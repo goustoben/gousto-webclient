@@ -146,6 +146,34 @@ describe('Header', () => {
     })
   })
 
+  describe('isAccountTabNameTest', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isAuthenticated: true })
+    })
+    
+    describe('when isAccountTabNameTest is set to true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAccountTabNameTest: true })
+      })
+
+      test('then the menu items should include "Upcoming Deliveries", "Subscription Settings" and "Account Details"', () => {
+        const result = wrapper.instance().getMenuItems('mobile', '/')
+        expect(result[1].name).toEqual("Upcoming Deliveries")
+        expect(result[2].name).toEqual("Subscription Settings")
+        expect(result[3].name).toEqual("Account Details")
+      })
+    })
+
+    describe('when isAccountTabNameTest is set to false', () => {
+      test('then the menu items should include "Deliveries", "My Subscription" and "Details"', () => {
+        const result = wrapper.instance().getMenuItems('mobile', '/')
+        expect(result[1].name).toEqual("Deliveries")
+        expect(result[2].name).toEqual("Subscription")
+        expect(result[3].name).toEqual("Details")
+      })
+    })
+  })
+
   describe('when existing menu path is passed as prop', () => {
     beforeEach(() => {
       wrapper.setProps({ path: 'box-prices' })

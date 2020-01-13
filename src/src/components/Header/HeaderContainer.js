@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
-import { getAbandonBasket } from 'selectors/features'
+import { getAbandonBasket, isAccountTabNameTest } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { Header } from './Header'
 
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => ({
   disabled: state.auth.get('isAdmin'),
   features: state.features,
   fromJoin: getUserFromJoin(state),
-  abandonBasketFeature: getAbandonBasket(state)
+  abandonBasketFeature: getAbandonBasket(state),
+  isAccountTabNameTest: isAccountTabNameTest(state)
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

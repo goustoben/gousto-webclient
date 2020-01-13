@@ -22,7 +22,7 @@ import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScree
 import { onEnter } from 'utils/accessibility'
 import { deepCloneObject } from 'utils/deepClone'
 import { MobileMenu } from './MobileMenu'
-import { defaultMenuItems } from './menuItemsHelper'
+import { defaultMenuItems, experimentalMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 const clientRoutes = config.routes.client
@@ -45,6 +45,7 @@ class Header extends React.PureComponent {
     small: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
+    isAccountTabNameTest: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -57,6 +58,7 @@ class Header extends React.PureComponent {
     small: false,
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
+    isAccountTabNameTest: false,
   }
 
   constructor(props) {
@@ -113,8 +115,8 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
-    const menuItems = deepCloneObject(defaultMenuItems)
+    const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest } = this.props
+    const menuItems = isAccountTabNameTest ? deepCloneObject(experimentalMenuItems) : deepCloneObject(defaultMenuItems)
 
     let pathLocal = path
     if (path.indexOf('/') === -1) {
