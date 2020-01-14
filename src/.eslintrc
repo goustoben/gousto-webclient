@@ -22,6 +22,8 @@
         "allow": ["resolve", "reject", "done", "cb", "e", "err", "error", "mapStateToProps"]
       }],
       "no-extra-boolean-cast": 2,
+      "react/no-unused-prop-types": 2,
+      "padded-blocks": 2,
       "import/extensions": 0,
       "import/no-unresolved": 0,
       "import/prefer-default-export": 0,
@@ -58,7 +60,6 @@
       "no-plusplus": [1, { "allowForLoopAfterthoughts": true }],
       "lines-between-class-members": 1,
       "comma-style": 1,
-      "padded-blocks": 2,
       "prefer-const": 1,
       "class-methods-use-this": 1,
       //end of gousto extended warnings
@@ -68,7 +69,6 @@
       "import/no-extraneous-dependencies": 1,
       "react/jsx-key": 1,
       "react/require-default-props": 1,
-      "react/no-unused-prop-types": 2,
       "react/destructuring-assignment": 1,
       "react/forbid-prop-types": 1,
       "react/no-deprecated": 1,
