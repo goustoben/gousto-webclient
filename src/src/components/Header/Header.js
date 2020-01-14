@@ -320,7 +320,7 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
-      routing,
+      routing
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen, loginPending } = this.state
@@ -374,26 +374,24 @@ class Header extends React.PureComponent {
                     {this.renderMenuItems(desktopMenuItems, hideNav)}
                     {this.renderAuthLink()}
                   </span>
-                  <div className={css.headerRightContainer}>
-                    {isAuthenticated && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button> }
-                    <MobileMenu
-                      hideMobileMenu={this.hideMobileMenu}
-                      onLoginClick={this.onLoginClick}
-                      onLogoutClick={this.onLogoutClick}
-                      showMobileMenu={this.showMobileMenu}
-                      mobileMenuItems={mobileMenuItems}
-                      mobileMenuOpen={mobileMenuOpen}
-                      hideNav={hideNav}
-                      isAuthenticated={isAuthenticated}
-                      promoCodeUrl={promoCodeUrl}
-                      trackNavigationClick={(param) => {
-                        trackNavigationClick(param)
-                        this.hideMobileMenu()
-                      }}
-                      serverError={serverError}
-                      shouldRenderNewMenuDesign={isAuthenticated && (pathName === '/menu')}
-                    />
-                  </div>
+                  {isAuthenticated && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button> }
+                  <MobileMenu
+                    hideMobileMenu={this.hideMobileMenu}
+                    onLoginClick={this.onLoginClick}
+                    onLogoutClick={this.onLogoutClick}
+                    showMobileMenu={this.showMobileMenu}
+                    mobileMenuItems={mobileMenuItems}
+                    mobileMenuOpen={mobileMenuOpen}
+                    hideNav={hideNav}
+                    isAuthenticated={isAuthenticated}
+                    promoCodeUrl={promoCodeUrl}
+                    trackNavigationClick={(param) => {
+                      trackNavigationClick(param)
+                      this.hideMobileMenu()
+                    }}
+                    serverError={serverError}
+                    shouldRenderNewMenuDesign={isAuthenticated && (pathName === '/menu')}
+                  />
                 </div>
               </div>
             </div>
