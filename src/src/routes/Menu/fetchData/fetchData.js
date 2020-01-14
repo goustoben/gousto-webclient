@@ -15,6 +15,7 @@ import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { brandDataReceived } from 'actions/brand'
 import { getMenuService } from 'selectors/features'
+
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 const requiresMenuRecipesClear = (store, orderId) => {
@@ -230,7 +231,7 @@ const shouldFetchData = (store, params, force) => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default async function fetchData({ store, query, params }, force, background) {
+export default async function fetchData({ store, query, params }, force, background, userMenuVariant) {
   const accessToken = store.getState().auth.get('accessToken')
   const useMenuService = getMenuService()
 
@@ -255,7 +256,11 @@ export default async function fetchData({ store, query, params }, force, backgro
     if (isAuthenticated && userId) {
       fetchMenuPromise = fetchMenusWithUserId(accessToken, userId)
     } else {
-      fetchMenuPromise = fetchMenus(accessToken, query)
+      if (userMenuVariant) { // A/B test on signup page
+        fetchMenuPromise = fetchMenusWithUserId(accessToken, userMenuVariant)
+      } else {
+        fetchMenuPromise = fetchMenus(accessToken, query)
+      }
     }
 
     const menuResponse = await fetchMenuPromise

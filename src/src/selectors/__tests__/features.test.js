@@ -14,7 +14,8 @@ import {
   getHideBoxSummary,
   getAddOnsBeforeOrderConfirmation,
   getFullScreenBoxSummary,
-  getShowStockAlertFlag
+  getShowStockAlertFlag,
+  getUserMenuVariant
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -319,6 +320,25 @@ describe('when features are defined', () => {
           }
         })
         expect(getShowStockAlertFlag(state)).toBe(true)
+      })
+    })
+  })
+
+  describe('getUserMenuVariant', () => {
+    describe('when is NOT set', () => {
+      test('should return an empty string', () => {
+        expect(getUserMenuVariant(state)).toBe('')
+      })
+    })
+
+    describe('when is set', () => {
+      test('should return the value which the menu name', () => {
+        state.features = Immutable.fromJS({
+          userMenuVariant: {
+            value: 'menuB'
+          }
+        })
+        expect(getUserMenuVariant(state)).toBe('menuB')
       })
     })
   })
