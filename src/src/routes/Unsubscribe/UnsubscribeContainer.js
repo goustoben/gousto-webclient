@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
 import Unsubscribe from './Unsubscribe'
 
@@ -31,4 +31,4 @@ const UnsubscribeContainer = connect(mapStateToProps, {
   userUnsubscribeAction: userActions.userUnsubscribe,
 })(Unsubscribe)
 
-export default UnsubscribeContainer
+export { UnsubscribeContainer }

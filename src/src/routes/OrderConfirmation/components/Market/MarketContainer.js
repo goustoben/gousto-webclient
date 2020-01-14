@@ -7,7 +7,7 @@ import {
 } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import basketActions from 'actions/basket'
 import { filterProductCategory } from 'actions/filters'
 import { Market } from './Market.logic'

@@ -4,7 +4,7 @@ import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from 'apis/onScr
 import { orderCancel, projectedOrderCancel } from 'actions/order'
 import { redirect } from 'actions/redirect'
 import subPauseActions from 'actions/subscriptionPause'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
 import logger from 'utils/logger'
 

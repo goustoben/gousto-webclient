@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { orderAddressChange } from 'actions/order'
 import userActions from 'actions/user'
 import { OrderDeliveryAddress } from './OrderDeliveryAddress'

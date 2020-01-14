@@ -9,7 +9,7 @@ import { basketOrderLoad } from 'actions/basket'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
 import recipeActions from './recipes'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 export const orderConfirmationRedirect = (orderId, orderAction) => (
   (dispatch) => {

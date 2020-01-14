@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
 const status = {
@@ -18,7 +18,7 @@ const status = {
     switch (action.type) {
     case actionTypes.ERROR:
       if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
-        let value = action.value
+        let { value } = action
         if (value instanceof Error) {
           value = value.message
         }

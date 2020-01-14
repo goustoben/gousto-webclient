@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import OrderRestoreButton from './OrderRestoreButton'
 
 function mapStateToProps(state, ownProps) {

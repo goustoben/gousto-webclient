@@ -3,7 +3,7 @@ import { recommendationsSlug } from 'config/collections'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { basketDateChange, basketSlotChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
-import { collectionFilterIdRecieve } from 'actions/filters'
+import { collectionFilterIdReceive } from 'actions/filters'
 
 export const getPreselectedCollectionName = (state, collectionNameFromQueryParam) => {
   if (hasJustForYouCollection(state) && !collectionNameFromQueryParam) {
@@ -19,7 +19,7 @@ export const selectCollection = (state, collectionName, dispatch) => {
     collectionId = getDefaultCollectionId(state)
   }
 
-  dispatch(collectionFilterIdRecieve(collectionId))
+  dispatch(collectionFilterIdReceive(collectionId))
 }
 
 export const setSlotFromIds = (state, slot_id, day_id, dispatch) => {

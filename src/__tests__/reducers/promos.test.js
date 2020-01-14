@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import promos from 'reducers/promos'
 
@@ -42,10 +42,10 @@ describe('promos reducer', () => {
       expect(Immutable.is(result, state)).toEqual(true)
     })
 
-    test('should handle PROMO_RECIEVE action types', () => {
+    test('should handle PROMO_RECEIVE action types', () => {
       const state = Immutable.Map()
       const result = promos.promoStore(state, {
-        type: actionTypes.PROMO_RECIEVE,
+        type: actionTypes.PROMO_RECEIVE,
         promo: { code: 'promo-code', campaign: 'campaign-1' },
       })
 

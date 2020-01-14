@@ -1,5 +1,5 @@
 import { getHelpTracking } from 'middlewares/tracking/snowplow/getHelp'
-import actions from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 describe('snowplow get help tracking events', () => {
   const {
@@ -12,7 +12,7 @@ describe('snowplow get help tracking events', () => {
 
   test('selectOrderIssue works correctly', () => {
     const action = {
-      type: actions.GET_HELP_ORDER_ISSUE_SELECT,
+      type: actionTypes.GET_HELP_ORDER_ISSUE_SELECT,
       issue: 'ingredients'
     }
 
@@ -27,7 +27,7 @@ describe('snowplow get help tracking events', () => {
 
   test('selectContactChannel works correctly', () => {
     const action = {
-      type: actions.GET_HELP_CONTACT_CHANNEL_SELECT,
+      type: actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT,
       channel: 'email'
     }
 
@@ -42,7 +42,7 @@ describe('snowplow get help tracking events', () => {
 
   test('selectIngredients works correctly', () => {
     const action = {
-      type: actions.GET_HELP_STORE_SELECTED_INGREDIENTS,
+      type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
       selectedIngredientAndRecipeIds: [{ recipeId: '1234', ingredientId: '4567890' }]
     }
 
@@ -55,7 +55,7 @@ describe('snowplow get help tracking events', () => {
 
   test('selectIngredientIssues works correctly', () => {
     const action = {
-      type: actions.GET_HELP_INGREDIENT_ISSUES_SELECT,
+      type: actionTypes.GET_HELP_INGREDIENT_ISSUES_SELECT,
       ingredientAndRecipeIdsWithIssueName: [{
         ingredientId: '3023a6f7d7133ac88089a2fc416954a8',
         issueName: 'Missing ingredients',
@@ -76,7 +76,7 @@ describe('snowplow get help tracking events', () => {
 
   test('acceptRefund works correctly', () => {
     const action = {
-      type: actions.GET_HELP_ACCEPT_REFUND,
+      type: actionTypes.GET_HELP_ACCEPT_REFUND,
       amount: 2
     }
 

@@ -1,6 +1,6 @@
 import { fetchPromo, fetchPromocodeFromCampaignUrl } from 'apis/promos'
 import { legacyVerifyAge } from 'apis/legacy'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
 import pricingActions from './pricing'
@@ -14,8 +14,8 @@ import {
 
 const { pending, error } = statusActions
 
-const promoRecieve = promo => ({
-  type: actionTypes.PROMO_RECIEVE,
+const promoReceive = promo => ({
+  type: actionTypes.PROMO_RECEIVE,
   promo,
 })
 
@@ -92,7 +92,7 @@ const promoGet = code => (
 
     dispatch(pending(actionTypes.PROMO_GET, false))
     if (!errored) {
-      dispatch(promoRecieve(promo))
+      dispatch(promoReceive(promo))
     }
   }
 )

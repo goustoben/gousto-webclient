@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'
 import { fetchRecipes } from 'apis/recipes'
 import { getCutoffDateTime } from 'utils/deliveries'

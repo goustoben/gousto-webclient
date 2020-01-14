@@ -1,5 +1,5 @@
 import { fetchJobs } from 'apis/workable'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
 function fetchOpenJobs() {

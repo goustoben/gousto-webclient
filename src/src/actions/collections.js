@@ -1,6 +1,6 @@
 import GoustoException from 'utils/GoustoException'
 import * as collectionsApi from 'apis/collections'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'
 
 const collectionActions = {
@@ -12,8 +12,8 @@ const collectionActions = {
 export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
   return async (dispatch, getState) => {
     try {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, true))
-      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, null))
+      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, true))
+      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, null))
       const accessToken = getState().auth.get('accessToken')
       const isAuthenticated = getState().auth.get('isAuthenticated')
       const experiments = (isAuthenticated) ? {
@@ -44,7 +44,7 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
       try {
         const { data: collections } = await collectionsApi.fetchCollections(accessToken, '', args)
         dispatch({
-          type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
+          type: actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS,
           collections,
         })
       } catch (err) {
@@ -54,9 +54,9 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
         })
       }
     } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, err))
+      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, err))
     } finally {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, false))
+      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, false))
     }
   }
 }
@@ -64,8 +64,8 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
 export function collectionsLoadCollectionBySlug(collectionSlug) {
   return async dispatch => {
     try {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, collectionSlug))
-      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, null))
+      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, collectionSlug))
+      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, null))
 
       let collection
       try {
@@ -79,13 +79,13 @@ export function collectionsLoadCollectionBySlug(collectionSlug) {
       }
 
       dispatch({
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS,
         collections: [collection],
       })
     } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, err))
+      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, err))
     } finally {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, false))
+      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, false))
     }
   }
 }
@@ -93,8 +93,8 @@ export function collectionsLoadCollectionBySlug(collectionSlug) {
 export function collectionsLoadCollectionRecipes(collectionId) {
   return async dispatch => {
     try {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, true))
-      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, null))
+      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, true))
+      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, null))
 
       let items
       try {
@@ -108,14 +108,14 @@ export function collectionsLoadCollectionRecipes(collectionId) {
       }
 
       dispatch({
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
         collectionId,
         recipes: items.recipes,
       })
     } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, err))
+      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, err))
     } finally {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, false))
+      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, false))
     }
   }
 }

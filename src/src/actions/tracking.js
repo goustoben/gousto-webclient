@@ -2,7 +2,7 @@
 import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import globals from 'config/globals'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import moment from 'moment'
 
 export const trackFirstPurchase = (orderId, prices) => (

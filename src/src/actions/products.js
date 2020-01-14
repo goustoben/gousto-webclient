@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
 import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
 import logger from 'utils/logger'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
 export const productDetailVisibilityChange = (productId = false) => (
@@ -69,8 +69,8 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       reqData.period_id = periodId
     }
 
-    if ((isProductsLargerThanBasket || reload) ||
-      (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
+    if ((isProductsLargerThanBasket || reload)
+      || (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
         const { data: productsFromApi } = await fetchProducts(auth.get('accessToken'), cutoffDate, reqData)

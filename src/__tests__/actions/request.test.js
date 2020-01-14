@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { browserTypeChange, setUserAgent } from 'actions/request'
 
 describe('request actions', () => {

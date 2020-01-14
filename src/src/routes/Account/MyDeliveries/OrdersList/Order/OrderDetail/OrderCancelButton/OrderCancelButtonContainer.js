@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions/order'
 import { orderCancelStart } from 'actions/onScreenRecovery'
 import OrderCancelButton from './OrderCancelButton'

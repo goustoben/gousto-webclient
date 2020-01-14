@@ -1,7 +1,7 @@
 import { notice } from 'utils/logger'
 import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from './basket'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 export const subscriptionLoadData = () => (
   async (dispatch, getState) => {

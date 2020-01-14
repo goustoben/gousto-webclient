@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const boxSummary = {
   boxSummaryShow: (state = Immutable.fromJS({ show: false, view: '' }), action) => {

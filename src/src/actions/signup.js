@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
 import redirectAction from 'actions/redirect'
 import { stepByName } from 'utils/signup'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
 
 const signupActions = {
@@ -56,7 +56,7 @@ export function signupNextStep(stepName) {
       }
 
       try {
-        const search = getState().routing.locationBeforeTransitions.search
+        const { search } = getState().routing.locationBeforeTransitions
         dispatch(push(`${client.signup}/${step.get('slug')}${search}`))
       } catch (e) {
         dispatch(push(`${client.signup}/${step.get('slug')}`))

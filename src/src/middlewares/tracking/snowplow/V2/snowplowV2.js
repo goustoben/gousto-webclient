@@ -1,4 +1,4 @@
-import actions from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import globals from 'config/globals'
 import windowUtils from 'utils/window'
 import logger from 'utils/logger'
@@ -58,35 +58,35 @@ const Tracking = (action, state = {}, prevState = {}) => {
     const pathname = getPathname(prevState)
 
     trackingMap({
-      [actions.BASKET_ORDER_LOADED]: trackEventWithData(basketTracking.basketOrderLoaded),
-      [actions.USER_IDENTIFIED]: userIdentifiedTracking,
-      [actions.USER_LOGGED_OUT]: userLoggedOut,
-      [actions.MENU_BOX_PRICES_RECEIVE]: trackEventWithData(basketTracking.menuBoxPricesReceive),
-      [actions.BASKET_PROMO_CODE_CHANGE]: trackEventWithData(basketTracking.promocodeChange),
-      [actions.BASKET_PROMO_CODE_APPLIED_CHANGE]: trackEventWithData(basketTracking.appliedPromocode),
-      [actions.LOGIN_ATTEMPT]: trackEventWithData(loginAttempt),
-      [actions.LOGIN_REMEMBER_ME]: trackEventWithData(loginRememberMe),
-      [actions.LOGIN_FAILED]: trackEventWithData(loginFailed),
-      [actions.LOGIN_VISIBILITY_CHANGE]: trackEventWithData(loginVisibility),
-      [actions.PS_SUBSCRIPTION_PAUSE_ATTEMPT]: trackEventWithData(pauseSubscriptionTracking.pauseAttempt),
-      [actions.PS_START_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.startModalViewed),
-      [actions.PS_REASON_CATEGORY_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.reasonCategoryModalViewed),
-      [actions.PS_REASON_CATEGORY_SELECTED]: trackEventWithData(pauseSubscriptionTracking.reasonCategorySelected),
-      [actions.PS_REASON_LIST_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.reasonListModalViewed),
-      [actions.PS_REASON_SELECTED]: trackEventWithData(pauseSubscriptionTracking.reasonSelected),
-      [actions.PS_RECOVERY_ATTEMPT_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.recoveryAttemptModalViewed),
-      [actions.PS_SUBSCRIPTION_KEPT_ACTIVE]: trackEventWithData(pauseSubscriptionTracking.subscriptionKeptActive),
-      [actions.PS_SUBSCRIPTION_PAUSED]: trackEventWithData(pauseSubscriptionTracking.subscriptionPaused),
-      [actions.PS_END_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.endModalViewed),
-      [actions.RECIPES_DISPLAYED_ORDER_TRACKING]: trackEventWithData(recipesTracking.recipeListViewed),
-      [actions.GET_HELP_ACCEPT_REFUND]: trackEventWithData(getHelpTracking.acceptRefund),
-      [actions.GET_HELP_CONTACT_CHANNEL_SELECT]: trackEventWithData(getHelpTracking.selectContactChannel),
-      [actions.GET_HELP_STORE_SELECTED_INGREDIENTS]: trackEventWithData(getHelpTracking.selectIngredients),
-      [actions.GET_HELP_INGREDIENT_ISSUES_SELECT]: trackEventWithData(getHelpTracking.selectIngredientIssues),
-      [actions.GET_HELP_ORDER_ISSUE_SELECT]: trackEventWithData(getHelpTracking.selectOrderIssue),
-      [actions.SIGNUP_TRACKING_STEP_CHANGE]: trackEventWithData(basketTracking.signupCheckoutStepChange),
-      [actions.MENU_LOAD_COMPLETE]: trackEventWithData(menuTracking.menuLoadComplete),
-      [actions.__REACT_ROUTER_LOCATION_CHANGE]: pageChange, // eslint-disable-line no-underscore-dangle
+      [actionTypes.BASKET_ORDER_LOADED]: trackEventWithData(basketTracking.basketOrderLoaded),
+      [actionTypes.USER_IDENTIFIED]: userIdentifiedTracking,
+      [actionTypes.USER_LOGGED_OUT]: userLoggedOut,
+      [actionTypes.MENU_BOX_PRICES_RECEIVE]: trackEventWithData(basketTracking.menuBoxPricesReceive),
+      [actionTypes.BASKET_PROMO_CODE_CHANGE]: trackEventWithData(basketTracking.promocodeChange),
+      [actionTypes.BASKET_PROMO_CODE_APPLIED_CHANGE]: trackEventWithData(basketTracking.appliedPromocode),
+      [actionTypes.LOGIN_ATTEMPT]: trackEventWithData(loginAttempt),
+      [actionTypes.LOGIN_REMEMBER_ME]: trackEventWithData(loginRememberMe),
+      [actionTypes.LOGIN_FAILED]: trackEventWithData(loginFailed),
+      [actionTypes.LOGIN_VISIBILITY_CHANGE]: trackEventWithData(loginVisibility),
+      [actionTypes.PS_SUBSCRIPTION_PAUSE_ATTEMPT]: trackEventWithData(pauseSubscriptionTracking.pauseAttempt),
+      [actionTypes.PS_START_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.startModalViewed),
+      [actionTypes.PS_REASON_CATEGORY_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.reasonCategoryModalViewed),
+      [actionTypes.PS_REASON_CATEGORY_SELECTED]: trackEventWithData(pauseSubscriptionTracking.reasonCategorySelected),
+      [actionTypes.PS_REASON_LIST_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.reasonListModalViewed),
+      [actionTypes.PS_REASON_SELECTED]: trackEventWithData(pauseSubscriptionTracking.reasonSelected),
+      [actionTypes.PS_RECOVERY_ATTEMPT_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.recoveryAttemptModalViewed),
+      [actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE]: trackEventWithData(pauseSubscriptionTracking.subscriptionKeptActive),
+      [actionTypes.PS_SUBSCRIPTION_PAUSED]: trackEventWithData(pauseSubscriptionTracking.subscriptionPaused),
+      [actionTypes.PS_END_MODAL_VIEWED]: trackEventWithData(pauseSubscriptionTracking.endModalViewed),
+      [actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING]: trackEventWithData(recipesTracking.recipeListViewed),
+      [actionTypes.GET_HELP_ACCEPT_REFUND]: trackEventWithData(getHelpTracking.acceptRefund),
+      [actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT]: trackEventWithData(getHelpTracking.selectContactChannel),
+      [actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS]: trackEventWithData(getHelpTracking.selectIngredients),
+      [actionTypes.GET_HELP_INGREDIENT_ISSUES_SELECT]: trackEventWithData(getHelpTracking.selectIngredientIssues),
+      [actionTypes.GET_HELP_ORDER_ISSUE_SELECT]: trackEventWithData(getHelpTracking.selectOrderIssue),
+      [actionTypes.SIGNUP_TRACKING_STEP_CHANGE]: trackEventWithData(basketTracking.signupCheckoutStepChange),
+      [actionTypes.MENU_LOAD_COMPLETE]: trackEventWithData(menuTracking.menuLoadComplete),
+      [actionTypes.__REACT_ROUTER_LOCATION_CHANGE]: pageChange, // eslint-disable-line no-underscore-dangle
     })(action, state, prevState, pathname)
   }
 }

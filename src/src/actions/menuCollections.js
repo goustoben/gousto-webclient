@@ -5,7 +5,7 @@ import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'u
 import { menuCollectionsReceive } from 'actions/menu'
 import { collectionFilterChange } from 'actions/filters'
 import { loadRecipesForSingleCollection } from 'actions/loadRecipesForSingleCollection'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
   return async (dispatch, getState) => {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import MyDeliveries from './MyDeliveries'
 
 const mapStateToProps = (state) => ({

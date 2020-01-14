@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { featuresSet } from '../features'
 
 describe('features actions', () => {

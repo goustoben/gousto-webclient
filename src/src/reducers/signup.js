@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const initialState = Immutable.fromJS({
   wizard: {

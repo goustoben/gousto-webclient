@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import logger from 'utils/logger'
 import routesConfig from 'config/routes'
 import actions from 'actions'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
@@ -150,6 +150,12 @@ class Checkout extends React.PureComponent {
     })
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.tariffId !== nextProps.tariffId) {
+      this.props.loadPrices()
+    }
+  }
+
   reloadCheckoutScript = () => {
     this.setState({
       checkoutScriptReady: false,
@@ -159,12 +165,6 @@ class Checkout extends React.PureComponent {
         checkoutScriptReady: true,
       })
     })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.tariffId !== nextProps.tariffId) {
-      this.props.loadPrices()
-    }
   }
 
   isLastStep = (steps, currentStep) => Boolean(steps.indexOf(currentStep) === (steps.length - 1))

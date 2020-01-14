@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import collectionsReducer from 'reducers/collections'
 
@@ -20,10 +20,10 @@ describe('collections reducer', () => {
     expect(Immutable.is(result, state)).toEqual(true)
   })
 
-  describe('COLLECTIONS_RECIEVE_COLLECTIONS', () => {
+  describe('COLLECTIONS_RECEIVE_COLLECTIONS', () => {
     test('should load collections into state and add recipes list', () => {
       const result = collectionsReducer.collections(Immutable.OrderedMap({}), {
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS,
         collections: [
           { id: 'collection-1', title: 'collection 1' },
           { id: 'collection-2', title: 'collection 2' },
@@ -60,7 +60,7 @@ describe('collections reducer', () => {
         }),
       })
       const result = collectionsReducer.collections(initialState, {
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS,
         collections: [
           { id: 'collection-1', title: 'collection 1 updated title' },
           { id: 'collection-3', title: 'collection 3' },
@@ -89,10 +89,10 @@ describe('collections reducer', () => {
     })
   })
 
-  describe('COOKBOOK_RECIEVE_COLLECTIONS', () => {
+  describe('COOKBOOK_RECEIVE_COLLECTIONS', () => {
     test('should load collections into state and add recipes list', () => {
       const result = collectionsReducer.collections(Immutable.OrderedMap({}), {
-        type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+        type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
         collections: [
           { id: 'collection-1', title: 'collection 1' },
           { id: 'collection-2', title: 'collection 2' },
@@ -129,7 +129,7 @@ describe('collections reducer', () => {
         }),
       })
       const result = collectionsReducer.collections(initialState, {
-        type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+        type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
         collections: [
           { id: 'collection-1', title: 'collection 1 updated title' },
           { id: 'collection-3', title: 'collection 3' },
@@ -158,7 +158,7 @@ describe('collections reducer', () => {
     })
   })
 
-  describe('COLLECTIONS_RECIEVE_COLLECTION_RECIPES', () => {
+  describe('COLLECTIONS_RECEIVE_COLLECTION_RECIPES', () => {
     test('should load recipes ids into given collection', () => {
       const initialState = Immutable.OrderedMap({
         'collection-1': Immutable.fromJS({
@@ -173,7 +173,7 @@ describe('collections reducer', () => {
         }),
       })
       const action = {
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
         collectionId: 'collection-1',
         recipes: [
           { id: 1, title: 'recipe 1' },
@@ -200,7 +200,7 @@ describe('collections reducer', () => {
 
     test("should load collection with recipes if collection doesn't exist yet", () => {
       const action = {
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
         collectionId: 'collection-1',
         recipes: [
           { id: 1, title: 'recipe 1' },

@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 
 import globals from 'config/globals'
 import windowUtils from 'utils/window'
-import actions from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getPathName } from 'middlewares/tracking/utils'
 
 export const pinterestTracking = {
@@ -92,11 +92,11 @@ function pageVisit(action, state) {
 
 function getCallbacks() {
   return {
-    [actions.FILTERS_COLLECTION_CHANGE]: pinterestTracking.showCollectionTracking,
-    [actions.BASKET_RECIPE_ADD]: pinterestTracking.addRecipeToBasket,
-    [actions.BASKET_CHECKOUT]: pinterestTracking.initiateCheckout,
-    [actions.CHECKOUT_SIGNUP_SUCCESS]: pinterestTracking.purchaseCompleted,
-    [actions.__REACT_ROUTER_LOCATION_CHANGE]: pinterestTracking.pageVisit, // eslint-disable-line no-underscore-dangle
+    [actionTypes.FILTERS_COLLECTION_CHANGE]: pinterestTracking.showCollectionTracking,
+    [actionTypes.BASKET_RECIPE_ADD]: pinterestTracking.addRecipeToBasket,
+    [actionTypes.BASKET_CHECKOUT]: pinterestTracking.initiateCheckout,
+    [actionTypes.CHECKOUT_SIGNUP_SUCCESS]: pinterestTracking.purchaseCompleted,
+    [actionTypes.__REACT_ROUTER_LOCATION_CHANGE]: pinterestTracking.pageVisit, // eslint-disable-line no-underscore-dangle
   }
 }
 

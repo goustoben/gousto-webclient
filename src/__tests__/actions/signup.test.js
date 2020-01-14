@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import { basketPostcodeChange } from 'actions/basket'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { push } from 'react-router-redux'
 import { stepByName } from 'utils/signup'
 import { redirect } from 'actions/redirect'

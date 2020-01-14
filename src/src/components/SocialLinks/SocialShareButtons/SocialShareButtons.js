@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'components/Overlay'
 import { ReferAFriendModal } from 'components/ReferAFriendModal'
 import { getFacebookReferralLink, getMessengerReferralLink } from '../socialReferralHelper'

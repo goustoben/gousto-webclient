@@ -28,7 +28,7 @@ describe('dateTransformer', () => {
     expect(result).toEqual("2019-10-29T11:59:59+01:00")
   })
 
-  test('should return the first date if only one menu recieved', () => {
+  test('should return the first date if only one menu received', () => {
     const testData = {
       data: [{
         "id": "295",

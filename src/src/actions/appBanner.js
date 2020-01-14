@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 

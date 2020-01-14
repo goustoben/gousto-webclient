@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { fromJS, Map } from 'immutable'
 
 const getHelpInitialState = fromJS({

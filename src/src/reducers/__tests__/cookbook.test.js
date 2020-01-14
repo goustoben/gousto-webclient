@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import cookbookReducer, { initialState } from 'reducers/cookbook'
 
@@ -15,10 +15,10 @@ describe('cookbook reducer', () => {
     expect(Immutable.is(result, initialState)).toEqual(true)
   })
 
-  describe('COOKBOOK_RECIEVE_COLLECTIONS', () => {
+  describe('COOKBOOK_RECEIVE_COLLECTIONS', () => {
     test('should add list of collection ids to collectionSets state keyed by setNum', () => {
       const result = cookbookReducer.cookbook(initialState, {
-        type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+        type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
         collections: [
           { id: 'collection-1', title: 'collection 1' },
           { id: 'collection-2', title: 'collection 2' },
@@ -44,7 +44,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ collectionSets: initialCollectionSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
           collections: [
             { id: 'collection-1', title: 'collection 1 updated title' },
             { id: 'collection-2', title: 'collection 2' },
@@ -70,7 +70,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ collectionSets: initialCollectionSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
           collections: [
             { id: 'collection-1', title: 'collection 1 updated title' },
             { id: 'collection-2', title: 'collection 2' },
@@ -101,7 +101,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ collectionSets: initialCollectionSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
           meta,
         },
       )
@@ -110,10 +110,10 @@ describe('cookbook reducer', () => {
     })
   })
 
-  describe('COOKBOOK_RECIEVE_COLLECTION_RECIPES', () => {
+  describe('COOKBOOK_RECEIVE_COLLECTION_RECIPES', () => {
     test('should add list of recipe ids to recipeSets state keyed by setNum', () => {
       const result = cookbookReducer.cookbook(initialState, {
-        type: actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES,
+        type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
         recipes: [
           { id: 'recipe-1', title: 'recipe 1' },
           { id: 'recipe-2', title: 'recipe 2' },
@@ -137,7 +137,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ recipeSets: initialRecipeSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
           recipes: [
             { id: 'recipe-1', title: 'recipe 1 updated title' },
             { id: 'recipe-2', title: 'recipe 2' },
@@ -163,7 +163,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ collectionSets: initialRecipeSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
           recipes: [
             { id: 'recipe-1', title: 'recipe 1 updated title' },
             { id: 'recipe-2', title: 'recipe 2' },
@@ -189,7 +189,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ recipeSets: initialRecipeSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
           collectionId: 'collection-y',
         },
       )
@@ -210,7 +210,7 @@ describe('cookbook reducer', () => {
       const result = cookbookReducer.cookbook(
         Immutable.Map({ recipeSets: initialRecipeSets }),
         {
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
           meta,
         },
       )

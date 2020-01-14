@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { fetchContentBySlug } from 'apis/content'
 import { contentLoadContentByPageSlug, loadContentVariants } from 'actions/content'
 
@@ -87,7 +87,7 @@ describe('content actions', () => {
       dispatch.mockClear()
     })
 
-    test('should dispatch given variants as a CONTENT_VARIANTS_RECIEVE action', () => {
+    test('should dispatch given variants as a CONTENT_VARIANTS_RECEIVE action', () => {
       const variants = {
         homepage: 'default',
         'my-gousto': 'osr-b',

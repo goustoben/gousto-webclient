@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import config from 'config/home'
 import { validateEmail } from 'utils/auth'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { ReferAFriendPresentation } from './ReferAFriend.presentation'
 
 class ReferAFriend extends PureComponent {

@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 import Order from './Order'
 

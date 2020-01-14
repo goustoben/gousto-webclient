@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import types from "../actions/actionTypes"
+import { actionTypes } from "../actions/actionTypes"
 
 export const initialState = Immutable.fromJS({
   collectionSets: {},
@@ -17,7 +17,7 @@ export const initialState = Immutable.fromJS({
 const cookbookReducer = {
   cookbook: (state = initialState, { type, ...data }) => {
     switch (type) {
-    case types.COOKBOOK_RECIEVE_COLLECTIONS: {
+    case actionTypes.COOKBOOK_RECEIVE_COLLECTIONS: {
       const { setNum, collections = [], meta = {} } = data
       const { total = 0, limit = 1 } = meta
       const collectionIds = collections.reduce((accumulator, currentCollection) => (
@@ -30,7 +30,7 @@ const cookbookReducer = {
       return newState
     }
 
-    case types.COOKBOOK_RECIEVE_COLLECTION_RECIPES: {
+    case actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES: {
       const { collectionId, setNum, recipes = [], meta = {} } = data
       const { total = 0, limit = 1 } = meta
 
@@ -47,7 +47,7 @@ const cookbookReducer = {
       return newState
     }
 
-    case types.COOKBOOK_LOAD_COLLECTION_SETS: {
+    case actionTypes.COOKBOOK_LOAD_COLLECTION_SETS: {
       const { startSet, endSet } = data
       let newState = state
 
@@ -62,7 +62,7 @@ const cookbookReducer = {
       return newState
     }
 
-    case types.COOKBOOK_LOAD_RECIPE_SETS: {
+    case actionTypes.COOKBOOK_LOAD_RECIPE_SETS: {
       const { startSet, endSet } = data
       let newState = state
 
@@ -77,7 +77,7 @@ const cookbookReducer = {
       return newState
     }
 
-    case types.COOKBOOK_RESET_RECIPE_SETS: {
+    case actionTypes.COOKBOOK_RESET_RECIPE_SETS: {
       let newState = state.set('recipeSets', initialState.get('recipeSets'))
       newState = newState.set('recipesCollectionId', initialState.get('recipesCollectionId'))
       newState = newState.set('recipesStartSet', initialState.get('recipesStartSet'))
@@ -87,7 +87,7 @@ const cookbookReducer = {
       return newState
     }
 
-    case types.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID: {
+    case actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID: {
       const { recipeId, recipeStepsById } = data
       let newState = state
 

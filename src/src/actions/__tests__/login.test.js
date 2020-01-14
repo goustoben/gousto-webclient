@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import globals from 'config/globals'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import loginActions from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'

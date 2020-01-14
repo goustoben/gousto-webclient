@@ -1,5 +1,5 @@
 
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 export function menuServiceDataReceived(response) {
   return ({

@@ -8,7 +8,7 @@ import {
   trackUserAttributes
 } from 'actions/tracking'
 import globals from 'config/globals'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { warning } from 'utils/logger'
 import moment from 'moment'
 
@@ -59,7 +59,7 @@ describe('tracking actions', () => {
     })
     test('should dispatch correct trackingData', () => {
       trackFirstPurchase('order-a', pricing)(dispatch, getState)
-      const trackingData = dispatch.mock.calls[0][0].trackingData
+      const { trackingData } = dispatch.mock.calls[0][0]
 
       expect(trackingData.asource).toBe('test-source')
       expect(trackingData.goustoReference).toBe('123')
@@ -71,7 +71,7 @@ describe('tracking actions', () => {
 
     test('should dispatch correct optimizely data', () => {
       trackFirstPurchase('order-a', pricing)(dispatch, getState)
-      const optimizelyData = dispatch.mock.calls[0][0].optimizelyData
+      const { optimizelyData } = dispatch.mock.calls[0][0]
 
       expect(optimizelyData.eventName).toBe('order_placed_gross')
       expect(optimizelyData.tags.revenue).toBe('15.99')

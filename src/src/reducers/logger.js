@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const logger = ( state = {uuid: ''}, action) => {
   switch (action.type) {

@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const initialState = () => fromJS({})
 

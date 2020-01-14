@@ -1,6 +1,6 @@
 import { fetchContentBySlug } from 'apis/content'
 import logger from 'utils/logger'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
 export const contentLoadContentByPageSlug = (pageSlug = '', variation = 'default') => (

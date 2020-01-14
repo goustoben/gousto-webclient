@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import basketActions from 'actions/basket'
 import productActions from 'actions/products'
 import OrderSummary from 'OrderSummary'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 function mapStateToProps(state) {
   return {

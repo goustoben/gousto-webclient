@@ -1,5 +1,5 @@
 import logger from 'utils/logger'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const statusActions = {
   pending,

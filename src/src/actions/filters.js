@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import config from 'config/recipes'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import {
   trackCTAToAllRecipesClicked,
 } from './tracking'
@@ -18,7 +18,7 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
   },
 })
 
-export const collectionFilterIdRecieve = (collectionId) => ({
+export const collectionFilterIdReceive = (collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
   collectionId,
 })
@@ -155,7 +155,7 @@ export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) 
 
 export default {
   collectionFilterChange,
-  collectionFilterIdRecieve,
+  collectionFilterIdReceive,
   currentFoodBrandChange,
   currentThematicChange,
   filterRecipeGrouping,

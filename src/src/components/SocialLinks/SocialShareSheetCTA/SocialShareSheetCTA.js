@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'components/Overlay'
 import SocialShareSheet from 'components/SocialLinks/SocialShareSheet'
 

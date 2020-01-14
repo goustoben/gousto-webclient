@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { fetchOrderIssues as fetchOrderIssuesApi } from 'apis/getHelp'
 import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
 import { fetchIngredientIssues as fetchOrderIssuesAction } from 'actions/getHelp'

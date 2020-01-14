@@ -9,7 +9,7 @@ import {
   updateOrderAddress,
 } from 'apis/orders'
 import actionStatus from 'actions/status'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getOrderDetails } from 'utils/basket'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'

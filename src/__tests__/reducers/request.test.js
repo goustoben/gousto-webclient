@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import reducer from 'reducers/request'
 
 describe('request reducer', () => {

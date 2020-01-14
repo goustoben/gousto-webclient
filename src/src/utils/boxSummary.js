@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const boxSummaryViews = {
   POSTCODE: 'POSTCODE',
@@ -12,7 +12,7 @@ function getCurrentBoxSummaryView(state) {
   const postcodePending = state.basket.get('postcodePending')
   const slotId = state.basket.get('slotId')
   const orderId = state.basket.get('orderId')
-  const menuPending = state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false) || state.pending.get(actionTypes.MENU_FETCH_DATA, false)
+  const menuPending = state.menuReceiveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false) || state.pending.get(actionTypes.MENU_FETCH_DATA, false)
 
   const showPostcode = (!postcode || deliveryDaysError || postcodePending) && !orderId
 

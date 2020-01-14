@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const recipes = {
   recipes: (state = Immutable.Map({}), action) => {
     switch (action.type) {
-    case actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES:
-    case actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES:
+    case actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES:
+    case actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES:
     case actionTypes.RECIPES_RECEIVE: {
       const newRecipes = (action.recipes || []).reduce((reducerState, recipe) => reducerState.set(recipe.id, Immutable.fromJS(recipe)), Immutable.OrderedMap({}))
       const newState = state.merge(newRecipes)

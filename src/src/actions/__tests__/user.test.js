@@ -17,7 +17,7 @@ import userActions, {
   userLoadOrderTrackingInfo,
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import logger from 'utils/logger'
 
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'

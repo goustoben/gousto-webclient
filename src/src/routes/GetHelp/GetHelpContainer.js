@@ -6,7 +6,7 @@ import {
   validateLatestOrder
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import GetHelp from './GetHelp'
 
 const getContent = ({ content }) => ({

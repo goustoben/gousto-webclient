@@ -14,7 +14,7 @@ import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import boxSummaryActions from './boxSummary'
 import { orderConfirmationUpdateOrderTracking } from './orderConfirmation'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import tempActions from './temp'
 import {
   getCurrentCollectionId,

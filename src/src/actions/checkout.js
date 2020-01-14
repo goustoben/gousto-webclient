@@ -17,7 +17,7 @@ import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getNDDFeatureValue } from 'selectors/features'
 import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import {
   basketPreviewOrderChange,
   basketPromoCodeChange,
@@ -172,21 +172,21 @@ export function checkoutCreatePreviewOrder() {
 
 export function checkoutFetchIntervals() {
   return async (dispatch) => {
-    dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECIEVE, true))
+    dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECEIVE, true))
 
     try {
       const { data: intervals } = await fetchIntervals()
 
       dispatch({
-        type: actionTypes.CHECKOUT_INTERVALS_RECIEVE,
+        type: actionTypes.CHECKOUT_INTERVALS_RECEIVE,
         intervals,
       })
     } catch (error) {
       const { message, code } = error
       logger.warning(message)
-      dispatch(error(actionTypes.CHECKOUT_INTERVALS_RECIEVE, { message, code }))
+      dispatch(error(actionTypes.CHECKOUT_INTERVALS_RECEIVE, { message, code }))
     } finally {
-      dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECIEVE, false))
+      dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECEIVE, false))
     }
   }
 }

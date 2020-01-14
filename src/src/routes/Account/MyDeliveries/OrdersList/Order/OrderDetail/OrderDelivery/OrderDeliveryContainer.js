@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { clearUpdateDateErrorAndPending } from 'actions/order'
 import OrderDelivery from './OrderDelivery'
 

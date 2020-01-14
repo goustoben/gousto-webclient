@@ -6,7 +6,7 @@ import css from './AgeVerify.css'
 const AgeVerify = ({ verified, onChange }) => (
   <div className={css.checkbox}>
     <CheckBox
-      label="Please confirm you are over 18 years old to recieve these gifts"
+      label="Please confirm you are over 18 years old to receive these gifts"
       required
       checked={verified}
       onChange={onChange}
