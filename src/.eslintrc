@@ -21,6 +21,7 @@
       "no-shadow": [2, {
         "allow": ["resolve", "reject", "done", "cb", "e", "err", "error", "mapStateToProps"]
       }],
+      "no-extra-boolean-cast": 2,
       "import/extensions": 0,
       "import/no-unresolved": 0,
       "import/prefer-default-export": 0,
@@ -97,7 +98,6 @@
       "jsx-a11y/anchor-has-content": 1,
       "jsx-a11y/no-noninteractive-element-interactions": 1,
       "no-useless-escape": 1,
-      "no-extra-boolean-cast": 1,
       "no-undef": 1,
       "no-control-regex": 1
   },
