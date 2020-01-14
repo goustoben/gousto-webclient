@@ -139,14 +139,15 @@ class Buttons extends React.PureComponent {
     const { isAgeVerificationRequired, isAvailable, inProgress, showPopUp } = this.props
     const { ageVerifyShowError, ageVerifyTooltipVisible } = this.state
 
-    return (isAgeVerificationRequired && !showPopUp) &&
-      (<AgeVerificationCheckBox
+    return (isAgeVerificationRequired && !showPopUp) && (
+      <AgeVerificationCheckBox
         disabled={inProgress || !isAvailable}
         onCheckBoxChange={this.handleAgeVerify}
         onTooltipToggle={this.ageVerifyTooltipToggle}
         showError={ageVerifyShowError}
         tooltipVisible={ageVerifyTooltipVisible}
-      />)
+      />
+    )
   }
 
   render() {

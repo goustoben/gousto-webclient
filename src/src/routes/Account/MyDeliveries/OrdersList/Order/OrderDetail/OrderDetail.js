@@ -58,7 +58,7 @@ class OrderDetail extends React.PureComponent {
 
     return (
       <div className={css.orderDetail}>
-        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
+        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderRecipes
               recipes={this.props.recipes}
@@ -68,16 +68,16 @@ class OrderDetail extends React.PureComponent {
               portionsCount={this.props.portionsCount}
             />
           </section>
-          : null}
-        {this.props.orderState === 'recipes chosen' ?
+        ): null}
+        {this.props.orderState === 'recipes chosen' ? (
           <section className={css.openCardSection}>
             <OrderProducts
               orderId={this.props.orderId}
               products={this.props.products}
             />
           </section>
-          : null}
-        {['recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
+        ): null}
+        {['recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderPricingDetail
               paymentDate={this.props.paymentDate}
@@ -85,8 +85,8 @@ class OrderDetail extends React.PureComponent {
               priceBreakdown={this.props.priceBreakdown}
             />
           </section>
-          : null}
-        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
+        ): null}
+        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderDelivery
               date={this.props.deliveryDate}
@@ -100,8 +100,8 @@ class OrderDetail extends React.PureComponent {
               fetchSuccess={fetchSuccess}
             />
           </section>
-          : null}
-        {this.props.cancellable && this.props.orderState !== 'cancelled' ?
+        ): null}
+        {this.props.cancellable && this.props.orderState !== 'cancelled' ? (
           <section className={css.openCardSection}>
             <OrderCancelButton
               orderId={this.props.orderId}
@@ -110,7 +110,7 @@ class OrderDetail extends React.PureComponent {
               deliveryDay={this.props.deliveryDay}
             />
           </section>
-          : null}
+        ): null}
       </div>
     )
   }

@@ -17,11 +17,11 @@ const ReceiptExtras = ({ items, vatableDisclaimerKey }) => {
   return (
     <div>
       {items.size ? <ReceiptLine label="Extras" /> : null}
-      {items.map((item, key) =>
+      {items.map((item, key) => (
         <ReceiptLine key={key} label={getLabel(item)} style="truncateLabel">
           {getCost(item)}
         </ReceiptLine>
-      )}
+      ))}
     </div>
   )
 }

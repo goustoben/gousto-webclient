@@ -8,13 +8,13 @@ import { getDescription } from './config'
 const RecipeAttribute = ({ icon, name, value, show, view }) => (
   show !== false && (
     <div className={css.attribute}>
-        <Svg
-          fileName={icon}
-          className={css.icon}
-        />
-        <span className={css.description}>
-          &nbsp;&nbsp;{getDescription(name, value, view)}
-        </span>
+      <Svg
+        fileName={icon}
+        className={css.icon}
+      />
+      <span className={css.description}>
+        {getDescription(name, value, view)}
+      </span>
     </div>
   )
 )

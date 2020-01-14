@@ -8,7 +8,7 @@ import cssMobile from '../MobileMenu.css'
 const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick }) => (
   <span className={cssMobile.mobileMenuTestWrapper}>
     <Svg fileName='icon_menubar_account_link' className={cssMobile.accountIcon} />
-    {isAuthenticated ?
+    {isAuthenticated ? (
       <Link
         data-testing='linkMenuAccount'
         to={defaultMenuItems.myGousto.url}
@@ -17,7 +17,8 @@ const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick })
         tracking={() => trackNavigationClick('New ' + defaultMenuItems.myGousto.tracking)}
       >
         Account
-      </Link> :
+      </Link>
+    ):
       <button type='button' className={cssMobile.accountMenuItem} onClick={onLoginClick}>Log in</button>
     }
     <Svg fileName='icon_menubar_help_link' className={cssMobile.accountIcon} />

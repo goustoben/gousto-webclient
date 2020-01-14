@@ -55,13 +55,13 @@ class OrderCancelButton extends React.PureComponent {
 
     return (
       <div className={css.button}>
-        {didCancelProjectedError ?
+        {didCancelProjectedError ? (
           <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrdercancelbuttonCancelprojectederror">
               <span>Whoops, there was a problem cancelling this order, please try again.</span>
             </Content>
           </Alert>
-          : null}
+        ): null}
         <Button color='negative' onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
           Cancel delivery
         </Button>

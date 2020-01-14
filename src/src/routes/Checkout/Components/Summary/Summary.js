@@ -55,9 +55,9 @@ class Summary extends React.PureComponent {
     }
 
     return (
-        <Link to={configRoute.client.menu} className={css.link}>
+      <Link to={configRoute.client.menu} className={css.link}>
           Edit order&nbsp;<span className={css.arrowRight} />
-        </Link>
+      </Link>
     )
   }
 
@@ -76,39 +76,38 @@ class Summary extends React.PureComponent {
 
     return (
       <div className={css.summaryContainer}>
-        {!isLoading &&
+        {!isLoading && (
           <Alert type='info'>
             <PricePerServingMessage />
           </Alert>
-        }
+        )}
         <H3 headlineFont>Order total</H3>
-        {
-          (isLoading) ?
-            <div className={css.loaderContainer}>
-              <Loading className={css.loadingImage} />
+        {(isLoading) ? (
+          <div className={css.loaderContainer}>
+            <Loading className={css.loadingImage} />
+          </div>
+        ): (
+          <div className={css.details}>
+            <Receipt
+              numRecipes={numRecipes}
+              prices={prices}
+              deliveryTotalPrice={prices.get('deliveryTotal')}
+              surcharges={getSurchargeItems(prices.get('items'))}
+              surchargeTotal={prices.get('surchargeTotal')}
+              recipeTotalPrice={prices.get('recipeTotal')}
+              totalToPay={prices.get('total')}
+              recipeDiscountAmount={prices.get('recipeDiscount')}
+              recipeDiscountPercent={prices.get('percentageOff')}
+              extrasTotalPrice={prices.get('productTotal')}
+              showAddPromocode={showAddPromocode}
+            />
+            <div>
+              {(currentStep !== 'payment') &&
+                this.renderLink()
+              }
             </div>
-            :
-            <div className={css.details}>
-              <Receipt
-                numRecipes={numRecipes}
-                prices={prices}
-                deliveryTotalPrice={prices.get('deliveryTotal')}
-                surcharges={getSurchargeItems(prices.get('items'))}
-                surchargeTotal={prices.get('surchargeTotal')}
-                recipeTotalPrice={prices.get('recipeTotal')}
-                totalToPay={prices.get('total')}
-                recipeDiscountAmount={prices.get('recipeDiscount')}
-                recipeDiscountPercent={prices.get('percentageOff')}
-                extrasTotalPrice={prices.get('productTotal')}
-                showAddPromocode={showAddPromocode}
-              />
-              <div>
-                {(currentStep !== 'payment') &&
-                  this.renderLink()
-                }
-              </div>
-            </div>
-        }
+          </div>
+        )}
       </div>
     )
   }

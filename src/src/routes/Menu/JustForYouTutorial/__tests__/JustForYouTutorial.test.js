@@ -80,14 +80,14 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-        <JustForYouTutorialComponent />, {
-          context: {
-            store: {
-              getState,
-              subscribe: jest.fn()
-            },
-          }
+      <JustForYouTutorialComponent />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
         }
+      }
     )
     expect(wrapper.instance().stateProps.showTutorial).toBe(false)
   })
@@ -111,14 +111,14 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-        <JustForYouTutorialComponent />, {
-          context: {
-            store: {
-              getState,
-              subscribe: jest.fn()
-            },
-          }
+      <JustForYouTutorialComponent />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
         }
+      }
     )
     expect(wrapper.instance().stateProps.showTutorial).toBe(false)
   })
@@ -142,14 +142,14 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-        <JustForYouTutorialComponent />, {
-          context: {
-            store: {
-              getState,
-              subscribe: jest.fn()
-            },
-          }
+      <JustForYouTutorialComponent />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
         }
+      }
     )
     expect(wrapper.instance().stateProps.showTutorial).toBe(false)
   })
@@ -173,14 +173,14 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-        <JustForYouTutorialComponent />, {
-          context: {
-            store: {
-              getState,
-              subscribe: jest.fn()
-            },
-          }
+      <JustForYouTutorialComponent />, {
+        context: {
+          store: {
+            getState,
+            subscribe: jest.fn()
+          },
         }
+      }
     )
     expect(wrapper.instance().stateProps.showTutorial).toBe(true)
   })

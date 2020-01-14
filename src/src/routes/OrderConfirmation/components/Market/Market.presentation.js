@@ -137,9 +137,9 @@ const MarketPresentation = ({
         </button>
         <Overlay open={isOrderSummaryOpen} from='bottom'>
           <div className={css.orderDetailsMobileContent}>
-          <div className={css.orderDetailsCloseButton}>
-            <CloseButton onClose={toggleOrderSummary} />
-          </div>
+            <div className={css.orderDetailsCloseButton}>
+              <CloseButton onClose={toggleOrderSummary} />
+            </div>
             <OrderSummaryContainer
               orderSummaryCollapsed={false}
               onOrderConfirmationMobile

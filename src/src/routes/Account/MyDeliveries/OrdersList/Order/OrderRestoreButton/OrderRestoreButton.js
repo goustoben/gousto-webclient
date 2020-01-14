@@ -38,13 +38,13 @@ class OrderRestoreButton extends React.PureComponent {
 
     return (
       <div>
-        {projectedOrderRestoreError ?
+        {projectedOrderRestoreError ? (
           <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrderrestorebuttonRestoreprojectederror">
               <span>Whoops, there was a problem restoring this order, please try again.</span>
             </Content>
           </Alert>
-          : null}
+        ): null}
         <div className={css.button}>
           <Button onClick={() => this.handleRestoreBox()} pending={pending && isCurrentOrder}>
             Restore delivery

@@ -52,7 +52,7 @@ const OrderPricingDetail = ({
           : null}
       </div>
       {discountRender}
-      {grossExtrasPrice ?
+      {grossExtrasPrice ? (
         <div className={`${css.row} ${css.separationBelow}`}>
           <span>
             <Content contentKeys="mydeliveriesOrderOrderpricingExtras">
@@ -61,21 +61,22 @@ const OrderPricingDetail = ({
           </span>
           <span>£{grossExtrasPrice.toFixed(2)}</span>
         </div>
-        : null}
+      ): null}
       <div className={`${css.row} ${css.separationBelow}`}>
         <span>
           <Content contentKeys="mydeliveriesOrderOrderpricingDelivery">
             <span>Delivery cost</span>
           </Content>
         </span>
-        {grossShippingPrice ?
-          <span>£{grossShippingPrice.toFixed(2)}</span>
-          :
-          <span>
-            <Content contentKeys="mydeliveriesOrderOrderpricingDeliveryfree">
-              <span>Free</span>
-            </Content>
-          </span>
+        {grossShippingPrice
+          ? <span>£{grossShippingPrice.toFixed(2)}</span>
+          : (
+            <span>
+              <Content contentKeys="mydeliveriesOrderOrderpricingDeliveryfree">
+                <span>Free</span>
+              </Content>
+            </span>
+          )
         }
       </div>
       <div className={`${css.row} ${css.bold}`}>

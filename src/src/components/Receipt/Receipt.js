@@ -81,7 +81,7 @@ class Receipt extends React.Component {
         {
           showAddPromocode && <PromoCode />
         }
-        {shippingAddress &&
+        {shippingAddress && (
           <ReceiptLine label="Delivery" showLineAbove>
             <DeliveryDetails
               address={shippingAddress}
@@ -89,7 +89,7 @@ class Receipt extends React.Component {
               slot={this.props.deliverySlot}
             />
           </ReceiptLine>
-        }
+        )}
         {
           orderNumber
             ? <ReceiptLine label="Order number" showLineAbove style="normal">{orderNumber}</ReceiptLine>

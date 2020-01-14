@@ -35,13 +35,15 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
 
   return (
     <div>
-      {!!products ? <ProductListPresentation
-        products={products}
-        ageVerified={ageVerified}
-        isLimitReached={isLimitReached}
-        toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-        numberOfColumnClass={availableNumberOfColumn[numberOfColumn]}
-      /> :
+      {!!products ? (
+        <ProductListPresentation
+          products={products}
+          ageVerified={ageVerified}
+          isLimitReached={isLimitReached}
+          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+          numberOfColumnClass={availableNumberOfColumn[numberOfColumn]}
+        />
+      ) :
         <Loading />
       }
     </div>

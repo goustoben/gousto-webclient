@@ -11,7 +11,7 @@ const getLink = slug => `${routeConfig.client.cookbook}/${slug}`
 
 const CollectionList = ({ collections, colSizes, ...restProps }) => (
   <Row {...restProps}>
-    {collections.map(collection =>
+    {collections.map(collection => (
       <Col
         key={collection.get('id')}
         {...getColSizes(colSizes)}
@@ -22,7 +22,7 @@ const CollectionList = ({ collections, colSizes, ...restProps }) => (
           title={collection.get('shortTitle')}
         />
       </Col>
-    )}
+    ))}
   </Row>
 )
 

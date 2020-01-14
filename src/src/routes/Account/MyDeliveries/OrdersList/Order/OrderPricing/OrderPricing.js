@@ -11,19 +11,18 @@ const OrderPricing = ({ pricing, orderState }) => {
 
   return (
     <div className={css.pricingContainer}>
-      {['recipes chosen', 'confirmed', 'dispatched', 'cancelled'].indexOf(orderState) > -1 ?
+      {['recipes chosen', 'confirmed', 'dispatched', 'cancelled'].indexOf(orderState) > -1 ? (
         <div>
-          {
-            netOrderPrice < grossOrderPrice &&
+          {netOrderPrice < grossOrderPrice && (
             <div className={css.fullPrice}>
               £{grossOrderPrice.toFixed(2)}
             </div>
-          }
+          )}
           <div className={css.total}>
             £{netOrderPrice.toFixed(2)}
           </div>
         </div>
-        : null}
+      ): null}
       {(orderState === 'menu open' && (pricing.get('flatDiscountAmount') || pricing.get('percentageDiscountAmount'))) ?
         <DiscountBadge flatDiscountAmount={pricing.get('flatDiscountAmount')} percentageDiscountAmount={pricing.get('percentageDiscountAmount')} />
         : null}

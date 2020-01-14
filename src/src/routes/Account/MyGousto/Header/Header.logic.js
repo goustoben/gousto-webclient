@@ -114,7 +114,7 @@ class Header extends PureComponent {
     const loaded = nextOrder || previousOrder
 
     return (
-      loaded ?
+      loaded ? (
         <HeaderPresentation
           nextOrderMessage={nextOrderMessage}
           nextOrderId={nextOrder ? nextOrder.get('id') : null}
@@ -123,7 +123,7 @@ class Header extends PureComponent {
           getHelpQueryParam={getHelpQueryParam}
           trackNextBoxTrackingClick={trackNextBoxTrackingClick}
         />
-        : null
+      ): null
     )
   }
 }

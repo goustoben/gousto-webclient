@@ -62,55 +62,61 @@ class EmailForm extends React.PureComponent {
           </Content>
         </h2>
         <div className={css.form}>
-        {
-          !this.state.emailSubmitted
-            ?
-            (<div>
+          {
+            !this.state.emailSubmitted
+              ?
+              (
+                <div>
+                  <P className={css.description}>
+                    <Content
+                      contentKeys="newsletterDescription"
+                    >
+                      <span>Sign up now to get all our insider info straight to your inbox.</span>
+                    </Content>
+                  </P>
+                  <Form onSubmit={this.handleSubmit}>
+                    <div className={css.row}>
+                      <div className={css.input}>
+                        <TextInput
+                          name="email"
+                          color="gray"
+                          textAlign="left"
+                          type="email"
+                          placeholder="Enter email"
+                          onChange={this.emailChanges}
+                          value={this.state.email}
+                          required
+                          className={css.inputs}
+                        />
+                      </div>
+                      <Button
+                        onClick={this.handleSubmit}
+                        className={css.inputs}
+                      >
+                      Subscribe Now
+                      </Button>
+                    </div>
+                  </Form>
+                </div>
+              )
+              : (
                 <P className={css.description}>
-                  <Content
-                    contentKeys="newsletterDescription"
-                  >
-                    <span>Sign up now to get all our insider info straight to your inbox.</span>
+                  <Content contentKeys="newsletterDescriptionSignup">
+                    <span>Wahoo! You’re now signed up.</span>
                   </Content>
                 </P>
-                <Form onSubmit={this.handleSubmit}>
-                  <div className={css.row}>
-                    <div className={css.input}>
-                      <TextInput
-                        name="email"
-                        color="gray"
-                        textAlign="left"
-                        type="email"
-                        placeholder="Enter email"
-                        onChange={this.emailChanges}
-                        value={this.state.email}
-                        required
-                        className={css.inputs}
-                      />
-                    </div>
-                    <Button
-                      onClick={this.handleSubmit}
-                      className={css.inputs}
-                    >
-                      Subscribe Now
-                    </Button>
-                  </div>
-                </Form>
-             </div>)
-            : <P className={css.description}>
-            <Content contentKeys="newsletterDescriptionSignup">
-              <span>Wahoo! You’re now signed up.</span>
-            </Content>
-              </P>
-        }
-        {
-          this.state.errorMessage
-            ?
-            (<div className={css.row}>
-              <p className={css.errorMsg}>{this.state.errorMessage}</p>
-             </div>)
-            : null
-        }
+              )
+          }
+          {
+            this.state.errorMessage
+              ?
+              (
+                <div className={css.row}>
+                  <p className={css.errorMsg}>{this.state.errorMessage}</p>
+                </div>
+              )
+              : null
+          }
         </div>
       </div>
     )

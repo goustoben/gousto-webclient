@@ -55,10 +55,10 @@ const PlanOption = ({
         {!totalPriceDiscounted || (totalPriceDiscounted===totalPrice) ? (
           <span className={css.totalPrice}>£{totalPrice}</span>
         ) : (
-            <span className={css.totalPriceDiscounted}>
-              <s className={css.totalPrice}>£{totalPrice}</s>£
+          <span className={css.totalPriceDiscounted}>
+            <s className={css.totalPrice}>£{totalPrice}</s>£
             {totalPriceDiscounted}
-            </span>
+          </span>
         )}
         {showExclExtras && <span className={css.exclExtras}>excl. extras</span>}
       </div>

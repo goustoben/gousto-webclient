@@ -52,18 +52,18 @@ const getHeaderClass = (type) => {
 
 const Header = ({ offer, type }) => (
   offer ? (
-  <div>
-    <div className={classnames(css.header, css[getHeaderClass(type)])}>
-      <div className={css.mask}>
-        <Svg className={css.box} fileName={getFileName(type)} />
-        <div className={css.boxText}>
-          <span className={css.boxText__title}>{offer.formattedValue}</span>
-          <span className={css.boxText__sub}>OFF</span>
+    <div>
+      <div className={classnames(css.header, css[getHeaderClass(type)])}>
+        <div className={css.mask}>
+          <Svg className={css.box} fileName={getFileName(type)} />
+          <div className={css.boxText}>
+            <span className={css.boxText__title}>{offer.formattedValue}</span>
+            <span className={css.boxText__sub}>OFF</span>
+          </div>
+          <ContentMask />
         </div>
-        <ContentMask />
       </div>
     </div>
-  </div>
   ) : <div className={css.spacer} />
 )
 

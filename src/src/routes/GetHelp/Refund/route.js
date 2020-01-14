@@ -5,5 +5,5 @@ import configRoutes from 'config/routes'
 import RefundContainer from './RefundContainer'
 
 export default (
-    <Route path={configRoutes.client.getHelp.refund} component={RefundContainer} />
+  <Route path={configRoutes.client.getHelp.refund} component={RefundContainer} />
 )

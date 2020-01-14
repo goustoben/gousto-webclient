@@ -4,7 +4,7 @@ import { H1 } from 'Page/Header'
 import Icon from 'Icon'
 
 const Title = ({ children, iconAfter, iconBefore, headlineFont }) => (
-  children ?
+  children ? (
     <H1 defaults="LG" headlineFont={headlineFont}>
       {iconBefore && [
         <Icon
@@ -22,7 +22,7 @@ const Title = ({ children, iconAfter, iconBefore, headlineFont }) => (
         />,
       ]}
     </H1>
-    : null
+  ): null
 )
 
 Title.propTypes = {

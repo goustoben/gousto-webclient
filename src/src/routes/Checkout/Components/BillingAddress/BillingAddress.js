@@ -44,16 +44,18 @@ export class BillingAddress extends React.PureComponent {
             <span className={css.linkRight} />
           </span>
         </p>
-        {isBillingAddressDifferent ? <Address
-          isDelivery={false}
-          asyncValidate={asyncValidate}
-          formName={form}
-          sectionName={sectionName}
-          formValues={formValues || {}}
-          onSaveAction={this.toggleDeliveryAddress}
-          receiveRef={receiveRef}
-          scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-        /> : null}
+        {isBillingAddressDifferent ? (
+          <Address
+            isDelivery={false}
+            asyncValidate={asyncValidate}
+            formName={form}
+            sectionName={sectionName}
+            formValues={formValues || {}}
+            onSaveAction={this.toggleDeliveryAddress}
+            receiveRef={receiveRef}
+            scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+          />
+        ) : null}
       </div>
     )
   }

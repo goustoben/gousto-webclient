@@ -62,7 +62,7 @@ class OrderProducts extends React.PureComponent {
             </div>
           ) : (
             <div>
-              {products.map(product =>
+              {products.map(product => (
                 <div key={product.get('id')} className={css.productContainer}>
                   <div className={css.productImage}>
                     <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
@@ -73,7 +73,7 @@ class OrderProducts extends React.PureComponent {
                     <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           )}
         </div>

@@ -9,12 +9,12 @@ const BoxPricesContent = () => (
   <div>
     <div className={css.container}>
       <div className={css.row}>
-          {config.content.map((content, index) => (
-            <div key={`box-prices-content-${index}`} className={css.content}>
-              <h3 className={css.title}>{content.title}</h3>
-              <p>{content.text}</p>
-            </div>
-          ))}
+        {config.content.map((content, index) => (
+          <div key={`box-prices-content-${index}`} className={css.content}>
+            <h3 className={css.title}>{content.title}</h3>
+            <p>{content.text}</p>
+          </div>
+        ))}
       </div>
       <div className={classnames(css.row, css.centered)}>
         <Svg className={css.icon} fileName="icon-hearts" />

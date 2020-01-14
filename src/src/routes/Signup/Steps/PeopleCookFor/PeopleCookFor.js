@@ -20,22 +20,24 @@ const PeopleCookFor = ({ header, text, numPeopleChange, next }) => {
         </div>
         <div className={signupCss.body}>
           <div className={css.container}>
-            {buttonsSequence.map(el => (<div key={el} className={css.button}>
-              <Button
-                fill={false}
-                width="full"
-              >
-                <Segment
+            {buttonsSequence.map(el => (
+              <div key={el} className={css.button}>
+                <Button
                   fill={false}
-                  onClick={() => {
-                    numPeopleChange(el)
-                    next()
-                  }}
+                  width="full"
                 >
-                  {el}
-                </Segment>
-              </Button>
-                                        </div>))}
+                  <Segment
+                    fill={false}
+                    onClick={() => {
+                      numPeopleChange(el)
+                      next()
+                    }}
+                  >
+                    {el}
+                  </Segment>
+                </Button>
+              </div>
+            ))}
           </div>
           <div className={css.link}>
             <span

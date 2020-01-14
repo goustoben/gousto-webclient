@@ -18,9 +18,11 @@ const Confirm = ({ pending, unsubscribeClick, isError, copy }) => (
     >
       {copy.button}
     </Button>
-    {isError && <p className={css.confirmContentError}>
-      {copy.defaultError}
-                </p>}
+    {isError && (
+      <p className={css.confirmContentError}>
+        {copy.defaultError}
+      </p>
+    )}
   </div>
 )
 

@@ -37,10 +37,12 @@ class SubmitButton extends React.PureComponent {
     return (
       <div>
         <ErrorMessage />
-        {confirmedAddress && <CheckoutButton
-          stepName={this.props.nextStepName}
-          onClick={this.handleSubmit}
-        />}
+        {confirmedAddress && (
+          <CheckoutButton
+            stepName={this.props.nextStepName}
+            onClick={this.handleSubmit}
+          />
+        )}
       </div>
     )
   }

@@ -298,12 +298,12 @@ class Address extends React.PureComponent {
 
     return (
       <div>
-        {this.props.isDelivery &&
+        {this.props.isDelivery && (
           <DeliveryInfo
             deliveryDate={deliveryDate}
             cutOffDate={cutOffDate}
           />
-        }
+        )}
         <Postcode
           postcodePending={this.props.addressesPending}
           onPostcodeLookup={this.getAddresses}
@@ -319,7 +319,7 @@ class Address extends React.PureComponent {
         {showDropdown && addresses.length > 1 && !isAddressSelected && <p><span data-testing="addressNotFound" onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}
         {isAddressSelected && this.renderAddressInputs()}
         <br />
-        {this.props.isDelivery &&
+        {this.props.isDelivery && (
           <Button
             data-testing="checkoutSelectAddressCTA"
             disabled={false}
@@ -329,7 +329,7 @@ class Address extends React.PureComponent {
           >
             Use This Address
           </Button>
-        }
+        )}
       </div>
     )
   }

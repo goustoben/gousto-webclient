@@ -25,15 +25,17 @@ const Subscription = ({ chosenIntervalId, options, optionName, sectionName, feat
       <FormSection name={sectionName} className={css.options}>
         {options.map(option => {
           if(option.get('id') == 1 || option.get('id') == 2)
-            return <SubscriptionOption
-              name={optionName}
-              id={option.get('id')}
-              key={`interval-${option.get('id')}`}
-              title={option.get('title')}
-              description={frequencyDescription[option.get('id')]}
-              checked={option.get('id') === chosenIntervalId}
-              onClick={trackSubscriptionIntervalChanged}
-            />
+            return (
+              <SubscriptionOption
+                name={optionName}
+                id={option.get('id')}
+                key={`interval-${option.get('id')}`}
+                title={option.get('title')}
+                description={frequencyDescription[option.get('id')]}
+                checked={option.get('id') === chosenIntervalId}
+                onClick={trackSubscriptionIntervalChanged}
+              />
+            )
         })}
       </FormSection>
     </div>

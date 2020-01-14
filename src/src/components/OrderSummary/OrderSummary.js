@@ -138,9 +138,9 @@ class OrderSummary extends React.PureComponent {
             { [css.mobileHide]: orderSummaryOpen },
           )}
         >
-          Your box will arrive 
-{' '}
-{moment(deliveryDate).format('dddd, Do MMMM')}
+          Your box will arrive
+          {' '}
+          {moment(deliveryDate).format('dddd, Do MMMM')}
         </p>
         <p
           className={classnames(
@@ -159,20 +159,21 @@ class OrderSummary extends React.PureComponent {
 
     return (
       <footer className={classnames(css.mobileOnly, css.footer)}>
-        {orderSummaryOpen
-          ? <a
+        {orderSummaryOpen ? (
+          <a
             className={css.toggleLink}
             onClick={this.toggleDetailView}
           >
             Hide order details
-          </a> : (
-            <a
-              className={css.toggleLink}
-              onClick={this.toggleDetailView}
-            >
-              View order details >
-            </a>
-          )}
+          </a>
+        ) : (
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
+            View order details >
+          </a>
+        )}
       </footer>
     )
   }
@@ -245,11 +246,13 @@ class OrderSummary extends React.PureComponent {
               extrasTotalPrice={String(extrasPrice)}
               orderNumber={orderNumber}
             >
-              {vatableItemsInOrder ? <p className={css.disclaimer}>
-{this.asterisk}
-{' '}
-These items include VAT at 20%
-</p> : null}
+              {vatableItemsInOrder ? (
+                <p className={css.disclaimer}>
+                  {this.asterisk}
+                  {' '}
+                  These items include VAT at 20%
+                </p>
+              ) : null}
             </Receipt>
           </div>
           <UserCreditMessage />

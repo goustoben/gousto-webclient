@@ -17,15 +17,15 @@ const SubscriptionPauseScreen = ({ closeModal, enableBack, onGoBack, pending, sc
     case 'reasonGrid':
     case 'reasonList':
       return (
-          <ReasonsScreen {...screenData} />
+        <ReasonsScreen {...screenData} />
       )
     case 'pausedPendingBoxes':
       return (
-          <PendingOrderReminder {...screenData} />
+        <PendingOrderReminder {...screenData} />
       )
     default:
       return (
-          <GenericScreen {...screenData} />
+        <GenericScreen {...screenData} />
       )
     }
   }

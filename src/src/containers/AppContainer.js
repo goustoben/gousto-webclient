@@ -23,7 +23,7 @@ const AppContainer = ({ history, routes, store }) => (
           fetchContentOnChange(documentLocation().pathname, store)
         })}
       >
-      {routes}
+        {routes}
       </Router>
     </ApolloProvider>
   </Provider>

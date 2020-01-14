@@ -8,12 +8,12 @@ const NavBarItem = ({ isActive, children, className, pathName, clientRouted }) =
   <li className={classnames(css.tab, className, { [css.active]: isActive })}>
     {isActive ?
       <div className={classnames(className, { [css.bold]: isActive })}>{children}</div>
-      :
-      // `noDecoration` used here as some of the links can have badge and the badge need to stay without being underlined
-      <Link to={pathName} clientRouted={clientRouted} noDecoration>
-        {children}
-      </Link>
-    }
+      : (
+        // `noDecoration` used here as some of the links can have badge and the badge need to stay without being underlined
+        <Link to={pathName} clientRouted={clientRouted} noDecoration>
+          {children}
+        </Link>
+      )}
   </li>
 )
 

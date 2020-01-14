@@ -56,20 +56,22 @@ class RecipeSummary extends React.PureComponent {
           const range = getFoodBrand(menuRecipesStore.get(recipeId)) || Immutable.Map()
           const rangeSlug = range.size ? range.get('slug') : null
 
-          return (<OrderedRecipe
-            key={recipeId}
-            recipeId={recipeId}
-            view={this.props.view}
-            featureBtn={false}
-            serving={numPortions * recipes.get(recipeId, 0)}
-            title={menuRecipesStore.getIn([recipeId, 'title'], '')}
-            basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
-            stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
-            media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
-            range={rangeSlug}
-            pricePerServing={Number(prices.get('pricePerPortion', 0))}
-            pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
-          />)
+          return (
+            <OrderedRecipe
+              key={recipeId}
+              recipeId={recipeId}
+              view={this.props.view}
+              featureBtn={false}
+              serving={numPortions * recipes.get(recipeId, 0)}
+              title={menuRecipesStore.getIn([recipeId, 'title'], '')}
+              basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
+              stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
+              media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
+              range={rangeSlug}
+              pricePerServing={Number(prices.get('pricePerPortion', 0))}
+              pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
+            />
+          )
         }).toArray()}
       </div>
     )

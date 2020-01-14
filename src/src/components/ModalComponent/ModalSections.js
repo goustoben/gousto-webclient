@@ -5,21 +5,21 @@ import classnames from 'classnames'
 import css from './ModalComponent.css'
 
 const ModalTitle = ({ children, className }) => (
-    <div className={classnames(css.modalTitle, className)}>
-        {children}
-    </div>
+  <div className={classnames(css.modalTitle, className)}>
+    {children}
+  </div>
 )
 
 const ModalContent = ({ children, className }) => (
-    <div className={classnames(css.modalContent, className)}>
-        {children}
-    </div>
+  <div className={classnames(css.modalContent, className)}>
+    {children}
+  </div>
 )
 
 const ModalFooter = ({ children, className }) => (
-    <div className={classnames(css.modalFooter, className)}>
-        {children}
-    </div>
+  <div className={classnames(css.modalFooter, className)}>
+    {children}
+  </div>
 )
 
 ModalTitle.propTypes = {

@@ -80,13 +80,13 @@ class ResetPassword extends React.PureComponent {
             onBlur={() => this.validatePasswordLength(passwordValue)}
             onEnter={() => this.validateAndSubmit(passwordValue)}
           />
-          {isPasswordLengthError ?
+          {isPasswordLengthError ? (
             <InputError>
               <Content contentKeys="newPasswordForm.resetPassword.resetPassword.lengthError">
                 <span>Password must be at least 8 characters</span>
               </Content>
             </InputError>
-            : null}
+          ): null}
           <Button className={css.submitButton} onClick={() => this.validateAndSubmit(passwordValue)}>
             Reset password
           </Button>
