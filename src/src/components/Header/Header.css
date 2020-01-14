@@ -9,16 +9,12 @@
 	position: relative;
 }
 
-.headerRightContainer {
-	display: flex;
-	align-items: center;
-}
-
 .useAppCta { 
 	@media ScreenXXSMax {
 		margin-right: 0.63rem;
 		font-weight: bold;
 		display: block; 
+		margin-left: auto;
 	}
 
 	display: none;
