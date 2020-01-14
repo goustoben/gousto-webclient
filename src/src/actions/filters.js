@@ -55,7 +55,7 @@ export function collectionFilterChange(collectionId) {
       }
     }
 
-    if (!!collectionName) {
+    if (collectionName) {
       dispatch(filtersCollectionChange(collectionName, collectionId))
     }
 
