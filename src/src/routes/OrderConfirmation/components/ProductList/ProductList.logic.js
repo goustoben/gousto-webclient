@@ -35,7 +35,7 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
 
   return (
     <div>
-      {!!products ? (
+      {products ? (
         <ProductListPresentation
           products={products}
           ageVerified={ageVerified}
