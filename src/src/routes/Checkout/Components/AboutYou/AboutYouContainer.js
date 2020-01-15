@@ -4,7 +4,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { getAboutYouFormName } from 'selectors/checkout'
-import AboutYou from './AboutYou'
+import { AboutYou } from './AboutYou'
 
 function mapStateToProps(sectionName) {
   return state => ({

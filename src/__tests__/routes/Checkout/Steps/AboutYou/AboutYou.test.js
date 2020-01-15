@@ -4,7 +4,7 @@ import { Field, FormSection } from 'redux-form'
 
 import React from 'react'
 import { shallow } from 'enzyme'
-import AboutYou from 'routes/Checkout/Components/AboutYou/AboutYou'
+import { AboutYou } from 'routes/Checkout/Components/AboutYou/AboutYou'
 import Overlay from 'Overlay'
 import ModalPanel from 'Modal/ModalPanel'
 import Login from 'Login'
