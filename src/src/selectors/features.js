@@ -94,6 +94,10 @@ export const getShowUserCredit = ({ features }) => (
   features && features.getIn(['showUserCredit', 'value'], false)
 )
 
+export const getUserMenuVariant = ({ features }) => (
+  features && features.getIn(['userMenuVariant', 'value'], '')
+)
+
 export const getMenuService = () => {
   if (menuServiceConfig.isEnabled) {
     return true

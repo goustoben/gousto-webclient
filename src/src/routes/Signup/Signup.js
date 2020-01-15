@@ -35,7 +35,7 @@ const components = {
 const availableSteps = Object.keys(components)
 
 class Signup extends React.PureComponent {
-  static fetchData = async ({ store, params = {}, query = {} }) => {
+  static fetchData = async ({ store, params = {}, query = {}}) => {
     let steps = Immutable.List(config.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
     const promoCode = query.promo_code
@@ -59,7 +59,8 @@ class Signup extends React.PureComponent {
     const firstStep = stepByName(steps.first())
 
     // defensive code to ensure menu load days works below for deeplinks
-    await loadMenuServiceDataIfDeepLinked(store)
+    const isSignUpPage = true
+    await loadMenuServiceDataIfDeepLinked(store, isSignUpPage)
 
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())

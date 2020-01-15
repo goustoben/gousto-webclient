@@ -684,5 +684,27 @@ describe('menu fetchData', () => {
         expect(fetchBrandInfo).toHaveBeenCalled()
       })
     })
+
+    describe('fetchMenusWithUserId can be called for non authenticated users', () => {
+      beforeEach(() => {
+        state.auth = state.auth.set('isAuthenticated', false)
+        state.auth = state.auth.set('accessToken', 'test-token')
+      })
+  
+      test('fetchMenusWithUserId is called if variant menu requested', async () => {
+        getMenuService.mockReturnValue(true)
+
+        const userMenuVariant = 'menuA'
+        const orderId = '123'
+        const paramsWithOrderId = {
+          ...params,
+          orderId
+        }
+
+        await fetchData({ store, query, params: paramsWithOrderId }, false, false, userMenuVariant)
+
+        expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', 'menuA')
+      })
+    })
   })
 })

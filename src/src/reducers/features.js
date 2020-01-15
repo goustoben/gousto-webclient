@@ -73,7 +73,11 @@ const defaultFeatures = () => ({
   showUserCredit: {
     experiment: false,
     value: false,
-  }
+  },
+  userMenuVariant: {
+    experiment: false,
+    value: '',
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())
