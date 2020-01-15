@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 
 import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 
-import StockBadge from 'routes/Menu/Recipe/StockBadge'
+import { StockBadge } from 'routes/Menu/Recipe/StockBadge'
 
 describe('<StockBadge />', () => {
   let wrapper

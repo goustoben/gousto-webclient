@@ -6,7 +6,7 @@ import css from './SimpleRecipe.css'
 import Title from '../Title'
 import Image from '../Image'
 import Rating from '../Rating'
-import StockBadge from '../StockBadge'
+import { StockBadge } from '../StockBadge'
 
 const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating, ratingCount, stock, isNew}) => (
   <div>

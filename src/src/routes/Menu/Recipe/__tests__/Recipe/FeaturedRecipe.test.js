@@ -12,7 +12,7 @@ import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
-import StockBadge from '../../StockBadge/StockBadge'
+import { StockBadge } from '../../StockBadge'
 
 describe('<FeaturedRecipe />', () => {
   let wrapper
