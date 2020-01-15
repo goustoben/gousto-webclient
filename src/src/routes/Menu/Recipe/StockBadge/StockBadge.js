@@ -17,4 +17,4 @@ StockBadge.propTypes = {
   inverse: PropTypes.bool,
 }
 
-export default StockBadge
+export { StockBadge }

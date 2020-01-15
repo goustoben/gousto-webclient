@@ -13,6 +13,7 @@ import Chef from '../Chef'
 import Title from '../Title'
 import Image from '../Image'
 import AddButton from '../AddButton'
+import { StockBadge } from '../StockBadge'
 import ChefQuote from '../ChefQuote'
 import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
@@ -65,6 +66,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
                 </Pill>
               </div>
               <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
+              <StockBadge stock={stock} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
               <RecipeDisclaimerContainer id={id} />
             </div>
