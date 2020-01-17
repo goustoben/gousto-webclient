@@ -175,15 +175,6 @@ jobs:
           paths:
             - project/src/eslint-results.json
 
-  code-analysis:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Code analysis
-          command: source ~/.circlerc && /bin/bash ./ci_scripts/code-analysis.sh
-
   test-e2e-selenium:
     docker: *gousto_build_image
     steps:
@@ -344,16 +335,6 @@ workflows:
             branches:
               only:
                 - develop
-      - code-analysis:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-jest-coverage
-            - eslint
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-                - develop
       - build-application:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -368,7 +349,6 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-application
-            - code-analysis
           filters:
             branches:
               only:
@@ -379,7 +359,6 @@ workflows:
           requires:
             - build-nginx-image
             - build-webclient-image
-            - code-analysis
           filters:
             branches:
               only:
