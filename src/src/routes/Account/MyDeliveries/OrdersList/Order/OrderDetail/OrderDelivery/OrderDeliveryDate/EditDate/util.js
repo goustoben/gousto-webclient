@@ -11,7 +11,7 @@ const countRecipes = (recipes) => {
   recipes.forEach(recipe => {
     const recipeId = recipe.get('recipeId')
     if (recipesCount[recipeId]) {
-      recipesCount[recipeId]++
+      recipesCount[recipeId] += 1
     } else {
       recipesCount[recipeId] = 1
     }

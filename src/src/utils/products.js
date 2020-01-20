@@ -56,7 +56,7 @@ export function getCategoriesFromProducts(products) {
         const categoryId = category.get('id')
 
         categoriesAcc[categoryId] ?
-          categoriesAcc[categoryId].count++ :
+          categoriesAcc[categoryId].count += 1 :
           categoriesAcc[categoryId] = {
             id: categoryId,
             label: category.get('title'),

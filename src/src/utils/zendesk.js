@@ -37,7 +37,7 @@ export const zeStart = () => {
           reject(notFoundErrorMessage)
         }
 
-        currentAttemptNumber++
+        currentAttemptNumber += 1
       } else {
         clearInterval(interval)
 

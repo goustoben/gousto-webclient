@@ -26,7 +26,7 @@ class RecipeRating extends React.Component {
     }
     if (avgRounded > avgFloored) {
       stars.push(<span className={css.starHalf} key={avgRounded} />)
-      i++
+      i += 1
     }
     for (i; i < 5; i++) {
       stars.push(<span className={css.starEmpty} key={i + 1} />)

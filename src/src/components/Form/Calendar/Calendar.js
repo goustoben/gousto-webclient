@@ -25,11 +25,11 @@ const getCalendarGrid = (dates) => {
   const bumpedIds = []
 
   dates.forEach((date) => {
-    let weekNo = moment(date.date).format('GGGGWW')
+    let weekNo = parseInt(moment(date.date).format('GGGGWW'))
     const dayNo = dateToDayNo(date.date)
     if (dayNo > bump(dayNo)) {
       bumpedIds.push(`${weekNo}${dayNo}`)
-      weekNo++
+      weekNo += 1
       if (parseInt((`${weekNo}`).substr(-2, 2), 10) > 52) {
         weekNo = weekNo - 52 + 100
       }

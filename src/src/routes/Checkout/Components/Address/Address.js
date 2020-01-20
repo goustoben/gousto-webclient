@@ -171,7 +171,7 @@ class Address extends React.PureComponent {
     const { formName, sectionName, change } = this.props
 
     let submitCount = this.getFormValue('submitCount') || 1
-    change(formName, `${sectionName}.submitCount`, ++submitCount)
+    change(formName, `${sectionName}.submitCount`, submitCount += 1)
   }
 
   getAddresses = async postcode => {

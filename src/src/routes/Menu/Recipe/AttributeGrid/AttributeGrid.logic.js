@@ -35,7 +35,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
     <div className={css.attributes}>
       {attributesInPriorityOrder.map(({name, value, icon, show}) => {
         if(show !== false && attributeCount < maxNoAttributes) {
-          attributeCount++
+          attributeCount += 1
 
           return <RecipeAttribute key={name} name={name} value={value} icon={icon} />
         }
