@@ -23,7 +23,6 @@ const requiresMenuRecipesClear = (store, orderId) => {
     orderId
     && getIsAuthenticated(store.getState())
     && store.getState().basket.get('recipes').size
-    && store.getState().features.getIn(['menuRecipes', 'experiment'])
   )
 }
 

@@ -29,11 +29,11 @@ describe('features reducers', () => {
           const action = {
             type: actionTypes.FEATURES_SET,
             features: [
-              { feature: 'someFeature', value: true, experiment: false }
+              { feature: 'someFeature', value: true}
             ]
           }
           const result = features(undefined, action)
-          expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: true, experiment: false }))).toEqual(true)
+          expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: true}))).toEqual(true)
         })
       })
 
@@ -42,11 +42,11 @@ describe('features reducers', () => {
           const action = {
             type: actionTypes.FEATURES_SET,
             features: [
-              { feature: 'someFeature', value: false, experiment: false }
+              { feature: 'someFeature', value: false}
             ]
           }
           const result = features(undefined, action)
-          expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: false, experiment: false }))).toEqual(true)
+          expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: false}))).toEqual(true)
         })
       })
 
@@ -55,11 +55,11 @@ describe('features reducers', () => {
           const action = {
             type: actionTypes.FEATURES_SET,
             features: [
-              { feature: 'someFeature', value: false, experiment: true }
+              { feature: 'someFeature', value: false}
             ]
           }
           const result = features(undefined, action)
-          expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: false, experiment: true }))).toEqual(true)
+          expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: false}))).toEqual(true)
         })
       })
     })
@@ -69,13 +69,13 @@ describe('features reducers', () => {
         const action = {
           type: actionTypes.FEATURES_SET,
           features: [
-            { feature: 'someFeature', value: true, experiment: false },
-            { feature: 'someOtherFeature', value: false, experiment: true }
+            { feature: 'someFeature', value: true},
+            { feature: 'someOtherFeature', value: false}
           ]
         }
         const result = features(undefined, action)
-        expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: true, experiment: false }))).toEqual(true)
-        expect(Immutable.is(result.get('someOtherFeature'),Immutable.fromJS({ value: false, experiment: true }))).toEqual(true)
+        expect(Immutable.is(result.get('someFeature'),Immutable.fromJS({ value: true}))).toEqual(true)
+        expect(Immutable.is(result.get('someOtherFeature'),Immutable.fromJS({ value: false}))).toEqual(true)
       })
     })
   })

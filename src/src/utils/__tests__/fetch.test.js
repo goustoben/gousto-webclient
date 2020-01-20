@@ -175,34 +175,6 @@ describe('fetch', function () {
         }),
       })
     })
-
-    test('should include features flagged as experiments in querystring by default', async function () {
-      const result = await fetch('', 'test/')
-
-      expect(result).toEqual({ data: { recipe: 'Test Recipe' }, meta: null })
-      const expectedRequest = {
-        method: 'GET',
-        headers: {},
-        cache: 'default',
-      }
-      expect(mockFetch).toHaveBeenCalledWith(
-        'test?experiments%5Bfeature1%5D=feature1Value&experiments%5Bfeature3%5D=true',
-        expectedRequest
-      )
-    })
-
-    test('should NOT include features flagged as experiments in querystring if indicated so', async function () {
-      const result = await fetch('', 'test/', {}, 'GET', 'default', {}, null, false, false)
-
-      expect(result).toEqual({ data: { recipe: 'Test Recipe' }, meta: null })
-      const expectedRequest = {
-        method: 'GET',
-        headers: {},
-        cache: 'default',
-      }
-
-      expect(mockFetch).toHaveBeenCalledWith('test', expectedRequest)
-    })
   })
 
   test('should have body and content-type set for non-GET requests', async function () {

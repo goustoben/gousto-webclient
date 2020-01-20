@@ -32,25 +32,25 @@ export function resetUserPassword(password, passwordToken) {
 }
 
 export function serverAuthenticate(email, password, rememberMe) {
-  return fetch(null, `${routes.auth.login}`, { grant_type: 'password', username: email, password, rememberMe }, 'POST', 'no-cache', {}, null, true, false)
+  return fetch(null, `${routes.auth.login}`, { grant_type: 'password', username: email, password, rememberMe }, 'POST', 'no-cache', {}, null, true)
 }
 
 export function serverLogout() {
-  return fetch(null, `${routes.auth.logout}`, {}, 'POST', 'no-cache', {}, null, true, false)
+  return fetch(null, `${routes.auth.logout}`, {}, 'POST', 'no-cache', {}, null, true)
 }
 
 export function serverRefresh(rememberMe) {
-  return fetch(null, `${routes.auth.refresh}`, { rememberMe }, 'POST', 'no-cache', {}, null, true, false)
+  return fetch(null, `${routes.auth.refresh}`, { rememberMe }, 'POST', 'no-cache', {}, null, true)
 }
 
 export function serverIdentify() {
-  return fetch(null, `${routes.auth.identify}`, {}, 'POST', 'no-cache', {}, null, true, false)
+  return fetch(null, `${routes.auth.identify}`, {}, 'POST', 'no-cache', {}, null, true)
 }
 
 export function serverForget(accessToken) {
-  return fetch(null, `${routes.auth.forget}`, { accessToken }, 'POST', 'no-cache', {}, null, true, false)
+  return fetch(null, `${routes.auth.forget}`, { accessToken }, 'POST', 'no-cache', {}, null, true)
 }
 
 export function serverValidatePassword(password) {
-  return fetch(null, `${routes.auth.validate}`, { password }, 'POST', 'no-cache', {}, null, true, false)
+  return fetch(null, `${routes.auth.validate}`, { password }, 'POST', 'no-cache', {}, null, true)
 }

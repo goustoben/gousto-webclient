@@ -3,7 +3,7 @@ import { actionTypes } from './actionTypes'
 export const featuresSet = (features) => {
   return {
     type: actionTypes.FEATURES_SET,
-    features: features.map(({feature, value, experiment}) => {
+    features: features.map(({feature, value}) => {
       if (value === 'true') {
         value = true
       }
@@ -12,14 +12,9 @@ export const featuresSet = (features) => {
         value = false
       }
 
-      if (experiment === undefined) {
-        experiment = false
-      }
-
       return {
         feature,
         value,
-        experiment
       }
     })
   }

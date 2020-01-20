@@ -6,7 +6,7 @@ describe('features actions', () => {
     let featuresToSet
 
     beforeEach(() => {
-      featuresToSet = { feature: 'someFeature', value: true, experiment: false }
+      featuresToSet = { feature: 'someFeature', value: true}
     })
 
     describe('when given one feature', () => {
@@ -15,36 +15,8 @@ describe('features actions', () => {
         expect(result).toEqual({
           type: actionTypes.FEATURES_SET,
           features: [
-            { feature: 'someFeature', value: true, experiment: false }
+            { feature: 'someFeature', value: true}
           ]
-        })
-      })
-
-      describe('when experiment is provided', () => {
-        describe('when experiment is false', () => {
-          test('should return the correct action', () => {
-            const result = featuresSet([featuresToSet])
-            expect(result).toEqual({
-              type: actionTypes.FEATURES_SET,
-              features: [
-                { feature: 'someFeature', value: true, experiment: false }
-              ]
-            })
-          })
-        })
-        describe('when experiment is true', () => {
-          beforeEach(() => {
-            featuresToSet.experiment = true
-          })
-          test('should return the correct action', () => {
-            const result = featuresSet([featuresToSet])
-            expect(result).toEqual({
-              type: actionTypes.FEATURES_SET,
-              features: [
-                { feature: 'someFeature', value: true, experiment: true }
-              ]
-            })
-          })
         })
       })
 
@@ -58,7 +30,7 @@ describe('features actions', () => {
             expect(result).toEqual({
               type: actionTypes.FEATURES_SET,
               features: [
-                { feature: 'someFeature', value: true, experiment: false }
+                { feature: 'someFeature', value: true}
               ]
             })
           })
@@ -73,7 +45,7 @@ describe('features actions', () => {
             expect(result).toEqual({
               type: actionTypes.FEATURES_SET,
               features: [
-                { feature: 'someFeature', value: false, experiment: false }
+                { feature: 'someFeature', value: false}
               ]
             })
           })
@@ -87,8 +59,8 @@ describe('features actions', () => {
         expect(result).toEqual({
           type: actionTypes.FEATURES_SET,
           features: [
-            { feature: 'someFeature', value: true, experiment: false },
-            { feature: 'someOtherFeature', value: false, experiment: false }
+            { feature: 'someFeature', value: true},
+            { feature: 'someOtherFeature', value: false}
           ]
         })
       })

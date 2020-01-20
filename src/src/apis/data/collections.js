@@ -13,16 +13,10 @@ const createCollectionRecipesRequestData = (filters, idsOnly) => {
   return reqData
 }
 
-export const getCollections = async (accessToken, availableOn, includeJustForYou) => {
+export const getCollections = async (accessToken, availableOn) => {
   const reqData = {
     filters: {
       available_on: availableOn
-    }
-  }
-
-  if (includeJustForYou) {
-    reqData.experiments = {
-      'justforyou_v2': true
     }
   }
 

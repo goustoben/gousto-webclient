@@ -230,17 +230,14 @@ const processCookies = (cookies, store) => {
       const featuresArr = []
       Object.keys(features).forEach((feature) => {
         const featureContent = features[feature]
-        let experiment
         let value
 
         if (featureContent && typeof featureContent === 'object') {
-          experiment = featureContent.experiment || false
           value = featureContent.value
         } else {
-          experiment = false
           value = featureContent
         }
-        featuresArr.push({ feature, value, experiment })
+        featuresArr.push({ feature, value })
       })
       store.dispatch(featuresSet(featuresArr))
     } catch (err) {

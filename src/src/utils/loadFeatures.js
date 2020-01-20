@@ -3,7 +3,7 @@ import globals from 'config/globals'
 import windowUtils from 'utils/window'
 
 // eslint-disable-next-line import/no-default-export
-export default function loadFeatures({ enable, disable, set = {}, features = {}, experiments = {} } = {}, store) {
+export default function loadFeatures({ enable, disable, set = {}, features = {}} = {}, store) {
   const featuresArr = []
   if (enable) {
     enable.forEach(feature => {
@@ -21,12 +21,6 @@ export default function loadFeatures({ enable, disable, set = {}, features = {},
   if (featuresToSet) {
     Object.keys(featuresToSet).forEach(name => {
       featuresArr.push({ feature: name, value: featuresToSet[name] })
-    })
-  }
-
-  if (experiments) {
-    Object.keys(experiments).forEach(name => {
-      featuresArr.push({ feature: name, value: experiments[name], experiment: true })
     })
   }
 

@@ -57,31 +57,6 @@ describe('menu actions', () => {
       afterEach(() => {
         fetchCollections.mockReset()
       })
-
-      test('should dispatch a fetchCollections request containing jfy experiment', () => {
-        fetchCollections.mockResolvedValue(Promise.resolve({
-          data: [{
-            id: 'all recipes collection',
-            slug: 'all-recipes',
-            properties: {
-              enabled: true,
-              limit: 25,
-              name: "All Recipes",
-            }
-          }],
-        }))
-        menuLoadCollections()(dispatch, getState)
-
-        expect(fetchCollections).toHaveBeenCalledWith(
-          'an-access-token',
-          '',
-          expect.objectContaining({
-            experiments: {
-              'justforyou_v2': true,
-            },
-          })
-        )
-      })
     })
 
     describe('when not authenticated', () => {
@@ -201,6 +176,45 @@ describe('menu actions', () => {
         await menuLoadCollections('a-date')(dispatch, getState2)
         expect(getDefaultCollectionId).toHaveBeenCalled()
         expect(collectionFilterChange).toHaveBeenCalledWith('defaultCollectionId')
+      })
+
+      describe('when the collection slug in url is a valid collection in store', () => {
+        beforeEach(() => {
+          state = {
+            auth: Immutable.Map({
+              accessToken: 'an-access-token',
+              isAuthenticated: true
+            }),
+            features: Immutable.fromJS({}),
+            routing: {
+              locationBeforeTransitions: {
+                query: {
+                  collection: "everyday-favourites"
+                }
+              }
+            },
+            menuCollections: Immutable.fromJS({
+              'key1': {
+                slug: 'everyday-favourites',
+                id: 'fakeId',
+              }
+            }),
+          }
+
+          getState2 = () => state
+          collectionFilterChange.mockReset()
+        })
+        test('should not call collectionFilterChange', async() => {
+          fetchCollections.mockReturnValueOnce(Promise.resolve({
+            data: [{
+              id: 'collectionId',
+              slug: 'all-recipes',
+            }],
+          }))
+          getCollectionIdWithName.mockReturnValueOnce('collectionId')
+          await menuLoadCollections('a-date')(dispatch, getState2)
+          expect(collectionFilterChange).not.toHaveBeenCalled()
+        })
       })
     })
   })

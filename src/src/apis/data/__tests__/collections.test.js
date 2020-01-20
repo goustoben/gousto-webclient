@@ -60,32 +60,6 @@ describe('collections', () => {
         })
       })
 
-      describe('includeJustForYou is true', () => {
-        beforeEach(() => {
-          includeJustForYou = true
-        })
-        
-        test('should call fetchCollections with correct experiments', async () => {
-          await getCollections(accessCode, date, includeJustForYou, useMenuService)
-
-          expect(mockFetchCollections.mock.calls[0][ARG_INDICES.fetchCollections.requestData]['experiments']).toEqual({
-            'justforyou_v2': true,
-          })
-        })
-      })
-
-      describe('includeJustForYou is false', () => {
-        beforeEach(() => {
-          includeJustForYou = false
-        })
-        
-        test('should call fetchCollections with correct experiments', async () => {
-          await getCollections(accessCode, date, includeJustForYou, useMenuService)
-
-          expect(mockFetchCollections.mock.calls[0][ARG_INDICES.fetchCollections.requestData]['experiments']).toEqual(undefined)
-        })
-      })
-
       test('should return the result of fetchCollections.data', async () => {
         const response = await getCollections(accessCode, date, includeJustForYou, useMenuService)
 
@@ -143,7 +117,7 @@ describe('collections', () => {
         beforeEach(() => {
           idsOnly = true
         })
-        
+
         test('should call fetchCollectionsRecipes with correct fields[]', async () => {
           await getCollectionRecipesForMenuId(accessCode, collectionId, menuId, idsOnly, useMenuService)
 
@@ -155,7 +129,7 @@ describe('collections', () => {
         beforeEach(() => {
           idsOnly = false
         })
-        
+
         test('should not set fields[] when calling fetchCollectionsRecipes', async () => {
           await getCollectionRecipesForMenuId(accessCode, collectionId, menuId, idsOnly, useMenuService)
 
@@ -220,7 +194,7 @@ describe('collections', () => {
         beforeEach(() => {
           idsOnly = true
         })
-        
+
         test('should call fetchCollectionsRecipes with correct fields[]', async () => {
           await getCollectionRecipesForDate(accessCode, collectionId, date, idsOnly, useMenuService)
 

@@ -10,7 +10,6 @@ const options = {
   headers: {},
   timeout: null,
   includeCookies: false,
-  includeExperiments: true,
   useMenuService: true
 }
 

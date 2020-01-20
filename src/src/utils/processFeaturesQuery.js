@@ -19,29 +19,19 @@ const getFeatureValues = (query, keyword = 'features') => {
     .filter(feature => feature !== null)
 }
 
-function setFeatures(store, list, value, experiment = false) {
+function setFeatures(store, list, value) {
   const isArray = Array.isArray(list)
   const featuresArr = []
 
   if (isArray) {
     list.forEach(item => {
-      featuresArr.push({ feature: item, value, experiment })
+      featuresArr.push({ feature: item, value })
     })
   } else {
-    featuresArr.push({ feature: list, value, experiment })
+    featuresArr.push({ feature: list, value })
   }
 
   store.dispatch(featuresSet(featuresArr))
-}
-
-const processExperimentsQuery = (query, store) => {
-  const experiments = query['experiments[]']
-  if (experiments) setFeatures(store, experiments, true, true)
-
-  const featureValues = getFeatureValues(query, 'experiments')
-    .map(({ feature, value }) => ({ feature, value, experiment: true }))
-
-  store.dispatch(featuresSet(featureValues))
 }
 
 const processFeaturesQuery = (query, store) => {
@@ -57,8 +47,6 @@ const processFeaturesQuery = (query, store) => {
     featureValues.push({ feature: 'landingOrder', value: true })
 
     store.dispatch(featuresSet(featureValues))
-
-    processExperimentsQuery(query, store)
   }
 }
 

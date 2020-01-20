@@ -192,7 +192,7 @@ describe('auth api', () => {
       }
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/login', expectedReqData, 'POST', 'no-cache', {}, null, true, false)
+      expect(fetch).toHaveBeenCalledWith(null, '/login', expectedReqData, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -206,7 +206,7 @@ describe('auth api', () => {
       await serverLogout()
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/logout', {}, 'POST', 'no-cache', {}, null, true, false)
+      expect(fetch).toHaveBeenCalledWith(null, '/logout', {}, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -221,7 +221,7 @@ describe('auth api', () => {
       await serverRefresh(rememberMe)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/refresh', { rememberMe }, 'POST', 'no-cache', {}, null, true, false)
+      expect(fetch).toHaveBeenCalledWith(null, '/refresh', { rememberMe }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -235,7 +235,7 @@ describe('auth api', () => {
       await serverIdentify()
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/identify', { }, 'POST', 'no-cache', {}, null, true, false)
+      expect(fetch).toHaveBeenCalledWith(null, '/identify', { }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -250,7 +250,7 @@ describe('auth api', () => {
       await serverForget(accessToken)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/forget', { accessToken }, 'POST', 'no-cache', {}, null, true, false)
+      expect(fetch).toHaveBeenCalledWith(null, '/forget', { accessToken }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -265,7 +265,7 @@ describe('auth api', () => {
       await serverValidatePassword(password)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/validate', { password }, 'POST', 'no-cache', {}, null, true, false)
+      expect(fetch).toHaveBeenCalledWith(null, '/validate', { password }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {

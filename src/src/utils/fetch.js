@@ -1,5 +1,4 @@
 import qs from 'qs'
-import Immutable from 'immutable'
 import logger from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
 import env from 'utils/env'
@@ -16,21 +15,12 @@ export function fetchRaw(url, data ={}, options) {
     options.headers,
     options.timeout,
     options.includeCookies,
-    options.includeExperiments,
     options.useMenuService)
 }
 
-export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true, useMenuService = false) {
+export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, useMenuService = false) {
   const requestData = {
     ...data,
-  }
-
-  if (includeExperiments) {
-    requestData.experiments = (getStore().getState().features || Immutable.Map({}))
-      .filter(feature => feature.get('experiment'))
-      .reduce((reducedFeatures, feature, featureName) => (
-        reducedFeatures.set(featureName, feature.get('value'))
-      ), Immutable.Map({})).toJS()
   }
 
   let httpMethod = method.toUpperCase()

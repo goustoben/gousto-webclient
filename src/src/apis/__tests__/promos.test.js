@@ -23,7 +23,7 @@ describe('promos api', () => {
     test('should fetch the correct url', async () => {
       await fetchPromo('token', 'my-promocode')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/promocode/my-promocode', {}, 'GET', 'default', {}, null, false, false)
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/promocode/my-promocode', {}, 'GET', 'default', {}, null, false)
     })
 
     test('should return the results of the fetch unchanged', async () => {

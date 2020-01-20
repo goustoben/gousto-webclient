@@ -9,7 +9,7 @@ const fetchRefundAmount = (accessToken, body) => {
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
-  }, null, false, false)
+  }, null, false)
 }
 
 const setComplaint = (accessToken, body) => {
@@ -17,7 +17,7 @@ const setComplaint = (accessToken, body) => {
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
-  }, null, false, false)
+  }, null, false)
 }
 
 const validateIngredients = (accessToken, body) => {
@@ -25,7 +25,7 @@ const validateIngredients = (accessToken, body) => {
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
-  }, null, false, false)
+  }, null, false)
 }
 
 const validateOrder = (accessToken, body) => {
@@ -35,7 +35,7 @@ const validateOrder = (accessToken, body) => {
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
-  }, null, false, false)
+  }, null, false)
 }
 
 const fetchOrderIssues = (accessToken) => {

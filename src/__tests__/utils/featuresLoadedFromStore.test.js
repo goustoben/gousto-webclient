@@ -102,25 +102,6 @@ describe('featuresLoadedFromStore', () => {
     expect(featuresLoadedFromStore(features2, store)).toBe(true)
   })
 
-  test('should return true if features experiments passed in & each experiment passed in is also set to same value in store', () => {
-    const features = {
-      experiments: {
-        keyX: 'valueX',
-        keyY: 'valueY',
-      },
-    }
-
-    expect(featuresLoadedFromStore(features, store)).toBe(true)
-
-    const features2 = {
-      experiments: {
-        keyX: 'valueX',
-      },
-    }
-
-    expect(featuresLoadedFromStore(features2, store)).toBe(true)
-  })
-
   test('should return false if enabled features passed in & any enabled feature passed in is NOT also enabled in store', () => {
     const features = {
       enable: ['feature-1', 'feature-2', 'feature-x'],
@@ -169,11 +150,7 @@ describe('featuresLoadedFromStore', () => {
       features: {
         keyA: 'valueA',
         keyB: 'valueB',
-      },
-      experiments: {
-        keyC: 'valueC',
-        keyD: 'valueD',
-      },
+      }
     }
 
     expect(featuresLoadedFromStore(featuresFailEnabled, store)).toBe(false)
@@ -188,11 +165,7 @@ describe('featuresLoadedFromStore', () => {
       features: {
         keyA: 'valueA',
         keyB: 'valueB',
-      },
-      experiments: {
-        keyC: 'valueC',
-        keyD: 'valueD',
-      },
+      }
     }
 
     expect(featuresLoadedFromStore(featuresFailDisabled, store)).toBe(false)
@@ -207,10 +180,6 @@ describe('featuresLoadedFromStore', () => {
       features: {
         keyA: 'valueA',
         keyB: 'valueB',
-      },
-      experiments: {
-        keyC: 'valueC',
-        keyD: 'valueD',
       },
     }
 
@@ -227,31 +196,8 @@ describe('featuresLoadedFromStore', () => {
         keyA: 'valueA',
         keyB: 'valueSomethingElse',
       },
-      experiments: {
-        keyC: 'valueC',
-        keyD: 'valueD',
-      },
     }
 
     expect(featuresLoadedFromStore(featuresFailFeatures, store)).toBe(false)
-
-    const featuresFailExperiments = {
-      enable: ['feature-1', 'feature-2'],
-      disable: ['feature-3', 'feature-4'],
-      set: {
-        keyX: 'valueX',
-        keyY: 'valueY',
-      },
-      features: {
-        keyA: 'valueA',
-        keyB: 'valueB',
-      },
-      experiments: {
-        keyC: 'valueC',
-        keyD: 'valueSomethingElse',
-      },
-    }
-
-    expect(featuresLoadedFromStore(featuresFailExperiments, store)).toBe(false)
   })
 })
