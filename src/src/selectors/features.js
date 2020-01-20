@@ -34,10 +34,6 @@ export const getRafPositionOnWelcomePage = ({ features }) => (
     : false
 )
 
-export const isDeliveryFrequencyFeatureEnabled = ({ features }) => (
-  features.getIn(['wizardDeliveryFrequency', 'value'], false)
-)
-
 export const getAppBanner = ({ features }) => (
   features.getIn(['appBanner', 'value'], false)
 )

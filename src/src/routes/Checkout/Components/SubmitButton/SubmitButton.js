@@ -1,7 +1,7 @@
-/* eslint-disable camelcase */
 import PropTypes from 'prop-types'
 
 import React from 'react'
+import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import CheckoutButton from '../CheckoutButton'
 import ErrorMessage from '../ErrorMessage'
 import TermsAndConditions from '../TermsAndConditions'
@@ -12,21 +12,21 @@ class SubmitButton extends React.PureComponent {
     onClick: PropTypes.func,
   }
 
+  static defaultProps = {
+    onClick: () => {}
+  }
+
   render() {
+    const { onClick } = this.props
+
     return (
       <div>
         <ErrorMessage />
         <CheckoutButton
           stepName="Submit Order"
-          onClick={this.props.onClick}
+          onClick={onClick}
         />
-        <p className={css.helperText}>
-          <span className={css.helperHighlighted}>
-            <i className={css.tick} />
-            No commitment. No cancellation fees. &nbsp;
-          </span>
-          Skip a box or cancel your subscription online at anytime.
-        </p>
+        <SubscriptionTransparencyText className={css.helperText} />
         <TermsAndConditions />
       </div>
     )

@@ -6,6 +6,7 @@ import DropdownInput from 'Form/Dropdown'
 
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
+import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
 import { Button as GoustoButton } from 'goustouicomponents'
 import Svg from 'Svg'
@@ -19,13 +20,11 @@ const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
 )
 
-const formatDate = (deliveryFrequencyFeatureEnabled, date) => (
-  deliveryFrequencyFeatureEnabled ? (
-    `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
-  ) : date.format('ddd D MMM')
+const formatDate = (date) => (
+  `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
 )
 
-const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, deliveryFrequencyFeatureEnabled) => {
+const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
@@ -39,7 +38,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, deliveryFrequ
     let disabled = dd.get('alternateDeliveryDay') !== null
     disabled = (dd && dd.get('alternateDeliveryDay') !== null)
 
-    return { date, value: date, disabled, label: formatDate(deliveryFrequencyFeatureEnabled, moment(date))}
+    return { date, value: date, disabled, label: formatDate(moment(date))}
   })
     .toArray()
     .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
@@ -55,7 +54,6 @@ const DeliveryStep = ({
   setTempSlotId,
   boxSummaryDeliverySlotChosen,
   menuFetchDataPending,
-  deliveryFrequencyFeatureEnabled,
   nextDayDeliveryPaintedDoorFeature,
   next,
   trackDeliveryDayDropDownOpened,
@@ -72,8 +70,7 @@ const DeliveryStep = ({
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
-    tempDate,
-    deliveryFrequencyFeatureEnabled,
+    tempDate
   )
 
   if (nextDayDeliveryPaintedDoorFeature) {
@@ -178,9 +175,7 @@ const DeliveryStep = ({
               </div>
             </div>
           </div>
-          <p className={signupCss.bodyText}>
-            Our insulated box and ice packs help keep your food cool. And if you're not home, we can leave your box in your chosen safe place.
-          </p>
+          <SubscriptionTransparencyText className={css.bodyText} />
         </div>
       </div>
       <div className={signupCss.footer}>
@@ -242,7 +237,6 @@ DeliveryStep.propTypes = {
   trackDeliveryDayEdited: PropTypes.func,
   trackDeliverySlotEdited: PropTypes.func,
   menuFetchDataPending: PropTypes.bool,
-  deliveryFrequencyFeatureEnabled: PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: PropTypes.bool,
   isNDDPaintedDoorOpened: PropTypes.bool,
   openNDDPaintedDoor: PropTypes.func,

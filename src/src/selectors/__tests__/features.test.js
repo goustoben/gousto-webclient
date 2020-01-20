@@ -4,7 +4,6 @@ import {
   getGoToMyGousto,
   getGoToMyDeliveries,
   getRafPositionOnWelcomePage,
-  isDeliveryFrequencyFeatureEnabled,
   getWelcomePageAppPromo,
   getPromoBannerEnabled,
   getPromoBannerText,
@@ -15,7 +14,8 @@ import {
   getAddOnsBeforeOrderConfirmation,
   getFullScreenBoxSummary,
   getShowStockAlertFlag,
-  getUserMenuVariant
+  getUserMenuVariant,
+  isAccountTabNameTest
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -78,42 +78,6 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getRafPositionOnWelcomePage(state)).toEqual(false)
-    })
-  })
-
-  describe('isDeliveryFrequencyFeatureEnabled', () => {
-    describe('when feature is not set', () => {
-      test('should return false', () => {
-        expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
-      })
-    })
-
-    describe('when feature is set to false', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          wizardDeliveryFrequency: {
-            value: false,
-          },
-        })
-      })
-
-      test('should return false', () => {
-        expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
-      })
-    })
-
-    describe('when feature is set to true', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          wizardDeliveryFrequency: {
-            value: true,
-          },
-        })
-      })
-
-      test('should return true', () => {
-        expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
-      })
     })
   })
 
@@ -339,6 +303,36 @@ describe('when features are defined', () => {
           }
         })
         expect(getUserMenuVariant(state)).toBe('menuB')
+      })
+    })
+  })
+
+  describe('isAccountTabNameTest', () => {
+    describe('when accountTabNameTest is NOT set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          accountTabNameTest: {
+            value: false
+          }
+        })
+      })
+
+      test('should return false', () => {
+        expect(isAccountTabNameTest(state)).toBe(false)
+      })
+    })
+
+    describe('when accountTabNameTest is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          accountTabNameTest: {
+            value: true
+          }
+        })
+      })
+
+      test('should return true', () => {
+        expect(isAccountTabNameTest(state)).toBe(true)
       })
     })
   })

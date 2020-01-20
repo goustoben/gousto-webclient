@@ -1,0 +1,19 @@
+@value Haricot, HaricotMedium from 'styles/colors.css';
+
+.helperText {
+	text-align: center;
+	padding: 1rem 0.625rem 0.625rem;
+	font-size: 1rem;
+}
+
+
+.helperHighlighted {
+	color: Haricot;
+	font-weight: bold;
+}
+
+.tick {
+	composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+	color: HaricotMedium;
+	font-size: 1.25rem;
+}

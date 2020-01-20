@@ -16,13 +16,12 @@ describe('Delivery', () => {
     expect(wrapper.type()).toEqual('div')
   })
 
-  describe('rendering', () => {
-    test('should render 1 <FormSection> component(s)', () => {
-      expect(wrapper.find(FormSection).length).toEqual(1)
-    })
-
-    test('should render 1 <DeliveryAddress> component(s)', () => {
-      expect(wrapper.find(DeliveryAddress).length).toEqual(1)
-    })
+  test('should render 1 <FormSection> component(s)', () => {
+    expect(wrapper.find(FormSection).length).toEqual(1)
   })
+
+  test('should render 1 <DeliveryAddress> component(s)', () => {
+    expect(wrapper.find(DeliveryAddress).length).toEqual(1)
+  })
+
 })

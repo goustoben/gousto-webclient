@@ -1,0 +1,1 @@
+export { SubscriptionTransparencyText } from './SubscriptionTransparencyText'
