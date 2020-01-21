@@ -168,13 +168,22 @@ describe('onScreenRecovery', () => {
   })
 
   describe('cancelPendingOrder', () => {
+    let state
     beforeEach(() => {
-      getStateSpy.mockReturnValue({
+      state = {
         onScreenRecovery: Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
+        }),
+        user: Immutable.fromJS({
+          newOrders: {
+            '64521': {
+              number: '10'
+            }
+          }
         })
-      })
+      }
+      getStateSpy.mockReturnValue(state)
     })
     test('should call the order cancel action with the orderId', () => {
       cancelPendingOrder('default')(dispatchSpy, getStateSpy)
@@ -189,28 +198,56 @@ describe('onScreenRecovery', () => {
       }))
     })
 
-    test('should redirect to my-deliveries if forceRefresh is true', async () => {
-      getStateSpy.mockReturnValue({
-        onScreenRecovery: Immutable.Map({
+    describe('when forceRefresh = true', () => {
+      beforeEach(() => {
+        state.onScreenRecovery = Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
           forceRefresh: true
         })
+        getStateSpy.mockReturnValue(state)
       })
-      await cancelPendingOrder()(dispatchSpy, getStateSpy)
-      expect(redirect).toHaveBeenCalledWith('/my-deliveries')
+
+      test('should redirect to my-deliveries if forceRefresh is true', async () => {
+        await cancelPendingOrder()(dispatchSpy, getStateSpy)
+        expect(redirect).toHaveBeenCalledWith('/my-deliveries')
+      })
     })
 
-    test('should NOT redirect to my-deliveries if forceRefresh is false', async () => {
-      getStateSpy.mockReturnValue({
-        onScreenRecovery: Immutable.Map({
+    describe('when forceRefresh = false', () => {
+      beforeEach(() => {
+        state.onScreenRecovery = Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
           forceRefresh: false
         })
+        getStateSpy.mockReturnValue(state)
       })
-      await cancelPendingOrder()(dispatchSpy, getStateSpy)
-      expect(redirect).not.toHaveBeenCalled()
+
+      test('should NOT redirect to my-deliveries', async () => {
+        await cancelPendingOrder()(dispatchSpy, getStateSpy)
+        expect(redirect).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when box number is 4 or less', () => {
+      test('hotjar is fired with correct trigger', async () => {
+        global.hj = jest.fn()
+
+        for(let i = 1; i<=4; i++) {
+          state.user = Immutable.fromJS({
+            newOrders: {
+              '64521': {
+                number: i.toString()
+              }
+            }
+          })
+          getStateSpy.mockReturnValue(state)
+
+          await cancelPendingOrder()(dispatchSpy, getStateSpy)
+          expect(hj).toHaveBeenCalledWith('trigger', `skipped-box-${i}`)
+        }
+      })
     })
   })
 
@@ -243,12 +280,12 @@ describe('onScreenRecovery', () => {
           forceRefresh: true
         })
       })
-      await cancelPendingOrder()(dispatchSpy, getStateSpy)
+      await cancelProjectedOrder()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
     })
 
     test('should NOT redirect to my-deliveries if forceRefresh is false', async () => {
-      await cancelPendingOrder()(dispatchSpy, getStateSpy)
+      await cancelProjectedOrder()(dispatchSpy, getStateSpy)
       expect(redirect).not.toHaveBeenCalled()
     })
   })
@@ -354,6 +391,7 @@ describe('onScreenRecovery', () => {
               orderId: '12223',
               orderType: 'pending',
             }),
+            user: Immutable.Map()
           })
 
           await getSkipRecoveryContent()(dispatchSpy, getStateSpy)
@@ -653,6 +691,7 @@ describe('onScreenRecovery', () => {
           deliveryDayId: '567',
           orderType: 'pending'
         }),
+        user: Immutable.Map()
       })
 
       await cancelOrder()(dispatchSpy, getStateSpy)

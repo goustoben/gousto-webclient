@@ -70,7 +70,8 @@ describe('myDeliveries utils', () => {
       isCurrentPeriod: false,
       shippingAddress: {
         id: '34820671',
-      }
+      },
+      number: '1',
     },
     '5678': {
       id: '11922804',
@@ -157,7 +158,8 @@ describe('myDeliveries utils', () => {
       },
       shippingAddress: {
         id: '34820671',
-      }
+      },
+      number: '2',
     }
   })
 
@@ -351,7 +353,8 @@ describe('myDeliveries utils', () => {
           }),
           portionsCount: '4',
           availableFrom: '2019-10-22T12:00:00+01:00',
-          availableTo: '2019-10-29T11:59:59+00:00'
+          availableTo: '2019-10-29T11:59:59+00:00',
+          number: '2',
         })
       })
 

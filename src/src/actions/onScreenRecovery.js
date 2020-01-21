@@ -113,6 +113,7 @@ export const cancelPendingOrder = (variation = 'default') => (
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
     const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
+    const number = getState().user.getIn(['newOrders',orderId, 'number'], '')
 
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
@@ -122,6 +123,11 @@ export const cancelPendingOrder = (variation = 'default') => (
       if (forceRefresh) {
         dispatch(redirect('/my-deliveries'))
       }
+
+      if (parseInt(number) <= 4) {
+        hj('trigger', `skipped-box-${number}`)
+      }
+
       modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }

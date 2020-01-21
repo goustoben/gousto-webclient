@@ -121,7 +121,8 @@
     "__CHECKOUT_PK__": false,
     "__TEST__": false,
     "__GIT_HASH__": false,
-    "ga": false
+    "ga": false,
+    "hj": true
   },
   "overrides": [
     {
