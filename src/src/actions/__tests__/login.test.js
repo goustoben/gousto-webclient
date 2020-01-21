@@ -214,4 +214,39 @@ describe('login actions', () => {
       })
     })
   })
+
+  describe('loginRedirect', () => {
+    describe('when the current url contain no search query parameters', () => {
+      test('should redirect the user to my-gousto by default', () => {
+        const url = loginActions.loginRedirect({
+          pathname: '/',
+          search: '',
+        }, false, Immutable.Map({}))
+        expect(url).toEqual('/my-gousto')
+      })
+    })
+
+    describe('when the current url contains a promo_code search query', () => {
+      test('should preserve promo_code', () => {
+        const url = loginActions.loginRedirect({
+          pathname: '/',
+          hash: '#login',
+          search: '?promo_code=GOUT3S',
+        }, false, Immutable.Map({}))
+        expect(url).toEqual('/my-gousto?promo_code=GOUT3S')
+      })
+    })
+
+    describe('when the current url only contains a target search query', () => {
+      test('should strip this from the destination', () => {
+        const url = loginActions.loginRedirect({
+          pathname: '/home',
+          hash: '#login',
+          search: '?target=fake.gousto.co.uk',
+        }, false, Immutable.Map({}))
+
+        expect(url).toEqual('/my-gousto')
+      })
+    })
+  })
 })

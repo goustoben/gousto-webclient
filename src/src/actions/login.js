@@ -8,7 +8,6 @@ import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
 import URL from 'url' //eslint-disable-line import/no-nodejs-modules
-import userActions from './user'
 import orderActions from './order'
 import pricingActions from './pricing'
 import statusActions from './status'
@@ -76,7 +75,6 @@ const login = (email, password, rememberMe, orderId = '') => (
       const userRoles = getState().auth.get('roles', Immutable.List([]))
       if (userRoles.size > 0 && authorise(userRoles)) {
         dispatch(authActions.userRememberMe(rememberMe))
-
         await postLoginSteps(isAdmin(userRoles), orderId, getState().features)(dispatch, getState)
       }
     } catch (err) {
@@ -153,8 +151,9 @@ export const loginRedirect = (location, userIsAdmin, features) => {
     destination = config.client[afterLoginPage] || config.client.myGousto
   }
 
-  if (destination && destination !== config.client.myDeliveries2) {
-    redirect(destination)
+  if (search) {
+    const { promo_code: promoCode } = queryString.parse(search)
+    destination = promoCode ? `${destination}?promo_code=${promoCode}` : destination
   }
 
   return destination
@@ -169,7 +168,6 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
     if (destination && destination !== config.client.myDeliveries2) {
       redirect(destination)
     }
-
     if (Cookies.get('from_join')) {
       Cookies.expire('from_join')
     }
@@ -189,16 +187,8 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
         dispatch(orderActions.orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
       }
     } else {
-      if (!userIsAdmin && getState().basket) {
-        const promoCode = getState().basket.get('promoCode')
-        if (promoCode) {
-          await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
-        }
-      }
-
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))
-
         if (destination === config.client.myDeliveries2) {
           dispatch(push(config.client.myDeliveries2))
         }
@@ -206,6 +196,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
     }
   }
 }
+
 export default {
   loginUser: login,
   logoutUser: logout,

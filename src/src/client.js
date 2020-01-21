@@ -18,6 +18,7 @@ import docReady from 'utils/docReady'
 import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
+import { getIsAuthenticated } from 'selectors'
 import logger from 'utils/logger'
 import { zeStart, zeChatButtonSetUp } from 'utils/zendesk'
 import { configureStore } from './store'
@@ -61,7 +62,7 @@ window.docReady(() => {
 
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
-  processQuery(query, store)
+  processQuery(query, store, {hashTag: window.location.hash})
 
   refresh(store)
 
@@ -97,7 +98,9 @@ window.docReady(() => {
 })
 
 window.onhashchange = () => {
-  if (window.location.hash.indexOf('login') !== -1) {
+  const isOfLoginHashTag = window.location.hash.indexOf('login') !== -1
+  const isNotAuthenticated = !getIsAuthenticated(store.getState())
+  if (isOfLoginHashTag && isNotAuthenticated) {
     store.dispatch(actions.loginVisibilityChange(true))
   }
 }

@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import Footer from 'Footer'
 import { Header } from 'Header'
 import actions from 'actions'
+import { getIsAuthenticated } from 'selectors'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import processQuery from 'utils/processQuery'
 import loadFeatures from 'utils/loadFeatures'
@@ -38,7 +39,7 @@ async function init() {
 
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
-  processQuery(query, store)
+  processQuery(query, store, {hashTag: window.location.hash})
   refresh(store)
 
   browserType(store)
@@ -66,13 +67,15 @@ async function init() {
       footer
     )
   }
+  const isOfLoginHashTag = window.location.hash.indexOf('login') !== -1
+  const isNotAuthenticated = !getIsAuthenticated(store.getState())
 
-  if (window.location.hash.indexOf('login') !== -1) {
+  if (isOfLoginHashTag && isNotAuthenticated) {
     store.dispatch(actions.loginVisibilityChange(true))
   }
 
   window.onhashchange = () => {
-    if (window.location.hash.indexOf('login') !== -1) {
+    if (isOfLoginHashTag && isNotAuthenticated) {
       store.dispatch(actions.loginVisibilityChange(true))
     }
   }
