@@ -6,10 +6,10 @@ import Address from 'routes/Checkout/Components/Address/Address'
 import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
-import { fetchDeliveryDays } from 'apis/deliveries'
+import { fetchDeliveryDays } from 'apis'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 
-jest.mock('apis/deliveries', () => ({
+jest.mock('apis', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [{id: '4'}, {id: '5'}, {id: '6'}]
   })
@@ -77,10 +77,10 @@ describe('Address', () => {
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}
         isNDDExperiment
-        initialPostcode={'NW1 8RJ'}
-        deliveryDate={'2019-09-01'}
+        initialPostcode='NW1 8RJ'
+        deliveryDate='2019-09-01'
         isDelivery
-        deliveryTariffId={'some-uuid'}
+        deliveryTariffId='some-uuid'
       />)
     })
 
@@ -106,18 +106,14 @@ describe('Address', () => {
     test('should fetch next day delivery days)', () => {
       getAvailableDeliveryDays.mockReturnValue([{id: '5'}, {id: '6'}])
 
-      const expectedReqData = {
-        'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
-        'filters[cutoff_datetime_until]': moment().startOf('day').add(30, 'days').toISOString(),
-        postcode: 'NW1 8RJ',
-        ndd: 'true',
-        delivery_tariff_id: 'some-uuid',
-        sort: 'date',
-        direction: 'asc',
-      }
+      const cutOfFrom = moment().startOf('day').toISOString()
+      const cutOfUntil = moment().startOf('day').add(30, 'days').toISOString()
+      const postcode= 'NW1 8RJ'
+      const ndd = 'true'
+      const deliveryTariffId = 'some-uuid'
 
       expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
-      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
+      expect(fetchDeliveryDays).toHaveBeenNthCalledWith(1, null, cutOfFrom, cutOfUntil, ndd, deliveryTariffId, postcode)
       expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
       expect(getAvailableDeliveryDays).toHaveBeenCalledWith([
         { id: '4', daySlotLeadTimes: [] },

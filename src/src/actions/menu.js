@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
-import { getAvailableDates, getRecipeStock } from 'apis/data'
 
+import { fetchAvailableDates, fetchRecipeStock } from 'apis'
 import * as boxPricesApi from 'apis/boxPrices'
 import { fetchOrder } from 'apis/orders'
 import { getCutoffDateTime } from 'utils/deliveries'
@@ -14,7 +14,7 @@ import menuConfig from 'config/menu'
 import { getMenuService } from 'selectors/features'
 import statusActions from './status'
 import { redirect } from './redirect'
-import products from './products'
+import {productsLoadProductsById, productsLoadStock, productsLoadCategories} from './products'
 import { getStockAvailability, loadMenuCollectionsWithMenuService } from './menuActionHelper'
 import { menuServiceLoadDays } from './menuServiceLoadDays'
 
@@ -137,7 +137,7 @@ export function menuLoadDays() {
     }
 
     const accessToken = getState().auth.get('accessToken')
-    const dates = await getAvailableDates(accessToken, false)
+    const { data: dates = [] } = await fetchAvailableDates(accessToken)
     const availableDays = dates.pop()
 
     dispatch(menuActions.menuCutoffUntilReceive(availableDays.until))
@@ -267,9 +267,9 @@ export function menuLoadOrderDetails(orderId) {
     const productItems = order.productItems || []
     if (productItems.length) {
       const productItemIds = productItems.map(productItem => productItem.itemableId)
-      await dispatch(products.productsLoadProductsById(productItemIds))
-      await dispatch(products.productsLoadStock())
-      await dispatch(products.productsLoadCategories())
+      await dispatch(productsLoadProductsById(productItemIds))
+      await dispatch(productsLoadStock())
+      await dispatch(productsLoadCategories())
       productItems.forEach((product) => {
         for (let i = 0; i < parseInt(product.quantity, 10); i++) {
           dispatch(basketProductAdd(product.itemableId))
@@ -302,16 +302,16 @@ export function menuClearStock() {
 
 export function menuLoadStock(clearStock = true) {
   return async (dispatch, getState) => {
-    const state = getState()
-    const date = state.basket.get('date')
-    const coreDayId = state.boxSummaryDeliveryDays.getIn([date, 'coreDayId'], '')
+    const { auth, basket, boxSummaryDeliveryDays } = getState()
+    const date = basket.get('date')
+    const coreDayId = boxSummaryDeliveryDays.getIn([date, 'coreDayId'], '')
 
     if (!coreDayId) {
       return
     }
 
-    const accessToken = getState().auth.get('accessToken')
-    const recipeStock = await getRecipeStock(accessToken, coreDayId, false)
+    const accessToken = auth.get('accessToken')
+    const { data: recipeStock } = await fetchRecipeStock(accessToken, coreDayId)
 
     let adjustedStock = {}
 
