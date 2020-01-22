@@ -225,7 +225,6 @@ describe('the Buttons component', () => {
               expect(onAdd).toHaveBeenCalledWith(
                 recipeId,
                 view,
-                false,
                 { position, score }
               )
             })
@@ -287,7 +286,6 @@ describe('the Buttons component', () => {
               expect(onAdd).toHaveBeenCalledWith(
                 recipeId,
                 view,
-                false,
                 { position, score }
               )
             })
