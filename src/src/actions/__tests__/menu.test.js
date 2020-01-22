@@ -12,8 +12,11 @@ const mockDispatchLoadRecipesForAllCollections = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
 
-jest.mock('apis', () => ({
-  fetchAvailableDates: mockFetchAvailableDates,
+jest.mock('apis/deliveries', () => ({
+  fetchAvailableDates: mockFetchAvailableDates
+}))
+
+jest.mock('apis/recipes', () => ({
   fetchRecipeStock: mockFetchRecipeStock
 }))
 
@@ -32,12 +35,6 @@ jest.mock('actions/menuCollections', () => ({
   loadRecipesForAllCollections: () => {
     return mockDispatchLoadRecipesForAllCollections
   }
-}))
-
-jest.mock('apis/recipes', () => ({
-  fetchRecipes: jest.fn().mockResolvedValue({
-    data: [{ id: '1234' }]
-  })
 }))
 
 jest.mock('actions/menuServiceLoadDays', () => ({

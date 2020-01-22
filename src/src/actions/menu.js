@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 
-import { fetchAvailableDates, fetchRecipeStock } from 'apis'
 import * as boxPricesApi from 'apis/boxPrices'
+import { fetchAvailableDates } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
+import { fetchRecipeStock } from 'apis/recipes'
 import { getCutoffDateTime } from 'utils/deliveries'
 import { limitReached } from 'utils/basket'
 import logger from 'utils/logger'

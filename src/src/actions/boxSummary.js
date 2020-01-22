@@ -1,4 +1,4 @@
-import { fetchDeliveryDays } from 'apis'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import { getNDDFeatureValue, getHideBoxSummary } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'

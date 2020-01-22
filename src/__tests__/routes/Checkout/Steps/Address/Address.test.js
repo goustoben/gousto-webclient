@@ -6,10 +6,10 @@ import Address from 'routes/Checkout/Components/Address/Address'
 import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
-import { fetchDeliveryDays } from 'apis'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 
-jest.mock('apis', () => ({
+jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [{id: '4'}, {id: '5'}, {id: '6'}]
   })

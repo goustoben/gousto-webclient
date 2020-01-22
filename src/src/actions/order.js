@@ -10,7 +10,7 @@ import {
   updateOrderAddress,
 } from 'apis/orders'
 
-import { fetchDeliveryDays } from 'apis'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import * as userApi from 'apis/user'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'

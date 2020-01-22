@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { fetchDeliveryDays } from 'apis'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import {
   saveOrder,
   fetchOrder,
@@ -52,7 +52,7 @@ jest.mock('config/order', () => ({
   }
 }))
 
-jest.mock('apis', () => ({
+jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [
       { id: 1 },
