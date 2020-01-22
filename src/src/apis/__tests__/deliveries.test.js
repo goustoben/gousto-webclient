@@ -34,7 +34,7 @@ describe('deliveries api', () => {
       const accessToken = 'accessCode'
       const cutoffDatetimeFrom = 'cutoffDatetimeFrom'
       const menuCutoffUntil = 'menuCutoffUntil'
-      const isNDDExperiment = 'true'
+      const isNDDExperiment = true
       const deliveryTariffId = '123'
 
       describe('and no postcode is provided', () => {
@@ -59,7 +59,7 @@ describe('deliveries api', () => {
             const expectedRequestBody = {
               'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
               'filters[cutoff_datetime_until]': menuCutoffUntil,
-              'ndd': isNDDExperiment,
+              'ndd': 'true',
               'delivery_tariff_id': deliveryTariffId,
               sort: 'date',
               direction: 'asc',
@@ -98,7 +98,7 @@ describe('deliveries api', () => {
             const expectedRequestBody = {
               'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
               'filters[cutoff_datetime_until]': menuCutoffUntil,
-              'ndd': isNDDExperiment,
+              'ndd': 'true',
               'delivery_tariff_id': deliveryTariffId,
               sort: 'date',
               direction: 'asc',
@@ -137,7 +137,7 @@ describe('deliveries api', () => {
             const expectedRequestBody = {
               'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
               'filters[cutoff_datetime_until]': menuCutoffUntil,
-              'ndd': isNDDExperiment,
+              'ndd': 'true',
               'delivery_tariff_id': deliveryTariffId,
               postcode: 'rm14',
               sort: 'date',

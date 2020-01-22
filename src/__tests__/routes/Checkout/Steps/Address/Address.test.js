@@ -109,7 +109,7 @@ describe('Address', () => {
       const cutOfFrom = moment().startOf('day').toISOString()
       const cutOfUntil = moment().startOf('day').add(30, 'days').toISOString()
       const postcode= 'NW1 8RJ'
-      const ndd = 'true'
+      const ndd = true
       const deliveryTariffId = 'some-uuid'
 
       expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)

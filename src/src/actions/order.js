@@ -404,8 +404,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
     const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
 
     try {
-      const isNDDExperimentString = isNDDExperiment ? 'true' : 'false'
-      let { data: days } = await fetchDeliveryDays(null, cutoffDatetimeFrom, cutoffDatetimeUntil, isNDDExperimentString, deliveryTariffId, postcode)
+      let { data: days } = await fetchDeliveryDays(null, cutoffDatetimeFrom, cutoffDatetimeUntil, isNDDExperiment, deliveryTariffId, postcode)
 
       if (isNDDExperiment) {
         days = transformDaySlotLeadTimesToMockSlots(days)

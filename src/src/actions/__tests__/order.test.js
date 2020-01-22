@@ -782,7 +782,6 @@ describe('order actions', () => {
 
       describe('and next day delivery is disabled', () => {
         const deliveryTariffId = deliveriesUtils.deliveryTariffTypes.NON_NDD
-        const nddExperimentString = 'false'
 
         beforeEach(() => {
           state.features = Immutable.fromJS({
@@ -815,7 +814,7 @@ describe('order actions', () => {
 
           test('then `fetchDeliveryDays` should have been called with correct parameters', () => {
             expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
-            expect(fetchDeliveryDays).toHaveBeenCalledWith(null, cutoffDatetimeFrom, cutoffDatetimeUntil, nddExperimentString, deliveryTariffId, postcode)
+            expect(fetchDeliveryDays).toHaveBeenCalledWith(null, cutoffDatetimeFrom, cutoffDatetimeUntil, false, deliveryTariffId, postcode)
           })
 
           test('then `getAvailableDeliveryDays` should have been called with correct parameters', () => {
@@ -872,7 +871,6 @@ describe('order actions', () => {
 
       describe('and next day delivery is enabled', () => {
         const deliveryTariffId = deliveriesUtils.deliveryTariffTypes.FREE_NDD
-        const nddExperimentString = 'true'
 
         beforeEach(() => {
           state.features = Immutable.fromJS({
@@ -905,7 +903,7 @@ describe('order actions', () => {
 
           test('then should call `fetchDeliveryDays` with correct parameters', () => {
             expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
-            expect(fetchDeliveryDays).toHaveBeenCalledWith(null, cutoffDatetimeFrom, cutoffDatetimeUntil, nddExperimentString, deliveryTariffId, postcode)
+            expect(fetchDeliveryDays).toHaveBeenCalledWith(null, cutoffDatetimeFrom, cutoffDatetimeUntil, true, deliveryTariffId, postcode)
           })
 
           test('then should call `transformDaySlotLeadTimesToMockSlots`', () => {

@@ -131,8 +131,7 @@ class Address extends React.PureComponent {
       try {
         const cutOfFrom = moment().startOf('day').toISOString()
         const cutOfUntil = menuCutoffUntil || menuCutoffUntilFallback
-        const isNDDExperimentString = isNDDExperiment ? 'true' : 'false'
-        let { data: days } = await fetchDeliveryDays(null, cutOfFrom, cutOfUntil, isNDDExperimentString, deliveryTariffId, postcode)
+        let { data: days } = await fetchDeliveryDays(null, cutOfFrom, cutOfUntil, isNDDExperiment, deliveryTariffId, postcode)
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)
