@@ -773,7 +773,6 @@ describe('basket actions', () => {
               recipeId: '123',
               position: '57',
               collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-              source: 'test-food-brand',
               recipe_count: 2
             },
           })
@@ -857,7 +856,6 @@ describe('basket actions', () => {
               recipeId: '123',
               position: '57',
               collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-              source: 'test-food-brand',
               recipe_count: 3
             },
           })
@@ -940,9 +938,6 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipeGroup: {
-            slug: 'test-food-brand'
-          },
         }),
       })
 
@@ -963,7 +958,6 @@ describe('basket actions', () => {
           view: undefined,
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          source: 'test-food-brand',
           recipe_count: 0
         },
       }])
@@ -1009,7 +1003,6 @@ describe('basket actions', () => {
           view: 'boxsummary',
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          source: 'test-food-brand',
           recipe_count: 0
         },
       }])
@@ -1040,9 +1033,6 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipeGroup: {
-            slug: 'test-food-brand'
-          },
         }),
       })
       basketRecipeRemove('123')(dispatch, getStateSpy)
@@ -1059,7 +1049,6 @@ describe('basket actions', () => {
           view: undefined,
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          source: 'test-food-brand',
           recipe_count: 2
         },
       }])

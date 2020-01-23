@@ -1,1 +1,1 @@
-export { ThematicsPage } from './ThematicsPageContainer'
+export { ThematicsPageContainer } from './ThematicsPageContainer'

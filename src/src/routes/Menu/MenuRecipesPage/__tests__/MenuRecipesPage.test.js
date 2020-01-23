@@ -1,13 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { MenuRecipes } from 'routes/Menu/MenuRecipes/MenuRecipes'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
 import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { Banner } from 'routes/Menu/Banner'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
+import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 
 jest.mock('routes/Menu/SubHeader')
+
+jest.mock('routes/Menu/CollectionsNav', () => ('CollectionsNav'))
 
 describe('initial render', () => {
   let wrapper
@@ -20,7 +22,7 @@ describe('initial render', () => {
         basketNumPortionChange={jest.fn()}
         fadeCss="fadeOut"
         showLoading={false}
-        filteredRecipesNumber={30}
+        stateRecipeCount={30}
         menuCurrentCollectionId=""
         menuRecipeDetailShow=""
         selectCurrentCollection={jest.fn()}
@@ -31,8 +33,8 @@ describe('initial render', () => {
   test('should render 1 SubHeader', () => {
     expect(wrapper.find(SubHeader).length).toBe(1)
   })
-  test('should not show a collections nav', () => {
-    expect(wrapper.find('CollectionsNav').length).toBe(0)
+  test('should show a collections nav', () => {
+    expect(wrapper.find('CollectionsNav').length).toBe(1)
   })
 
   test('should not show as loading', () => {
@@ -56,7 +58,7 @@ describe('with the collections feature enabled', () => {
         basketNumPortionChange={jest.fn()}
         fadeCss="fadeOut"
         showLoading={false}
-        filteredRecipesNumber={30}
+        stateRecipeCount={30}
         menuCurrentCollectionId=""
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
@@ -77,7 +79,7 @@ describe('with the force collections feature enabled', () => {
         basketNumPortionChange={jest.fn()}
         fadeCss="fadeOut"
         showLoading={false}
-        filteredRecipesNumber={30}
+        stateRecipeCount={30}
         menuCurrentCollectionId=""
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
@@ -94,7 +96,7 @@ describe('with the force collections feature enabled', () => {
         basketNumPortionChange={jest.fn()}
         fadeCss="fadeOut"
         showLoading={false}
-        filteredRecipesNumber={30}
+        stateRecipeCount={30}
         menuCurrentCollectionId=""
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
@@ -117,7 +119,7 @@ describe('selectCurrentCollection', () => {
         basketNumPortionChange={jest.fn()}
         fadeCss="fadeOut"
         showLoading={false}
-        filteredRecipesNumber={30}
+        stateRecipeCount={30}
         menuCurrentCollectionId="123abc"
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
@@ -153,7 +155,7 @@ describe('componentWillUnmount', () => {
         fadeCss="fadeOut"
         orderId=""
         showLoading={false}
-        filteredRecipesNumber={30}
+        stateRecipeCount={30}
         menuCurrentCollectionId="123abc"
         menuRecipeDetailShow=""
         selectCurrentCollection={() => { }}
@@ -186,7 +188,7 @@ describe('stockAlert', () => {
           fadeCss="fadeOut"
           showLoading={false}
           showStockAlert
-          filteredRecipesNumber={30}
+          stateRecipeCount={30}
           menuCurrentCollectionId=""
           menuRecipeDetailShow=""
           selectCurrentCollection={jest.fn()}

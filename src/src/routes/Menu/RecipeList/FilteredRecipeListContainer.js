@@ -2,34 +2,33 @@ import { connect } from 'react-redux'
 
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { showDetailRecipe } from 'actions/menu'
-import { getCurrentCollectionId } from 'selectors/filters'
-import { getCutoffDate } from '../selectors/cutoff'
-import { getCurrentCollectionIsRecommendation } from '../selectors/menu'
+import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
 
 import { RecipeList } from './RecipeList'
-import { getSortedRecipes } from '../selectors/sorting'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
 
-  const collectionId = getCurrentCollectionId(state)
-  const { recipes, recipeIds } = getSortedRecipes(state)(collectionId)
-
+  // this component is used for thematic/food brand pages
+  // which don't need CTAs shown, so this should be false
+  const isCurrentCollectionRecommendation = false
+  
   return {
-    filteredRecipeIds: recipeIds,
-    recipes,
+    filteredRecipeIds: ownProps.filteredRecipeIds,
+    recipes: ownProps.recipes,
     cutoffDate: getCutoffDate(state),
     numPortions: state.basket.get('numPortions'),
-    isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state),
+    isCurrentCollectionRecommendation,
     thematicName: query && query.thematic,
     deliveryDate: state.basket.get('date'),
     browserType: state.request.get('browser')
   }
 }
-const RecipeListContainer = connect(mapStateToProps, {
+
+const FilteredRecipeListContainer = connect(mapStateToProps, {
   collectionFilterChange: changeCollectionToAllRecipesViaCTA,
   showDetailRecipe
 })(RecipeList)
 
-export { RecipeListContainer }
+export { FilteredRecipeListContainer }

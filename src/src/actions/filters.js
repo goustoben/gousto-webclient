@@ -1,7 +1,5 @@
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
-import config from 'config/recipes'
-import { getCollectionDetailsBySlug } from 'selectors/collections'
 import { actionTypes } from './actionTypes'
 import {
   trackCTAToAllRecipesClicked,
@@ -21,25 +19,6 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
 export const collectionFilterIdReceive = (collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
   collectionId,
-})
-
-export const currentFoodBrandChange = (foodBrand) => ({
-  type: actionTypes.FILTERS_FOOD_BRAND_CHANGE,
-  foodBrand,
-  trackingData: {
-    actionType: foodBrand !== null ? 'FoodBrand selected' : 'FoodBrand unselected',
-    food_brand: foodBrand !== null ? foodBrand.slug : ''
-  }
-})
-
-export const currentThematicChange = (thematic, onAction) => ({
-  type: actionTypes.FILTERS_THEMATIC_CHANGE,
-  thematic,
-  trackingData: {
-    actionType: thematic !== null ? 'Thematic selected' : 'Thematic unselected',
-    thematic: thematic !== null ? thematic.slug : '',
-    onAction
-  }
 })
 
 export function collectionFilterChange(collectionId) {
@@ -86,78 +65,8 @@ export const filterProductCategory = (category) => (
   }
 )
 
-const selectFoodBrand = (dispatch, getState, recipeGrouping) => {
-  const { routing } = getState()
-  const previousLocation = routing.locationBeforeTransitions
-  const query = { ...previousLocation.query }
-
-  dispatch(currentFoodBrandChange(recipeGrouping))
-  if (recipeGrouping === null) {
-    delete query.foodBrand
-  } else {
-    query.foodBrand = recipeGrouping.slug
-    if (query.collection) {
-      delete query.collection
-    }
-  }
-
-  const newLocation = { ...previousLocation, query }
-  dispatch(push(newLocation))
-}
-
-const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
-  const { routing } = getState()
-  const previousLocation = routing.locationBeforeTransitions
-  const query = { ...previousLocation.query }
-  let thematic = thematicSlug
-  if (thematicSlug === null) {
-    delete query.thematic
-  } else {
-    if (query.collection) {
-      delete query.collection
-    }
-    const thematicCollection = getCollectionDetailsBySlug(getState(), thematicSlug)
-
-    if (thematicCollection) {
-      thematic = {
-        name: thematicCollection.get('shortTitle'),
-        slug: thematicSlug,
-        borderColor: config.thematicBorderColor,
-        location: 'thematic'
-      }
-      query.thematic = thematicSlug
-    } else {
-      thematic = null
-    }
-  }
-
-  dispatch(currentThematicChange(thematic, onAction))
-  const newLocation = { ...previousLocation, query }
-  dispatch(push(newLocation))
-}
-
-export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) => (
-  (dispatch, getState) => {
-    if (location === 'foodBrand') {
-      if (recipeGrouping !== null) {
-        recipeGrouping.location = location
-      }
-      selectFoodBrand(dispatch, getState, recipeGrouping)
-      dispatch(changeCollectionById())
-    }
-
-    if (location === 'thematic') {
-      selectThematic(dispatch, getState, recipeGrouping, onAction)
-      dispatch(changeCollectionById())
-    }
-  }
-)
-
 export default {
   collectionFilterChange,
   collectionFilterIdReceive,
-  currentFoodBrandChange,
-  currentThematicChange,
-  filterRecipeGrouping,
   changeCollectionById
 }

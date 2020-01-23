@@ -1,0 +1,1 @@
+export { MenuRecipesPageContainer } from './MenuRecipesPageContainer'

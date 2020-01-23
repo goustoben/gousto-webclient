@@ -8,40 +8,106 @@ import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import { Banner } from '../Banner'
-import css from './MenuRecipes.css'
+import fetchData from '../fetchData'
 
-class MenuRecipes extends PureComponent {
+import css from './MenuRecipesPage.css'
+
+export class MenuRecipesPage extends PureComponent {
+  static contextTypes = {
+    store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
+  }
+
   static propTypes = {
-    fadeCss: PropTypes.string.isRequired,
     showLoading: PropTypes.bool.isRequired,
-    filteredRecipesNumber: PropTypes.number.isRequired,
+    stateRecipeCount: PropTypes.number.isRequired,
     menuCurrentCollectionId: PropTypes.string.isRequired,
     selectCurrentCollection: PropTypes.func.isRequired,
     detailVisibilityChange: PropTypes.func.isRequired,
+    shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
+    basketOrderLoaded: PropTypes.func.isRequired,
+    portionSizeSelectedTracking: PropTypes.func.isRequired,
     menuRecipeDetailShow: PropTypes.string,
     orderId: PropTypes.string,
-    showStockAlert: PropTypes.bool
+    showStockAlert: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    storeOrderId: PropTypes.string,
+    numPortions: PropTypes.number,
+    query: PropTypes.shape({}),
+    params: PropTypes.shape({})
   }
 
   static defaultProps = {
     menuRecipeDetailShow: '',
     orderId: null,
-    showStockAlert: false
+    showStockAlert: false,
+    isLoading: false,
+    storeOrderId: '',
+    numPortions: 2,
+    query: {},
+    params: {}
+  }
+
+  async componentDidMount() {
+    const { store } = this.context
+
+    const {
+      orderId,
+      params,
+      storeOrderId,
+      basketOrderLoaded,
+      query,
+      portionSizeSelectedTracking,
+      numPortions,
+    } = this.props
+
+    // if server rendered
+    if (orderId && orderId === storeOrderId) {
+      basketOrderLoaded(orderId)
+    }
+
+    const forceDataLoad = (storeOrderId && storeOrderId !== orderId) || query.reload
+    // TODO: Add back logic to check what needs to be reloaded
+
+    if (forceDataLoad) {
+      await fetchData({ store, query, params }, forceDataLoad)
+    }
+
+    if (orderId) {
+      portionSizeSelectedTracking(numPortions, orderId)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { menuRecipeDetailShow } = this.props
+    const { menuRecipeDetailShow, orderId } = this.props
     if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
       window.document.addEventListener('keyup', this.handleKeyup, false)
     } else if (!nextProps.menuRecipeDetailShow) {
       window.document.removeEventListener('keyup', this.handleKeyup, false)
     }
+
+    // /menu-> /menu/:orderId
+    const editingOrder = (nextProps.orderId || orderId) && nextProps.orderId !== orderId
+    if (editingOrder) {
+      const { store } = this.context
+      const query = nextProps.query || {}
+      const params = nextProps.params || {}
+      fetchData({ store, query, params }, true)
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { menuCurrentCollectionId, selectCurrentCollection } = this.props
+    const {
+      shouldJfyTutorialBeVisible,
+      isLoading,
+      menuCurrentCollectionId,
+      selectCurrentCollection
+    } = this.props
     if (prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
       selectCurrentCollection(menuCurrentCollectionId)
+    }
+
+    if (!isLoading && prevProps.isLoading !== isLoading) {
+      shouldJfyTutorialBeVisible()
     }
   }
 
@@ -69,13 +135,13 @@ class MenuRecipes extends PureComponent {
 
   render() {
     const {
-      fadeCss,
       showLoading,
-      filteredRecipesNumber,
-      menuCurrentCollectionId,
+      stateRecipeCount,
       orderId,
       showStockAlert
     } = this.props
+
+    const fadeCss = (showLoading) ? css.fadeOut : css.willFade
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
@@ -94,17 +160,10 @@ class MenuRecipes extends PureComponent {
             </div>
           )}
         <Loading loading={showLoading} />
-        {!showLoading
-          && <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
-        {filteredRecipesNumber
-          ? (
-            <RecipeGrid />
-          )
-          : null
-        }
+        {!showLoading && <CollectionsNav />}
+        {stateRecipeCount && <RecipeGrid isFoodBrandClickable />}
       </div>
     )
   }
 }
 
-export { MenuRecipes }

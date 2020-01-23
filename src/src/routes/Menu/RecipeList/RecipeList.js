@@ -15,13 +15,15 @@ class RecipeList extends React.PureComponent {
     collectionFilterChange: PropTypes.func,
     thematicName: PropTypes.string,
     deliveryDate: PropTypes.string,
+    isFoodBrandClickable: PropTypes.bool,
 
     recipes: PropTypes.instanceOf(Immutable.List).isRequired,
     browserType: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    filteredRecipeIds: Immutable.List([])
+    filteredRecipeIds: Immutable.List([]),
+    isFoodBrandClickable: true
   }
 
   static contextTypes = {
@@ -40,9 +42,11 @@ class RecipeList extends React.PureComponent {
     const { filteredRecipeIds, recipes } = this.props
     const { store } = this.context
 
+    const recipeIds = recipes.map(recipe => recipe.get('id'))
+
     store.dispatch(actions.trackRecipeOrderDisplayed(
       filteredRecipeIds.toJS(),
-      recipes.map(recipe => recipe.get('id')).toJS()
+      recipeIds.toJS()
     ))
   }
 
@@ -54,7 +58,8 @@ class RecipeList extends React.PureComponent {
       thematicName,
       isCurrentCollectionRecommendation,
       deliveryDate,
-      collectionFilterChange
+      collectionFilterChange,
+      isFoodBrandClickable
     } = this.props
 
     if (browserType === 'mobile') {
@@ -66,6 +71,7 @@ class RecipeList extends React.PureComponent {
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
           collectionFilterChange={collectionFilterChange}
+          isFoodBrandClickable={isFoodBrandClickable}
         />
       )
     }
@@ -79,6 +85,7 @@ class RecipeList extends React.PureComponent {
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
           collectionFilterChange={collectionFilterChange}
+          isFoodBrandClickable={isFoodBrandClickable}
         />
       )
     }
@@ -91,6 +98,7 @@ class RecipeList extends React.PureComponent {
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
         deliveryDate={deliveryDate}
         collectionFilterChange={collectionFilterChange}
+        isFoodBrandClickable={isFoodBrandClickable}
       />
     )
   }

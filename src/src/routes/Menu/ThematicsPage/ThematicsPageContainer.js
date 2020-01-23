@@ -1,21 +1,38 @@
 import { connect } from 'react-redux'
-import { getRecipeGroupFilter } from 'selectors/filters'
+import { push } from 'react-router-redux'
+import Immutable from 'immutable'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
-import { filterRecipeGrouping } from 'actions/filters'
 import { FilteredRecipePage } from '../FilteredRecipePage'
+import { getSortedRecipes } from '../selectors/sorting'
 
-const mapStateToProps = (state) => {
-  const selectedFoodBrand = getRecipeGroupFilter(state)
-  const collection = getCollectionDetailsBySlug(state, selectedFoodBrand.slug)
+const mapStateToProps = (state, ownProps) => {
+  const { params } = ownProps
 
+  const collection = getCollectionDetailsBySlug(state, params.slug)
+
+  if (!collection) {
+    return {
+      name: '',
+      description: '',
+      borderColor: '#FF0000',
+      recipes: Immutable.List([]),
+      isFoodBrandClickable: true
+    }
+  }
+  
+  const { recipes, recipeIds } = getSortedRecipes(state)(collection.get('id'))
+  
   return {
-    name: selectedFoodBrand.name,
-    description: collection && collection.get('description'),
-    borderColor: selectedFoodBrand.borderColor,
+    name: collection.get('shortTitle'),
+    description: collection.get('description'),
+    borderColor: collection.get('colour'),
+    recipes,
+    filteredRecipeIds: recipeIds,
+    isFoodBrandClickable: true
   }
 }
-const ThematicsPage = connect(mapStateToProps, {
-  removeRecipeFilter: () => filterRecipeGrouping(null, 'thematic'),
+const ThematicsPageContainer = connect(mapStateToProps, {
+  backToAllRecipes: () => push('/menu')
 })(FilteredRecipePage)
 
-export { ThematicsPage }
+export { ThematicsPageContainer }

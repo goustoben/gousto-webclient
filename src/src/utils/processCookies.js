@@ -78,10 +78,6 @@ const processCookies = (cookies, store) => {
   const subscriptionOption = getCookieStoreValue(cookies, 'basket_subscriptionOption')
   const collection = getCookieStoreValue(cookies, 'basket_collection')
   const currentCollectionId = getCookieStoreValue(cookies, 'filters_currentCollectionId')
-  const recipeGroupSlug = getCookieStoreValue(cookies, 'filters_recipeGroup_slug')
-  const recipeGroupName = getCookieStoreValue(cookies, 'filters_recipeGroup_name')
-  const recipeGroupBorderColor = getCookieStoreValue(cookies, 'filters_recipeGroup_borderColor')
-  const recipeGroupBorderLocation = getCookieStoreValue(cookies, 'filters_recipeGroup_location')
   const promoAgeVerified = getCookieStoreValue(cookies, 'promoAgeVerified')
   const tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy')
@@ -156,22 +152,6 @@ const processCookies = (cookies, store) => {
 
   if (currentCollectionId) {
     store.dispatch(filterActions.collectionFilterIdReceive(currentCollectionId))
-  }
-
-  if (recipeGroupSlug && recipeGroupName && recipeGroupBorderColor && recipeGroupBorderLocation) {
-    const recipeGroup = {
-      slug: recipeGroupSlug,
-      name: recipeGroupName,
-      borderColor: recipeGroupBorderColor,
-      location: recipeGroupBorderLocation
-    }
-
-    if (recipeGroupBorderLocation === 'foodBrand') {
-      store.dispatch(filterActions.currentFoodBrandChange(recipeGroup))
-    }
-    if (recipeGroupBorderLocation === 'thematic') {
-      store.dispatch(filterActions.currentThematicChange(recipeGroup))
-    }
   }
 
   if (!orderId) {

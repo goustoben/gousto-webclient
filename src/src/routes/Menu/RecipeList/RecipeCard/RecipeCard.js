@@ -24,9 +24,9 @@ const getRecipeView = (isFeatured, isFineDineIn) => {
 }
 
 const RecipeCard = ({
-  recipe, index, showDetailRecipe, isFeatured,
+  recipe, index, showDetailRecipe, isFeatured, isFoodBrandClickable,
 
-  numPortions, cutoffDate, features, allRecipesList, recipesStore, browserType
+  numPortions, cutoffDate, features, allRecipesList, recipesStore, browserType,
 }) => {
   if (!recipe) {
     return null
@@ -62,6 +62,7 @@ const RecipeCard = ({
       tasteScore={recipe.getIn(['recommendationData', 'score'])}
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
+      isFoodBrandClickable={isFoodBrandClickable}
     />
   )
 }
@@ -81,7 +82,8 @@ RecipeCard.propTypes = {
   allRecipesList: PropTypes.instanceOf(Immutable.List).isRequired,
   isFeatured: PropTypes.bool,
   cutoffDate: PropTypes.string,
-  browserType: PropTypes.string.isRequired
+  browserType: PropTypes.string.isRequired,
+  isFoodBrandClickable: PropTypes.bool.isRequired
 }
 
 export { RecipeCard }
