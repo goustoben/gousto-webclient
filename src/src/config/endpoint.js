@@ -21,7 +21,7 @@ const getPath = (service, isServerSide, environment, version) => {
     return `/${service}/${version}`
   }
 
-  if (isServerSide) {
+  if (isServerSide && service !== 'menu') {
     return ''
   }
 
@@ -57,7 +57,7 @@ const getSubdomain = (service, isServerSide, environment) => {
     return 'api'
   }
 
-  if (isServerSide) {
+  if (isServerSide && service !== 'menu') {
     return `${environment}-${service}`
   }
 
