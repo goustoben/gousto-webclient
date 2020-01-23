@@ -2,8 +2,8 @@ import Immutable from 'immutable'
 import { menuServiceConfig } from 'config/menuService'
 import { actionTypes } from '../actionTypes'
 
-const mockGetAvailableDates = jest.fn()
-const mockGetRecipeStock = jest.fn()
+const mockFetchAvailableDates = jest.fn()
+const mockFetchRecipeStock = jest.fn()
 const mockLimitReached = jest.fn()
 const mockGetCutoffDateTime = jest.fn()
 
@@ -12,9 +12,12 @@ const mockDispatchLoadRecipesForAllCollections = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
 
-jest.mock('apis/data', () => ({
-  getAvailableDates: mockGetAvailableDates,
-  getRecipeStock: mockGetRecipeStock
+jest.mock('apis/deliveries', () => ({
+  fetchAvailableDates: mockFetchAvailableDates
+}))
+
+jest.mock('apis/recipes', () => ({
+  fetchRecipeStock: mockFetchRecipeStock
 }))
 
 jest.mock('utils/basket', () => ({
@@ -32,14 +35,6 @@ jest.mock('actions/menuCollections', () => ({
   loadRecipesForAllCollections: () => {
     return mockDispatchLoadRecipesForAllCollections
   }
-}))
-
-jest.mock('apis/recipes', () => ({
-  fetchRecipes: jest.fn().mockImplementation(() => {
-    const getData = async () => ({ data: [{ id: '1234' }] })
-
-    return getData()
-  })
 }))
 
 jest.mock('actions/menuServiceLoadDays', () => ({
@@ -83,19 +78,14 @@ describe('menu actions', () => {
   const initialValue = menuServiceConfig.enabled
 
   beforeEach(() => {
-    mockGetAvailableDates.mockResolvedValue([
-      { until: '2019-09-17T00:00:00+01:00' },
-      { until: '2019-10-22T00:00:00+01:00' }
-    ])
-
-    mockGetRecipeStock.mockResolvedValue({
+    mockFetchRecipeStock.mockResolvedValue({ data: {
       '001': {
         recipeId: '001',
         committed: '1',
         number: '53',
         familyNumber: '100'
       }
-    })
+    }})
   })
 
   afterEach(() => {
@@ -160,32 +150,65 @@ describe('menu actions', () => {
   })
 
   describe('menuLoadDays', () => {
-    const menuLoadDaysAction = menuActions.menuLoadDays()
-    describe('with menuService turned off', () => {
-      test('should call getAvailable with the access token', async () => {
-        await menuLoadDaysAction(dispatch, getState)
+    beforeEach(() => {
+      mockFetchAvailableDates.mockResolvedValue({ data: [
+        { until: '2019-09-17T00:00:00+01:00' },
+        { until: '2019-10-22T00:00:00+01:00' }
+      ]})
+    })
 
-        expect(mockGetAvailableDates).toHaveBeenCalledWith('test', false)
+    describe('given menuService turned off', () => {
+      beforeEach(() => {
+        menuServiceConfig.isEnabled = false
       })
 
-      test('should dispatch an action with the until value of the last date', async () => {
-        await menuLoadDaysAction(dispatch, getState)
+      describe('when call `menuLoadDays`', () => {
+        beforeEach(async () => {
+          await menuActions.menuLoadDays()(dispatch, getState)
+        })
 
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
-          cutoffUntil: '2019-10-22T00:00:00+01:00'
+        test('then should have called `fetchAvailableDates` with access token', () => {
+          expect(mockFetchAvailableDates).toHaveBeenCalledWith('test')
+        })
+
+        test('then should not have called `loadDays`', () => {
+          expect(mockMenuServiceLoadDays).not.toHaveBeenCalled()
+        })
+
+        test('then should dispatch action with until value of the last date', () => {
+          expect(dispatch).toHaveBeenCalledWith({
+            type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
+            cutoffUntil: '2019-10-22T00:00:00+01:00'
+          })
         })
       })
     })
 
-    describe('with menuService turned off', () => {
-      test('should call menuServiceLoadDays', async () => {
+    describe('given menuService turned on', () => {
+      beforeEach(() => {
         menuServiceConfig.isEnabled = true
-        await menuLoadDaysAction(dispatch, getState)
+      })
 
-        expect(mockMenuServiceLoadDays).toHaveBeenCalled()
-
+      afterEach(() => {
         menuServiceConfig.isEnabled = false
+      })
+
+      describe('when call `menuLoadDays`', () => {
+        beforeEach(async () => {
+          await menuActions.menuLoadDays()(dispatch, getState)
+        })
+
+        test('then should have called `loadDays`', () => {
+          expect(mockMenuServiceLoadDays).toHaveBeenCalled()
+        })
+
+        test('then should not have called `fetchAvailableDates`', () => {
+          expect(mockFetchAvailableDates).not.toHaveBeenCalled()
+        })
+
+        test('then should not have dispatched value', () => {
+          expect(dispatch).not.toHaveBeenCalled()
+        })
       })
     })
   })

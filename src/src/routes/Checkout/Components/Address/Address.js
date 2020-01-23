@@ -5,7 +5,7 @@ import { Button } from 'goustouicomponents'
 import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
-import { getDeliveryDays } from 'apis/data/deliveryDays'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import DeliveryInfo from './DeliveryInfo'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
@@ -129,14 +129,9 @@ class Address extends React.PureComponent {
 
     if (deliveryDate) {
       try {
-        let days = await getDeliveryDays(
-          null,
-          postcode,
-          moment().startOf('day').toISOString(),
-          menuCutoffUntil || menuCutoffUntilFallback,
-          isNDDExperiment,
-          deliveryTariffId,
-        )
+        const cutOfFrom = moment().startOf('day').toISOString()
+        const cutOfUntil = menuCutoffUntil || menuCutoffUntilFallback
+        let { data: days } = await fetchDeliveryDays(null, cutOfFrom, cutOfUntil, isNDDExperiment, deliveryTariffId, postcode)
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)

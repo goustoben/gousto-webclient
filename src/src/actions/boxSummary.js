@@ -1,4 +1,4 @@
-import { getDeliveryDays } from 'apis/data/deliveryDays'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import { getNDDFeatureValue, getHideBoxSummary } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'
@@ -71,30 +71,29 @@ const actions = {
 
   boxSummaryDeliveryDaysLoad: (cutoffDatetimeFrom, cutoffDatetimeUntil) => (
     async (dispatch, getState) => {
+      const state = getState()
+      const { auth, basket, menuCutoffUntil, user } = state
+
       dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false))
 
-      const postcode = getState().basket.get('postcode') || null
+      const postcode = basket.get('postcode') || null
       const cutoffUntil = cutoffDatetimeUntil
         ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
-        : getState().menuCutoffUntil
+        : menuCutoffUntil
 
       const isNDDExperiment = getNDDFeatureFlagVal(getState())
 
       try {
-        let days = await getDeliveryDays(
-          getState().auth.get('accessToken'),
-          postcode,
-          moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),
-          cutoffUntil,
-          isNDDExperiment,
-          getDeliveryTariffId(getState().user, getNDDFeatureValue(getState())),
-        )
+        const accessToken = auth.get('accessToken')
+        const cutoffDatetimeFromFormatted = moment.utc(cutoffDatetimeFrom).startOf('day').toISOString()
+        const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
+        let { data: days } = await fetchDeliveryDays(accessToken, cutoffDatetimeFromFormatted, cutoffUntil, isNDDExperiment, deliveryTariffId, postcode)
 
         if (isNDDExperiment) {
           days = transformDaySlotLeadTimesToMockSlots(days)
         }
 
-        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, getUsersOrdersDaySlotLeadTimeIds(getState()))
+        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, getUsersOrdersDaySlotLeadTimeIds(state))
 
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
       } catch (err) {

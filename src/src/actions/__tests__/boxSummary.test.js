@@ -25,96 +25,124 @@ deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
 
 describe('boxSummary actions', () => {
   describe('boxSummaryDeliveryDaysLoad', () => {
-    const from = '2017-12-05'
-    const to = '2017-12-30'
-    const getStateArgs = {
-      auth: Immutable.fromJS({ accessToken: 'access token' }),
-      basket: Immutable.fromJS({}),
-    }
+    describe('given postcode is provided in state', () => {
+      const dispatchSpy = jest.fn()
+      const getStateSpy = jest.fn()
 
-    const dispatchSpy = jest.fn()
-
-    test('should fetch delivery days with menu cutoff date', async () => {
+      const accessToken = 'access token'
+      const postcode = 'RM14 1DL'
       const menuCutoffUntil = '2017-12-30T00:00:00.000Z'
-      const expectedRequestData = {
-        'direction': 'asc',
-        'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
-        'filters[cutoff_datetime_until]': menuCutoffUntil,
-        'sort': 'date',
-        'ndd': 'false',
-        'delivery_tariff_id': deliveriesUtils.deliveryTariffTypes.NON_NDD,
-      }
+      let state
 
-      const getStateSpy = jest.fn().mockReturnValue({
-        ...getStateArgs,
-        menuCutoffUntil,
-        features: Immutable.fromJS({
-          ndd: {
-            value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
-            experiment: false,
-          }
+      beforeEach(() => {
+        state = {
+          auth: Immutable.fromJS({ accessToken }),
+          basket: Immutable.fromJS({ postcode }),
+          menuCutoffUntil
         }
-        ),
       })
 
-      await boxSummary.boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
+      describe('and NDD is not enabled', () => {
+        const deliveryTariffId = deliveriesUtils.deliveryTariffTypes.NON_NDD
 
-      expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
-      expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
-    })
+        beforeEach(() => {
+          state.features = Immutable.fromJS({
+            ndd: {
+              value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
+              experiment: false,
+            }
+          })
 
-    test('should fetch delivery days with requested cut off dates', async () => {
-      const expectedRequestData = {
-        'direction': 'asc',
-        'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
-        'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
-        'sort': 'date',
-        'ndd': 'false',
-        'delivery_tariff_id': deliveriesUtils.deliveryTariffTypes.NON_NDD,
-      }
+          getStateSpy.mockReturnValue(state)
+        })
 
-      const getStateSpy = jest.fn().mockReturnValue({
-        ...getStateArgs,
-        features: Immutable.fromJS({
-          ndd: {
-            value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
-            experiment: false,
-          }
-        }
-        ),
+        describe('when `boxSummaryDeliveryDaysLoad` is called with only `cutoffDatetimeFrom`', () => {
+          const from = '2017-12-05'
+          const menuCutoffFrom = '2017-12-05T00:00:00.000Z'
+
+          beforeEach(async () => {
+            await boxSummary.boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
+          })
+
+          test('the `fetchDeliveryDays` was called with correct parameters', () => {
+            expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', menuCutoffFrom, menuCutoffUntil, false, deliveryTariffId, postcode)
+          })
+
+          test('then `transformDaySlotLeadTimesToMockSlots` should not have been called', () => {
+            expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('when `boxSummaryDeliveryDaysLoad` is called with `cutoffDatetimeFrom` and `cutoffDatetimeUntil`', () => {
+          const from = '2017-12-05'
+          const until = '2018-12-05'
+          const menuCutoffFrom = '2017-12-05T00:00:00.000Z'
+          const providedenuCutoffUntil = '2018-12-05T23:59:59.999Z'
+
+          beforeEach(async () => {
+            await boxSummary.boxSummaryDeliveryDaysLoad(from, until)(dispatchSpy, getStateSpy)
+          })
+
+          test('the `fetchDeliveryDays` was called with correct parameters', () => {
+            expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', menuCutoffFrom, providedenuCutoffUntil, false, deliveryTariffId, postcode)
+          })
+
+          test('then `transformDaySlotLeadTimesToMockSlots` should not have been called', () => {
+            expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
+          })
+        })
       })
 
-      await boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)
+      describe('and NDD is enabled', () => {
+        const deliveryTariffId = deliveriesUtils.deliveryTariffTypes.FREE_NDD
 
-      expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
-      expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
-    })
+        beforeEach(() => {
+          state.features = Immutable.fromJS({
+            ndd: {
+              value: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
+              experiment: false,
+            }
+          })
 
-    test('should fetch next day delivery days with requested cut off dates when feature flag is enabled', async () => {
-      const expectedRequestData = {
-        'direction': 'asc',
-        'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
-        'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
-        'sort': 'date',
-        'ndd': 'true',
-        'delivery_tariff_id': deliveriesUtils.deliveryTariffTypes.FREE_NDD,
-      }
+          getStateSpy.mockReturnValue(state)
+        })
 
-      const getStateSpy = jest.fn().mockReturnValue({
-        ...getStateArgs,
-        features: Immutable.fromJS({
-          ndd: {
-            value: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
-            experiment: false,
-          }
-        }
-        ),
+        describe('when `boxSummaryDeliveryDaysLoad` is called with only `cutoffDatetimeFrom`', () => {
+          const from = '2017-12-05'
+          const menuCutoffFrom = '2017-12-05T00:00:00.000Z'
+
+          beforeEach(async () => {
+            await boxSummary.boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
+          })
+
+          test('the `fetchDeliveryDays` was called with correct parameters', () => {
+            expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', menuCutoffFrom, menuCutoffUntil, true, deliveryTariffId, postcode)
+          })
+
+          test('then `transformDaySlotLeadTimesToMockSlots` should have been called', () => {
+            expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+          })
+        })
+
+        describe('when `boxSummaryDeliveryDaysLoad` is called with `cutoffDatetimeFrom` and `cutoffDatetimeUntil`', () => {
+          const from = '2017-12-05'
+          const until = '2018-12-05'
+          const menuCutoffFrom = '2017-12-05T00:00:00.000Z'
+          const providedenuCutoffUntil = '2018-12-05T23:59:59.999Z'
+
+          beforeEach(async () => {
+            await boxSummary.boxSummaryDeliveryDaysLoad(from, until)(dispatchSpy, getStateSpy)
+          })
+
+          test('the `fetchDeliveryDays` was called with correct parameters', () => {
+            expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', menuCutoffFrom, providedenuCutoffUntil, true, deliveryTariffId, postcode)
+          })
+
+          test('then `transformDaySlotLeadTimesToMockSlots` should have been called', () => {
+            expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+          })
+        })
       })
-
-      await boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)
-
-      expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
-      expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
     })
   })
 

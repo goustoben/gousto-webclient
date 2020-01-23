@@ -10,7 +10,7 @@ import {
   updateOrderAddress,
 } from 'apis/orders'
 
-import { getDeliveryDays } from 'apis/data/deliveryDays'
+import { fetchDeliveryDays } from 'apis/deliveries'
 import * as userApi from 'apis/user'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
@@ -394,22 +394,17 @@ export const orderAddressChange = (orderId, addressId) => (
 
 export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, addressId, orderId) => (
   async (dispatch, getState) => {
+    const state = getState()
+    const { user } = state
     dispatch(statusActions.error(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
 
-    const postcode = getState().user.getIn(['addresses', addressId, 'postcode'])
-    const isNDDExperiment = getNDDFeatureFlagVal(getState()) ? true : false
-    const deliveryTariffId = getDeliveryTariffId(getState().user, getNDDFeatureValue(getState()))
+    const postcode = user.getIn(['addresses', addressId, 'postcode'])
+    const isNDDExperiment = getNDDFeatureFlagVal(state) ? true : false
+    const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
 
     try {
-      let days = await getDeliveryDays(
-        null,
-        postcode,
-        cutoffDatetimeFrom,
-        cutoffDatetimeUntil,
-        isNDDExperiment,
-        deliveryTariffId,
-      )
+      let { data: days } = await fetchDeliveryDays(null, cutoffDatetimeFrom, cutoffDatetimeUntil, isNDDExperiment, deliveryTariffId, postcode)
 
       if (isNDDExperiment) {
         days = transformDaySlotLeadTimesToMockSlots(days)

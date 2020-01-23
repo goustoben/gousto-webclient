@@ -83,26 +83,6 @@ describe('basket reducer', function () {
     })
   })
 
-  describe('BASKET_RECIPES_CLEAR action type', function () {
-    test('should only clear recipes', function () {
-      const state = Immutable.fromJS({ date: '2016-08-09', recipes: { r1: 1, r2: 3 } })
-      const result = basket(state, { type: 'BASKET_RECIPES_CLEAR' })
-      const expected = Immutable.fromJS({ date: '2016-08-09', recipes: {} })
-
-      expect(Immutable.is(result, expected)).toEqual(true)
-    })
-  })
-
-  describe('BASKET_RECIPES_POSITIONS_CLEAR action type', function () {
-    test('should only clear recipes positions', function () {
-      const state = Immutable.fromJS({ recipesPositions: [{ 3: { position: 4, collection: 'all-recipes' } }] })
-      const result = basket(state, { type: 'BASKET_RECIPES_POSITIONS_CLEAR' })
-      const expected = Immutable.fromJS({ recipesPositions: [] })
-
-      expect(Immutable.is(result, expected)).toEqual(true)
-    })
-  })
-
   describe('BASKET_GIFT_ADD action type', function () {
     test('should increment count for gift id in gifts list by 1', function () {
       const action = {
@@ -297,6 +277,43 @@ describe('basket reducer', function () {
     })
   })
 
+  describe('BASKET_RECIPES_INITIALISE action type', () => {
+    describe('given an initial state with recipes', () => {
+      beforeEach(() => {
+        initialState = Immutable.Map({
+          recipes: Immutable.Map({ 345: 3 }),
+          other: 'data'
+        })
+      })
+
+      describe('when reducer is passed `BASKET_RECIPES_INITIALISE` action', () => {
+        let result
+        const recipes = { 123: 1, 234: 2 }
+        const recipesPositions = [{ 123: { data: 'here' } }]
+
+        beforeEach(() => {
+          const action = {
+            type: actionTypes.BASKET_RECIPES_INITIALISE,
+            recipes,
+            recipesPositions
+          }
+
+          result = basket(initialState, action)
+        })
+
+        test('then the new state should overwrite the recipes and recipesPositions', () => {
+          const expectedState = Immutable.Map({
+            recipes: Immutable.Map(recipes),
+            recipesPositions: Immutable.fromJS(recipesPositions),
+            other: 'data'
+          })
+
+          expect(Immutable.is(result, expectedState)).toBeTruthy()
+        })
+      })
+    })
+  })
+
   describe('BASKET_RECIPE_ADD action type', function () {
     test('should put recipe in recipes list if incrementing and WAS NOT there before', function () {
       const action = {
@@ -307,10 +324,15 @@ describe('basket reducer', function () {
       initialState = Immutable.Map({
         recipes: Immutable.Map({}),
       })
+      const expected = Immutable.Map({
+        recipes: Immutable.Map({
+          123: 1
+        })
+      })
 
       const result = basket(initialState, action)
 
-      expect(Immutable.is(result, Immutable.Map({ recipes: Immutable.Map({ 123: 1 }) }))).toEqual(true)
+      expect(Immutable.is(result, expected)).toBeTruthy()
     })
 
     test('should put recipe in recipes list if incrementing and WAS there before', function () {
@@ -322,10 +344,13 @@ describe('basket reducer', function () {
       initialState = Immutable.Map({
         recipes: Immutable.Map({ 123: 2 }),
       })
+      const expected = Immutable.Map({
+        recipes: Immutable.Map({ 123: 3 }),
+      })
 
       const result = basket(initialState, action)
 
-      expect(Immutable.is(result, Immutable.Map({ recipes: Immutable.Map({ 123: 3 }) }))).toEqual(true)
+      expect(Immutable.is(result, expected)).toBeTruthy()
     })
   })
 

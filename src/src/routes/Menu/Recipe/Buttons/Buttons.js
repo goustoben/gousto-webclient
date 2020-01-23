@@ -153,7 +153,7 @@ class Buttons extends React.Component {
     } = this.props
     if (!disable) {
       if (stock !== null) {
-        onAdd(recipeId, view, false, { position: position, score: score })
+        onAdd(recipeId, view, { position: position, score: score })
       } else if (config.recipeDetailViews.includes(view)) {
         menuRecipeDetailVisibilityChange(false)
         setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)

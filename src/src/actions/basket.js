@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 
 import basketActions from 'actions/basket'
 import pricingActions from 'actions/pricing'
-import { limitReached } from 'utils/basket'
+import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
 import config from 'config'
@@ -305,79 +305,78 @@ export const basketStepsOrderReceive = stepsOrder => ({
   stepsOrder,
 })
 
-export const basketRecipesClear = () => ({
-  type: actionTypes.BASKET_RECIPES_CLEAR,
-})
+export const basketRecipesInitialise = (recipes, recipesPositions) => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.BASKET_RECIPES_INITIALISE,
+    recipes,
+    recipesPositions
+  })
 
-export const basketRecipesPositionsClear = () => ({
-  type: actionTypes.BASKET_RECIPES_POSITIONS_CLEAR,
-})
+  const { basket } = getState()
+  const reachedLimit = naiveLimitReached(basket)
+  dispatch({
+    type: actionTypes.BASKET_LIMIT_REACHED,
+    limitReached: reachedLimit,
+  })
 
-export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum) => (
+  dispatch(pricingActions.pricingRequest())
+}
+
+export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
   (dispatch, getState) => {
-    const numPortions = getState().basket.get('numPortions')
+    const state = getState()
+    const { basket, menuRecipeStock, menuRecipes } = state
+    const numPortions = basket.get('numPortions')
 
-    if (force) {
-      dispatch({
-        type: actionTypes.BASKET_RECIPE_ADD,
+    let reachedLimit = limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum)
+    const outOfStock = isOutOfStock(recipeId, numPortions, menuRecipeStock)
+    if(reachedLimit || outOfStock) {
+      return
+    }
+
+    const collection = getCurrentCollectionId(state)
+    if (recipeInfo) {
+      Object.assign(recipeInfo, { collection })
+    }
+
+    const selectedFoodBrand = getRecipeGroupFilter(state)
+    dispatch({
+      type: actionTypes.BASKET_RECIPE_ADD,
+      recipeId,
+      ...recipeInfo,
+      trackingData: {
+        actionType: 'Recipe Added',
         recipeId,
-        ...recipeInfo,
-      })
-      const { basket, menuRecipes, menuRecipeStock } = getState()
-      const reachedLimit = limitReached(basket, menuRecipes, menuRecipeStock, true)
+        view,
+        position: recipeInfo && recipeInfo.position,
+        collection,
+        source: !!selectedFoodBrand && selectedFoodBrand.slug,
+        recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
+      },
+    })
+
+    dispatch({
+      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+      stock: {
+        [recipeId]: {
+          [numPortions]: -1,
+        },
+      },
+    })
+
+    const {basket: newBasket, menuRecipes: newMenuRecipes, menuRecipeStock: newMenuRecipeStock} = getState()
+    reachedLimit = limitReached(newBasket, newMenuRecipes, newMenuRecipeStock, undefined, maxRecipesNum)
+    if (reachedLimit) {
       dispatch({
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
+        trackingData: {
+          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          limitReached: reachedLimit,
+          view,
+          source: actionTypes.RECIPE_ADDED,
+        },
       })
-    } else {
-      let state = getState()
-      const outOfStock = isOutOfStock(recipeId, numPortions, getState().menuRecipeStock)
-      const { basket, menuRecipeStock, menuRecipes } = state
-      const selectedFoodBrand = getRecipeGroupFilter(state)
-      if (!limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum) && !outOfStock) {
-        if (recipeInfo) {
-          Object.assign(recipeInfo, { collection: getCurrentCollectionId(state) })
-        }
-
-        dispatch({
-          type: actionTypes.BASKET_RECIPE_ADD,
-          recipeId,
-          ...recipeInfo,
-          trackingData: {
-            actionType: 'Recipe Added',
-            recipeId,
-            view,
-            position: recipeInfo && recipeInfo.position,
-            collection: getCurrentCollectionId(state),
-            source: !!selectedFoodBrand && selectedFoodBrand.slug,
-            recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
-          },
-        })
-
-        dispatch({
-          type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-          stock: {
-            [recipeId]: {
-              [numPortions]: -1,
-            },
-          },
-        })
-        state = getState()
-
-        const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, undefined, maxRecipesNum)
-        if (reachedLimit) {
-          dispatch({
-            type: actionTypes.BASKET_LIMIT_REACHED,
-            limitReached: reachedLimit,
-            trackingData: {
-              actionType: actionTypes.BASKET_LIMIT_REACHED,
-              limitReached: reachedLimit,
-              view,
-              source: actionTypes.RECIPE_ADDED,
-            },
-          })
-        }
-      }
     }
 
     dispatch(pricingActions.pricingRequest())
@@ -828,8 +827,7 @@ export const actions = {
   basketPostcodeClear,
   basketAddressChange,
   basketStepsOrderReceive,
-  basketRecipesClear,
-  basketRecipesPositionsClear,
+  basketRecipesInitialise,
   basketRecipeAdd,
   basketRecipeRemove,
   basketSlotChange,

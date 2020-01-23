@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, getOrderDetails } from 'utils/basket'
 import * as basketProductLimits from 'utils/basketProductLimits'
 import { getSlot } from 'utils/deliveries'
+import { naiveLimitReached } from '../basket'
 
 jest.mock('utils/basketProductLimits', () => ({
   getAllBasketProducts: jest.fn(),
@@ -125,6 +126,109 @@ describe('basket utils', function () {
 
       const result = okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions)
       expect(Immutable.is(result, Immutable.Map({ 456: 3 }))).toBe(true)
+    })
+  })
+
+  describe('naiveLimitReached', () => {
+    describe('given an empty basket of recipes', () => {
+      let basket
+
+      beforeEach(() => {
+        basket = Immutable.fromJS({
+          recipes: Immutable.Map({ }),
+          numPortions: 2,
+        })
+      })
+
+      describe('when check if limit reached', () => {
+        let result
+
+        beforeEach(() => {
+          result = naiveLimitReached(basket)
+        })
+
+        test('should equal false', () => {
+          expect(result).toBeFalsy()
+        })
+      })
+    })
+
+    describe('given a basket of less than the default maximum recipes', () => {
+      let basket
+
+      beforeEach(() => {
+        basket = Immutable.fromJS({
+          recipes: Immutable.Map({ 456: 2 }),
+          numPortions: 2,
+        })
+      })
+
+      describe('when check if limit reached', () => {
+        let result
+
+        beforeEach(() => {
+          result = naiveLimitReached(basket)
+        })
+
+        test('should equal false', () => {
+          expect(result).toBeFalsy()
+        })
+      })
+    })
+
+    describe('given a basket of greater than the default maximum recipes', () => {
+      let basket
+
+      beforeEach(() => {
+        basket = Immutable.fromJS({
+          recipes: Immutable.Map({ 456: 5 }),
+          numPortions: 4,
+        })
+      })
+
+      describe('when check if limit reached', () => {
+        let result
+
+        beforeEach(() => {
+          result = naiveLimitReached(basket)
+        })
+
+        test('should equal false', () => {
+          expect(result).toBeTruthy()
+        })
+      })
+    })
+
+    describe('given a basket of 6 recipes', () => {
+      let basket
+      let result
+
+      beforeEach(() => {
+        basket = Immutable.fromJS({
+          recipes: Immutable.Map({ 456: 4, 567: 2 }),
+          numPortions: 2,
+        })
+      })
+
+      describe('when check limit of 7 recipes', () => {
+        beforeEach(() => {
+          result = naiveLimitReached(basket, 7)
+        })
+
+        test('should equal false', () => {
+          expect(result).toBeFalsy()
+        })
+      })
+
+      describe('when check limit of 4 recipes', () => {
+        beforeEach(() => {
+          result = naiveLimitReached(basket, 4)
+        })
+
+        test('should equal true', () => {
+          expect(result).toBeTruthy()
+        })
+      })
     })
   })
 

@@ -178,12 +178,11 @@ const basket = {
       return state.set('promoCodeUrl', action.promoCodeUrl)
     }
 
-    case actionTypes.BASKET_RECIPES_CLEAR: {
-      return state.set('recipes', Immutable.fromJS({}))
-    }
+    case actionTypes.BASKET_RECIPES_INITIALISE: {
+      const { recipes, recipesPositions } = action
 
-    case actionTypes.BASKET_RECIPES_POSITIONS_CLEAR: {
-      return state.set('recipesPositions', Immutable.List([]))
+      return state.set('recipes', Immutable.Map(recipes))
+        .set('recipesPositions', Immutable.fromJS(recipesPositions))
     }
 
     case actionTypes.BASKET_RECIPE_ADD: {

@@ -43,30 +43,32 @@ export function getOrderDetails(basket, deliveryDays) {
 }
 
 export function okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions) {
-  const notOnMenuRecipes = recipes.filter((recipe, recipeId) => !menuRecipes.contains(recipeId))
+  const notOnMenuRecipes = recipes.filter((_, recipeId) => !menuRecipes.contains(recipeId))
 
   const outOfStockRecipes = recipes
-    .map((recipe, recipeId) => [menuRecipeStock.get(recipeId), recipeId])
+    .map((_, recipeId) => [menuRecipeStock.get(recipeId), recipeId])
     .filter(([stock, recipeId]) => !stock || ((stock.get(String(numPortions), 0) + (recipes.get(recipeId) * numPortions)) <= config.menu.stockThreshold))
 
   const unavailableRecipes = notOnMenuRecipes.merge(outOfStockRecipes)
 
-  const okRecipesList = recipes.filter((recipe, recipeId) => !unavailableRecipes.has(recipeId))
+  const okRecipesList = recipes.filter((_, recipeId) => !unavailableRecipes.has(recipeId))
 
   return okRecipesList
 }
 
-export function limitReached(basket, menuRecipes, menuRecipeStock, naive, maxRecipesNum) {
-  let recipeCount
+export const naiveLimitReached = (basket, maxRecipesNum = config.basket.maxRecipesNum) => basketSum(basket.get('recipes')) >= maxRecipesNum
 
-  if (naive) {
-    recipeCount = basketSum(basket.get('recipes'))
-  } else {
-    const okRecipeIds = okRecipes(basket.get('recipes'), menuRecipes, menuRecipeStock, basket.get('numPortions'))
-    recipeCount = basketSum(okRecipeIds)
+export function limitReached(basket, menuRecipes, menuRecipeStock, naive = false, maxRecipesNum = config.basket.maxRecipesNum) {
+  if(naive) {
+    return naiveLimitReached(basket, maxRecipesNum)
   }
 
-  return recipeCount >= (maxRecipesNum || config.basket.maxRecipesNum)
+  const recipes = basket.get('recipes')
+  const numPortions = basket.get('numPortions')
+  const okRecipeIds = okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions)
+  const recipeCount = basketSum(okRecipeIds)
+
+  return recipeCount >= maxRecipesNum
 }
 
 export function getProductsQtyInCategory(categoryId, basket, products, includeGiftProducts = true) {

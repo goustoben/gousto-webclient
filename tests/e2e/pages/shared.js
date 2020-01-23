@@ -62,12 +62,7 @@ module.exports = {
             .then(function ({ data }) {
               const availableDays = data.pop().until
 
-              return webclient.apis.fetchDeliveryDays('', {
-                'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
-                'filters[cutoff_datetime_until]': availableDays,
-                sort: 'date',
-                direction: 'asc',
-              })
+              return webclient.apis.fetchDeliveryDays('', cutoffDatetimeFrom, availableDays, false, null)
             }).then(function ({ data }) {
               const availableDeliveryDays = webclient.getAvailableDeliveryDays(data, cutoffDatetimeFrom)
               const immutableDays = Immutable.fromJS(availableDeliveryDays)

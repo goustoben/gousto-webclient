@@ -1,3 +1,5 @@
+# Production deploy? [Make sure you create a merge commit - don't squash!](https://gousto.atlassian.net/wiki/spaces/~484404164/pages/1378615425/How+and+Why+to+Squash+and+Merge)
+
 ## Description
 Motivation behind those changes are coming from the following [JIRA ticket](http://gousto.atlassian.net/browse/TECH-XXXX)
 <!--- If applicable describe your changes in this section -->

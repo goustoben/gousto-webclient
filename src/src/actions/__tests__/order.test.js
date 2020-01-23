@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 
+import { fetchDeliveryDays } from 'apis/deliveries'
 import {
   saveOrder,
   fetchOrder,
@@ -11,7 +12,6 @@ import {
 import actionStatus from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
 import { getOrderDetails } from 'utils/basket'
-import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { saveUserOrder, updateUserOrder } from 'apis/user'
@@ -200,12 +200,9 @@ describe('order actions', () => {
       ))
       await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
 
-      expect(pending).toHaveBeenCalled()
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[0][1]).toBe(true)
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[1][1]).toBe(false)
-      expect(pending.mock.calls.length).toBe(2)
+      expect(pending).toHaveBeenCalledTimes(2)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', false)
     })
 
     test('should mark ORDER_SAVE as errored if it errors', async () => {
@@ -215,26 +212,18 @@ describe('order actions', () => {
       ))
       await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
 
-      expect(pending).toHaveBeenCalled()
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[0][1]).toBe(true)
-      expect(pending.mock.calls[1][0]).toEqual('BASKET_CHECKOUT')
-      expect(pending.mock.calls[1][1]).toBe(false)
-      expect(pending.mock.calls[2][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[2][1]).toBe(false)
+      expect(pending).toHaveBeenCalledTimes(3)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
+      expect(pending).toHaveBeenNthCalledWith(2, 'BASKET_CHECKOUT', false)
+      expect(pending).toHaveBeenNthCalledWith(3, 'ORDER_SAVE', false)
 
       expect(error).toHaveBeenCalledTimes(2)
-      expect(error.mock.calls[0][0]).toEqual('ORDER_SAVE')
-      expect(error.mock.calls[0][1]).toBe(null)
-      expect(error.mock.calls[1][0]).toEqual('ORDER_SAVE')
-      expect(error.mock.calls[1][1]).toEqual(err.message)
+      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', null)
+      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', err.message)
       expect(dispatch.mock.calls.length).toEqual(5)
     })
 
     test('should map the arguments through to saveOrder correctly', async () => {
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
-
-      expect(saveOrder).toHaveBeenCalledTimes(1)
       const order = {
         recipe_choices: [
           { id: 1, type: 'Recipe', quantity: 3 },
@@ -248,9 +237,11 @@ describe('order actions', () => {
         delivery_day_id: 3,
         day_slot_lead_time_id: 'day-slot-lead-time-uuid'
       }
-      expect(saveOrder.mock.calls[0][0]).toEqual('access-token')
-      expect(saveOrder.mock.calls[0][1]).toEqual('12345')
-      expect(saveOrder.mock.calls[0][2]).toEqual(order)
+
+      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+      expect(saveOrder).toHaveBeenCalledTimes(1)
+      expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)
     })
 
     test('should redirect the user to the order summary page if it succeeds', async () => {
@@ -329,21 +320,16 @@ describe('order actions', () => {
         recipes: ['recipe-id-1', 'recipe-id-2']
       })
 
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
-      expect(pending.mock.calls[1][1]).toBe(false)
-
-      expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
-      expect(error.mock.calls[0][1]).toBe(null)
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', false)
+      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', null)
     })
 
     test('status is set to pending and no error', async () => {
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
-      expect(pending).toHaveBeenCalled()
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
-      expect(pending.mock.calls[0][1]).toBe(true)
 
-      expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
-      expect(error.mock.calls[0][1]).toBe(null)
+      expect(pending).toHaveBeenCalledTimes(2)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', true)
+      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', null)
     })
 
     test('returns an order ID and url', async () => {
@@ -358,8 +344,7 @@ describe('order actions', () => {
         checkoutOrderApiParams
       )(dispatch, getState)
 
-      expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
-      expect(error.mock.calls[0][1]).toBe(null)
+      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_CHECKOUT', null)
 
       expect(result).toEqual({
         orderId: '123',
@@ -375,11 +360,8 @@ describe('order actions', () => {
 
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
-      expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
-      expect(error.mock.calls[1][1]).toBe('error api')
-
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
-      expect(pending.mock.calls[1][1]).toBe(false)
+      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', 'error api')
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', false)
     })
 
     test('throw an error when orderId is not present in the response', async () => {
@@ -394,8 +376,7 @@ describe('order actions', () => {
         checkoutOrderApiParams
       )(dispatch, getState)
 
-      expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
-      expect(error.mock.calls[1][1]).toBe('Error when saving the order')
+      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', 'Error when saving the order')
     })
 
     test('throw an error when url is not present in the response', async () => {
@@ -410,8 +391,7 @@ describe('order actions', () => {
         checkoutOrderApiParams
       )(dispatch, getState)
 
-      expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
-      expect(error.mock.calls[1][1]).toBe('Error when saving the order')
+      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_CHECKOUT', 'Error when saving the order')
     })
 
     test('redirect is called when redirected parameter is set to true', async () => {
@@ -570,11 +550,9 @@ describe('order actions', () => {
       ))
       await orderAssignToUser(orderAction)(dispatch, getState)
 
-      expect(pending.mock.calls.length).toBe(2)
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[0][1]).toBe(true)
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[1][1]).toBe(false)
+      expect(pending).toHaveBeenCalledTimes(2)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', false)
     })
 
     test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async () => {
@@ -584,19 +562,14 @@ describe('order actions', () => {
       ))
       await orderAssignToUser(orderAction)(dispatch, getState)
 
-      expect(pending.mock.calls.length).toBe(3)
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[0][1]).toBe(true)
-      expect(pending.mock.calls[1][0]).toEqual('BASKET_CHECKOUT')
-      expect(pending.mock.calls[1][1]).toBe(false)
-      expect(pending.mock.calls[2][0]).toEqual('ORDER_SAVE')
-      expect(pending.mock.calls[2][1]).toBe(false)
+      expect(pending).toHaveBeenCalledTimes(3)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
+      expect(pending).toHaveBeenNthCalledWith(2, 'BASKET_CHECKOUT', false)
+      expect(pending).toHaveBeenNthCalledWith(3, 'ORDER_SAVE', false)
 
-      expect(error.mock.calls.length).toBe(2)
-      expect(error.mock.calls[0][0]).toEqual('ORDER_SAVE')
-      expect(error.mock.calls[0][1]).toBe(null)
-      expect(error.mock.calls[1][0]).toEqual('ORDER_SAVE')
-      expect(error.mock.calls[1][1]).toBe('save-order-fail')
+      expect(error).toHaveBeenCalledTimes(2)
+      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', null)
+      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', 'save-order-fail')
     })
 
     test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async () => {
@@ -721,10 +694,8 @@ describe('order actions', () => {
       await orderAddressChange(orderId, addressId)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_ADDRESS_CHANGE')
-      expect(pending.mock.calls[0][1]).toEqual('12345')
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_ADDRESS_CHANGE')
-      expect(pending.mock.calls[1][1]).toEqual('')
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_ADDRESS_CHANGE', '12345')
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_ADDRESS_CHANGE', '')
     })
 
     it('should call updateOrderAddress and dispatch the action with the correct arguments', async () => {
@@ -735,9 +706,7 @@ describe('order actions', () => {
       await orderAddressChange(orderId, addressId)(dispatch, getState)
 
       expect(updateOrderAddress).toHaveBeenCalled()
-      expect(updateOrderAddress.mock.calls[0][0]).toEqual('access-token')
-      expect(updateOrderAddress.mock.calls[0][1]).toEqual('12345')
-      expect(updateOrderAddress.mock.calls[0][2]).toEqual('101')
+      expect(updateOrderAddress).toHaveBeenCalledWith('access-token', '12345', '101')
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
@@ -766,10 +735,8 @@ describe('order actions', () => {
         await orderAddressChange(orderId, addressId)(dispatch, getState)
 
         expect(error).toHaveBeenCalledTimes(2)
-        expect(error.mock.calls[0][0]).toEqual('ORDER_ADDRESS_CHANGE')
-        expect(error.mock.calls[0][1]).toEqual({ orderId: '', errorMessage: '' })
-        expect(error.mock.calls[1][0]).toEqual('ORDER_ADDRESS_CHANGE')
-        expect(error.mock.calls[1][1]).toEqual({ orderId: '12345', errorMessage: 'error message' })
+        expect(error).toHaveBeenNthCalledWith(1, 'ORDER_ADDRESS_CHANGE', { orderId: '', errorMessage: '' })
+        expect(error).toHaveBeenNthCalledWith(2, 'ORDER_ADDRESS_CHANGE', { orderId: '12345', errorMessage: 'error message' })
       })
 
       it('should dispatch the SaveAttemptFailed action with the correct arguments', async () => {
@@ -791,128 +758,158 @@ describe('order actions', () => {
   })
 
   describe('orderGetDeliveryDays', () => {
-    const cutoffDatetimeFrom = '01-01-2017 10:00:01'
-    const cutoffDatetimeUntil = '02-02-2017 14:23:34'
+    describe('given a user who has set their postcode', () => {
+      let state
+      const postcode = 'AA11 2BB'
+      const cutoffDatetimeFrom = '01-01-2017 10:00:01'
+      const cutoffDatetimeUntil = '02-02-2017 14:23:34'
+      const fetchedDays = [{ id: '4' }, { id: '5' }, { id: '6' }]
+      const availableDays = [{ id: '5' }, { id: '6' }]
 
-    beforeEach(() => {
-      orderId = '123'
-      getState.mockReturnValue({
-        user: Immutable.fromJS({
-          addresses: { 789: { postcode: 'AA11 2BB' } },
-          deliveryTariffId: deliveriesUtils.deliveryTariffTypes.FREE_NDD
-        }),
-        features: Immutable.fromJS({
-          ndd: {
-            value: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
-            experiment: false,
-          }
-        }),
-      })
-    })
+      beforeEach(() => {
+        orderId = '123'
 
-    it('should mark ORDER_DELIVERY_DAYS_RECEIVE as pending', async () => {
-      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
-
-      expect(actionStatus.pending.mock.calls.length).toEqual(2)
-      expect(actionStatus.pending.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[0][1]).toBe(true)
-      expect(actionStatus.pending.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[1][1]).toBe(false)
-      expect(dispatch.mock.calls.length).toEqual(4)
-    })
-
-    it('should mark ORDER_DELIVERY_DAYS_RECEIVE as errored if it errors', async () => {
-      const err = new Error('oops')
-
-      fetchDeliveryDays.mockReturnValue(
-        new Promise((resolve, reject) => { reject(err) })
-      )
-
-      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
-
-      expect(actionStatus.pending.mock.calls.length).toEqual(2)
-      expect(actionStatus.pending.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[0][1]).toEqual(true)
-      expect(actionStatus.pending.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[1][1]).toEqual(false)
-
-      expect(actionStatus.error.mock.calls.length).toEqual(2)
-      expect(actionStatus.error.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.error.mock.calls[0][1]).toBeNull()
-      expect(actionStatus.error.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.error.mock.calls[1][1]).toEqual(err.message)
-      expect(dispatch.mock.calls.length).toEqual(4)
-    })
-
-    it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async () => {
-      getState.mockReturnValue({
-        user: Immutable.fromJS({
-          addresses: { 789: { postcode: 'AA11 2BB' } },
-        }),
-        features: Immutable.fromJS({
-          ndd: {
-            value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
-            experiment: false,
-          }
-        }),
-      })
-
-      const fetchedDays = { data: [{ id: '4' }, { id: '5' }, { id: '6' }] }
-
-      fetchDeliveryDays.mockReturnValue(
-        new Promise(resolve => { resolve(fetchedDays) })
-      )
-
-      deliveriesUtils.getAvailableDeliveryDays.mockReturnValue(
-        [{ id: '5' }, { id: '6' }]
-      )
-
-      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
-
-      expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
-
-      const expectedReqData = {
-        'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
-        'filters[cutoff_datetime_until]': '02-02-2017 14:23:34',
-        sort: 'date',
-        direction: 'asc',
-        postcode: 'AA11 2BB',
-        ndd: 'false',
-        delivery_tariff_id: deliveriesUtils.deliveryTariffTypes.NON_NDD,
-      }
-
-      expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull()
-
-      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
-      expect(deliveriesUtils.getAvailableDeliveryDays.mock.calls[0][0]).toEqual([{ id: '4' }, { id: '5' }, { id: '6' }])
-      expect(dispatch.mock.calls.length).toEqual(4)
-      expect(dispatch.mock.calls[2][0]).toEqual({
-        type: actionTypes.ORDER_DELIVERY_DAYS_RECEIVE,
-        orderId: '123',
-        availableDays: [{ id: '5' }, { id: '6' }],
-      })
-      expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
-    })
-
-    describe('if the feature is on for the user', () => {
-      it('should fetch delivery days method should include ndd in its request', async () => {
-        await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
-
-        expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
-
-        const expectedReqData = {
-          'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
-          'filters[cutoff_datetime_until]': '02-02-2017 14:23:34',
-          sort: 'date',
-          direction: 'asc',
-          postcode: 'AA11 2BB',
-          ndd: 'true',
-          delivery_tariff_id: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
+        state = {
+          user: Immutable.fromJS({
+            addresses: { 789: { postcode } },
+            deliveryTariffId: 'deliveryTarriffId'
+          }),
         }
 
-        expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull
-        expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
-        expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+        fetchDeliveryDays.mockResolvedValue({ data: fetchedDays })
+        deliveriesUtils.getAvailableDeliveryDays.mockReturnValue(availableDays)
+      })
+
+      describe('and next day delivery is disabled', () => {
+        const deliveryTariffId = deliveriesUtils.deliveryTariffTypes.NON_NDD
+
+        beforeEach(() => {
+          state.features = Immutable.fromJS({
+            ndd: {
+              value: deliveryTariffId,
+              experiment: false,
+            }
+          })
+
+          getState.mockReturnValue(state)
+          deliveriesUtils.getDeliveryTariffId = jest.fn().mockReturnValue(deliveryTariffId)
+          deliveriesUtils.getNDDFeatureFlagVal = jest.fn().mockReturnValue(false)
+        })
+
+        describe('when call `orderGetDeliveryDays`', () => {
+          beforeEach(async () => {
+            await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
+          })
+
+          test('then `ORDER_DELIVERY_DAYS_RECEIVE` should trigger pending and not pending state', () => {
+            expect(actionStatus.pending).toHaveBeenCalledTimes(2)
+            expect(actionStatus.pending).toHaveBeenNthCalledWith(1, 'ORDER_DELIVERY_DAYS_RECEIVE', true)
+            expect(actionStatus.pending).toHaveBeenNthCalledWith(2, 'ORDER_DELIVERY_DAYS_RECEIVE', false)
+          })
+
+          test('then `ORDER_DELIVERY_DAYS_RECEIVE` cleared of error', () => {
+            expect(actionStatus.error).toHaveBeenCalledTimes(1)
+            expect(actionStatus.error).toHaveBeenCalledWith('ORDER_DELIVERY_DAYS_RECEIVE', null)
+          })
+
+          test('then `fetchDeliveryDays` should have been called with correct parameters', () => {
+            expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
+            expect(fetchDeliveryDays).toHaveBeenCalledWith(null, cutoffDatetimeFrom, cutoffDatetimeUntil, false, deliveryTariffId, postcode)
+          })
+
+          test('then `getAvailableDeliveryDays` should have been called with correct parameters', () => {
+            expect(deliveriesUtils.getAvailableDeliveryDays).toHaveBeenCalledWith(fetchedDays)
+          })
+
+          test('then dispatch should have been called 4 times', () => {
+            expect(dispatch).toHaveBeenCalledTimes(4)
+          })
+
+          test('then action `ORDER_DELIVERY_DAYS_RECEIVE` should have been dispatched third', () => {
+            expect(dispatch).toHaveBeenNthCalledWith(3, {
+              type: actionTypes.ORDER_DELIVERY_DAYS_RECEIVE,
+              orderId,
+              availableDays,
+            })
+          })
+
+          test('then `transformDaySlotLeadTimesToMockSlots` should not have been called', () => {
+            expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('and `fetchDeliveryDays` throws an error', () => {
+          const err = new Error('oops')
+
+          beforeEach(() => {
+            fetchDeliveryDays.mockRejectedValue(err)
+          })
+
+          describe('when call `orderGetDeliveryDays`', () => {
+            beforeEach(async () => {
+              await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
+            })
+
+            test('then `ORDER_DELIVERY_DAYS_RECEIVE` should trigger pending and not pending state', () => {
+              expect(actionStatus.pending).toHaveBeenCalledTimes(2)
+              expect(actionStatus.pending).toHaveBeenNthCalledWith(1, 'ORDER_DELIVERY_DAYS_RECEIVE', true)
+              expect(actionStatus.pending).toHaveBeenNthCalledWith(2, 'ORDER_DELIVERY_DAYS_RECEIVE', false)
+            })
+
+            test('then `ORDER_DELIVERY_DAYS_RECEIVE` should be marked as errored', () => {
+              expect(actionStatus.error).toHaveBeenCalledTimes(2)
+              expect(actionStatus.error).toHaveBeenNthCalledWith(1, 'ORDER_DELIVERY_DAYS_RECEIVE', null)
+              expect(actionStatus.error).toHaveBeenNthCalledWith(2, 'ORDER_DELIVERY_DAYS_RECEIVE', err.message)
+            })
+
+            test('then dispatch should have been called 4 times', () => {
+              expect(dispatch).toHaveBeenCalledTimes(4)
+            })
+          })
+        })
+      })
+
+      describe('and next day delivery is enabled', () => {
+        const deliveryTariffId = deliveriesUtils.deliveryTariffTypes.FREE_NDD
+
+        beforeEach(() => {
+          state.features = Immutable.fromJS({
+            ndd: {
+              value: deliveryTariffId,
+              experiment: false,
+            }
+          })
+
+          getState.mockReturnValue(state)
+          deliveriesUtils.getDeliveryTariffId = jest.fn().mockReturnValue(deliveryTariffId)
+          deliveriesUtils.getNDDFeatureFlagVal = jest.fn().mockReturnValue(true)
+        })
+
+        describe('when call `orderGetDeliveryDays`', () => {
+          beforeEach(async () => {
+            await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
+          })
+
+          test('then `ORDER_DELIVERY_DAYS_RECEIVE` should trigger pending and not pending state', () => {
+            expect(actionStatus.pending).toHaveBeenCalledTimes(2)
+            expect(actionStatus.pending).toHaveBeenNthCalledWith(1, 'ORDER_DELIVERY_DAYS_RECEIVE', true)
+            expect(actionStatus.pending).toHaveBeenNthCalledWith(2, 'ORDER_DELIVERY_DAYS_RECEIVE', false)
+          })
+
+          test('then `ORDER_DELIVERY_DAYS_RECEIVE` cleared of error', () => {
+            expect(actionStatus.error).toHaveBeenCalledTimes(1)
+            expect(actionStatus.error).toHaveBeenCalledWith('ORDER_DELIVERY_DAYS_RECEIVE', null)
+          })
+
+          test('then should call `fetchDeliveryDays` with correct parameters', () => {
+            expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
+            expect(fetchDeliveryDays).toHaveBeenCalledWith(null, cutoffDatetimeFrom, cutoffDatetimeUntil, true, deliveryTariffId, postcode)
+          })
+
+          test('then should call `transformDaySlotLeadTimesToMockSlots`', () => {
+            expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+          })
+        })
       })
     })
   })
@@ -947,10 +944,8 @@ describe('order actions', () => {
       await orderUpdateDayAndSlot(orderId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(pending.mock.calls[0][1]).toEqual(true)
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(pending.mock.calls[1][1]).toEqual(false)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', true)
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', false)
     })
 
     it('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as errored if it errors', async () => {
@@ -962,16 +957,12 @@ describe('order actions', () => {
       await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(pending.mock.calls[0][1]).toEqual(true)
-      expect(pending.mock.calls[1][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(pending.mock.calls[1][1]).toEqual(false)
+      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', true)
+      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', false)
 
       expect(error).toHaveBeenCalledTimes(2)
-      expect(error.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(error.mock.calls[0][1]).toEqual(null)
-      expect(error.mock.calls[1][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(error.mock.calls[1][1]).toEqual(err.message)
+      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', null)
+      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', err.message)
     })
 
     it('should map the arguments through to saveOrder and dispatch the action with the correct arguments', async () => {
@@ -1003,9 +994,7 @@ describe('order actions', () => {
         day_slot_lead_time_id: 'day-slot-lead-time-uuid'
       }
 
-      expect(saveOrder.mock.calls[0][0]).toEqual('access-token')
-      expect(saveOrder.mock.calls[0][1]).toEqual('12345')
-      expect(saveOrder.mock.calls[0][2]).toEqual(order)
+      expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
@@ -1053,15 +1042,13 @@ describe('order actions', () => {
     test('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as NOT pending', () => {
       clearUpdateDateErrorAndPending()(dispatch)
 
-      expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(pending.mock.calls[0][1]).toEqual(null)
+      expect(pending).toHaveBeenCalledWith('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', null)
     })
 
     test('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as NOT errored', () => {
       clearUpdateDateErrorAndPending()(dispatch)
 
-      expect(error.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
-      expect(error.mock.calls[0][1]).toEqual(null)
+      expect(pending).toHaveBeenCalledWith('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', null)
     })
   })
 })

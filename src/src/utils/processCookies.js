@@ -196,50 +196,23 @@ const processCookies = (cookies, store) => {
       store.dispatch(basketActions.basketNumPortionChange(numPortions))
     }
 
-    if (recipes) {
-      recipes = JSON.parse(recipes)
-
-      if (Object.keys(recipes).length > 0) {
-        store.dispatch(basketActions.basketRecipesClear())
-      }
-      if (recipesPositions) {
-        recipesPositions = JSON.parse(recipesPositions)
-
-        if (Object.keys(recipesPositions).length > 0) {
-          store.dispatch(basketActions.basketRecipesPositionsClear())
-        }
-      }
-
-      Object.keys(recipes).forEach((recipeId) => {
-        for (let i = 0; i < recipes[recipeId]; i++) {
-          let recipeInfo = null
-          const index = Array.isArray(recipesPositions) ? recipesPositions.findIndex((el) => Object.keys(el).length > 0 && Object.keys(el)[0] === recipeId) : -1
-          if (index !== -1) {
-            recipeInfo = recipesPositions[index][recipeId]
-            recipesPositions.splice(index, 1)
-          }
-          store.dispatch(basketActions.basketRecipeAdd(recipeId, null, true, recipeInfo))
-        }
-      })
-    }
+    recipes = recipes ? JSON.parse(recipes) : {}
+    recipesPositions = recipesPositions ? JSON.parse(recipesPositions) : []
+    store.dispatch(basketActions.basketRecipesInitialise(recipes, recipesPositions))
   }
 
   if (features) {
     try {
       features = JSON.parse(features)
-      const featuresArr = []
-      Object.keys(features).forEach((feature) => {
-        const featureContent = features[feature]
-        let value
-
-        if (featureContent && typeof featureContent === 'object') {
-          value = featureContent.value
-        } else {
-          value = featureContent
+      const featureArray = Object.entries(features).map(([feature, content]) => {
+        if(content && typeof content === 'object') {
+          return { feature, value: content.value }
         }
-        featuresArr.push({ feature, value })
+
+        return { feature, value: content }
       })
-      store.dispatch(featuresSet(featuresArr))
+
+      store.dispatch(featuresSet(featureArray))
     } catch (err) {
       logger.error({ message: 'error parsing features cookie value', errors: [err] })
     }
