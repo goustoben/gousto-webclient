@@ -12,10 +12,8 @@ import Content from 'containers/Content'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
-import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
 import { AwinPixel } from './AwinPixel'
-import SubHeader from './SubHeader'
 import css from './Welcome.css'
 import { AppPromo } from './AppPromo'
 
@@ -26,8 +24,6 @@ class Welcome extends React.PureComponent {
     productDetailVisibilityChange: PropTypes.func,
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
-    isRafAboveCarousel: PropTypes.bool,
-    welcomePageAppPromo: PropTypes.bool,
     userFetchReferralOffer: PropTypes.func.isRequired,
     query: PropTypes.shape({
       var: PropTypes.string
@@ -126,151 +122,75 @@ class Welcome extends React.PureComponent {
       orderId,
       productDetailId,
       productDetailVisibilityChange,
-      isRafAboveCarousel,
       device,
-      welcomePageAppPromo,
       trackWelcomeAppPromoClick
     } = this.props
 
-    if (welcomePageAppPromo) {
-      const defaultMessage =
-        'You’ve just made your first step towards a life with more free time, better food and less hassle than ever before. Let the good times roll!'
+    const defaultMessage = 'You’ve just made your first step towards a life with more free time, better food and less hassle than ever before. Let the good times roll!'
 
-      return (
-        <section className={css.container} data-testing="welcomeContainer">
-          <div className={css.contentContainer}>
-            <div className={css.row}>
-              <div className={css.colMedium}>
-                <div className={css.welcomeColInnerVerticalStages}>
-                  <VerticalStages>
-                    <Content
-                      contentKeys="welcomeImmediateTitleText"
-                      propNames="title"
-                      backgroundColor="white"
-                      isCompleted
+    return (
+      <section className={css.container} data-testing="welcomeContainer">
+        <div className={css.contentContainer}>
+          <div className={css.row}>
+            <div className={css.colMedium}>
+              <div className={css.welcomeColInnerVerticalStages}>
+                <VerticalStages>
+                  <Content
+                    contentKeys="welcomeImmediateTitleText"
+                    propNames="title"
+                    backgroundColor="white"
+                    isCompleted
+                  >
+                    <VerticalStagesItem
+                      title={`Thanks ${user.get('nameFirst')}`}
                     >
-                      <VerticalStagesItem
-                        title={`Thanks ${user.get('nameFirst')}`}
-                      >
-                        <Content contentKeys="welcomeImmediateTitleMessage">
-                          <p>{defaultMessage}</p>
-                        </Content>
-                        <div className={css.mobileShow}>
-                          <OrderSummary />
-                        </div>
-                      </VerticalStagesItem>
-                    </Content>
-                    <VerticalStagesItem title="Download the Gousto app" backgroundColor="white" extraClass={css.welcomeStageContent}>
-                      <AppPromo
-                        device={device}
-                        trackWelcomeAppPromoClick={trackWelcomeAppPromoClick}
-                      />
+                      <Content contentKeys="welcomeImmediateTitleMessage">
+                        <p>{defaultMessage}</p>
+                      </Content>
+                      <div className={css.mobileShow}>
+                        <OrderSummary />
+                      </div>
                     </VerticalStagesItem>
-                  </VerticalStages>
-                </div>
-                <div
-                  className={classnames(
-                    css.welcomeColInner,
-                    css.mobileShow,
-                    css.rafMobile
-                  )}
-                >
-                  <ReferAFriend />
-                </div>
-                <div className={css.welcomeColInner}>
-                  <ProductSelection orderId={orderId} />
-                </div>
+                  </Content>
+                  <VerticalStagesItem title="Download the Gousto app" backgroundColor="white" extraClass={css.welcomeStageContent}>
+                    <AppPromo
+                      device={device}
+                      trackWelcomeAppPromoClick={trackWelcomeAppPromoClick}
+                    />
+                  </VerticalStagesItem>
+                </VerticalStages>
               </div>
-              <div className={classnames(css.colSmall, css.mobileHide)}>
-                <div className={classnames(css.welcomeColInner, css.orderSummaryWrapper)}>
-                  <OrderSummary />
-                </div>
-                <div className={classnames(css.welcomeColInner)}>
-                  <ReferAFriend />
-                </div>
+              <div
+                className={classnames(
+                  css.welcomeColInner,
+                  css.mobileShow,
+                  css.rafMobile
+                )}
+              >
+                <ReferAFriend />
+              </div>
+              <div className={css.welcomeColInner}>
+                <ProductSelection orderId={orderId} />
+              </div>
+            </div>
+            <div className={classnames(css.colSmall, css.mobileHide)}>
+              <div className={classnames(css.welcomeColInner, css.orderSummaryWrapper)}>
+                <OrderSummary />
+              </div>
+              <div className={classnames(css.welcomeColInner)}>
+                <ReferAFriend />
               </div>
             </div>
           </div>
-          <ProductDetailOverlay
-            onVisibilityChange={productDetailVisibilityChange}
-            open={isClient && this.isProductDetailAvailable()}
-            productId={productDetailId}
-          />
-          <AwinPixel />
-        </section>
-      )
-    } else {
-      return (
-        <section className={css.container} data-testing="welcomeContainer">
-          <Content
-            contentKeys="welcomeImmediateTitleMessage"
-            propNames="message"
-          >
-            <SubHeader
-              nameFirst={user.get('nameFirst')}
-              contentKeys="welcomeImmediateTitleText"
-            />
-          </Content>
-
-          <div className={css.contentContainer}>
-            <div className={css.row}>
-              <div className={css.colMedium}>
-                {isRafAboveCarousel && (
-                  <div
-                    className={classnames(
-                      css.welcomeColInner,
-                      css.mobileShow,
-                      css.rafMobile
-                    )}
-                  >
-                    <ReferAFriend />
-                  </div>
-                )}
-                <div className={css.welcomeColInner}>
-                  <ExpectationsCarousel />
-                </div>
-                {!isRafAboveCarousel && (
-                  <div
-                    className={classnames(
-                      css.welcomeColInner,
-                      css.mobileShow,
-                      css.rafMobile
-                    )}
-                  >
-                    <ReferAFriend />
-                  </div>
-                )}
-                <div className={css.welcomeColInner}>
-                  <ProductSelection orderId={orderId} />
-                </div>
-              </div>
-              <div className={classnames(css.colSmall, css.colTopXS)}>
-                <div
-                  className={classnames(css.welcomeColInner, css.colTopXSInner, css.orderSummaryWrapper)}
-                >
-                  <OrderSummary />
-                </div>
-                <div
-                  className={classnames(
-                    css.welcomeColInner,
-                    css.colTopXSInner,
-                    css.mobileHide
-                  )}
-                >
-                  <ReferAFriend />
-                </div>
-              </div>
-            </div>
-          </div>
-          <ProductDetailOverlay
-            onVisibilityChange={productDetailVisibilityChange}
-            open={isClient && this.isProductDetailAvailable()}
-            productId={productDetailId}
-          />
-          <AwinPixel />
-        </section>
-      )
-    }
+        </div>
+        <ProductDetailOverlay
+          onVisibilityChange={productDetailVisibilityChange}
+          open={isClient && this.isProductDetailAvailable()}
+          productId={productDetailId}
+        />
+        <AwinPixel />
+      </section>
+    )
   }
 }
 

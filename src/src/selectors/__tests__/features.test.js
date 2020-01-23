@@ -1,10 +1,17 @@
 import Immutable from 'immutable'
 
 import {
+  isNextDayDeliveryPaintedDoorFeatureEnabled,
+  getDisabledSlots,
+  getAppBanner,
+  isShowNoDiscountCTAFeatureEnabled,
+  isSubscriptionPauseOsrFeatureEnabled,
+  isOsrOfferFeatureEnabled,
+  getAbandonBasket,
+  isChoosePlanEnabled,
+  getShowUserCredit,
   getGoToMyGousto,
   getGoToMyDeliveries,
-  getRafPositionOnWelcomePage,
-  getWelcomePageAppPromo,
   getPromoBannerEnabled,
   getPromoBannerText,
   getPromoBannerCode,
@@ -25,6 +32,267 @@ describe('when features are defined', () => {
     state = {
       features: Immutable.Map({})
     }
+  })
+
+  describe('isNextDayDeliveryPaintedDoorFeatureEnabled', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          nextDayDeliveryPaintedDoor: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(isNextDayDeliveryPaintedDoorFeatureEnabled(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          nextDayDeliveryPaintedDoor: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(isNextDayDeliveryPaintedDoorFeatureEnabled(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('getDisabledSlots', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          disabledSlots: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(getDisabledSlots(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          disabledSlots: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getDisabledSlots(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('getAppBanner', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          appBanner: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(getAppBanner(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          appBanner: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getAppBanner(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('isShowNoDiscountCTAFeatureEnabled', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          showNoDiscountCTA: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(isShowNoDiscountCTAFeatureEnabled(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          showNoDiscountCTA: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(isShowNoDiscountCTAFeatureEnabled(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('isSubscriptionPauseOsrFeatureEnabled', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          subscriptionPauseOsr: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(isSubscriptionPauseOsrFeatureEnabled(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          subscriptionPauseOsr: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(isSubscriptionPauseOsrFeatureEnabled(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('isOsrOfferFeatureEnabled', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          enableOsrOffer: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(isOsrOfferFeatureEnabled(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          enableOsrOffer: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(isOsrOfferFeatureEnabled(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('getAbandonBasket', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          abandonBasket: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(getAbandonBasket(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          abandonBasket: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getAbandonBasket(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('isChoosePlanEnabled', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          choosePlanRoute: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(isChoosePlanEnabled(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          choosePlanRoute: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(isChoosePlanEnabled(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('getShowUserCredit', () => {
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          showUserCredit: {
+            value: true,
+          },
+        })
+      })
+      test('should return true', () => {
+        expect(getShowUserCredit(state)).toEqual(true)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          showUserCredit: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getShowUserCredit(state)).toEqual(false)
+      })
+    })
   })
 
   describe('getGoToMyGousto', () => {
@@ -60,48 +328,6 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getGoToMyDeliveries(state)).toEqual(false)
-    })
-  })
-
-  describe('getRafPositionOnWelcomePage', () => {
-    it('should return value of getRafPositionOnWelcomePage', () => {
-      state.features = Immutable.fromJS({
-        rafAboveCarouselOnWelcomePage: {
-          value: true
-        }
-      })
-
-      expect(getRafPositionOnWelcomePage(state)).toEqual(true)
-    })
-
-    it('should return false if features does not exist', () => {
-      state = Immutable.fromJS({})
-
-      expect(getRafPositionOnWelcomePage(state)).toEqual(false)
-    })
-  })
-
-  describe('getWelcomePageAppPromo', () => {
-    describe('when feature is not set', () => {
-      test('should return false', () => {
-        expect(getWelcomePageAppPromo(state)).toEqual(false)
-      })
-    })
-
-    describe('when feature is set to true', () => {
-      const value = true
-
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          welcomePageAppPromo: {
-            value,
-          },
-        })
-      })
-
-      test('should return value', () => {
-        expect(getWelcomePageAppPromo(state)).toEqual(true)
-      })
     })
   })
 
@@ -268,7 +494,7 @@ describe('when features are defined', () => {
       })
     })
   })
-  
+
   describe('getShowStockAlertFlag', () => {
     describe('when is NOT set', () => {
       test('should return false', () => {

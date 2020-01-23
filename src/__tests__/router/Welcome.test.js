@@ -1,8 +1,5 @@
 import Immutable from 'immutable'
 import WelcomeContainer from 'routes/Welcome/WelcomeContainer'
-import WelcomeImmediate from 'routes/Welcome/VariationImmediate'
-import WelcomeSubscription from 'routes/Welcome/VariationSubscription'
-import WelcomeStorytelling from 'routes/Welcome/VariationStorytelling'
 
 import { match, createMemoryHistory } from 'react-router'
 import { routes } from '../../src/routes'
@@ -63,45 +60,7 @@ describe('Welcome router', () => {
       },
     )
   })
-  test('should display WelcomeImmediate welcome page when /welcome-to-gousto/what-happens-next is called', () => {
-    const path = '/welcome-to-gousto/what-happens-next/1'
-    const memoryHistory = createMemoryHistory(path)
-    match(
-      { memoryHistory, routes: currentRoutes, location: path },
-      (error, redirectLocation, renderProps) => {
-        if (error) {
-          throw error
-        }
-        expect(renderProps.components[4]).toEqual(WelcomeImmediate)
-      },
-    )
-  })
-  test('should display WelcomeSubscription welcome page when /welcome-to-gousto/flexible-subscription is called', () => {
-    const path = '/welcome-to-gousto/flexible-subscription/1'
-    const memoryHistory = createMemoryHistory(path)
-    match(
-      { memoryHistory, routes: currentRoutes, location: path },
-      (error, redirectLocation, renderProps) => {
-        if (error) {
-          throw error
-        }
-        expect(renderProps.components[4]).toEqual(WelcomeSubscription)
-      },
-    )
-  })
-  test('should display WelcomeStorytelling welcome page when /welcome-to-gousto/our-story is called', () => {
-    const path = '/welcome-to-gousto/our-story/1'
-    const memoryHistory = createMemoryHistory(path)
-    match(
-      { memoryHistory, routes: currentRoutes, location: path },
-      (error, redirectLocation, renderProps) => {
-        if (error) {
-          throw error
-        }
-        expect(renderProps.components[4]).toEqual(WelcomeStorytelling)
-      },
-    )
-  })
+
   test('should display an error page if non-existent welcome page route is called', () => {
     const path = '/welcome-to-gousto/does-not-exist/1'
     const memoryHistory = createMemoryHistory(path)

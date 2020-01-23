@@ -4,15 +4,15 @@ module.exports = {
       selector: '*[data-testing=welcomeContainer]',
 
       elements: {
-        expectationsCarousel: {
-          selector: '*[data-testing=expectationsCarousel]',
+        appPromo: {
+          selector: '*[data-testing=appPromo]',
         }
       },
 
       commands: [{
         checkIfWelcomePageVisible: function () {
           this
-            .waitForElementVisible('@expectationsCarousel', 60000)
+            .waitForElementVisible('@appPromo', 60000)
         },
       }],
     },

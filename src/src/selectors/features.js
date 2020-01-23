@@ -28,12 +28,6 @@ export const getGoToMyDeliveries = ({ features }) => (
     : false
 )
 
-export const getRafPositionOnWelcomePage = ({ features }) => (
-  features
-    ? features.getIn(['rafAboveCarouselOnWelcomePage', 'value'])
-    : false
-)
-
 export const getAppBanner = ({ features }) => (
   features.getIn(['appBanner', 'value'], false)
 )
@@ -52,10 +46,6 @@ export const isOsrOfferFeatureEnabled = ({ features }) => (
 
 export const getAbandonBasket = ({ features }) => (
   features && features.getIn(['abandonBasket', 'value'], false)
-)
-
-export const getWelcomePageAppPromo = ({ features }) => (
-  features && features.getIn(['welcomePageAppPromo', 'value'], false)
 )
 
 export const getPromoBannerEnabled = ({ features }) => (
