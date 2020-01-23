@@ -1,8 +1,4 @@
-export const activeMenuForDateTransformer = (response, date) => {
-  if (!response || !response.data || !response.data.length) {
-    return
-  }
-  
+export const activeMenuForDateTransformer = (response, date) => {  
   if (!date) {
     const defaultFallbackMenu = response.data[0]
     

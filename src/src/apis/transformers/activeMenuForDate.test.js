@@ -105,7 +105,7 @@ describe('activeMenuForDateTransformer', () => {
     })
   })
   
-  test('should get the active menu for a date that is just after the second menus end_at', () => {
+  test('should return undefined for a date that is just after the second menus end_at', () => {
     const testData = {
       data: [{
         "id": "295",
@@ -123,25 +123,5 @@ describe('activeMenuForDateTransformer', () => {
     }
     const result = activeMenuForDateTransformer(testData, '2019-10-25T12:00:00+01:000')
     expect(result).toEqual(undefined)
-  })
-
-  describe('when the response data is undefined', () => {
-    describe('when response is undefined', () => {
-      test('should return undefined', () => {
-        const testData = undefined
-        const result = activeMenuForDateTransformer(testData, '2019-04-01T11:59:59+01:00')
-        expect(result).toEqual(undefined)
-      })
-    })
-
-    describe('when response.data is undefined', () => {
-      test('should return undefined', () => {
-        const testData = {
-          data: undefined
-        }
-        const result = activeMenuForDateTransformer(testData, '2019-04-01T11:59:59+01:00')
-        expect(result).toEqual(undefined)
-      })
-    })
   })
 })
