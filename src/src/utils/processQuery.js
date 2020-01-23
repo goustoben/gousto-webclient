@@ -2,7 +2,7 @@ import logger from 'utils/logger'
 import basketActions from 'actions/basket'
 import promosActions from 'actions/promos'
 import trackingActions from 'actions/tracking'
-import { getIsAuthenticated } from 'selectors'
+import { getIsAuthenticated } from 'selectors/auth'
 
 async function processQuery(query, store, { hashTag = '', }) {
   if (!query || !store) {
@@ -23,9 +23,9 @@ async function processQuery(query, store, { hashTag = '', }) {
       if (query.noPromoModal === 'true') {
         store.dispatch(promosActions.promoApply())
       } else {
-        const isOfLoginHashTag = hashTag.indexOf('login') !== -1
-        const isNotAuthenticated = !getIsAuthenticated(store.getState())
-        if (isOfLoginHashTag || isNotAuthenticated) {
+        const isOfNoLoginHashTag = hashTag.indexOf('login') === -1
+        const isAuthenticated = getIsAuthenticated(store.getState())
+        if (isOfNoLoginHashTag || isAuthenticated) {
           store.dispatch(promosActions.promoToggleModalVisibility(true))
         } else {
           store.dispatch(basketActions.basketPromoCodeChange(promoCode))
