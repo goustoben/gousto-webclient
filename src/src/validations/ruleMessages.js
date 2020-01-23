@@ -21,7 +21,7 @@ export default {
       message = 'Please use only letters (a-z) and European special characters.'
       break
     case regExp.name:
-      message = 'Please use only letters (a-z), hyphens (-) and European special characters.'
+      message = 'Please use only letters (a-z), hyphens (-), apostrophes (\' and ‘) and European special characters.'
       break
     default:
       message = 'Oops, this isn\'t a valid format, please double-check and try again.'
