@@ -51,7 +51,7 @@ const desktopAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
 
 const AppPromo = ({ device, trackWelcomeAppPromoClick }) => {
   return (
-    <div className={css.container}>
+    <div className={css.container} data-testing="appPromo">
       <div className={css.contentContainer}>
         <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
         <div className={css.content}>

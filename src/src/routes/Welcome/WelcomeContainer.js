@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { productDetailVisibilityChange } from 'actions/products'
 import { userFetchReferralOffer } from 'actions/user'
 import { trackWelcomeAppPromoClick } from 'actions/welcome'
-import { getRafPositionOnWelcomePage, getWelcomePageAppPromo } from 'selectors/features'
 
 import Welcome from './Welcome'
 
@@ -16,8 +15,6 @@ function mapStateToProps(state, ownProps) {
     productDetailId: (location && location.query) ? location.query.productDetailId : '',
     products,
     user,
-    isRafAboveCarousel: getRafPositionOnWelcomePage(state),
-    welcomePageAppPromo: getWelcomePageAppPromo(state),
     device: request.get('browser')
   })
 }
@@ -25,7 +22,6 @@ function mapStateToProps(state, ownProps) {
 const WelcomeContainer = connect(mapStateToProps, {
   productDetailVisibilityChange,
   userFetchReferralOffer,
-  getWelcomePageAppPromo,
   trackWelcomeAppPromoClick,
 })(Welcome)
 
