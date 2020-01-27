@@ -12,12 +12,9 @@ const mockDispatchLoadRecipesForAllCollections = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
 
-jest.mock('apis/deliveries', () => ({
-  fetchAvailableDates: mockFetchAvailableDates
-}))
-
 jest.mock('apis/recipes', () => ({
-  fetchRecipeStock: mockFetchRecipeStock
+  fetchRecipeStock: mockFetchRecipeStock,
+  fetchAvailableDates: mockFetchAvailableDates
 }))
 
 jest.mock('utils/basket', () => ({
