@@ -8,6 +8,13 @@ describe('validations/regularExpressions', () => {
     expect(regex.test('gfĦû ģ gf ghgłò ń g')).toEqual(true)
     expect(regex.test('éèçàăâî ßäöüä żóą')).toEqual(true)
     expect(regex.test('saa-sasa')).toEqual(true)
+    expect(regex.test('saa\'sasa')).toEqual(true)
+    expect(regex.test('saa‘sasa')).toEqual(true)
+    expect(regex.test('sa-a sa\'sa')).toEqual(true)
+    expect(regex.test('Da\'vi d\'a')).toEqual(true)
+    expect(regex.test('Da‘vi d‘a')).toEqual(true)
+    expect(regex.test(' Da\'vi d\'a ')).toEqual(true)
+    expect(regex.test(' Da‘vi d‘a')).toEqual(true)
   })
 
   test('should not pass validation', () => {

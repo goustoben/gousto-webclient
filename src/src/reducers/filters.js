@@ -3,7 +3,6 @@ import { actionTypes } from 'actions/actionTypes'
 
 export const initialState = () => Immutable.Map({
   currentCollectionId: '',
-  recipeGroup: null,
 })
 
 const previousState = initialState()
@@ -17,14 +16,6 @@ const filters = {
     switch (action.type) {
     case actionTypes.FILTERS_COLLECTION_CHANGE: {
       return state.set('currentCollectionId', action.collectionId)
-    }
-
-    case actionTypes.FILTERS_FOOD_BRAND_CHANGE: {
-      return state.set('recipeGroup', action.foodBrand)
-    }
-
-    case actionTypes.FILTERS_THEMATIC_CHANGE: {
-      return state.set('recipeGroup', action.thematic)
     }
 
     case actionTypes.FILTERS_RESET: {

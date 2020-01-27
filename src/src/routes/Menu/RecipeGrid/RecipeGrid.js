@@ -1,11 +1,25 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import menu from 'config/menu'
-import { RecipeList } from '../RecipeList'
+import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
 import DetailOverlay from '../DetailOverlay'
 
 import css from '../Menu.css'
 
 class RecipeGrid extends PureComponent {
+  static propTypes = {
+    recipes: PropTypes.instanceOf(Immutable.List),
+    filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
+    isFoodBrandClickable: PropTypes.bool
+  }
+
+  static defaultProps = {
+    recipes: null,
+    filteredRecipeIds: null,
+    isFoodBrandClickable: true
+  }
+
   state = {
     shouldShowOverlay: false,
   }
@@ -15,6 +29,7 @@ class RecipeGrid extends PureComponent {
   }
 
   render() {
+    const { recipes, filteredRecipeIds, isFoodBrandClickable } = this.props
     const { shouldShowOverlay } = this.state
 
     return (
@@ -22,7 +37,11 @@ class RecipeGrid extends PureComponent {
         className={css.menuContainer}
         data-testing="menuRecipesList"
       >
-        <RecipeList />
+        {
+          recipes === null
+            ? <RecipeListContainer isFoodBrandClickable={isFoodBrandClickable} />
+            : <FilteredRecipeListContainer recipes={recipes} filteredRecipeIds={filteredRecipeIds} isFoodBrandClickable={isFoodBrandClickable} />
+        }
         <p className={css.legal}>{menu.legal}</p>
         <DetailOverlay
           showOverlay={shouldShowOverlay}

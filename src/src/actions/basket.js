@@ -18,7 +18,6 @@ import { actionTypes } from './actionTypes'
 import tempActions from './temp'
 import {
   getCurrentCollectionId,
-  getRecipeGroupFilter
 } from '../selectors/filters'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
@@ -339,7 +338,6 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
       Object.assign(recipeInfo, { collection })
     }
 
-    const selectedFoodBrand = getRecipeGroupFilter(state)
     dispatch({
       type: actionTypes.BASKET_RECIPE_ADD,
       recipeId,
@@ -350,7 +348,6 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
         view,
         position: recipeInfo && recipeInfo.position,
         collection,
-        source: !!selectedFoodBrand && selectedFoodBrand.slug,
         recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
       },
     })
@@ -388,7 +385,6 @@ export const basketRecipeRemove = (recipeId, view, position) => (
     let state = getState()
     const { basket } = state
     const collection = getCurrentCollectionId(state)
-    const selectedFoodBrand = getRecipeGroupFilter(state)
     dispatch({
       type: actionTypes.BASKET_RECIPE_REMOVE,
       recipeId,
@@ -398,7 +394,6 @@ export const basketRecipeRemove = (recipeId, view, position) => (
         view,
         position,
         collection,
-        source: !!selectedFoodBrand && selectedFoodBrand.slug,
         recipe_count: basket.get('recipes').size - 1,// The action is performed in the same time so the size is not updated yet
       },
     })

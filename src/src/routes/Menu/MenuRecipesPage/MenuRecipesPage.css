@@ -14,3 +14,14 @@
 .stockAlert :first-child {
   margin-bottom: 0.5rem;
 }
+
+.willFade {
+	opacity: 1;
+	transition: 0.5s opacity;
+}
+
+.fadeOut {
+	composes: willFade;
+	opacity: 0.4;
+	pointer-events: none;
+}

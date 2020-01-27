@@ -8,7 +8,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
   let textColor
   let backgroundColor
   let borderColor
-  let rangeSelect
+  let foodBrandSlug
   let rangeBadge
   let handleClick = null
 
@@ -18,11 +18,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
     textColor = rangeBadge.get('textColor')
     backgroundColor = rangeBadge.get('ribbonColor')
     borderColor = rangeBadge.get('borderColor')
-    rangeSelect = {
-      name: range.get('name'),
-      slug: range.get('slug'),
-      borderColor: backgroundColor
-    }
+    foodBrandSlug = range.get('slug')
   }
 
   const ribbonTextStyle = {
@@ -46,10 +42,14 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
     borderLeft: `10px solid ${borderColor}`,
   }
   if (isFoodBrandClickable) {
-    handleClick = () => selectFoodBrand(rangeSelect, 'foodBrand')
+    handleClick = () => selectFoodBrand(foodBrandSlug)
   }
 
-  return (rangeBadge) ? (
+  if (!rangeBadge) {
+    return null
+  }
+
+  return (
     <div className={css.rangeBadge}>
       <div
         role="button"
@@ -65,6 +65,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
         </span>
         {isFoodBrandClickable ? <span className={css.rightChevron}></span> : null}
       </div>
+
       <div className={css.ribbon} style={ribbonStyle}>
         <div className={css.arrowTopBorder} style={arrowBorderStyle}></div>
         <div className={css.arrowTop} style={arrowStyle}></div>
@@ -72,7 +73,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
         <div className={css.arrowBottom} style={arrowStyle}></div>
       </div>
     </div>
-  ) : null
+  )
 }
 
 RangeBadge.propTypes = {

@@ -33,7 +33,6 @@ export default (store) => {
       },
       filters: {
         currentCollectionId: true,
-        recipeGroup: true
       },
     })
   }

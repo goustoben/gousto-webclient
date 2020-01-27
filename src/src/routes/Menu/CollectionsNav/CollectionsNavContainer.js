@@ -1,8 +1,11 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
+import { getCurrentCollectionId } from 'selectors/filters'
 import CollectionsNav from './CollectionsNav'
 
 function mapStateToProps(state) {
+  const collectionId = getCurrentCollectionId(state)
+
   return {
     menuCollections: state.menuCollections
       .filter(collection => state.menuCollectionRecipes.get(collection.get('id'), []).size > 0)
@@ -10,6 +13,7 @@ function mapStateToProps(state) {
     features: state.features,
     menuCollectionRecipes: state.menuCollectionRecipes,
     isPolicyAccepted: state.cookies && state.cookies.get('isPolicyAccepted'),
+    menuCurrentCollectionId: collectionId
   }
 }
 

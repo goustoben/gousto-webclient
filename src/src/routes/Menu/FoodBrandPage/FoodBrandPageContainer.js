@@ -1,22 +1,39 @@
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
+import Immutable from 'immutable'
 import config from 'config/recipes'
-import { getRecipeGroupFilter } from 'selectors/filters'
-import { filterRecipeGrouping } from 'actions/filters'
-import { showDetailRecipe } from 'actions/menu'
 import { FilteredRecipePage } from '../FilteredRecipePage'
+import { getFoodBrandForSlug } from '../selectors/food-brand'
 
-const mapStateToProps = (state) => {
-  const selectedFoodBrand = getRecipeGroupFilter(state)
+const mapStateToProps = (state, ownProps) => {
+  const { params } = ownProps
+
+  const foodBrandInfo = getFoodBrandForSlug(state)(params.slug)
+
+  if (!foodBrandInfo) {
+    return {
+      name: '',
+      description: '',
+      borderColor: '#FF0000',
+      recipes: Immutable.List([]),
+      isFoodBrandClickable: false
+    }
+  }
+
+  const { foodBrand, recipes, recipeIds } = foodBrandInfo
 
   return {
-    name: selectedFoodBrand.name,
-    description: config.foodBrandDescription[selectedFoodBrand.slug],
-    borderColor: selectedFoodBrand.borderColor,
+    name: foodBrand.get('name'),
+    description: config.foodBrandDescription[params.slug],
+    borderColor: foodBrand.getIn(['properties', 'ribbonColor']),
+    recipes,
+    filteredRecipeIds: recipeIds,
+    isFoodBrandClickable: false
   }
 }
+
 const FoodBrandPageContainer = connect(mapStateToProps, {
-  removeRecipeFilter: () => filterRecipeGrouping(null, 'foodBrand'),
-  showDetailRecipe
+  backToAllRecipes: () => push('/menu')
 })(FilteredRecipePage)
 
 export { FoodBrandPageContainer }

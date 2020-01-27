@@ -104,4 +104,24 @@ describe('activeMenuForDateTransformer', () => {
       }
     })
   })
+  
+  test('should return undefined for a date that is just after the second menus end_at', () => {
+    const testData = {
+      data: [{
+        "id": "295",
+        "type": "menus",
+        "attributes": {
+          "ends_at": "2019-04-03T11:59:59+01:00"
+        }
+      }, {
+        "id": "296",
+        "type": "menus",
+        "attributes": {
+          "ends_at": "2019-10-20T11:59:59+01:00"
+        }
+      }]
+    }
+    const result = activeMenuForDateTransformer(testData, '2019-10-25T12:00:00+01:000')
+    expect(result).toEqual(undefined)
+  })
 })

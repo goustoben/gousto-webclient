@@ -1,1 +1,1 @@
-export { FoodBrandPageContainer as FoodBrandPage } from './FoodBrandPageContainer'
+export { FoodBrandPageContainer } from './FoodBrandPageContainer'
