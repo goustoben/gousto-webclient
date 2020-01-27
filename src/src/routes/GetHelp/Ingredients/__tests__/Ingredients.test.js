@@ -42,6 +42,7 @@ describe('<Ingredients />', () => {
           content={content}
           isValidateOrderLoading={false}
           storeSelectedIngredients={() => {}}
+          trackUserCannotGetCompensation={() => {}}
           validateLatestOrder={() => {}}
           validateSelectedIngredients={() => {}}
         />
@@ -123,6 +124,7 @@ describe('<Ingredients />', () => {
           content={content}
           isValidateOrderLoading={false}
           storeSelectedIngredients={storeSelectedIngredients}
+          trackUserCannotGetCompensation={() => {}}
           validateLatestOrder={validateLatestOrderSpy}
           validateSelectedIngredients={validateSelectedIngredients}
         />
@@ -242,16 +244,12 @@ describe('<Ingredients />', () => {
       })
 
       describe('and order validation errors', () => {
-        beforeAll(() => {
+        const trackUserCannotGetCompensation = jest.fn()
+
+        beforeEach(() => {
           browserHistory.push = jest.fn()
-        })
 
-        test('redirects to /contact if order validation request fails', () => {
-          validateLatestOrderSpy.mockImplementationOnce(() => {
-            throw new Error('error')
-          })
-
-          mount(
+          wrapper = mount(
             <Ingredients
               order={order}
               user={user}
@@ -259,11 +257,15 @@ describe('<Ingredients />', () => {
               content={content}
               isValidateOrderLoading={false}
               storeSelectedIngredients={storeSelectedIngredients}
+              trackUserCannotGetCompensation={trackUserCannotGetCompensation}
               validateLatestOrder={validateLatestOrderSpy}
               validateSelectedIngredients={validateSelectedIngredients}
             />
           )
+          wrapper.setProps({ daysSinceLastCompensation: 1 })
+        })
 
+        test('redirects to /contact if order validation request fails', () => {
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
         })
       })
@@ -279,33 +281,6 @@ describe('<Ingredients />', () => {
 
         test('the <Loading /> is being rendered', () => {
           expect(wrapper.find('Loading').length).toBe(1)
-        })
-      })
-
-      test('redirects to /contact when validation api returns false', async () => {
-        browserHistory.push = jest.fn()
-
-        const fetchPromise = Promise.resolve({ data: { valid: false } })
-
-        validateLatestOrderSpy.mockImplementationOnce(() => fetchPromise)
-
-        mount(
-          <Ingredients
-            order={order}
-            user={user}
-            recipes={recipes}
-            content={content}
-            isValidateOrderLoading={false}
-            storeSelectedIngredients={storeSelectedIngredients}
-            validateLatestOrder={validateLatestOrderSpy}
-            validateSelectedIngredients={validateSelectedIngredients}
-          />
-        )
-
-        return fetchPromise.then(async () => {
-          await fetchPromise
-
-          expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
         })
       })
     })

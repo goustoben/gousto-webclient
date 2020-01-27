@@ -60,6 +60,16 @@ const trackRecipeCardClick = recipeId => ({
   }
 })
 
+const trackUserCannotGetCompensation = numberOfDaysSinceLastCompensation => {
+  return {
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: 'UserCannotGetCompensation Clicked',
+      numberOfDaysSinceLastCompensation,
+    }
+  }
+}
+
 const validateSelectedIngredients = ({
   accessToken,
   orderId,
@@ -98,7 +108,7 @@ const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
     try {
-      return await validateOrder(
+      await validateOrder(
         accessToken,
         {
           customer_id: Number(costumerId),
@@ -204,4 +214,5 @@ export {
   trackAcceptRefund,
   trackIngredientIssues,
   trackRecipeCardClick,
+  trackUserCannotGetCompensation,
 }

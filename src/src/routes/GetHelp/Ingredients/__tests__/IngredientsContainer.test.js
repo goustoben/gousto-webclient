@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
 import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { browserHistory } from 'react-router'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import status from 'reducers/status'
@@ -106,6 +107,50 @@ describe('<IngredientsContainer />', () => {
         '',
         { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ] }
       )
+    })
+  })
+
+  describe('order validation fails', () => {
+    let store
+    let trackUserCannotGetCompensation
+
+    beforeAll(() => {
+      trackUserCannotGetCompensation = jest.fn()
+      store = createStore(
+        combineReducers(Object.assign(
+          {},
+          { ...authReducer },
+          { ...userReducer },
+          { ...status },
+          { ...contentReducer },
+          { getHelp },
+        )),
+        initialState,
+        compose(applyMiddleware(thunk))
+      )
+
+      browserHistory.push = jest.fn()
+      validateIngredients.mockResolvedValue({ valid: true })
+      validateOrder.mockRejectedValueOnce({
+        message: {
+          errors: {
+            criteria: {
+              daysSinceLastCompensation: 0
+            }
+          }
+        }
+      })
+
+      mount(
+        <IngredientsContainer
+          store={store}
+          trackUserCannotGetCompensation={trackUserCannotGetCompensation}
+        />
+      )
+    })
+
+    test('redirects to /contact if order validation request fails', () => {
+      expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
     })
   })
 

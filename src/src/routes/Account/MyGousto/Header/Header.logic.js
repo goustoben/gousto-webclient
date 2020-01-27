@@ -12,6 +12,7 @@ class Header extends PureComponent {
     loadOrderTrackingInfo: PropTypes.func,
     nextOrderTracking: PropTypes.string,
     trackNextBoxTrackingClick: PropTypes.func,
+    trackOrderNotEligibleForSelfServiceResolutionClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -19,6 +20,7 @@ class Header extends PureComponent {
     loadOrderTrackingInfo: () => {},
     nextOrderTracking: null,
     trackNextBoxTrackingClick: () => {},
+    trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
   }
 
   componentDidUpdate(prevProps) {
@@ -98,32 +100,54 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { orders, nextOrderTracking, trackNextBoxTrackingClick } = this.props
+    const {
+      orders,
+      nextOrderTracking,
+      trackNextBoxTrackingClick,
+      trackOrderNotEligibleForSelfServiceResolutionClick,
+    } = this.props
     const now = moment()
-
     const nextOrder = this.findOrder(orders, now, 'next')
     const previousOrder = this.findOrder(orders, now, 'previous')
-
     const nextOrderMessage = this.formatDeliveryDate(nextOrder, now)
+    const numberOfDaysSincePreviousOrder = previousOrder
+      && now.diff(moment(previousOrder.get('deliveryDate')), 'days', true)
     const previousOrderMessage = this.formatPreviousBoxDate(previousOrder, now)
-    const getHelpQueryParam =
-      previousOrder &&
-      now.diff(moment(previousOrder.get('deliveryDate')), 'days', true) <
-      ELIGIBILITY_DAYS &&
-      `?orderId=${previousOrder.get('id')}`
+    const isOrderElegibleForSelfRefundResolution = numberOfDaysSincePreviousOrder
+      && numberOfDaysSincePreviousOrder < ELIGIBILITY_DAYS
+    const getHelpQueryParam = isOrderElegibleForSelfRefundResolution
+      && `?orderId=${previousOrder.get('id')}`
     const loaded = nextOrder || previousOrder
+    const onPreviousBoxGetHelpClick = isOrderElegibleForSelfRefundResolution
+      ? () => {}
+      : () => {
+        const parsedNumberOfDaysSincePreviousOrder = parseInt(
+          numberOfDaysSincePreviousOrder,
+          0
+        )
+
+        if (parsedNumberOfDaysSincePreviousOrder >= 0) {
+          trackOrderNotEligibleForSelfServiceResolutionClick(
+            parsedNumberOfDaysSincePreviousOrder
+          )
+        }
+      }
 
     return (
-      loaded ? (
-        <HeaderPresentation
-          nextOrderMessage={nextOrderMessage}
-          nextOrderId={nextOrder ? nextOrder.get('id') : null}
-          nextOrderTracking={nextOrderTracking}
-          previousOrderMessage={previousOrderMessage}
-          getHelpQueryParam={getHelpQueryParam}
-          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
-        />
-      ): null
+      (loaded)
+        ? (
+          <HeaderPresentation
+            nextOrderMessage={nextOrderMessage}
+            nextOrderId={nextOrder ? nextOrder.get('id') : null}
+            nextOrderTracking={nextOrderTracking}
+            numberOfDaysSincePreviousOrder={numberOfDaysSincePreviousOrder}
+            previousOrderMessage={previousOrderMessage}
+            getHelpQueryParam={getHelpQueryParam}
+            trackNextBoxTrackingClick={trackNextBoxTrackingClick}
+            onPreviousBoxGetHelpClick={onPreviousBoxGetHelpClick}
+          />
+        )
+        : null
     )
   }
 }

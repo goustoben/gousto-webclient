@@ -36,21 +36,24 @@ describe('<Refund />', () => {
         'CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">'
     },
   }
+  const trackAcceptRefundSpy = jest.fn()
+  const trackUserCannotGetCompensationSpy = jest.fn()
+  const PROPS = {
+    content,
+    user: { id: '999', accessToken: '123' },
+    order: { id: '888' },
+    selectedIngredients,
+    trackAcceptRefund: trackAcceptRefundSpy,
+    trackUserCannotGetCompensation: trackUserCannotGetCompensationSpy,
+  }
 
   describe('rendering', () => {
     let getHelpLayout
     let wrapper
-    const trackAcceptRefundSpy = jest.fn()
 
     beforeEach(() => {
       wrapper = mount(
-        <Refund
-          content={content}
-          user={{ id: '999', accessToken: '123' }}
-          order={{ id: '888' }}
-          selectedIngredients={selectedIngredients}
-          trackAcceptRefund={trackAcceptRefundSpy}
-        />
+        <Refund {...PROPS} />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
     })
@@ -96,19 +99,11 @@ describe('<Refund />', () => {
         order_id: 888
       }
     ]
-
     let wrapper
-    const trackAcceptRefundSpy = jest.fn()
 
     beforeEach(() => {
       wrapper = mount(
-        <Refund
-          content={content}
-          user={{ id: '999', accessToken: '123' }}
-          order={{ id: '888' }}
-          selectedIngredients={selectedIngredients}
-          trackAcceptRefund={trackAcceptRefundSpy}
-        />
+        <Refund {...PROPS} />
       )
     })
 
@@ -125,11 +120,9 @@ describe('<Refund />', () => {
 
           wrapper = mount(
             <Refund
-              content={content}
+              {...PROPS}
               user={{ id: '0', accessToken: '123' }}
               order={{ id: '0' }}
-              selectedIngredients={selectedIngredients}
-              trackAcceptRefund={jest.fn()}
             />
           )
         })
@@ -174,11 +167,9 @@ describe('<Refund />', () => {
 
         wrapper = mount(
           <Refund
-            content={content}
+            {...PROPS}
             user={{ id: '0', accessToken: '123' }}
             order={{ id: '0' }}
-            selectedIngredients={selectedIngredients}
-            trackAcceptRefund={trackAcceptRefundSpy}
           />
         )
       })
@@ -225,12 +216,25 @@ describe('<Refund />', () => {
           })
 
           describe('and when setComplaint errors', () => {
-            test('redirect is not called', async () => {
-              setComplaint.mockRejectedValueOnce(new Error('error'))
+            beforeEach(async () => {
+              trackUserCannotGetCompensationSpy.mockClear()
+
+              setComplaint.mockRejectedValueOnce({ errors: {
+                criteria: {
+                  daysSinceLastCompensation: 1
+                }
+              } })
 
               await Button.props().onClick()
+            })
 
+            test('redirect is not called', async () => {
               expect(browserHistory.push).toHaveBeenCalledTimes(0)
+            })
+
+            test('the tracking is being called correctly', async () => {
+              expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledTimes(1)
+              expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledWith(1)
             })
           })
         })
