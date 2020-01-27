@@ -152,6 +152,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         coreDayId,
         slotId: coreSlotId,
         deliveryDay: updatedOrder.deliveryDate,
+        humanDeliveryDay: updatedOrder.humanDeliveryDate,
         deliverySlotStart: slot.get('deliveryStartTime'),
         deliverySlotEnd: slot.get('deliveryEndTime'),
         shouldCutoffAt: updatedOrder.shouldCutoffAt,

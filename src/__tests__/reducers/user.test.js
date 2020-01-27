@@ -735,6 +735,7 @@ describe('user reducer', () => {
             coreDeliveryDayId: 0,
             deliverySlotId: 0,
             deliveryDay: { id: 0 },
+            humanDeliveryDay: 'something',
             deliverySlotStart: 'something',
             deliverySlotEnd: 'different',
           },
@@ -746,6 +747,7 @@ describe('user reducer', () => {
         coreDayId: 8,
         slotId: 9,
         deliveryDay: { id: 7 },
+        humanDeliveryDay: 'Saturday 3rd Feb',
         deliverySlotStart: '10:01:01',
         deliverySlotEnd: '12:02:02',
       })
@@ -755,6 +757,7 @@ describe('user reducer', () => {
             coreDeliveryDayId: 8,
             deliverySlotId: 9,
             deliveryDay: { id: 7 },
+            humanDeliveryDay: 'Saturday 3rd Feb',
             deliverySlotStart: '10:01:01',
             deliverySlotEnd: '12:02:02',
           },

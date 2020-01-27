@@ -179,6 +179,7 @@ const user = {
         coreDeliveryDayId: action.coreDayId,
         deliverySlotId: action.slotId,
         deliveryDay: action.deliveryDay,
+        humanDeliveryDay: action.humanDeliveryDay,
         deliverySlotStart: action.deliverySlotStart,
         deliverySlotEnd: action.deliverySlotEnd,
         shouldCutoffAt: action.shouldCutoffAt,
