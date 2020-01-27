@@ -16,6 +16,7 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
+  daysSinceLastCompensation: PropTypes.number,
   isValidateOrderLoading: PropTypes.bool.isRequired,
   order: PropTypes.shape({
     id: PropTypes.string.isRequired
@@ -37,35 +38,39 @@ const propTypes = {
     accessToken: PropTypes.string.isRequired,
   }),
   storeSelectedIngredients: PropTypes.func.isRequired,
+  trackUserCannotGetCompensation: PropTypes.func.isRequired,
   validateLatestOrder: PropTypes.func.isRequired,
   validateSelectedIngredients: PropTypes.func.isRequired,
 }
 
+const defaultProps = {
+  daysSinceLastCompensation: -1,
+  order: {},
+  recipes: [],
+  user: {},
+}
+
 class Ingredients extends PureComponent {
   state = {
-    selectedIngredients: new Map()
+    selectedIngredients: new Map(),
   }
 
-  componentDidMount = async () => {
+  componentDidMount() {
     const { validateLatestOrder, user, order } = this.props
 
-    try {
-      const response = await validateLatestOrder({
-        accessToken: user.accessToken,
-        costumerId: user.id,
-        orderId: order.id,
-      })
+    validateLatestOrder({
+      accessToken: user.accessToken,
+      costumerId: user.id,
+      orderId: order.id,
+    })
+  }
 
-      if (response && response.data) {
-        const { valid } = response.data
+  componentDidUpdate() {
+    const { daysSinceLastCompensation, trackUserCannotGetCompensation } = this.props
 
-        if (!valid) {
-          this.redirectToContactPage()
-        }
-      } else {
-        this.redirectToContactPage()
-      }
-    } catch (error) {
+    if (daysSinceLastCompensation >= 0) {
+      trackUserCannotGetCompensation(daysSinceLastCompensation)
+
       this.redirectToContactPage()
     }
   }
@@ -157,6 +162,7 @@ class Ingredients extends PureComponent {
 }
 
 Ingredients.propTypes = propTypes
+Ingredients.defaultProps = defaultProps
 
 export {
   Ingredients

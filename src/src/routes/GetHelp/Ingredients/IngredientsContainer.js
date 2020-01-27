@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import {
   validateLatestOrder,
   validateSelectedIngredients,
-  storeSelectedIngredients
+  storeSelectedIngredients,
+  trackUserCannotGetCompensation,
 } from 'actions/getHelp'
-import { getOrderValidationPendingState } from 'selectors/getHelp'
+import { getOrderValidationPendingState, getDaysSinceLastCompensation } from 'selectors/getHelp'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => {
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => {
       button2Copy: state.content.get('get-help_orderissues_pagecontent_button2copy')
       || 'Continue',
     },
+    daysSinceLastCompensation: getDaysSinceLastCompensation(state),
     isValidateOrderLoading: getOrderValidationPendingState(state),
     order: state.getHelp.get('order').toJS(),
     recipes: state.getHelp.get('recipes').toJS(),
@@ -32,7 +34,8 @@ const mapStateToProps = (state) => {
 const IngredientsContainer = connect(mapStateToProps, {
   validateLatestOrder,
   storeSelectedIngredients,
-  validateSelectedIngredients
+  validateSelectedIngredients,
+  trackUserCannotGetCompensation,
 })(Ingredients)
 
 export {

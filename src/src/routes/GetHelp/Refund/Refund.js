@@ -37,6 +37,7 @@ class Refund extends PureComponent {
       recipeId: PropTypes.string.isRequired,
     })).isRequired,
     trackAcceptRefund: PropTypes.func.isRequired,
+    trackUserCannotGetCompensation: PropTypes.func.isRequired,
   }
 
   state = {
@@ -87,7 +88,8 @@ class Refund extends PureComponent {
       user,
       order,
       selectedIngredients,
-      trackAcceptRefund
+      trackAcceptRefund,
+      trackUserCannotGetCompensation,
     } = this.props
     const issues = Object.keys(selectedIngredients).map(key => (
       {
@@ -115,6 +117,14 @@ class Refund extends PureComponent {
 
       return response
     } catch (err) {
+      const { errors } = err
+
+      if (errors && errors.criteria) {
+        const { daysSinceLastCompensation } = errors.criteria
+
+        trackUserCannotGetCompensation(daysSinceLastCompensation)
+      }
+
       return this.requestFailure()
     }
   }

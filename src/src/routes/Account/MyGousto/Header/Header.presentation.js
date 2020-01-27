@@ -14,6 +14,7 @@ const HeaderPresentation = ({
   previousOrderMessage,
   getHelpQueryParam,
   trackNextBoxTrackingClick,
+  onPreviousBoxGetHelpClick,
 }) => {
   const getHelpUrlSuffix = getHelpQueryParam
     ? getHelpQueryParam
@@ -69,6 +70,7 @@ const HeaderPresentation = ({
     <CardWithLink
       linkLabel='Get help with this box'
       linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+      trackClick={onPreviousBoxGetHelpClick}
     >
       <OrderDetails heading='Your most recent box delivery'>
         <div className={css.orderDetailsItem}>
@@ -96,6 +98,7 @@ HeaderPresentation.propTypes = {
   previousOrderMessage: PropTypes.string,
   getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   trackNextBoxTrackingClick: PropTypes.func,
+  onPreviousBoxGetHelpClick: PropTypes.func,
 }
 
 HeaderPresentation.defaultProps = {
@@ -108,6 +111,7 @@ HeaderPresentation.defaultProps = {
   previousOrderMessage: null,
   getHelpQueryParam: false,
   trackNextBoxTrackingClick: () => {},
+  onPreviousBoxGetHelpClick: () => {},
 }
 
 export { HeaderPresentation }

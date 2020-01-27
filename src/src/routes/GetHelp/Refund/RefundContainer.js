@@ -1,6 +1,10 @@
 import { connect } from 'react-redux'
 
-import { selectOrderIssue, trackAcceptRefund } from 'actions/getHelp'
+import {
+  selectOrderIssue,
+  trackAcceptRefund,
+  trackUserCannotGetCompensation,
+} from 'actions/getHelp'
 
 import Refund from './Refund'
 
@@ -37,6 +41,7 @@ const mapStateToProps = (state) => {
 const RefundContainer = connect(mapStateToProps, {
   selectOrderIssue,
   trackAcceptRefund,
+  trackUserCannotGetCompensation,
 })(Refund)
 
 export default RefundContainer

@@ -2,6 +2,7 @@ import { actionTypes } from 'actions/actionTypes'
 import {
   trackNotificationLinkClick,
   trackNextBoxTrackingClick,
+  trackOrderNotEligibleForSelfServiceResolutionClick,
 } from 'actions/myGousto'
 
 describe('myGousto actions', () => {
@@ -30,6 +31,21 @@ describe('myGousto actions', () => {
           orderId,
         }
       })
+    })
+  })
+
+  describe('trackOrderNotEligibleForSelfServiceResolutionClick', () => {
+    test('creates the tracking action', () => {
+      const numberOfDaysSincePreviousOrder = 2
+
+      expect(trackOrderNotEligibleForSelfServiceResolutionClick(numberOfDaysSincePreviousOrder))
+        .toEqual({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: 'OrderNotEligibleForSelfServiceResolution Clicked',
+            numberOfDaysSincePreviousOrder,
+          }
+        })
     })
   })
 })

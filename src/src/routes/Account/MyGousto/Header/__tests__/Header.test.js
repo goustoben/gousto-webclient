@@ -83,6 +83,10 @@ let wrapper
 const mockLoadOrderTrackingInfo = jest.fn()
 
 describe('MyGousto - Header', () => {
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
   describe('when no orders are passed in', () => {
     beforeEach(() => {
       wrapper = mount(
@@ -164,10 +168,6 @@ describe('MyGousto - Header', () => {
           wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
         })
 
-        afterEach(() => {
-          jest.resetAllMocks()
-        })
-
         test('opens the tracking page in a new tab', () => {
           expect(windowUtils.windowOpen).toHaveBeenCalledWith(TRACKING_URL)
         })
@@ -194,11 +194,13 @@ describe('MyGousto - Header', () => {
 
   describe('when a user has previously delivered orders', () => {
     let previousDeliveryDetails
+    const mockOrderNotEligibleClick = jest.fn()
 
     beforeEach(() => {
       wrapper = mount(
         <Header
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
           orders={previousOrders}
         />
       )
@@ -211,22 +213,48 @@ describe('MyGousto - Header', () => {
     })
 
     describe('and the most recent order > 7 days ago', () => {
-      test('should link to general help contact page', () => {
+      beforeEach(() => {
         wrapper = mount(
           <Header
             loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
             orders={onlyOldOrders}
+            trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
           />
         )
+
+        wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
+      })
+
+      test('should link to general help contact page', () => {
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
         expect(linkUrl.includes(config.routes.client.getHelp.contact)).toBe(true)
+      })
+
+      test('dispatches the "non-eligible tracking action"', () => {
+        expect(mockOrderNotEligibleClick).toHaveBeenCalledWith(10)
       })
     })
 
     describe('and the most recent order < 7 days ago', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <Header
+            loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+            trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
+            orders={previousOrders}
+          />
+        )
+
+        wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
+      })
+
       test('should link to help page with order id', () => {
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
         expect(linkUrl.includes('?orderId=101')).toBe(true)
+      })
+
+      test('does not dispatches the "non-eligible tracking action"', () => {
+        expect(mockOrderNotEligibleClick).not.toHaveBeenCalled()
       })
     })
   })
@@ -251,10 +279,6 @@ describe('MyGousto - Header', () => {
           orders={Immutable.Map({})}
         />
       )
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
     })
 
     describe('when the user has an upcoming order', () => {

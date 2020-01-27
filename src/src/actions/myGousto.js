@@ -15,3 +15,12 @@ export const trackNextBoxTrackingClick = orderId => ({
     orderId,
   }
 })
+
+export const trackOrderNotEligibleForSelfServiceResolutionClick = numberOfDaysSincePreviousOrder =>
+  ({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: 'OrderNotEligibleForSelfServiceResolution Clicked',
+      numberOfDaysSincePreviousOrder,
+    }
+  })
