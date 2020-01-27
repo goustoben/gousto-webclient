@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
 const nodeExternals = require('webpack-node-externals')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -39,21 +40,6 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.js/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        options: {
-          cache: false,
-          quiet: false,
-          failOnWarning: false,
-          fix: false
-        },
-        include: [
-          path.resolve(__dirname, '../src'),
-          path.resolve(__dirname, '../server'),
-        ],
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -209,4 +195,8 @@ if (build === 'development') {
   )
 }
 
-module.exports = config
+const smp = new SpeedMeasurePlugin({
+  disable: !process.env.MEASURE
+})
+
+module.exports = smp.wrap(config)

@@ -2,6 +2,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const ExtractPlugin = require('extract-text-webpack-plugin')
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
 
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
@@ -103,20 +104,6 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.js/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        options: {
-          cache: false,
-          quiet: false,
-          failOnWarning: false,
-          fix: false
-        },
-        include: [
-          path.resolve('./src')
-        ]
-      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -282,7 +269,7 @@ if (build === 'development') {
       cssProcessor: require('cssnano'),
       cssProcessorPluginOptions: {
         preset: ['advanced',
-          { 
+          {
             discardComments: { removeAll: true },
             autoprefixer: {
               browsers: ["safari >= 7", "iOS >= 7", "chrome >= 34", "and_chr >= 34", "android >= 36", "explorer >= 11", "firefox >= 48", "edge >= 13", "samsung >= 3.3", "opera >= 36"]
@@ -322,5 +309,9 @@ if (build === 'development') {
   config.devtool = 'source-map'
 }
 
-module.exports = config
+const smp = new SpeedMeasurePlugin({
+  disable: !process.env.MEASURE
+})
+
+module.exports = smp.wrap(config)
 

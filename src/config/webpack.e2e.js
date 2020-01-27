@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
 const ExitCodePlugin = require('./exitCode')
 
 // let build = 'production'
@@ -132,4 +133,8 @@ if (build === 'development') {
   config.plugins.push(ExitCodePlugin)
 }
 
-module.exports = config
+const smp = new SpeedMeasurePlugin({
+  disable: !process.env.MEASURE
+})
+
+module.exports = smp.wrap(config)
