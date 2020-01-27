@@ -21,14 +21,14 @@
 
 .febyouary {
 	composes: container;
-	background-image: url('media/images/menu/FebYouary_mobile_click.jpg');
+	background-image: url('media/images/menu/FebYouary_mobile.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/FebYouary_tablet_click.jpg');
+		background-image: url('media/images/menu/FebYouary_tablet.jpg');
 	}
 
 	@media ScreenMLMin {
-		background-image: url('media/images/menu/FebYouary_desktop_click.jpg');
+		background-image: url('media/images/menu/FebYouary_desktop.jpg');
 	}
 }
 
@@ -42,19 +42,6 @@
 
 	@media ScreenMLMin {
 		background-image: url('media/images/menu/JanYouary_desktop_no_click.jpg');
-	}
-}
-
-.christmas2 {
-	composes: container;
-	background-image: url('media/images/menu/christmas_banner_mobile_click.jpg');
-
-	@media ScreenXXSMin {
-		background-image: url('media/images/menu/christmas_banner_tablet_click.jpg');
-	}
-
-	@media ScreenMLMin {
-		background-image: url('media/images/menu/christmas_banner_desktop_click.jpg');
 	}
 }
 
