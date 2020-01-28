@@ -970,6 +970,7 @@ describe('order actions', () => {
         data: {
           deliveryDate: '01-01-2017',
           shouldCutoffAt: '29-12-2016',
+          humanDeliveryDate: "Monday 1st January"
         },
       }
 
@@ -1002,6 +1003,7 @@ describe('order actions', () => {
         coreDayId: 3,
         slotId: 8,
         deliveryDay: '01-01-2017',
+        humanDeliveryDay: 'Monday 1st January',
         shouldCutoffAt: '29-12-2016',
         deliverySlotStart: '05:00:00',
         deliverySlotEnd: '07:00:00',
