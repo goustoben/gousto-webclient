@@ -5,6 +5,7 @@ import { getAddOnsBeforeOrderConfirmation } from 'selectors/features'
 import { getSlot } from 'utils/deliveries'
 import { actionTypes } from 'actions/actionTypes'
 import { checkoutTransactionalOrder } from 'actions/checkout'
+import { boxSummaryVisibilityChange } from 'actions/boxSummary'
 import { Checkout } from './Checkout'
 
 function getCoreSlotId(deliveryDays, date, slotId) {
@@ -40,9 +41,9 @@ const mapStateToProps = (state) => ({
 
 const CheckoutContainer = connect(mapStateToProps, {
   basketCheckedOut: actions.basketCheckedOut,
-  boxSummaryVisibilityChange: actions.boxSummaryVisibilityChange,
   basketProceedToCheckout: actions.basketProceedToCheckout,
   orderUpdate: actions.orderUpdate,
+  boxSummaryVisibilityChange,
   checkoutTransactionalOrder,
 })(Checkout)
 

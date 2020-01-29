@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
 import Postcode from './Postcode'
 
@@ -35,7 +36,7 @@ const PostcodeContainer = connect(mapStateToProps, {
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   basketChosenAddressChange: actions.basketChosenAddressChange,
   setTempPostcode: postcode => actions.temp('postcode', postcode),
-  boxSummaryNext: actions.boxSummaryNext,
+  boxSummaryNext,
 })(Postcode)
 
 export default PostcodeContainer

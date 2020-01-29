@@ -15,6 +15,7 @@ import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceConfig } from 'config/menuService'
 import { getMenuService } from 'selectors/features'
+import * as boxSummaryActions from 'actions/boxSummary'
 
 import fetchData from '../fetchData'
 
@@ -64,7 +65,7 @@ describe('menu fetchData', () => {
   actions.menuLoadOrderDetails = jest.fn()
   actions.menuLoadMenu = jest.fn()
   actions.menuLoadDays = jest.fn()
-  actions.boxSummaryDeliveryDaysLoad = jest.fn()
+  boxSummaryActions.boxSummaryDeliveryDaysLoad = jest.fn()
   actions.basketNumPortionChange = jest.fn()
   actions.basketRecipeAdd = jest.fn()
   actions.userLoadOrders = jest.fn()
@@ -83,7 +84,7 @@ describe('menu fetchData', () => {
     actions.menuLoadOrderDetails.mockReset()
     actions.menuLoadMenu.mockReset()
     actions.menuLoadDays.mockReset()
-    actions.boxSummaryDeliveryDaysLoad.mockReset()
+    boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReset()
     actions.basketNumPortionChange.mockReset()
     actions.basketRecipeAdd.mockReset()
 
@@ -319,7 +320,7 @@ describe('menu fetchData', () => {
             // so making it return a symbol is an easy way to do that
             const boxSummaryDeliveryDaysLoadResult = Symbol()
 
-            actions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+            boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
             await fetchData({ store, query: queryWithSlots, params }, false, false)
 
@@ -394,7 +395,7 @@ describe('menu fetchData', () => {
               test('should dispatch boxSummaryDeliveryDaysLoad', async () => {
                 const boxSummaryDeliveryDaysLoadResult = Symbol()
 
-                actions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+                boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
                 await fetchData({ store, query, params }, false, false)
 

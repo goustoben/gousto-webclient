@@ -7,7 +7,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
 import userActions from 'actions/user'
 import { menuLoadDays } from 'actions/menu'
-import boxSummaryActions from 'actions/boxSummary'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
@@ -56,7 +56,7 @@ class AbandonBasketModal extends PureComponent {
         await loadMenuServiceDataIfDeepLinked(store)
 
         await store.dispatch(menuLoadDays())
-        await store.dispatch(boxSummaryActions.boxSummaryDeliveryDaysLoad())
+        await store.dispatch(boxSummaryDeliveryDaysLoad())
       }
 
       if (!getRecipes(state).size) {

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
+import { boxSummaryVisibilityChange } from 'actions/boxSummary'
 import BrowseCTA from './BrowseCTA'
 
 function mapStateToProps(state) {
@@ -9,7 +10,7 @@ function mapStateToProps(state) {
 }
 
 const BrowseCTAContainer = connect(mapStateToProps, {
-  boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
+  boxDetailsVisibilityChange: boxSummaryVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
 })(BrowseCTA)
 

@@ -88,7 +88,8 @@ describe('Menu', () => {
         })
       ),
       shouldJfyTutorialBeVisible: shouldJfyTutorialBeVisibleMock,
-      recipesCount: 3
+      recipesCount: 3,
+      onOverlayClick: jest.fn()
     }
   })
 

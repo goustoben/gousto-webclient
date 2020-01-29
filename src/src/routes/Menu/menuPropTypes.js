@@ -3,17 +3,13 @@ import Immutable from 'immutable'
 
 export const menuPropTypes = {
   basketNumPortionChange: PropTypes.func.isRequired,
-  basketRestorePreviousValues: PropTypes.func.isRequired,
-  boxDetailsVisibilityChange: PropTypes.func.isRequired,
   boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
   boxSummaryDeliveryDaysLoad: PropTypes.func,
-  boxSummaryShow: PropTypes.bool,
+  showOverlay: PropTypes.bool,
   disabled: PropTypes.bool.isRequired,
   forceLoad: PropTypes.bool,
   isAuthenticated: PropTypes.bool.isRequired,
   loginVisibilityChange: PropTypes.func,
-  menuBrowseCTAShow: PropTypes.bool,
-  menuBrowseCTAVisibilityChange: PropTypes.func,
   menuLoadBoxPrices: PropTypes.func.isRequired,
   menuLoadDays: PropTypes.func,
   menuLoadingBoxPrices: PropTypes.bool,
@@ -30,16 +26,13 @@ export const menuPropTypes = {
 }
 
 export const defaultMenuPropTypes = {
-  basketRestorePreviousValues: () => { },
   boxSummaryDeliveryDays: Immutable.Map(),
   boxSummaryDeliveryDaysLoad: () => { },
-  boxSummaryShow: false,
+  showOverlay: false,
   disabled: false,
   forceLoad: false,
   isAuthenticated: false,
   loginVisibilityChange: () => { },
-  menuBrowseCTAShow: false,
-  menuBrowseCTAVisibilityChange: () => { },
   menuLoadDays: () => { },
   menuLoadingBoxPrices: false,
   menuVariation: '',

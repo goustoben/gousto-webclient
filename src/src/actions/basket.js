@@ -12,7 +12,7 @@ import { updateOrderItems } from 'apis/orders'
 import { isChoosePlanEnabled } from 'selectors/features'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
-import boxSummaryActions from './boxSummary'
+import { boxSummaryDeliveryDaysLoad } from './boxSummary'
 import { orderConfirmationUpdateOrderTracking } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import tempActions from './temp'
@@ -272,7 +272,7 @@ export const basketPostcodeChange = (postcode, forgetPrevPostcode = false) => (
         type: actionTypes.BASKET_POSTCODE_PENDING,
         pending: true,
       })
-      await dispatch(boxSummaryActions.boxSummaryDeliveryDaysLoad())
+      await dispatch(boxSummaryDeliveryDaysLoad())
       dispatch({
         type: actionTypes.BASKET_POSTCODE_PENDING,
         pending: false,

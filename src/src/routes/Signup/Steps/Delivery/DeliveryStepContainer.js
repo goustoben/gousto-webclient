@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
@@ -35,7 +36,7 @@ const DeliveryStepContainer = connect(mapStateToProps, {
   setTempSlotId: slotId => actions.temp('slotId', slotId),
   openNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', true),
   closeNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', false),
-  boxSummaryDeliverySlotChosen: actions.boxSummaryDeliverySlotChosen,
+  boxSummaryDeliverySlotChosen,
   trackDeliveryDayDropDownOpened: actions.trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed: actions.trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened: actions.trackDeliverySlotDropDownOpened,

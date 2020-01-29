@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 
 import Menu from './Menu'
+import { menuOverlayClick } from './actions/menuOverlayClick'
 
 const flattenRecipes = (recipes) => {
   const recipesToJs = recipes.toJS()
@@ -22,10 +24,11 @@ const flattenRecipes = (recipes) => {
 function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query
 
+  const showOverlay = state.boxSummaryShow.get('show') || state.menuBrowseCTAShow
+
   return {
-    boxSummaryShow: state.boxSummaryShow.get('show'),
+    showOverlay,
     menuCollectionRecipes: state.menuCollectionRecipes,
-    menuBrowseCTAShow: state.menuBrowseCTAShow,
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
     query: query || {},
     params: ownProps.params,
@@ -42,10 +45,6 @@ function mapStateToProps(state, ownProps) {
 
 const mapDispatchToProps = {
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
-  boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
-  menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
-  basketRestorePreviousValues: actions.basketRestorePreviousValues,
-  boxSummaryDeliveryDaysLoad: actions.boxSummaryDeliveryDaysLoad,
   menuLoadDays: actions.menuLoadDays,
   loginVisibilityChange: actions.loginVisibilityChange,
   basketNumPortionChange: actions.basketNumPortionChange,
@@ -54,6 +53,8 @@ const mapDispatchToProps = {
   orderUpdateProducts: actions.orderUpdateProducts,
   orderCheckoutAction: actions.orderCheckout,
   selectCurrentCollection: actions.changeCollectionById,
+  onOverlayClick: menuOverlayClick,
+  boxSummaryDeliveryDaysLoad,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
