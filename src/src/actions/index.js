@@ -1,6 +1,5 @@
 import auth from './auth'
 import basket from './basket'
-import boxSummary from './boxSummary'
 import checkout from './checkout'
 import content from './content'
 import filters from './filters'
@@ -33,7 +32,6 @@ import * as welcome from './welcome'
 const actions = {
   ...auth,
   ...basket,
-  ...boxSummary,
   ...checkout,
   ...collections,
   ...cookbook,

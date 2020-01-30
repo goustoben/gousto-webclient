@@ -26,7 +26,7 @@ function basketDeliveryDaysReceive(days) {
   }
 }
 
-const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
+export const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
   async (dispatch) => {
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, true))
     dispatch(basketDateChange(date))
@@ -39,7 +39,7 @@ const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
   }
 )
 
-const boxSummaryVisibilityChange = (show) => (
+export const boxSummaryVisibilityChange = (show) => (
   (dispatch, getState) => {
     dispatch({
       type: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
@@ -64,96 +64,88 @@ const boxSummaryVisibilityChange = (show) => (
   }
 )
 
-const actions = {
-  boxSummaryVisibilityChange,
+export const boxSummaryDeliveryDaysLoad = (cutoffDatetimeFrom, cutoffDatetimeUntil) => (
+  async (dispatch, getState) => {
+    const state = getState()
+    const { auth, basket, menuCutoffUntil, user } = state
 
-  boxSummaryDeliverySlotChosen,
+    dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false))
 
-  boxSummaryDeliveryDaysLoad: (cutoffDatetimeFrom, cutoffDatetimeUntil) => (
-    async (dispatch, getState) => {
-      const state = getState()
-      const { auth, basket, menuCutoffUntil, user } = state
+    const postcode = basket.get('postcode') || null
+    const cutoffUntil = cutoffDatetimeUntil
+      ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
+      : menuCutoffUntil
 
-      dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false))
+    const isNDDExperiment = getNDDFeatureFlagVal(getState())
 
-      const postcode = basket.get('postcode') || null
-      const cutoffUntil = cutoffDatetimeUntil
-        ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
-        : menuCutoffUntil
+    try {
+      const accessToken = auth.get('accessToken')
+      const cutoffDatetimeFromFormatted = moment.utc(cutoffDatetimeFrom).startOf('day').toISOString()
+      const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
+      let { data: days } = await fetchDeliveryDays(accessToken, cutoffDatetimeFromFormatted, cutoffUntil, isNDDExperiment, deliveryTariffId, postcode)
 
-      const isNDDExperiment = getNDDFeatureFlagVal(getState())
-
-      try {
-        const accessToken = auth.get('accessToken')
-        const cutoffDatetimeFromFormatted = moment.utc(cutoffDatetimeFrom).startOf('day').toISOString()
-        const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
-        let { data: days } = await fetchDeliveryDays(accessToken, cutoffDatetimeFromFormatted, cutoffUntil, isNDDExperiment, deliveryTariffId, postcode)
-
-        if (isNDDExperiment) {
-          days = transformDaySlotLeadTimesToMockSlots(days)
-        }
-
-        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, getUsersOrdersDaySlotLeadTimeIds(state))
-
-        dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
-      } catch (err) {
-        if (err.message !== 'do-not-deliver') {
-          logger.error(err)
-        }
-
-        dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, err.message))
+      if (isNDDExperiment) {
+        days = transformDaySlotLeadTimesToMockSlots(days)
       }
+
+      const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, getUsersOrdersDaySlotLeadTimeIds(state))
+
+      dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
+    } catch (err) {
+      if (err.message !== 'do-not-deliver') {
+        logger.error(err)
+      }
+
+      dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, err.message))
     }
-  ),
+  }
+)
 
-  boxSummaryNext: (numPortions) => (
-    (dispatch, getState) => {
-      const state = getState()
-      const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
-      const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
-      const landing = getLandingDay(
-        state,
-        true,
-        !canLandOnOrder,
-        deliveryDays
-      )
+export const boxSummaryNext = (numPortions) => (
+  (dispatch, getState) => {
+    const state = getState()
+    const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
+    const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
+    const landing = getLandingDay(
+      state,
+      true,
+      !canLandOnOrder,
+      deliveryDays
+    )
 
-      const tempDate = state.temp.get('date', landing.date)
-      const tempSlotId = state.temp.get('slotId', landing.slotId)
-      const tempOrderId = state.temp.get('orderId', landing.orderId)
+    const tempDate = state.temp.get('date', landing.date)
+    const tempSlotId = state.temp.get('slotId', landing.slotId)
+    const tempOrderId = state.temp.get('orderId', landing.orderId)
 
-      const basketPostcode = state.basket.get('postcode')
+    const basketPostcode = state.basket.get('postcode')
 
-      if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
-        dispatch(portionSizeSelectedTracking(numPortions))
-        if (tempOrderId) {
-          dispatch(push(`/menu/${tempOrderId}`))
-          dispatch(boxSummaryVisibilityChange(false))
-        } else {
-          dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
-          if (getHideBoxSummary(state) && getState().basket.get('recipes').size === 0) {
-            dispatch(boxSummaryVisibilityChange(false))
-          }
-        }
+    if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
+      dispatch(portionSizeSelectedTracking(numPortions))
+      if (tempOrderId) {
+        dispatch(push(`/menu/${tempOrderId}`))
+        dispatch(boxSummaryVisibilityChange(false))
       } else {
-        const tempPostcode = state.temp.get('postcode', '')
-        let shippingDefault
-        if (state.user.get('shippingAddresses')) {
-          shippingDefault = state.user.get('shippingAddresses').filter(address => address.get('shippingDefault')).first()
-        }
-
-        const chosenAddress = state.basket.get('chosenAddress') || shippingDefault
-
-        if (chosenAddress) {
-          dispatch(basketAddressChange(chosenAddress))
-          dispatch(basketPostcodeChange(chosenAddress.get('postcode')))
-        } else if (tempPostcode && tempPostcode.trim() !== '') {
-          const postcode = state.temp.get('postcode')
-          dispatch(basketPostcodeChange(postcode))
+        dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
+        if (getHideBoxSummary(state) && getState().basket.get('recipes').size === 0) {
+          dispatch(boxSummaryVisibilityChange(false))
         }
       }
-    }
-  ),
-}
+    } else {
+      const tempPostcode = state.temp.get('postcode', '')
+      let shippingDefault
+      if (state.user.get('shippingAddresses')) {
+        shippingDefault = state.user.get('shippingAddresses').filter(address => address.get('shippingDefault')).first()
+      }
 
-export default actions
+      const chosenAddress = state.basket.get('chosenAddress') || shippingDefault
+
+      if (chosenAddress) {
+        dispatch(basketAddressChange(chosenAddress))
+        dispatch(basketPostcodeChange(chosenAddress.get('postcode')))
+      } else if (tempPostcode && tempPostcode.trim() !== '') {
+        const postcode = state.temp.get('postcode')
+        dispatch(basketPostcodeChange(postcode))
+      }
+    }
+  }
+)

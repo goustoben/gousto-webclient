@@ -110,32 +110,18 @@ class Menu extends React.PureComponent {
     loginVisibilityChange(false)
   }
 
-  handleOverlayClick = () => {
-    const { boxSummaryShow, boxDetailsVisibilityChange, basketRestorePreviousValues, menuBrowseCTAShow, menuBrowseCTAVisibilityChange } = this.props
-    if (boxSummaryShow) {
-      boxDetailsVisibilityChange(false, '')
-      basketRestorePreviousValues()
-    } else if (menuBrowseCTAShow) {
-      menuBrowseCTAVisibilityChange(false)
-    }
-  }
-
   render() {
     const {
-      boxSummaryShow,
+      onOverlayClick,
+      showOverlay,
       isAuthenticated,
-      menuBrowseCTAShow,
       query,
       recipesCount,
       children
     } = this.props
     const { isChrome } = this.state
-    const overlayShow = boxSummaryShow || menuBrowseCTAShow
 
-    let overlayShowCSS = null
-    if (isChrome) {
-      overlayShowCSS = overlayShow ? css.blur : null
-    }
+    const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null
 
     return (
       <MainLayout route={{ withRecipeBar: true }}>
@@ -149,7 +135,7 @@ class Menu extends React.PureComponent {
           <JustForYouTutorial />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
-            <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick} />
+            <div className={showOverlay ? css.greyOverlayShow : css.greyOverlay} onClick={onOverlayClick} />
           </div>
           <BoxSummaryContainer />
           <RecipesInBasketProgress

@@ -9,7 +9,8 @@ import Summary from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
-import { menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
+import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
 import Checkout from 'routes/Checkout/Checkout'
@@ -23,8 +24,11 @@ jest.mock('actions', () => ({
   checkoutFetchIntervals: jest.fn().mockReturnValue(Promise.resolve()),
   basketStepsOrderReceive: jest.fn().mockReturnValue(Promise.resolve()),
   basketProceedToCheckout: jest.fn().mockReturnValue(Promise.resolve()),
-  boxSummaryDeliveryDaysLoad: jest.fn().mockReturnValue(Promise.resolve()),
   checkoutCreatePreviewOrder: jest.fn().mockReturnValue(Promise.resolve()),
+}))
+
+jest.mock('actions/boxSummary', () => ({
+  boxSummaryDeliveryDaysLoad: jest.fn().mockReturnValue(Promise.resolve()),
 }))
 
 jest.mock('routes/Checkout/loadCheckoutScript', () => ({

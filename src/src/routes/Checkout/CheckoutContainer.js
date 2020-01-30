@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Checkout from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -16,13 +17,13 @@ function mapStateToProps(state, ownProps) {
 }
 
 const CheckoutContainer = connect(mapStateToProps, {
-  boxSummaryDeliveryDaysLoad: actions.boxSummaryDeliveryDaysLoad,
   menuLoadDays: actions.menuLoadDays,
   redirect: actions.redirect,
   submitOrder: actions.checkoutSignup,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
   loadPrices: actions.pricingRequest,
   trackSignupStep: actions.trackSignupPageChange,
+  boxSummaryDeliveryDaysLoad,
   trackCheckoutButtonPressed,
 })(Checkout)
 

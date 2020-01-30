@@ -6,6 +6,7 @@ import logger from 'utils/logger'
 import routesConfig from 'config/routes'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
@@ -88,7 +89,7 @@ class Checkout extends React.PureComponent {
 
     if (!store.getState().boxSummaryDeliveryDays || (typeof store.getState().boxSummaryDeliveryDays === 'object' && store.getState().boxSummaryDeliveryDays.size === 0)) {
       await store.dispatch(actions.menuLoadDays())
-      await store.dispatch(actions.boxSummaryDeliveryDaysLoad())
+      await store.dispatch(boxSummaryDeliveryDaysLoad())
     }
 
     if (!store.getState().checkout.get('intervals', Immutable.List()).size) {

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
+import { boxSummaryNext } from 'actions/boxSummary'
 import { Next } from './Next'
 
 const mapStateToProps = (state) => ({
@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
 })
 
 const NextContainer = connect(mapStateToProps, {
-  boxSummaryNext: actions.boxSummaryNext
+  boxSummaryNext
 })(Next)
 
 export { NextContainer }

@@ -14,6 +14,7 @@ import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { brandDataReceived } from 'actions/brand'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { getMenuService } from 'selectors/features'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
@@ -56,7 +57,7 @@ const chooseFirstDate = async (store) => {
   }
 
   await store.dispatch(actions.menuLoadDays())
-  await store.dispatch(actions.boxSummaryDeliveryDaysLoad())
+  await store.dispatch(boxSummaryDeliveryDaysLoad())
 
   const canLandOnOrder = store.getState().features.getIn(['landingOrder', 'value'], false)
   const { date } = getLandingDay(
@@ -146,7 +147,7 @@ const loadWithoutOrder = async (store, query, background) => {
   ) {
     try {
       await store.dispatch(actions.menuLoadDays())
-      await store.dispatch(actions.boxSummaryDeliveryDaysLoad())
+      await store.dispatch(boxSummaryDeliveryDaysLoad())
 
       setSlotFromIds(store.getState(), query.slot_id, query.day_id, store.dispatch)
     } catch (err) {

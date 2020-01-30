@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import * as reactRouterPush from 'react-router-redux'
 import basketActions from 'actions/basket'
-import boxSummary from 'actions/boxSummary'
+import { boxSummaryDeliveryDaysLoad, boxSummaryNext } from 'actions/boxSummary'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
 
@@ -61,7 +61,7 @@ describe('boxSummary actions', () => {
           const menuCutoffFrom = '2017-12-05T00:00:00.000Z'
 
           beforeEach(async () => {
-            await boxSummary.boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
+            await boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
           })
 
           test('the `fetchDeliveryDays` was called with correct parameters', () => {
@@ -80,7 +80,7 @@ describe('boxSummary actions', () => {
           const providedenuCutoffUntil = '2018-12-05T23:59:59.999Z'
 
           beforeEach(async () => {
-            await boxSummary.boxSummaryDeliveryDaysLoad(from, until)(dispatchSpy, getStateSpy)
+            await boxSummaryDeliveryDaysLoad(from, until)(dispatchSpy, getStateSpy)
           })
 
           test('the `fetchDeliveryDays` was called with correct parameters', () => {
@@ -112,7 +112,7 @@ describe('boxSummary actions', () => {
           const menuCutoffFrom = '2017-12-05T00:00:00.000Z'
 
           beforeEach(async () => {
-            await boxSummary.boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
+            await boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
           })
 
           test('the `fetchDeliveryDays` was called with correct parameters', () => {
@@ -131,7 +131,7 @@ describe('boxSummary actions', () => {
           const providedenuCutoffUntil = '2018-12-05T23:59:59.999Z'
 
           beforeEach(async () => {
-            await boxSummary.boxSummaryDeliveryDaysLoad(from, until)(dispatchSpy, getStateSpy)
+            await boxSummaryDeliveryDaysLoad(from, until)(dispatchSpy, getStateSpy)
           })
 
           test('the `fetchDeliveryDays` was called with correct parameters', () => {
@@ -185,7 +185,7 @@ describe('boxSummary actions', () => {
         jest.clearAllMocks()
       })
       test('should redirect the user to /order/:orderId', () => {
-        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(pushSpy).toHaveBeenCalledTimes(1)
         expect(pushSpy.mock.calls[0][0]).toEqual('/menu/12345')
         expect(dispatchSpy).toHaveBeenCalledTimes(3)
@@ -214,7 +214,7 @@ describe('boxSummary actions', () => {
             })
           })
           test('should dispatch boxSummaryVisibilityChange(false)', () => {
-            boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+            boxSummaryNext()(dispatchSpy, getStateSpy)
             expect(dispatchSpy).toHaveBeenCalledTimes(3)
           })
         })
@@ -238,14 +238,14 @@ describe('boxSummary actions', () => {
             })
           })
           test('should dispatch boxSummaryVisibilityChange(false)', () => {
-            boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+            boxSummaryNext()(dispatchSpy, getStateSpy)
             expect(dispatchSpy).toHaveBeenCalledTimes(2)
           })
         })
       })
 
       test('should dispatch a boxSummaryDeliverySlotChosen action', () => {
-        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(dispatchSpy).toHaveBeenCalledTimes(2)
       })
     })
@@ -266,7 +266,7 @@ describe('boxSummary actions', () => {
         jest.clearAllMocks()
       })
       test('should dispatch a basketPostcodeChange action', () => {
-        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
         expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w3')
       })
@@ -290,7 +290,7 @@ describe('boxSummary actions', () => {
         jest.clearAllMocks()
       })
       test('should dispatch a basketPostcodeChange action', () => {
-        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
         expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w3')
       })
@@ -314,7 +314,7 @@ describe('boxSummary actions', () => {
         jest.clearAllMocks()
       })
       test('should dispatch basketPostcodeChange and basketAddressChange actions', () => {
-        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
         expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w4')
         expect(basketAddressChange).toHaveBeenCalledTimes(1)

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { boxSummaryVisibilityChange, boxSummaryNext } from 'actions/boxSummary'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes } from 'selectors/basket'
@@ -30,9 +31,9 @@ const mapStateToProps = (state) => ({
 })
 
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {
-  boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
+  boxDetailsVisibilityChange: boxSummaryVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
-  boxSummaryNext: actions.boxSummaryNext,
+  boxSummaryNext,
 })(BoxSummaryDesktop)
 
 export default BoxSummaryDesktopContainer
