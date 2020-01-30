@@ -13,7 +13,10 @@ const propTypes = {
 
 const handleClick = (e, url, onLinkClick) => {
   e.preventDefault()
-  onLinkClick()
+  if (typeof onLinkClick === 'function') {
+    onLinkClick()
+  }
+
   window.location.assign(url)
 }
 

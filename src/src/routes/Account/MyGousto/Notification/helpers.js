@@ -8,9 +8,9 @@ export const checkCardExpiryDate = (card, now) => {
 
   if (!card.size) return
 
-  if (now.isBefore(expiryDate) && expiryDate.diff(now, 'days') <= 30) {
+  if (now.isSame(expiryDate, 'month')) {
     bannerToShow = 'toExpire'
-  } else if (now.isSameOrAfter(expiryDate)) {
+  } else if (now.isAfter(expiryDate, 'month')) {
     bannerToShow = 'expired'
   }
 
