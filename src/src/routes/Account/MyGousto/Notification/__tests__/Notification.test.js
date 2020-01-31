@@ -28,20 +28,20 @@ describe('Notification component', () => {
       now = moment('2019-08-15')
     })
 
-    it('should return "Expired" if card expiry date is in current month or earlier', () => {
+    it('should return "expired" if card expiry date is before the current month', () => {
       card = Immutable.Map({
         lastFourDigits: "1234",
-        expiryDate: '2019-08',
+        expiryDate: '2019-07',
       })
 
       const result = checkCardExpiryDate(card, now)
       expect(result).toEqual('expired')
     })
 
-    it('should return "Expiring" if card expiry date is within one month of now', () => {
+    it('should return "toExpire" if card expiry date is within the current month', () => {
       card = Immutable.Map({
         lastFourDigits: "1234",
-        expiryDate: '2019-09',
+        expiryDate: '2019-08',
       })
 
       const result = checkCardExpiryDate(card, now)
