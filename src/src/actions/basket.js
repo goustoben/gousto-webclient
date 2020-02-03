@@ -304,11 +304,10 @@ export const basketStepsOrderReceive = stepsOrder => ({
   stepsOrder,
 })
 
-export const basketRecipesInitialise = (recipes, recipesPositions) => (dispatch, getState) => {
+export const basketRecipesInitialise = (recipes) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.BASKET_RECIPES_INITIALISE,
     recipes,
-    recipesPositions
   })
 
   const { basket } = getState()

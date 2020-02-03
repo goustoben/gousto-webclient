@@ -24,7 +24,6 @@ export default (store) => {
         numPortions: true,
         slotId: true,
         recipes: false,
-        recipesPositions: false,
         previewOrderId: true,
         stepsOrder: false,
         collection: true,

@@ -35,7 +35,6 @@ describe('basket reducer', function () {
       promoCodeApplied: false,
       promoCodeUrl: '',
       recipes: {},
-      recipesPositions: [],
       slotId: '',
       unsaved: false,
       previewOrderId: '',
@@ -289,22 +288,19 @@ describe('basket reducer', function () {
       describe('when reducer is passed `BASKET_RECIPES_INITIALISE` action', () => {
         let result
         const recipes = { 123: 1, 234: 2 }
-        const recipesPositions = [{ 123: { data: 'here' } }]
 
         beforeEach(() => {
           const action = {
             type: actionTypes.BASKET_RECIPES_INITIALISE,
             recipes,
-            recipesPositions
           }
 
           result = basket(initialState, action)
         })
 
-        test('then the new state should overwrite the recipes and recipesPositions', () => {
+        test('then the new state should overwrite the recipes', () => {
           const expectedState = Immutable.Map({
             recipes: Immutable.Map(recipes),
-            recipesPositions: Immutable.fromJS(recipesPositions),
             other: 'data'
           })
 
@@ -388,23 +384,6 @@ describe('basket reducer', function () {
 
       expect(Immutable.is(result, Immutable.Map({
         recipes: Immutable.Map({ 123: 2 }),
-      }))).toEqual(true)
-    })
-
-    test('should remove recipe position', function () {
-      const action = {
-        type: actionTypes.BASKET_RECIPE_REMOVE,
-        recipeId: '123',
-        position: 4,
-      }
-
-      initialState = Immutable.Map({
-        recipesPositions: Immutable.List([Immutable.Map({ 123: 4 })]),
-      })
-      const result = basket(initialState, action)
-
-      expect(Immutable.is(result, Immutable.Map({
-        recipesPositions: Immutable.List([]),
       }))).toEqual(true)
     })
 

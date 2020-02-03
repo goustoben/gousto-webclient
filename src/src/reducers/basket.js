@@ -45,7 +45,6 @@ const initialState = () => Immutable.fromJS({
   promoCodeApplied: false,
   promoCodeUrl: '',
   recipes: {},
-  recipesPositions: [],
   slotId: '',
   unsaved: false,
   previewOrderId: '',
@@ -179,23 +178,16 @@ const basket = {
     }
 
     case actionTypes.BASKET_RECIPES_INITIALISE: {
-      const { recipes, recipesPositions } = action
+      const { recipes } = action
 
       return state.set('recipes', Immutable.Map(recipes))
-        .set('recipesPositions', Immutable.fromJS(recipesPositions))
     }
 
     case actionTypes.BASKET_RECIPE_ADD: {
-      const { recipeId, position, collection } = action
+      const { recipeId } = action
       const currentQty = state.getIn(['recipes', recipeId], 0)
-      let newState = state.setIn(['recipes', recipeId], currentQty + 1)
-      if (recipeId && position) {
-        const newRecipe = Immutable.Map({}).set(recipeId, { position, collection })
-        const newRecipesPositions = newState.get('recipesPositions').push(newRecipe)
-        newState = newState.set('recipesPositions', newRecipesPositions)
-      }
 
-      return newState
+      return state.setIn(['recipes', recipeId], currentQty + 1)
     }
 
     case actionTypes.BASKET_LIMIT_REACHED: {
@@ -209,18 +201,6 @@ const basket = {
         newState = state.deleteIn(['recipes', action.recipeId], 0)
       } else if (currentQty > 0) {
         newState = state.setIn(['recipes', action.recipeId], currentQty - 1)
-      }
-
-      const recipesPositions = newState.get('recipesPositions')
-      let theLastRecipeIndex
-
-      if (Immutable.List.isList(recipesPositions)) {
-        theLastRecipeIndex = recipesPositions.findLastIndex(value => value.has(action.recipeId))
-
-        if (theLastRecipeIndex !== -1) {
-          const newRecipesPositions = newState.get('recipesPositions').delete(theLastRecipeIndex)
-          newState = newState.set('recipesPositions', newRecipesPositions)
-        }
       }
 
       return newState

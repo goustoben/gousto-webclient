@@ -191,9 +191,10 @@ describe('login actions', () => {
           })
         })
 
-        it ('should not redirect user to the targeted URL', async () => {
+        it ('should not redirect user to the targeted URL and should redirect to /menu', async () => {
           await loginActions.loginUser('email', 'password', true)(dispatch, getState)
-          expect(redirect).toHaveBeenCalledTimes(0)
+          expect(redirect).not.toHaveBeenCalledWith(`${HOST_PRODUCTION}.evil.me`)
+          expect(redirect).toHaveBeenCalledWith('/menu')
         })
       })
 
@@ -230,6 +231,33 @@ describe('login actions', () => {
       test('should preserve promo_code', () => {
         const url = loginActions.loginRedirect({
           pathname: '/',
+          hash: '#login',
+          search: '?promo_code=GOUT3S',
+        }, false, Immutable.Map({}))
+        expect(url).toEqual('/my-gousto?promo_code=GOUT3S')
+      })
+
+      test('should preserve path when it is menu', () => {
+        const url = loginActions.loginRedirect({
+          pathname: '/menu',
+          hash: '#login',
+          search: '?promo_code=GOUT3S',
+        }, false, Immutable.Map({}))
+        expect(url).toEqual('/menu?promo_code=GOUT3S')
+      })
+
+      test('should preserve path when it is check-out', () => {
+        const url = loginActions.loginRedirect({
+          pathname: '/check-out',
+          hash: '#login',
+          search: '?promo_code=GOUT3S',
+        }, false, Immutable.Map({}))
+        expect(url).toEqual('/check-out?promo_code=GOUT3S')
+      })
+
+      test('should my-gousto when path is not menu or check-out', () => {
+        const url = loginActions.loginRedirect({
+          pathname: '/box-prices',
           hash: '#login',
           search: '?promo_code=GOUT3S',
         }, false, Immutable.Map({}))

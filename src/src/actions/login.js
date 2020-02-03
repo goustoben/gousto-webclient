@@ -153,6 +153,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 
   if (search) {
     const { promo_code: promoCode } = queryString.parse(search)
+    destination = destination || pathname || ''
     destination = promoCode ? `${destination}?promo_code=${promoCode}` : destination
   }
 
