@@ -46,7 +46,7 @@ export const sortRecipesByStock = (recipes, inStockRecipes) => {
       inStock: acc.inStock
     }
   }, { outOfStock: Immutable.List(), inStock: Immutable.List() })
-
+  
   return inStock.concat(outOfStock)
 }
 
@@ -59,21 +59,16 @@ export const getSortedRecipes = createSelector(
       }
 
       const recipesInCollection = menuCollectionRecipes.get(collectionId)
+
       if (!recipesInCollection) {
         return createSortedRecipesResponse(allRecipes, inStockRecipes)
       }
 
-      const recipeIsInCollection = (recipe) => {
-        const id = getRecipeId(recipe)
-
-        if (!id) {
-          return false
-        }
-
-        return recipesInCollection.includes(id)
+      const getRecipeDetailsById = (recipeId) => {
+        return allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
       }
-
-      const filtered = allRecipes.filter(recipeIsInCollection)
+      // recipesInCollection is in recommended order whilst allRecipes is the default order of the menu
+      const filtered = recipesInCollection.map(getRecipeDetailsById).filter(recipe => recipe !== undefined)
 
       return createSortedRecipesResponse(filtered, inStockRecipes)
     }

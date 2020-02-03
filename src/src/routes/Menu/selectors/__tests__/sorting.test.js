@@ -9,7 +9,7 @@ describe('RecipeList selectors', () => {
   const menuCollectionRecipes = Immutable.fromJS({
     [VALID_COLLECTION_ID]: [ '327', '819' ]
   })
-  const currentMenuRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
+  let currentMenuRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
   const inStockRecipes = Immutable.fromJS([secondRecipe])
   
   describe('getSortedRecipes', () => {
@@ -64,6 +64,19 @@ describe('RecipeList selectors', () => {
         expect(recipeIds).toEqual(Immutable.fromJS([
           firstRecipe.get('id'), secondRecipe.get('id')
         ]))
+      })
+      
+      describe('when menuRecipes in different order than recipesInCollection', () => {
+        beforeEach(() => {
+          currentMenuRecipes = Immutable.fromJS([secondRecipe, thirdRecipe, firstRecipe])
+        })
+        test('should return recipes in recipeInCollection order', () => {
+          const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes)(VALID_COLLECTION_ID)
+
+          expect(recipeIds).toEqual(Immutable.fromJS([
+            firstRecipe.get('id'), secondRecipe.get('id')
+          ]))
+        })
       })
     })
   })
