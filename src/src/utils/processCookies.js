@@ -72,7 +72,6 @@ const processCookies = (cookies, store) => {
   const boxId = getCookieStoreValue(cookies, 'basket_boxId')
   const numPortions = getCookieStoreValue(cookies, 'basket_numPortions')
   let recipes = getCookieStoreValue(cookies, 'basket_recipes')
-  let recipesPositions = getCookieStoreValue(cookies, 'basket_recipesPositions')
   const stepsOrder = getCookieStoreValue(cookies, 'basket_stepsOrder')
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
   const subscriptionOption = getCookieStoreValue(cookies, 'basket_subscriptionOption')
@@ -177,8 +176,7 @@ const processCookies = (cookies, store) => {
     }
 
     recipes = recipes ? JSON.parse(recipes) : {}
-    recipesPositions = recipesPositions ? JSON.parse(recipesPositions) : []
-    store.dispatch(basketActions.basketRecipesInitialise(recipes, recipesPositions))
+    store.dispatch(basketActions.basketRecipesInitialise(recipes))
   }
 
   if (features) {

@@ -664,7 +664,6 @@ describe('basket actions', () => {
   describe('basketRecipeInitialise', () => {
     describe('given a basket with recipes already contained', () => {
       let recipes
-      let recipesPositions
       const pricingRequestAction = Symbol()
 
       beforeEach(() => {
@@ -680,12 +679,11 @@ describe('basket actions', () => {
         pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
 
         recipes = { 123: 1, 234: 2 }
-        recipesPositions = { 123: { position: 57 }, 234: { position: 32 }}
       })
 
       describe('when `basketRecipesInitialise` action called', () => {
         beforeEach(() => {
-          basketRecipesInitialise(recipes, recipesPositions)(dispatch, getStateSpy)
+          basketRecipesInitialise(recipes)(dispatch, getStateSpy)
         })
 
         test('then the state should have been retrieved', () => {
@@ -700,7 +698,6 @@ describe('basket actions', () => {
           expect(dispatch).toHaveBeenNthCalledWith(1, {
             type: actionTypes.BASKET_RECIPES_INITIALISE,
             recipes,
-            recipesPositions,
           })
         })
 

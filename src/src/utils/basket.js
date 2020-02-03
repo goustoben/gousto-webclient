@@ -103,7 +103,6 @@ export function getProductLimitReached(productId, basket, products, productsCate
 export function basketResetPersistent(cookie) {
   unset(cookie, 'goustoStateStore_basket_slotId')
   unset(cookie, 'goustoStateStore_basket_recipes')
-  unset(cookie, 'goustoStateStore_basket_recipesPositions')
   unset(cookie, 'goustoStateStore_basket_previewOrderId')
   unset(cookie, 'goustoStateStore_basket_postcode')
   unset(cookie, 'goustoStateStore_basket_numPortions')
