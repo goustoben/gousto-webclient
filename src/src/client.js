@@ -19,8 +19,6 @@ import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
-import logger from 'utils/logger'
-import { zeStart, zeChatButtonSetUp } from 'utils/zendesk'
 import { configureStore } from './store'
 
 docReady('docReady', window)
@@ -67,14 +65,6 @@ window.docReady(() => {
   refresh(store)
 
   browserType(store)
-
-  zeStart()
-    .then(() => {
-      zeChatButtonSetUp(window.location.pathname)
-    })
-    .catch((err) => {
-      logger.notice({ message: err })
-    })
 
   const reactRootDOM = document.getElementById('react-root')
 
