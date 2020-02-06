@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import DOMPurify from 'dompurify'
 import Immutable from 'immutable'
 import Image from 'routes/Menu/Recipe/Image'
+import { sanitize } from 'utils/sanitizer'
 import { Button } from 'goustouicomponents'
 import css from './CookingInstructions.css'
 
@@ -30,7 +30,7 @@ class CookingInstructions extends PureComponent {
   cookingStep = (recipeStep) => {
     const images = recipeStep.get('media').get('images')
     const instruction = recipeStep.get('instruction')
-    const instructionSanitize = DOMPurify.sanitize(instruction).replace(/&nbsp;/g, ' ')
+    const instructionSanitize = sanitize(instruction).replace(/&nbsp;/g, ' ')
     const stepNumber = recipeStep.get('stepNumber')
     let title
     let urls

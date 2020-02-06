@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import DOMPurify from 'dompurify'
 import ReactMarkdown from 'react-markdown'
+import { sanitize } from 'utils/sanitizer'
 import css from './GenericScreen.css'
 import CallToAction from '../CallToAction'
 import Image from '../Image'
@@ -16,7 +16,7 @@ export function renderContent(contents = []) {
     case 'copy': {
       component = (content.copy && (
         <ReactMarkdown
-          source={DOMPurify.sanitize(content.copy)}
+          source={sanitize(content.copy)}
           className={css.copy}
         />
       ))
