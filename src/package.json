@@ -50,7 +50,7 @@
     "bower": "1.8.8",
     "classnames": "2.2.6",
     "cookies-js": "1.2.3",
-    "dompurify": "1.0.8",
+    "dompurify": "^2.0.8",
     "gousto-lumberjack-js": "git+ssh://git@github.com/Gousto/lumberjack-js-package.git#v1.0.4",
     "graphql": "0.11.7",
     "graphql-anywhere": "4.1.22",

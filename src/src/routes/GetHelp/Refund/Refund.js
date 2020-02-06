@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
-import DOMPurify from 'dompurify'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
+import { sanitize } from 'utils/sanitizer'
 import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 import { BottomButton } from '../components/BottomButton'
@@ -95,7 +95,7 @@ class Refund extends PureComponent {
       {
         category_id: Number(selectedIngredients[key].issueId),
         ingredient_id: selectedIngredients[key].ingredientId,
-        description: DOMPurify.sanitize(selectedIngredients[key].issueDescription),
+        description: sanitize(selectedIngredients[key].issueDescription),
       }
     ))
     const setComplaintParams = [
