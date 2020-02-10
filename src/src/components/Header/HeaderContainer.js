@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
+import { getIsAuthenticated } from 'selectors/auth'
 import { getAbandonBasket, isAccountTabNameTest } from 'selectors/features'
-import { getUserFromJoin } from 'selectors/user'
+import { getUserFromJoin, getUserId } from 'selectors/user'
 import { Header } from './Header'
 
 const mapStateToProps = (state) => ({
   serverError: state.serverError === '500',
-  isAuthenticated: state.auth.get('isAuthenticated'),
+  isAuthenticated: getIsAuthenticated(state),
   routing: state.routing,
   promoCodeUrl: state.basket.get('promoCodeUrl'),
   loginOpen: state.loginVisibility,
@@ -15,7 +16,8 @@ const mapStateToProps = (state) => ({
   features: state.features,
   fromJoin: getUserFromJoin(state),
   abandonBasketFeature: getAbandonBasket(state),
-  isAccountTabNameTest: isAccountTabNameTest(state)
+  isAccountTabNameTest: isAccountTabNameTest(state),
+  userId: getUserId(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

@@ -15,6 +15,7 @@ import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import CookieBanner from 'CookieBanner'
+import { addUserIdToHelpUrl } from 'utils/url'
 import { Button } from 'goustouicomponents'
 import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
@@ -46,6 +47,7 @@ class Header extends React.PureComponent {
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
     isAccountTabNameTest: PropTypes.bool,
+    userId: PropTypes.string,
   }
 
   static defaultProps = {
@@ -59,6 +61,7 @@ class Header extends React.PureComponent {
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
     isAccountTabNameTest: false,
+    userId: null,
   }
 
   constructor(props) {
@@ -97,6 +100,12 @@ class Header extends React.PureComponent {
     }
   }
 
+  isExternalLink = (menuItemName) => {
+    const externalLinkNames = ['help']
+
+    return externalLinkNames.includes(menuItemName.toLowerCase())
+  }
+
   onClose = () => {
     const { loginVisibilityChange } = this.props
     loginVisibilityChange(false)
@@ -115,16 +124,23 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest } = this.props
-    const menuItems = isAccountTabNameTest ? deepCloneObject(experimentalMenuItems) : deepCloneObject(defaultMenuItems)
+    const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest, userId } = this.props
+    const menuItems = isAccountTabNameTest
+      ? deepCloneObject(experimentalMenuItems)
+      : deepCloneObject(defaultMenuItems)
 
     let pathLocal = path
     if (path.indexOf('/') === -1) {
       pathLocal = `/${pathLocal}`
     }
+
+    menuItems.faq.url = addUserIdToHelpUrl(isAuthenticated, userId)
+
     Object.keys(menuItems).forEach(menuItem => {
-      if (pathLocal.indexOf(menuItems[menuItem].url) > -1) {
-        menuItems[menuItem].disabled = true
+      const currentMenuItem = menuItems[menuItem]
+
+      if (pathLocal.indexOf(currentMenuItem.url) > -1) {
+        currentMenuItem.disabled = true
       }
     })
 
@@ -281,7 +297,7 @@ class Header extends React.PureComponent {
         )
       }
 
-      const openNewTab = menuItem.name === 'Help'
+      const isExternalLink = this.isExternalLink(menuItem.name)
 
       return (
         <Link
@@ -290,8 +306,8 @@ class Header extends React.PureComponent {
           className={css.linkDesktop}
           clientRouted={menuItem.clientRouted}
           tracking={() => trackNavigationClick(menuItem.tracking)}
-          target={openNewTab ? '_blank' : null}
-          rel={openNewTab ? 'noopener noreferrer' : null}
+          target={isExternalLink ? '_blank' : null}
+          rel={isExternalLink ? 'noopener noreferrer' : null}
         >
           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
           {menuItem.name}

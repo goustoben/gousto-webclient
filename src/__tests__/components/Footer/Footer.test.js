@@ -121,4 +121,36 @@ describe('<Footer />', () => {
       expect(linksWithNewTab).toHaveLength(1)
     })
   })
+
+  describe('given user is loggeed in/out', () => {
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = shallow(
+        <Footer copyright={false} />
+      )
+    })
+
+    describe('when user is logged in', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAuthenticated: true, userId: '123' })
+      })
+      test('the help link has user_id as a parameter', () => {
+        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+
+        expect(helpLink.prop('to')).toContain('?user_id=123')
+      })
+    })
+
+    describe('when user is logged out', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAuthenticated: false })
+      })
+      test('the help link does not have user_id as a parameter', () => {
+        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+
+        expect(helpLink.prop('to')).not.toContain('?user_id=123')
+      })
+    })
+  })
 })
