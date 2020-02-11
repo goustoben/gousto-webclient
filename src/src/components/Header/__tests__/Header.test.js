@@ -20,7 +20,7 @@ describe('Header', () => {
     features: Immutable.fromJS({}),
     persist: Immutable.fromJS({
       simpleHeader: false,
-    })
+    }),
   }
 
   let wrapper
@@ -100,8 +100,8 @@ describe('Header', () => {
 
     describe('when the user clicks', () => {
       const trackNavigationClickSpy = jest.fn()
-      
-      beforeEach(() => { 
+
+      beforeEach(() => {
         wrapper = shallow(<Header isAuthenticated trackNavigationClick={trackNavigationClickSpy} />, { context: { store } })
 
         delete window.location
@@ -113,7 +113,7 @@ describe('Header', () => {
       test('then trackNavigationClick should be called', () => {
         expect(trackNavigationClickSpy).toHaveBeenCalledWith('UseAppHeaderCta Clicked')
       })
-  
+
       test('then the user should be redirected to /apps', () => {
         expect(window.location.assign).toHaveBeenCalledWith('/apps')
       })
@@ -150,7 +150,7 @@ describe('Header', () => {
     beforeEach(() => {
       wrapper.setProps({ isAuthenticated: true })
     })
-    
+
     describe('when isAccountTabNameTest is set to true', () => {
       beforeEach(() => {
         wrapper.setProps({ isAccountTabNameTest: true })
@@ -228,7 +228,7 @@ describe('Header', () => {
 
   describe('when isAuthenticated prop is true', () => {
     beforeEach(() => {
-      wrapper.setProps({ isAuthenticated: true })
+      wrapper.setProps({ isAuthenticated: true, userId: '123' })
     })
 
     test('renders referFriend', () => {
@@ -293,12 +293,28 @@ describe('Header', () => {
         {
           "clientRouted": false,
           "name": "Help",
-          "url": routesConfig.zendesk.faqs,
+          "url": `${routesConfig.zendesk.faqs}/?user_id=123`,
           "tracking": "FAQNavigation Clicked",
         }
       ]
 
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
+    })
+
+    test('on desktop the help link has user_id as a parameter', () => {
+      const helpLink = wrapper.find('GoustoLink').at(4)
+
+      expect(helpLink.prop('to')).toContain('?user_id=123')
+    })
+
+    test('on mobile the help link has user_id as a parameter', () => {
+      const helpMenuItem = wrapper
+        .find('MobileMenu')
+        .prop('mobileMenuItems')
+        .filter((menuItem) => menuItem.name === 'Help')
+        .pop()
+
+      expect(helpMenuItem.url).toContain('?user_id=123')
     })
   })
 
@@ -344,6 +360,22 @@ describe('Header', () => {
         }
       ]
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
+    })
+
+    test('on desktop the help link does not have user_id as a parameter', () => {
+      const helpLink = wrapper.find('GoustoLink').at(4)
+
+      expect(helpLink.prop('to')).not.toContain('?user_id=123')
+    })
+
+    test('on mobile the help link does not have user_id as a parameter', () => {
+      const helpMenuItem = wrapper
+        .find('MobileMenu')
+        .prop('mobileMenuItems')
+        .filter((menuItem) => menuItem.name === 'Help')
+        .pop()
+
+      expect(helpMenuItem.url).not.toContain('?user_id=123')
     })
   })
 })
