@@ -104,8 +104,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
                     <CookingInstructions recipeId={id} />
                   </div>
                 </div>
-              )
-            }
+              )}
           </div>
         </div>
         <div className={css.stickyContainer}>
@@ -117,13 +116,11 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
 
 FineDineInDetail.propTypes = {
   ...detailPropTypes,
-  scrolledPastPoint: PropTypes.bool,
   images: PropTypes.instanceOf(Immutable.List),
   showCookingInstruction: PropTypes.bool.isRequired,
 }
 
 FineDineInDetail.defaultProps = {
-  scrolledPastPoint: false,
   images: Immutable.List([]),
 }
 

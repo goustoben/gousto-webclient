@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
 import { SocialButton } from 'components/SocialLinks/SocialButton'
 import { UserRAFLink } from 'components/UserRAFLink'
@@ -8,7 +9,7 @@ import css from './ReferAFriend.css'
 import { Offer } from './Offer'
 
 const propTypes = {
-  rafOffer: PropTypes.shape({
+  rafOffer: ImmutablePropTypes.map({
     creditFormatted: PropTypes.string,
     firstBoxDiscountFormatted: PropTypes.string,
     firstMonthDiscountFormatted: PropTypes.string,
@@ -39,7 +40,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
           trackingReferFriend={trackingReferFriend}
           isModal
         >
-          <SocialButton text='Copy Invite Link' type='link' elementType='component' />
+          <SocialButton text="Copy Invite Link" type="link" elementType="component" />
         </UserRAFLink>
         <p className={css.socialButtonsText}>Share your invite code:</p>
         <SocialShareButtons
@@ -48,7 +49,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
           device={device}
           offerCredit={yourOffer}
           trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
-          elementType='component'
+          elementType="component"
         />
       </div>
       <div className={css.mobileShow}>

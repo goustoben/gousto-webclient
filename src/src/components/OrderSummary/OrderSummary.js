@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import moment from 'moment'
 import Receipt from 'Receipt'
@@ -12,44 +13,50 @@ import productUtils from 'utils/products'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import css from './OrderSummary.css'
 
-class OrderSummary extends React.PureComponent {
-  static propTypes = {
-    prices: PropTypes.instanceOf(Immutable.Map),
-    deliveryDate: PropTypes.string.isRequired,
-    deliverySlot: PropTypes.instanceOf(Immutable.Map),
-    giftItems: PropTypes.instanceOf(Immutable.Map),
-    numPortions: PropTypes.number.isRequired,
-    numRecipes: PropTypes.number.isRequired,
-    productItems: PropTypes.instanceOf(Immutable.Map),
-    products: PropTypes.object.isRequired,
-    recipeItems: PropTypes.instanceOf(Immutable.Map),
-    recipes: PropTypes.object.isRequired,
-    removeProduct: PropTypes.func,
-    shippingAddress: PropTypes.instanceOf(Immutable.Map),
-    showProductDetail: PropTypes.func,
-    saveError: PropTypes.bool,
-    saveRequired: PropTypes.bool,
-    saving: PropTypes.bool,
-    onSave: PropTypes.func.isRequired,
-    surcharges: PropTypes.instanceOf(Immutable.List),
-    orderNumber: PropTypes.string,
-    orderSummaryCollapsed: PropTypes.bool,
-  }
+const propTypes = {
+  prices: ImmutablePropTypes.map,
+  deliveryDate: PropTypes.string.isRequired,
+  deliverySlot: PropTypes.instanceOf(Immutable.Map),
+  giftItems: PropTypes.instanceOf(Immutable.Map),
+  numPortions: PropTypes.number.isRequired,
+  numRecipes: PropTypes.number.isRequired,
+  productItems: PropTypes.instanceOf(Immutable.Map),
+  products: ImmutablePropTypes.map.isRequired,
+  recipeItems: PropTypes.instanceOf(Immutable.Map),
+  recipes: ImmutablePropTypes.map.isRequired,
+  removeProduct: PropTypes.func,
+  shippingAddress: ImmutablePropTypes.map,
+  showProductDetail: PropTypes.func,
+  saveError: PropTypes.bool,
+  saveRequired: PropTypes.bool,
+  saving: PropTypes.bool,
+  onSave: PropTypes.func.isRequired,
+  surcharges: PropTypes.instanceOf(Immutable.List),
+  orderNumber: PropTypes.string,
+  orderSummaryCollapsed: PropTypes.bool,
+  isOrderConfirmation: PropTypes.bool.isRequired,
+  sectionTitle: PropTypes.string.isRequired,
+  onOrderConfirmationMobile: PropTypes.bool.isRequired,
+}
 
-  static defaultProps = {
-    giftItems: Immutable.Map(),
-    productItems: Immutable.Map(),
-    recipeItems: Immutable.Map(),
-    prices: Immutable.Map({}),
-    orderNumber: '',
-    orderSummaryCollapsed: true,
-  }
+const defaultProps = {
+  giftItems: Immutable.Map(),
+  productItems: Immutable.Map(),
+  recipeItems: Immutable.Map(),
+  prices: Immutable.Map({}),
+  orderNumber: '',
+  orderSummaryCollapsed: true,
+}
 
-  state = {
-    orderSummaryOpen: false,
-  }
-
+class OrderSummary extends PureComponent {
   asterisk = String.fromCharCode(42)
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      orderSummaryOpen: false,
+    }
+  }
 
   onOrderSave = () => {
     const { isOrderConfirmation, onSave } = this.props
@@ -130,7 +137,7 @@ class OrderSummary extends React.PureComponent {
     const { deliveryDate, sectionTitle } = this.props
 
     return (
-      <SectionHeader title={sectionTitle ? sectionTitle : "Box summary"} type="minorArticle">
+      <SectionHeader title={sectionTitle || 'Box summary'} type="minorArticle">
         <p
           className={classnames(
             css.mobileOnly,
@@ -171,7 +178,7 @@ class OrderSummary extends React.PureComponent {
             className={css.toggleLink}
             onClick={this.toggleDetailView}
           >
-            View order details >
+            View order details &gt;
           </a>
         )}
       </footer>
@@ -271,5 +278,9 @@ class OrderSummary extends React.PureComponent {
     )
   }
 }
+
+OrderSummary.propTypes = propTypes
+
+OrderSummary.defaultProps = defaultProps
 
 export default OrderSummary
