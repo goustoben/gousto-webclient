@@ -24,19 +24,22 @@ const formatDate = (date) => (
   `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
 )
 
-const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
+const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, disabledSlots) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
-    slots[date] = dd.get('slots').map(slot => ({
-      label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
-      subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
-      value: slot.get('id'),
-      coreSlotId: slot.get('coreSlotId'),
-    })).toArray()
+    slots[date] = dd.get('slots').map(slot => {
+      const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
 
-    let disabled = dd.get('alternateDeliveryDay') !== null
-    disabled = (dd && dd.get('alternateDeliveryDay') !== null)
+      return {
+        label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
+        subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
+        value: slot.get('id'),
+        coreSlotId: slot.get('coreSlotId'),
+        disabled: isSlotDisabled
+      }
+    }).toArray()
+    const disabled = (dd && dd.get('alternateDeliveryDay') !== null) || slots[date].every(slot => slot.disabled)
 
     return { date, value: date, disabled, label: formatDate(moment(date))}
   })
@@ -67,10 +70,12 @@ const DeliveryStep = ({
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceModalClosed,
   trackDeliveryPreferenceSelected,
+  disabledSlots
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
-    tempDate
+    tempDate,
+    disabledSlots
   )
 
   if (nextDayDeliveryPaintedDoorFeature) {
@@ -192,7 +197,8 @@ const DeliveryStep = ({
       <Overlay open={isNDDPaintedDoorOpened} from="top">
         <ModalPanel className={css.modal} closePortal={onPopupClose}>
           <div className={css.modalTitleDiv}>
-            <h2 className={css.modalFirstTitle}>We're working on speeding
+            <h2 className={css.modalFirstTitle}>
+              We're working on speeding
               <span>up our deliveries</span>
             </h2>
           </div>
@@ -245,6 +251,11 @@ DeliveryStep.propTypes = {
   trackDeliveryPreferenceModalClosed: PropTypes.func,
   trackDeliveryPreferenceSelected: PropTypes.func,
   next: PropTypes.func,
+  disabledSlots: PropTypes.arrayOf(PropTypes.string),
+}
+
+DeliveryStep.defaultProps = {
+  disabledSlots: []
 }
 
 export default DeliveryStep

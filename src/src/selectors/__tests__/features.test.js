@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
   getDisabledSlots,
+  getLogoutUserDisabledSlots,
   getAppBanner,
   isShowNoDiscountCTAFeatureEnabled,
   isSubscriptionPauseOsrFeatureEnabled,
@@ -88,6 +89,35 @@ describe('when features are defined', () => {
 
       test('should return value', () => {
         expect(getDisabledSlots(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('getLogoutUserDisabledSlots', () => {
+    describe('when feature is set to disable slots', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          logoutUserDisabledSlots: {
+            value: '2020-01-20_08-19,2020-02-21_08-12',
+          },
+        })
+      })
+      test('should return disable slots', () => {
+        expect(getLogoutUserDisabledSlots(state)).toEqual('2020-01-20_08-19,2020-02-21_08-12')
+      })
+    })
+
+    describe('when feature is set to empty string', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          logoutUserDisabledSlots: {
+            value: '',
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getLogoutUserDisabledSlots(state)).toEqual('')
       })
     })
   })
