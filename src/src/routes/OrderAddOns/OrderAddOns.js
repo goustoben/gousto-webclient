@@ -36,6 +36,7 @@ const propTypes = {
   trackContinueOrderAddOnsClick: PropTypes.func.isRequired,
   trackSkipOrderAddOnsClick: PropTypes.func.isRequired,
   trackErrorSkipOrderAddOns: PropTypes.func.isRequired,
+  productLoadError: PropTypes.bool,
 }
 
 const defaultProps = {

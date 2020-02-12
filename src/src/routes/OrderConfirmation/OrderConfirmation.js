@@ -32,11 +32,12 @@ const propTypes = {
   rafOffer: PropTypes.instanceOf(Immutable.Map).isRequired,
   showHeader: PropTypes.bool.isRequired,
   userFetchReferralOffer: PropTypes.func,
+  userVerifyAge: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 }
 
 const defaultProps = {
-  headerDetails: {},
-  showHeader: false
+  headerDetails: {}
 }
 
 class OrderConfirmation extends PureComponent {
@@ -78,66 +79,70 @@ class OrderConfirmation extends PureComponent {
     const { hasConfirmedAge, showAgeVerification } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
-    return isLoading ?
-      (
-        <PageLoader />
-      ) :
-      (
-        <LayoutPageWrapper padding='large-screens-only'>
-          <div
-            className={css.pageContent}
-            data-testing="orderConfirmationContainer"
-          >
-            <Overlay open={showAgeVerification} from="top">
-              <AgeVerificationPopUp
-                onClose={this.toggleAgeVerificationPopUp}
-                isUnderAge={isUnderAge}
-                onAgeConfirmation={this.onAgeConfirmation}
-              />
-            </Overlay>
+    if (isLoading) {
+      return <PageLoader />
+    }
 
-            {showHeader ? (
-              <VerticalStages hasFullWidth>
-                <VerticalStagesItem
-                  title="Order created"
-                  isCompleted
-                  backgroundColor="lightGrey"
-                >
-                  <div>
-                    <OrderConfirmationHeader {...headerDetails} />
-                    <div className={classnames(css.mobileShow, css.rafMobile)}>
-                      <ReferAFriend />
+    return (
+      <LayoutPageWrapper padding="large-screens-only">
+        <div
+          className={css.pageContent}
+          data-testing="orderConfirmationContainer"
+        >
+          <Overlay open={showAgeVerification} from="top">
+            <AgeVerificationPopUp
+              onClose={this.toggleAgeVerificationPopUp}
+              isUnderAge={isUnderAge}
+              onAgeConfirmation={this.onAgeConfirmation}
+            />
+          </Overlay>
+
+          {
+            showHeader
+              ? (
+                <VerticalStages hasFullWidth>
+                  <VerticalStagesItem
+                    title="Order created"
+                    isCompleted
+                    backgroundColor="lightGrey"
+                  >
+                    <div>
+                      <OrderConfirmationHeader {...headerDetails} />
+                      <div className={classnames(css.mobileShow, css.rafMobile)}>
+                        <ReferAFriend />
+                      </div>
                     </div>
-                  </div>
-                </VerticalStagesItem>
+                  </VerticalStagesItem>
 
-                <VerticalStagesItem
-                  title='Add desserts, drinks, snacks & more from the Gousto Market'
-                  isCompleted={false}
-                >
+                  <VerticalStagesItem
+                    title="Add desserts, drinks, snacks & more from the Gousto Market"
+                    isCompleted={false}
+                  >
+                    <Market
+                      ageVerified={ageVerified}
+                      toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                    />
+                  </VerticalStagesItem>
+                </VerticalStages>
+              )
+              : (
+                <div>
+                  <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
                   <Market
                     ageVerified={ageVerified}
                     toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
                   />
-                </VerticalStagesItem>
-              </VerticalStages>
-            ) : (
-              <div>
-                <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
-                <Market
-                  ageVerified={ageVerified}
-                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                />
-                <div className={classnames(css.mobileShow, css.rafMobile)}>
-                  <ReferAFriend />
+                  <div className={classnames(css.mobileShow, css.rafMobile)}>
+                    <ReferAFriend />
+                  </div>
                 </div>
-              </div>
-            )}
+              )
+          }
 
-            <AwinPixel />
-          </div>
-        </LayoutPageWrapper>
-      )
+          <AwinPixel />
+        </div>
+      </LayoutPageWrapper>
+    )
   }
 }
 

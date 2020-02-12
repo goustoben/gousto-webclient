@@ -105,8 +105,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                     <div className={classnames(css.cookingInstructionsDesktop, css.sectionPanel)}>
                       <CookingInstructions recipeId={id} />
                     </div>
-                  )
-                }
+                  )}
               </div>
             )}
             {(!!allergens.size > 0 || !!ingredients.size > 0) && (
@@ -120,8 +119,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                     <div className={classnames(css.cookingInstructionsMobile, css.sectionPanel)}>
                       <CookingInstructions recipeId={id} />
                     </div>
-                  )
-                }
+                  )}
               </div>
             )}
           </div>
@@ -135,13 +133,11 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
 
 DefaultDetail.propTypes = {
   ...detailPropTypes,
-  scrolledPastPoint: PropTypes.bool,
   isFoodBrandClickable: PropTypes.bool,
   showCookingInstruction: PropTypes.bool.isRequired,
 }
 
 DefaultDetail.defaultProps = {
-  scrolledPastPoint: false,
   fiveADay: 0
 }
 
