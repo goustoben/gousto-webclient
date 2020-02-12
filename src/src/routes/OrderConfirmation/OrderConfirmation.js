@@ -32,12 +32,11 @@ const propTypes = {
   rafOffer: PropTypes.instanceOf(Immutable.Map).isRequired,
   showHeader: PropTypes.bool.isRequired,
   userFetchReferralOffer: PropTypes.func,
-  userVerifyAge: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool,
 }
 
 const defaultProps = {
-  headerDetails: {}
+  headerDetails: {},
+  showHeader: false
 }
 
 class OrderConfirmation extends PureComponent {
@@ -79,70 +78,66 @@ class OrderConfirmation extends PureComponent {
     const { hasConfirmedAge, showAgeVerification } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
-    if (isLoading) {
-      return <PageLoader />
-    }
+    return isLoading ?
+      (
+        <PageLoader />
+      ) :
+      (
+        <LayoutPageWrapper padding='large-screens-only'>
+          <div
+            className={css.pageContent}
+            data-testing="orderConfirmationContainer"
+          >
+            <Overlay open={showAgeVerification} from="top">
+              <AgeVerificationPopUp
+                onClose={this.toggleAgeVerificationPopUp}
+                isUnderAge={isUnderAge}
+                onAgeConfirmation={this.onAgeConfirmation}
+              />
+            </Overlay>
 
-    return (
-      <LayoutPageWrapper padding="large-screens-only">
-        <div
-          className={css.pageContent}
-          data-testing="orderConfirmationContainer"
-        >
-          <Overlay open={showAgeVerification} from="top">
-            <AgeVerificationPopUp
-              onClose={this.toggleAgeVerificationPopUp}
-              isUnderAge={isUnderAge}
-              onAgeConfirmation={this.onAgeConfirmation}
-            />
-          </Overlay>
-
-          {
-            showHeader
-              ? (
-                <VerticalStages hasFullWidth>
-                  <VerticalStagesItem
-                    title="Order created"
-                    isCompleted
-                    backgroundColor="lightGrey"
-                  >
-                    <div>
-                      <OrderConfirmationHeader {...headerDetails} />
-                      <div className={classnames(css.mobileShow, css.rafMobile)}>
-                        <ReferAFriend />
-                      </div>
+            {showHeader ? (
+              <VerticalStages hasFullWidth>
+                <VerticalStagesItem
+                  title="Order created"
+                  isCompleted
+                  backgroundColor="lightGrey"
+                >
+                  <div>
+                    <OrderConfirmationHeader {...headerDetails} />
+                    <div className={classnames(css.mobileShow, css.rafMobile)}>
+                      <ReferAFriend />
                     </div>
-                  </VerticalStagesItem>
+                  </div>
+                </VerticalStagesItem>
 
-                  <VerticalStagesItem
-                    title="Add desserts, drinks, snacks & more from the Gousto Market"
-                    isCompleted={false}
-                  >
-                    <Market
-                      ageVerified={ageVerified}
-                      toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                    />
-                  </VerticalStagesItem>
-                </VerticalStages>
-              )
-              : (
-                <div>
-                  <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+                <VerticalStagesItem
+                  title='Add desserts, drinks, snacks & more from the Gousto Market'
+                  isCompleted={false}
+                >
                   <Market
                     ageVerified={ageVerified}
                     toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
                   />
-                  <div className={classnames(css.mobileShow, css.rafMobile)}>
-                    <ReferAFriend />
-                  </div>
+                </VerticalStagesItem>
+              </VerticalStages>
+            ) : (
+              <div>
+                <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+                <Market
+                  ageVerified={ageVerified}
+                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                />
+                <div className={classnames(css.mobileShow, css.rafMobile)}>
+                  <ReferAFriend />
                 </div>
-              )
-          }
+              </div>
+            )}
 
-          <AwinPixel />
-        </div>
-      </LayoutPageWrapper>
-    )
+            <AwinPixel />
+          </div>
+        </LayoutPageWrapper>
+      )
   }
 }
 

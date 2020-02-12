@@ -1,4 +1,4 @@
-import Immutable from 'immutable'
+import Immutable from 'immutable' /* eslint-disable no-caps */
 
 export function getUserOrderById(orderId, userOrders = new Immutable.List([])) {
   return userOrders.find(order => order.get('id') === orderId, null, new Immutable.Map({}))

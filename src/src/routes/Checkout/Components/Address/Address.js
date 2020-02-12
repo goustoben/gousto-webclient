@@ -11,53 +11,47 @@ import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
 import css from './Address.css'
 
-const propTypes = {
-  formName: PropTypes.string,
-  sectionName: PropTypes.string,
-  formErrors: PropTypes.shape({}),
-  formValues: PropTypes.shape({}),
-  change: PropTypes.func,
-  touch: PropTypes.func,
-  untouch: PropTypes.func,
-  addressesPending: PropTypes.bool,
-  initialPostcode: PropTypes.string,
-  deliveryTariffId: PropTypes.string,
-  isDelivery: PropTypes.bool,
-  deliveryDate: PropTypes.string,
-  cutOffDate: PropTypes.string,
-  menuCutoffUntil: PropTypes.string,
-  receiveRef: PropTypes.func,
-  scrollToFirstMatchingRef: PropTypes.func,
-  registerField: PropTypes.func,
-  checkoutAddressLookup: PropTypes.func,
-  onAddressConfirm: PropTypes.func,
-  trackCheckoutButtonPressed: PropTypes.func,
-  isNDDExperiment: PropTypes.bool,
-  isMobile: PropTypes.bool,
-}
-
-const defaultProps = {
-  formName: 'address',
-  sectionName: 'delivery',
-  formErrors: {},
-  formValues: {},
-  isNDDExperiment: false,
-
-  change: () => { },
-  touch: () => { },
-  untouch: () => { },
-
-  addressesPending: false,
-  initialPostcode: '',
-  isDelivery: true,
-  receiveRef: () => { },
-  scrollToFirstMatchingRef: () => { },
-}
-
 class Address extends React.PureComponent {
-  static propTypes = propTypes
+  static propTypes = {
+    formName: PropTypes.string,
+    sectionName: PropTypes.string,
+    formErrors: PropTypes.object,
+    formValues: PropTypes.object,
+    change: PropTypes.func,
+    touch: PropTypes.func,
+    untouch: PropTypes.func,
+    addressesPending: PropTypes.bool,
+    initialPostcode: PropTypes.string,
+    isDelivery: PropTypes.bool,
+    deliveryDate: PropTypes.string,
+    cutOffDate: PropTypes.string,
+    menuCutoffUntil: PropTypes.string,
+    receiveRef: PropTypes.func,
+    scrollToFirstMatchingRef: PropTypes.func,
+    registerField: PropTypes.func,
+    checkoutAddressLookup: PropTypes.func,
+    onAddressConfirm: PropTypes.func,
+    trackCheckoutButtonPressed: PropTypes.func,
+    isNDDExperiment: PropTypes.bool,
+    isMobile: PropTypes.bool,
+  }
+  static defaultProps = {
+    formName: 'address',
+    sectionName: 'delivery',
+    formErrors: {},
+    formValues: {},
+    isNDDExperiment: false,
 
-  static defaultProps = defaultProps
+    change: () => { },
+    touch: () => { },
+    untouch: () => { },
+
+    addressesPending: false,
+    initialPostcode: '',
+    isDelivery: true,
+    receiveRef: () => { },
+    scrollToFirstMatchingRef: () => { },
+  }
 
   componentWillMount() {
     const { initialPostcode, sectionName, formName, change, touch } = this.props
@@ -69,6 +63,14 @@ class Address extends React.PureComponent {
     }
   }
 
+  getFormValue = inputName => {
+    const { formValues, sectionName } = this.props
+
+    return (formValues
+      && formValues[sectionName]
+      && formValues[sectionName][inputName]) ? formValues[sectionName][inputName] : undefined
+  }
+
   componentDidMount() {
     const { formName, sectionName, registerField } = this.props
 
@@ -76,14 +78,6 @@ class Address extends React.PureComponent {
     registerField(formName, `${sectionName}.addressesFetched`, 'Field')
     registerField(formName, `${sectionName}.deliverable`, 'Field')
     registerField(formName, `${sectionName}.confirmed`, 'Field')
-  }
-
-  getFormValue = inputName => {
-    const { formValues, sectionName } = this.props
-
-    return (formValues
-      && formValues[sectionName]
-      && formValues[sectionName][inputName]) ? formValues[sectionName][inputName] : undefined
   }
 
   saveAddresses = async (results) => {
@@ -160,14 +154,12 @@ class Address extends React.PureComponent {
   }
 
   loadAddresses = async postcode => {
-    const { checkoutAddressLookup, isDelivery } = this.props
-
-    const checks = [checkoutAddressLookup(postcode)]
-    if (isDelivery) {
+    const checks = [this.props.checkoutAddressLookup(postcode)]
+    if (this.props.isDelivery) {
       checks.push(this.checkCanDeliver(postcode))
     }
 
-    return Promise.all(checks)
+    return await Promise.all(checks)
   }
 
   forceReValidation = () => {
@@ -211,18 +203,16 @@ class Address extends React.PureComponent {
       addressDetails = { line1: '', line2: '', town: '', county: '', postcode: '' }
       change(formName, `${sectionName}.notFound`, false)
     } else {
-      const { addressData: { deliveryPoints, town, county, postcode } } = this.state
-
-      const matchingDeliveryPoint = deliveryPoints.find(deliveryPoint => (
+      const matchingDeliveryPoint = this.state.addressData.deliveryPoints.find(deliveryPoint => (
         deliveryPoint.udprn === addressId
       ))
 
       addressDetails = {
         line1: matchingDeliveryPoint.line1,
         line2: matchingDeliveryPoint.line2,
-        town,
-        county,
-        postcode,
+        town: this.state.addressData.town,
+        county: this.state.addressData.county,
+        postcode: this.state.addressData.postcode,
       }
     }
 
@@ -267,20 +257,13 @@ class Address extends React.PureComponent {
       if (onAddressConfirm) {
         onAddressConfirm(postcode)
       }
-
-      if (isMobile) {
-        trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: true, missing_field: null })
-      }
+      isMobile && trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: true, missing_field: null })
     } else {
-      const { scrollToFirstMatchingRef } = this.props
       const sectionErrors = {
         [sectionName]: errors,
       }
-      scrollToFirstMatchingRef([dottify(sectionErrors)])
-
-      if (isMobile) {
-        trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: false, missing_field: Object.keys(errors) })
-      }
+      this.props.scrollToFirstMatchingRef([dottify(sectionErrors)])
+      isMobile && trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: false, missing_field: Object.keys(errors) })
     }
   }
 
@@ -288,21 +271,17 @@ class Address extends React.PureComponent {
    * Render address inputs
    * @param selectedAddress
    */
-  renderAddressInputs = () => {
-    const { receiveRef, sectionName } = this.props
-
-    return (
-      <div>
-        <AddressInputs
-          receiveRef={receiveRef}
-          sectionName={sectionName}
-        />
-      </div>
-    )
-  }
+  renderAddressInputs = () => (
+    <div>
+      <AddressInputs
+        receiveRef={this.props.receiveRef}
+        sectionName={this.props.sectionName}
+      />
+    </div>
+  )
 
   render() {
-    const { isDelivery, deliveryDate, cutOffDate, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef } = this.props
+    const { isDelivery, deliveryDate, cutOffDate, isMobile, trackCheckoutButtonPressed } = this.props
     const addresses = this.getFormValue('addresses') || []
     const postcodeTemp = this.getFormValue('postcodeTemp')
     const addressId = this.getFormValue('addressId')
@@ -314,20 +293,20 @@ class Address extends React.PureComponent {
 
     return (
       <div>
-        {isDelivery && (
+        {this.props.isDelivery && (
           <DeliveryInfo
             deliveryDate={deliveryDate}
             cutOffDate={cutOffDate}
           />
         )}
         <Postcode
-          postcodePending={addressesPending}
+          postcodePending={this.props.addressesPending}
           onPostcodeLookup={this.getAddresses}
           postcodeTemp={postcodeTemp}
           addresses={addresses}
           onSelectedAddressChange={this.handleSelectedAddressChange}
           showDropdown={showDropdown}
-          receiveRef={receiveRef}
+          receiveRef={this.props.receiveRef}
           trackClick={trackCheckoutButtonPressed}
           isMobile={isMobile}
         />
@@ -335,12 +314,12 @@ class Address extends React.PureComponent {
         {showDropdown && addresses.length > 1 && !isAddressSelected && <p><span data-testing="addressNotFound" onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}
         {isAddressSelected && this.renderAddressInputs()}
         <br />
-        {isDelivery && (
+        {this.props.isDelivery && (
           <Button
             data-testing="checkoutSelectAddressCTA"
             disabled={false}
             onClick={this.handleAddressConfirm}
-            pending={addressesPending}
+            pending={this.props.addressesPending}
             width="full"
           >
             Use This Address

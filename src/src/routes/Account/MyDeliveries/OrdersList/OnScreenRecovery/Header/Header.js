@@ -11,7 +11,7 @@ import { ORDER_TYPE, SUBSCRIPTION_TYPE } from '../config'
 
 const propTypes = {
   offer: PropTypes.shape({
-    formattedValue: PropTypes.string,
+    formatted_value: PropTypes.string,
     raw_message: PropTypes.shape({
       text: PropTypes.string,
       values: PropTypes.shape({

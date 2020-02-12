@@ -12,48 +12,40 @@ import fetchData from '../fetchData'
 
 import css from './MenuRecipesPage.css'
 
-const contextTypes = {
-  store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
-}
-
-const propTypes = {
-  showLoading: PropTypes.bool.isRequired,
-  stateRecipeCount: PropTypes.number.isRequired,
-  menuCurrentCollectionId: PropTypes.string.isRequired,
-  selectCurrentCollection: PropTypes.func.isRequired,
-  detailVisibilityChange: PropTypes.func.isRequired,
-  shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
-  basketOrderLoaded: PropTypes.func.isRequired,
-  portionSizeSelectedTracking: PropTypes.func.isRequired,
-  menuRecipeDetailShow: PropTypes.string,
-  orderId: PropTypes.string,
-  showStockAlert: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  storeOrderId: PropTypes.string,
-  numPortions: PropTypes.number,
-  query: PropTypes.shape({
-    reload: PropTypes.bool
-  }),
-  params: PropTypes.shape({})
-}
-
-const defaultProps = {
-  menuRecipeDetailShow: '',
-  orderId: null,
-  showStockAlert: false,
-  isLoading: false,
-  storeOrderId: '',
-  numPortions: 2,
-  query: {},
-  params: {}
-}
-
 export class MenuRecipesPage extends PureComponent {
-  static propTypes = propTypes
+  static contextTypes = {
+    store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
+  }
 
-  static contextTypes = contextTypes
+  static propTypes = {
+    showLoading: PropTypes.bool.isRequired,
+    stateRecipeCount: PropTypes.number.isRequired,
+    menuCurrentCollectionId: PropTypes.string.isRequired,
+    selectCurrentCollection: PropTypes.func.isRequired,
+    detailVisibilityChange: PropTypes.func.isRequired,
+    shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
+    basketOrderLoaded: PropTypes.func.isRequired,
+    portionSizeSelectedTracking: PropTypes.func.isRequired,
+    menuRecipeDetailShow: PropTypes.string,
+    orderId: PropTypes.string,
+    showStockAlert: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    storeOrderId: PropTypes.string,
+    numPortions: PropTypes.number,
+    query: PropTypes.shape({}),
+    params: PropTypes.shape({})
+  }
 
-  static defaultProps = defaultProps
+  static defaultProps = {
+    menuRecipeDetailShow: '',
+    orderId: null,
+    showStockAlert: false,
+    isLoading: false,
+    storeOrderId: '',
+    numPortions: 2,
+    query: {},
+    params: {}
+  }
 
   async componentDidMount() {
     const { store } = this.context
@@ -135,10 +127,10 @@ export class MenuRecipesPage extends PureComponent {
     const switchoverTime = moment(switchoverDate)
 
     if (now.isSameOrAfter(switchoverTime, 'hour')) {
-      return <Banner type="febyouary" />
+      return (<Banner type='febyouary' />)
     }
 
-    return <Banner type="janyoury1" />
+    return (<Banner type='janyoury1' />)
   }
 
   render() {
@@ -157,7 +149,8 @@ export class MenuRecipesPage extends PureComponent {
         <SubHeader
           orderId={orderId}
         />
-        {showStockAlert
+        {
+          showStockAlert
           && (
             <div className={css.stockAlert}>
               <Alert type="warning">

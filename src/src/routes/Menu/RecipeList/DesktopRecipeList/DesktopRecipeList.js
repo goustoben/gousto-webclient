@@ -12,15 +12,17 @@ const DesktopRecipeList = ({
   recipes, showDetailRecipe, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange, isFoodBrandClickable
 }) => {
   // eslint-disable-next-line react/prop-types
-  const createRecipeCard = ({ index, value }) => (
-    <RecipeCardContainer
-      key={`${index}-${value.get('id')}`} // eslint-disable-line react/prop-types
-      recipe={value}
-      index={index}
-      showDetailRecipe={showDetailRecipe}
-      isFoodBrandClickable={isFoodBrandClickable}
-    />
-  )
+  const createRecipeCard = ({ index, value }) => {
+    return (
+      <RecipeCardContainer
+        key={`${index}-${value.get('id')}`}
+        recipe={value}
+        index={index}
+        showDetailRecipe={showDetailRecipe}
+        isFoodBrandClickable={isFoodBrandClickable}
+      />
+    )
+  }
 
   const recipeArr = recipes.toArray()
 
@@ -30,7 +32,7 @@ const DesktopRecipeList = ({
   return (
     <div className={css.desktopRecipeList}>
       <div className={css.mainColumnLeft}>
-        <div className="featured">
+        <div className='featured'>
           <RecipeCardContainer
             recipe={featured}
             index={0}
@@ -74,7 +76,7 @@ DesktopRecipeList.propTypes = {
 DesktopRecipeList.defaultProps = {
   thematicName: null,
   deliveryDate: null,
-  collectionFilterChange: () => { },
+  collectionFilterChange: () => {},
   isCurrentCollectionRecommendation: false,
   isFoodBrandClickable: true
 }

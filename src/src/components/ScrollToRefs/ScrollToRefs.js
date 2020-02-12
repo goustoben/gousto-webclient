@@ -1,24 +1,21 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import React from 'react'
 import * as domHelper from 'utils/DOMhelper'
 
-const propTypes = {
-  refKeys: PropTypes.array,
-  scrollToRef: PropTypes.bool,
-  Component: PropTypes.node
-}
+export default class ScrollToRefs extends React.PureComponent {
+  static propTypes = {
+    refKeys: PropTypes.array,
+    scrollToRef: PropTypes.bool,
+  }
 
-const defaultProps = {
-  refKeys: [],
-  scrollToRef: false,
-  Component: null,
-}
+  static defaultProps = {
+    refKeys: [],
+    scrollToRef: false,
+    Component: null,
+  }
 
-export default class ScrollToRefs extends PureComponent {
   componentWillReceiveProps(nextProps) {
-    const { scrollToRef } = this.props
-
-    if (!scrollToRef && nextProps.scrollToRef) {
+    if (!this.props.scrollToRef && nextProps.scrollToRef) {
       if (nextProps.refKeys.length) {
         this.scrollToFirstMatchingRef(nextProps.refKeys)
       }
@@ -53,10 +50,6 @@ export default class ScrollToRefs extends PureComponent {
     ) : null
   }
 }
-
-ScrollToRefs.propTypes = propTypes
-
-ScrollToRefs.defaultProps = defaultProps
 
 export const scrollToRefsWrapper = Component => props => (
   <ScrollToRefs

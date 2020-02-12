@@ -16,7 +16,6 @@ const propTypes = {
     images: PropTypes.object,
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
-    stock: PropTypes.number,
   }).isRequired,
   limitReached: PropTypes.oneOfType([
     PropTypes.bool,
@@ -33,10 +32,6 @@ const propTypes = {
   numberOfColumnClass: PropTypes.string,
   temp: PropTypes.func,
   orderConfirmationProductTracking: PropTypes.func,
-  isSelectedProduct: PropTypes.bool,
-  addProduct: PropTypes.bool,
-  toggleAgeVerificationPopUp: PropTypes.func,
-  productId: PropTypes.string,
 }
 
 class Product extends PureComponent {
@@ -52,11 +47,7 @@ class Product extends PureComponent {
     const ageVerifiedChanged = !Object.is(ageVerified, prevProps.ageVerified)
 
     if (isSelectedProduct && ageVerified && ageVerifiedChanged) {
-      if (addProduct) {
-        basketProductAdd(product.id)
-      } else {
-        this.toggleModal()
-      }
+      addProduct ? basketProductAdd(product.id) : this.toggleModal()
     }
   }
 
@@ -110,9 +101,9 @@ class Product extends PureComponent {
   getProductCardContent = () => {
     const { ageVerified, product, basket, limitReached, ageVerificationPending, productId } = this.props
     const { id, title, listPrice, images, ageRestricted, stock } = product
-    const quantity = basket && basket.get('products').has(id) ? basket.getIn(['products', id]) : 0
+    const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
-    const imgSource = images && images['400'].src
+    const imgSource = images && images['400']['src']
     const isAgeVerificationRequired = !ageVerified && ageRestricted
     const lowStock = (stock <= configProducts.lowStockThreshold)
     const outOfStock = stock <= 0

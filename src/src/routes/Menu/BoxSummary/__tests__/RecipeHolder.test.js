@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import Immutable from 'immutable'
+import Immutable from 'immutable' // eslint-disable-line no-caps
 
 import Image from 'Image'
 import RecipeHolder from '../RecipeHolder'

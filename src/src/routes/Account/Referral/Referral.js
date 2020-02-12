@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import Loading from 'routes/Menu/Loading'
 import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
@@ -16,7 +15,7 @@ import { DoubleCreditCountdown } from './DoubleCreditCountdown'
 
 const proptypes = {
   referralCode: PropTypes.string.isRequired,
-  rafOffer: ImmutablePropTypes.map({}),
+  rafOffer: PropTypes.shape({}),
   userFirstName: PropTypes.string,
   userFetchReferralOffer: PropTypes.func,
   trackingReferFriend: PropTypes.func,
@@ -26,18 +25,19 @@ const proptypes = {
 }
 
 const defaultProps = {
+  referralCode: '',
   rafOffer: defaultOffer,
   userFetchReferralOffer: () => { },
 }
 
 class Referral extends Component {
-  componentDidMount() {
-    this.fetchReferralOffer()
-  }
-
   fetchReferralOffer = () => {
     const { userFetchReferralOffer } = this.props
     userFetchReferralOffer()
+  }
+
+  componentDidMount() {
+    this.fetchReferralOffer()
   }
 
   render() {
@@ -57,13 +57,13 @@ class Referral extends Component {
     const expiry = rafOffer.get('expiry')
     const displayLink = getReferralLink(referralCode)
 
-    return isLoading
-      ? (
+    return isLoading ?
+      (
         <div className={css.loadingContainer}>
           <Loading loading={isLoading} />
         </div>
-      )
-      : (
+      ) :
+      (
         <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
           <div className={css.rafPageTitle}>
             <RAFTitle title={offerTitle} />
@@ -85,7 +85,7 @@ class Referral extends Component {
                 userFirstName={userFirstName}
                 device={device}
                 offerCredit={offerCredit}
-                elementType="page"
+                elementType='page'
                 trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
               />
               <div className={css.mobileShow}>

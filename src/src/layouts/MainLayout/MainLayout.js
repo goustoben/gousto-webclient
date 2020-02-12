@@ -7,68 +7,67 @@ import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import css from './MainLayout.css'
 
-const propTypes = {
-  children: PropTypes.node.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  orders: PropTypes.instanceOf(Immutable.Map),
-  shippingAddresses: PropTypes.instanceOf(Immutable.List),
-  userLoadOrders: PropTypes.func.isRequired,
-  userFetchShippingAddresses: PropTypes.func.isRequired,
-  userClearData: PropTypes.func.isRequired,
-  menuLoadingBoxPrices: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
-  menuLoadBoxPrices: PropTypes.func.isRequired,
-  route: PropTypes.shape({
-    withRecipeBar: PropTypes.bool,
-    footerType: PropTypes.string,
-  }),
-}
-
-const defaultProps = {
-  isAuthenticated: false,
-  orders: Immutable.fromJS({}),
-  shippingAddresses: Immutable.List([]),
-  route: {
-
-  },
-}
-
 class MainLayout extends React.Component {
-  componentDidMount() {
-    const { disabled, isAuthenticated, orders, shippingAddresses, userClearData, userFetchShippingAddresses, userLoadOrders } = this.props
+  static propTypes = {
+    children: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    orders: PropTypes.instanceOf(Immutable.Map),
+    shippingAddresses: PropTypes.instanceOf(Immutable.List),
+    userLoadOrders: PropTypes.func.isRequired,
+    userFetchShippingAddresses: PropTypes.func.isRequired,
+    userClearData: PropTypes.func.isRequired,
+    menuLoadingBoxPrices: PropTypes.bool, //eslint-disable-line react/no-unused-prop-types
+    menuLoadBoxPrices: PropTypes.func.isRequired,
+    route: PropTypes.shape({
+      withRecipeBar: PropTypes.bool,
+    }),
+  }
 
-    if (!disabled) {
-      if (isAuthenticated) {
-        if (shippingAddresses.size < 1) {
-          userFetchShippingAddresses()
+  static defaultProps = {
+    isAuthenticated: false,
+    orders: Immutable.fromJS({}),
+    shippingAddresses: Immutable.List([]),
+    route: {
+
+    },
+  }
+
+  componentDidMount() {
+    if (!this.props.disabled) {
+      if (this.props.isAuthenticated) {
+        if (this.props.shippingAddresses.size < 1) {
+          this.props.userFetchShippingAddresses()
         }
-        if (orders.size < 1) {
-          userLoadOrders()
+        if (this.props.orders.size < 1) {
+          this.props.userLoadOrders()
         }
-      } else if (this.props.isAuthenticated) {
-        userClearData()
+      } else {
+        if (this.props.isAuthenticated) {
+          this.props.userClearData()
+        }
       }
     }
   }
 
   componentWillReceiveProps(nextProp) {
-    const { disabled, isAuthenticated, menuLoadBoxPrices, shippingAddresses, userClearData, userFetchShippingAddresses, userLoadOrders } = this.props
-
-    if (!nextProp.disabled && !disabled) {
-      if (!isAuthenticated && nextProp.isAuthenticated) {
-        if (shippingAddresses.size < 1) {
-          userFetchShippingAddresses()
+    if (!nextProp.disabled && !this.props.disabled) {
+      if (!this.props.isAuthenticated && nextProp.isAuthenticated) {
+        if (this.props.shippingAddresses.size < 1) {
+          this.props.userFetchShippingAddresses()
         }
         if (nextProp.orders.size < 1) {
-          userLoadOrders()
+          this.props.userLoadOrders()
 
           if (!nextProp.menuLoadingBoxPrices) {
-            menuLoadBoxPrices()
+            this.props.menuLoadBoxPrices()
           }
         }
-      } else if (isAuthenticated && !nextProp.isAuthenticated) {
-        userClearData()
-        menuLoadBoxPrices()
+      } else {
+        if (this.props.isAuthenticated && !nextProp.isAuthenticated) {
+          this.props.userClearData()
+          this.props.menuLoadBoxPrices()
+        }
       }
     }
   }
@@ -90,9 +89,5 @@ class MainLayout extends React.Component {
     )
   }
 }
-
-MainLayout.propTypes = propTypes
-
-MainLayout.defaultProps = defaultProps
 
 export default MainLayout

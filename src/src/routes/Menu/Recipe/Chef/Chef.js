@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import React from 'react'
 import { Iterable } from 'immutable'
 
@@ -24,7 +23,7 @@ const Chef = ({ chef }) => {
 }
 
 Chef.propTypes = {
-  chef: ImmutablePropTypes.map({
+  chef: PropTypes.shape({
     media: PropTypes.shape({
       images: PropTypes.Array,
     }),
