@@ -96,11 +96,10 @@ module.exports = {
 
               return Promise.all([
                 webclient.apis.fetchRecipeStock('', coreDayId),
-                webclient.apis.fetchRecipes('', '', { 'filters[available_on]': slot.get('whenCutoff') })
+                webclient.apis.fetchMenus('', {})
               ])
-            }).then(function (menu) {
-              const stock = menu[0].data
-              const recipes = menu[1].data
+            }).then(function ([{ data: stock }, { data: [currentMenu]}]) {
+              const menuRecipeIds = currentMenu.relationships.recipes.data.map(recipe => recipe.core_recipe_id)
 
               const availableRecipeIds = Object.keys(stock)
                 .filter(function (recipeId) {
@@ -110,7 +109,7 @@ module.exports = {
 
                   return !committed || parseInt(numberAvail, 10) > 4
                 })
-                .filter(recipeId => recipes.map(recipe => recipe.id).includes(recipeId))
+                .filter(recipeId => menuRecipeIds.includes(recipeId))
 
               const recipeChoices = availableRecipeIds.slice(0, numRecipes).map(function (recipeId) {
                 return ({

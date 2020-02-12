@@ -5,6 +5,7 @@ import * as checkout from './checkout'
 import * as collections from './collections'
 import * as content from './content'
 import * as deliveries from './deliveries'
+import * as menus from './menus'
 import * as newsletter from './newsletter'
 import * as orders from './orders'
 import * as products from './products'
@@ -20,6 +21,7 @@ const apis = {
   ...collections,
   ...content,
   ...deliveries,
+  ...menus,
   ...newsletter,
   ...orders,
   ...products,
@@ -27,4 +29,5 @@ const apis = {
   ...user,
   ...workable,
 }
+
 export default apis
