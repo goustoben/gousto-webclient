@@ -2,7 +2,7 @@ const newAssetPath = require('utils/media').newAssetPath
 const head = require('./head').default
 const encodeState = require('./encodeState')
 
-const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', noGTM = false, helmetHead) => (
+const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', scripts, helmetHead) => (
   `<!doctype html>
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
@@ -18,7 +18,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
       <meta name="viewport" content="width=device-width,initial-scale=1">
       ${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
       ${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
-      ${noGTM ? '' : head.optimizely(initialState.features)}
+      ${scripts.optimizely ? head.optimizely(initialState.features) : ''}
       <script src="${newAssetPath('vendors.js')}" defer></script>
       <script src="${newAssetPath('main.js')}" defer></script>
       ${head.favicon()}
@@ -34,12 +34,12 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
       ${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}
       ${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
       ${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}
-      ${noGTM ? '' : head.pingdom()}
+      ${scripts.other ? head.pingdom() : ''}
 
     </head>
     <body>
-      ${noGTM ? '' : head.fbTracking()}
-      ${noGTM ? '' : head.gtm(initialState, userAgent)}
+      ${scripts.facebookTracking ? head.fbTracking() : ''}
+      ${scripts.gtm ? head.gtm(initialState, userAgent) : ''}
       <div id="react-root">${reactHTML}</div>
     </body>
   </html>`

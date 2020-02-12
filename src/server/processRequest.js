@@ -1,3 +1,4 @@
+import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 const React = require('react')
 
 const { renderToString } = require('react-dom/server')
@@ -61,7 +62,7 @@ const configureHistoryAndStore = (url, initialState) => {
   return { store, history }
 }
 
-const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
+const renderHTML = (store, renderProps, url, userAgent, scripts) => {
   let startTime = new Date()
   const apollo = apolloClient(store)
   const components = (
@@ -75,7 +76,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
   startTime = new Date()
   renderToString(
     <GoustoHelmet
-      noGTM={noGTM}
+      scripts={scripts}
       requestUrl={url}
     />
   )
@@ -88,7 +89,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
       }
       startTime = new Date()
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, noGTM, helmetHead)
+      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
       if(__CLIENT__){
         logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
       }
@@ -244,13 +245,13 @@ async function processRequest(ctx, next) {
               resolve()
             } else {
               ctx.status = is404 ? 404 : 200
-              let noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
+              let scripts = extractScriptOptions(ctx.request)
               if (store.getState().basket && store.getState().basket.get('promoCode', '').toLowerCase() === 'fruit') {
-                noGTM = true
+                scripts = DISABLED_SCRIPTS
               }
               const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
               await fetchContentOnChange(ctx.request.path, store)
-              renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], noGTM, helmetHead)
+              renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], scripts, helmetHead)
                 .then(html => {
                   ctx.body = html
                   resolve()

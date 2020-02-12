@@ -14,8 +14,21 @@ export const generateHref = url => {
   return `${globals.protocol}://${hostname}${url || '/'}`
 }
 
-const GoustoHelmet = ({ noGTM, requestUrl }) => (
-  !noGTM ? (
+const propTypes = {
+  requestUrl: PropTypes.string.isRequired,
+  scripts: PropTypes.shape({
+    other: PropTypes.bool,
+  }),
+}
+
+const defaultProps = {
+  scripts: {
+    other: true,
+  }
+}
+
+const GoustoHelmet = ({ requestUrl, scripts: { other } }) => (
+  other ? (
     <span>
       <CanonicalLink href={generateHref(requestUrl)} />
       <Facebook admins={templateConfig.head.fbAdmins} appID={templateConfig.head.fbAppID} />
@@ -26,9 +39,7 @@ const GoustoHelmet = ({ noGTM, requestUrl }) => (
   ) : null
 )
 
-GoustoHelmet.propTypes = {
-  noGTM: PropTypes.bool,
-  requestUrl: PropTypes.string.isRequired,
-}
+GoustoHelmet.propTypes = propTypes
+GoustoHelmet.defaultProps = defaultProps
 
 export default GoustoHelmet
