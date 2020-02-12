@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, boxSummaryDeliverySlotChosen, boxSummaryNext } from 'actions/boxSummary'
-import { getDisabledSlots, getFullScreenBoxSummary, getLogoutUserDisabledSlots } from 'selectors/features'
+import { getDisabledSlots, getFullScreenBoxSummary } from 'selectors/features'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
@@ -12,8 +12,7 @@ import { getBoxSummaryTextProps } from 'selectors/boxSummary'
 import DeliverySlot from './DeliverySlot'
 
 function mapStateToProps(state) {
-  const isAuthenticated = getIsAuthenticated(state)
-  const nonValidatedDisabledSlots = isAuthenticated ? getDisabledSlots(state) : getLogoutUserDisabledSlots(state)
+  const nonValidatedDisabledSlots = getDisabledSlots(state)
   const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
   const {
     deliveryDays,
@@ -38,7 +37,7 @@ function mapStateToProps(state) {
     tempOrderId,
     numPortions: getNumPortions(state),
     disabledSlots,
-    isAuthenticated,
+    isAuthenticated: getIsAuthenticated(state),
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
     shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
     getBoxSummaryTextProps: (slots) => getBoxSummaryTextProps(state, tempDate, tempSlotId, tempOrderId, slots)

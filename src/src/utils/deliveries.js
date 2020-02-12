@@ -1,8 +1,7 @@
 import moment from 'moment'
 import Immutable from 'immutable'
 import GoustoException from 'utils/GoustoException'
-import { getDisabledSlots, getLogoutUserDisabledSlots, getNDDFeatureValue } from 'selectors/features'
-import { getIsAuthenticated } from 'selectors/auth'
+import { getDisabledSlots, getNDDFeatureValue } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
 export const deliveryTariffTypes = {
@@ -178,9 +177,8 @@ function getLandingOrder(userOrders, deliveryDays) {
       if (!correspondingDay) {
         if (defaultDayOrderFilled) {
           let deliveryDay
-          const hasFilledOrdersBeforeDefaultDay = futureOrders.some(
-            futureOrder => moment(futureOrder.get('deliveryDate')).isAfter(moment(defaultDay.get('date')))
-          )
+          const hasFilledOrdersBeforeDefaultDay =
+            futureOrders.filter(futureOrder => moment(futureOrder.get('deliveryDate')).isAfter(moment(defaultDay.get('date')))).size > 0
 
           if (hasFilledOrdersBeforeDefaultDay) {
             deliveryDay = possibleDeliveryDays
@@ -294,8 +292,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
   const deliveryDays = deliveryDaysWithDisabledSlotIds || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const isAuthenticated = getIsAuthenticated(state)
-  const nonValidatedDisabledSlots = isAuthenticated ? getDisabledSlots(state) : getLogoutUserDisabledSlots(state)
+  const nonValidatedDisabledSlots = getDisabledSlots(state)
   const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
 
   // try and find the delivery day
@@ -350,18 +347,13 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
     // if we have none of the above get the first one
     if (!day) {
       day = deliveryDays
-        .filter(deliveryDay => {
-          const isDateAvailable = !deliveryDay.get('alternateDeliveryDay')
-          const isSlotAvailable = deliveryDay.get('slots').some(slot => !disabledSlots.includes(slot.get('disabledSlotId')))
-
-          return isDateAvailable && isSlotAvailable
-        })
+        .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
         .sort(
           (comparisonDay1, comparisonDay2) => {
             const diffToD1 = moment(comparisonDay1.get('date')).diff(Date.now(), 'days')
             const diffToD2 = moment(comparisonDay2.get('date')).diff(Date.now(), 'days')
 
-            // we want to order all free slot to the beginning and the rest at the end
+            // we want to order all free slot to the begining and the rest at the end
             const day1 = diffToD1 + (isFreeSlotAvailable(comparisonDay1.get('slots', [])) ? 0 : 9999)
             const day2 = diffToD2 + (isFreeSlotAvailable(comparisonDay2.get('slots', [])) ? 0 : 9999)
 
@@ -447,8 +439,8 @@ export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom, users
 }
 
 export function isDeliverySlotAvailable(slot, cutoffDatetimeFromMoment, usersOrderDaySlotLeadTimeIds) {
-  return (isSlotActive(slot) || userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot))
-    && isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
+  return (isSlotActive(slot) || userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)) &&
+    isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
 }
 
 export function isSlotActive (slot) {

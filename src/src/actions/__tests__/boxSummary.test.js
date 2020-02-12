@@ -153,7 +153,6 @@ describe('boxSummary actions', () => {
     let basketAddressChange
     let basketPostcodeChange
     const defaultProps = {
-      auth: Immutable.Map(),
       basket: Immutable.Map({
         postcode: 'w3',
         slotId: '',

@@ -2,8 +2,7 @@ import { basketSlotChange } from 'actions/basket'
 import tempActions from 'actions/temp'
 import { getSlot } from 'utils/deliveries'
 import { getDeliveryDaysAndSlots, formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
-import { getDisabledSlots, getLogoutUserDisabledSlots } from 'selectors/features'
-import { getIsAuthenticated } from 'selectors/auth'
+import { getDisabledSlots } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 
 export const trackDeliveryDayDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
@@ -129,14 +128,13 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
     return
   }
 
-  const { user } = getState()
-  const isAuthenticated = getIsAuthenticated(getState())
-  const nonValidatedDisabledSlots = isAuthenticated ? getDisabledSlots(getState()) : getLogoutUserDisabledSlots(getState())
+  const nonValidatedDisabledSlots = getDisabledSlots(getState())
   const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
+  const { auth, user } = getState()
   const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
   const helperProps = {
     disabledSlots,
-    isAuthenticated,
+    isAuthenticated: auth.get('isAuthenticated'),
     isSubscriptionActive: user.getIn(['subscription', 'state'], false),
     userOrders: user.get('orders'),
     tempDate,

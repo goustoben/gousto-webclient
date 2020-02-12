@@ -26,7 +26,6 @@ import {
 } from '../deliveries'
 
 features.getDisabledSlots = jest.fn()
-features.getLogoutUserDisabledSlots = jest.fn()
 
 const userWithDeliveryTariff = (deliveryTariffId) => {
   return Immutable.fromJS({
@@ -357,7 +356,6 @@ describe('utils/deliveries', () => {
       prevSlotId = ''
       defaultDay = ''
       state = {
-        auth: Immutable.Map(),
         basket: Immutable.Map({
           date,
           slotId,
@@ -967,48 +965,28 @@ describe('utils/deliveries', () => {
         expect(result).toEqual(expected)
       })
 
-      describe('when a user is a transaction user', () => {
-        beforeEach(() => {
-          state = {
-            ...state,
-            auth: Immutable.fromJS({
-              isAuthenticated: true,
-            }),
-            subscription: Immutable.Map({
-              state: 'inactive',
-            })
-          }
-        })
+      test('should NOT return the default delivery slot if disabled', () => {
+        features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
-        describe('when default delivery slot is disabled', () => {
-          beforeEach(() => {
-            features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
-          })
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).not.toEqual(expected)
+      })
 
-          test('should NOT return the default delivery slot', () => {
-            const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
-            const expected = { date: '2017-01-01', slotId: '123-123-123' }
-            expect(result).not.toEqual(expected)
-          })
+      test('should return nothing if the default delivery slot if disabled and all other slots are disabled', () => {
+        features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
-          test('should return first non blocked slot if the default delivery slot', () => {
-            const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
-            const expected = { date: '2017-01-01', slotId: '789-789-789' }
-            expect(result).toEqual(expected)
-          })
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).not.toEqual(expected)
+      })
 
-          describe('and all other slots are disabled', () => {
-            beforeEach(() => {
-              features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
-            })
+      test('should return first non blocked slot if the default delivery slot if disabled', () => {
+        features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
 
-            test('should return nothing if the default delivery slot', () => {
-              const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
-              const expected = { date: '2017-01-01', slotId: undefined }
-              expect(result).toEqual(expected)
-            })
-          })
-        })
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: undefined }
+        expect(result).toEqual(expected)
       })
     })
 
@@ -2249,87 +2227,6 @@ describe('utils/deliveries', () => {
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
             expect(result).toEqual(expected)
           })
-        })
-      })
-    })
-
-    describe('when fallback to first available day', () => {
-      beforeEach(() => {
-        deliveryDaysWithDisabledSlotIds = Immutable.fromJS({
-          '2020-01-02': {
-            date: '2020-01-02',
-            isDefault: false,
-            slots: [
-              {
-                id: '123-123-123',
-                whenCutoff: 'asdf',
-                disabledSlotId: '2020-01-02_08-19',
-              },
-            ],
-          },
-          '2020-02-14': {
-            date: '2020-02-14',
-            isDefault: false,
-            slots: [
-              {
-                id: '321-321-321',
-                whenCutoff: 'qwerty',
-                disabledSlotId: '2020-02-14_08-19'
-              },
-            ],
-          },
-          '20202-02-13': {
-            date: '20202-02-13',
-            isDefault: false,
-            slots: [
-              {
-                id: '456-456-456',
-                whenCutoff: 'zxcvb',
-                disabledSlotId: '2020-02-13_08-19'
-              },
-            ],
-          },
-          '2020-02-15': {
-            date: '2020-02-15',
-            isDefault: false,
-            slots: [
-              {
-                id: '789-789-789',
-                whenCutoff: 'zxcvb',
-                disabledSlotId: '2020-02-15_08-19'
-              },
-              {
-                id: '123-123-123',
-                whenCutoff: 'jfklsad',
-                disabledSlotId: '2020-02-1_18-22',
-                isDefault: true,
-              },
-            ]
-          }
-        })
-        state = {
-          ...state,
-          auth: Immutable.fromJS({
-            isAuthenticated: false,
-          }),
-          boxSummaryDeliveryDays: deliveryDays,
-        }
-      })
-
-      test('then the first chronological date is returned', () => {
-        const result = getLandingDay(state, true, true, deliveryDaysWithDisabledSlotIds )
-        const expected = { date: '2020-01-02', slotId: '123-123-123' }
-        expect(result).toEqual(expected)
-      })
-
-      describe('when there are disabled slots', () => {
-        beforeEach(() => {
-          features.getLogoutUserDisabledSlots.mockImplementation(() => '2020-01-02_08-19,2020-02-13_08-19')
-        })
-        test('then the first available chronological date is returned', () => {
-          const result = getLandingDay(state, true, true, deliveryDaysWithDisabledSlotIds )
-          const expected = { date: '2020-02-14', slotId: '321-321-321' }
-          expect(result).toEqual(expected)
         })
       })
     })
