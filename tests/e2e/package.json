@@ -4,8 +4,8 @@
   "description": "Gousto e2e",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/nightwatch --env=local:chrome --suiteRetries 3",
-    "test:mobile": "./node_modules/.bin/nightwatch --env=local:iphone6 --suiteRetries 3",
+    "test": "./node_modules/.bin/nightwatch --env=local:chrome",
+    "test:mobile": "./node_modules/.bin/nightwatch --env=local:iphone6",
     "test:staging:web": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose --suiteRetries 3",
     "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose --suiteRetries 3",
     "test:cypress:debug": "./node_modules/.bin/cypress open",
