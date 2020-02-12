@@ -31,11 +31,15 @@ describe('Helmet GoustoHelmet', () => {
   })
 
   test('should return 1 span by default', () => {
-    expect(shallow(<GoustoHelmet />).type()).toBe('span')
+    expect(shallow(<GoustoHelmet requestUrl='mock' />).type()).toBe('span')
   })
 
-  test('should return null if noGTM is set', () => {
-    expect(shallow(<GoustoHelmet noGTM />).type()).toBe(null)
+  test('should return 1 if `other` in scripts is set to true', () => {
+    expect(shallow(<GoustoHelmet requestUrl='mock' scripts={{other: true}} />).type()).toBe('span')
+  })
+
+  test('should return null if `other` in scripts is set to false', () => {
+    expect(shallow(<GoustoHelmet requestUrl='mock' scripts={{other: false}} />).type()).toBe(null)
   })
 
   describe('rendering', () => {

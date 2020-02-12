@@ -1,4 +1,5 @@
 import { experiment_setMenuServiceSegment } from './middleware/experiment_setMenuServiceSegment'
+import { extractScriptOptions } from './routes/scripts'
 
 const Koa = require('koa')
 const React = require('react')
@@ -11,7 +12,7 @@ const Footer = require('Footer').default
 const logger = require('utils/logger').default
 const app = new Koa()
 const apolloClient = require('apis/apollo').default
-const Provider = require('react-redux').Provider
+const { Provider } = require('react-redux')
 const { ApolloProvider, getDataFromTree } = require('react-apollo')
 
 const globals = require('config/globals')
@@ -36,25 +37,28 @@ const { processRequest, configureHistoryAndStore } = require('./processRequest')
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
   const startTime = new Date()
-  const path = ctx.request.path
+  const { header, request: { path }} = ctx
   const writeLog = (path.indexOf('/ping') === -1) && (path.indexOf('/nsassets') === -1 )
 
   if (writeLog) {
     const uuid = uuidv1()
     ctx.uuid = uuid
-    logger.notice({message: `[START] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid, headers: ctx.header})
+    logger.notice({message: `[START] REQUEST`, requestUrl: path, uuid: ctx.uuid, headers: header})
   }
 
   await next()
   if (writeLog) {
-    logger.notice({message: `[END] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: ctx.header})
+    logger.notice({message: `[END] REQUEST`, requestUrl: path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header})
   }
 })
 
 app.use(async (ctx, next) => {
-  if(ctx.uuid){
-    const { store } = configureHistoryAndStore(ctx.request.url)
-    store.dispatch(loggerSetUuid(ctx.uuid))
+  const { request, uuid } = ctx
+  const { url } = request
+
+  if(uuid){
+    const { store } = configureHistoryAndStore(url)
+    store.dispatch(loggerSetUuid(uuid))
   }
   try {
     // Make cookies secure
@@ -66,7 +70,7 @@ app.use(async (ctx, next) => {
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }
-    logger.critical({message: err.message, status: err.status, uuid: ctx.uuid, errors: [err]})
+    logger.critical({message: err.message, status: err.status, uuid: uuid, errors: [err]})
 
     if (Number(err.status) === 200) {
       ctx.status = 500
@@ -75,12 +79,13 @@ app.use(async (ctx, next) => {
     }
     clearPersistentStore(ctx.cookies)
 
-    const { store } = configureHistoryAndStore(ctx.request.url, { serverError: `${ctx.status}` })
-    const noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
+    const { store } = configureHistoryAndStore(url, { serverError: `${ctx.status}` })
+    const scripts = extractScriptOptions(request)
+
     renderToString(
       <GoustoHelmet
-        noGTM={noGTM}
-        requestUrl={ctx.request.url}
+        scripts={scripts}
+        requestUrl={url}
       />
     )
     const reactHTML = (
@@ -93,7 +98,7 @@ app.use(async (ctx, next) => {
       </Provider>
     )
     const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.req.headers['user-agent'], noGTM, helmetHead)
+    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.req.headers['user-agent'], scripts, helmetHead)
   }
 })
 
