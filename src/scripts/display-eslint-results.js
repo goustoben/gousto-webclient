@@ -2,7 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const eslintStylishFormatter = require('eslint/lib/formatters/stylish')
+const eslintStylishFormatter = require('eslint/lib/cli-engine/formatters/stylish')
 
 const resultsPath = path.resolve(__dirname, '../', 'eslint-results.json')
 
