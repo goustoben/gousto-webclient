@@ -6,28 +6,35 @@ import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
+  getLogoutUserDisabledSlots,
 } from 'selectors/features'
-
+import { formatAndValidateDisabledSlots, addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import DeliveryStep from './DeliveryStep'
 
 function mapStateToProps(state) {
+  const deliveryDaysWithDisabled = addDisabledSlotIds(state.boxSummaryDeliveryDays)
+
   const landing = getLandingDay(
     state,
     true,
     true,
+    deliveryDaysWithDisabled
   )
 
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
   const isNDDPaintedDoorOpened = state.temp.get('isNDDPaintedDoorOpened', false)
+  const nonValidatedDisabledSlots = getLogoutUserDisabledSlots(state)
+  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
 
   return {
-    boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
+    boxSummaryDeliveryDays: deliveryDaysWithDisabled,
     tempDate,
     tempSlotId,
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
     isNDDPaintedDoorOpened,
+    disabledSlots,
   }
 }
 

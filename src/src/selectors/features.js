@@ -16,6 +16,12 @@ export const getDisabledSlots = ({ features }) => (
     : ''
 )
 
+export const getLogoutUserDisabledSlots = ({ features }) => (
+  features
+    ? features.getIn(['logoutUserDisabledSlots', 'value'])
+    : ''
+)
+
 export const getGoToMyGousto = ({ features }) => (
   features
     ? features.getIn(['goToMyGousto', 'value'])

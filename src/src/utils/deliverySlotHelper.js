@@ -58,6 +58,16 @@ export const getTempDeliveryOptions = (state) => {
   return { deliveryDays, tempDate, tempSlotId, tempOrderId }
 }
 
+export const isDisabledSlotsApplicable = (isAuthenticated, isSubscriptionActive) => {
+  // Disabled slots are applicable to logout user
+  if (!isAuthenticated) {
+    return true
+  }
+
+  // Disabled slots are applicable to transactional user
+  return isAuthenticated && isSubscriptionActive === 'inactive'
+}
+
 export const getDeliveryDaysAndSlots = (newDate, props) => {
   const slots = {}
   const {
@@ -81,7 +91,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
         subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
         value: slot.get('id'),
         coreSlotId: slot.get('coreSlotId'),
-        disabled: isSlotDisabled && isAuthenticated && isSubscriptionActive === 'inactive'
+        disabled: isSlotDisabled && isDisabledSlotsApplicable(isAuthenticated, isSubscriptionActive)
       }
     }).toArray()
 
@@ -105,7 +115,10 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
       hasOrders = true
     }
 
-    let disabled = deliveryDay.get('alternateDeliveryDay') !== null
+    // disabled if either are true:
+    // * delivery day has an alternate delivery day
+    // * all slots on the delivery day are disabled AND user is not authenticated (due to a business decision to treat signup differently than transactional customers)
+    let disabled = deliveryDay.get('alternateDeliveryDay') !== null || (slots[date] && slots[date].every(slot => slot.disabled) && !isAuthenticated)
     let legacyData = {}
 
     if (!isAuthenticated) {

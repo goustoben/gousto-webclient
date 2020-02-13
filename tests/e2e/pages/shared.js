@@ -71,6 +71,7 @@ module.exports = {
                 features: Immutable.Map({}),
                 boxSummaryDeliveryDays: immutableDays,
                 user: Immutable.Map({}),
+                auth: Immutable.Map({}),
               }
               const landingDay = webclient.getLandingDay(state)
 
