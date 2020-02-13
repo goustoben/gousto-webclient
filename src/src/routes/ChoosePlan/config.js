@@ -12,10 +12,12 @@ export const subscription = {
 export const transactional = {
   title: 'One-off box',
   priceBoxTypeMessage: 'For one box',
-  get benefits() { return [
-    'Single payment, no subscription',
-    `${this.percentageOff}% off first box`
-  ]},
+  get benefits() {
+    return [
+      'Single payment, no subscription',
+      `${this.percentageOff}% off first box`
+    ]
+  },
   percentageOff: 30
 }
 

@@ -37,7 +37,7 @@ export class Step extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(JSON.stringify(prevState) !== JSON.stringify(this.state)) {
+    if (JSON.stringify(prevState) !== JSON.stringify(this.state)) {
       this.recalculateLocations()
     }
   }
@@ -79,8 +79,12 @@ export class Step extends PureComponent {
             <div className={css.cta} onClick={next}>
               {(last) ? (
                 <p>OK</p>
-              ): (
-                <p>NEXT <Icon name="fa-angle-right" size={30} className={css.cta__icon} /></p>
+              ) : (
+                <p>
+                  NEXT
+                  {' '}
+                  <Icon name="fa-angle-right" size={30} className={css.cta__icon} />
+                </p>
               )}
             </div>
           </Tooltip>

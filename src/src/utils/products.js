@@ -7,11 +7,9 @@ export function isNotAGift(product) {
 }
 
 export function getProductsByCategoryId(products, categoryId) {
-  return products.filter((product) => {
-    return product.get('categories').filter((category) => (
-      category.get('id') === categoryId
-    )).size > 0
-  })
+  return products.filter((product) => product.get('categories').filter((category) => (
+    category.get('id') === categoryId
+  )).size > 0)
 }
 
 export function getOneProductFromEachCategory(products, randomSeed) {
@@ -55,9 +53,9 @@ export function getCategoriesFromProducts(products) {
       if (!category.get('hidden')) {
         const categoryId = category.get('id')
 
-        categoriesAcc[categoryId] ?
-          categoriesAcc[categoryId].count += 1 :
-          categoriesAcc[categoryId] = {
+        categoriesAcc[categoryId]
+          ? categoriesAcc[categoryId].count += 1
+          : categoriesAcc[categoryId] = {
             id: categoryId,
             label: category.get('title'),
             count: 1,

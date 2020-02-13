@@ -22,7 +22,7 @@ const Title = ({ children, iconAfter, iconBefore, headlineFont }) => (
         />,
       ]}
     </H1>
-  ): null
+  ) : null
 )
 
 Title.propTypes = {

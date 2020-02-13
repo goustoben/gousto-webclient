@@ -77,10 +77,10 @@ describe('Address', () => {
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}
         isNDDExperiment
-        initialPostcode='NW1 8RJ'
-        deliveryDate='2019-09-01'
+        initialPostcode="NW1 8RJ"
+        deliveryDate="2019-09-01"
         isDelivery
-        deliveryTariffId='some-uuid'
+        deliveryTariffId="some-uuid"
       />)
     })
 
@@ -108,7 +108,7 @@ describe('Address', () => {
 
       const cutOfFrom = moment().startOf('day').toISOString()
       const cutOfUntil = moment().startOf('day').add(30, 'days').toISOString()
-      const postcode= 'NW1 8RJ'
+      const postcode = 'NW1 8RJ'
       const ndd = true
       const deliveryTariffId = 'some-uuid'
 

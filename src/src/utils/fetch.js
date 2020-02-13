@@ -5,7 +5,7 @@ import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 
-export function fetchRaw(url, data ={}, options) {
+export function fetchRaw(url, data = {}, options) {
   return fetch(
     options.accessToken,
     url,
@@ -59,7 +59,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   const { uuid } = getStore().getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
-      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid: uuid })
+      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid })
     }
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
@@ -68,7 +68,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     if (env && env.apiToken) {
       requestHeaders['API-Token'] = env.apiToken
     } else {
-      logger.error({message: 'Missing env.apiToken', uuid: uuid })
+      logger.error({message: 'Missing env.apiToken', uuid })
     }
   }
 
@@ -98,14 +98,14 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   }
 
   const startTime = new Date()
-  logger.notice({message: "[fetch start]", requestUrl: requestUrl, uuid: uuid})
+  logger.notice({message: '[fetch start]', requestUrl, uuid})
   let responseStatus
   let responseRedirected
   let responseUrl
 
   return isomorphicFetch(requestUrl, requestDetails)
     .then(response => {
-      const { status, redirected, url:endpointOrRedirectedUrl } = response
+      const { status, redirected, url: endpointOrRedirectedUrl } = response
       responseStatus = status
       responseRedirected = redirected
       responseUrl = endpointOrRedirectedUrl
@@ -116,7 +116,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     .then(response => [JSONParse(response, useMenuService), responseStatus]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice({message: "[fetch end]", status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
+      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid})
 
       if ( useMenuService ) {
         return { data: response.data, included: response.included, meta: response.meta }
@@ -133,12 +133,12 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       }
 
       log({
-        message: "[fetch end]",
+        message: '[fetch end]',
         status: responseStatus,
         elapsedTime: `${(new Date() - startTime)}ms`,
-        requestUrl: requestUrl,
+        requestUrl,
         errors: [e],
-        uuid: uuid
+        uuid
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {

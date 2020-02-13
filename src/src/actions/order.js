@@ -102,7 +102,7 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
         ))
 
         const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
-        if(isAddOnsFeatureFlagOn) {
+        if (isAddOnsFeatureFlagOn) {
           dispatch(orderAddOnRedirect(savedOrder.id, orderAction))
         } else {
           dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
@@ -214,8 +214,7 @@ export const orderCheckout = ({
           orderId: data.orderId,
           url: data.url,
         }
-      }
-      else {
+      } else {
         throw { message: 'Error when saving the order' }
       }
     } catch (err) {
@@ -269,7 +268,7 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
           savedOrder,
         ))
         const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
-        if(isAddOnsFeatureFlagOn) {
+        if (isAddOnsFeatureFlagOn) {
           dispatch(orderAddOnRedirect(savedOrder.id, orderAction))
         } else {
           dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
@@ -401,7 +400,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
 
     const postcode = user.getIn(['addresses', addressId, 'postcode'])
-    const isNDDExperiment = getNDDFeatureFlagVal(state) ? true : false
+    const isNDDExperiment = !!getNDDFeatureFlagVal(state)
     const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(state))
 
     try {
@@ -431,7 +430,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
 export const orderUpdateProducts = (orderId, itemChoices) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
-    const reqData = { item_choices: itemChoices, restrict: "Product" }
+    const reqData = { item_choices: itemChoices, restrict: 'Product' }
 
     try {
       await updateOrderItems(accessToken, orderId, reqData)

@@ -83,7 +83,7 @@ describe('the products utility functions', () => {
       describe('and categories are hidden', () => {
         let productsWithHiddenCategory
 
-        beforeEach(() =>{
+        beforeEach(() => {
           productsWithHiddenCategory = products.setIn(['productId2', 'categories', 0, 'hidden'], true)
         })
 

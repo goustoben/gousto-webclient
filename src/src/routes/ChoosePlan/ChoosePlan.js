@@ -46,7 +46,7 @@ class ChoosePlan extends PureComponent {
   componentDidMount() {
     const { pricesLoaded, redirect } = this.props
 
-    if (!pricesLoaded){
+    if (!pricesLoaded) {
       redirect('/')
     }
   }

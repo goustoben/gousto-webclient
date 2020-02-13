@@ -1,9 +1,7 @@
-export const menuLoadComplete = (action) => {
-  return {
-    type: action.type,
-    data: {
-      timeToLoadMs: action.timeToLoadMs,
-      useMenuService: action.useMenuService
-    }
+export const menuLoadComplete = (action) => ({
+  type: action.type,
+  data: {
+    timeToLoadMs: action.timeToLoadMs,
+    useMenuService: action.useMenuService
   }
-}
+})

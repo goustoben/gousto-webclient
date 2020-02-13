@@ -104,9 +104,8 @@ class OrderDelivery extends React.PureComponent {
       shippingAddressId,
       addressLoading
     } = this.props
-    const editDateHasError =
-      recipesPeriodStockFetchError != null ||
-      orderDeliveryDaysFetchError != null
+    const editDateHasError = recipesPeriodStockFetchError != null
+      || orderDeliveryDaysFetchError != null
     const errorText = hasUpdateDeliveryDayError
       ? 'There was a problem updating your order date. Please try again later.'
       : 'Whoops, something went wrong - please try again'
@@ -118,7 +117,7 @@ class OrderDelivery extends React.PureComponent {
           <div className={css.spinnerContainer}>
             <Loading className={css.spinner} />
           </div>
-        ): (
+        ) : (
           <div className={css.deliveryDetailsWrapper}>
             <div className={css.subSection}>
               <OrderDeliveryDate

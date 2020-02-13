@@ -7,9 +7,9 @@ import Footer from 'components/Footer/Footer'
 describe('CheckoutLayout', () => {
   let wrapper
   beforeEach(() => {
-    wrapper =shallow(
+    wrapper = shallow(
       <CheckoutLayout>
-        <span></span>
+        <span />
       </CheckoutLayout>
     )
   })

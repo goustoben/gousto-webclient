@@ -71,7 +71,7 @@ export function getCookingTime(time) {
 export function getFoodBrand(recipe) {
   const foodBrandTaxonomy = recipe && recipe.size && recipe.get('taxonomy')
   const foodBrand = foodBrandTaxonomy ? foodBrandTaxonomy.find(tag => tag.get('slug') === 'food-brands') : null
-  if(foodBrand && foodBrand.get('tags').size) {
+  if (foodBrand && foodBrand.get('tags').size) {
     return foodBrand.get('tags').get(0)
   }
 
@@ -101,9 +101,7 @@ export function roundUp(value, precision = 0.01) {
   return Math.ceil(value / precision) * precision
 }
 
-export const isAvailableRecipeList = (recipeIds, recipesStore) => {
-  return recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
-}
+export const isAvailableRecipeList = (recipeIds, recipesStore) => recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
 
 export default {
   getLowStockTag,

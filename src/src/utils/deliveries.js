@@ -178,9 +178,7 @@ function getLandingOrder(userOrders, deliveryDays) {
       if (!correspondingDay) {
         if (defaultDayOrderFilled) {
           let deliveryDay
-          const hasFilledOrdersBeforeDefaultDay = futureOrders.some(
-            futureOrder => moment(futureOrder.get('deliveryDate')).isAfter(moment(defaultDay.get('date')))
-          )
+          const hasFilledOrdersBeforeDefaultDay = futureOrders.some(futureOrder => moment(futureOrder.get('deliveryDate')).isAfter(moment(defaultDay.get('date'))))
 
           if (hasFilledOrdersBeforeDefaultDay) {
             deliveryDay = possibleDeliveryDays
@@ -391,15 +389,11 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       }
     } else {
       // try to find the default slot for that day
-      let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-        return (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot.get('isDefault')
-      })
+      let foundSlot = day.get('slots', Immutable.List([])).find(slot => (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot.get('isDefault'))
 
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
-        foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-          return (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot
-        })
+        foundSlot = day.get('slots', Immutable.List([])).find(slot => (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot)
       }
 
       if (foundSlot) {
@@ -451,8 +445,8 @@ export function isDeliverySlotAvailable(slot, cutoffDatetimeFromMoment, usersOrd
     && isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
 }
 
-export function isSlotActive (slot) {
-  return "daySlotLeadTimeActive" in slot ? slot.daySlotLeadTimeActive : true
+export function isSlotActive(slot) {
+  return 'daySlotLeadTimeActive' in slot ? slot.daySlotLeadTimeActive : true
 }
 
 export function userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot) {
@@ -516,5 +510,5 @@ export function getNDDFeatureFlagVal(state) {
   const nddExperimentVal = getNDDFeatureValue(state)
   const deliveryTariffId = getDeliveryTariffId(user, nddExperimentVal)
 
-  return (deliveryTariffId !== deliveryTariffTypes['NON_NDD'])
+  return (deliveryTariffId !== deliveryTariffTypes.NON_NDD)
 }

@@ -687,19 +687,15 @@ export function userSubscribe() {
           card: getPaymentDetails(state)
         },
         addresses: {
-          shipping_address: Object.assign(
-            {
-              type: config.address_types.shipping,
-              delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction')
-            },
-            deliveryAddress
-          ),
-          billing_address: Object.assign(
-            {
-              type: config.address_types.billing
-            },
-            billingAddress
-          )
+          shipping_address: {
+            type: config.address_types.shipping,
+            delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
+            ...deliveryAddress
+          },
+          billing_address: {
+            type: config.address_types.billing,
+            ...billingAddress
+          }
         },
         subscription: {
           interval_id: intervalId,
@@ -709,8 +705,8 @@ export function userSubscribe() {
       }
 
       if (
-        isChoosePlanEnabled(state) &&
-        basket.get('subscriptionOption') === config.subscriptionOptions.transactional
+        isChoosePlanEnabled(state)
+        && basket.get('subscriptionOption') === config.subscriptionOptions.transactional
       ) {
         reqData.subscription.paused = 1
       }
@@ -791,43 +787,37 @@ export function userFetchReferralOffer() {
   }
 }
 
-export const userGetReferralDetails = () => {
-  return async (dispatch, getState) => {
-    try {
-      const accessToken = getState().auth.get('accessToken')
-      const { data } = await userApi.referralDetails(accessToken)
+export const userGetReferralDetails = () => async (dispatch, getState) => {
+  try {
+    const accessToken = getState().auth.get('accessToken')
+    const { data } = await userApi.referralDetails(accessToken)
 
-      dispatch(userLoadReferralDetails(data))
-    } catch (err) {
-      logger.error({ message: `Failed to fetch referral details`, errors: [err] })
-    }
+    dispatch(userLoadReferralDetails(data))
+  } catch (err) {
+    logger.error({ message: 'Failed to fetch referral details', errors: [err] })
   }
 }
 
-export const trackingReferFriend = (actionType, trackingType) => {
-  return dispatch => {
-    if (actionType && trackingType) {
-      dispatch({
-        type: actionType,
-        trackingData: {
-          actionType: trackingType
-        }
-      })
-    }
+export const trackingReferFriend = (actionType, trackingType) => dispatch => {
+  if (actionType && trackingType) {
+    dispatch({
+      type: actionType,
+      trackingData: {
+        actionType: trackingType
+      }
+    })
   }
 }
 
-export const trackingReferFriendSocialSharing = (actionType, trackingType, channel) => {
-  return dispatch => {
-    if (actionType && trackingType) {
-      dispatch({
-        type: actionType,
-        trackingData: {
-          actionType: trackingType,
-          channel: channel
-        }
-      })
-    }
+export const trackingReferFriendSocialSharing = (actionType, trackingType, channel) => dispatch => {
+  if (actionType && trackingType) {
+    dispatch({
+      type: actionType,
+      trackingData: {
+        actionType: trackingType,
+        channel
+      }
+    })
   }
 }
 export const userLoadCookbookRecipes = () => (dispatch, getState) => {
@@ -847,7 +837,7 @@ export const userLoadOrderTrackingInfo = (orderId) => (
         type: actionTypes.USER_LOAD_ORDER_TRACKING,
         trackingUrl,
       })
-    } catch(err) {
+    } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, true))
       dispatch({
         type: actionTypes.USER_LOAD_ORDER_TRACKING,

@@ -22,8 +22,14 @@ const OrderPricingDetail = ({
   if (percentageDiscountAmount && flatDiscountAmount) {
     discountRender = (
       <div className={`${css.row} ${css.green} ${css.separationBelow}`}>
-        <span>{percentageDiscountAmount}% Discount</span>
-        <span>-£{flatDiscountAmount.toFixed(2)}</span>
+        <span>
+          {percentageDiscountAmount}
+          % Discount
+        </span>
+        <span>
+          -£
+          {flatDiscountAmount.toFixed(2)}
+        </span>
       </div>
     )
   }
@@ -35,7 +41,10 @@ const OrderPricingDetail = ({
             <span>Discount</span>
           </Content>
         </span>
-        <span>-£{flatDiscountAmount.toFixed(2)}</span>
+        <span>
+          -£
+          {flatDiscountAmount.toFixed(2)}
+        </span>
       </div>
     )
   }
@@ -43,12 +52,23 @@ const OrderPricingDetail = ({
   return (
     <div className={css.paymentInfo} data-testing="recipesPricingDetailSection">
       <div className={`${css.row} ${css.bold}`}>
-        Payment on {paymentDate}
+        Payment on
+        {' '}
+        {paymentDate}
       </div>
       <div className={css.row}>
-        <span>{numberOfRecipes} recipes</span>
-        {typeof(grossRecipesPrice) === 'number' ?
-          <span>£{grossRecipesPrice.toFixed(2)}</span>
+        <span>
+          {numberOfRecipes}
+          {' '}
+          recipes
+        </span>
+        {typeof(grossRecipesPrice) === 'number'
+          ? (
+            <span>
+              £
+              {grossRecipesPrice.toFixed(2)}
+            </span>
+          )
           : null}
       </div>
       {discountRender}
@@ -59,9 +79,12 @@ const OrderPricingDetail = ({
               <span>Extras</span>
             </Content>
           </span>
-          <span>£{grossExtrasPrice.toFixed(2)}</span>
+          <span>
+            £
+            {grossExtrasPrice.toFixed(2)}
+          </span>
         </div>
-      ): null}
+      ) : null}
       <div className={`${css.row} ${css.separationBelow}`}>
         <span>
           <Content contentKeys="mydeliveriesOrderOrderpricingDelivery">
@@ -69,20 +92,29 @@ const OrderPricingDetail = ({
           </Content>
         </span>
         {grossShippingPrice
-          ? <span>£{grossShippingPrice.toFixed(2)}</span>
+          ? (
+            <span>
+              £
+              {grossShippingPrice.toFixed(2)}
+            </span>
+          )
           : (
             <span>
               <Content contentKeys="mydeliveriesOrderOrderpricingDeliveryfree">
                 <span>Free</span>
               </Content>
             </span>
-          )
-        }
+          )}
       </div>
       <div className={`${css.row} ${css.bold}`}>
         <span>Total</span>
-        {typeof(netOrderPrice) === 'number' ?
-          <span>£{netOrderPrice.toFixed(2)}</span>
+        {typeof(netOrderPrice) === 'number'
+          ? (
+            <span>
+              £
+              {netOrderPrice.toFixed(2)}
+            </span>
+          )
           : null}
       </div>
     </div>

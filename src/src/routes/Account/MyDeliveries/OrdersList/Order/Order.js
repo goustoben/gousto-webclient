@@ -141,7 +141,7 @@ class Order extends React.PureComponent {
                       oldDeliveryDay={originalDeliveryDay}
                       reason={deliveryDayRescheduledReason}
                     />
-                  ): null}
+                  ) : null}
                   <OrderDate
                     date={humanDeliveryDay}
                   />
@@ -158,7 +158,7 @@ class Order extends React.PureComponent {
                       orderId={orderId}
                       deliveryDayId={deliveryDayId}
                     />
-                  ): (
+                  ) : (
                     <OrderStatus
                       orderState={orderState}
                       whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'timeLeft')}
@@ -171,7 +171,7 @@ class Order extends React.PureComponent {
                         recipes={recipes}
                         numberOfProducts={products.get('total')}
                       />
-                    ): null}
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -190,7 +190,7 @@ class Order extends React.PureComponent {
                     />
                   </div>
                 </div>
-              ): null}
+              ) : null}
             </div>
           </span>
           {!collapsed ? (
@@ -220,9 +220,8 @@ class Order extends React.PureComponent {
                 portionsCount={portionsCount}
               />
             </div>
-          ):
-            null
-          }
+          )
+            : null}
         </div>
       </div>
     )

@@ -177,7 +177,7 @@ describe('onScreenRecovery', () => {
         }),
         user: Immutable.fromJS({
           newOrders: {
-            '64521': {
+            64521: {
               number: '10'
             }
           }
@@ -234,10 +234,10 @@ describe('onScreenRecovery', () => {
       test('hotjar is fired with correct trigger', async () => {
         global.hj = jest.fn()
 
-        for(let i = 1; i<=4; i++) {
+        for (let i = 1; i <= 4; i++) {
           state.user = Immutable.fromJS({
             newOrders: {
-              '64521': {
+              64521: {
                 number: i.toString()
               }
             }

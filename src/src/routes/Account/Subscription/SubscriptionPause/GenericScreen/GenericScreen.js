@@ -38,7 +38,10 @@ export function renderContent(contents = []) {
       component = (
         <div className={css.quoteBlock}>
           <p className={css.quote}>{content.quote}</p>
-          <p className={css.quote}>-{content.quoteAuthor}</p>
+          <p className={css.quote}>
+            -
+            {content.quoteAuthor}
+          </p>
         </div>
       )
       break
@@ -54,7 +57,7 @@ export function renderContent(contents = []) {
       >
         {component}
       </div>
-    ): null
+    ) : null
   })
 }
 

@@ -15,13 +15,17 @@ const BoxDetails = ({ maxRecipesNum, recipes }) => (
       <RecipeSummary showButton view="boxdetails" />
       {(basketSum(recipes) < maxRecipesNum) ? (
         <div className={css.text}>
-          You get the best value when your box is full with {maxRecipesNum} recipes.&nbsp;
+          You get the best value when your box is full with
+          {' '}
+          {maxRecipesNum}
+          {' '}
+          recipes.&nbsp;
           <Link to={routes.client.menu} clientRouted>
             Add another recipe&nbsp;
             <span className={css.arrowRight} />
           </Link>
         </div>
-      ): null}
+      ) : null}
     </div>
   </div>
 )

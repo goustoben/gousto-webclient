@@ -27,48 +27,53 @@ const PlanOption = ({
   priceBoxTypeMessage,
   showExclExtras,
   benefits,
-}) => {
-  return (
-    <label
-      htmlFor={title}
-      className={classnames(css.container, {
-        [css.containerSelected]: selected
-      })}
-    >
-      <div className={css.radioContainer}>
-        <input
-          type="radio"
-          id={title}
-          checked={selected}
-          className={css.hiddenRadio}
-          onClick={handleSelect}
-        />
-        <div
-          className={classnames(css.customRadio, {
-            [css.customRadioSelected]: selected
-          })}
-        />
-        <h3 className={css.title}>{title}</h3>
-      </div>
-      <TickList listItems={benefits} listItemClassName={css.benefitList} />
-      <div className={css.totalPriceContainer}>
-        {!totalPriceDiscounted || (totalPriceDiscounted===totalPrice) ? (
-          <span className={css.totalPrice}>£{totalPrice}</span>
-        ) : (
-          <span className={css.totalPriceDiscounted}>
-            <s className={css.totalPrice}>£{totalPrice}</s>£
-            {totalPriceDiscounted}
-          </span>
-        )}
-        {showExclExtras && <span className={css.exclExtras}>excl. extras</span>}
-      </div>
-      <p className={css.priceMessage}>{priceBoxTypeMessage}</p>
-      <p className={css.priceMessage}>
-        {`(£${pricePerPortion} per meal per person)`}
-      </p>
-    </label>
-  )
-}
+}) => (
+  <label
+    htmlFor={title}
+    className={classnames(css.container, {
+      [css.containerSelected]: selected
+    })}
+  >
+    <div className={css.radioContainer}>
+      <input
+        type="radio"
+        id={title}
+        checked={selected}
+        className={css.hiddenRadio}
+        onClick={handleSelect}
+      />
+      <div
+        className={classnames(css.customRadio, {
+          [css.customRadioSelected]: selected
+        })}
+      />
+      <h3 className={css.title}>{title}</h3>
+    </div>
+    <TickList listItems={benefits} listItemClassName={css.benefitList} />
+    <div className={css.totalPriceContainer}>
+      {!totalPriceDiscounted || (totalPriceDiscounted === totalPrice) ? (
+        <span className={css.totalPrice}>
+          £
+          {totalPrice}
+        </span>
+      ) : (
+        <span className={css.totalPriceDiscounted}>
+          <s className={css.totalPrice}>
+            £
+            {totalPrice}
+          </s>
+          £
+          {totalPriceDiscounted}
+        </span>
+      )}
+      {showExclExtras && <span className={css.exclExtras}>excl. extras</span>}
+    </div>
+    <p className={css.priceMessage}>{priceBoxTypeMessage}</p>
+    <p className={css.priceMessage}>
+      {`(£${pricePerPortion} per meal per person)`}
+    </p>
+  </label>
+)
 
 PlanOption.propTypes = propTypes
 

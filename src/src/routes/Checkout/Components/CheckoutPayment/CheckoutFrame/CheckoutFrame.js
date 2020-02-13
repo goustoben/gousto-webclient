@@ -70,11 +70,11 @@ class CheckoutFrame extends React.Component {
       Frames.setBillingDetails(billingAddress)
     }
 
-    if(checkoutScriptReady && hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError)) {
+    if (checkoutScriptReady && hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError)) {
       Frames.unblockFields()
     }
 
-    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled)){
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled)) {
       this.submitCard()
     }
   }

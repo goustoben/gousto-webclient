@@ -77,7 +77,7 @@ class Unsubscribe extends React.PureComponent {
                   button: copy.button,
                 }}
               />
-            ): <Unsubscribed copy={{ link: copy.link }} />
+            ) : <Unsubscribed copy={{ link: copy.link }} />
           }
         </PageContent>
       </div>

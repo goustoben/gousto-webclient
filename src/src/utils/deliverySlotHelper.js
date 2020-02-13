@@ -26,8 +26,8 @@ export const addDisabledSlotIds = deliveryDays => (
 )
 
 export const formatAndValidateDisabledSlots = (disabledSlots = '') => {
-  //date_slotStartTime-slotEndTime
-  //05-02-2019_08-19
+  // date_slotStartTime-slotEndTime
+  // 05-02-2019_08-19
 
   if (typeof disabledSlots !== 'string') {
     return []
@@ -84,7 +84,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
   const deliveryDaysData = deliveryDaysProps && deliveryDaysProps.map(deliveryDay => {
     const date = deliveryDay.get('date')
     slots[date] = deliveryDay.get('slots').map(slot => {
-      const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
+      const isSlotDisabled = !!(disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')))
 
       return {
         label: formatDeliveryTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),

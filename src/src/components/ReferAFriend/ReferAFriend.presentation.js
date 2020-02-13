@@ -15,51 +15,49 @@ const propTypes = {
   showEmailReferralForm: PropTypes.func.isRequired,
 }
 
-const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange, email, errorMessage, showEmailReferralForm }) => {
-  return (
-    <div>
-      {
-        !isEmailSent ? (
-          <div>
-            <p>Enter your friend&#8217;s email below:</p>
-            <Form onSubmit={handleSubmit}>
-              <div>
-                <div className={css.emailInput}>
-                  <TextInput
-                    name="email"
-                    color="primary"
-                    textAlign="left"
-                    placeholder="Your friend's email"
-                    onChange={handleEmailChange}
-                    value={email}
-                  />
-                  <InputError>{errorMessage}</InputError>
-                </div>
-                <div className={css.button}>
-                  <Button
-                    onClick={handleSubmit}
-                  >
-                    Send Email
-                  </Button>
-                </div>
+const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange, email, errorMessage, showEmailReferralForm }) => (
+  <div>
+    {
+      !isEmailSent ? (
+        <div>
+          <p>Enter your friend&#8217;s email below:</p>
+          <Form onSubmit={handleSubmit}>
+            <div>
+              <div className={css.emailInput}>
+                <TextInput
+                  name="email"
+                  color="primary"
+                  textAlign="left"
+                  placeholder="Your friend's email"
+                  onChange={handleEmailChange}
+                  value={email}
+                />
+                <InputError>{errorMessage}</InputError>
               </div>
-            </Form>
-          </div>
-        ) : (
-          <div>
-            <p className={css.emailSentNotification}>An invitation has been sent to your friend!</p>
-            <Button
-              onClick={showEmailReferralForm}
-              className={css.button}
-            >
-                Invite another friend
-            </Button>
-          </div>
-        )
-      }
-    </div>
-  )
-}
+              <div className={css.button}>
+                <Button
+                  onClick={handleSubmit}
+                >
+                    Send Email
+                </Button>
+              </div>
+            </div>
+          </Form>
+        </div>
+      ) : (
+        <div>
+          <p className={css.emailSentNotification}>An invitation has been sent to your friend!</p>
+          <Button
+            onClick={showEmailReferralForm}
+            className={css.button}
+          >
+            Invite another friend
+          </Button>
+        </div>
+      )
+    }
+  </div>
+)
 
 ReferAFriendPresentation.propTypes = propTypes
 

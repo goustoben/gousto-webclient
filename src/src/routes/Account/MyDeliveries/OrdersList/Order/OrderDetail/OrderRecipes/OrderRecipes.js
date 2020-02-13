@@ -28,7 +28,7 @@ const OrderRecipes = ({
             {orderState === 'recipes chosen' ? 'Edit recipes' : 'Choose recipes'}
           </Link>
         </div>
-      ): null}
+      ) : null}
     </div>
     <OrderRecipeBox recipes={recipes} orderState={orderState} portionsCount={portionsCount} />
     {orderState === 'menu open' ? (
@@ -38,9 +38,14 @@ const OrderRecipes = ({
             <span>You haven't chosen any recipes yet.</span>
           </Content>
         </p>
-        <p>If you do not choose by <strong>{whenCutoff}</strong>, Gousto will send you a selection of recipes based on your subscription settings.</p>
+        <p>
+          If you do not choose by
+          {' '}
+          <strong>{whenCutoff}</strong>
+          , Gousto will send you a selection of recipes based on your subscription settings.
+        </p>
       </div>
-    ): null}
+    ) : null}
   </div>
 )
 

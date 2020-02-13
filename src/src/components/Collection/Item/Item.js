@@ -39,11 +39,12 @@ const CollectionItem = ({ link, media, title }) => {
     >
       {CollectionContent}
     </Link>
-  ): (
+  ) : (
     <Div>
       {CollectionContent}
     </Div>
-  )}
+  )
+}
 
 CollectionItem.propTypes = {
   title: PropTypes.string,

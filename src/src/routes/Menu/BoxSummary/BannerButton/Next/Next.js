@@ -2,18 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { BaseBannerButton } from '../BaseBannerButton'
 
-const Next = ({ pricingPending, view, showDetails, boxSummaryNext, open }) => {
-  return (
-    <BaseBannerButton
-      view={view}
-      pending={pricingPending}
-      dataTesting='boxSummaryNextButton'
-      onClick={showDetails ? boxSummaryNext : open}
-    >
-      Next
-    </BaseBannerButton>
-  )
-}
+const Next = ({ pricingPending, view, showDetails, boxSummaryNext, open }) => (
+  <BaseBannerButton
+    view={view}
+    pending={pricingPending}
+    dataTesting="boxSummaryNextButton"
+    onClick={showDetails ? boxSummaryNext : open}
+  >
+    Next
+  </BaseBannerButton>
+)
 
 Next.propTypes = {
   boxSummaryNext: PropTypes.func.isRequired,

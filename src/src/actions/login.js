@@ -7,7 +7,7 @@ import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from
 import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
-import URL from 'url' //eslint-disable-line import/no-nodejs-modules
+import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import orderActions from './order'
 import pricingActions from './pricing'
 import statusActions from './status'

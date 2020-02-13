@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer'
 
 import BoxPrice from 'routes/BoxPrices/BoxPrice'
 
-describe("BoxPrice", () => {
+describe('BoxPrice', () => {
 
   const boxPriceMock = [
     { delivery_total: '0.00',
@@ -50,7 +50,7 @@ describe("BoxPrice", () => {
     }
   ]
 
-  it ("Will snap BoxPrice", () => {
+  it('Will snap BoxPrice', () => {
     const tree = renderer
       .create(<BoxPrice boxInfo={boxPriceMock} numPersons={2} />)
       .toJSON()

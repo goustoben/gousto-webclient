@@ -4,13 +4,11 @@ import withError from 'utils/withError'
 import BoxPrice from '../BoxPrice'
 import css from './BoxPriceList.css'
 
-const groupBy = (collection, key) => {
-  return collection.reduce(function(accumulator, currentValue) {
-    (accumulator[currentValue[key]] = accumulator[currentValue[key]] || []).push(currentValue)
+const groupBy = (collection, key) => collection.reduce((accumulator, currentValue) => {
+  (accumulator[currentValue[key]] = accumulator[currentValue[key]] || []).push(currentValue)
 
-    return accumulator
-  }, {})
-}
+  return accumulator
+}, {})
 
 const BoxPricesList = ({ boxPrices, type }) => {
   const boxTypes = boxPrices[type]

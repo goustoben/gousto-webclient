@@ -9,7 +9,7 @@ export const getRecipePosition = (state, recipeId) => {
   const currentCollectionRecipes = menuCollectionRecipes.get(currentCollection)
   const indexOfRecipe = currentCollectionRecipes && currentCollectionRecipes.indexOf(recipeId)
 
-  return (indexOfRecipe+1) || null
+  return (indexOfRecipe + 1) || null
 }
 
 export const getMenuCollectionIdBySlug = (menuCollections, slug) => {
@@ -29,7 +29,7 @@ export const getMenuCollectionRecipeIds = (menuCollections, allMenuCollectionRec
 export const getCollectionDetailsBySlug = (state, slug) => {
   const { menuCollections } = state
   const selectedCollection = menuCollections.find(collection => collection.get('slug') === slug)
-  if(selectedCollection) {
+  if (selectedCollection) {
     return selectedCollection
   }
 

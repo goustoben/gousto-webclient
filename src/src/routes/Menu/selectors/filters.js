@@ -1,4 +1,4 @@
-//This file is for Quick Filters and Collection filters only - should change file name eventually
+// This file is for Quick Filters and Collection filters only - should change file name eventually
 
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'

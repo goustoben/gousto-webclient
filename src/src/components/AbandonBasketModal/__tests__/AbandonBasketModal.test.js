@@ -61,7 +61,7 @@ const orders = Immutable.fromJS([
   },
   {
     deliveryDate: '08/08/08',
-    recipeItems: [] //projected order
+    recipeItems: [] // projected order
   }
 ])
 

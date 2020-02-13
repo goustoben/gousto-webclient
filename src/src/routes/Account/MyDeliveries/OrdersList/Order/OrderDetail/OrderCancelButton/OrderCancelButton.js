@@ -40,9 +40,9 @@ class OrderCancelButton extends React.PureComponent {
       deliveryDay
     } = this.props
     if (orderState !== 'scheduled') {
-      orderCancelStart(orderId, deliveryDayId, deliveryDay, "pending")
+      orderCancelStart(orderId, deliveryDayId, deliveryDay, 'pending')
     } else {
-      orderCancelStart(null, deliveryDayId, deliveryDay, "projected")
+      orderCancelStart(null, deliveryDayId, deliveryDay, 'projected')
     }
   }
 
@@ -50,8 +50,8 @@ class OrderCancelButton extends React.PureComponent {
     const { contentPending, didCancelProjectedError, deliveryDayId, orderId, osrDeliveryDayId, osrOrderId } = this.props
 
     let pending = false
-    if(contentPending && deliveryDayId === osrDeliveryDayId) pending = true
-    if(contentPending && orderId === osrOrderId) pending = true
+    if (contentPending && deliveryDayId === osrDeliveryDayId) pending = true
+    if (contentPending && orderId === osrOrderId) pending = true
 
     return (
       <div className={css.button}>
@@ -61,8 +61,8 @@ class OrderCancelButton extends React.PureComponent {
               <span>Whoops, there was a problem cancelling this order, please try again.</span>
             </Content>
           </Alert>
-        ): null}
-        <Button color='negative' onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
+        ) : null}
+        <Button color="negative" onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
           Cancel delivery
         </Button>
       </div>

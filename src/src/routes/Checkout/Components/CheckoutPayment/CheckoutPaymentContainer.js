@@ -7,12 +7,10 @@ import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
 import { CheckoutPayment } from './CheckoutPayment'
 
-const mapStateToProps = state => {
-  return {
-    formErrors: Object.assign({}, getFormSyncErrors(sectionName)(state), getFormAsyncErrors(sectionName)(state)),
-    sectionName,
-  }
-}
+const mapStateToProps = state => ({
+  formErrors: { ...getFormSyncErrors(sectionName)(state), ...getFormAsyncErrors(sectionName)(state)},
+  sectionName,
+})
 
 const mapDispatchToProps = {
   touch,

@@ -68,7 +68,7 @@ class OrderDetail extends React.PureComponent {
               portionsCount={this.props.portionsCount}
             />
           </section>
-        ): null}
+        ) : null}
         {this.props.orderState === 'recipes chosen' ? (
           <section className={css.openCardSection}>
             <OrderProducts
@@ -76,7 +76,7 @@ class OrderDetail extends React.PureComponent {
               products={this.props.products}
             />
           </section>
-        ): null}
+        ) : null}
         {['recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderPricingDetail
@@ -85,7 +85,7 @@ class OrderDetail extends React.PureComponent {
               priceBreakdown={this.props.priceBreakdown}
             />
           </section>
-        ): null}
+        ) : null}
         {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderDelivery
@@ -100,7 +100,7 @@ class OrderDetail extends React.PureComponent {
               fetchSuccess={fetchSuccess}
             />
           </section>
-        ): null}
+        ) : null}
         {this.props.cancellable && this.props.orderState !== 'cancelled' ? (
           <section className={css.openCardSection}>
             <OrderCancelButton
@@ -110,7 +110,7 @@ class OrderDetail extends React.PureComponent {
               deliveryDay={this.props.deliveryDay}
             />
           </section>
-        ): null}
+        ) : null}
       </div>
     )
   }

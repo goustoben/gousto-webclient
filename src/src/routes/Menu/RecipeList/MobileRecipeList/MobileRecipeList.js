@@ -11,17 +11,15 @@ const MobileRecipeList = ({
   recipes, showDetailRecipe, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange, isFoodBrandClickable
 }) => {
   // eslint-disable-next-line react/prop-types
-  const createRecipeCard = (value, index) => {
-    return (
-      <RecipeCardContainer
-        key={`${index}-${value.get('id')}`}
-        recipe={value}
-        index={index}
-        showDetailRecipe={showDetailRecipe}
-        isFoodBrandClickable={isFoodBrandClickable}
-      />
-    )
-  }
+  const createRecipeCard = (value, index) => (
+    <RecipeCardContainer
+      key={`${index}-${value.get('id')}`}
+      recipe={value}
+      index={index}
+      showDetailRecipe={showDetailRecipe}
+      isFoodBrandClickable={isFoodBrandClickable}
+    />
+  )
 
   return (
     <div className={css.mobileRecipeList}>

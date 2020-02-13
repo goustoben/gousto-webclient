@@ -14,16 +14,14 @@ describe('menuservice', () => {
       jest.clearAllMocks()
     })
 
-    test('fetches menuservice data when menu service is enabled and local data is empty', async() => {
+    test('fetches menuservice data when menu service is enabled and local data is empty', async () => {
       menuFetchData.mockResolvedValue()
       const store = {
-        getState: () => {
-          return {
-            menuService: {
-              data: []
-            }
+        getState: () => ({
+          menuService: {
+            data: []
           }
-        }
+        })
       }
 
       await loadMenuServiceDataIfDeepLinked(store)
@@ -32,17 +30,15 @@ describe('menuservice', () => {
       expect(menuFetchData).toHaveBeenCalled()
     })
 
-    test('fetches menuservice data when menu service is enabled and user has a userMenuVariant for AB testing menus', async() => {
+    test('fetches menuservice data when menu service is enabled and user has a userMenuVariant for AB testing menus', async () => {
       getUserMenuVariant.mockReturnValue('menuB')
       menuFetchData.mockResolvedValue()
       const store = {
-        getState: () => {
-          return {
-            menuService: {
-              data: []
-            },
-          }
-        }
+        getState: () => ({
+          menuService: {
+            data: []
+          },
+        })
       }
 
       const isSignUpPage = true
@@ -53,17 +49,15 @@ describe('menuservice', () => {
       expect(menuFetchData.mock.calls[0][3]).toEqual('menuB')
     })
 
-    test('should not fetch menuservice data when menu service is disabled', async() => {
+    test('should not fetch menuservice data when menu service is disabled', async () => {
       getMenuService.mockReturnValueOnce(false)
       menuFetchData.mockResolvedValue()
       const store = {
-        getState: () => {
-          return {
-            menuService: {
-              data: []
-            }
+        getState: () => ({
+          menuService: {
+            data: []
           }
-        }
+        })
       }
 
       await loadMenuServiceDataIfDeepLinked(store)
@@ -72,7 +66,7 @@ describe('menuservice', () => {
       expect(menuFetchData).not.toHaveBeenCalled()
     })
 
-    test('should not fetch menuservice data when store is empty', async() => {
+    test('should not fetch menuservice data when store is empty', async () => {
       menuFetchData.mockResolvedValue()
       const store = undefined
 

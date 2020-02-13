@@ -60,96 +60,84 @@ const trackRecipeCardClick = recipeId => ({
   }
 })
 
-const trackUserCannotGetCompensation = numberOfDaysSinceLastCompensation => {
-  return {
-    type: actionTypes.TRACKING,
-    trackingData: {
-      actionType: 'UserCannotGetCompensation Clicked',
-      numberOfDaysSinceLastCompensation,
-    }
+const trackUserCannotGetCompensation = numberOfDaysSinceLastCompensation => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'UserCannotGetCompensation Clicked',
+    numberOfDaysSinceLastCompensation,
   }
-}
+})
 
 const validateSelectedIngredients = ({
   accessToken,
   orderId,
   costumerId,
   ingredientIds,
-}) => {
-  return async (dispatch) => {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
-    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
+}) => async (dispatch) => {
+  dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
+  dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
 
-    const validateIngredientsParams = [
+  const validateIngredientsParams = [
+    accessToken,
+    {
+      customer_id: Number(costumerId),
+      order_id: Number(orderId),
+      ingredient_ids: ingredientIds
+    }
+  ]
+
+  try {
+    await validateIngredients(...validateIngredientsParams)
+  } catch (error) {
+    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, error.message))
+    throw error
+  } finally {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, false))
+  }
+}
+
+const validateLatestOrder = ({ accessToken, orderId, costumerId }) => async (dispatch) => {
+  dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
+  dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
+
+  try {
+    await validateOrder(
       accessToken,
       {
         customer_id: Number(costumerId),
         order_id: Number(orderId),
-        ingredient_ids: ingredientIds
       }
-    ]
-
-    try {
-      await validateIngredients(...validateIngredientsParams)
-    }
-    catch (error) {
-      dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, error.message))
-      throw error
-    }
-    finally {
-      dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, false))
-    }
+    )
+  } catch (error) {
+    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
+  } finally {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, false))
   }
 }
 
-const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
-  return async (dispatch) => {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
-    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
+const fetchIngredientIssues = () => async (dispatch, getState) => {
+  dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, true))
+  dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, null))
 
-    try {
-      await validateOrder(
-        accessToken,
-        {
-          customer_id: Number(costumerId),
-          order_id: Number(orderId),
-        }
-      )
-    }
-    catch (error) {
-      dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
-    }
-    finally {
-      dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, false))
-    }
-  }
-}
+  try {
+    const ingredientIssues = await fetchOrderIssuesApi(getState().auth.get('accessToken'))
+    dispatch({ type: actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, ingredientIssues })
 
-const fetchIngredientIssues = () => {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, true))
-    dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, null))
-
-    try {
-      const ingredientIssues = await fetchOrderIssuesApi(getState().auth.get('accessToken'))
-      dispatch({ type: actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, ingredientIssues })
-
-      const selectedIngredients = getState().getHelp.get('selectedIngredients')
-      const { id, name } = ingredientIssues.data[0].category
-      selectedIngredients.forEach(selectedIngredient => {
-        const ingredientAndRecipeId = `${selectedIngredient.get('recipeId')}-${selectedIngredient.get('ingredientId')}`
-        dispatch({
-          type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
-          ingredientAndRecipeId,
-          issueId: id,
-          issueName: name,
-        })
+    const selectedIngredients = getState().getHelp.get('selectedIngredients')
+    const { id, name } = ingredientIssues.data[0].category
+    selectedIngredients.forEach(selectedIngredient => {
+      const ingredientAndRecipeId = `${selectedIngredient.get('recipeId')}-${selectedIngredient.get('ingredientId')}`
+      dispatch({
+        type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
+        ingredientAndRecipeId,
+        issueId: id,
+        issueName: name,
       })
-    } catch (error) {
-      dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, error.message))
-    } finally {
-      dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, false))
-    }
+    })
+  } catch (error) {
+    dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, error.message))
+  } finally {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, false))
   }
 }
 
@@ -174,28 +162,26 @@ const loadRecipesById = (recipeIds = []) => (
   }
 )
 
-const loadOrderById = ({ accessToken, orderId }) => {
-  return async (dispatch) => {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, true))
-    dispatch(statusActions.error(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, null))
+const loadOrderById = ({ accessToken, orderId }) => async (dispatch) => {
+  dispatch(statusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, true))
+  dispatch(statusActions.error(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, null))
 
-    try {
-      const { data: order } = await fetchOrder(
-        accessToken,
-        orderId
-      )
+  try {
+    const { data: order } = await fetchOrder(
+      accessToken,
+      orderId
+    )
 
-      dispatch({
-        type: actionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
-        order,
-      })
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, err.message))
-      logger.error(err)
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, false))
-    }
+    dispatch({
+      type: actionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
+      order,
+    })
+  } catch (err) {
+    dispatch(statusActions.error(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, err.message))
+    logger.error(err)
+    throw err
+  } finally {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, false))
   }
 }
 

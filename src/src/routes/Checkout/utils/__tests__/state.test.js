@@ -54,7 +54,7 @@ describe('is submitting', () => {
 })
 
 describe('is billing address different', () => {
-  beforeEach(()=>{
+  beforeEach(() => {
     formValues = {
       delivery: {},
       payment: {},

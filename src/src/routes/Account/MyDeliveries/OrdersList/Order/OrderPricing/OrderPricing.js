@@ -15,16 +15,18 @@ const OrderPricing = ({ pricing, orderState }) => {
         <div>
           {netOrderPrice < grossOrderPrice && (
             <div className={css.fullPrice}>
-              £{grossOrderPrice.toFixed(2)}
+              £
+              {grossOrderPrice.toFixed(2)}
             </div>
           )}
           <div className={css.total}>
-            £{netOrderPrice.toFixed(2)}
+            £
+            {netOrderPrice.toFixed(2)}
           </div>
         </div>
-      ): null}
-      {(orderState === 'menu open' && (pricing.get('flatDiscountAmount') || pricing.get('percentageDiscountAmount'))) ?
-        <DiscountBadge flatDiscountAmount={pricing.get('flatDiscountAmount')} percentageDiscountAmount={pricing.get('percentageDiscountAmount')} />
+      ) : null}
+      {(orderState === 'menu open' && (pricing.get('flatDiscountAmount') || pricing.get('percentageDiscountAmount')))
+        ? <DiscountBadge flatDiscountAmount={pricing.get('flatDiscountAmount')} percentageDiscountAmount={pricing.get('percentageDiscountAmount')} />
         : null}
     </div>
   )

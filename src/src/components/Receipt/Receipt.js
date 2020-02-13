@@ -65,7 +65,8 @@ class Receipt extends React.Component {
         {
           showRecipeDiscount
             ? <ReceiptLine label={formatRecipeDiscount(recipeDiscountPercent)} style="primary">{`-${formatPrice(recipeDiscountAmount)}`}</ReceiptLine>
-            : null}
+            : null
+        }
         {
           showSurchargeTotalPrice
             ? <ReceiptLine label={formatLabelPlural('Recipe surcharge', surcharges.size)} showLineAbove style="normal">{formatPrice(surchargeTotal)}</ReceiptLine>
@@ -76,7 +77,7 @@ class Receipt extends React.Component {
             ? <ReceiptLine label="Extras" showLineAbove style="normal">{formatPrice(extrasTotalPrice)}</ReceiptLine>
             : null
         }
-        <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? "primary" :"normal"}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
+        <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? 'primary' : 'normal'}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
         <ReceiptLine label="Total" style="bold" showLineAbove>{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
         {
           showAddPromocode && <PromoCode />

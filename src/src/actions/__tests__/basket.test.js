@@ -1072,5 +1072,5 @@ describe('basket actions', () => {
 const multiReturnMock = (array) => {
   const reversedArray = (array || []).reverse()
 
-  return jest.fn(() =>reversedArray.pop())
+  return jest.fn(() => reversedArray.pop())
 }

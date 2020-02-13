@@ -3,9 +3,9 @@ import renderer from 'react-test-renderer'
 
 import BoxInfo from 'routes/BoxPrices/BoxInfo'
 
-describe("BoxInfo", () => {
+describe('BoxInfo', () => {
 
-  it ("Will snap BoxInfo", () => {
+  it('Will snap BoxInfo', () => {
     const tree = renderer
       .create(<BoxInfo
         numPortions={2}
