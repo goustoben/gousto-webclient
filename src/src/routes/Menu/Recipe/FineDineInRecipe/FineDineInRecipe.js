@@ -16,6 +16,37 @@ import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 
+const propTypes = {
+  ...recipePropTypes,
+  id: PropTypes.string.isRequired,
+  position: PropTypes.number,
+  chef: PropTypes.shape({
+    media: PropTypes.shape({
+      images: PropTypes.array,
+    }),
+    name: PropTypes.string,
+    celebrity: PropTypes.bool,
+  }),
+  isRecommendedRecipe: PropTypes.bool,
+  inBasket: PropTypes.bool,
+  cookingTime: PropTypes.number.isRequired,
+  features: PropTypes.instanceOf(Immutable.Map).isRequired,
+  highlight: PropTypes.func,
+  unhighlight: PropTypes.func,
+  detailHover: PropTypes.bool,
+  tasteScore: PropTypes.number,
+  isFoodBrandClickable: PropTypes.bool,
+  selectFoodBrand: PropTypes.func,
+  view: PropTypes.string,
+}
+
+const defaultProps = {
+  view: 'fineDineIn',
+  isRecommendedRecipe: false,
+  chef: Immutable.Map({}),
+  media: Immutable.List([]),
+}
+
 const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
   tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
   features, stock, inBasket, position, id, range }) => {
@@ -66,7 +97,7 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
             </div>
             <div className={css.alignBadges}>
               <div className={css.badgeItem}>
-                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time-white' />
+                <RecipeAttribute name="cookingTime" value={cookingTime} icon="icon-time-white" />
               </div>
               <div className={css.badgeItem}>
                 <RecommendedBadge
@@ -91,41 +122,8 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
   )
 }
 
-FineDineInRecipe.propTypes = {
-  ...recipePropTypes,
-  id: PropTypes.string.isRequired,
-  position: PropTypes.number,
-  chef: PropTypes.shape({
-    media: PropTypes.shape({
-      images: PropTypes.array,
-    }),
-    name: PropTypes.string,
-    celebrity: PropTypes.bool,
-  }),
-  isRecommendedRecipe: PropTypes.bool,
-  equipment: PropTypes.instanceOf(Immutable.List),
-  inBasket: PropTypes.bool,
-  averageRating: PropTypes.number,
-  cookingTime: PropTypes.number.isRequired,
-  ratingCount: PropTypes.number,
-  features: PropTypes.instanceOf(Immutable.Map).isRequired,
-  useWithin: PropTypes.string.isRequired,
-  highlight: PropTypes.func,
-  unhighlight: PropTypes.func,
-  detailHover: PropTypes.bool,
-  tasteScore: PropTypes.number,
-  isFoodBrandClickable: PropTypes.bool,
-  selectFoodBrand: PropTypes.func,
-  view: PropTypes.string,
-}
+FineDineInRecipe.propTypes = propTypes
 
-FineDineInRecipe.defaultProps = {
-  view: 'fineDineIn',
-  isRecommendedRecipe: false,
-  chef: Immutable.Map({}),
-  averageRating: 0,
-  ratingCount: 0,
-  media: Immutable.List([]),
-}
+FineDineInRecipe.defaultProps = defaultProps
 
 export { FineDineInRecipe }

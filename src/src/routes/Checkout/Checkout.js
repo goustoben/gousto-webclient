@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
@@ -43,34 +43,36 @@ const mobileStepMapping = {
   payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
-class Checkout extends React.PureComponent {
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
+const propTypes = {
+  params: PropTypes.shape({
+    stepName: PropTypes.string
+  }),
+  browser: PropTypes.string,
+  redirect: PropTypes.func,
+  submitOrder: PropTypes.func,
+  menuLoadBoxPrices: PropTypes.func,
+  trackSignupStep: PropTypes.func,
+  tariffId: PropTypes.string,
+  query: PropTypes.shape({
+    steps: PropTypes.array
+  }),
+  loadPrices: PropTypes.func,
+  trackCheckoutButtonPressed: PropTypes.func,
+  queueItFeature: PropTypes.bool,
+}
 
-  static propTypes = {
-    params: PropTypes.object,
-    browser: PropTypes.string,
-    redirect: PropTypes.func,
-    submitOrder: PropTypes.func,
-    menuLoadBoxPrices: PropTypes.func,
-    trackSignupStep: PropTypes.func,
-    tariffId: PropTypes.string,
-  }
+const defaultProps = {
+  params: {},
+  redirect: () => { },
+}
 
-  static defaultProps = {
-    params: {},
-    redirect: () => { },
-  }
+const contextTypes = {
+  store: PropTypes.shape({
+    getState: PropTypes.func.isRequired
+  }),
+}
 
-  constructor(state, props) {
-    super(state, props)
-    this.state = {
-      isCreatingPreviewOrder: true,
-      checkoutScriptReady: false,
-    }
-  }
-
+class Checkout extends PureComponent {
   static fetchData = async ({ store, query, params, browser }) => {
     const steps = browser === 'mobile' ? defaultMobile : defaultDesktop
 
@@ -126,6 +128,14 @@ class Checkout extends React.PureComponent {
       })
   }
 
+  constructor(state, props) {
+    super(state, props)
+    this.state = {
+      isCreatingPreviewOrder: true,
+      checkoutScriptReady: false,
+    }
+  }
+
   componentDidMount() {
     Overlay.forceCloseAll()
 
@@ -152,7 +162,9 @@ class Checkout extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.tariffId !== nextProps.tariffId) {
+    const { tariffId } = propTypes
+
+    if (tariffId !== nextProps.tariffId) {
       this.props.loadPrices()
     }
   }
@@ -249,30 +261,39 @@ class Checkout extends React.PureComponent {
     )
   }
 
-  renderMobileSteps = () => (
-    <Div>
-      {this.renderProgressBar(mobileStepMapping, defaultMobile, this.props.params.stepName)}
-      {this.renderSteps(mobileStepMapping, defaultMobile, this.props.params.stepName)}
-      {this.renderStaticPayment(mobileStepMapping, defaultMobile, this.props.params.stepName)}
-    </Div>
-  )
+  renderMobileSteps = () => {
+    const { params: { stepName }} = this.props
 
-  renderDesktopSteps = () => (
-    <Div className={css.rowCheckout}>
-      <Div className={css.section}>
-        {this.renderProgressBar(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
-        {this.renderSteps(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
-        {this.renderStaticPayment(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
+    return (
+      <Div>
+        {this.renderProgressBar(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderSteps(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderStaticPayment(mobileStepMapping, defaultMobile, stepName)}
       </Div>
+    )
+  }
 
-      <Div className={css.aside}>
-        <Summary showPromocode isLoading={this.state.isCreatingPreviewOrder} />
-        <Div margin={{ top: 'LG' }}>
-          <BoxDetails />
+  renderDesktopSteps = () => {
+    const { params: {stepName}} = this.props
+    const {isCreatingPreviewOrder} = this.state
+
+    return (
+      <Div className={css.rowCheckout}>
+        <Div className={css.section}>
+          {this.renderProgressBar(desktopStepMapping, defaultDesktop, stepName)}
+          {this.renderSteps(desktopStepMapping, defaultDesktop, stepName)}
+          {this.renderStaticPayment(desktopStepMapping, defaultDesktop, stepName)}
+        </Div>
+
+        <Div className={css.aside}>
+          <Summary showPromocode isLoading={isCreatingPreviewOrder} />
+          <Div margin={{ top: 'LG' }}>
+            <BoxDetails />
+          </Div>
         </Div>
       </Div>
-    </Div>
-  )
+    )
+  }
 
   renderProgressBar = (stepMapping, steps, currentStep) => (
     <Div margin={{ bottom: 'MD' }}>
@@ -303,5 +324,11 @@ class Checkout extends React.PureComponent {
     )
   }
 }
+
+Checkout.propTypes = propTypes
+
+Checkout.defaultProps = defaultProps
+
+Checkout.contextTypes = contextTypes
 
 export default Checkout

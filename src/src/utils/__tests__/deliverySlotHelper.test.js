@@ -130,9 +130,9 @@ describe('Delivery Slot Helper', () => {
           result = getDeliveryDaysAndSlots(dateToCheck, newProps)
         })
 
-        test('should NOT return a disabled slot but user NOT logged in', () => {
+        test('should return a disabled slot but user NOT logged in', () => {
           const slotToCheck = result.slots[dateToCheck][0]
-          expect(slotToCheck.disabled).toEqual(false)
+          expect(slotToCheck.disabled).toEqual(true)
         })
       })
     })
