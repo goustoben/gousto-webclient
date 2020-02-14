@@ -22,50 +22,48 @@ const BoxSummaryDesktopBanner = ({
   expandWarning,
   onExpandClick,
   openDetails
-}) => {
-  return (
-    <div className={css.bardesktop}>
-      <RecipeList view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
-      <span className={css.buttonsContainer}>
-        {
-          showBrowseCTA
-            ? (
-              <Tooltip
-                message={errorText}
-                visible={!!errorText}
-                style="button"
-                overlayClassName={css.errorTooltipDesktop}
-                className={css.errorMessage}
-              >
-                <BrowseCTAButton view="desktop" />
-              </Tooltip>
-            )
-            : (
-              <ExpandBoxSummaryButtonContainer key={0} warning={expandWarning} onClick={onExpandClick} numRecipes={numRecipes} />
-            )
-        }
+}) => (
+  <div className={css.bardesktop}>
+    <RecipeList view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
+    <span className={css.buttonsContainer}>
+      {
+        showBrowseCTA
+          ? (
+            <Tooltip
+              message={errorText}
+              visible={!!errorText}
+              style="button"
+              overlayClassName={css.errorTooltipDesktop}
+              className={css.errorMessage}
+            >
+              <BrowseCTAButton view="desktop" />
+            </Tooltip>
+          )
+          : (
+            <ExpandBoxSummaryButtonContainer key={0} warning={expandWarning} onClick={onExpandClick} numRecipes={numRecipes} />
+          )
+      }
 
-        {
-          showBrowseCTA
-            ? (
-              <BrowseCTA view="desktop" />
-            )
-            : (
-              <Tooltip
-                message={errorText}
-                visible={!!errorText}
-                style="button"
-                overlayClassName={css.errorTooltipDesktop}
-                className={css.errorMessage}
-              >
-                <BannerButtonContainer view="desktop" open={openDetails} />
-              </Tooltip>
-            )
-        }
-      </span>
-    </div>
-  )
-}
+      {
+        showBrowseCTA
+          ? (
+            <BrowseCTA view="desktop" />
+          )
+          : (
+            <Tooltip
+              message={errorText}
+              visible={!!errorText}
+              style="button"
+              overlayClassName={css.errorTooltipDesktop}
+              className={css.errorMessage}
+            >
+              <BannerButtonContainer view="desktop" open={openDetails} />
+            </Tooltip>
+          )
+      }
+    </span>
+  </div>
+)
 
 BoxSummaryDesktopBanner.propTypes = {
   expandWarning: PropTypes.bool.isRequired,

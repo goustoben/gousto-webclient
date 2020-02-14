@@ -20,11 +20,7 @@ jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
 }))
 jest.mock('actions/loadRecipesForSingleCollection', () => ({
-  loadRecipesForSingleCollection: jest.fn().mockImplementation(() => {
-    return () => {
-      return Promise.resolve()
-    }
-  })
+  loadRecipesForSingleCollection: jest.fn().mockImplementation(() => () => Promise.resolve())
 }))
 jest.mock('utils/basket', () => ({
   limitReached: jest.fn(),
@@ -80,7 +76,7 @@ describe('menu actions', () => {
             properties: {
               enabled: true,
               limit: 25,
-              name: "All Recipes",
+              name: 'All Recipes',
             }
           }],
         }))
@@ -112,12 +108,12 @@ describe('menu actions', () => {
           routing: {
             locationBeforeTransitions: {
               query: {
-                collection: "everyday-favourites"
+                collection: 'everyday-favourites'
               }
             }
           },
           menuCollections: Immutable.fromJS({
-            'key1': {
+            key1: {
               slug: 'recommendations',
               id: 'fakeRecommendationsId',
             }
@@ -139,7 +135,7 @@ describe('menu actions', () => {
             properties: {
               enabled: true,
               limit: 25,
-              name: "All Recipes",
+              name: 'All Recipes',
             }
           }],
         }))
@@ -154,7 +150,7 @@ describe('menu actions', () => {
         state = {
           ...state,
           menuCollections: Immutable.fromJS({
-            'key1': {
+            key1: {
               slug: 'fakeslug',
               id: 'fakeId',
             }
@@ -168,7 +164,7 @@ describe('menu actions', () => {
             properties: {
               enabled: true,
               limit: 25,
-              name: "All Recipes",
+              name: 'All Recipes',
             }
           }],
         }))
@@ -189,12 +185,12 @@ describe('menu actions', () => {
             routing: {
               locationBeforeTransitions: {
                 query: {
-                  collection: "everyday-favourites"
+                  collection: 'everyday-favourites'
                 }
               }
             },
             menuCollections: Immutable.fromJS({
-              'key1': {
+              key1: {
                 slug: 'everyday-favourites',
                 id: 'fakeId',
               }
@@ -204,7 +200,7 @@ describe('menu actions', () => {
           getState2 = () => state
           collectionFilterChange.mockReset()
         })
-        test('should not call collectionFilterChange', async() => {
+        test('should not call collectionFilterChange', async () => {
           fetchCollections.mockReturnValueOnce(Promise.resolve({
             data: [{
               id: 'collectionId',

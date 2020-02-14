@@ -7,9 +7,9 @@ import BoxProgressAlert from '../BoxProgressAlert'
 jest.mock('components/PricePerServingMessage', () => ({
   PricePerServingMessage: () => <div>PricePerServingMessage</div>,
 }))
- 
+
 describe('<BoxProgressAlert', () => {
-  test('renders without crashing', () =>{
+  test('renders without crashing', () => {
     const div = document.createElement('div')
     ReactDOM.render(
       <BoxProgressAlert numRecipes={0} />,

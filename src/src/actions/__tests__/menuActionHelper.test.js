@@ -7,27 +7,19 @@ const mockActiveMenuForDateTransformer = jest.fn()
 jest.mock('actions/menuCollections')
 
 jest.mock('apis/transformers/activeMenuForDate', () => ({
-  activeMenuForDateTransformer: () => {
-    return mockActiveMenuForDateTransformer
-  },
+  activeMenuForDateTransformer: () => mockActiveMenuForDateTransformer,
 }))
 
 jest.mock('apis/transformers/collections', () => ({
-  collectionsTransformer: () => {
-    return 'mock collection'
-  },
+  collectionsTransformer: () => 'mock collection',
 }))
 
 jest.mock('apis/transformers/recipes', () => ({
-  recipesTransformer: () => {
-    return 'mock recipe'
-  },
+  recipesTransformer: () => 'mock recipe',
 }))
 
 jest.mock('apis/transformers/collectionRecipes', () => ({
-  collectionRecipesTransformer: () => {
-    return 'mock collection recipes'
-  },
+  collectionRecipesTransformer: () => 'mock collection recipes',
 }))
 
 describe('loadMenuCollectionsWithMenuService', () => {
@@ -36,13 +28,11 @@ describe('loadMenuCollectionsWithMenuService', () => {
   })
 
   test('calls menuLoadCollections and loadRecipesForAllCollections with menuservice data', async () => {
-    const getState = () => {
-      return {
-        menuService: {
-          data: [ 'some element' ]
-        }
+    const getState = () => ({
+      menuService: {
+        data: [ 'some element' ]
       }
-    }
+    })
 
     const dispatch = () => {}
     const background = true
@@ -59,61 +49,55 @@ describe('loadMenuCollectionsWithMenuService', () => {
   })
 
   describe('when menuservice is undefined', () => {
-    const getState = () => {
-      return {
-        menuService: undefined
-      }
-    }
+    const getState = () => ({
+      menuService: undefined
+    })
 
     test('should not call menuLoadCollections or loadRecipesForAllCollections', async () => {
       const mockMenuLoadDispatcher = jest.fn()
       menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
       loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-  
+
       await loadMenuCollectionsWithMenuService(() => {}, getState, 'any Date', true)
-  
+
       expect(menuLoadCollections).not.toHaveBeenCalled()
       expect(loadRecipesForAllCollections).not.toHaveBeenCalled()
     })
   })
 
   describe('when menuservice data is undefined', () => {
-    const getState = () => {
-      return {
-        menuService: {
-          data: undefined
-        }
+    const getState = () => ({
+      menuService: {
+        data: undefined
       }
-    }
+    })
 
     test('should not call menuLoadCollections or loadRecipesForAllCollections', async () => {
       const mockMenuLoadDispatcher = jest.fn()
       menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
       loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-  
+
       await loadMenuCollectionsWithMenuService(() => {}, getState, 'any Date', true)
-  
+
       expect(menuLoadCollections).not.toHaveBeenCalled()
       expect(loadRecipesForAllCollections).not.toHaveBeenCalled()
     })
   })
 
   describe('when menuservice data is empty', () => {
-    const getState = () => {
-      return {
-        menuService: {
-          data: []
-        }
+    const getState = () => ({
+      menuService: {
+        data: []
       }
-    }
+    })
 
     test('should not call menuLoadCollections or loadRecipesForAllCollections', async () => {
       const mockMenuLoadDispatcher = jest.fn()
       menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
       loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-  
+
       await loadMenuCollectionsWithMenuService(() => {}, getState, 'any Date', true)
-  
+
       expect(menuLoadCollections).not.toHaveBeenCalled()
       expect(loadRecipesForAllCollections).not.toHaveBeenCalled()
     })
@@ -123,31 +107,29 @@ describe('loadMenuCollectionsWithMenuService', () => {
 describe('getStockAvailability', () => {
   test('should set availablilty by mapping new ids to old ids', async () => {
     const recipeStock = {
-      '123': {
+      123: {
         committed: '1',
         recipeId: 123,
         number: '5',
         familyNumber: '4'
       }
     }
-    const getState = () => {
-      return {
-        recipes: Immutable.Map({
-          '07cc774f-c233-4212-9478-bc9c7912f793': {
-            id: '07cc774f-c233-4212-9478-bc9c7912f793',
-            coreRecipeId: '123'
-          }
-        })
-      }
-    }
+    const getState = () => ({
+      recipes: Immutable.Map({
+        '07cc774f-c233-4212-9478-bc9c7912f793': {
+          id: '07cc774f-c233-4212-9478-bc9c7912f793',
+          coreRecipeId: '123'
+        }
+      })
+    })
 
     const result = getStockAvailability(getState, recipeStock)
 
     expect(result).toEqual({
-      "07cc774f-c233-4212-9478-bc9c7912f793": {
-        "2": 5,
-        "4": 4,
-        "committed": true,
+      '07cc774f-c233-4212-9478-bc9c7912f793': {
+        2: 5,
+        4: 4,
+        committed: true,
       },
     })
   })
@@ -156,35 +138,33 @@ describe('getStockAvailability', () => {
     // We have seen occations when the menu service has not been updated with the
     // latest recipe but the stock request has so we need to protect against it
     const recipeStock = {
-      '123': {
+      123: {
         committed: '1',
         recipeId: 123,
         number: '5',
         familyNumber: '4'
       },
     }
-    const getState = () => {
-      return {
-        recipes: Immutable.Map({
-          '07cc774f-c233-4212-9478-bc9c7912f793': {
-            id: '07cc774f-c233-4212-9478-bc9c7912f793',
-            coreRecipeId: '123'
-          },
-          '473c49e7-2414-4c1e-89a1-a91907927e20': {
-            id: '473c49e7-2414-4c1e-89a1-a91907927e20',
-            coreRecipeId: '456'
-          }
-        })
-      }
-    }
+    const getState = () => ({
+      recipes: Immutable.Map({
+        '07cc774f-c233-4212-9478-bc9c7912f793': {
+          id: '07cc774f-c233-4212-9478-bc9c7912f793',
+          coreRecipeId: '123'
+        },
+        '473c49e7-2414-4c1e-89a1-a91907927e20': {
+          id: '473c49e7-2414-4c1e-89a1-a91907927e20',
+          coreRecipeId: '456'
+        }
+      })
+    })
 
     const result = getStockAvailability(getState, recipeStock)
 
     expect(result).toEqual({
-      "07cc774f-c233-4212-9478-bc9c7912f793": {
-        "2": 5,
-        "4": 4,
-        "committed": true,
+      '07cc774f-c233-4212-9478-bc9c7912f793': {
+        2: 5,
+        4: 4,
+        committed: true,
       },
     })
   })

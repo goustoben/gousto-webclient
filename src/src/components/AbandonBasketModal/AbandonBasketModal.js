@@ -139,17 +139,15 @@ class AbandonBasketModal extends PureComponent {
             :
           </div>
           <div className={css.modalContentRecipes}>
-            {recipeDetails.map(recipeDetail => {
-              return (
-                <RecipeItem
-                  key={recipeDetail.get('title')}
-                  title={recipeDetail.get('title')}
-                  media={recipeDetail.get('media')}
-                  numPortions={numPortions}
-                  available
-                />
-              )
-            })}
+            {recipeDetails.map(recipeDetail => (
+              <RecipeItem
+                key={recipeDetail.get('title')}
+                title={recipeDetail.get('title')}
+                media={recipeDetail.get('media')}
+                numPortions={numPortions}
+                available
+              />
+            ))}
           </div>
           <Button
             width="full"

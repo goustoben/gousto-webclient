@@ -9,7 +9,7 @@ function mapStateToProps(state, ownProps) {
   const { orderId } = ownProps
   const addresses = state.user.get('addresses', Immutable.Map({})).filter((address) => address.get('type') === 'shipping')
   const addressUpdateError = state.error.get(actionTypes.ORDER_ADDRESS_CHANGE)
-  const hasUpdateDeliveryAddressError = addressUpdateError ? addressUpdateError.orderId === orderId :false
+  const hasUpdateDeliveryAddressError = addressUpdateError ? addressUpdateError.orderId === orderId : false
 
   return {
     addresses,

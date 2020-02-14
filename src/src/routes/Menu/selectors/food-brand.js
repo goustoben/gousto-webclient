@@ -4,25 +4,23 @@ import { getCurrentMenuRecipes, getInStockRecipes, sortRecipesByStock } from './
 
 export const getFoodBrandForSlug = createSelector(
   [getCurrentMenuRecipes, getInStockRecipes],
-  (recipes, inStockRecipes) => {
-    return slug => {
-      const matchingRecipes = recipes.filter(recipe => getFoodBrand(recipe).get('slug') === slug).toList()
+  (recipes, inStockRecipes) => slug => {
+    const matchingRecipes = recipes.filter(recipe => getFoodBrand(recipe).get('slug') === slug).toList()
 
-      if (matchingRecipes.size === 0) {
-        return null
-      }
+    if (matchingRecipes.size === 0) {
+      return null
+    }
 
-      // get food brand details from the first matching recipe
-      const firstRecipe = matchingRecipes.get(0)
+    // get food brand details from the first matching recipe
+    const firstRecipe = matchingRecipes.get(0)
 
-      const recipeIds = matchingRecipes.map(r => r.get('id'))
-      const sortedRecipes = sortRecipesByStock(matchingRecipes, inStockRecipes)
+    const recipeIds = matchingRecipes.map(r => r.get('id'))
+    const sortedRecipes = sortRecipesByStock(matchingRecipes, inStockRecipes)
 
-      return {
-        foodBrand: getFoodBrand(firstRecipe),
-        recipes: sortedRecipes,
-        recipeIds
-      }
+    return {
+      foodBrand: getFoodBrand(firstRecipe),
+      recipes: sortedRecipes,
+      recipeIds
     }
   }
 )

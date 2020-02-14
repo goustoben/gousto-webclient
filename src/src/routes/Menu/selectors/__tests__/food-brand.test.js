@@ -1,20 +1,18 @@
 import Immutable from 'immutable'
 import { getFoodBrandForSlug } from '../food-brand'
 
-const createRecipe = (id, foodBrandInfo) => {
-  return Immutable.fromJS({
-    id,
-    taxonomy: [
-      {
-        name: 'Food Brands',
-        slug: 'food-brands',
-        tags: [
-          foodBrandInfo
-        ]
-      }
-    ]
-  })
-}
+const createRecipe = (id, foodBrandInfo) => Immutable.fromJS({
+  id,
+  taxonomy: [
+    {
+      name: 'Food Brands',
+      slug: 'food-brands',
+      tags: [
+        foodBrandInfo
+      ]
+    }
+  ]
+})
 
 describe('Food Brand selectors', () => {
   const tenMinuteMeals = { name: '10 Minute Meals', slug: '10-minute-meals' }
@@ -24,7 +22,7 @@ describe('Food Brand selectors', () => {
   const thirdRecipe = createRecipe('102', globalKitchen)
   const inputRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
   const inStockRecipes = Immutable.fromJS([secondRecipe])
-  
+
   describe('getFoodBrandForSlug', () => {
     describe('when the slug is "10-minute-meals"', () => {
       test('should return the correct food brand', () => {

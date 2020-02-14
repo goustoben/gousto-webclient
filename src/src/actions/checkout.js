@@ -191,16 +191,12 @@ export function checkoutFetchIntervals() {
   }
 }
 
-export const fireCheckoutError = (errorName, errorValue = true) => {
-  return dispatch => {
-    dispatch(error(errorName, errorValue))
-  }
+export const fireCheckoutError = (errorName, errorValue = true) => dispatch => {
+  dispatch(error(errorName, errorValue))
 }
 
-export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => {
-  return dispatch => {
-    dispatch(pending(pendingName, checkoutValue))
-  }
+export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => dispatch => {
+  dispatch(pending(pendingName, checkoutValue))
 }
 
 export function checkoutSignup() {
@@ -389,7 +385,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
         order_id: basket.get('previewOrderId'),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),
-        interval_id: interval_id,
+        interval_id,
         payment_provider: 'checkout'
       }
     })

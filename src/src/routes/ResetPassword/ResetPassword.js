@@ -86,7 +86,7 @@ class ResetPassword extends React.PureComponent {
                 <span>Password must be at least 8 characters</span>
               </Content>
             </InputError>
-          ): null}
+          ) : null}
           <Button className={css.submitButton} onClick={() => this.validateAndSubmit(passwordValue)}>
             Reset password
           </Button>

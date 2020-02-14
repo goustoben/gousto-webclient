@@ -5,19 +5,19 @@ const { renderToString } = require('react-dom/server')
 const { match, RouterContext, createMemoryHistory } = require('react-router')
 const { syncHistoryWithStore } = require('react-router-redux')
 const { routes } = require('routes')
-const configureStore = require('store').configureStore
+const {configureStore} = require('store')
 const { ApolloProvider, getDataFromTree } = require('react-apollo')
 const apolloClient = require('apis/apollo').default
-const Provider = require('react-redux').Provider
+const {Provider} = require('react-redux')
 const promoActions = require('actions/promos').default
 const logger = require('utils/logger').default
 const { Header } = require('Header/Header')
-const clearPersistentStore = require('middlewares/persist/persistStore').clearPersistentStore
+const {clearPersistentStore} = require('middlewares/persist/persistStore')
 const { processCookies } = require('utils/processCookies')
 const basketActions = require('actions/basket').default
 const processFeaturesQuery = require('utils/processFeaturesQuery').default
-const newAssetPath = require('utils/media').newAssetPath
-const authorise = require('utils/clientAuthorise').authorise
+const {newAssetPath} = require('utils/media')
+const {authorise} = require('utils/clientAuthorise')
 const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
@@ -84,14 +84,14 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
   return getDataFromTree(components)
     .then(() => {
       const reactHTML = renderToString(components)
-      if(__CLIENT__){
-        logger.notice({message: `renderHTML/reactHTML`, elapsedTime: (new Date() - startTime)})
+      if (__CLIENT__) {
+        logger.notice({message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime)})
       }
       startTime = new Date()
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
-      if(__CLIENT__){
-        logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
+      if (__CLIENT__) {
+        logger.notice({message: 'renderHTML/template', elapsedTime: (new Date() - startTime)})
       }
 
       return template
@@ -111,7 +111,7 @@ const experiment_setGoustoUseMenuServiceGlobalCookie = (ctx) => {
 
   if (val === 'true' || val === 'false') {
     global.document = {
-      cookie: 'gousto_useNewMenuService=' + val + ';'
+      cookie: `gousto_useNewMenuService=${val};`
     }
   } else {
     global.document = {
@@ -127,7 +127,7 @@ async function processRequest(ctx, next) {
   }
 
   const { history, store } = configureHistoryAndStore(ctx.request.url, {})
-  if(ctx.uuid){
+  if (ctx.uuid) {
     store.dispatch(loggerSetUuid(ctx.uuid))
   }
 
@@ -234,10 +234,10 @@ async function processRequest(ctx, next) {
         } else if (renderProps) {
           const is404 = renderProps.routes.find(r => (r.component && r.component.displayName && r.component.displayName === 'Connect(ErrorPage)')) !== undefined
           fetchAllData(renderProps, store).then(async () => {
-            const redirect = store.getState().redirect
+            const {redirect} = store.getState()
 
             if (redirect) {
-              const clearCookies = store.getState().clearCookies
+              const {clearCookies} = store.getState()
               if (clearCookies) {
                 clearPersistentStore(ctx.cookies)
               }

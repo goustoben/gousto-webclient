@@ -26,12 +26,8 @@ jest.mock('utils/deliveries', () => ({
 }))
 
 jest.mock('actions/menuCollections', () => ({
-  menuLoadCollections: () => {
-    return mockDispatchMenuLoadCollections
-  },
-  loadRecipesForAllCollections: () => {
-    return mockDispatchLoadRecipesForAllCollections
-  }
+  menuLoadCollections: () => mockDispatchMenuLoadCollections,
+  loadRecipesForAllCollections: () => mockDispatchLoadRecipesForAllCollections
 }))
 
 jest.mock('actions/menuServiceLoadDays', () => ({
@@ -55,8 +51,8 @@ describe('menu actions', () => {
       numPortions: 2,
       date: '2019-10-22T00:00:00+01:00',
       recipes: {
-        '1234': 2,
-        '5678': 1
+        1234: 2,
+        5678: 1
       }
     }),
     boxSummaryDeliveryDays: Immutable.fromJS({
@@ -233,15 +229,13 @@ describe('menu actions', () => {
         await menuLoadStockAction(dispatch, getState)
 
         // jest has no way of seeing how many times a function was called only with specific arguments
-        const callsForFirstRecipe = dispatch.mock.calls.filter(c => {
-          return c[0].type && c[0].type === actionTypes.MENU_RECIPE_STOCK_CHANGE
-            && c[0].stock && c[0].stock['1234'] && c[0].stock['1234'][2] === -1
-        })
+        const callsForFirstRecipe = dispatch.mock.calls.filter(c => c[0].type && c[0].type === actionTypes.MENU_RECIPE_STOCK_CHANGE
+            && c[0].stock && c[0].stock['1234'] && c[0].stock['1234'][2] === -1)
 
         expect(callsForFirstRecipe).toHaveLength(2)
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-          stock: { '5678': { 2: -1 } },
+          stock: { 5678: { 2: -1 } },
         })
       })
     })
@@ -311,10 +305,10 @@ describe('menu actions', () => {
       test('should call menuRecipeDetailVisibilityChange', () => {
         expect(dispatch).toHaveBeenCalledWith({
           recipeId: '1234',
-          type: "MENU_RECIPE_DETAIL_VISIBILITY_CHANGE",
+          type: 'MENU_RECIPE_DETAIL_VISIBILITY_CHANGE',
           trackingData: {
-            actionType: "MENU_RECIPE_DETAIL_VISIBILITY_CHANGE",
-            recipeId: "1234",
+            actionType: 'MENU_RECIPE_DETAIL_VISIBILITY_CHANGE',
+            recipeId: '1234',
             show: true
           },
         })

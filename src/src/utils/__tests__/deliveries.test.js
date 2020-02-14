@@ -28,11 +28,9 @@ import {
 features.getDisabledSlots = jest.fn()
 features.getLogoutUserDisabledSlots = jest.fn()
 
-const userWithDeliveryTariff = (deliveryTariffId) => {
-  return Immutable.fromJS({
-    deliveryTariffId: deliveryTariffId,
-  })
-}
+const userWithDeliveryTariff = (deliveryTariffId) => Immutable.fromJS({
+  deliveryTariffId,
+})
 
 const mockDate = dateString => {
   Date.now = jest.fn(() => new Date(dateString))
@@ -440,9 +438,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
 
         test('should return closest day that has free slots available', () => {
@@ -464,13 +460,13 @@ describe('utils/deliveries', () => {
                 {
                   id: 'paid-1',
                   whenCutoff: 'asdf',
-                  deliveryPrice: .99,
+                  deliveryPrice: 0.99,
                   daySlotLeadTimeActive: true,
                 },
                 {
                   id: 'paid-2',
                   whenCutoff: 'zxcvb',
-                  deliveryPrice: .1,
+                  deliveryPrice: 0.1,
                   daySlotLeadTimeActive: true,
                 },
               ],
@@ -512,9 +508,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
 
         test('should return closest day that has active free slots available', () => {
@@ -566,9 +560,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
 
         test('should return closest day available', () => {
@@ -612,9 +604,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
         test('should return that day', () => {
           const result = getLandingDay(state, false, true)
@@ -626,9 +616,7 @@ describe('utils/deliveries', () => {
         describe('and an order on that date', () => {
           beforeEach(() => {
             userOrders = Immutable.fromJS([{ deliveryDate: '2015-12-12' }])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           })
           test('should not default to the default day', () => {
             const result = getLandingDay(state, false, true)
@@ -666,9 +654,7 @@ describe('utils/deliveries', () => {
               },
             })
             deliveryDays = deliveryDays.mergeDeep(alternate)
-            state = Object.assign({}, state, {
-              boxSummaryDeliveryDays: deliveryDays,
-            })
+            state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
           })
           test('should use the alternate day instead', () => {
             const result = getLandingDay(state, false, true)
@@ -714,9 +700,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
         test('should return the first free day available', () => {
           const result = getLandingDay(state, false, true)
@@ -726,9 +710,7 @@ describe('utils/deliveries', () => {
         describe('and an order on the first day available', () => {
           beforeEach(() => {
             userOrders = Immutable.fromJS([{ deliveryDate: '2014-12-12' }])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           })
           test('should return the next date', () => {
             const result = getLandingDay(state, prevSlotId, true)
@@ -739,11 +721,10 @@ describe('utils/deliveries', () => {
         describe('and a valid feature date set', () => {
           beforeEach(() => {
             defaultDay = '2016-03-02'
-            state = Object.assign({}, state, {
+            state = { ...state,
               features: Immutable.Map({
                 default_day: Immutable.Map({ value: defaultDay }),
-              }),
-            })
+              }),}
           })
           test('should return the feature date', () => {
             const result = getLandingDay(state)
@@ -754,11 +735,10 @@ describe('utils/deliveries', () => {
         describe('and an invalid feature date set', () => {
           beforeEach(() => {
             defaultDay = '2017-10-10'
-            state = Object.assign({}, state, {
+            state = { ...state,
               features: Immutable.Map({
                 default_day: Immutable.Map({ value: defaultDay }),
-              }),
-            })
+              }),}
           })
           test('should return the first day available', () => {
             const result = getLandingDay(state)
@@ -772,7 +752,7 @@ describe('utils/deliveries', () => {
     describe('with a basket date passed in', () => {
       beforeEach(() => {
         date = '2017-01-01'
-        state = Object.assign({}, state, { basket: Immutable.Map({ date }) })
+        state = { ...state, basket: Immutable.Map({ date })}
       })
       test('should return undefined', () => {
         const result = getLandingDay(state, false, true)
@@ -823,9 +803,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
 
         test('should return with that date', () => {
@@ -837,11 +815,10 @@ describe('utils/deliveries', () => {
         describe('and a valid feature date set', () => {
           beforeEach(() => {
             defaultDay = '2016-03-02'
-            state = Object.assign({}, state, {
+            state = { ...state,
               features: Immutable.Map({
                 default_day: Immutable.Map({ value: defaultDay }),
-              }),
-            })
+              }),}
           })
           test('should return the basket date', () => {
             const result = getLandingDay(state)
@@ -954,10 +931,9 @@ describe('utils/deliveries', () => {
             ],
           },
         })
-        state = Object.assign({}, state, {
+        state = { ...state,
           basket: Immutable.Map({ date }),
-          boxSummaryDeliveryDays: deliveryDays,
-        })
+          boxSummaryDeliveryDays: deliveryDays,}
       })
       test('should return the default delivery slot if not disabled', () => {
         features.getDisabledSlots.mockImplementation(() => '')
@@ -1063,14 +1039,13 @@ describe('utils/deliveries', () => {
           },
         })
         userOrders = Immutable.fromJS([{ deliveryDate: '2016-03-02' }])
-        state = Object.assign({}, state, {
+        state = { ...state,
           basket: Immutable.Map({
             date,
             prevSlotId,
           }),
           boxSummaryDeliveryDays: deliveryDays,
-          user: Immutable.Map({ orders: userOrders }),
-        })
+          user: Immutable.Map({ orders: userOrders }),}
       })
 
       test('should keep the selected date', () => {
@@ -1092,13 +1067,13 @@ describe('utils/deliveries', () => {
               {
                 id: 'paid-1',
                 whenCutoff: 'asdf',
-                deliveryPrice: .99,
+                deliveryPrice: 0.99,
                 daySlotLeadTimeActive: true,
               },
               {
                 id: 'paid-2',
                 whenCutoff: 'zxcvb',
-                deliveryPrice: .1,
+                deliveryPrice: 0.1,
                 daySlotLeadTimeActive: true,
               },
             ],
@@ -1169,9 +1144,7 @@ describe('utils/deliveries', () => {
           dds[d] = { date: d, slots: [slot] }
         }
         deliveryDays = Immutable.fromJS(dds)
-        state = Object.assign({}, state, {
-          boxSummaryDeliveryDays: deliveryDays,
-        })
+        state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         clock = sinon.useFakeTimers(
           new Date(Date.UTC(2016, 2, 1, 0, 0, 0)).getTime(),
         )
@@ -1199,9 +1172,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1224,9 +1195,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1243,9 +1212,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1262,9 +1229,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1287,9 +1252,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1312,9 +1275,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1331,9 +1292,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1356,9 +1315,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1381,9 +1338,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-01', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1393,9 +1348,7 @@ describe('utils/deliveries', () => {
       describe('with this weeks order: none, next weeks order: none, default delivery day: not set', () => {
         test('should land on first available delivery date', () => {
           userOrders = Immutable.fromJS([])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-01', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1412,9 +1365,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2016-02-20',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1436,9 +1387,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1460,9 +1409,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = Object.assign({}, state, {
-            user: Immutable.Map({ orders: userOrders }),
-          })
+          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
           const result = getLandingDay(state)
           const expected = { date: '2016-03-01', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1484,9 +1431,7 @@ describe('utils/deliveries', () => {
           }
           dds['2016-03-05'].isDefault = true
           deliveryDays = Immutable.fromJS(dds)
-          state = Object.assign({}, state, {
-            boxSummaryDeliveryDays: deliveryDays,
-          })
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
         })
 
         describe('with this weeks order: none, next weeks order: none, default delivery day: set to day with no order', () => {
@@ -1507,9 +1452,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1532,9 +1475,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1551,9 +1492,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1576,9 +1515,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1601,9 +1538,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1620,9 +1555,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1645,9 +1578,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1670,9 +1601,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1689,9 +1618,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2016-02-20',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1713,9 +1640,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1737,9 +1662,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = Object.assign({}, state, {
-              user: Immutable.Map({ orders: userOrders }),
-            })
+            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1775,10 +1698,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1797,10 +1719,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -1826,10 +1747,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -1855,10 +1775,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -1884,10 +1803,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -1913,10 +1831,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -1953,10 +1870,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -1982,10 +1898,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -2005,10 +1920,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2034,10 +1948,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2063,10 +1976,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
@@ -2091,10 +2003,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
@@ -2126,10 +2037,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-05'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-07', slotId: '123-123-123' }
@@ -2160,10 +2070,9 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-05'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-06', slotId: '123-123-123' }
@@ -2196,10 +2105,9 @@ describe('utils/deliveries', () => {
             dds['2016-03-05'].isDefault = true
             dds['2016-03-07'].alternateDeliveryDay = true
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-08', slotId: '123-123-123' }
@@ -2240,10 +2148,9 @@ describe('utils/deliveries', () => {
             dds['2016-03-14'].alternateDeliveryDay = true
 
             deliveryDays = Immutable.fromJS(dds)
-            state = Object.assign({}, state, {
+            state = { ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),
-            })
+              user: Immutable.Map({ orders: userOrders }),}
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
@@ -2489,41 +2396,41 @@ describe('utils/deliveries', () => {
     // Arrange a minimal response from the delivery service days endpoint
     const daysFromDeliveryService = [
       {
-        id: "98b901bc-0157-11e6-bbb4-080027089d5f",
-        date: "2014-01-15",
+        id: '98b901bc-0157-11e6-bbb4-080027089d5f',
+        date: '2014-01-15',
         isDefault: false,
-        coreDayId: "3",
-        unavailableReason: "",
+        coreDayId: '3',
+        unavailableReason: '',
         alternateDeliveryDay: null,
         daySlotLeadTimes: [
           {
-            id: "7bdd00f7-af72-41af-8444-a35f1467be49",
-            dayId: "98b901bc-0157-11e6-bbb4-080027089d5f",
-            slotId: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
+            id: '7bdd00f7-af72-41af-8444-a35f1467be49',
+            dayId: '98b901bc-0157-11e6-bbb4-080027089d5f',
+            slotId: 'dafe3372-12d1-11e6-bee5-06ddb628bdc5',
             leadTime: 24,
-            coreSlotId: "4",
+            coreSlotId: '4',
             isSlotDefault: true,
-            date: "2014-01-15",
+            date: '2014-01-15',
             active: true,
-            startTime: "18:00:00",
-            endTime: "22:00:00",
-            deliveryPrice: "2.99",
-            shouldCutoffAt: "2014-01-14T11:59:59+00:00",
+            startTime: '18:00:00',
+            endTime: '22:00:00',
+            deliveryPrice: '2.99',
+            shouldCutoffAt: '2014-01-14T11:59:59+00:00',
             isExpress: true,
           },
           {
-            id: "386932e5-71bd-4610-b9a4-baae4bc91be9",
-            dayId: "98b901bc-0157-11e6-bbb4-080027089d5f",
-            slotId: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
+            id: '386932e5-71bd-4610-b9a4-baae4bc91be9',
+            dayId: '98b901bc-0157-11e6-bbb4-080027089d5f',
+            slotId: 'dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5',
             leadTime: 24,
-            coreSlotId: "3",
+            coreSlotId: '3',
             isSlotDefault: false,
-            date: "2014-01-15",
+            date: '2014-01-15',
             active: true,
-            startTime: "08:00:00",
-            endTime: "19:00:00",
-            deliveryPrice: "0.00",
-            shouldCutoffAt: "2014-01-14T11:59:59+00:00",
+            startTime: '08:00:00',
+            endTime: '19:00:00',
+            deliveryPrice: '0.00',
+            shouldCutoffAt: '2014-01-14T11:59:59+00:00',
             isExpress: false,
           }
         ]
@@ -2535,34 +2442,34 @@ describe('utils/deliveries', () => {
 
       const expectedMockSlot = [
         {
-          id: "98b901bc-0157-11e6-bbb4-080027089d5f",
-          date: "2014-01-15",
+          id: '98b901bc-0157-11e6-bbb4-080027089d5f',
+          date: '2014-01-15',
           isDefault: false,
-          coreDayId: "3",
-          unavailableReason: "",
+          coreDayId: '3',
+          unavailableReason: '',
           alternateDeliveryDay: null,
           slots: [
             {
-              whenCutoff: "2014-01-14T11:59:59+00:00",
-              deliveryEndTime: "22:00:00",
-              deliveryPrice: "2.99",
+              whenCutoff: '2014-01-14T11:59:59+00:00',
+              deliveryEndTime: '22:00:00',
+              deliveryPrice: '2.99',
               isDefault: true,
-              coreSlotId: "4",
-              deliveryStartTime: "18:00:00",
-              id: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
-              daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49",
+              coreSlotId: '4',
+              deliveryStartTime: '18:00:00',
+              id: 'dafe3372-12d1-11e6-bee5-06ddb628bdc5',
+              daySlotLeadTimeId: '7bdd00f7-af72-41af-8444-a35f1467be49',
               daySlotLeadTimeActive: true,
               daySlotLeadTimeIsExpress: true,
             },
             {
-              whenCutoff: "2014-01-14T11:59:59+00:00",
-              deliveryEndTime: "19:00:00",
-              deliveryPrice: "0.00",
+              whenCutoff: '2014-01-14T11:59:59+00:00',
+              deliveryEndTime: '19:00:00',
+              deliveryPrice: '0.00',
               isDefault: false,
-              coreSlotId: "3",
-              deliveryStartTime: "08:00:00",
-              id: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
-              daySlotLeadTimeId: "386932e5-71bd-4610-b9a4-baae4bc91be9",
+              coreSlotId: '3',
+              deliveryStartTime: '08:00:00',
+              id: 'dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5',
+              daySlotLeadTimeId: '386932e5-71bd-4610-b9a4-baae4bc91be9',
               daySlotLeadTimeActive: true,
               daySlotLeadTimeIsExpress: false,
             }

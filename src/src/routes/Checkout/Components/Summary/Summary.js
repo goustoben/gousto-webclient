@@ -45,18 +45,20 @@ class Summary extends React.PureComponent {
       <div
         className={classes}
         role="button"
-        tabIndex='0'
+        tabIndex="0"
         onClick={() => { promoApplyCheckoutCode() }}
         onKeyDown={e => { onEnter(e,promoApplyCheckoutCode) }}
       >
-        Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;<span className={css.arrowRight} />
+        Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;
+        <span className={css.arrowRight} />
       </div>
       )
     }
 
     return (
       <Link to={configRoute.client.menu} className={css.link}>
-          Edit order&nbsp;<span className={css.arrowRight} />
+        Edit order&nbsp;
+        <span className={css.arrowRight} />
       </Link>
     )
   }
@@ -77,7 +79,7 @@ class Summary extends React.PureComponent {
     return (
       <div className={css.summaryContainer}>
         {!isLoading && (
-          <Alert type='info'>
+          <Alert type="info">
             <PricePerServingMessage />
           </Alert>
         )}
@@ -86,7 +88,7 @@ class Summary extends React.PureComponent {
           <div className={css.loaderContainer}>
             <Loading className={css.loadingImage} />
           </div>
-        ): (
+        ) : (
           <div className={css.details}>
             <Receipt
               numRecipes={numRecipes}
@@ -102,9 +104,8 @@ class Summary extends React.PureComponent {
               showAddPromocode={showAddPromocode}
             />
             <div>
-              {(currentStep !== 'payment') &&
-                this.renderLink()
-              }
+              {(currentStep !== 'payment')
+                && this.renderLink()}
             </div>
           </div>
         )}

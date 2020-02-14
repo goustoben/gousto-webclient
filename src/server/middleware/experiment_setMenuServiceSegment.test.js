@@ -17,13 +17,11 @@ const getContext = (url, userAgent, {querystring} = {}) => ({
   },
   redirect: jest.fn(),
   cookies: {
-    get: () => {
-      return cookieValue
-    },
+    get: () => cookieValue,
     set: mockSetCookie
   },
   query: {
-    useNewMenuService: useNewMenuService,
+    useNewMenuService,
   }
 })
 
@@ -99,7 +97,7 @@ describe('experiment_setMenuServiceSegment', () => {
     experiment_setMenuServiceSegment(ctx, next)
 
     expect(next).toHaveBeenCalled()
-    expect(mockSetCookie).toHaveBeenCalledWith(COOKIE_NAME, 'true', { maxAge: TWELVE_HOURS_IN_MS, "httpOnly": false, })
+    expect(mockSetCookie).toHaveBeenCalledWith(COOKIE_NAME, 'true', { maxAge: TWELVE_HOURS_IN_MS, httpOnly: false, })
   })
 
   test('when useMenuService query is false set the cookie to false', () => {
@@ -108,6 +106,6 @@ describe('experiment_setMenuServiceSegment', () => {
     experiment_setMenuServiceSegment(ctx, next)
 
     expect(next).toHaveBeenCalled()
-    expect(mockSetCookie).toHaveBeenCalledWith(COOKIE_NAME, 'false', { maxAge: TWELVE_HOURS_IN_MS, "httpOnly": false, })
+    expect(mockSetCookie).toHaveBeenCalledWith(COOKIE_NAME, 'false', { maxAge: TWELVE_HOURS_IN_MS, httpOnly: false, })
   })
 })

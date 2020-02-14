@@ -24,7 +24,7 @@ const FormAlert = ({ errorResetPassword }) => {
             </Link>
             &nbsp;to reset your password!
           </span>
-        ): null}
+        ) : null}
       </span>
     </Alert>
   ) : null

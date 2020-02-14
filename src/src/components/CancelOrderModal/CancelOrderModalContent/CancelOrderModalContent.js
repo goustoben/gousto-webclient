@@ -39,12 +39,12 @@ class CancelOrderModalContent extends React.PureComponent {
           <Alert type="danger">
             Whoops, there was a problem cancelling this order, please try again.
           </Alert>
-        ): null}
+        ) : null}
         <div className={css.bottom}>
-          <Button onClick={close} color={'negative'} className={css.firstButton} noDecoration>
+          <Button onClick={close} color="negative" className={css.firstButton} noDecoration>
             Go Back
           </Button>
-          <Button color={'primary'} noDecoration onClick={() => this.handleCancelBox()}>
+          <Button color="primary" noDecoration onClick={() => this.handleCancelBox()}>
             Cancel Box
           </Button>
         </div>

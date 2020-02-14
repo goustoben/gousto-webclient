@@ -1,22 +1,20 @@
 import { actionTypes } from './actionTypes'
 
-export const featuresSet = (features) => {
-  return {
-    type: actionTypes.FEATURES_SET,
-    features: features.map(({feature, value}) => {
-      if (value === 'true') {
-        value = true
-      }
+export const featuresSet = (features) => ({
+  type: actionTypes.FEATURES_SET,
+  features: features.map(({feature, value}) => {
+    if (value === 'true') {
+      value = true
+    }
 
-      if (value === 'false') {
-        value = false
-      }
+    if (value === 'false') {
+      value = false
+    }
 
-      return {
-        feature,
-        value,
-      }
-    })
-  }
-}
+    return {
+      feature,
+      value,
+    }
+  })
+})
 

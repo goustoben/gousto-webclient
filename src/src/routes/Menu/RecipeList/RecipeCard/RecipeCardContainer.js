@@ -5,16 +5,14 @@ import { getNumPortions } from 'selectors/basket'
 
 import { RecipeCard } from './RecipeCard'
 
-const mapStateToProps = (state) => {
-  return {
-    numPortions: getNumPortions(state),
-    cutoffDate: getCutoffDate(state),
-    features: state.features,
-    allRecipesList: state.menuRecipes,
-    recipesStore: state.recipes,
-    browserType: state.request.get('browser')
-  }
-}
+const mapStateToProps = (state) => ({
+  numPortions: getNumPortions(state),
+  cutoffDate: getCutoffDate(state),
+  features: state.features,
+  allRecipesList: state.menuRecipes,
+  recipesStore: state.recipes,
+  browserType: state.request.get('browser')
+})
 
 const RecipeCardContainer = connect(mapStateToProps)(RecipeCard)
 

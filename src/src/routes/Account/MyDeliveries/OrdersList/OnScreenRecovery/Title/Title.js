@@ -7,13 +7,11 @@ const propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-const Title = ({ title }) => {
-  return (
-    <div className={css.title}>
-      {title}
-    </div>
-  )
-}
+const Title = ({ title }) => (
+  <div className={css.title}>
+    {title}
+  </div>
+)
 
 Title.propTypes = propTypes
 

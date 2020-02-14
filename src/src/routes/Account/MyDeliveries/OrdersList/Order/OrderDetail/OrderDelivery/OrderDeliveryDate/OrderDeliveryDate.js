@@ -45,20 +45,26 @@ const OrderDeliveryDate = ({
     <div className={css.header}>
       <div className={css.details}>
         <p className={`${css.bold} ${css.subHeader}`}>
-            Date and time
+          Date and time
         </p>
+        {' '}
         <p className={`${css.bold} ${css.dateTime}`}>
           {date}
         </p>
+        {' '}
         <p className={css.dateTime}>
-          {timeStart} - {timeEnd}
+          {timeStart}
+          {' '}
+          -
+          {' '}
+          {timeEnd}
         </p>
       </div>
       {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ? (
         <div className={css.button}>
           <LinkButton onClick={onClickFunction} text={editDeliveryMode ? 'Cancel' : 'Change'} />
         </div>
-      ): null}
+      ) : null}
     </div>
     {editDeliveryMode && fetchSuccess && (
       <EditDate

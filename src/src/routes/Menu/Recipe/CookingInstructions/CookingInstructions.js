@@ -15,17 +15,15 @@ class CookingInstructions extends PureComponent {
     }
   }
 
-  cookingSteps = (recipeStepsById) => {
-    return (
-      <div className={css.wrapper}>
-        <div className={css.container}>
-          {recipeStepsById.map(recipeStep => (
-            this.cookingStep(recipeStep)
-          ))}
-        </div>
+  cookingSteps = (recipeStepsById) => (
+    <div className={css.wrapper}>
+      <div className={css.container}>
+        {recipeStepsById.map(recipeStep => (
+          this.cookingStep(recipeStep)
+        ))}
       </div>
-    )
-  }
+    </div>
+  )
 
   cookingStep = (recipeStep) => {
     const images = recipeStep.get('media').get('images')

@@ -16,8 +16,12 @@ const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
   const renderTermsLink = () => (
     <li className={css.menuItem}>
       Terms
-      (<Link to={clientRoutes.termsOfUse} data-selid="footer-terms-of-use" title="Terms &amp; Conditions" clientRouted={false} secondary>Website</Link>)
-      (<Link to={clientRoutes.termsAndConditions} data-selid="footer-terms-and-conditions" title="Terms &amp; Conditions for Sale of Goods" clientRouted={false} secondary>Sale</Link>)
+      (
+      <Link to={clientRoutes.termsOfUse} data-selid="footer-terms-of-use" title="Terms &amp; Conditions" clientRouted={false} secondary>Website</Link>
+      )
+      (
+      <Link to={clientRoutes.termsAndConditions} data-selid="footer-terms-and-conditions" title="Terms &amp; Conditions for Sale of Goods" clientRouted={false} secondary>Sale</Link>
+      )
     </li>
   )
 
@@ -34,48 +38,46 @@ const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
     </ul>
   )
 
-  const renderFullList = () => {
-    return (
-      <ul className={css.menuList}>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
-        </li>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link
-            to={addUserIdToHelpUrl(isAuthenticated, userId)}
-            data-selid="footer-learn-more"
-            title="Help"
-            clientRouted={false}
-            secondary
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Help
-          </Link>
-        </li>
-        {renderTermsLink()}
-        <li className={css.menuItem}>
-          <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.weCare} data-selid="footer-we-care" title="We Care" clientRouted={false} secondary>We Care</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
-        </li>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
-        </li>
-        {renderPrivacyLink()}
-      </ul>
-    )
-  }
+  const renderFullList = () => (
+    <ul className={css.menuList}>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
+      </li>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link
+          to={addUserIdToHelpUrl(isAuthenticated, userId)}
+          data-selid="footer-learn-more"
+          title="Help"
+          clientRouted={false}
+          secondary
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Help
+        </Link>
+      </li>
+      {renderTermsLink()}
+      <li className={css.menuItem}>
+        <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.weCare} data-selid="footer-we-care" title="We Care" clientRouted={false} secondary>We Care</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
+      </li>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
+      </li>
+      {renderPrivacyLink()}
+    </ul>
+  )
 
   const renderSocial = () => (
     <div className={css.appLinks}>
@@ -97,7 +99,13 @@ const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
     </div>
   )
 
-  const copyrightText = <p>&copy; Gousto {moment().format('YYYY')}. All rights reserved.</p>
+  const copyrightText = (
+    <p>
+      &copy; Gousto
+      {moment().format('YYYY')}
+      . All rights reserved.
+    </p>
+  )
 
   const renderCopyright = () => (
     <div id="copyright" className={css.copyright}>

@@ -19,13 +19,11 @@ import { getMenuService } from 'selectors/features'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
-const requiresMenuRecipesClear = (store, orderId) => {
-  return (
-    orderId
+const requiresMenuRecipesClear = (store, orderId) => (
+  orderId
     && getIsAuthenticated(store.getState())
     && store.getState().basket.get('recipes').size
-  )
-}
+)
 
 const inBrowseMode = (store, query) => {
   if (store.getState().request.get('browser', '') === 'mobile' && store.getState().features.getIn(['browse', 'value']) !== true) {
@@ -239,7 +237,7 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
   const shouldFetch = shouldFetchData(store, params, force)
-  const isAdminQuery = query && query['preview[auth_user_id]'] ? true : false
+  const isAdminQuery = !!(query && query['preview[auth_user_id]'])
 
   if (!isAdminQuery && (isPending || !shouldFetch)) {
     return
@@ -255,12 +253,10 @@ export default async function fetchData({ store, query, params }, force, backgro
 
     if (isAuthenticated && userId) {
       fetchMenuPromise = fetchMenusWithUserId(accessToken, userId)
+    } else if (userMenuVariant) { // A/B test on signup page
+      fetchMenuPromise = fetchMenusWithUserId(accessToken, userMenuVariant)
     } else {
-      if (userMenuVariant) { // A/B test on signup page
-        fetchMenuPromise = fetchMenusWithUserId(accessToken, userMenuVariant)
-      } else {
-        fetchMenuPromise = fetchMenus(accessToken, query)
-      }
+      fetchMenuPromise = fetchMenus(accessToken, query)
     }
 
     const menuResponse = await fetchMenuPromise

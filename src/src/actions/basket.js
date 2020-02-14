@@ -102,7 +102,7 @@ export const portionSizeSelectedTracking = (num_portion, order_id) => (
       trackingData: {
         actionType: 'PortionSize Selected',
         num_portion,
-        order_id: order_id ? order_id : null,
+        order_id: order_id || null,
       },
     })
   }
@@ -328,7 +328,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
 
     let reachedLimit = limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum)
     const outOfStock = isOutOfStock(recipeId, numPortions, menuRecipeStock)
-    if(reachedLimit || outOfStock) {
+    if (reachedLimit || outOfStock) {
       return
     }
 
@@ -670,12 +670,10 @@ export const basketCheckedOut = (numRecipes, view) => (
           view,
         },
       })
-    }
-    catch (err) {
+    } catch (err) {
       dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, true))
       logger.error(err)
-    }
-    finally {
+    } finally {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
     }
   }

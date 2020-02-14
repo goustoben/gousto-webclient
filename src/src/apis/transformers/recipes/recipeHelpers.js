@@ -1,44 +1,24 @@
 // [TR-2087] - Used a forEach for all the below to catch any missing data that may be in normalisedRelationships but missing from normalisedData
 
 const allergensTransformer = (allergensArray) => {
-  const contains = allergensArray.filter((allergen) => {
-    return allergen.contain_type === 'contains'
-  })
+  const contains = allergensArray.filter((allergen) => allergen.contain_type === 'contains')
 
-  return contains.map((allergen) => {
-    return allergen.name
-  })
+  return contains.map((allergen) => allergen.name)
 }
 
-const basicsTransformer = (basicsArray) => {
-  return basicsArray.map((basic) => {
-    return basic.name
-  })
-}
+const basicsTransformer = (basicsArray) => basicsArray.map((basic) => basic.name)
 
-const cropsTransformer = (media) => {
-  return media.map((url) => {
-    return {
-      src: url.url,
-      width: url.width,
-    }
-  })
-}
+const cropsTransformer = (media) => media.map((url) => ({
+  src: url.url,
+  width: url.width,
+}))
 
-const dietaryTagsTransformer = (dietaryArray) => {
-  return dietaryArray.map((attribute) => {
-    return {
-      name: attribute.name,
-      slug: attribute.slug,
-    }
-  })
-}
+const dietaryTagsTransformer = (dietaryArray) => dietaryArray.map((attribute) => ({
+  name: attribute.name,
+  slug: attribute.slug,
+}))
 
-const equipmentTransformer = (equipmentArray) => {
-  return equipmentArray.map((piece) => {
-    return piece.name
-  })
-}
+const equipmentTransformer = (equipmentArray) => equipmentArray.map((piece) => piece.name)
 
 const foodBrandTransformer = (foodBrand, foodBrandColours = {}) => {
   if (foodBrand) {
@@ -66,7 +46,7 @@ const formatIngredients = (normalisedRelationships, normalisedData) => {
         if (normalisedIngredients) {
           normalisedIngredients.label = ingredientLabel
 
-          return result.push(normalisedIngredients)
+          result.push(normalisedIngredients)
         }
       }
     })
@@ -93,24 +73,18 @@ const healthKitchenTransformer = (healthKitchen) => {
   }
 }
 
-const imageUrlMap = (urls) => {
-  return urls.map((url) => {
-    return {
-      src: url.url,
-      width: url.width,
-    }
-  })
-}
+const imageUrlMap = (urls) => urls.map((url) => ({
+  src: url.url,
+  width: url.width,
+}))
 
 const roundelTransformer = (roundel, brandData = {}) => {
-  if (roundel 
-    && roundel.slug 
+  if (roundel
+    && roundel.slug
     && brandData.data
-    && brandData.data.roundels 
+    && brandData.data.roundels
     && brandData.data.roundels.length > 0) {
-    const match = brandData.data.roundels.find((item) => {
-      return item.slug === roundel.slug
-    })
+    const match = brandData.data.roundels.find((item) => item.slug === roundel.slug)
 
     if (match) {
       return {
@@ -133,16 +107,10 @@ const roundelTransformer = (roundel, brandData = {}) => {
         }
       }
     }
-
-    return
   }
-
-  return
 }
 
-const shelfLifeTransformer = (minDays, maxDays) => {
-  return `${minDays}-${maxDays}`
-}
+const shelfLifeTransformer = (minDays, maxDays) => `${minDays}-${maxDays}`
 
 const surchargeTransformer = (surcharge) => {
   const decimalSurcharge = surcharge / 100
@@ -152,18 +120,16 @@ const surchargeTransformer = (surcharge) => {
   }
 }
 
-const taxonomyTransformer = (attributes, foodBrandColours) => {
-  return [{
-    name: "Dietary attributes",
-    slug: "dietary-attributes",
-    tags: dietaryTagsTransformer(attributes.dietary_claims)
-  },
-  {
-    name: "Food Brands",
-    slug: "food-brands",
-    tags: foodBrandTransformer(attributes.food_brand, foodBrandColours)
-  }]
-}
+const taxonomyTransformer = (attributes, foodBrandColours) => [{
+  name: 'Dietary attributes',
+  slug: 'dietary-attributes',
+  tags: dietaryTagsTransformer(attributes.dietary_claims)
+},
+{
+  name: 'Food Brands',
+  slug: 'food-brands',
+  tags: foodBrandTransformer(attributes.food_brand, foodBrandColours)
+}]
 
 export {
   allergensTransformer,

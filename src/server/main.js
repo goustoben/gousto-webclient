@@ -43,12 +43,12 @@ app.use(async (ctx, next) => {
   if (writeLog) {
     const uuid = uuidv1()
     ctx.uuid = uuid
-    logger.notice({message: `[START] REQUEST`, requestUrl: path, uuid: ctx.uuid, headers: header})
+    logger.notice({message: '[START] REQUEST', requestUrl: path, uuid: ctx.uuid, headers: header})
   }
 
   await next()
   if (writeLog) {
-    logger.notice({message: `[END] REQUEST`, requestUrl: path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header})
+    logger.notice({message: '[END] REQUEST', requestUrl: path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header})
   }
 })
 
@@ -56,7 +56,7 @@ app.use(async (ctx, next) => {
   const { request, uuid } = ctx
   const { url } = request
 
-  if(uuid){
+  if (uuid) {
     const { store } = configureHistoryAndStore(url)
     store.dispatch(loggerSetUuid(uuid))
   }
@@ -70,7 +70,7 @@ app.use(async (ctx, next) => {
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }
-    logger.critical({message: err.message, status: err.status, uuid: uuid, errors: [err]})
+    logger.critical({message: err.message, status: err.status, uuid, errors: [err]})
 
     if (Number(err.status) === 200) {
       ctx.status = 500

@@ -49,22 +49,20 @@ const desktopAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
   </div>
 )
 
-const AppPromo = ({ device, trackWelcomeAppPromoClick }) => {
-  return (
-    <div className={css.container} data-testing="appPromo">
-      <div className={css.contentContainer}>
-        <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
-        <div className={css.content}>
-          <TickList listItems={benefits} listItemClassName={css.list} />
-          <div>
-            {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}
-            {desktopAppStoreCTAs(device, trackWelcomeAppPromoClick)}
-          </div>
+const AppPromo = ({ device, trackWelcomeAppPromoClick }) => (
+  <div className={css.container} data-testing="appPromo">
+    <div className={css.contentContainer}>
+      <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
+      <div className={css.content}>
+        <TickList listItems={benefits} listItemClassName={css.list} />
+        <div>
+          {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}
+          {desktopAppStoreCTAs(device, trackWelcomeAppPromoClick)}
         </div>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 AppPromo.propTypes = propTypes
 AppPromo.defaultProps = defaultProps

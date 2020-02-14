@@ -70,7 +70,7 @@ const initialState = () => Immutable.fromJS(defaultFeatures())
 const featureToggles = {
   features: (state = initialState(), action) => {
     switch (action.type) {
-    case actionTypes.FEATURES_SET:{
+    case actionTypes.FEATURES_SET: {
       let interimState = state
       action.features.forEach(f => {
         interimState = interimState.set(f.feature, Immutable.fromJS({

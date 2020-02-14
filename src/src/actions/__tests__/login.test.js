@@ -53,7 +53,7 @@ describe('login actions', () => {
       roles: ['user']
     })
 
-    beforeEach(function() {
+    beforeEach(() => {
       jest.clearAllMocks()
 
       globals.domain = HOST_PRODUCTION
@@ -65,7 +65,7 @@ describe('login actions', () => {
       isActive.mockReturnValue(true)
     })
 
-    it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /menu, no redirect', async function() {
+    it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /menu, no redirect', async () => {
       getState.mockReturnValue({
         auth: authState,
         routing: { locationBeforeTransitions: { pathname: '/menu' } },
@@ -88,7 +88,7 @@ describe('login actions', () => {
       expect(redirect).not.toHaveBeenCalled()
     })
 
-    it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async function() {
+    it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async () => {
       documentLocation.mockReturnValueOnce({ pathname: '/home' })
       await loginActions.loginUser('email', 'password', true)(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
@@ -102,7 +102,7 @@ describe('login actions', () => {
       expect(redirect).toHaveBeenCalledWith('/my-gousto')
     })
 
-    it('should call userRememberMe and postLoginSteps - admin, /home, no redirect', async function() {
+    it('should call userRememberMe and postLoginSteps - admin, /home, no redirect', async () => {
       isAdmin.mockReturnValueOnce(true)
       documentLocation.mockReturnValue({ pathname: '/home' })
       await loginActions.loginUser('email', 'password', true)(dispatch, getState)
@@ -117,7 +117,7 @@ describe('login actions', () => {
       expect(redirect).toHaveBeenCalledWith('/menu?features[]=browse')
     })
 
-    it('should call userRememberMe and postLoginSteps - user, /home, redirect', async function() {
+    it('should call userRememberMe and postLoginSteps - user, /home, redirect', async () => {
       documentLocation.mockReturnValue({
         pathname: '/home',
         protocol: 'http:',
@@ -151,7 +151,7 @@ describe('login actions', () => {
           globals.domain = HOST_LOCAL
         })
 
-        it ('should redirect user to the targeted URL', async () => {
+        it('should redirect user to the targeted URL', async () => {
           await loginActions.loginUser('email', 'password', true)(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
@@ -169,7 +169,7 @@ describe('login actions', () => {
           globals.domain = HOST_STAGING
         })
 
-        it ('should redirect user to the targeted URL', async () => {
+        it('should redirect user to the targeted URL', async () => {
           await loginActions.loginUser('email', 'password', true)(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
@@ -191,7 +191,7 @@ describe('login actions', () => {
           })
         })
 
-        it ('should not redirect user to the targeted URL and should redirect to /menu', async () => {
+        it('should not redirect user to the targeted URL and should redirect to /menu', async () => {
           await loginActions.loginUser('email', 'password', true)(dispatch, getState)
           expect(redirect).not.toHaveBeenCalledWith(`${HOST_PRODUCTION}.evil.me`)
           expect(redirect).toHaveBeenCalledWith('/menu')
@@ -208,7 +208,7 @@ describe('login actions', () => {
           })
         })
 
-        it ('should redirect user without target in the URL', async () => {
+        it('should redirect user without target in the URL', async () => {
           await loginActions.loginUser('email', 'password', true)(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })

@@ -4,26 +4,24 @@ import GoustoLink from 'Link'
 import { LayoutContentWrapper } from 'goustouicomponents'
 import css from './CardWithLink.css'
 
-const CardWithLink = ({ children, clientRouted, linkLabel, linkUrl, trackClick }) => {
-  return (
-    <div className={css.cardWrapper}>
-      <LayoutContentWrapper>
-        <div className={css.contentWrapper}>
-          <LayoutContentWrapper>
-            {children}
-          </LayoutContentWrapper>
-        </div>
-        <div className={css.linkWrapper}>
-          <GoustoLink to={linkUrl} clientRouted={clientRouted} tracking={trackClick}>
-            {linkLabel}
+const CardWithLink = ({ children, clientRouted, linkLabel, linkUrl, trackClick }) => (
+  <div className={css.cardWrapper}>
+    <LayoutContentWrapper>
+      <div className={css.contentWrapper}>
+        <LayoutContentWrapper>
+          {children}
+        </LayoutContentWrapper>
+      </div>
+      <div className={css.linkWrapper}>
+        <GoustoLink to={linkUrl} clientRouted={clientRouted} tracking={trackClick}>
+          {linkLabel}
             &nbsp;
-            <span className={css.arrowRight} />
-          </GoustoLink>
-        </div>
-      </LayoutContentWrapper>
-    </div>
-  )
-}
+          <span className={css.arrowRight} />
+        </GoustoLink>
+      </div>
+    </LayoutContentWrapper>
+  </div>
+)
 
 CardWithLink.propTypes = {
   children: PropTypes.node.isRequired,

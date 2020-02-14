@@ -29,7 +29,7 @@ jest.mock('actions/redirect', () => ({
   redirect: jest.fn()
 }))
 jest.mock('actions/onScreenRecovery', () => ({
-  getPauseRecoveryContent: jest.fn(()=>(()=>{}))
+  getPauseRecoveryContent: jest.fn(() => (() => {}))
 }))
 jest.mock('apis/subscription', () => ({
   deactivateSubscription: jest.fn()
@@ -621,7 +621,7 @@ describe('Subscription action', () => {
       }
     )
 
-    describe('when feature flag subscriptionPause value is true', async function() {
+    describe('when feature flag subscriptionPause value is true', async () => {
       beforeEach(() => {
         getState.mockReturnValueOnce({
           features: Immutable.fromJS({subscriptionPauseOsr: {experiment: false, value: true}}),
@@ -637,8 +637,8 @@ describe('Subscription action', () => {
         })
       })
 
-      describe('when feature flag enableOsrOffer value is undefined', async function() {
-        it('should call getPauseRecoveryContent with false enableOffer', async function() {
+      describe('when feature flag enableOsrOffer value is undefined', async () => {
+        it('should call getPauseRecoveryContent with false enableOffer', async () => {
           await subPauseActions.subscriptionPauseStart()(dispatch, getState)
 
           expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
@@ -646,7 +646,7 @@ describe('Subscription action', () => {
         })
       })
 
-      describe('when feature flag enableOsrOffer value is true', async function() {
+      describe('when feature flag enableOsrOffer value is true', async () => {
         beforeEach(() => {
           getState.mockReturnValueOnce({
             features: Immutable.fromJS({
@@ -664,7 +664,7 @@ describe('Subscription action', () => {
             }),
           })
         })
-        it('should call getPauseRecoveryContent with true enableOffer', async function() {
+        it('should call getPauseRecoveryContent with true enableOffer', async () => {
           await subPauseActions.subscriptionPauseStart()(dispatch, getState)
 
           expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
@@ -2183,7 +2183,7 @@ describe('Subscription action', () => {
 
     describe('when an error occurs after cancelling pending orders', () => {
       beforeEach(async () => {
-        subscriptionPauseTrackSpy.mockImplementationOnce(() => {throw Error('error occurred')})
+        subscriptionPauseTrackSpy.mockImplementationOnce(() => { throw Error('error occurred') })
 
         await subPauseActions.subscriptionPauseCancelPendingOrders()(dispatch, getState)
       })
@@ -2826,7 +2826,7 @@ describe('Subscription action', () => {
       async () => {
         await subPauseActions.subscriptionPauseRedirect(routesConfig.client.myDeliveries)(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith(Object.assign({}, { seRecoveryType: 'change_delivery_day' }, keptActiveActionSample2))
+        expect(dispatch).toHaveBeenCalledWith({ seRecoveryType: 'change_delivery_day', ...keptActiveActionSample2})
       }
     )
 
@@ -2835,7 +2835,7 @@ describe('Subscription action', () => {
       async () => {
         await subPauseActions.subscriptionPauseRedirect(routesConfig.client.help)(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith(Object.assign({}, { seRecoveryType: 'contact_cc' }, keptActiveActionSample2))
+        expect(dispatch).toHaveBeenCalledWith({ seRecoveryType: 'contact_cc', ...keptActiveActionSample2})
       }
     )
 
@@ -2910,11 +2910,10 @@ describe('Subscription action', () => {
     test(
       'should dispatch PS_SUBSCRIPTION_KEPT_ACTIVE and correct data when calling subscriptionPauseEnd if the subscription status is active',
       () => {
-        getState = jest.fn().mockReturnValue(Object.assign({
-          user: Immutable.fromJS({
-            subscription: { state: 'active' },
-          }),
-        }, getState()))
+        getState = jest.fn().mockReturnValue({user: Immutable.fromJS({
+          subscription: { state: 'active' },
+        }),
+        ...getState()})
         subPauseActions.subscriptionPauseEnd()(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledWith({

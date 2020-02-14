@@ -8,16 +8,23 @@ const UnavailableMessage = ({ unavailableRecipeList, menuFetchPending, orderSave
 
   return (unavailableRecipeList.size > 0 && !menuFetchPending) ? (
     <span className={css.notAvailableText}>
-      <span className={css.warningIcon}></span>
-      The following {plural ? 'recipes are' : 'recipe is'} no longer available. Please choose {plural ? 'different recipes' : 'another recipe'}, or&nbsp;
+      <span className={css.warningIcon} />
+      The following
+      {' '}
+      {plural ? 'recipes are' : 'recipe is'}
+      {' '}
+      no longer available. Please choose
+      {' '}
+      {plural ? 'different recipes' : 'another recipe'}
+      , or&nbsp;
       {
         orderSaveError === 'no-stock'
-          ? <button type='button' className={css.undoLink} onClick={clearSlot}>choose a later date</button>
-          : <button type='button' className={css.undoLink} onClick={basketRestorePreviousDate}>undo your date change</button>
+          ? <button type="button" className={css.undoLink} onClick={clearSlot}>choose a later date</button>
+          : <button type="button" className={css.undoLink} onClick={basketRestorePreviousDate}>undo your date change</button>
       }
     </span>
-  ):
-    null
+  )
+    : null
 }
 
 UnavailableMessage.propTypes = {

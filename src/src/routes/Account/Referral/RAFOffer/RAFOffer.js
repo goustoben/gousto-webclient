@@ -11,14 +11,12 @@ const propTypes = {
   offerColour: PropTypes.string,
 }
 
-const RAFOffer = ({youGetOffer, offerColour, yourFriendFirstBoxOffer, yourFriendFirstMonthOffer}) => {
-  return (
-    <div className={css.rafOffer}>
-      <YouGet youGetOffer={youGetOffer} offerColour={offerColour} />
-      <YourFriendGets yourFriendFirstBoxOffer={yourFriendFirstBoxOffer} yourFriendFirstMonthOffer={yourFriendFirstMonthOffer} />
-    </div>
-  )
-}
+const RAFOffer = ({youGetOffer, offerColour, yourFriendFirstBoxOffer, yourFriendFirstMonthOffer}) => (
+  <div className={css.rafOffer}>
+    <YouGet youGetOffer={youGetOffer} offerColour={offerColour} />
+    <YourFriendGets yourFriendFirstBoxOffer={yourFriendFirstBoxOffer} yourFriendFirstMonthOffer={yourFriendFirstMonthOffer} />
+  </div>
+)
 
 RAFOffer.propTypes = propTypes
 

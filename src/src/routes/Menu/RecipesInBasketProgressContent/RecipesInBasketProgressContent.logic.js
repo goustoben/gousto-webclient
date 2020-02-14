@@ -44,10 +44,13 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
               numRecipes={selectedRecipesCount}
             />
           </Layout2Cells>
-        ): (
+        ) : (
           <div className={css.cardContentWrapperPartial}>
             <Layout2Cells>
-              <p className={css.percentageNumber}>{percentage}%</p>
+              <p className={css.percentageNumber}>
+                {percentage}
+                %
+              </p>
               <BoxProgressMessage
                 className={css.message}
                 numRecipes={selectedRecipesCount}

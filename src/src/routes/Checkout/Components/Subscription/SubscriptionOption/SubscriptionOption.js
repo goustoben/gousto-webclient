@@ -20,10 +20,7 @@ const SubscriptionOption = ({ name, id, title, description, checked, onClick }) 
     </div>
     <div className={css.content}>
       <p className={css.title}>{title}</p>
-      {(description) ? description.map(descriptionOption => {
-        return <p className={css.description}>{descriptionOption}</p>
-      }) : null
-      }
+      {(description) ? description.map(descriptionOption => <p className={css.description}>{descriptionOption}</p>) : null}
     </div>
   </label>
 )

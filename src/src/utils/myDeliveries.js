@@ -136,50 +136,48 @@ export const transformPendingOrders = (orders) => {
   }, new Immutable.Map())
 }
 
-export const transformProjectedDeliveries = (projectedDeliveries) => {
-  return projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
-    const id = delivery.get('id')
-    const date = delivery.get('date')
-    const whenCutoff = delivery.get('whenCutoff')
-    const humanWhenMenuLive = delivery.get('humanWhenMenuLive')
-    const whenMenuLive = delivery.get('whenMenuLive')
-    const deliverySlot = delivery.get('deliverySlot')
-    const active = delivery.get('active')
-    const unavailableReason = delivery.get('unavailableReason')
-    const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
-    const deliveryDayId = delivery.get('id')
-    let humanDeliveryDay = delivery.get('humanDate', null)
-    const humanAlternateDeliveryDay = delivery.getIn(['alternateDeliveryDay', 'humanDate'])
+export const transformProjectedDeliveries = (projectedDeliveries) => projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
+  const id = delivery.get('id')
+  const date = delivery.get('date')
+  const whenCutoff = delivery.get('whenCutoff')
+  const humanWhenMenuLive = delivery.get('humanWhenMenuLive')
+  const whenMenuLive = delivery.get('whenMenuLive')
+  const deliverySlot = delivery.get('deliverySlot')
+  const active = delivery.get('active')
+  const unavailableReason = delivery.get('unavailableReason')
+  const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
+  const deliveryDayId = delivery.get('id')
+  let humanDeliveryDay = delivery.get('humanDate', null)
+  const humanAlternateDeliveryDay = delivery.getIn(['alternateDeliveryDay', 'humanDate'])
 
-    let originalDeliveryDay = null
-    if (humanAlternateDeliveryDay) {
-      originalDeliveryDay = humanDeliveryDay
-      humanDeliveryDay = humanAlternateDeliveryDay
-    }
+  let originalDeliveryDay = null
+  if (humanAlternateDeliveryDay) {
+    originalDeliveryDay = humanDeliveryDay
+    humanDeliveryDay = humanAlternateDeliveryDay
+  }
 
-    const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
-    const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
-    const restorable = parseInt(active) === 0
+  const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
+  const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
+  const restorable = parseInt(active) === 0
 
-    return deliveryAccumulator.set(
+  return deliveryAccumulator.set(
+    id,
+    Immutable.Map({
       id,
-      Immutable.Map({
-        id,
-        orderState,
-        deliveryDay: date,
-        originalDeliveryDay,
-        humanDeliveryDay,
-        whenCutoff,
-        whenMenuOpen: whenMenuLive,
-        deliverySlotStart: deliverySlot.get('deliveryStart'),
-        deliverySlotEnd: deliverySlot.get('deliveryEnd'),
-        deliveryDayRescheduledReason,
-        alternateDeliveryDay,
-        isProjected: true,
-        restorable,
-        cancellable: true,
-        deliveryDayId,
-      })
-    )
-  }, new Immutable.Map())
-}
+      orderState,
+      deliveryDay: date,
+      originalDeliveryDay,
+      humanDeliveryDay,
+      whenCutoff,
+      whenMenuOpen: whenMenuLive,
+      deliverySlotStart: deliverySlot.get('deliveryStart'),
+      deliverySlotEnd: deliverySlot.get('deliveryEnd'),
+      deliveryDayRescheduledReason,
+      alternateDeliveryDay,
+      isProjected: true,
+      restorable,
+      cancellable: true,
+      deliveryDayId,
+    })
+  )
+}, new Immutable.Map())

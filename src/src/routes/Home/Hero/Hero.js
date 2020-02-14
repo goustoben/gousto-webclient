@@ -6,7 +6,7 @@ import Content from 'containers/Content'
 import CTAHomepage from '../CTA'
 import css from './Hero.css'
 
-//ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
+// ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
 const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
   <div className={css[`container--${variant}`]} data-testing={dataTesting}>

@@ -12,11 +12,9 @@ function getStockAvailability(getState, recipeStock) {
   return recipeStockList.reduce((acc, stockEntry) => {
     const committed = stockEntry.committed === '1'
 
-    const foundMatchingRecipeFromStock = storedRecipes.find((obj) => {
-      return obj.coreRecipeId === stockEntry.recipeId.toString()
-    })
+    const foundMatchingRecipeFromStock = storedRecipes.find((obj) => obj.coreRecipeId === stockEntry.recipeId.toString())
 
-    if(foundMatchingRecipeFromStock) {
+    if (foundMatchingRecipeFromStock) {
       acc[foundMatchingRecipeFromStock.id] = {
         2: committed ? parseInt(stockEntry.number, 10) : 1000,
         4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,

@@ -5,9 +5,7 @@ export const getOrderValidationPendingState = ({ pending }) => (
   Boolean(pending.get(actionTypes.GET_HELP_VALIDATE_ORDER, null))
 )
 
-export const getOrderValidationError = ({ error }) => {
-  return error.get('GET_HELP_VALIDATE_ORDER', '')
-}
+export const getOrderValidationError = ({ error }) => error.get('GET_HELP_VALIDATE_ORDER', '')
 
 export const getDaysSinceLastCompensation = createSelector(
   getOrderValidationError,

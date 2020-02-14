@@ -212,7 +212,7 @@ describe('<Ingredients />', () => {
       })
 
       test('redirection to the Contact Us page happens when validateIngredients errors', async () => {
-        validateSelectedIngredients.mockImplementation(() => { throw new Error('error')})
+        validateSelectedIngredients.mockImplementation(() => { throw new Error('error') })
         selectIngredientAndGetCheckbox(wrapper)
         await ContinueButton.prop('onClick')()
 

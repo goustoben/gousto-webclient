@@ -8,11 +8,7 @@ export function loadRecipesForSingleCollection(date, collectionId, idsOnly, tran
         const recipesInCollectionIds = transformedCollectionRecipesIds[collectionId]
 
         if (recipesInCollectionIds) {
-          const recipesInCollection = recipesInCollectionIds.map((recipeRelationship) => {
-            return transformedRecipes.find((recipe) => {
-              return recipe.coreRecipeId === recipeRelationship.core_recipe_id.toString()
-            })
-          })
+          const recipesInCollection = recipesInCollectionIds.map((recipeRelationship) => transformedRecipes.find((recipe) => recipe.coreRecipeId === recipeRelationship.core_recipe_id.toString()))
 
           dispatch(menuReceiveCollectionRecipes(collectionId, recipesInCollection))
         }

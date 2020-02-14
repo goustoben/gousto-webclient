@@ -17,17 +17,15 @@ const images = (ingredient) => {
   return []
 }
 
-const ingredientTransformer = (ingredient) => {
-  return {
-    allergens: allergensTransformer(ingredient.attributes.allergens),
-    id: ingredient.id,
-    label: ingredient.label,
-    name: ingredient.attributes.name,
-    media:{
-      images: images(ingredient)
-    },
-    subIngredients: ingredient.attributes.sub_ingredients || '',
-  }
-}
+const ingredientTransformer = (ingredient) => ({
+  allergens: allergensTransformer(ingredient.attributes.allergens),
+  id: ingredient.id,
+  label: ingredient.label,
+  name: ingredient.attributes.name,
+  media: {
+    images: images(ingredient)
+  },
+  subIngredients: ingredient.attributes.sub_ingredients || '',
+})
 
 export { ingredientTransformer }

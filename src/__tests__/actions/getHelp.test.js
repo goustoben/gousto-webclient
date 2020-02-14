@@ -51,7 +51,7 @@ describe('getHelp actions', () => {
 
     test('error action with corresponding error is dispatched if an error occurs', async () => {
       fetchOrderIssuesApi.mockImplementationOnce(
-        () => { throw new Error('error-message')}
+        () => { throw new Error('error-message') }
       )
       await fetchOrderIssuesAction()(dispatch, getState)
 

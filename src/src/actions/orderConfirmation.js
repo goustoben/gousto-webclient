@@ -38,8 +38,7 @@ export const orderDetails = (orderId) => (
         orderId,
         orderDetails: immutableOrderDetails,
       })
-    }
-    catch (err) {
+    } catch (err) {
       logger.error(err)
     }
   }

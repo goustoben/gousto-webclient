@@ -46,31 +46,27 @@ export const sortRecipesByStock = (recipes, inStockRecipes) => {
       inStock: acc.inStock
     }
   }, { outOfStock: Immutable.List(), inStock: Immutable.List() })
-  
+
   return inStock.concat(outOfStock)
 }
 
 export const getSortedRecipes = createSelector(
   [getMenuCollectionRecipes, getCurrentMenuRecipes, getInStockRecipes],
-  (menuCollectionRecipes, allRecipes, inStockRecipes) => {
-    return (collectionId) => {
-      if (!collectionId) {
-        return createSortedRecipesResponse(allRecipes, inStockRecipes)
-      }
-
-      const recipesInCollection = menuCollectionRecipes.get(collectionId)
-
-      if (!recipesInCollection) {
-        return createSortedRecipesResponse(allRecipes, inStockRecipes)
-      }
-
-      const getRecipeDetailsById = (recipeId) => {
-        return allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
-      }
-      // recipesInCollection is in recommended order whilst allRecipes is the default order of the menu
-      const filtered = recipesInCollection.map(getRecipeDetailsById).filter(recipe => recipe !== undefined)
-
-      return createSortedRecipesResponse(filtered, inStockRecipes)
+  (menuCollectionRecipes, allRecipes, inStockRecipes) => (collectionId) => {
+    if (!collectionId) {
+      return createSortedRecipesResponse(allRecipes, inStockRecipes)
     }
+
+    const recipesInCollection = menuCollectionRecipes.get(collectionId)
+
+    if (!recipesInCollection) {
+      return createSortedRecipesResponse(allRecipes, inStockRecipes)
+    }
+
+    const getRecipeDetailsById = (recipeId) => allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
+    // recipesInCollection is in recommended order whilst allRecipes is the default order of the menu
+    const filtered = recipesInCollection.map(getRecipeDetailsById).filter(recipe => recipe !== undefined)
+
+    return createSortedRecipesResponse(filtered, inStockRecipes)
   }
 )

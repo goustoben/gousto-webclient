@@ -60,27 +60,31 @@ const IngredientReasonsPresentation = ({
   </GetHelpLayout>
 )
 
-const renderIngredientReasonsForm = (ingredientReasons, onChange) => {
-  return Object.keys(ingredientReasons).map(key => {
-    const {
-      issueName,
-      label
-    } = ingredientReasons[key]
+const renderIngredientReasonsForm = (ingredientReasons, onChange) => Object.keys(ingredientReasons).map(key => {
+  const {
+    issueName,
+    label
+  } = ingredientReasons[key]
 
-    return (
-      <div key={key} className={css.issueDetails}>
-        <p>{issueName} - {label}</p>
-        <textarea
-          id={key}
-          value={ingredientReasons[key].issueDescription}
-          onChange={
-            (event) => onChange(key, event.target.value)
-          }
-        />
-      </div>
-    )
-  })
-}
+  return (
+    <div key={key} className={css.issueDetails}>
+      <p>
+        {issueName}
+        {' '}
+        -
+        {' '}
+        {label}
+      </p>
+      <textarea
+        id={key}
+        value={ingredientReasons[key].issueDescription}
+        onChange={
+          (event) => onChange(key, event.target.value)
+        }
+      />
+    </div>
+  )
+})
 
 IngredientReasonsPresentation.propTypes = propTypes
 

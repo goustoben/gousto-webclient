@@ -69,7 +69,7 @@ const Detail = ({
                 <div className={css.detailButtons}>
                   <Buttons {...buttonProps} qty={qty} outOfStock={outOfStock} />
                 </div>
-              ): null}
+              ) : null}
             </div>
 
           </div>
