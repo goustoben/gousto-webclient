@@ -1082,7 +1082,7 @@ describe('basket actions', () => {
           date: '2020-02-13',
         }),
         boxSummaryDeliveryDays: Immutable.Map({
-          day: Immutable.Map({
+          '2020-02-13': Immutable.Map({
             id: 123
           })
         })
@@ -1099,7 +1099,7 @@ describe('basket actions', () => {
         trackingData: {
           actionType: 'BASKET_SLOT_CHANGE',
           date: '2020-02-13',
-          dayId: undefined,
+          dayId: 123,
           slotId: 'slot-1-day-1',
         },
       }
