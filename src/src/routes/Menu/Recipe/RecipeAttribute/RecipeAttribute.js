@@ -13,7 +13,8 @@ const RecipeAttribute = ({ icon, name, value, show, view }) => (
         className={css.icon}
       />
       <span className={css.description}>
-        {getDescription(name, value, view)}
+        {'  '}
+        { getDescription(name, value, view) }
       </span>
     </div>
   )
