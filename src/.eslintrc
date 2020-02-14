@@ -194,7 +194,8 @@
         "jest": true
       },
       "rules": {
-        "react/display-name": 0
+        "react/display-name": 0,
+        "react/jsx-props-no-spreading": 0,
       }
     }
   ]

@@ -9,27 +9,13 @@ import DeliverySlot from '../DeliverySlot'
 
 class BoxSummaryContent extends React.PureComponent {
   static propTypes = {
-    displayOptions: PropTypes.instanceOf(Immutable.List),
-    view: PropTypes.string,
-    date: PropTypes.string,
-    orderId: PropTypes.string,
+    displayOptions: PropTypes.instanceOf(Immutable.List).isRequired,
+    view: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    orderId: PropTypes.string.isRequired,
     numPortions: PropTypes.number.isRequired,
     recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-    boxSummaryCurrentView: PropTypes.string,
-    prices: PropTypes.instanceOf(Immutable.Map),
-    pricesLoading: PropTypes.bool,
-    loadPrices: PropTypes.func,
-  }
-
-  static defaultProps = {
-    prices: Immutable.Map({}),
-    pricesLoading: false,
-  }
-
-  componentDidMount() {
-    if (this.props.prices.size === 0 && this.props.pricesLoading === false) {
-      this.props.loadPrices()
-    }
+    boxSummaryCurrentView: PropTypes.string.isRequired,
   }
 
   render() {

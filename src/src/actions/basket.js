@@ -436,6 +436,7 @@ export const basketSlotChange = slotId => (
         dayId: state.boxSummaryDeliveryDays.getIn([date, 'id']),
       },
     })
+    dispatch(pricingActions.pricingRequest())
   }
 )
 
