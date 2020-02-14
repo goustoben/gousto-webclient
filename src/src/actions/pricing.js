@@ -102,7 +102,9 @@ const pricingActions = {
         deliveryTariffId
       ]
 
-      shouldSendTariffId && pricingRequestParams.push(tariffId)
+      if (shouldSendTariffId) {
+        pricingRequestParams.push(tariffId)
+      }
 
       if (!deliverySlotId) {
         return undefined
@@ -136,11 +138,6 @@ const pricingActions = {
       if (Object.keys(prices).length) {
         dispatch(pricingReset())
       }
-    }
-  ),
-  updatePrices: (prices) => (
-    (dispatch) => {
-      dispatch(pricingSuccess(prices))
     }
   ),
 }

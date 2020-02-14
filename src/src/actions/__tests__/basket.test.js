@@ -34,7 +34,12 @@ jest.mock('actions/orderConfirmation', () => ({
 describe('basket actions', () => {
   let dispatch = jest.fn()
   let getStateSpy = jest.fn()
-  const { portionSizeSelectedTracking, basketCheckedOut, basketOrderItemsLoad, basketProceedToCheckout, basketRecipesInitialise, basketRecipeAdd, basketRecipeRemove, basketNumPortionChange } = basket
+  const {
+    portionSizeSelectedTracking,
+    basketCheckedOut, basketOrderItemsLoad,
+    basketProceedToCheckout, basketRecipesInitialise,
+    basketRecipeAdd, basketRecipeRemove,
+    basketNumPortionChange, basketSlotChange } = basket
 
   beforeEach(() => {
     basketUtils.basketSumMock = jest.fn(() => false)
@@ -54,7 +59,7 @@ describe('basket actions', () => {
         trackingData: {
           actionType: 'PortionSize Selected',
           num_portion,
-          order_id: order_id ? order_id : null,
+          order_id: order_id || null,
         },
       }
       await portionSizeSelectedTracking(num_portion, order_id)(dispatch)
@@ -89,8 +94,8 @@ describe('basket actions', () => {
       }),
       user: Immutable.fromJS({
         orders: {
-          '178': {
-            'recipeItems': [
+          178: {
+            recipeItems: [
               '1234'
             ]
           },
@@ -107,8 +112,8 @@ describe('basket actions', () => {
         }
       }),
       temp: Immutable.fromJS({
-        originalGrossTotal: "24.99",
-        originalNetTotal: "24.99"
+        originalGrossTotal: '24.99',
+        originalNetTotal: '24.99'
       })
     })
 
@@ -157,8 +162,8 @@ describe('basket actions', () => {
         }),
         user: Immutable.fromJS({
           orders: {
-            '178': {
-              'recipeItems': [
+            178: {
+              recipeItems: [
                 '1234'
               ]
             },
@@ -175,8 +180,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalGrossTotal: "24.99",
-          originalNetTotal: "24.99"
+          originalGrossTotal: '24.99',
+          originalNetTotal: '24.99'
         })
       })
 
@@ -224,8 +229,8 @@ describe('basket actions', () => {
         }),
         user: Immutable.fromJS({
           orders: {
-            '178': {
-              'recipeItems': [
+            178: {
+              recipeItems: [
                 '1234'
               ]
             },
@@ -242,8 +247,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalGrossTotal: "24.99",
-          originalNetTotal: "24.99"
+          originalGrossTotal: '24.99',
+          originalNetTotal: '24.99'
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
@@ -290,8 +295,8 @@ describe('basket actions', () => {
         }),
         user: Immutable.fromJS({
           orders: {
-            '179': {
-              'recipeItems': []
+            179: {
+              recipeItems: []
             },
           },
           subscription: {
@@ -306,8 +311,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalGrossTotal: "24.99",
-          originalNetTotal: "24.99"
+          originalGrossTotal: '24.99',
+          originalNetTotal: '24.99'
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
@@ -354,8 +359,8 @@ describe('basket actions', () => {
         }),
         user: Immutable.fromJS({
           orders: {
-            '179': {
-              'recipeItems': []
+            179: {
+              recipeItems: []
             },
           },
           subscription: {
@@ -370,8 +375,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalGrossTotal: "24.99",
-          originalNetTotal: "24.99"
+          originalGrossTotal: '24.99',
+          originalNetTotal: '24.99'
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
@@ -485,7 +490,7 @@ describe('basket actions', () => {
       jest.clearAllMocks()
     })
 
-    describe('when update is sucessful', function () {
+    describe('when update is sucessful', () => {
       const order = {
         id: '23',
         products: [
@@ -496,7 +501,7 @@ describe('basket actions', () => {
 
       updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
 
-      test('should call updateOrderItems api with products', function () {
+      test('should call updateOrderItems api with products', () => {
         basket.basketUpdateProducts()(dispatch, getStateSpy)
         expect(updateOrderItems).toHaveBeenCalled()
         expect(updateOrderItems).toHaveBeenCalledWith(
@@ -522,7 +527,7 @@ describe('basket actions', () => {
       test('should dispatch correct pending and action events for BASKET_CHECKOUT', (done) => {
         updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
         basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .then(function () {
+          .then(() => {
             expect(dispatch.mock.calls.length).toBe(8)
             expect(dispatch.mock.calls[0][0]).toEqual({
               type: actionTypes.PENDING,
@@ -548,7 +553,7 @@ describe('basket actions', () => {
       test('should dispatch BASKET_ORDER_DETAILS_LOADED action with the orderDetails', (done) => {
         updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
         basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .then(function () {
+          .then(() => {
             expect(dispatch.mock.calls.length).toBe(8)
             expect(dispatch.mock.calls[2][0]).toEqual({
               type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
@@ -563,7 +568,7 @@ describe('basket actions', () => {
         updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
         const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(orderConfirmationActions, 'orderConfirmationUpdateOrderTracking')
         basket.basketUpdateProducts(true)(dispatch, getStateSpy)
-          .then(function () {
+          .then(() => {
             expect(dispatch.mock.calls.length).toBe(9)
             expect(orderConfirmationUpdateOrderTrackingSpy).toHaveBeenCalledTimes(1)
           })
@@ -571,16 +576,16 @@ describe('basket actions', () => {
       })
     })
 
-    describe('when it fails to update order', function () {
+    describe('when it fails to update order', () => {
       let loggerErrorSpy
-      beforeEach(function () {
+      beforeEach(() => {
         dispatch = jest.fn()
         updateOrderItems.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
         loggerErrorSpy = jest.spyOn(utilsLogger, 'error')
       })
-      test('should put the error into the error store for BASKET_CHECKOUT', function (done) {
+      test('should put the error into the error store for BASKET_CHECKOUT', (done) => {
         basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .catch(function () {
+          .catch(() => {
             expect(updateOrderItems).toHaveBeenCalledTimes(1)
             expect(dispatch.mock.calls[0][0]).toEqual({
               type: actionTypes.PENDING,
@@ -600,9 +605,9 @@ describe('basket actions', () => {
           })
           .then(done, done)
       })
-      test('should log the error', function (done) {
+      test('should log the error', (done) => {
         basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .catch(function () {
+          .catch(() => {
             expect(loggerErrorSpy).toHaveBeenCalledTimes(1)
             expect(loggerErrorSpy).toHaveBeenCalledWith((new Error({ e: 'Error' })))
           })
@@ -940,7 +945,7 @@ describe('basket actions', () => {
 
       basketUtils.limitReached = jest.fn(() => false)
     })
-    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', function () {
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', () => {
       basketRecipeRemove('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
@@ -985,7 +990,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
     })
 
-    test('should map through the given view argument through to trackingData', function () {
+    test('should map through the given view argument through to trackingData', () => {
       basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
@@ -1021,7 +1026,7 @@ describe('basket actions', () => {
       }])
     })
 
-    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE when portion and recipe limit is reached', function () {
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE when portion and recipe limit is reached', () => {
       getStateSpy = jest.fn().mockReturnValue({
         basket: Immutable.Map({
           recipes: Immutable.Map([['111', 1], ['222', 1], ['333', 1]]),
@@ -1065,6 +1070,46 @@ describe('basket actions', () => {
           limitReached: false,
         },
       }])
+    })
+  })
+
+  describe('basketSlotChange', () => {
+    const pricingRequestAction = Symbol()
+
+    beforeEach(() => {
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.Map({
+          date: '2020-02-13',
+        }),
+        boxSummaryDeliveryDays: Immutable.Map({
+          day: Immutable.Map({
+            id: 123
+          })
+        })
+      })
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+    })
+
+    test('should dispatch BASKET_SLOT_CHANGE', () => {
+      const slotId = 'slot-1-day-1'
+      basketSlotChange(slotId)(dispatch, getStateSpy)
+      const expectedResult = {
+        type: 'BASKET_SLOT_CHANGE',
+        slotId: 'slot-1-day-1',
+        trackingData: {
+          actionType: 'BASKET_SLOT_CHANGE',
+          date: '2020-02-13',
+          dayId: undefined,
+          slotId: 'slot-1-day-1',
+        },
+      }
+      expect(dispatch).toHaveBeenNthCalledWith(1, expectedResult)
+    })
+
+    test('should dispatch pricingRequestAction', () => {
+      const slotId = 'slot-1-day-1'
+      basketSlotChange(slotId)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenNthCalledWith(2, pricingRequestAction)
     })
   })
 })
