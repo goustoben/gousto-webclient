@@ -24,7 +24,9 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
   const ribbonTextStyle = {
     color: textColor,
     backgroundColor: backgroundColor,
-    border: `1px solid ${borderColor}`,
+    borderColor: `${borderColor}`,
+    borderStyle: 'solid',
+    borderWidth: '1px',
     borderRight: 'none',
     cursor: isFoodBrandClickable ? 'pointer' : 'default'
   }
