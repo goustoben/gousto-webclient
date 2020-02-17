@@ -6,20 +6,21 @@ import RangeBadge from 'routes/Menu/Recipe/RangeBadge'
 import { recipePropTypes } from 'routes/Menu/Recipe'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
+import config from 'config'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
 import Image from '../Image'
 import Rating from '../Rating'
 import AddButton from '../AddButton'
-import { StockBadge } from '../StockBadge'
-import TasteScore from '../TasteScore'
-import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
-const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew }) => (
+const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, chef, view, detailHover, range, isRecommendedRecipe,
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew }) => {
+  const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
+
+  return (
     <div className={css.recipeDetails}>
       <span onClick={onClick} className={css.link}>
         <Image
@@ -27,19 +28,22 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           alt={title}
           mouseEnter={highlight}
           mouseLeave={unhighlight}
+          stock={stock}
+          inBasket={inBasket}
         />
       </span>
       <div className={css.viewDetails}>
-        <Pill
-          mouseEnter={highlight}
-          mouseLeave={unhighlight}
-          onClick={() => { onClick(true) }}
-          icon
-        >
-          View details
-        </Pill>
+        {outOfStock || (
+          <Pill
+            mouseEnter={highlight}
+            mouseLeave={unhighlight}
+            onClick={() => { onClick(true) }}
+            icon
+          >
+            View details
+          </Pill>
+        )}
       </div>
-      <TasteScore className={css.score} score={tasteScore} />
       <div>
         <Chef chef={chef} />
       </div>
@@ -58,24 +62,37 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
         </div>
         <div>
           <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
-          <StockBadge stock={stock} />
           <div>
+            {outOfStock || (
             <Rating
               average={averageRating}
               count={ratingCount}
               isNew={isNew}
             />
+            )}
           </div>
         </div>
-        <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
+        <div>
+          {outOfStock || (
+          <AttributeGrid
+            maxNoAttributes={4}
+            cookingTime={cookingTime}
+            useWithin={useWithin}
+            equipment={equipment}
+            diet={diet}
+            fiveADay={fiveADay}
+          />
+          )}
+        </div>
         <RecipeDisclaimerContainer id={id} />
         <div className={css.buttonContainer}>
-          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
         </div>
-        <DisabledOverlay stock={stock} inBasket={inBasket} />
+
       </div>
     </div>
-)
+  )
+}
 
 GridRecipe.propTypes = {
   ...recipePropTypes,
@@ -99,7 +116,6 @@ GridRecipe.propTypes = {
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
-  tasteScore: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,

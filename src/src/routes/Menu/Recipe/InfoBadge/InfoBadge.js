@@ -7,7 +7,6 @@ const InfoBadge = ({ type = 'span', children, newRecipe, stockInfo, recommended,
   const className = classNames(
     css.badge,
     { [css.newRecipe]: newRecipe },
-    { [css.stockInfo]: stockInfo },
     { [css.recommended]: recommended },
     { [css.inverse]: inverse },
   )

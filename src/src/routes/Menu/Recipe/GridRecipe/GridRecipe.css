@@ -35,6 +35,7 @@
   margin-top: -15px;
   margin-left: -1px;
   position: absolute;
+  z-index: 12;
 }
 
 .viewDetails {
@@ -42,6 +43,7 @@
   float: right;
   margin-top: -40px;
   margin-right: 10px;
+  z-index: 12;
 
   @media ScreenSMMin {
     margin-top: -50px;

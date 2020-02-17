@@ -59,7 +59,6 @@ const RecipeCard = ({
       features={features}
       isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
       range={range}
-      tasteScore={recipe.getIn(['recommendationData', 'score'])}
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
       isFoodBrandClickable={isFoodBrandClickable}

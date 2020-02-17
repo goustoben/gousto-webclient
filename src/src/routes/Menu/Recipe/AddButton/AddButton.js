@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Button from 'routes/Menu/Recipe/Buttons'
 import config from 'config'
+import Button from '../Buttons/Buttons'
 
-const AddButton = ({ id, inBasket, position, stock, view, score }) => (
+const AddButton = ({ id, inBasket, position, stock, view}) => (
   (stock > config.menu.stockThreshold || stock === null || inBasket)
-    ? <Button position={position} recipeId={id} view={view} outOfstock={stock <= config.menu.stockThreshold && stock !== null} stock={stock} score={score} />
+    ? <Button position={position} recipeId={id} view={view} outOfstock={stock <= config.menu.stockThreshold && stock !== null} stock={stock} />
     : null
 )
 
@@ -16,7 +16,6 @@ AddButton.propTypes = {
   position: PropTypes.number,
   stock: PropTypes.number,
   view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail']).isRequired,
-  score: PropTypes.number,
 }
 
 export default AddButton

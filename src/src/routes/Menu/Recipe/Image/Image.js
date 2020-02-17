@@ -2,11 +2,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
-
 import GoustoImage from 'Image'
+import { SoldOutOverlay } from '../SoldOutOverlay'
+
 import css from './Image.css'
 
-const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize }) => (
+const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, stock, inBasket }) => (
   <div
     className={classnames(
       { [css[view]]: ['list', 'featured'].indexOf(view) !== -1 },
@@ -19,7 +20,8 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize }) => 
     onMouseEnter={mouseEnter}
     onMouseLeave={mouseLeave}
   >
-    {(media.size > 0) ? (
+    {(media.size > 0) && (<SoldOutOverlay stock={stock} inBasket={inBasket} />) }
+    {(media.size > 0) && (
       <GoustoImage
         media={media}
         title={title}
@@ -27,7 +29,7 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize }) => 
         className={css.recipeImg}
         lazy
       />
-    ) : ''}
+    ) }
   </div>
 )
 
@@ -38,6 +40,8 @@ Image.propTypes = {
   mouseEnter: PropTypes.func,
   mouseLeave: PropTypes.func,
   maxMediaSize: PropTypes.number,
+  stock: PropTypes.number.isRequired,
+  inBasket: PropTypes.bool.isRequired,
 }
 
 Image.defaultProps = {

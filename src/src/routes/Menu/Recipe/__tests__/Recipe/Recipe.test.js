@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
-import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
+import { SimpleRecipe } from 'routes/Menu/Recipe/SimpleRecipe'
 import { FeaturedRecipe }from 'routes/Menu/Recipe/FeaturedRecipe'
 import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 import { CTAToAllRecipes } from 'routes/Menu/Recipe/CTAToAllRecipes'

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 
-import { CTAToAllRecipes } from 'routes/Menu/Recipe/CTAToAllRecipes'
-import { CTAThematic } from 'routes/Menu/Recipe/CTAThematic'
-import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
-import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
-import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
-import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
+import { CTAToAllRecipes } from './CTAToAllRecipes'
+import { CTAThematic } from './CTAThematic'
+import { GridRecipe } from './GridRecipe'
+import { SimpleRecipe } from './SimpleRecipe'
+import { FeaturedRecipe } from './FeaturedRecipe'
+import { FineDineInRecipe } from './FineDineInRecipe'
 import css from './Recipe.css'
 
 const recipePropTypes = {

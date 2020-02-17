@@ -41,7 +41,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
         </div>
         <div className={css.shadow}>
           <div className={css.imageContainer}>
-            <Image media={media} title={title} view={view} />
+            <Image media={media} title={title} view={view} stock={stock} inBasket={inBasket} />
             <div className={css.infoBox}>
               <div className={css.rangeBadgeDetails}>
                 <RangeBadge range={range} isFoodBrandClickable={isFoodBrandClickable} />
@@ -138,7 +138,7 @@ DefaultDetail.propTypes = {
 }
 
 DefaultDetail.defaultProps = {
-  fiveADay: 0
+  fiveADay: 0,
 }
 
 export default DefaultDetail
