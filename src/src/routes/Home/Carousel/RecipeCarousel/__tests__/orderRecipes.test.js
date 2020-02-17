@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import orderRecipes from 'routes/Home/Carousel/RecipeCarousel/orderRecipes'
+import orderRecipes from '../orderRecipes'
 
 describe('orderRecipes', () => {
   let recipes
@@ -7,109 +7,109 @@ describe('orderRecipes', () => {
 
   beforeEach(() => {
     recipes = Immutable.OrderedMap({
-      '901': Immutable.fromJS({
+      901: Immutable.fromJS({
         id: '901',
         availability: [],
         dietType: 'Meat',
         rating: { average: 3 },
       }),
-      '987': Immutable.fromJS({
+      987: Immutable.fromJS({
         id: '987',
         availability: [],
         dietType: 'Fish',
         rating: { average: 2 },
       }),
-      '876': Immutable.fromJS({
+      876: Immutable.fromJS({
         id: '876',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 2 },
       }),
-      '765': Immutable.fromJS({
+      765: Immutable.fromJS({
         id: '765',
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
       }),
-      '654': Immutable.fromJS({
+      654: Immutable.fromJS({
         id: '654',
         availability: [],
         dietType: 'Fish',
         rating: { average: 1 },
       }),
-      '678': Immutable.fromJS({
+      678: Immutable.fromJS({
         id: '678',
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
       }),
-      '789': Immutable.fromJS({
+      789: Immutable.fromJS({
         id: '789',
         availability: [],
         dietType: 'Fish',
         rating: { average: 3 },
       }),
-      '890': Immutable.fromJS({
+      890: Immutable.fromJS({
         id: '890',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 3 },
       }),
-      '321': Immutable.fromJS({
+      321: Immutable.fromJS({
         id: '321',
         availability: [],
         dietType: 'Fish',
         rating: { average: 0 },
       }),
-      '210': Immutable.fromJS({
+      210: Immutable.fromJS({
         id: '210',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
       }),
-      '109': Immutable.fromJS({
+      109: Immutable.fromJS({
         id: '109',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '123': Immutable.fromJS({
+      123: Immutable.fromJS({
         id: '123',
         availability: [],
         dietType: 'Fish',
         rating: { average: 5 },
       }),
-      '234': Immutable.fromJS({
+      234: Immutable.fromJS({
         id: '234',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 5 },
       }),
-      '345': Immutable.fromJS({
+      345: Immutable.fromJS({
         id: '345',
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
       }),
-      '456': Immutable.fromJS({
+      456: Immutable.fromJS({
         id: '456',
         availability: [],
         dietType: 'Fish',
         rating: { average: 4 },
       }),
-      '567': Immutable.fromJS({
+      567: Immutable.fromJS({
         id: '567',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 4 },
       }),
-      '543': Immutable.fromJS({
+      543: Immutable.fromJS({
         id: '543',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 1 },
       }),
-      '432': Immutable.fromJS({
+      432: Immutable.fromJS({
         id: '432',
         availability: [],
         dietType: 'Meat',
@@ -291,109 +291,109 @@ describe('orderRecipes', () => {
 
   test('with an off-balanced set of recipes should still order correctly', () => {
     recipes = Immutable.OrderedMap({
-      '901': Immutable.fromJS({
+      901: Immutable.fromJS({
         id: '901',
         availability: [],
         dietType: 'Meat',
         rating: { average: 3 },
       }),
-      '987': Immutable.fromJS({
+      987: Immutable.fromJS({
         id: '987',
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
       }),
-      '876': Immutable.fromJS({
+      876: Immutable.fromJS({
         id: '876',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 2 },
       }),
-      '765': Immutable.fromJS({
+      765: Immutable.fromJS({
         id: '765',
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
       }),
-      '654': Immutable.fromJS({
+      654: Immutable.fromJS({
         id: '654',
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
       }),
-      '678': Immutable.fromJS({
+      678: Immutable.fromJS({
         id: '678',
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
       }),
-      '789': Immutable.fromJS({
+      789: Immutable.fromJS({
         id: '789',
         availability: [],
         dietType: 'Meat',
         rating: { average: 3 },
       }),
-      '890': Immutable.fromJS({
+      890: Immutable.fromJS({
         id: '890',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 3 },
       }),
-      '321': Immutable.fromJS({
+      321: Immutable.fromJS({
         id: '321',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '210': Immutable.fromJS({
+      210: Immutable.fromJS({
         id: '210',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
       }),
-      '109': Immutable.fromJS({
+      109: Immutable.fromJS({
         id: '109',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '123': Immutable.fromJS({
+      123: Immutable.fromJS({
         id: '123',
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
       }),
-      '234': Immutable.fromJS({
+      234: Immutable.fromJS({
         id: '234',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 5 },
       }),
-      '345': Immutable.fromJS({
+      345: Immutable.fromJS({
         id: '345',
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
       }),
-      '456': Immutable.fromJS({
+      456: Immutable.fromJS({
         id: '456',
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
       }),
-      '567': Immutable.fromJS({
+      567: Immutable.fromJS({
         id: '567',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 4 },
       }),
-      '543': Immutable.fromJS({
+      543: Immutable.fromJS({
         id: '543',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 1 },
       }),
-      '432': Immutable.fromJS({
+      432: Immutable.fromJS({
         id: '432',
         availability: [],
         dietType: 'Meat',
@@ -572,119 +572,117 @@ describe('orderRecipes', () => {
 
   test('with an off-balanced un-rated set of recipes should still order correctly', () => {
     recipes = Immutable.OrderedMap({
-      '901': Immutable.fromJS({
+      901: Immutable.fromJS({
         id: '901',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '987': Immutable.fromJS({
+      987: Immutable.fromJS({
         id: '987',
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
       }),
-      '876': Immutable.fromJS({
+      876: Immutable.fromJS({
         id: '876',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 2 },
       }),
-      '765': Immutable.fromJS({
+      765: Immutable.fromJS({
         id: '765',
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
       }),
-      '654': Immutable.fromJS({
+      654: Immutable.fromJS({
         id: '654',
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
       }),
-      '678': Immutable.fromJS({
+      678: Immutable.fromJS({
         id: '678',
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
       }),
-      '789': Immutable.fromJS({
+      789: Immutable.fromJS({
         id: '789',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '890': Immutable.fromJS({
+      890: Immutable.fromJS({
         id: '890',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
       }),
-      '321': Immutable.fromJS({
+      321: Immutable.fromJS({
         id: '321',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '210': Immutable.fromJS({
+      210: Immutable.fromJS({
         id: '210',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
       }),
-      '109': Immutable.fromJS({
+      109: Immutable.fromJS({
         id: '109',
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
       }),
-      '123': Immutable.fromJS({
+      123: Immutable.fromJS({
         id: '123',
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
       }),
-      '234': Immutable.fromJS({
+      234: Immutable.fromJS({
         id: '234',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 5 },
       }),
-      '345': Immutable.fromJS({
+      345: Immutable.fromJS({
         id: '345',
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
       }),
-      '456': Immutable.fromJS({
+      456: Immutable.fromJS({
         id: '456',
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
       }),
-      '567': Immutable.fromJS({
+      567: Immutable.fromJS({
         id: '567',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 4 },
       }),
-      '543': Immutable.fromJS({
+      543: Immutable.fromJS({
         id: '543',
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 1 },
       }),
-      '432': Immutable.fromJS({
+      432: Immutable.fromJS({
         id: '432',
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
       }),
-      '12345': Immutable.fromJS({
+      12345: Immutable.fromJS({
         id: '12345',
-        availability: [
-          { from: '2017-01-01', until: '2017-10-01', featured: true },
-        ],
+        isFeaturedRecipe: true,
         dietType: 'anything',
         rating: { average: 0 },
       }),
@@ -697,9 +695,7 @@ describe('orderRecipes', () => {
       '12345',
       Immutable.fromJS({
         id: '12345',
-        availability: [
-          { from: '2017-01-01', until: '2017-10-01', featured: true },
-        ],
+        isFeaturedRecipe: true,
         dietType: 'anything',
         rating: { average: 0 },
       }),
@@ -873,113 +869,111 @@ describe('orderRecipes', () => {
   describe('with a featured recipe', () => {
     beforeEach(() => {
       recipes = Immutable.OrderedMap({
-        '901': Immutable.fromJS({
+        901: Immutable.fromJS({
           id: '901',
           availability: [],
           dietType: 'Meat',
           rating: { average: 3 },
         }),
-        '987': Immutable.fromJS({
+        987: Immutable.fromJS({
           id: '987',
           availability: [],
           dietType: 'Fish',
           rating: { average: 2 },
         }),
-        '876': Immutable.fromJS({
+        876: Immutable.fromJS({
           id: '876',
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 2 },
         }),
-        '765': Immutable.fromJS({
+        765: Immutable.fromJS({
           id: '765',
           availability: [],
           dietType: 'Meat',
           rating: { average: 2 },
         }),
-        '654': Immutable.fromJS({
+        654: Immutable.fromJS({
           id: '654',
           availability: [],
           dietType: 'Fish',
           rating: { average: 1 },
         }),
-        '678': Immutable.fromJS({
+        678: Immutable.fromJS({
           id: '678',
           availability: [],
           dietType: 'Meat',
           rating: { average: 4 },
         }),
-        '789': Immutable.fromJS({
+        789: Immutable.fromJS({
           id: '789',
           availability: [],
           dietType: 'Fish',
           rating: { average: 3 },
         }),
-        '890': Immutable.fromJS({
+        890: Immutable.fromJS({
           id: '890',
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 3 },
         }),
-        '321': Immutable.fromJS({
+        321: Immutable.fromJS({
           id: '321',
           availability: [],
           dietType: 'Fish',
           rating: { average: 0 },
         }),
-        '210': Immutable.fromJS({
+        210: Immutable.fromJS({
           id: '210',
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 0 },
         }),
-        '109': Immutable.fromJS({
+        109: Immutable.fromJS({
           id: '109',
           availability: [],
           dietType: 'Meat',
           rating: { average: 0 },
         }),
-        '123': Immutable.fromJS({
+        123: Immutable.fromJS({
           id: '123',
           availability: [],
           dietType: 'Fish',
           rating: { average: 5 },
         }),
-        '234': Immutable.fromJS({
+        234: Immutable.fromJS({
           id: '234',
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 5 },
         }),
-        '345': Immutable.fromJS({
+        345: Immutable.fromJS({
           id: '345',
           availability: [],
           dietType: 'Meat',
           rating: { average: 5 },
         }),
-        '456': Immutable.fromJS({
+        456: Immutable.fromJS({
           id: '456',
           availability: [],
           dietType: 'Fish',
           rating: { average: 4 },
         }),
-        '567': Immutable.fromJS({
+        567: Immutable.fromJS({
           id: '567',
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 4 },
         }),
-        '543': Immutable.fromJS({
+        543: Immutable.fromJS({
           id: '543',
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 1 },
         }),
-        '432': Immutable.fromJS({
+        432: Immutable.fromJS({
           id: '432',
-          availability: [
-            { from: '2017-01-01', until: '2017-10-01', featured: true },
-          ],
+          isFeaturedRecipe: true,
           dietType: 'Meat',
           rating: { average: 1 },
         }),
@@ -995,9 +989,7 @@ describe('orderRecipes', () => {
         '432',
         Immutable.fromJS({
           id: '432',
-          availability: [
-            { from: '2017-01-01', until: '2017-10-01', featured: true },
-          ],
+          isFeaturedRecipe: true,
           dietType: 'Meat',
           rating: { average: 1 },
         }),

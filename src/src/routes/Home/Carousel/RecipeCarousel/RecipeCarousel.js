@@ -7,7 +7,7 @@ import { formatRecipeTitle } from 'utils/recipe'
 import css from './RecipeCarousel.css'
 import orderRecipes from './orderRecipes'
 
-const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
+const RecipeCarousel = ({ homeCarouselRecipes }) => (
   <div className={`homepageSlider ${css.container}`}>
     <Carousel
       dots={false}
@@ -33,7 +33,7 @@ const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
       ]}
     >
       {
-        orderRecipes(homeCarouselRecipes, cutoffDate)
+        orderRecipes(homeCarouselRecipes)
           .map(recipe => (
             <div className={css.recipeContainer} key={recipe.get('id')}>
               <div className={css.recipe} key={recipe.get('id')}>
@@ -45,9 +45,6 @@ const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
                   averageRating={recipe.getIn(['rating', 'average'])}
                   ratingCount={recipe.getIn(['rating', 'count'])}
                   description={recipe.get('description')}
-                  availability={recipe.get('availability')}
-                  cutoffDate={cutoffDate}
-                  url={recipe.get('url')}
                   useWithin={recipe.get('shelfLifeDays')}
                   cookingTime={recipe.get('cookingTime')}
                   maxMediaSize={400}
@@ -62,7 +59,6 @@ const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
 
 RecipeCarousel.propTypes = {
   homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap),
-  cutoffDate: PropTypes.string,
 }
 
 export default RecipeCarousel

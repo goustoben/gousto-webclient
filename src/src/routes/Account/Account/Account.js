@@ -2,7 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import userActions from 'actions/user'
 import subscriptionActions from 'actions/subscriptionPause'
-import homeActions from 'actions/home'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
+
 import NavBar from './NavBar'
 import css from './Account.css'
 import Banner from './Banner'
@@ -32,10 +33,12 @@ class Account extends React.PureComponent {
 
   componentDidMount() {
     const { store } = this.context
+
     Promise.all([
       store.dispatch(userActions.userLoadData()),
       store.dispatch(userActions.userRecipeRatings()),
-      store.dispatch(homeActions.homeLoadCarousel()),
+
+      loadMenuServiceDataIfDeepLinked(store),
       store.dispatch(subscriptionActions.subscriptionLoadData()),
     ]).then(() => store.dispatch(userActions.checkCardExpiry()))
   }

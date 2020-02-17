@@ -4,8 +4,7 @@ import { createSelector } from 'reselect'
 import { getRecipes, getMenuRecipeIds, getStock, getMenuRecipes as getMenuCollectionRecipes } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
-
-const getRecipeId = (recipe) => recipe.get('id')
+import { getRecipeId } from 'utils/recipe'
 
 const createSortedRecipesResponse = (recipes, inStockRecipes) => {
   const recipeIds = recipes.map(getRecipeId)

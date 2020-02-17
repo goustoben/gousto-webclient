@@ -15,6 +15,11 @@ describe('recipesTransformer', () => {
             core_menu_id: '295'
           },
           relationships: {
+            featured_recipe: {
+              data: {
+                core_recipe_id: '2106',
+              }
+            },
             collections: {
               data: [
                 {
@@ -525,6 +530,7 @@ describe('recipesTransformer', () => {
             id: '488d5751-dcff-4985-88c0-bf745ff54904',
           },
         ],
+        isFeaturedRecipe: true,
         meals: [
           {
             numPortions: 2,
@@ -745,6 +751,11 @@ describe('recipesTransformer', () => {
               core_menu_id: '295'
             },
             relationships: {
+              featured_recipe: {
+                data: {
+                  core_recipe_id: '7586',
+                }
+              },
               recipes: {
                 data: [
                   {

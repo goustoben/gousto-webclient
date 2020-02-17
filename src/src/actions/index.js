@@ -3,7 +3,6 @@ import basket from './basket'
 import checkout from './checkout'
 import content from './content'
 import filters from './filters'
-import home from './home'
 import jobs from './jobs'
 import login from './login'
 import menu from './menu'
@@ -37,7 +36,6 @@ const actions = {
   ...cookbook,
   ...content,
   ...filters,
-  ...home,
   ...jobs,
   ...login,
   ...menu,

@@ -4,7 +4,7 @@ import OrdersList from './OrdersList'
 function mapStateToProps(state) {
   return {
     orders: state.user.get('newOrders'),
-    recipes: state.homeCarouselRecipes,
+    recipes: state.recipes.toOrderedMap(),
     boxType: state.subscription.getIn(['box', 'boxType']),
   }
 }

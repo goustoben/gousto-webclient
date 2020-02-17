@@ -1,5 +1,8 @@
 import Immutable from 'immutable'
-import { getSortedRecipes } from '../sorting'
+import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
+import { getSortedRecipes, getCurrentMenuRecipes, getInStockRecipes } from '../sorting'
+
+jest.mock('utils/menu')
 
 describe('RecipeList selectors', () => {
   const VALID_COLLECTION_ID = '77d1eb54-e3e5-11e7-bf51-06543e25a81c'
@@ -11,7 +14,7 @@ describe('RecipeList selectors', () => {
   })
   let currentMenuRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
   const inStockRecipes = Immutable.fromJS([secondRecipe])
-  
+
   describe('getSortedRecipes', () => {
     describe('no collection id provided', () => {
       test('should return all recipes with in stock first', () => {
@@ -34,7 +37,7 @@ describe('RecipeList selectors', () => {
     describe('wrong collection id provided', () => {
       test('should return all recipes with in stock first', () => {
         const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes)('non-existent-collection')
-        
+
         expect(recipes).toEqual(Immutable.fromJS([
           secondRecipe, firstRecipe, thirdRecipe
         ]))
@@ -65,7 +68,7 @@ describe('RecipeList selectors', () => {
           firstRecipe.get('id'), secondRecipe.get('id')
         ]))
       })
-      
+
       describe('when menuRecipes in different order than recipesInCollection', () => {
         beforeEach(() => {
           currentMenuRecipes = Immutable.fromJS([secondRecipe, thirdRecipe, firstRecipe])
@@ -78,6 +81,34 @@ describe('RecipeList selectors', () => {
           ]))
         })
       })
+    })
+  })
+
+  describe('getCurrentMenuRecipes', () => {
+    test('should return only recipes in the current menu', () => {
+      const allRecipes = Immutable.fromJS({ recipeId1: { desc: 'recipe1Desc'}, recipeId2: { desc: 'recipe2Desc' }})
+      const currentMenuIds = ['recipeId1']
+      const result = getCurrentMenuRecipes.resultFunc(allRecipes, currentMenuIds)
+      expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
+    })
+  })
+
+  describe('getInStockRecipes', () => {
+    const recipes = [Immutable.fromJS({ desc: 'recipe1Desc' })]
+    const stock = []
+    const basketRecipes = []
+    const numPortions = []
+    test('should return recipes when isRecipeInBasket is true', () => {
+      isRecipeInBasket.mockImplementationOnce(() => true)
+      const result = getInStockRecipes.resultFunc(recipes, stock, basketRecipes, numPortions)
+      expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
+    })
+
+    test('should return recipes when isRecipeInStock is true', () => {
+      isRecipeInStock.mockImplementationOnce(() => true)
+
+      const result = getInStockRecipes.resultFunc(recipes, stock, basketRecipes, numPortions)
+      expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
     })
   })
 })

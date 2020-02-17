@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
-import { cutoffDateTimeNow } from 'utils/deliveries'
 import RecipeCarousel from './RecipeCarousel'
+import { getRecipesFromAllRecipesCollection } from './carouselRecipes'
 
-const RecipeCarouselContainer = connect(state => ({
-  homeCarouselRecipes: state.homeCarouselRecipes,
-  cutoffDate: cutoffDateTimeNow(),
-}), {})(RecipeCarousel)
+const mapStateToProps = (state) => ({
+  homeCarouselRecipes: getRecipesFromAllRecipesCollection(state),
+})
+
+const RecipeCarouselContainer = connect(mapStateToProps, {})(RecipeCarousel)
 
 export default RecipeCarouselContainer

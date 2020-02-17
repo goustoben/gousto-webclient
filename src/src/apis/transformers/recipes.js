@@ -1,12 +1,21 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, equipmentTransformer, formatIngredients, healthKitchenTransformer, roundelTransformer, shelfLifeTransformer, surchargeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import {
+  allergensTransformer,
+  basicsTransformer,
+  equipmentTransformer,
+  formatIngredients,
+  healthKitchenTransformer,
+  roundelTransformer,
+  shelfLifeTransformer,
+  surchargeTransformer,
+  taxonomyTransformer
+} from './recipes/recipeHelpers'
 
 const recipesTransformer = (activeMenu, response, brandData = {}) => {
   const normalisedData = normaliseData(response)
   const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.core_recipe_id.toString() )
-
   let foodBrandColours = {}
   if (brandData.data && brandData.data.foodBrandColours) {
     foodBrandColours = brandData.data.foodBrandColours.reduce((acc, item) => ({
@@ -15,7 +24,7 @@ const recipesTransformer = (activeMenu, response, brandData = {}) => {
     }), {})
   }
 
-  const formattedData = activeMenuRecipesIds.map((individualRecipeId) => {
+  const formattedData = activeMenuRecipesIds.map((individualRecipeId, index) => {
     const currentRecipe = normalisedData.recipe[individualRecipeId]
     const normalisedAttributes = currentRecipe && currentRecipe.attributes
     const normalisedRelationships = currentRecipe && currentRecipe.relationships
@@ -24,6 +33,9 @@ const recipesTransformer = (activeMenu, response, brandData = {}) => {
     const finalIngredients = formattedIngredients.map(ingredientTransformer)
 
     const nutritionalInfo = normalisedAttributes.nutritional_information
+
+    // use the first recipe as the featured one (base on recommendations)
+    const isFeaturedRecipe = index === 0
 
     return {
       allergens: allergensTransformer(normalisedAttributes.allergens),
@@ -41,6 +53,7 @@ const recipesTransformer = (activeMenu, response, brandData = {}) => {
       healthKitchen: healthKitchenTransformer(normalisedAttributes.health_kitchen),
       id: individualRecipeId,
       ingredients: finalIngredients,
+      isFeaturedRecipe,
       meals: [
         {
           numPortions: 2,
