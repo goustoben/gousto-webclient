@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import config from 'config'
-import Button from '../Buttons/Buttons'
+import Button from '../Buttons'
 
 const AddButton = ({ id, inBasket, position, stock, view}) => (
   (stock > config.menu.stockThreshold || stock === null || inBasket)
