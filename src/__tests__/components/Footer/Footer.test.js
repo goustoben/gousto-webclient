@@ -25,6 +25,10 @@ describe('<Footer />', () => {
     expect(
       wrapper.find('[data-selid="footer-privacy-statement"]').length,
     ).toEqual(1)
+    // render Modern Slavery link
+    expect(
+      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
+    ).toEqual(1)
     // Don't render pattern
     expect(wrapper.find('#pattern').length).toEqual(0)
   })
@@ -36,6 +40,10 @@ describe('<Footer />', () => {
     // Render Privacy links
     expect(
       wrapper.find('[data-selid="footer-privacy-statement"]').length,
+    ).toEqual(1)
+    // render Modern Slavery link
+    expect(
+      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
     ).toEqual(1)
     // DONT Render app links store
     expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(0)
@@ -55,6 +63,10 @@ describe('<Footer />', () => {
     expect(
       wrapper.find('[data-selid="footer-privacy-statement"]').length,
     ).toEqual(1)
+    // render Modern Slavery link
+    expect(
+      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
+    ).toEqual(1)
     // DONT Render app links store
     expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(0)
     // DONT Render full list
@@ -72,6 +84,10 @@ describe('<Footer />', () => {
     // Render Privacy links
     expect(
       wrapper.find('[data-selid="footer-privacy-statement"]').length,
+    ).toEqual(1)
+    // render Modern Slavery link
+    expect(
+      wrapper.find('[data-selid="footer-modern-slavery-statement"]').length,
     ).toEqual(1)
     // Render app links store
     expect(wrapper.find('[data-selid="footer-facebook"]').length).toEqual(1)

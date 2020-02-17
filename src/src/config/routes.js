@@ -84,6 +84,8 @@ module.exports = {
 
     privacyPolicy: '/privacy-statement',
 
+    modernSlavery: '/modern-slavery-statement',
+
     resetForm: '/resetform',
 
     welcome: '/welcome-to-gousto',

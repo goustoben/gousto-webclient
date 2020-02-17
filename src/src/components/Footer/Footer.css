@@ -318,3 +318,9 @@
 		font-size: 0.7rem;
 	}
 }
+
+.modernSlaveryLink {
+	@media ScreenXSMax {
+		display: none;
+	}
+}

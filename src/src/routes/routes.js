@@ -23,6 +23,7 @@ import OrderConfirmation from './OrderConfirmation'
 import PrivacyStatement from './PrivacyStatement'
 import ChoosePlan from './ChoosePlan'
 import { OrderAddOns } from './OrderAddOns'
+import { ModernSlaveryStatement } from './ModernSlaveryStatement'
 
 const routes = (store) => (
   <Route path="/" component={Page}>
@@ -39,6 +40,7 @@ const routes = (store) => (
     {Unsubscribe}
     {PrivacyStatement}
     {GetHelp(store)}
+    {ModernSlaveryStatement}
 
     <Route component={MainLayout}>
       {Example}

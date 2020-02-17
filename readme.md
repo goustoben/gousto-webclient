@@ -25,15 +25,23 @@ Gousto Web Client
 ### Deployment including a new route
 Routing is handled by the old-stack [Gousto2Frontend](https://github.com/Gousto/Gousto2-FrontEnd) application, meaning new (root-level) routes must be added to the nginx config here and this should be deployed too.
 
-1. Add a the new route in the [redirect rules config](https://github.com/Gousto/Gousto2-FrontEnd/blob/develop/ansible/roles/frontend/templates/nginx/redirect_rules.conf.j2), for example:
+1. Add the new route in the Gousto2-FrontEnd [redirect rules config](https://github.com/Gousto/Gousto2-FrontEnd/blob/develop/ansible/roles/frontend/templates/nginx/redirect_rules.conf.j2), for example:
 ```
 location = /my-new-route {
   include frontend-proxy.conf;
   proxy_pass $webclient$1;
 }
 ```
-2. Deploy [Gousto2Frontend](https://github.com/Gousto/Gousto2-FrontEnd)
-3. Deploy Web Client following the steps above
+2. Add the new route in the devbox-platform [frontend config](https://github.com/Gousto/devbox-platform/blob/master/config/nginx/config/configs/frontend-redirect.conf), for example:
+```
+location = /my-new-route {
+  include frontend-proxy.conf;
+  proxy_pass $webclient:8080$request_uri;
+}
+```
+3. To test the above locally you will have to rebuild the nginx docker image, more information can be found [here](https://github.com/Gousto/Gousto2-FrontEnd/blob/develop/readme.md)
+4. Deploy [Gousto2Frontend](https://github.com/Gousto/Gousto2-FrontEnd)
+5. Deploy Web Client following the steps above
 
 ## Testing
 ### Running unit tests
