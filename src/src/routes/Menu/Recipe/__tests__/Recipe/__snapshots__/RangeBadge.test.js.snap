@@ -13,8 +13,10 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
     style={
       Object {
         "backgroundColor": "#333D47",
-        "border": "1px solid #282B2F",
+        "borderColor": "#282B2F",
         "borderRight": "none",
+        "borderStyle": "solid",
+        "borderWidth": "1px",
         "color": "#FFFFFF",
         "cursor": "default",
       }
