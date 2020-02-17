@@ -103,6 +103,8 @@ export function roundUp(value, precision = 0.01) {
 
 export const isAvailableRecipeList = (recipeIds, recipesStore) => recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
 
+export const getRecipeId = (recipe) => recipe.get('id')
+
 export default {
   getLowStockTag,
 }

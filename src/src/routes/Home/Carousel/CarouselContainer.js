@@ -3,7 +3,7 @@ import redirectAction from 'actions/redirect'
 import Carousel from './Carousel'
 
 const CarouselContainer = connect((state) => ({
-  numRecipes: state.homeCarouselRecipes.count(),
+  numRecipes: state.menuRecipes.count(),
 }), {
   redirect: redirectAction.redirect,
 })(Carousel)

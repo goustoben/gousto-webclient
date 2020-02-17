@@ -6,7 +6,6 @@ import Helmet from 'react-helmet'
 import home from 'config/home'
 import routes from 'config/routes'
 import HomeSections from 'routes/Home/HomeSections'
-import { homeLoadCarousel } from 'actions'
 import menuFetchData from 'routes/Menu/fetchData'
 
 import Home from 'routes/Home/Home'
@@ -17,10 +16,6 @@ jest.mock('routes/Home/HomeSections', () => (
   () => <div />
 ))
 
-jest.mock('actions', () => ({
-  homeLoadCarousel: jest.fn(),
-}))
-
 describe('Home', () => {
   let store
   let wrapper
@@ -28,7 +23,6 @@ describe('Home', () => {
 
   beforeEach(() => {
     dispatch = jest.fn()
-    homeLoadCarousel.mockReturnValue('returned from homeLoadCarousel')
     store = {
       getState: () => ({
         homeCarouselRecipes: Immutable.OrderedMap({
@@ -54,17 +48,6 @@ describe('Home', () => {
 
   afterEach(() => {
     menuFetchData.mockClear()
-  })
-
-  describe('fetchData', () => {
-    test('should dispatch the result of a actions.homeLoadCarousel', () => {
-      Home.fetchData({ store })
-      expect(dispatch).toHaveBeenCalled()
-      expect(homeLoadCarousel).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalledWith(
-        'returned from homeLoadCarousel',
-      )
-    })
   })
 
   describe('componentDidMount', () => {
@@ -116,6 +99,19 @@ describe('Home', () => {
         'whatsInYourBox',
         'testimonials',
         'testedAndLovedBy',
+      ])
+    })
+
+    test('should display HomeSections in requested order', () => {
+      wrapper = shallow(<Home
+        redirectLoggedInUser={jest.fn()}
+        moduleOrder="testimonials,recipes"
+      />, { context: { store } })
+
+      expect(wrapper.find(HomeSections)).toHaveLength(1)
+      expect(wrapper.find(HomeSections).prop('modules')).toEqual([
+        'testimonials',
+        'recipes',
       ])
     })
   })

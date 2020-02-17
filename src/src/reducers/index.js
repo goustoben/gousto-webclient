@@ -10,7 +10,6 @@ import { cookbookRecipes } from './cookbookRecipes'
 import example from './example'
 import features from './features'
 import filters from './filters'
-import home from './home'
 import jobs from './jobs'
 import login from './login'
 import menu from './menu'
@@ -58,7 +57,6 @@ const reducers = {
   ...example,
   ...features,
   ...filters,
-  ...home,
   ...jobs,
   ...login,
   logger,

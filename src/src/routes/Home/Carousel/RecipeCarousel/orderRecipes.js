@@ -1,36 +1,26 @@
 import Immutable from 'immutable'
 
 const ratingSort = (a, b) => b.getIn(['rating', 'average'], 0) - a.getIn(['rating', 'average'], 0)
-const isFeatured = (recipe, cutoffDate) => (
-  recipe && recipe.get('availability').filter((entry) => {
-    const dateFrom = new Date(entry.get('from'))
-    const dateUntil = new Date(entry.get('until'))
-
-    return entry.get('featured') && (cutoffDate <= dateUntil) && (cutoffDate >= dateFrom)
-  }).size > 0
-)
-
 const isMeat = recipe => recipe.get('dietType', '').toLowerCase() === 'meat'
 const isFish = recipe => recipe.get('dietType', '').toLowerCase() === 'fish'
 const isOther = recipe => !(isFish(recipe) || isMeat(recipe))
 
-const orderRecipes = (recipesMap, cutoffDateStr) => {
-  const cutoffDate = new Date(cutoffDateStr)
+const orderRecipes = (recipesMap) => {
   const recipes = recipesMap.toList()
-  const featuredRecipes = recipes.filter(recipe => isFeatured(recipe, cutoffDate))
+  const featuredRecipes = recipes.filter(recipe => recipe.get('isFeaturedRecipe'))
   const meatRecipes = recipes
-    .filter(recipe => !isFeatured(recipe, cutoffDate))
+    .filter(recipe => !recipe.get('isFeaturedRecipe'))
     .filter(isMeat)
     .sort(ratingSort)
 
   const fishRecipes = recipes
-    .filter(recipe => !isFeatured(recipe, cutoffDate))
+    .filter(recipe => !recipe.get('isFeaturedRecipe'))
     .filter(isFish)
     .sort(ratingSort)
 
   // veggie and anything else
   const otherRecipes = recipes
-    .filter(recipe => !isFeatured(recipe, cutoffDate))
+    .filter(recipe => !recipe.get('isFeaturedRecipe'))
     .filter(isOther)
     .sort(ratingSort)
 

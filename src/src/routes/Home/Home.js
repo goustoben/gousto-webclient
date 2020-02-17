@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 
-import actions from 'actions'
 import menuFetchData from 'routes/Menu/fetchData'
 import home from 'config/home'
 import routes from 'config/routes'
@@ -27,20 +26,14 @@ class Home extends React.Component {
     variant: 'default',
   }
 
-  static fetchData({ store }) {
-    return store.dispatch(actions.homeLoadCarousel())
-  }
-
   componentDidMount() {
-    const store = this.context.store
+    const { store } = this.context
     const { redirectLoggedInUser } = this.props
     redirectLoggedInUser()
 
     this.prefetchTimer = setTimeout(() => {
       menuFetchData({ store, query: {}, params: {} }, false, true)
     }, 500)
-
-    Home.fetchData({ store })
   }
 
   componentWillUnmount() {
@@ -60,7 +53,8 @@ class Home extends React.Component {
   }
 
   defaultModules() {
-    if (this.props.isAuthenticated) {
+    const { isAuthenticated } = this.props
+    if (isAuthenticated) {
       return [
         'hero', 'howItWorks', 'subscription', 'recipes',
         'whatsInYourBox', 'testimonials',
