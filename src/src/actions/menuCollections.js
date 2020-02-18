@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import logger from 'utils/logger'
 import { fetchCollections } from 'apis/collections'
 import { limitReached } from 'utils/basket'
 import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
@@ -48,7 +49,7 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => async
   }
 }
 
-const loadRecipesForAllCollections = (date, transformedRecipes, transformedCollectionRecipes) => (dispatch, getState) => {
+const loadRecipesForAllCollections = (transformedRecipes, transformedCollectionRecipes) => (dispatch, getState) => {
   const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
   const ids = Array.from(getState().menuCollections.keys())
 
@@ -58,7 +59,7 @@ const loadRecipesForAllCollections = (date, transformedRecipes, transformedColle
   }
 
   return Promise.all(
-    ids.map(id => loadRecipesForSingleCollection(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
+    ids.map(id => loadRecipesForSingleCollection(id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
   )
     .then(() => {
       const state = getState()
@@ -67,6 +68,9 @@ const loadRecipesForAllCollections = (date, transformedRecipes, transformedColle
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
       })
+    })
+    .catch((err) => {
+      logger.error({ message: 'Failed to load recipes for collections', errors: [err] })
     })
 }
 

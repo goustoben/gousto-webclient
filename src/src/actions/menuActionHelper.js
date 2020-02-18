@@ -11,8 +11,7 @@ function getStockAvailability(getState, recipeStock) {
 
   return recipeStockList.reduce((acc, stockEntry) => {
     const committed = stockEntry.committed === '1'
-
-    const foundMatchingRecipeFromStock = storedRecipes.find((obj) => obj.coreRecipeId === stockEntry.recipeId.toString())
+    const foundMatchingRecipeFromStock = storedRecipes.find((obj) => obj.id === stockEntry.recipeId.toString())
 
     if (foundMatchingRecipeFromStock) {
       acc[foundMatchingRecipeFromStock.id] = {
@@ -41,7 +40,7 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date, back
   const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
 
   await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
-  await loadRecipesForAllCollections(date, transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
+  await loadRecipesForAllCollections(transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
 }
 
 export {

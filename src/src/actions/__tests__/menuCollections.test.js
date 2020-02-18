@@ -6,6 +6,7 @@ import { getCollectionIdWithName, getDefaultCollectionId, isAllRecipes } from 'u
 import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
 import { loadRecipesForSingleCollection } from 'actions/loadRecipesForSingleCollection'
 import { collectionFilterChange } from 'actions/filters'
+import logger from 'utils/logger'
 
 jest.mock('utils/collections', () => ({
   getCollectionIdWithName: jest.fn(),
@@ -20,15 +21,22 @@ jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
 }))
 jest.mock('actions/loadRecipesForSingleCollection', () => ({
-  loadRecipesForSingleCollection: jest.fn().mockImplementation(() => () => Promise.resolve())
+  loadRecipesForSingleCollection: jest.fn()
 }))
 jest.mock('utils/basket', () => ({
   limitReached: jest.fn(),
 }))
 
+jest.mock('utils/logger', () => ({
+  error: jest.fn()
+}))
+
 describe('menu actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
+  beforeEach(() => {
+    loadRecipesForSingleCollection.mockImplementation(() => () => Promise.resolve())
+  })
 
   afterEach(() => {
     dispatch.mockClear()
@@ -238,11 +246,24 @@ describe('menu actions', () => {
     })
 
     test('calls loadRecipesForSingleCollection for each menuCollection in state', async () => {
-      await loadRecipesForAllCollections('a-date')(dispatch, getStateWithBasketItems)
+      const transformedRecipes = {}
+      const transformedCollectionRecipes = {}
+      await loadRecipesForAllCollections(transformedRecipes, transformedCollectionRecipes)(dispatch, getStateWithBasketItems)
 
       expect(isAllRecipes).toHaveBeenCalled()
       expect(loadRecipesForSingleCollection).toHaveBeenCalled()
       expect(limitReached).toHaveBeenCalled()
+    })
+
+    describe('when promise all rejects', () => {
+      test('should call logger with error', async () => {
+        const transformedRecipes = {}
+        const transformedCollectionRecipes = {}
+        loadRecipesForSingleCollection.mockImplementation(() => () => Promise.reject())
+        await loadRecipesForAllCollections(transformedRecipes, transformedCollectionRecipes)(dispatch, getStateWithBasketItems)
+
+        expect(logger.error).toHaveBeenCalled()
+      })
     })
   })
 })

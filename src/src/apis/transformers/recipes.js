@@ -15,6 +15,9 @@ import {
 
 const recipesTransformer = (activeMenu, response, brandData = {}) => {
   const normalisedData = normaliseData(response)
+  if (!activeMenu || !activeMenu.relationships) {
+    return undefined
+  }
   const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.core_recipe_id.toString() )
   let foodBrandColours = {}
   if (brandData.data && brandData.data.foodBrandColours) {

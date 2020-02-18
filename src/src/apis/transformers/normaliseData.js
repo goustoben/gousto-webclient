@@ -4,11 +4,11 @@ export const normaliseData = (response) => {
   const normalised = {}
 
   included.forEach(row => {
-    if(normalised[row.type] === undefined) {
+    if (normalised[row.type] === undefined) {
       normalised[row.type] = {}
     }
 
-    const id = (row.type === 'recipe') ? row.attributes.core_recipe_id.toString() : row.id
+    const id = (row.type === 'recipe') ? row.attributes.core_recipe_id && row.attributes.core_recipe_id.toString() : row.id
     normalised[row.type][id] = row
   })
 

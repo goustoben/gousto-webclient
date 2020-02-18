@@ -1,20 +1,16 @@
 import Immutable from 'immutable'
-import { menuServiceConfig } from 'config/menuService'
 import { actionTypes } from '../actionTypes'
-
 const mockFetchAvailableDates = jest.fn()
 const mockFetchRecipeStock = jest.fn()
 const mockLimitReached = jest.fn()
 const mockGetCutoffDateTime = jest.fn()
 
-const mockDispatchMenuLoadCollections = jest.fn()
 const mockDispatchLoadRecipesForAllCollections = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
 
 jest.mock('apis/recipes', () => ({
   fetchRecipeStock: mockFetchRecipeStock,
-  fetchAvailableDates: mockFetchAvailableDates
 }))
 
 jest.mock('utils/basket', () => ({
@@ -26,7 +22,6 @@ jest.mock('utils/deliveries', () => ({
 }))
 
 jest.mock('actions/menuCollections', () => ({
-  menuLoadCollections: () => mockDispatchMenuLoadCollections,
   loadRecipesForAllCollections: () => mockDispatchLoadRecipesForAllCollections
 }))
 
@@ -41,7 +36,8 @@ jest.mock('actions/menuActionHelper', () => ({
 
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
-  const menuActions = require('../menu')
+  const { findSlot, ...menuActions }= require('../menu')//eslint-disable-line
+  const { getStockAvailability } = require('../menuActionHelper')//eslint-disable-line
   const dispatch = jest.fn()
   const state = {
     auth: Immutable.fromJS({
@@ -66,9 +62,7 @@ describe('menu actions', () => {
       }
     })
   }
-  const getState = () => state
-
-  const initialValue = menuServiceConfig.enabled
+  let getState = () => state
 
   beforeEach(() => {
     mockFetchRecipeStock.mockResolvedValue({ data: {
@@ -83,7 +77,60 @@ describe('menu actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    menuServiceConfig.isEnabled = initialValue
+  })
+
+  describe('menuReceiveMenu', () => {
+    test('should return RECIPES_RECEIVE action', () => {
+      const result = menuActions.menuReceiveMenu(['234', '235'])
+      expect(result).toEqual({
+        type: actionTypes.RECIPES_RECEIVE,
+        recipes: ['234', '235'],
+      })
+    })
+  })
+
+  describe('findSlot', () => {
+    let boxSummaryDeliveryDays
+    let coreSlotId
+    describe('when slot found', () => {
+      beforeEach(() => {
+        boxSummaryDeliveryDays = Immutable.fromJS({
+          '2019-10-22': {
+            slots: [
+              {
+                id: 'dg015db8',
+                coreSlotId: '001'
+              }
+            ]
+          }
+        })
+        coreSlotId = '001'
+      })
+      test('should return slotId', () => {
+        const result = findSlot(boxSummaryDeliveryDays, coreSlotId)
+        expect(result).toEqual('dg015db8')
+      })
+    })
+
+    describe('when slot not found', () => {
+      beforeEach(() => {
+        boxSummaryDeliveryDays = Immutable.fromJS({
+          '2019-10-22': {
+            slots: [
+              {
+                id: 'dg015db8',
+                coreSlotId: '001'
+              }
+            ]
+          }
+        })
+        coreSlotId = '002'
+      })
+      test('should return undefined', () => {
+        const result = findSlot(boxSummaryDeliveryDays, coreSlotId)
+        expect(result).toEqual(undefined)
+      })
+    })
   })
 
   describe('menuLoadMenu', () => {
@@ -98,47 +145,21 @@ describe('menu actions', () => {
       expect(mockGetCutoffDateTime).toHaveBeenCalled()
     })
 
-    describe('when useMenuService is true', () => {
-      test('should load collections when collections.value is true', async () => {
-        menuServiceConfig.isEnabled = true
+    test('should load collections when collections.value is true', async () => {
+      const stateWithTrueCollectionValue = {
+        ...state,
+        features: Immutable.fromJS({
+          collections: {
+            value: true,
+          }
+        }),
+      }
 
-        const stateWithTrueCollectionValue = {
-          ...state,
-          features: Immutable.fromJS({
-            collections: {
-              value: true,
-            }
-          }),
-        }
+      const getStateForTest = () => stateWithTrueCollectionValue
 
-        const getStateForTest = () => stateWithTrueCollectionValue
+      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
 
-        await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
-
-        expect(mockLoadMenuCollectionsWithMenuService).toHaveBeenCalled()
-      })
-    })
-
-    describe('when useMenuService is false', () => {
-      test('should load collections when collections.value is false', async () => {
-        menuServiceConfig.isEnabled = false
-
-        const stateWithTrueCollectionValue = {
-          ...state,
-          features: Immutable.fromJS({
-            collections: {
-              value: true,
-            }
-          }),
-        }
-
-        const getStateForTest = () => stateWithTrueCollectionValue
-
-        await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
-
-        expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
-        expect(mockDispatchLoadRecipesForAllCollections).toHaveBeenCalled()
-      })
+      expect(mockLoadMenuCollectionsWithMenuService).toHaveBeenCalled()
     })
   })
 
@@ -150,42 +171,7 @@ describe('menu actions', () => {
       ]})
     })
 
-    describe('given menuService turned off', () => {
-      beforeEach(() => {
-        menuServiceConfig.isEnabled = false
-      })
-
-      describe('when call `menuLoadDays`', () => {
-        beforeEach(async () => {
-          await menuActions.menuLoadDays()(dispatch, getState)
-        })
-
-        test('then should have called `fetchAvailableDates` with access token', () => {
-          expect(mockFetchAvailableDates).toHaveBeenCalledWith('test')
-        })
-
-        test('then should not have called `loadDays`', () => {
-          expect(mockMenuServiceLoadDays).not.toHaveBeenCalled()
-        })
-
-        test('then should dispatch action with until value of the last date', () => {
-          expect(dispatch).toHaveBeenCalledWith({
-            type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
-            cutoffUntil: '2019-10-22T00:00:00+01:00'
-          })
-        })
-      })
-    })
-
     describe('given menuService turned on', () => {
-      beforeEach(() => {
-        menuServiceConfig.isEnabled = true
-      })
-
-      afterEach(() => {
-        menuServiceConfig.isEnabled = false
-      })
-
       describe('when call `menuLoadDays`', () => {
         beforeEach(async () => {
           await menuActions.menuLoadDays()(dispatch, getState)
@@ -208,6 +194,18 @@ describe('menu actions', () => {
 
   describe('menuLoadStock', () => {
     describe('clearStock is true', () => {
+      beforeEach(() => {
+        getStockAvailability.mockReturnValue({
+          '001': {
+            2: 53,
+            4: 100,
+            committed: true
+          }
+        })
+      })
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
       const menuLoadStockAction = menuActions.menuLoadStock(true)
 
       test('should dispatch a replace action with adjusted stock', async () => {
@@ -242,6 +240,18 @@ describe('menu actions', () => {
 
     describe('clearStock is false', () => {
       const menuLoadStockAction = menuActions.menuLoadStock(false)
+      beforeEach(() => {
+        getStockAvailability.mockReturnValue({
+          '001': {
+            2: 53,
+            4: 100,
+            committed: true
+          }
+        })
+      })
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
 
       test('should dispatch a change action with adjusted stock', async () => {
         await menuLoadStockAction(dispatch, getState)
@@ -268,6 +278,53 @@ describe('menu actions', () => {
         type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
         cutoffUntil: '2020-06-26',
       })
+    })
+  })
+
+  describe('forceMenuLoad', () => {
+    test('should return a MENU_FORCE_LOAD action', () => {
+      const result = menuActions.forceMenuLoad(true)
+
+      expect(result).toEqual({
+        type: actionTypes.MENU_FORCE_LOAD,
+        forceLoad: true,
+      })
+    })
+  })
+
+  describe('menuBrowseCTAVisibilityChange', () => {
+    test('should return a MENU_BROWSE_CTA_VISIBILITY_CHANGE action', () => {
+      const result = menuActions.menuBrowseCTAVisibilityChange(true)
+
+      expect(result).toEqual({
+        type: actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE,
+        show: true,
+      })
+    })
+  })
+
+  describe('menuAddEmptyStock', () => {
+    beforeEach(() => {
+      getState = () => ({
+        menuRecipes: ['123', '234']
+      })
+    })
+    test('should return a MENU_RECIPE_STOCK_CHANGE action', () => {
+      menuActions.menuAddEmptyStock(true)(dispatch, getState)
+
+      expect(dispatch.mock.calls[0]).toEqual([{
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: {
+          123: {
+            2: null,
+            4: null
+          },
+          234: {
+            2: null,
+            4: null
+          }
+        },
+      }])
     })
   })
 

@@ -106,20 +106,6 @@ const createCookies = (ctx, store) => {
   }
 }
 
-const experiment_setGoustoUseMenuServiceGlobalCookie = (ctx) => {
-  const val = ctx.cookies.get('gousto_useNewMenuService')
-
-  if (val === 'true' || val === 'false') {
-    global.document = {
-      cookie: `gousto_useNewMenuService=${val};`
-    }
-  } else {
-    global.document = {
-      cookie: ''
-    }
-  }
-}
-
 /* eslint-disable no-param-reassign */
 async function processRequest(ctx, next) {
   if (ctx.request.url === '/500pagetest') {
@@ -134,8 +120,6 @@ async function processRequest(ctx, next) {
   const currentRoutes = routes(store)
 
   if (ctx.cookies) {
-    experiment_setGoustoUseMenuServiceGlobalCookie(ctx)
-
     processCookies(ctx.cookies, store) // read auth cookies into the store
     createCookies(ctx, store)
   }

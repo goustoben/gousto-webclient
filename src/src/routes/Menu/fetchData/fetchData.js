@@ -15,7 +15,6 @@ import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { brandDataReceived } from 'actions/brand'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { getMenuService } from 'selectors/features'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
@@ -232,7 +231,6 @@ const shouldFetchData = (store, params, force) => {
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background, userMenuVariant) {
   const accessToken = store.getState().auth.get('accessToken')
-  const useMenuService = getMenuService()
 
   const startTime = now()
 
@@ -246,24 +244,22 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
 
-  if (useMenuService) {
-    const isAuthenticated = getIsAuthenticated(store.getState())
-    const userId = store.getState().auth.get('id')
+  const isAuthenticated = getIsAuthenticated(store.getState())
+  const userId = store.getState().auth.get('id')
 
-    let fetchMenuPromise
+  let fetchMenuPromise
 
-    if (isAuthenticated && userId) {
-      fetchMenuPromise = fetchMenusWithUserId(accessToken, userId)
-    } else if (userMenuVariant) { // A/B test on signup page
-      fetchMenuPromise = fetchMenusWithUserId(accessToken, userMenuVariant)
-    } else {
-      fetchMenuPromise = fetchMenus(accessToken, query)
-    }
-
-    const menuResponse = await fetchMenuPromise
-
-    store.dispatch(menuServiceDataReceived(menuResponse))
+  if (isAuthenticated && userId) {
+    fetchMenuPromise = fetchMenusWithUserId(accessToken, userId)
+  } else if (userMenuVariant) { // A/B test on signup page
+    fetchMenuPromise = fetchMenusWithUserId(accessToken, userMenuVariant)
+  } else {
+    fetchMenuPromise = fetchMenus(accessToken, query)
   }
+
+  const menuResponse = await fetchMenuPromise
+
+  store.dispatch(menuServiceDataReceived(menuResponse))
 
   try {
     const brandResponse = await fetchBrandInfo()
@@ -291,7 +287,7 @@ export default async function fetchData({ store, query, params }, force, backgro
 
     const timeTaken = Math.round(now() - startTime)
 
-    store.dispatch(menuLoadComplete(timeTaken, useMenuService))
+    store.dispatch(menuLoadComplete(timeTaken, true))
   } catch (e) {
     store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
     throw e

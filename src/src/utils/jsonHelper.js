@@ -25,16 +25,16 @@ export function snakeToCamelCase(text) {
   return text.replace(/"\w+?":/g, key => key.replace(/_\w/g, match => match[1].toUpperCase()))
 }
 
-export function JSONParse(text, useMenuService) { // eslint-disable-line new-cap
+export function JSONParse(text, returnRawData) { // eslint-disable-line new-cap
   try {
-    if (useMenuService) {
+    if (returnRawData) {
       return JSON.parse(text)
     }
     const camelCaseText = snakeToCamelCase(text)
 
     return JSON.parse(camelCaseText)
   } catch (e) {
-    logger.error({ message:`JSONParse failed with text: "${text}"`, errors:  [e] })
+    logger.error({ message: `JSONParse failed with text: "${text}"`, errors: [e] })
     throw new Error('An error occurred, please try again.')
   }
 }
@@ -82,12 +82,10 @@ export function processJSON([response, status]) {
       reject(errorObj)
     } else if (typeof response === 'object' && status < 400) {
       resolve({ response, meta })
+    } else if (typeof response === 'object') {
+      reject(response, meta)
     } else {
-      if (typeof response === 'object') {
-        reject(response, meta)
-      } else {
-        reject('Response is malformed')
-      }
+      reject('Response is malformed')
     }
   })
 }

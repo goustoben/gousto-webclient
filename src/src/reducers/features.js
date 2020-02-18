@@ -51,9 +51,6 @@ const defaultFeatures = () => ({
   showCookingInstruction: {
     value: false,
   },
-  menuService: {
-    value: false,
-  },
   addOnsBeforeOrderConfirmation: {
     value: false,
   },
