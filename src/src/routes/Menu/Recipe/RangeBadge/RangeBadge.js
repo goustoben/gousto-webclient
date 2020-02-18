@@ -4,26 +4,33 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import css from './RangeBadge.css'
 
+const propTypes = {
+  range: PropTypes.instanceOf(Immutable.Map),
+  selectFoodBrand: PropTypes.func,
+  isFoodBrandClickable: PropTypes.bool,
+}
+
+const defaultProps = {
+  range: Immutable.Map({}),
+  selectFoodBrand: () => {},
+  isFoodBrandClickable: false,
+}
+
 const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
-  let textColor
-  let backgroundColor
-  let borderColor
-  let foodBrandSlug
-  let rangeBadge
-  let handleClick = null
-
-  if (range && range.size) {
-    rangeBadge = range.get('properties')
-
-    textColor = rangeBadge.get('textColor')
-    backgroundColor = rangeBadge.get('ribbonColor')
-    borderColor = rangeBadge.get('borderColor')
-    foodBrandSlug = range.get('slug')
+  if (!range || !range.has('properties')) {
+    return null
   }
+
+  const rangeBadge = range.get('properties')
+  const textColor = rangeBadge.get('textColor')
+  const backgroundColor = rangeBadge.get('ribbonColor')
+  const borderColor = rangeBadge.get('borderColor')
+  const foodBrandSlug = range.get('slug')
+  let handleClick = null
 
   const ribbonTextStyle = {
     color: textColor,
-    backgroundColor: backgroundColor,
+    backgroundColor,
     borderColor: `${borderColor}`,
     borderStyle: 'solid',
     borderWidth: '1px',
@@ -47,10 +54,6 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
     handleClick = () => selectFoodBrand(foodBrandSlug)
   }
 
-  if (!rangeBadge) {
-    return null
-  }
-
   return (
     <div className={css.rangeBadge}>
       <div
@@ -65,23 +68,20 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
         <span className={classnames(css.foodBrandName, {[css.foodBrandNameUnderlined]: isFoodBrandClickable})}>
           {range.get('name')}
         </span>
-        {isFoodBrandClickable ? <span className={css.rightChevron}></span> : null}
+        {isFoodBrandClickable ? <span className={css.rightChevron} /> : null}
       </div>
 
       <div className={css.ribbon} style={ribbonStyle}>
-        <div className={css.arrowTopBorder} style={arrowBorderStyle}></div>
-        <div className={css.arrowTop} style={arrowStyle}></div>
-        <div className={css.arrowBottomBorder} style={arrowBorderStyle}></div>
-        <div className={css.arrowBottom} style={arrowStyle}></div>
+        <div className={css.arrowTopBorder} style={arrowBorderStyle} />
+        <div className={css.arrowTop} style={arrowStyle} />
+        <div className={css.arrowBottomBorder} style={arrowBorderStyle} />
+        <div className={css.arrowBottom} style={arrowStyle} />
       </div>
     </div>
   )
 }
 
-RangeBadge.propTypes = {
-  range: PropTypes.instanceOf(Immutable.Map),
-  selectFoodBrand: PropTypes.func,
-  isFoodBrandClickable: PropTypes.bool,
-}
+RangeBadge.propTypes = propTypes
+RangeBadge.defaultProps = defaultProps
 
 export default RangeBadge

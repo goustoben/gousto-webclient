@@ -75,6 +75,41 @@ const handleQueryError = async (store, error) => {
   }
 }
 
+const loadOrderAuthenticated = async (store, orderId) => {
+  try {
+    const { auth, user } = store.getState()
+
+    if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
+      await store.dispatch(actions.userLoadData())
+    }
+    const prevBasketRecipes = store.getState().basket.get('recipes')
+
+    await store.dispatch(actions.menuLoadOrderDetails(orderId))
+
+    const noOfOrderRecipes = store.getState().basket.get('recipes').size
+
+    if (noOfOrderRecipes === 0) {
+      // eslint-disable-next-line no-restricted-syntax, no-unused-vars
+      for (const [recipeId, qty] of prevBasketRecipes) {
+        for (let i = 0; i < qty; i++) {
+          store.dispatch(actions.basketRecipeAdd(recipeId))
+        }
+      }
+    }
+
+    await Promise.all([
+      store.dispatch(actions.menuLoadMenu()),
+      store.dispatch(actions.menuLoadStock(true))
+    ])
+  } catch (e) {
+    logger.error({ message: `Debug fetchData: ${e}`, errors: [e] })
+    if (__SERVER__) {
+      logger.error({ message: `Failed to fetch order: ${orderId}.`, errors: [e] })
+      await store.dispatch(actions.redirect('/menu', true))
+    }
+  }
+}
+
 const loadOrder = async (store, orderId) => {
   const isAuthenticated = getIsAuthenticated(store.getState())
 
@@ -90,40 +125,6 @@ const loadOrder = async (store, orderId) => {
     }
 
     await store.dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}/menu/${orderId}`)}#login`, true))
-  }
-}
-
-const loadOrderAuthenticated = async (store, orderId) => {
-  try {
-    const { auth, user } = store.getState()
-
-    if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
-      await store.dispatch(actions.userLoadData())
-    }
-    const prevBasketRecipes = store.getState().basket.get('recipes')
-
-    await store.dispatch(actions.menuLoadOrderDetails(orderId))
-
-    const noOfOrderRecipes = store.getState().basket.get('recipes').size
-
-    if (noOfOrderRecipes === 0) {
-      for (const [recipeId, qty] of prevBasketRecipes) {
-        for (let i = 0; i < qty; i++) {
-          await store.dispatch(actions.basketRecipeAdd(recipeId))
-        }
-      }
-    }
-
-    await Promise.all([
-      store.dispatch(actions.menuLoadMenu()),
-      store.dispatch(actions.menuLoadStock(true))
-    ])
-  } catch (e) {
-    logger.error({ message: `Debug fetchData: ${e}`, errors: [e] })
-    if (__SERVER__) {
-      logger.error({ message: `Failed to fetch order: ${orderId}.`, errors: [e] })
-      await store.dispatch(actions.redirect('/menu', true))
-    }
   }
 }
 
@@ -200,9 +201,9 @@ const addRecipesFromQuery = async (store, query) => {
   const recipeIds = query.recipes.slice(1, -1).split(',')
   const newRecipes = recipeIds.filter(el => inStockRecipes.indexOf(el) > -1).slice(0, 4)
 
-  for (const i of newRecipes) {
-    await store.dispatch(actions.basketRecipeAdd(i))
-  }
+  newRecipes.forEach(newRecipe => {
+    store.dispatch(actions.basketRecipeAdd(newRecipe))
+  })
 }
 
 const selectCollectionFromQuery = (store, query) => {
@@ -264,8 +265,12 @@ export default async function fetchData({ store, query, params }, force, backgro
     store.dispatch(menuServiceDataReceived(menuResponse))
   }
 
-  const brandResponse = await fetchBrandInfo()
-  store.dispatch(brandDataReceived(brandResponse))
+  try {
+    const brandResponse = await fetchBrandInfo()
+    store.dispatch(brandDataReceived(brandResponse))
+  } catch (err) {
+    logger.notice({ message: `Brand Theme failed to load: ${err.message}`, errors: [err] })
+  }
 
   try {
     if (query.error) {

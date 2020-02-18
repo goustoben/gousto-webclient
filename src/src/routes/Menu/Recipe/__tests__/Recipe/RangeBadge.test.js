@@ -19,9 +19,9 @@ describe('<RangeBadge />', () => {
         name: 'Ten to table',
         slug: 'ten-to-table',
         properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
+          ribbonColor: '#333D47',
+          borderColor: '#282B2F',
+          textColor: '#FFFFFF'
         }
       })
       const tree = renderer
@@ -39,9 +39,9 @@ describe('<RangeBadge />', () => {
         name: 'Ten to table',
         slug: 'ten-to-table',
         properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
+          ribbonColor: '#333D47',
+          borderColor: '#282B2F',
+          textColor: '#FFFFFF'
         }
       })
       const wrapper = shallow(<RangeBadge range={range} />)
@@ -53,9 +53,9 @@ describe('<RangeBadge />', () => {
         name: 'everyday favourites',
         slug: 'everyday-favourites',
         properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
+          ribbonColor: '#333D47',
+          borderColor: '#282B2F',
+          textColor: '#FFFFFF'
         }
       })
       const wrapper = shallow(<RangeBadge range={range} />)
@@ -67,9 +67,9 @@ describe('<RangeBadge />', () => {
         name: 'everyday favourites',
         slug: 'everyday-favourites',
         properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
+          ribbonColor: '#333D47',
+          borderColor: '#282B2F',
+          textColor: '#FFFFFF'
         }
       })
       const wrapper = shallow(<RangeBadge range={range} />)
@@ -81,13 +81,50 @@ describe('<RangeBadge />', () => {
         name: '10-MINUTE MEAL',
         slug: 'ten-to-table',
         properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
+          ribbonColor: '#333D47',
+          borderColor: '#282B2F',
+          textColor: '#FFFFFF'
         }
       })
       const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.foodBrandName').prop('children')).toEqual('10-MINUTE MEAL')
+    })
+
+    test('should not render if there is no range supplied', () => {
+      let range
+      const wrapper = shallow(<RangeBadge range={range} />)
+      expect(wrapper.type()).toEqual(null)
+    })
+
+    test('should not render if there is no matching theme properties for range', () => {
+      const range = Immutable.fromJS({
+        id: '1',
+        name: '10-MINUTE MEAL',
+        slug: 'ten-to-table',
+      })
+      const wrapper = shallow(<RangeBadge range={range} />)
+      expect(wrapper.type()).toEqual(null)
+    })
+
+    test('should add a click event for clickable food brand', () => {
+      const mockSelectFoodBrand = jest.fn()
+      const range = Immutable.fromJS({
+        id: '1',
+        name: 'Ten to table',
+        slug: 'ten-to-table',
+        properties: {
+          ribbonColor: '#333D47',
+          borderColor: '#282B2F',
+          textColor: '#FFFFFF'
+        }
+      })
+      const wrapper = shallow(<RangeBadge
+        range={range}
+        selectFoodBrand={mockSelectFoodBrand}
+        isFoodBrandClickable
+      />)
+      wrapper.find('[data-testing="foodBrandBanner"]').simulate('click')
+      expect(mockSelectFoodBrand).toHaveBeenCalled()
     })
   })
 })
