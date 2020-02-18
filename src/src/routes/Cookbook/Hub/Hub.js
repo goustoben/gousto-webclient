@@ -98,7 +98,7 @@ class Hub extends React.PureComponent {
   }
 
   async componentDidMount() {
-    const store = this.context.store
+    const {store} = this.context
     const { collection, fetchSetData, params, recipesCollection, resetSets, startSet } = this.props
 
     if (collection.get('slug') !== params.collectionSlug || collection.get('id') !== recipesCollection) {
@@ -191,9 +191,11 @@ class Hub extends React.PureComponent {
             view="simple"
             media={urls}
             alt={title}
+            stock={100 /* always show Simple Recipe as in stock */}
+            inBasket={false}
           />
           <Info regular>
-            {<div className={css.recipeInfo}>
+            <div className={css.recipeInfo}>
               <Title
                 title={title}
                 linkUnderlined
@@ -210,9 +212,9 @@ class Hub extends React.PureComponent {
                   average={rating.average}
                   count={rating.count}
                 />
-                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
+                <RecipeAttribute name="cookingTime" value={cookingTime} icon="icon-time" />
               </span>
-            </div>}
+            </div>
           </Info>
         </Link>
       </div>
@@ -262,8 +264,7 @@ class Hub extends React.PureComponent {
                   <Div margin={{ top: 'XXL', bottom: 'XXL' }}>
                     <LoadMoreLink onClick={loadNextSet} />
                   </Div>
-                )
-              }
+                )}
             </Col>
             <Col
               col-xs-12
@@ -284,6 +285,6 @@ class Hub extends React.PureComponent {
 }
 
 export default Hub
-export const fetchData = Hub.fetchData
+export const {fetchData} = Hub
 export const fetchSetData = Hub.fetchRecipes
-export const limit = Hub.limit
+export const {limit} = Hub
