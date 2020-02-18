@@ -169,7 +169,7 @@ describe('menu fetchData', () => {
           test('should dispatch menuLoadStock action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const menuLoadStockResult = Symbol()
+            const menuLoadStockResult = Symbol('fake action creator result')
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
             await fetchData({ store, query: noStockQuery, params }, false, false)
@@ -194,14 +194,10 @@ describe('menu fetchData', () => {
           test('should dispatch menuLoadOrderDetails', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const menuLoadOrderDetailsResult = Symbol()
+            const menuLoadOrderDetailsResult = Symbol('fake action creator result')
 
             // use mockImplementation and only return the symbol if it's called with the expected orderId
-            actions.menuLoadOrderDetails.mockImplementation(loadOrderId => {
-              if (loadOrderId === orderId) {
-                return menuLoadOrderDetailsResult
-              }
-            })
+            actions.menuLoadOrderDetails.mockImplementation(loadOrderId => (loadOrderId === orderId ? menuLoadOrderDetailsResult : undefined))
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
@@ -211,15 +207,15 @@ describe('menu fetchData', () => {
           describe('menuLoadOrderDetails changes number of recipes in basket', () => {
             beforeEach(() => {
               state.basket = state.basket.set('recipes', Immutable.fromJS({
-                '200': 1,
-                '250': 2
+                200: 1,
+                250: 2
               }))
             })
 
             test('should dispatch basketRecipeAdd for each previous recipe', async () => {
               // this test requires some horrible setup because it checks the same value twice
               // which means we have to manually simulate some state changes
-              const menuLoadOrderDetailsResult = Symbol()
+              const menuLoadOrderDetailsResult = Symbol('fake action creator result')
               actions.menuLoadOrderDetails.mockReturnValue(menuLoadOrderDetailsResult)
 
               store.dispatch.mockImplementation(event => {
@@ -246,7 +242,7 @@ describe('menu fetchData', () => {
           test('should dispatch menuLoadMenu', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const menuLoadMenuResult = Symbol()
+            const menuLoadMenuResult = Symbol('fake action creator result')
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
@@ -258,7 +254,7 @@ describe('menu fetchData', () => {
           test('should dispatch menuLoadStock', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const menuLoadStockResult = Symbol()
+            const menuLoadStockResult = Symbol('fake action creator result')
 
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
@@ -306,7 +302,7 @@ describe('menu fetchData', () => {
           test('should dispatch menuLoadDays action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const menuLoadDaysResult = Symbol()
+            const menuLoadDaysResult = Symbol('fake action creator result')
 
             actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
 
@@ -318,7 +314,7 @@ describe('menu fetchData', () => {
           test('should dispatch boxSummaryDeliveryDaysLoad action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const boxSummaryDeliveryDaysLoadResult = Symbol()
+            const boxSummaryDeliveryDaysLoadResult = Symbol('fake action creator result')
 
             boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
@@ -367,7 +363,7 @@ describe('menu fetchData', () => {
               })
 
               test('should dispatch userLoadOrders', async () => {
-                const userLoadOrdersResult = Symbol()
+                const userLoadOrdersResult = Symbol('fake action creator result')
 
                 actions.userLoadOrders.mockReturnValue(userLoadOrdersResult)
 
@@ -383,7 +379,7 @@ describe('menu fetchData', () => {
               })
 
               test('should dispatch menuLoadDays', async () => {
-                const menuLoadDaysResult = Symbol()
+                const menuLoadDaysResult = Symbol('fake action creator result')
 
                 actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
 
@@ -393,7 +389,7 @@ describe('menu fetchData', () => {
               })
 
               test('should dispatch boxSummaryDeliveryDaysLoad', async () => {
-                const boxSummaryDeliveryDaysLoadResult = Symbol()
+                const boxSummaryDeliveryDaysLoadResult = Symbol('fake action creator result')
 
                 boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
@@ -426,16 +422,12 @@ describe('menu fetchData', () => {
           test('should dispatch basketNumPortionChange', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const basketNumPortionChangeResult = Symbol()
+            const basketNumPortionChangeResult = Symbol('fake action creator result')
 
             // use mockImplementation and only return the symbol if it's called with the expected parameters
             // this would normally be accomplished using `toHaveBeenCalledWith`, but what we are actually
             // testing is that the correct action is passed to dispatch
-            actions.basketNumPortionChange.mockImplementation((numPortions) => {
-              if (numPortions === 10) {
-                return basketNumPortionChangeResult
-              }
-            })
+            actions.basketNumPortionChange.mockImplementation(numPortions => (numPortions === 10 ? basketNumPortionChangeResult : undefined))
 
             await fetchData({ store, query: queryWithNumPortions, params }, false, false)
 
@@ -466,7 +458,7 @@ describe('menu fetchData', () => {
         test('should dispatch menuLoadMenu', async () => {
           // we need to test that dispatch is called with the **result** of the action creator
           // so making it return a symbol is an easy way to do that
-          const menuLoadMenuResult = Symbol()
+          const menuLoadMenuResult = Symbol('fake action creator result')
 
           actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
@@ -522,11 +514,7 @@ describe('menu fetchData', () => {
 
         test('should call selectCollection with name from getPreselectedCollectionName', async () => {
           // mockImplementation is used here to ensure that queryName is passed correctly
-          getPreselectedCollectionName.mockImplementation((stateArg, queryName) => {
-            if (queryName === collectionName) {
-              return 'some-collection-name'
-            }
-          })
+          getPreselectedCollectionName.mockImplementation((stateArg, queryName) => (queryName === collectionName ? 'some-collection-name' : undefined))
 
           await fetchData({ store, query: queryWithCollection, params }, false, false)
 
@@ -548,11 +536,7 @@ describe('menu fetchData', () => {
 
         test('should call selectCollection with name from getPreselectedCollectionName', async () => {
           // mockImplementation is used here to ensure that queryName is passed correctly
-          getPreselectedCollectionName.mockImplementation((stateArg, queryName) => {
-            if (queryName === collectionName) {
-              return 'some-collection-name'
-            }
-          })
+          getPreselectedCollectionName.mockImplementation((stateArg, queryName) => (queryName === collectionName ? 'some-collection-name' : undefined))
 
           await fetchData({ store, query: queryWithCollection, params }, false, false)
 
@@ -691,7 +675,7 @@ describe('menu fetchData', () => {
         state.auth = state.auth.set('isAuthenticated', false)
         state.auth = state.auth.set('accessToken', 'test-token')
       })
-  
+
       test('fetchMenusWithUserId is called if variant menu requested', async () => {
         getMenuService.mockReturnValue(true)
 
@@ -705,6 +689,37 @@ describe('menu fetchData', () => {
         await fetchData({ store, query, params: paramsWithOrderId }, false, false, userMenuVariant)
 
         expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', 'menuA')
+      })
+    })
+  })
+
+  describe('given fetchBrandInfo is called', () => {
+    describe('when the call fails', () => {
+      const err = { message: 'something broke!' }
+
+      beforeEach(() => {
+        fetchBrandInfo.mockImplementation(() => {
+          throw err
+        })
+      })
+
+      test('then the error is caught and notice is logged', async () => {
+        getMenuService.mockReturnValue(true)
+
+        const orderId = '123'
+        const paramsWithOrderId = {
+          ...params,
+          orderId
+        }
+
+        await fetchData({ store, query, params: paramsWithOrderId })
+
+        expect(fetchMenus).toHaveBeenCalled()
+        expect(fetchBrandInfo).toHaveBeenCalled()
+        expect(logger.notice).toHaveBeenCalledWith({
+          message: `Brand Theme failed to load: ${err.message}`,
+          errors: [err]
+        })
       })
     })
   })
