@@ -7,8 +7,7 @@ import Title from 'routes/Menu/Recipe/Title'
 import Image from 'routes/Menu/Recipe/Image'
 import Rating from 'routes/Menu/Recipe/Rating'
 import AddButton from 'routes/Menu/Recipe/AddButton'
-
-import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
+import { SimpleRecipe } from '../../SimpleRecipe'
 
 describe('<SimpleRecipe />', () => {
   let wrapper

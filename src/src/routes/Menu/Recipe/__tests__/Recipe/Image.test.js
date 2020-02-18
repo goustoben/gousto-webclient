@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import Image from 'routes/Menu/Recipe/Image'
 import GoustoImage from 'Image'
+import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
 
 describe('<Image />', () => {
   let wrapper
@@ -39,6 +40,10 @@ describe('<Image />', () => {
     wrapper = shallow(<Image media={media} />)
 
     expect(wrapper.find(GoustoImage)).toHaveLength(1)
+  })
+
+  test('should contain one SoldOutOverlay component', () => {
+    expect(wrapper.find(SoldOutOverlay).length).toEqual(1)
   })
 })
 

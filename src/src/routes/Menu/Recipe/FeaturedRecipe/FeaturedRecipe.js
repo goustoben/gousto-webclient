@@ -15,13 +15,12 @@ import Image from '../Image'
 import AddButton from '../AddButton'
 import { StockBadge } from '../StockBadge'
 import ChefQuote from '../ChefQuote'
-import TasteScore from '../TasteScore'
-import DisabledOverlay from '../DisabledOverlay'
+import { SoldOutOverlay } from '../SoldOutOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
-  view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
+  view, highlight, unhighlight, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
   useWithin, equipment, id, stock, inBasket, position, fiveADay, diet }) => (
     <div>
@@ -33,9 +32,10 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
             view={view}
             mouseEnter={highlight}
             mouseLeave={unhighlight}
+            stock={stock}
+            inBasket={inBasket}
           />
         </span>
-        <TasteScore className={css.score} score={tasteScore} />
         <div className={css.chefLogo}>
           <Chef chef={chef} />
         </div>
@@ -72,10 +72,10 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>
-                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
               </div>
             </div>
-            <DisabledOverlay stock={stock} inBasket={inBasket} />
+            <SoldOutOverlay stock={stock} inBasket={inBasket} />
           </div>
         </div>
       </div>
@@ -104,7 +104,6 @@ FeaturedRecipe.propTypes = {
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
-  tasteScore: PropTypes.number,
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,

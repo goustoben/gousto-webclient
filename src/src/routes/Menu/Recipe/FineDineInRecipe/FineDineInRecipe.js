@@ -11,9 +11,8 @@ import css from './FineDineInRecipe.css'
 import Title from '../Title'
 import AddButton from '../AddButton'
 import { StockBadge } from '../StockBadge'
-import TasteScore from '../TasteScore'
 import { RecipeAttribute } from '../RecipeAttribute'
-import DisabledOverlay from '../DisabledOverlay'
+import { SoldOutOverlay } from '../SoldOutOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 
 const propTypes = {
@@ -34,7 +33,6 @@ const propTypes = {
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
-  tasteScore: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
   view: PropTypes.string,
@@ -48,7 +46,7 @@ const defaultProps = {
 }
 
 const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
-  tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
+  title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
   features, stock, inBasket, position, id, range }) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
@@ -78,7 +76,6 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
           onMouseLeave={unhighlight}
         />
         <div className={css.recipeDetails}>
-          <TasteScore className={css.score} score={tasteScore} />
           <div className={css.textContainer}>
             <div
               role="link"
@@ -111,10 +108,10 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>
-                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
               </div>
             </div>
-            <DisabledOverlay stock={stock} inBasket={inBasket} />
+            <SoldOutOverlay stock={stock} inBasket={inBasket} />
           </div>
         </div>
       </div>

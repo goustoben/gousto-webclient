@@ -5,7 +5,6 @@ import { shallow } from 'enzyme'
 import Image from 'routes/Menu/Recipe/Image'
 import Title from 'routes/Menu/Recipe/Title'
 import ChefQuote from 'routes/Menu/Recipe/ChefQuote'
-import TasteScore from 'routes/Menu/Recipe/TasteScore'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
 import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
@@ -56,13 +55,6 @@ describe('<FeaturedRecipe />', () => {
   test('should contain one recipe disclaimer ', () => {
     expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
     expect(wrapper.find(RecipeDisclaimerContainer).prop('id')).toEqual('1')
-  })
-
-  test('should contain one TasteScore component', () => {
-    wrapper = shallow(<FeaturedRecipe tasteScore={99} />)
-
-    expect(wrapper.find(TasteScore)).toHaveLength(1)
-    expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
   })
 
   test('should contain one ChefQuote component', () => {

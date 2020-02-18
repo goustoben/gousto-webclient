@@ -27,7 +27,16 @@ const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
 
   const renderPrivacyLink = () => (
     <li className={css.menuItem}>
-      <Link to={clientRoutes.privacyPolicy} data-selid="footer-privacy-statement" title="Privacy Policy" clientRouted={false} secondary>Privacy Policy</Link>
+      <Link to={clientRoutes.privacyPolicy} data-selid="footer-privacy-statement" title="Privacy Policy" clientRouted secondary>Privacy Policy</Link>
+    </li>
+  )
+
+  const renderModernSlaveryLink = () => (
+    <li className={css.menuItem}>
+      <Link to={clientRoutes.modernSlavery} data-selid="footer-modern-slavery-statement" title="Modern Slavery" clientRouted secondary>
+        Modern Slavery
+        <span className={css.modernSlaveryLink}> Statement</span>
+      </Link>
     </li>
   )
 
@@ -35,6 +44,7 @@ const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
     <ul className={css.menuList}>
       {renderTermsLink()}
       {renderPrivacyLink()}
+      {renderModernSlaveryLink()}
     </ul>
   )
 
@@ -76,6 +86,7 @@ const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
         <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
       </li>
       {renderPrivacyLink()}
+      {renderModernSlaveryLink()}
     </ul>
   )
 

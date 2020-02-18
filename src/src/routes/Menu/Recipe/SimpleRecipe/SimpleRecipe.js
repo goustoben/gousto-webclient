@@ -6,7 +6,6 @@ import css from './SimpleRecipe.css'
 import Title from '../Title'
 import Image from '../Image'
 import Rating from '../Rating'
-import { StockBadge } from '../StockBadge'
 
 const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating, ratingCount, stock, isNew}) => (
   <div>
@@ -17,6 +16,7 @@ const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating,
           alt={title}
           view={view}
           maxMediaSize={maxMediaSize}
+          stock={100 /* always show Simple Recipe as in stock */}
         />
       </div>
       <div className={css.textContainerCenter}>
@@ -33,7 +33,6 @@ const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating,
             view={view}
             isNew={isNew}
           />
-          <StockBadge stock={stock} />
         </div>
       </div>
     </div>
@@ -45,6 +44,7 @@ SimpleRecipe.propTypes = {
   maxMediaSize: PropTypes.number,
   averageRating: PropTypes.number,
   ratingCount: PropTypes.number,
+  view: PropTypes.string,
 }
 
 SimpleRecipe.defaultProps = {
@@ -53,4 +53,4 @@ SimpleRecipe.defaultProps = {
   ratingCount: 0,
 }
 
-export default SimpleRecipe
+export { SimpleRecipe }

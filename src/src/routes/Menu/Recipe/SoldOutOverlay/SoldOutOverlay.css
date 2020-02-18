@@ -1,0 +1,21 @@
+.overlay {
+	composes: absolute from 'styles/position.css';
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 1, 0.52);
+    z-index: 11;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlayText {
+    font-family: Axiforma;
+    font-style: normal;
+	font-weight: 600;
+	font-size: 1rem;
+
+    color: #FFFFFF;
+}
