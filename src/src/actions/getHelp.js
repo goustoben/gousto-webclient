@@ -68,6 +68,20 @@ const trackUserCannotGetCompensation = numberOfDaysSinceLastCompensation => ({
   }
 })
 
+const trackDeliveryOther = () => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'TrackGetHelpDeliveryOther Clicked',
+  },
+})
+
+const trackDeliveryStatus = () => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'TrackGetHelpDeliveryStatus Clicked',
+  },
+})
+
 const validateSelectedIngredients = ({
   accessToken,
   orderId,
@@ -201,4 +215,6 @@ export {
   trackIngredientIssues,
   trackRecipeCardClick,
   trackUserCannotGetCompensation,
+  trackDeliveryOther,
+  trackDeliveryStatus,
 }
