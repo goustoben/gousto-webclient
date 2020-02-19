@@ -49,13 +49,13 @@ location = /my-new-route {
 #### Jest
 ```shell
 cd ~/code/goustowebclient/src
-yarn test:jest
+npm run test:jest
 ```
 
 Additional commands:
-- Run on one file: `yarn test:jest:one <filename>`
-- Run a watcher on one file: `yarn test:jest:one:watch <filename>`
-- Run a watcher on all files: `yarn test:jest:watch`
+- Run on one file: `npm run test:jest:one <filename>`
+- Run a watcher on one file: `npm run test:jest:one:watch <filename>`
+- Run a watcher on all files: `npm run  test:jest:watch`
 
 Note:
 You may need to get the latest version of watchman to run Jest's watch mode.
@@ -73,24 +73,24 @@ brew cask install java
 2. Nightwatch/Selenium:
 ```shell
 cd ~/code/goustowebclient/tests/e2e
-yarn
+npm ci
 node installLocal.js
 ```
 
 #### Local environment
 ```shell
 cd ~/code/goustowebclient/src
-yarn build:e2e:local
+npm run build:e2e:local
 cd ~/code/goustowebclient/tests/e2e
-yarn test
+npm test
 ```
 
 #### Staging environment
 ```shell
 cd ~/code/goustowebclient/src
-yarn build:e2e
+npm run build:e2e
 cd ~/code/goustowebclient/tests/e2e
-yarn test:staging
+npm run test:staging
 ```
 
 To run a specific tag use:
@@ -104,12 +104,12 @@ Your builds will generate now a file: public/stats.json (only in local)
 
 ### Installation
 
-Only the first time: `yarn install -g webpack-bundle-analyzer`
+Only the first time: `npm install -g webpack-bundle-analyzer`
 
 ### Usage
 
 Run
-`yarn bundle-analyzer`
+`npm run bundle-analyzer`
 
 It will spin up a server that reads from the stats.json file.
 

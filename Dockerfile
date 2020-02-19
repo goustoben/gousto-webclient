@@ -21,5 +21,4 @@ RUN mkdir -p /root/.ssh/ &&\
     echo "IdentityFile ~/.ssh/id_rsa" >> /root/.ssh/config
 
 # Install global packages
-RUN npm install -g yarn &&\
-    yarn global add bower
+RUN npm i -g bower

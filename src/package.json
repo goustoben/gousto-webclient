@@ -9,10 +9,10 @@
   "scripts": {
     "postinstall": "bower install --force --allow-root",
     "start": "node dist/server.js",
-    "start:with-static": "withStatic=true yarn run start",
+    "start:with-static": "withStatic=true npm run start",
     "start:dev": "nodemon dist/server.js -L",
     "start:devlocal": "nodemon dist/server.js",
-    "start:hmr": "NODE_ENV=hmr yarn run build:server && yarn run start",
+    "start:hmr": "NODE_ENV=hmr npm run build:server && npm run start",
     "watch:client": "webpack --watch --config config/webpack.client.js",
     "watch:server": "webpack --watch --config config/webpack.server.js",
     "watch": "rm -rf dist/* && rm -rf public/* && run-p watch:client watch:server",
@@ -34,7 +34,7 @@
     "test:jest:ci:coverage": "jest --ci -w=4 --coverage",
     "deploy:sentry-upload": "chmod a+x getsentryUpload.sh && ./getsentryUpload.sh",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
-    "deploy": "yarn run deploy:sentry-upload && yarn run deploy:cleanup-assets",
+    "deploy": "npm run deploy:sentry-upload && npm run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
     "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd ..",
     "eslint": "node_modules/.bin/eslint ."
@@ -135,6 +135,7 @@
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "2.0.0",
     "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.2.0",
+    "husky": "^4.2.2",
     "identity-obj-proxy": "3.0.0",
     "image-webpack-loader": "4.6.0",
     "inject-loader": "4.0.1",
@@ -142,7 +143,7 @@
     "jest-transform-graphql": "2.1.0",
     "lodash-webpack-plugin": "0.11.5",
     "mockdate": "^2.0.5",
-    "node-sass": "4.11.0",
+    "node-sass": "^4.13.1",
     "nodemon": "1.18.3",
     "npm-run-all": "4.1.3",
     "null-loader": "0.1.1",
@@ -242,6 +243,11 @@
       "__TEST__": true,
       "process.env.NODE_ENV": "production",
       "__GIT_HASH__": "production"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm audit --audit-level=critical"
     }
   }
 }

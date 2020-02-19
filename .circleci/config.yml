@@ -21,27 +21,14 @@ jobs:
           name: Setup platform
           command: /gousto/platform-setup.sh
       - run:
-          name: Install global yarn dependencies
-          command: yarn global add gulp && yarn global add concurrently@2.2.0
+          name: Install global npm dependencies
+          command: npm i -g gulp && npm i -g concurrently@2.2.0
       - run:
           name: Setup common
           command: source ~/.circlerc && setup/setup-common.sh
-      - restore_cache:
-          name: Restore isomorphic Yarn Package Cache
-          keys:
-            - yarn-packages-isomorphic-v2-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
-            - yarn-packages-isomorphic-v2-{{ .Branch }}
-            - yarn-packages-isomorphic-v2-master
-            - yarn-packages-isomorphic-v2-
       - run:
-          name: Install isomorphic yarn dependencies
-          command: cd src && yarn install
-
-      - save_cache:
-          name: Save isomorphic Yarn Package Cache
-          key: yarn-packages-isomorphic-v2-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
-          paths:
-            - src/node_modules/
+          name: Install isomorphic npm dependencies
+          command: cd src && npm ci && npm run postinstall
       - persist_to_workspace:
           root: ~/
           paths:
@@ -55,7 +42,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests
-          command: cd src && yarn run test:jest:ci
+          command: cd src && npm run test:jest:ci
       - persist_to_workspace:
           root: ~/
           paths:
@@ -69,7 +56,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests with coverage
-          command: cd src && yarn run test:jest:ci:coverage
+          command: cd src && npm run test:jest:ci:coverage
       - persist_to_workspace:
           root: ~/
           paths:
@@ -146,8 +133,8 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Install global yarn dependencies
-          command: yarn global add gulp && yarn global add concurrently@2.2.0
+          name: Install global nom dependencies
+          command: npm i -g gulp && npm i -g concurrently@2.2.0
       - run:
           name: Setup common
           command: source ~/.circlerc && setup/setup-common.sh

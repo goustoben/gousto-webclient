@@ -1,4 +1,4 @@
 #!/bin/bash
 
-yarn install
-yarn run test:staging:cypress:mobile
+npm ci
+npm run test:staging:cypress:mobile

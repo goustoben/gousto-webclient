@@ -11,37 +11,33 @@
 - name: set {{ node_version }} as default version
   copy: dest="{{ nvm_root }}/alias/default" content="{{ node_version }}"
 
-- name: Install yarn
-  sudo: yes
-  command: npm install -g yarn
-
 - name: Install gulp
-  command: yarn add gulp
+  command: npm i -g gulp
 
-- name: Install yarn
-  command: yarn global add bower  
+- name: Install bower
+  command: npm i -g bower
 
 - name: Install Bower dependencies
   command: bower install --allow-root
   args:
     chdir: "{{ directory }}"
 
-- name: yarn cache clean
-  command: yarn cache clean
+- name: npm cache clean
+  command: npm cache clean
   args:
     chdir: "{{ directory }}"
 
-- name: yarn install
-  command: yarn install
+- name: npm install
+  command: npm ci && npm run postinstall
   args:
     chdir: "{{ directory }}"
 
-- name: yarn link
-  command: yarn link
+- name: npm link
+  command: npm link
   args:
     chdir: "{{ directory }}"
 
-- name: yarn run build nodeserver
-  command: yarn run build:dev
+- name: npm run build nodeserver
+  command: npm run build:dev
   args:
     chdir: "{{ directory }}"
