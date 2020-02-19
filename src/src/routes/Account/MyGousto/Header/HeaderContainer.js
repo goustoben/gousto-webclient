@@ -7,6 +7,7 @@ import {
 import { Header } from './Header.logic'
 
 const mapStateToProps = state => ({
+  accessToken: state.auth.get('accessToken'),
   nextOrderTracking: state.user.get('nextOrderTracking'),
 })
 

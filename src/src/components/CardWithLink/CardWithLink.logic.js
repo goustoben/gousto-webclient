@@ -1,10 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import GoustoLink from 'Link'
-import { LayoutContentWrapper } from 'goustouicomponents'
+import { LayoutContentWrapper, InfoTip } from 'goustouicomponents'
 import css from './CardWithLink.css'
 
-const CardWithLink = ({ children, clientRouted, linkLabel, linkUrl, trackClick }) => (
+const CardWithLink = ({
+  children,
+  clientRouted,
+  linkLabel,
+  linkUrl,
+  tooltipContent,
+  trackClick
+}) => (
   <div className={css.cardWrapper}>
     <LayoutContentWrapper>
       <div className={css.contentWrapper}>
@@ -13,9 +20,11 @@ const CardWithLink = ({ children, clientRouted, linkLabel, linkUrl, trackClick }
         </LayoutContentWrapper>
       </div>
       <div className={css.linkWrapper}>
+        {tooltipContent
+          && <InfoTip isCloseIconVisible>{tooltipContent}</InfoTip>}
         <GoustoLink to={linkUrl} clientRouted={clientRouted} tracking={trackClick}>
           {linkLabel}
-            &nbsp;
+          &nbsp;
           <span className={css.arrowRight} />
         </GoustoLink>
       </div>
@@ -28,11 +37,13 @@ CardWithLink.propTypes = {
   clientRouted: PropTypes.bool,
   linkLabel: PropTypes.string.isRequired,
   linkUrl: PropTypes.string.isRequired,
+  tooltipContent: PropTypes.node,
   trackClick: PropTypes.func,
 }
 
 CardWithLink.defaultProps = {
   clientRouted: true,
+  tooltipContent: null,
   trackClick: () => {},
 }
 
