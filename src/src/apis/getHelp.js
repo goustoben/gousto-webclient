@@ -46,10 +46,20 @@ const fetchOrderIssues = (accessToken) => {
   return fetch(accessToken, url, null, 'GET')
 }
 
+const shouldShowEntryPointTooltip = (accessToken, orderDeliveryDate) => (
+  fetch(
+    accessToken,
+    `${endpoint('ssr', routes.version.ssr)}/ssr/show-tooltip`,
+    { delivery_date: orderDeliveryDate },
+    'GET'
+  )
+)
+
 export {
   fetchRefundAmount,
   setComplaint,
   validateIngredients,
   validateOrder,
   fetchOrderIssues,
+  shouldShowEntryPointTooltip,
 }

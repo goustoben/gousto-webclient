@@ -74,4 +74,16 @@ describe('CardWithLink', () => {
       expect(wrapper.find('.linkWrapper .arrowRight')).toHaveLength(1)
     })
   })
+
+  describe('when tooltipContent prop is passed', () => {
+    const SAMPLE_TEXT = 'sample text'
+
+    beforeEach(() => {
+      wrapper.setProps({ tooltipContent: SAMPLE_TEXT })
+    })
+
+    test('the tooltip is rendered', () => {
+      expect(wrapper.find('InfoTip').text()).toBe(SAMPLE_TEXT)
+    })
+  })
 })

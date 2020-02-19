@@ -2,12 +2,16 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import Immutable from 'immutable'
+import routes from 'config/routes'
+import { shouldShowEntryPointTooltip } from 'apis/getHelp'
+import logger from 'utils/logger'
 import { HeaderPresentation } from './Header.presentation'
 
 const ELIGIBILITY_DAYS = 7
 
 class Header extends PureComponent {
   static propTypes = {
+    accessToken: PropTypes.string.isRequired,
     orders: PropTypes.instanceOf(Immutable.Map),
     loadOrderTrackingInfo: PropTypes.func,
     nextOrderTracking: PropTypes.string,
@@ -23,8 +27,13 @@ class Header extends PureComponent {
     trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
   }
 
-  componentDidUpdate(prevProps) {
-    const { orders, loadOrderTrackingInfo } = this.props
+  constructor(props) {
+    super(props)
+    this.state = { todayOrderHasTooltip: false }
+  }
+
+  async componentDidUpdate(prevProps, prevState) {
+    const { accessToken, orders, loadOrderTrackingInfo } = this.props
     if (prevProps.orders.size !== orders.size) {
       const now = moment()
       const nextOrder = this.findOrder(orders, now, 'next')
@@ -37,13 +46,34 @@ class Header extends PureComponent {
           const nextOrderId = nextOrder.get('id')
           loadOrderTrackingInfo(nextOrderId)
         }
+
+        try {
+          const { data: { day: showTooltipTime } } = await shouldShowEntryPointTooltip(
+            accessToken,
+            nextOrder.get('deliveryDate')
+          )
+
+          if (
+            showTooltipTime === 'same_day_evening'
+            && !prevState.todayOrderHasTooltip
+          ) {
+            this.setState({ todayOrderHasTooltip: true })
+          }
+        } catch (error) {
+          logger.warning(
+            'API call to shouldShowEntryPointTooltip thrown an error',
+            error
+          )
+        }
       }
     }
   }
 
-  formatDeliveryDate = (order, now) => {
+  formatNextOrderCopy = (order, now) => {
     if (!order) {
       return {
+        linkLabel: 'View this week\'s menu',
+        linkUrl: routes.client.menu,
         primary: 'No boxes scheduled',
         secondary: '',
       }
@@ -52,17 +82,21 @@ class Header extends PureComponent {
     const deliveryDay = order.get('deliveryDate').substring(0, 10)
     const start = moment(`${deliveryDay} ${order.getIn(['deliverySlot', 'deliveryStart'])}`)
     const end = moment(`${deliveryDay} ${order.getIn(['deliverySlot', 'deliveryEnd'])}`)
-    const roundedEnd =
-      end.minute() || end.second() || end.millisecond()
-        ? end.add(1, 'h').startOf('hour')
-        : end
+    const roundedEnd = end.minute() || end.second() || end.millisecond()
+      ? end.add(1, 'h').startOf('hour')
+      : end
     const timeRange = `${start.format('ha')} - ${roundedEnd.format('ha')}`
 
     const date = moment(order.get('deliveryDate'))
-    const orderIsToday = now.format('YYMMDD') === date.format('YYMMDD')
+    const isOrderForToday = now.format('YYMMDD') === date.format('YYMMDD')
 
     return {
-      primary: orderIsToday ? 'Today' : date.format('dddd Do MMMM'),
+      linkLabel: isOrderForToday
+        ? 'Get help with this box' : 'View my deliveries',
+      linkUrl: isOrderForToday
+        ? `${routes.client.getHelp.index}?orderId=${order.get('id')}`
+        : routes.client.myDeliveries,
+      primary: isOrderForToday ? 'Today' : date.format('dddd Do MMMM'),
       secondary: timeRange,
     }
   }
@@ -78,10 +112,9 @@ class Header extends PureComponent {
   findOrder = (orders, now, orderToFind) => {
     const orderIndex = orders.reduce((currentOrderIndex, order, index) => {
       const orderDeliveryDate = moment(order.get('deliveryDate')).endOf('day')
-      const orderValidComparedToNow =
-        orderToFind === 'next'
-          ? orderDeliveryDate.isAfter(now)
-          : orderDeliveryDate.isBefore(now)
+      const orderValidComparedToNow = orderToFind === 'next'
+        ? orderDeliveryDate.isAfter(now)
+        : orderDeliveryDate.isBefore(now)
 
       if (!orderValidComparedToNow) return currentOrderIndex
       if (currentOrderIndex === null) return index
@@ -90,8 +123,8 @@ class Header extends PureComponent {
         orders.getIn([currentOrderIndex, 'deliveryDate'])
       ).endOf('day')
 
-      return orderDeliveryDate.isBetween(currentOrderDeliveryDate, now) ||
-        orderDeliveryDate.isBetween(now, currentOrderDeliveryDate)
+      return orderDeliveryDate.isBetween(currentOrderDeliveryDate, now)
+        || orderDeliveryDate.isBetween(now, currentOrderDeliveryDate)
         ? index
         : currentOrderIndex
     }, null)
@@ -106,10 +139,11 @@ class Header extends PureComponent {
       trackNextBoxTrackingClick,
       trackOrderNotEligibleForSelfServiceResolutionClick,
     } = this.props
+    const { todayOrderHasTooltip } = this.state
     const now = moment()
     const nextOrder = this.findOrder(orders, now, 'next')
     const previousOrder = this.findOrder(orders, now, 'previous')
-    const nextOrderMessage = this.formatDeliveryDate(nextOrder, now)
+    const nextOrderMessage = this.formatNextOrderCopy(nextOrder, now)
     const numberOfDaysSincePreviousOrder = previousOrder
       && now.diff(moment(previousOrder.get('deliveryDate')), 'days', true)
     const previousOrderMessage = this.formatPreviousBoxDate(previousOrder, now)
@@ -139,6 +173,7 @@ class Header extends PureComponent {
           <HeaderPresentation
             nextOrderMessage={nextOrderMessage}
             nextOrderId={nextOrder ? nextOrder.get('id') : null}
+            nextOrderHasTooltip={todayOrderHasTooltip}
             nextOrderTracking={nextOrderTracking}
             numberOfDaysSincePreviousOrder={numberOfDaysSincePreviousOrder}
             previousOrderMessage={previousOrderMessage}

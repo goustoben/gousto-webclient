@@ -3,10 +3,19 @@ import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import moment from 'moment'
 import config from 'config'
+import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import * as windowUtils from 'utils/window'
+import logger from 'utils/logger'
 import { Header } from '../Header.logic'
 
-const deliveryDateFormat = "YYYY-MM-DD HH:mm:ss"
+jest.mock('apis/getHelp', () => ({
+  shouldShowEntryPointTooltip: jest.fn().mockResolvedValue({
+    data: { day: 'no' }
+  }),
+}))
+
+const deliveryDateFormat = 'YYYY-MM-DD HH:mm:ss'
+const ACCESS_TOKEN = 'shhhh-secret'
 const upcomingOrders = Immutable.fromJS({
   100: {
     deliveryDate: moment().add(10, 'days').format(deliveryDateFormat),
@@ -84,13 +93,14 @@ const mockLoadOrderTrackingInfo = jest.fn()
 
 describe('MyGousto - Header', () => {
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
   describe('when no orders are passed in', () => {
     beforeEach(() => {
       wrapper = mount(
         <Header
+          accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
         />
       )
@@ -107,10 +117,14 @@ describe('MyGousto - Header', () => {
     beforeEach(() => {
       wrapper = mount(
         <Header
+          accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
-          orders={upcomingOrders}
         />
       )
+
+      // Props changed so componentDidUpdate runs
+      wrapper.setProps({ orders: upcomingOrders })
+
       nextDeliveryDetails = wrapper.find('OrderDetails').first()
     })
 
@@ -127,10 +141,72 @@ describe('MyGousto - Header', () => {
       expect(wrapper.find('CardWithLink').first().find('Button').exists()).toBe(false)
     })
 
+    test('GetHelp API shouldShowEntryPointTooltip is called with the right parameters', () => {
+      expect(shouldShowEntryPointTooltip).toHaveBeenCalledWith(
+        ACCESS_TOKEN,
+        upcomingOrders.getIn(['101', 'deliveryDate'])
+      )
+    })
+
+    describe('and the call to GetHelp API shouldShowEntryPointTooltip errors', () => {
+      const ERROR = new Error('error occurred')
+
+      beforeEach(() => {
+        shouldShowEntryPointTooltip.mockImplementationOnce(() => {
+          throw ERROR
+        })
+        logger.warning = jest.fn()
+        wrapper = mount(
+          <Header
+            accessToken={ACCESS_TOKEN}
+            loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          />
+        )
+
+        // Props changed so componentDidUpdate runs
+        wrapper.setProps({ orders: upcomingOrders })
+      })
+
+      test('a warning is logged', () => {
+        expect(logger.warning.mock.calls[0]).toEqual([
+          'API call to shouldShowEntryPointTooltip thrown an error',
+          ERROR,
+        ])
+      })
+    })
+
+    describe('and the next order is not for today', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <Header
+            accessToken={ACCESS_TOKEN}
+            orders={upcomingOrders}
+          />
+        )
+      })
+
+      test('shows a link that says "View my deliveries"', () => {
+        const linkLabel = wrapper.find('CardWithLink').first().prop('linkLabel')
+        expect(linkLabel).toBe('View my deliveries')
+      })
+
+      test('shows link to my deliveries', () => {
+        const linkUrl = wrapper.find('CardWithLink').first().prop('linkUrl')
+        expect(linkUrl).toContain('/my-deliveries')
+      })
+
+      test('shows a link that is not client routed', () => {
+        const clientRouted = wrapper.find('CardWithLink').first()
+          .find('GoustoLink').prop('clientRouted')
+        expect(clientRouted).toBe(false)
+      })
+    })
+
     describe('and the next order is today', () => {
       beforeEach(() => {
         wrapper = mount(
           <Header
+            accessToken={ACCESS_TOKEN}
             loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
             orders={orderForToday}
           />
@@ -141,6 +217,58 @@ describe('MyGousto - Header', () => {
       test('explicitly shows that the order is arriving today', () => {
         expect(nextDeliveryDetails.find('.message').first().text()).toBe('Today')
       })
+
+      test('shows a link that says "Get help with this box"', () => {
+        const linkLabel = wrapper.find('CardWithLink').first().prop('linkLabel')
+        expect(linkLabel).toBe('Get help with this box')
+      })
+
+      test('should link to getHelp page with order id', () => {
+        const linkUrl = wrapper.find('CardWithLink').first().prop('linkUrl')
+        expect(linkUrl.includes('/get-help?orderId=100')).toBe(true)
+      })
+
+      test('shows a link that is client routed', () => {
+        const clientRouted = wrapper.find('CardWithLink').first()
+          .find('GoustoLink').prop('clientRouted')
+        expect(clientRouted).toBe(true)
+      })
+
+      describe('and the time is so a tooltip should show', () => {
+        beforeEach(() => {
+          shouldShowEntryPointTooltip.mockResolvedValueOnce({
+            data: { day: 'same_day_evening' }
+          })
+
+          wrapper = mount(<Header accessToken={ACCESS_TOKEN} />)
+          // Props changed so componentDidUpdate runs
+          wrapper.setProps({ orders: orderForToday })
+        })
+
+        test('shows a tooltip pointing to the Get Help link', () => {
+          wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
+          expect(wrapper.find('CardWithLink').first().find('InfoTip'))
+            .toHaveLength(1)
+        })
+      })
+
+      describe('and the time is so a tooltip should not show', () => {
+        beforeEach(() => {
+          shouldShowEntryPointTooltip.mockResolvedValueOnce({
+            data: { day: 'no' }
+          })
+
+          wrapper = mount(<Header accessToken={ACCESS_TOKEN} />)
+          // Props changed so componentDidUpdate runs
+          wrapper.setProps({ orders: orderForToday })
+        })
+
+        test('does not show any tooltip', () => {
+          wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
+          expect(wrapper.find('CardWithLink').first().find('InfoTip').exists())
+            .toBe(false)
+        })
+      })
     })
 
     describe('and a tracking URL is available for the next order', () => {
@@ -150,6 +278,7 @@ describe('MyGousto - Header', () => {
       beforeEach(() => {
         wrapper = mount(
           <Header
+            accessToken={ACCESS_TOKEN}
             loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
             trackNextBoxTrackingClick={mockTrackNextBoxTrackingClick}
             orders={upcomingOrders}
@@ -183,12 +312,29 @@ describe('MyGousto - Header', () => {
     test('should show the no upcoming orders message', () => {
       wrapper = mount(
         <Header
+          accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
           orders={previousOrders}
         />
       )
       const nextDeliveryDetails = wrapper.find('OrderDetails').first()
       expect(nextDeliveryDetails.find('.message').first().text()).toBe('No boxes scheduled')
+    })
+
+    test('shows a link that says "View this week\'s menu"', () => {
+      const linkLabel = wrapper.find('CardWithLink').first().prop('linkLabel')
+      expect(linkLabel).toBe('View this week\'s menu')
+    })
+
+    test('shows link to the menu', () => {
+      const linkUrl = wrapper.find('CardWithLink').first().prop('linkUrl')
+      expect(linkUrl).toContain('/menu')
+    })
+
+    test('shows a link that is client routed', () => {
+      const clientRouted = wrapper.find('CardWithLink').first()
+        .find('GoustoLink').prop('clientRouted')
+      expect(clientRouted).toBe(true)
     })
   })
 
@@ -199,6 +345,7 @@ describe('MyGousto - Header', () => {
     beforeEach(() => {
       wrapper = mount(
         <Header
+          accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
           trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
           orders={previousOrders}
@@ -216,6 +363,7 @@ describe('MyGousto - Header', () => {
       beforeEach(() => {
         wrapper = mount(
           <Header
+            accessToken={ACCESS_TOKEN}
             loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
             orders={onlyOldOrders}
             trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
@@ -225,7 +373,7 @@ describe('MyGousto - Header', () => {
         wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
       })
 
-      test('should link to general help contact page', () => {
+      test('should link to general getHelp contact page', () => {
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
         expect(linkUrl.includes(config.routes.client.getHelp.contact)).toBe(true)
       })
@@ -239,6 +387,7 @@ describe('MyGousto - Header', () => {
       beforeEach(() => {
         wrapper = mount(
           <Header
+            accessToken={ACCESS_TOKEN}
             loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
             trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
             orders={previousOrders}
@@ -248,9 +397,9 @@ describe('MyGousto - Header', () => {
         wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
       })
 
-      test('should link to help page with order id', () => {
+      test('should link to getHelp page with order id', () => {
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
-        expect(linkUrl.includes('?orderId=101')).toBe(true)
+        expect(linkUrl.includes('/get-help?orderId=101')).toBe(true)
       })
 
       test('does not dispatches the "non-eligible tracking action"', () => {
@@ -263,6 +412,7 @@ describe('MyGousto - Header', () => {
     test('does not show details of previous deliveries', () => {
       wrapper = mount(
         <Header
+          accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
           orders={upcomingOrders}
         />
@@ -275,6 +425,7 @@ describe('MyGousto - Header', () => {
     beforeEach(() => {
       wrapper = mount(
         <Header
+          accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
           orders={Immutable.Map({})}
         />

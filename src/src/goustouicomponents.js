@@ -12,6 +12,7 @@ export {
   FloatCard,
   Heading,
   Item,
+  InfoTip,
   InputCheck,
   ItemExpandable,
   Layout2Cells,

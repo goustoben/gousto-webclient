@@ -32,6 +32,7 @@
       "react/jsx-curly-spacing": 0,
       "react/jsx-indent-props": 0,
       "react/jsx-filename-extension": 0,
+      "react/no-did-update-set-state": 0, // React says it's ok to do this: https://github.com/yannickcr/eslint-plugin-react/issues/1707
       "object-curly-spacing": 0,
       "array-bracket-spacing": 0,
       "computed-property-spacing": 0,
