@@ -45,7 +45,7 @@ describe('loadMenuCollectionsWithMenuService', () => {
 
     expect(menuLoadCollections).toHaveBeenCalledWith('any Date', background, 'mock collection')
     expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)
-    expect(loadRecipesForAllCollections).toHaveBeenCalledWith('any Date', 'mock recipe', 'mock collection recipes')
+    expect(loadRecipesForAllCollections).toHaveBeenCalledWith('mock recipe', 'mock collection recipes')
   })
 
   describe('when menuservice is undefined', () => {
@@ -116,9 +116,8 @@ describe('getStockAvailability', () => {
     }
     const getState = () => ({
       recipes: Immutable.Map({
-        '07cc774f-c233-4212-9478-bc9c7912f793': {
-          id: '07cc774f-c233-4212-9478-bc9c7912f793',
-          coreRecipeId: '123'
+        123: {
+          id: '123',
         }
       })
     })
@@ -126,7 +125,7 @@ describe('getStockAvailability', () => {
     const result = getStockAvailability(getState, recipeStock)
 
     expect(result).toEqual({
-      '07cc774f-c233-4212-9478-bc9c7912f793': {
+      123: {
         2: 5,
         4: 4,
         committed: true,
@@ -147,13 +146,11 @@ describe('getStockAvailability', () => {
     }
     const getState = () => ({
       recipes: Immutable.Map({
-        '07cc774f-c233-4212-9478-bc9c7912f793': {
-          id: '07cc774f-c233-4212-9478-bc9c7912f793',
-          coreRecipeId: '123'
+        123: {
+          id: '123'
         },
-        '473c49e7-2414-4c1e-89a1-a91907927e20': {
-          id: '473c49e7-2414-4c1e-89a1-a91907927e20',
-          coreRecipeId: '456'
+        456: {
+          id: '456'
         }
       })
     })
@@ -161,7 +158,7 @@ describe('getStockAvailability', () => {
     const result = getStockAvailability(getState, recipeStock)
 
     expect(result).toEqual({
-      '07cc774f-c233-4212-9478-bc9c7912f793': {
+      123: {
         2: 5,
         4: 4,
         committed: true,

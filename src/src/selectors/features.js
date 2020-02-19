@@ -1,5 +1,3 @@
-import { menuServiceConfig } from 'config/menuService'
-
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
   features
     ? features.getIn(['nextDayDeliveryPaintedDoor', 'value'])
@@ -87,15 +85,6 @@ export const getShowUserCredit = ({ features }) => (
 export const getUserMenuVariant = ({ features }) => (
   features && features.getIn(['userMenuVariant', 'value'], '')
 )
-
-export const getMenuService = () => {
-  if (menuServiceConfig.isEnabled) {
-    return true
-  }
-  const b = document.cookie.match('(^|[^;]+)\\s*gousto_useNewMenuService\\s*=\\s*([^;]+)')
-
-  return b && b[2] === 'true'
-}
 
 export const getFullScreenBoxSummary = ({ features }) => (features && features.getIn(['fullScreenBoxSummary', 'value'], false))
 

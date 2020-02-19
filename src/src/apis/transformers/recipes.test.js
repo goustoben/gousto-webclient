@@ -1,6 +1,22 @@
 import { recipesTransformer } from './recipes'
 
 describe('recipesTransformer', () => {
+  describe('when no active menu', () => {
+    test('should return undefined', () => {
+      const menuServiceResponse = {
+        status: 'ok',
+        meta: {},
+        data: [],
+        included: []
+      }
+
+      const brandData = {
+        data: {}
+      }
+      const result = recipesTransformer(undefined, menuServiceResponse, brandData)
+      expect(result).toEqual(undefined)
+    })
+  })
   test('should return recipe data', () => {
     const menuServiceResponse = {
       status: 'ok',

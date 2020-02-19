@@ -3,7 +3,6 @@ import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import fetchData from 'routes/Menu/fetchData'
-import { menuServiceConfig } from 'config/menuService'
 
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
@@ -60,23 +59,15 @@ describe('Menu', () => {
   beforeEach(() => {
     shouldJfyTutorialBeVisibleMock.mockClear()
 
-    menuServiceConfig.isEnabled = false
     requiredProps = {
       basketNumPortionChange: () => { },
-      basketOrderLoaded: () => { },
-      basketRestorePreviousValues: () => { },
-      boxDetailsVisibilityChange: () => { },
-      cutOffDate: '',
       disabled: false,
       isAuthenticated: false,
       menuLoadBoxPrices: () => { },
-      recipes: [],
-      storeOrderId: '',
       query: {
         orderId: '',
         reload: false
       },
-      userOrders: Immutable.Map(),
       boxSummaryDeliveryDaysLoad: jest.fn().mockReturnValue(
         new Promise(resolve => {
           resolve()
@@ -94,7 +85,6 @@ describe('Menu', () => {
   })
 
   afterEach(() => {
-    menuServiceConfig.isEnabled = false
     jest.clearAllMocks()
   })
 
@@ -170,6 +160,27 @@ describe('Menu', () => {
     })
   })
 
+  describe('componentWillUnmount', () => {
+    let wrapper
+    const loginVisibilityChange = jest.fn()
+    beforeEach(() => {
+      wrapper = shallow(
+        <Menu
+          {...requiredProps}
+          isLoading={false}
+          boxSummaryDeliveryDays={Immutable.Map()}
+          disabled={false}
+          loginVisibilityChange={loginVisibilityChange}
+        />,
+        mountOptions
+      )
+    })
+    test('should call loginVisibilityChange', () => {
+      wrapper.unmount()
+      expect(loginVisibilityChange).toHaveBeenCalled()
+    })
+  })
+
   describe('componentDidMount', () => {
     let menuLoadBoxPrices
     let basketNumPortionChangeSpy
@@ -197,7 +208,6 @@ describe('Menu', () => {
           {...requiredProps}
           menuLoadBoxPrices={menuLoadBoxPrices}
           basketNumPortionChange={basketNumPortionChangeSpy}
-          menuRecipeDetailShow={false}
           disabled={false}
         />,
         mountOptions,
@@ -274,11 +284,6 @@ describe('Menu', () => {
       wrapper = await mount(
         <Menu
           {...requiredProps}
-          orderCheckout={{
-            orderId: 'order-id',
-            url: 'summary-url',
-          }}
-          cutOffDate="2019-05-13 12:00:00"
         />,
         {
           context: {
@@ -331,27 +336,8 @@ describe('Menu', () => {
       expect(fetchData).toHaveBeenCalledTimes(2)
     })
 
-    test('should call menuLoadBoxPrices twice if not disabled & tariffId has changed and not using menuService', () => {
-      menuServiceConfig.isEnabled = false
+    test('should call menuLoadBoxPrices twice if not disabled & tariffId has changed', async () => {
       const menuLoadBoxPrices = jest.fn()
-
-      const wrapper = shallow(
-        <Menu
-          {...requiredProps}
-          menuLoadBoxPrices={menuLoadBoxPrices}
-          tariffId={1}
-        />,
-        mountOptions
-      )
-
-      wrapper.setProps({ tariffId: 2 })
-      expect(menuLoadBoxPrices).toHaveBeenCalledTimes(2)
-      expect(menuLoadBoxPrices).toHaveBeenCalledWith()
-    })
-
-    test('should call menuLoadBoxPrices twice if not disabled & tariffId has changed and using menuService', async () => {
-      const menuLoadBoxPrices = jest.fn()
-      menuServiceConfig.isEnabled = true
 
       const wrapper = await shallow(
         <Menu

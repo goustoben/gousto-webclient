@@ -367,7 +367,6 @@ workflows:
       - test-e2e-selenium:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-application
             - deploy-containers
           filters:
             branches:
@@ -376,7 +375,6 @@ workflows:
       - test-e2e-selenium-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-application
             - deploy-containers
           filters:
             branches:

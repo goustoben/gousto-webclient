@@ -1,5 +1,8 @@
 const collectionRecipesTransformer = (activeMenu) => {
   const getRecipeIds = (collectionRecipeData) => collectionRecipeData.map((recipe) => recipe)
+  if (!activeMenu) {
+    return undefined
+  }
 
   const result = activeMenu
     .relationships.collections.data.reduce((acc, collection) => {

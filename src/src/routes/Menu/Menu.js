@@ -7,7 +7,6 @@ import { forceCheck as forceCheckLazyload } from 'react-lazyload'
 import menu from 'config/menu'
 import browserHelper from 'utils/browserHelper'
 
-import { getMenuService } from 'selectors/features'
 import MainLayout from 'layouts/MainLayout'
 import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
@@ -55,8 +54,6 @@ class Menu extends React.PureComponent {
 
     const { store } = this.context
 
-    const useMenuService = getMenuService()
-
     const forceDataLoad = Boolean(query.reload)
     // TODO: Add back logic to check what needs to be reloaded
 
@@ -64,11 +61,7 @@ class Menu extends React.PureComponent {
       basketNumPortionChange(query.num_portions)
     }
 
-    if (useMenuService) {
-      await Menu.fetchData({ store, query, params }, forceDataLoad)
-    } else {
-      Menu.fetchData({ store, query, params }, forceDataLoad)
-    }
+    await Menu.fetchData({ store, query, params }, forceDataLoad)
 
     if (boxSummaryDeliveryDays.size === 0 && !disabled) {
       menuLoadDays().then(() => {
