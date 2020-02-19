@@ -10,6 +10,7 @@ import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 import Refund from './Refund'
 import Contact from './Contact'
 import Confirmation from './Confirmation'
+import { Delivery } from './Delivery'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
@@ -33,6 +34,7 @@ const getHelpRoutes = (store) => {
         <IndexRoute component={OrderIssueContainer} />
         {Confirmation}
         {Contact}
+        {Delivery}
         {Ingredients}
         {IngredientIssues}
         {IngredientReasons}

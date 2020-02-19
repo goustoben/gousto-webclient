@@ -37,6 +37,7 @@ const getPending = ({ pending }) => {
 const skipErrorByRoute = ({ pathname }) => ([
   `${routes.getHelp.index}/${routes.getHelp.contact}`,
   `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
+  `${routes.getHelp.index}/${routes.getHelp.delivery}`,
 ].includes(pathname))
 
 const mapStateToProps = (state, ownProps) => {

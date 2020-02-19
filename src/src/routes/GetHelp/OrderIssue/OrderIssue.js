@@ -39,7 +39,7 @@ const OrderIssue = ({
       <ItemLink
         label={deliveryItem}
         trackClick={trackClick(selectOrderIssue, 'delivery')}
-        to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+        to={`${routes.getHelp.index}/${routes.getHelp.delivery}`}
         clientRouted
       />
       <ItemLink

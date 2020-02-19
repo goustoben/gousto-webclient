@@ -47,15 +47,16 @@ module.exports = {
     rateRecipes2: '/rate-recipes',
 
     getHelp: {
-      index: '/get-help',
-      refund: 'refund',
-      contact: 'contact',
-      orderIssue: 'order-issue',
       confirmation: 'confirmation',
-      ingredients: 'ingredients',
+      contact: 'contact',
+      delivery: 'delivery',
+      index: '/get-help',
       ingredientIssues: 'ingredient-issues',
       ingredientReasons: 'ingredient-reasons',
+      ingredients: 'ingredients',
+      orderIssue: 'order-issue',
       recipeCards: 'recipe-cards',
+      refund: 'refund',
     },
 
     help: '/help',
