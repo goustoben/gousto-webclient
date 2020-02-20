@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import config from 'config'
+import { client } from 'config/routes'
 import Svg from 'Svg'
 import Link from 'Link'
 import ModalPanel from 'Modal/ModalPanel'
@@ -25,8 +25,6 @@ import { deepCloneObject } from 'utils/deepClone'
 import { MobileMenu } from './MobileMenu'
 import { defaultMenuItems, experimentalMenuItems } from './menuItemsHelper'
 import css from './Header.css'
-
-const clientRoutes = config.routes.client
 
 class Header extends React.PureComponent {
   static propTypes = {
@@ -148,9 +146,9 @@ class Header extends React.PureComponent {
     if (promoCodeUrl) {
       homeMenuItem.url = `/${promoCodeUrl}`
     } else if (path.includes('check-out')) {
-      homeMenuItem.url = clientRoutes.menu
+      homeMenuItem.url = client.menu
     } else if (path.includes('join') || fromJoin === 'join') {
-      homeMenuItem.url = clientRoutes.join
+      homeMenuItem.url = client.join
     }
 
     const desktopItems = [
@@ -233,8 +231,8 @@ class Header extends React.PureComponent {
       buttonState = 'loggedIn'
       button = (
         <Link
-          key={clientRoutes.myGousto}
-          to={clientRoutes.myGousto}
+          key={client.myGousto}
+          to={client.myGousto}
           className={css.btn}
           clientRouted
           data-testing="myGoustoButtonLink"
@@ -385,12 +383,15 @@ class Header extends React.PureComponent {
                       <Svg fileName="gousto_logo" className={css.logoDesktop} />
                     </span>
                   </Link>
-                  {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
+                  {(path === client.menu) ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
                   <span className={css.linkDesktopContainer}>
                     {this.renderMenuItems(desktopMenuItems, hideNav)}
                     {this.renderAuthLink()}
                   </span>
-                  {isAuthenticated && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button> }
+                  {
+                    (isAuthenticated && pathName !== client.menu)
+                    && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button>
+                  }
                   <MobileMenu
                     hideMobileMenu={this.hideMobileMenu}
                     onLoginClick={this.onLoginClick}

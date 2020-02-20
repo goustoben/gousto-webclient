@@ -4,6 +4,7 @@
 @value ScreenXSMax, ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 @value mobileLogoSize 25px;
+@value bodyFontStackBold, sizeXS from 'styles/typography.css';
 
 .header {
 	position: relative;
@@ -11,10 +12,19 @@
 
 .useAppCta { 
 	@media ScreenXXSMax {
-		margin-right: 0.63rem;
-		font-weight: bold;
+		margin-right: 0.85rem;
 		display: block; 
 		margin-left: auto;
+		border: 0;
+
+		div[role="button"]:last-child {
+			border-radius: 0.5rem;
+			padding-left: 1rem;
+			padding-right: 1rem;
+			font-family: bodyFontStackBold;
+			font-size: sizeXS;
+			line-height: 2.4rem;
+		}
 	}
 
 	display: none;

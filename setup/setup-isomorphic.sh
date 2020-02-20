@@ -3,7 +3,7 @@
 cd src
 
 # isomorphic: build
-yarn run build
+npm run build
 
 if [ $? -ne 0 ]
 then
@@ -12,4 +12,4 @@ then
 fi
 
 # e2e build
-yarn run build:e2e
+npm run build:e2e

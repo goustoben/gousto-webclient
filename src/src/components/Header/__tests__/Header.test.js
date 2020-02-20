@@ -78,9 +78,16 @@ describe('Header', () => {
   })
 
   describe('use app cta', () => {
-    describe('when the user is logged in', () => {
+    describe('when the user is logged in and the pathname is NOT /menu', () => {
       beforeEach(() => {
-        wrapper.setProps({isAuthenticated:true})
+        wrapper.setProps({
+          isAuthenticated: true,
+          routing: {
+            locationBeforeTransitions: {
+              pathname: '/',
+            },
+          },
+        })
       })
 
       test('then the use app cta should render', () => {
@@ -88,9 +95,50 @@ describe('Header', () => {
       })
     })
 
-    describe('when the user is NOT logged in', () => {
+    describe('when the user is logged in and the pathname is /menu', () => {
       beforeEach(() => {
-        wrapper.setProps({isAuthenticated:false})
+        wrapper.setProps({
+          isAuthenticated: true,
+          routing: {
+            locationBeforeTransitions: {
+              pathname: '/menu',
+            },
+          },
+        })
+      })
+
+      test('then the use app cta should NOT render', () => {
+        expect(wrapper.find('Button').findWhere(el => el.text() === 'Use App').exists()).toEqual(false)
+      })
+    })
+
+    describe('when the user is NOT logged in and the pathname is NOT /menu', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: false,
+          routing: {
+            locationBeforeTransitions: {
+              pathname: '/',
+            },
+          },
+        })
+      })
+
+      test('then the use app cta should NOT render', () => {
+        expect(wrapper.find('Button').findWhere(el => el.text() === 'Use App').exists()).toEqual(false)
+      })
+    })
+
+    describe('when the user is NOT logged in and the pathname is /menu', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: false,
+          routing: {
+            locationBeforeTransitions: {
+              pathname: '/menu',
+            },
+          },
+        })
       })
 
       test('then the use app cta should NOT render', () => {
@@ -235,6 +283,14 @@ describe('Header', () => {
       expect(wrapper.find('GoustoLink').at(2).childAt(0).text()).toEqual('Free Food')
     })
 
+    test('does NOT render Login button', () => {
+      expect(wrapper.find('Button').findWhere(el => el.text() === 'Login').exists()).toEqual(false)
+    })
+
+    test('does render Logout button', () => {
+      expect(wrapper.find('Button').findWhere(el => el.text() === 'Logout').exists()).toEqual(false)
+    })
+
     test('renders menu items in correct order', () => {
       const expected = [
         {
@@ -327,6 +383,14 @@ describe('Header', () => {
       expect(wrapper.find('GoustoLink').at(1).childAt(0).text()).toEqual('Box Prices')
     })
 
+    test('does NOT render Logout button', () => {
+      expect(wrapper.find('Button').findWhere(el => el.text() === 'Logout').exists()).toEqual(false)
+    })
+
+    test('does render Login button', () => {
+      expect(wrapper.find('Button').findWhere(el => el.text() === 'Login').exists()).toEqual(false)
+    })
+
     test('should render menu items in correct order when logged out', () => {
       const expected = [
         {
@@ -376,6 +440,44 @@ describe('Header', () => {
         .pop()
 
       expect(helpMenuItem.url).not.toContain('?user_id=123')
+    })
+  })
+
+  describe('handleQuery', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isAuthenticated: true,
+        routing: {
+          locationBeforeTransitions: {
+            pathname: '/my-referrals',
+            query: {
+              from_wizard: true,
+            },
+          },
+        },
+      })
+    })
+
+    test('should return correct results when from_wizard is set to true', () => {
+      const result = wrapper.instance().handleQuery()
+      expect(result).toEqual({ fromWizard: true, newPath: '/my-referrals' })
+    })
+
+    test('should return correct results when from_wizard is NOT set to true', () => {
+      wrapper.setProps({
+        isAuthenticated: true,
+        routing: {
+          locationBeforeTransitions: {
+            pathname: '/my-referrals',
+            query: {
+              from_wizard: false,
+            },
+          },
+        },
+      })
+
+      const result = wrapper.instance().handleQuery()
+      expect(result).toEqual({ fromWizard: false, newPath: '/my-referrals' })
     })
   })
 })
