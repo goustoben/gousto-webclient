@@ -109,6 +109,8 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
         }
       }
     } catch (err) {
+      logger.error({ message: 'saveOrder api call failed, logging error below...' })
+      logger.error(err)
       dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
     }
