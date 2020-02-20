@@ -1,4 +1,5 @@
 import logger from 'utils/logger'
+import moment from 'moment'
 import { actionTypes } from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
@@ -254,13 +255,29 @@ export const cancelOrder = () => (
   }
 )
 
+export const generateHotjarMessage = ({ subscriptionLength, currentBoxNumber }) => {
+  if (subscriptionLength.days === 1) {
+    return 'paused-day-1'
+  } else if (currentBoxNumber === 0) {
+    return 'paused-before-box-1'
+  } else if (currentBoxNumber < 2 && subscriptionLength.weeks < 4) {
+    return 'paused-before-box-2-weeks-4'
+  } else if (currentBoxNumber < 4 && subscriptionLength.weeks < 8) {
+    return 'paused-before-box-4-weeks-8'
+  }
+
+  return null
+}
+
 export const pauseSubscription = () => (
   async (dispatch, getState) => {
     await dispatch(subPauseActions.subscriptionDeactivate())
 
-    const userId = getState().user.get('id')
-    const offer = getState().onScreenRecovery.get('offer')
+    const { user, subscription, onScreenRecovery } = getState()
+    const userId = user.get('id')
+    const offer = onScreenRecovery.get('offer')
     const promoCode = offer ? offer.promoCode : null
+
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
@@ -270,6 +287,18 @@ export const pauseSubscription = () => (
         osrDiscount: promoCode,
       },
     })
+
+    const currentBoxNumber = subscription.get('subscription').get('currentBoxNumber')
+    const createdAt = user.get('subscription').get('createdAt')
+    const subscriptionLength = {
+      days: moment().diff(moment(createdAt), 'day') + 1,
+      weeks: moment().diff(moment(createdAt), 'week') + 1,
+    }
+
+    const hotjarMessage = generateHotjarMessage({ subscriptionLength, currentBoxNumber })
+    if (hotjarMessage) {
+      hj('trigger', hotjarMessage)
+    }
 
     dispatch(redirect('/my-subscription'))
   }
