@@ -134,13 +134,19 @@ export function checkoutCreatePreviewOrder() {
       )
 
       if (!(deliveryDayId && deliverySlotId && recipeChoices.length > 0)) {
+        let path
+        if (document && document.location) {
+          path = document.location.href
+        }
+
         logger.warning({
           message: 'Missing data, persistent basket might be expired',
           actor: userId,
           extra: {
             deliveryDayId,
             deliverySlotId,
-            recipeChoices
+            recipeChoices,
+            path,
           }
         })
         dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, { message: 'Missing data, persistent basket might be expired', code: 'basket-expired' }))
@@ -169,11 +175,17 @@ export function checkoutCreatePreviewOrder() {
       } catch (e) {
         const { message, code } = e
         logger.warning(message)
+
+        let path
+        if (document && document.location) {
+          path = document.location.href
+        }
         logger.error({
           message: 'createPreviewOrder failed, logging error below...',
           actor: userId,
           extra: {
-            orderDetails
+            orderDetails,
+            path,
           }
         })
         logger.error(e)
