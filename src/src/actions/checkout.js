@@ -100,9 +100,10 @@ export function checkoutAddressLookup(postcode) {
 
 export function checkoutCreatePreviewOrder() {
   return async (dispatch, getState) => {
-    const { basket, boxSummaryDeliveryDays, user } = getState()
+    const { auth, basket, boxSummaryDeliveryDays, user } = getState()
     const date = basket.get('date')
     const slotId = basket.get('slotId')
+    const userId = auth.get('id')
     const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
 
     dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, true))
@@ -133,6 +134,15 @@ export function checkoutCreatePreviewOrder() {
       )
 
       if (!(deliveryDayId && deliverySlotId && recipeChoices.length > 0)) {
+        logger.warning({
+          message: 'Missing data, persistent basket might be expired',
+          actor: userId,
+          extra: {
+            deliveryDayId,
+            deliverySlotId,
+            recipeChoices
+          }
+        })
         dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, { message: 'Missing data, persistent basket might be expired', code: 'basket-expired' }))
       }
 
@@ -159,10 +169,20 @@ export function checkoutCreatePreviewOrder() {
       } catch (e) {
         const { message, code } = e
         logger.warning(message)
+        logger.error({
+          message: 'createPreviewOrder failed, logging error below...',
+          actor: userId,
+          extra: {
+            orderDetails
+          }
+        })
+        logger.error(e)
+
         dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, { message, code }))
       }
     } catch (e) {
-      logger.warning(e.message)
+      logger.error({ message: 'checkoutCreatePreviewOrder failed, logging error below...', actor: userId })
+      logger.error(e)
       dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, e.message))
     } finally {
       dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false))
