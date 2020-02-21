@@ -4,6 +4,7 @@ import now from 'performance-now'
 
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { preselectOrderIdForDeliveryDate } from 'actions/user'
 import { initialState as initialAuthState } from 'reducers/auth'
 import { initialState as initialBasketState } from 'reducers/basket'
 import { initialState as initialRequestState } from 'reducers/request'
@@ -18,6 +19,10 @@ import * as boxSummaryActions from 'actions/boxSummary'
 import fetchData from '../fetchData'
 
 import { setSlotFromIds, getPreselectedCollectionName, selectCollection } from '../utils'
+
+jest.mock('actions/user', () => ({
+  preselectOrderIdForDeliveryDate: jest.fn()
+}))
 
 jest.mock('../utils')
 jest.mock('utils/deliveries')
@@ -88,6 +93,7 @@ describe('menu fetchData', () => {
 
     fetchMenus.mockReset()
     fetchBrandInfo.mockReset()
+    preselectOrderIdForDeliveryDate.mockReset()
   })
 
   describe('is pending', () => {

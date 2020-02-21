@@ -1085,6 +1085,18 @@ describe('basket actions', () => {
           '2020-02-13': Immutable.Map({
             id: 123
           })
+        }),
+        user: Immutable.fromJS({
+          orders: {
+            12345: {
+              id: '12345',
+              deliveryDate: '2020-02-13 08:00:00'
+            },
+            12305: {
+              id: '12305',
+              deliveryDate: '2020-02-28 08:00:00'
+            }
+          }
         })
       })
       pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
@@ -1109,7 +1121,16 @@ describe('basket actions', () => {
     test('should dispatch pricingRequestAction', () => {
       const slotId = 'slot-1-day-1'
       basketSlotChange(slotId)(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenNthCalledWith(2, pricingRequestAction)
+      expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
+    })
+
+    test('should dispatch pricingRequestAction', () => {
+      const slotId = 'slot-1-day-1'
+      basketSlotChange(slotId)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: actionTypes.BASKET_ID_CHANGE,
+        orderId: '12345'
+      })
     })
   })
 })

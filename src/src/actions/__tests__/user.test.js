@@ -269,7 +269,7 @@ describe('user actions', () => {
             ...state,
             features: Immutable.fromJS({
               ndd: {
-                value: value,
+                value,
               }
             })
           }
@@ -397,8 +397,8 @@ describe('user actions', () => {
               payment_provider: 'checkout',
             }
           },
-          addresses:  {
-            billing_address:  {
+          addresses: {
+            billing_address: {
               county: '',
               line1: '',
               line2: '',
@@ -652,7 +652,7 @@ describe('user actions', () => {
         type: actionType,
         trackingData: {
           actionType: trackingType,
-          channel: channel
+          channel
         }
       })
     })
@@ -749,7 +749,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               deliverySlotId: 'slotid123',
               isCurrentPeriod: true
             })
@@ -779,7 +779,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               shippingAddressId: 'addressid123',
               isCurrentPeriod: true
             })
@@ -811,7 +811,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               isCurrentPeriod: true
             })
           })
@@ -843,7 +843,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               isCurrentPeriod: true
             })
           })
@@ -951,7 +951,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               isCurrentPeriod: true
             })
           })
@@ -980,7 +980,7 @@ describe('user actions', () => {
     test('should dispatch action for EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE', async () => {
       userActions.userToggleExpiredBillingModal(visibilty)(dispatchSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, "visibility": true
+        type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: true
       })
     })
   })

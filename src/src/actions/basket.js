@@ -10,6 +10,7 @@ import config from 'config'
 import logger from 'utils/logger'
 import { updateOrderItems } from 'apis/orders'
 import { isChoosePlanEnabled } from 'selectors/features'
+import { getUserOrders } from 'selectors/user'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
@@ -422,10 +423,22 @@ export const basketRecipeRemove = (recipeId, view, position) => (
   }
 )
 
+export const basketIdChange = orderId => ({
+  type: actionTypes.BASKET_ID_CHANGE,
+  orderId,
+})
+
 export const basketSlotChange = slotId => (
   (dispatch, getState) => {
     const state = getState()
     const date = state.basket.get('date')
+    const userOrders = getUserOrders(getState())
+    const orderForDate = userOrders.find(order => {
+      const deliveryDay = order.get('deliveryDate').split(' ')[0]
+
+      return (deliveryDay === date)
+    })
+
     dispatch({
       type: actionTypes.BASKET_SLOT_CHANGE,
       slotId,
@@ -436,6 +449,10 @@ export const basketSlotChange = slotId => (
         dayId: state.boxSummaryDeliveryDays.getIn([date, 'id']),
       },
     })
+    if (orderForDate) {
+      const orderId = orderForDate.get('id')
+      dispatch(basketIdChange(orderId))
+    }
     dispatch(pricingActions.pricingRequest())
   }
 )
@@ -450,11 +467,6 @@ export const basketPreviewOrderChange = (previewOrderId, boxId, surcharges = [])
 export const basketSlotClear = () => ({
   type: actionTypes.BASKET_SLOT_CHANGE,
   slotId: '',
-})
-
-export const basketIdChange = orderId => ({
-  type: actionTypes.BASKET_ID_CHANGE,
-  orderId,
 })
 
 export const basketTariffChange = tariffId => ({
