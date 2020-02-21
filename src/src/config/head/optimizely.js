@@ -6,4 +6,5 @@ export default {
   haricots: '15910240385',
   carrots: '16871517734',
   production: '3732210624',
+  beetroots: '17499241109',
 }

@@ -7,6 +7,7 @@ import subPauseActions from 'actions/subscriptionPause'
 import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
 import logger from 'utils/logger'
+import moment from 'moment'
 
 import {
   modalVisibilityChange,
@@ -291,52 +292,116 @@ describe('onScreenRecovery', () => {
   })
 
   describe('pauseSubscription', () => {
-    beforeEach(() => {
-      getStateSpy.mockReturnValue({
-        user: Immutable.Map({
-          id: '123',
+    const initialState = (createdAt = '2020-01-10 10:00:00', currentBoxNumber = '10') => ({
+      user: Immutable.Map({
+        id: '123',
+        subscription: Immutable.Map({
+          createdAt,
         }),
-        onScreenRecovery: Immutable.Map({
-          modalType: 'subscription',
-          offer: {
-            promoCode: 'OSR-PROMO-CODE',
-          },
+      }),
+      subscription: Immutable.Map({
+        subscription: Immutable.Map({
+          currentBoxNumber,
         }),
-        features: Immutable.Map({
-          subscriptionPauseOsr: {
-            experiment: false,
-            value: true
-          }
-        }),
+      }),
+      onScreenRecovery: Immutable.Map({
+        modalType: 'subscription',
+        offer: {
+          promoCode: 'OSR-PROMO-CODE',
+        },
+      }),
+      features: Immutable.Map({
+        subscriptionPauseOsr: {
+          experiment: false,
+          value: true
+        }
+      }),
+    })
+
+    describe('given an in-life user with an OSR promo code and multiple orders', () => {
+      beforeEach(() => {
+        global.hj = jest.fn()
+        getStateSpy.mockReturnValue(initialState())
+      })
+
+      describe('when a user pauses their subscription', () => {
+        beforeEach(() => {
+          pauseSubscription()(dispatchSpy, getStateSpy)
+        })
+
+        test('then the subscriptionDeactivate action should be called', async () => {
+          expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
+        })
+
+        test('then the pause subscription modal visibility should be toggled off', async () => {
+          expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+            type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+            modalVisibility: false,
+          }))
+        })
+
+        test('then the tracking data for osr promo code and eligibility should be in the dispatched action', async () => {
+          expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+            type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+            trackingData: expect.objectContaining({
+              actionType: 'Subscription Paused',
+              osrDiscount: 'OSR-PROMO-CODE',
+            })
+          }))
+        })
+
+        test('then the user should be redirected to my-subscription', async () => {
+          expect(redirect).toHaveBeenCalledWith('/my-subscription')
+        })
+
+        test('then hotjar should NOT be called if user has been active', async () => {
+          expect(hj).not.toHaveBeenCalled()
+        })
       })
     })
-    test('should call the subscriptionDeactivate action', async () => {
-      await pauseSubscription()(dispatchSpy, getStateSpy)
-      expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
-    })
 
-    test('should toggle the pause subscription modal visibility', async () => {
-      await pauseSubscription()(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-        modalVisibility: false,
-      }))
-    })
+    describe('given a user has been signed up for less than 8 weeks and has minimal orders', () => {
+      beforeEach(() => {
+        global.hj = jest.fn()
+        getStateSpy.mockReturnValue(initialState())
+      })
 
-    test('should include the tracking data for osr promo code and eligibility in the dispatched action', async () => {
-      await pauseSubscription()(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-        trackingData: expect.objectContaining({
-          actionType: 'Subscription Paused',
-          osrDiscount: 'OSR-PROMO-CODE',
+      describe('when a user pauses their subscription', () => {
+        test('then hotjar should be called if user has paused on first day', async () => {
+          getStateSpy.mockReturnValue(initialState(moment()))
+
+          await pauseSubscription()(dispatchSpy, getStateSpy)
+          expect(hj).toHaveBeenCalledWith('trigger', 'paused-day-1')
         })
-      }))
-    })
 
-    test('should redirect to my-subscription', async () => {
-      await pauseSubscription()(dispatchSpy, getStateSpy)
-      expect(redirect).toHaveBeenCalledWith('/my-subscription')
+        test('then hotjar should be called if user has paused with no boxes ordered', async () => {
+          getStateSpy.mockReturnValue(initialState(null, 0))
+
+          await pauseSubscription()(dispatchSpy, getStateSpy)
+          expect(hj).toHaveBeenCalledWith('trigger', 'paused-before-box-1')
+        })
+
+        test('then hotjar should be called if user has paused with less than 2 boxes ordered in less than 4 weeks', async () => {
+          getStateSpy.mockReturnValue(initialState(moment().subtract(1, 'week'), 1))
+
+          await pauseSubscription()(dispatchSpy, getStateSpy)
+          expect(hj).toHaveBeenCalledWith('trigger', 'paused-before-box-2-weeks-4')
+        })
+
+        test('then hotjar should be called if user has paused with less than 4 boxes ordered in less than 8 weeks', async () => {
+          getStateSpy.mockReturnValue(initialState(moment().subtract(6, 'week'), 3))
+
+          await pauseSubscription()(dispatchSpy, getStateSpy)
+          expect(hj).toHaveBeenCalledWith('trigger', 'paused-before-box-4-weeks-8')
+        })
+
+        test('then hotjar should NOT be called if user has paused with 5 boxes ordered in less than 8 weeks', async () => {
+          getStateSpy.mockReturnValue(initialState(moment().subtract(6, 'week'), 5))
+
+          await pauseSubscription()(dispatchSpy, getStateSpy)
+          expect(hj).not.toHaveBeenCalled()
+        })
+      })
     })
   })
 

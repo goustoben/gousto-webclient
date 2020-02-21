@@ -1,5 +1,6 @@
 export const activeMenuForDateTransformer = (response, date) => {
-  if (!date) {
+  const isPreviewMenu = response.meta && response.meta.isPreviewMenu
+  if (isPreviewMenu || !date) {
     const defaultFallbackMenu = response.data[0]
 
     return defaultFallbackMenu
