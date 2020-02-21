@@ -23,7 +23,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
     <div>
       <div className={css.container}>
         <div className={css.carousel}>
-          <Carousel images={images} />
+          <Carousel images={images} stock={stock} inBasket={inBasket} />
           <div className={css.closeButton} onClick={() => { menuRecipeDetailVisibilityChange(false) }}>
             <span className={css.closeIcon} />
           </div>

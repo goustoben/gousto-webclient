@@ -41,7 +41,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   const dairyFree = dietaryTagSlugs.some(slug => slug === 'dairy-free')
   const glutenFree = dietaryTagSlugs.some(slug => slug === 'gluten-free')
 
-  const stockRecipe = stock.getIn([recipeId, String(numPortions)])
+  const stockRecipe = stock.getIn([recipeId, String(numPortions)], 0)
   const surcharge = getSurcharge(detailRecipe.get('meals'), numPortions)
   const range = getFoodBrand(detailRecipe)
   const IsFineDineIn = range.size && range.get('slug') === 'fine-dine-in'

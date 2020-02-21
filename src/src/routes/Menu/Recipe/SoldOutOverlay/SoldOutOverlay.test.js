@@ -55,8 +55,8 @@ describe('<SoldOutOverlay', () => {
       wrapper = shallow(<SoldOutOverlay stock={stock} />)
     })
 
-    test('the overlay renders with out of stock text', () => {
-      expect(wrapper.text()).toEqual('This recipe is sold out')
+    test('the out of stock text does not render', () => {
+      expect(wrapper.isEmptyRender()).toEqual(true)
     })
   })
 })

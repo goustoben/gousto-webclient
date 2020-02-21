@@ -191,8 +191,6 @@ class Hub extends React.PureComponent {
             view="simple"
             media={urls}
             alt={title}
-            stock={100 /* always show Simple Recipe as in stock */}
-            inBasket={false}
           />
           <Info regular>
             <div className={css.recipeInfo}>

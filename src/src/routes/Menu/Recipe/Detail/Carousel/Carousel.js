@@ -8,7 +8,7 @@ import ContentMask from 'routes/Menu/Recipe/Detail/Carousel/ContentMask'
 import Arrow from 'routes/Menu/Recipe/Detail/Carousel/Arrow'
 import css from './Carousel.css'
 
-const Carousel = ({ images, media, view, dots, arrows }) => (
+const Carousel = ({ images, media, view, dots, arrows, stock, inBasket }) => (
   (images.size)
     ? (
       <div className={css.carousel}>
@@ -28,7 +28,7 @@ const Carousel = ({ images, media, view, dots, arrows }) => (
                 <p className={css.imageTitle}>{image.get('title')}</p>
                 <p className={css.imageDescription}>{image.get('description')}</p>
               </ContentMask>
-              <Image media={image.get('urls')} title={image.title} view={view} />
+              <Image media={image.get('urls')} title={image.title} view={view} stock={stock} inBasket={inBasket} />
             </div>
           ))}
         </SlickCarousel>
@@ -44,6 +44,8 @@ Carousel.propTypes = {
   view: PropTypes.oneOf(['fineDineInDetail']),
   dots: PropTypes.bool,
   arrows: PropTypes.bool,
+  stock: PropTypes.number,
+  inBasket: PropTypes.bool
 }
 
 Carousel.defaultProps = {
@@ -52,6 +54,8 @@ Carousel.defaultProps = {
   view: 'fineDineInDetail',
   dots: true,
   arrows: true,
+  stock: null,
+  inBasket: false
 }
 
 export default Carousel
