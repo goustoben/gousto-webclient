@@ -55,6 +55,7 @@ jest.mock('actions/status', () => ({
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
+  error: jest.fn()
 }))
 
 jest.mock('actions/order', () => ({
@@ -66,6 +67,9 @@ jest.mock('actions/tracking', () => ({
 }))
 
 const createState = (stateOverrides) => ({
+  auth: Immutable.fromJS({
+    id: '',
+  }),
   basket: Immutable.fromJS({
     address: '3 Moris House, London',
     date: '2016-11-21',
@@ -255,6 +259,9 @@ describe('checkout actions', () => {
             ],
           },
         }),
+        auth: Immutable.fromJS({
+          id: ''
+        })
       }))
 
       await checkoutCreatePreviewOrder()(

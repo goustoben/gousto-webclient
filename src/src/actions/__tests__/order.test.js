@@ -38,6 +38,9 @@ jest.mock('actions/status')
 jest.mock('actions/tracking')
 jest.mock('actions/orderConfirmation')
 jest.mock('actions/orderAddOn')
+jest.mock('utils/logger', () => ({
+  error: jest.fn()
+}))
 
 jest.mock('config/order', () => ({
   orderTrackingActions: {
@@ -307,7 +310,7 @@ describe('order actions', () => {
     test('api is being called correctly', async () => {
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
-      expect(checkoutOrder).toHaveBeenCalledWith("access-token", {
+      expect(checkoutOrder).toHaveBeenCalledWith('access-token', {
         address_id: 'address-id',
         deliverypostcode: 'N1',
         num_portions: 3,
@@ -424,15 +427,15 @@ describe('order actions', () => {
   describe('orderUpdateProducts', () => {
     test('api function is called with correct parameters', async () => {
       const itemChoices = [
-        { id: "df0ddd72-beb3-11e5-8432-02fada0dd3b9", quantity: 1, type: "Product" },
-        { id: "d533155a-7c4f-11e7-b81e-02e92c52d95a", quantity: 2, type: "Product" }
+        { id: 'df0ddd72-beb3-11e5-8432-02fada0dd3b9', quantity: 1, type: 'Product' },
+        { id: 'd533155a-7c4f-11e7-b81e-02e92c52d95a', quantity: 2, type: 'Product' }
       ]
       await orderUpdateProducts(orderId, itemChoices)(dispatch, getState)
 
       expect(updateOrderItems).toHaveBeenCalledWith(
         'access-token',
         orderId,
-        { item_choices: itemChoices, restrict: "Product" }
+        { item_choices: itemChoices, restrict: 'Product' }
       )
     })
 
@@ -584,7 +587,7 @@ describe('order actions', () => {
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
-      expect(error).toHaveBeenCalledWith("ORDER_SAVE", 'update-order-fail')
+      expect(error).toHaveBeenCalledWith('ORDER_SAVE', 'update-order-fail')
     })
 
     test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async () => {
@@ -681,7 +684,7 @@ describe('order actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               shippingAddressId: '100',
               isCurrentPeriod: true
             })
@@ -931,7 +934,7 @@ describe('order actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               deliverySlotId: 'deliverySlotId',
               isCurrentPeriod: true
             })
@@ -970,7 +973,7 @@ describe('order actions', () => {
         data: {
           deliveryDate: '01-01-2017',
           shouldCutoffAt: '29-12-2016',
-          humanDeliveryDate: "Monday 1st January"
+          humanDeliveryDate: 'Monday 1st January'
         },
       }
 
@@ -1018,7 +1021,7 @@ describe('order actions', () => {
     })
 
     it('should dispatch the SaveAttemptFailed action with the correct arguments if saveOrder fails', async () => {
-      const error = new Error("error message")
+      const error = new Error('error message')
 
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => reject(error))
