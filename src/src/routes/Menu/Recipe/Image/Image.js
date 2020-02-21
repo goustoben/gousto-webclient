@@ -22,13 +22,13 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, stock
   >
     {(media.size > 0) && (<SoldOutOverlay stock={stock} inBasket={inBasket} />) }
     {(media.size > 0) && (
-      <GoustoImage
-        media={media}
-        title={title}
-        maxMediaSize={maxMediaSize}
-        className={css.recipeImg}
-        lazy
-      />
+    <GoustoImage
+      media={media}
+      title={title}
+      maxMediaSize={maxMediaSize}
+      className={css.recipeImg}
+      lazy
+    />
     ) }
   </div>
 )
@@ -40,8 +40,8 @@ Image.propTypes = {
   mouseEnter: PropTypes.func,
   mouseLeave: PropTypes.func,
   maxMediaSize: PropTypes.number,
-  stock: PropTypes.number.isRequired,
-  inBasket: PropTypes.bool.isRequired,
+  stock: PropTypes.number,
+  inBasket: PropTypes.bool,
 }
 
 Image.defaultProps = {
@@ -50,6 +50,8 @@ Image.defaultProps = {
   mouseEnter: () => {},
   mouseLeave: () => {},
   media: Immutable.List([]),
+  stock: null,
+  inBasket: false
 }
 
 export default Image

@@ -13,12 +13,7 @@ const SoldOutOverlay = ({ inBasket, stock }) => {
     </div>
   )
 
-  // sometimes stock is missing from some recipes (seen on lower env)
-  if (stock === undefined) {
-    return message
-  }
-
-  if (stock === null) {
+  if (stock === undefined || stock === null) {
     return null
   }
 
@@ -34,4 +29,8 @@ SoldOutOverlay.propTypes = {
   inBasket: PropTypes.bool,
 }
 
+SoldOutOverlay.defaultProps = {
+  stock: null,
+  inBasket: false,
+}
 export { SoldOutOverlay }
