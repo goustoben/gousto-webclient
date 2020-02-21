@@ -134,10 +134,7 @@ export function checkoutCreatePreviewOrder() {
       )
 
       if (!(deliveryDayId && deliverySlotId && recipeChoices.length > 0)) {
-        let path
-        if (document && document.location) {
-          path = document.location.href
-        }
+        const { router: { locationBeforeTransitions: { pathName: path } = {} } = {} } = getState()
 
         logger.warning({
           message: 'Missing data, persistent basket might be expired',
@@ -176,10 +173,7 @@ export function checkoutCreatePreviewOrder() {
         const { message, code } = e
         logger.warning(message)
 
-        let path
-        if (document && document.location) {
-          path = document.location.href
-        }
+        const { router: { locationBeforeTransitions: { pathName: path } = {} } = {} } = getState()
         logger.error({
           message: 'createPreviewOrder failed, logging error below...',
           actor: userId,
