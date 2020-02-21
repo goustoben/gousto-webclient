@@ -2,10 +2,7 @@ import moment from 'moment'
 import now from 'performance-now'
 import actions from 'actions'
 import logger from 'utils/logger'
-
 import { actionTypes } from 'actions/actionTypes'
-import { preselectOrderIdForDeliveryDate } from 'actions/user'
-
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
@@ -63,7 +60,6 @@ const chooseFirstDate = async (store) => {
     false,
     !canLandOnOrder,
   )
-  store.dispatch(preselectOrderIdForDeliveryDate(date))
 
   return store.dispatch(actions.basketDateChange(date))
 }

@@ -14,10 +14,10 @@ import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { isChoosePlanEnabled, getNDDFeatureValue } from 'selectors/features'
-import { getUserRecentRecipesIds, getUserOrders } from 'selectors/user'
+import { getUserRecentRecipesIds } from 'selectors/user'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 import statusActions from './status'
-import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange, basketIdChange } from './basket'
+import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
 import { actionTypes } from './actionTypes'
 import { trackFirstPurchase, trackUserAttributes } from './tracking'
@@ -849,21 +849,5 @@ export const userLoadOrderTrackingInfo = (orderId) => (
     }
   }
 )
-
-export const preselectOrderIdForDeliveryDate = date => (dispatch, getState) => {
-  const userOrders = getUserOrders(getState())
-  const orderForDate = userOrders.find(order => {
-    const deliveryDay = order.get('deliveryDate').split(' ')[0]
-
-    return (deliveryDay === date)
-  })
-
-  if (!orderForDate) {
-    return
-  }
-
-  const orderId = orderForDate.get('id')
-  dispatch(basketIdChange(orderId))
-}
 
 export default userActions

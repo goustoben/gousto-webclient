@@ -16,7 +16,6 @@ import userActions, {
   userLoadCookbookRecipes,
   userGetReferralDetails,
   userLoadOrderTrackingInfo,
-  preselectOrderIdForDeliveryDate,
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
 import { actionTypes } from 'actions/actionTypes'
@@ -982,43 +981,6 @@ describe('user actions', () => {
       userActions.userToggleExpiredBillingModal(visibilty)(dispatchSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: true
-      })
-    })
-  })
-
-  describe('preselectOrderIdForDeliveryDate', () => {
-    beforeEach(() => {
-      getState.mockReturnValue({
-        user: Immutable.fromJS({
-          orders: {
-            12345: {
-              id: '12345',
-              deliveryDate: '2020-02-21 08:00:00'
-            },
-            12305: {
-              id: '12305',
-              deliveryDate: '2020-02-28 08:00:00'
-            }
-          }
-        })
-      })
-    })
-    describe('when does not find order for selected date', () => {
-      test('should return without dispatching anything', () => {
-        const date = '2020-02-20'
-        preselectOrderIdForDeliveryDate(date)(dispatch, getState)
-        expect(dispatch).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('when does find order for selected date', () => {
-      test('should dispatch basketIdChange with order id', () => {
-        const date = '2020-02-21'
-        preselectOrderIdForDeliveryDate(date)(dispatch, getState)
-        expect(dispatch.mock.calls[0]).toEqual([{
-          type: 'BASKET_ID_CHANGE',
-          orderId: '12345'
-        }])
       })
     })
   })

@@ -395,22 +395,13 @@ describe('menu fetchData', () => {
                 expect(store.dispatch.mock.calls[4]).toEqual([boxSummaryDeliveryDaysLoadResult])
               })
 
-              test('should dispatch preselectOrderIdForDeliveryDate with result of getLandingDay', async () => {
-                const date = '2019-01-01T00:00:00'
-                getLandingDay.mockReturnValue({ date })
-
-                await fetchData({ store, query, params }, false, false)
-
-                expect(preselectOrderIdForDeliveryDate).toHaveBeenCalledWith(date)
-              })
-
               test('should dispatch basketDateChange with result of getLandingDay', async () => {
                 const date = '2019-01-01T00:00:00'
                 getLandingDay.mockReturnValue({ date })
 
                 await fetchData({ store, query, params }, false, false)
 
-                expect(store.dispatch.mock.calls[6]).toEqual([{
+                expect(store.dispatch.mock.calls[5]).toEqual([{
                   type: actionTypes.BASKET_DATE_CHANGE,
                   date
                 }])
@@ -531,11 +522,11 @@ describe('menu fetchData', () => {
         test('should dispatch basketRecipeAdd for in stock recipes', async () => {
           await fetchData({ store, query: queryWithRecipes, params }, false, false)
 
-          expect(store.dispatch.mock.calls[10]).toEqual([{
+          expect(store.dispatch.mock.calls[9]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '123'
           }])
-          expect(store.dispatch.mock.calls[11]).toEqual([{
+          expect(store.dispatch.mock.calls[10]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '789'
           }])
