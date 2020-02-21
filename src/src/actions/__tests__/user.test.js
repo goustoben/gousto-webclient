@@ -16,6 +16,7 @@ import userActions, {
   userLoadCookbookRecipes,
   userGetReferralDetails,
   userLoadOrderTrackingInfo,
+  preselectOrderIdForDeliveryDate,
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
 import { actionTypes } from 'actions/actionTypes'
@@ -269,7 +270,7 @@ describe('user actions', () => {
             ...state,
             features: Immutable.fromJS({
               ndd: {
-                value: value,
+                value,
               }
             })
           }
@@ -397,8 +398,8 @@ describe('user actions', () => {
               payment_provider: 'checkout',
             }
           },
-          addresses:  {
-            billing_address:  {
+          addresses: {
+            billing_address: {
               county: '',
               line1: '',
               line2: '',
@@ -652,7 +653,7 @@ describe('user actions', () => {
         type: actionType,
         trackingData: {
           actionType: trackingType,
-          channel: channel
+          channel
         }
       })
     })
@@ -749,7 +750,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               deliverySlotId: 'slotid123',
               isCurrentPeriod: true
             })
@@ -779,7 +780,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               shippingAddressId: 'addressid123',
               isCurrentPeriod: true
             })
@@ -811,7 +812,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               isCurrentPeriod: true
             })
           })
@@ -843,7 +844,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               isCurrentPeriod: true
             })
           })
@@ -951,7 +952,7 @@ describe('user actions', () => {
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
-            '12345': Immutable.Map({
+            12345: Immutable.Map({
               isCurrentPeriod: true
             })
           })
@@ -980,7 +981,44 @@ describe('user actions', () => {
     test('should dispatch action for EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE', async () => {
       userActions.userToggleExpiredBillingModal(visibilty)(dispatchSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, "visibility": true
+        type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: true
+      })
+    })
+  })
+
+  describe('preselectOrderIdForDeliveryDate', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        user: Immutable.fromJS({
+          orders: {
+            12345: {
+              id: '12345',
+              deliveryDate: '2020-02-21 08:00:00'
+            },
+            12305: {
+              id: '12305',
+              deliveryDate: '2020-02-28 08:00:00'
+            }
+          }
+        })
+      })
+    })
+    describe('when does not find order for selected date', () => {
+      test('should return without dispatching anything', () => {
+        const date = '2020-02-20'
+        preselectOrderIdForDeliveryDate(date)(dispatch, getState)
+        expect(dispatch).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when does find order for selected date', () => {
+      test('should dispatch basketIdChange with order id', () => {
+        const date = '2020-02-21'
+        preselectOrderIdForDeliveryDate(date)(dispatch, getState)
+        expect(dispatch.mock.calls[0]).toEqual([{
+          type: 'BASKET_ID_CHANGE',
+          orderId: '12345'
+        }])
       })
     })
   })

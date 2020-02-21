@@ -4,6 +4,7 @@ import actions from 'actions'
 import logger from 'utils/logger'
 
 import { actionTypes } from 'actions/actionTypes'
+import { preselectOrderIdForDeliveryDate } from 'actions/user'
 
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
@@ -62,6 +63,7 @@ const chooseFirstDate = async (store) => {
     false,
     !canLandOnOrder,
   )
+  store.dispatch(preselectOrderIdForDeliveryDate(date))
 
   return store.dispatch(actions.basketDateChange(date))
 }

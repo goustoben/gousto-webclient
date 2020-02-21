@@ -4,6 +4,7 @@ import now from 'performance-now'
 
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { preselectOrderIdForDeliveryDate } from 'actions/user'
 import { initialState as initialAuthState } from 'reducers/auth'
 import { initialState as initialBasketState } from 'reducers/basket'
 import { initialState as initialRequestState } from 'reducers/request'
@@ -18,6 +19,10 @@ import * as boxSummaryActions from 'actions/boxSummary'
 import fetchData from '../fetchData'
 
 import { setSlotFromIds, getPreselectedCollectionName, selectCollection } from '../utils'
+
+jest.mock('actions/user', () => ({
+  preselectOrderIdForDeliveryDate: jest.fn()
+}))
 
 jest.mock('../utils')
 jest.mock('utils/deliveries')
@@ -88,6 +93,7 @@ describe('menu fetchData', () => {
 
     fetchMenus.mockReset()
     fetchBrandInfo.mockReset()
+    preselectOrderIdForDeliveryDate.mockReset()
   })
 
   describe('is pending', () => {
@@ -389,13 +395,22 @@ describe('menu fetchData', () => {
                 expect(store.dispatch.mock.calls[4]).toEqual([boxSummaryDeliveryDaysLoadResult])
               })
 
+              test('should dispatch preselectOrderIdForDeliveryDate with result of getLandingDay', async () => {
+                const date = '2019-01-01T00:00:00'
+                getLandingDay.mockReturnValue({ date })
+
+                await fetchData({ store, query, params }, false, false)
+
+                expect(preselectOrderIdForDeliveryDate).toHaveBeenCalledWith(date)
+              })
+
               test('should dispatch basketDateChange with result of getLandingDay', async () => {
                 const date = '2019-01-01T00:00:00'
                 getLandingDay.mockReturnValue({ date })
 
                 await fetchData({ store, query, params }, false, false)
 
-                expect(store.dispatch.mock.calls[5]).toEqual([{
+                expect(store.dispatch.mock.calls[6]).toEqual([{
                   type: actionTypes.BASKET_DATE_CHANGE,
                   date
                 }])
@@ -516,11 +531,11 @@ describe('menu fetchData', () => {
         test('should dispatch basketRecipeAdd for in stock recipes', async () => {
           await fetchData({ store, query: queryWithRecipes, params }, false, false)
 
-          expect(store.dispatch.mock.calls[9]).toEqual([{
+          expect(store.dispatch.mock.calls[10]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '123'
           }])
-          expect(store.dispatch.mock.calls[10]).toEqual([{
+          expect(store.dispatch.mock.calls[11]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '789'
           }])
