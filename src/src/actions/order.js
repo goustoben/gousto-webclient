@@ -236,6 +236,7 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
     dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
     const accessToken = getState().auth.get('accessToken')
+    const userId = getState().auth.get('id')
     let orderDetailsUtils
     let savedOrder
 
@@ -245,14 +246,34 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
         const { data } = await userApi.saveUserOrder(accessToken, orderDetailsUtils)
         savedOrder = data
       } catch (err) {
+        logger.error({
+          message: 'saveUserOrder in orderAssignToUser failed, logging error below...',
+          actor: userId,
+          extra: {
+            orderDetails: orderDetailsUtils
+          }
+        })
+        logger.error(err)
+
         if (existingOrderId && err.message === 'user already has an order for chosen delivery day') {
+          const updateUserOrderPayload = {
+            ...orderDetailsUtils,
+            order_id: existingOrderId,
+          }
+
           try {
-            const { data } = await userApi.updateUserOrder(accessToken, {
-              ...orderDetailsUtils,
-              order_id: existingOrderId,
-            })
+            const { data } = await userApi.updateUserOrder(accessToken, updateUserOrderPayload)
             savedOrder = data
           } catch (err) {
+            logger.error({
+              message: 'updateUserOrder in orderAssignToUser failed, logging error below...',
+              actor: userId,
+              extra: {
+                updateUserOrderPayload
+              }
+            })
+            logger.error(err)
+
             throw new GoustoException(err.message || err, {
               error: 'update-order-fail',
             })
@@ -281,11 +302,10 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
         })
       }
     } catch (err) {
-      const logLevel = err.level || 'error'
-      const errorMessage = err.message || err
-      const error = err.error || errorMessage
-      logger[logLevel](errorMessage)
-      dispatch(statusActions.error(actionTypes.ORDER_SAVE, error))
+      logger.error({ message: 'orderAssignToUser failed, logging error below...', actor: userId })
+      logger.error(err)
+
+      dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.error))
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
     } finally {
       dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
