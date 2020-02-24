@@ -63,9 +63,14 @@ class DeliverySlot extends React.PureComponent {
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
     const doesDateHaveDisabledSlots = datesOfDisabledSlots.includes(tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
     const helperProps = {
-      disableOnDelivery, disabledSlots,
-      isAuthenticated, isSubscriptionActive, tempDate, userOrders,
-      tempSlotId, deliveryDaysProps
+      disableOnDelivery,
+      disabledSlots,
+      isAuthenticated,
+      isSubscriptionActive,
+      tempDate,
+      userOrders,
+      tempSlotId,
+      deliveryDaysProps
     }
     const { slots, deliveryDays, chosen, hasEmptyOrders, hasFullOrders, subLabelClassName } = getDeliveryDaysAndSlots(tempDate, helperProps)
     const { deliveryLocationText, slotId, buttonText, showWarning } = getBoxSummaryTextProps(slots)

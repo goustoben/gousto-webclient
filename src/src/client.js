@@ -6,7 +6,6 @@ import { routes } from 'routes'
 import AppContainer from 'containers/AppContainer'
 import transit from 'transit-immutable-js'
 import Cookies from 'utils/GoustoCookies'
-import Raven from 'raven-js'
 import { processCookies } from 'utils/processCookies'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import processQuery from 'utils/processQuery'
@@ -22,23 +21,6 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { configureStore } from './store'
 
 docReady('docReady', window)
-
-if (!__TEST__ && __PROD__) {
-  let url
-  if (__ENV__ === 'production') {
-    url = 'https://1e4757633f8442df8a0043740e0d5648@app.getsentry.com/95380'
-  }
-  if (__ENV__ === 'staging') {
-    url = 'https://19bb1b5729834d8e922a6319fb4c01af@sentry.io/94578'
-  }
-  if (url) {
-    Raven
-      .config(url, { release: __GIT_HASH__ })
-      .install()
-  }
-} else {
-  window.gitHash = __GIT_HASH__
-}
 
 let initialState = {}
 try {
@@ -78,12 +60,7 @@ window.docReady(() => {
       reactRootDOM
     )
   } else {
-    const e = new Error('reactRootDOM not found')
-    if (Raven) {
-      Raven.captureException(e)
-    } else {
-      console.log(e) // eslint-disable-line no-console
-    }
+    console.log(new Error('reactRootDOM not found')) // eslint-disable-line no-console
   }
 })
 

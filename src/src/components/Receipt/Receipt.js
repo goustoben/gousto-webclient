@@ -7,6 +7,7 @@ import PromoCode from 'routes/Checkout/Components/PromoCode'
 import css from './Receipt.css'
 import ReceiptLine from './ReceiptLine'
 import DeliveryDetails from './DeliveryDetails'
+import { FirstDeliveryDayContainer } from './FirstDeliveryDay'
 
 class Receipt extends React.Component {
   static propTypes = {
@@ -27,6 +28,7 @@ class Receipt extends React.Component {
     showAddPromocode: PropTypes.bool,
     showTitleSection: PropTypes.bool,
     orderNumber: PropTypes.string,
+    hasFirstDeliveryDay: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -43,12 +45,13 @@ class Receipt extends React.Component {
     showAddPromocode: false,
     showTitleSection: false,
     orderNumber: '',
+    hasFirstDeliveryDay: false,
   }
 
   dash = <span className={css.dash}>&mdash;</span>
 
   render() {
-    const { prices, recipeTotalPrice, totalToPay, extrasTotalPrice, numRecipes, shippingAddress, surcharges, surchargeTotal, recipeDiscountAmount, recipeDiscountPercent, deliveryTotalPrice, showAddPromocode, showTitleSection, orderNumber } = this.props
+    const { prices, recipeTotalPrice, totalToPay, extrasTotalPrice, numRecipes, shippingAddress, surcharges, surchargeTotal, recipeDiscountAmount, recipeDiscountPercent, deliveryTotalPrice, showAddPromocode, showTitleSection, orderNumber, hasFirstDeliveryDay } = this.props
     const showRecipeDiscount = parseFloat(recipeDiscountAmount) > 0 ? true : null
     const showExtrasTotalPrice = parseFloat(extrasTotalPrice) > 0 ? true : null
     const showFreeDelivery = parseFloat(deliveryTotalPrice) === 0 ? true : null
@@ -79,6 +82,7 @@ class Receipt extends React.Component {
         }
         <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? 'primary' : 'normal'}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
         <ReceiptLine label="Total" style="bold" showLineAbove>{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
+        { hasFirstDeliveryDay && <FirstDeliveryDayContainer /> }
         {
           showAddPromocode && <PromoCode />
         }

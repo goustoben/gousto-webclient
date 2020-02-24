@@ -3,8 +3,8 @@ import { shallow } from 'enzyme'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
 import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
-import { Banner } from 'routes/Menu/Banner'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
+import { MenuBanner } from '../MenuBanner'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 
 jest.mock('routes/Menu/SubHeader')
@@ -40,9 +40,8 @@ describe('initial render', () => {
   test('should not show as loading', () => {
     expect(wrapper.find(Loading).prop('loading')).toBe(false)
   })
-  test('should render banner with an image name prop', () => {
-    expect(wrapper.find(Banner).length).toBe(1)
-    expect(wrapper.find(Banner).prop('type')).toBeTruthy()
+  test('should render MenuBanner ', () => {
+    expect(wrapper.find(MenuBanner).length).toBe(1)
   })
   test('should render these through the RecipGrid component', () => {
     expect(wrapper.find(RecipeGrid)).toHaveLength(1)
@@ -199,7 +198,7 @@ describe('stockAlert', () => {
     test('should show stock alert', () => {
       expect(wrapper.find('Alert')).toHaveLength(1)
     })
-    
+
     test('should show stock alert with Recipe rush title', () => {
       expect(wrapper.find('Alert > h4').text()).toEqual('Recipe rush')
     })

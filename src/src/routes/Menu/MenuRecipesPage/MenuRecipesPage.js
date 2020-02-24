@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react'
 import { Alert } from 'goustouicomponents'
 import PropTypes from 'prop-types'
-import menu from 'config/menu'
-import moment from 'moment'
 import CollectionsNav from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
-import { Banner } from '../Banner'
 import fetchData from '../fetchData'
+import { MenuBanner } from './MenuBanner'
 
 import css from './MenuRecipesPage.css'
 
@@ -130,17 +128,6 @@ export class MenuRecipesPage extends PureComponent {
     }
   }
 
-  renderBanner = (switchoverDate) => {
-    const now = moment()
-    const switchoverTime = moment(switchoverDate)
-
-    if (now.isSameOrAfter(switchoverTime, 'hour')) {
-      return <Banner type="febyouary" />
-    }
-
-    return <Banner type="janyoury1" />
-  }
-
   render() {
     const {
       showLoading,
@@ -153,7 +140,7 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        {this.renderBanner(menu.janyouary.switchoverDate)}
+        <MenuBanner />
         <SubHeader
           orderId={orderId}
         />

@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import Immutable from 'immutable'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryVisibilityChange, boxSummaryDeliverySlotChosen, boxSummaryNext } from 'actions/boxSummary'
+import { boxSummaryNext } from 'actions/boxSummary'
 import { getDisabledSlots, getFullScreenBoxSummary, getLogoutUserDisabledSlots } from 'selectors/features'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
@@ -49,10 +49,7 @@ const DeliverySlotContainer = connect(mapStateToProps, {
   pushOrderEdit: orderId => push(`/menu/${orderId}`),
   clearPostcode: actions.basketPostcodeClear,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
-  menuLoadMenu: actions.menuLoadMenu,
-  menuLoadStock: actions.menuLoadStock,
-  deliverySlotChosen: boxSummaryDeliverySlotChosen,
   boxSummaryNext,
-  boxSummaryVisibilityChange,
 })(DeliverySlot)
+
 export default DeliverySlotContainer
