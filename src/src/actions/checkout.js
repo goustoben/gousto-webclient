@@ -144,6 +144,7 @@ export function checkoutCreatePreviewOrder() {
             deliverySlotId,
             recipeChoices,
             path,
+            serverSide: __SERVER__ === true,
           }
         })
         dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, { message: 'Missing data, persistent basket might be expired', code: 'basket-expired' }))
@@ -180,6 +181,7 @@ export function checkoutCreatePreviewOrder() {
           extra: {
             orderDetails,
             path,
+            serverSide: __SERVER__ === true,
           }
         })
         logger.error(e)

@@ -98,7 +98,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   }
 
   const startTime = new Date()
-  logger.notice({message: '[fetch start]', requestUrl, uuid})
+  logger.notice({message: '[fetch start]', requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
   let responseStatus
   let responseRedirected
   let responseUrl
@@ -116,7 +116,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     .then(response => [JSONParse(response, useMenuService), responseStatus]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid})
+      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
 
       if ( useMenuService ) {
         return { data: response.data, included: response.included, meta: response.meta }
@@ -138,7 +138,8 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
         elapsedTime: `${(new Date() - startTime)}ms`,
         requestUrl,
         errors: [e],
-        uuid
+        uuid,
+        extra: { serverSide: __SERVER__ === true, },
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {
