@@ -102,6 +102,7 @@ class Summary extends React.PureComponent {
               recipeDiscountPercent={prices.get('percentageOff')}
               extrasTotalPrice={prices.get('productTotal')}
               showAddPromocode={showAddPromocode}
+              hasFirstDeliveryDay
             />
             <div>
               {(currentStep !== 'payment')

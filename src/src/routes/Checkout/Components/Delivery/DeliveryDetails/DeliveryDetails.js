@@ -56,7 +56,7 @@ class DeliveryDetails extends React.PureComponent {
         <div className={css.iconDeliverySection}>
           <Svg fileName="icon-delivery" className={css.iconDelivery} />
           <div className={css.iconDeliveryDescription}>
-            <p className={css.textSM}>Not going to be home? No problem. Just tell us a safe place to leave your box. Your food will keep cold for 24hrs.</p>
+            <p className={css.textSM}>Not going to be home? No problem. Just tell us a safe place to leave your box. Your food will keep cold for 12hrs.</p>
           </div>
         </div>
         <DeliveryInstruction
