@@ -93,3 +93,5 @@ export const getShowStockAlertFlag = ({ features }) => (features && features.get
 export const isAccountTabNameTest = ({ features }) => (
   features && features.getIn(['accountTabNameTest', 'value'], false)
 )
+
+export const getHideMenuBanner = ({ features }) => (features && features.getIn(['hideMenuBanner', 'value'], false))

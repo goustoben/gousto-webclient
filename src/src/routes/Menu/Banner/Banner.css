@@ -32,16 +32,16 @@
 	}
 }
 
-.janyoury1 {
+.default {
 	composes: container;
-	background-image: url('media/images/menu/JanYouary_mobile_no_click.jpg');
+	background-image: url('media/images/menu/default_mobile_no_click.png');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/JanYouary_tablet_no_click.jpg');
+		background-image: url('media/images/menu/default_tablet_no_click.png');
 	}
 
 	@media ScreenMLMin {
-		background-image: url('media/images/menu/JanYouary_desktop_no_click.jpg');
+		background-image: url('media/images/menu/default_desktop_no_click.png');
 	}
 }
 

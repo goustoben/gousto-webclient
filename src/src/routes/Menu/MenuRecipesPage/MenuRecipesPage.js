@@ -6,7 +6,7 @@ import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
-import { MenuBanner } from './MenuBanner'
+import { MenuBannerContainer } from './MenuBanner'
 
 import css from './MenuRecipesPage.css'
 
@@ -140,7 +140,7 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        <MenuBanner />
+        <MenuBannerContainer />
         <SubHeader
           orderId={orderId}
         />

@@ -4,7 +4,7 @@ import CollectionsNav from 'routes/Menu/CollectionsNav'
 import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
-import { MenuBanner } from '../MenuBanner'
+import { MenuBannerContainer } from '../MenuBanner'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 
 jest.mock('routes/Menu/SubHeader')
@@ -41,7 +41,7 @@ describe('initial render', () => {
     expect(wrapper.find(Loading).prop('loading')).toBe(false)
   })
   test('should render MenuBanner ', () => {
-    expect(wrapper.find(MenuBanner).length).toBe(1)
+    expect(wrapper.find(MenuBannerContainer).length).toBe(1)
   })
   test('should render these through the RecipGrid component', () => {
     expect(wrapper.find(RecipeGrid)).toHaveLength(1)
