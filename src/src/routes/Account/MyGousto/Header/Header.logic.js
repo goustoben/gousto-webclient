@@ -10,33 +10,28 @@ import { HeaderPresentation } from './Header.presentation'
 const ELIGIBILITY_DAYS = 7
 
 class Header extends PureComponent {
-  static propTypes = {
-    accessToken: PropTypes.string.isRequired,
-    orders: PropTypes.instanceOf(Immutable.Map),
-    loadOrderTrackingInfo: PropTypes.func,
-    nextOrderTracking: PropTypes.string,
-    trackNextBoxTrackingClick: PropTypes.func,
-    trackOrderNotEligibleForSelfServiceResolutionClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    orders: Immutable.Map({}),
-    loadOrderTrackingInfo: () => {},
-    nextOrderTracking: null,
-    trackNextBoxTrackingClick: () => {},
-    trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
-  }
-
   constructor(props) {
     super(props)
-    this.state = { todayOrderHasTooltip: false }
+    this.state = { hasTooltipForNextOrder: false, hasTooltipForPreviousOrder: false }
   }
 
-  async componentDidUpdate(prevProps, prevState) {
-    const { accessToken, orders, loadOrderTrackingInfo } = this.props
+  componentDidUpdate(prevProps, prevState) {
+    const { orders, loadOrderTrackingInfo } = this.props
     if (prevProps.orders.size !== orders.size) {
       const now = moment()
+      const previousOrder = this.findOrder(orders, now, 'previous')
       const nextOrder = this.findOrder(orders, now, 'next')
+
+      if (previousOrder) {
+        this.checkShouldShowTooltip({
+          orderDate: previousOrder.get('deliveryDate'),
+          targetTime: 'yesterday',
+        }).then(orderHasTooltip => {
+          if (orderHasTooltip && !prevState.hasTooltipForPreviousOrder) {
+            this.setState({ hasTooltipForPreviousOrder: true })
+          }
+        })
+      }
 
       if (nextOrder) {
         const date = moment(nextOrder.get('deliveryDate'))
@@ -47,24 +42,14 @@ class Header extends PureComponent {
           loadOrderTrackingInfo(nextOrderId)
         }
 
-        try {
-          const { data: { day: showTooltipTime } } = await shouldShowEntryPointTooltip(
-            accessToken,
-            nextOrder.get('deliveryDate')
-          )
-
-          if (
-            showTooltipTime === 'same_day_evening'
-            && !prevState.todayOrderHasTooltip
-          ) {
-            this.setState({ todayOrderHasTooltip: true })
+        this.checkShouldShowTooltip({
+          orderDate: nextOrder.get('deliveryDate'),
+          targetTime: 'same_day_evening',
+        }).then(orderHasTooltip => {
+          if (orderHasTooltip && !prevState.hasTooltipForNextOrder) {
+            this.setState({ hasTooltipForNextOrder: true })
           }
-        } catch (error) {
-          logger.warning(
-            'API call to shouldShowEntryPointTooltip thrown an error',
-            error
-          )
-        }
+        })
       }
     }
   }
@@ -132,6 +117,28 @@ class Header extends PureComponent {
     return orders.get(orderIndex)
   }
 
+  checkShouldShowTooltip = async ({ orderDate, targetTime }) => {
+    const { accessToken } = this.props
+
+    try {
+      const { data: { day: showTooltipTime } } = await shouldShowEntryPointTooltip(
+        accessToken,
+        orderDate
+      )
+
+      if (showTooltipTime === targetTime) {
+        return true
+      }
+    } catch (error) {
+      logger.warning(
+        `API call to shouldShowEntryPointTooltip for order with date ${orderDate} thrown an error`,
+        error
+      )
+    }
+
+    return false
+  }
+
   render() {
     const {
       orders,
@@ -139,7 +146,7 @@ class Header extends PureComponent {
       trackNextBoxTrackingClick,
       trackOrderNotEligibleForSelfServiceResolutionClick,
     } = this.props
-    const { todayOrderHasTooltip } = this.state
+    const { hasTooltipForNextOrder, hasTooltipForPreviousOrder } = this.state
     const now = moment()
     const nextOrder = this.findOrder(orders, now, 'next')
     const previousOrder = this.findOrder(orders, now, 'previous')
@@ -173,9 +180,10 @@ class Header extends PureComponent {
           <HeaderPresentation
             nextOrderMessage={nextOrderMessage}
             nextOrderId={nextOrder ? nextOrder.get('id') : null}
-            nextOrderHasTooltip={todayOrderHasTooltip}
+            hasTooltipForNextOrder={hasTooltipForNextOrder}
             nextOrderTracking={nextOrderTracking}
             numberOfDaysSincePreviousOrder={numberOfDaysSincePreviousOrder}
+            hasTooltipForPreviousOrder={hasTooltipForPreviousOrder}
             previousOrderMessage={previousOrderMessage}
             getHelpQueryParam={getHelpQueryParam}
             trackNextBoxTrackingClick={trackNextBoxTrackingClick}
@@ -185,6 +193,23 @@ class Header extends PureComponent {
         : null
     )
   }
+}
+
+Header.propTypes = {
+  accessToken: PropTypes.string.isRequired,
+  orders: PropTypes.instanceOf(Immutable.Map),
+  loadOrderTrackingInfo: PropTypes.func,
+  nextOrderTracking: PropTypes.string,
+  trackNextBoxTrackingClick: PropTypes.func,
+  trackOrderNotEligibleForSelfServiceResolutionClick: PropTypes.func,
+}
+
+Header.defaultProps = {
+  orders: Immutable.Map({}),
+  loadOrderTrackingInfo: () => {},
+  nextOrderTracking: null,
+  trackNextBoxTrackingClick: () => {},
+  trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
 }
 
 export { Header }
