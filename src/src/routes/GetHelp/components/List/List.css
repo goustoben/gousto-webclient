@@ -13,9 +13,3 @@
 .item:last-child {
 	border-bottom: 0;
 }
-
-.hiddenOnMobile {
-	@media ScreenXXSMax {
-		display: none;
-	}
-}
