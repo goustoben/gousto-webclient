@@ -10,8 +10,9 @@ import css from './Header.css'
 const HeaderPresentation = ({
   nextOrderId,
   nextOrderMessage,
-  nextOrderHasTooltip,
   nextOrderTracking,
+  hasTooltipForNextOrder,
+  hasTooltipForPreviousOrder,
   previousOrderMessage,
   getHelpQueryParam,
   trackNextBoxTrackingClick,
@@ -31,7 +32,7 @@ const HeaderPresentation = ({
         linkLabel={linkLabel}
         linkUrl={linkUrl}
         clientRouted={!linkUrl.includes(client.myDeliveries)}
-        tooltipContent={nextOrderHasTooltip
+        tooltipContent={hasTooltipForNextOrder
           && 'Any issues with this box? Let us know and we\'ll sort it out.'}
       >
         <OrderDetails heading="Your next box delivery">
@@ -76,6 +77,8 @@ const HeaderPresentation = ({
     <CardWithLink
       linkLabel="Get help with this box"
       linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+      tooltipContent={hasTooltipForPreviousOrder
+        && 'Any issues with this box? Let us know and we\'ll sort it out.'}
       trackClick={onPreviousBoxGetHelpClick}
     >
       <OrderDetails heading="Your most recent box delivery">
@@ -102,8 +105,9 @@ HeaderPresentation.propTypes = {
     primary: PropTypes.string,
     secondary: PropTypes.string,
   }),
-  nextOrderHasTooltip: PropTypes.bool,
+  hasTooltipForNextOrder: PropTypes.bool,
   nextOrderTracking: PropTypes.string,
+  hasTooltipForPreviousOrder: PropTypes.bool,
   previousOrderMessage: PropTypes.string,
   getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   trackNextBoxTrackingClick: PropTypes.func,
@@ -118,8 +122,9 @@ HeaderPresentation.defaultProps = {
     primary: null,
     secondary: null,
   },
-  nextOrderHasTooltip: false,
+  hasTooltipForNextOrder: false,
   nextOrderTracking: null,
+  hasTooltipForPreviousOrder: false,
   previousOrderMessage: null,
   getHelpQueryParam: false,
   trackNextBoxTrackingClick: () => {},
