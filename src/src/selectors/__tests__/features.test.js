@@ -23,7 +23,8 @@ import {
   getFullScreenBoxSummary,
   getShowStockAlertFlag,
   getUserMenuVariant,
-  isAccountTabNameTest
+  isAccountTabNameTest,
+  getHideMenuBanner
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -589,6 +590,36 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(isAccountTabNameTest(state)).toBe(true)
+      })
+    })
+  })
+
+  describe('getHideMenuBanner', () => {
+    describe('when hideMenuBanner is NOT set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          hideMenuBanner: {
+            value: false
+          }
+        })
+      })
+
+      test('should return false', () => {
+        expect(getHideMenuBanner(state)).toBe(false)
+      })
+    })
+
+    describe('when hideMenuBanner is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          hideMenuBanner: {
+            value: true
+          }
+        })
+      })
+
+      test('should return true', () => {
+        expect(getHideMenuBanner(state)).toBe(true)
       })
     })
   })

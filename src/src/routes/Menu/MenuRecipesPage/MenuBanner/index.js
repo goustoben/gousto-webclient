@@ -1,1 +1,1 @@
-export { MenuBanner } from './MenuBanner'
+export { MenuBannerContainer } from './MenuBannerContainer'

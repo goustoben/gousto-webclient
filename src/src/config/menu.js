@@ -50,7 +50,7 @@ module.exports = {
     { id: 'dairy-free', label: 'Dairy Free' },
     { id: 'gluten-free', label: 'Gluten Free' },
   ],
-  noMenu: {
-    switchoverDate: '2020-03-03T12:00:00+01:00',
+  defaultMenu: {
+    switchoverDate: '2020-02-25T12:00:00+01:00',
   }
 }
