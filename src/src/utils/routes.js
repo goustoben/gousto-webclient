@@ -1,4 +1,6 @@
 import config from 'config/routes'
+import authActions from 'actions/auth'
+import { getIsAuthenticated, getAccessToken, getRefreshToken, getExpiresAt } from 'selectors/auth'
 
 /**
  * Get origin url on the client
@@ -15,25 +17,46 @@ function getOrigin() {
   return ''
 }
 
+export const addTargetToRedirect = ({target = false, location, redirectUrl = '/'}) => {
+  let redirectWithTarget
+
+  if (target) {
+    const encodedUrl = encodeURIComponent(getOrigin() + location.pathname)
+    redirectWithTarget = `${redirectUrl}#login?target=${encodedUrl}`
+  }
+
+  return redirectWithTarget || redirectUrl
+}
+
 /**
  * On Enter function, which prevent
  * access to not authenticated users
- * redirecting to the whished location
+ * redirecting to the wished location
  *
  * @param store
  * @param redirectUrl
  * @returns {function(*, *, *)}
  */
-export function checkValidSession(store, redirectUrl = '/', target = false) {
+export function checkValidSession(store, redirectUrl, target) {
   return ({ location }, replace, next) => {
-    const isAuthenticated = store.getState().auth.get('isAuthenticated')
+    const state = store.getState()
+    const isAuthenticated = getIsAuthenticated(state)
     if (!isAuthenticated) {
-      if (target) {
-        const encodedUrl = encodeURIComponent(getOrigin() + location.pathname)
-        redirectUrl += `#login?target=${encodedUrl}` // eslint-disable-line no-param-reassign
+      const accessToken = getAccessToken(state)
+      const refreshToken = getRefreshToken(state)
+      const expiresAt = getExpiresAt(state)
+
+      if (!accessToken && !refreshToken) {
+        replace(addTargetToRedirect({target, location, redirectUrl}))
       }
-      replace(redirectUrl)
+
+      try {
+        store.dispatch(authActions.authValidate(accessToken, refreshToken, expiresAt))
+      } catch (e) {
+        replace(addTargetToRedirect({target, location, redirectUrl}))
+      }
     }
+
     next()
   }
 }
