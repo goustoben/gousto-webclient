@@ -35,7 +35,7 @@ class MyGousto extends React.PureComponent {
 
     userLoadOrders()
     userGetReferralDetails()
-    
+
     setTimeout(() => {
       menuFetchData({ store, query: {}, params: {} }, false, true)
     }, 500)

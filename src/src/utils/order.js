@@ -1,8 +1,16 @@
 import Immutable from 'immutable'
-
+import moment from 'moment'
 import { formatPrice } from 'utils/format'
 
 const hyphen = String.fromCharCode(45)
+
+export function isOrderBeingDeliveredToday(deliveryDate) {
+  const now = moment()
+  const orderDeliveryDate = moment(deliveryDate)
+  const nextOrderIsToday = now.format('YYMMDD') === orderDeliveryDate.format('YYMMDD')
+
+  return nextOrderIsToday
+}
 
 export function formatTotalDiscounts(dashPricing, boxPrice) {
   let totalDiscounts = null
@@ -15,6 +23,31 @@ export function formatTotalDiscounts(dashPricing, boxPrice) {
   }
 
   return totalDiscounts
+}
+
+export function findNewestOrder(orders, areFutureOrdersIncluded) {
+  const now = moment()
+
+  const orderIndex = orders.reduce((currentOrderIndex, order, index) => {
+    const orderDeliveryDate = moment(order.get('deliveryDate')).endOf('day')
+    const orderValidComparedToNow = areFutureOrdersIncluded
+      ? orderDeliveryDate.isAfter(now)
+      : orderDeliveryDate.isBefore(now)
+
+    if (!orderValidComparedToNow) return currentOrderIndex
+    if (currentOrderIndex === null) return index
+
+    const currentOrderDeliveryDate = moment(
+      orders.getIn([currentOrderIndex, 'deliveryDate'])
+    ).endOf('day')
+
+    return orderDeliveryDate.isBetween(currentOrderDeliveryDate, now)
+      || orderDeliveryDate.isBetween(now, currentOrderDeliveryDate)
+      ? index
+      : currentOrderIndex
+  }, null)
+
+  return orders.get(orderIndex)
 }
 
 export function totalPrice(boxPrice, extrasPrice, slotPrice) {

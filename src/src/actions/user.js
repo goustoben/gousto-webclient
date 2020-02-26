@@ -308,6 +308,7 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
           state: orderType,
           includes: ['shipping_address']
         })
+
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
           orders
