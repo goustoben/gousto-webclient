@@ -49,27 +49,5 @@ describe('<ItemLink />', () => {
 
       expect(itemLinkWithTracking.find(Item).prop('trackClick')).toBe(aFunction)
     })
-
-    test('the isHiddenOnMobile value is passed to the Item', () => {
-      let itemLink = mount(
-        <ItemLink
-          label="item-label"
-          to="/test"
-          isHiddenOnMobile
-        />
-      )
-
-      expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(true)
-
-      itemLink = mount(
-        <ItemLink
-          label="item-label"
-          to="/test"
-          isHiddenOnMobile={false}
-        />
-      )
-
-      expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(false)
-    })
   })
 })

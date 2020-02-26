@@ -33,7 +33,6 @@ const Contact = ({
       <Item
         label={chatItem}
         trackClick={trackClick(selectContactChannel, 'chat')}
-        isHiddenOnMobile
         onClick={openLiveChat}
       />
       <ItemLink
