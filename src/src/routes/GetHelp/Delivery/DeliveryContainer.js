@@ -1,13 +1,26 @@
 import { connect } from 'react-redux'
+import userActions, { userLoadOrderTrackingInfo } from 'actions/user'
+import { getUserOrders } from 'selectors/user'
 import {
   trackDeliveryOther,
   trackDeliveryStatus,
-} from 'actions/getHelp'
+  trackNextBoxTrackingClick,
+} from '../actions/getHelp'
 import { Delivery } from './Delivery'
 
-const DeliveryContainer = connect(null, {
+function mapStateToProps(state) {
+  return {
+    nextOrderTracking: state.user.get('nextOrderTracking'),
+    orders: getUserOrders(state),
+  }
+}
+
+const DeliveryContainer = connect(mapStateToProps, {
+  loadOrderTrackingInfo: userLoadOrderTrackingInfo,
   trackDeliveryOther,
   trackDeliveryStatus,
+  trackNextBoxTrackingClick,
+  userLoadOrders: userActions.userLoadOrders,
 })(Delivery)
 
 export {

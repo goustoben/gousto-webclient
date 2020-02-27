@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 
-import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
+import { loadCheckoutScript } from '../loadCheckoutScript'
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
 const { window } = jsdom

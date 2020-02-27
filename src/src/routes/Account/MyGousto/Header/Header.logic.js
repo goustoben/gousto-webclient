@@ -3,8 +3,12 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import Immutable from 'immutable'
 import routes from 'config/routes'
-import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import logger from 'utils/logger'
+import { shouldShowEntryPointTooltip } from 'apis/getHelp'
+import {
+  findNewestOrder,
+  isOrderBeingDeliveredToday
+} from 'utils/order'
 import { HeaderPresentation } from './Header.presentation'
 
 const ELIGIBILITY_DAYS = 7
@@ -18,9 +22,8 @@ class Header extends PureComponent {
   componentDidUpdate(prevProps, prevState) {
     const { orders, loadOrderTrackingInfo } = this.props
     if (prevProps.orders.size !== orders.size) {
-      const now = moment()
-      const previousOrder = this.findOrder(orders, now, 'previous')
-      const nextOrder = this.findOrder(orders, now, 'next')
+      const previousOrder = findNewestOrder(orders, false)
+      const nextOrder = findNewestOrder(orders, true)
 
       if (previousOrder) {
         this.checkShouldShowTooltip({
@@ -34,12 +37,8 @@ class Header extends PureComponent {
       }
 
       if (nextOrder) {
-        const date = moment(nextOrder.get('deliveryDate'))
-        const nextOrderIsToday = now.format('YYMMDD') === date.format('YYMMDD')
-
-        if (nextOrderIsToday) {
-          const nextOrderId = nextOrder.get('id')
-          loadOrderTrackingInfo(nextOrderId)
+        if (isOrderBeingDeliveredToday(nextOrder.get('deliveryDate'))) {
+          loadOrderTrackingInfo(nextOrder.get('id'))
         }
 
         this.checkShouldShowTooltip({
@@ -94,29 +93,6 @@ class Header extends PureComponent {
     return deliveryDate.format('dddd Do MMMM')
   }
 
-  findOrder = (orders, now, orderToFind) => {
-    const orderIndex = orders.reduce((currentOrderIndex, order, index) => {
-      const orderDeliveryDate = moment(order.get('deliveryDate')).endOf('day')
-      const orderValidComparedToNow = orderToFind === 'next'
-        ? orderDeliveryDate.isAfter(now)
-        : orderDeliveryDate.isBefore(now)
-
-      if (!orderValidComparedToNow) return currentOrderIndex
-      if (currentOrderIndex === null) return index
-
-      const currentOrderDeliveryDate = moment(
-        orders.getIn([currentOrderIndex, 'deliveryDate'])
-      ).endOf('day')
-
-      return orderDeliveryDate.isBetween(currentOrderDeliveryDate, now)
-        || orderDeliveryDate.isBetween(now, currentOrderDeliveryDate)
-        ? index
-        : currentOrderIndex
-    }, null)
-
-    return orders.get(orderIndex)
-  }
-
   checkShouldShowTooltip = async ({ orderDate, targetTime }) => {
     const { accessToken } = this.props
 
@@ -148,8 +124,8 @@ class Header extends PureComponent {
     } = this.props
     const { hasTooltipForNextOrder, hasTooltipForPreviousOrder } = this.state
     const now = moment()
-    const nextOrder = this.findOrder(orders, now, 'next')
-    const previousOrder = this.findOrder(orders, now, 'previous')
+    const nextOrder = findNewestOrder(orders, true)
+    const previousOrder = findNewestOrder(orders, false)
     const nextOrderMessage = this.formatNextOrderCopy(nextOrder, now)
     const numberOfDaysSincePreviousOrder = previousOrder
       && now.diff(moment(previousOrder.get('deliveryDate')), 'days', true)

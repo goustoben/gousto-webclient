@@ -1,10 +1,66 @@
 import Immutable from 'immutable'
+import moment from 'moment'
 
 import {
   getAffiliateTrackingData,
   getConfirmationPromoCode,
   getPreviewOrderErrorName,
+  findNewestOrder,
 } from 'utils/order'
+
+const deliveryDateFormat = 'YYYY-MM-DD HH:mm:ss'
+const upcomingOrders = Immutable.fromJS({
+  99: {
+    deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '99',
+  },
+  100: {
+    deliveryDate: moment().format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '100',
+  },
+  101: {
+    deliveryDate: moment().add(2, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '101',
+  },
+  102: {
+    deliveryDate: moment().add(5, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '102',
+  },
+})
+const pastOrder = Immutable.fromJS({
+  99: {
+    deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '99',
+  },
+  100: {
+    deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '100',
+  },
+})
 
 describe('order utils', () => {
   describe('getConfirmationPromoCode', () => {
@@ -136,6 +192,85 @@ describe('order utils', () => {
       test('should return correct error code for known error types', () => {
         errors.forEach(error => {
           expect(getPreviewOrderErrorName(error)).toEqual(error.result)
+        })
+      })
+    })
+  })
+
+  describe('given findNewestOrder is called', () => {
+    describe('when customer has upcoming and past orders', () => {
+      describe('and the areFutureOrdersIncluded param is set to true', () => {
+        let order
+
+        beforeEach(() => {
+          order = findNewestOrder(upcomingOrders, true)
+        })
+
+        test('returns order to be deliveried today', () => {
+          const expectedOrderOfToday = Immutable.fromJS({
+            deliveryDate: moment().format(deliveryDateFormat),
+            deliverySlot: {
+              deliveryEnd: '18:59:59',
+              deliveryStart: '08:00:00'
+            },
+            id: '100',
+          })
+
+          expect(order).toEqual(expectedOrderOfToday)
+        })
+      })
+
+      describe('and the areFutureOrdersIncluded param is set to false', () => {
+        let order
+
+        beforeEach(() => {
+          order = findNewestOrder(upcomingOrders, false)
+        })
+
+        test('returns the most recent delivered order', () => {
+          const expectedPreviousOrder = Immutable.fromJS({
+            deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+            deliverySlot: {
+              deliveryEnd: '18:59:59',
+              deliveryStart: '08:00:00'
+            },
+            id: '99',
+          })
+          expect(order).toEqual(expectedPreviousOrder)
+        })
+      })
+    })
+
+    describe('when customer has past orders only', () => {
+      describe('and the areFutureOrdersIncluded param is set to true', () => {
+        let order
+
+        beforeEach(() => {
+          order = findNewestOrder(pastOrder, true)
+        })
+
+        test('returns undefined', () => {
+          expect(order).toEqual(undefined)
+        })
+      })
+
+      describe('and the areFutureOrdersIncluded param is set to false', () => {
+        let order
+
+        beforeEach(() => {
+          order = findNewestOrder(pastOrder, false)
+        })
+
+        test('returns the most recent delivered order', () => {
+          const expectedPreviousOrder = Immutable.fromJS({
+            deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+            deliverySlot: {
+              deliveryEnd: '18:59:59',
+              deliveryStart: '08:00:00'
+            },
+            id: '100',
+          })
+          expect(order).toEqual(expectedPreviousOrder)
         })
       })
     })
