@@ -114,7 +114,7 @@ describe('login actions', () => {
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
-      expect(redirect).toHaveBeenCalledWith('/menu?features[]=browse')
+      expect(redirect).toHaveBeenCalledWith('/menu')
     })
 
     it('should call userRememberMe and postLoginSteps - user, /home, redirect', async () => {

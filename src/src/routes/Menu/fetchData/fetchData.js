@@ -22,27 +22,6 @@ const requiresMenuRecipesClear = (store, orderId) => (
     && store.getState().basket.get('recipes').size
 )
 
-const inBrowseMode = (store, query) => {
-  if (store.getState().request.get('browser', '') === 'mobile' && store.getState().features.getIn(['browse', 'value']) !== true) {
-    return false
-  }
-
-  if (store.getState().features.getIn(['browse', 'value']) === false || getIsAuthenticated(store.getState())) {
-    return false
-  }
-
-  if (
-    query.day_id
-    || query.slot_id
-    || getBasketDate(store.getState())
-    || store.getState().basket.get('slotId')
-  ) {
-    return false
-  }
-
-  return true
-}
-
 const chooseFirstDate = async (store) => {
   const isAuthenticated = getIsAuthenticated(store.getState())
   const isAdmin = getIsAdmin(store.getState())
@@ -133,8 +112,6 @@ const loadWithoutOrder = async (store, query, background) => {
     await store.dispatch(actions.basketChosenAddressChange(store.getState().user.get('shippingAddresses').first()))
   }
 
-  const browseMode = inBrowseMode(store, query)
-
   if (
     query.day_id
     || query.slot_id
@@ -149,7 +126,7 @@ const loadWithoutOrder = async (store, query, background) => {
     } catch (err) {
       logger.error({ message: `Debug fetchData: ${err.message}`, errors: [err] })
     }
-  } else if (!store.getState().basket.get('date') && !browseMode) {
+  } else if (!store.getState().basket.get('date')) {
     await chooseFirstDate(store)
   }
 
@@ -157,22 +134,19 @@ const loadWithoutOrder = async (store, query, background) => {
     await store.dispatch(actions.basketNumPortionChange(query.num_portions))
   }
 
-  let cutoffDateTime = browseMode ? cutoffDateTimeNow() : undefined
+  let cutoffDateTime
   if (isAdmin) {
     cutoffDateTime = query.cutoffDate || store.getState().basket.get('date') || cutoffDateTimeNow()
   }
 
   await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background))
-
-  if (!browseMode) {
-    await store.dispatch(actions.menuLoadStock(true))
-  }
+  await store.dispatch(actions.menuLoadStock(true))
 
   if (query.postcode && !store.getState().basket.get('postcode')) {
     await store.dispatch(actions.basketPostcodeChangePure(query.postcode))
   }
 
-  if (browseMode || isAdmin) {
+  if (isAdmin) {
     await Promise.all([
       store.dispatch(actions.menuAddEmptyStock()),
       store.dispatch(actions.temp('cutoffDateTime', cutoffDateTime))
@@ -284,7 +258,6 @@ export default async function fetchData({ store, query, params }, force, backgro
     await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
 
     const timeTaken = Math.round(now() - startTime)
-
     store.dispatch(menuLoadComplete(timeTaken, true))
   } catch (e) {
     store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
