@@ -128,6 +128,7 @@ class Menu extends React.PureComponent {
           <JustForYouTutorial />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
+            <p className={css.legal}>{menu.legal}</p>
             <div className={showOverlay ? css.greyOverlayShow : css.greyOverlay} onClick={onOverlayClick} />
           </div>
           <BoxSummaryContainer />

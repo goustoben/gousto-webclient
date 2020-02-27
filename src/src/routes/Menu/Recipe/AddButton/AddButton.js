@@ -15,7 +15,7 @@ AddButton.propTypes = {
   inBasket: PropTypes.bool,
   position: PropTypes.number,
   stock: PropTypes.number,
-  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail']).isRequired,
+  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
 }
 
 export default AddButton

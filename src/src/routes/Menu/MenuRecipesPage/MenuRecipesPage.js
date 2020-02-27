@@ -3,6 +3,7 @@ import { Alert } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import CollectionsNav from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
+import { SimplifiedMenuRecipesPage } from '../NewMenuLayout/SimplifiedMenuRecipesPage'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
@@ -23,6 +24,7 @@ const propTypes = {
   shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,
   portionSizeSelectedTracking: PropTypes.func.isRequired,
+  newMenuLayout: PropTypes.bool.isRequired,
   menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
   showStockAlert: PropTypes.bool,
@@ -32,7 +34,7 @@ const propTypes = {
   query: PropTypes.shape({
     reload: PropTypes.bool
   }),
-  params: PropTypes.shape({})
+  params: PropTypes.shape({}),
 }
 
 const defaultProps = {
@@ -128,14 +130,13 @@ export class MenuRecipesPage extends PureComponent {
     }
   }
 
-  render() {
+  getDefaultMenuRecipePage = () => {
     const {
       showLoading,
       stateRecipeCount,
       orderId,
       showStockAlert
     } = this.props
-
     const fadeCss = (showLoading) ? css.fadeOut : css.willFade
 
     return (
@@ -158,6 +159,20 @@ export class MenuRecipesPage extends PureComponent {
         {stateRecipeCount && <RecipeGrid isFoodBrandClickable />}
       </div>
     )
+  }
+
+  render() {
+    const {
+      stateRecipeCount,
+      showLoading,
+      newMenuLayout
+    } = this.props
+
+    if (newMenuLayout) {
+      return <SimplifiedMenuRecipesPage stateRecipeCount={stateRecipeCount} showLoading={showLoading} />
+    }
+
+    return this.getDefaultMenuRecipePage()
   }
 }
 

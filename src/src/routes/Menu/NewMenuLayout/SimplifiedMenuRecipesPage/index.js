@@ -1,0 +1,1 @@
+export { SimplifiedMenuRecipesPage } from './SimplifiedMenuRecipesPage'
