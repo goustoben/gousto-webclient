@@ -206,18 +206,18 @@ describe('Header', () => {
 
       test('then the menu items should include "Upcoming Deliveries", "Subscription Settings" and "Account Details"', () => {
         const result = wrapper.instance().getMenuItems('mobile', '/')
-        expect(result[1].name).toEqual("Upcoming Deliveries")
-        expect(result[2].name).toEqual("Subscription Settings")
-        expect(result[3].name).toEqual("Account Details")
+        expect(result[1].name).toEqual('Upcoming Deliveries')
+        expect(result[2].name).toEqual('Subscription Settings')
+        expect(result[3].name).toEqual('Account Details')
       })
     })
 
     describe('when isAccountTabNameTest is set to false', () => {
       test('then the menu items should include "Deliveries", "My Subscription" and "Details"', () => {
         const result = wrapper.instance().getMenuItems('mobile', '/')
-        expect(result[1].name).toEqual("Deliveries")
-        expect(result[2].name).toEqual("Subscription")
-        expect(result[3].name).toEqual("Details")
+        expect(result[1].name).toEqual('Deliveries')
+        expect(result[2].name).toEqual('Subscription')
+        expect(result[3].name).toEqual('Details')
       })
     })
   })
@@ -294,63 +294,63 @@ describe('Header', () => {
     test('renders menu items in correct order', () => {
       const expected = [
         {
-          "clientRouted": true,
-          "name": 'My Gousto',
-          "url": routesConfig.client.myGousto,
-          "tracking": "MyGoustoNavigation Clicked",
+          'clientRouted': true,
+          'name': 'My Gousto',
+          'url': routesConfig.client.myGousto,
+          'tracking': 'MyGoustoNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": 'Deliveries',
-          "url": routesConfig.client.myDeliveries,
-          "tracking": "DeliveriesNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Deliveries',
+          'url': routesConfig.client.myDeliveries,
+          'tracking': 'DeliveriesNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": 'Subscription',
-          "url": routesConfig.client.mySubscription,
-          "tracking": "SubscriptionNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Subscription',
+          'url': routesConfig.client.mySubscription,
+          'tracking': 'SubscriptionNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": 'Details',
-          "url": routesConfig.client.myDetails,
-          "tracking": "DetailsNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Details',
+          'url': routesConfig.client.myDetails,
+          'tracking': 'DetailsNavigation Clicked',
         },
         {
-          "clientRouted": true,
-          "name": "Free Food",
-          "url": routesConfig.client.myReferral,
-          "tracking": "ReferAFriendNavigation Clicked",
+          'clientRouted': true,
+          'name': 'Free Food',
+          'url': routesConfig.client.myReferral,
+          'tracking': 'ReferAFriendNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": "Rate My Recipes",
-          "url": routesConfig.client.rateMyRecipes,
-          "tracking": "RateMyRecipesNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Rate My Recipes',
+          'url': routesConfig.client.rateMyRecipes,
+          'tracking': 'RateMyRecipesNavigation Clicked',
         },
         {
-          "clientRouted": true,
-          "disabled": true,
-          "name": "Home",
-          "url": routesConfig.client.home,
+          'clientRouted': true,
+          'disabled': true,
+          'name': 'Home',
+          'url': routesConfig.client.home,
         },
         {
-          "name": "Choose Recipes",
-          "url": routesConfig.client.menu,
-          "tracking": "RecipeNavigation Clicked",
+          'name': 'Choose Recipes',
+          'url': routesConfig.client.menu,
+          'tracking': 'RecipeNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": "Sustainability",
-          "url": routesConfig.client.weCare,
-          "tracking": "SustainabilityNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Sustainability',
+          'url': routesConfig.client.weCare,
+          'tracking': 'SustainabilityNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": "Help",
-          "url": `${routesConfig.zendesk.faqs}/?user_id=123`,
-          "tracking": "FAQNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Help',
+          'url': `${routesConfig.zendesk.faqs}/?user_id=123`,
+          'tracking': 'FAQNavigation Clicked',
         }
       ]
 
@@ -394,33 +394,33 @@ describe('Header', () => {
     test('should render menu items in correct order when logged out', () => {
       const expected = [
         {
-          "clientRouted": true,
-          "disabled": true,
-          "name": "Home",
-          "url": routesConfig.client.home,
+          'clientRouted': true,
+          'disabled': true,
+          'name': 'Home',
+          'url': routesConfig.client.home,
         },
         {
-          "clientRouted": true,
-          "name": "Box Prices",
-          "url": routesConfig.client.boxPrices,
-          "tracking": "BoxPricingNavigation Clicked",
+          'clientRouted': true,
+          'name': 'Box Prices',
+          'url': routesConfig.client.boxPrices,
+          'tracking': 'BoxPricingNavigation Clicked',
         },
         {
-          "name": "Choose Recipes",
-          "url": routesConfig.client.menu,
-          "tracking": "RecipeNavigation Clicked",
+          'name': 'Choose Recipes',
+          'url': routesConfig.client.menu,
+          'tracking': 'RecipeNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": "Sustainability",
-          "url": routesConfig.client.weCare,
-          "tracking": "SustainabilityNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Sustainability',
+          'url': routesConfig.client.weCare,
+          'tracking': 'SustainabilityNavigation Clicked',
         },
         {
-          "clientRouted": false,
-          "name": "Help",
-          "url": routesConfig.zendesk.faqs,
-          "tracking": "FAQNavigation Clicked",
+          'clientRouted': false,
+          'name': 'Help',
+          'url': routesConfig.zendesk.faqs,
+          'tracking': 'FAQNavigation Clicked',
         }
       ]
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)

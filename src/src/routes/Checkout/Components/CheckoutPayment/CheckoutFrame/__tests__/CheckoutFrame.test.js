@@ -107,9 +107,9 @@ describe('CheckoutFrame', () => {
 
     describe('billing address ', () => {
       const testAddress = {
-        addressLine1:"1 Test street",
-        city:"London",
-        postcode: "L0N D0N"
+        addressLine1: '1 Test street',
+        city: 'London',
+        postcode: 'L0N D0N'
       }
 
       test('should call Frames.setBillingDetails when updated', () => {
@@ -216,8 +216,8 @@ describe('CheckoutFrame', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame
         change={change}
-        formName={"payment"}
-        sectionName={"payment"}
+        formName={'payment'}
+        sectionName={'payment'}
         cardTokenReady={cardTokenReady}
         trackingCardTokenisationSuccessfully={jest.fn()}
         trackingCardTokenisationFailed={jest.fn()}
@@ -352,8 +352,8 @@ describe('CheckoutFrame', () => {
     test('should call the fireCheckoutError prop with correct action type when no error code in the event', () => {
       const event = {
         data: {
-          errorCode:'',
-          message:''
+          errorCode: '',
+          message: ''
         }
       }
       wrapper.instance().cardTokenisationFailed(event)
@@ -364,8 +364,8 @@ describe('CheckoutFrame', () => {
     test('should call the fireCheckoutError prop with correct action type when error code in the event', () => {
       const event = {
         data: {
-          errorCode:'82031',
-          message:'card tokenisation failure'
+          errorCode: '82031',
+          message: 'card tokenisation failure'
         }
       }
       wrapper.instance().cardTokenisationFailed(event)

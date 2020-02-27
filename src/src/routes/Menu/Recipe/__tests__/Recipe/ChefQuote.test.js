@@ -45,7 +45,7 @@ describe('<ChefQuote />', () => {
       wrapper = shallow(<ChefQuote quote={quote} chef={chef} />)
     })
 
-    test("should show the headshot image as the primary image", () => {
+    test('should show the headshot image as the primary image', () => {
       expect(wrapper.find('span').length).toEqual(0)
       expect(wrapper.find('img').length).toEqual(1)
       expect(
@@ -78,7 +78,7 @@ describe('<ChefQuote />', () => {
       wrapper = shallow(<ChefQuote quote={quote} chef={chef} />)
     })
 
-    test("should show the headshot image as the primary image", () => {
+    test('should show the headshot image as the primary image', () => {
       expect(wrapper.find('span').length).toEqual(0)
       expect(wrapper.find('img').length).toEqual(2)
       expect(
@@ -89,7 +89,7 @@ describe('<ChefQuote />', () => {
       ).toEqual('image-headshot.jpg')
     })
 
-    test("should show the signature image as the secondary image", () => {
+    test('should show the signature image as the secondary image', () => {
       expect(wrapper.find('span').length).toEqual(0)
       expect(wrapper.find('img').length).toEqual(2)
       expect(

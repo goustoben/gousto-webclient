@@ -30,7 +30,7 @@ describe('Notification component', () => {
 
     it('should return "expired" if card expiry date is before the current month', () => {
       card = Immutable.Map({
-        lastFourDigits: "1234",
+        lastFourDigits: '1234',
         expiryDate: '2019-07',
       })
 
@@ -40,7 +40,7 @@ describe('Notification component', () => {
 
     it('should return "toExpire" if card expiry date is within the current month', () => {
       card = Immutable.Map({
-        lastFourDigits: "1234",
+        lastFourDigits: '1234',
         expiryDate: '2019-08',
       })
 
@@ -50,7 +50,7 @@ describe('Notification component', () => {
 
     it('should return undefined if no cards are expired or expiring', () => {
       card = Immutable.Map({
-        lastFourDigits: "1234",
+        lastFourDigits: '1234',
         expiryDate: '2019-11',
       })
 
@@ -191,7 +191,7 @@ describe('Notification component', () => {
       config.referAFriend.startDate = '2019-01-01'
       config.referAFriend.endDate = '3019-01-01'
       card = Immutable.Map({
-        lastFourDigits: "1234",
+        lastFourDigits: '1234',
         expiryDate: currentMonth,
       })
       orders = Immutable.fromJS({
@@ -207,7 +207,7 @@ describe('Notification component', () => {
       window.location.assign = jest.fn()
       wrapper = mount(<Notification card={card} orders={orders} trackNotificationLinkClick={mockTrackNotificationLinkClick} />)
 
-      wrapper.find(`[href="my-referrals"]`).simulate('click')
+      wrapper.find('[href="my-referrals"]').simulate('click')
       expect(mockTrackNotificationLinkClick).toHaveBeenCalledWith(config.referAFriend.linkTrackingType)
       expect(window.location.assign).toHaveBeenCalledWith(config.referAFriend.url)
     })

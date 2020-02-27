@@ -150,9 +150,9 @@ describe('orderConfirmation actions', () => {
         await orderDetails('1234')(dispatch, getState)
 
         expect(basketOrderLoad).toHaveBeenCalledWith('1234', Immutable.Map({
-          "id": "1234",
-          "whenCutOff": "2019-04-12 19:00:00",
-          "periodId": "5678",
+          'id': '1234',
+          'whenCutOff': '2019-04-12 19:00:00',
+          'periodId': '5678',
         }))
       })
     })
@@ -230,13 +230,13 @@ describe('orderConfirmation actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
         trackingData: {
-          actionType: "Order Edited",
-          order_id: "123",
-          order_total: "25.5",
+          actionType: 'Order Edited',
+          order_id: '123',
+          order_total: '25.5',
           promo_code: false,
           signup: false,
           subscription_active: true,
-          subscription_order: "1"
+          subscription_order: '1'
         }
       })
     })

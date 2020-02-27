@@ -3,11 +3,11 @@ import { getHeaderDetails } from '../helper'
 
 describe('getHeaderDetails', () => {
   const testProps = Immutable.fromJS({
-    humanDeliveryDate: "Tuesday 26th March" ,
-    shouldCutoffAt: "2019-03-20 11:59:59" ,
+    humanDeliveryDate: 'Tuesday 26th March' ,
+    shouldCutoffAt: '2019-03-20 11:59:59' ,
     deliverySlot: {
-      deliveryStart: "08:00:00",
-      deliveryEnd: "18:59:59"
+      deliveryStart: '08:00:00',
+      deliveryEnd: '18:59:59'
     }
   })
   const expectedValues = {

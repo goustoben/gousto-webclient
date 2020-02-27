@@ -69,7 +69,7 @@ describe('Refer A Friend Logic', () => {
       const mockEvent = {
         preventDefault: () => {}
       }
-    
+
       const mockReferAFriend = jest.fn()
       wrapper.instance().referAFriend = mockReferAFriend
       wrapper.instance().handleSubmit(mockEvent)
@@ -83,7 +83,7 @@ describe('Refer A Friend Logic', () => {
       const mockEvent = {
         preventDefault: () => {}
       }
-    
+
       const mockReferAFriend = jest.fn()
       wrapper.instance().referAFriend = mockReferAFriend
       wrapper.instance().handleSubmit(mockEvent)

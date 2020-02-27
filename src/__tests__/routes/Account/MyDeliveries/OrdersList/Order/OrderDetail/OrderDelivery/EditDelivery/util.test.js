@@ -114,7 +114,7 @@ describe('util', () => {
     )
 
     expect(deliveryDaysOptions).toEqual([
-      { value: '46', label: 'Mon 6 Feb', date:'2017-02-06', disabled: true, icon: 'full-box' },
+      { value: '46', label: 'Mon 6 Feb', date: '2017-02-06', disabled: true, icon: 'full-box' },
       { value: '47', label: 'Tue 7 Feb', date: '2017-02-07', disabled: false, icon: '' },
     ])
 

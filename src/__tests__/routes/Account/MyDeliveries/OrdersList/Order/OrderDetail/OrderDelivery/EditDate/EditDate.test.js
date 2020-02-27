@@ -22,8 +22,8 @@ describe('EditDate', function () {
     bbb: { coreDayId: '46' },
   })
   const recipesStock = Immutable.List(['a', 'b'])
-  const recipes = Immutable.List([{id:'1'}, {id:'2'}])
-  const orders = Immutable.List([{id:'1'}, {id:'2'}])
+  const recipes = Immutable.List([{id: '1'}, {id: '2'}])
+  const orders = Immutable.List([{id: '1'}, {id: '2'}])
   const daysOptionsSample = [{
     value: '1241',
     label: '2018-02-11',
@@ -71,7 +71,7 @@ describe('EditDate', function () {
       recipesStock={recipesStock}
       recipes={recipes}
       orders={orders}
-      numPortions='2'
+      numPortions="2"
     />, { context: { store: { dispatch: dispatchSpy, getState: getStateSpy } } })
   })
 

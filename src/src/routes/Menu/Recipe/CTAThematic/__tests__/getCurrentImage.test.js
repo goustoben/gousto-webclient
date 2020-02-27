@@ -16,8 +16,8 @@ describe('CTAThematic', () => {
 
     describe('when first and second image match', () => {
       test('it returns the second image', () => {
-        const options = [ 
-          createOption('2019-12-20T12:00:00+01:00', '/foo.png'), 
+        const options = [
+          createOption('2019-12-20T12:00:00+01:00', '/foo.png'),
           createOption('2019-12-23T12:00:00+01:00', '/bar.png')
         ]
         const currentDate = '2019-12-25T12:00:00+01:00'
@@ -29,8 +29,8 @@ describe('CTAThematic', () => {
 
     describe('when first and second image match but third does not match', () => {
       test('it returns the second image', () => {
-        const options = [ 
-          createOption(null, '/foo.png'), 
+        const options = [
+          createOption(null, '/foo.png'),
           createOption('2019-12-23T12:00:00+01:00', '/bar.png'),
           createOption('2020-01-01T12:00:00+01:00', '/qux.png')
         ]
@@ -43,7 +43,7 @@ describe('CTAThematic', () => {
 
     describe('when no images match', () => {
       test('it returns null', () => {
-        const options = [ 
+        const options = [
           createOption('2019-12-23T12:00:00+01:00', '/bar.png'),
           createOption('2020-01-01T12:00:00+01:00', '/qux.png')
         ]

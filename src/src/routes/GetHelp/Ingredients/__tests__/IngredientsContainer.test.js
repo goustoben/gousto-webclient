@@ -90,7 +90,7 @@ describe('<IngredientsContainer />', () => {
       await ContinueButton.prop('onClick')()
 
       expect(store.getState().getHelp.get('selectedIngredients'))
-        .toEqual(fromJS({"1917-aaa": {"ingredientId": "aaa", "label": "1 beef stock cube", "recipeId": "1917"}}))
+        .toEqual(fromJS({'1917-aaa': {'ingredientId': 'aaa', 'label': '1 beef stock cube', 'recipeId': '1917'}}))
     })
 
     test('/v2/validate-ingredients endpoint is called correctly', async () => {

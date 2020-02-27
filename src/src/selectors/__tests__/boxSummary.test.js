@@ -7,9 +7,9 @@ describe('getBoxSummaryTextProps', () => {
     '2019-12-17': [{
       coreSlotId: '2',
       disabled: false,
-      label: "8am - 7pm ",
-      subLabel: "Free",
-      value: "456asv222"
+      label: '8am - 7pm ',
+      subLabel: 'Free',
+      value: '456asv222'
     }]
   }
   describe('when tempOrderId is empty', () => {
@@ -48,7 +48,8 @@ describe('getBoxSummaryTextProps', () => {
       describe('when user has prevSlotId', () => {
         test('should return Address name and button text Update delivery date', () => {
           const newState = {
-            ...state, basket: Immutable.fromJS({
+            ...state,
+            basket: Immutable.fromJS({
               address: {
                 name: 'Home'
               },

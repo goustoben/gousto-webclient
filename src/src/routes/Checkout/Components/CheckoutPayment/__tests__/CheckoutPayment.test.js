@@ -138,7 +138,7 @@ describe('CheckoutPayment', () => {
         expect(trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
       })
     })
-    
+
     describe('when form errors do have error', () => {
       const formErrors = {
         payment: {
@@ -152,7 +152,7 @@ describe('CheckoutPayment', () => {
       beforeEach(() => {
         wrapper.setProps({ formErrors, sectionName, formName })
       })
-      
+
       test('should call touch for correct fields', () => {
         wrapper.find(SubmitButton).simulate('click')
 
@@ -165,7 +165,7 @@ describe('CheckoutPayment', () => {
 
       test('should call trackingOrderPlaceAttemptFailed prop', () => {
         wrapper.find(SubmitButton).simulate('click')
-  
+
         expect(trackingOrderPlaceAttemptFailed).toHaveBeenCalledWith()
       })
     })

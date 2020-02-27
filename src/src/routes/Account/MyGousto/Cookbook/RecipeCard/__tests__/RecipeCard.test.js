@@ -3,9 +3,9 @@ import { shallow } from 'enzyme'
 
 import { RecipeCard } from '../RecipeCard'
 
-const testLink = "test-link"
-const testImages = "test-image"
-const testTitle = "test title"
+const testLink = 'test-link'
+const testImages = 'test-image'
+const testTitle = 'test title'
 
 describe('RecipeCard', () => {
   it('renders an Image, title, and link', () => {

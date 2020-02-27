@@ -20,7 +20,7 @@ describe('Billing Address', () => {
     store = {
       form: {
         payment: {
-          values:{
+          values: {
             payment: {isBillingAddressDifferent: true}
           }
         }
@@ -39,9 +39,9 @@ describe('Billing Address', () => {
       },
     }
 
-    deliveryAddress = {houseNo: '', street: '', town:'', postcode: ''}
-    form = "payment"
-    sectionName = "payment"
+    deliveryAddress = {houseNo: '', street: '', town: '', postcode: ''}
+    form = 'payment'
+    sectionName = 'payment'
     change = jest.fn()
 
     wrapper = shallow(

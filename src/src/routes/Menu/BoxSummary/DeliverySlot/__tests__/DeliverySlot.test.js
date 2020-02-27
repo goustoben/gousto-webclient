@@ -9,20 +9,20 @@ describe('DeliverySlot logic', () => {
 
   beforeEach(() => {
     deliveryDays = Immutable.Map({
-      "2019-03-03": Immutable.Map({
-        date: "2019-03-03",
-        id: "djhdhds",
+      '2019-03-03': Immutable.Map({
+        date: '2019-03-03',
+        id: 'djhdhds',
         slots: Immutable.List([
           Immutable.Map({
-            deliveryStartTime: "08:00:00",
-            deliveryEndTime: "19:00:00",
-            id: "123sddrdfst456",
+            deliveryStartTime: '08:00:00',
+            deliveryEndTime: '19:00:00',
+            id: '123sddrdfst456',
             disabledSlotId: '2019-03-03_08-19'
           }),
           Immutable.Map({
-            deliveryStartTime: "18:00:00",
-            deliveryEndTime: "22:00:00",
-            id: "987sddrdfst456",
+            deliveryStartTime: '18:00:00',
+            deliveryEndTime: '22:00:00',
+            id: '987sddrdfst456',
             disabledSlotId: '2019-03-03_18-22'
           })
         ])
@@ -47,7 +47,7 @@ describe('DeliverySlot logic', () => {
           disabledSlots={disabledSlots}
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={isSubscriptionActive}
-          tempDate='2019-03-03'
+          tempDate="2019-03-03"
           clearPostcode={jest.fn()}
           getBoxSummaryTextProps={getBoxSummaryTextProps}
           basketRestorePreviousValues={() => { }}
@@ -64,7 +64,7 @@ describe('DeliverySlot logic', () => {
           disabledSlots={disabledSlots}
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={isSubscriptionActive}
-          tempDate='2019-03-03'
+          tempDate="2019-03-03"
           clearPostcode={jest.fn()}
           getBoxSummaryTextProps={getBoxSummaryTextProps}
           basketRestorePreviousValues={() => { }}
@@ -81,7 +81,7 @@ describe('DeliverySlot logic', () => {
           disabledSlots={disabledSlots}
           isAuthenticated={isAuthenticated}
           isSubscriptionActive="active"
-          tempDate='2019-03-03'
+          tempDate="2019-03-03"
           clearPostcode={jest.fn()}
           getBoxSummaryTextProps={getBoxSummaryTextProps}
           basketRestorePreviousValues={() => { }}
@@ -102,7 +102,7 @@ describe('DeliverySlot logic', () => {
             deliverySlotChosen={jest.fn()}
             isAuthenticated={isAuthenticated}
             isSubscriptionActive={isSubscriptionActive}
-            tempDate='2019-03-03'
+            tempDate="2019-03-03"
             clearPostcode={jest.fn()}
             getBoxSummaryTextProps={getBoxSummaryTextProps}
             basketRestorePreviousValues={() => { }}
@@ -124,7 +124,7 @@ describe('DeliverySlot logic', () => {
             deliverySlotChosen={jest.fn()}
             isAuthenticated={isAuthenticated}
             isSubscriptionActive={isSubscriptionActive}
-            tempDate='2019-03-03'
+            tempDate="2019-03-03"
             clearPostcode={jest.fn()}
             getBoxSummaryTextProps={getBoxSummaryTextProps}
             basketRestorePreviousValues={() => { }}

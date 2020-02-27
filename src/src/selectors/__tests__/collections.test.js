@@ -78,15 +78,15 @@ describe('collection selectors', () => {
               id: 'b456'
             },
           }),
-          menuCollectionsRecipes : Immutable.fromJS({
-            a123: ["22", "33", "44"],
-            b456: ["55", "66", "77"],
+          menuCollectionsRecipes: Immutable.fromJS({
+            a123: ['22', '33', '44'],
+            b456: ['55', '66', '77'],
           }),
         }
       })
 
       test('should return id 456 of collection with slug taste-of-japan', () => {
-        expect(getMenuCollectionRecipeIds(state.menuCollections, state.menuCollectionsRecipes,'taste-of-japan').toArray()).toEqual(["55", "66", "77"])
+        expect(getMenuCollectionRecipeIds(state.menuCollections, state.menuCollectionsRecipes,'taste-of-japan').toArray()).toEqual(['55', '66', '77'])
       })
     })
   })

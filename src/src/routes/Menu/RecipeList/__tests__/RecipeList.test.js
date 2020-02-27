@@ -42,7 +42,7 @@ describe('RecipeList', () => {
       ])
 
       const wrapper = shallow(
-        <RecipeList recipes={recipes} browserType='mobile' />,
+        <RecipeList recipes={recipes} browserType="mobile" />,
         { context }
       )
 
@@ -68,7 +68,7 @@ describe('RecipeList', () => {
       ])
 
       const wrapper = shallow(
-        <RecipeList recipes={recipes} browserType='tablet' />,
+        <RecipeList recipes={recipes} browserType="tablet" />,
         { context }
       )
 
@@ -94,7 +94,7 @@ describe('RecipeList', () => {
       ])
 
       const wrapper = shallow(
-        <RecipeList recipes={recipes} browserType='desktop' />,
+        <RecipeList recipes={recipes} browserType="desktop" />,
         { context }
       )
 

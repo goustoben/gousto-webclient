@@ -12,7 +12,7 @@ describe('when a checkout error exists', () => {
   const state = {
     checkout: Immutable.Map({
       errors: Immutable.Map({
-        CHECKOUT_SIGNUP: "422-payment-failed",
+        CHECKOUT_SIGNUP: '422-payment-failed',
       })
     })
   }

@@ -66,7 +66,7 @@ describe('user api', () => {
 
       await fetchUserCredit(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/current/balance`, {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/user/current/balance', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {

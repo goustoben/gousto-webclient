@@ -36,7 +36,7 @@ describe('getCollectionId', () => {
 
       test('should return the correct collection id', () => {
         const result = getCollectionId({}, {})
-  
+
         expect(result).toEqual(COLLECTION_ID_FOR_RECOMMENDATION)
       })
     })
@@ -51,7 +51,7 @@ describe('getCollectionId', () => {
         getDefaultCollectionId.mockReturnValue(COLLECTION_ID_DEFAULT)
 
         const result = getCollectionId({}, {})
-  
+
         expect(result).toEqual(COLLECTION_ID_DEFAULT)
       })
     })

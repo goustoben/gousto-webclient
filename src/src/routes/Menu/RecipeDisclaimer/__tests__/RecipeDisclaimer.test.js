@@ -5,7 +5,7 @@ import { RecipeDisclaimer } from '../RecipeDisclaimer.js'
 describe('RecipeDisclaimer', () => {
   let wrapper
   describe('when the recipe contains a disclaimer', () => {
-    const disclaimer = "Iron, magnesium and B vitamins reducing tiredness and fatigue"
+    const disclaimer = 'Iron, magnesium and B vitamins reducing tiredness and fatigue'
     beforeEach(() => {
       wrapper = shallow(
         <RecipeDisclaimer

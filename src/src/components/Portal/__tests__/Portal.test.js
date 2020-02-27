@@ -70,7 +70,7 @@ describe('Portal', () => {
     })
 
     describe('when node does not exist', () => {
-      test("should mount children and add render subtree into DOM", () => {
+      test('should mount children and add render subtree into DOM', () => {
         expect(document.body.innerHTML).toEqual(portalHtml)
         expect(unstable_renderSubtreeIntoContainer).toHaveBeenCalled()
       })

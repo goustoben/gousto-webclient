@@ -48,7 +48,7 @@ describe('OrderSummary', () => {
       town: 'London',
       postcode: 'F4 K3',
     }),
-    deliveryDate: "2016-05-06",
+    deliveryDate: '2016-05-06',
     deliverySlot: Immutable.fromJS({
       deliveryStart: '09:00:00',
       deliveryEnd: '16:59:59',
@@ -244,7 +244,7 @@ describe('OrderSummary SectionHeader', () => {
         numRecipes={2}
         products={{}}
         recipes={{}}
-        deliveryTotalPrice='2.50'
+        deliveryTotalPrice="2.50"
         onSave={() => { }}
       />,
     )
@@ -286,7 +286,7 @@ describe('OrderSummary footer', () => {
         numRecipes={2}
         products={{}}
         recipes={{}}
-        deliveryTotalPrice='2.50'
+        deliveryTotalPrice="2.50"
         onSave={() => { }}
         orderSummaryCollapsed
       />,

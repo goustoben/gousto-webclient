@@ -14,7 +14,7 @@ describe('RecipeItem', () => {
     }),
     title: 'Chicken Curry',
     numPortions: 2,
-    onRemove: function() {},
+    onRemove: function () {},
   }
 
   test('should have an item element', () => {

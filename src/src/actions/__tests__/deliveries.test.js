@@ -204,19 +204,19 @@ describe('delivery actions', () => {
         tempSlotId: '',
         deliveryDays: Immutable.List([
           Immutable.Map({
-            date: "2019-03-03",
-            id: "djhdhds",
+            date: '2019-03-03',
+            id: 'djhdhds',
             slots: Immutable.List([
               Immutable.Map({
-                deliveryStartTime: "08:00:00",
-                deliveryEndTime: "19:00:00",
-                id: "123sddrdfst456",
+                deliveryStartTime: '08:00:00',
+                deliveryEndTime: '19:00:00',
+                id: '123sddrdfst456',
                 disabledSlotId: '2019-03-03_08-19'
               }),
               Immutable.Map({
-                deliveryStartTime: "18:00:00",
-                deliveryEndTime: "22:00:00",
-                id: "987sddrdfst456",
+                deliveryStartTime: '18:00:00',
+                deliveryEndTime: '22:00:00',
+                id: '987sddrdfst456',
                 disabledSlotId: '2019-03-03_18-22'
               })
             ])
@@ -240,18 +240,18 @@ describe('delivery actions', () => {
         slots: {
           '2019-03-03': [
             {
-              coreSlotId: "1",
+              coreSlotId: '1',
               disabled: false,
-              label: "8am - 7pm ",
-              subLabel: "Free",
-              value: "123sddrdfst456",
+              label: '8am - 7pm ',
+              subLabel: 'Free',
+              value: '123sddrdfst456',
             },
             {
-              coreSlotId: "2",
+              coreSlotId: '2',
               disabled: false,
-              label: "6pm - 10pm ",
-              subLabel: "Free",
-              value: "987sddrdfst456",
+              label: '6pm - 10pm ',
+              subLabel: 'Free',
+              value: '987sddrdfst456',
             },
           ]
         }
@@ -277,18 +277,18 @@ describe('delivery actions', () => {
         slots: {
           '2019-03-03': [
             {
-              coreSlotId: "1",
+              coreSlotId: '1',
               disabled: true,
-              label: "8am - 7pm ",
-              subLabel: "Free",
-              value: "123sddrdfst456",
+              label: '8am - 7pm ',
+              subLabel: 'Free',
+              value: '123sddrdfst456',
             },
             {
-              coreSlotId: "2",
+              coreSlotId: '2',
               disabled: false,
-              label: "6pm - 10pm ",
-              subLabel: "Free",
-              value: "987sddrdfst456",
+              label: '6pm - 10pm ',
+              subLabel: 'Free',
+              value: '987sddrdfst456',
             },
           ]
         }
@@ -314,18 +314,18 @@ describe('delivery actions', () => {
         slots: {
           '2019-03-03': [
             {
-              coreSlotId: "1",
+              coreSlotId: '1',
               disabled: true,
-              label: "8am - 7pm ",
-              subLabel: "Free",
-              value: "123sddrdfst456",
+              label: '8am - 7pm ',
+              subLabel: 'Free',
+              value: '123sddrdfst456',
             },
             {
-              coreSlotId: "2",
+              coreSlotId: '2',
               disabled: true,
-              label: "6pm - 10pm ",
-              subLabel: "Free",
-              value: "987sddrdfst456",
+              label: '6pm - 10pm ',
+              subLabel: 'Free',
+              value: '987sddrdfst456',
             },
           ]
         }

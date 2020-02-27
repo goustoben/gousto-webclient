@@ -264,7 +264,7 @@ describe('Tutorial helpers', () => {
         document.body.removeChild(element)
       })
 
-      test("should return false", () => {
+      test('should return false', () => {
         expect(isElementHidden('div[data-testing="target"]')).toBe(false)
       })
     })

@@ -103,13 +103,13 @@ describe('OrderDelivery',() => {
         addressLoading
       />,{context})
 
-      expect(wrapper.find("Loading").length).toEqual(1)
-      expect(wrapper.find("OrderDeliveryDate").length).toEqual(0)
+      expect(wrapper.find('Loading').length).toEqual(1)
+      expect(wrapper.find('OrderDeliveryDate').length).toEqual(0)
       expect(wrapper.find(OrderDeliveryAddress).length).toEqual(0)
     })
 
     test('should render <OrderDeliveryDate/> if addressLoading = false ', () => {
-      expect(wrapper.find("OrderDeliveryDate").length).toEqual(1)
+      expect(wrapper.find('OrderDeliveryDate').length).toEqual(1)
     })
 
     test('should render <OrderDeliveryAddress/> if addressLoading = false ', () => {

@@ -27,7 +27,7 @@ describe('YouGet', () => {
     })
 
     it('should render the youGet offer as a child of the Gel component', () => {
-      expect(wrapper.find(Gel).contains("£15")).toEqual(true)
+      expect(wrapper.find(Gel).contains('£15')).toEqual(true)
     })
   })
 })
