@@ -12,6 +12,8 @@ tests/e2e/node_modules
 tests/e2e/selenium-debug.log
 tests/e2e/reports
 tests/e2e/screenshots
+tests/regression/node_modules
+tests/regression/screenshots
 src/coverage/
 src/eslint-results.json
 yarn-error.log

@@ -32,9 +32,8 @@
     "test:jest:watch": "jest --watchAll",
     "test:jest:coverage": "jest --coverage",
     "test:jest:ci:coverage": "jest --ci -w=4 --coverage",
-    "deploy:sentry-upload": "chmod a+x getsentryUpload.sh && ./getsentryUpload.sh",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
-    "deploy": "npm run deploy:sentry-upload && npm run deploy:cleanup-assets",
+    "deploy": "npm run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
     "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd ..",
     "eslint": "node_modules/.bin/eslint ."

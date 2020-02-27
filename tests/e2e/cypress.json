@@ -1,4 +1,0 @@
-{
-  "baseUrl": "http://frontend.gousto.local/",
-  "integrationFolder": "tests/cypress"
-}

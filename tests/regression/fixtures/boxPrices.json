@@ -1,4 +1,4 @@
-export default {
+{
     "data": {
         "boxPrices": {
             "__typename": "BoxPrice",

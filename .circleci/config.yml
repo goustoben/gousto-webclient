@@ -180,23 +180,23 @@ jobs:
           name: Run e2e selenium tests mobile
           command: source ~/.circlerc && scripts/validate-mobile.sh
 
-  test-e2e-cypress:
+  test-regression:
     docker: *gousto_build_image
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run e2e cypress tests
-          command: source ~/.circlerc && scripts/validate-cypress.sh
+          name: Run regression tests
+          command: source ~/.circlerc && scripts/validate-regression.sh
 
-  test-e2e-cypress-mobile:
+  test-regression-mobile:
     docker: *gousto_build_image
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run e2e cypress tests mobile
-          command: source ~/.circlerc && scripts/validate-cypress-mobile.sh
+          name: Run regression tests mobile
+          command: source ~/.circlerc && scripts/validate-regression-mobile.sh
 
   deploy-application:
     docker: *gousto_build_image
@@ -369,7 +369,7 @@ workflows:
             branches:
               only:
                 - develop
-      - test-e2e-cypress:
+      - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
             - deploy-application
@@ -378,7 +378,7 @@ workflows:
             branches:
               only:
                 - env-rockets
-      - test-e2e-cypress-mobile:
+      - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
             - deploy-application
