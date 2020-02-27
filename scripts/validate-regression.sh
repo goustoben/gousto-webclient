@@ -7,6 +7,6 @@ gousto env sglease $ENVIRONMENT
 
 export CYPRESS_baseUrl="https://${ENVIRONMENT}-frontend.gousto.info"
 
-cd tests/e2e
-chmod a+x runcypresstestsmobile.sh
-./runcypresstestsmobile.sh
+cd tests/regression
+chmod a+x runtests.sh
+./runtests.sh

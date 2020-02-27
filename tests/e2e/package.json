@@ -6,13 +6,8 @@
   "scripts": {
     "test": "./node_modules/.bin/nightwatch --env=local:chrome",
     "test:mobile": "./node_modules/.bin/nightwatch --env=local:iphone6",
-    "test:staging:web": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose --suiteRetries 3",
-    "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose --suiteRetries 3",
-    "test:cypress:debug": "./node_modules/.bin/cypress open",
-    "test:cypress:web": "CYPRESS_MEDIA=web ./node_modules/.bin/cypress run",
-    "test:cypress:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress run",
-    "test:staging:cypress:web": "CYPRESS_MEDIA=web ./node_modules/.bin/cypress run",
-    "test:staging:cypress:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress run"
+    "test:staging:web": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose",
+    "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose",
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://frontend.gousto.local/",
+  "integrationFolder": "tests",
+  "screenshotsFolder": "screenshots",
+  "fixturesFolder": "fixtures",
+  "supportFile" : "commands",
+  "pluginsFile": false,
+  "video": false
+}

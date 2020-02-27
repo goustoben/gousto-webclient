@@ -1,0 +1,64 @@
+{
+  "status": "ok",
+  "result": {
+      "data": {
+          "subscription": {
+              "state": "active",
+              "reason": null,
+              "updated_at": "2019-10-20 22:18:34",
+              "payment_failed_at": null,
+              "current_box_number": "45",
+              "delivery_slot_id": "6",
+              "next_delivery_week_id": "299",
+              "interval": "1",
+              "pause_date": null
+          },
+          "box": {
+              "num_portions": "4",
+              "num_recipes": "3",
+              "box_type": "vegetarian",
+              "price": "42.75",
+              "sku": "SKU-VEG-3-4"
+          },
+          "projected": [
+              {
+                  "id": "2015",
+                  "delivery_slot_id": "6",
+                  "delivery_week_id": "318",
+                  "date": "2020-02-15 00:00:00",
+                  "human_date": "Saturday 15th February",
+                  "day_of_week": "Saturday",
+                  "when_cutoff": "2020-02-12 11:59:59",
+                  "is_cutoff": false,
+                  "unavailable_reason": "",
+                  "alternate_delivery_day": null
+              },
+              {
+                  "id": "2022",
+                  "delivery_slot_id": "6",
+                  "delivery_week_id": "319",
+                  "date": "2020-02-22 00:00:00",
+                  "human_date": "Saturday 22nd February",
+                  "day_of_week": "Saturday",
+                  "when_cutoff": "2020-02-19 11:59:59",
+                  "is_cutoff": false,
+                  "unavailable_reason": "",
+                  "alternate_delivery_day": null
+              },
+              {
+                  "id": "2029",
+                  "delivery_slot_id": "6",
+                  "delivery_week_id": "320",
+                  "date": "2020-02-29 00:00:00",
+                  "human_date": "Saturday 29th February",
+                  "day_of_week": "Saturday",
+                  "when_cutoff": "2020-02-26 11:59:59",
+                  "is_cutoff": false,
+                  "unavailable_reason": "",
+                  "alternate_delivery_day": null
+              }
+          ]
+      },
+      "meta": []
+  }
+}

@@ -1,0 +1,14 @@
+{
+    "id":"8c2852e3-dd36-47d3-b522-839c6d62d80a",
+    "type":"user",
+    "name":"Gousto User",
+    "email":"bc0aab4e300a7c7aa82f50ad64ae82df@gousto.info",
+    "roles":[
+        "user",
+        "view_own_user",
+        "edit_own_user",
+        "view_own_order",
+        "edit_own_order",
+        "view_own_consignment"
+    ]
+}

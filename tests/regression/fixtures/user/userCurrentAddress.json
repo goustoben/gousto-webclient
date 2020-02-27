@@ -1,0 +1,44 @@
+{
+  "status": "ok",
+  "result": {
+      "data": [
+          {
+              "id": "34005976",
+              "deleted": false,
+              "user_id": "17247344",
+              "name": "My Address",
+              "companyname": "Gousto",
+              "line1": "Gousto Shepherds Building",
+              "line2": "Unit 1.8/1.9",
+              "line3": "Charecroft Way",
+              "town": "London",
+              "county": null,
+              "postcode": "SW4 1AA",
+              "delivery_instructions": "Front garden - inside the gate behind bins",
+              "shipping_default": true,
+              "billing_default": false,
+              "state": "unset",
+              "premium_delivery": true
+          },
+          {
+              "id": "34005998",
+              "deleted": false,
+              "user_id": "17247344",
+              "name": "My Address",
+              "companyname": "Gousto",
+              "line1": "Gousto Shepherds Building",
+              "line2": "Unit 1.8/1.9",
+              "line3": "Charecroft Way",
+              "town": "London",
+              "county": null,
+              "postcode": "SW4 1AA",
+              "delivery_instructions": null,
+              "shipping_default": false,
+              "billing_default": true,
+              "state": "unset",
+              "premium_delivery": true
+          }
+      ],
+      "meta": []
+  }
+}

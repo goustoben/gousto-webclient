@@ -1,0 +1,19 @@
+{
+  "name": "gousto-regression",
+  "version": "1.0.0",
+  "description": "Gousto regression",
+  "main": "index.js",
+  "scripts": {
+    "test:debug": "cypress open",
+    "test:web": "CYPRESS_MEDIA=web cypress run",
+    "test:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run",
+    "test:staging:web": "CYPRESS_MEDIA=web cypress run",
+    "test:staging:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.24.0",
+    "cypress": "^3.7.0"
+  }
+}
