@@ -6,30 +6,10 @@ import Content from 'containers/Content'
 import css from './OrderRestoreButton.css'
 
 class OrderRestoreButton extends React.PureComponent {
-  static propTypes = {
-    userId: PropTypes.string,
-    orderId: PropTypes.string,
-    deliveryDayId: PropTypes.string,
-    osrOrderId: PropTypes.string,
-    projectedOrderRestoreError: PropTypes.string,
-    pending: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    userId: '',
-    orderId: '',
-    deliveryDayId: '',
-    osrOrderId: '',
-    projectedOrderRestoreError: null,
-    pending: false
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   handleRestoreBox = () => {
-    this.context.store.dispatch(actions.projectedOrderRestore(this.props.orderId, this.props.userId, this.props.deliveryDayId))
+    const { store } = this.context
+    const { orderId, userId, deliveryDayId } = this.props
+    store.dispatch(actions.projectedOrderRestore(orderId, userId, deliveryDayId))
   }
 
   render() {
@@ -46,13 +26,35 @@ class OrderRestoreButton extends React.PureComponent {
           </Alert>
         ) : null}
         <div className={css.button}>
-          <Button onClick={() => this.handleRestoreBox()} pending={pending && isCurrentOrder}>
+          <Button onClick={() => this.handleRestoreBox()} pending={pending && isCurrentOrder} data-testing="restoreButton">
             Restore delivery
           </Button>
         </div>
       </div>
     )
   }
+}
+
+OrderRestoreButton.propTypes = {
+  userId: PropTypes.string,
+  orderId: PropTypes.string,
+  deliveryDayId: PropTypes.string,
+  osrOrderId: PropTypes.string,
+  projectedOrderRestoreError: PropTypes.string,
+  pending: PropTypes.bool,
+}
+
+OrderRestoreButton.defaultProps = {
+  userId: '',
+  orderId: '',
+  deliveryDayId: '',
+  osrOrderId: '',
+  projectedOrderRestoreError: null,
+  pending: false
+}
+
+OrderRestoreButton.contextTypes = {
+  store: PropTypes.object.isRequired,
 }
 
 export default OrderRestoreButton

@@ -7,30 +7,6 @@ import Content from 'containers/Content'
 import css from './OrderCancelButton.css'
 
 class OrderCancelButton extends React.PureComponent {
-  static propTypes = {
-    orderId: PropTypes.string,
-    deliveryDayId: PropTypes.string,
-    osrOrderId: PropTypes.string,
-    osrDeliveryDayId: PropTypes.string,
-    orderState: PropTypes.string,
-    didCancelProjectedError: PropTypes.bool,
-    orderCancelStart: PropTypes.func,
-    deliveryDay: PropTypes.string,
-    contentPending: PropTypes.bool
-  }
-
-  static defaultProps = {
-    orderId: '',
-    deliveryDayId: '',
-    osrOrderId: '',
-    osrDeliveryDayId: '',
-    orderState: '',
-    didCancelProjectedError: false,
-    orderCancelStart: () => { },
-    deliveryDay: '',
-    contentPending: false,
-  }
-
   handleCancelBox = () => {
     const {
       orderState,
@@ -62,12 +38,36 @@ class OrderCancelButton extends React.PureComponent {
             </Content>
           </Alert>
         ) : null}
-        <Button color="negative" onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
+        <Button color="negative" onClick={this.handleCancelBox} className={css.cancelButton} pending={pending} data-testing="cancelButton">
           Cancel delivery
         </Button>
       </div>
     )
   }
+}
+
+OrderCancelButton.propTypes = {
+  orderId: PropTypes.string,
+  deliveryDayId: PropTypes.string,
+  osrOrderId: PropTypes.string,
+  osrDeliveryDayId: PropTypes.string,
+  orderState: PropTypes.string,
+  didCancelProjectedError: PropTypes.bool,
+  orderCancelStart: PropTypes.func,
+  deliveryDay: PropTypes.string,
+  contentPending: PropTypes.bool
+}
+
+OrderCancelButton.defaultProps = {
+  orderId: '',
+  deliveryDayId: '',
+  osrOrderId: '',
+  osrDeliveryDayId: '',
+  orderState: '',
+  didCancelProjectedError: false,
+  orderCancelStart: () => { },
+  deliveryDay: '',
+  contentPending: false,
 }
 
 export default OrderCancelButton
