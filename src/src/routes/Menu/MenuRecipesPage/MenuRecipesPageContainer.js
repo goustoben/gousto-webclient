@@ -36,7 +36,8 @@ const mapStateToProps = (state, ownProps) => {
     orderId: params.orderId,
     storeOrderId: state.basket.get('orderId'),
     numPortions: state.basket.get('numPortions'),
-    showStockAlert: getShowStockAlertFlag(state)
+    showStockAlert: getShowStockAlertFlag(state),
+    newMenuLayout: false
   })
 }
 

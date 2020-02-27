@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import menu from 'config/menu'
 import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
 import DetailOverlay from '../DetailOverlay'
 
@@ -42,7 +41,6 @@ class RecipeGrid extends PureComponent {
             ? <RecipeListContainer isFoodBrandClickable={isFoodBrandClickable} />
             : <FilteredRecipeListContainer recipes={recipes} filteredRecipeIds={filteredRecipeIds} isFoodBrandClickable={isFoodBrandClickable} />
         }
-        <p className={css.legal}>{menu.legal}</p>
         <DetailOverlay
           showOverlay={shouldShowOverlay}
         />
