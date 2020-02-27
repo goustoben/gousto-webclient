@@ -116,7 +116,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
   const { pathname, search } = location
 
   if (userIsAdmin) {
-    destination = `${config.client.menu}?features[]=browse`
+    destination = `${config.client.menu}`
   } else if (search) {
     const { target } = queryString.parse(search)
 

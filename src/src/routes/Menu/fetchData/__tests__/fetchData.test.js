@@ -12,6 +12,7 @@ import { initialState as initialFeaturesState } from 'reducers/features'
 import { defaultState as defaultUserState } from 'reducers/user'
 import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
+import { menuLoadComplete } from 'actions/menu'
 import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import * as boxSummaryActions from 'actions/boxSummary'
@@ -31,6 +32,7 @@ jest.mock('performance-now')
 jest.mock('apis/menus')
 jest.mock('apis/brand')
 jest.mock('selectors/features')
+jest.mock('actions/menu')
 
 describe('menu fetchData', () => {
   let state = {
@@ -80,6 +82,7 @@ describe('menu fetchData', () => {
 
     getLandingDay.mockReset()
     getLandingDay.mockReturnValue({ date: '2010-12-25T12:00:00' })
+    menuLoadComplete.mockReset()
 
     actions.menuLoadStock.mockReset()
     actions.menuLoadOrderDetails.mockReset()
@@ -347,65 +350,58 @@ describe('menu fetchData', () => {
         })
 
         describe('query does not have day id and slot id', () => {
-          describe('is not in browse mode', () => {
+          describe('is authenticated and is not admin', () => {
             beforeEach(() => {
-              state.request = state.request.set('browser', 'mobile')
-              state.features = state.features.setIn(['browse', 'value'], false)
+              state.auth = state.auth.set('isAuthenticated', true)
+              state.auth = state.auth.set('isAdmin', false)
             })
 
-            describe('is authenticated and is not admin', () => {
-              beforeEach(() => {
-                state.auth = state.auth.set('isAuthenticated', true)
-                state.auth = state.auth.set('isAdmin', false)
-              })
+            test('should dispatch userLoadOrders', async () => {
+              const userLoadOrdersResult = Symbol('fake action creator result')
 
-              test('should dispatch userLoadOrders', async () => {
-                const userLoadOrdersResult = Symbol('fake action creator result')
+              actions.userLoadOrders.mockReturnValue(userLoadOrdersResult)
 
-                actions.userLoadOrders.mockReturnValue(userLoadOrdersResult)
+              await fetchData({ store, query, params }, false, false)
 
-                await fetchData({ store, query, params }, false, false)
+              expect(store.dispatch.mock.calls[3]).toEqual([userLoadOrdersResult])
+            })
+          })
 
-                expect(store.dispatch.mock.calls[3]).toEqual([userLoadOrdersResult])
-              })
+          describe('is not authenticated', () => {
+            beforeEach(() => {
+              state.auth = state.auth.set('isAuthenticated', false)
             })
 
-            describe('is not authenticated', () => {
-              beforeEach(() => {
-                state.auth = state.auth.set('isAuthenticated', false)
-              })
+            test('should dispatch menuLoadDays', async () => {
+              const menuLoadDaysResult = Symbol('fake action creator result')
 
-              test('should dispatch menuLoadDays', async () => {
-                const menuLoadDaysResult = Symbol('fake action creator result')
+              actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
 
-                actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
+              await fetchData({ store, query, params }, false, false)
 
-                await fetchData({ store, query, params }, false, false)
+              expect(store.dispatch.mock.calls[3]).toEqual([menuLoadDaysResult])
+            })
 
-                expect(store.dispatch.mock.calls[3]).toEqual([menuLoadDaysResult])
-              })
+            test('should dispatch boxSummaryDeliveryDaysLoad', async () => {
+              const boxSummaryDeliveryDaysLoadResult = Symbol('fake action creator result')
 
-              test('should dispatch boxSummaryDeliveryDaysLoad', async () => {
-                const boxSummaryDeliveryDaysLoadResult = Symbol('fake action creator result')
+              boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
 
-                boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
+              await fetchData({ store, query, params }, false, false)
 
-                await fetchData({ store, query, params }, false, false)
+              expect(store.dispatch.mock.calls[4]).toEqual([boxSummaryDeliveryDaysLoadResult])
+            })
 
-                expect(store.dispatch.mock.calls[4]).toEqual([boxSummaryDeliveryDaysLoadResult])
-              })
+            test('should dispatch basketDateChange with result of getLandingDay', async () => {
+              const date = '2019-01-01T00:00:00'
+              getLandingDay.mockReturnValue({ date })
 
-              test('should dispatch basketDateChange with result of getLandingDay', async () => {
-                const date = '2019-01-01T00:00:00'
-                getLandingDay.mockReturnValue({ date })
+              await fetchData({ store, query, params }, false, false)
 
-                await fetchData({ store, query, params }, false, false)
-
-                expect(store.dispatch.mock.calls[5]).toEqual([{
-                  type: actionTypes.BASKET_DATE_CHANGE,
-                  date
-                }])
-              })
+              expect(store.dispatch.mock.calls[5]).toEqual([{
+                type: actionTypes.BASKET_DATE_CHANGE,
+                date
+              }])
             })
           })
         })
@@ -419,7 +415,7 @@ describe('menu fetchData', () => {
           test('should dispatch basketNumPortionChange', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
             // so making it return a symbol is an easy way to do that
-            const basketNumPortionChangeResult = Symbol('fake action creator result')
+            const basketNumPortionChangeResult = Symbol('basketNumPortionChange result')
 
             // use mockImplementation and only return the symbol if it's called with the expected parameters
             // this would normally be accomplished using `toHaveBeenCalledWith`, but what we are actually
@@ -428,7 +424,7 @@ describe('menu fetchData', () => {
 
             await fetchData({ store, query: queryWithNumPortions, params }, false, false)
 
-            expect(store.dispatch.mock.calls[3]).toEqual([basketNumPortionChangeResult])
+            expect(store.dispatch.mock.calls[6]).toEqual([basketNumPortionChangeResult])
           })
         })
 
@@ -445,7 +441,7 @@ describe('menu fetchData', () => {
           test('should dispatch basketPostcodeChangePure', async () => {
             await fetchData({ store, query: queryWithPostcode, params }, false, false)
 
-            expect(store.dispatch.mock.calls[4]).toEqual([{
+            expect(store.dispatch.mock.calls[8]).toEqual([{
               type: actionTypes.BASKET_POSTCODE_CHANGE,
               postcode: 'W2 3LX'
             }])
@@ -461,7 +457,16 @@ describe('menu fetchData', () => {
 
           await fetchData({ store, query, params }, false, false)
 
-          expect(store.dispatch.mock.calls[3]).toEqual([menuLoadMenuResult])
+          expect(store.dispatch.mock.calls[6]).toEqual([menuLoadMenuResult])
+        })
+
+        test('should catch and re-throw error from menuLoadMenu', async () => {
+          menuLoadComplete.mockImplementation(() => {
+            throw new Error('Error occurred')
+          })
+
+          await expect(fetchData({ store, query, params }, false, false))
+            .rejects.toThrow()
         })
 
         describe('when user is admin', () => {
@@ -579,9 +584,11 @@ describe('menu fetchData', () => {
       test('should dispatch menuLoadComplete action', async () => {
         const firstTime = 1
         const secondTime = 2.3
-
-        // Math.round(2.3 - 1)
         const expectedValue = 1
+
+        const menuLoadCompleteResult = Symbol('menuLoadComplete result')
+
+        menuLoadComplete.mockReturnValue(menuLoadCompleteResult)
 
         now.mockReturnValueOnce(firstTime)
           .mockReturnValueOnce(secondTime)
@@ -589,11 +596,8 @@ describe('menu fetchData', () => {
 
         await fetchData({ store, query, params }, false, false)
 
-        expect(store.dispatch.mock.calls[7]).toEqual([{
-          type: actionTypes.MENU_LOAD_COMPLETE,
-          timeToLoadMs: expectedValue,
-          useMenuService: true
-        }])
+        expect(menuLoadComplete).toHaveBeenCalledWith(expectedValue, true)
+        expect(store.dispatch.mock.calls[9]).toEqual([menuLoadCompleteResult])
       })
     })
   })
