@@ -12,7 +12,7 @@ const ErrorMessage = ({ errorType, goBack }) => (
         {config.errorsRequireGoBack.includes(errorType) && (
           <button
             className={css.goBackButton}
-            type='button'
+            type="button"
             onClick={() => goBack()}
           >
             Back to Delivery

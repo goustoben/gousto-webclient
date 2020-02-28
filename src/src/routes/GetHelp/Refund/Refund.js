@@ -198,8 +198,7 @@ class Refund extends PureComponent {
                 {acceptButton}
               </BottomBar>
             </div>
-          )
-        }
+          )}
       </GetHelpLayout>
     )
   }

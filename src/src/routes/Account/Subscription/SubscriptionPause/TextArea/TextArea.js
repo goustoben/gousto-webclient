@@ -69,9 +69,8 @@ class SubscriptionPauseTextArea extends React.PureComponent {
           value={this.state.currentText}
         />
 
-        {!!this.state.validationMessage.length &&
-          <small className={css.feedback}>{this.state.validationMessage}</small>
-        }
+        {!!this.state.validationMessage.length
+          && <small className={css.feedback}>{this.state.validationMessage}</small>}
 
         <div className={css.controls}>
           <Button onClick={this.handleSubmit}>

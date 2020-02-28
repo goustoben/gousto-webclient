@@ -19,10 +19,10 @@ import bannerButtonCss from '../../BannerButton/BannerButton.css'
 import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryMobileBanner = ({
-  showBrowseCTA, 
-  maxRecipesNum, 
-  menuRecipesStore, 
-  recipes, 
+  showBrowseCTA,
+  maxRecipesNum,
+  menuRecipesStore,
+  recipes,
   errorText,
   openDetails,
 
@@ -39,7 +39,7 @@ const BoxSummaryMobileBanner = ({
   const slotTime = getSlotTimes({ date, deliveryDays, slotId })
 
   return (
-    <div className={css.barmobile} role='button' tabIndex={0} onClick={handleMobileClick} onKeyPress={handleMobileClick}>
+    <div className={css.barmobile} role="button" tabIndex={0} onClick={handleMobileClick} onKeyPress={handleMobileClick}>
       <div>
         <OpenBoxButton />
         <Title view={MOBILE_VIEW} date={date} finalisedSlot={slotId !== ''} slotTime={slotTime} />

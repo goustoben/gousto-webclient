@@ -96,8 +96,8 @@ const user = {
 
     case actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES: {
       const newProjectedDeliveries = (action.deliveryDayIds || []).reduce((remainingDeliveries, deliveryDayId) =>
-        remainingDeliveries.delete(deliveryDayId)
-      , state.get('projectedDeliveries'))
+        remainingDeliveries.delete(deliveryDayId),
+      state.get('projectedDeliveries'))
 
       return state.set('projectedDeliveries', newProjectedDeliveries)
     }

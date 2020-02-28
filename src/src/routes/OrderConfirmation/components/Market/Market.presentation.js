@@ -100,10 +100,9 @@ const MarketPresentation = ({
           { [css.productsLoadError]: productsLoadError }
         )}
       >
-        {productsLoadError ?
-          <Alert type="warning">{config.productsLoadErrorMessage}</Alert>
-          :
-          (
+        {productsLoadError
+          ? <Alert type="warning">{config.productsLoadErrorMessage}</Alert>
+          : (
             <ProductList
               products={filteredProducts || products}
               basket={basket}
@@ -112,8 +111,7 @@ const MarketPresentation = ({
               toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
               selectedCategory={selectedCategory}
             />
-          )
-        }
+          )}
       </section>
       {showOrderConfirmationReceipt && (
         <section className={classnames(css.orderDetails, css.mobileHide)}>
@@ -130,12 +128,12 @@ const MarketPresentation = ({
       >
         <button
           className={css.orderDetailsOpenButton}
-          type='button'
+          type="button"
           onClick={toggleOrderSummary}
         >
           Open Order Summary
         </button>
-        <Overlay open={isOrderSummaryOpen} from='bottom'>
+        <Overlay open={isOrderSummaryOpen} from="bottom">
           <div className={css.orderDetailsMobileContent}>
             <div className={css.orderDetailsCloseButton}>
               <CloseButton onClose={toggleOrderSummary} />

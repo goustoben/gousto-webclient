@@ -19,9 +19,9 @@ const mapStateToProps = (state, ownProps) => {
       isFoodBrandClickable: true
     }
   }
-  
+
   const { recipes, recipeIds } = getSortedRecipes(state)(collection.get('id'))
-  
+
   return {
     name: collection.get('shortTitle'),
     description: collection.get('description'),

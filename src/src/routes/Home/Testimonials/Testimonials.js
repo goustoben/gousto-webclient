@@ -4,7 +4,7 @@ import home from 'config/home'
 import config from 'config/routes'
 import ModuleHeader from 'ModuleHeader'
 import TestimonialCarousel from './TestimonialCarousel'
-import Storystream from "../Storystream"
+import Storystream from '../Storystream'
 import css from './Testimonials.css'
 import CTAHomepage from '../CTA'
 

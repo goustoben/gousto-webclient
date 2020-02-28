@@ -85,14 +85,14 @@ class BillingForm extends React.PureComponent {
 
   static validateFormSubmit(formInput) {
     return !!(
-      formInput.payment_type &&
-      formInput.card_holder &&
-      formInput.card_number &&
-      formInput.card_type &&
-      formInput.card_cvv2 &&
-      formInput.card_cvv2.length === 3 &&
-      formInput.formCardExpiryYear &&
-      formInput.formCardExpiryMonth
+      formInput.payment_type
+      && formInput.card_holder
+      && formInput.card_number
+      && formInput.card_type
+      && formInput.card_cvv2
+      && formInput.card_cvv2.length === 3
+      && formInput.formCardExpiryYear
+      && formInput.formCardExpiryMonth
     )
   }
 

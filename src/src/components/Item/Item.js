@@ -38,7 +38,7 @@ const Item = ({
     <GoustoImage onClick={onImageClick} media={media} title={title} className={classnames(css.img, { [css.pointer]: isFunction(onImageClick) })} />
 
     <div className={classnames(css.details, { [css.detailsExtraPadding]: !!onRemove })}>
-      <button type='button' className={classnames(css.title, { [css.pointer]: isFunction(onImageClick), [css.clickableTitle]: isFunction(onImageClick) })} onClick={onImageClick}>
+      <button type="button" className={classnames(css.title, { [css.pointer]: isFunction(onImageClick), [css.clickableTitle]: isFunction(onImageClick) })} onClick={onImageClick}>
         {title}
         {isFunction(onImageClick) && <span className={css.arrowRight} />}
       </button>

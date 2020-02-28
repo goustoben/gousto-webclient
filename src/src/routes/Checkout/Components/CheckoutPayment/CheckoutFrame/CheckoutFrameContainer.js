@@ -19,8 +19,8 @@ const mapStateToProps = state => {
   return {
     sectionName,
     cardName: formValues && formValues[sectionName] && formValues[sectionName].cardName ? formValues[sectionName].cardName : '',
-    billingAddress : getBillingAddress(formValues),
-    hasCheckoutError:  hasCheckoutError(state),
+    billingAddress: getBillingAddress(formValues),
+    hasCheckoutError: hasCheckoutError(state),
   }
 }
 

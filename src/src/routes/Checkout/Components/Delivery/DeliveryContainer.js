@@ -66,6 +66,6 @@ export function addInitialValues(Component, { sectionName }) {
           },
         },
       }
-    }
-    , {})(Component)
+    },
+    {})(Component)
 }

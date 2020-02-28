@@ -55,7 +55,7 @@ class MobileMenu extends React.PureComponent {
           trackNavigationClick={trackNavigationClick}
         />
         <button
-          type='button'
+          type="button"
           className={classNames([css.burgerIcon, 'needsclick'])}
           onClick={showMobileMenu}
           href={serverError ? '#mobileMenu' : null}
@@ -64,6 +64,7 @@ class MobileMenu extends React.PureComponent {
       </span>
     )
   }
+
   onLoginClick = (e) => {
     const { onLoginClick, trackNavigationClick } = this.props
     trackNavigationClick('New Login Clicked')
@@ -76,8 +77,8 @@ class MobileMenu extends React.PureComponent {
     return (
       <span className={css.linkMobileContainer}>
         {
-          shouldRenderNewMenuDesign ?
-            <LinkMobileMenu isAuthenticated={isAuthenticated} trackNavigationClick={trackNavigationClick} onLoginClick={this.onLoginClick} />
+          shouldRenderNewMenuDesign
+            ? <LinkMobileMenu isAuthenticated={isAuthenticated} trackNavigationClick={trackNavigationClick} onLoginClick={this.onLoginClick} />
             : this.renderBurgerMenu()
         }
       </span>

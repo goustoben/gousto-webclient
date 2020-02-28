@@ -58,8 +58,8 @@ class OrderDeliveryAddress extends React.PureComponent {
   formatAddress = (address) => {
     const formattedAddress = [address.get('line1')]
 
-    if(address.get('line2')) formattedAddress.push(address.get('line2'))
-    if(address.get('line3')) formattedAddress.push(address.get('line3'))
+    if (address.get('line2')) formattedAddress.push(address.get('line2'))
+    if (address.get('line3')) formattedAddress.push(address.get('line3'))
 
     formattedAddress.push(address.get('town'), address.get('postcode'))
 

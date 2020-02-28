@@ -38,7 +38,7 @@ const CTACard = ({ isCurrentCollectionRecommendation, thematicName, deliveryDate
   if (isCurrentCollectionRecommendation) {
     return (
       <Recipe
-        view={'ctaAllRecipe'} 
+        view={'ctaAllRecipe'}
         collectionFilterChange={collectionFilterChange}
       />
     )

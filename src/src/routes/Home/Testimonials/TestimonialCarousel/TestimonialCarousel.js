@@ -32,8 +32,7 @@ const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) =
               <Testimonial testimonial={Immutable.Map(testimonial)} showLink={showLink} />
             </div>
           </div>
-        ))
-      }
+        ))}
     </Carousel>
   </div>
 )

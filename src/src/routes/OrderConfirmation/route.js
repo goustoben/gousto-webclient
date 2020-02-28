@@ -11,7 +11,7 @@ export default (store) => {
     const redirectTo = config.client.orderConfirmation
     const path = store.getState().routing.locationBeforeTransitions.pathname
     const orderId = path.split('/order-confirmation/')[1]
-    if(typeof parseInt(orderId) === 'number') {
+    if (typeof parseInt(orderId) === 'number') {
       store.dispatch(orderDetails(orderId))
     }
 

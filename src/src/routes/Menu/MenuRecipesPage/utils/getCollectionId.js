@@ -6,7 +6,7 @@ export const getCollectionId = (state, query) => {
   const collectionName = (query && query.collection) ? query.collection : ''
 
   let collectionId = getCollectionIdWithName(state, collectionName)
-  
+
   if (!collectionId) {
     if (getCurrentCollectionIsRecommendation(state)) {
       collectionId = getCurrentCollectionIsRecommendation(state)

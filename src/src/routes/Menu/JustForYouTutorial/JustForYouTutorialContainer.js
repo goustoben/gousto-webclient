@@ -7,13 +7,13 @@ import { getRecommendationShortName } from '../selectors/menu'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
 const getBrowser = (userAgent) => {
-  if(userAgent.indexOf('Edge') >= 0) {
+  if (userAgent.indexOf('Edge') >= 0) {
     return 'Edge'
   }
   if (userAgent.indexOf('Trident') >= 0) {
     return 'IE'
   }
-  
+
   return null
 }
 
@@ -22,7 +22,7 @@ const showTutorial = (state) => {
   const browser = getBrowser(userAgentFromState)
   const jfyPresent = state.tutorial && state.tutorial.getIn(['visible', 'justforyou'], false)
 
-  if (browser === 'Edge' || browser === 'IE' || !jfyPresent) {    
+  if (browser === 'Edge' || browser === 'IE' || !jfyPresent) {
     return false
   }
 

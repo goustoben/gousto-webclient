@@ -9,7 +9,7 @@ import { BillingAddress } from './BillingAddress'
 const getDeliveryAddress = (state) => {
   const deliveryFormName = getDeliveryFormName(state)
   const address = state.form[deliveryFormName] ? state.form[deliveryFormName].values.delivery : {}
-  
+
   return address
 }
 

@@ -7,6 +7,6 @@ const version = routes.version.brand
 export function fetchBrandInfo() {
   const accessToken = null
   const reqData = {}
-  
+
   return fetch(accessToken, `${endpoint('brand', version)}/theme`, reqData, 'GET')
 }

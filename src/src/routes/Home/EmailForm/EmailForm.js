@@ -64,8 +64,7 @@ class EmailForm extends React.PureComponent {
         <div className={css.form}>
           {
             !this.state.emailSubmitted
-              ?
-              (
+              ? (
                 <div>
                   <P className={css.description}>
                     <Content
@@ -109,8 +108,7 @@ class EmailForm extends React.PureComponent {
           }
           {
             this.state.errorMessage
-              ?
-              (
+              ? (
                 <div className={css.row}>
                   <p className={css.errorMsg}>{this.state.errorMessage}</p>
                 </div>

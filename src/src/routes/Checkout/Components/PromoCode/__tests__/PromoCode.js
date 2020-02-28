@@ -67,7 +67,7 @@ describe('PromoCode', function () {
     beforeEach(function () {
       wrapper = shallow(
         <PromoCode
-          promoCode='10perm'
+          promoCode="10perm"
           promoCodeApplied
           previewOrderId={previewOrderId}
           basketPromoCodeChange={basketPromoCodeChange}
@@ -109,7 +109,7 @@ describe('PromoCode', function () {
     it('should apply promocode if button clicked', async function () {
       wrapper = shallow(
         <PromoCode
-          promoCode='promo'
+          promoCode="promo"
           promoCodeApplied={false}
           previewOrderId={previewOrderId}
           basketPromoCodeChange={basketPromoCodeChange}
@@ -128,7 +128,7 @@ describe('PromoCode', function () {
     it('should set pending to false if promoCode is invalid', () => {
       wrapper = shallow(
         <PromoCode
-          promoCode='invalid'
+          promoCode="invalid"
           promoCodeApplied
           previewOrderId={previewOrderId}
           basketPromoCodeChange={basketPromoCodeChange}

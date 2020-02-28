@@ -4,7 +4,7 @@ export const trackWelcomeAppPromoClick = () => (
   (dispatch) => {
     dispatch({
       type: actionTypes.TRACKING,
-      trackingData:{
+      trackingData: {
         actionType: 'AppPromoSection Clicked'
       }
     })

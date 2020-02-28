@@ -8,15 +8,15 @@ const AwinPixel = ({ show, orderId, total, commissionGroup, promoCode }) => (
     <img
       alt=""
       src={
-        `https://www.awin1.com/sread.img` +
-        `?tt=ns` +
-        `&tv=2` +
-        `&cr=GBP` +
-        `&merchant=${MERCHANT_ID}` +
-        (total ? `&amount=${total}` : '') +
-        (orderId ? `&ref=${orderId}` : '') +
-        (promoCode ? `&vc=${promoCode}` : '') +
-        (commissionGroup && total ? `&parts=${commissionGroup}:${total}` : '')
+        'https://www.awin1.com/sread.img'
+        + '?tt=ns'
+        + '&tv=2'
+        + '&cr=GBP'
+        + `&merchant=${MERCHANT_ID}`
+        + (total ? `&amount=${total}` : '')
+        + (orderId ? `&ref=${orderId}` : '')
+        + (promoCode ? `&vc=${promoCode}` : '')
+        + (commissionGroup && total ? `&parts=${commissionGroup}:${total}` : '')
       }
     />
   ) : null

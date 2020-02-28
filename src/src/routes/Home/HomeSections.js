@@ -25,6 +25,7 @@ class HomeSections extends Component {
     testedAndLovedBy: PropTypes.object,
     alternativeDesktopHero: PropTypes.bool,
   };
+
   static defaultProps = {
     modules: [
       'hero', 'howItWorks', 'subscription', 'recipes',

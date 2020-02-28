@@ -15,7 +15,7 @@ const RecipeCardsPresentation = ({
   title,
   buttonLeftUrl,
 }) => (
-  <GetHelpLayout title={title} body='Which recipe had a recipe card issue?'>
+  <GetHelpLayout title={title} body="Which recipe had a recipe card issue?">
     {children}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>

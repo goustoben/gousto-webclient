@@ -15,16 +15,16 @@ function OrderAddOnsHeader({
   return (
     <div className={css.headerWrapper}>
       <div className={css.headerTop}>
-        <Heading type='h1' size='large'>You may also like</Heading>
+        <Heading type="h1" size="large">You may also like</Heading>
         <button
-          type='button'
+          type="button"
           className={css.skipButton}
           onClick={onClickSkip}
         >
           Skip
         </button>
       </div>
-      <Heading type='h2'>{`(${numberOfProducts} products)`}</Heading>
+      <Heading type="h2">{`(${numberOfProducts} products)`}</Heading>
     </div>
   )
 }

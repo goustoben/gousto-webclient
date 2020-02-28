@@ -8,7 +8,7 @@ export const arrayToColumns = (arr, count, indexOffset = 0) => {
   arr.forEach((value, index) => {
     const destination = index % count
 
-    columns[destination].push({ 
+    columns[destination].push({
       index: (index + indexOffset),
       value
     })

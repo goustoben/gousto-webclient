@@ -6,8 +6,7 @@ export function fetchOrderSkipContent(accessToken, orderId, orderDate) {
     order_date: orderDate,
     order_id: orderId
   }
-    :
-    {
+    : {
       order_date: orderDate,
     }
 

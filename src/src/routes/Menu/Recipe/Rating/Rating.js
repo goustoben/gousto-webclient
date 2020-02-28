@@ -43,7 +43,7 @@ class RecipeRating extends React.Component {
             {this.showStar(this.props.average)}
           </span>
           {this.props.view !== 'simple' && (
-            <span className={css.description}> 
+            <span className={css.description}>
               {' '}
               {this.props.count}
               {' '}

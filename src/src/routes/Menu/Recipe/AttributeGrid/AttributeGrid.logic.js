@@ -7,15 +7,15 @@ import { RecipeAttribute } from '../RecipeAttribute'
 
 const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine, dairyFree, glutenFree}) => {
   const attributes = [
-    { name: 'cookingTime', value: cookingTime, icon:'icon-time'},
-    { name: 'useWithin', value: useWithin, icon:'icon-use-within'},
-    { name: 'equipmentRequired', value: equipment, icon:'icon-equipment', show:equipment && equipment.size > 0},
-    { name: 'diet', value: diet, icon:'icon-diet', show:['vegetarian', 'vegan'].includes(diet.toLowerCase())},
-    { name: 'fiveADay', value: fiveADay, icon:'icon-five-a-day', show:fiveADay > 0},
-    { name: 'cals', value: cals, icon:'icon-calories'},
-    { name: 'cuisine', value: cuisine, icon:'icon-cuisine'},
-    { name: 'glutenFree', value: glutenFree, icon:'icon-gluten-free', show: !!glutenFree},
-    { name: 'dairyFree', value: dairyFree, icon:'icon-dairy-free', show: !!dairyFree},
+    { name: 'cookingTime', value: cookingTime, icon: 'icon-time'},
+    { name: 'useWithin', value: useWithin, icon: 'icon-use-within'},
+    { name: 'equipmentRequired', value: equipment, icon: 'icon-equipment', show: equipment && equipment.size > 0},
+    { name: 'diet', value: diet, icon: 'icon-diet', show: ['vegetarian', 'vegan'].includes(diet.toLowerCase())},
+    { name: 'fiveADay', value: fiveADay, icon: 'icon-five-a-day', show: fiveADay > 0},
+    { name: 'cals', value: cals, icon: 'icon-calories'},
+    { name: 'cuisine', value: cuisine, icon: 'icon-cuisine'},
+    { name: 'glutenFree', value: glutenFree, icon: 'icon-gluten-free', show: !!glutenFree},
+    { name: 'dairyFree', value: dairyFree, icon: 'icon-dairy-free', show: !!dairyFree},
   ]
 
   const getAttributesInPriorityOrder = priorityOrder => {
@@ -34,7 +34,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
   return (
     <div className={css.attributes}>
       {attributesInPriorityOrder.map(({name, value, icon, show}) => {
-        if(show !== false && attributeCount < maxNoAttributes) {
+        if (show !== false && attributeCount < maxNoAttributes) {
           attributeCount += 1
 
           return <RecipeAttribute key={name} name={name} value={value} icon={icon} />

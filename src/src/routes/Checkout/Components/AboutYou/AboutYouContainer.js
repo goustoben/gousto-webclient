@@ -47,6 +47,6 @@ export function addInitialValues(Component, { sectionName }) {
           },
         },
       }
-    }
-    , { userProspect: actions.userProspect })(Component)
+    },
+    { userProspect: actions.userProspect })(Component)
 }

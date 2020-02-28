@@ -51,8 +51,8 @@ export function getReasonsFromStore(reasonsStore, chosenReasonIds = []) {
   try {
     reasons = chosenReasonIds.reduce((currentReasonSet, chosenReasonId) =>
       currentReasonSet.find(reason => reason.get('id') === chosenReasonId, undefined, Immutable.List([]))
-        .get('children', Immutable.List([]))
-    , reasonsStore)
+        .get('children', Immutable.List([])),
+    reasonsStore)
   } catch (err) {
     throw new GoustoException(`${errorPrefix} reasonsStore must be deeply Immutable`)
   }

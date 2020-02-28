@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   // this component is used for thematic/food brand pages
   // which don't need CTAs shown, so this should be false
   const isCurrentCollectionRecommendation = false
-  
+
   return {
     filteredRecipeIds: ownProps.filteredRecipeIds,
     recipes: ownProps.recipes,

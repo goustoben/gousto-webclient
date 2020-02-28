@@ -99,7 +99,7 @@ const DeliveryStep = ({
     }
   }
 
-  const isNDDSlotSelected = () => slots[tempDate][0]["coreSlotId"] === "NULL"
+  const isNDDSlotSelected = () => slots[tempDate][0]['coreSlotId'] === 'NULL'
 
   const onShowRecipe = () => {
     if (isNDDSlotSelected()) {

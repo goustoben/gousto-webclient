@@ -76,7 +76,7 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       orderRef: orderId,
       parts: `${commissionGroup}:${total}`,
       voucher: promoCode,
-      currency: "GBP",
+      currency: 'GBP',
     }
 
     if (typeof window.AWIN.Tracking.run === 'function') {

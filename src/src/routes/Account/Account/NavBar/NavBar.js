@@ -9,13 +9,13 @@ const NavBar = (props) => {
   const { rateRecipeCount, isAccountTabNameTest } = props
 
   let menuTitles = {
-    myGousto: 'My Gousto', 
+    myGousto: 'My Gousto',
     myDeliveries: 'Deliveries',
     mySubscription: 'Subscription',
     myDetails: 'Details',
     myReferral: 'Free Food'
   }
-  
+
   if (isAccountTabNameTest) {
     menuTitles = {
       ...menuTitles,
@@ -23,7 +23,7 @@ const NavBar = (props) => {
       mySubscription: 'Subscription Settings',
       myDetails: 'Account Details',
     }
-  } 
+  }
 
   const menuItems = [
     {

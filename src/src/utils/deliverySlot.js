@@ -18,7 +18,7 @@ export const isAfterCutoff = () => moment().hours() >= 12
 export const getDateOffset = date => {
   const now = moment()
   const then = moment(date)
-  const offset = Math.ceil(then.diff(now, "hours", true) / 24)
+  const offset = Math.ceil(then.diff(now, 'hours', true) / 24)
   const adjustedOffset = isAfterCutoff() ? offset - 1 : offset
 
   return adjustedOffset
@@ -39,7 +39,7 @@ export const formatNextDayDeliveryDayLabel = dayOffSet => moment().add(dayOffSet
 export const generateNextDayDeliverySlots = nextDayDeliveryDays => {
   const slots = {}
   nextDayDeliveryDays.map(day => {
-    slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }]
+    slots[day.date] = [{ label: '8AM - 7PM', subLabel: '', value: 'NULL', coreSlotId: 'NULL' }]
   })
 
   return slots

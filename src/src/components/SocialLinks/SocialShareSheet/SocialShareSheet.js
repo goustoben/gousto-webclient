@@ -11,6 +11,7 @@ import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferra
 
 class SocialShareSheet extends React.PureComponent {
   state = { isEmailFormOpen: false }
+
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     referralCode: PropTypes.string.isRequired,
@@ -47,7 +48,7 @@ class SocialShareSheet extends React.PureComponent {
         <div className={`${css.row} ${isEmailFormOpen && css.emailFormOpen}`}>
           <div className={css.emailHeader} onClick={this.toggleEmailModal}>
             <div className={css.iconWrapper}>
-              <Svg fileName='icon-email-colour' className={css.icon} />
+              <Svg fileName="icon-email-colour" className={css.icon} />
             </div>
             <span>E-mail</span>
           </div>
@@ -57,9 +58,9 @@ class SocialShareSheet extends React.PureComponent {
           </div>
         </div>
 
-        <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName='icon-text-message-colour' rowName='Text Message' />
-        <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName='icon-whatsapp-colour' rowName='Whatsapp' />
-        <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }} svgName='icon-facebook-colour' rowName='Facebook' />
+        <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName="icon-text-message-colour" rowName="Text Message" />
+        <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName="icon-whatsapp-colour" rowName="Whatsapp" />
+        <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }} svgName="icon-facebook-colour" rowName="Facebook" />
 
         <UserRAFLink
           classContainer={css.row}
@@ -70,7 +71,7 @@ class SocialShareSheet extends React.PureComponent {
         >
           <div>
             <div className={css.iconWrapper}>
-              <Svg fileName='icon-link-colour' className={css.icon} />
+              <Svg fileName="icon-link-colour" className={css.icon} />
             </div>
             <span>Copy link</span>
           </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 import WelcomeContainer from './WelcomeContainer'
-import { checkValidSession } from "../../utils/routes"
+import { checkValidSession } from '../../utils/routes'
 
 export default (store) => (
   <Route>

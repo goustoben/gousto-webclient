@@ -5,8 +5,8 @@ import { set } from 'utils/cookieHelper2'
 import home from 'config/home'
 import routes from 'config/routes'
 import Cookies from 'utils/GoustoCookies'
-import Home from "../Home/Home"
-import HomeSections from "../Home/HomeSections"
+import Home from '../Home/Home'
+import HomeSections from '../Home/HomeSections'
 
 class Join extends Home {
   static propTypes = {
@@ -15,6 +15,7 @@ class Join extends Home {
     heroLeftAlignedBox570: PropTypes.bool,
     browser: PropTypes.string,
   }
+
   static defaultProps = {
     ...Home.defaultProps,
     enableSubscription: false,
@@ -52,8 +53,8 @@ class Join extends Home {
 
     return modules.filter((moduleName) => {
       if (
-        modulesFeatured[moduleName] !== undefined &&
-        manualListOfModules.indexOf(moduleName) === -1
+        modulesFeatured[moduleName] !== undefined
+        && manualListOfModules.indexOf(moduleName) === -1
       ) {
         return modulesFeatured[moduleName]
       }
