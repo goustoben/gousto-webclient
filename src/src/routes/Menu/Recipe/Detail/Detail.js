@@ -35,7 +35,7 @@ export const detailPropTypes = {
   scrolledPastPoint: PropTypes.bool,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
-  showCookingInstruction: PropTypes.bool.isRequired,
+  showCookingInstruction: PropTypes.bool.isRequired
 }
 
 export class Detail extends React.Component {

@@ -13,7 +13,7 @@ describe('getNoOfColumns', () => {
 
   describe('when innerWidth is more than 1200 ', () => {
     beforeEach(() => {
-      global.window.innerWidth = 1220
+      global.window.innerWidth = 1420
     })
 
     afterEach(() => {
@@ -28,7 +28,7 @@ describe('getNoOfColumns', () => {
 
   describe('when innerWidth is more than 994 but less than 1200 ', () => {
     beforeEach(() => {
-      global.window.innerWidth = 995
+      global.window.innerWidth = 1030
     })
 
     afterEach(() => {

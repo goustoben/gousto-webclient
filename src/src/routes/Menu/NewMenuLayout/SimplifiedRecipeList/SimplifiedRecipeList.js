@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { arrayToColumns } from '../../RecipeList/arrayToColumns'
-import { getNoOfColumns } from '../utils/columns'
+import { getNoOfColumns } from './utils/columns'
+import { CTACard } from '../../RecipeList/CTACard'
 import css from './SimplifiedRecipeList.css'
 
 import { GridRecipeSmallTilesContainer } from '../GridRecipeSmallTiles'
+import { CollectionsHeader } from '../CollectionsHeader'
 
 class SimplifiedRecipeList extends React.PureComponent {
   constructor(props) {
@@ -33,6 +35,8 @@ class SimplifiedRecipeList extends React.PureComponent {
 
   returnRecipesForColumn = (recipes, idx) => {
     const { detailHover } = this.state
+    const { changeCollectionToAllRecipesViaCTA, isCurrentCollectionRecommendation } = this.props
+    const COLUMN_INDEX = 2
 
     return (
       <div className={css.recipesColumn} key={idx + 1}>
@@ -48,6 +52,13 @@ class SimplifiedRecipeList extends React.PureComponent {
             />
           ))
         }
+        {idx === COLUMN_INDEX
+        && (
+        <CTACard
+          isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+          collectionFilterChange={changeCollectionToAllRecipesViaCTA}
+        />
+        )}
       </div>
     )
   }
@@ -66,6 +77,7 @@ class SimplifiedRecipeList extends React.PureComponent {
   render() {
     const {
       recipes,
+      currentCollectionTitle
     } = this.props
     const noOfColumns = getNoOfColumns()
     const recipeArr = recipes && recipes.toArray()
@@ -74,9 +86,12 @@ class SimplifiedRecipeList extends React.PureComponent {
 
     return (
       <div className={css.recipeListContainer}>
-        {
-          columns.map(this.returnRecipesForColumn)
-        }
+        <CollectionsHeader currentCollectionTitle={currentCollectionTitle} />
+        <div className={css.columnsContainer}>
+          {
+            columns.map(this.returnRecipesForColumn)
+          }
+        </div>
       </div>
     )
   }
@@ -85,7 +100,10 @@ class SimplifiedRecipeList extends React.PureComponent {
 SimplifiedRecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   recipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
-  trackRecipeOrderDisplayed: PropTypes.func.isRequired
+  trackRecipeOrderDisplayed: PropTypes.func.isRequired,
+  changeCollectionToAllRecipesViaCTA: PropTypes.func.isRequired,
+  isCurrentCollectionRecommendation: PropTypes.bool.isRequired,
+  currentCollectionTitle: PropTypes.string.isRequired
 }
 
 export { SimplifiedRecipeList }

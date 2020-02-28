@@ -27,26 +27,33 @@ describe('Given SimplifiedRecipeList', () => {
           recipes={recipes}
           recipeIds={recipeIds}
           trackRecipeOrderDisplayed={trackRecipeOrderDisplayedSpy}
+          changeCollectionToAllRecipesViaCTA={ () => {}}
+          isCurrentCollectionRecommendation={false}
+          currentCollectionTitle="Vegetarian"
         />)
     })
 
     afterEach(() => {
       jest.resetAllMocks()
     })
-    test('then should have state detailHover false', () => {
+    test('then it should have state detailHover false', () => {
       expect(wrapper.state()).toEqual({
         detailHover: false
       })
     })
 
-    test('then should call trackRecipeOrderDisplayed', () => {
+    test('then it should call trackRecipeOrderDisplayed', () => {
       const recipeIdsArray = ['1', '2', '3']
       const displayedOrderIds = ['3', '1', '2']
       expect(trackRecipeOrderDisplayedSpy).toHaveBeenCalledWith(recipeIdsArray, displayedOrderIds)
     })
 
-    test('then should render 3 GridRecipeSmallTilesContainer', () => {
+    test('then it should render 3 GridRecipeSmallTilesContainer', () => {
       expect(wrapper.find(GridRecipeSmallTilesContainer)).toHaveLength(3)
+    })
+
+    test('then it should render the CollectionsHeader', () => {
+      expect(wrapper.find('CollectionsHeader')).toHaveLength(1)
     })
   })
 
@@ -58,6 +65,9 @@ describe('Given SimplifiedRecipeList', () => {
           recipes={recipes}
           recipeIds={recipeIds}
           trackRecipeOrderDisplayed={trackRecipeOrderDisplayedSpy}
+          changeCollectionToAllRecipesViaCTA={ () => {}}
+          isCurrentCollectionRecommendation={false}
+          currentCollectionTitle="Vegetarian"
         />)
     })
 

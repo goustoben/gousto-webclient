@@ -11,7 +11,6 @@ import MainLayout from 'layouts/MainLayout'
 import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
-import { JustForYouTutorial } from './JustForYouTutorial'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import fetchData from './fetchData'
@@ -125,7 +124,6 @@ class Menu extends React.PureComponent {
             style={menu.helmet.style}
           />
           <RecipeMeta query={query} />
-          <JustForYouTutorial />
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
             <p className={css.legal}>{menu.legal}</p>

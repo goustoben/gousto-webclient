@@ -4,6 +4,7 @@ import { SimplifiedRecipeListContainer } from '../SimplifiedRecipeList'
 import DetailOverlay from '../../DetailOverlay'
 import Loading from '../../Loading'
 import css from './SimplifiedMenuRecipesPage.css'
+import { VerticalCollectionsNavContainer } from '../VerticalCollectionsNav'
 
 class SimplifiedMenuRecipesPage extends PureComponent {
   constructor(props) {
@@ -25,6 +26,7 @@ class SimplifiedMenuRecipesPage extends PureComponent {
     return (
       <div className={fadeCss} data-testing="menuRecipes">
         <Loading loading={showLoading} />
+        <VerticalCollectionsNavContainer />
         {stateRecipeCount && <SimplifiedRecipeListContainer />}
         <DetailOverlay
           showOverlay={shouldShowOverlay}

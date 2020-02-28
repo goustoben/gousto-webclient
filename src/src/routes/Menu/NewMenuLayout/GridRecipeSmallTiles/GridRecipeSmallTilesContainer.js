@@ -4,7 +4,7 @@ import { getNumPortions } from 'selectors/basket'
 import { isNew } from 'utils/recipe'
 import { showDetailRecipe } from 'actions/menu'
 import { GridRecipeSmallTiles } from './GridRecipeSmallTiles'
-import { getRecipeProps } from '../utils/getRecipeProps'
+import { getRecipeProps } from './utils/getRecipeProps'
 
 const mapStateToProps = (state, ownProps) => {
   const { basket, menuRecipeStock } = state

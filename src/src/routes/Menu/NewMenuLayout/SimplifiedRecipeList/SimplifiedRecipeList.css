@@ -1,35 +1,24 @@
-@value ScreenLGMin, ScreenMDMin, ScreenMDMax, ScreenSMMax from 'styles/screenSizes.css';
+@value ScreenLGMin, ScreenMLMin, ScreenMDMax, ScreenSMMax from 'styles/screenSizes.css';
 
 .recipeListContainer {
     display: flex;
     margin: 1rem;
+    margin-right: 0;
+    flex-direction: column;
+}
+
+.columnsContainer {
+    display: flex;
 }
 
 .recipesColumn {
     flex-basis: 33%;
+    margin-right: 1rem;
 
     @media ScreenLGMin {
         flex-basis: 20%;
     }
-    @media ScreenMDMin {
+    @media ScreenMLMin {
         flex-basis: 25%;
-    }
-}
-
-.recipesColumn:nth-child(1),
-.recipesColumn:nth-child(2) {
-  margin-right: 1rem;
-}
-
-@media ScreenLGMin {
-    .recipesColumn:nth-child(3),
-    .recipesColumn:nth-child(4) {
-         margin-right: 1rem;
-    }
-}
-
-@media ScreenMDMin {
-    .recipesColumn:nth-child(3) {
-        margin-right: 1rem;
     }
 }

@@ -4,7 +4,7 @@ import { menuRecipeDetailVisibilityChange } from 'actions/menu'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
-import { getShowStockAlertFlag } from 'selectors/features'
+import { getShowStockAlertFlag, getShowNewMenuLayout } from 'selectors/features'
 import { getRecipes } from 'selectors/root'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
@@ -37,7 +37,7 @@ const mapStateToProps = (state, ownProps) => {
     storeOrderId: state.basket.get('orderId'),
     numPortions: state.basket.get('numPortions'),
     showStockAlert: getShowStockAlertFlag(state),
-    newMenuLayout: false
+    newMenuLayout: getShowNewMenuLayout(state)
   })
 }
 

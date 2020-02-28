@@ -16,7 +16,6 @@ jest.mock('../BoxSummary', () => ({
   BoxSummaryContainer: () => <div />
 }))
 jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
-jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 jest.mock('../RecipeMeta', () => ({
   RecipeMeta: () => <div />
 }))
@@ -123,19 +122,6 @@ describe('Menu', () => {
 
       test('should render 1 BoxSummaryContainer', () => {
         expect(wrapper.find('BoxSummaryContainer').length).toBe(1)
-      })
-
-      test('should render JFY tutorial', () => {
-        wrapper = shallow(
-          <Menu
-            {...requiredProps}
-            isLoading={false}
-            boxSummaryDeliveryDays={Immutable.Map()}
-            disabled={false}
-          />,
-          mountOptions
-        )
-        expect(wrapper.find('JustForYouTutorial').length).toBe(1)
       })
 
       describe('the RecipesInBasketProgress component', () => {
