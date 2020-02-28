@@ -8,7 +8,7 @@ const SoldOutOverlay = ({ inBasket, stock }) => {
   const message = (
     <div className={css.overlay}>
       <span className={css.overlayText}>
-        This recipe is sold out
+        This recipe is sold out for your delivery date
       </span>
     </div>
   )

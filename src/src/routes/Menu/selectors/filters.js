@@ -15,3 +15,9 @@ export const getAllRecipesCollectionId = createSelector(
     ).get('id')
   )
 )
+
+export const getMenuCollectionsWithRecipes = (state) => (
+  state.menuCollections
+    .filter(collection => state.menuCollectionRecipes.get(collection.get('id'), Immutable.List([])).size > 0)
+    .filter(collection => collection.get('published'))
+)

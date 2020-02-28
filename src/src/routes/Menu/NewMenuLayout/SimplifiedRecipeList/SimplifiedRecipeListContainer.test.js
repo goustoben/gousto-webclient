@@ -40,7 +40,10 @@ describe('SimplifiedRecipeListContainer', () => {
           getState: () => ({
             filters: Immutable.fromJS({
               currentCollectionId: 'collection-id'
-            })
+            }),
+            menuCollections: Immutable.fromJS([
+              { id: 'collection'}
+            ])
           }),
           dispatch: () => {},
           subscribe: () => {}

@@ -22,7 +22,7 @@ describe('<SoldOutOverlay', () => {
     })
 
     test('the overlay with out of stock text renders', () => {
-      expect(wrapper.text()).toEqual('This recipe is sold out')
+      expect(wrapper.text()).toEqual('This recipe is sold out for your delivery date')
     })
 
     describe('when recipe is already in the basket', () => {

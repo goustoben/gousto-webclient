@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CollectionsNav from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { SimplifiedMenuRecipesPage } from '../NewMenuLayout/SimplifiedMenuRecipesPage'
+import { JustForYouTutorial } from '../JustForYouTutorial'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
@@ -145,6 +146,7 @@ export class MenuRecipesPage extends PureComponent {
         <SubHeader
           orderId={orderId}
         />
+        <JustForYouTutorial />
         {showStockAlert
           && (
             <div className={css.stockAlert}>

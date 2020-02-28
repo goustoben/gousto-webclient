@@ -1,8 +1,10 @@
 @value headingFontStackBold, sizeMD from 'styles/typography.css';
+@value White, DarkBasa from 'styles/colors.css';
 
 .smallRecipeTile {
   width: 100%;
-  border: 1px solid #DBDBDB;
+  border: 1px solid DarkBasa;
+  background-color: White;
   box-sizing: border-box;
   display: inline-block;
   margin-bottom: 1rem;

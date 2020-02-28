@@ -10,6 +10,7 @@ import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 jest.mock('routes/Menu/SubHeader')
 
 jest.mock('routes/Menu/CollectionsNav', () => ('CollectionsNav'))
+jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 
 describe('initial render', () => {
   let wrapper
@@ -45,6 +46,10 @@ describe('initial render', () => {
   })
   test('should render these through the RecipGrid component', () => {
     expect(wrapper.find(RecipeGrid)).toHaveLength(1)
+  })
+
+  test('should render JFY tutorial', () => {
+    expect(wrapper.find('JustForYouTutorial').length).toBe(1)
   })
 })
 
