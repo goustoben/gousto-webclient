@@ -47,10 +47,9 @@ const ProgressBar = ({ currentId, items }) => {
                 right: 'XXS',
               }}
             >
-              {index < activeIndex ?
-                <Icon name="fa-check" /> :
-                (index + 1)
-              }
+              {index < activeIndex
+                ? <Icon name="fa-check" />
+                : (index + 1)}
             </Span>
             <Span
               className={css.text}

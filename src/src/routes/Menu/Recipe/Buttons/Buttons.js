@@ -38,8 +38,8 @@ class Buttons extends React.Component {
     const viewsToExclude = config.recipeDetailViews
 
     const shouldApplyClass = Boolean(
-      surchargePerPortion &&
-      !viewsToExclude.includes(view)
+      surchargePerPortion
+      && !viewsToExclude.includes(view)
     )
     const otherClassNames = otherClasses.map(name => css[name])
 
@@ -212,7 +212,7 @@ class Buttons extends React.Component {
       <Button
         fill={false}
         className={css.btnWrapper}
-        data-testing={qty < 1 ? "menuRecipeAdd" : undefined}
+        data-testing={qty < 1 ? 'menuRecipeAdd' : undefined}
         width="full"
       >
         {this.getSegments(

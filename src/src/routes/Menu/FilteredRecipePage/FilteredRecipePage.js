@@ -29,7 +29,7 @@ class FilteredRecipePage extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({ containerHeight: getElementHeight(window.document, "#filteredRecipePageTitleContainer") })
+    this.setState({ containerHeight: getElementHeight(window.document, '#filteredRecipePageTitleContainer') })
 
     window.scrollTo(0, 0)
   }
@@ -49,7 +49,7 @@ class FilteredRecipePage extends PureComponent {
     return (
       <section className={css.filteredRecipePageContainer}>
         <div id="filteredRecipePageTitleContainer" className={css.filteredRecipePageTitleContainer}>
-          <span className={css.backButton} role="button" tabIndex={0} onClick={backToAllRecipes} onKeyPress={backToAllRecipes} data-testing='backToAllRecipes'>
+          <span className={css.backButton} role="button" tabIndex={0} onClick={backToAllRecipes} onKeyPress={backToAllRecipes} data-testing="backToAllRecipes">
             <span className={css.leftArrow} />
             <span className={css.underline}>
               Back

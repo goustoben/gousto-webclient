@@ -29,8 +29,8 @@ const notificationConfig = ({
     title: 'Get £30 credit',
     url: 'my-referrals',
     linkTrackingType: 'refer_friend',
-    startDate:'2019-11-22',
-    endDate:'2019-11-24',
+    startDate: '2019-11-22',
+    endDate: '2019-11-24',
   },
   sustainabilityPledge: {
     message: 'And this is just the beginning. Find out more.',
@@ -38,8 +38,8 @@ const notificationConfig = ({
     title: 'We’ve solved our 50% pledge.',
     url: 'https://www.gousto.co.uk/unwrapped',
     linkTrackingType: 'sustainability_pledge',
-    startDate:'2020-01-10',
-    endDate:'2020-02-29',
+    startDate: '2020-01-10',
+    endDate: '2020-02-29',
   },
 })
 

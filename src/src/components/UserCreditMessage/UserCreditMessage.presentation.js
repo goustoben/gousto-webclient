@@ -8,7 +8,7 @@ const propTypes = {
 
 const UserCreditMessagePresentation = ({ userCredit }) => (
   <Alert type="success" hasIcon={false}>
-    <Heading type='h3'>
+    <Heading type="h3">
       {`Credit £${userCredit}`}
     </Heading>
     <p>

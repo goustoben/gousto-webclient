@@ -53,7 +53,7 @@ class CollectionsNav extends React.PureComponent {
   }
 
   componentWillUpdate({ menuCurrentCollectionId, menuCollections, isPolicyAccepted }) {
-    if(isPolicyAccepted !== this.props.isPolicyAccepted) {
+    if (isPolicyAccepted !== this.props.isPolicyAccepted) {
       this.checkCollectionOffsetTop()
     }
     if (menuCurrentCollectionId !== this.props.menuCurrentCollectionId) {
@@ -146,8 +146,8 @@ class CollectionsNav extends React.PureComponent {
     const rect = ele.getBoundingClientRect()
 
     return (
-      rect.left >= 0 &&
-      (rect.right + rect.width) <= (parent.innerWidth || document.documentElement.clientWidth)
+      rect.left >= 0
+      && (rect.right + rect.width) <= (parent.innerWidth || document.documentElement.clientWidth)
     )
   }
 

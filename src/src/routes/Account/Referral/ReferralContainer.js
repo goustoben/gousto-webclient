@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 })
 
 const ReferralContainer = connect(mapStateToProps, {
-  userFetchReferralOffer, 
+  userFetchReferralOffer,
   trackingReferFriend,
   trackingReferFriendSocialSharing,
 })(Referral)

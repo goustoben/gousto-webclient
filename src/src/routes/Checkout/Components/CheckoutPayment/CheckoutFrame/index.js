@@ -1,1 +1,1 @@
-export { CheckoutFrameContainer as CheckoutFrame }from './CheckoutFrameContainer'
+export { CheckoutFrameContainer as CheckoutFrame } from './CheckoutFrameContainer'

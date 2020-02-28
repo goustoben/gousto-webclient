@@ -44,10 +44,10 @@ const propTypes = {
 
 const defaultProps = {
   valueProposition: {
-    message:'',
+    message: '',
     title: '',
   },
-  callToActions:{
+  callToActions: {
     confirm: '',
     keep: '',
   },

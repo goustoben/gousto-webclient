@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { actionTypes } from "../actions/actionTypes"
+import { actionTypes } from '../actions/actionTypes'
 
 export const initialState = Immutable.fromJS({
   collectionSets: {},
@@ -91,7 +91,7 @@ const cookbookReducer = {
       const { recipeId, recipeStepsById } = data
       let newState = state
 
-      if( recipeId && recipeStepsById ) {
+      if ( recipeId && recipeStepsById ) {
         newState = newState.setIn(['recipesInstructions', recipeId], Immutable.fromJS(recipeStepsById))
       }
 

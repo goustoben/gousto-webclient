@@ -52,7 +52,7 @@ export const checkSustainabilityPledge = (now) => {
 }
 
 export const priority = (type = '') => {
-  switch(type) {
+  switch (type) {
   case 'danger':
     return 3
   case 'warning':

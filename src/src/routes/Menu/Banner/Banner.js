@@ -20,8 +20,8 @@ const Banner = ({ imageName, type, collectionSlug, setThematic }) => (
       className={css[type]}
       onClick={() => setThematic(collectionSlug, 'thematic', 'banner click')}
       onKeyPress={() => setThematic(collectionSlug, 'thematic', 'banner click')}
-    />) :
-    (
+    />)
+    : (
       <div className={css[type]}>
         <div className={css.content}>
           {(imageName && (

@@ -1,1 +1,1 @@
-export { CTAThematic } from "./CTAThematic"
+export { CTAThematic } from './CTAThematic'

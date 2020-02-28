@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import css from "./Allergens.css"
+import css from './Allergens.css'
 
 export const allergenNamesInParentheses = (allergens) => {
-  const allergenString = allergens.join(", ")
+  const allergenString = allergens.join(', ')
   const allergenText = `(${allergenString})`
 
   return allergenText

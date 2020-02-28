@@ -183,7 +183,7 @@ const processCookies = (cookies, store) => {
     try {
       features = JSON.parse(features)
       const featureArray = Object.entries(features).map(([feature, content]) => {
-        if(content && typeof content === 'object') {
+        if (content && typeof content === 'object') {
           return { feature, value: content.value }
         }
 

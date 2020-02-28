@@ -1,7 +1,7 @@
 
 export default (action, state = {}) => {
   if (__CLIENT__ && window.dataLayer) {
-    const { actionType, seCategory:category } = action
+    const { actionType, seCategory: category } = action
     const actionValue = {}
     Object.keys(action)
       .filter(key => key !== 'actionType' && key !== 'seCategory')

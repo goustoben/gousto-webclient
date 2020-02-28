@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Image from '../../Image'
-import Button from "../../Button"
+import Button from '../../Button'
 import css from '../../Signup.css'
 
 const WelcomeStep = ({ next }) => (

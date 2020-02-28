@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import menu from 'config/menu'
-import Button from "../../Button"
+import Button from '../../Button'
 
 import css from './RecipesStep.css'
 import signupCss from '../../Signup.css'

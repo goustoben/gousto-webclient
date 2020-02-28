@@ -4,7 +4,7 @@ import { getTempProductId, getTempAddProduct } from 'selectors/temp'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
 import tempActions from 'actions/temp'
-import { Product } from "./Product.logic"
+import { Product } from './Product.logic'
 
 const mapStateToProps = (state, props) => {
   const isSelectedProduct = props.product && (props.product.id === state.temp.get('productId'))

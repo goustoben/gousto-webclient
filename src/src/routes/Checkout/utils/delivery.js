@@ -16,7 +16,7 @@ export function showAddress(address) {
 export function isAddressConfirmed(formValues) {
   const sectionName = 'delivery'
 
-  return formValues && formValues[sectionName] && formValues[sectionName].confirmed ?
-    formValues[sectionName].confirmed :
-    false
+  return formValues && formValues[sectionName] && formValues[sectionName].confirmed
+    ? formValues[sectionName].confirmed
+    : false
 }

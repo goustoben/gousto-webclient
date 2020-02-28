@@ -82,4 +82,4 @@ DatePicker.propTypes = {
   setTempSlotId: PropTypes.func.isRequired,
   handleDateChange: PropTypes.func.isRequired
 }
-export { DatePicker } 
+export { DatePicker }

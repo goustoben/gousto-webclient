@@ -20,6 +20,7 @@ class Title extends React.PureComponent {
     recipeTotalDiscounted: PropTypes.number,
     slotTime: PropTypes.string,
   }
+
   static defaultProps = {
     date: '',
     view: '',

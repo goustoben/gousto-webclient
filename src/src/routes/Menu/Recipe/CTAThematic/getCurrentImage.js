@@ -10,14 +10,14 @@ export const getCurrentImage = (date, options) => {
   if (!date) {
     return null
   }
-  
+
   const currentDate = moment(date)
 
   for (let i = 0; i < options.length; i++) {
     const currentOption = options[i]
 
     const matchesCurrentOption = withinOptionDate(currentDate, currentOption)
-    
+
     // we can skip the rest of the checks if we don't match the option at all
     if (!matchesCurrentOption) {
       continue

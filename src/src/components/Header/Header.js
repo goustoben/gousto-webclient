@@ -251,7 +251,7 @@ class Header extends React.PureComponent {
     const logoutLink = (
       <span
         role="button"
-        tabIndex='0'
+        tabIndex="0"
         className={css.linkDesktop}
         onClick={this.onLogoutClick}
         onKeyDown={e => onEnter(e, this.onLogoutClick)}
@@ -263,8 +263,8 @@ class Header extends React.PureComponent {
 
     return (
       <span
-        role='button'
-        tabIndex='0'
+        role="button"
+        tabIndex="0"
         className={classNames(css.authButtonsContainer, css[buttonState])}
         onClick={e => { if (!isAuthenticated) { this.onLoginClick(e) } }}
         onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onLoginClick() } })}

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import Svg from 'Svg'
-import css from "../Delivery.css"
+import css from '../Delivery.css'
 import DeliveryInstruction from './DeliveryInstruction'
 import DeliveryPhoneNumber from './DeliveryPhoneNumber'
 import DeliveryAddressType from './DeliveryAddressType'

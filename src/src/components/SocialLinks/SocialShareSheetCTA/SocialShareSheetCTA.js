@@ -15,6 +15,7 @@ class SocialShareSheetCTA extends PureComponent {
     isFixed: PropTypes.bool.isRequired,
     trackingReferFriend: PropTypes.func.isRequired,
   }
+
   openShareSheet = () => {
     const { trackingReferFriend } = this.props
     trackingReferFriend(actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED, 'ReferFriendShareSheet Opened')

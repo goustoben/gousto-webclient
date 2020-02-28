@@ -17,9 +17,8 @@ const Testimonial = ({ testimonial, showLink }) => (
           {testimonial.get('title')}
         </a>
       )}
-      {!showLink &&
-        testimonial.get('title')
-      }
+      {!showLink
+        && testimonial.get('title')}
     </div>
     <div className={css.body}>{nl2br(testimonial.get('body'))}</div>
   </div>

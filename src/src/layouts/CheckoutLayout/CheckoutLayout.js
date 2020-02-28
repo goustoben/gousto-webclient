@@ -10,6 +10,7 @@ class CheckoutLayout extends React.PureComponent {
     children: PropTypes.object.isRequired,
     params: PropTypes.object,
   }
+
   static defaultProps = {
     params: {
       stepName: '',

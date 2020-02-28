@@ -18,6 +18,6 @@ export const gtm = (state, userAgent) => {
   }
 
   return (
-    `<script>dataLayer = window.dataLayer || [];</script>`
+    '<script>dataLayer = window.dataLayer || [];</script>'
   )
 }

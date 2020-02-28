@@ -38,7 +38,7 @@ export function getOrderDetails(basket, deliveryDays) {
     delivery_day_id: deliveryDayId,
     delivery_slot_id: deliverySlotId,
     recipe_choices: recipeChoices,
-    day_slot_lead_time_id : daySlotLeadTimeId
+    day_slot_lead_time_id: daySlotLeadTimeId
   }
 }
 
@@ -59,7 +59,7 @@ export function okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions) {
 export const naiveLimitReached = (basket, maxRecipesNum = config.basket.maxRecipesNum) => basketSum(basket.get('recipes')) >= maxRecipesNum
 
 export function limitReached(basket, menuRecipes, menuRecipeStock, naive = false, maxRecipesNum = config.basket.maxRecipesNum) {
-  if(naive) {
+  if (naive) {
     return naiveLimitReached(basket, maxRecipesNum)
   }
 

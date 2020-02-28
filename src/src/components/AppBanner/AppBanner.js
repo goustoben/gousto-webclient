@@ -27,10 +27,10 @@ const showStar = (avg) => {
 }
 
 const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismiss }) => (
-  showAppBanner ?
-    (
+  showAppBanner
+    ? (
       <div className={css.appBannerWrapper}>
-        <button data-testing="appBannerDismiss" type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
+        <button data-testing="appBannerDismiss" type="button" className={css.closeButton} onClick={() => appBannerDismiss()}>
           <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
         </button>
         <div className={css.appDetails}>

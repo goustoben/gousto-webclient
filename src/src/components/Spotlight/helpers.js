@@ -16,7 +16,7 @@ export const getEllipse = ({ originX, originY, radius, accuracy = 1 }) => {
 
   let angle, x, y, steps = ''
 
-  for(var i = 0; i <= n; i++) {
+  for (var i = 0; i <= n; i++) {
     angle = i * baseAngle
     x = Math.cos(angle).toFixed(3)
     y = Math.sin(angle).toFixed(3)

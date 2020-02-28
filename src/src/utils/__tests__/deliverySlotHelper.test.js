@@ -8,25 +8,25 @@ describe('Delivery Slot Helper', () => {
   beforeEach(() => {
     deliveryDays = Immutable.fromJS({
       aaa: {
-        date: "2019-03-03",
-        id: "testId",
+        date: '2019-03-03',
+        id: 'testId',
         slots: [
           {
-            deliveryStartTime: "18:00:00",
-            deliveryEndTime: "22:00:00",
-            id: "testSlotId1",
+            deliveryStartTime: '18:00:00',
+            deliveryEndTime: '22:00:00',
+            id: 'testSlotId1',
             disabledSlotId: '2019-03-03_18-22'
           },
           {
-            deliveryStartTime: "08:00:00",
-            deliveryEndTime: "12:00:00",
-            id: "testSlotId2",
+            deliveryStartTime: '08:00:00',
+            deliveryEndTime: '12:00:00',
+            id: 'testSlotId2',
             disabledSlotId: '2019-03-03_08-12'
           },
           {
-            deliveryStartTime: "08:00:00",
-            deliveryEndTime: "19:00:00",
-            id: "testSlotId3",
+            deliveryStartTime: '08:00:00',
+            deliveryEndTime: '19:00:00',
+            id: 'testSlotId3',
             disabledSlotId: '2019-03-03_08-19'
           }
         ]
@@ -46,17 +46,17 @@ describe('Delivery Slot Helper', () => {
   test('should return an empty disabledSlotId when slotStartTime is missing', () => {
     deliveryDays = Immutable.fromJS({
       aaa: {
-        date: "2019-03-03",
-        id: "testId",
+        date: '2019-03-03',
+        id: 'testId',
         slots: [
           {
-            deliveryStartTime: "18:00:00",
-            id: "testSlotId1",
+            deliveryStartTime: '18:00:00',
+            id: 'testSlotId1',
             disabledSlotId: '2019-03-03_18-22'
           },
           {
-            deliveryEndTime: "12:00:00",
-            id: "testSlotId2",
+            deliveryEndTime: '12:00:00',
+            id: 'testSlotId2',
             disabledSlotId: '2019-03-03_08-12'
           }
         ]
@@ -82,19 +82,19 @@ describe('Delivery Slot Helper', () => {
         tempSlotId: '',
         deliveryDaysProps: Immutable.List([
           Immutable.Map({
-            date: "2019-03-03",
-            id: "djhdhds",
+            date: '2019-03-03',
+            id: 'djhdhds',
             slots: Immutable.List([
               Immutable.Map({
-                deliveryStartTime: "08:00:00",
-                deliveryEndTime: "19:00:00",
-                id: "123sddrdfst456",
+                deliveryStartTime: '08:00:00',
+                deliveryEndTime: '19:00:00',
+                id: '123sddrdfst456',
                 disabledSlotId: '2019-03-03_08-19'
               }),
               Immutable.Map({
-                deliveryStartTime: "18:00:00",
-                deliveryEndTime: "22:00:00",
-                id: "987sddrdfst456",
+                deliveryStartTime: '18:00:00',
+                deliveryEndTime: '22:00:00',
+                id: '987sddrdfst456',
                 disabledSlotId: '2019-03-03_18-22'
               })
             ])

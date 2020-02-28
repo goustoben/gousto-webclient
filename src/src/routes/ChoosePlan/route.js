@@ -6,7 +6,7 @@ import { isChoosePlanEnabled } from 'selectors/features'
 import { ChoosePlanContainer } from './ChoosePlanContainer'
 
 const onEnterHandler = (replace, next, store) => {
-  if(!isChoosePlanEnabled(store.getState())) {
+  if (!isChoosePlanEnabled(store.getState())) {
     const redirectTo = '/'
     replace(redirectTo)
   }

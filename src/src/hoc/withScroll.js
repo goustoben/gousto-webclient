@@ -12,8 +12,8 @@ const withScroll = ({ propName, height }) => (Component) =>
 
     scrollListener = () => {
       // Polyfill for different browser requestAnimationFrame API
-      const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
+      const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame
+        || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame
 
       const lastKnownScrollPosition = window.scrollY
 

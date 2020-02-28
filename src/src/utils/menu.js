@@ -30,7 +30,7 @@ export const getScrollOffset = (threshold, animationThreshold, scrolledPastPoint
     })
   }
   if (window.pageYOffset >= threshold && !scrolledPastPoint) {
-    return({
+    return ({
       scrolledPastPoint: true,
       scrollJumped: (window.pageYOffset - threshold) > animationThreshold,
     })

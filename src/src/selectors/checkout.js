@@ -1,6 +1,6 @@
 export const hasCheckoutError = state => {
   const errors = state.checkout.get('errors')
-  if(!errors) {
+  if (!errors) {
     return false
   }
 
@@ -9,12 +9,12 @@ export const hasCheckoutError = state => {
 
 export const getAboutYouFormName = state => {
   const { request } = state
-  
+
   return request.get('browser') === 'mobile' ? 'yourdetails' : 'aboutyou'
 }
 
 export const getDeliveryFormName = state => {
   const { request } = state
-  
+
   return request.get('browser') === 'mobile' ? 'yourdetails' : 'delivery'
 }

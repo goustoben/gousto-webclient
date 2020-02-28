@@ -43,9 +43,8 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
           numberOfColumnClass={availableNumberOfColumn[numberOfColumn]}
         />
-      ) :
-        <Loading />
-      }
+      )
+        : <Loading />}
     </div>
   )
 }

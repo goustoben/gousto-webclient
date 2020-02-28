@@ -162,8 +162,7 @@ class Signup extends React.PureComponent {
   )
 
   getCurrentStepNumber(steps) {
-    const stepNumber =
-      steps.findIndex(step => step.get('slug') === this.props.stepName)
+    const stepNumber = steps.findIndex(step => step.get('slug') === this.props.stepName)
 
     if (stepNumber < 0) {
       return 0

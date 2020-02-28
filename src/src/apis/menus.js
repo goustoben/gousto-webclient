@@ -20,7 +20,7 @@ export function fetchMenus(accessToken, query) {
   }
 
   let adminLinkData
-  if(query && query['preview[auth_user_id]']) {
+  if (query && query['preview[auth_user_id]']) {
     adminLinkData = {
       'preview[menu_id]': query['preview[menu_id]'],
       'preview[auth_user_id]': query['preview[auth_user_id]'],

@@ -26,8 +26,8 @@ const subscriptionPause = {
     case actionTypes.SUBSCRIPTION_PAUSE_REASON_LOAD_REASONS: {
       const reasons = Immutable.fromJS(action.reasons)
       let newState = state.set('activeReasons', reasons.reduce((workingReasons, reason) =>
-        workingReasons.set(reason.get('id'), reason)
-      , Immutable.OrderedMap({})))
+        workingReasons.set(reason.get('id'), reason),
+      Immutable.OrderedMap({})))
 
       newState = newState.set('activeSteps', subscriptionPauseInitialState.get('activeSteps'))
       newState = newState.set('activeStepId', subscriptionPauseInitialState.get('activeStepId'))
@@ -40,8 +40,8 @@ const subscriptionPause = {
       let newState = state.set('chosenReasonIds', action.chosenReasonIds)
       const steps = state.getIn(['activeReasons', action.chosenReasonIds.last(), 'steps'], [])
       newState = newState.set('activeSteps', steps.reduce((workingSteps, step) =>
-        workingSteps.set(step.get('id'), step)
-      , Immutable.OrderedMap({})))
+        workingSteps.set(step.get('id'), step),
+      Immutable.OrderedMap({})))
 
       newState = newState.set('activeStepId', subscriptionPauseInitialState.get('activeStepId'))
       newState = newState.set('staticScreenId', subscriptionPauseInitialState.get('staticScreenId'))

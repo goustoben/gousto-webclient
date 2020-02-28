@@ -42,14 +42,17 @@ class Login extends React.PureComponent {
       showValidationError: false,
     }
   }
+
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.statusText) {
       this.setState({ showValidationError: true })
     }
   }
+
   componentWillMount() {
     this.setState({ remember: this.props.rememberMeDefault })
   }
+
   componentWillUnmount = () => {
     this.setState({ showValidationError: false })
   }
