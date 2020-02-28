@@ -16,7 +16,7 @@ describe('redirectLoggedInUser', () => {
     redirect.mockClear()
   })
 
-  test('should NOT redirect if neither feature is set to true', async() => {
+  test('should NOT redirect if neither feature is set to true', async () => {
     getState = () => ({
       auth: Immutable.Map({
         isAuthenticated: true,
@@ -36,7 +36,7 @@ describe('redirectLoggedInUser', () => {
     expect(redirect).not.toHaveBeenCalled()
   })
 
-  test('should NOT redirect to my deliveries if feature is set to true and NOT on homepage', async() => {
+  test('should NOT redirect to my deliveries if feature is set to true and NOT on homepage', async () => {
     documentLocation.mockReturnValue({pathname: '/menu'})
 
     getState = () => ({
@@ -58,7 +58,7 @@ describe('redirectLoggedInUser', () => {
     expect(redirect).not.toHaveBeenCalled()
   })
 
-  test('should redirect to my gousto if feature is set to true', async() => {
+  test('should redirect to my gousto if feature is set to true', async () => {
     getState = () => ({
       auth: Immutable.Map({
         isAuthenticated: true,
@@ -78,7 +78,7 @@ describe('redirectLoggedInUser', () => {
     expect(redirect).toHaveBeenCalledWith('/my-gousto')
   })
 
-  test('should redirect to my deliveries if feature is set to true', async() => {
+  test('should redirect to my deliveries if feature is set to true', async () => {
     getState = () => ({
       auth: Immutable.Map({
         isAuthenticated: true,

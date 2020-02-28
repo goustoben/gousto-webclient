@@ -121,24 +121,24 @@ describe('recipes', () => {
         taxonomy: [
           {
             id: 2,
-            name: "Food Brands",
-            slug: "food-brands",
+            name: 'Food Brands',
+            slug: 'food-brands',
             tags: [
               {
-                id: "9",
-                name: "Fine Dine In",
-                properties: { ribbon_color: "#333D47", border_color: "#282B2F", text_color: "#FFFFFF" },
-                slug: "fine-dine-in"
+                id: '9',
+                name: 'Fine Dine In',
+                properties: { ribbon_color: '#333D47', border_color: '#282B2F', text_color: '#FFFFFF' },
+                slug: 'fine-dine-in'
               }
             ]
           }
         ]
       })
       expect(getFoodBrand(recipe)).toEqual(Immutable.fromJS({
-        id: "9",
-        name: "Fine Dine In",
-        properties: { ribbon_color: "#333D47", border_color: "#282B2F", text_color: "#FFFFFF" },
-        slug: "fine-dine-in"
+        id: '9',
+        name: 'Fine Dine In',
+        properties: { ribbon_color: '#333D47', border_color: '#282B2F', text_color: '#FFFFFF' },
+        slug: 'fine-dine-in'
       }))
     })
   })
@@ -198,11 +198,11 @@ describe('recipes', () => {
       const recipe1 = Immutable.fromJS({
         availability: [
           {
-            id: "123456789",
+            id: '123456789',
             offset: -12,
           },
           {
-            id: "098765432",
+            id: '098765432',
             offset: 0,
           },
         ],
@@ -210,11 +210,11 @@ describe('recipes', () => {
       const recipe2 = Immutable.fromJS({
         availability: [
           {
-            id: "5454545454",
+            id: '5454545454',
             offset: 0,
           },
           {
-            id: "6767676767",
+            id: '6767676767',
             offset: 5,
           },
         ],
@@ -264,12 +264,12 @@ describe('recipes', () => {
       let result
       beforeEach(() => {
         const recipeIds = Immutable.Map({'1138': 1})
-        const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
+        const recipesStore = Immutable.Map({'1138': Immutable.Map({'id': '1138'}), '1': Immutable.Map({'id': '1'})})
         result = isAvailableRecipeList(recipeIds, recipesStore)
       })
 
       test('should return recipes', () => {
-        expect(result).toEqual(Immutable.Map({'1138': Immutable.Map({"id": "1138"})}))
+        expect(result).toEqual(Immutable.Map({'1138': Immutable.Map({'id': '1138'})}))
       })
     })
 
@@ -277,7 +277,7 @@ describe('recipes', () => {
       let result
       beforeEach(() => {
         const recipeIds = Immutable.Map({'123': 1})
-        const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
+        const recipesStore = Immutable.Map({'1138': Immutable.Map({'id': '1138'}), '1': Immutable.Map({'id': '1'})})
         result = isAvailableRecipeList(recipeIds, recipesStore)
       })
 

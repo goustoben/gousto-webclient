@@ -7,7 +7,7 @@ describe('App Banner', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<AppBanner name='iOS' averageRating={3.6} ratings='33.6K' showAppBanner appBannerDismiss={mockAppBannerDismiss} />)
+    wrapper = shallow(<AppBanner name="iOS" averageRating={3.6} ratings="33.6K" showAppBanner appBannerDismiss={mockAppBannerDismiss} />)
   })
 
   describe('when showAppBanner is true', () => {

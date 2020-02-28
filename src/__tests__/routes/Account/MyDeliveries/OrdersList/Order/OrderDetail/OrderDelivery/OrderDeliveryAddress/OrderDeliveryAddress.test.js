@@ -71,7 +71,7 @@ describe('OrderDeliveryAddress', () => {
     })
 
     test('should not render a <LinkButton/> if state is scheduled', () => {
-      wrapper.setProps({orderState:'scheduled'})
+      wrapper.setProps({orderState: 'scheduled'})
       expect(wrapper.find(LinkButton).length).toEqual(0)
     })
 

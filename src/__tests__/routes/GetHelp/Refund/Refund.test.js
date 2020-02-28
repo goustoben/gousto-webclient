@@ -22,18 +22,18 @@ describe('<Refund />', () => {
       recipeId: '1010',
       ingredientId: '1234',
       issueId: '999999',
-      issueDescription: 'a description <> <script>alert("hi")<script>' +
-        '<b onmouseover=alert(\'Wufff!\')>click me!</b>' +
-        '<img src="http://url.to.file.which/not.exist" onerror=alert(document.cookie);>'
+      issueDescription: 'a description <> <script>alert("hi")<script>'
+        + '<b onmouseover=alert(\'Wufff!\')>click me!</b>'
+        + '<img src="http://url.to.file.which/not.exist" onerror=alert(document.cookie);>'
     },
     '2020-1234': {
       recipeId: '2020',
       ingredientId: '1234',
       issueId: '999999',
-      issueDescription: 'another &description' +
-        '<IMG SRC=j&#X41vascript:alert(\'test2\')>' +
-        '<META HTTP-EQUIV="refresh"' +
-        'CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">'
+      issueDescription: 'another &description'
+        + '<IMG SRC=j&#X41vascript:alert(\'test2\')>'
+        + '<META HTTP-EQUIV="refresh"'
+        + 'CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">'
     },
   }
   const trackAcceptRefundSpy = jest.fn()

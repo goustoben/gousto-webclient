@@ -113,7 +113,7 @@ describe('products api', () => {
         limit,
         image_sizes: imageSizes
       }
-      
+
       await fetchRandomProducts('token', limit, imageSizes)
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')

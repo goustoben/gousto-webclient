@@ -14,7 +14,7 @@ describe('CookingInstructions', () => {
     jest.clearAllMocks()
   })
 
-  describe('Render', () => {  
+  describe('Render', () => {
     describe('when recipeStepsById is empty', () => {
       test('should trigger passed onClick function when clicked', () => {
         wrapper = shallow(<CookingInstructions recipeId={id} cookbookLoadRecipeStepsById={onClickSpy} recipeStepsById={Immutable.List()} />)
@@ -49,7 +49,7 @@ describe('CookingInstructions', () => {
         expect(wrapper.find('.recipeInstruction')).toHaveLength(1)
       })
 
-      test('should find recipeInstruction with removed &nbsp;', () => {        
+      test('should find recipeInstruction with removed &nbsp;', () => {
         expect(wrapper.find('.recipeInstruction').text()).toEqual('Instruction ')
       })
     })

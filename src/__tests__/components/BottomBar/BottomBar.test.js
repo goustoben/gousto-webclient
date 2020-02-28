@@ -33,7 +33,7 @@ describe('<BottomBar />', () => {
 
   test('it should use the className passed', () => {
     wrapper = shallow(
-      <BottomBar className='test-class'>
+      <BottomBar className="test-class">
         <TestComponent />
       </BottomBar>,
     )

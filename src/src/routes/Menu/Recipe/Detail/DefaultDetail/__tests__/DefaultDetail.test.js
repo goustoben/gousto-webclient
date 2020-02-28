@@ -22,19 +22,19 @@ describe('<DefaultDetail />', () => {
   const DEFAULT_DETAIL = (
     <DefaultDetail
       allergens={Immutable.List(['allergens'])}
-      cuisine='cuisine'
+      cuisine="cuisine"
       cookingTime={123}
       dairyFree={false}
-      diet='vegetarian'
+      diet="vegetarian"
       equipment={Immutable.List(['spoon, mixer'])}
-      id='123'
+      id="123"
       ingredients={Immutable.fromJS([{
-        allergens:'allergens',
-        id:'id',
-        label:'label',
+        allergens: 'allergens',
+        id: 'id',
+        label: 'label',
         media: { images: [{urls: [{width: 10}]}] },
-        name:'name',
-        subIngredients:'subIngredients',
+        name: 'name',
+        subIngredients: 'subIngredients',
       }])}
       per100Grams={Immutable.Map({
         carbs: 1,
@@ -59,9 +59,9 @@ describe('<DefaultDetail />', () => {
         salt: 1,
       })}
       showCookingInstruction={false}
-      title='title'
-      useWithin='5 days'
-      view='detail'
+      title="title"
+      useWithin="5 days"
+      view="detail"
       youWillNeed={Immutable.List(['spoon', 'fork'])}
     />
   )
@@ -140,12 +140,12 @@ describe('<DefaultDetail />', () => {
       beforeEach(() => {
         wrapper.setProps({
           ingredients: Immutable.fromJS([{
-            allergens:'allergens',
-            id:'id',
-            label:'label',
+            allergens: 'allergens',
+            id: 'id',
+            label: 'label',
             media: { images: [{urls: [{width: 10}]}] },
-            name:'name',
-            subIngredients:'subIngredients',
+            name: 'name',
+            subIngredients: 'subIngredients',
           }])
         })
       })
@@ -256,12 +256,12 @@ describe('<DefaultDetail />', () => {
     beforeEach(() => {
       wrapper.setProps({
         ingredients: Immutable.fromJS([{
-          allergens:'allergens',
-          id:'id',
-          label:'label',
+          allergens: 'allergens',
+          id: 'id',
+          label: 'label',
           media: { images: [{urls: [{width: 10}]}] },
-          name:'name',
-          subIngredients:'subIngredients',
+          name: 'name',
+          subIngredients: 'subIngredients',
         }])
       })
     })
@@ -296,12 +296,12 @@ describe('<DefaultDetail />', () => {
       wrapper.setProps({
         allergens: Immutable.List(['allergens']),
         ingredients: Immutable.fromJS([{
-          allergens:'allergens',
-          id:'id',
-          label:'label',
+          allergens: 'allergens',
+          id: 'id',
+          label: 'label',
           media: { images: [{urls: [{width: 10}]}] },
-          name:'name',
-          subIngredients:'subIngredients',
+          name: 'name',
+          subIngredients: 'subIngredients',
         }])
       })
     })

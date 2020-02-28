@@ -188,7 +188,7 @@ describe('setSlotFromIds', () => {
 
       setSlotFromIds(state, null, dayId, dispatchSpy)
 
-      expect(basketDateChange).toHaveBeenCalledWith("2019-08-03")
+      expect(basketDateChange).toHaveBeenCalledWith('2019-08-03')
       expect(basketSlotChange).toHaveBeenCalledWith('')
     })
   })

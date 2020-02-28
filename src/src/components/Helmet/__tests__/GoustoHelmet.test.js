@@ -17,10 +17,10 @@ describe('Helmet GoustoHelmet', () => {
   let protocol
 
   beforeEach(() => {
-    protocol = sinon.stub(globals, 'protocol').get(function() {
+    protocol = sinon.stub(globals, 'protocol').get(function () {
       return '<protocol>'
     })
-    domain = sinon.stub(globals, 'domain').get(function() {
+    domain = sinon.stub(globals, 'domain').get(function () {
       return '<domain>'
     })
   })
@@ -31,15 +31,15 @@ describe('Helmet GoustoHelmet', () => {
   })
 
   test('should return 1 span by default', () => {
-    expect(shallow(<GoustoHelmet requestUrl='mock' />).type()).toBe('span')
+    expect(shallow(<GoustoHelmet requestUrl="mock" />).type()).toBe('span')
   })
 
   test('should return 1 if `other` in scripts is set to true', () => {
-    expect(shallow(<GoustoHelmet requestUrl='mock' scripts={{other: true}} />).type()).toBe('span')
+    expect(shallow(<GoustoHelmet requestUrl="mock" scripts={{other: true}} />).type()).toBe('span')
   })
 
   test('should return null if `other` in scripts is set to false', () => {
-    expect(shallow(<GoustoHelmet requestUrl='mock' scripts={{other: false}} />).type()).toBe(null)
+    expect(shallow(<GoustoHelmet requestUrl="mock" scripts={{other: false}} />).type()).toBe(null)
   })
 
   describe('rendering', () => {
@@ -84,7 +84,7 @@ describe('Helmet GoustoHelmet', () => {
     let templateConfigHead
 
     beforeEach(() => {
-      templateConfigHead = sinon.stub(templateConfig, 'head').get(function() {
+      templateConfigHead = sinon.stub(templateConfig, 'head').get(function () {
         return {
           fbAppID: 'abc123',
           fbAdmins: ['admin1id', 'admin2id'],

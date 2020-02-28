@@ -63,6 +63,15 @@ You may need to get the latest version of watchman to run Jest's watch mode.
 brew install watchman
 ```
 
+### Running regression tests
+```shell
+cd ~/code/goustowebclient/tests/regression
+npm run test
+```
+
+To run through the Cypress UI:
+`npm run test:debug`
+
 ### Running end-to-end tests
 You will need the following installed:
 1. Java Runtime. Check if already installed with `java --version`, and if not, install using homebrew:

@@ -39,7 +39,7 @@ describe('router', () => {
 
   describe('when /menu/:orderId is called', () => {
     const path = '/menu/1234'
-    
+
     test('should display the menu', () => {
       const memoryHistory = createMemoryHistory(path)
       match(
@@ -59,7 +59,7 @@ describe('router', () => {
 
   describe('when /menu/food-brand/:slug is called', () => {
     const path = '/menu/food-brand/10-minute-meals'
-    
+
     test('should display the food brand page', () => {
       const memoryHistory = createMemoryHistory(path)
       match(
@@ -79,7 +79,7 @@ describe('router', () => {
 
   describe('when /menu/thematic/:slug is called', () => {
     const path = '/menu/thematic/10-minute-meals'
-    
+
     test('should display the thematic page', () => {
       const memoryHistory = createMemoryHistory(path)
       match(

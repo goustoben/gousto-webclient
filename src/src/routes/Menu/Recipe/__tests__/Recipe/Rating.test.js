@@ -18,7 +18,7 @@ describe('<Rating />', () => {
   })
   test('should have two span children when the count prop is greater than 0', () => {
     const wrapper = shallow(<Rating count={count} average={average} />)
-    wrapper.children().forEach(function(node) {
+    wrapper.children().forEach(function (node) {
       expect(node.type()).toEqual('span')
     })
   })

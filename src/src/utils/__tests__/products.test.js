@@ -136,19 +136,19 @@ describe('the products utility functions', () => {
     beforeEach(() => {
       products = [
         {
-          id:'test-product-1',
+          id: 'test-product-1',
           listPrice: '6.00',
         },
         {
-          id:'test-product-1',
+          id: 'test-product-1',
           listPrice: '2.00',
         },
         {
-          id:'test-product-1',
+          id: 'test-product-1',
           listPrice: '4.50',
         },
         {
-          id:'test-product-1',
+          id: 'test-product-1',
           listPrice: '3.00',
         },
       ]
@@ -183,15 +183,15 @@ describe('the products utility functions', () => {
       beforeEach(() => {
         productsWithFreeProduct = [
           {
-            id:'test-product-1',
+            id: 'test-product-1',
             listPrice: '6.00',
           },
           {
-            id:'test-product-1',
+            id: 'test-product-1',
             listPrice: '2.00',
           },
           {
-            id:'test-product-1',
+            id: 'test-product-1',
             listPrice: '4.50',
           },
           {
@@ -199,7 +199,7 @@ describe('the products utility functions', () => {
             listPrice: '0.00',
           },
           {
-            id:'test-product-1',
+            id: 'test-product-1',
             listPrice: '3.00',
           },
         ]

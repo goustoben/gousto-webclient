@@ -29,8 +29,8 @@ describe('Home/Testimonials/TestimonialCarousel/Testimonial', () => {
 
   test('should render the author, title, and body', () => {
     expect(wrapper.find('div').at(1).text()).toBe('someone')
-    expect(wrapper.find('div') .at(3).text()).toBe('gousto is awesome!')
-    expect(wrapper .find('div').at(4).text()).toBe('something super positive')
+    expect(wrapper.find('div').at(3).text()).toBe('gousto is awesome!')
+    expect(wrapper.find('div').at(4).text()).toBe('something super positive')
   })
 })
 

@@ -1,5 +1,5 @@
 
-describe("Demo", () => {
+describe("Add box", () => {
   beforeEach(() => {
     cy.server()
     cy.fixture('user/userCurrent').as('userCurrent')
@@ -13,11 +13,13 @@ describe("Demo", () => {
     cy.fixture('user/userCurrentSubscription').as('userCurrentSubscription')
     cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription')
     cy.route('GET', /customers\/v1\/customers\/\/addresses/, {})
-  })
 
-  it("should load My Deliveries", () => {
     cy.login()
     cy.visit('/mydeliveries')
-    cy.get('[data-testing="logoutButton"]').should('have.text','Logout')
+  })
+
+  it("should take the user to the menu", () => {
+    cy.get('[data-testing="addBoxButton"]').click()
+    cy.url().should('include', 'menu')
   })
 })

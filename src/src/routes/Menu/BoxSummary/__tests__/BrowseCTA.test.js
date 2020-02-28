@@ -22,9 +22,9 @@ describe('BrowseCTA', () => {
       preventDefault,
       stopPropagation,
     }
-    menuBrowseCTAShow = sinon.stub().returns(function() {})
-    boxDetailsVisibilityChange = sinon.stub().returns(function() {})
-    menuBrowseCTAVisibilityChange = sinon.stub().returns(function() {})
+    menuBrowseCTAShow = sinon.stub().returns(function () {})
+    boxDetailsVisibilityChange = sinon.stub().returns(function () {})
+    menuBrowseCTAVisibilityChange = sinon.stub().returns(function () {})
   })
 
   test('should return a div', () => {

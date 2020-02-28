@@ -9,11 +9,11 @@ import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 describe('<FineDineInRecipe />', () => {
   const FINE_DINE_IN_RECIPE = (
     <FineDineInRecipe
-      id='id'
+      id="id"
       cookingTime={1}
       features={Immutable.Map({})}
-      useWithin='3 days'
-      title='title'
+      useWithin="3 days"
+      title="title"
     />
   )
 

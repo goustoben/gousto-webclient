@@ -7,7 +7,7 @@ describe('menuServiceDataReceived', () => {
     const result = menuServiceDataReceived(testResponse)
 
     expect(result).toEqual({
-      type: "MENU_SERVICE_DATA_RECEIVED",
+      type: 'MENU_SERVICE_DATA_RECEIVED',
       response: {testData: '123'},
       trackingData: {
         actionType: 'MENU_SERVICE_DATA_RECEIVED'

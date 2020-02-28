@@ -378,6 +378,7 @@ workflows:
             branches:
               only:
                 - env-rockets
+                - develop
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -387,6 +388,7 @@ workflows:
             branches:
               only:
                 - env-rockets
+                - develop
 
 
 

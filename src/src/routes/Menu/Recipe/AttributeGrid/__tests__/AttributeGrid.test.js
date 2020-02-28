@@ -29,20 +29,20 @@ describe('AttributeGrid', () => {
     })
 
     test('should contain cookingTime, useWithin, equipmentRequired and diet when all attributes meet show conditions ', () => {
-      expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'equipmentRequired'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'cookingTime'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'useWithin'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'equipmentRequired'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'diet'}).length).toEqual(1)
     })
 
     test('should contain cookingTime, useWithin, diet and fiveADay when equipment is not required ', () => {
       equipment = Immutable.fromJS([])
       wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} />)
 
-      expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'fiveADay'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'cookingTime'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'useWithin'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'diet'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'fiveADay'}).length).toEqual(1)
     })
   })
 
@@ -57,14 +57,14 @@ describe('AttributeGrid', () => {
     })
 
     test('should contain cookingTime, useWithin, glutenFree, dairyFree, fiveADay, diet, cals and cuisine when all attributes meet show conditions ', () => {
-      expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'glutenFree'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'dairyFree'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'fiveADay'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'cals'}).length).toEqual(1)
-      expect(wrapper.find(RecipeAttribute).find({name:'cuisine'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'cookingTime'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'useWithin'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'glutenFree'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'dairyFree'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'fiveADay'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'diet'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'cals'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name: 'cuisine'}).length).toEqual(1)
     })
   })
 })

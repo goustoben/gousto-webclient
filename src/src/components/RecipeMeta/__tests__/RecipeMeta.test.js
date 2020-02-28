@@ -9,7 +9,7 @@ describe('RecipeMeta', () => {
   const recipe = Immutable.fromJS({
     id: '12345',
     title: 'A Recipe Title',
-    description: `The best you've ever tasted.`,
+    description: 'The best you\'ve ever tasted.',
     media: {
       images: [{
         urls: [{
@@ -22,18 +22,18 @@ describe('RecipeMeta', () => {
       {},
       {
         id: 2,
-        name: "Food Brands",
-        slug: "food-brands",
+        name: 'Food Brands',
+        slug: 'food-brands',
         tags: [
           {
-            id: "9",
-            name: "Great Food",
+            id: '9',
+            name: 'Great Food',
             properties: {
-              ribbon_color: "#000000",
-              border_color: "#222222",
-              text_color: "#FFFFFF",
+              ribbon_color: '#000000',
+              border_color: '#222222',
+              text_color: '#FFFFFF',
             },
-            slug: "great-food",
+            slug: 'great-food',
           }
         ]
       }

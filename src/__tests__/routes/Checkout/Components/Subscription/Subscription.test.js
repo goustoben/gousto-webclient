@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 
-import Subscription from 'routes/Checkout/Components/Subscription/Subscription' 
+import Subscription from 'routes/Checkout/Components/Subscription/Subscription'
 import SubscriptionOption from 'routes/Checkout/Components/Subscription/SubscriptionOption'
 
 const createFeatures = (value) => (Immutable.fromJS({
@@ -98,6 +98,6 @@ describe('Subscription', () => {
 
       expect(monthlyOption).toHaveLength(0)
     })
-    
+
   })
 })

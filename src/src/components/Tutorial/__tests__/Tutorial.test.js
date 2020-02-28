@@ -81,7 +81,7 @@ describe('Tutorial', () => {
 
       wrapper = mount(
         <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {children} 
+          {children}
         </Tutorial>
       )
 
@@ -102,7 +102,7 @@ describe('Tutorial', () => {
 
       wrapper = mount(
         <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {children} 
+          {children}
         </Tutorial>
       )
 
@@ -128,7 +128,7 @@ describe('Tutorial', () => {
 
       wrapper = mount(
         <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {generateSteps(2)} 
+          {generateSteps(2)}
         </Tutorial>
       )
 
@@ -147,7 +147,7 @@ describe('Tutorial', () => {
 
       wrapper = mount(
         <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-          {generateSteps(2)} 
+          {generateSteps(2)}
         </Tutorial>
       )
 
@@ -164,7 +164,7 @@ describe('Tutorial', () => {
 
     wrapper = mount(
       <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
-        {generateSteps(2)} 
+        {generateSteps(2)}
       </Tutorial>
     )
 

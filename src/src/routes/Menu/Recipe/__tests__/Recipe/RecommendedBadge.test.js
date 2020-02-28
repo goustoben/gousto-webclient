@@ -11,13 +11,13 @@ describe('<RecommendedBadge />', () => {
   let wrapper
   let features
 
-  it('should not render a badge by default', function() {
+  it('should not render a badge by default', function () {
     features = Immutable.fromJS({})
     wrapper = shallow(<RecommendedBadge features={features} />)
     expect(wrapper.find(InfoBadge).length).toBe(0)
   })
 
-  it('should render a badge if recipe is recommended and recommended feature set', function() {
+  it('should render a badge if recipe is recommended and recommended feature set', function () {
     features = Immutable.fromJS({
       recommendedBadge: {
         value: true,
@@ -30,7 +30,7 @@ describe('<RecommendedBadge />', () => {
     expect(wrapper.find(InfoBadge).prop('recommended')).toBe(true)
   })
 
-  it('should not render a badge if recipe is not recommended and recommended feature set', function() {
+  it('should not render a badge if recipe is not recommended and recommended feature set', function () {
     features = Immutable.fromJS({
       recommendedBadge: true,
     })
@@ -38,7 +38,7 @@ describe('<RecommendedBadge />', () => {
     expect(wrapper.find(InfoBadge).length).toBe(0)
   })
 
-  it('should not render a badge if recipe is recommended and recommended feature not set', function() {
+  it('should not render a badge if recipe is recommended and recommended feature not set', function () {
     features = Immutable.fromJS({
       recommendedBadge: null,
     })

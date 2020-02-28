@@ -90,11 +90,11 @@ describe('Product component', () => {
       )
     })
 
-    test('should change the qty of the product', async() => {
+    test('should change the qty of the product', async () => {
       wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
-            "1234": 1,
+            '1234': 1,
           }
         })
       })
@@ -126,14 +126,14 @@ describe('Product component', () => {
       await wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
-            "1234": 1,
+            '1234': 1,
           }
         }),
         limitReached: false,
         ageVerified: true,
         product: {
           ageRestricted: false,
-          id: "1234"
+          id: '1234'
         },
         basketProductAdd: jest.fn(),
         orderConfirmationProductTracking: orderConfirmationProductTrackingMock

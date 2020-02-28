@@ -31,6 +31,7 @@ function mapStateToProps(state, ownProps) {
     priceBreakdown: order.get('priceBreakdown', Immutable.Map({})),
     cancellable: order.get('cancellable'),
     restorable: order.get('restorable'),
+    isProjected: order.get('isProjected'),
     orderDeliveryDaysFetchError: state.error.get(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE),
     recipesPeriodStockFetchError: state.error.get(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE),
     portionsCount: order.get('portionsCount'),

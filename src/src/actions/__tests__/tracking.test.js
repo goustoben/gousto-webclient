@@ -253,7 +253,7 @@ describe('tracking actions', () => {
         amount: '',
         channel: '',
         orderRef: 9010322,
-        parts: `FIRSTPURCHASE:47.75`,
+        parts: 'FIRSTPURCHASE:47.75',
         voucher: 'TV',
         currency: 'GBP',
       }

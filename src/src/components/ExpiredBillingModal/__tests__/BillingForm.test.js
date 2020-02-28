@@ -43,7 +43,7 @@ describe('BillingForm', () => {
     expect(wrapper.find('Button').length).toEqual(1)
   })
 
-  it('should return all the relevant input fields + titles', function() {
+  it('should return all the relevant input fields + titles', function () {
     expect(wrapper.find(Svg).findWhere(c => c.prop('fileName') === 'icon-Maestro-dark')).toHaveLength(2)
     expect(wrapper.find(Svg).findWhere(c => c.prop('fileName') === 'icon-MasterCard-dark')).toHaveLength(2)
     expect(wrapper.find(Svg).findWhere(c => c.prop('fileName') === 'icon-Visa-dark')).toHaveLength(2)

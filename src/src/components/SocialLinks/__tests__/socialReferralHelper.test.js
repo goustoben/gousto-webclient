@@ -15,17 +15,17 @@ describe('Social Referral Helper', () => {
 
   describe('getMessage', () => {
     test('should return the correct referral code text', () => {
-      expect(getMessage(offer)).toEqual(`I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\n`)
+      expect(getMessage(offer)).toEqual('I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\n')
     })
 
     test('should return the correct referral code with default offer when no raf offer is provided', () => {
-      expect(getMessage()).toEqual(`I love Gousto and I think you will too! Use my link to get an exclusive 60% off your first box, PLUS 30% off for a whole month. \r\n`)
+      expect(getMessage()).toEqual('I love Gousto and I think you will too! Use my link to get an exclusive 60% off your first box, PLUS 30% off for a whole month. \r\n')
     })
   })
 
   describe('getReferralLink', () => {
     test('should return correct referral link', () => {
-      expect(getReferralLink(referralCode, firstName, UTM)).toEqual(`cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test`)
+      expect(getReferralLink(referralCode, firstName, UTM)).toEqual('cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test')
     })
 
     test('should return correct referral link when first name and UTM not provided', () => {

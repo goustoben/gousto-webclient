@@ -25,7 +25,7 @@ describe('loadCheckoutScript', () => {
       global.document = window.document
     })
 
-    describe(`when script doesn't exist`, () => {
+    describe('when script doesn\'t exist', () => {
       test('should create a new script element and append it to body', () => {
         loadCheckoutScript(callback)
 

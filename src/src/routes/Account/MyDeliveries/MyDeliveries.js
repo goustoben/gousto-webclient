@@ -10,34 +10,25 @@ import OrdersList from './OrdersList'
 import accountCss from '../Account/Account.css'
 
 class MyDeliveries extends React.PureComponent {
-  static propTypes = {
-    isFetchingOrders: PropTypes.bool,
-    didErrorFetchingPendingOrders: PropTypes.string,
-    didErrorFetchingProjectedOrders: PropTypes.string,
-    didErrorFetchingAddresses: PropTypes.string,
-  }
-
-  static defaultProps = {
-    isFetchingOrders: false,
-    isFetchingAddresses: false,
-    didErrorFetchingPendingOrders: null,
-    didErrorFetchingProjectedOrders: null,
-    didErrorFetchingAddresses: null,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   static fetchOrdersAndAddresses = ({ store }) => {
     store.dispatch(actions.userLoadNewOrders())
     store.dispatch(actions.userLoadAddresses())
   }
 
+  componentDidMount() {
+    const { store } = this.context
+    MyDeliveries.fetchOrdersAndAddresses({ store })
+  }
+
+  retryFetch = () => {
+    const { store } = this.context
+    MyDeliveries.fetchOrdersAndAddresses({ store })
+  }
+
   static renderFetchError = (retryFetch) => (
     <div>
       <Alert type="danger">
-        <p>We're not able to display your deliveries right now. Please try again later.</p>
+        <p>We&#39;re not able to display your deliveries right now. Please try again later.</p>
       </Alert>
       <div className={css.button}>
         <Button onClick={retryFetch}>Retry</Button>
@@ -50,11 +41,6 @@ class MyDeliveries extends React.PureComponent {
       <Loading />
     </div>
   )
-
-  retryFetch = () => {
-    const store = this.context.store
-    MyDeliveries.fetchOrdersAndAddresses({ store })
-  }
 
   renderOrders() {
     const {
@@ -73,17 +59,12 @@ class MyDeliveries extends React.PureComponent {
     return <OrdersList />
   }
 
-  componentDidMount() {
-    const store = this.context.store
-    MyDeliveries.fetchOrdersAndAddresses({ store })
-  }
-
   render() {
     return (
       <div className={accountCss.accountContainer} data-testing="myDeliveries">
         <div className={css.button}>
           <Link to={routes.client.menu}>
-            <Button color={'secondary'} noDecoration>
+            <Button color="secondary" noDecoration data-testing="addBoxButton">
               Add box
             </Button>
           </Link>
@@ -92,6 +73,24 @@ class MyDeliveries extends React.PureComponent {
       </div>
     )
   }
+}
+
+MyDeliveries.propTypes = {
+  isFetchingOrders: PropTypes.bool,
+  didErrorFetchingPendingOrders: PropTypes.string,
+  didErrorFetchingProjectedOrders: PropTypes.string,
+  didErrorFetchingAddresses: PropTypes.string,
+}
+
+MyDeliveries.defaultProps = {
+  isFetchingOrders: false,
+  didErrorFetchingPendingOrders: null,
+  didErrorFetchingProjectedOrders: null,
+  didErrorFetchingAddresses: null,
+}
+
+MyDeliveries.contextTypes = {
+  store: PropTypes.object.isRequired,
 }
 
 export default MyDeliveries

@@ -41,7 +41,7 @@ describe('AwinPixel', () => {
     let orderId, total, commissionGroup, promoCode
 
     beforeEach(() => {
-      orderId = "9010320"
+      orderId = '9010320'
       total = '34.99'
       commissionGroup = 'EXISTING'
       promoCode = ''

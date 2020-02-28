@@ -51,7 +51,7 @@ describe('tutorial actions', () => {
   })
 
   describe('shouldJfyTutorialBeVisible', () => {
-    describe("when tutorial has been seen and collection is present", () => {
+    describe('when tutorial has been seen and collection is present', () => {
       beforeEach(() => {
         getState.mockReturnValueOnce(getTutorialState({
           collections: { slug: 'recommendations' },

@@ -17,7 +17,7 @@ describe('Referral', () => {
       })
 
       beforeEach(() => {
-        wrapper = shallow(<Referral referralCode='RAF-TEST-1234' rafOffer={rafOffer} isLoading={false} />)
+        wrapper = shallow(<Referral referralCode="RAF-TEST-1234" rafOffer={rafOffer} isLoading={false} />)
       })
 
       test('should render a <div> with no props', () => {
@@ -37,7 +37,7 @@ describe('Referral', () => {
           firstMonthDiscountFormatted: '30%',
           expiry: '2019-01-01'
         })
-        wrapper = shallow(<Referral referralCode='RAF-TEST-1234' rafOffer={doubleRafOffer} />)
+        wrapper = shallow(<Referral referralCode="RAF-TEST-1234" rafOffer={doubleRafOffer} />)
 
         expect(wrapper.find('.containerBackgroundDouble').length).toEqual(1)
         expect(wrapper.find('.iconReferDouble').length).toEqual(1)
@@ -55,7 +55,7 @@ describe('Referral', () => {
         })
 
         test('should render default RAFOffer if have no raf data', () => {
-          wrapper = shallow(<Referral referralCode='RAF-TEST-1234' />)
+          wrapper = shallow(<Referral referralCode="RAF-TEST-1234" />)
           expect(wrapper.instance().props.rafOffer).toEqual(defaultOffer)
         })
       })
@@ -70,7 +70,7 @@ describe('Referral', () => {
             expiry: '2019-01-21T12:17:00Z'
           })
 
-          wrapper = shallow(<Referral referralCode='RAF-TEST-1234' rafOffer={expiryPresent} isLoading={false} />)
+          wrapper = shallow(<Referral referralCode="RAF-TEST-1234" rafOffer={expiryPresent} isLoading={false} />)
 
           expect(wrapper.find('DoubleCreditCountdown').length).toEqual(1)
         })
@@ -89,7 +89,7 @@ describe('Referral', () => {
 
         describe('HowItWorks with a default offer', () => {
           beforeEach(() => {
-            wrapper = shallow(<Referral referralCode='RAF-TEST-1234' />)
+            wrapper = shallow(<Referral referralCode="RAF-TEST-1234" />)
           })
 
           test('should render HowItWorks component with default details prop', () => {
@@ -108,7 +108,7 @@ describe('Referral', () => {
       let wrapper
 
       beforeEach(() => {
-        wrapper = shallow(<Referral referralCode='RAF-TEST-1234' isLoading />)
+        wrapper = shallow(<Referral referralCode="RAF-TEST-1234" isLoading />)
       })
       test('should render Loading component while loading the response from backend', () => {
         expect(wrapper.find('Loading').length).toEqual(1)

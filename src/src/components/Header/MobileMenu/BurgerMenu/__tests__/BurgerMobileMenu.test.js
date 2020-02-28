@@ -21,7 +21,7 @@ describe('BurgerMobileMenu', () => {
         loginFunc={jest.fn()}
         logoutFunc={jest.fn()}
         hideNav={false}
-        promoCodeUrl={""}
+        promoCodeUrl={''}
       />
     )
   })

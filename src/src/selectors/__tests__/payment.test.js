@@ -1,5 +1,5 @@
 import { getPaymentDetails } from 'selectors/payment'
-import Immutable from "immutable"
+import Immutable from 'immutable'
 
 describe('getPaymentDetails', () => {
   let state = {}

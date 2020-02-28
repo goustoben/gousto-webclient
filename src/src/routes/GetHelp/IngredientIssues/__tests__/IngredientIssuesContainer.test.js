@@ -52,7 +52,7 @@ describe('<IngredientIssuesContainer />', () => {
               label: '1 can of chopped tomatoes (210g)'
             },
             '1494-bbb': {
-              recipeId:'1494',
+              recipeId: '1494',
               ingredientId: 'bbb',
               label: '1 can of chopped tomatoes (210g)'
             },
@@ -148,7 +148,7 @@ describe('<IngredientIssuesContainer />', () => {
         .toEqual(expectedSelectedIngredients)
     })
 
-    test('selected ingredient issues are changed in the store when selected', async() => {
+    test('selected ingredient issues are changed in the store when selected', async () => {
       wrapper = mount(
         <IngredientIssuesContainer
           store={store}
@@ -170,7 +170,7 @@ describe('<IngredientIssuesContainer />', () => {
           issueName: 'Fruit or Veg - Mouldy',
         },
       })
-      
+
       const secondOption = wrapper.find('select')
       await secondOption.at(0).simulate('change')
       const option = wrapper.find('[value="104"]')
