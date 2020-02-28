@@ -70,7 +70,7 @@ const previousOrders = Immutable.fromJS({
 })
 const onlyOldOrders = Immutable.fromJS({
   100: {
-    deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+    deliveryDate: moment().subtract(12, 'days').format(deliveryDateFormat),
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -413,7 +413,7 @@ describe('MyGousto - Header', () => {
       })
     })
 
-    describe('and the most recent order > 7 days ago', () => {
+    describe('and the most recent order > 10 days ago', () => {
       beforeEach(() => {
         wrapper = mount(
           <Header
@@ -432,11 +432,11 @@ describe('MyGousto - Header', () => {
       })
 
       test('dispatches the "non-eligible tracking action"', () => {
-        expect(mockOrderNotEligibleClick).toHaveBeenCalledWith(10)
+        expect(mockOrderNotEligibleClick).toHaveBeenCalledWith(12)
       })
     })
 
-    describe('and the most recent order < 7 days ago', () => {
+    describe('and the most recent order < 10 days ago', () => {
       beforeEach(() => {
         wrapper = mount(
           <Header

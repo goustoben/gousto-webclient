@@ -11,7 +11,7 @@ import {
 } from 'utils/order'
 import { HeaderPresentation } from './Header.presentation'
 
-const ELIGIBILITY_DAYS = 7
+const ELIGIBILITY_DAYS = 10
 
 class Header extends PureComponent {
   constructor(props) {
