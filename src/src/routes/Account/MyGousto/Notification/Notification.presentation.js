@@ -24,7 +24,10 @@ const NotificationPresentation = ({ type, title, message, url, onLinkClick }) =>
   <div>
     <Alert type={type}>
       <a href={url} className={css.notificationLink} onClick={e => handleClick(e, url, onLinkClick)}>
-        <span className={css.notificationTitle}>{title} </span>
+        <span className={css.notificationTitle}>
+          {title}
+          {' '}
+        </span>
         <span className={css.notificationMessage}>{message}</span>
       </a>
     </Alert>

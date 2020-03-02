@@ -6,7 +6,7 @@ const OrderCollapseExpand = ({
   collapsed,
 }) => (
   <div className={css.arrowBox}>
-    <i className={collapsed ? css.arrowDown : css.arrowUp} aria-hidden="true"></i>
+    <i className={collapsed ? css.arrowDown : css.arrowUp} aria-hidden="true" />
   </div>
 )
 

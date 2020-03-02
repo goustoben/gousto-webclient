@@ -31,7 +31,11 @@ const Subscription = ({ startSubscriptionPause }) => (
           </LinkButton>
         </div>
         <p>
-          Or you can <Link onClick={startSubscriptionPause} className={css.linkBase}>pause your subscription</Link> until further notice. You are still able to order one-off boxes even when your subscription is paused.
+          Or you can
+          {' '}
+          <Link onClick={startSubscriptionPause} className={css.linkBase}>pause your subscription</Link>
+          {' '}
+          until further notice. You are still able to order one-off boxes even when your subscription is paused.
         </p>
       </div>
     </div>

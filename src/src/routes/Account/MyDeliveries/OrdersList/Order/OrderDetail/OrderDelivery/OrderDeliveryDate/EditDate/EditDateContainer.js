@@ -23,7 +23,7 @@ function mapStateToProps(state, ownProps) {
     recipesStock: state.recipesStock,
     coreDeliveryDayId,
     deliverySlotId,
-    shippingAddressId: shippingAddressId,
+    shippingAddressId,
     isPendingUpdateDayAndSlot: state.pending.get(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT),
     portionsCount,
   }

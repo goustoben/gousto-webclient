@@ -15,7 +15,7 @@ const SubscriptionPauseReasonsScreen = ({ onReasonChoice, reasons, type }) => (
           className={type !== 'reasonList' ? css.gridItem : css.listItem}
         >
           {type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}-hover`} className={css.svgHover} /> : null}
-          {type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}`}className={css.svg} /> : null}
+          {type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}`} className={css.svg} /> : null}
           <span className={css.label}>{reason.get('label')}</span>
         </div>
       )).toArray()}

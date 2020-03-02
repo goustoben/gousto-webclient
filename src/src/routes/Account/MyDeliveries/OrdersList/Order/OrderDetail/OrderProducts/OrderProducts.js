@@ -69,8 +69,17 @@ class OrderProducts extends React.PureComponent {
                   </div>
                   <div className={css.productInfo}>
                     <div>{product.get('title')}</div>
-                    <div>x {product.get('quantity')}</div>
-                    <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
+                    <div>
+                      x
+                      {' '}
+                      {product.get('quantity')}
+                    </div>
+                    <div className={css.price}>
+                      £
+                      {product.get('unitPrice').toFixed(2)}
+                      {' '}
+                      each
+                    </div>
                   </div>
                 </div>
               ))}

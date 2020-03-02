@@ -35,7 +35,10 @@ const ReferAFriend = ({ referralDetails, redirect }) => {
         </div>
         <div className={css.rafStampDetails}>
           <div className={css.rafStamp}>
-            <p className={css.rafDetailsValue}>£{referralCredit}</p>
+            <p className={css.rafDetailsValue}>
+              £
+              {referralCredit}
+            </p>
             <Svg fileName="icon-stamp-full" className={css.iconStamp} />
           </div>
           <p className={css.rafDetailsLabel}>Gousto credit you&#39;ve earned so far from inviting your friends</p>

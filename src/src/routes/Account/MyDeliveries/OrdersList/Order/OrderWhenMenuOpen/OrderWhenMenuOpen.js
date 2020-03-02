@@ -3,7 +3,11 @@ import React from 'react'
 import css from './OrderWhenMenuOpen.css'
 
 const OrderWhenMenuOpen = ({ whenMenuOpen }) => (
-  <p className={css.whenMenuOpen}>Menu open {whenMenuOpen}</p>
+  <p className={css.whenMenuOpen}>
+    Menu open
+    {' '}
+    {whenMenuOpen}
+  </p>
 )
 
 OrderWhenMenuOpen.propTypes = {

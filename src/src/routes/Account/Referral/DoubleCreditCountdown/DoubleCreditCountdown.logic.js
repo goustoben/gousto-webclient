@@ -22,7 +22,7 @@ class DoubleCreditCountdown extends PureComponent {
   componentDidMount() {
     this.setInitialTime()
     const intervalId = setInterval(this.updateTime, 60000)
-    this.setState({intervalId: intervalId})
+    this.setState({intervalId})
   }
 
   componentWillUnmount() {

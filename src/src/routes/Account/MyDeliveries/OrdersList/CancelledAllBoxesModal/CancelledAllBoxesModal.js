@@ -27,7 +27,12 @@ const CancelledAllBoxesModal = ({
             We noticed you've cancelled all your upcoming boxes, so want to double-check: Would you like to pause for now or keep your subscription active?
             <ul className={css.pendingOrders}>
               {pendingOrdersDates.entrySeq().toJS().map(([orderId, pendingOrderDate]) => (
-                <li key={orderId}>We'll deliver your box on {timeFormat(pendingOrderDate, 'dayAndMonth')} as requested</li>
+                <li key={orderId}>
+                  We'll deliver your box on
+                  {timeFormat(pendingOrderDate, 'dayAndMonth')}
+                  {' '}
+                  as requested
+                </li>
               ))}
             </ul>
           </div>
@@ -35,7 +40,7 @@ const CancelledAllBoxesModal = ({
             <Button color="negative" onClick={() => closeModal()} className={css.firstButton}>
               Keep subscription active
             </Button>
-            <Link to={'/my-subscription'} clientRouted={false}>
+            <Link to="/my-subscription" clientRouted={false}>
               <Button color="primary" noDecoration className={css.secondButton}>
                 Pause subscription
               </Button>

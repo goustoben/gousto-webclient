@@ -7,7 +7,7 @@ import { RecipeCard } from '../RecipeCard'
 
 describe('MyGousto', () => {
   let wrapper
-  const orders = Immutable.fromJS({ '1234': { id: '1234' }, '5678': { id: '5678' } })
+  const orders = Immutable.fromJS({ 1234: { id: '1234' }, 5678: { id: '5678' } })
   const recipes = Immutable.fromJS([
     {
       title: 'Recipe 1',

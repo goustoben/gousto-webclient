@@ -62,7 +62,7 @@ describe('OrderDelivery EditDate utils', () => {
           newOrders: {
             1: {},
             10: {
-              availableDeliveryDays: availableDeliveryDays,
+              availableDeliveryDays,
             },
           }
         }),
@@ -117,7 +117,7 @@ describe('OrderDelivery EditDate utils', () => {
           newOrders: {
             1: {},
             10: {
-              availableDeliveryDays: availableDeliveryDays,
+              availableDeliveryDays,
               recipes:
                 [
                   {id: '10763778'},

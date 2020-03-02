@@ -39,7 +39,8 @@ const RecipeCard = ({ link, images, title }) => (
         />
         {title && (
           <p className={css.title}>
-            {title}&nbsp;
+            {title}
+&nbsp;
             <span className={css.arrowRight} />
           </p>
         )}
