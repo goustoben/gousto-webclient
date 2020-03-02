@@ -123,7 +123,7 @@ describe('snowplow pauseSubscription Tracking', () => {
         seRecoveryAttemptTypesByModalType,
       )
       modalToRecoveryAttemptTypeMap.forEach((mapEntry, index) => {
-        otherAction = Object.assign({}, { modalType: mapEntry[0] }, action)
+        otherAction = { modalType: mapEntry[0], ...action}
         result = pauseSubscriptionTracking.subscriptionKeptActive(otherAction)
         expect(result.data.recovery_attempt_type).toBe(
           recoveryTypesExpected[index],
@@ -188,7 +188,7 @@ describe('snowplow pauseSubscription Tracking', () => {
         seRecoveryAttemptTypesByModalType,
       )
       modalToRecoveryAttemptTypeMap.forEach((mapEntry, index) => {
-        otherAction = Object.assign({}, { modalType: mapEntry[0] }, action)
+        otherAction = { modalType: mapEntry[0], ...action}
         expect(
           pauseSubscriptionTracking.subscriptionPaused(otherAction),
         ).toEqual({

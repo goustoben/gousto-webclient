@@ -100,7 +100,7 @@ describe('recipes actions', () => {
       expect(fetchRecipesMockCalls[1]).toEqual('')
       expect(fetchRecipesMockCalls[2]).toEqual({
         'filters[recipe_ids]': ['2', '4', '5', '6'],
-        'includes': ['ingredients', 'allergens', 'taxonomy'],
+        includes: ['ingredients', 'allergens', 'taxonomy'],
       })
     })
 
@@ -120,7 +120,7 @@ describe('recipes actions', () => {
         await recipeActions.recipesLoadRecipesById(['1', '2', '3', '4'], true)(dispatchSpy, getStateSpy)
 
         expect(fetchRecipes).toHaveBeenCalledWith('accessToken', '', {
-          'includes': ['ingredients', 'allergens', 'taxonomy'],
+          includes: ['ingredients', 'allergens', 'taxonomy'],
           'filters[recipe_ids]': ['1', '2', '3', '4']
         })
       })

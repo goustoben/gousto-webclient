@@ -24,11 +24,11 @@ describe('jobs selectors', () => {
     describe('when jobs exist', () => {
       beforeEach(() => {
         testJobs = Immutable.fromJS({
-          'jobId1': {
+          jobId1: {
             id: 'jobId1',
             title: 'Test job 1',
           },
-          'jobId2': {
+          jobId2: {
             id: 'jobId2',
             title: 'Test job 2',
           }
@@ -64,27 +64,27 @@ describe('jobs selectors', () => {
   describe('the getJobsToDisplay selector', () => {
     beforeEach(() => {
       testJobs = Immutable.fromJS({
-        'jobId1': {
+        jobId1: {
           id: 'jobId1',
           title: 'Test job 1',
           department: 'Operations',
         },
-        'jobId2': {
+        jobId2: {
           id: 'jobId2',
           title: 'Test job 2',
           department: 'Tech'
         },
-        'jobId3': {
+        jobId3: {
           id: 'jobId3',
           title: 'Test job 3',
           department: 'Operations'
         },
-        'jobId4': {
+        jobId4: {
           id: 'jobId4',
           title: 'Test job 4',
           department: 'Data'
         },
-        'jobId5': {
+        jobId5: {
           id: 'jobId5',
           title: 'Test job 5',
           department: 'Analytics'
@@ -113,7 +113,7 @@ describe('jobs selectors', () => {
         })
       }
       expect(getJobsToDisplay(updatedState)).toEqual(Immutable.fromJS({
-        'jobId2': {
+        jobId2: {
           id: 'jobId2',
           title: 'Test job 2',
           department: 'Tech'
@@ -129,12 +129,12 @@ describe('jobs selectors', () => {
         })
       }
       expect(getJobsToDisplay(updatedState)).toEqual(Immutable.fromJS({
-        'jobId4': {
+        jobId4: {
           id: 'jobId4',
           title: 'Test job 4',
           department: 'Data'
         },
-        'jobId5': {
+        jobId5: {
           id: 'jobId5',
           title: 'Test job 5',
           department: 'Analytics'

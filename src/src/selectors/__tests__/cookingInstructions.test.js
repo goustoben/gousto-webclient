@@ -7,10 +7,10 @@ describe('cookingInstructions selectors', () => {
       const state = {
         cookbook: Immutable.fromJS({
           recipesInstructions: {
-            '123': {
-              'step_number': 1,
-              'instruction': 'Instruction',
-              'media': {}
+            123: {
+              step_number: 1,
+              instruction: 'Instruction',
+              media: {}
             }
           }
         })
@@ -18,9 +18,9 @@ describe('cookingInstructions selectors', () => {
       const recipeId = '123'
 
       expect(getRecipeSteps(state, recipeId)).toEqual(Immutable.fromJS({
-        'step_number': 1,
-        'instruction': 'Instruction',
-        'media': {}
+        step_number: 1,
+        instruction: 'Instruction',
+        media: {}
       }))
     })
   })

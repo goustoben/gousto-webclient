@@ -50,17 +50,17 @@ describe('pricing actions', () => {
     }
   })
 
-  beforeEach(function () {
+  beforeEach(() => {
     dispatchSpy = jest.fn()
     getStateSpy = jest.fn()
   })
 
-  beforeEach(function () {
+  beforeEach(() => {
     jest.clearAllMocks()
   })
 
-  describe('pricingRequest', function () {
-    it('will not request prices if the number of recipes are less then 2', async function () {
+  describe('pricingRequest', () => {
+    it('will not request prices if the number of recipes are less then 2', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 1 }, slotId: 124 }),
@@ -81,7 +81,7 @@ describe('pricing actions', () => {
       expect(pricing).not.toHaveBeenCalled()
     })
 
-    it('will not request prices if the slotId is not set', async function () {
+    it('will not request prices if the slotId is not set', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 1, 234: 1 } }),
@@ -102,7 +102,7 @@ describe('pricing actions', () => {
       expect(pricing).not.toHaveBeenCalled()
     })
 
-    it('will return with the PRICING_SUCCESS action and data when 2 recipes and the slotId are set', async function () {
+    it('will return with the PRICING_SUCCESS action and data when 2 recipes and the slotId are set', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 2 }, slotId: 124 }),
@@ -124,13 +124,13 @@ describe('pricing actions', () => {
       expect(pricing).toHaveBeenCalled()
     })
 
-    it('should return with the PRICING_SUCCESS action and data with store data set', async function () {
+    it('should return with the PRICING_SUCCESS action and data with store data set', async () => {
       const accessToken = 'accessToken'
       const date = '12-12-2029'
       const slotId = 12
       const promoCode = '1234'
       const daySlotLeadTimeId = 987
-      const deliveryTariffId = deliveryTariffTypes['FREE_NDD']
+      const deliveryTariffId = deliveryTariffTypes.FREE_NDD
 
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({
@@ -177,14 +177,14 @@ describe('pricing actions', () => {
       )
     })
 
-    it('will be called with tariffId if id is provided and user is not authenticated', async function () {
+    it('will be called with tariffId if id is provided and user is not authenticated', async () => {
       const accessToken = 'accessToken'
       const date = '12-12-2029'
       const slotId = 12
       const promoCode = '1234'
       const tariffId = '12345678'
       const daySlotLeadTimeId = 987
-      const deliveryTariffId = deliveryTariffTypes['PAID_NDD']
+      const deliveryTariffId = deliveryTariffTypes.PAID_NDD
 
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({
@@ -221,7 +221,7 @@ describe('pricing actions', () => {
       )
     })
 
-    it('will request all basket items when recipes, products and the slotId are set', async function () {
+    it('will request all basket items when recipes, products and the slotId are set', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({
@@ -246,7 +246,7 @@ describe('pricing actions', () => {
       })
     })
 
-    it('should return with the PRICING_FAILURE action and message', async function () {
+    it('should return with the PRICING_FAILURE action and message', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 1, 134: 1 }, slotId: 1 }),
@@ -269,8 +269,8 @@ describe('pricing actions', () => {
     })
   })
 
-  describe('pricingClear', function () {
-    it('should dispatch a pricing reset event', async function () {
+  describe('pricingClear', () => {
+    it('should dispatch a pricing reset event', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: ['123', 1] }),
@@ -286,7 +286,7 @@ describe('pricing actions', () => {
       })
     })
 
-    it('should not dispatch a pricing reset event when there is no items in the pricing array', async function () {
+    it('should not dispatch a pricing reset event when there is no items in the pricing array', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: ['123', 1] }),

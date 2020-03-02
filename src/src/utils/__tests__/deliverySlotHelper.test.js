@@ -204,7 +204,7 @@ describe('Format and validate Disabled Slots', () => {
     const validDisabledSlots = '2019-02-02_08-19,2019-02-02_08-22, 2019-02-02_18-22'
     const validDisabledSlotsArray = ['2019-02-02_08-19', '2019-02-02_08-22', '2019-02-02_18-22']
     const invalidDisabledSlots = 'slot,2019-02-02,02-02-2019_00-00, 2019-02-02_00_00, 2019-02-02-00-00'
-    const result = formatAndValidateDisabledSlots(validDisabledSlots + ',' + invalidDisabledSlots)
+    const result = formatAndValidateDisabledSlots(`${validDisabledSlots},${invalidDisabledSlots}`)
 
     expect(result).toEqual(validDisabledSlotsArray)
   })

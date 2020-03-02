@@ -11,10 +11,10 @@ describe('orderConfirmation selectors', () => {
     describe('when any pending action is true', () => {
       const state = {
         pending: Immutable.Map({
-          'PRODUCT_CATEGORIES_RECEIVE': false,
-          'PRODUCTS_STOCK_CHANGE': false,
-          'PRODUCTS_RECEIVE': true,
-          'USER_LOAD_ORDERS': false,
+          PRODUCT_CATEGORIES_RECEIVE: false,
+          PRODUCTS_STOCK_CHANGE: false,
+          PRODUCTS_RECEIVE: true,
+          USER_LOAD_ORDERS: false,
         })
       }
 
@@ -26,10 +26,10 @@ describe('orderConfirmation selectors', () => {
     describe('when all pending actions are false', () => {
       const state = {
         pending: Immutable.Map({
-          'PRODUCT_CATEGORIES_RECEIVE': false,
-          'PRODUCTS_STOCK_CHANGE': false,
-          'PRODUCTS_RECEIVE': false,
-          'USER_LOAD_ORDERS': false,
+          PRODUCT_CATEGORIES_RECEIVE: false,
+          PRODUCTS_STOCK_CHANGE: false,
+          PRODUCTS_RECEIVE: false,
+          USER_LOAD_ORDERS: false,
         })
       }
 
@@ -46,7 +46,7 @@ describe('orderConfirmation selectors', () => {
       beforeEach(() => {
         state = {
           pending: Immutable.Map({
-            'USER_LOAD_REFERRAL_OFFER': true,
+            USER_LOAD_REFERRAL_OFFER: true,
           })
         }
       })
@@ -61,7 +61,7 @@ describe('orderConfirmation selectors', () => {
         beforeEach(() => {
           state = {
             pending: Immutable.Map({
-              'USER_LOAD_REFERRAL_OFFER': false,
+              USER_LOAD_REFERRAL_OFFER: false,
             })
           }
         })

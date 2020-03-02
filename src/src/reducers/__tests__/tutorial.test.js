@@ -24,7 +24,7 @@ describe('tutorial state', () => {
       })
 
       expect(result).toEqual(getTutorialState({
-        visible: { 'testTutorial': true }
+        visible: { testTutorial: true }
       }))
     })
   })
@@ -52,7 +52,7 @@ describe('tutorial state', () => {
         })
 
         expect(result).toEqual(getTutorialState({
-          viewed: { 'testTutorial': 1 }
+          viewed: { testTutorial: 1 }
         }))
       })
     })
@@ -67,7 +67,7 @@ describe('tutorial state', () => {
         })
 
         expect(result).toEqual(getTutorialState({
-          viewed: { 'testTutorial': 2 }
+          viewed: { testTutorial: 2 }
         }))
       })
     })

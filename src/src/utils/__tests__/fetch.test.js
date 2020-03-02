@@ -15,7 +15,7 @@ jest.mock('store', () => ({
   })
 }))
 
-describe('fetch', function () {
+describe('fetch', () => {
   // this require here is needed, rather than an import
   // so that the jest.mocks are set up in time
   const { fetch } = require('../fetch')
@@ -33,13 +33,13 @@ describe('fetch', function () {
     })
   })
 
-  afterEach(function () {
+  afterEach(() => {
     MockDate.reset()
     mockFetch.mockReset()
     mockGetState.mockReset()
   })
 
-  test('should return with JSON', async function () {
+  test('should return with JSON', async () => {
     const data = {
       status: 'ok',
       data: {
@@ -71,7 +71,7 @@ describe('fetch', function () {
     expect(result).toEqual({ data: expected, meta: null })
   })
 
-  test('should return with error if response has not ok status', async function () {
+  test('should return with error if response has not ok status', async () => {
     const data = {
       status: 'error',
       error: 'test error',
@@ -86,7 +86,7 @@ describe('fetch', function () {
     }
   })
 
-  test('should return with error if response is not in a recognised JSON format', async function () {
+  test('should return with error if response is not in a recognised JSON format', async () => {
     const data = {
       something: '...',
     }
@@ -100,7 +100,7 @@ describe('fetch', function () {
     }
   })
 
-  test('should return with error if response is not a JSON string', async function () {
+  test('should return with error if response is not a JSON string', async () => {
     setMockFetchResult('not json')
 
     try {
@@ -110,7 +110,7 @@ describe('fetch', function () {
     }
   })
 
-  test('should not have body set for GET requests', async function () {
+  test('should not have body set for GET requests', async () => {
     const data = {
       status: 'ok',
       data: { recipe: 'Test Recipe' },
@@ -130,7 +130,7 @@ describe('fetch', function () {
     expect(mockFetch).toHaveBeenCalledWith('test', expectedRequest)
   })
 
-  test('should have correct querystring set for GET requests', async function () {
+  test('should have correct querystring set for GET requests', async () => {
     const data = {
       status: 'ok',
       data: { recipe: 'Test Recipe' },
@@ -150,8 +150,8 @@ describe('fetch', function () {
     expect(mockFetch).toHaveBeenCalledWith('test?id=1&include%5B0%5D=test1&include%5B1%5D=test2', expectedRequest)
   })
 
-  describe('experiments in fetch parameters', function () {
-    beforeEach(function () {
+  describe('experiments in fetch parameters', () => {
+    beforeEach(() => {
       const data = {
         status: 'ok',
         data: { recipe: 'Test Recipe' },
@@ -177,7 +177,7 @@ describe('fetch', function () {
     })
   })
 
-  test('should have body and content-type set for non-GET requests', async function () {
+  test('should have body and content-type set for non-GET requests', async () => {
     const data = {
       status: 'ok',
       data: { recipe: 'Test Recipe' },
@@ -198,7 +198,7 @@ describe('fetch', function () {
     expect(mockFetch).toHaveBeenCalledWith('test', expectedRequest)
   })
 
-  test('should append a unix timestamp to the request URL when cache mode is no-store', async function () {
+  test('should append a unix timestamp to the request URL when cache mode is no-store', async () => {
     const cacheMode = 'no-store'
     const data = {
       status: 'ok',
@@ -223,7 +223,7 @@ describe('fetch', function () {
     )
   })
 
-  test('should append a unix timestamp to the request URL when cache mode is reload', async function () {
+  test('should append a unix timestamp to the request URL when cache mode is reload', async () => {
     const cacheMode = 'reload'
     const data = {
       status: 'ok',
@@ -247,7 +247,7 @@ describe('fetch', function () {
       expectedRequest
     )
   })
-  test('should append a unix timestamp to the request URL when cache mode is no-cache', async function () {
+  test('should append a unix timestamp to the request URL when cache mode is no-cache', async () => {
     const cacheMode = 'no-cache'
     const data = {
       status: 'ok',
@@ -273,7 +273,7 @@ describe('fetch', function () {
     )
   })
 
-  test('should throw a string if an Error is thrown from the fetch', async function () {
+  test('should throw a string if an Error is thrown from the fetch', async () => {
     const cacheMode = 'no-cache'
 
     setMockFetchResult('lol', 500)

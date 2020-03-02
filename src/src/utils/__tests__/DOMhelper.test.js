@@ -11,7 +11,7 @@ describe('DOMhelper', () => {
       expect(DOMHelper.getBoundingClientRect()).toEqual({})
     })
 
-    test('should call getBoundingClientRect function when available', function () {
+    test('should call getBoundingClientRect function when available', () => {
       const ref = {
         getBoundingClientRect: () => ({ width: 100, height: 200 }),
       }
@@ -20,26 +20,26 @@ describe('DOMhelper', () => {
     })
   })
 
-  describe('getFirstMatchingNode', function () {
+  describe('getFirstMatchingNode', () => {
     let findDOMNodeSpy
 
-    beforeEach(function () {
+    beforeEach(() => {
       findDOMNodeSpy = jest.spyOn(ReactDOM, 'findDOMNode')
     })
 
-    afterEach(function () {
+    afterEach(() => {
       jest.resetAllMocks()
     })
 
-    test('should return undefined if no keys available', function () {
+    test('should return undefined if no keys available', () => {
       expect(DOMHelper.getFirstMatchingNode(undefined, { x: 'something' })).toEqual(undefined)
     })
 
-    test('should return undefined if no refs available', function () {
+    test('should return undefined if no refs available', () => {
       expect(DOMHelper.getFirstMatchingNode(['x'], undefined)).toEqual(undefined)
     })
 
-    test('should return matching node for first found key in list', function () {
+    test('should return matching node for first found key in list', () => {
       ReactDOM.findDOMNode.mockReturnValue('node for key2')//eslint-disable-line
       const keys = ['key1', 'key2', 'key3']
       const refs = {

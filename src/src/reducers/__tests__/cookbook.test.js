@@ -334,11 +334,11 @@ describe('cookbook reducer', () => {
   describe('COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', () => {
     const resultState = Immutable.fromJS({
       recipesInstructions: {
-        '123': [
+        123: [
           {
-            'step_number': 1,
-            'instruction': 'Instruction',
-            'media': {}
+            step_number: 1,
+            instruction: 'Instruction',
+            media: {}
           }
         ]
       }
@@ -366,9 +366,9 @@ describe('cookbook reducer', () => {
           recipeId: '123',
           recipeStepsById: [
             {
-              'step_number': 1,
-              'instruction': 'Instruction',
-              'media': {}
+              step_number: 1,
+              instruction: 'Instruction',
+              media: {}
             }
           ]
         })

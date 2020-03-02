@@ -20,7 +20,7 @@ describe('OrderProducts', () => {
     beforeEach(() => {
       wrapper = shallow(
         <OrderProducts
-          orderId={'777'}
+          orderId="777"
           products={productsSample}
           periodId={1}
           store={{}}

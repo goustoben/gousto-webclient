@@ -23,8 +23,8 @@ describe('the basket selectors', () => {
       basket: Immutable.fromJS({
         numPortions: 2,
         recipes: {
-          '100': 1,
-          '200': 1,
+          100: 1,
+          200: 1,
         },
         collection: '',
       }),
@@ -44,8 +44,8 @@ describe('the basket selectors', () => {
   describe('getBasketRecipes', () => {
     test('returns the recipes from basket state', () => {
       expect(getBasketRecipes(state)).toEqual(Immutable.Map({
-        '100': 1,
-        '200': 1,
+        100: 1,
+        200: 1,
       }))
     })
   })
@@ -56,9 +56,9 @@ describe('the basket selectors', () => {
         basket: Immutable.fromJS({
           numPortions: 2,
           recipes: {
-            '100': 1,
-            '200': 2,
-            '300': 1,
+            100: 1,
+            200: 2,
+            300: 1,
           },
         }),
       }
@@ -211,8 +211,8 @@ describe('the basket selectors', () => {
 describe('the getBasketProducts selector', () => {
   let state
   const productsInBasket = Immutable.Map({
-    'product1': 1,
-    'product2': 3,
+    product1: 1,
+    product2: 3,
   })
 
   beforeEach(() => {
@@ -235,7 +235,7 @@ describe('the getBasketProductsCost selector', () => {
     beforeEach(() => {
       state = {
         basket: Immutable.fromJS({
-          products: { 'product1': 1 }
+          products: { product1: 1 }
         }),
         products: Immutable.Map()
       }
@@ -253,7 +253,7 @@ describe('the getBasketProductsCost selector', () => {
           products: {}
         }),
         products: Immutable.fromJS({
-          'product1': {
+          product1: {
             listPrice: '5.00',
           }
         })
@@ -270,15 +270,15 @@ describe('the getBasketProductsCost selector', () => {
       state = {
         basket: Immutable.fromJS({
           products: {
-            'product1': 1,
-            'product2': 1,
+            product1: 1,
+            product2: 1,
           }
         }),
         products: Immutable.fromJS({
-          'product1': {
+          product1: {
             listPrice: '5.00',
           },
-          'product2': {
+          product2: {
             listPrice: '6.50',
           },
         })
@@ -294,15 +294,15 @@ describe('the getBasketProductsCost selector', () => {
         state = {
           basket: Immutable.fromJS({
             products: {
-              'product1': 1,
-              'product2': 4,
+              product1: 1,
+              product2: 4,
             },
           }),
           products: Immutable.fromJS({
-            'product1': {
+            product1: {
               listPrice: '5.00',
             },
-            'product2': {
+            product2: {
               listPrice: '6.50',
             },
           })

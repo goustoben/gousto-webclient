@@ -9,7 +9,7 @@ function reduxStoreMock(isAuthenticated) {
     getState() {
       return {
         auth: Immutable.fromJS({
-          isAuthenticated: isAuthenticated,
+          isAuthenticated,
         }),
       }
     },

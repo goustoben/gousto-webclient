@@ -6,7 +6,7 @@ jest.mock('moment')
 
 describe('myDeliveries utils', () => {
   const mockOrders = Immutable.fromJS({
-    '1234': {
+    1234: {
       id: '8360325',
       state: 'committed',
       phase: 'delivered',
@@ -73,7 +73,7 @@ describe('myDeliveries utils', () => {
       },
       number: '1',
     },
-    '5678': {
+    5678: {
       id: '11922804',
       state: 'pending',
       phase: 'open',
@@ -365,7 +365,7 @@ describe('myDeliveries utils', () => {
 
   describe('transformProjectedDeliveries', () => {
     const dummyProjectedDeliveries = Immutable.fromJS({
-      '1917': {
+      1917: {
         deliveryDate: '2019-11-09 00:00:00',
         deliveryWeekId: '304',
         whenMenuLive: '2019-10-29 12:00:00',
@@ -397,7 +397,7 @@ describe('myDeliveries utils', () => {
         humanDate: 'Saturday 9th November',
         numRecipes: '4'
       },
-      '1924': {
+      1924: {
         deliveryDate: '2019-11-16 00:00:00',
         deliveryWeekId: '305',
         whenMenuLive: '2019-11-05 12:00:00',

@@ -38,7 +38,7 @@ describe('InputWrapper', () => {
 
   test('should pass through any props not consumed', () => {
     wrapper = mount(
-      <ComponentWrapper attribute1 attribute2={'something'} mask />,
+      <ComponentWrapper attribute1 attribute2="something" mask />,
     )
     expect(wrapper.find(Component).prop('attribute1')).toEqual(true)
     expect(wrapper.find(Component).prop('attribute2')).toEqual('something')

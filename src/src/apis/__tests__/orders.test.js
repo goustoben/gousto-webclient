@@ -59,7 +59,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await fetchOrder('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId, reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -72,7 +72,7 @@ describe('orders api', () => {
         const orderId = '123'
         await fetchOrder('token', orderId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId, {}, 'GET')
+        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'GET')
       })
     })
   })
@@ -105,7 +105,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await updateOrderItems('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId + '/update-items', reqData, 'PUT')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/update-items`, reqData, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -118,7 +118,7 @@ describe('orders api', () => {
         const orderId = '123'
         await updateOrderItems('token', orderId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId + '/update-items', {}, 'PUT')
+        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/update-items`, {}, 'PUT')
       })
     })
   })
@@ -129,7 +129,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await saveOrder('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId, reqData, 'PUT')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -144,7 +144,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await cancelOrder('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId, reqData, 'DELETE')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'DELETE')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -157,7 +157,7 @@ describe('orders api', () => {
         const orderId = '123'
         await cancelOrder('token', orderId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId, {}, 'DELETE')
+        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'DELETE')
       })
     })
   })
@@ -190,7 +190,7 @@ describe('orders api', () => {
       const addressId = '456'
       await updateOrderAddress('token', orderId, addressId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/order/' + orderId + '/change-address/', { address_id: addressId }, 'PUT')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/change-address/`, { address_id: addressId }, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {

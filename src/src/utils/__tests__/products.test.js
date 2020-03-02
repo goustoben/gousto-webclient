@@ -27,7 +27,7 @@ describe('the products utility functions', () => {
     describe('when there are products', () => {
       beforeEach(() => {
         products = Immutable.fromJS({
-          'productId1': {
+          productId1: {
             id: 'productId1',
             title: 'First test product',
             categories: [
@@ -38,7 +38,7 @@ describe('the products utility functions', () => {
               }
             ]
           },
-          'productId2': {
+          productId2: {
             id: 'productId2',
             title: 'Second test product',
             categories: [
@@ -61,17 +61,17 @@ describe('the products utility functions', () => {
         test('returns the categories and their counts', () => {
           expect(getCategoriesFromProducts(products)).toEqual({
             ...allProductsCategory(products),
-            'categoryId1': {
+            categoryId1: {
               id: 'categoryId1',
               label: 'Category 1',
               count: 1,
             },
-            'categoryId2': {
+            categoryId2: {
               id: 'categoryId2',
               label: 'Category 2',
               count: 1,
             },
-            'categoryId3': {
+            categoryId3: {
               id: 'categoryId3',
               label: 'Category 3',
               count: 1,
@@ -90,12 +90,12 @@ describe('the products utility functions', () => {
         test('ignores hidden categories', () => {
           expect(getCategoriesFromProducts(productsWithHiddenCategory)).toEqual({
             ...allProductsCategory(productsWithHiddenCategory),
-            'categoryId1': {
+            categoryId1: {
               id: 'categoryId1',
               label: 'Category 1',
               count: 1,
             },
-            'categoryId3': {
+            categoryId3: {
               id: 'categoryId3',
               label: 'Category 3',
               count: 1,
@@ -115,12 +115,12 @@ describe('the products utility functions', () => {
         test('updates category count when duplicate category', () => {
           expect(getCategoriesFromProducts(productsWithDuplicateCategory)).toEqual({
             ...allProductsCategory(productsWithDuplicateCategory),
-            'categoryId1': {
+            categoryId1: {
               id: 'categoryId1',
               label: 'Category 1',
               count: 1,
             },
-            'categoryId2': {
+            categoryId2: {
               id: 'categoryId2',
               label: 'Category 2',
               count: 2,

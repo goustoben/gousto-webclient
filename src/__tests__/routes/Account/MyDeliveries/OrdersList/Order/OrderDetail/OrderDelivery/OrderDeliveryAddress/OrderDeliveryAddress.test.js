@@ -10,7 +10,7 @@ import { Address } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetai
 describe('OrderDeliveryAddress', () => {
   let wrapper
   const addresses = Immutable.fromJS({
-    '100': {
+    100: {
       companyName: null,
       county: null,
       name: 'My Address',
@@ -26,7 +26,7 @@ describe('OrderDeliveryAddress', () => {
       line2: 'Swainson Road',
       line3: ''
     },
-    '101': {
+    101: {
       companyName: '',
       county: 'Greater London',
       name: 'Test Address',
@@ -48,9 +48,9 @@ describe('OrderDeliveryAddress', () => {
 
   beforeEach(() => {
     wrapper = shallow(<OrderDeliveryAddress
-      orderId={'8'}
-      orderState={'menu open'}
-      shippingAddressId={'100'}
+      orderId="8"
+      orderState="menu open"
+      shippingAddressId="100"
       addresses={addresses}
       orderAddressChange={orderAddressChangeMock}
       hasError={false}

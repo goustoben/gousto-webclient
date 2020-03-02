@@ -61,13 +61,12 @@ describe('<IngredientIssuesContainer />', () => {
       }
 
       store = createStore(
-        combineReducers(Object.assign(
-          {},
-          { ...authReducer },
-          { ...status },
-          { ...contentReducer },
-          { getHelp },
-        )),
+        combineReducers({
+          ...authReducer,
+          ...status,
+          ...contentReducer,
+          getHelp,
+        }),
         initialState,
         compose(applyMiddleware(thunk))
       )

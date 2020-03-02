@@ -228,7 +228,7 @@ describe('boxSummary actions', () => {
                 postcode: 'w3',
                 slotId: '',
                 recipes: Immutable.Map({
-                  '123': 1
+                  123: 1
                 })
               }),
               features: Immutable.fromJS({

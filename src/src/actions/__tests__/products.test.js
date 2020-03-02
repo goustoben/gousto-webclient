@@ -71,7 +71,7 @@ describe('productsLoadProducts', () => {
         { id: '1', isForSale: true, stock: 1000 },
         { id: '2', isForSale: true, stock: 1000 }
       ],
-      cutoffDate: cutoffDate,
+      cutoffDate,
       reload: false,
     })
     expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' })

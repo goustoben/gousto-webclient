@@ -9,7 +9,7 @@ describe('SignupLayout', () => {
   beforeEach(() => {
     wrapper = shallow(
       <SignupLayout>
-        <span></span>
+        <span />
       </SignupLayout>
     )
   })

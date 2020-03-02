@@ -18,7 +18,7 @@ describe('<GetHelp />', () => {
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
-          orderId={'7'}
+          orderId="7"
           order={{ id: '7', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
@@ -42,7 +42,7 @@ describe('<GetHelp />', () => {
         <GetHelp
           didRequestError
           isRequestPending={false}
-          orderId={''}
+          orderId=""
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
@@ -64,7 +64,7 @@ describe('<GetHelp />', () => {
         wrapper = mount(
           <GetHelp
             didRequestError={false}
-            orderId={'7'}
+            orderId="7"
             order={{ id: '', recipeItems: [] }}
             recipes={{}}
             user={{ id: '123', accessToken: 'test' }}
@@ -98,7 +98,7 @@ describe('<GetHelp />', () => {
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
-          orderId={''}
+          orderId=""
           order={{ id: '', recipeItems: [] }}
           recipes={{}}
           user={{ id: '123', accessToken: 'test' }}
@@ -131,7 +131,7 @@ describe('<GetHelp />', () => {
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
-          orderId={'7'}
+          orderId="7"
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
@@ -147,7 +147,7 @@ describe('<GetHelp />', () => {
 
     test('calls customers order endpoint', () => {
       expect(loadOrderByIdSpy).toHaveBeenCalledWith(
-        {'accessToken': 'test', 'orderId': '7'}
+        {accessToken: 'test', orderId: '7'}
       )
     })
 
