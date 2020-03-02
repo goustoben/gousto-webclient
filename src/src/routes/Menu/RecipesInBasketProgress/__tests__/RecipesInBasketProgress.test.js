@@ -6,7 +6,7 @@ import { RecipesInBasketProgress } from '..'
 
 describe('RecipesInBasketProgress Component', () => {
   let wrapper
-  let PROPS = {
+  const PROPS = {
     isAuthenticated: false,
     selectedRecipesCount: 0,
   }

@@ -10,18 +10,18 @@ describe('the composed selectors', () => {
     let numPortions
 
     beforeEach(() => {
-      basketRecipes = Immutable.Map({ '100': 1 })
+      basketRecipes = Immutable.Map({ 100: 1 })
       menuRecipeIds = Immutable.fromJS(['100', '200'])
       stock = Immutable.fromJS({
-        '100': {
-          '2': 1000,
-          '4': 1000,
-          '8': 0,
+        100: {
+          2: 1000,
+          4: 1000,
+          8: 0,
         },
-        '200': {
-          '2': 1000,
-          '4': 1000,
-          '8': 0,
+        200: {
+          2: 1000,
+          4: 1000,
+          8: 0,
         }
       })
       numPortions = 2
@@ -51,9 +51,9 @@ describe('the composed selectors', () => {
     describe('when recipes have been selected', () => {
       beforeEach(() => {
         basketRecipes = Immutable.Map({
-          '100': 1,
-          '200': 1,
-          '300': 2,
+          100: 1,
+          200: 1,
+          300: 2,
         })
       })
 
@@ -70,14 +70,14 @@ describe('the composed selectors', () => {
       describe('and some recipes are not available', () => {
         beforeEach(() => {
           okRecipeIds = Immutable.Map({
-            '200': 1,
+            200: 1,
           })
         })
 
         test('returns the unavailable recipes', () => {
           const expectedUnavailable = Immutable.Map({
-            '100': 1,
-            '300': 2,
+            100: 1,
+            300: 2,
           })
 
           expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toEqual(expectedUnavailable)

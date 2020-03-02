@@ -4,7 +4,11 @@ import Immutable from 'immutable'
 import DeliverySlot from '../DeliverySlot'
 
 describe('DeliverySlot logic', () => {
-  let deliveryDays, wrapper, disabledSlots, isAuthenticated, isSubscriptionActive
+  let deliveryDays
+  let wrapper
+  let disabledSlots
+  let isAuthenticated
+  let isSubscriptionActive
   const getBoxSummaryTextProps = jest.fn()
 
   beforeEach(() => {

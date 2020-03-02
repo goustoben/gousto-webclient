@@ -24,7 +24,9 @@ class SubHeader extends React.PureComponent {
     <InfoToggle>
       <div className={mobile ? css.mobileDeliveryInfo : css.deliveryInfo}>
         <span>
-          About Delivery <span className={css.iconArrowDown} />
+          About Delivery
+          {' '}
+          <span className={css.iconArrowDown} />
         </span>
       </div>
       <div>
@@ -49,7 +51,8 @@ class SubHeader extends React.PureComponent {
       showNotificaiton && (
         <InfoToggle>
           <div className={css.infoBanner}>
-            {info.title}&nbsp;<span className={css.infoIcon} />
+            {info.title}
+            <span className={css.infoIcon} />
           </div>
           <div className={css.infoBannerMessage}>
             {info.line1}

@@ -19,7 +19,11 @@ const IngredientsList = ({ ingredients, allergens, inset }) => (
 
           return (subIngredients) ? (
             <dl key={index}>
-              <span className={css.bold}>{capitalizeFirstLetter(ingredient.get('name'))}: </span>
+              <span className={css.bold}>
+                {capitalizeFirstLetter(ingredient.get('name'))}
+                :
+                {' '}
+              </span>
               <SubIngredients subIngredients={subIngredientsArray} allergens={allergens} />
             </dl>
           ) : <span key={index} />

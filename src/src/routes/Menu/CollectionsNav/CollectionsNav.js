@@ -261,7 +261,7 @@ class CollectionsNav extends React.PureComponent {
     const { navBarOffsetTop } = this.state
     if (!collectionId) return
     this.props.collectionFilterChange(collectionId)
-    let position = 0
+    const position = 0
     if (document && document.body) {
       if (actual('width', 'px') < 768) {
         top(document.body, position)

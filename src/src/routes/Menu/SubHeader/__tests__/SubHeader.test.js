@@ -39,7 +39,9 @@ describe('SubHeader', () => {
   })
 
   describe('notificationBanner', () => {
-    let sandbox, clock, notifications
+    let sandbox
+    let clock
+    let notifications
 
     beforeEach(() => {
       sandbox = sinon.sandbox.create()

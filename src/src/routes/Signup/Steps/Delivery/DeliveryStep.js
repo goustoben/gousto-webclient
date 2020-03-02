@@ -29,7 +29,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, disabledSlots
   const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
     slots[date] = dd.get('slots').map(slot => {
-      const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
+      const isSlotDisabled = !!(disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')))
 
       return {
         label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
@@ -99,7 +99,7 @@ const DeliveryStep = ({
     }
   }
 
-  const isNDDSlotSelected = () => slots[tempDate][0]['coreSlotId'] === 'NULL'
+  const isNDDSlotSelected = () => slots[tempDate][0].coreSlotId === 'NULL'
 
   const onShowRecipe = () => {
     if (isNDDSlotSelected()) {

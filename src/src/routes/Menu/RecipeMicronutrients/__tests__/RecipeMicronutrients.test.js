@@ -8,20 +8,20 @@ describe('RecipeMicronutrients', () => {
   describe('when the recipe contains micronutrients', () => {
     const micronutrients = Immutable.fromJS([
       {
-        'name': 'Iron',
-        'content': {
-          'amount': 6.5,
-          'unit': 'µg'
+        name: 'Iron',
+        content: {
+          amount: 6.5,
+          unit: 'µg'
         },
-        'nrvPercent': 46.4
+        nrvPercent: 46.4
       },
       {
-        'name': 'Magnesium',
-        'content': {
-          'amount': 197.5,
-          'unit': 'mg'
+        name: 'Magnesium',
+        content: {
+          amount: 197.5,
+          unit: 'mg'
         },
-        'nrvPercent': 52.7
+        nrvPercent: 52.7
       }
     ])
 

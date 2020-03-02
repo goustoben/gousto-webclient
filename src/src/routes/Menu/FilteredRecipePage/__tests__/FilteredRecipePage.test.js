@@ -44,7 +44,7 @@ describe('Filtered Recipe Page', () => {
       expect(wrapper.find('.backButton').length).toBe(1)
     })
     test('should render filtered recipe page with colour border', () => {
-      expect(wrapper.find('.border').at(0).prop('style')).toEqual({ 'background': 'blue', 'top': { 'elementHeight': '50px' } })
+      expect(wrapper.find('.border').at(0).prop('style')).toEqual({ background: 'blue', top: { elementHeight: '50px' } })
     })
     test('should call backToAllRecipes when click on back button', () => {
       wrapper.find('.backButton').simulate('click')

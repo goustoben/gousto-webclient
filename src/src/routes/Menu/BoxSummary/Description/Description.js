@@ -11,7 +11,13 @@ const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }
     statusText = 'Select delivery options'
   }
   if (warning) {
-    statusText = <span><span className={css.warningIcon}></span> There's been a change in your box</span>
+    statusText = (
+      <span>
+        <span className={css.warningIcon} />
+        {' '}
+        There's been a change in your box
+      </span>
+    )
   }
 
   return <p className={css[`description${view}`]}>{statusText}</p>

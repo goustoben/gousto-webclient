@@ -7,11 +7,11 @@ const asterisk = String.fromCharCode(42)
 const descriptions = {
   cookingTime: time => `Takes ${getCookingTime(time)}`,
   useWithin: useWithin => `Use within ${getUseWithinFormatted(useWithin)} days`,
-  equipmentRequired: (equipment, view) => view === 'list' ? equipment.toJS().join(', ') : 'Equipment required',
+  equipmentRequired: (equipment, view) => (view === 'list' ? equipment.toJS().join(', ') : 'Equipment required'),
   fiveADay: fiveADay => `${fiveADay}/5 a day`,
   cuisine: cuisine => `${cuisine} Cuisine`,
   cals: cals => `${Math.round(cals)} cals / serving${asterisk}`,
-  diet: diet => (diet === 'vegan') ? 'Plant-based' : capitalizeFirstLetter(diet),
+  diet: diet => ((diet === 'vegan') ? 'Plant-based' : capitalizeFirstLetter(diet)),
   glutenFree: glutenFree => glutenFree && 'Gluten free',
   dairyFree: dairyFree => dairyFree && 'Dairy free',
 }

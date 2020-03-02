@@ -3,7 +3,12 @@ import { shallow } from 'enzyme'
 import { DeliverySupportingText } from '../DeliverySupportingText'
 
 describe('DeliverySupportingText', () => {
-  let hasEmptyOrders, hasFullOrders, doesDateHaveDisabledSlots, showWarning, tempDate, wrapper
+  let hasEmptyOrders
+  let hasFullOrders
+  let doesDateHaveDisabledSlots
+  let showWarning
+  let tempDate
+  let wrapper
 
   describe('when showWarning is true', () => {
     beforeEach(() => {

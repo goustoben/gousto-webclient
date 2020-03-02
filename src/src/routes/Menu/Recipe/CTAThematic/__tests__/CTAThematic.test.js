@@ -8,7 +8,7 @@ describe('CTAThematic', () => {
     const thematicName = 'christmas-inspired'
 
     describe('when after 19th November 2019', () => {
-      const wrapper = shallow(<CTAThematic name={thematicName} selectedDate={'2019-11-19T00:00:00+01:00'} />)
+      const wrapper = shallow(<CTAThematic name={thematicName} selectedDate="2019-11-19T00:00:00+01:00" />)
 
       test('shows correct image', () => {
         const image = wrapper.find(ThematicImage)

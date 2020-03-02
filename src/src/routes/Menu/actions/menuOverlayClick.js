@@ -15,8 +15,6 @@ export const menuOverlayClick = () => (
 
     if (menuBrowseCTAShow) {
       dispatch(menuBrowseCTAVisibilityChange(false))
-
-      return
     }
   }
 )

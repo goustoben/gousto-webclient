@@ -24,7 +24,20 @@ const DefaultBody = ({ boxSummaryDeliveryDays, date, numPortions, postcode, slot
   <div className={css.body}>
     <h1 className={css.heading}>All set</h1>
     <p className={css.bodyText}>
-      Now choose recipes for your {numPortions}-person box, to arrive {formatDate(date)} between {formatSlot(boxSummaryDeliveryDays, date, slotId)} at {postcode}
+      Now choose recipes for your
+      {' '}
+      {numPortions}
+      -person box, to arrive
+      {' '}
+      {formatDate(date)}
+      {' '}
+      between
+      {' '}
+      {formatSlot(boxSummaryDeliveryDays, date, slotId)}
+      {' '}
+      at
+      {' '}
+      {postcode}
     </p>
   </div>
 )
@@ -34,11 +47,23 @@ const FamilyBody = ({ boxSummaryDeliveryDays, date, numPortions, postcode, slotI
     <h1 className={css.heading}>
       The best box for you is the
       <div className={css.headingHilight}>
-        {basketConfig.boxTypes[numPortions]} Box
+        {basketConfig.boxTypes[numPortions]}
+        {' '}
+        Box
       </div>
     </h1>
     <p className={css.bodyText}>
-      Delivered {formatDate(date)}, between {formatSlot(boxSummaryDeliveryDays, date, slotId)} to {postcode}.
+      Delivered
+      {' '}
+      {formatDate(date)}
+      , between
+      {' '}
+      {formatSlot(boxSummaryDeliveryDays, date, slotId)}
+      {' '}
+      to
+      {' '}
+      {postcode}
+      .
       <br />
       You can change your delivery day & address on our menu.
     </p>
