@@ -41,7 +41,7 @@ const ErrorPage = ({ status }) => {
             <h3 className={css.descriptionSM}>Please try again or contact our customer care team.</h3>
             <h2 className={css.contact}>
               <a href={`tel:${config.company.telephone.link}`} className={classNames(css.contactLink, css.phoneNumber)}>
-                <span className={css.iconEarphone}></span>
+                <span className={css.iconEarphone} />
                 {config.company.telephone.number}
               </a>
               <a href={`mailto:${config.company.email}`} className={css.contactLink}>

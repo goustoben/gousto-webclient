@@ -65,7 +65,9 @@ class ModalPanel extends React.Component {
           className={css.leftControl}
           onClick={this.props.onGoBack}
         >
-          <span className={css.back} /> Back
+          <span className={css.back} />
+          {' '}
+          Back
         </div>
       )
     }

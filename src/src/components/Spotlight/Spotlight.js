@@ -40,8 +40,7 @@ const Spotlight = ({ x, y, onClick }) => {
         )`,
       }}
       onClick={onClick}
-    >
-    </div>
+    />
   )
 }
 

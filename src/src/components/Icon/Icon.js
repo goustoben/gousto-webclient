@@ -10,8 +10,7 @@ const Icon = ({ name, fixedWidth, size, style, className }) => (
       [className]: className,
     })}
     style={{ fontSize: size || 'inherit', ...style }}
-  >
-  </span>
+  />
 )
 
 Icon.propTypes = {

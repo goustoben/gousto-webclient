@@ -7,7 +7,14 @@ const Attributes = ({ attributes }) => (
   <ul className={css.list}>
     {attributes.map((attribute, i) => (
       <li key={i} className={css.listItem}>
-        <span className={css.textBold}>{attribute.get('title')}: </span> {attribute.get('value')}{attribute.get('unit')}
+        <span className={css.textBold}>
+          {attribute.get('title')}
+          :
+          {' '}
+        </span>
+        {' '}
+        {attribute.get('value')}
+        {attribute.get('unit')}
       </li>
     ))}
   </ul>

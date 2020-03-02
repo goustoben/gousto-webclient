@@ -47,13 +47,11 @@ export const getMessengerReferralLink = (referralCode, userFirstName, trackingRe
         redirect_uri: referralLink,
       })
     }
-  } else {
-    if (globals.client) {
-      const { fbAppID } = fbSettings.head
-      const shareurl = `https://www.facebook.com/dialog/share?app_id=${fbAppID}&display=popup&href=${referralLink}&redirect_uri=https://${referralLink}`
+  } else if (globals.client) {
+    const { fbAppID } = fbSettings.head
+    const shareurl = `https://www.facebook.com/dialog/share?app_id=${fbAppID}&display=popup&href=${referralLink}&redirect_uri=https://${referralLink}`
 
-      window.open(shareurl)
-    }
+    window.open(shareurl)
   }
 }
 

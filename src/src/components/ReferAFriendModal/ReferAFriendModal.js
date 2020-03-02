@@ -21,7 +21,11 @@ class ReferAFriendModal extends PureComponent {
         disableOverlay
       >
         <div className={css.modalContent}>
-          <h4 className={css.heading}>Refer a friend - Get {credit}</h4>
+          <h4 className={css.heading}>
+            Refer a friend - Get
+            {' '}
+            {credit}
+          </h4>
           <ReferAFriend />
         </div>
       </ModalPanel>

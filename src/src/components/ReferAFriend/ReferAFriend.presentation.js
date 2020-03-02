@@ -38,7 +38,7 @@ const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange,
                 <Button
                   onClick={handleSubmit}
                 >
-                    Send Email
+                  Send Email
                 </Button>
               </div>
             </div>

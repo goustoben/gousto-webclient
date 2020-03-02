@@ -224,7 +224,9 @@ class Header extends React.PureComponent {
       buttonState = 'loggingOut'
       button = (
         <button type="button" className={css.btn}>
-          You&#8217;re logged out <span className={css.confirm} />
+          You&#8217;re logged out
+          {' '}
+          <span className={css.confirm} />
         </button>
       )
     } else if (isAuthenticated) {

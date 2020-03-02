@@ -154,9 +154,9 @@ class Buttons extends React.PureComponent {
     const { qty, isAvailable, inProgress, ageVerificationPending, fullWidth, outOfStock } = this.props
     const { tooltipVisible } = this.state
     const tooltipMessage = !isAvailable ? this.getTooltipMessage() : ''
-    const cssSegmentController = classnames({ [css['segmentControler']]: !fullWidth })
-    const cssQtySegment = classnames({ [css['qtySegment']]: !fullWidth })
-    const cssAddButton = classnames({ [css['addButton']]: !fullWidth })
+    const cssSegmentController = classnames({ [css.segmentControler]: !fullWidth })
+    const cssQtySegment = classnames({ [css.qtySegment]: !fullWidth })
+    const cssAddButton = classnames({ [css.addButton]: !fullWidth })
     const cssBtnWrapper = classnames(
       css.btnWrapper, {
         [css['btnWrapper--fullWidth']]: (fullWidth || outOfStock),
@@ -214,7 +214,7 @@ class Buttons extends React.PureComponent {
             disabledClick={this.disabledClick}
             disabled={!isAvailable}
             fill={false}
-            width={'auto'}
+            width="auto"
             className={cssAddButton}
           >
             {outOfStock ? 'Sold out' : 'Add'}

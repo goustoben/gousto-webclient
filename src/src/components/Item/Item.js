@@ -15,7 +15,10 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
 
     return (
       <p className={css.quantity}>
-        {quantity} {typeLabel}{amountLabel}
+        {quantity}
+        {' '}
+        {typeLabel}
+        {amountLabel}
         {disclaimerKey !== undefined ? ` ${disclaimerKey}` : ''}
       </p>
     )
@@ -47,7 +50,11 @@ const Item = ({
       {url && (
         <p className={css.url}>
           <a className={css.view} href={url}>
-            View {capitalizeFirstLetter(type)} <i className="fa fa-chevron-right" aria-hidden="true"></i>
+            View
+            {' '}
+            {capitalizeFirstLetter(type)}
+            {' '}
+            <i className="fa fa-chevron-right" aria-hidden="true" />
           </a>
         </p>
       )}

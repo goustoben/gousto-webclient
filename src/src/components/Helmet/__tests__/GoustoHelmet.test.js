@@ -17,12 +17,8 @@ describe('Helmet GoustoHelmet', () => {
   let protocol
 
   beforeEach(() => {
-    protocol = sinon.stub(globals, 'protocol').get(function () {
-      return '<protocol>'
-    })
-    domain = sinon.stub(globals, 'domain').get(function () {
-      return '<domain>'
-    })
+    protocol = sinon.stub(globals, 'protocol').get(() => '<protocol>')
+    domain = sinon.stub(globals, 'domain').get(() => '<domain>')
   })
 
   afterEach(() => {
@@ -84,12 +80,10 @@ describe('Helmet GoustoHelmet', () => {
     let templateConfigHead
 
     beforeEach(() => {
-      templateConfigHead = sinon.stub(templateConfig, 'head').get(function () {
-        return {
-          fbAppID: 'abc123',
-          fbAdmins: ['admin1id', 'admin2id'],
-        }
-      })
+      templateConfigHead = sinon.stub(templateConfig, 'head').get(() => ({
+        fbAppID: 'abc123',
+        fbAdmins: ['admin1id', 'admin2id'],
+      }))
       wrapper = shallow(<GoustoHelmet />)
     })
 

@@ -17,13 +17,12 @@ jest.mock('apis/user', () => ({
 const getStore = (enableFeature = true) => (
   createStore(
     combineReducers(
-      Object.assign(
-        {},
-        { ...authReducer },
-        { ...featuresReducer },
-        { ...userReducer },
-        { ...status },
-      )
+      {
+        ...authReducer,
+        ...featuresReducer,
+        ...userReducer,
+        ...status,
+      }
     ),
     {
       auth: authDefaultState(),
