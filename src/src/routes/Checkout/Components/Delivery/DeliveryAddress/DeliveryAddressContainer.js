@@ -21,7 +21,7 @@ function mapStateToProps(state, ownProps) {
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
     formFields: getFormMeta(ownProps.formName)(state),
-    formErrors: Object.assign({}, getFormSyncErrors(ownProps.formName)(state), getFormAsyncErrors(ownProps.formName)(state)),
+    formErrors: { ...getFormSyncErrors(ownProps.formName)(state), ...getFormAsyncErrors(ownProps.formName)(state)},
     sectionName: ownProps.sectionName,
     initialPostcode: state.basket.get('postcode'),
     deliveryDate: state.basket.get('date'),

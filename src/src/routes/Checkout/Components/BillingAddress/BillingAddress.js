@@ -40,7 +40,8 @@ export class BillingAddress extends React.PureComponent {
             className={css.link}
             onClick={this.toggleDeliveryAddress}
           >
-            {toggleAddressText}&nbsp;
+            {toggleAddressText}
+&nbsp;
             <span className={css.linkRight} />
           </span>
         </p>

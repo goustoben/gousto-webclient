@@ -5,8 +5,23 @@ import css from './OrderConfirmationHeader.css'
 
 const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, whenCutoffTime, whenCutoffDate}) => (
   <div data-testing="orderConfirmationHeader">
-    <p className={css.paragraph}>Delivery date: {deliveryDate} between {deliveryStart} - {deliveryEnd}</p>
-    <p className={classnames(css.paragraph, css.bold)}>You can edit your choices until {whenCutoffTime} on {whenCutoffDate}</p>
+    <p className={css.paragraph}>
+      Delivery date:
+      {deliveryDate}
+      {' '}
+      between
+      {deliveryStart}
+      {' '}
+      -
+      {deliveryEnd}
+    </p>
+    <p className={classnames(css.paragraph, css.bold)}>
+      You can edit your choices until
+      {whenCutoffTime}
+      {' '}
+      on
+      {whenCutoffDate}
+    </p>
   </div>
 )
 

@@ -94,7 +94,7 @@ describe('Product component', () => {
       wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
-            '1234': 1,
+            1234: 1,
           }
         })
       })
@@ -126,7 +126,7 @@ describe('Product component', () => {
       await wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
-            '1234': 1,
+            1234: 1,
           }
         }),
         limitReached: false,

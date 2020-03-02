@@ -9,11 +9,11 @@ describe('is submitting', () => {
   test('should return true if the form "submitting" value is true', () => {
     state = {
       pending: Immutable.Map({
-        'CHECKOUT_CARD_SUBMIT': false
+        CHECKOUT_CARD_SUBMIT: false
       }),
       form: {
         checkout: {
-          'submitting': true
+          submitting: true
         }
       }
     }
@@ -25,11 +25,11 @@ describe('is submitting', () => {
     test('and "CHECKOUT_CARD_SUBMIT" is pending it should return true', () => {
       state = {
         pending: Immutable.Map({
-          'CHECKOUT_CARD_SUBMIT': true
+          CHECKOUT_CARD_SUBMIT: true
         }),
         form: {
           checkout: {
-            'submitting': false
+            submitting: false
           }
         }
       }
@@ -39,11 +39,11 @@ describe('is submitting', () => {
     test('and "CHECKOUT_CARD_SUBMIT" is not pending it should return false', () => {
       state = {
         pending: Immutable.Map({
-          'CHECKOUT_CARD_SUBMIT': false
+          CHECKOUT_CARD_SUBMIT: false
         }),
         form: {
           checkout: {
-            'submitting': false
+            submitting: false
           }
         }
       }

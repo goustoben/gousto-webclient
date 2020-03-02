@@ -32,22 +32,21 @@ describe('<OrderAddOnsContainer />', () => {
 
   const store = createStore(
     combineReducers(
-      Object.assign(
-        {},
-        { ...authReducer },
-        { ...basketReducer },
-        { ...featuresReducer },
-        { ...productsReducer },
-        { ...userReducer },
-        { ...status },
-      )
+      {
+        ...authReducer,
+        ...basketReducer,
+        ...featuresReducer,
+        ...productsReducer,
+        ...userReducer,
+        ...status,
+      }
     ),
     {
       auth: authDefaultState(),
       basket: Immutable.fromJS({
         ...basketDefaultState().toJS(),
         products: {
-          '2': 2
+          2: 2
         },
         orderId: '123',
       }),

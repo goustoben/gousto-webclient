@@ -3,7 +3,7 @@ import React from 'react'
 import PromoCode from 'routes/Checkout/Components/PromoCode/PromoCode'
 import { Button, Segment } from 'goustouicomponents'
 
-describe('PromoCode', function () {
+describe('PromoCode', () => {
   const promoCode = ''
   let basketPromoCodeChange
   let basketPromoCodeAppliedChange
@@ -12,7 +12,7 @@ describe('PromoCode', function () {
   let wrapper
   const previewOrderId = '123'
 
-  beforeEach(function () {
+  beforeEach(() => {
     basketPromoCodeChange = jest.fn()
     basketPromoCodeAppliedChange = jest.fn()
     trackPromocodeChange = jest.fn()
@@ -38,24 +38,24 @@ describe('PromoCode', function () {
     loadPrices.mockClear()
   })
 
-  describe('rendering', function () {
-    it('should return a div', function () {
+  describe('rendering', () => {
+    it('should return a div', () => {
       expect(wrapper.type()).toEqual('div')
     })
 
-    it('should have one input', function () {
+    it('should have one input', () => {
       expect(wrapper.find('input').length).toEqual(1)
     })
 
-    it('should have one Button', function () {
+    it('should have one Button', () => {
       expect(wrapper.find(Button).length).toEqual(1)
     })
 
-    it('should have one Segment', function () {
+    it('should have one Segment', () => {
       expect(wrapper.find(Segment).length).toEqual(1)
     })
 
-    it('should render a <div> with no props', function () {
+    it('should render a <div> with no props', () => {
       wrapper = shallow(
         <PromoCode />
       )
@@ -63,8 +63,8 @@ describe('PromoCode', function () {
     })
   })
 
-  describe('with promocode prop', function () {
-    beforeEach(function () {
+  describe('with promocode prop', () => {
+    beforeEach(() => {
       wrapper = shallow(
         <PromoCode
           promoCode="10perm"
@@ -86,7 +86,7 @@ describe('PromoCode', function () {
       await expect(loadPrices).toHaveBeenCalledTimes(1)
     })
 
-    it('should remove exisiting promocode', async function () {
+    it('should remove exisiting promocode', async () => {
       wrapper.setState({ successMsg: 'Promocode applied' })
       wrapper.find(Segment).first().simulate('click')
       expect(basketPromoCodeChange).toHaveBeenCalledTimes(1)
@@ -95,7 +95,7 @@ describe('PromoCode', function () {
       expect(trackPromocodeChange).toHaveBeenCalled()
     })
 
-    it('should handle promo code change, update promoCode in the store', function () {
+    it('should handle promo code change, update promoCode in the store', () => {
       const collection = wrapper.find({ name: 'promoCode' })
       expect(collection.length).toBe(1)
       collection.forEach((node) => {
@@ -106,7 +106,7 @@ describe('PromoCode', function () {
       })
     })
 
-    it('should apply promocode if button clicked', async function () {
+    it('should apply promocode if button clicked', async () => {
       wrapper = shallow(
         <PromoCode
           promoCode="promo"
@@ -143,32 +143,32 @@ describe('PromoCode', function () {
       expect(wrapper.state('pending')).toEqual(false)
     })
 
-    describe('handleInput', function () {
+    describe('handleInput', () => {
       let value
-      beforeEach(function () {
+      beforeEach(() => {
         value = 'test'
       })
 
-      it('shouldn\'t run if no event target is passed', function () {
+      it('shouldn\'t run if no event target is passed', () => {
         wrapper.find('input').simulate('input')
 
         expect(basketPromoCodeChange).not.toHaveBeenCalled()
       })
 
-      it('should pass value to basketPromoCodeChange', function () {
+      it('should pass value to basketPromoCodeChange', () => {
         wrapper.find('input').simulate('input', { target: { value } })
 
         expect(basketPromoCodeChange).toHaveBeenCalledWith(value)
       })
     })
 
-    describe('handleKeyUp', function () {
+    describe('handleKeyUp', () => {
       let value
-      beforeEach(function () {
+      beforeEach(() => {
         value = 'test'
       })
 
-      it('should call loadPrices and trackPromocodeChange when press enter', async function () {
+      it('should call loadPrices and trackPromocodeChange when press enter', async () => {
         wrapper.find('input').simulate('input', { target: { value } })
         wrapper.find('input').simulate('keyup', {keyCode: 13})
 
@@ -176,7 +176,7 @@ describe('PromoCode', function () {
         expect(trackPromocodeChange).toHaveBeenCalled()
       })
 
-      it('should call loadPrices and trackPromocodeChange when press space', async function () {
+      it('should call loadPrices and trackPromocodeChange when press space', async () => {
         wrapper.find('input').simulate('input', { target: { value } })
         wrapper.find('input').simulate('keyup', {keyCode: 32})
 
@@ -184,7 +184,7 @@ describe('PromoCode', function () {
         expect(trackPromocodeChange).toHaveBeenCalled()
       })
 
-      it('should NOT apply new promocode if shift pressed', function () {
+      it('should NOT apply new promocode if shift pressed', () => {
         wrapper.find('input').simulate('input', { target: { value } })
         wrapper.find('input').simulate('keyUp', { keyCode: 16 })
         expect(loadPrices).not.toHaveBeenCalled()

@@ -10,7 +10,7 @@ function mapStateToProps(state, ownProps) {
     selectedAddress: state.checkout.get('selectedBillingAddress'),
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
-    formErrors: Object.assign({}, getFormSyncErrors(ownProps.formName)(state), getFormAsyncErrors(ownProps.formName)(state)),
+    formErrors: { ...getFormSyncErrors(ownProps.formName)(state), ...getFormAsyncErrors(ownProps.formName)(state)},
     sectionName: ownProps.sectionName,
     addressEdited: state.checkout.get('billingAddressEdited'),
     touchPostcode: false,

@@ -36,18 +36,14 @@ class RecipeSummary extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.menuRecipesStore && this.props.menuRecipesStore.size === 0) {
-      const store = this.context.store
+      const {store} = this.context
       const orderRecipeIds = this.props.recipes && this.props.recipes.size ? this.props.recipes.keySeq().toArray() : []
       RecipeSummary.fetchData({ store, orderRecipeIds })
     }
   }
 
   render() {
-    const recipes = this.props.recipes
-    const menuRecipesStore = this.props.menuRecipesStore
-    const menuRecipeStock = this.props.menuRecipeStock
-    const numPortions = this.props.numPortions
-    const menuBoxPrices = this.props.menuBoxPrices
+    const {recipes, menuRecipesStore, menuRecipeStock, numPortions, menuBoxPrices} = this.props
     const prices = menuBoxPrices.getIn([numPortions.toString(), (basketSum(recipes).toString()), 'gourmet'], Immutable.Map({}))
 
     return (
