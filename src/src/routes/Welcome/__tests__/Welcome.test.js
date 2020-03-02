@@ -14,7 +14,7 @@ describe('Welcome Page', () => {
   const query = {}
   const params = { orderId: '1234'}
 
-  beforeEach(function () {
+  beforeEach(() => {
     const store = {
       auth: Immutable.fromJS({ accessToken: 'access-token', isAuthenticated: true }),
       user: Immutable.fromJS({ nameFirst: 'User', ageVerified: false, orders: [] }),

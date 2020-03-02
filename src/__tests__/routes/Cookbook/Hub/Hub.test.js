@@ -63,7 +63,7 @@ describe('Hub', () => {
               getState: () => ({
                 error: Immutable.Map({}),
                 collections: Immutable.Map({
-                  '1234': Immutable.Map({
+                  1234: Immutable.Map({
                     id: '1234',
                     slug: 'all-recipes'
                   })

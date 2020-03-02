@@ -95,7 +95,7 @@ describe('addressLookup', () => {
       ]
 
       badMethods.forEach(method => {
-        test('Then it should throw a 405 error(' + method + ')', async () => {
+        test(`Then it should throw a 405 error(${method})`, async () => {
           const ctx = {
             path: '/address/postcode-lookup',
             query: {

@@ -25,8 +25,8 @@ describe('promo actions', () => {
 
     test('should call basketPromoCodeChange', () => {
       expect(dispatchSpy.mock.calls[0][0]).toEqual({
-        'type': 'BASKET_PROMO_CODE_CHANGE',
-        'promoCode': 'DTI-CHECKOUT30'
+        type: 'BASKET_PROMO_CODE_CHANGE',
+        promoCode: 'DTI-CHECKOUT30'
       })
     })
 

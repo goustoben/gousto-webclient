@@ -6,7 +6,7 @@ import Tag from 'routes/Menu/Recipe/Tag'
 
 describe('<Tag />', () => {
   test('should return a <span>', () => {
-    const wrapper = shallow(<Tag tag={'asda'} />)
+    const wrapper = shallow(<Tag tag="asda" />)
     expect(wrapper.type()).toEqual('span')
   })
 })

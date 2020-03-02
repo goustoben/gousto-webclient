@@ -129,7 +129,8 @@ const Calendar = ({ dates, selected, onClick }) => {
           </div>
         ))}
       </div>
-    </div>)
+    </div>
+  )
 }
 
 Calendar.propTypes = {

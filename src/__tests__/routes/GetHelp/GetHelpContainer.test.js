@@ -30,14 +30,13 @@ describe('<GetHelpContainer />', () => {
       }
 
       store = createStore(
-        combineReducers(Object.assign(
-          {},
-          { getHelp },
-          { ...contentReducer },
-          { ...authReducer },
-          { ...userReducer },
-          { ...status },
-        )),
+        combineReducers({
+          getHelp,
+          ...contentReducer,
+          ...authReducer,
+          ...userReducer,
+          ...status,
+        }),
         initialState,
         compose(applyMiddleware(thunk))
       )

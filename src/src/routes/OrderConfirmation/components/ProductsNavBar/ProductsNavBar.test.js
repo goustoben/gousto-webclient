@@ -9,12 +9,12 @@ describe('The ProductsNavBar component', () => {
       label: 'All Products',
       count: 10,
     },
-    'category1': {
+    category1: {
       id: 'category1',
       label: 'Category 1',
       count: 2,
     },
-    'category2': {
+    category2: {
       id: 'category2',
       label: 'Category 2',
       count: 1,

@@ -59,9 +59,7 @@ class Login extends React.PureComponent {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const email = this.state.email
-    const password = this.state.password
-    const remember = this.state.remember
+    const {email, password, remember} = this.state
     if (this.state.emailValid && this.state.passwordValid) {
       this.props.onSubmit(email, password, remember)
     } else {
@@ -98,7 +96,9 @@ class Login extends React.PureComponent {
 
   renderConfirmMessage = () => (
     <div className={css.confirmMsg}>
-      You are now Logged in <span className={css.confirm} />
+      You are now Logged in
+      {' '}
+      <span className={css.confirm} />
     </div>
   )
 

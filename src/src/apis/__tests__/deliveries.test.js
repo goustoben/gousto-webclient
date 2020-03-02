@@ -59,8 +59,8 @@ describe('deliveries api', () => {
             const expectedRequestBody = {
               'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
               'filters[cutoff_datetime_until]': menuCutoffUntil,
-              'ndd': 'true',
-              'delivery_tariff_id': deliveryTariffId,
+              ndd: 'true',
+              delivery_tariff_id: deliveryTariffId,
               sort: 'date',
               direction: 'asc',
             }
@@ -98,8 +98,8 @@ describe('deliveries api', () => {
             const expectedRequestBody = {
               'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
               'filters[cutoff_datetime_until]': menuCutoffUntil,
-              'ndd': 'true',
-              'delivery_tariff_id': deliveryTariffId,
+              ndd: 'true',
+              delivery_tariff_id: deliveryTariffId,
               sort: 'date',
               direction: 'asc',
             }
@@ -137,8 +137,8 @@ describe('deliveries api', () => {
             const expectedRequestBody = {
               'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
               'filters[cutoff_datetime_until]': menuCutoffUntil,
-              'ndd': 'true',
-              'delivery_tariff_id': deliveryTariffId,
+              ndd: 'true',
+              delivery_tariff_id: deliveryTariffId,
               postcode: 'rm14',
               sort: 'date',
               direction: 'asc',

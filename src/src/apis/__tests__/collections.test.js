@@ -56,7 +56,7 @@ describe('collections api', () => {
     })
   })
 
-  describe('fetchCollectionBySlug', function () {
+  describe('fetchCollectionBySlug', () => {
     test('should fetch the correct url', async () => {
       await fetchCollectionBySlug('slug')
       expect(fetch).toHaveBeenCalledTimes(1)

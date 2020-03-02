@@ -58,8 +58,11 @@ export class DropdownInput extends React.Component {
         label: (
           <span className={classNames(labelClassName, (option.labelClassName) ? option.labelClassName : '', { [css.disabled]: option.disabled })}>
             {option.label}
-            <span className={classNames(css.subLabel, css[subLabelClassName])}> {option.subLabel}</span>
-            {option.icon ? <span className={css[`icon-${option.icon}`]}></span> : null}
+            <span className={classNames(css.subLabel, css[subLabelClassName])}>
+              {' '}
+              {option.subLabel}
+            </span>
+            {option.icon ? <span className={css[`icon-${option.icon}`]} /> : null}
           </span>),
         disabled: option.disabled,
       }))
@@ -70,8 +73,11 @@ export class DropdownInput extends React.Component {
     options.map(
       (option) => (
         <option key={JSON.stringify(option.value)} value={JSON.stringify(option.value)} disabled={option.disabled}>
-          {option.label} {(typeof option.subLabel === 'string') ? option.subLabel : ''}
-        </option>)
+          {option.label}
+          {' '}
+          {(typeof option.subLabel === 'string') ? option.subLabel : ''}
+        </option>
+      )
     )
   )
 
@@ -99,7 +105,7 @@ export class DropdownInput extends React.Component {
         >
           {this.mapToNative(options)}
         </select>
-        <span className={classNames(css.nativeSelectArrow, css[color])}></span>
+        <span className={classNames(css.nativeSelectArrow, css[color])} />
       </div>
     )
   }

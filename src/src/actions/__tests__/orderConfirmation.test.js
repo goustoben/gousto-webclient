@@ -150,9 +150,9 @@ describe('orderConfirmation actions', () => {
         await orderDetails('1234')(dispatch, getState)
 
         expect(basketOrderLoad).toHaveBeenCalledWith('1234', Immutable.Map({
-          'id': '1234',
-          'whenCutOff': '2019-04-12 19:00:00',
-          'periodId': '5678',
+          id: '1234',
+          whenCutOff: '2019-04-12 19:00:00',
+          periodId: '5678',
         }))
       })
     })

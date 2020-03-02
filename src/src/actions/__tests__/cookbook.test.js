@@ -20,9 +20,9 @@ describe('Cookbook actions', () => {
     recipeId = '123'
     recipeStepsById = [
       {
-        'step_number': 1,
-        'instruction': 'Instruction',
-        'media': {}
+        step_number: 1,
+        instruction: 'Instruction',
+        media: {}
       }
     ]
   })

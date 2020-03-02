@@ -6,19 +6,19 @@ import { RecipesInBasketProgressContent} from '..'
 
 describe('RecipesInBasketProgressContent', () => {
   let wrapper
-  let PROPS = {
+  const props = {
     selectedRecipesCount: 0,
   }
 
   beforeEach(() => {
     wrapper = mount(
-      <RecipesInBasketProgressContent {...PROPS} />
+      <RecipesInBasketProgressContent {...props} />
     )
   })
 
   test('renders without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(<RecipesInBasketProgressContent {...PROPS} />, div)
+    ReactDOM.render(<RecipesInBasketProgressContent {...props} />, div)
   })
 
   describe('when 1 recipe is selected', () => {

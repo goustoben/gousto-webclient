@@ -17,7 +17,7 @@ describe('ProductList component', () => {
   const propsProductList = {
     basket: Immutable.fromJS({
       products: {
-        '1234': 1
+        1234: 1
       }
     }),
     productsCategories: Immutable.Map({}),

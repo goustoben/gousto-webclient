@@ -34,10 +34,7 @@ class Title extends React.PureComponent {
   }
 
   render() {
-    const { recipeTotal, recipeDiscount, recipeTotalDiscounted, slotTime } = this.props
-    const date = this.props.date
-    const view = this.props.view
-    const pending = this.props.pending
+    const { recipeTotal, recipeDiscount, recipeTotalDiscounted, slotTime, date, view, pending } = this.props
     const spinnerClassNames = {
       [css.spinnerContainer]: true,
       [this.props.spinnerContainerClassName]: true,
@@ -48,7 +45,12 @@ class Title extends React.PureComponent {
       <div className={css.titleWrapper}>
         <p className={css[`title${view}`]}>
           {date ? <span className={css.showDate}>{moment(date).format('ddd D MMM')}</span> : null}
-          {slotTime ? <span className={css.showDate}> {slotTime}</span> : null}
+          {slotTime ? (
+            <span className={css.showDate}>
+              {' '}
+              {slotTime}
+            </span>
+          ) : null}
         </p>
         <div className={classNames(css[`title${view}`], css.price)}>
           {

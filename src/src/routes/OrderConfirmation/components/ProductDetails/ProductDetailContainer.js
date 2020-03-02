@@ -18,7 +18,7 @@ function mapStateToProps(state, props) {
     onVisibilityChange,
   } = props
 
-  const imgSource = images && images['400']['src']
+  const imgSource = images && images['400'].src
   const ageVerified = getAgeVerified(state)
   const isAgeVerificationRequired = !ageVerified && ageRestricted
   const outOfStock = productsStock.get(id, 0) <= 0

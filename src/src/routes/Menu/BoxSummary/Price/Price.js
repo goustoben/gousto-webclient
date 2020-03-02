@@ -15,7 +15,10 @@ const Price = ({ recipeTotal, recipeDiscount, recipeTotalDiscounted }) => (
       </span>
     </div>
   ) : (
-    <div>£<span className={css.dash}>-</span></div>
+    <div>
+      £
+      <span className={css.dash}>-</span>
+    </div>
   )
 )
 

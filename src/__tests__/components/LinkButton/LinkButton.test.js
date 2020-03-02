@@ -13,7 +13,7 @@ describe('LinkButton', () => {
 })
 
 describe('LinkButton link', () => {
-  const wrapper = shallow(<LinkButton to={'/testRoute'} clientRouted />)
+  const wrapper = shallow(<LinkButton to="/testRoute" clientRouted />)
 
   test('should display an Link', () => {
     expect(wrapper.find(Link).length).toEqual(1)

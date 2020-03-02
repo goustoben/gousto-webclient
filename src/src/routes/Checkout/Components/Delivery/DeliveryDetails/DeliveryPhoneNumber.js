@@ -59,7 +59,7 @@ class DeliveryPhoneNumber extends React.PureComponent {
   handleKeyDown = (event) => {
     if (!event || !event.target) return
     const input = event.target
-    const keyCode = event.keyCode
+    const {keyCode} = event
 
     if (!this.keys[keyCode]) {
       this.keys[keyCode] = event
@@ -88,7 +88,8 @@ class DeliveryPhoneNumber extends React.PureComponent {
 
   render() {
     const inputPrefix = (
-      <div className={css.phonePrefix}><span className={css.prefix} />
+      <div className={css.phonePrefix}>
+        <span className={css.prefix} />
         <span className={this.state.addZero ? css.withZero : css.withoutZero} />
       </div>
     )

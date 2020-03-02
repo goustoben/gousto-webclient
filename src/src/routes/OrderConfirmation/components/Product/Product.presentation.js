@@ -67,7 +67,10 @@ const ProductPresentation = ({
         </button>
       </div>
       <div>
-        <p className={css.productPrice}>£{listPrice}</p>
+        <p className={css.productPrice}>
+          £
+          {listPrice}
+        </p>
         <div
           className={css.productButtonWrapper}
           role="button"

@@ -9,7 +9,7 @@ describe('the OrderAddOns component', () => {
     orderDetails: () => {},
     orderId: '123456',
     products: {
-      '12345': { id: '12345', title: 'First test product' }
+      12345: { id: '12345', title: 'First test product' }
     },
     ageVerified: true,
     basket: Immutable.fromJS({
@@ -139,8 +139,8 @@ describe('the OrderAddOns component', () => {
       wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
-            'product2': 1,
-            'product4': 2,
+            product2: 1,
+            product4: 2,
           }
         }),
         basketProductsCost: '8.00',

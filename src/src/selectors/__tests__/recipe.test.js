@@ -82,20 +82,20 @@ describe('health kitchen recipe selectors', () => {
             disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
             micronutrients: [
               {
-                'name': 'Iron',
-                'content': {
-                  'amount': 6.5,
-                  'unit': 'µg'
+                name: 'Iron',
+                content: {
+                  amount: 6.5,
+                  unit: 'µg'
                 },
-                'nrv_percent': 46.4
+                nrv_percent: 46.4
               },
               {
-                'name': 'Magnesium',
-                'content': {
-                  'amount': 197.5,
-                  'unit': 'mg'
+                name: 'Magnesium',
+                content: {
+                  amount: 197.5,
+                  unit: 'mg'
                 },
-                'nrv_percent': 52.7
+                nrv_percent: 52.7
               }
             ]
           }

@@ -11,9 +11,10 @@ const CheckoutTooltip = (props) => (
       overlay={<div className={css.tooltipContent}>{props.children}</div>}
       overlayClassName={`checkoutTooltip-${props.placement}`}
     >
-      <span className={css.tooltipTrigger}></span>
+      <span className={css.tooltipTrigger} />
     </RCTooltip>
-  </div>)
+  </div>
+)
 
 CheckoutTooltip.propTypes = {
   children: PropTypes.node.isRequired,

@@ -51,7 +51,7 @@ describe('menus', () => {
     })
   })
 
-  describe('fetchMenusWithUserId', function () {
+  describe('fetchMenusWithUserId', () => {
     test('should fetch the correct url', async () => {
       await fetchMenusWithUserId('token', 'e34rder')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)

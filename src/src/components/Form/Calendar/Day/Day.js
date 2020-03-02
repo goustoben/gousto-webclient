@@ -21,7 +21,7 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
         data-testing="dateSlot"
       >
         <div className={css.content}>
-          {icon ? <span className={css[`icon-${icon}`]} data-testing={`icon-${icon}`}></span> : null}
+          {icon ? <span className={css[`icon-${icon}`]} data-testing={`icon-${icon}`} /> : null}
           {dateToDay(date)}
         </div>
       </div>
@@ -31,7 +31,7 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
   return (
     <div key={`${weekNo}-${dayNo}`} className={classnames(css.emptyDay, className, css.square)}>
       <div className={css.content}>
-        {icon ? (<span className={css[`icon-${icon}`]}></span>) : null}
+        {icon ? (<span className={css[`icon-${icon}`]} />) : null}
         {date ? dateToDay(date) : weekNoDayNoToDay(weekNo, dayNo)}
       </div>
     </div>

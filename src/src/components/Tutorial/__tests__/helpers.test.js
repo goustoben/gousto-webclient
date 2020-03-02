@@ -13,8 +13,8 @@ import {
 } from 'Tutorial/helpers'
 
 describe('Tutorial helpers', () => {
-  const windowWidth = 1920,
-    windowHeight = 1080
+  const windowWidth = 1920
+  const windowHeight = 1080
 
   const getBoundingClientRect = (width, height) => ({
     x: 0,
@@ -66,7 +66,10 @@ describe('Tutorial helpers', () => {
 
   describe('getCenterFromElementRect', () => {
     test("should find the center of a given element given it's position, width and height", () => {
-      const x = 0, y = 0, width = 100, height = 100
+      const x = 0
+      const y = 0
+      const width = 100
+      const height = 100
 
       expect(getCenterFromElementRect({ x, y, width, height })).toEqual({
         x: 50,
@@ -77,7 +80,10 @@ describe('Tutorial helpers', () => {
 
   describe('getBottomFromElementRect', () => {
     test("should find the bottom of a given element given it's position, width and height", () => {
-      const x = 25, y = 25, width = 100, height = 50
+      const x = 25
+      const y = 25
+      const width = 100
+      const height = 50
 
       expect(getBottomFromElementRect({ x, y, width, height })).toEqual({
         x: 75,
@@ -88,7 +94,9 @@ describe('Tutorial helpers', () => {
 
   describe('getTopFromElementRect', () => {
     test("should find the top of a given element given it's position and width", () => {
-      const x = 100, y = 100, width = 50
+      const x = 100
+      const y = 100
+      const width = 50
 
       expect(getTopFromElementRect({ x, y, width })).toEqual({
         x: 125,

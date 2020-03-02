@@ -26,9 +26,7 @@ class SocialShareSheet extends React.PureComponent {
     const { isEmailFormOpen } = this.state
     !isEmailFormOpen && trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Email')
 
-    this.setState(function (prevState) {
-      return { isEmailFormOpen: !prevState.isEmailFormOpen }
-    })
+    this.setState((prevState) => ({ isEmailFormOpen: !prevState.isEmailFormOpen }))
   }
 
   render() {

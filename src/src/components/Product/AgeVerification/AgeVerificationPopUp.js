@@ -52,10 +52,11 @@ class AgeVerificationPopUp extends PureComponent {
         <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onConfirmation(false)}>
           No, i&#39;m under 18
         </Button>
-        <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => this.onConfirmation(true)}>
+        <Button className={css.yesAgeVerificationButton} fill color="primary" onClick={() => this.onConfirmation(true)}>
           Yes, I&#39;m over 18
         </Button>
-      </ModalFooter>)
+      </ModalFooter>
+    )
   }
 
   getContent = () => {

@@ -74,7 +74,10 @@ const NavBar = (props) => {
       item: (
         <span className={css.mobileHide}>
           <span className={css.link}>
-            Rate <span className={css.tabletHide}>My </span>Recipes
+            Rate
+            {' '}
+            <span className={css.tabletHide}>My </span>
+            Recipes
           </span>
           {(rateRecipeCount > 0) ? <span className={css.badge}>{rateRecipeCount}</span> : null}
         </span>

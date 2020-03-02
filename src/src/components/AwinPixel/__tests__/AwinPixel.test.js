@@ -38,7 +38,10 @@ describe('AwinPixel', () => {
   })
 
   describe('with props', () => {
-    let orderId, total, commissionGroup, promoCode
+    let orderId
+    let total
+    let commissionGroup
+    let promoCode
 
     beforeEach(() => {
       orderId = '9010320'

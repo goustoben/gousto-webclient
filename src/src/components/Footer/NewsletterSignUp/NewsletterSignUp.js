@@ -22,10 +22,8 @@ class NewsletterSignUp extends React.Component {
     const input = this.refs.email
     if (!this.props.signup.get('pending') && input && input.checkValidity()) {
       this.props.onSignup(this.state.email)
-    } else {
-      if (!input) {
-        this.props.onSignup(this.state.email)
-      }
+    } else if (!input) {
+      this.props.onSignup(this.state.email)
     }
   }
 

@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import userReducer, { defaultState as defaultInitialState } from 'reducers/user'
 
 describe('user reducer', () => {
-  const user = userReducer.user
+  const {user} = userReducer
   const shippingAddresses = [
     {
       id: '321250',

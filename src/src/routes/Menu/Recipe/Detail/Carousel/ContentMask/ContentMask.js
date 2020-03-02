@@ -17,8 +17,7 @@ const ContentMask = ({ className, children }) => (
       >
         <path d="M100,250 C160,195 340,195 400,250 Z" />
       </svg>
-      <div className={css.mask}>
-      </div>
+      <div className={css.mask} />
     </div>
   </div>
 )

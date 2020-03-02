@@ -31,7 +31,7 @@ class BillingForm extends React.PureComponent {
 
   paymentOptions() {
     return config.cardTypeOptions.map((option) =>
-      Object.assign({}, option, { subLabel: (<span className={css[option.icon]} aria-hidden="true" />) })
+      ({ ...option, subLabel: (<span className={css[option.icon]} aria-hidden="true" />)})
     )
   }
 
@@ -243,7 +243,7 @@ class BillingForm extends React.PureComponent {
         </div>
         <div className={css.bottom}>
           <Button
-            color={'primary'}
+            color="primary"
             noDecoration
             onClick={() => submitCardDetails(this.state)}
             disabled={!BillingForm.validateFormSubmit(this.state)}

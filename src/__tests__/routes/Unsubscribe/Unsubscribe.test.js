@@ -9,7 +9,7 @@ describe('<Unsubscribe />', () => {
   test('<Confirm /> is rendering correctly', () => {
     const wrapper = shallow(
       <Unsubscribe
-        error={''}
+        error=""
         pending={false}
         isUserUnsubscribed={false}
         copy={{
@@ -32,7 +32,7 @@ describe('<Unsubscribe />', () => {
   test('<Unsubscribed /> is being redered instead of <Confirm />', () => {
     const wrapper = shallow(
       <Unsubscribe
-        error={''}
+        error=""
         pending={false}
         isUserUnsubscribed
         copy={{

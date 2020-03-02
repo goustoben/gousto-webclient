@@ -65,7 +65,7 @@ describe('recipes', () => {
     })
   })
 
-  describe('fetchRecipeStock', function () {
+  describe('fetchRecipeStock', () => {
     test('should fetch the correct url', async () => {
       await fetchRecipeStock('token', 'day-id')
       expect(fetch).toHaveBeenCalledTimes(1)
@@ -78,7 +78,7 @@ describe('recipes', () => {
     })
   })
 
-  describe('fetchRecipesStockByDate', function () {
+  describe('fetchRecipesStockByDate', () => {
     test('should fetch the correct url', async () => {
       const reqData = { a: 1, b: 2 }
       await fetchRecipesStockByDate(reqData)
@@ -92,7 +92,7 @@ describe('recipes', () => {
     })
   })
 
-  describe('fetchRecipeStepsById', function () {
+  describe('fetchRecipeStepsById', () => {
     test('should fetch the correct url', async () => {
       const recipeId = '123'
       await fetchRecipeStepsById(recipeId)

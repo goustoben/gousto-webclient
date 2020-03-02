@@ -135,7 +135,7 @@ describe('CheckoutFrame', () => {
       test('should call Frames.unblockFields when updated and value is true', () => {
         wrapper = mount(<CheckoutFrame checkoutScriptReady />)
         Frames.unblockFields.mockClear()
-        wrapper.setProps({ hasCheckoutError: hasCheckoutError })
+        wrapper.setProps({ hasCheckoutError })
 
         expect(Frames.unblockFields).toHaveBeenCalled()
       })
@@ -151,7 +151,7 @@ describe('CheckoutFrame', () => {
       test('should not call Frames.unblockFields when not updated', () => {
         wrapper = mount(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
         Frames.unblockFields.mockClear()
-        wrapper.setProps({ hasCheckoutError: hasCheckoutError })
+        wrapper.setProps({ hasCheckoutError })
 
         expect(Frames.unblockFields).not.toHaveBeenCalled()
       })
@@ -216,8 +216,8 @@ describe('CheckoutFrame', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame
         change={change}
-        formName={'payment'}
-        sectionName={'payment'}
+        formName="payment"
+        sectionName="payment"
         cardTokenReady={cardTokenReady}
         trackingCardTokenisationSuccessfully={jest.fn()}
         trackingCardTokenisationFailed={jest.fn()}

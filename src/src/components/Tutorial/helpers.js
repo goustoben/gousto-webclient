@@ -56,8 +56,8 @@ export const getTooltipLocation = (selector, arrowDirection) => {
 }
 
 export const getTransformOffset = (direction) => {
-  let x = -50,
-    y = 0
+  let x = -50
+  let y = 0
 
   if (direction.includes('bottom')) {
     y = -100

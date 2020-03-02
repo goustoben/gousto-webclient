@@ -55,14 +55,13 @@ describe('<IngredientsContainer />', () => {
 
     beforeAll(() => {
       store = createStore(
-        combineReducers(Object.assign(
-          {},
-          { ...authReducer },
-          { ...userReducer },
-          { ...status },
-          { ...contentReducer },
-          { getHelp },
-        )),
+        combineReducers({
+          ...authReducer,
+          ...userReducer,
+          ...status,
+          ...contentReducer,
+          getHelp,
+        }),
         initialState,
         compose(applyMiddleware(thunk))
       )
@@ -90,7 +89,7 @@ describe('<IngredientsContainer />', () => {
       await ContinueButton.prop('onClick')()
 
       expect(store.getState().getHelp.get('selectedIngredients'))
-        .toEqual(fromJS({'1917-aaa': {'ingredientId': 'aaa', 'label': '1 beef stock cube', 'recipeId': '1917'}}))
+        .toEqual(fromJS({'1917-aaa': {ingredientId: 'aaa', label: '1 beef stock cube', recipeId: '1917'}}))
     })
 
     test('/v2/validate-ingredients endpoint is called correctly', async () => {
@@ -117,14 +116,13 @@ describe('<IngredientsContainer />', () => {
     beforeAll(() => {
       trackUserCannotGetCompensation = jest.fn()
       store = createStore(
-        combineReducers(Object.assign(
-          {},
-          { ...authReducer },
-          { ...userReducer },
-          { ...status },
-          { ...contentReducer },
-          { getHelp },
-        )),
+        combineReducers({
+          ...authReducer,
+          ...userReducer,
+          ...status,
+          ...contentReducer,
+          getHelp,
+        }),
         initialState,
         compose(applyMiddleware(thunk))
       )
@@ -160,14 +158,13 @@ describe('<IngredientsContainer />', () => {
 
     beforeAll(() => {
       store = createStore(
-        combineReducers(Object.assign(
-          {},
-          { ...authReducer },
-          { ...userReducer },
-          { ...status },
-          { ...contentReducer },
-          { getHelp },
-        )),
+        combineReducers({
+          ...authReducer,
+          ...userReducer,
+          ...status,
+          ...contentReducer,
+          getHelp,
+        }),
         initialState,
         compose(applyMiddleware(thunk))
       )

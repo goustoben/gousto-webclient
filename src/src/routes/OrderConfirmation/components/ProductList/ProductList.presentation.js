@@ -28,7 +28,8 @@ const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggle
             ageVerified={ageVerified}
             numberOfColumnClass={numberOfColumnClass}
             toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-          />)
+          />
+        )
       })
     }
   </div>

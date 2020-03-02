@@ -7,7 +7,14 @@ const OrderRescheduledNotification = ({ oldDeliveryDay, reason }) => (
   <div className={css.notification}>
     <span className={css.oldDeliveryDay}>{oldDeliveryDay}</span>
     {reason
-      ? <span> ({reason})</span>
+      ? (
+        <span>
+          {' '}
+          (
+          {reason}
+          )
+        </span>
+      )
       : null}
   </div>
 )

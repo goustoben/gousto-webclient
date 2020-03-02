@@ -32,7 +32,7 @@ describe('request reducer', () => {
     const userAgent = 'Mozilla Facebook'
     const result = reducer.request(state, {
       type: actionTypes.BROWSER_SET_USER_AGENT,
-      userAgent: userAgent,
+      userAgent,
     })
 
     expect(result.get('userAgent')).toBe(userAgent)

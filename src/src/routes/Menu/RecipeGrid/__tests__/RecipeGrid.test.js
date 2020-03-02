@@ -8,8 +8,8 @@ describe('RecipeGrid', () => {
   const wrapper = shallow(
     <RecipeGrid
       showDetailRecipe={jest.fn()}
-      menuCurrentCollectionId={''}
-      menuRecipeDetailShow={''}
+      menuCurrentCollectionId=""
+      menuRecipeDetailShow=""
       isClient
     />
   )

@@ -42,7 +42,7 @@ describe('CheckoutPayment', () => {
 
   describe('prerendering', () => {
     beforeEach(() => {
-      wrapper.setProps({ 'prerender': true })
+      wrapper.setProps({ prerender: true })
     })
 
     test('should not render Payment Form Sections', () => {
@@ -89,7 +89,7 @@ describe('CheckoutPayment', () => {
           trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
           touch={touch}
           submit={submit}
-          browser={'mobile'}
+          browser="mobile"
         />
       )
       expect(wrapper.find(BoxDetails)).toHaveLength(1)
@@ -104,7 +104,7 @@ describe('CheckoutPayment', () => {
           trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
           touch={touch}
           submit={submit}
-          browser={'desktop'}
+          browser="desktop"
         />
       )
       expect(wrapper.find(BoxDetails)).toHaveLength(0)

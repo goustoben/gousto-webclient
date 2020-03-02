@@ -41,7 +41,7 @@ class SubscriptionPause extends React.Component {
 
   componentDidUpdate() {
     if (this.props.showModal && !this.props.dataLoaded) {
-      const store = this.context.store
+      const {store} = this.context
       SubscriptionPause.fetchData({ store })
     }
   }

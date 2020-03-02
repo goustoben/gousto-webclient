@@ -29,7 +29,7 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display the use within date formatted correctly with spaces', () => {
-    const wrapper = shallow(<RecipeAttribute name="useWithin" value={'5-6'} />)
+    const wrapper = shallow(<RecipeAttribute name="useWithin" value="5-6" />)
     expect(wrapper.find('span').text()).toContain('Use within 5 - 6 days')
   })
 
@@ -54,7 +54,7 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display the cuisine correctly', () => {
-    const wrapper = shallow(<RecipeAttribute name="cuisine" value={'Italian'} />)
+    const wrapper = shallow(<RecipeAttribute name="cuisine" value="Italian" />)
     expect(wrapper.find('span').text()).toContain('Italian Cuisine')
   })
 
@@ -68,7 +68,7 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display the vegan diet type as plant-based', () => {
-    const wrapper = shallow(<RecipeAttribute name="diet" value={'vegan'} />)
+    const wrapper = shallow(<RecipeAttribute name="diet" value="vegan" />)
     expect(wrapper.find('span').text()).toContain('Plant-based')
   })
 
@@ -78,7 +78,7 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display the equipment in a comma separated list when view="list" ', () => {
-    const wrapper = shallow(<RecipeAttribute name="equipmentRequired" value={Immutable.fromJS(['Spoon', 'Egg Beater'])} view={'list'} />)
+    const wrapper = shallow(<RecipeAttribute name="equipmentRequired" value={Immutable.fromJS(['Spoon', 'Egg Beater'])} view="list" />)
     expect(wrapper.find('span').text()).toContain('Spoon, Egg Beater')
   })
 })

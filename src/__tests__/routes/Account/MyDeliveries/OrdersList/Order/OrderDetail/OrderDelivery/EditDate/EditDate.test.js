@@ -144,7 +144,7 @@ describe('EditDate', function () {
     it('should dispatch orderUpdateDayAndSlot action when clicking the button if the deliverySlot changed', function() {
       orderActions.orderUpdateDayAndSlot.mockReturnValueOnce('orderUpdateDayAndSlot result')
       const slotsOptions = {
-        '100': [
+        100: [
           { uuid: 'jk06', value: '777' },
           { uuid: 'whatever', value: '888' },
         ],

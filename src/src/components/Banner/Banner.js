@@ -15,7 +15,10 @@ const Banner = ({ hide, onClick, text, linkText }) => (
       { [css.hide]: hide },
     )}
   >
-    <p className={css.text}>{text}&nbsp;</p>
+    <p className={css.text}>
+      {text}
+&nbsp;
+    </p>
     <Button color="tertiary">{linkText}</Button>
   </div>
 )

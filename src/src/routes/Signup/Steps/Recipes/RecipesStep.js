@@ -48,7 +48,7 @@ const RecipesStep = ({ basketSignupCollectionReceive, next }) => {
     </div>
   )
 
-  const elementsArray = createGroupedArray(menu.collections.map((el, index) => (Object.assign({}, { side: index % 2 === 0 ? 'left' : 'right' }, el))), 2)
+  const elementsArray = createGroupedArray(menu.collections.map((el, index) => ({ side: index % 2 === 0 ? 'left' : 'right', ...el})), 2)
 
   return (
     <span className={signupCss.stepContainer}>

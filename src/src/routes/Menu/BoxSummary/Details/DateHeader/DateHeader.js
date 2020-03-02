@@ -34,7 +34,7 @@ const DateHeader = (props) => {
         <Segment onClick={clearSlot} fill={false}>
           <span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
           <span className={css.clear}>
-            <span className={css.clearIcon}></span>
+            <span className={css.clearIcon} />
             edit
           </span>
         </Segment>

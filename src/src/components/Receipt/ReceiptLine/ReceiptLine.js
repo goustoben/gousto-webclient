@@ -7,7 +7,7 @@ const ReceiptLine = ({ label, children, style, showLineAbove }) => (
   <div>
     {
       showLineAbove
-        ? <div className={css.horizontalLineAbove}></div>
+        ? <div className={css.horizontalLineAbove} />
         : null
     }
     <p

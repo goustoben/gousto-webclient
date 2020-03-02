@@ -16,7 +16,7 @@ describe('Refer A Friend Logic', () => {
   describe('Refer A Friend', () => {
     test('should call userReferAFriend action with the email', () => {
       const email = 'test email'
-      wrapper.setState({ email: email })
+      wrapper.setState({ email })
       wrapper.instance().referAFriend()
 
       expect(userReferAFriend).toHaveBeenCalledWith(email)

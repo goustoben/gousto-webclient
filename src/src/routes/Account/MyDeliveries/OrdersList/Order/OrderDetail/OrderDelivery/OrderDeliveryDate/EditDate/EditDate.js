@@ -101,7 +101,8 @@ class EditDate extends React.PureComponent {
     const { coreDeliveryDayId, deliverySlotId, clearUpdateDateErrorAndPending, orderId } = this.props
     const { deliveryDaysOptions } = this.state
 
-    let slotId, selectedDeliveryDate
+    let slotId
+    let selectedDeliveryDate
     if (dayId === coreDeliveryDayId) {
       slotId = deliverySlotId
     } else {
@@ -155,7 +156,7 @@ class EditDate extends React.PureComponent {
           </div>
           <Button
             onClick={() => this.onSubmitFunction()}
-            color={'secondary'}
+            color="secondary"
             width="full"
             noDecoration
             pending={isPendingUpdateDayAndSlot}

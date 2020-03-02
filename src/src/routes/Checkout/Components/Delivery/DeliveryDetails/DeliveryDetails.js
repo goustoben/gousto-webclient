@@ -42,9 +42,11 @@ class DeliveryDetails extends React.PureComponent {
       <div className={css.deliveryInfoContainer}>
         <h4>Deliver to</h4>
         <p className={css.textSM}>
-          {showAddress(this.props.deliveryAddress)}&nbsp;
+          {showAddress(this.props.deliveryAddress)}
+&nbsp;
           <span onClick={this.props.onAddressEdit} className={css.linkBase}>
-            Edit address&nbsp;<span className={css.linkRight} />
+            Edit address&nbsp;
+            <span className={css.linkRight} />
           </span>
         </p>
         <DeliveryAddressType

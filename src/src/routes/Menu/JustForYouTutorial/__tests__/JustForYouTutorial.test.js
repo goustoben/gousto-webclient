@@ -14,7 +14,7 @@ describe('JustForYouTutorial Component', () => {
       <JustForYouTutorial
         showTutorial
         incrementTutorialViewed={incrementTutorialViewed}
-        collectionName={'Just For You'}
+        collectionName="Just For You"
       />
     )
   })
@@ -69,7 +69,7 @@ describe('Check browser to show JFY', () => {
         }
       }),
       menuCollections: Immutable.fromJS({
-        'recommendationID': {
+        recommendationID: {
           slug: 'recommendations',
           shortTitle: 'Chosen For You'
         }
@@ -100,7 +100,7 @@ describe('Check browser to show JFY', () => {
         }
       }),
       menuCollections: Immutable.fromJS({
-        'recommendationID': {
+        recommendationID: {
           slug: 'recommendations',
           shortTitle: 'Chosen For You'
         }
@@ -131,7 +131,7 @@ describe('Check browser to show JFY', () => {
         }
       }),
       menuCollections: Immutable.fromJS({
-        'recommendationID': {
+        recommendationID: {
           slug: 'recommendations',
           shortTitle: 'Chosen For You'
         }
@@ -162,7 +162,7 @@ describe('Check browser to show JFY', () => {
         }
       }),
       menuCollections: Immutable.fromJS({
-        'recommendationID': {
+        recommendationID: {
           slug: 'recommendations',
           shortTitle: 'Chosen For You'
         }

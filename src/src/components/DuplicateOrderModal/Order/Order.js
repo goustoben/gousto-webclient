@@ -8,8 +8,19 @@ const Order = ({ date, numPeople, numRecipes }) => (
       <span className={css.calendar} />
     </div>
     <div className={css.right}>
-      <div className={css.infoLine}>Box Scheduled for {date}</div>
-      <div className={css.infoLine}>{numRecipes} Recipes for {numPeople} People</div>
+      <div className={css.infoLine}>
+        Box Scheduled for
+        {date}
+      </div>
+      <div className={css.infoLine}>
+        {numRecipes}
+        {' '}
+        Recipes for
+        {' '}
+        {numPeople}
+        {' '}
+        People
+      </div>
     </div>
   </div>
 )

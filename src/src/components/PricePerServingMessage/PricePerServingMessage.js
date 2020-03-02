@@ -6,12 +6,22 @@ import css from './PricePerServingMessage.css'
 const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null }) => {
   if (discountedPrice) {
     const oldPrice = fullPrice !== discountedPrice ? (
-        <span className={css.oldPrice}><s>£{fullPrice}</s> </span>
+      <span className={css.oldPrice}>
+        <s>
+          £
+          {fullPrice}
+        </s>
+        {' '}
+      </span>
     ) : null
 
     return (
       <p className={css.pricePerServingMessage}>
-        Price per serving: {oldPrice}£{discountedPrice}
+        Price per serving:
+        {' '}
+        {oldPrice}
+        £
+        {discountedPrice}
       </p>
     )
   } else {

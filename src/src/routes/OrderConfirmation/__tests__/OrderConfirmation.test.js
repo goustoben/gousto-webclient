@@ -129,7 +129,7 @@ describe('OrderConfirmation', () => {
 
     describe('when "showAgeVerification" is true', () => {
       beforeEach(() => {
-        wrapper.setState({ 'showAgeVerification': true })
+        wrapper.setState({ showAgeVerification: true })
       })
 
       test('renders the AgeVerificationPopUp', () => {
@@ -143,7 +143,7 @@ describe('OrderConfirmation', () => {
 
     describe('when "showAgeVerification" is false', () => {
       beforeEach(() => {
-        wrapper.setState({ 'showAgeVerification': false })
+        wrapper.setState({ showAgeVerification: false })
       })
 
       test('renders the AgeVerificationPopUp', () => {

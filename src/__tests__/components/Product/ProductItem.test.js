@@ -15,8 +15,8 @@ describe('ProductItem', () => {
     }),
     title: 'Chicken Curry',
     quantity: 2,
-    onRemove: function() {},
-    onImageClick: function() {},
+    onRemove() {},
+    onImageClick() {},
   }
 
   test('should have an item element', () => {

@@ -11,8 +11,8 @@ describe('Details', () => {
   describe('render', () => {
     let wrapper
     const okRecipeIds = Immutable.fromJS({
-      '123': 1,
-      '456': 1
+      123: 1,
+      456: 1
     })
 
     const props = {
@@ -54,7 +54,7 @@ describe('Details', () => {
           media: {}
         }
       }),
-      okRecipeIds: okRecipeIds,
+      okRecipeIds,
       slotId: '12e12',
       menuFetchPending: false,
       orderSaveError: '',

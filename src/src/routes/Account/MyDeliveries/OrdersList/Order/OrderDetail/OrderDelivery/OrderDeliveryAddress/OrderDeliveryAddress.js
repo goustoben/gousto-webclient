@@ -115,24 +115,24 @@ class OrderDeliveryAddress extends React.PureComponent {
           <div>
             {this.renderedAddresses()}
             <Link className={css.newAddressLink} to={client.myDetails} clientRouted={false}>
-                Add new address to your account&nbsp;
+              Add new address to your account&nbsp;
               <span className={css.arrowRight} />
             </Link>
             <Button
               onClick={this.handleSubmit}
-              color={'secondary'}
+              color="secondary"
               width="full"
               noDecoration
               pending={isPendingUpdateAddress}
               disabled={submitDisabled}
             >
-                Set Address
+              Set Address
             </Button>
           </div>
         )}
         {hasError && (
           <Alert type="danger">
-              There was a problem updating your order address. Please contact customer care.
+            There was a problem updating your order address. Please contact customer care.
           </Alert>
         )}
       </div>

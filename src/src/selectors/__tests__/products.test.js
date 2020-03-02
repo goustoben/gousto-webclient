@@ -16,27 +16,27 @@ const createOrderedMap = targetObject => (
 
 describe('the products selectors', () => {
   const products = createOrderedMap({
-    'product1': {
+    product1: {
       title: 'First product',
       id: 'product1',
       stock: 1,
     },
-    'product2': {
+    product2: {
       title: 'Second product',
       id: 'product2',
       stock: -1,
     },
-    'product3': {
+    product3: {
       title: 'Third product',
       id: 'product3',
       stock: 0,
     },
-    'product4': {
+    product4: {
       title: 'Fourth product',
       id: 'product4',
       stock: 5,
     },
-    'product5': {
+    product5: {
       title: 'Fourth product',
       id: 'product5',
       stock: 0,
@@ -61,7 +61,7 @@ describe('the products selectors', () => {
       beforeEach(() => {
         store = {
           ...store,
-          error: fromJS({ 'PRODUCTS_RECEIVE': 'Failed to fetch'})
+          error: fromJS({ PRODUCTS_RECEIVE: 'Failed to fetch'})
         }
       })
 
@@ -88,7 +88,7 @@ describe('the products selectors', () => {
         beforeEach(() => {
           store = {
             ...store,
-            error: fromJS({ 'PRODUCTS_RECEIVE': null })
+            error: fromJS({ PRODUCTS_RECEIVE: null })
           }
         })
 
@@ -111,12 +111,12 @@ describe('the products selectors', () => {
     test('returns only products that are in stock', () => {
       expect(getProductsInStock(store)).toEqual(
         createOrderedMap({
-          'product1': {
+          product1: {
             title: 'First product',
             id: 'product1',
             stock: 1,
           },
-          'product4': {
+          product4: {
             title: 'Fourth product',
             id: 'product4',
             stock: 5,
@@ -130,17 +130,17 @@ describe('the products selectors', () => {
     test('returns only products that are out of stock', () => {
       expect(getProductsOutOfStock(store)).toEqual(
         createOrderedMap({
-          'product2': {
+          product2: {
             title: 'Second product',
             id: 'product2',
             stock: -1,
           },
-          'product3': {
+          product3: {
             title: 'Third product',
             id: 'product3',
             stock: 0,
           },
-          'product5': {
+          product5: {
             title: 'Fourth product',
             id: 'product5',
             stock: 0,
@@ -152,27 +152,27 @@ describe('the products selectors', () => {
 
   describe('the getProductsForMarket selector', () => {
     const expectedResult = {
-      'product1': {
+      product1: {
         title: 'First product',
         id: 'product1',
         stock: 1,
       },
-      'product4': {
+      product4: {
         title: 'Fourth product',
         id: 'product4',
         stock: 5,
       },
-      'product2': {
+      product2: {
         title: 'Second product',
         id: 'product2',
         stock: -1,
       },
-      'product3': {
+      product3: {
         title: 'Third product',
         id: 'product3',
         stock: 0,
       },
-      'product5': {
+      product5: {
         title: 'Fourth product',
         id: 'product5',
         stock: 0,
@@ -195,13 +195,13 @@ describe('the products selectors', () => {
   describe('the getDesserts selector', () => {
     test('products are returned with desserts only', () => {
       const productsWithCategories = createOrderedMap({
-        'product6': {
+        product6: {
           title: 'Sixth product',
           id: 'product6',
           stock: 1,
           categories: [{ id: 'fec10d0e-bf7d-11e5-90a9-02fada0dd3b9' }]
         },
-        'product7': {
+        product7: {
           title: 'Seventh product',
           id: 'product7',
           stock: 1,

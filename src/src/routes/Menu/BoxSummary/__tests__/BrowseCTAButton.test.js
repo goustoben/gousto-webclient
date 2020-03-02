@@ -5,7 +5,8 @@ import { Button, Segment } from 'goustouicomponents'
 import BrowseCTAButton from '../BrowseCTAButton/BrowseCTAButton'
 
 describe('BrowseCTAButton', () => {
-  let boxDetailsVisibilityChange, menuBrowseCTAVisibilityChange
+  let boxDetailsVisibilityChange
+  let menuBrowseCTAVisibilityChange
   const view = 'desktop'
 
   beforeEach(() => {

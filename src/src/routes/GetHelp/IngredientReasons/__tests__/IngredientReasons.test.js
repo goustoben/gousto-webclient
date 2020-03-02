@@ -153,20 +153,20 @@ describe('<IngredientReasons />', () => {
     test('action being called with issue ids and issue descriptions when submit button is clicked', () => {
       const expectedIssueReasons = {
         '1917-bbb': {
-          'ingredientId': 'bbb',
-          'issueDescription': 'This is my issue...',
-          'issueId': '101',
-          'issueName': 'Missing ingredients',
-          'label': '1 can of chopped tomatoes (210g)',
-          'recipeId': '1917'
+          ingredientId: 'bbb',
+          issueDescription: 'This is my issue...',
+          issueId: '101',
+          issueName: 'Missing ingredients',
+          label: '1 can of chopped tomatoes (210g)',
+          recipeId: '1917'
         },
         '1494-bbb': {
-          'ingredientId': 'bbb',
-          'issueDescription': 'And this is my other issue...',
-          'issueId': '104',
-          'issueName': 'Fruit or Veg - Mouldy',
-          'label': '1 can of chopped tomatoes (210g)',
-          'recipeId': '1494'
+          ingredientId: 'bbb',
+          issueDescription: 'And this is my other issue...',
+          issueId: '104',
+          issueName: 'Fruit or Veg - Mouldy',
+          label: '1 can of chopped tomatoes (210g)',
+          recipeId: '1494'
         }
       }
       const issueDetails = getHelpLayout.find('div.issueDetails')

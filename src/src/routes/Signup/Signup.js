@@ -117,7 +117,7 @@ class Signup extends React.PureComponent {
   }
 
   componentDidMount() {
-    const store = this.context.store
+    const {store} = this.context
     const query = this.props.location ? this.props.location.query : {}
     const params = this.props.params || {}
     Signup.fetchData({ store, query, params })

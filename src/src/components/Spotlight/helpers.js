@@ -11,15 +11,15 @@ export const getDocumentHeight = () => {
 }
 
 export const getEllipse = ({ originX, originY, radius, accuracy = 1 }) => {
-  const n = 360 * accuracy,
-    baseAngle = 2 * Math.PI / n
+  const n = 360 * accuracy
+  const baseAngle = 2 * Math.PI / n
 
-  let angle, x, y, steps = ''
+  let steps = ''
 
-  for (var i = 0; i <= n; i++) {
-    angle = i * baseAngle
-    x = Math.cos(angle).toFixed(3)
-    y = Math.sin(angle).toFixed(3)
+  for (let i = 0; i <= n; i++) {
+    const angle = i * baseAngle
+    const x = Math.cos(angle).toFixed(3)
+    const y = Math.sin(angle).toFixed(3)
 
     steps += `${(originX + radius * x)}px ${(originY - radius * y)}px, `
   }

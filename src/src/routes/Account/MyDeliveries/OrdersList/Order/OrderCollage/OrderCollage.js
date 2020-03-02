@@ -17,7 +17,7 @@ const OrderCollage = ({ recipes, orderState }) => {
   for (let i = recipes.size; i < maxRecipes; i++) {
     blankCards.push(
       <div className={css.empty} key={i}>
-        <div className={css.emptyItem}></div>
+        <div className={css.emptyItem} />
       </div>
     )
   }

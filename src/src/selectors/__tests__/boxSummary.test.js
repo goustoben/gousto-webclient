@@ -2,7 +2,8 @@ import Immutable from 'immutable'
 import { getBoxSummaryTextProps } from '../boxSummary'
 
 describe('getBoxSummaryTextProps', () => {
-  let state, tempOrderId, tempDate, tempSlotId
+  let state; let tempOrderId; let tempDate; let
+    tempSlotId
   const slots = {
     '2019-12-17': [{
       coreSlotId: '2',
@@ -106,7 +107,7 @@ describe('getBoxSummaryTextProps', () => {
           }),
           user: Immutable.fromJS({
             orders: {
-              '1234': {
+              1234: {
                 id: '1234',
                 shippingAddress: {
                   name: 'Work'
@@ -142,7 +143,7 @@ describe('getBoxSummaryTextProps', () => {
             ...state,
             user: Immutable.fromJS({
               orders: {
-                '1234': {
+                1234: {
                   id: '1234',
                   shippingAddress: {
                     name: 'Work'
@@ -169,7 +170,7 @@ describe('getBoxSummaryTextProps', () => {
               ...state,
               user: Immutable.fromJS({
                 orders: {
-                  '1234': {
+                  1234: {
                     id: '1234',
                     shippingAddress: {
                       name: 'Work'
