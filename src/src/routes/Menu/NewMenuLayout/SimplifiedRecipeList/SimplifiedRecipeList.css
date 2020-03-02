@@ -1,4 +1,4 @@
-@value ScreenLGMin, ScreenMLMin, ScreenMDMax, ScreenSMMax from 'styles/screenSizes.css';
+@value ScreenXLMin, ScreenLGMin from 'styles/screenSizes.css';
 
 .recipeListContainer {
     display: flex;
@@ -15,10 +15,10 @@
     flex-basis: 33%;
     margin-right: 1rem;
 
-    @media ScreenLGMin {
+    @media ScreenXLMin {
         flex-basis: 20%;
     }
-    @media ScreenMLMin {
+    @media ScreenLGMin {
         flex-basis: 25%;
     }
 }

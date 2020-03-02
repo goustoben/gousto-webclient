@@ -5,6 +5,14 @@ import Immutable from 'immutable'
 import CollectionItem from 'CollectionItem'
 import css from './VerticalCollectionsNav.css'
 
+const changeCollectionWithScrollToTop = (collectionFilterChange, collectionId) => {
+  const headerHeight = 61
+  if (window.scrollY >= headerHeight) {
+    window.scrollTo(0,headerHeight)
+  }
+  collectionFilterChange(collectionId)
+}
+
 export const VerticalCollectionsNav = ({ menuCollections, menuCollectionRecipes, menuCurrentCollectionId, collectionFilterChange }) => (
   <div className={css.navBarContainer}>
     {menuCollections
@@ -21,7 +29,7 @@ export const VerticalCollectionsNav = ({ menuCollections, menuCollectionRecipes,
             key={collectionId}
             dataId={collectionId}
             className={collectionClass}
-            onClick={() => { collectionFilterChange(collectionId) }}
+            onClick={() => { changeCollectionWithScrollToTop(collectionFilterChange, collectionId) }}
             collectionId={collectionId}
             slug={collectionSlug}
           >
