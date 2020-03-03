@@ -59,5 +59,17 @@ describe('VerticalCollectionsNav', () => {
       wrapper.find('CollectionItem').first().simulate('click')
       expect(collectionFilterChangeSpy).toHaveBeenCalledWith('bc234')
     })
+
+    describe('when page srolled more than 60 px', () => {
+      const spyOnWindowScrollTo = jest.fn()
+      beforeEach(() => {
+        global.scrollY = 80
+        global.scrollTo = spyOnWindowScrollTo
+      })
+      test('should scroll to top', () => {
+        wrapper.find('CollectionItem').first().simulate('click')
+        expect(spyOnWindowScrollTo).toHaveBeenCalledWith(0, 61)
+      })
+    })
   })
 })
