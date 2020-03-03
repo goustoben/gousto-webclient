@@ -46,6 +46,9 @@ describe('auth', () => {
             password,
             rememberMe,
           },
+          header: {
+            'x-forwarded-for': '192.192.192'
+          }
         },
       },
       ))
@@ -77,6 +80,7 @@ describe('auth', () => {
           password,
           clientId: 'authClientId',
           clientSecret: 'authClientSecret',
+          xForwardedFor: '192.192.192'
         })
       })
 

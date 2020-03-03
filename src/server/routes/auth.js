@@ -10,9 +10,10 @@ import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue }
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
     const { username, password, rememberMe } = ctx.request.body
+    const { header } = ctx.request
     const { authClientId, authClientSecret } = env
 
-    const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret })
+    const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret, xForwardedFor: header['x-forwarded-for'] })
 
     addSessionCookies(ctx, authResponse, rememberMe)
     ctx.response.body = authResponse
