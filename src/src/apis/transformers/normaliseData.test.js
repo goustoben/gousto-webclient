@@ -4,30 +4,30 @@ describe('normaliseData', () => {
   test('should take api response and normalise it', () => {
     const testData = {
       included: [{
-        'id': '4e10aea9-996e-415a-92a2-3de840f8ed14',
-        'type': 'ingredients',
-        'attributes': {}
+        id: '4e10aea9-996e-415a-92a2-3de840f8ed14',
+        type: 'ingredients',
+        attributes: {}
       }, {
-        'id': '91ff0bd9-aca6-4336-b0a0-512a8f40e460',
-        'type': 'collections',
-        'attributes': {}
+        id: '91ff0bd9-aca6-4336-b0a0-512a8f40e460',
+        type: 'collections',
+        attributes: {}
       }]
     }
 
     const result = normaliseData(testData)
     expect(result).toEqual({
-      'ingredients': {
+      ingredients: {
         '4e10aea9-996e-415a-92a2-3de840f8ed14': {
-          'attributes': {},
-          'id': '4e10aea9-996e-415a-92a2-3de840f8ed14',
-          'type': 'ingredients'
+          attributes: {},
+          id: '4e10aea9-996e-415a-92a2-3de840f8ed14',
+          type: 'ingredients'
         }
       },
-      'collections': {
+      collections: {
         '91ff0bd9-aca6-4336-b0a0-512a8f40e460': {
-          'attributes': {},
-          'id': '91ff0bd9-aca6-4336-b0a0-512a8f40e460',
-          'type': 'collections'
+          attributes: {},
+          id: '91ff0bd9-aca6-4336-b0a0-512a8f40e460',
+          type: 'collections'
         }
       }
     })
@@ -67,31 +67,31 @@ describe('normaliseData', () => {
     expect(result).toEqual(
       {
         collections: {
-          'idtestcollection1': {
+          idtestcollection1: {
             id: 'idtestcollection1',
             type: 'collections'
           },
-          'idtestcollection2': {
+          idtestcollection2: {
             id: 'idtestcollection2',
             type: 'collections'
           }
         },
         recipes: {
-          'idtestrecipe3': {
+          idtestrecipe3: {
             id: 'idtestrecipe3',
             type: 'recipes'
           },
-          'idtestrecipe4': {
+          idtestrecipe4: {
             id: 'idtestrecipe4',
             type: 'recipes'
           }
         },
         ingredients: {
-          'idtestingredients5': {
+          idtestingredients5: {
             id: 'idtestingredients5',
             type: 'ingredients'
           },
-          'idtestingredients6': {
+          idtestingredients6: {
             id: 'idtestingredients6',
             type: 'ingredients'
           }

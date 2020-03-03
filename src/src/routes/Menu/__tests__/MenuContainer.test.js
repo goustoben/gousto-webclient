@@ -11,7 +11,7 @@ describe('flattenRecipes', () => {
       bds345fvf: 1
     })
   })
-  
+
   test('should return flatten recipes array', () => {
     const result = flattenRecipes(recipesFromBasket)
     expectedResult = ['abc123cds', 'bds345fvf']

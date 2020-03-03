@@ -44,6 +44,7 @@ describe('auth api', () => {
       const password = 'blabla'
       const clientId = 'abcdef'
       const clientSecret = '987654'
+      const xForwardedFor = '192.192.192'
 
       const expectedReqData = {
         grant_type: 'password',
@@ -53,9 +54,9 @@ describe('auth api', () => {
         client_secret: clientSecret
       }
 
-      await getUserToken({ email, password, clientId, clientSecret })
+      await getUserToken({ email, password, clientId, clientSecret, xForwardedFor })
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache')
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache', {'x-forwarded-for': xForwardedFor})
     })
 
     test('should return the results of the fetch unchanged', async () => {

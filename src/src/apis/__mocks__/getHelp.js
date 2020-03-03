@@ -1,50 +1,50 @@
 const fetchOrderIssuesMockResponse = {
-  'status': 'ok',
-  'data': [
+  status: 'ok',
+  data: [
     {
-      'category': {
-        'requireDescription': false,
-        'id': 101,
-        'name': 'Missing ingredients'
+      category: {
+        requireDescription: false,
+        id: 101,
+        name: 'Missing ingredients'
       },
-      'type': 'category',
-      'groupLabel': null
+      type: 'category',
+      groupLabel: null
     },
     {
-      'category': {
-        'requireDescription': false,
-        'id': 102,
-        'name': 'Wrong ingredients'
+      category: {
+        requireDescription: false,
+        id: 102,
+        name: 'Wrong ingredients'
       },
-      'type': 'category',
-      'groupLabel': null
+      type: 'category',
+      groupLabel: null
     },
     {
-      'category': {
-        'requireDescription': true,
-        'id': 104,
-        'name': 'Fruit or Veg - Mouldy'
+      category: {
+        requireDescription: true,
+        id: 104,
+        name: 'Fruit or Veg - Mouldy'
       },
-      'type': 'subcategory',
-      'groupLabel': 'Ingredient quality'
+      type: 'subcategory',
+      groupLabel: 'Ingredient quality'
     },
     {
-      'category': {
-        'requireDescription': false,
-        'id': 105,
-        'name': 'Fruit or Veg - not fresh'
+      category: {
+        requireDescription: false,
+        id: 105,
+        name: 'Fruit or Veg - not fresh'
       },
-      'type': 'subcategory',
-      'groupLabel': 'Ingredient quality'
+      type: 'subcategory',
+      groupLabel: 'Ingredient quality'
     },
     {
-      'category': {
-        'requireDescription': true,
-        'id': 107,
-        'name': 'Meat - gristle or bones'
+      category: {
+        requireDescription: true,
+        id: 107,
+        name: 'Meat - gristle or bones'
       },
-      'type': 'subcategory',
-      'groupLabel': 'Another group'
+      type: 'subcategory',
+      groupLabel: 'Another group'
     },
   ],
 }
