@@ -21,14 +21,14 @@ const CancelledAllBoxesModal = ({
   return (
     <Overlay open={Boolean(isModalOpen)} from="top">
       <ModalPanel closePortal={() => closeModal()} disableClickOutside disableOverlay className={css.modal}>
-        <div className={css.body}>
+        <div className={css.body} data-testing="cancelledAllBoxesModal">
           <h2 className={css.modalTitle}>Manage your subscription</h2>
           <div className={css.modalBodyText}>
-            We noticed you've cancelled all your upcoming boxes, so want to double-check: Would you like to pause for now or keep your subscription active?
+            We noticed you&#39;ve cancelled all your upcoming boxes, so want to double-check: Would you like to pause for now or keep your subscription active?
             <ul className={css.pendingOrders}>
               {pendingOrdersDates.entrySeq().toJS().map(([orderId, pendingOrderDate]) => (
                 <li key={orderId}>
-                  We'll deliver your box on
+                  We&#39;ll deliver your box on
                   {timeFormat(pendingOrderDate, 'dayAndMonth')}
                   {' '}
                   as requested
