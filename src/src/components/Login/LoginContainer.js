@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsRecaptchaEnabled } from 'selectors/auth'
+import { changeRecaptcha } from 'actions/auth'
 import Login from './Login'
 
 const mapStateToProps = (state) => {
@@ -22,4 +23,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   onSubmit: actions.loginUser,
   onInvalid: actions.cannotLogin,
+  changeRecaptcha
 })(Login)

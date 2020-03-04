@@ -41,6 +41,7 @@ class Login extends React.PureComponent {
       PropTypes.bool,
     ]),
     rememberMeDefault: PropTypes.bool,
+    changeRecaptcha: PropTypes.func
   }
 
   static defaultProps = {
@@ -49,6 +50,7 @@ class Login extends React.PureComponent {
     isAuthenticated: false,
     isAuthenticating: false,
     statusText: '',
+    changeRecaptcha: () => {}
   }
 
   constructor() {
@@ -72,6 +74,11 @@ class Login extends React.PureComponent {
 
   componentWillMount() {
     this.setState({ remember: this.props.rememberMeDefault })
+  }
+
+  async componentDidMount() {
+    const { changeRecaptcha } = this.props
+    await changeRecaptcha()
   }
 
   componentWillUnmount = () => {
