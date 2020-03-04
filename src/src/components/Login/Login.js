@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import TextInput from 'Form/Input'
 import CheckBox from 'Form/CheckBox'
 import { Button } from 'goustouicomponents'
@@ -10,9 +12,27 @@ import { validateEmail } from 'utils/auth'
 import { getWindow } from 'utils/window'
 import css from './Login.css'
 
+const secretPingdomEmailLength = 31
+const secretPingdomEmailSuffix = '@gmail.com'
+const secretPingdomEmailQuickHash = 294722922
+
+// from StackOverflow [user: lordvlad] https://stackoverflow.com/a/15710692/1916362
+// so we disable eslint
+const quickStringHash = string => (
+  // eslint-disable-next-line
+  string.split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)
+)
+
+const isSecretPingdomEmail = (email) => (
+  email.length === secretPingdomEmailLength
+    && email.endsWith(secretPingdomEmailSuffix)
+    && quickStringHash(email) === secretPingdomEmailQuickHash
+)
+
 class Login extends React.PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    isRecaptchaEnabled: PropTypes.bool.isRequired,
     onInvalid: PropTypes.func,
     isAuthenticated: PropTypes.bool,
     isAuthenticating: PropTypes.bool,
@@ -24,7 +44,7 @@ class Login extends React.PureComponent {
   }
 
   static defaultProps = {
-    onInvalid: () => {},
+    onInvalid: () => { },
     isOpen: false,
     isAuthenticated: false,
     isAuthenticating: false,
@@ -40,6 +60,7 @@ class Login extends React.PureComponent {
       emailValid: false,
       passwordValid: false,
       showValidationError: false,
+      recaptchaValue: null
     }
   }
 
@@ -59,9 +80,14 @@ class Login extends React.PureComponent {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const {email, password, remember} = this.state
+
+    if (this.canSubmit() === false) {
+      return
+    }
+
+    const { email, password, remember, recaptchaValue } = this.state
     if (this.state.emailValid && this.state.passwordValid) {
-      this.props.onSubmit(email, password, remember)
+      this.props.onSubmit({ email, password, rememberMe: remember, recaptchaToken: recaptchaValue })
     } else {
       this.props.onInvalid({ email, password })
     }
@@ -89,6 +115,10 @@ class Login extends React.PureComponent {
     this.setState({ remember: checked })
   }
 
+  captchaChanges = (value) => {
+    this.setState({ recaptchaValue: value })
+  }
+
   disabledClick = () => {
     this.setState({ showValidationError: true })
     getWindow().setTimeout(() => { this.setState({ showValidationError: false }) }, 3000)
@@ -101,6 +131,18 @@ class Login extends React.PureComponent {
       <span className={css.confirm} />
     </div>
   )
+
+  canSubmit = () => {
+    const { email, recaptchaValue } = this.state
+    const { isRecaptchaEnabled } = this.props
+
+    const captchaPassed = recaptchaValue !== null
+
+    return (
+      isSecretPingdomEmail(email)
+      || (isRecaptchaEnabled === false || captchaPassed)
+    )
+  }
 
   renderLoginForm = () => (
     <Form onSubmit={this.handleSubmit} method="post" data-testing="loginForm">
@@ -141,6 +183,17 @@ class Login extends React.PureComponent {
           checked={this.state.remember}
         />
       </div>
+      {
+        this.props.isRecaptchaEnabled
+        && (
+          <div>
+            <ReCAPTCHA
+              sitekey={RECAPTCHA_PUBLIC_KEY}
+              onChange={this.captchaChanges}
+            />
+          </div>
+        )
+      }
       <div className={css.flex}>
         <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
         <Button
@@ -148,6 +201,7 @@ class Login extends React.PureComponent {
           disabledClick={this.disabledClick}
           onClick={this.handleSubmit}
           pending={this.props.isAuthenticating}
+          disabled={this.canSubmit() === false}
         >
           Go
         </Button>

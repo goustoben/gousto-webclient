@@ -178,4 +178,7 @@ module.exports = {
     faqs: 'https://gousto.zendesk.com/hc/en-gb',
     contactUs: 'https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us',
   },
+  recaptcha: {
+    verify: 'https://www.google.com/recaptcha/api/siteverify',
+  },
 }

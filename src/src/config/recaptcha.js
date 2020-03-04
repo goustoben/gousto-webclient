@@ -1,1 +1,1 @@
-export const RECAPTCHA_PUBLIC_KEY = ''
+export const RECAPTCHA_PUBLIC_KEY = '6LcFYN4UAAAAAC6GGgmdn81UumA6vfucfRU7jBuz'

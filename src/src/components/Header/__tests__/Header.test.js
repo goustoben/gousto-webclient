@@ -441,6 +441,18 @@ describe('Header', () => {
 
       expect(helpMenuItem.url).not.toContain('?user_id=123')
     })
+
+    describe('when click on login button', () => {
+      const changeRecaptchaSpy = jest.fn()
+      beforeEach(() => {
+        changeRecaptchaSpy.mockReturnValue(Promise.resolve())
+        wrapper.setProps({ changeRecaptcha: changeRecaptchaSpy})
+        wrapper.find('.authButtonsContainer').simulate('click', { stopPropagation: () => {} })
+      })
+      test('should call changeRecaptcha', () => {
+        expect(changeRecaptchaSpy).toHaveBeenCalled()
+      })
+    })
   })
 
   describe('handleQuery', () => {

@@ -12,10 +12,11 @@ import config from 'config/auth'
 import configRoutes from 'config/routes'
 import moment from 'moment'
 import logger from 'utils/logger'
-import { redirect , documentLocation} from 'utils/window'
+import { redirect, documentLocation } from 'utils/window'
 import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
 import statusActions from './status'
 import loginActions from './login'
+import { fetchFeatures } from '../apis/fetchS3'
 import { actionTypes } from './actionTypes'
 
 /* action creators */
@@ -47,7 +48,7 @@ const redirectLoggedInUser = () => (
 
     const { pathname } = documentLocation()
 
-    if (pathname === '/' && isAuthenticated ) {
+    if (pathname === '/' && isAuthenticated) {
       if (getGoToMyGousto(getState())) return redirect(configRoutes.client.myGousto)
       if (getGoToMyDeliveries(getState())) return redirect(configRoutes.client.myDeliveries)
     }
@@ -55,10 +56,10 @@ const redirectLoggedInUser = () => (
 )
 
 /* auth */
-const authenticate = (email, password, rememberMe) => (
+const authenticate = (email, password, rememberMe, recaptchaToken) => (
   async (dispatch) => {
     try {
-      const { data: authResponse } = await serverAuthenticate(email, password, rememberMe)
+      const { data: authResponse } = await serverAuthenticate(email, password, rememberMe, recaptchaToken)
       const {
         accessToken,
         refreshToken,
@@ -154,7 +155,7 @@ const resetPassword = (password, passwordToken) => (
 
     try {
       const { data: { email } } = await resetUserPassword(password, passwordToken)
-      await dispatch(loginActions.loginUser(email, password, true))
+      await dispatch(loginActions.loginUser({ email, password, rememberMe: true }))
       redirect(configRoutes.client.myDeliveries)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, err.code))
@@ -164,6 +165,21 @@ const resetPassword = (password, passwordToken) => (
     }
   }
 )
+
+export const changeRecaptcha = () => async (dispatch) => {
+  try {
+    const { data } = await fetchFeatures()
+    if (data) {
+      const { isRecaptchaEnabled } = data
+      await dispatch({
+        type: actionTypes.CHANGE_RECAPTCHA,
+        isRecaptchaEnabled
+      })
+    }
+  } catch (err) {
+    logger.error({message: 'S3File fetch failed'})
+  }
+}
 
 const authActions = {
   authAuthenticate: authenticate,

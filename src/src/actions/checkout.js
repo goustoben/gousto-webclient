@@ -327,7 +327,7 @@ export function checkoutPostSignup() {
       const email = aboutYou.get('email')
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
-      await dispatch(loginActions.loginUser(email, password, true, orderId))
+      await dispatch(loginActions.loginUser({ email, password, rememberMe: true }, orderId))
       const prices = pricing.get('prices')
       const grossTotal = prices && prices.get('grossTotal')
       const netTotal = prices && prices.get('total')

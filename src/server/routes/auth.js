@@ -1,7 +1,19 @@
-import { identifyUser, getUserToken, refreshUserToken, forgetUserToken, validateUserPassword } from 'apis/auth'
+import { fetchFeatures } from 'apis/fetchS3'
+import logger from 'utils/logger'
+import {
+  getUserToken,
+  identifyUser,
+  refreshUserToken,
+  forgetUserToken,
+  validateRecaptchaUserToken,
+  validateUserPassword,
+} from 'apis/auth'
 import env from 'utils/env'
 import routes from 'config/routes'
 import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from './utils'
+import { RECAPTCHA_PRIVATE_KEY } from '../config/recaptcha'
+
+const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
 /**
  * Login Route
@@ -9,9 +21,23 @@ import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue }
  */
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
-    const { username, password, rememberMe } = ctx.request.body
     const { header } = ctx.request
+    const { username, password, rememberMe, recaptchaToken } = ctx.request.body
     const { authClientId, authClientSecret } = env
+    const { data } = await fetchFeatures()
+    const { isRecaptchaEnabled } = data
+
+    if (isRecaptchaEnabled && username !== PINGDOM_USER) {
+      const { success } = await validateRecaptchaUserToken(recaptchaToken, RECAPTCHA_PRIVATE_KEY)
+
+      if (!success) {
+        const errorMessage = 'Recaptcha failed'
+
+        logger.notice({ message: errorMessage })
+
+        throw Error(errorMessage)
+      }
+    }
 
     const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret, xForwardedFor: header['x-forwarded-for'] })
 
