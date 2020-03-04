@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
-import { changeRecaptcha } from 'actions/auth'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getAbandonBasket, isAccountTabNameTest } from 'selectors/features'
 import { getUserFromJoin, getUserId } from 'selectors/user'
@@ -26,5 +25,4 @@ export const HeaderContainer = connect(mapStateToProps, {
   loginVisibilityChange: actions.loginVisibilityChange,
   closeBoxModalVisibilityChange: actions.cancelOrderModalToggleVisibility,
   trackNavigationClick,
-  changeRecaptcha
 })(Header)
