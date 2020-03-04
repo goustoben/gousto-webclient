@@ -27,6 +27,9 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
     const { data } = await fetchFeatures()
     const { isRecaptchaEnabled } = data
 
+    logger.notice({ message: `auth/login fetchFeatures ${data}` })
+    logger.notice({ message: `auth/login recaptchaToken ${recaptchaToken}` })
+
     if (isRecaptchaEnabled && username !== PINGDOM_USER) {
       const validateRecaptchaResponse = await validateRecaptchaUserToken(
         recaptchaToken,
@@ -37,7 +40,7 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
         const errorMessage = 'Recaptcha failed'
 
         logger.notice({
-          message: `${errorMessage} :: ${JSON.stringify(validateRecaptchaResponse)}`
+          message: `auth/login ${errorMessage} :: ${JSON.stringify(validateRecaptchaResponse)}`
         })
 
         throw Error(errorMessage)
@@ -49,6 +52,8 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
     addSessionCookies(ctx, authResponse, rememberMe)
     ctx.response.body = authResponse
   } catch (e) {
+    logger.notice({ message: `auth/login catch ${e}` })
+
     ctx.response.status = 401
     ctx.response.body = {
       error: 'invalid_credentials',
