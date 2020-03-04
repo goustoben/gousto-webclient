@@ -2,6 +2,7 @@ import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
 import { getUserToken, refreshUserToken, validateUserPassword, identifyUser, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
+import { RECAPTCHA_PRIVATE_KEY } from '../../../server/config/recaptcha'
 
 jest.mock('apis/fetchS3', () => ({
   fetchFeatures: jest.fn(),
@@ -39,7 +40,7 @@ const getCtx = () => ({
   response: {},
 })
 
-const RECAPTCHA_SECRET = ''
+const RECAPTCHA_SECRET = RECAPTCHA_PRIVATE_KEY
 const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
 describe('auth', () => {
