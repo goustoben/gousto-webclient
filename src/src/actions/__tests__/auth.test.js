@@ -1,15 +1,23 @@
-import actions from 'actions/auth'
+import actions, { changeRecaptcha } from 'actions/auth'
+import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
+import logger from 'utils/logger'
 
 jest.mock('utils/window')
+jest.mock('apis/fetchS3', () => ({
+  fetchFeatures: jest.fn()
+}))
+jest.mock('utils/logger', () => ({
+  error: jest.fn()
+}))
 
 describe('redirectLoggedInUser', () => {
   let getState
 
   beforeEach(() => {
     redirect.mockReturnValue(jest.fn())
-    documentLocation.mockReturnValue({pathname: '/'})
+    documentLocation.mockReturnValue({ pathname: '/' })
   })
 
   afterEach(() => {
@@ -31,13 +39,13 @@ describe('redirectLoggedInUser', () => {
       }),
     })
 
-    await actions.redirectLoggedInUser()(null,getState)
+    await actions.redirectLoggedInUser()(null, getState)
 
     expect(redirect).not.toHaveBeenCalled()
   })
 
   test('should NOT redirect to my deliveries if feature is set to true and NOT on homepage', async () => {
-    documentLocation.mockReturnValue({pathname: '/menu'})
+    documentLocation.mockReturnValue({ pathname: '/menu' })
 
     getState = () => ({
       auth: Immutable.Map({
@@ -53,7 +61,7 @@ describe('redirectLoggedInUser', () => {
       }),
     })
 
-    await actions.redirectLoggedInUser()(null,getState)
+    await actions.redirectLoggedInUser()(null, getState)
 
     expect(redirect).not.toHaveBeenCalled()
   })
@@ -73,7 +81,7 @@ describe('redirectLoggedInUser', () => {
       }),
     })
 
-    await actions.redirectLoggedInUser()(null,getState)
+    await actions.redirectLoggedInUser()(null, getState)
 
     expect(redirect).toHaveBeenCalledWith('/my-gousto')
   })
@@ -93,8 +101,66 @@ describe('redirectLoggedInUser', () => {
       }),
     })
 
-    await actions.redirectLoggedInUser()(null,getState)
+    await actions.redirectLoggedInUser()(null, getState)
 
     expect(redirect).toHaveBeenCalledWith('/my-deliveries')
+  })
+})
+
+describe('changeRecaptcha', () => {
+  let dispatch
+  describe('when isRecaptchaEnabled is false', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      fetchFeatures.mockReturnValue({ data: { isRecaptchaEnabled: false }})
+    })
+    test('should dispatch CHANGE_RECAPTCHA false ', async () => {
+      await changeRecaptcha()(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'CHANGE_RECAPTCHA',
+        isRecaptchaEnabled: false
+      })
+    })
+  })
+
+  describe('when isRecaptchaEnabled is true', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      fetchFeatures.mockReturnValue({ data: { isRecaptchaEnabled: true }})
+    })
+    test('should dispatch CHANGE_RECAPTCHA true ', async () => {
+      await changeRecaptcha()(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'CHANGE_RECAPTCHA',
+        isRecaptchaEnabled: true
+      })
+    })
+  })
+
+  describe('when data is null', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      fetchFeatures.mockReturnValue({ data: null})
+    })
+    test('should not dispatch', async () => {
+      await changeRecaptcha()(dispatch)
+      expect(dispatch).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when fetch fails', () => {
+    let loggerErrorSpy
+    beforeEach(() => {
+      dispatch = jest.fn()
+      fetchFeatures.mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error('error message!')))
+      )
+      loggerErrorSpy = jest.spyOn(logger, 'error')
+    })
+
+    test('should call logger.error', async () => {
+      await changeRecaptcha()(dispatch)
+      expect(loggerErrorSpy).toHaveBeenCalledWith({ message: 'S3File fetch failed' })
+    })
   })
 })

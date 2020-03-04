@@ -46,6 +46,7 @@ class Header extends React.PureComponent {
     trackNavigationClick: PropTypes.func,
     isAccountTabNameTest: PropTypes.bool,
     userId: PropTypes.string,
+    changeRecaptcha: PropTypes.func
   }
 
   static defaultProps = {
@@ -57,6 +58,7 @@ class Header extends React.PureComponent {
     title: '',
     small: false,
     trackNavigationClick: () => { },
+    changeRecaptcha: () => {},
     abandonBasketFeature: false,
     isAccountTabNameTest: false,
     userId: null,
@@ -115,9 +117,11 @@ class Header extends React.PureComponent {
     closeBoxModalVisibilityChange(false)
   }
 
-  onLoginClick = (e) => {
-    const { loginVisibilityChange } = this.props
+  onLoginClick = async (e) => {
+    const { loginVisibilityChange, changeRecaptcha } = this.props
     e.stopPropagation()
+
+    await changeRecaptcha()
     loginVisibilityChange(true)
   }
 

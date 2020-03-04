@@ -5,13 +5,13 @@ describe("My Deliveries", () => {
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent')
     cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
-    cy.route('GET', /user\/current\/orders/, '@userCurrentOrders')
+    cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('currentOrders')
     cy.fixture('user/userCurrentProjectedDeliveries').as('userCurrentProjectedDeliveries')
-    cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries')
+    cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
     cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
-    cy.route('GET', /user\/current\/address/, '@userCurrentAddress')
+    cy.route('GET', /user\/current\/address/, '@userCurrentAddress').as('currentAddress')
     cy.fixture('user/userCurrentSubscription').as('userCurrentSubscription')
-    cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription')
+    cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('currentSubscription')
     cy.route('GET', /customers\/v1\/customers\/\/addresses/, {})
     cy.fixture('orderSkipRecovery').as('orderSkipRecovery')
     cy.route('GET', /orderskiprecovery/, '@orderSkipRecovery')
@@ -19,9 +19,12 @@ describe("My Deliveries", () => {
     cy.route('POST', /user\/current\/subscription\/delivery\/disable/, '@userCurrentSubscriptionDelivery').as('cancelProjectedDelivery')
     cy.route('POST', /user\/(.*)\/subscription\/delivery\/enable/, '@userCurrentSubscriptionDelivery').as('restoreProjectedDelivery')
     cy.route('DELETE', /order/, {}).as('cancelPendingOrder')
+    cy.route('GET', /deliveries\/v1.0/, {}).as('deliveries')
+    cy.route('GET', /delivery_day/, {})
 
     cy.login()
     cy.visit('/mydeliveries')
+    cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
   })
 
   describe('add box button', () => {
@@ -59,8 +62,10 @@ describe("My Deliveries", () => {
       it("should show the modal to prompt a user to pause", () => {
         cy.get('[data-testing="projectedDelivery"]').each(el => {
           cy.wrap(el).click()
+          cy.contains('Cancel').should('be.visible')
           cy.get('[data-testing="cancelButton"]').click()
           cy.wait('@cancelProjectedDelivery')
+          cy.contains('Cancelled').should('be.visible')
         })
 
         cy.get('[data-testing="cancelledAllBoxesModal"]').should("be.visible")

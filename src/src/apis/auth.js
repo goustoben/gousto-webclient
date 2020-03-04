@@ -1,3 +1,4 @@
+import isomorphicFetch from 'isomorphic-fetch'
 import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
@@ -31,8 +32,8 @@ export function resetUserPassword(password, passwordToken) {
   }, 'POST', 'no-cache')
 }
 
-export function serverAuthenticate(email, password, rememberMe) {
-  return fetch(null, `${routes.auth.login}`, { grant_type: 'password', username: email, password, rememberMe }, 'POST', 'no-cache', {}, null, true)
+export function serverAuthenticate(email, password, rememberMe, recaptchaToken) {
+  return fetch(null, `${routes.auth.login}`, { grant_type: 'password', username: email, password, rememberMe, recaptchaToken }, 'POST', 'no-cache', {}, null, true)
 }
 
 export function serverLogout() {
@@ -53,4 +54,20 @@ export function serverForget(accessToken) {
 
 export function serverValidatePassword(password) {
   return fetch(null, `${routes.auth.validate}`, { password }, 'POST', 'no-cache', {}, null, true)
+}
+
+export function validateRecaptchaUserToken(token, secret) {
+  return new Promise((resolve, reject) => {
+    isomorphicFetch(routes.recaptcha.verify, { method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secret}&response=${token}`,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }

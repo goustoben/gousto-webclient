@@ -60,7 +60,7 @@ const postLogoutSteps = () => (
   }
 )
 
-const login = (email, password, rememberMe, orderId = '') => (
+const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '') => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.USER_LOGIN, true))
     dispatch(error(actionTypes.USER_LOGIN, false))
@@ -69,7 +69,7 @@ const login = (email, password, rememberMe, orderId = '') => (
       if (rememberMe) {
         dispatch({ type: actionTypes.LOGIN_REMEMBER_ME })
       }
-      await dispatch(authActions.authAuthenticate(email, password, rememberMe))
+      await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken))
       await dispatch(authActions.authIdentify())
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))

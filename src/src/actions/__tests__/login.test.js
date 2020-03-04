@@ -72,14 +72,14 @@ describe('login actions', () => {
       })
       documentLocation.mockReturnValueOnce({ pathname: '/menu' })
 
-      await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+      await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
 
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(dispatch.mock.calls[3][0]).toEqual({
         type: actionTypes.LOGIN_REMEMBER_ME,
       })
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -88,12 +88,20 @@ describe('login actions', () => {
       expect(redirect).not.toHaveBeenCalled()
     })
 
+    it('should call authAuthenticate action with correct recaptchaToken', async () => {
+      const recaptchaToken = '1234'
+
+      await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true, recaptchaToken })(dispatch, getState)
+
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, recaptchaToken)
+    })
+
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async () => {
       documentLocation.mockReturnValueOnce({ pathname: '/home' })
-      await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+      await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -105,10 +113,10 @@ describe('login actions', () => {
     it('should call userRememberMe and postLoginSteps - admin, /home, no redirect', async () => {
       isAdmin.mockReturnValueOnce(true)
       documentLocation.mockReturnValue({ pathname: '/home' })
-      await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+      await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -125,11 +133,11 @@ describe('login actions', () => {
         slashes: true,
       })
 
-      await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+      await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
 
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
-      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
+      expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
       expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
@@ -152,7 +160,7 @@ describe('login actions', () => {
         })
 
         it('should redirect user to the targeted URL', async () => {
-          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+          await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
       })
@@ -170,7 +178,7 @@ describe('login actions', () => {
         })
 
         it('should redirect user to the targeted URL', async () => {
-          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+          await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
       })
@@ -192,7 +200,7 @@ describe('login actions', () => {
         })
 
         it('should not redirect user to the targeted URL and should redirect to /menu', async () => {
-          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+          await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
           expect(redirect).not.toHaveBeenCalledWith(`${HOST_PRODUCTION}.evil.me`)
           expect(redirect).toHaveBeenCalledWith('/menu')
         })
@@ -209,7 +217,7 @@ describe('login actions', () => {
         })
 
         it('should redirect user without target in the URL', async () => {
-          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+          await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
       })

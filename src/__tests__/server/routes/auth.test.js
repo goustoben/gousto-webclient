@@ -1,6 +1,12 @@
+import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
-import { getUserToken, refreshUserToken, validateUserPassword, identifyUser, forgetUserToken } from 'apis/auth'
+import { getUserToken, refreshUserToken, validateUserPassword, identifyUser, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
+import { RECAPTCHA_PRIVATE_KEY } from '../../../server/config/recaptcha'
+
+jest.mock('apis/fetchS3', () => ({
+  fetchFeatures: jest.fn(),
+}))
 
 jest.mock('apis/auth', () => ({
   getUserToken: jest.fn(),
@@ -8,6 +14,7 @@ jest.mock('apis/auth', () => ({
   validateUserPassword: jest.fn(),
   forgetUserToken: jest.fn(),
   identifyUser: jest.fn(),
+  validateRecaptchaUserToken: jest.fn(),
 }))
 
 jest.mock('server/routes/utils', () => ({
@@ -19,12 +26,22 @@ jest.mock('server/routes/utils', () => ({
 jest.mock('utils/env', () => ({
   authClientId: 'authClientId',
   authClientSecret: 'authClientSecret',
+  recaptchaPrivateKey: '',
+}))
+
+jest.mock('apis/fetchS3', () => ({
+  fetchFeatures: jest.fn().mockReturnValue(
+    new Promise((resolve) => resolve({ data: { isRecaptchaEnabled: false }}))
+  )
 }))
 
 const getCtx = () => ({
   request: {},
   response: {},
 })
+
+const RECAPTCHA_SECRET = RECAPTCHA_PRIVATE_KEY
+const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
 describe('auth', () => {
   let ctx
@@ -34,17 +51,20 @@ describe('auth', () => {
 
   afterEach(() => {
     addSessionCookies.mockReset()
+    getUserToken.mockReset()
     removeSessionCookies.mockReset()
+    validateRecaptchaUserToken.mockReset()
   })
 
   describe('login', () => {
-    const getLoginCtx = ({ username, password, rememberMe }) => (
+    const getLoginCtx = ({ username, password, rememberMe, recaptchaToken }) => (
       Object.assign(getCtx(), {
         request: {
           body: {
             username,
             password,
             rememberMe,
+            recaptchaToken,
           },
           header: {
             'x-forwarded-for': '192.192.192'
@@ -52,6 +72,11 @@ describe('auth', () => {
         },
       },
       ))
+
+    beforeEach(() => {
+      fetchFeatures.mockResolvedValue({ data: { isRecaptchaEnabled: true } })
+      validateRecaptchaUserToken.mockResolvedValue({ success: true })
+    })
 
     describe('when given an invalid request context', () => {
       test('should return a 401', async () => {
@@ -110,6 +135,122 @@ describe('auth', () => {
             },
           })
         })
+      })
+    })
+
+    describe('captcha excluded credentials', () => {
+      const [username, password, rememberMe, recaptchaToken] = [PINGDOM_USER, 'pass1234', true]
+
+      beforeEach(async () => {
+        ctx = getLoginCtx({ username, password, rememberMe, recaptchaToken })
+
+        await login(ctx)
+      })
+
+      test('the validateRecaptchaUserToken is not being called', () => {
+        expect(validateRecaptchaUserToken).not.toHaveBeenCalled()
+      })
+
+      test('the getUserToken is being called correctly', () => {
+        expect(getUserToken).toHaveBeenCalledWith({
+          email: username,
+          password,
+          clientId: 'authClientId',
+          clientSecret: 'authClientSecret',
+          xForwardedFor: '192.192.192',
+        })
+      })
+    })
+
+    describe('recaptcha flag is set to false', () => {
+      const [username, password, rememberMe, recaptchaToken] = [PINGDOM_USER, 'pass1234', true]
+
+      beforeEach(async () => {
+        fetchFeatures.mockResolvedValue({ data: { isRecaptchaEnabled: false } })
+
+        ctx = getLoginCtx({ username, password, rememberMe, recaptchaToken })
+
+        await login(ctx)
+      })
+
+      test('the validateRecaptchaUserToken is not being called', () => {
+        expect(validateRecaptchaUserToken).not.toHaveBeenCalled()
+      })
+
+      test('the getUserToken is being called correctly', () => {
+        expect(getUserToken).toHaveBeenCalledWith({
+          email: username,
+          password,
+          clientId: 'authClientId',
+          clientSecret: 'authClientSecret',
+          xForwardedFor: '192.192.192',
+        })
+      })
+    })
+
+    describe('given a valid token is provided', () => {
+      const [username, password, rememberMe, recaptchaToken] = ['test@test.com', 'pass1234', true, 'RECAPTCHA_TOKEN']
+
+      beforeEach(async () => {
+        validateRecaptchaUserToken.mockResolvedValueOnce({ success: true })
+
+        ctx = getLoginCtx({ username, password, rememberMe, recaptchaToken })
+
+        await login(ctx)
+      })
+
+      test('the fetch is being called with the token', () => {
+        expect(validateRecaptchaUserToken).toHaveBeenCalledWith('RECAPTCHA_TOKEN', RECAPTCHA_SECRET)
+      })
+
+      test('the getUserToken is being called correctly', () => {
+        expect(getUserToken).toHaveBeenCalledWith({
+          email: username,
+          password,
+          clientId: 'authClientId',
+          clientSecret: 'authClientSecret',
+          xForwardedFor: '192.192.192',
+        })
+      })
+    })
+
+    describe('given invalid token is provided', () => {
+      const [username, password, rememberMe, recaptchaToken] = ['test@test.com', 'pass1234', true, 'INVALID_RECAPTCHA_TOKEN']
+
+      beforeEach(async () => {
+        validateRecaptchaUserToken.mockResolvedValueOnce({ success: false })
+
+        ctx = getLoginCtx({ username, password, rememberMe, recaptchaToken })
+
+        await login(ctx)
+      })
+
+      test('the fetch is being called with the token', () => {
+        expect(validateRecaptchaUserToken).toHaveBeenCalledWith('INVALID_RECAPTCHA_TOKEN', RECAPTCHA_SECRET)
+      })
+
+      test('the getUserToken is not being called', () => {
+        expect(getUserToken).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('given no token is provided', () => {
+      const [username, password, rememberMe, recaptchaToken] = ['test@test.com', 'pass1234', true]
+
+      beforeEach(async () => {
+        validateRecaptchaUserToken.mockResolvedValueOnce({ success: false })
+
+        ctx = getLoginCtx({ username, password, rememberMe, recaptchaToken })
+
+        await login(ctx)
+      })
+
+      test('the fetch is being called with the token', () => {
+        expect(validateRecaptchaUserToken).toHaveBeenCalledWith(undefined, RECAPTCHA_SECRET)
+      })
+
+      test('the getUserToken is not being called', () => {
+        expect(getUserToken).not.toHaveBeenCalled()
       })
     })
   })

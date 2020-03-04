@@ -17,6 +17,7 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      isRecaptchaEnabled: false
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -36,6 +37,7 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      isRecaptchaEnabled: false
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -302,6 +304,7 @@ describe('auth reducer', () => {
       name: 'gousto employee',
       roles: ['admin'],
       expiresAt: '',
+      isRecaptchaEnabled: false
     })
     const action = {
       type: 'USER_LOGGED_OUT',
@@ -318,7 +321,44 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      isRecaptchaEnabled: false
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
+
+  test('should handle CHANGE_RECAPTCHA action', () => {
+    const state = Immutable.fromJS({
+      accessToken: '',
+      refreshToken: '',
+      isAuthenticated: false,
+      isAdmin: false,
+      rememberMe: false,
+      email: '',
+      id: '',
+      name: '',
+      roles: [],
+      expiresAt: '',
+      isRecaptchaEnabled: false
+    })
+    const action = {
+      type: 'CHANGE_RECAPTCHA',
+      isRecaptchaEnabled: true
+    }
+    const result = auth.auth(state, action)
+    const expected = Immutable.fromJS({
+      accessToken: '',
+      refreshToken: '',
+      isAuthenticated: false,
+      isAdmin: false,
+      rememberMe: false,
+      email: '',
+      id: '',
+      name: '',
+      roles: [],
+      expiresAt: '',
+      isRecaptchaEnabled: true
+    })
+    expect(Immutable.is(result, expected)).toEqual(true)
+  })
+
 })
