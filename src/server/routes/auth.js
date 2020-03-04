@@ -28,12 +28,17 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
     const { isRecaptchaEnabled } = data
 
     if (isRecaptchaEnabled && username !== PINGDOM_USER) {
-      const { success } = await validateRecaptchaUserToken(recaptchaToken, RECAPTCHA_PRIVATE_KEY)
+      const validateRecaptchaResponse = await validateRecaptchaUserToken(
+        recaptchaToken,
+        RECAPTCHA_PRIVATE_KEY
+      )
 
-      if (!success) {
+      if (!validateRecaptchaResponse.success) {
         const errorMessage = 'Recaptcha failed'
 
-        logger.notice({ message: errorMessage })
+        logger.notice({
+          message: `${errorMessage} :: ${JSON.stringify(validateRecaptchaResponse)}`
+        })
 
         throw Error(errorMessage)
       }
