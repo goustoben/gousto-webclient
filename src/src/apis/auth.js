@@ -57,5 +57,17 @@ export function serverValidatePassword(password) {
 }
 
 export function validateRecaptchaUserToken(token, secret) {
-  return isomorphicFetch(routes.recaptcha.verify, { method: 'POST', secret, response: token })
+  return new Promise((resolve, reject) => {
+    isomorphicFetch(routes.recaptcha.verify, { method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${secret}&response=${token}`,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }
