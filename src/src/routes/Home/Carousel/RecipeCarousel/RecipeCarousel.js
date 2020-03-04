@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import Carousel from 'Carousel'
-import { Recipe } from 'routes/Menu/Recipe'
 import { formatRecipeTitle } from 'utils/recipe'
+import { SimpleRecipe } from '../SimpleRecipe'
 import css from './RecipeCarousel.css'
 import orderRecipes from './orderRecipes'
 
@@ -37,16 +37,11 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
           .map(recipe => (
             <div className={css.recipeContainer} key={recipe.get('id')}>
               <div className={css.recipe} key={recipe.get('id')}>
-                <Recipe
-                  view="simple"
-                  id={recipe.get('id')}
+                <SimpleRecipe
                   title={formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))}
                   media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
                   averageRating={recipe.getIn(['rating', 'average'])}
                   ratingCount={recipe.getIn(['rating', 'count'])}
-                  description={recipe.get('description')}
-                  useWithin={recipe.get('shelfLifeDays')}
-                  cookingTime={recipe.get('cookingTime')}
                   maxMediaSize={400}
                 />
               </div>

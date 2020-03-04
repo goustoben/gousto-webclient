@@ -6,7 +6,6 @@ import Immutable from 'immutable'
 import { CTAToAllRecipes } from './CTAToAllRecipes'
 import { CTAThematic } from './CTAThematic'
 import { GridRecipe } from './GridRecipe'
-import { SimpleRecipe } from './SimpleRecipe'
 import { FeaturedRecipe } from './FeaturedRecipe'
 import { FineDineInRecipe } from './FineDineInRecipe'
 import css from './Recipe.css'
@@ -46,8 +45,6 @@ class Recipe extends React.PureComponent {
     switch (view) {
     case 'featured':
       return <FeaturedRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
-    case 'simple':
-      return <SimpleRecipe {...this.props} />
     case 'fineDineIn':
       return <FineDineInRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     case 'ctaAllRecipe':

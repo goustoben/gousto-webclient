@@ -1,0 +1,70 @@
+@value SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMax from 'styles/screenSizes.css';
+@value sizeMD bodyFontStackBold from 'styles/typography.css';
+@value White from 'styles/colors.css';
+
+.base {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	composes: textBold from 'styles/typography.css';
+}
+
+.recipeDetails {
+	composes: relative from 'styles/position.css';
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderXS from 'styles/borders.css';
+	composes: flex, verticalCenter from 'styles/flex.css';
+	background: White;
+	border-radius: 0;
+	vertical-align: top;
+	composes: inlineBlock from 'styles/display.css';
+	position: relative;
+	width: 100%;
+	@media ScreenXSMax {
+		flex-basis: MobColumnWidth;
+		border-left-width: 0;
+		border-right-width: 0;
+	}
+}
+
+.simpleHeading {
+	composes: textCenter headerLG from 'styles/typography.css';
+	composes: block from 'styles/display.css';
+	composes: headerLG from 'styles/typography.css';
+	composes: base;
+	min-height: 50px;
+	-webkit-font-smoothing: auto;
+	font-smoothing: auto;
+	font-weight: bold;
+	margin-top: 0;
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+
+	@media ScreenSMMax {
+		font-size: 15px;
+	}
+
+	@media (width > 1500px) {
+		height: 50px;
+	}
+}
+
+.simple {
+	min-height: 160px;
+	cursor: pointer;
+}
+
+.textContainer {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+}
+
+.textContainerCenter {
+	composes: textContainer;
+	composes: textCenter from 'styles/typography.css';
+	padding-left: SpacingSM;
+	padding-right: SpacingSM;
+	padding-bottom: SpacingXXS;
+}
+.simpleTagContainer {
+	height: 30px;
+}
