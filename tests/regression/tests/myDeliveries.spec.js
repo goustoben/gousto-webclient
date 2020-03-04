@@ -59,8 +59,10 @@ describe("My Deliveries", () => {
       it("should show the modal to prompt a user to pause", () => {
         cy.get('[data-testing="projectedDelivery"]').each(el => {
           cy.wrap(el).click()
+          cy.contains('Cancel').should('be.visible')
           cy.get('[data-testing="cancelButton"]').click()
           cy.wait('@cancelProjectedDelivery')
+          cy.contains('Cancelled').should('be.visible')
         })
 
         cy.get('[data-testing="cancelledAllBoxesModal"]').should("be.visible")
