@@ -7,6 +7,7 @@ import {
   getPromoBannerText,
   getPromoBannerCode,
   getPromoBannerEnabled,
+  getPromoOfferVariant,
 } from 'selectors/features'
 
 import home from 'config/home'
@@ -32,8 +33,11 @@ const mapStateToProps = (state, ownProps) => {
   const currentPromo = state.promoCurrent || ''
   const basketPromo = getPromoCode(state) || ''
   const isAuthenticated = state.auth.get('isAuthenticated')
-  const text = getPromoBannerText(state) || home.promo.banner.text
-  const promoCode = getPromoBannerCode(state) || ownProps.promoCode || home.promo.code.toUpperCase()
+  const isTVPromoAdsEnabled = getPromoOfferVariant(state)
+  const bannerText = isTVPromoAdsEnabled ? home.promo.banner.tvAdsText : home.promo.banner.text
+  const text = getPromoBannerText(state) || bannerText
+  const discountCode = isTVPromoAdsEnabled ? home.promo.tvAdsCode : home.promo.code.toUpperCase()
+  const promoCode = getPromoBannerCode(state) || ownProps.promoCode || discountCode
   const queryStringPromo = (ownProps.location && ownProps.location.query && ownProps.location.query.promo_code) ? ownProps.location.query.promo_code : ''
 
   const hasBasketPromo = basketPromo.length > 0

@@ -88,6 +88,14 @@ class Login extends React.PureComponent {
   handleSubmit = (e) => {
     e.preventDefault()
 
+    if (this.recaptchaElement && this.state.recaptchaValue === null) {
+      this.recaptchaElement.execute()
+    } else {
+      this.processLogin()
+    }
+  }
+
+  processLogin = () => {
     if (this.canSubmit() === false) {
       return
     }
@@ -123,7 +131,12 @@ class Login extends React.PureComponent {
   }
 
   captchaChanges = (value) => {
-    this.setState({ recaptchaValue: value })
+    // only call processLogin callback if the captcha value isn't null (otherwise this is being called due to the captcha expiring)
+    const callback = value === null ? undefined : this.processLogin
+
+    this.setState({
+      recaptchaValue: value
+    }, callback)
   }
 
   disabledClick = () => {
@@ -195,7 +208,9 @@ class Login extends React.PureComponent {
         && (
           <div>
             <ReCAPTCHA
+              ref={el => { this.recaptchaElement = el }}
               sitekey={RECAPTCHA_PUBLIC_KEY}
+              size='invisible'
               onChange={this.captchaChanges}
             />
           </div>
@@ -208,7 +223,6 @@ class Login extends React.PureComponent {
           disabledClick={this.disabledClick}
           onClick={this.handleSubmit}
           pending={this.props.isAuthenticating}
-          disabled={this.canSubmit() === false}
         >
           Go
         </Button>
