@@ -60,6 +60,9 @@ const defaultFeatures = () => ({
   userMenuVariant: {
     value: '',
   },
+  enableTVPromoAds: {
+    value: false,
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

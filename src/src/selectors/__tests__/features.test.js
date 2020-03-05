@@ -25,7 +25,8 @@ import {
   getUserMenuVariant,
   isAccountTabNameTest,
   getHideMenuBanner,
-  getShowNewMenuLayout
+  getShowNewMenuLayout,
+  getPromoOfferVariant
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -651,6 +652,36 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(getShowNewMenuLayout(state)).toBe(true)
+      })
+    })
+  })
+
+  describe('getPromoOfferVariant', () => {
+    describe('when enableTVPromoAds is NOT set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          enableTVPromoAds: {
+            value: false
+          }
+        })
+      })
+
+      test('should be falsy', () => {
+        expect(getPromoOfferVariant(state)).toBeFalsy()
+      })
+    })
+
+    describe('when enableTVPromoAds is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          enableTVPromoAds: {
+            value: true
+          }
+        })
+      })
+
+      test('should be truthy', () => {
+        expect(getPromoOfferVariant(state)).toBeTruthy()
       })
     })
   })
