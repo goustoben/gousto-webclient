@@ -1,3 +1,1 @@
-import env from 'utils/env'
-
-export const RECAPTCHA_PRIVATE_KEY = '6LcFYN4UAAAAAPrY9wXD_3CFXlDDoIuWQK0v90BZ'
+export const RECAPTCHA_PRIVATE_KEY = '6LcjBd8UAAAAANgAZu3GJi1SlSZ5Yof9leBz-z5q'
