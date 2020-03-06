@@ -17,8 +17,12 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      isRecaptchaEnabled: false
+      isRecaptchaEnabled: false,
+      recaptcha: {
+        signupToken: null,
+      }
     })
+
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
@@ -37,7 +41,10 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      isRecaptchaEnabled: false
+      isRecaptchaEnabled: false,
+      recaptcha: {
+        signupToken: null,
+      }
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -304,7 +311,10 @@ describe('auth reducer', () => {
       name: 'gousto employee',
       roles: ['admin'],
       expiresAt: '',
-      isRecaptchaEnabled: false
+      isRecaptchaEnabled: false,
+      recaptcha: {
+        signupToken: null,
+      }
     })
     const action = {
       type: 'USER_LOGGED_OUT',
@@ -321,7 +331,10 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      isRecaptchaEnabled: false
+      isRecaptchaEnabled: false,
+      recaptcha: {
+        signupToken: null,
+      }
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })

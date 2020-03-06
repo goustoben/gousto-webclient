@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import ReCAPTCHA from 'components/Recaptcha'
+import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 
 import { Section } from 'Page/Elements'
 import BoxDetails from '../BoxDetails'
@@ -30,6 +32,9 @@ export class CheckoutPayment extends React.Component {
     reloadCheckoutScript: PropTypes.func,
     /* prerender - We allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only */
     prerender: PropTypes.bool,
+    isRecaptchaEnabled: PropTypes.bool,
+    storeSignupRecaptchaToken: PropTypes.func,
+    recaptchaValue: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -45,6 +50,8 @@ export class CheckoutPayment extends React.Component {
     sectionName: 'payment',
     browser: 'mobile',
     checkoutScriptReady: false,
+    isRecaptchaEnabled: false,
+    storeSignupRecaptchaToken: () => {},
   }
 
   state = {
@@ -80,7 +87,19 @@ export class CheckoutPayment extends React.Component {
   }
 
   handleClick = () => {
-    const { trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed, trackingOrderPlaceAttemptSucceeded } = this.props
+    const { recaptchaValue } = this.props
+    const captchaPassed = recaptchaValue !== null
+
+    if (this.recaptchaElement && !captchaPassed) {
+      this.recaptchaElement.execute()
+    } else {
+      this.processSignup()
+    }
+  }
+
+  processSignup = () => {
+    const { trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed, trackingOrderPlaceAttemptSucceeded, isRecaptchaEnabled, recaptchaValue } = this.props
+
     trackingOrderPlaceAttempt()
 
     if (this.isFormValid()) {
@@ -101,8 +120,17 @@ export class CheckoutPayment extends React.Component {
     submit()
   }
 
+  handleRecaptchaChange = (value) => {
+    const { storeSignupRecaptchaToken } = this.props
+
+    storeSignupRecaptchaToken(value)
+    if (value !== null) {
+      this.processSignup()
+    }
+  }
+
   render() {
-    const { asyncValidate, browser, checkoutScriptReady, prerender, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName } = this.props
+    const { asyncValidate, browser, checkoutScriptReady, prerender, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, isRecaptchaEnabled } = this.props
     const { isSubmitCardEnabled } = this.state
 
     return (
@@ -124,14 +152,32 @@ export class CheckoutPayment extends React.Component {
               disableCardSubmission={this.disableCardSubmission}
             />
           </div>
-          {prerender ? null : (
-            <CheckoutAddress
-              sectionName={sectionName}
-              asyncValidate={asyncValidate}
-              receiveRef={receiveRef}
-              scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-            />
-          )}
+          <div className={css.row}>
+            {prerender ? null : (
+              <div className={css.addressContainer}>
+                <CheckoutAddress
+                  sectionName={sectionName}
+                  asyncValidate={asyncValidate}
+                  receiveRef={receiveRef}
+                  scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+                />
+              </div>
+            )}
+            {
+              !prerender
+              && isRecaptchaEnabled
+              && (
+                <div className={css.recaptchaContainer}>
+                  <ReCAPTCHA
+                    ref={el => { this.recaptchaElement = el }}
+                    sitekey={RECAPTCHA_PUBLIC_KEY}
+                    onChange={this.handleRecaptchaChange}
+                    size="invisible"
+                  />
+                </div>
+              )
+            }
+          </div>
         </div>
         {(prerender) ? null : (
           <div>

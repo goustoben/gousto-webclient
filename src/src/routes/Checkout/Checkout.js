@@ -59,11 +59,13 @@ const propTypes = {
   loadPrices: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
   queueItFeature: PropTypes.bool,
+  changeRecaptcha: PropTypes.func
 }
 
 const defaultProps = {
   params: {},
   redirect: () => { },
+  changeRecaptcha: () => {}
 }
 
 const contextTypes = {
@@ -140,7 +142,7 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, queueItFeature } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, queueItFeature, changeRecaptcha } = this.props
 
     /* global QueueIt */
     if (queueItFeature) {
@@ -159,6 +161,8 @@ class Checkout extends PureComponent {
         checkoutScriptReady: true,
       })
     })
+
+    changeRecaptcha()
   }
 
   componentWillReceiveProps(nextProps) {

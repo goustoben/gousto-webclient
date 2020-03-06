@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { changeRecaptcha } from 'actions/auth'
 import Checkout from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -25,6 +26,7 @@ const CheckoutContainer = connect(mapStateToProps, {
   trackSignupStep: actions.trackSignupPageChange,
   boxSummaryDeliveryDaysLoad,
   trackCheckoutButtonPressed,
+  changeRecaptcha,
 })(Checkout)
 
 export default CheckoutContainer

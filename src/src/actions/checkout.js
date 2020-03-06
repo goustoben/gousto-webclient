@@ -229,8 +229,9 @@ export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => d
 
 export function checkoutSignup() {
   return async (dispatch, getState) => {
-    const { basket } = getState()
+    const { basket, auth } = getState()
     const orderId = basket.get('previewOrderId')
+    const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
 
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
@@ -239,7 +240,7 @@ export function checkoutSignup() {
       dispatch(checkoutActions.resetDuplicateCheck())
       dispatch(trackSignupPageChange('Submit'))
       await dispatch(userSubscribe())
-      await dispatch(checkoutActions.checkoutPostSignup())
+      await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
@@ -315,7 +316,7 @@ export const trackPurchase = () => (
   }
 )
 
-export function checkoutPostSignup() {
+export function checkoutPostSignup(recaptchaValue) {
   return async (dispatch, getState) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
@@ -327,7 +328,7 @@ export function checkoutPostSignup() {
       const email = aboutYou.get('email')
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
-      await dispatch(loginActions.loginUser({ email, password, rememberMe: true }, orderId))
+      await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken: recaptchaValue }, orderId))
       const prices = pricing.get('prices')
       const grossTotal = prices && prices.get('grossTotal')
       const netTotal = prices && prices.get('total')
