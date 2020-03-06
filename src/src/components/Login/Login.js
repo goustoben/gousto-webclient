@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ReCAPTCHA from 'react-google-recaptcha'
+import ReCAPTCHA from 'components/recaptcha'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import TextInput from 'Form/Input'
 import CheckBox from 'Form/CheckBox'

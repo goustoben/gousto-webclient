@@ -31,6 +31,20 @@
 	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
+.row {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap
+}
+
+.addressContainer, .recaptchaContainer {
+	display: inline-block;
+}
+
+.addressContainer {
+	margin-right: 1rem;
+}
+
 .hide {
 	display: none;
 }

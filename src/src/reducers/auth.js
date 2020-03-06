@@ -13,7 +13,10 @@ export const initialState = () => Immutable.fromJS({
   name: '',
   roles: [],
   expiresAt: '',
-  isRecaptchaEnabled: false
+  isRecaptchaEnabled: false,
+  recaptcha: {
+    signupToken: null,
+  }
 })
 
 const auth = {
@@ -57,6 +60,10 @@ const auth = {
 
     case actionTypes.CHANGE_RECAPTCHA: {
       return state.set('isRecaptchaEnabled', action.isRecaptchaEnabled)
+    }
+
+    case actionTypes.STORE_SIGNUP_RECAPTCHA_TOKEN: {
+      return state.setIn(['recaptcha', 'signupToken'], action.token)
     }
 
     default:

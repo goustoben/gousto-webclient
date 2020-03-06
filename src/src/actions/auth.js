@@ -181,6 +181,11 @@ export const changeRecaptcha = () => async (dispatch) => {
   }
 }
 
+export const storeSignupRecaptchaToken = (token) => ({
+  type: actionTypes.STORE_SIGNUP_RECAPTCHA_TOKEN,
+  token,
+})
+
 const authActions = {
   authAuthenticate: authenticate,
   authRefresh: refresh,
@@ -188,6 +193,7 @@ const authActions = {
   authClear: clear,
   authValidate: validate,
   authResetPassword: resetPassword,
+  storeSignupRecaptchaToken,
   userRememberMe,
   userAuthenticated,
   redirectLoggedInUser,

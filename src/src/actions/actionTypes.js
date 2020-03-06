@@ -317,7 +317,9 @@ const actionTypes = {
   VOID: 'VOID', // to be used when action type is required but there's no actual action to dispatch
 
   __REACT_ROUTER_LOCATION_CHANGE: '@@router/LOCATION_CHANGE', // React router,
-  LOGGER_SET_UUID: 'LOGGER_SET_UUID'
+  LOGGER_SET_UUID: 'LOGGER_SET_UUID',
+
+  STORE_SIGNUP_RECAPTCHA_TOKEN: 'STORE_SIGNUP_RECAPTCHA_TOKEN',
 }
 
 export { actionTypes }
