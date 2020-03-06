@@ -91,7 +91,31 @@ describe('<ResetPassword />', () => {
       wrapper.find(PageContent).find(Button).prop('onClick')()
 
       expect(authResetPasswordSpy).toHaveBeenCalledTimes(1)
-      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', 'someTokenValue')
+      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', 'someTokenValue', null)
+    })
+  })
+
+  describe('given recaptcha is enabled', () => {
+    const authResetPasswordSpy = jest.fn()
+    const location = { query: { token: 'someTokenValue' } }
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = shallow(<ResetPassword
+        authResetPassword={authResetPasswordSpy}
+        location={location}
+        isRecaptchaEnabled
+      />)
+      wrapper.setState({ recaptchaValue: 'recaptcha-value' })
+
+      pageContent = wrapper.find(PageContent)
+      wrapper.find(PageContent).find(Input).prop('onChange')('8charact')
+      wrapper.update()
+      wrapper.find(PageContent).find(Button).prop('onClick')()
+    })
+
+    test('authResetPassword is called with the recaptcha token', () => {
+      expect(authResetPasswordSpy).toHaveBeenCalledWith('8charact', 'someTokenValue', 'recaptcha-value')
     })
   })
 })

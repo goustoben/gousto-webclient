@@ -148,14 +148,14 @@ const validate = (accessToken, refreshToken, expiresAt) => (
   }
 )
 
-const resetPassword = (password, passwordToken) => (
+const resetPassword = (password, passwordToken, recaptchaToken = '') => (
   async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.AUTH_PASSWORD_RESET, true))
     dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, null))
 
     try {
       const { data: { email } } = await resetUserPassword(password, passwordToken)
-      await dispatch(loginActions.loginUser({ email, password, rememberMe: true }))
+      await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }))
       redirect(configRoutes.client.myDeliveries)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, err.code))
