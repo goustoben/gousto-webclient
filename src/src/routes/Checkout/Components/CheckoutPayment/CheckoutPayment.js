@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ReCAPTCHA from 'components/recaptcha'
+import ReCAPTCHA from 'components/Recaptcha'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 
 import { Section } from 'Page/Elements'
