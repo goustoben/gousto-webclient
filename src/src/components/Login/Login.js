@@ -20,13 +20,14 @@ const secretPingdomEmailQuickHash = 294722922
 // so we disable eslint
 const quickStringHash = string => (
   // eslint-disable-next-line
-  string.split('').reduce((a,b)=>{a=((a<<5)-a)+b.charCodeAt(0);return a&a},0)
+  string.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
 )
 
 const isSecretPingdomEmail = (email) => (
-  email.length === secretPingdomEmailLength
-    && email.endsWith(secretPingdomEmailSuffix)
-    && quickStringHash(email) === secretPingdomEmailQuickHash
+  email
+  && email.length === secretPingdomEmailLength
+  && email.endsWith(secretPingdomEmailSuffix)
+  && quickStringHash(email) === secretPingdomEmailQuickHash
 )
 
 class Login extends React.PureComponent {
@@ -50,7 +51,7 @@ class Login extends React.PureComponent {
     isAuthenticated: false,
     isAuthenticating: false,
     statusText: '',
-    changeRecaptcha: () => {}
+    changeRecaptcha: () => { }
   }
 
   constructor() {
@@ -88,7 +89,7 @@ class Login extends React.PureComponent {
   handleSubmit = (e) => {
     e.preventDefault()
 
-    if (this.recaptchaElement && this.state.recaptchaValue === null) {
+    if (this.captchaNeedsExecuting()) {
       this.recaptchaElement.execute()
     } else {
       this.processLogin()
@@ -96,7 +97,8 @@ class Login extends React.PureComponent {
   }
 
   processLogin = () => {
-    if (this.canSubmit() === false) {
+    // shouldn't reach here, but just in case
+    if (this.captchaNeedsExecuting()) {
       return
     }
 
@@ -152,16 +154,23 @@ class Login extends React.PureComponent {
     </div>
   )
 
-  canSubmit = () => {
+  captchaNeedsExecuting = () => {
     const { email, recaptchaValue } = this.state
     const { isRecaptchaEnabled } = this.props
 
-    const captchaPassed = recaptchaValue !== null
+    const featureFlagIsOff = isRecaptchaEnabled === false
+    const secretEmailEntered = isSecretPingdomEmail(email)
 
-    return (
-      isSecretPingdomEmail(email)
-      || (isRecaptchaEnabled === false || captchaPassed)
-    )
+    // prevent errors from breaking the page if the captcha isn't loaded for whatever reason
+    const captchaElementNotOnPage = !this.recaptchaElement
+
+    if (featureFlagIsOff || secretEmailEntered || captchaElementNotOnPage) {
+      return false
+    }
+
+    const captchaIsEmpty = (recaptchaValue === null)
+
+    return captchaIsEmpty
   }
 
   renderLoginForm = () => (
