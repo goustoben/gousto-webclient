@@ -61,9 +61,9 @@ describe("My Deliveries", () => {
     describe('when all projected deliveries are cancelled', () => {
       it("should show the modal to prompt a user to pause", () => {
         cy.get('[data-testing="projectedDelivery"]').each(el => {
-          cy.wrap(el).click()
+          cy.wrap(el).click().scrollIntoView()
           cy.contains('Cancel').should('be.visible')
-          cy.get('[data-testing="cancelButton"]').click()
+          cy.wrap(el).find('[data-testing="cancelButton"]').click()
           cy.wait('@cancelProjectedDelivery')
           cy.contains('Cancelled').should('be.visible')
         })
