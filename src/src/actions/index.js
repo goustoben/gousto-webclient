@@ -23,7 +23,7 @@ import subscriptionPause from './subscriptionPause'
 import temp from './temp'
 import tracking from './tracking'
 import user from './user'
-import collections from './collections'
+import { collectionsLoadCollectionBySlug } from './collections'
 import cookbook from './cookbook'
 import deliveries from './deliveries'
 import * as welcome from './welcome'
@@ -32,7 +32,7 @@ const actions = {
   ...auth,
   ...basket,
   ...checkout,
-  ...collections,
+  ...collectionsLoadCollectionBySlug,
   ...cookbook,
   ...content,
   ...filters,

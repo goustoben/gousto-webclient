@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import redirectActions from 'actions/redirect'
-import collectionActions from 'actions/collections'
+import { collectionsLoadCollectionBySlug } from 'actions/collections'
 import cookbookActions from 'actions/cookbook'
 import { actionTypes } from 'actions/actionTypes'
 import routesConfig from 'config/routes'
@@ -80,7 +80,7 @@ class Hub extends React.PureComponent {
   }
 
   static async fetchData({ store, params, setNum = 1 }) {
-    await store.dispatch(collectionActions.collectionsLoadCollectionBySlug(params.collectionSlug))
+    await store.dispatch(collectionsLoadCollectionBySlug(params.collectionSlug))
 
     if (store.getState().error.get(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS)) {
       logger.error({ message: `Cookbook hub not available for collection slug: ${params.collectionSlug}` })

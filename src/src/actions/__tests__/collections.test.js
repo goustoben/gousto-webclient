@@ -1,12 +1,13 @@
-import Immutable from 'immutable'
+import GoustoException from 'utils/GoustoException'
+import { collectionsLoadCollectionBySlug } from 'actions/collections'
+import { fetchCollectionBySlug } from 'apis/collections'
+import { errorLoad } from 'actions/status'
 
-import { fetchCollections } from 'apis/collections'
-
-import {
-  collectionsLoadCollections,
-  collectionsLoadCollectionBySlug,
-  collectionsLoadCollectionRecipes,
-} from 'actions/collections'
+jest.mock('actions/status', () => ({
+  errorLoad: jest.fn(),
+  error: jest.fn(),
+  pending: jest.fn()
+}))
 
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
@@ -27,13 +28,6 @@ jest.mock('apis/collections', () => ({
   ),
 }))
 
-const createCollectionState = ({ isAuthenticated }) => ({
-  auth: Immutable.Map({
-    accessToken: 'an-access-token',
-    isAuthenticated,
-  }),
-})
-
 describe('collection actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
@@ -43,32 +37,6 @@ describe('collection actions', () => {
   })
 
   describe('collectionsLoadCollections', () => {
-    describe('when authenticated', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createCollectionState({
-          isAuthenticated: true,
-        }))
-      })
-    })
-
-    describe('when not authenticated', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createCollectionState({
-          isAuthenticated: false,
-        }))
-      })
-
-      test('should dispatch a fetchCollections request without experiments preset', () => {
-        collectionsLoadCollections()(dispatch, getState)
-
-        expect(fetchCollections).toHaveBeenCalledWith(
-          'an-access-token',
-          '',
-          {}
-        )
-      })
-    })
-
     describe('collections receive collection recipes slug action', () => {
       const collectionSlug = 'slug'
       test('should dispatch COLLECTIONS_RECEIVE_COLLECTIONS', async () => {
@@ -83,19 +51,20 @@ describe('collection actions', () => {
           }]
         })
       })
-    })
 
-    describe('collections receive collection recipes action', () => {
-      const collectionId = '1234'
-      test('should dispatch COLLECTIONS_RECEIVE_COLLECTIONS', async () => {
-        const thunk = collectionsLoadCollectionRecipes(collectionId)
+      test('should mark COLLECTIONS_RECEIVE_COLLECTIONS as errored if it errors', async () => {
+        const err = new GoustoException(`Failed to load collection by slug: ${collectionSlug}`, {
+          error: 'fetch-collection-fail',
+          level: 'notice',
+        })
+        fetchCollectionBySlug.mockReturnValueOnce(
+          new Promise((resolve, reject) => { reject(err) })
+        )
+        const thunk = collectionsLoadCollectionBySlug(collectionSlug)
 
         await thunk(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith({
-          type: 'COLLECTIONS_RECEIVE_COLLECTION_RECIPES',
-          collectionId: '1234',
-          recipes: {}
-        })
+        expect(errorLoad).toHaveBeenCalledTimes(1)
+        expect(errorLoad).toHaveBeenNthCalledWith(1, 'COLLECTIONS_RECEIVE_COLLECTIONS', err)
       })
     })
   })
