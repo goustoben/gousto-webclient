@@ -30,13 +30,20 @@ class BoxSummary extends React.PureComponent {
     pricingPending: PropTypes.bool,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
     slotId: PropTypes.string,
+    shouldShowBoxSummary: PropTypes.bool
   }
 
   static defaultProps = {
-    deliveryDays: Immutable.fromJS([]),
-    displayOptions: Immutable.fromJS([]),
+    deliveryDays: Immutable.Map(),
     maxRecipesNum: config.maxRecipesNum,
     basketCheckedOut: false,
+    shouldShowBoxSummary: false,
+    date: null,
+    menuFetchPending: false,
+    hasUnavailableRecipes: false,
+    orderSaveError: null,
+    pricingPending: false,
+    slotId: null,
   }
 
   state = {
@@ -44,9 +51,9 @@ class BoxSummary extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { hasUnavailableRecipes, orderSaveError, boxDetailsVisibilityChange } = this.props
+    const { hasUnavailableRecipes, orderSaveError, boxDetailsVisibilityChange, shouldShowBoxSummary } = this.props
 
-    if (hasUnavailableRecipes && orderSaveError === 'no-stock') {
+    if ((hasUnavailableRecipes && orderSaveError === 'no-stock') || shouldShowBoxSummary) {
       boxDetailsVisibilityChange(true)
     }
 

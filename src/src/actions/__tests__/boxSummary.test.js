@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import * as reactRouterPush from 'react-router-redux'
 import basketActions from 'actions/basket'
-import { boxSummaryDeliveryDaysLoad, boxSummaryNext } from 'actions/boxSummary'
+import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive } from 'actions/boxSummary'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
 
@@ -24,6 +24,22 @@ jest.mock('actions/basket', () => ({
 deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
 
 describe('boxSummary actions', () => {
+  describe('basketDeliveryDaysReceive', () => {
+    test('should return an action with the correct response', () => {
+      const days = {
+        alternateDeliveryDay: null,
+        coredayId: '231',
+        date: '2020-02-02',
+        id: '12',
+        isDefault: false,
+        unavailableReason: ''}
+      const result = basketDeliveryDaysReceive(days)
+      expect(result).toEqual({
+        type: 'BOXSUMMARY_DELIVERY_DAYS_RECEIVE',
+        days,
+      })
+    })
+  })
   describe('boxSummaryDeliveryDaysLoad', () => {
     describe('given postcode is provided in state', () => {
       const dispatchSpy = jest.fn()
@@ -189,7 +205,7 @@ describe('boxSummary actions', () => {
         boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(pushSpy).toHaveBeenCalledTimes(1)
         expect(pushSpy.mock.calls[0][0]).toEqual('/menu/12345')
-        expect(dispatchSpy).toHaveBeenCalledTimes(3)
+        expect(dispatchSpy).toHaveBeenCalledTimes(2)
       })
     })
     describe('with no order id in the temp state but a postcode in the basket state', () => {
@@ -202,46 +218,34 @@ describe('boxSummary actions', () => {
         jest.clearAllMocks()
       })
 
-      describe('when hide box summary feature flag is present', () => {
-        describe('and the basket is empty', () => {
-          beforeEach(() => {
-            getStateSpy = jest.fn().mockReturnValue({
-              ...defaultProps,
-              features: Immutable.fromJS({
-                hideBoxSummary: {
-                  value: true
-                }
-              })
-            })
-          })
-          test('should dispatch boxSummaryVisibilityChange(false)', () => {
-            boxSummaryNext()(dispatchSpy, getStateSpy)
-            expect(dispatchSpy).toHaveBeenCalledTimes(3)
+      describe('when the basket is empty', () => {
+        beforeEach(() => {
+          getStateSpy = jest.fn().mockReturnValue({
+            ...defaultProps,
           })
         })
+        test('should dispatch boxSummaryVisibilityChanged', () => {
+          boxSummaryNext()(dispatchSpy, getStateSpy)
+          expect(dispatchSpy).toHaveBeenCalledTimes(2)
+        })
+      })
 
-        describe('and the basket contains recipes', () => {
-          beforeEach(() => {
-            getStateSpy = jest.fn().mockReturnValue({
-              ...defaultProps,
-              basket: Immutable.Map({
-                postcode: 'w3',
-                slotId: '',
-                recipes: Immutable.Map({
-                  123: 1
-                })
-              }),
-              features: Immutable.fromJS({
-                hideBoxSummary: {
-                  value: true
-                }
+      describe('and the basket contains recipes', () => {
+        beforeEach(() => {
+          getStateSpy = jest.fn().mockReturnValue({
+            ...defaultProps,
+            basket: Immutable.Map({
+              postcode: 'w3',
+              slotId: '',
+              recipes: Immutable.Map({
+                123: 1
               })
-            })
+            }),
           })
-          test('should dispatch boxSummaryVisibilityChange(false)', () => {
-            boxSummaryNext()(dispatchSpy, getStateSpy)
-            expect(dispatchSpy).toHaveBeenCalledTimes(2)
-          })
+        })
+        test('should dispatch boxSummaryVisibilityChange(false)', () => {
+          boxSummaryNext()(dispatchSpy, getStateSpy)
+          expect(dispatchSpy).toHaveBeenCalledTimes(1)
         })
       })
 
