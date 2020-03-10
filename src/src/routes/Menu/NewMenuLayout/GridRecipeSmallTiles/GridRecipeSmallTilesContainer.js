@@ -17,7 +17,8 @@ const mapStateToProps = (state, ownProps) => {
     inBasket: basket.hasIn(['recipes', recipeId]),
     stock: menuRecipeStock.getIn([recipeId, String(numPortions)], 0),
     isNew: isNew(Immutable.fromJS(ownProps.recipe)),
-    view: 'smallGrid'
+    view: 'smallGrid',
+    shouldShowRangeBadge: recipeProps.range && recipeProps.range.get('slug') === 'fine-dine-in'
   }
 }
 
