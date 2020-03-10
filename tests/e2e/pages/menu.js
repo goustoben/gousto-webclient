@@ -21,7 +21,7 @@ module.exports = {
           clickNextButton: function () {
             this
               .api.execute(function () {
-                const checkoutButton = document.querySelector('[data-testing="boxSummaryNextButton"]')
+                const checkoutButton = document.querySelector('[data-testing="boxSummaryArrow"]')
                 checkoutButton.click()
               })
           },
