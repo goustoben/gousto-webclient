@@ -52,8 +52,8 @@ module.exports = {
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
-    browser.pause(2000)
       .perform(done => {
+        browser.pause(2000)
         orderConfirmation.section.orderConfirmationContainer.checkIfOrderConfirmationPageVisible(browser)
         done()
       })
