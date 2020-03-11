@@ -64,6 +64,7 @@ describe("My Deliveries", () => {
           cy.wrap(el).click().scrollIntoView()
           cy.contains('Cancel').should('be.visible')
           cy.wrap(el).find('[data-testing="cancelButton"]').click()
+          cy.wrap(el).click().scrollIntoView()
           cy.wait('@cancelProjectedDelivery')
           cy.contains('Cancelled').should('be.visible')
         })
