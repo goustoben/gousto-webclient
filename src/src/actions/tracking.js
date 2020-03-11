@@ -2,6 +2,7 @@
 import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import globals from 'config/globals'
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from 'actions/actionTypes'
 import moment from 'moment'
 
@@ -112,7 +113,7 @@ export const trackCTAToAllRecipesClicked = () => (
     dispatch({
       type: actionTypes.TRACKING_CTA_TO_ALL_RECIPES_CLICKED,
       trackingData: {
-        actionType: 'All Recipe CTA Clicked',
+        actionType: trackingKeys.clickAllRecipes,
       }
     })
   }

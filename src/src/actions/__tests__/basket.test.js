@@ -9,6 +9,7 @@ import { push } from 'react-router-redux'
 import config from 'config'
 
 import * as basketUtils from 'utils/basket'
+import * as trackingKeys from 'actions/trackingKeys'
 
 jest.mock('utils/basket')
 
@@ -57,7 +58,7 @@ describe('basket actions', () => {
       const numPortionChangeTracking = {
         type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
         trackingData: {
-          actionType: 'PortionSize Selected',
+          actionType: trackingKeys.selectPortionSize,
           num_portion,
           order_id: order_id || null,
         },
@@ -255,7 +256,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
-          actionType: 'Order Placed',
+          actionType: trackingKeys.placeOrder,
           order_id: '',
           order_total: '24.00',
           promo_code: false,
@@ -319,7 +320,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         trackingData: {
-          actionType: 'Order Placed',
+          actionType: trackingKeys.placeOrder,
           order_id: '179',
           order_total: '22.00',
           promo_code: false,
@@ -384,7 +385,7 @@ describe('basket actions', () => {
       expect(dispatch.mock.calls[3][0]).toEqual({
         type: 'BASKET_CHECKOUT',
         trackingData: {
-          actionType: 'BASKET_CHECKED_OUT',
+          actionType: trackingKeys.checkOutBasketAttempt,
           numRecipes: 2,
           view: 'grid',
         },
@@ -537,7 +538,7 @@ describe('basket actions', () => {
             expect(dispatch.mock.calls[1][0]).toEqual({
               type: actionTypes.BASKET_CHECKOUT,
               trackingData: {
-                actionType: actionTypes.BASKET_CHECKED_OUT,
+                actionType: trackingKeys.checkOutBasketAttempt,
                 order,
               },
             })
@@ -634,7 +635,7 @@ describe('basket actions', () => {
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: 'BASKET_CHECKOUT_PROCEED',
         trackingData: {
-          actionType: 'BASKET_CHECKOUT_PROCEED',
+          actionType: trackingKeys.checkOutBasketComplete,
           basket: Immutable.fromJS({
             orderId: '179',
           }),
@@ -771,7 +772,7 @@ describe('basket actions', () => {
             collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             trackingData: {
               view: 'boxsummary',
-              actionType: 'Recipe Added',
+              actionType: trackingKeys.addRecipe,
               recipeId: '123',
               position: '57',
               collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
@@ -854,7 +855,7 @@ describe('basket actions', () => {
             collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             trackingData: {
               view: 'boxsummary',
-              actionType: 'Recipe Added',
+              actionType: trackingKeys.addRecipe,
               recipeId: '123',
               position: '57',
               collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
@@ -875,7 +876,7 @@ describe('basket actions', () => {
             type: actionTypes.BASKET_LIMIT_REACHED,
             limitReached: true,
             trackingData: {
-              actionType: actionTypes.BASKET_LIMIT_REACHED,
+              actionType: trackingKeys.basketLimit,
               limitReached: true,
               view: 'boxsummary',
               source: actionTypes.RECIPE_ADDED,
@@ -955,7 +956,7 @@ describe('basket actions', () => {
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
         trackingData: {
-          actionType: 'Recipe Removed',
+          actionType: trackingKeys.removeRecipe,
           recipeId: '123',
           view: undefined,
           position: undefined,
@@ -975,7 +976,7 @@ describe('basket actions', () => {
         trackingData: {
           view: undefined,
           source: actionTypes.RECIPE_REMOVED,
-          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          actionType: trackingKeys.basketLimit,
           limitReached: false,
         },
       }])
@@ -1000,7 +1001,7 @@ describe('basket actions', () => {
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
         trackingData: {
-          actionType: 'Recipe Removed',
+          actionType: trackingKeys.removeRecipe,
           recipeId: '123',
           view: 'boxsummary',
           position: undefined,
@@ -1020,7 +1021,7 @@ describe('basket actions', () => {
         trackingData: {
           view: 'boxsummary',
           source: actionTypes.RECIPE_REMOVED,
-          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          actionType: trackingKeys.basketLimit,
           limitReached: false,
         },
       }])
@@ -1046,7 +1047,7 @@ describe('basket actions', () => {
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
         trackingData: {
-          actionType: 'Recipe Removed',
+          actionType: trackingKeys.removeRecipe,
           recipeId: '123',
           view: undefined,
           position: undefined,
@@ -1066,7 +1067,7 @@ describe('basket actions', () => {
         trackingData: {
           view: undefined,
           source: actionTypes.RECIPE_REMOVED,
-          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          actionType: trackingKeys.basketLimit,
           limitReached: false,
         },
       }])
@@ -1109,7 +1110,7 @@ describe('basket actions', () => {
         type: 'BASKET_SLOT_CHANGE',
         slotId: 'slot-1-day-1',
         trackingData: {
-          actionType: 'BASKET_SLOT_CHANGE',
+          actionType: trackingKeys.changeBasketSlot,
           date: '2020-02-13',
           dayId: 123,
           slotId: 'slot-1-day-1',

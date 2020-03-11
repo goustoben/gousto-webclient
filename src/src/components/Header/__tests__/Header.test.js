@@ -4,6 +4,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import { Header } from 'Header/Header'
 import routesConfig from 'config/routes'
+import * as trackingKeys from 'actions/trackingKeys'
 
 describe('Header', () => {
   const store = {
@@ -327,7 +328,7 @@ describe('Header', () => {
           clientRouted: false,
           name: 'Rate My Recipes',
           url: routesConfig.client.rateMyRecipes,
-          tracking: 'RateMyRecipesNavigation Clicked',
+          tracking: trackingKeys.clickRateMyRecipesNavigation,
         },
         {
           clientRouted: true,
@@ -338,7 +339,7 @@ describe('Header', () => {
         {
           name: 'Choose Recipes',
           url: routesConfig.client.menu,
-          tracking: 'RecipeNavigation Clicked',
+          tracking: trackingKeys.clickRecipeNavigation,
         },
         {
           clientRouted: false,
@@ -408,7 +409,7 @@ describe('Header', () => {
         {
           name: 'Choose Recipes',
           url: routesConfig.client.menu,
-          tracking: 'RecipeNavigation Clicked',
+          tracking: trackingKeys.clickRecipeNavigation,
         },
         {
           clientRouted: false,

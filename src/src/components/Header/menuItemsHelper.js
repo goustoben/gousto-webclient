@@ -1,11 +1,12 @@
 import config from 'config'
+import * as trackingKeys from 'actions/trackingKeys'
 
 const clientRoutes = config.routes.client
 
 export const defaultMenuItems = {
   home: { name: 'Home', url: clientRoutes.home, clientRouted: true },
   boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
-  menu: { name: 'Choose Recipes', url: clientRoutes.menu, tracking: 'RecipeNavigation Clicked' },
+  menu: { name: 'Choose Recipes', url: clientRoutes.menu, tracking: trackingKeys.clickRecipeNavigation },
   faq: {
     name: 'Help',
     url: config.routes.zendesk.faqs,
@@ -14,7 +15,7 @@ export const defaultMenuItems = {
   },
   myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true, tracking: 'MyGoustoNavigation Clicked' },
   referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: true, tracking: 'ReferAFriendNavigation Clicked' },
-  rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipesNavigation Clicked' },
+  rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: trackingKeys.clickRateMyRecipesNavigation },
   deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
   subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
   details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },

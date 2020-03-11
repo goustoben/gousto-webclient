@@ -10,6 +10,7 @@ import { push } from 'react-router-redux'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import { loadRecipesForAllCollections } from 'actions/menuCollections'
+import * as trackingKeys from 'actions/trackingKeys'
 import menuConfig from 'config/menu'
 import statusActions from './status'
 import { redirect } from './redirect'
@@ -319,7 +320,7 @@ export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClic
       type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
       recipeId,
       trackingData: {
-        actionType: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+        actionType: trackingKeys.changeMenuRecipeDetailVisibility,
         recipeId: recipeId || getState().menuRecipeDetailShow,
         show: !!recipeId,
       },

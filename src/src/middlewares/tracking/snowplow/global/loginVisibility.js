@@ -1,8 +1,8 @@
-export default function loginVisibility(action, state) {
-  return {
-    type: action.type,
-    data: {
-      visible: state.loginVisibility,
-    },
-  }
-}
+import * as trackingKeys from 'actions/trackingKeys'
+
+export const loginVisibility = (action, state) => ({
+  type: trackingKeys.changeLoginVisibility,
+  data: {
+    visible: state.loginVisibility,
+  },
+})

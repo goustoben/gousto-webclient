@@ -15,6 +15,7 @@ import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { isChoosePlanEnabled, getNDDFeatureValue } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
+import * as trackingKeys from 'actions/trackingKeys'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -727,7 +728,7 @@ export function userSubscribe() {
         dispatch({
           type: actionTypes.CHECKOUT_ORDER_PLACED,
           trackingData: {
-            actionType: 'Order Placed',
+            actionType: trackingKeys.placeOrder,
             order_id: orderId,
             order_total: prices.get('total'),
             promo_code: prices.get('promoCode'),

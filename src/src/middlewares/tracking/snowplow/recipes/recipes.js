@@ -1,5 +1,7 @@
+import * as trackingKeys from 'actions/trackingKeys'
+
 export const recipeListViewed = (action) => ({
-  type: 'RecipeList Viewed',
+  type: trackingKeys.viewRecipeList,
   data: {
     original_order: action.originalOrder,
     displayed_order: action.displayedOrder,
@@ -15,7 +17,7 @@ export const recipeListViewed = (action) => ({
 })
 
 export const recipeCollectionSelected = (action) => ({
-  type: 'RecipeCollection Selected',
+  type: trackingKeys.selectRecipeCollection,
   data: {
     collection_id: action.collectionId,
   },

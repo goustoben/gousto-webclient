@@ -2,6 +2,7 @@
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import { tutorialViewedExpireTime } from 'config/cookies'
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from './actionTypes'
 
 export const shouldJfyTutorialBeVisible = () => (
@@ -69,7 +70,7 @@ export const tutorialTracking = (tutorialName, turorialStep, dismissed) => (
     dispatch({
       type: actionTypes.TUTORIAL_TRACKING,
       trackingData: {
-        actionType: dismissed ? 'TutorialModal Dismissed' : 'TutorialModal Viewed',
+        actionType: dismissed ? trackingKeys.dismissTutorialModal : trackingKeys.viewTutorialModal,
         tutorial_name: tutorialName,
         turorial_step: turorialStep + 1,
       },

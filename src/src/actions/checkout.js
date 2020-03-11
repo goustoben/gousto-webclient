@@ -17,6 +17,7 @@ import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getNDDFeatureValue } from 'selectors/features'
 import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from './actionTypes'
 import {
   basketPreviewOrderChange,
@@ -375,7 +376,7 @@ export function trackingOrderPlaceAttempt() {
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT,
       trackingData: {
-        actionType: 'Order Place Attempt',
+        actionType: trackingKeys.placeOrderAttempt,
         order_id: basket.get('previewOrderId'),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),
@@ -392,7 +393,7 @@ export function trackingOrderPlaceAttemptFailed() {
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT_FAILED,
       trackingData: {
-        actionType: 'Order Place Attempt Failed',
+        actionType: trackingKeys.placeOrderFailAttempt,
         missing_fields: Object.values(errorMessages)
       }
     })
@@ -410,7 +411,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT_SUCCEEDED,
       trackingData: {
-        actionType: 'Order Place Attempt Succeeded',
+        actionType: trackingKeys.placeOrderAttemptComplete,
         order_id: basket.get('previewOrderId'),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),

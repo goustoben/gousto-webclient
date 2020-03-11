@@ -1,10 +1,11 @@
+import * as trackingKeys from 'actions/trackingKeys'
 import {
   recipeListViewed,
   recipeCollectionSelected,
 } from '../recipes/recipes'
 
 describe('snowplow recipe tracking events', () => {
-  describe('recipeListViewed', () => {
+  describe('view_recipe_list', () => {
     const action = {
       originalOrder: ['3', '5', '2', '7'],
       displayedOrder: ['7', '3', '2'],
@@ -18,8 +19,8 @@ describe('snowplow recipe tracking events', () => {
       browseMode: false,
     }
 
-    test('should return an object with type RecipeList Viewed', () => {
-      expect(recipeListViewed(action)).toMatchObject({ type: 'RecipeList Viewed' })
+    test('should return an object with type view_recipe_list', () => {
+      expect(recipeListViewed(action)).toMatchObject({ type: 'view_recipe_list' })
     })
 
     test('should return an object with data extracted from the action', () => {
@@ -46,7 +47,7 @@ describe('snowplow recipe tracking events', () => {
     }
 
     test('should return an object with type RecipeCollection Select', () => {
-      expect(recipeCollectionSelected(action)).toMatchObject({ type: 'RecipeCollection Selected' })
+      expect(recipeCollectionSelected(action)).toMatchObject({ type: trackingKeys.selectRecipeCollection })
     })
 
     test('should return an object with data extracted from the action', () => {
