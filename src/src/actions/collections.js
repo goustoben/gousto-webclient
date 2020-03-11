@@ -3,57 +3,6 @@ import * as collectionsApi from 'apis/collections'
 import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'
 
-const collectionActions = {
-  collectionsLoadCollectionBySlug,
-  collectionsLoadCollectionRecipes,
-  collectionsLoadCollections,
-}
-
-export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, true))
-      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, null))
-      const accessToken = getState().auth.get('accessToken')
-      let filters
-
-      if (type) {
-        filters = { type }
-      }
-
-      if (date) {
-        filters = {
-          ...filters,
-          available_on: date,
-        }
-      }
-
-      const args = {
-        limit,
-        filters,
-        offset,
-      }
-
-      try {
-        const { data: collections } = await collectionsApi.fetchCollections(accessToken, '', args)
-        dispatch({
-          type: actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS,
-          collections,
-        })
-      } catch (err) {
-        throw new GoustoException(`Failed to load collections with args: ${JSON.stringify(args)}`, {
-          error: 'fetch-collections-fail',
-          level: 'notice',
-        })
-      }
-    } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, err))
-    } finally {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS, false))
-    }
-  }
-}
-
 export function collectionsLoadCollectionBySlug(collectionSlug) {
   return async dispatch => {
     try {
@@ -82,35 +31,3 @@ export function collectionsLoadCollectionBySlug(collectionSlug) {
     }
   }
 }
-
-export function collectionsLoadCollectionRecipes(collectionId) {
-  return async dispatch => {
-    try {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, true))
-      dispatch(statusActions.error(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, null))
-
-      let items
-      try {
-        const { data } = await collectionsApi.fetchCollectionRecipes(null, collectionId)
-        items = data
-      } catch (err) {
-        throw new GoustoException(`Failed to load collection recipes by collection id: ${collectionId}`, {
-          error: 'fetch-collection-recipes-fail',
-          level: 'notice',
-        })
-      }
-
-      dispatch({
-        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
-        collectionId,
-        recipes: items.recipes,
-      })
-    } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, err))
-    } finally {
-      dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES, false))
-    }
-  }
-}
-
-export default collectionActions

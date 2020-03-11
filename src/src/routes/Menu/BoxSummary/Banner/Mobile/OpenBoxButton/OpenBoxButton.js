@@ -5,7 +5,7 @@ import css from './OpenBoxButton.css'
 const OpenBoxButton = ({ arrowUp }) => (
   <div className={css.iconMobile}>
     <div>
-      <span className={arrowUp ? css.arrowUp : css.arrowDown} data-slug="box-summary-mobile" />
+      <span className={arrowUp ? css.arrowUp : css.arrowDown} data-slug="box-summary-mobile" data-testing="boxSummaryArrow" />
     </div>
   </div>
 )

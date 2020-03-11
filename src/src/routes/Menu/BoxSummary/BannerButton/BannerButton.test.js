@@ -4,16 +4,12 @@ import Immutable from 'immutable'
 
 import { boxSummaryViews } from 'utils/boxSummary'
 import { basketSum, okRecipes } from 'utils/basket'
-import { BannerButton } from '../BannerButton/BannerButton'
+import { BannerButton } from './BannerButton'
 
-import { CheckoutContainer } from '../BannerButton/Checkout'
-import { NextContainer } from '../BannerButton/Next'
+import { CheckoutContainer } from './Checkout'
 
 jest.mock('../BannerButton/Checkout', () => ({
   CheckoutContainer: () => <div />
-}))
-jest.mock('../BannerButton/Next', () => ({
-  NextContainer: () => <div />
 }))
 
 jest.mock('utils/basket', () => ({
@@ -85,32 +81,6 @@ describe('BannerButton', () => {
       wrapper.setProps({ view: 'desktop' })
       expect(wrapper.find(CheckoutContainer)).toHaveLength(1)
       expect(wrapper.find(CheckoutContainer).prop('view')).toEqual('desktop')
-    })
-  })
-
-  describe('when boxSummaryCurrentView is not set', () => {
-    let wrapper
-    beforeEach(() => {
-      wrapper = mount(<BannerButton {...props} open={openSpy} />, {
-        context: {
-          store: {
-            getState,
-            subscribe: jest.fn()
-          }
-        },
-        childContextTypes: {
-          store: {
-            getState,
-            subscribe: jest.fn()
-          }
-        }
-      })
-    })
-    test('should not show a CheckoutContainer', () => {
-      expect(wrapper.find(CheckoutContainer)).toHaveLength(0)
-    })
-    test('should not show a NextContainer', () => {
-      expect(wrapper.find(NextContainer)).toHaveLength(1)
     })
   })
 })

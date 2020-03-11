@@ -1,5 +1,6 @@
 import { fetchDeliveryDays } from 'apis/deliveries'
-import { getNDDFeatureValue, getHideBoxSummary } from 'selectors/features'
+import { getBasketRecipes } from 'selectors/basket'
+import { getNDDFeatureValue } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'
 import { okRecipes } from 'utils/basket'
@@ -15,16 +16,13 @@ import {
   basketPostcodeChange,
   basketRecipeRemove,
   basketSlotChange,
-  portionSizeSelectedTracking
 } from './basket'
 import { actionTypes } from './actionTypes'
 
-function basketDeliveryDaysReceive(days) {
-  return {
-    type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE,
-    days,
-  }
-}
+export const basketDeliveryDaysReceive = (days) => ({
+  type: actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE,
+  days,
+})
 
 export const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
   async (dispatch) => {
@@ -101,7 +99,7 @@ export const boxSummaryDeliveryDaysLoad = (cutoffDatetimeFrom, cutoffDatetimeUnt
   }
 )
 
-export const boxSummaryNext = (numPortions) => (
+export const boxSummaryNext = () => (
   (dispatch, getState) => {
     const state = getState()
     const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
@@ -120,13 +118,12 @@ export const boxSummaryNext = (numPortions) => (
     const basketPostcode = state.basket.get('postcode')
 
     if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
-      dispatch(portionSizeSelectedTracking(numPortions))
       if (tempOrderId) {
         dispatch(push(`/menu/${tempOrderId}`))
         dispatch(boxSummaryVisibilityChange(false))
       } else {
         dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
-        if (getHideBoxSummary(state) && getState().basket.get('recipes').size === 0) {
+        if (getBasketRecipes(state).size === 0) {
           dispatch(boxSummaryVisibilityChange(false))
         }
       }

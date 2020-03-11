@@ -4,7 +4,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, boxSummaryNext } from 'actions/boxSummary'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
-import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes } from 'selectors/basket'
+import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes, shouldShowBoxSummary } from 'selectors/basket'
 import { isMobile } from 'utils/view'
 import BoxSummaryDesktop from './BoxSummary'
 
@@ -28,6 +28,7 @@ const mapStateToProps = (state) => ({
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
   pricingPending: state.pricing.get('pending'),
+  shouldShowBoxSummary: shouldShowBoxSummary(state)
 })
 
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {

@@ -28,19 +28,18 @@ module.exports = {
         done()
       })
       .perform(done => {
+        browser.pause(1000)
         menu.section.menuContainer.clickNextButton()
         done()
       })
       .perform(done => {
+        browser.pause(1000)
         menu.section.menuContainer.clickDateOfExistingOrder()
         done()
       })
       .perform(done => {
+        browser.pause(1000)
         menu.section.menuContainer.clickContinueButton()
-        done()
-      })
-      .perform(done => {
-        menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
       .perform(done => {
@@ -48,8 +47,8 @@ module.exports = {
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
-    browser.pause(2000)
       .perform(done => {
+        browser.pause(1000)
         orderConfirmation.section.orderConfirmationContainer.checkIfOrderConfirmationPageVisible(browser)
         done()
       })

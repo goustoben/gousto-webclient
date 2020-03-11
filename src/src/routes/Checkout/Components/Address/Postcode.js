@@ -23,6 +23,7 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
             mask
             withRef
             ref={receiveRef}
+
           />
         </div>
 
@@ -61,6 +62,7 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
             mask
             withRef
             ref={receiveRef}
+            dataTesting="houseNo"
           />
         </div>
       </div>

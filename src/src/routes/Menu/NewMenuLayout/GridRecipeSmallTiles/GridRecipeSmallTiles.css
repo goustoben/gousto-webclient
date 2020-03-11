@@ -38,3 +38,10 @@
 .recipeAttributes > div {
   grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
 }
+
+.rangeBadgeWrapper{
+  margin-top: -20px;
+  margin-left: -1px;
+  position: absolute;
+  z-index: 12;
+}

@@ -36,13 +36,17 @@ describe('<GridRecipeSmallTiles />', () => {
     useWithin: '2-3',
     stock: 100,
     isNew: false,
-    position: 23
+    position: 23,
+    range: Immutable.fromJS({
+      name: 'Fine Dine In',
+      slug: 'fine-dine-in'
+    })
   }
   const view = 'smallGrid'
   let onClickSpy
   beforeEach(() => {
     onClickSpy = jest.fn()
-    wrapper = shallow(<GridRecipeSmallTiles {...recipe} view={view} onClick={onClickSpy} unhighlight={() => {}} highlight={() => {}} />)
+    wrapper = shallow(<GridRecipeSmallTiles {...recipe} view={view} onClick={onClickSpy} unhighlight={() => {}} highlight={() => {}} shouldShowRangeBadge />)
   })
 
   afterEach(() => {
@@ -105,6 +109,12 @@ describe('<GridRecipeSmallTiles />', () => {
 
       test('should not contain one Rating component', () => {
         expect(wrapper.find(Rating).length).toEqual(0)
+      })
+    })
+
+    describe('when shouldShowRangeBadge is true', () => {
+      test('should render rangeBadgeWrapper', () => {
+        expect(wrapper.find('.rangeBadgeWrapper')).toHaveLength(1)
       })
     })
   })

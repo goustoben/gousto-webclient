@@ -70,10 +70,6 @@ export const getCookingInstruction = ({ features }) => (
   features && features.getIn(['showCookingInstruction', 'value'], false)
 )
 
-export const getHideBoxSummary = ({ features }) => (
-  features && features.getIn(['hideBoxSummary', 'value'], false)
-)
-
 export const getAddOnsBeforeOrderConfirmation = ({ features }) => (
   features && features.getIn(['addOnsBeforeOrderConfirmation', 'value'], false)
 )
