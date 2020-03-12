@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from '../actionTypes'
 const mockFetchAvailableDates = jest.fn()
 const mockFetchRecipeStock = jest.fn()
@@ -364,7 +365,7 @@ describe('menu actions', () => {
           recipeId: '1234',
           type: 'MENU_RECIPE_DETAIL_VISIBILITY_CHANGE',
           trackingData: {
-            actionType: 'MENU_RECIPE_DETAIL_VISIBILITY_CHANGE',
+            actionType: trackingKeys.changeMenuRecipeDetailVisibility,
             recipeId: '1234',
             show: true
           },

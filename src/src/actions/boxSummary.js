@@ -8,6 +8,7 @@ import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
+import * as trackingKeys from 'actions/trackingKeys'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import {
@@ -43,7 +44,7 @@ export const boxSummaryVisibilityChange = (show) => (
       type: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
       show,
       trackingData: {
-        actionType: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
+        actionType: trackingKeys.changeBoxSummaryVisibility,
         show,
       },
     })

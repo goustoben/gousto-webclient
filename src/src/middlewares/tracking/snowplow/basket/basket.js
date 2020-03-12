@@ -1,8 +1,9 @@
 import * as basketUtils from 'utils/basket'
+import * as trackingKeys from 'actions/trackingKeys'
 
 export function basketOrderLoaded(action, state) {
   return {
-    type: action.type,
+    type: trackingKeys.loadBasketOrder,
     data: {
       numGifts: basketUtils.basketSum(state.basket.get('gifts')),
       numProducts: basketUtils.basketSum(state.basket.get('products')),
@@ -13,7 +14,7 @@ export function basketOrderLoaded(action, state) {
 
 export function menuBoxPricesReceive(action, state) {
   return {
-    type: action.type,
+    type: trackingKeys.recieveMenuOrderPrices,
     data: {
       menuBoxPrices: state.menuBoxPrices,
     },

@@ -1,8 +1,9 @@
 import { optimizelyTracker } from 'middlewares/tracking/optimizely'
+import * as trackingKeys from 'actions/trackingKeys'
 
 describe('optimizely middleware', () => {
   const action = {
-    type: 'Order Placed',
+    type: trackingKeys.placeOrder,
     optimizelyData: {
       type: 'event',
       eventName: 'order_placed_gross',
@@ -16,7 +17,7 @@ describe('optimizely middleware', () => {
   }
 
   const notOptimizelyAction = {
-    type: 'Order Placed',
+    type: trackingKeys.placeOrder,
   }
 
   const nextMock = jest.fn()

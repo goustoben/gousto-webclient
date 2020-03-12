@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from 'actions/actionTypes'
 
 import { set } from 'utils/cookieHelper2'
@@ -199,14 +199,14 @@ describe('tutorial actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TUTORIAL_TRACKING,
         trackingData: {
-          actionType: 'TutorialModal Dismissed',
+          actionType: trackingKeys.dismissTutorialModal,
           tutorial_name: tutorialName,
           turorial_step: 2,
         },
       })
     })
 
-    test('should return actionType as TutorialModal Viewed if dismissed is false', () => {
+    test('should return actionType as viewTutorialModal if dismissed is false', () => {
       const tutorialName = 'testTutorial'
       const turorialStep = 1
       const dismissed = false
@@ -216,7 +216,7 @@ describe('tutorial actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TUTORIAL_TRACKING,
         trackingData: {
-          actionType: 'TutorialModal Viewed',
+          actionType: trackingKeys.viewTutorialModal,
           tutorial_name: tutorialName,
           turorial_step: 2,
         },

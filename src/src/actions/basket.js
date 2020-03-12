@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 
 import basketActions from 'actions/basket'
 import pricingActions from 'actions/pricing'
+import * as trackingKeys from 'actions/trackingKeys'
 import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
@@ -86,8 +87,8 @@ export const basketNumPortionChange = (numPortions) => (
       type: actionTypes.BASKET_LIMIT_REACHED,
       limitReached: reachedLimit,
       trackingData: {
-        actionType: actionTypes.BASKET_LIMIT_REACHED,
-        source: 'PortionSize Selected',
+        actionType: trackingKeys.basketLimit,
+        source: trackingKeys.selectPortionSize,
         limitReached: reachedLimit,
       },
     })
@@ -101,7 +102,7 @@ export const portionSizeSelectedTracking = (num_portion, order_id) => (
     dispatch({
       type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
       trackingData: {
-        actionType: 'PortionSize Selected',
+        actionType: trackingKeys.selectPortionSize,
         num_portion,
         order_id: order_id || null,
       },
@@ -265,7 +266,7 @@ export const basketPostcodeChange = (postcode, forgetPrevPostcode = false) => (
         postcode: trimmedPostcode,
         forgetPrevPostcode,
         trackingData: {
-          actionType: actionTypes.BASKET_POSTCODE_CHANGE,
+          actionType: trackingKeys.changeBasketPostcode,
           postcode: trimmedPostcode,
         },
       })
@@ -343,7 +344,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
       recipeId,
       ...recipeInfo,
       trackingData: {
-        actionType: 'Recipe Added',
+        actionType: trackingKeys.addRecipe,
         recipeId,
         view,
         position: recipeInfo && recipeInfo.position,
@@ -368,7 +369,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
         trackingData: {
-          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          actionType: trackingKeys.basketLimit,
           limitReached: reachedLimit,
           view,
           source: actionTypes.RECIPE_ADDED,
@@ -389,7 +390,7 @@ export const basketRecipeRemove = (recipeId, view, position) => (
       type: actionTypes.BASKET_RECIPE_REMOVE,
       recipeId,
       trackingData: {
-        actionType: 'Recipe Removed',
+        actionType: trackingKeys.removeRecipe,
         recipeId,
         view,
         position,
@@ -411,7 +412,7 @@ export const basketRecipeRemove = (recipeId, view, position) => (
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
         trackingData: {
-          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          actionType: trackingKeys.basketLimit,
           limitReached: reachedLimit,
           view,
           source: actionTypes.RECIPE_REMOVED,
@@ -443,7 +444,7 @@ export const basketSlotChange = slotId => (
       type: actionTypes.BASKET_SLOT_CHANGE,
       slotId,
       trackingData: {
-        actionType: actionTypes.BASKET_SLOT_CHANGE,
+        actionType: trackingKeys.changeBasketSlot,
         slotId,
         date,
         dayId: state.boxSummaryDeliveryDays.getIn([date, 'id']),
@@ -588,7 +589,7 @@ export const basketCheckedOut = (numRecipes, view) => (
             dispatch({
               type: actionTypes.TRACKING,
               trackingData: {
-                actionType: 'Order Placed',
+                actionType: trackingKeys.placeOrder,
                 order_id: basketOrderId,
                 order_total: orderTotal,
                 promo_code: promoCode,
@@ -647,7 +648,7 @@ export const basketCheckedOut = (numRecipes, view) => (
           dispatch({
             type: actionTypes.TRACKING,
             trackingData: {
-              actionType: 'Order Placed',
+              actionType: trackingKeys.placeOrder,
               order_id: basketOrderId,
               order_total: orderTotal,
               promo_code: promoCode,
@@ -678,7 +679,7 @@ export const basketCheckedOut = (numRecipes, view) => (
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
-          actionType: actionTypes.BASKET_CHECKED_OUT,
+          actionType: trackingKeys.checkOutBasketAttempt,
           numRecipes,
           view,
         },
@@ -698,7 +699,7 @@ export const basketProceedToCheckout = () => (
     dispatch({
       type: actionTypes.BASKET_CHECKOUT_PROCEED,
       trackingData: {
-        actionType: actionTypes.BASKET_CHECKOUT_PROCEED,
+        actionType: trackingKeys.checkOutBasketComplete,
         basket,
       },
     })
@@ -744,7 +745,7 @@ export const basketUpdateProducts = (isOrderConfirmation = false) => (
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
-          actionType: actionTypes.BASKET_CHECKED_OUT,
+          actionType: trackingKeys.checkOutBasketAttempt,
           order,
         },
       })

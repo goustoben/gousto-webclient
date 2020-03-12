@@ -1,4 +1,5 @@
 
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from './actionTypes'
 
 export function menuServiceDataReceived(response) {
@@ -6,7 +7,7 @@ export function menuServiceDataReceived(response) {
     type: actionTypes.MENU_SERVICE_DATA_RECEIVED,
     response,
     trackingData: {
-      actionType: 'MENU_SERVICE_DATA_RECEIVED'
+      actionType: trackingKeys.receiveMenuServiceData
     }
   })
 }

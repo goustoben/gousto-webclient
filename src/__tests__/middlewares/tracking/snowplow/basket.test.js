@@ -2,6 +2,7 @@ import sinon from 'sinon'
 
 import Immutable from 'immutable'
 import basketTracking from 'middlewares/tracking/snowplow/basket'
+import * as trackingKeys from 'actions/trackingKeys'
 
 describe('snowplow basketOrderLoaded data', () => {
   const action = {
@@ -33,7 +34,7 @@ describe('snowplow basketOrderLoaded data', () => {
 
   test('should return data with numGifts, numProducts, & numRecipes given basket state', () => {
     expect(basketTracking.basketOrderLoaded(action, state)).toEqual({
-      type: 'ACTION_TYPE_STRING',
+      type: trackingKeys.loadBasketOrder,
       data: {
         numGifts: 0,
         numProducts: 3,

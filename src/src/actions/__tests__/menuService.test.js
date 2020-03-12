@@ -1,4 +1,5 @@
 import { menuServiceDataReceived } from 'actions/menuService'
+import * as trackingKeys from 'actions/trackingKeys'
 
 describe('menuServiceDataReceived', () => {
   test('should dispatch menuServiceDataReceived with the correct response and tracking data', () => {
@@ -10,7 +11,7 @@ describe('menuServiceDataReceived', () => {
       type: 'MENU_SERVICE_DATA_RECEIVED',
       response: {testData: '123'},
       trackingData: {
-        actionType: 'MENU_SERVICE_DATA_RECEIVED'
+        actionType: trackingKeys.receiveMenuServiceData
       }
     })
   })

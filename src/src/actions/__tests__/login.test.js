@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import globals from 'config/globals'
+import { zendesk } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import loginActions from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
@@ -181,6 +182,24 @@ describe('login actions', () => {
           await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
+      })
+    })
+
+    describe('when the redirect URL is zendesk', () => {
+      beforeEach(() => {
+        documentLocation.mockReturnValueOnce({
+          pathname: '/',
+          protocol: 'http:',
+          search: '?target=https://gousto.zendesk.com/hc/en-gb',
+          slashes: true,
+        })
+
+        globals.domain = HOST_PRODUCTION
+      })
+
+      it('then should redirect user to zendesk', async () => {
+        await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+        expect(redirect).toHaveBeenCalledWith(zendesk.faqs)
       })
     })
 

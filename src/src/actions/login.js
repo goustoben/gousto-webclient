@@ -135,9 +135,14 @@ export const loginRedirect = (location, userIsAdmin, features) => {
         const isGoustoTarget = (
           hostInfo.join('.') === globalsHostInfo
         )
+        const isZendeskTarget = (
+          hostInfo.join('.') === 'gousto.zendesk.com'
+        )
 
         if (isGoustoTarget) {
           destination = `${url.pathname}${url.search ? url.search : ''}`
+        } else if (isZendeskTarget) {
+          destination = target
         }
       } catch (err) {
         // do nothing

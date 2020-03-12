@@ -62,7 +62,7 @@ const configureHistoryAndStore = (url, initialState) => {
   return { store, history }
 }
 
-const renderHTML = (store, renderProps, url, userAgent, scripts) => {
+const renderHTML = (store, renderProps, url, userAgent, scripts, host) => {
   let startTime = new Date()
   const apollo = apolloClient(store)
   const components = (
@@ -89,7 +89,7 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
       }
       startTime = new Date()
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
+      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead, host)
       if (__CLIENT__) {
         logger.notice({message: 'renderHTML/template', elapsedTime: (new Date() - startTime)})
       }
@@ -233,9 +233,9 @@ async function processRequest(ctx, next) {
               if (store.getState().basket && store.getState().basket.get('promoCode', '').toLowerCase() === 'fruit') {
                 scripts = DISABLED_SCRIPTS
               }
-              const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
               await fetchContentOnChange(ctx.request.path, store)
-              renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], scripts, helmetHead)
+              const host = ctx.request && ctx.request.header && ctx.request.header['x-forwarded-host']
+              renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], scripts, host)
                 .then(html => {
                   ctx.body = html
                   resolve()
