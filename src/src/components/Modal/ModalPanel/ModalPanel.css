@@ -47,6 +47,10 @@
 	line-height: sizeXL;
 }
 
+.narrow {
+	max-width: 32rem !important; /* override Header.css .modal passed via className prop */
+}
+
 .leftControl {
 	composes: controlContainer;
 	left: SpacingMD;

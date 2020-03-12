@@ -32,7 +32,7 @@ describe('Screen', () => {
     test('should NOT pass onGoBack to <ModalPanel> if pending is true', () => {
       const onGoBack = sinon.spy()
       wrapper = shallow(<Screen enableBack onGoBack={onGoBack} pending />)
-      expect(wrapper.prop('onGoBack')).toBe(undefined)
+      expect(wrapper.prop('onGoBack')).toBe(null)
     })
 
     test('should NOT pass onGoBack to <ModalPanel> if enabledBack if false', () => {
@@ -40,7 +40,7 @@ describe('Screen', () => {
       wrapper = shallow(
         <Screen enableBack={false} onGoBack={onGoBack} pending={false} />,
       )
-      expect(wrapper.prop('onGoBack')).toBe(undefined)
+      expect(wrapper.prop('onGoBack')).toBe(null)
     })
 
     test('should render a <ReasonsScreen> for type "reasonGrid" & spread screenData as props', () => {

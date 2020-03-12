@@ -2,29 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
+import { onEnter } from 'utils/accessibility'
 import css from './ModalPanel.css'
 
 class ModalPanel extends React.Component {
-  static propTypes = {
-    children: PropTypes.node,
-    closePortal: PropTypes.func,
-    closePortalFromButton: PropTypes.func,
-    className: PropTypes.string,
-    containerClassName: PropTypes.string,
-    disableOverlay: PropTypes.bool,
-    onGoBack: PropTypes.func,
-    disableClickOutside: PropTypes.bool,
-  }
-
-  static defaultProps ={
-    children: null,
-    closePortal: () => {},
-    className: '',
-    containerClassName: '',
-    disableOverlay: false,
-    disableClickOutside: false,
-  }
-
   componentDidMount() {
     document.addEventListener('mousedown', this.handleMouseClickOutside)
   }
@@ -46,53 +27,104 @@ class ModalPanel extends React.Component {
   }
 
   handleMouseClickOutside = (e) => {
-    if (this.props.disableClickOutside) {
+    const { closePortal, disableClickOutside } = this.props
+
+    if (disableClickOutside) {
       return
     }
     if (this.isNodeInRoot(e.target, ReactDOM.findDOMNode(this.refs.content))) {
       return
     }
     e.stopPropagation()
-    this.props.closePortal()
+    closePortal()
   }
 
   renderBackButton = () => {
-    let backButton = null
+    const { onGoBack } = this.props
 
-    if (this.props.onGoBack) {
-      backButton = (
+    if (onGoBack) {
+      return (
         <div
           className={css.leftControl}
-          onClick={this.props.onGoBack}
+          role="button"
+          tabIndex="0"
+          onClick={onGoBack}
+          onKeyDown={e => onEnter(e, onGoBack)}
         >
           <span className={css.back} />
-          {' '}
           Back
         </div>
       )
     }
 
-    return backButton
+    return null
   }
 
   render() {
+    const {
+      children,
+      className,
+      closePortal,
+      closePortalFromButton,
+      containerClassName,
+      disableOverlay,
+      isNarrow,
+    } = this.props
+
+    const modalClasses = classNames(
+      className,
+      css.modal,
+      {
+        [css.narrow]: isNarrow,
+      }
+    )
+
+    const closeModal = closePortalFromButton || closePortal
+
     return (
-      <div className={this.props.containerClassName}>
-        {this.props.disableOverlay ? null : <div className={css.modalOverlay} />}
-        <div className={classNames(this.props.className, css.modal)} ref="content">
+      <div className={containerClassName}>
+        {!disableOverlay && <div className={css.modalOverlay} />}
+        <div className={modalClasses} ref="content">
           {this.renderBackButton()}
           <div
             className={css.rightControl}
-            onClick={this.props.closePortalFromButton || this.props.closePortal}
+            role="button"
+            tabIndex="0"
+            onClick={closeModal}
+            onKeyDown={e => onEnter(e, closeModal)}
             data-testing="modalClose"
           >
             <span className={css.close} />
           </div>
-          {this.props.children}
+          {children}
         </div>
       </div>
     )
   }
+}
+
+ModalPanel.propTypes = {
+  children: PropTypes.node,
+  closePortal: PropTypes.func,
+  closePortalFromButton: PropTypes.func,
+  className: PropTypes.string,
+  containerClassName: PropTypes.string,
+  disableOverlay: PropTypes.bool,
+  disableClickOutside: PropTypes.bool,
+  isNarrow: PropTypes.bool,
+  onGoBack: PropTypes.func,
+}
+
+ModalPanel.defaultProps = {
+  children: null,
+  closePortal: () => {},
+  closePortalFromButton: null,
+  className: '',
+  containerClassName: '',
+  disableOverlay: false,
+  disableClickOutside: false,
+  isNarrow: false,
+  onGoBack: null,
 }
 
 export default ModalPanel

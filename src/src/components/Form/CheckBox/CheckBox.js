@@ -5,68 +5,92 @@ import InputWrapper from 'Form/InputWrapper'
 import css from './CheckBox.css'
 
 export class CheckBox extends React.PureComponent {
-  static propTypes = {
-    additionalProps: PropTypes.object,
-    onChange: PropTypes.func,
-    className: PropTypes.string,
-    labelClassName: PropTypes.string,
-    disabled: PropTypes.bool,
-    required: PropTypes.bool,
-    checked: PropTypes.bool,
-    label: PropTypes.string.isRequired,
-    name: PropTypes.string,
-    'data-testing': PropTypes.string,
-    style: PropTypes.oneOf([
-      '',
-      'disclaimer',
-    ]),
-  }
-
-  defaultProps = {
-    additionalProps: {},
-    labelClassName: '',
-    className: '',
-    disabled: false,
-    required: false,
-    checked: false,
-    style: '',
-  }
-
   handleChange = (e) => {
-    if (this.props.onChange) {
-      this.props.onChange(e.target.checked)
+    const { onChange } = this.props
+
+    if (onChange) {
+      onChange(e.target.checked)
     }
   }
 
-  render = () => (
-    <span
-      className={classNames(
-        css.container,
-        {
-          [css[this.props.style]]: this.props.style,
-        }
-      )}
-    >
-      <label className={this.props.labelClassName || css.label}>
-        <input
-          {...this.props.additionalProps}
-          className={classNames(
-            css.input,
-            this.props.className
-          )}
-          disabled={this.props.disabled}
-          onChange={this.handleChange}
-          required={this.props.required}
-          type="checkbox"
-          checked={this.props.checked}
-          name={this.props.name}
-          data-testing={this.props['data-testing']}
-        />
-        <span className={css.indicator} />
-        <span className={css.text}>{this.props.label}</span>
-      </label>
-    </span>
-  )
+  render = () => {
+    const {
+      additionalProps,
+      checked,
+      className,
+      'data-testing': dataTesting,
+      disabled,
+      label,
+      labelClassName,
+      name,
+      required,
+      style,
+      textSize
+    } = this.props
+
+    const labelElementClasses = classNames(
+      {
+        [labelClassName]: labelClassName,
+        [css.label]: !labelClassName,
+      },
+      css[`textSize${textSize}`]
+    )
+    const spanElementClasses = classNames(
+      css.container,
+      {
+        [css[style]]: style,
+      }
+    )
+
+    return (
+      <span className={spanElementClasses}>
+        <label className={labelElementClasses}>
+          <input
+            {...additionalProps}
+            className={classNames(css.input, className)}
+            disabled={disabled}
+            onChange={this.handleChange}
+            required={required}
+            type="checkbox"
+            checked={checked}
+            name={name}
+            data-testing={dataTesting}
+          />
+          <span className={css.indicator} />
+          <span className={css.text}>{label}</span>
+        </label>
+      </span>
+    )
+  }
+}
+
+CheckBox.propTypes = {
+  additionalProps: PropTypes.object,
+  checked: PropTypes.bool,
+  className: PropTypes.string,
+  'data-testing': PropTypes.string,
+  disabled: PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  labelClassName: PropTypes.string,
+  name: PropTypes.string,
+  onChange: PropTypes.func,
+  required: PropTypes.bool,
+  style: PropTypes.oneOf(['','disclaimer']),
+  textSize: PropTypes.oneOf(['ExtraSmall', 'Medium']),
+}
+
+CheckBox.defaultProps = {
+  additionalProps: {},
+  checked: false,
+  className: '',
+  'data-testing': '',
+  disabled: false,
+  labelClassName: '',
+  name: '',
+  onChange: null,
+  required: false,
+  style: '',
+  textSize: 'ExtraSmall',
 }
 
 export default InputWrapper(CheckBox)

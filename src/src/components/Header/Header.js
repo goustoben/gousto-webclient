@@ -27,41 +27,6 @@ import { defaultMenuItems, experimentalMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 class Header extends React.PureComponent {
-  static propTypes = {
-    logoutUser: PropTypes.func,
-    serverError: PropTypes.bool,
-    isAuthenticated: PropTypes.bool,
-    loginOpen: PropTypes.bool,
-    routing: PropTypes.object,
-    simple: PropTypes.bool,
-    disabled: PropTypes.bool,
-    path: PropTypes.string,
-    fromJoin: PropTypes.bool,
-    promoCodeUrl: PropTypes.string,
-    loginVisibilityChange: PropTypes.func,
-    closeBoxModalVisibilityChange: PropTypes.func,
-    title: PropTypes.string,
-    small: PropTypes.bool,
-    abandonBasketFeature: PropTypes.bool,
-    trackNavigationClick: PropTypes.func,
-    isAccountTabNameTest: PropTypes.bool,
-    userId: PropTypes.string,
-  }
-
-  static defaultProps = {
-    serverError: false,
-    isAuthenticated: false,
-    simple: false,
-    path: '',
-    promoCodeUrl: '',
-    title: '',
-    small: false,
-    trackNavigationClick: () => { },
-    abandonBasketFeature: false,
-    isAccountTabNameTest: false,
-    userId: null,
-  }
-
   constructor(props) {
     super(props)
 
@@ -226,7 +191,6 @@ class Header extends React.PureComponent {
       button = (
         <button type="button" className={css.btn}>
           You&#8217;re logged out
-          {' '}
           <span className={css.confirm} />
         </button>
       )
@@ -417,7 +381,13 @@ class Header extends React.PureComponent {
             </div>
           </header>
           <Overlay open={Boolean(loginOpen)} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="top">
-            <ModalPanel closePortal={this.onClose} className={css.modal} containerClassName={css.modalContainer} disableOverlay>
+            <ModalPanel
+              closePortal={this.onClose}
+              className={css.modal}
+              containerClassName={css.modalContainer}
+              disableOverlay
+              isNarrow
+            >
               <Login isAuthenticated={isAuthenticated} isOpen={loginOpen} isPending={loginPending} />
             </ModalPanel>
           </Overlay>
@@ -433,4 +403,43 @@ class Header extends React.PureComponent {
     )
   }
 }
+
+Header.propTypes = {
+  abandonBasketFeature: PropTypes.bool,
+  closeBoxModalVisibilityChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  fromJoin: PropTypes.bool,
+  isAccountTabNameTest: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  loginOpen: PropTypes.bool,
+  loginVisibilityChange: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  path: PropTypes.string,
+  promoCodeUrl: PropTypes.string,
+  routing: PropTypes.object.isRequired,
+  serverError: PropTypes.bool,
+  simple: PropTypes.bool,
+  small: PropTypes.bool,
+  title: PropTypes.string,
+  trackNavigationClick: PropTypes.func,
+  userId: PropTypes.string,
+}
+
+Header.defaultProps = {
+  abandonBasketFeature: false,
+  disabled: false,
+  fromJoin: false,
+  isAccountTabNameTest: false,
+  isAuthenticated: false,
+  loginOpen: false,
+  path: '',
+  promoCodeUrl: '',
+  serverError: false,
+  simple: false,
+  small: false,
+  title: '',
+  trackNavigationClick: () => { },
+  userId: null,
+}
+
 export { Header }
