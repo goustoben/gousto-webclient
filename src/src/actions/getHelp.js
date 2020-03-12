@@ -6,6 +6,8 @@ import {
 import logger from 'utils/logger'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
+import { appendFeatureToRequest } from 'routes/GetHelp/utils/appendFeatureToRequest'
+import { featureShorterCompensationPeriod } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
@@ -73,17 +75,20 @@ const validateSelectedIngredients = ({
   orderId,
   costumerId,
   ingredientIds,
-}) => async (dispatch) => {
+}) => async (dispatch, getState) => {
   dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
   dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
 
   const validateIngredientsParams = [
     accessToken,
-    {
-      customer_id: Number(costumerId),
-      order_id: Number(orderId),
-      ingredient_ids: ingredientIds
-    }
+    appendFeatureToRequest({
+      body: {
+        customer_id: Number(costumerId),
+        order_id: Number(orderId),
+        ingredient_ids: ingredientIds
+      },
+      featureShorterCompensationPeriod: featureShorterCompensationPeriod(getState()),
+    })
   ]
 
   try {
@@ -96,17 +101,24 @@ const validateSelectedIngredients = ({
   }
 }
 
-const validateLatestOrder = ({ accessToken, orderId, costumerId }) => async (dispatch) => {
+const validateLatestOrder = ({
+  accessToken,
+  orderId,
+  costumerId
+}) => async (dispatch, getState) => {
   dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
   dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
   try {
     await validateOrder(
       accessToken,
-      {
-        customer_id: Number(costumerId),
-        order_id: Number(orderId),
-      }
+      appendFeatureToRequest({
+        body: {
+          customer_id: Number(costumerId),
+          order_id: Number(orderId),
+        },
+        featureShorterCompensationPeriod: featureShorterCompensationPeriod(getState()),
+      })
     )
   } catch (error) {
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))

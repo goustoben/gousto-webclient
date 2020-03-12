@@ -104,7 +104,7 @@ describe('<IngredientsContainer />', () => {
 
       expect(validateIngredients).toHaveBeenCalledWith(
         '',
-        { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ] }
+        { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ], features: [] }
       )
     })
   })

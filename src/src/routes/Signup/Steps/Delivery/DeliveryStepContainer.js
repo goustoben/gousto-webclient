@@ -18,7 +18,8 @@ function mapStateToProps(state) {
     state,
     true,
     true,
-    deliveryDaysWithDisabled
+    deliveryDaysWithDisabled,
+    false
   )
 
   const tempDate = state.temp.get('date', landing.date)

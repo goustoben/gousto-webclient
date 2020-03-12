@@ -826,6 +826,14 @@ describe('utils/deliveries', () => {
             expect(result).toEqual(expected)
           })
         })
+
+        describe('and with the ignore basket date flag passed in', () => {
+          test('should return the closes day that has free slots available', () => {
+            const result = getLandingDay(state, false, true, deliveryDays, false)
+            const expected = { date: '2014-12-12', slotId: '456-456-456' }
+            expect(result).toEqual(expected)
+          })
+        })
       })
     })
 

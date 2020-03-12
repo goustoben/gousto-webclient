@@ -2,6 +2,7 @@ import moment from 'moment'
 import Immutable from 'immutable'
 import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots, getLogoutUserDisabledSlots, getNDDFeatureValue } from 'selectors/features'
+import { getBasketDate } from 'selectors/basket'
 import { getIsAuthenticated } from 'selectors/auth'
 import { formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
@@ -286,8 +287,8 @@ export function isFreeSlotAvailable(slots) {
   return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) == 0).size > 0
 }
 
-export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds) {
-  const date = state.basket.get('date')
+export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds, useBasketDate = true) {
+  const date = useBasketDate ? getBasketDate(state) : null
   const defaultDate = state.features.getIn(['default_day', 'value'])
   const deliveryDays = deliveryDaysWithDisabledSlotIds || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')

@@ -9,41 +9,47 @@ import { client as routes } from 'config/routes'
 import { sanitize } from 'utils/sanitizer'
 import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
+import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { BottomButton } from '../components/BottomButton'
 
 import css from './Refund.css'
 
-class Refund extends PureComponent {
-  static propTypes = {
-    content: PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      infoBody: PropTypes.string.isRequired,
-      confirmationBody: PropTypes.string.isRequired,
-      errorBody: PropTypes.string.isRequired,
-      button1: PropTypes.string.isRequired,
-      button2: PropTypes.string.isRequired,
-    }).isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      accessToken: PropTypes.string.isRequired,
-    }).isRequired,
-    order: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-    selectedIngredients: PropTypes.objectOf(PropTypes.shape({
-      ingredientId: PropTypes.string.isRequired,
-      issueDescription: PropTypes.string.isRequired,
-      issueId: PropTypes.string.isRequired,
-      recipeId: PropTypes.string.isRequired,
-    })).isRequired,
-    trackAcceptRefund: PropTypes.func.isRequired,
-    trackUserCannotGetCompensation: PropTypes.func.isRequired,
-  }
+const propTypes = {
+  content: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    infoBody: PropTypes.string.isRequired,
+    confirmationBody: PropTypes.string.isRequired,
+    errorBody: PropTypes.string.isRequired,
+    button1: PropTypes.string.isRequired,
+    button2: PropTypes.string.isRequired,
+  }).isRequired,
+  featureShorterCompensationPeriod: PropTypes.bool.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    accessToken: PropTypes.string.isRequired,
+  }).isRequired,
+  order: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  selectedIngredients: PropTypes.objectOf(PropTypes.shape({
+    ingredientId: PropTypes.string.isRequired,
+    issueDescription: PropTypes.string.isRequired,
+    issueId: PropTypes.string.isRequired,
+    recipeId: PropTypes.string.isRequired,
+  })).isRequired,
+  trackAcceptRefund: PropTypes.func.isRequired,
+  trackUserCannotGetCompensation: PropTypes.func.isRequired,
+}
 
-  state = {
-    refund: { value: 0, type: 'credit' },
-    isFetching: true,
-    didFetchError: false,
+class Refund extends PureComponent {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      refund: { value: 0, type: 'credit' },
+      isFetching: true,
+      didFetchError: false,
+    }
   }
 
   componentDidMount() {
@@ -51,16 +57,20 @@ class Refund extends PureComponent {
   }
 
   getRefund = async () => {
-    const { user, order, selectedIngredients } = this.props
+    const { featureShorterCompensationPeriod, user, order, selectedIngredients } = this.props
+
     const fetchRefundAmountParams = [
       user.accessToken,
-      {
-        customer_id: Number(user.id),
-        order_id: Number(order.id),
-        ingredient_ids: Object.keys(selectedIngredients).map(
-          key => selectedIngredients[key].ingredientId
-        ),
-      }
+      appendFeatureToRequest({
+        body: {
+          customer_id: Number(user.id),
+          order_id: Number(order.id),
+          ingredient_ids: Object.keys(selectedIngredients).map(
+            key => selectedIngredients[key].ingredientId
+          ),
+        },
+        featureShorterCompensationPeriod,
+      })
     ]
 
     try {
@@ -85,6 +95,7 @@ class Refund extends PureComponent {
   onAcceptOffer = async () => {
     const { refund } = this.state
     const {
+      featureShorterCompensationPeriod,
       user,
       order,
       selectedIngredients,
@@ -100,13 +111,16 @@ class Refund extends PureComponent {
     ))
     const setComplaintParams = [
       user.accessToken,
-      {
-        customer_id: Number(user.id),
-        order_id: Number(order.id),
-        type: refund.type,
-        value: refund.value,
-        issues
-      }
+      appendFeatureToRequest({
+        body: {
+          customer_id: Number(user.id),
+          order_id: Number(order.id),
+          type: refund.type,
+          value: refund.value,
+          issues
+        },
+        featureShorterCompensationPeriod,
+      })
     ]
 
     try {
@@ -203,5 +217,7 @@ class Refund extends PureComponent {
     )
   }
 }
+
+Refund.propTypes = propTypes
 
 export default Refund
