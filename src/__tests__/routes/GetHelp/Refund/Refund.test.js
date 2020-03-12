@@ -40,6 +40,7 @@ describe('<Refund />', () => {
   const trackUserCannotGetCompensationSpy = jest.fn()
   const PROPS = {
     content,
+    featureShorterCompensationPeriod: false,
     user: { id: '999', accessToken: '123' },
     order: { id: '888' },
     selectedIngredients,
@@ -96,8 +97,9 @@ describe('<Refund />', () => {
       {
         customer_id: 999,
         ingredient_ids: ['1234', '1234'],
-        order_id: 888
-      }
+        order_id: 888,
+        features: [],
+      },
     ]
     let wrapper
 
@@ -107,11 +109,28 @@ describe('<Refund />', () => {
       )
     })
 
-    describe('when it is fetching data', () => {
-      test('fetch to have been called correctly', () => {
+    describe('when fetchRefundAmount is being called on componendDidMount', () => {
+      test('fetchRefundAmount is being called with the correct params', () => {
         expect(fetchRefundAmount).toHaveBeenCalledWith(
           ...FETCH_REFUND_AMOUNT_PARAMS
         )
+      })
+
+      describe('when ssrShorterCompensationPeriod feature is turned on', () => {
+        beforeEach(() => {
+          wrapper = mount(
+            <Refund {...PROPS} featureShorterCompensationPeriod />
+          )
+        })
+
+        test('the fetchRefundAmount has ssrShorterCompensationPeriod attached to the body request', () => {
+          const [customerId, body] = FETCH_REFUND_AMOUNT_PARAMS
+
+          expect(fetchRefundAmount).toHaveBeenCalledWith(
+            customerId,
+            { ...body, features: ['ssrShorterCompensationPeriod'] },
+          )
+        })
       })
 
       describe('and when it is still waiting for a response', () => {
@@ -159,6 +178,7 @@ describe('<Refund />', () => {
               description: 'another &amp;description<img>'
             },
           ],
+          features: [],
         }
       ]
 
@@ -193,7 +213,7 @@ describe('<Refund />', () => {
           expect(wrapperText).not.toContain('Error body')
         })
 
-        describe('and when user accepts the refund offer', () => {
+        describe('when user accepts the refund offer', () => {
           test('redirect when refund is accepted', async() => {
             await Button.props().onClick()
             expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
@@ -236,6 +256,25 @@ describe('<Refund />', () => {
               expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledTimes(1)
               expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledWith(1)
             })
+          })
+        })
+
+        describe('when ssrShorterCompensationPeriod feature is turned on', () => {
+          beforeEach(async () => {
+            setComplaint.mockResolvedValueOnce({})
+
+            wrapper.setProps({ featureShorterCompensationPeriod: true })
+
+            await Button.props().onClick()
+          })
+
+          test('the setComplaint has ssrShorterCompensationPeriod attached to the body request', () => {
+            const [customerId, body] = SET_COMPLAINS_PARAMS
+
+            expect(setComplaint).toHaveBeenCalledWith(
+              customerId,
+              { ...body, features: ['ssrShorterCompensationPeriod'] },
+            )
           })
         })
       })
