@@ -16,7 +16,6 @@
 
 .label {
 	composes: c-input c-checkbox from 'sass-loader!styles/bootstrap.scss';
-	composes: paragraphXS from 'styles/typography.css';
 	padding: 2px 0;
 
 	& .indicator {
@@ -44,6 +43,14 @@
 	&:hover > input ~ .indicator {
 		box-shadow: 0 0 0 1px checkRadioBorderColorFocus;
 	}
+}
+
+.textSizeExtraSmall {
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.textSizeMedium {
+	composes: paragraphMD from 'styles/typography.css';
 }
 
 .input {

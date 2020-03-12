@@ -10,10 +10,10 @@
 	position: relative;
 }
 
-.useAppCta { 
+.useAppCta {
 	@media ScreenXXSMax {
 		margin-right: 0.85rem;
-		display: block; 
+		display: block;
 		margin-left: auto;
 		border: 0;
 

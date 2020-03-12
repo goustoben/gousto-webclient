@@ -3,7 +3,7 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
 
 .heading {
-	composes: textCenter textBold from 'styles/typography.css';
+	composes: textLeft textBold from 'styles/typography.css';
 	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
 	font-size: 24px;
 }
@@ -22,6 +22,11 @@
 
 .error {
 	composes: error from 'styles/layout.css';
+}
+
+.rememberMe {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	margin-right: 1.75rem;
 }
 
 .link {
@@ -54,4 +59,7 @@
 
 .row {
 	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
 }

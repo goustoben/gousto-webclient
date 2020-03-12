@@ -23,7 +23,7 @@ describe('ModalPanel', () => {
     expect(backButtonWrapper.type()).toEqual('div')
     expect(backButtonWrapper.prop('onClick')).toEqual(onGoBack)
     expect(backButtonWrapper.find('span').length).toEqual(1)
-    expect(backButtonWrapper.text()).toEqual(' Back')
+    expect(backButtonWrapper.text()).toEqual('Back')
   })
 
   test('should render a <div> with onClick equal to closePortalFromButton with one <span> if closePortalFromButton is provided', () => {
@@ -60,5 +60,25 @@ describe('ModalPanel', () => {
     wrapper = shallow(<ModalPanel>{children}</ModalPanel>)
 
     expect(wrapper.contains(children)).toEqual(true)
+  })
+
+  describe('when the prop "isNarrow" is set to true', () => {
+    beforeEach(() => {
+      wrapper = shallow(<ModalPanel isNarrow />)
+    })
+
+    test('it should render with the className "narrow"', () => {
+      expect(wrapper.find('.modal').hasClass('narrow')).toBe(true)
+    })
+  })
+
+  describe('when the prop "isNarrow" is set to false', () => {
+    beforeEach(() => {
+      wrapper = shallow(<ModalPanel isNarrow={false} />)
+    })
+
+    test('it should render without the className "narrow"', () => {
+      expect(wrapper.find('.modal').hasClass('narrow')).toBe(false)
+    })
   })
 })
