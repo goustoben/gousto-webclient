@@ -215,6 +215,20 @@ jobs:
           command: source ~/.circlerc && python ./ci_scripts/deploy_containers.py --service webclient
           no_output_timeout: 20m
 
+  install-test-dependencies:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: source ~/.circlerc && scripts/install-test-dependencies.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/tests/regression/node_modules
+            - project/tests/e2e/node_modules
+            - .cache/Cypress
+
+
 workflows:
   version: 2
   pull-request-branch:
@@ -351,9 +365,19 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - install-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - develop
+                - env-rockets
       - test-e2e-selenium:
           context: gousto-beta-aws-app-circleci
           requires:
+            - install-test-dependencies
             - deploy-application
             - deploy-containers
           filters:
@@ -363,6 +387,7 @@ workflows:
       - test-e2e-selenium-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
+            - install-test-dependencies
             - deploy-application
             - deploy-containers
           filters:
@@ -372,6 +397,7 @@ workflows:
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
+            - install-test-dependencies
             - deploy-application
             - deploy-containers
           filters:
@@ -382,6 +408,7 @@ workflows:
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
+            - install-test-dependencies
             - deploy-application
             - deploy-containers
           filters:
