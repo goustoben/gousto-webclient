@@ -48,7 +48,8 @@ export const getTempDeliveryOptions = (state) => {
     state,
     true,
     !canLandOnOrder,
-    deliveryDays
+    deliveryDays,
+    false
   )
 
   const tempDate = state.temp.get('date', landing.date)
