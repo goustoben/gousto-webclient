@@ -1,11 +1,11 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import Hero from './Hero'
-import Values from './Values'
-import SubHero from './SubHero'
-import FadeHero from './FadeHero'
-import Perks from './Perks'
-import Openings from './Openings'
+import { Hero } from './Hero'
+import { Values } from './Values'
+import { SubHero } from './SubHero'
+import { FadeHero } from './FadeHero'
+import { Perks } from './Perks'
+import { Openings } from './Openings'
 
 const Jobs = () => (
   <div>
@@ -44,4 +44,4 @@ const Jobs = () => (
   </div>
 )
 
-export default Jobs
+export { Jobs }

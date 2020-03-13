@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import config from 'config/jobs'
-import PerkCircle from 'routes/Jobs/Perks/PerkCircle/PerkCircle'
+import { PerkCircle } from 'routes/Jobs/Perks/PerkCircle/PerkCircle'
 
 describe('the PerkCircle component', () => {
   let wrapper

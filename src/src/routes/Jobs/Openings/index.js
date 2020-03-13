@@ -1,1 +1,1 @@
-export default from './OpeningsContainer'
+export { OpeningsContainer as Openings } from './OpeningsContainer'

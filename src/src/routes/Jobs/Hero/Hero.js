@@ -2,7 +2,7 @@ import React from 'react'
 import config from 'config/routes'
 import Content from 'containers/Content'
 import css from './Hero.css'
-import Button from './Button/Button'
+import { Button } from './Button'
 
 const Hero = () => (
   <div className={css.container}>
@@ -25,4 +25,4 @@ const Hero = () => (
   </div>
 )
 
-export default Hero
+export { Hero }

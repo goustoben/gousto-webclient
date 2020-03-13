@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SubHero from 'routes/Jobs/SubHero/SubHero'
+import { SubHero } from 'routes/Jobs/SubHero/SubHero'
 
 describe('SubHero', () => {
   test('should have only 1 div', () => {

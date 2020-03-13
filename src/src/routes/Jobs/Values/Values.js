@@ -80,4 +80,4 @@ const Values = () => (
   </div>
 )
 
-export default Values
+export { Values }

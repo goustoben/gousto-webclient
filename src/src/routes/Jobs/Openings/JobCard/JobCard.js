@@ -17,7 +17,7 @@ const JobCard = ({ jobLink, isOdd, jobTitle, jobDepartment }) => (
           <div to={jobLink} className={css.jobCTA} target="_blank">
             Read more
           </div>
-          <span className={css.chevronRight} aria-hidden="true"></span>
+          <span className={css.chevronRight} aria-hidden="true" />
         </div>
       </div>
     </div>
@@ -38,4 +38,4 @@ JobCard.defaultProps = {
   jobLink: config.workable.link,
 }
 
-export default JobCard
+export { JobCard }

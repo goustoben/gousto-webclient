@@ -22,4 +22,4 @@ SubHero.defaultProps = {
   imageName: 4,
 }
 
-export default SubHero
+export { SubHero }

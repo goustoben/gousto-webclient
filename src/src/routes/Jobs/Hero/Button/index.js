@@ -1,1 +1,1 @@
-export default from './Button'
+export {CTA as Button} from './Button'

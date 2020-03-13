@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import config from 'config/jobs'
-import Openings from 'routes/Jobs/Openings/Openings'
+import { Openings } from 'routes/Jobs/Openings/Openings'
 
 describe('The Openings component', () => {
   let jobs

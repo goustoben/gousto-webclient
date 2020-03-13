@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Hero from 'routes/Jobs/Hero/Hero'
+import { Hero } from 'routes/Jobs/Hero/Hero'
 
 describe('<Hero />', () => {
   let wrapper

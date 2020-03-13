@@ -1,1 +1,1 @@
-export default from './JobCard'
+export { JobCard } from './JobCard'

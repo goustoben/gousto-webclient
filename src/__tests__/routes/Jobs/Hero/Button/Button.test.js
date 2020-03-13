@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Button from 'routes/Jobs/Hero/Button/Button'
+import { Button } from 'routes/Jobs/Hero/Button'
 import css from 'routes/Jobs/Hero/Button/Button.css'
 
 describe('Jobs page hero button', () => {
