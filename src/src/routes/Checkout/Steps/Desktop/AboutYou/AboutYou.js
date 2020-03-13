@@ -43,7 +43,9 @@ AboutYouStep.propTypes = {
 
 AboutYouStep.defaultProps = {
   userProspect: () => {},
+  receiveRef: () => {},
   checkoutValid: false,
+  nextStepName: ''
 }
 
 const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports

@@ -11,6 +11,13 @@ const propTypes = {
   offerColour: PropTypes.string,
 }
 
+const defaultProps = {
+  youGetOffer: '',
+  yourFriendFirstBoxOffer: '',
+  yourFriendFirstMonthOffer: '',
+  offerColour: '',
+}
+
 const RAFOffer = ({youGetOffer, offerColour, yourFriendFirstBoxOffer, yourFriendFirstMonthOffer}) => (
   <div className={css.rafOffer}>
     <YouGet youGetOffer={youGetOffer} offerColour={offerColour} />
@@ -19,5 +26,6 @@ const RAFOffer = ({youGetOffer, offerColour, yourFriendFirstBoxOffer, yourFriend
 )
 
 RAFOffer.propTypes = propTypes
+RAFOffer.defaultProps = defaultProps
 
 export { RAFOffer }

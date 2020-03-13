@@ -6,7 +6,7 @@ import MyDeliveries from './MyDeliveries'
 import MyGousto from './MyGousto'
 import Subscription from './Subscription'
 import MyDetails from './MyDetails'
-import Referral from './Referral'
+import { Referral } from './Referral'
 import RateRecipes from './RateRecipes'
 import Account from './Account'
 

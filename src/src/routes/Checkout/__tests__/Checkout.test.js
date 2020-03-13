@@ -343,7 +343,8 @@ describe('Checkout', () => {
 
   describe('componentDidMount', () => {
     beforeEach(() => {
-      fetchData = Checkout.fetchData = jest.fn().mockReturnValue(Promise.resolve())
+      fetchData = jest.fn().mockReturnValue(Promise.resolve())
+      Checkout.fetchData = fetchData
       wrapper = mount(
         <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false} />,
         { context },

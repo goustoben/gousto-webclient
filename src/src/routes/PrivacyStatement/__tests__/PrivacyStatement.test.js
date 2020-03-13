@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
 
-import PrivacyStatement from '../PrivacyStatement'
+import { PrivacyStatement } from '../PrivacyStatement'
 
 describe('PrivacyStatement', () => {
   test('renders without crashing', () => {

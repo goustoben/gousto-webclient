@@ -10,11 +10,11 @@ import defaultOffer from 'config/referral'
 
 import { RAFTitle } from './RAFTitle'
 import css from './Referral.css'
-import RAFOffer from './RAFOffer'
+import { RAFOffer } from './RAFOffer'
 import { HowItWorks } from './HowItWorks'
 import { DoubleCreditCountdown } from './DoubleCreditCountdown'
 
-const proptypes = {
+const propTypes = {
   referralCode: PropTypes.string.isRequired,
   rafOffer: ImmutablePropTypes.map({}),
   userFirstName: PropTypes.string,
@@ -27,7 +27,12 @@ const proptypes = {
 
 const defaultProps = {
   rafOffer: defaultOffer,
+  userFirstName: '',
   userFetchReferralOffer: () => { },
+  trackingReferFriend: () => { },
+  trackingReferFriendSocialSharing: () => { },
+  isLoading: false,
+  device: 'desktop'
 }
 
 class Referral extends Component {
@@ -99,7 +104,7 @@ class Referral extends Component {
   }
 }
 
-Referral.propTypes = proptypes
+Referral.propTypes = propTypes
 
 Referral.defaultProps = defaultProps
 

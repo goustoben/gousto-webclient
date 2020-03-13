@@ -36,6 +36,13 @@ DeliveryStep.propTypes = {
   scrollToFirstMatchingRef: PropTypes.func,
 }
 
+DeliveryStep.defaultProps = {
+  nextStepName: '',
+  formValues: {},
+  receiveRef: () => { },
+  scrollToFirstMatchingRef: () => { },
+}
+
 const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), sectionName, validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
 
 export default addInitialValues(DeliveryYouForm, { sectionName })
