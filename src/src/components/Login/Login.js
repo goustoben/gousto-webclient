@@ -83,10 +83,10 @@ class Login extends React.PureComponent {
     }
 
     const { email, password, remember, emailValid, passwordValid, recaptchaValue } = this.state
-    const { onSubmit, onInvalid } = this.props
+    const { onSubmit, onInvalid, shouldAppendUserIdToQueryString } = this.props
 
     if (emailValid && passwordValid) {
-      onSubmit({ email, password, rememberMe: remember, recaptchaToken: recaptchaValue })
+      onSubmit({ email, password, rememberMe: remember, recaptchaToken: recaptchaValue, shouldAppendUserIdToQueryString })
     } else {
       onInvalid({ email, password })
     }
@@ -228,11 +228,11 @@ class Login extends React.PureComponent {
   }
 
   render() {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, title } = this.props
 
     return (
       <div className={css.modalContent} data-testing="loginModal">
-        <h4 className={css.heading}>Login</h4>
+        <h4 className={css.heading}>{title}</h4>
         {(isAuthenticated) ? this.renderConfirmMessage() : this.renderLoginForm()}
       </div>
     )
@@ -247,10 +247,12 @@ Login.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onInvalid: PropTypes.func,
   rememberMeDefault: PropTypes.bool,
+  shouldAppendUserIdToQueryString: PropTypes.bool,
   statusText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
   ]),
+  title: PropTypes.string,
 }
 
 Login.defaultProps = {
@@ -259,7 +261,9 @@ Login.defaultProps = {
   isAuthenticating: false,
   onInvalid: () => {},
   rememberMeDefault: false,
+  shouldAppendUserIdToQueryString: false,
   statusText: '',
+  title: 'Login',
 }
 
 export default Login
