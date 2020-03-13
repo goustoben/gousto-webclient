@@ -1,1 +1,1 @@
-export default from './Dots'
+export { Dots } from './Dots'

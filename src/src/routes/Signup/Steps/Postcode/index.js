@@ -1,1 +1,1 @@
-export default from './PostcodeStepContainer'
+export { PostcodeStepContainer as PostcodeStep } from './PostcodeStepContainer'

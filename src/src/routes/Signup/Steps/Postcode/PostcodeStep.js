@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TextInput from 'Form/Input'
 import {reminder} from 'config/freeDelivery'
-import Button from '../../Button'
-import Image from '../../Image'
+import { Button } from '../../Button'
+import { Image } from '../../Image'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
@@ -112,4 +112,13 @@ PostcodeStep.propTypes = {
   ]),
 }
 
-export default PostcodeStep
+PostcodeStep.defaultProps = {
+  deliveryDaysError: false,
+  postcodePending: false,
+  tempPostcode: '',
+  changeTempPostcode: () => {},
+  changePostcode: () => {},
+  nextStepName: ''
+}
+
+export { PostcodeStep }

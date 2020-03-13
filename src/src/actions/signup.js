@@ -5,15 +5,6 @@ import { stepByName } from 'utils/signup'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
 
-const signupActions = {
-  signupStepsReceive,
-  signupCookForKidsChange,
-  signupChangePostcode,
-  signupSetStep,
-  signupTracking,
-  signupNextStep,
-}
-
 export function signupStepsReceive(steps) {
   return {
     type: actionTypes.SIGNUP_STEPS_RECEIVE,
@@ -40,41 +31,6 @@ export function signupSetStep(step) {
         stepName: step.get('name'),
       },
     })
-  }
-}
-
-export function signupNextStep(stepName) {
-  return (dispatch, getState) => {
-    const step = stepByName(stepName)
-    if (step) {
-      const signupState = getState().signup
-      const isCurrentlyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
-      if (isCurrentlyTheLastStep) {
-        dispatch(signupTracking())
-
-        return dispatch(redirectAction.redirect(routes.client.menu))
-      }
-
-      try {
-        const { search } = getState().routing.locationBeforeTransitions
-        dispatch(push(`${client.signup}/${step.get('slug')}${search}`))
-      } catch (e) {
-        dispatch(push(`${client.signup}/${step.get('slug')}`))
-      }
-
-      dispatch(signupSetStep(step))
-    }
-
-    return null
-  }
-}
-
-export function signupChangePostcode(postcode, nextStepName) {
-  return async (dispatch, getState) => {
-    await dispatch(basketPostcodeChange(postcode))
-    if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
-      signupActions.signupNextStep(nextStepName)(dispatch, getState)
-    }
   }
 }
 
@@ -114,4 +70,38 @@ export function signupTracking() {
   }
 }
 
-export default signupActions
+export function signupNextStep(stepName) {
+  return (dispatch, getState) => {
+    const step = stepByName(stepName)
+    if (step) {
+      const signupState = getState().signup
+      const isCurrentlyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
+      if (isCurrentlyTheLastStep) {
+        dispatch(signupTracking())
+
+        return dispatch(redirectAction.redirect(routes.client.menu))
+      }
+
+      try {
+        const { search } = getState().routing.locationBeforeTransitions
+        dispatch(push(`${client.signup}/${step.get('slug')}${search}`))
+      } catch (e) {
+        dispatch(push(`${client.signup}/${step.get('slug')}`))
+      }
+
+      dispatch(signupSetStep(step))
+    }
+
+    return null
+  }
+}
+
+export function signupChangePostcode(postcode, nextStepName) {
+  return async (dispatch, getState) => {
+    await dispatch(basketPostcodeChange(postcode))
+    if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
+      signupNextStep(nextStepName)(dispatch, getState)
+    }
+  }
+}
+

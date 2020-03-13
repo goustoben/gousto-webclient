@@ -4,7 +4,7 @@ import css from './Dots.css'
 
 const Dots = ({ steps, stepNo }) => (
   <div className={css.dots}>
-    {Array.from(Array(steps)).map((s, step) => <div key={step} className={step <= stepNo ? css.filledDot : css.dot} />)}
+    {Array.from(Array(steps)).map((s, step) => <div key={s && s.get('name')} className={step <= stepNo ? css.filledDot : css.dot} />)}
   </div>
 )
 
@@ -13,4 +13,9 @@ Dots.propTypes = {
   steps: PropTypes.number,
 }
 
-export default Dots
+Dots.defaultProps = {
+  stepNo: 1,
+  steps: 1,
+}
+
+export { Dots }

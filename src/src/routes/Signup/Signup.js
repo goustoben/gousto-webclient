@@ -10,29 +10,56 @@ import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
 import css from './Signup.css'
 
-import WelcomeStep from './Steps/Welcome'
-import KidsCookForStep from './Steps/KidsCookFor'
-import AdultsCookFor from './Steps/AdultsCookFor'
-import BoxSizeStep from './Steps/BoxSize'
-import PostcodeStep from './Steps/Postcode'
-import DeliveryStep from './Steps/Delivery'
-import RecipesStep from './Steps/Recipes'
-import FinishStep from './Steps/Finish'
+import { BoxSizeStep } from './Steps/BoxSize'
+import { PostcodeStep } from './Steps/Postcode'
+import { DeliveryStep } from './Steps/Delivery'
 
-import Dots from './Dots'
+import { Dots } from './Dots'
 
 const components = {
-  foodPref: RecipesStep,
-  welcome: WelcomeStep,
-  kidsCookFor: KidsCookForStep,
-  adultsCookFor: AdultsCookFor,
   boxSize: BoxSizeStep,
   postcode: PostcodeStep,
   delivery: DeliveryStep,
-  finish: FinishStep,
 }
 
 const availableSteps = Object.keys(components)
+
+const propTypes = {
+  stepName: PropTypes.string,
+  steps: PropTypes.instanceOf(Immutable.List),
+  goToStep: PropTypes.func,
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      steps: PropTypes.string,
+      promo_code: PropTypes.string,
+    })
+  }),
+  params: PropTypes.shape({
+    stepName: PropTypes.string,
+  }),
+  currentStepName: PropTypes.string,
+  changeStep: PropTypes.func.isRequired,
+}
+
+const defaultProps = {
+  stepName: '',
+  steps: Immutable.List(),
+  goToStep: () => {},
+  location: {
+    query: {
+      steps: '',
+      promo_code: '',
+    }
+  },
+  params: {
+    stepName: '',
+  },
+  currentStepName: '',
+}
+
+const contextTypes = {
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+}
 
 class Signup extends React.PureComponent {
   static fetchData = async ({ store, params = {}, query = {}}) => {
@@ -95,52 +122,58 @@ class Signup extends React.PureComponent {
     return null
   }
 
-  static propTypes = {
-    stepName: PropTypes.string,
-    steps: PropTypes.instanceOf(Immutable.List),
-    goToStep: PropTypes.func,
-    location: PropTypes.shape({
-      query: PropTypes.shape({
-        steps: PropTypes.string,
-        promo_code: PropTypes.string,
-      })
-    }),
-    params: PropTypes.shape({
-      stepName: PropTypes.string,
-    }),
-    currentStepName: PropTypes.string,
-    changeStep: PropTypes.func.isRequired,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   componentDidMount() {
-    const {store} = this.context
-    const query = this.props.location ? this.props.location.query : {}
-    const params = this.props.params || {}
+    const { location, params } = this.props
+    const { store } = this.context
+    const query = location ? location.query : {}
     Signup.fetchData({ store, query, params })
   }
 
   componentWillReceiveProps(nextProps) {
+    const { changeStep } = this.props
     const step = stepByName(nextProps.currentStepName)
     if (nextProps.stepName !== step.get('slug')) {
-      this.props.changeStep(stepBySlug(nextProps.stepName))
+      changeStep(stepBySlug(nextProps.stepName))
     }
   }
 
-  renderStep = (stepName, nextStepName, currentStepNumber, isLastStep) => {
-    const Component = components[stepName]
+  getCurrentStepNumber(steps) {
+    const { stepName } = this.props
+    const stepNumber = steps.findIndex(step => step.get('slug') === stepName)
+
+    if (stepNumber < 0) {
+      return 0
+    }
+
+    return stepNumber
+  }
+
+  getSteps() {
+    const { steps } = this.props
+
+    const signupSteps = steps
+      .filter(step => step && availableSteps.includes(step))
+      .map(stepName => stepByName(stepName))
+
+    if (signupSteps.size === 0) {
+      return Immutable.fromJS(config.defaultSteps.map(stepByName))
+    }
+
+    return signupSteps
+  }
+
+  renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
+    const { goToStep, stepName } = this.props
+    const Component = components[name]
 
     return (
       <Component
-        next={() => this.props.goToStep(nextStepName)}
+        next={() => goToStep(nextStepName)}
         nextStepName={nextStepName}
-        currentStepName={this.props.stepName}
+        currentStepName={stepName}
         stepNumber={currentStepNumber}
         isLastStep={isLastStep}
-        active={this.props.stepName === stepName}
+        active={stepName === name}
       />
     )
   }
@@ -160,28 +193,6 @@ class Signup extends React.PureComponent {
       </div>
     )).toArray()
   )
-
-  getCurrentStepNumber(steps) {
-    const stepNumber = steps.findIndex(step => step.get('slug') === this.props.stepName)
-
-    if (stepNumber < 0) {
-      return 0
-    }
-
-    return stepNumber
-  }
-
-  getSteps() {
-    const steps = this.props.steps
-      .filter(step => step && availableSteps.includes(step))
-      .map(stepName => stepByName(stepName))
-
-    if (steps.size === 0) {
-      return Immutable.fromJS(config.defaultSteps.map(stepByName))
-    }
-
-    return steps
-  }
 
   render() {
     const steps = this.getSteps()
@@ -213,4 +224,8 @@ class Signup extends React.PureComponent {
   }
 }
 
-export default Signup
+Signup.propTypes = propTypes
+Signup.defaultProps = defaultProps
+Signup.contextTypes = contextTypes
+
+export { Signup }

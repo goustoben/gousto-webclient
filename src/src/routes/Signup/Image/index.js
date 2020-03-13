@@ -1,1 +1,1 @@
-export default from './Image'
+export { SignupImage as Image } from './Image'
