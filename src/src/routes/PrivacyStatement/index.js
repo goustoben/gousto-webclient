@@ -1,1 +1,1 @@
-export default from './route'
+export { route as PrivacyStatement } from './route'
