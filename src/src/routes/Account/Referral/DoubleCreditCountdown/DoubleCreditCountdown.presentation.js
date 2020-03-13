@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import css from './DoubleCreditCountdown.css'
 
-const proptypes = {
+const propTypes = {
   title: PropTypes.string.isRequired,
   days: PropTypes.number.isRequired,
   hours: PropTypes.number.isRequired,
@@ -34,6 +34,6 @@ const DoubleCreditCountdownPresentation = ({title, days, hours, minutes}) => (
   </div>
 )
 
-DoubleCreditCountdownPresentation.propTypes = proptypes
+DoubleCreditCountdownPresentation.propTypes = propTypes
 
 export { DoubleCreditCountdownPresentation }

@@ -1,2 +1,2 @@
-export default from './RAFOfferContainer'
+export { RAFOfferContainer as RAFOffer } from './RAFOfferContainer'
 

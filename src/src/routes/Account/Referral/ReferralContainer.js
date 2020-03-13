@@ -19,4 +19,4 @@ const ReferralContainer = connect(mapStateToProps, {
   trackingReferFriendSocialSharing,
 })(Referral)
 
-export default ReferralContainer
+export { ReferralContainer }

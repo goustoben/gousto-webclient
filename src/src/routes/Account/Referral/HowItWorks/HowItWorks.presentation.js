@@ -4,8 +4,12 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import css from './HowItWorks.css'
 
-const proptypes = {
+const propTypes = {
   detailsSteps: PropTypes.instanceOf(Immutable.List)
+}
+
+const defaultProps = {
+  detailsSteps: Immutable.List()
 }
 
 const HowItWorksPresentation = ({detailsSteps}) => (
@@ -15,7 +19,7 @@ const HowItWorksPresentation = ({detailsSteps}) => (
     <div className={css.howItWorksWrapper}>
       {
         detailsSteps && detailsSteps.map((item, idx) => (
-          <div className={css.howItWorksStep} key={`raf-how-it-works ${idx}`}>
+          <div className={css.howItWorksStep} key={item}>
             <div className={css.howItWorksStepIdx}><span>{idx + 1}</span></div>
             {
               (idx === detailsSteps.size - 1)
@@ -30,6 +34,7 @@ const HowItWorksPresentation = ({detailsSteps}) => (
   </div>
 )
 
-HowItWorksPresentation.propTypes = proptypes
+HowItWorksPresentation.propTypes = propTypes
+HowItWorksPresentation.defaultProps = defaultProps
 
 export { HowItWorksPresentation }

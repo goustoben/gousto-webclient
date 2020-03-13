@@ -15,4 +15,8 @@ RAFTitle.propTypes = {
   title: PropTypes.string,
 }
 
+RAFTitle.defaultProps = {
+  title: '',
+}
+
 export { RAFTitle }

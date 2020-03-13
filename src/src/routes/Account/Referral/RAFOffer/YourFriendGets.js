@@ -36,6 +36,12 @@ const propTypes = {
   yourFriendFirstMonthOffer: PropTypes.string,
 }
 
+const defaultProps = {
+  yourFriendFirstBoxOffer: '',
+  yourFriendFirstMonthOffer: '',
+}
+
 YourFriendGets.propTypes = propTypes
+YourFriendGets.defaultProps = defaultProps
 
 export { YourFriendGets }

@@ -15,4 +15,4 @@ const mapStateToProps = (state, ownProps) => {
 
 const RAFOfferContainer = connect(mapStateToProps)(RAFOffer)
 
-export default RAFOfferContainer
+export { RAFOfferContainer }

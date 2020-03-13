@@ -22,6 +22,7 @@ const propTypes = {
 }
 
 const defaultProps = {
+  youGetOffer: '',
   offerColour: 'grey'
 }
 

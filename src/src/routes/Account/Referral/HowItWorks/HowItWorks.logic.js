@@ -9,6 +9,10 @@ const propTypes = {
   details: PropTypes.instanceOf(Immutable.List),
 }
 
+const defaultProps = {
+  details: Immutable.List()
+}
+
 const HowItWorks = ({ details }) => {
   const sanitizeLastStep = replaceLinkToTermsAndCondition(details.last(), rafTermsLink)
   const detailsSteps = details.pop().push(sanitizeLastStep)
@@ -19,5 +23,6 @@ const HowItWorks = ({ details }) => {
 }
 
 HowItWorks.propTypes = propTypes
+HowItWorks.defaultProps = defaultProps
 
 export { HowItWorks }
