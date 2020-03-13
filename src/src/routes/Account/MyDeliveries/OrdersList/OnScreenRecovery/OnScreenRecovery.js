@@ -39,10 +39,13 @@ const propTypes = {
   confirmCopy: PropTypes.string,
   onKeep: PropTypes.func.isRequired,
   keepCopy: PropTypes.string,
-  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE, '']),
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE, ''])
 }
 
 const defaultProps = {
+  visible: undefined,
+  title: '',
+  offer: undefined,
   valueProposition: {
     message: '',
     title: '',
@@ -52,8 +55,10 @@ const defaultProps = {
     keep: '',
   },
   triggered: false,
+  getRecoveryContent: () => null,
   confirmCopy: '',
-  keepCopy: ''
+  keepCopy: '',
+  type: ''
 }
 
 class OnScreenRecovery extends React.PureComponent {

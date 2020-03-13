@@ -10,18 +10,6 @@ import { Address } from './Address'
 import css from './OrderDeliveryAddress.css'
 
 class OrderDeliveryAddress extends React.PureComponent {
-  static propTypes = {
-    addresses: PropTypes.instanceOf(Immutable.Map),
-    orderAddressChange: PropTypes.func,
-    orderId: PropTypes.string,
-    orderState: PropTypes.string,
-    shippingAddressId: PropTypes.string,
-    hasError: PropTypes.bool,
-    isPendingUpdateAddress: PropTypes.bool,
-    userTrackToggleEditAddressSection: PropTypes.func,
-    userTrackAddressSelected: PropTypes.func,
-  }
-
   constructor(props) {
     super(props)
     const { shippingAddressId } = this.props
@@ -138,6 +126,30 @@ class OrderDeliveryAddress extends React.PureComponent {
       </div>
     )
   }
+}
+
+OrderDeliveryAddress.propTypes = {
+  addresses: PropTypes.instanceOf(Immutable.Map),
+  orderAddressChange: PropTypes.func,
+  orderId: PropTypes.string,
+  orderState: PropTypes.string,
+  shippingAddressId: PropTypes.string,
+  hasError: PropTypes.bool,
+  isPendingUpdateAddress: PropTypes.bool,
+  userTrackToggleEditAddressSection: PropTypes.func,
+  userTrackAddressSelected: PropTypes.func,
+}
+
+OrderDeliveryAddress.defaultProps = {
+  addresses: Immutable.Map({}),
+  orderAddressChange: () => null,
+  orderId: '',
+  orderState: '',
+  shippingAddressId: '',
+  hasError: false,
+  isPendingUpdateAddress: false,
+  userTrackToggleEditAddressSection: () => null,
+  userTrackAddressSelected: () => null,
 }
 
 export { OrderDeliveryAddress }

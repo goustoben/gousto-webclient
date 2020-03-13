@@ -6,15 +6,16 @@ import deliverySlotUtils from 'utils/deliverySlot'
 import css from './DeliveryDetails.css'
 
 const DeliveryDetails = (props) => {
-  const deliveryDate = moment(props.date).format('ddd, D MMM')
-  const deliveryTime = deliverySlotUtils.toTimeRange(props.slot)
+  const { address, date, slot } = props
+  const deliveryDate = moment(date).format('ddd, D MMM')
+  const deliveryTime = deliverySlotUtils.toTimeRange(slot)
 
   const shippingDetails = [
-    props.address.get('line1'),
-    props.address.get('line2'),
-    props.address.get('line3'),
-    props.address.get('town'),
-    props.address.get('postcode'),
+    address.get('line1'),
+    address.get('line2'),
+    address.get('line3'),
+    address.get('town'),
+    address.get('postcode'),
     `${deliveryDate}, ${deliveryTime}`,
   ]
     .filter(lineItem => !!lineItem)
@@ -33,6 +34,12 @@ DeliveryDetails.propTypes = {
   address: PropTypes.instanceOf(Immutable.Map),
   date: PropTypes.string,
   slot: PropTypes.object,
+}
+
+DeliveryDetails.defaultProps = {
+  address: Immutable.Map({}),
+  date: '',
+  slot: {}
 }
 
 export default DeliveryDetails

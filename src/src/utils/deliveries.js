@@ -284,7 +284,7 @@ export function isDaySlotLeadTimeActive(slot) {
 }
 
 export function isFreeSlotAvailable(slots) {
-  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) == 0).size > 0
+  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) == 0).size > 0 // eslint-disable-line eqeqeq
 }
 
 export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds, useBasketDate = true) {
@@ -420,6 +420,30 @@ export function cutoffDateTimeNow() {
   )
 }
 
+export function isSlotActive(slot) {
+  return "daySlotLeadTimeActive" in slot ? slot.daySlotLeadTimeActive : true
+}
+
+export function userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot) {
+  return usersOrderDaySlotLeadTimeIds.indexOf(slot.daySlotLeadTimeId) > -1
+}
+
+export function isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment) {
+  return moment(slot.whenCutoff).isAfter(cutoffDatetimeFromMoment)
+}
+
+export function isDeliverySlotAvailable(
+  slot,
+  cutoffDatetimeFromMoment,
+  usersOrderDaySlotLeadTimeIds
+) {
+  return (
+    (isSlotActive(slot) ||
+      userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)) &&
+    isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
+  )
+}
+
 export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom, usersOrderDaySlotLeadTimeIds = []) {
   const cutoffDatetimeFromMoment = moment(cutoffDatetimeFrom)
 
@@ -439,23 +463,6 @@ export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom, users
   }
 
   return availableDeliveryDays.reduce((daysMap, day) => ({ ...daysMap, [day.date]: day }), {})
-}
-
-export function isDeliverySlotAvailable(slot, cutoffDatetimeFromMoment, usersOrderDaySlotLeadTimeIds) {
-  return (isSlotActive(slot) || userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot))
-    && isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
-}
-
-export function isSlotActive(slot) {
-  return 'daySlotLeadTimeActive' in slot ? slot.daySlotLeadTimeActive : true
-}
-
-export function userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot) {
-  return usersOrderDaySlotLeadTimeIds.indexOf(slot.daySlotLeadTimeId) > -1
-}
-
-export function isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment) {
-  return moment(slot.whenCutoff).isAfter(cutoffDatetimeFromMoment)
 }
 
 export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
