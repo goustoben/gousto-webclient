@@ -1,1 +1,1 @@
-export default from './route'
+export { Checkout } from './route'

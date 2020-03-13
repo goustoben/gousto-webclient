@@ -6,7 +6,7 @@ import Page from 'containers/PageContainer'
 
 import ErrorPage from 'components/ErrorPage'
 import Home from './Home'
-import Checkout from './Checkout'
+import { Checkout } from './Checkout'
 import Example from './Example'
 import Menu from './Menu'
 import Account from './Account'

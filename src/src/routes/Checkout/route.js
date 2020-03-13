@@ -7,7 +7,7 @@ import CheckoutContainer from './CheckoutContainer'
 
 const path = `${config.client['check-out']}(/:stepName)`
 
-export default (store) => (
+export const Checkout = (store) => (
   <Route component={CheckoutLayout} onEnter={checkGuest(store, '/menu')}>
     <Route path={path} component={CheckoutContainer} />
   </Route>

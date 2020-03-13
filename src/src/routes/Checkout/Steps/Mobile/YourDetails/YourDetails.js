@@ -77,9 +77,13 @@ YourDetailsStep.propTypes = {
 }
 
 YourDetailsStep.defaultProps = {
+  browser: '',
+  formValues: {},
+  nextStepName: '',
   userProspect: () => { },
   receiveRef: () => { },
   scrollToFirstMatchingRef: () => { },
+  trackClick: () => { },
   checkoutValid: false,
 }
 
