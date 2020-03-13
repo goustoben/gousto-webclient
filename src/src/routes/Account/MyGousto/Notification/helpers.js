@@ -6,7 +6,7 @@ export const checkCardExpiryDate = (card, now) => {
   let bannerToShow
   const expiryDate = moment(card.get('expiryDate'))
 
-  if (!card.size) return
+  if (!card.size) return undefined
 
   if (now.isSame(expiryDate, 'month')) {
     bannerToShow = 'toExpire'
@@ -19,9 +19,8 @@ export const checkCardExpiryDate = (card, now) => {
 
 export const checkAmendedDeliveryDate = (orders) => {
   const alternateDeliveryDays = orders.filter(order => order.get('state') === 'pending' && order.get('originalDeliveryDay')).toArray()
-  if (alternateDeliveryDays.length > 0) {
-    return 'amendDelivery'
-  }
+
+  return alternateDeliveryDays.length > 0 ? 'amendDelivery' : undefined
 }
 
 export const checkOrderAwaitingSelection = (orders, now) => {
@@ -30,18 +29,14 @@ export const checkOrderAwaitingSelection = (orders, now) => {
     .filter(order => moment(order.get('whenCutoff')).isSame(now, 'day'))
     .toArray()
 
-  if (notifications.length >= 1) {
-    return 'selectOrder'
-  }
+  return notifications.length >= 1 ? 'selectOrder' : undefined
 }
 
 export const checkRafOffer = (now) => {
   const { startDate, endDate } = config.referAFriend
   const rafExpiry = moment(now).isBetween(startDate, endDate)
 
-  if (rafExpiry) {
-    return 'referAFriend'
-  }
+  return rafExpiry ? 'referAFriend' : undefined
 }
 
 export const checkSustainabilityPledge = (now) => {

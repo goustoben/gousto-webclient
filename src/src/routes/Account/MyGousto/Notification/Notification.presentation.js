@@ -11,6 +11,10 @@ const propTypes = {
   onLinkClick: PropTypes.func,
 }
 
+const defaultProps = {
+  onLinkClick: () => {}
+}
+
 const handleClick = (e, url, onLinkClick) => {
   e.preventDefault()
   if (typeof onLinkClick === 'function') {
@@ -35,5 +39,6 @@ const NotificationPresentation = ({ type, title, message, url, onLinkClick }) =>
 )
 
 NotificationPresentation.propTypes = propTypes
+NotificationPresentation.defaultProps = defaultProps
 
 export { NotificationPresentation }

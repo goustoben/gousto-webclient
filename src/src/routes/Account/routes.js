@@ -3,7 +3,7 @@ import { Route } from 'react-router'
 
 import config from 'config/routes'
 import MyDeliveries from './MyDeliveries'
-import MyGousto from './MyGousto'
+import { MyGousto } from './MyGousto'
 import Subscription from './Subscription'
 import { Referral } from './Referral'
 import Account from './Account'

@@ -9,26 +9,30 @@ import { HeaderContainer } from './Header'
 import { ReferAFriend } from './ReferAFriend'
 import css from './MyGousto.css'
 
+const propTypes = {
+  userLoadOrders: PropTypes.func.isRequired,
+  userGetReferralDetails: PropTypes.func.isRequired,
+  card: PropTypes.instanceOf(Immutable.Map),
+  orders: PropTypes.instanceOf(Immutable.Map),
+  nameFirst: PropTypes.string,
+  referralDetails: PropTypes.instanceOf(Immutable.Map),
+  redirect: PropTypes.func,
+}
+
+const contextTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  store: PropTypes.object.isRequired,
+}
+
+const defaultProps = {
+  card: Immutable.Map(),
+  orders: Immutable.Map(),
+  nameFirst: '',
+  referralDetails: Immutable.Map(),
+  redirect: () => {},
+}
+
 class MyGousto extends React.PureComponent {
-  static propTypes = {
-    userLoadOrders: PropTypes.func.isRequired,
-    userGetReferralDetails: PropTypes.func.isRequired,
-    card: PropTypes.instanceOf(Immutable.Map),
-    orders: PropTypes.instanceOf(Immutable.Map),
-    nameFirst: PropTypes.string,
-    referralDetails: PropTypes.instanceOf(Immutable.Map),
-    redirect: PropTypes.func,
-  }
-
-  static defaultProps = {
-    userLoadOrders: () => { },
-    redirect: () => {},
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   componentDidMount() {
     const { userLoadOrders, userGetReferralDetails } = this.props
     const { store } = this.context
@@ -66,4 +70,8 @@ class MyGousto extends React.PureComponent {
   }
 }
 
-export default MyGousto
+MyGousto.propTypes = propTypes
+MyGousto.defaultProps = defaultProps
+MyGousto.contextTypes = contextTypes
+
+export { MyGousto }

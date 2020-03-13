@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { userGetReferralDetails } from 'actions/user'
 import { redirect } from 'actions/redirect'
-import MyGousto from './MyGousto'
+import { MyGousto } from './MyGousto'
 
 function mapStateToProps(state) {
   return {
@@ -19,4 +19,4 @@ const MyGoustoContainer = connect(mapStateToProps, {
   redirect
 })(MyGousto)
 
-export default MyGoustoContainer
+export { MyGoustoContainer }

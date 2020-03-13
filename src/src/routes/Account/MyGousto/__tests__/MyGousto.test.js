@@ -6,7 +6,7 @@ import { Cookbook } from '../Cookbook'
 import { Notification } from '../Notification'
 import { HeaderContainer } from '../Header'
 import { ReferAFriend } from '../ReferAFriend'
-import MyGousto from '../MyGousto'
+import { MyGousto } from '../MyGousto'
 
 jest.mock('routes/Menu/fetchData')
 
