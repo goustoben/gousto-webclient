@@ -4,7 +4,7 @@ import { browserHistory } from 'react-router'
 import { client as routes } from 'config/routes'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
-import Refund from 'routes/GetHelp/Refund/Refund'
+import { Refund } from 'routes/GetHelp/Refund/Refund'
 
 jest.mock('apis/getHelp')
 

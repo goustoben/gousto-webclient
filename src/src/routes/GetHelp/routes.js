@@ -4,12 +4,12 @@ import { Route, Redirect, IndexRoute } from 'react-router'
 import configRoutes from 'config/routes'
 import WizardLayout from 'layouts/WizardLayout'
 import { checkValidSession } from 'utils/routes'
-import GetHelpContainer from './GetHelpContainer'
-import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
+import { GetHelpContainer } from './GetHelpContainer'
+import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 
-import Refund from './Refund'
-import Contact from './Contact'
-import Confirmation from './Confirmation'
+import { Refund } from './Refund'
+import { Contact } from './Contact'
+import { Confirmation } from './Confirmation'
 import { Delivery } from './Delivery'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
@@ -46,4 +46,7 @@ const getHelpRoutes = (store) => {
   )
 }
 
-export default getHelpRoutes
+export {
+  getHelpRoutes
+}
+

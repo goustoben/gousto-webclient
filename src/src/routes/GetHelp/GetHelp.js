@@ -33,8 +33,14 @@ const propTypes = {
   loadOrderById: PropTypes.func.isRequired,
 }
 
+const defaultProps = {
+  content: undefined,
+  order: {},
+  user: {},
+}
+
 class GetHelp extends PureComponent {
-  componentDidMount = async () => {
+  async componentDidMount() {
     const { storeGetHelpOrderId, orderId, user, loadOrderById } = this.props
 
     if (orderId.length < 1) {
@@ -49,7 +55,7 @@ class GetHelp extends PureComponent {
         orderId,
       })
 
-      this.orderLoadComplete()
+      return this.orderLoadComplete()
     } catch (error) {
       return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
     }
@@ -92,5 +98,8 @@ class GetHelp extends PureComponent {
 }
 
 GetHelp.propTypes = propTypes
+GetHelp.defaultProps = defaultProps
 
-export default GetHelp
+export {
+  GetHelp
+}

@@ -7,7 +7,7 @@ import {
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-import GetHelp from './GetHelp'
+import { GetHelp } from './GetHelp'
 
 const getContent = ({ content }) => ({
   title: content.get('get-help_default_pageheader_header')
@@ -84,4 +84,6 @@ const GetHelpContainer = connect(mapStateToProps, {
   loadRecipesById,
 })(GetHelp)
 
-export default GetHelpContainer
+export {
+  GetHelpContainer
+}

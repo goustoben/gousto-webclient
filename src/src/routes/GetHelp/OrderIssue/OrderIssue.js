@@ -74,4 +74,6 @@ OrderIssue.defaultProps = {
   selectOrderIssue: () => {},
 }
 
-export default OrderIssue
+export {
+  OrderIssue
+}

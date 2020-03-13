@@ -11,7 +11,7 @@ import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
-import GetHelpContainer from 'routes/GetHelp/GetHelpContainer'
+import { GetHelpContainer } from 'routes/GetHelp/GetHelpContainer'
 
 jest.mock('apis/getHelp')
 jest.mock('apis/recipes')

@@ -6,7 +6,7 @@ import { zendesk } from 'config/routes'
 import { Item, ItemExpandable } from 'goustouicomponents'
 import { ItemLink } from 'routes/GetHelp/components/ItemLink'
 import itemCSS from 'routes/GetHelp/components/Item/Item.css'
-import Contact from 'routes/GetHelp/Contact/Contact'
+import { Contact } from 'routes/GetHelp/Contact/Contact'
 
 describe('<Contact />', () => {
   const content = {

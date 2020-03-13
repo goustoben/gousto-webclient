@@ -7,7 +7,7 @@ import {
 } from 'actions/getHelp'
 import { featureShorterCompensationPeriod } from 'selectors/features'
 
-import Refund from './Refund'
+import { Refund } from './Refund'
 
 const mapStateToProps = (state) => {
   const { auth, user, getHelp } = state
@@ -46,4 +46,6 @@ const RefundContainer = connect(mapStateToProps, {
   trackUserCannotGetCompensation,
 })(Refund)
 
-export default RefundContainer
+export {
+  RefundContainer
+}

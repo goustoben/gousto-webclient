@@ -51,8 +51,12 @@ const defaultProps = {
 }
 
 class Ingredients extends PureComponent {
-  state = {
-    selectedIngredients: new Map(),
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      selectedIngredients: new Map(),
+    }
   }
 
   componentDidMount() {

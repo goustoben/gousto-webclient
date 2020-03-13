@@ -13,4 +13,6 @@ const PhoneContent = () => (
   </div>
 )
 
-export default PhoneContent
+export {
+  PhoneContent
+}

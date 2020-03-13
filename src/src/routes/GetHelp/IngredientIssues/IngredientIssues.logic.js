@@ -23,11 +23,11 @@ const propTypes = {
   ).isRequired,
   issues: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      requireDescription: PropTypes.bool.isRequired,
-    }).isRequired
-  ),
+      id: PropTypes.string,
+      label: PropTypes.string,
+      requireDescription: PropTypes.bool,
+    })
+  ).isRequired,
   selectedIngredients: PropTypes.objectOf(PropTypes.shape({
     ingredientId: PropTypes.string,
     issueName: PropTypes.string,
@@ -36,23 +36,20 @@ const propTypes = {
   storeSelectedIngredientIssue: PropTypes.func.isRequired,
   subIssues: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      groupLabel: PropTypes.string.isRequired,
-      requireDescription: PropTypes.bool.isRequired,
-    }).isRequired
-  ),
+      id: PropTypes.string,
+      label: PropTypes.string,
+      groupLabel: PropTypes.string,
+      requireDescription: PropTypes.bool,
+    })
+  ).isRequired,
   trackIngredientIssues: PropTypes.func.isRequired,
+}
+const defaultProps = {
+  selectedIngredients: {}
 }
 
 class IngredientIssues extends PureComponent {
   buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
-
-  fetchData() {
-    const { fetchIngredientIssues } = this.props
-
-    fetchIngredientIssues()
-  }
 
   componentDidMount() {
     this.fetchData()
@@ -80,6 +77,12 @@ class IngredientIssues extends PureComponent {
     storeSelectedIngredientIssue(ingredientAndRecipeId, issueId, issueLabel)
   }
 
+  fetchData() {
+    const { fetchIngredientIssues } = this.props
+
+    fetchIngredientIssues()
+  }
+
   render() {
     const { content, ingredients, issues, subIssues } = this.props
 
@@ -97,6 +100,7 @@ class IngredientIssues extends PureComponent {
   }
 }
 
+IngredientIssues.defaultProps = defaultProps
 IngredientIssues.propTypes = propTypes
 
 export {

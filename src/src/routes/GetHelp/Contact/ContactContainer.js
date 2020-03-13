@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { selectContactChannel } from 'actions/getHelp'
 
-import Contact from './Contact'
+import { Contact } from './Contact'
 
 const mapStateToProps = (state) => ({
   content: {
@@ -27,4 +27,6 @@ const ContactContainer = connect(mapStateToProps, {
   selectContactChannel,
 })(Contact)
 
-export default ContactContainer
+export {
+  ContactContainer
+}
