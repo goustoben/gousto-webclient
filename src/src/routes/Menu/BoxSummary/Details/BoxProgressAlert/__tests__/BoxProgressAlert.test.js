@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import config from 'config/basket'
-import BoxProgressAlert from '../BoxProgressAlert'
+import { BoxProgressAlert } from '../BoxProgressAlert'
 
 jest.mock('components/PricePerServingMessage', () => ({
   PricePerServingMessage: () => <div>PricePerServingMessage</div>,

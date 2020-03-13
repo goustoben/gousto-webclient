@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Tooltip } from 'goustouicomponents'
-import RecipeList from '../../RecipeList'
+import { RecipeListContainer } from '../../RecipeList'
 import { BannerButtonContainer } from '../../BannerButton'
-import BrowseCTA from '../../BrowseCTA'
-import BrowseCTAButton from '../../BrowseCTAButton'
+import { BrowseCTAContainer } from '../../BrowseCTA'
+import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
 import { ExpandBoxSummaryButtonContainer } from './ExpandBoxSummaryButtonContainer'
 
@@ -24,7 +24,7 @@ const BoxSummaryDesktopBanner = ({
   openDetails
 }) => (
   <div className={css.bardesktop}>
-    <RecipeList view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
+    <RecipeListContainer view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
     <span className={css.buttonsContainer}>
       {
         showBrowseCTA
@@ -36,7 +36,7 @@ const BoxSummaryDesktopBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BrowseCTAButton view="desktop" />
+              <BrowseCTAButtonContainer view="desktop" />
             </Tooltip>
           )
           : (
@@ -47,7 +47,7 @@ const BoxSummaryDesktopBanner = ({
       {
         showBrowseCTA
           ? (
-            <BrowseCTA view="desktop" />
+            <BrowseCTAContainer view="desktop" />
           )
           : (
             <Tooltip

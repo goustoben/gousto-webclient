@@ -1,1 +1,1 @@
-export default from './BrowseCTAContainer'
+export { BrowseCTAContainer } from './BrowseCTAContainer'

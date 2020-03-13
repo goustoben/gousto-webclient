@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import Details from '../../Details/Details'
+import { Details } from '../../Details/Details'
 
 jest.mock('../../BannerButton/Checkout', () => ({
   CheckoutContainer: 'CheckoutContainer'

@@ -1,1 +1,1 @@
-export default from './PostcodeContainer'
+export { PostcodeContainer } from './PostcodeContainer'

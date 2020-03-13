@@ -8,7 +8,7 @@ const BoxSummaryOverlayDesktop = ({ onCloseClick, onToggleVisibility, showDetail
   <div className={css.supercontainerdesktop}>
     <div className={showDetails ? css.detailContainerdesktopShow : css.detailContainerdesktop}>
       <span>
-        <div className={css.closeBtn} onClick={onCloseClick} />
+        <div className={css.closeBtn} role="button" onClick={onCloseClick} tabIndex={0} onKeyPress={onCloseClick} />
         <BoxSummaryContentContainer
           recipes={recipes}
           date={date}

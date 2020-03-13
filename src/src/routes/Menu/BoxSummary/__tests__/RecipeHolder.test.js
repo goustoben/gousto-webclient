@@ -4,7 +4,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import Image from 'Image'
-import RecipeHolder from '../RecipeHolder'
+import { RecipeHolder } from '../RecipeHolder'
 
 describe('RecipeHolder', () => {
   test('should return a span', () => {

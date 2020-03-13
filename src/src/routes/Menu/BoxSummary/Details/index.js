@@ -1,1 +1,1 @@
-export default from './DetailsContainer'
+export { DetailsContainer } from './DetailsContainer'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import DeliverySlot from '../DeliverySlot'
+import { DeliverySlot } from '../DeliverySlot'
 
 describe('DeliverySlot logic', () => {
   let deliveryDays

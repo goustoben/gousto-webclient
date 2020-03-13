@@ -10,42 +10,6 @@ import { DeliverySupportingText } from './DeliverySupportingText'
 import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.PureComponent {
-  static propTypes = {
-    basketRestorePreviousValues: PropTypes.func.isRequired,
-    boxSummaryNext: PropTypes.func.isRequired,
-    clearPostcode: PropTypes.func.isRequired,
-    deliveryDays: PropTypes.instanceOf(Immutable.Map),
-    disabledSlots: PropTypes.arrayOf(PropTypes.string),
-    disableOnDelivery: PropTypes.bool,
-    getBoxSummaryTextProps: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-    isSubscriptionActive: PropTypes.string,
-    menuFetchDataPending: PropTypes.bool,
-    menuPending: PropTypes.bool,
-    numPortions: PropTypes.number.isRequired,
-    prevDate: PropTypes.string,
-    shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
-    tempDate: PropTypes.string,
-    tempOrderId: PropTypes.string,
-    tempSlotId: PropTypes.string,
-    userOrders: PropTypes.instanceOf(Immutable.Map),
-  }
-
-  static defaultProps = {
-    deliveryDays: Immutable.fromJS({}),
-    disabledSlots: [],
-    disableOnDelivery: false,
-    isAuthenticated: false,
-    menuFetchDataPending: false,
-    menuPending: false,
-    prevDate: '',
-    tempDate: '',
-    tempOrderId: '',
-    tempSlotId: '',
-    userOrders: Immutable.fromJS({}),
-    isSubscriptionActive: ''
-  }
-
   render = () => {
     const {
       numPortions,
@@ -132,4 +96,39 @@ class DeliverySlot extends React.PureComponent {
   }
 }
 
-export default DeliverySlot
+DeliverySlot.propTypes = {
+  basketRestorePreviousValues: PropTypes.func.isRequired,
+  boxSummaryNext: PropTypes.func.isRequired,
+  clearPostcode: PropTypes.func.isRequired,
+  deliveryDays: PropTypes.instanceOf(Immutable.Map),
+  disabledSlots: PropTypes.arrayOf(PropTypes.string),
+  disableOnDelivery: PropTypes.bool,
+  getBoxSummaryTextProps: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  isSubscriptionActive: PropTypes.string,
+  menuFetchDataPending: PropTypes.bool,
+  menuPending: PropTypes.bool,
+  numPortions: PropTypes.number.isRequired,
+  prevDate: PropTypes.string,
+  shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
+  tempDate: PropTypes.string,
+  tempOrderId: PropTypes.string,
+  tempSlotId: PropTypes.string,
+  userOrders: PropTypes.instanceOf(Immutable.Map),
+}
+
+DeliverySlot.defaultProps = {
+  deliveryDays: Immutable.fromJS({}),
+  disabledSlots: [],
+  disableOnDelivery: false,
+  isAuthenticated: false,
+  menuFetchDataPending: false,
+  menuPending: false,
+  prevDate: '',
+  tempDate: '',
+  tempOrderId: '',
+  tempSlotId: '',
+  userOrders: Immutable.fromJS({}),
+  isSubscriptionActive: ''
+}
+export { DeliverySlot }

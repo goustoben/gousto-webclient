@@ -15,7 +15,7 @@ const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }
       <span>
         <span className={css.warningIcon} />
         {' '}
-        There's been a change in your box
+        There&apos;s been a change in your box
       </span>
     )
   }
@@ -27,8 +27,8 @@ Description.propTypes = {
   view: PropTypes.string.isRequired,
   numPortions: PropTypes.number.isRequired,
   numRecipes: PropTypes.number.isRequired,
-  deliveryOptions: PropTypes.bool,
-  warning: PropTypes.bool,
+  deliveryOptions: PropTypes.bool.isRequired,
+  warning: PropTypes.bool.isRequired,
 }
 
-export default Description
+export { Description }

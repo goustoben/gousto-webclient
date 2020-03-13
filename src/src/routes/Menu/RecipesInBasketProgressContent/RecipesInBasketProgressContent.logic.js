@@ -8,7 +8,7 @@ import {
   LayoutContentWrapper,
   ProgressBar,
 } from 'goustouicomponents'
-import BoxProgressMessage from 'routes/Menu/BoxProgressMessage'
+import { BoxProgressMessage } from 'routes/Menu/BoxProgressMessage'
 
 import css from './RecipesInBasketProgressContent.css'
 

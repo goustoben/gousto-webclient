@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 import config from 'config/basket'
-import BoxProgressMessage from '../index'
+import { BoxProgressMessage } from '../BoxProgressMessage'
 
 describe('<BoxProgressMessage />', () => {
   const NO_RECIPES_TEXT = `Add ${config.maxRecipesNum} recipes for the best price per serving`

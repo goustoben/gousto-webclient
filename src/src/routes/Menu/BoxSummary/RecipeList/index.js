@@ -1,1 +1,1 @@
-export default from './RecipeListContainer'
+export { RecipeListContainer } from './RecipeListContainer'

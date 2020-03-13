@@ -4,12 +4,32 @@ import { boxSummaryOverlayPropTypes } from './propTypes'
 import { BoxSummaryOverlayMobile } from './Mobile/BoxSummaryOverlayMobile'
 import { BoxSummaryOverlayDesktop } from './Desktop/BoxSummaryOverlayDesktop'
 
-const BoxSummaryOverlay = ({ isMobile, ...props }) => {
+const BoxSummaryOverlay = ({ isMobile, onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions, shouldDisplayFullScreenBoxSummary, orderSaveError}) => {
   if (isMobile) {
-    return <BoxSummaryOverlayMobile {...props} />
+    return (
+      <BoxSummaryOverlayMobile
+        onCloseClick={onCloseClick}
+        onToggleVisibility={onToggleVisibility}
+        showDetails={showDetails}
+        date={date}
+        recipes={recipes}
+        numPortions={numPortions}
+        shouldDisplayFullScreenBoxSummary={shouldDisplayFullScreenBoxSummary}
+      />
+    )
   }
 
-  return <BoxSummaryOverlayDesktop {...props} />
+  return (
+    <BoxSummaryOverlayDesktop
+      onCloseClick={onCloseClick}
+      onToggleVisibility={onToggleVisibility}
+      showDetails={showDetails}
+      date={date}
+      recipes={recipes}
+      numPortions={numPortions}
+      orderSaveError={orderSaveError}
+    />
+  )
 }
 
 BoxSummaryOverlay.propTypes = {

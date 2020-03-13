@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import Price from '../Price'
+import { Price } from '../Price'
 import css from '../Price/Price.css'
 
 describe('<Price />', () => {

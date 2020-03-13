@@ -1,1 +1,1 @@
-export default from './BoxProgressMessage'
+export { BoxProgressMessage } from './BoxProgressMessage'
