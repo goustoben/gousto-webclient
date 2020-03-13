@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import RecipeCarousel from './RecipeCarousel'
+import { RecipeCarousel } from './RecipeCarousel'
 import { getRecipesFromAllRecipesCollection } from './carouselRecipes'
 
 const mapStateToProps = (state) => ({
@@ -8,4 +8,4 @@ const mapStateToProps = (state) => ({
 
 const RecipeCarouselContainer = connect(mapStateToProps, {})(RecipeCarousel)
 
-export default RecipeCarouselContainer
+export { RecipeCarouselContainer }

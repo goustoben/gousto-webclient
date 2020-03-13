@@ -3,7 +3,7 @@ import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
 import ModuleHeader from 'ModuleHeader'
-import RecipeCarousel from './RecipeCarousel'
+import { RecipeCarousel } from './RecipeCarousel'
 import CTAHomepage from '../CTA'
 
 const Carousel = ({ redirect, numRecipes, ctaUri, ctaText }) => (
@@ -25,6 +25,7 @@ Carousel.defaultProps = {
   numRecipes: 0,
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
+  redirect: () => {},
 }
 
-export default Carousel
+export { Carousel }

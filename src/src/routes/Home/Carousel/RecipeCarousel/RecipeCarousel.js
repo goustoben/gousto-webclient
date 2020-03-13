@@ -5,7 +5,7 @@ import Carousel from 'Carousel'
 import { formatRecipeTitle } from 'utils/recipe'
 import { SimpleRecipe } from '../SimpleRecipe'
 import css from './RecipeCarousel.css'
-import orderRecipes from './orderRecipes'
+import { orderRecipes } from './orderRecipes'
 
 const RecipeCarousel = ({ homeCarouselRecipes }) => (
   <div className={`homepageSlider ${css.container}`}>
@@ -53,7 +53,7 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
 )
 
 RecipeCarousel.propTypes = {
-  homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap),
+  homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
 }
 
-export default RecipeCarousel
+export { RecipeCarousel }

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import redirectAction from 'actions/redirect'
-import Carousel from './Carousel'
+import { Carousel } from './Carousel'
 
 const CarouselContainer = connect((state) => ({
   numRecipes: state.menuRecipes.count(),
@@ -8,4 +8,4 @@ const CarouselContainer = connect((state) => ({
   redirect: redirectAction.redirect,
 })(Carousel)
 
-export default CarouselContainer
+export { CarouselContainer }

@@ -1,1 +1,1 @@
-export default from './EmailForm'
+export { EmailForm } from './EmailForm'

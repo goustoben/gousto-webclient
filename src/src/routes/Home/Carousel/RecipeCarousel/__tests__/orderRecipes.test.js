@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import orderRecipes from '../orderRecipes'
+import { orderRecipes } from '../orderRecipes'
 
 describe('orderRecipes', () => {
   let recipes
