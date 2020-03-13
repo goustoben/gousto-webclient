@@ -62,17 +62,6 @@ jobs:
           paths:
             - project/src/coverage/
 
-  compare-code-health:
-    docker: *gousto_build_image_docker
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Compare code health
-          command: |
-            cd src
-            git diff --name-status origin/develop | node ./scripts/compare-code-health.js ${CODE_HEALTH_API_TOKEN} develop tmp/artifacts/${CODE_HEALTH_FILE_NAME}
-
   publish-code-health-artifact:
     docker: *gousto_build_image_docker
     steps:
@@ -231,48 +220,6 @@ jobs:
 
 workflows:
   version: 2
-  pull-request-branch:
-    jobs:
-      - install-dependencies:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
-      - test-isomorphic-jest-coverage:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
-      - eslint:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
-      - compare-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-jest-coverage
-            - eslint
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
-
   development-environment:
     jobs:
       - install-dependencies:
