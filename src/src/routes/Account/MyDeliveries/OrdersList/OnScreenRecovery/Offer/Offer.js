@@ -22,7 +22,8 @@ const propTypesOffer = {
 }
 
 const defaultProps = {
-  offer: {}
+  offer: {},
+  type: ''
 }
 
 const transformMessage = (text, values) => {

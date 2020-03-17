@@ -10,6 +10,10 @@ const propTypes = {
   buttonLeftUrl: PropTypes.string,
 }
 
+const defaultProps = {
+  buttonLeftUrl: ''
+}
+
 const RecipeCardsPresentation = ({
   children,
   title,
@@ -25,6 +29,7 @@ const RecipeCardsPresentation = ({
   </GetHelpLayout>
 )
 
+RecipeCardsPresentation.defaultProps = defaultProps
 RecipeCardsPresentation.propTypes = propTypes
 
 export {

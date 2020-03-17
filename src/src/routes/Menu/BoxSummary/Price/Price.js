@@ -34,4 +34,4 @@ Price.propTypes = {
   recipeTotalDiscounted: PropTypes.number,
 }
 
-export default Price
+export { Price }

@@ -5,7 +5,7 @@ import {
   getJobsToDisplay
 } from 'selectors/jobs'
 import config from 'config/jobs'
-import Openings from './Openings'
+import { Openings } from './Openings'
 
 const mapStateToProps = state => ({
   jobs: getJobsToDisplay(state),
@@ -18,4 +18,4 @@ const OpeningsContainer = connect(mapStateToProps, {
   selectDepartment: actions.selectDepartment,
 })(Openings)
 
-export default OpeningsContainer
+export { OpeningsContainer }

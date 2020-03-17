@@ -45,4 +45,4 @@ const signup = {
   },
 }
 
-export default signup
+export { signup }

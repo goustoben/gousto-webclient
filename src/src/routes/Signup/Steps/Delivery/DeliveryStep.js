@@ -10,11 +10,11 @@ import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
 import { Button as GoustoButton } from 'goustouicomponents'
 import Svg from 'Svg'
-import Button from '../../Button'
+import { Button } from '../../Button'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
-import Image from '../../Image'
+import { Image } from '../../Image'
 
 const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
@@ -198,25 +198,25 @@ const DeliveryStep = ({
         <ModalPanel className={css.modal} closePortal={onPopupClose}>
           <div className={css.modalTitleDiv}>
             <h2 className={css.modalFirstTitle}>
-              We're working on speeding
+              We&#39;re working on speeding
               <span>up our deliveries</span>
             </h2>
           </div>
           <div className={css.modalrow}>
-            <p>The delivery date you selected isn't available yet but we would love to get your feedback about deliveries.</p>
+            <p>The delivery date you selected isn&#39;t available yet but we would love to get your feedback about deliveries.</p>
           </div>
           <div className={css.modalrow}>
             <p>Please help us improve and tell us which statement you agree with:</p>
           </div>
           <div className={css.modalrow}>
-            <label className={css.label}>
-              <input className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference} />
+            <label className={css.label} htmlFor="ndd">
+              <input id="ndd" className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference} />
               <span>Fast delivery (24-48 hour) is very important to me</span>
             </label>
           </div>
           <div className={css.modalrow}>
-            <label className={css.label}>
-              <input className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference} />
+            <label className={css.label} htmlFor="no-ndd">
+              <input id="no-ndd" className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference} />
               <span>I am OK with 3 day delivery</span>
             </label>
           </div>
@@ -255,7 +255,27 @@ DeliveryStep.propTypes = {
 }
 
 DeliveryStep.defaultProps = {
+  boxSummaryDeliveryDays: Immutable.Map(),
+  tempDate: '',
+  tempSlotId: '',
+  setTempDate: () => {},
+  setTempSlotId: () => {},
+  boxSummaryDeliverySlotChosen: () => {},
+  trackDeliveryDayDropDownOpened: () => {},
+  trackDeliveryDayDropDownClosed: () => {},
+  trackDeliverySlotDropDownOpened: () => {},
+  trackDeliveryDayEdited: () => {},
+  trackDeliverySlotEdited: () => {},
+  menuFetchDataPending: false,
+  nextDayDeliveryPaintedDoorFeature: false,
+  isNDDPaintedDoorOpened: false,
+  openNDDPaintedDoor: () => {},
+  closeNDDPaintedDoor: () => {},
+  trackDeliveryPreferenceModalViewed: () => {},
+  trackDeliveryPreferenceModalClosed: () => {},
+  trackDeliveryPreferenceSelected: () => {},
+  next: () => {},
   disabledSlots: []
 }
 
-export default DeliveryStep
+export { DeliveryStep }

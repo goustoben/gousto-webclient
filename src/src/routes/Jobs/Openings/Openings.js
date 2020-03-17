@@ -5,13 +5,9 @@ import Immutable from 'immutable'
 import Link from 'Link'
 import Content from 'containers/Content'
 import css from './Openings.css'
-import JobCard from './JobCard/JobCard'
+import { JobCard } from './JobCard'
 
 class Openings extends React.PureComponent {
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   static fetchData = async ({ store }) => {
     await store.dispatch(actions.fetchOpenJobs())
   }
@@ -66,6 +62,9 @@ class Openings extends React.PureComponent {
         key={dept}
         className={selectedDepartment === dept ? css.activeJobSelector : css.jobSelector}
         onClick={() => selectDepartment(dept)}
+        onKeyUp={() => selectDepartment(dept)}
+        role="button"
+        tabIndex="0"
       >
         <p className={css.jobSelectorText}>{dept}</p>
       </div>
@@ -120,4 +119,8 @@ Openings.defaultProps = {
   selectedDepartment: 'All',
 }
 
-export default Openings
+Openings.contextTypes = {
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+}
+
+export { Openings }

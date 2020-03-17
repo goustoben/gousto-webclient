@@ -1,1 +1,1 @@
-export default from './Values'
+export { Values } from './Values'

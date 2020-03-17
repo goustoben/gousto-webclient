@@ -28,11 +28,11 @@ const UnavailableMessage = ({ unavailableRecipeList, menuFetchPending, orderSave
 }
 
 UnavailableMessage.propTypes = {
-  unavailableRecipeList: PropTypes.instanceOf(Immutable.Map),
-  menuFetchPending: PropTypes.bool,
-  orderSaveError: PropTypes.string,
-  clearSlot: PropTypes.func,
-  basketRestorePreviousDate: PropTypes.func,
+  unavailableRecipeList: PropTypes.instanceOf(Immutable.Map).isRequired,
+  menuFetchPending: PropTypes.bool.isRequired,
+  orderSaveError: PropTypes.string.isRequired,
+  clearSlot: PropTypes.func.isRequired,
+  basketRestorePreviousDate: PropTypes.func.isRequired,
 }
 
 export { UnavailableMessage }

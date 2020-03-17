@@ -10,13 +10,17 @@ const Subscription = ({ steps, header, description }) => (
 )
 
 Subscription.propTypes = {
-  header: PropTypes.string,
-  description: PropTypes.string,
-  steps: PropTypes.array,
+  header: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  steps: PropTypes.arrayOf(PropTypes.shape({
+    path: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  })),
 }
 
 Subscription.defaultProps = {
   steps: config.subscription.steps,
 }
 
-export default Subscription
+export { Subscription }

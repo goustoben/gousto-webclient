@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions'
-import PostcodeStep from './PostcodeStep'
+import { PostcodeStep } from './PostcodeStep'
 
 function mapStateToProps(state) {
   return {
@@ -16,4 +16,4 @@ const PostcodeStepContainer = connect(mapStateToProps, {
   changePostcode: actions.signupChangePostcode,
 })(PostcodeStep)
 
-export default PostcodeStepContainer
+export { PostcodeStepContainer }

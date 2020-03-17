@@ -10,35 +10,6 @@ import util from './util'
 import css from './EditDate.css'
 
 class EditDate extends React.PureComponent {
-  static propTypes = {
-    orderId: PropTypes.string,
-    deliveryDays: PropTypes.instanceOf(Immutable.Map),
-    recipesStock: PropTypes.instanceOf(Immutable.List),
-    coreDeliveryDayId: PropTypes.string.isRequired,
-    deliverySlotId: PropTypes.string.isRequired,
-    isPendingUpdateDayAndSlot: PropTypes.bool,
-    clearUpdateDateErrorAndPending: PropTypes.func,
-    recipes: PropTypes.instanceOf(Immutable.List),
-    orders: PropTypes.instanceOf(Immutable.Map),
-    portionsCount: PropTypes.string
-  }
-
-  static defaultProps = {
-    editDeliveryMode: true,
-    orderId: '',
-    deliveryDays: Immutable.Map(),
-    recipesStock: Immutable.List(),
-    isPendingUpdateDayAndSlot: false,
-    orderGetDeliveryDays: () => { },
-    recipes: Immutable.List(),
-    orders: Immutable.Map(),
-    portionsCount: '2'
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   constructor(props) {
     super(props)
     const { coreDeliveryDayId, deliverySlotId } = this.props
@@ -63,25 +34,6 @@ class EditDate extends React.PureComponent {
     if (deliveryDays !== nextProps.deliveryDays || recipesStock !== nextProps.recipesStock) {
       this.setDayAndSlotOptionsAndSelected(nextProps.deliveryDays, nextProps.recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders)
     }
-  }
-
-  setDayAndSlotOptionsAndSelected = (deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders) => {
-    const { deliveryDaysOptions, slotsOptions } = util.getDeliveryDaysAndSlotsOptions(deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders)
-
-    let selectedDeliveryDayId = coreDeliveryDayId
-    let selectedDeliverySlotId = deliverySlotId
-
-    if (!deliveryDaysOptions.some(option => option.value === selectedDeliveryDayId)) {
-      selectedDeliveryDayId = deliveryDaysOptions[0] ? deliveryDaysOptions[0].value : ''
-    }
-    if (!slotsOptions[selectedDeliveryDayId]
-      || !slotsOptions[selectedDeliveryDayId].some(option => option.value === selectedDeliverySlotId)) {
-      selectedDeliverySlotId = slotsOptions[selectedDeliveryDayId] && slotsOptions[selectedDeliveryDayId][0] ? slotsOptions[selectedDeliveryDayId][0].value : ''
-    }
-
-    const selectedDeliveryDate = deliveryDaysOptions.find(day => day.value === selectedDeliveryDayId).date
-
-    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
   }
 
   onSubmitFunction() {
@@ -127,6 +79,25 @@ class EditDate extends React.PureComponent {
     store.dispatch(userActions.userTrackSlotSelected(orderId, deliverySlotId, slotId))
   }
 
+  setDayAndSlotOptionsAndSelected = (deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders) => {
+    const { deliveryDaysOptions, slotsOptions } = util.getDeliveryDaysAndSlotsOptions(deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders)
+
+    let selectedDeliveryDayId = coreDeliveryDayId
+    let selectedDeliverySlotId = deliverySlotId
+
+    if (!deliveryDaysOptions.some(option => option.value === selectedDeliveryDayId)) {
+      selectedDeliveryDayId = deliveryDaysOptions[0] ? deliveryDaysOptions[0].value : ''
+    }
+    if (!slotsOptions[selectedDeliveryDayId]
+      || !slotsOptions[selectedDeliveryDayId].some(option => option.value === selectedDeliverySlotId)) {
+      selectedDeliverySlotId = slotsOptions[selectedDeliveryDayId] && slotsOptions[selectedDeliveryDayId][0] ? slotsOptions[selectedDeliveryDayId][0].value : ''
+    }
+
+    const selectedDeliveryDate = deliveryDaysOptions.find(day => day.value === selectedDeliveryDayId).date
+
+    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
+  }
+
   render() {
     const { deliverySlotId, isPendingUpdateDayAndSlot } = this.props
     const { deliveryDaysOptions, slotsOptions } = this.state
@@ -168,6 +139,34 @@ class EditDate extends React.PureComponent {
       </div>
     )
   }
+}
+
+EditDate.propTypes = {
+  orderId: PropTypes.string,
+  deliveryDays: PropTypes.instanceOf(Immutable.Map),
+  recipesStock: PropTypes.instanceOf(Immutable.List),
+  coreDeliveryDayId: PropTypes.string.isRequired,
+  deliverySlotId: PropTypes.string.isRequired,
+  isPendingUpdateDayAndSlot: PropTypes.bool,
+  clearUpdateDateErrorAndPending: PropTypes.func,
+  recipes: PropTypes.instanceOf(Immutable.List),
+  orders: PropTypes.instanceOf(Immutable.Map),
+  portionsCount: PropTypes.string
+}
+
+EditDate.contextTypes = {
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+}
+
+EditDate.defaultProps = {
+  orderId: '',
+  deliveryDays: Immutable.Map(),
+  recipesStock: Immutable.List(),
+  isPendingUpdateDayAndSlot: false,
+  clearUpdateDateErrorAndPending: () => null,
+  recipes: Immutable.List(),
+  orders: Immutable.Map(),
+  portionsCount: '2'
 }
 
 export { EditDate }

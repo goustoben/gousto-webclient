@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import { shallow } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
-import OpeningsContainer from 'routes/Jobs/Openings/OpeningsContainer'
+import { OpeningsContainer } from 'routes/Jobs/Openings/OpeningsContainer'
 
 describe('Openings Container', () => {
   let sandbox

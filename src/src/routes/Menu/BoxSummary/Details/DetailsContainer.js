@@ -8,7 +8,7 @@ import {
   getOkRecipeIds,
   getUnavailableRecipeIds,
 } from 'routes/Menu/selectors/basket'
-import Details from './Details'
+import { Details } from './Details'
 
 const mapStateToProps = (state) => ({
   accessToken: state.auth.get('accessToken'),
@@ -37,4 +37,4 @@ const DetailsContainer = connect(mapStateToProps, {
   boxSummaryVisibilityChange,
 })(Details)
 
-export default DetailsContainer
+export { DetailsContainer }

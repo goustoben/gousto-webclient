@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
-import RecipeList from './RecipeList'
+import { RecipeList } from './RecipeList'
 
 const mapStateToProps = (state) => ({
   browser: state.request.get('browser'),
@@ -13,4 +13,4 @@ const RecipeListContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: boxSummaryVisibilityChange,
 })(RecipeList)
 
-export default RecipeListContainer
+export { RecipeListContainer }

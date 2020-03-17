@@ -15,24 +15,6 @@ import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
 import css from './OrderProducts.css'
 
 class OrderProducts extends React.PureComponent {
-  static propTypes = {
-    products: ImmutablePropTypes.listOf(
-      ImmutablePropTypes.mapContains({
-        id: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        quantity: PropTypes.number.isRequired,
-        unitPrice: PropTypes.number.isRequired,
-      })
-    ),
-    orderId: PropTypes.string,
-  }
-
-  static defaultProps = {
-    products: Immutable.List([]),
-    orderId: '',
-  }
-
   render() {
     const { products, orderId } = this.props
 
@@ -89,6 +71,24 @@ class OrderProducts extends React.PureComponent {
       </div>
     )
   }
+}
+
+OrderProducts.propTypes = {
+  products: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.mapContains({
+      id: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+      unitPrice: PropTypes.number.isRequired,
+    })
+  ),
+  orderId: PropTypes.string,
+}
+
+OrderProducts.defaultProps = {
+  products: Immutable.List([]),
+  orderId: '',
 }
 
 export default OrderProducts

@@ -19,10 +19,14 @@ const Button = ({ children, onClick, isLastStep, ...buttonProps }) => {
 
   return (
     <GoustoButton
-      {...buttonProps}
-      onClick={() => {
+      disabled={buttonProps.disabled}
+      pending={buttonProps.pending}
+      width={buttonProps.width}
+      data-testing={buttonProps.disabled}
+      fill={buttonProps.fill}
+      onClick={args => {
         if (typeof onClick === 'function') {
-          onClick(...arguments)
+          onClick(args)
         }
       }}
     >
@@ -37,5 +41,10 @@ Button.propTypes = {
   children: PropTypes.node,
 }
 
-export default Button
+Button.defaultProps = {
+  onClick: () => {},
+  children: undefined,
+}
+
+export { Button }
 

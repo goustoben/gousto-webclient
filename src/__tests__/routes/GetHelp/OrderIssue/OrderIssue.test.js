@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import OrderIssue from 'routes/GetHelp/OrderIssue/OrderIssue'
+import { OrderIssue } from 'routes/GetHelp/OrderIssue/OrderIssue'
 
 describe('<OrderIssue />', () => {
   const content = {

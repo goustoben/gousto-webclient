@@ -12,6 +12,10 @@ const propTypes = {
 }
 
 const defaultProps = {
+  title: '',
+  largeTitle: false,
+  alternateColour: false,
+  children: null,
   hasPaddingBottom: true,
 }
 

@@ -13,7 +13,7 @@ const BoxSummaryOverlayMobile = ({ onCloseClick, onToggleVisibility, showDetails
     <Overlay open={showDetails} className={classNameToApply} contentClassName={css.mobileModalContent} from="bottom">
       <div className={css.supercontainermobile}>
         <div className={css.detailContainermobile} data-testing="boxSummaryMobile">
-          <div className={css.closeBtn} onClick={onCloseClick} />
+          <div className={css.closeBtn} role="button" onClick={onCloseClick} tabIndex={0} onKeyPress={onCloseClick} />
           <BoxSummaryContentContainer
             recipes={recipes}
             date={date}

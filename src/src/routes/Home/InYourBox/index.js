@@ -1,1 +1,1 @@
-export default from './InYourBoxContainer'
+export { InYourBoxContainer as InYourBox } from './InYourBoxContainer'

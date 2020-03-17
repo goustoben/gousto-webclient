@@ -11,4 +11,8 @@ SignupImage.propTypes = {
   name: PropTypes.string,
 }
 
-export default SignupImage
+SignupImage.defaultProps = {
+  name: '',
+}
+
+export { SignupImage }

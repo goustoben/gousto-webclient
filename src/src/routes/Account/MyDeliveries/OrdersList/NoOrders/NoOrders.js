@@ -25,7 +25,7 @@ const NoOrders = ({ recipes, boxType }) => (
         <div>
           <p className={css.twrCopy}>
             <Content contentKeys="myDeliveriesNoOrdersBaseCopy">
-              <span>Check out a selection of this week's menu</span>
+              <span>Check out a selection of this week&apos;s menu</span>
             </Content>
           </p>
         </div>

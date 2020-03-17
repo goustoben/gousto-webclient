@@ -10,8 +10,8 @@ const HowItWorks = ({ steps, header, description, variant }) => (
 )
 
 HowItWorks.propTypes = {
-  header: PropTypes.object,
-  description: PropTypes.object,
+  header: PropTypes.object.isRequired,
+  description: PropTypes.object.isRequired,
   steps: PropTypes.func,
   variant: PropTypes.string,
 }
@@ -21,4 +21,4 @@ HowItWorks.defaultProps = {
   variant: 'default',
 }
 
-export default HowItWorks
+export { HowItWorks }

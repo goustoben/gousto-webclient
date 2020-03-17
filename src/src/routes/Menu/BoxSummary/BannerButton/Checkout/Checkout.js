@@ -83,7 +83,7 @@ Checkout.propTypes = {
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
-  deliveryDayId: PropTypes.string,
+  deliveryDayId: PropTypes.string.isRequired,
   slotId: PropTypes.string.isRequired,
   basketCheckedOut: PropTypes.func.isRequired,
   basketProceedToCheckout: PropTypes.func.isRequired,
@@ -91,8 +91,8 @@ Checkout.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   boxSummaryVisibilityChange: PropTypes.func.isRequired,
   checkoutTransactionalOrder: PropTypes.func,
-  orderId: PropTypes.string,
-  userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
+  orderId: PropTypes.string.isRequired,
+  userOrders: PropTypes.instanceOf(Immutable.Map),
   isAddOnsFeatureFlagOn: PropTypes.bool,
 }
 
@@ -102,8 +102,10 @@ Checkout.defaultProps = {
   orderSavePending: false,
   recipes: Immutable.Map({}),
   basketPreviewOrderChangePending: false,
-  userOrders: Immutable.Map({}),
   isAddOnsFeatureFlagOn: false,
+  checkoutTransactionalOrder: () => {},
+  orderUpdate: () => {},
+  userOrders: Immutable.Map({}),
 }
 
 export { Checkout }

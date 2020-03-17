@@ -10,56 +10,6 @@ import { OrderDeliveryDate } from './OrderDeliveryDate'
 import css from './OrderDelivery.css'
 
 class OrderDelivery extends React.PureComponent {
-  static propTypes = {
-    availableFrom: PropTypes.string,
-    availableTo: PropTypes.string,
-    shippingAddressId: PropTypes.string,
-    date: PropTypes.string,
-    timeStart: PropTypes.string,
-    timeEnd: PropTypes.string,
-    editDeliveryMode: PropTypes.bool,
-    orderState: PropTypes.string,
-    orderId: PropTypes.string,
-    fetchSuccess: PropTypes.bool,
-    recipesPeriodStockFetchError: PropTypes.object,
-    orderDeliveryDaysFetchError: PropTypes.object,
-    hasUpdateDeliveryDayError: PropTypes.bool,
-    clearUpdateDateErrorAndPending: PropTypes.func,
-    addressLoading: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    date: '',
-    timeStart: '',
-    timeEnd: '',
-    editDeliveryMode: false,
-    orderState: '',
-    orderId: '',
-    fetchSuccess: false
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
-  onClickFunction = () => {
-    const {
-      orderId,
-      editDeliveryMode,
-      clearUpdateDateErrorAndPending
-    } = this.props
-
-    if (!editDeliveryMode) {
-      this.context.store.dispatch(
-        userActions.userTrackToggleEditDateSection(orderId)
-      )
-    }
-    this.context.store.dispatch(
-      userActions.userToggleEditDateSection(orderId, !editDeliveryMode)
-    )
-    clearUpdateDateErrorAndPending()
-  }
-
   componentDidMount() {
     const {
       availableFrom,
@@ -70,7 +20,7 @@ class OrderDelivery extends React.PureComponent {
     } = this.props
     const { store } = this.context
 
-    const isOrderPending = orderState == 'menu open' || orderState == 'recipes chosen'
+    const isOrderPending = orderState === 'menu open' || orderState === 'recipes chosen'
 
     if (isOrderPending) {
       store.dispatch(
@@ -85,6 +35,26 @@ class OrderDelivery extends React.PureComponent {
         recipesActions.recipesLoadStockByDate(availableFrom, availableTo)
       )
     }
+  }
+
+  onClickFunction = () => {
+    const {
+      orderId,
+      editDeliveryMode,
+      clearUpdateDateErrorAndPending
+    } = this.props
+
+    const { store } = this.context
+
+    if (!editDeliveryMode) {
+      store.dispatch(
+        userActions.userTrackToggleEditDateSection(orderId)
+      )
+    }
+    store.dispatch(
+      userActions.userToggleEditDateSection(orderId, !editDeliveryMode)
+    )
+    clearUpdateDateErrorAndPending()
   }
 
   render() {
@@ -147,6 +117,46 @@ class OrderDelivery extends React.PureComponent {
       </div>
     )
   }
+}
+
+OrderDelivery.propTypes = {
+  availableFrom: PropTypes.string,
+  availableTo: PropTypes.string,
+  shippingAddressId: PropTypes.string,
+  date: PropTypes.string,
+  timeStart: PropTypes.string,
+  timeEnd: PropTypes.string,
+  editDeliveryMode: PropTypes.bool,
+  orderState: PropTypes.string,
+  orderId: PropTypes.string,
+  fetchSuccess: PropTypes.bool,
+  recipesPeriodStockFetchError: PropTypes.object,
+  orderDeliveryDaysFetchError: PropTypes.object,
+  hasUpdateDeliveryDayError: PropTypes.bool,
+  clearUpdateDateErrorAndPending: PropTypes.func,
+  addressLoading: PropTypes.bool,
+}
+
+OrderDelivery.contextTypes = {
+  store: PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
+}
+
+OrderDelivery.defaultProps = {
+  availableFrom: '',
+  availableTo: '',
+  shippingAddressId: '',
+  date: '',
+  timeStart: '',
+  timeEnd: '',
+  editDeliveryMode: false,
+  orderState: '',
+  orderId: '',
+  fetchSuccess: false,
+  recipesPeriodStockFetchError: undefined,
+  orderDeliveryDaysFetchError: undefined,
+  hasUpdateDeliveryDayError: false,
+  clearUpdateDateErrorAndPending: undefined,
+  addressLoading: false,
 }
 
 export default OrderDelivery

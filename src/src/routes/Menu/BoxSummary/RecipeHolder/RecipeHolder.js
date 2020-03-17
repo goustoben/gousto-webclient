@@ -20,6 +20,9 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
         { [css.widthMobile]: isMobileView }
       )}
       onClick={onClick}
+      onKeyPress={onClick}
+      role="button"
+      tabIndex={0}
     >
       {(recipe.size > 0)
         ? (
@@ -49,4 +52,4 @@ RecipeHolder.defaultProps = {
   onClick: () => { }
 }
 
-export default RecipeHolder
+export { RecipeHolder }

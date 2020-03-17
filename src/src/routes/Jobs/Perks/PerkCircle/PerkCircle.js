@@ -1,7 +1,7 @@
 import React from 'react'
 import config from 'config/jobs'
 import css from './PerkCircle.css'
-import Perk from './Perk/Perk'
+import { Perk } from './Perk'
 
 const PerkCircle = () => {
   const { perks } = config
@@ -19,4 +19,4 @@ const PerkCircle = () => {
   )
 }
 
-export default PerkCircle
+export { PerkCircle }

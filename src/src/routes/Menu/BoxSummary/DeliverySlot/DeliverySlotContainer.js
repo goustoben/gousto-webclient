@@ -9,7 +9,7 @@ import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/de
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
 import { getBoxSummaryTextProps } from 'selectors/boxSummary'
-import DeliverySlot from './DeliverySlot'
+import { DeliverySlot } from './DeliverySlot'
 
 function mapStateToProps(state) {
   const isAuthenticated = getIsAuthenticated(state)
@@ -52,4 +52,4 @@ const DeliverySlotContainer = connect(mapStateToProps, {
   boxSummaryNext,
 })(DeliverySlot)
 
-export default DeliverySlotContainer
+export { DeliverySlotContainer }

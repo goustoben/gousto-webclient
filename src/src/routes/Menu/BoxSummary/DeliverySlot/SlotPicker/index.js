@@ -1,1 +1,1 @@
-export default from './SlotPicker'
+export { SlotPicker } from './SlotPicker'

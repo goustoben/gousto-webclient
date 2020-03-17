@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
 import { appBannerDismiss } from 'actions/appBanner'
 import basketActions from 'actions/basket'
-import signupActions from 'actions/signup'
+import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import promoActions from 'actions/promos'
 import authActions from 'actions/auth'
@@ -212,7 +212,7 @@ const processCookies = (cookies, store) => {
   if (signupSteps) {
     try {
       signupSteps = JSON.parse(signupSteps)
-      store.dispatch(signupActions.signupStepsReceive(signupSteps))
+      store.dispatch(signupStepsReceive(signupSteps))
     } catch (err) {
       logger.error({ message: 'error parsing signup steps cookie value', errors: [err] })
     }

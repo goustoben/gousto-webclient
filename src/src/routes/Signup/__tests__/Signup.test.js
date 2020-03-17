@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { menuLoadDays, redirect } from 'actions'
 import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
-import Signup from 'routes/Signup/Signup'
+import { Signup } from 'routes/Signup/Signup'
 
 jest.mock('actions', () => ({
   signupStepsReceive: jest.fn().mockReturnValue(Promise.resolve()),

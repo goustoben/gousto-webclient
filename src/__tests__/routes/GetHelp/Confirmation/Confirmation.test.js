@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import { client as routes } from 'config/routes'
-import Confirmation from 'routes/GetHelp/Confirmation/Confirmation'
+import { Confirmation } from 'routes/GetHelp/Confirmation/Confirmation'
 
 describe('<Confirmation />', () => {
   const content = {

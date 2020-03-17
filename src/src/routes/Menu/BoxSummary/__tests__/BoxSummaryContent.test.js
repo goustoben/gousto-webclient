@@ -4,9 +4,9 @@ import Immutable from 'immutable'
 
 import { boxSummaryViews } from 'utils/boxSummary'
 import { BoxSummaryContent as BoxSummary } from '../BoxSummaryContent/BoxSummaryContent'
-import Details from '../Details'
-import Postcode from '../Postcode'
-import DeliverySlot from '../DeliverySlot'
+import { DetailsContainer } from '../Details'
+import { PostcodeContainer } from '../Postcode'
+import { DeliverySlotContainer } from '../DeliverySlot'
 
 describe('BoxSummaryContent', () => {
   const recipes = Immutable.Map()
@@ -25,9 +25,9 @@ describe('BoxSummaryContent', () => {
         recipes={recipes}
         boxSummaryCurrentView={boxSummaryViews.POSTCODE}
       />)
-      expect(wrapper.find(Postcode)).toHaveLength(1)
-      expect(wrapper.find(DeliverySlot)).toHaveLength(0)
-      expect(wrapper.find(Details)).toHaveLength(0)
+      expect(wrapper.find(PostcodeContainer)).toHaveLength(1)
+      expect(wrapper.find(DeliverySlotContainer)).toHaveLength(0)
+      expect(wrapper.find(DetailsContainer)).toHaveLength(0)
     })
   })
 
@@ -38,9 +38,9 @@ describe('BoxSummaryContent', () => {
         recipes={recipes}
         boxSummaryCurrentView={boxSummaryViews.DELIVERY_SLOT}
       />)
-      expect(wrapper.find(Postcode)).toHaveLength(0)
-      expect(wrapper.find(DeliverySlot)).toHaveLength(1)
-      expect(wrapper.find(Details)).toHaveLength(0)
+      expect(wrapper.find(PostcodeContainer)).toHaveLength(0)
+      expect(wrapper.find(DeliverySlotContainer)).toHaveLength(1)
+      expect(wrapper.find(DetailsContainer)).toHaveLength(0)
     })
   })
 
@@ -51,9 +51,9 @@ describe('BoxSummaryContent', () => {
         recipes={recipes}
         boxSummaryCurrentView={boxSummaryViews.DETAILS}
       />)
-      expect(wrapper.find(Postcode)).toHaveLength(0)
-      expect(wrapper.find(DeliverySlot)).toHaveLength(0)
-      expect(wrapper.find(Details)).toHaveLength(1)
+      expect(wrapper.find(PostcodeContainer)).toHaveLength(0)
+      expect(wrapper.find(DeliverySlotContainer)).toHaveLength(0)
+      expect(wrapper.find(DetailsContainer)).toHaveLength(1)
     })
   })
 

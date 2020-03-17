@@ -16,6 +16,8 @@ const defaultProps = {
   addressName: '',
   formattedAddress: '',
   isSelected: false,
+  addressId: '',
+  selectAddress: () => null,
 }
 
 const Address = ({selectAddress, isSelected, addressId, addressName, formattedAddress}) => (

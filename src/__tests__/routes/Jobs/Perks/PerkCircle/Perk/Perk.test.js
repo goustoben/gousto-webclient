@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Perk from 'routes/Jobs/Perks/PerkCircle/Perk'
+import { Perk } from 'routes/Jobs/Perks/PerkCircle/Perk'
 
 describe('Perk', () => {
   test('should render set of divs', () => {

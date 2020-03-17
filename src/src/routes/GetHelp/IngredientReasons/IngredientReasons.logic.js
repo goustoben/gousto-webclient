@@ -24,8 +24,12 @@ const propTypes = {
 }
 
 class IngredientReasons extends PureComponent {
-  state = {
-    issueReasons: {}
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      issueReasons: {}
+    }
   }
 
   changeHandler = (id, issueDescription) => {
@@ -43,7 +47,6 @@ class IngredientReasons extends PureComponent {
     }
 
     this.setState({
-      ...this.state,
       issueReasons: { ...issueReasons, ...newIssueReasons },
     })
   }

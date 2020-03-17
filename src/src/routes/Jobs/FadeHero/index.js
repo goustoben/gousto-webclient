@@ -1,1 +1,1 @@
-export default from './FadeHero'
+export { FadeHero } from './FadeHero'

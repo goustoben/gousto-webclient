@@ -7,7 +7,7 @@ import { client, zendesk } from 'config/routes'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
-import PhoneContent from './PhoneContent'
+import { PhoneContent } from './PhoneContent'
 import { BottomButton } from '../components/BottomButton'
 
 const openLiveChat = () => {
@@ -76,4 +76,6 @@ Contact.defaultProps = {
   selectContactChannel: () => {},
 }
 
-export default Contact
+export {
+  Contact
+}

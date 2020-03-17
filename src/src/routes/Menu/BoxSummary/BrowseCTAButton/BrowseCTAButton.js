@@ -46,4 +46,11 @@ BrowseCTAButton.propTypes = {
   fullWidth: PropTypes.bool,
 }
 
-export default BrowseCTAButton
+BrowseCTAButton.defaultProps = {
+  menuBrowseCTAVisibilityChange: () => {},
+  boxSummaryShow: true,
+  view: null,
+  fullWidth: false,
+}
+
+export { BrowseCTAButton }

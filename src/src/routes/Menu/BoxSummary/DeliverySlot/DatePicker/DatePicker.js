@@ -3,7 +3,7 @@ import React from 'react'
 
 import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
-import SlotPicker from '../SlotPicker'
+import { SlotPicker } from '../SlotPicker'
 
 import css from '../DeliverySlot.css'
 

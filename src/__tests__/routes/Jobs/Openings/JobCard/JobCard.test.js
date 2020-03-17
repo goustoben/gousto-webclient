@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import JobCard from 'routes/Jobs/Openings/JobCard/JobCard'
+import { JobCard } from 'routes/Jobs/Openings/JobCard/JobCard'
 
 describe('The JobCard component', () => {
   let wrapper

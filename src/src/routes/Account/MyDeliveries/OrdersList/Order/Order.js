@@ -227,7 +227,7 @@ Order.defaultProps = {
 }
 
 Order.contextTypes = {
-  store: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default Order

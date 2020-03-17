@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Carousel from 'routes/Home/Carousel/Carousel'
+import { Carousel } from 'routes/Home/Carousel/Carousel'
 
 import CTA from 'routes/Home/CTA'
-import RecipeCarousel from 'routes/Home/Carousel/RecipeCarousel'
+import { RecipeCarousel } from 'routes/Home/Carousel/RecipeCarousel'
 import ModuleHeader from 'components/ModuleHeader'
 
 describe('Carousel', () => {

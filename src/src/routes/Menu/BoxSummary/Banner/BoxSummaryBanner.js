@@ -7,16 +7,18 @@ import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
 
 const BoxSummaryBanner = ({
   isMobile,
-
   date,
   deliveryDays,
   slotId,
-
   numRecipes,
   expandWarning,
   onExpandClick,
-
-  ...genericProps
+  showBrowseCTA,
+  maxRecipesNum,
+  menuRecipesStore,
+  recipes,
+  errorText,
+  openDetails,
 }) => {
   if (isMobile) {
     return (
@@ -24,7 +26,12 @@ const BoxSummaryBanner = ({
         date={date}
         deliveryDays={deliveryDays}
         slotId={slotId}
-        {...genericProps}
+        showBrowseCTA={showBrowseCTA}
+        maxRecipesNum={maxRecipesNum}
+        menuRecipesStore={menuRecipesStore}
+        recipes={recipes}
+        errorText={errorText}
+        openDetails={openDetails}
       />
     )
   }
@@ -34,23 +41,32 @@ const BoxSummaryBanner = ({
       numRecipes={numRecipes}
       expandWarning={expandWarning}
       onExpandClick={onExpandClick}
-      {...genericProps}
+      showBrowseCTA={showBrowseCTA}
+      maxRecipesNum={maxRecipesNum}
+      menuRecipesStore={menuRecipesStore}
+      recipes={recipes}
+      errorText={errorText}
+      openDetails={openDetails}
     />
   )
 }
 
 BoxSummaryBanner.propTypes = {
   isMobile: PropTypes.bool.isRequired,
-
   date: PropTypes.string,
   deliveryDays: PropTypes.instanceOf(Immutable.Map),
   slotId: PropTypes.string,
-
   expandWarning: PropTypes.bool.isRequired,
   onExpandClick: PropTypes.func.isRequired,
   numRecipes: PropTypes.number.isRequired,
 
   ...boxSummaryBannerPropTypes
+}
+
+BoxSummaryBanner.defaultProps = {
+  date: null,
+  deliveryDays: [Immutable.Map()],
+  slotId: null,
 }
 
 export { BoxSummaryBanner }

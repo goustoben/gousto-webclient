@@ -6,10 +6,10 @@ import { getSlotTimes } from 'utils/deliveries'
 import { MOBILE_VIEW } from 'utils/view'
 
 import { Tooltip } from 'goustouicomponents'
-import RecipeList from '../../RecipeList'
+import { RecipeListContainer } from '../../RecipeList'
 import { BannerButtonContainer } from '../../BannerButton'
-import BrowseCTA from '../../BrowseCTA'
-import BrowseCTAButton from '../../BrowseCTAButton'
+import { BrowseCTAContainer } from '../../BrowseCTA'
+import { BrowseCTAButtonContainer } from '../../BrowseCTAButton'
 
 import { OpenBoxButton } from './OpenBoxButton'
 import Title from '../../Title'
@@ -45,7 +45,7 @@ const BoxSummaryMobileBanner = ({
         <Title view={MOBILE_VIEW} date={date} finalisedSlot={slotId !== ''} slotTime={slotTime} />
       </div>
       <div className={css.summaryMobile}>
-        <RecipeList view={MOBILE_VIEW} recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
+        <RecipeListContainer view={MOBILE_VIEW} recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
 
         {
           showBrowseCTA
@@ -57,13 +57,13 @@ const BoxSummaryMobileBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BrowseCTAButton view={MOBILE_VIEW} />
+              <BrowseCTAButtonContainer view={MOBILE_VIEW} />
             </Tooltip>
           )
         }
         {
           showBrowseCTA
-          && <BrowseCTA view={MOBILE_VIEW} />
+          && <BrowseCTAContainer view={MOBILE_VIEW} />
         }
 
         {
@@ -91,6 +91,12 @@ BoxSummaryMobileBanner.propTypes = {
   slotId: PropTypes.string,
 
   ...boxSummaryBannerPropTypes
+}
+
+BoxSummaryMobileBanner.defaultProps = {
+  date: null,
+  deliveryDays: [Immutable.Map()],
+  slotId: null,
 }
 
 export { BoxSummaryMobileBanner }

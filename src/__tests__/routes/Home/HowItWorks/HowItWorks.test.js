@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import Guide from 'components/Guide'
 
-import HowItWorks from 'routes/Home/HowItWorks/HowItWorks'
+import { HowItWorks } from 'routes/Home/HowItWorks/HowItWorks'
 
 const steps = jest.fn().mockReturnValue([
   {

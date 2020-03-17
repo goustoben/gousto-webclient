@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
-import RecipeHolder from '../RecipeHolder'
+import { RecipeHolder } from '../RecipeHolder'
 import css from './RecipeList.css'
 
 const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore, detailVisibilityChange, boxDetailsVisibilityChange, browser, boxSummaryVisible }) => {
@@ -61,11 +61,11 @@ const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore,
 RecipeList.propTypes = {
   view: PropTypes.string,
   recipes: PropTypes.instanceOf(Immutable.Map),
-  maxRecipesNum: PropTypes.number,
+  maxRecipesNum: PropTypes.number.isRequired,
   menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
   invisible: PropTypes.bool,
-  detailVisibilityChange: PropTypes.func,
-  boxDetailsVisibilityChange: PropTypes.func,
+  detailVisibilityChange: PropTypes.func.isRequired,
+  boxDetailsVisibilityChange: PropTypes.func.isRequired,
   boxSummaryVisible: PropTypes.bool,
   browser: PropTypes.string
 }
@@ -79,4 +79,4 @@ RecipeList.defaultProps = {
   browser: 'desktop'
 }
 
-export default RecipeList
+export { RecipeList }

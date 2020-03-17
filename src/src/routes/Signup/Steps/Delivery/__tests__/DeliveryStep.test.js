@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import DropdownInput from 'Form/Dropdown'
-import DeliveryStep from '../DeliveryStep'
+import { DeliveryStep } from '../DeliveryStep'
 
 describe('Delivery Step', () => {
   let wrapper

@@ -44,7 +44,10 @@ const propTypes = {
 }
 
 const defaultProps = {
-  ingredients: []
+  buttonLeftUrl: '',
+  ingredients: [],
+  issues: [],
+  subIssues: [],
 }
 
 const renderIngredientsIssues = (ingredients, issues, subIssues, changeHandler) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import EmailForm from 'routes/Home/EmailForm'
+import { EmailForm } from 'routes/Home/EmailForm'
 import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'

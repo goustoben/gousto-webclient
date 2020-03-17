@@ -9,7 +9,7 @@ import {
   getLogoutUserDisabledSlots,
 } from 'selectors/features'
 import { formatAndValidateDisabledSlots, addDisabledSlotIds } from 'utils/deliverySlotHelper'
-import DeliveryStep from './DeliveryStep'
+import { DeliveryStep } from './DeliveryStep'
 
 function mapStateToProps(state) {
   const deliveryDaysWithDisabled = addDisabledSlotIds(state.boxSummaryDeliveryDays)
@@ -55,4 +55,4 @@ const DeliveryStepContainer = connect(mapStateToProps, {
   trackDeliveryPreferenceSelected: actions.trackDeliveryPreferenceSelected,
 })(DeliveryStep)
 
-export default DeliveryStepContainer
+export { DeliveryStepContainer }

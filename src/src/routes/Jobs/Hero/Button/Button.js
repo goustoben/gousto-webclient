@@ -21,4 +21,9 @@ CTA.propTypes = {
   link: PropTypes.string,
 }
 
-export default CTA
+CTA.defaultProps = {
+  children: '',
+  link: '',
+}
+
+export { CTA }

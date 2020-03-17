@@ -220,4 +220,6 @@ class Refund extends PureComponent {
 
 Refund.propTypes = propTypes
 
-export default Refund
+export {
+  Refund
+}

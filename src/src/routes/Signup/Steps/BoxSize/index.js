@@ -1,1 +1,1 @@
-export default from './BoxSizeStepContainer'
+export { BoxSizeStepContainer as BoxSizeStep } from './BoxSizeStepContainer'

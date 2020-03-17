@@ -1,1 +1,1 @@
-export { default } from './route'
+export { Confirmation } from './route'

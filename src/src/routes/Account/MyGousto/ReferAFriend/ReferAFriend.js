@@ -12,7 +12,8 @@ const propTypes = {
 }
 
 const defaultProps = {
-  referralDetails: Immutable.Map({})
+  referralDetails: Immutable.Map({}),
+  redirect: () => {}
 }
 
 const ReferAFriend = ({ referralDetails, redirect }) => {

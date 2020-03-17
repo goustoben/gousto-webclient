@@ -6,100 +6,100 @@ import { getDisabledSlots, getLogoutUserDisabledSlots } from 'selectors/features
 import { getIsAuthenticated } from 'selectors/auth'
 import { actionTypes } from './actionTypes'
 
-export const trackDeliveryDayDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
+export const trackDeliveryDayDropDownOpened = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_DROPDOWN_OPEN,
     trackingData: {
       actionType: 'DeliveryDayDropDown Opened',
       date,
-      day_offset,
-      delivery_slot_id
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId
     }
   })
 }
 
-export const trackDeliveryDayDropDownClosed = (date, day_offset, delivery_slot_id) => dispatch => {
+export const trackDeliveryDayDropDownClosed = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_DROPDOWN_CLOSED,
     trackingData: {
       actionType: 'DeliveryDayDropDown Closed',
       date,
-      day_offset,
-      delivery_slot_id
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId
     }
   })
 }
 
-export const trackDeliverySlotDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
+export const trackDeliverySlotDropDownOpened = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_SLOT_DROPDOWN_OPEN,
     trackingData: {
       actionType: 'DeliverySlotDropDown Opened',
       date,
-      day_offset,
-      delivery_slot_id
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId
     }
   })
 }
 
-export const trackDeliveryDayEdited = (date, day_offset, delivery_slot_id) => dispatch => {
+export const trackDeliveryDayEdited = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_SELECTION_EDITED,
     trackingData: {
       actionType: 'DeliveryDay Edited',
       date,
-      day_offset,
-      delivery_slot_id
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId
     }
   })
 }
 
-export const trackDeliverySlotEdited = (date, day_offset, delivery_slot_id) => dispatch => {
+export const trackDeliverySlotEdited = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_SLOT_SELECTION_EDITED,
     trackingData: {
       actionType: 'DeliverySlot Edited',
       date,
-      day_offset,
-      delivery_slot_id
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId
     }
   })
 }
 
-export const trackDeliveryPreferenceModalViewed = (date, day_offset, delivery_slot_id) => dispatch => {
+export const trackDeliveryPreferenceModalViewed = (date, dayOffset, deliverySlotId) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_PREFERENCE_MODAL_VIEWED,
     trackingData: {
       actionType: 'DeliveryPreferenceModal Viewed',
       date,
-      day_offset,
-      delivery_slot_id
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId
     }
   })
 }
 
-export const trackDeliveryPreferenceSelected = (date, day_offset, delivery_slot_id, delivery_preference) => dispatch => {
+export const trackDeliveryPreferenceSelected = (date, dayOffset, deliverySlotId, deliveryPreference) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_PREFERENCE_SELECTED,
     trackingData: {
       actionType: 'DeliveryPreference Selected',
       date,
-      day_offset,
-      delivery_slot_id,
-      delivery_preference
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId,
+      delivery_preference: deliveryPreference
     }
   })
 }
 
-export const trackDeliveryPreferenceModalClosed = (date, day_offset, delivery_slot_id, delivery_preference) => dispatch => {
+export const trackDeliveryPreferenceModalClosed = (date, dayOffset, deliverySlotId, deliveryPreference) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_PREFERENCE_MODAL_CLOSED,
     trackingData: {
       actionType: 'DeliveryPreferenceModal Closed',
       date,
-      day_offset,
-      delivery_slot_id,
-      delivery_preference
+      day_offset: dayOffset,
+      delivery_slot_id: deliverySlotId,
+      delivery_preference: deliveryPreference
     }
   })
 }

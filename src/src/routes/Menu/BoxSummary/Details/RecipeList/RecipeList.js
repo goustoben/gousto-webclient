@@ -67,17 +67,17 @@ const RecipeList = ({
 }
 
 RecipeList.propTypes = {
-  basketRecipes: PropTypes.instanceOf(Immutable.Map),
-  menuFetchPending: PropTypes.bool,
-  numPortions: PropTypes.number,
-  okRecipeIds: PropTypes.instanceOf(Immutable.Map),
-  onRemove: PropTypes.func,
-  orderSaveError: PropTypes.string,
-  recipesStore: PropTypes.instanceOf(Immutable.Map),
-  showRecipeDetailsOnClick: PropTypes.func,
-  unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
-  basketRestorePreviousDate: PropTypes.func,
-  clearSlot: PropTypes.func
+  basketRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+  menuFetchPending: PropTypes.bool.isRequired,
+  numPortions: PropTypes.number.isRequired,
+  okRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
+  onRemove: PropTypes.func.isRequired,
+  orderSaveError: PropTypes.string.isRequired,
+  recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
+  showRecipeDetailsOnClick: PropTypes.func.isRequired,
+  unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
+  basketRestorePreviousDate: PropTypes.func.isRequired,
+  clearSlot: PropTypes.func.isRequired
 }
 
 export { RecipeList }

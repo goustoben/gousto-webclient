@@ -8,6 +8,18 @@ import GetHelpLayout from 'layouts/GetHelpLayout'
 import { client as routes } from 'config/routes'
 import { BottomButton } from '../components/BottomButton'
 
+const propTypes = {
+  content: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    button1: PropTypes.string.isRequired,
+    button2: PropTypes.string.isRequired,
+    confirmationBody: PropTypes.string.isRequired,
+  }),
+}
+const defaultProps = {
+  content: {}
+}
+
 const Confirmation = ({ content }) => (
   <GetHelpLayout title={content.title} body={content.confirmationBody}>
     <BottomBar>
@@ -21,13 +33,9 @@ const Confirmation = ({ content }) => (
   </GetHelpLayout>
 )
 
-Confirmation.propTypes = {
-  content: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    button1: PropTypes.string.isRequired,
-    button2: PropTypes.string.isRequired,
-    confirmationBody: PropTypes.string.isRequired,
-  }),
-}
+Confirmation.defaultProps = defaultProps
+Confirmation.propTypes = propTypes
 
-export default Confirmation
+export {
+  Confirmation
+}

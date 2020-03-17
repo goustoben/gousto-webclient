@@ -8,9 +8,9 @@ import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
-import Portions from './Portions'
+import { Portions } from './Portions'
 import css from './Details.css'
-import BoxProgressAlert from './BoxProgressAlert'
+import { BoxProgressAlert } from './BoxProgressAlert'
 import { RecipeList } from './RecipeList'
 import { DateHeader } from './DateHeader'
 import { CheckoutContainer } from '../BannerButton/Checkout'
@@ -22,42 +22,6 @@ import {
 } from './displayOptionsProps'
 
 class Details extends React.Component {
-  static propTypes = {
-    accessToken: PropTypes.string,
-    basketNumPortionChange: PropTypes.func.isRequired,
-    portionSizeSelectedTracking: PropTypes.func.isRequired,
-    basketRestorePreviousDate: PropTypes.func.isRequired,
-    boxSummaryVisibilityChange: PropTypes.func.isRequired,
-    clearSlot: PropTypes.func.isRequired,
-    date: PropTypes.string,
-    deliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
-    displayOptions: PropTypes.instanceOf(Immutable.List),
-    numPortions: PropTypes.number.isRequired,
-    onRemove: PropTypes.func.isRequired,
-    orderId: PropTypes.string,
-    promoCode: PropTypes.string,
-    okRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
-    recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-    slotId: PropTypes.string,
-    view: PropTypes.string,
-    menuFetchPending: PropTypes.bool,
-    orderSaveError: PropTypes.string,
-    pricingPending: PropTypes.bool,
-    prices: PropTypes.instanceOf(Immutable.Map),
-    unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
-    showRecipeDetailsOnClick: PropTypes.func,
-    shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
-  }
-
-  static defaultProps = {
-    view: 'desktop',
-    accessToken: '',
-    displayOptions: Immutable.List([]),
-    prices: Immutable.Map({}),
-    pricingPending: false,
-    showRecipeDetailsOnClick: () => { },
-  }
-
   getCtaText = (numRecipes) => {
     const { maxRecipesNum, minRecipesNum } = config.basket
     let text = ''
@@ -206,4 +170,43 @@ class Details extends React.Component {
   }
 }
 
-export default Details
+Details.propTypes = {
+  accessToken: PropTypes.string,
+  basketNumPortionChange: PropTypes.func.isRequired,
+  portionSizeSelectedTracking: PropTypes.func.isRequired,
+  basketRestorePreviousDate: PropTypes.func.isRequired,
+  boxSummaryVisibilityChange: PropTypes.func.isRequired,
+  clearSlot: PropTypes.func.isRequired,
+  date: PropTypes.string.isRequired,
+  deliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
+  displayOptions: PropTypes.instanceOf(Immutable.List),
+  numPortions: PropTypes.number.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  orderId: PropTypes.string.isRequired,
+  promoCode: PropTypes.string,
+  okRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
+  recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
+  slotId: PropTypes.string,
+  view: PropTypes.string,
+  menuFetchPending: PropTypes.bool.isRequired,
+  orderSaveError: PropTypes.string,
+  pricingPending: PropTypes.bool,
+  prices: PropTypes.instanceOf(Immutable.Map),
+  unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
+  showRecipeDetailsOnClick: PropTypes.func,
+  shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
+}
+
+Details.defaultProps = {
+  view: 'desktop',
+  accessToken: '',
+  displayOptions: Immutable.List([]),
+  prices: Immutable.Map({}),
+  pricingPending: false,
+  showRecipeDetailsOnClick: () => { },
+  promoCode: null,
+  slotId: null,
+  orderSaveError: null,
+}
+
+export { Details }

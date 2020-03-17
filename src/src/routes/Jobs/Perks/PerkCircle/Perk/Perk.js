@@ -10,7 +10,7 @@ const Perk = ({ title, copy }) => (
     <div className={css.perkInner}>
       <div className={css.perkCircle}>
         <div className={css.perkVerticalCenter}>
-          <span className={classnames({ [icons[title]]: true })}></span>
+          <span className={classnames({ [icons[title]]: true })} />
           <p className={css.circleCopy}>{reactnl2br(copy)}</p>
         </div>
       </div>
@@ -23,4 +23,9 @@ Perk.propTypes = {
   copy: PropTypes.string,
 }
 
-export default Perk
+Perk.defaultProps = {
+  title: '',
+  copy: '',
+}
+
+export { Perk }

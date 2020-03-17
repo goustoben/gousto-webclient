@@ -7,21 +7,20 @@ import placeholderSrc from 'media/images/product-placeholder.png'
 import css from './Cookbook.css'
 import { RecipeCard } from './RecipeCard'
 
+const propTypes = {
+  loading: PropTypes.bool,
+  userLoadCookbookRecipes: PropTypes.func,
+  orders: PropTypes.instanceOf(Immutable.Map),
+  recipes: PropTypes.instanceOf(Immutable.List)
+}
+
+const defaultProps = {
+  loading: false,
+  userLoadCookbookRecipes: () => { },
+  orders: Immutable.Map(),
+  recipes: Immutable.List()
+}
 class Cookbook extends React.PureComponent {
-  static propTypes = {
-    loading: PropTypes.bool,
-    userLoadCookbookRecipes: PropTypes.func,
-    orders: PropTypes.instanceOf(Immutable.Map),
-    recipes: PropTypes.instanceOf(Immutable.List)
-  }
-
-  static defaultProps = {
-    loading: false,
-    userLoadCookbookRecipes: () => { },
-    orders: Immutable.Map(),
-    recipes: Immutable.List()
-  }
-
   componentDidMount() {
     const { userLoadCookbookRecipes, orders } = this.props
 
@@ -75,5 +74,8 @@ class Cookbook extends React.PureComponent {
     )
   }
 }
+
+Cookbook.propTypes = propTypes
+Cookbook.defaultProps = defaultProps
 
 export { Cookbook }

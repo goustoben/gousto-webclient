@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import { Spinner } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
-import Price from '../Price'
+import { Price } from '../Price'
 import css from './Title.css'
 
 class Title extends React.PureComponent {

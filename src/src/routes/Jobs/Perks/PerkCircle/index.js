@@ -1,1 +1,1 @@
-export default from './PerkCircle'
+export { PerkCircle } from './PerkCircle'

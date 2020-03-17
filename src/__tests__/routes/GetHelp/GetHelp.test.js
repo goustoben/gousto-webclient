@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
-import GetHelp from 'routes/GetHelp/GetHelp'
+import { GetHelp } from 'routes/GetHelp/GetHelp'
 
 describe('<GetHelp />', () => {
   describe('rendering', () => {

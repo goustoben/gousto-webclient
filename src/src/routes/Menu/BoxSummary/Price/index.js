@@ -1,1 +1,1 @@
-export default from './Price'
+export { Price} from './Price'

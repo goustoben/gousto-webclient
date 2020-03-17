@@ -1,1 +1,1 @@
-export default from './RecipeHolder'
+export { RecipeHolder } from './RecipeHolder'

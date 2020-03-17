@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Button from '../../Button'
+import { Button } from '../../Button'
 import css from './BoxSizeStep.css'
 import signupCss from '../../Signup.css'
 
-import Image from '../../Image'
+import { Image } from '../../Image'
 
 const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next }) => {
   const portions = [2, 4]
 
   const renderButtons = () => (portions.map((value, index) => (
-    <div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions_${index}`}>
+    <div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions`}>
       <Button
         data-testing={`signupBoxSize${value}Portions`}
         fill={false}
@@ -49,4 +49,4 @@ BoxSizeStep.propTypes = {
   next: PropTypes.func.isRequired,
 }
 
-export default BoxSizeStep
+export { BoxSizeStep }

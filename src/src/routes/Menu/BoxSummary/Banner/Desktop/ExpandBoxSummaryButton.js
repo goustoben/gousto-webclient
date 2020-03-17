@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Button, Segment } from 'goustouicomponents'
 import Title from '../../Title'
-import Description from '../../Description'
+import { Description } from '../../Description'
 
 import css from './ExpandBoxSummaryButton.css'
 

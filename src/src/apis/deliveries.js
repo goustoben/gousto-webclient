@@ -7,8 +7,8 @@ export function fetchDeliveryDays(accessToken, cutoffDatetimeFrom, menuCutoffUnt
   const reqData = {
     'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
     'filters[cutoff_datetime_until]': menuCutoffUntil,
-    'ndd': isNDDExperiment ? 'true' : 'false',
-    'delivery_tariff_id': deliveryTariffId,
+    ndd: isNDDExperiment ? 'true' : 'false',
+    delivery_tariff_id: deliveryTariffId,
     sort: 'date',
     direction: 'asc', }
 

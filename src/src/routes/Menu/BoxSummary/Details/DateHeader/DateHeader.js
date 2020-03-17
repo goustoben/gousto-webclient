@@ -44,11 +44,11 @@ const DateHeader = (props) => {
 }
 
 DateHeader.propTypes = {
-  orderId: PropTypes.string,
-  date: PropTypes.string,
-  clearSlot: PropTypes.func,
-  deliveryDays: PropTypes.instanceOf(Immutable.Map),
-  slotId: PropTypes.string,
+  orderId: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  clearSlot: PropTypes.func.isRequired,
+  deliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
+  slotId: PropTypes.string.isRequired,
 }
 
 export { DateHeader }

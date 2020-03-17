@@ -8,24 +8,6 @@ import { CancelButton } from '../CancelButton'
 import css from './Postcode.css'
 
 class Postcode extends React.PureComponent {
-  static propTypes = {
-    deliveryDaysError: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.bool,
-      PropTypes.object,
-    ]),
-    postcodePending: PropTypes.bool,
-    prevPostcode: PropTypes.string,
-    addresses: PropTypes.object,
-    basketRestorePreviousValues: PropTypes.func.isRequired,
-    chosenAddress: PropTypes.object,
-    basketChosenAddressChange: PropTypes.func.isRequired,
-    tempPostcode: PropTypes.string,
-    setTempPostcode: PropTypes.func,
-    boxSummaryNext: PropTypes.func,
-    shouldDisplayFullScreenBoxSummary: PropTypes.bool,
-  }
-
   handleChange = (value) => {
     const { setTempPostcode } = this.props
     setTempPostcode(value)
@@ -47,12 +29,16 @@ class Postcode extends React.PureComponent {
     boxSummaryNext()
   }
 
-  addressesToOptions = () => (
-    this.props.addresses.map(address => ({
-      label: `${address.get('name')}, ${address.get('postcode')}`,
-      value: address.get('id'),
-    })).toArray()
-  )
+  addressesToOptions = () => {
+    const { addresses } = this.props
+
+    return (
+      addresses.map(address => ({
+        label: `${address.get('name')}, ${address.get('postcode')}`,
+        value: address.get('id'),
+      })).toArray()
+    )
+  }
 
   savedAddresses = () => {
     const { deliveryDaysError, chosenAddress } = this.props
@@ -160,4 +146,29 @@ class Postcode extends React.PureComponent {
   }
 }
 
-export default Postcode
+Postcode.propTypes = {
+  deliveryDaysError: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.object,
+  ]).isRequired,
+  postcodePending: PropTypes.bool.isRequiredq,
+  prevPostcode: PropTypes.string.isRequired,
+  addresses: PropTypes.object.isRequired,
+  basketRestorePreviousValues: PropTypes.func.isRequired,
+  chosenAddress: PropTypes.object.isRequired,
+  basketChosenAddressChange: PropTypes.func.isRequired,
+  tempPostcode: PropTypes.string,
+  setTempPostcode: PropTypes.func,
+  boxSummaryNext: PropTypes.func,
+  shouldDisplayFullScreenBoxSummary: PropTypes.bool,
+}
+
+Postcode.defaultProps = {
+  tempPostcode: null,
+  setTempPostcode: () => {},
+  boxSummaryNext: () => {},
+  shouldDisplayFullScreenBoxSummary: false,
+}
+
+export { Postcode }

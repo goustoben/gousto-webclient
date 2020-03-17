@@ -11,109 +11,130 @@ import OrderPricingDetail from './OrderPricingDetail'
 import OrderDelivery from './OrderDelivery'
 
 class OrderDetail extends React.PureComponent {
-  static propTypes = {
-    orderId: PropTypes.string,
-    deliveryDayId: PropTypes.string,
-    orderState: PropTypes.string,
-    paymentDate: PropTypes.string,
-    recipes: PropTypes.instanceOf(Immutable.List),
-    products: PropTypes.instanceOf(Immutable.List),
-    priceBreakdown: PropTypes.instanceOf(Immutable.Map),
-    deliveryDate: PropTypes.string,
-    deliveryTimeStart: PropTypes.string,
-    deliveryTimeEnd: PropTypes.string,
-    whenCutoff: PropTypes.string,
-    editDeliveryMode: PropTypes.bool,
-    cancellable: PropTypes.bool,
-    orderDeliveryDaysFetchError: PropTypes.string,
-    recipesPeriodStockFetchError: PropTypes.string,
-    deliveryDay: PropTypes.string,
-    portionsCount: PropTypes.string,
-  }
-
-  static defaultProps = {
-    orderId: '',
-    deliveryDayId: '',
-    orderState: '',
-    paymentDate: '',
-    recipes: Immutable.List([]),
-    products: Immutable.List([]),
-    priceBreakdown: Immutable.Map({}),
-    deliveryDate: '',
-    deliveryTimeStart: '',
-    deliveryTimeEnd: '',
-    whenCutoff: '',
-    editDeliveryMode: false,
-    cancellable: false,
-    deliveryDay: '',
-    portionsCount: '2',
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   render() {
-    const fetchSuccess = this.props.recipesPeriodStockFetchError === null && this.props.orderDeliveryDaysFetchError === null
+    const {
+      recipesPeriodStockFetchError,
+      orderDeliveryDaysFetchError,
+      recipes,
+      orderId,
+      orderState,
+      products,
+      whenCutoff,
+      portionsCount,
+      paymentDate,
+      priceBreakdown,
+      deliveryDate,
+      deliveryTimeStart,
+      deliveryTimeEnd,
+      editDeliveryMode,
+      cancellable,
+      deliveryDayId,
+      deliveryDay
+    } = this.props
+    const fetchSuccess = recipesPeriodStockFetchError === null && orderDeliveryDaysFetchError === null
 
     return (
       <div className={css.orderDetail}>
-        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
+        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderRecipes
-              recipes={this.props.recipes}
-              orderId={this.props.orderId}
-              orderState={this.props.orderState}
-              whenCutoff={this.props.whenCutoff}
-              portionsCount={this.props.portionsCount}
+              recipes={recipes}
+              orderId={orderId}
+              orderState={orderState}
+              whenCutoff={whenCutoff}
+              portionsCount={portionsCount}
             />
           </section>
         ) : null}
-        {this.props.orderState === 'recipes chosen' ? (
+        {orderState === 'recipes chosen' ? (
           <section className={css.openCardSection}>
             <OrderProducts
-              orderId={this.props.orderId}
-              products={this.props.products}
+              orderId={orderId}
+              products={products}
             />
           </section>
         ) : null}
-        {['recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
+        {['recipes chosen', 'confirmed', 'dispatched'].indexOf(orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderPricingDetail
-              paymentDate={this.props.paymentDate}
-              numberOfRecipes={this.props.recipes.size}
-              priceBreakdown={this.props.priceBreakdown}
+              paymentDate={paymentDate}
+              numberOfRecipes={recipes.size}
+              priceBreakdown={priceBreakdown}
             />
           </section>
         ) : null}
-        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
+        {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(orderState) > -1 ? (
           <section className={css.openCardSection}>
             <OrderDelivery
-              date={this.props.deliveryDate}
-              timeStart={this.props.deliveryTimeStart}
-              timeEnd={this.props.deliveryTimeEnd}
-              orderState={this.props.orderState}
-              orderId={this.props.orderId}
-              editDeliveryMode={this.props.editDeliveryMode}
-              orderDeliveryDaysFetchError={this.props.orderDeliveryDaysFetchError}
-              recipesPeriodStockFetchError={this.props.recipesPeriodStockFetchError}
+              date={deliveryDate}
+              timeStart={deliveryTimeStart}
+              timeEnd={deliveryTimeEnd}
+              orderState={orderState}
+              orderId={orderId}
+              editDeliveryMode={editDeliveryMode}
+              orderDeliveryDaysFetchError={orderDeliveryDaysFetchError}
+              recipesPeriodStockFetchError={recipesPeriodStockFetchError}
               fetchSuccess={fetchSuccess}
             />
           </section>
         ) : null}
-        {this.props.cancellable && this.props.orderState !== 'cancelled' ? (
+        {cancellable && orderState !== 'cancelled' ? (
           <section className={css.openCardSection}>
             <OrderCancelButton
-              orderId={this.props.orderId}
-              deliveryDayId={this.props.deliveryDayId}
-              orderState={this.props.orderState}
-              deliveryDay={this.props.deliveryDay}
+              orderId={orderId}
+              deliveryDayId={deliveryDayId}
+              orderState={orderState}
+              deliveryDay={deliveryDay}
             />
           </section>
         ) : null}
       </div>
     )
   }
+}
+
+OrderDetail.propTypes = {
+  orderId: PropTypes.string,
+  deliveryDayId: PropTypes.string,
+  orderState: PropTypes.string,
+  paymentDate: PropTypes.string,
+  recipes: PropTypes.instanceOf(Immutable.List),
+  products: PropTypes.instanceOf(Immutable.List),
+  priceBreakdown: PropTypes.instanceOf(Immutable.Map),
+  deliveryDate: PropTypes.string,
+  deliveryTimeStart: PropTypes.string,
+  deliveryTimeEnd: PropTypes.string,
+  whenCutoff: PropTypes.string,
+  editDeliveryMode: PropTypes.bool,
+  cancellable: PropTypes.bool,
+  orderDeliveryDaysFetchError: PropTypes.string,
+  recipesPeriodStockFetchError: PropTypes.string,
+  deliveryDay: PropTypes.string,
+  portionsCount: PropTypes.string,
+}
+
+OrderDetail.contextTypes = {
+  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+}
+
+OrderDetail.defaultProps = {
+  orderId: '',
+  deliveryDayId: '',
+  orderState: '',
+  paymentDate: '',
+  recipes: Immutable.List([]),
+  products: Immutable.List([]),
+  priceBreakdown: Immutable.Map({}),
+  deliveryDate: '',
+  deliveryTimeStart: '',
+  deliveryTimeEnd: '',
+  whenCutoff: '',
+  editDeliveryMode: false,
+  cancellable: false,
+  orderDeliveryDaysFetchError: '',
+  recipesPeriodStockFetchError: '',
+  deliveryDay: '',
+  portionsCount: '2',
 }
 
 export default OrderDetail

@@ -24,10 +24,6 @@ const BottomButton = ({ color, clientRouted, url, children }) => (
   </Button>
 )
 
-BottomButton.defaultProps = {
-  disabled: false
-}
-
 BottomButton.propTypes = {
   children: PropTypes.node.isRequired,
   clientRouted: PropTypes.bool.isRequired,

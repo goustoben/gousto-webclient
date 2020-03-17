@@ -32,8 +32,8 @@ class EmailForm extends React.PureComponent {
 
   handleSubmit = async (e) => {
     e.preventDefault()
-    const email = this.state.email
-    if (this.state.emailValid) {
+    const { email, emailValid } = this.state
+    if (emailValid) {
       try {
         await newsletterSubscribe(email)
         this.setState({ emailSubmitted: true })
@@ -52,6 +52,8 @@ class EmailForm extends React.PureComponent {
   }
 
   render() {
+    const { email, emailSubmitted, errorMessage } = this.state
+
     return (
       <div className={css.container}>
         <h2 className={css.title}>
@@ -63,7 +65,7 @@ class EmailForm extends React.PureComponent {
         </h2>
         <div className={css.form}>
           {
-            !this.state.emailSubmitted
+            !emailSubmitted
               ? (
                 <div>
                   <P className={css.description}>
@@ -83,7 +85,7 @@ class EmailForm extends React.PureComponent {
                           type="email"
                           placeholder="Enter email"
                           onChange={this.emailChanges}
-                          value={this.state.email}
+                          value={email}
                           required
                           className={css.inputs}
                         />
@@ -92,7 +94,7 @@ class EmailForm extends React.PureComponent {
                         onClick={this.handleSubmit}
                         className={css.inputs}
                       >
-                      Subscribe Now
+                        Subscribe Now
                       </Button>
                     </div>
                   </Form>
@@ -107,10 +109,10 @@ class EmailForm extends React.PureComponent {
               )
           }
           {
-            this.state.errorMessage
+            errorMessage
               ? (
                 <div className={css.row}>
-                  <p className={css.errorMsg}>{this.state.errorMessage}</p>
+                  <p className={css.errorMsg}>{errorMessage}</p>
                 </div>
               )
               : null
@@ -121,4 +123,6 @@ class EmailForm extends React.PureComponent {
   }
 }
 
-export default EmailForm
+export {
+  EmailForm
+}

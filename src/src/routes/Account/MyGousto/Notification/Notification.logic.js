@@ -15,19 +15,19 @@ import {
 
 import { NotificationPresentation } from './Notification.presentation'
 
+const propTypes = {
+  card: PropTypes.instanceOf(Immutable.Map),
+  orders: PropTypes.instanceOf(Immutable.Map),
+  trackNotificationLinkClick: PropTypes.func,
+}
+
+const defaultProps = {
+  card: Immutable.Map({}),
+  orders: Immutable.Map({}),
+  trackNotificationLinkClick: () => {},
+}
+
 class NotificationLogic extends Component {
-  static propTypes = {
-    card: PropTypes.instanceOf(Immutable.Map),
-    orders: PropTypes.instanceOf(Immutable.Map),
-    trackNotificationLinkClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    card: Immutable.Map({}),
-    orders: Immutable.Map({}),
-    trackNotificationLinkClick: () => {},
-  }
-
   getNotifications() {
     const { card, orders } = this.props
     const now = moment()
@@ -69,5 +69,8 @@ class NotificationLogic extends Component {
     ) : null
   }
 }
+
+NotificationLogic.propTypes = propTypes
+NotificationLogic.defaultProps = defaultProps
 
 export { NotificationLogic }

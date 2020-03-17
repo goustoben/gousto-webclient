@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
-import BrowseCTAButton from './BrowseCTAButton'
+import { BrowseCTAButton } from './BrowseCTAButton'
 
 function mapStateToProps(state, ownProps) {
   return ({
@@ -16,4 +16,4 @@ const BrowseCTAButtonContainer = connect(mapStateToProps, {
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
 })(BrowseCTAButton)
 
-export default BrowseCTAButtonContainer
+export { BrowseCTAButtonContainer }

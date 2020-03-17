@@ -33,10 +33,10 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 )
 
 SlotPicker.propTypes = {
-  slots: PropTypes.object,
-  date: PropTypes.string,
-  slotId: PropTypes.string,
-  onClick: PropTypes.func,
+  slots: PropTypes.object.isRequired,
+  date: PropTypes.string.isRequired,
+  slotId: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
-export default SlotPicker
+export { SlotPicker }

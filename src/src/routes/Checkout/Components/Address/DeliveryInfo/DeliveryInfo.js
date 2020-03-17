@@ -48,6 +48,8 @@ DeliveryInfo.propTypes = {
 }
 
 DeliveryInfo.defaultProps = {
+  deliveryDate: '',
+  cutOffDate: '',
   frequency: 'weekly',
 }
 

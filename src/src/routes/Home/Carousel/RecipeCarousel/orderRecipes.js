@@ -46,4 +46,4 @@ const orderRecipes = (recipesMap) => {
   return orderedRecipes.reduce((reducerState, recipe) => reducerState.set(recipe.get('id'), recipe), Immutable.OrderedMap({}))
 }
 
-export default orderRecipes
+export { orderRecipes }

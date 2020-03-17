@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import PerkCircle from 'routes/Jobs/Perks/PerkCircle/PerkCircle'
-import Perks from 'routes/Jobs/Perks/Perks'
+import { PerkCircle } from 'routes/Jobs/Perks/PerkCircle/PerkCircle'
+import { Perks } from 'routes/Jobs/Perks/Perks'
 import css from 'routes/Jobs/Perks/Perks.css'
 
 describe('Perks', () => {

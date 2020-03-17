@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import Signup from './Signup'
+import { Signup } from './Signup'
 
 const mapStateToProps = (state, ownProps) => ({
   stepName: ownProps.params.stepName,
@@ -14,4 +14,4 @@ const SignupContainer = connect(mapStateToProps, {
   signupStepsReceive: actions.signupStepsReceive,
 })(Signup)
 
-export default SignupContainer
+export { SignupContainer }

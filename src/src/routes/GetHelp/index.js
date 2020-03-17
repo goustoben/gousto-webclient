@@ -1,1 +1,1 @@
-export default from './routes'
+export { getHelpRoutes as GetHelp } from './routes'

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import Confirmation from './Confirmation'
+import { Confirmation } from './Confirmation'
 
 const mapStateToProps = (state) => ({
   content: {
@@ -19,4 +19,6 @@ const mapStateToProps = (state) => ({
 
 const ConfirmationContainer = connect(mapStateToProps)(Confirmation)
 
-export default ConfirmationContainer
+export {
+  ConfirmationContainer
+}

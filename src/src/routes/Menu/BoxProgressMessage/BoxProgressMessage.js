@@ -46,4 +46,4 @@ BoxProgressMessage.defaultProps = {
   className: '',
 }
 
-export default BoxProgressMessage
+export { BoxProgressMessage }

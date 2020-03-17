@@ -5,13 +5,6 @@ import Image from 'Image'
 import { getImage } from 'utils/menu'
 import css from './Banner.css'
 
-const propTypes = {
-  type: PropTypes.string.isRequired,
-  collectionSlug: PropTypes.string,
-  imageName: PropTypes.string,
-  setThematic: PropTypes.func
-}
-
 const Banner = ({ imageName, type, collectionSlug, setThematic }) => (
   collectionSlug ? (
     <div
@@ -36,6 +29,17 @@ const Banner = ({ imageName, type, collectionSlug, setThematic }) => (
     )
 )
 
-Banner.propTypes = propTypes
+Banner.propTypes = {
+  type: PropTypes.string.isRequired,
+  collectionSlug: PropTypes.string,
+  imageName: PropTypes.string,
+  setThematic: PropTypes.func
+}
+
+Banner.defaultProps = {
+  collectionSlug: null,
+  imageName: null,
+  setThematic: () => {},
+}
 
 export { Banner }

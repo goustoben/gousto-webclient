@@ -35,7 +35,7 @@ const OrderRecipes = ({
       <div className={css.textRow}>
         <p className={css.subHeader}>
           <Content contentKeys="mydeliveriesOrderOrderrecipesMessage">
-            <span>You haven't chosen any recipes yet.</span>
+            <span>You haven&apos;t chosen any recipes yet.</span>
           </Content>
         </p>
         <p>

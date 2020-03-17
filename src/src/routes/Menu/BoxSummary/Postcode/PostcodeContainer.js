@@ -3,7 +3,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
-import Postcode from './Postcode'
+import { Postcode } from './Postcode'
 
 function mapStateToProps(state) {
   let shippingDefault
@@ -39,4 +39,4 @@ const PostcodeContainer = connect(mapStateToProps, {
   boxSummaryNext,
 })(Postcode)
 
-export default PostcodeContainer
+export { PostcodeContainer }

@@ -12,6 +12,7 @@ import {
   signupChangePostcode,
   signupTracking,
   signupNextStep,
+  signupSetStep,
 } from 'actions/signup'
 
 jest.mock('actions/basket', () => ({
@@ -242,6 +243,41 @@ describe('signup actions', () => {
           numPortions: 4,
           date: '2017-06-09',
           slotId: '95355fb4-01db-4169-abe2-04695ec451bc',
+        },
+      })
+    })
+  })
+
+  describe('signupSetStep action', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        signup: Immutable.fromJS({
+          wizard: {
+            steps: [
+              {name: 'stepName', slug: 'step-slug'},
+              {name: 'secondStepName', slug: 'step-2-slug'}
+            ]
+          }
+        }),
+      })
+    })
+
+    test('should dispatch the SIGNUP_STEP_SET action', () => {
+      const step = Immutable.Map({
+        name: 'stepName',
+        slug: 'step-slug'
+      })
+      signupSetStep(step)(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'SIGNUP_STEP_SET',
+        currentStepName: 'stepName',
+        currentStepNumber: -1,
+        isLastStep: false,
+        trackingData: {
+          type: 'SIGNUP_STEP_SET',
+          step: 'step-slug',
+          stepName: 'stepName'
         },
       })
     })

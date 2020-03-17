@@ -4,7 +4,7 @@ import React from 'react'
 import { Spinner } from 'goustouicomponents'
 import { MOBILE_VIEW } from 'utils/view'
 import Title from '../Title/Title'
-import Price from '../Price'
+import { Price } from '../Price'
 
 describe('Title', () => {
   let wrapper

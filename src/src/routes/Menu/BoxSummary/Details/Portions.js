@@ -37,4 +37,4 @@ Portions.propTypes = {
   orderId: PropTypes.string.isRequired,
 }
 
-export default Portions
+export { Portions }

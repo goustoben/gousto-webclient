@@ -6,6 +6,7 @@ import GetHelpLayout from 'layouts/GetHelpLayout'
 import { BottomButton } from '../components/BottomButton'
 
 const propTypes = {
+  buttonLeftUrl: PropTypes.string,
   children: PropTypes.node.isRequired,
   content: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -16,7 +17,9 @@ const propTypes = {
   cssButton: PropTypes.string.isRequired,
   cannotContinue: PropTypes.bool.isRequired,
   continueClick: PropTypes.func.isRequired,
-  buttonLeftUrl: PropTypes.string,
+}
+const defaultProps = {
+  buttonLeftUrl: '',
 }
 
 const IngredientsPresentation = ({
@@ -50,6 +53,7 @@ const IngredientsPresentation = ({
   </GetHelpLayout>
 )
 
+IngredientsPresentation.defaultProps = defaultProps
 IngredientsPresentation.propTypes = propTypes
 
 export {

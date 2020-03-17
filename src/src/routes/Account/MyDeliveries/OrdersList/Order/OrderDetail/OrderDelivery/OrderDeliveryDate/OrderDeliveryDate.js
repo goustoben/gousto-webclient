@@ -21,10 +21,18 @@ const propTypes = {
 }
 
 const defaultProps = {
+  date: '',
+  timeStart: '',
+  timeEnd: '',
   hasError: false,
   errorText: '',
+  orderState: '',
+  editDeliveryMode: false,
   onClickFunction: () => {},
   fetchSuccess: true,
+  orderId: '',
+  availableFrom: '',
+  availableTo: ''
 }
 
 const OrderDeliveryDate = ({

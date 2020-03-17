@@ -1,7 +1,7 @@
 import React from 'react'
 import Content from 'containers/Content'
 import css from './Perks.css'
-import PerkCircle from './PerkCircle'
+import { PerkCircle } from './PerkCircle'
 
 const Perks = () => (
   <div className={css.container}>
@@ -48,4 +48,4 @@ const Perks = () => (
   </div>
 )
 
-export default Perks
+export { Perks }

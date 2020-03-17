@@ -5,13 +5,23 @@ const getCodeHealth = require('./code-health-utils/get-code-health')
 const sanitiseFilePath = require('./code-health-utils/sanitise-file-path')
 const getFailureMessages = require('./code-health-utils/get-failure-messages')
 
-if (process.argv.length !== 5) {
-  console.log('error! missing arguments')
-  console.log('usage: node compare-coverage.js [token] [branch] [code health file path]')
+if (!process.env.CIRCLECI_ACCESS_TOKEN) {
+  console.log('error! process.env.CIRCLECI_ACCESS_TOKEN not set')
   process.exit(1)
 }
 
-const [, , argToken, argBranch, argCodeHealthFile] = process.argv
+if (process.argv.length !== 4) {
+  console.log('error! missing arguments')
+  console.log('usage: node compare-coverage.js [branch] [code health file path]')
+  process.exit(1)
+}
+
+console.log('')
+console.log('')
+console.log('=============== Beginning code health comparison ===============')
+console.log('')
+
+const [, , argBranch, argCodeHealthFile] = process.argv
 
 const parseGitDiffLine = (line) => {
   const result = /^(\w{1})\s+(.+)$/.exec(line)
@@ -79,7 +89,7 @@ const run = async (changedFiles) => {
   }
 
   try {
-    const benchmarkCodeHealth = await getCodeHealthBenchmark(argToken, argBranch, argCodeHealthFile)
+    const benchmarkCodeHealth = await getCodeHealthBenchmark(process.env.CIRCLECI_ACCESS_TOKEN, argBranch, argCodeHealthFile)
 
     if (!benchmarkCodeHealth.files) {
       console.log('Benchmark is in old format, unable to compare health')
