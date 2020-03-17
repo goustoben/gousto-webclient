@@ -25,7 +25,8 @@ import {
   isAccountTabNameTest,
   getHideMenuBanner,
   getShowNewMenuLayout,
-  getPromoOfferVariant
+  getPromoOfferVariant,
+  getIsSignupReductionEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -665,6 +666,36 @@ describe('when features are defined', () => {
 
       test('should be truthy', () => {
         expect(getPromoOfferVariant(state)).toBeTruthy()
+      })
+    })
+  })
+
+  describe('getIsSignupReductionEnabled', () => {
+    describe('when enableSignupReduction is NOT set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          enableSignupReduction: {
+            value: false
+          }
+        })
+      })
+
+      test('should be falsy', () => {
+        expect(getIsSignupReductionEnabled(state)).toBeFalsy()
+      })
+    })
+
+    describe('when enableSignupReduction is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          enableSignupReduction: {
+            value: true
+          }
+        })
+      })
+
+      test('should be truthy', () => {
+        expect(getIsSignupReductionEnabled(state)).toBeTruthy()
       })
     })
   })

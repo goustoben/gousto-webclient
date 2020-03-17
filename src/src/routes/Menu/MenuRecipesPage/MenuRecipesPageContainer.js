@@ -4,8 +4,9 @@ import { menuRecipeDetailVisibilityChange } from 'actions/menu'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
-import { getShowStockAlertFlag, getShowNewMenuLayout } from 'selectors/features'
+import { getShowStockAlertFlag, getShowNewMenuLayout, getIsSignupReductionEnabled } from 'selectors/features'
 import { getRecipes } from 'selectors/root'
+import { getIsAuthenticated } from 'selectors/auth'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCollectionId } from './utils/getCollectionId'
@@ -37,7 +38,8 @@ const mapStateToProps = (state, ownProps) => {
     storeOrderId: state.basket.get('orderId'),
     numPortions: state.basket.get('numPortions'),
     showStockAlert: getShowStockAlertFlag(state),
-    newMenuLayout: getShowNewMenuLayout(state)
+    newMenuLayout: getShowNewMenuLayout(state),
+    isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
   })
 }
 

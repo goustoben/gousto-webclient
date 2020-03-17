@@ -1,0 +1,32 @@
+@value Pomegranate, White, Bluecheese from 'styles/colors.css';
+
+.container {
+  composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+  background: White;
+  border-radius: 3px;
+  border: 1px solid Pomegranate;
+  padding: 16px 14px;
+  margin: 0 24px;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  grid-column-gap: 10px;
+}
+
+.headerText {
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 21px;
+}
+
+.bodyText {
+  font-size: 13px;
+  line-height: 20px;
+  margin-bottom: 0px;
+}
+
+.infoIcon {
+  composes: fa-basic-class fa-info-circle from 'styles/vendor/font-awesome-module.css';
+  color: Bluecheese;
+  font-size: 18px;
+}

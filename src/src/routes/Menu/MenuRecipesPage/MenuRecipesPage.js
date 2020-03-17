@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import { Alert } from 'goustouicomponents'
 import PropTypes from 'prop-types'
+import { CoronaVirusBanner } from 'CoronaVirusBanner'
+
 import CollectionsNav from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { SimplifiedMenuRecipesPage } from '../NewMenuLayout/SimplifiedMenuRecipesPage'
@@ -36,6 +38,7 @@ const propTypes = {
     reload: PropTypes.bool
   }),
   params: PropTypes.shape({}),
+  isSignupReductionEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -46,7 +49,8 @@ const defaultProps = {
   storeOrderId: '',
   numPortions: 2,
   query: {},
-  params: {}
+  params: {},
+  isSignupReductionEnabled: false,
 }
 
 export class MenuRecipesPage extends PureComponent {
@@ -136,13 +140,15 @@ export class MenuRecipesPage extends PureComponent {
       showLoading,
       stateRecipeCount,
       orderId,
-      showStockAlert
+      showStockAlert,
+      isSignupReductionEnabled,
     } = this.props
     const fadeCss = (showLoading) ? css.fadeOut : css.willFade
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
         <MenuBannerContainer />
+        { isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div> }
         <SubHeader
           orderId={orderId}
         />

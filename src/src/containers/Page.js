@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 import config from 'config'
 import actions from 'actions'
 import { trackUserAttributes } from 'actions/tracking'
-import { getWindow } from 'utils/window'
+import { getWindow, redirect } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
 import css from './Page.css'
 
@@ -20,11 +20,18 @@ class Page extends React.PureComponent {
     disabled: PropTypes.bool.isRequired,
     loginVisibilityChange: PropTypes.func.isRequired,
     contentFetchPending: PropTypes.bool.isRequired,
+    isSignupReductionEnabled: PropTypes.bool,
   }
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
   }
+
+  static defaultProps = {
+    isSignupReductionEnabled: false,
+  }
+
+  static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus/'
 
   static fetchData = ({ store }) => {
     const state = store.getState()
@@ -36,18 +43,29 @@ class Page extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (!this.props.disabled && this.props.isAuthenticated && this.props.email) {
-      this.updateDataLayer(this.props.email, this.props.goustoReference)
-    }
-    const location = getWindow().location
+    const { isSignupReductionEnabled, disabled, isAuthenticated, email, loginVisibilityChange, goustoReference } = this.props
+    const { location } = getWindow()
 
-    if (location && location.hash && location.hash.includes('login') && !this.props.isAuthenticated) {
-      this.props.loginVisibilityChange(true)
+    if (isSignupReductionEnabled) {
+      redirect(Page.COVID_19_LINK)
     }
+
+    if (!disabled && isAuthenticated && email) {
+      this.updateDataLayer(email, goustoReference)
+    }
+
+    if (location && location.hash && location.hash.includes('login') && !isAuthenticated) {
+      loginVisibilityChange(true)
+    }
+
     this.context.store.dispatch(trackUserAttributes())
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.isSignupReductionEnabled) {
+      redirect(Page.COVID_19_LINK)
+    }
+
     if (!nextProps.disabled && nextProps.isAuthenticated) {
       if (!nextProps.email) {
         Page.fetchData({ store: this.context.store })
