@@ -19,25 +19,35 @@
 	}
 }
 
-.container--default {
-	composes: container;
-	background: url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
+.containerSignupOverride {
+	height: 300px;
+	padding-top: 24px;
+	margin-bottom: 0;
 
 	@media ScreenSMMin {
-		background: url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
+		min-height: calc(desktopInfoSize + 200px);
+	}
+}
+
+.container--default {
+	composes: container;
+	background: Coconut url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
+
+	@media ScreenSMMin {
+		background: Coconut url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
 	}
 }
 
 .container--tv {
 	composes: container;
-	background: url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
+	background: Coconut url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
 
 	@media ScreenSMMin {
-		background: url('routes/Home/Hero/hero-alt-1300w.jpg') center center / cover no-repeat;
+		background: Coconut url('routes/Home/Hero/hero-alt-1300w.jpg') center center / cover no-repeat;
 	}
 
 	@media ScreenLGMin {
-		background: url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
+		background: Coconut url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
 	}
 }
 
@@ -101,6 +111,14 @@
 	@media ScreenLGMin {
 		right: 8%;
 		top: 100px;
+	}
+}
+
+.textContainerSignupOverride {
+	top: 50px;
+
+	@media ScreenSMMin {
+		top: 155px;
 	}
 }
 

@@ -25,3 +25,7 @@
 	opacity: 0.4;
 	pointer-events: none;
 }
+
+.cvBanner {
+  padding: 13px 0 18px;
+}

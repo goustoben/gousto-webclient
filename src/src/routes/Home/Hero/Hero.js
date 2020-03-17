@@ -1,16 +1,36 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classnames from 'classnames'
 import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
+import { CoronaVirusBanner } from 'CoronaVirusBanner'
+import { Alert } from 'goustouicomponents'
+
 import CTAHomepage from '../CTA'
 import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
-  <div className={css[`container--${variant}`]} data-testing={dataTesting}>
-    <div className={css[`textContainer--${variant}`]}>
+const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, isSignupReductionEnabled }) => (
+  <div
+    className={
+      classnames(
+        css[`container--${variant}`],
+        isSignupReductionEnabled && css.containerSignupOverride,
+      )
+    }
+    data-testing={dataTesting}
+  >
+    { isSignupReductionEnabled && <CoronaVirusBanner /> }
+    <div
+      className={
+        classnames(
+          css[`textContainer--${variant}`],
+          isSignupReductionEnabled && css.textContainerSignupOverride,
+        )
+      }
+    >
       <h1 className={css.header}>
         <Content contentKeys="propositionMainHeadlineDefault">
           <span>{home.hero.header}</span>
@@ -39,12 +59,14 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   dataTesting: PropTypes.string,
   variant: PropTypes.string,
+  isSignupReductionEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
   variant: 'default',
+  isSignupReductionEnabled: false,
 }
 
 export default Hero

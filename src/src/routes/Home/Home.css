@@ -1,5 +1,5 @@
 @value Coconut, InYourBoxBg, White from 'styles/colors.css';
-@value ScreenXSMax, ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMax, ScreenSMMin, ScreenXXSMax from 'styles/screenSizes.css';
 
 .section {
 	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
@@ -8,6 +8,14 @@
 .inverseSection {
 	composes: section;
 	background-color: Coconut;
+}
+
+.inverseSectionSignupOverride {
+	padding-top: 240px;
+
+	@media ScreenSMMin {
+		padding-top: 80px;
+	}
 }
 
 .sectionContainer {

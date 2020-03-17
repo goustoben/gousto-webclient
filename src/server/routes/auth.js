@@ -27,9 +27,6 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
     const { data } = await fetchFeatures()
     const { isRecaptchaEnabled } = data
 
-    logger.notice({ message: `auth/login fetchFeatures ${data}` })
-    logger.notice({ message: `auth/login recaptchaToken ${recaptchaToken}` })
-
     if (isRecaptchaEnabled && username !== PINGDOM_USER) {
       const validateRecaptchaResponse = await validateRecaptchaUserToken(
         recaptchaToken,
@@ -37,13 +34,7 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
       )
 
       if (!validateRecaptchaResponse.success) {
-        const errorMessage = 'Recaptcha failed'
-
-        logger.notice({
-          message: `auth/login ${errorMessage} :: ${JSON.stringify(validateRecaptchaResponse)}`
-        })
-
-        throw Error(errorMessage)
+        throw validateRecaptchaResponse
       }
     }
 
@@ -51,8 +42,8 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
 
     addSessionCookies(ctx, authResponse, rememberMe)
     ctx.response.body = authResponse
-  } catch (e) {
-    logger.notice({ message: `auth/login catch ${e}` })
+  } catch (error) {
+    logger.error({ message: `auth/login catch ${JSON.stringify(error)}` })
 
     ctx.response.status = 401
     ctx.response.body = {
