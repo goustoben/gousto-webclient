@@ -2,7 +2,13 @@ import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
 import { getUserToken, refreshUserToken, validateUserPassword, identifyUser, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
+import logger from 'utils/logger'
 import { RECAPTCHA_PRIVATE_KEY } from '../../../server/config/recaptcha'
+
+jest.mock('utils/logger', () => ({
+  error: jest.fn(),
+  notice: jest.fn(),
+}))
 
 jest.mock('apis/fetchS3', () => ({
   fetchFeatures: jest.fn(),
@@ -218,7 +224,7 @@ describe('auth', () => {
       const [username, password, rememberMe, recaptchaToken] = ['test@test.com', 'pass1234', true, 'INVALID_RECAPTCHA_TOKEN']
 
       beforeEach(async () => {
-        validateRecaptchaUserToken.mockResolvedValueOnce({ success: false })
+        validateRecaptchaUserToken.mockResolvedValueOnce({ success: false, 'error-codes': ['missing-input-secret'] })
 
         ctx = getLoginCtx({ username, password, rememberMe, recaptchaToken })
 
@@ -231,6 +237,10 @@ describe('auth', () => {
 
       test('the getUserToken is not being called', () => {
         expect(getUserToken).not.toHaveBeenCalled()
+      })
+
+      test('error is being logged', () => {
+        expect(logger.error).toHaveBeenCalledWith({message: 'auth/login catch {"success":false,"error-codes":["missing-input-secret"]}'})
       })
     })
 
