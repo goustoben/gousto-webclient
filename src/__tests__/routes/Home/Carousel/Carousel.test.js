@@ -8,16 +8,46 @@ import { RecipeCarousel } from 'routes/Home/Carousel/RecipeCarousel'
 import ModuleHeader from 'components/ModuleHeader'
 
 describe('Carousel', () => {
-  test('should have Header and CTA elements, but no RecipeCarousel', () => {
-    const wrapper = shallow(<Carousel />)
+  let wrapper
 
+  beforeEach(() => {
+    wrapper = shallow(<Carousel />)
+  })
+
+  test('should have Header and CTA elements, but no RecipeCarousel', () => {
     expect(wrapper.find(ModuleHeader)).toHaveLength(1)
     expect(wrapper.find(RecipeCarousel)).toHaveLength(0)
     expect(wrapper.find(CTA)).toHaveLength(1)
   })
 
-  test('should not render a RecipeCarousel if the numRecipes prop is > 0', () => {
-    const wrapper = shallow(<Carousel numRecipes={1} />)
-    expect(wrapper.find(RecipeCarousel)).toHaveLength(1)
+  describe('CTA', () => {
+    const redirect = jest.fn()
+    const trackGetStarted = jest.fn()
+
+    beforeEach(() => {
+      wrapper.setProps({
+        redirect,
+        trackGetStarted,
+        ctaUri: '/carousel'
+      })
+    })
+
+    test('should dispatch redirect, and trackGetStarted actions with properly', () => {
+      wrapper.find(CTA).simulate('click')
+      expect(redirect).toHaveBeenCalledWith('/carousel')
+      expect(trackGetStarted).toHaveBeenCalledWith('recipecarousel')
+    })
+  })
+
+  describe('RecipeCarousel', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        numRecipes: 1
+      })
+    })
+
+    test('should not render a RecipeCarousel if the numRecipes prop is > 0', () => {
+      expect(wrapper.find(RecipeCarousel)).toHaveLength(1)
+    })
   })
 })

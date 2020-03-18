@@ -34,6 +34,7 @@ initialState = transit.fromJSON(initialState)
 const store = configureStore(browserHistory, initialState, Cookies)
 
 processCookies(Cookies, store)
+store.dispatch(actions.setUTMSource())
 
 const history = syncHistoryWithStore(browserHistory, store)
 

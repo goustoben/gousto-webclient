@@ -5,10 +5,13 @@ import {
   setAffiliateSource,
   trackRecipeOrderDisplayed,
   trackAffiliatePurchase,
-  trackUserAttributes
+  trackUserAttributes,
+  trackGetStarted,
+  setUTMSource
 } from 'actions/tracking'
 import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
+import { clickGetStarted } from 'actions/trackingKeys'
 import { warning } from 'utils/logger'
 import moment from 'moment'
 
@@ -397,6 +400,74 @@ describe('tracking actions', () => {
             isSignupInLast30Days,
           }
         }
+      })
+    })
+  })
+
+  describe('setUTMSource', () => {
+    describe('when utmSource not set', () => {
+      beforeEach(() => {
+        const state = {
+          tracking: Immutable.fromJS({
+            utmSource: undefined
+          })
+        }
+        dispatch = jest.fn()
+        getState = jest.fn().mockReturnValue(state)
+      })
+
+      test('then should dispatch SET_UTM_SOURCE action', () => {
+        setUTMSource()(dispatch, getState)
+        const expected = {
+          type: actionTypes.SET_UTM_SOURCE,
+          payload: { referral: '' }
+        }
+        expect(dispatch).toHaveBeenCalledWith(expected)
+      })
+    })
+
+    describe('when has utmSource set', () => {
+      beforeEach(() => {
+        const state = {
+          tracking: Immutable.fromJS({
+            utmSource: {}
+          })
+        }
+        dispatch = jest.fn()
+        getState = jest.fn().mockReturnValue(state)
+      })
+
+      test('then setUTMSource action should not be dispatched', () => {
+        setUTMSource()(dispatch, getState)
+        expect(dispatch).not.toBeCalled()
+      })
+    })
+  })
+
+  describe('trackGetStarted', () => {
+    describe('when section passed', () => {
+      const section = 'hero'
+
+      beforeEach(() => {
+        const state = {
+          basket: Immutable.fromJS({
+            promoCode: '123'
+          }),
+          tracking: Immutable.fromJS({
+            utmSource: undefined
+          })
+        }
+        dispatch = jest.fn()
+        getState = jest.fn().mockReturnValue(state)
+      })
+
+      test('then trackGetStarted action should be dispatched with proper payload', () => {
+        trackGetStarted(section)(dispatch, getState)
+        const { type, trackingData } = dispatch.mock.calls[0][0]
+        expect(type).toEqual(clickGetStarted)
+        expect(trackingData.actionType).toEqual(clickGetStarted)
+        expect(trackingData.section).toEqual(section)
+        expect(trackingData.promoCode).toEqual('123')
       })
     })
   })

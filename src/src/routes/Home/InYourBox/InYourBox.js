@@ -6,7 +6,7 @@ import ModuleHeader from 'ModuleHeader'
 import css from './InYourBox.css'
 import CTAHomepage from '../CTA'
 
-const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
+const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted }) => (
   <div className={css.container}>
     <div className={inverse ? css.inverseContent : css.content}>
       <ModuleHeader>It starts with a box</ModuleHeader>
@@ -33,7 +33,16 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
           Meals for 2 or 4 people
         </li>
       </ul>
-      <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }} buttonContainer={false}>{ctaText}</CTAHomepage>
+      <CTAHomepage
+        width={240}
+        onClick={() => {
+          redirect(ctaUri)
+          trackGetStarted('boxdescription')
+        }}
+        buttonContainer={false}
+      >
+        {ctaText}
+      </CTAHomepage>
     </div>
   </div>
 )
@@ -43,13 +52,15 @@ InYourBox.propTypes = {
   inverse: PropTypes.bool,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ctaUri: PropTypes.string,
+  trackGetStarted: PropTypes.func,
 }
 
 InYourBox.defaultProps = {
   ctaText: home.CTA.main,
   ctaUri: config.client.signup,
   inverse: false,
-  redirect: () => {}
+  redirect: () => {},
+  trackGetStarted: () => {}
 }
 
 export { InYourBox }

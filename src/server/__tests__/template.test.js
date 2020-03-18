@@ -56,34 +56,6 @@ describe('htmlTemplate', () => {
     })
   })
 
-  describe('host', () => {
-    const META_ROBOTS = '<meta name="robots" content="noindex">'
-    const PRODUCTION_FRONTEND_CDN_HOST = 'production-frontend.gousto.co.uk'
-
-    beforeEach(() => {
-      output = ''
-      host = ''
-    })
-
-    describe('when host did not meet the CDN-URL condition', () => {
-      test('should not contain robots meta tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
-        expect(output).not.toContain(META_ROBOTS)
-      })
-    })
-
-    describe('when host match and passed the CDN-URL condition', () => {
-      beforeEach(() => {
-        host = PRODUCTION_FRONTEND_CDN_HOST
-      })
-
-      test('should contain robots meta tag with noindex attr', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
-        expect(output).toContain(META_ROBOTS)
-      })
-    })
-  })
-
   describe('title', () => {
     const TITLE_TAG = '<title>Recipe boxs</title>'
 

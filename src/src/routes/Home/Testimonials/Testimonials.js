@@ -8,7 +8,7 @@ import Storystream from '../Storystream'
 import css from './Testimonials.css'
 import CTAHomepage from '../CTA'
 
-const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, ...props }) => (
+const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, trackGetStarted, ...props }) => (
 
   <div className={css.testimonials}>
     <ModuleHeader>Over 1 million meals delivered</ModuleHeader>
@@ -20,7 +20,15 @@ const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, 
       </section>
     )}
 
-    <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }}>{ctaText}</CTAHomepage>
+    <CTAHomepage
+      width={240}
+      onClick={() => {
+        redirect(ctaUri)
+        trackGetStarted('trustpilot')
+      }}
+    >
+      {ctaText}
+    </CTAHomepage>
   </div>
 )
 
@@ -30,6 +38,7 @@ Testimonials.propTypes = {
   enableStorystream: PropTypes.bool,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ctaUri: PropTypes.string,
+  trackGetStarted: PropTypes.func,
 }
 
 Testimonials.defaultProps = {
@@ -37,6 +46,7 @@ Testimonials.defaultProps = {
   enableStorystream: false,
   ctaText: home.CTA.main,
   ctaUri: config.client.signup,
+  trackGetStarted: () => {}
 }
 
 export default Testimonials
