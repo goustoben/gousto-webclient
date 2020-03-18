@@ -12,7 +12,7 @@ import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, isSignupReductionEnabled }) => (
+const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted, isSignupReductionEnabled }) => (
   <div
     className={
       classnames(
@@ -42,7 +42,10 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, isSignupReducti
       <div className={css.cta}>
         <CTAHomepage
           width={240}
-          onClick={() => redirect(ctaUri)}
+          onClick={() => {
+            redirect(ctaUri)
+            trackGetStarted('hero')
+          }}
           dataTesting="homepageHeroCTA"
         >
           {ctaText}
@@ -59,6 +62,7 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   dataTesting: PropTypes.string,
   variant: PropTypes.string,
+  trackGetStarted: PropTypes.func,
   isSignupReductionEnabled: PropTypes.bool,
 }
 
@@ -66,6 +70,7 @@ Hero.defaultProps = {
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
   variant: 'default',
+  trackGetStarted: () => {},
   isSignupReductionEnabled: false,
 }
 

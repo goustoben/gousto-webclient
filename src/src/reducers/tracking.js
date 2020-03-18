@@ -3,6 +3,7 @@ import { actionTypes } from 'actions/actionTypes'
 
 const initialState = Immutable.fromJS({
   asource: undefined,
+  utmSource: undefined
 })
 
 const tracking = {
@@ -10,6 +11,10 @@ const tracking = {
     switch (action.type) {
     case actionTypes.AFFILIATE_SOURCE_SET: {
       return state.set('asource', action.asource)
+    }
+
+    case actionTypes.SET_UTM_SOURCE: {
+      return state.set('utmSource', action.payload)
     }
 
     default: {

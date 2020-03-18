@@ -5,6 +5,8 @@ import globals from 'config/globals'
 import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from 'actions/actionTypes'
 import moment from 'moment'
+import { getUTM } from '../utils/utm'
+import { getUTMAndPromoCode } from '../selectors/tracking'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -150,8 +152,38 @@ export const trackUserAttributes = () => (
   }
 )
 
+export const setUTMSource = () => (dispatch, getState) => {
+  const { tracking } = getState()
+
+  if (!tracking.get('utmSource')) {
+    dispatch({
+      type: actionTypes.SET_UTM_SOURCE,
+      payload: {
+        ...getUTM()
+      }
+    })
+  }
+}
+
+export const trackGetStarted = (section) => (dispatch, getState) => {
+  const { promoCode, UTM } = getUTMAndPromoCode(getState())
+  const type = trackingKeys.clickGetStarted
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      section,
+      ...UTM,
+      promoCode
+    }
+  })
+}
+
 export default {
   trackFirstPurchase,
   setAffiliateSource,
   trackRecipeOrderDisplayed,
+  trackGetStarted,
+  setUTMSource,
 }

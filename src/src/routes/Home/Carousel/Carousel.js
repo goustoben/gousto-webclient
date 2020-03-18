@@ -6,11 +6,19 @@ import ModuleHeader from 'ModuleHeader'
 import { RecipeCarousel } from './RecipeCarousel'
 import CTAHomepage from '../CTA'
 
-const Carousel = ({ redirect, numRecipes, ctaUri, ctaText }) => (
+const Carousel = ({ redirect, numRecipes, ctaUri, ctaText, trackGetStarted }) => (
   <div>
     <ModuleHeader>Mmmmmm</ModuleHeader>
     {numRecipes > 0 ? <RecipeCarousel /> : null}
-    <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }}>{ctaText}</CTAHomepage>
+    <CTAHomepage
+      width={240}
+      onClick={() => {
+        redirect(ctaUri)
+        trackGetStarted('recipecarousel')
+      }}
+    >
+      {ctaText}
+    </CTAHomepage>
   </div>
 )
 
@@ -19,6 +27,7 @@ Carousel.propTypes = {
   numRecipes: PropTypes.number,
   ctaUri: PropTypes.string,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  trackGetStarted: PropTypes.func,
 }
 
 Carousel.defaultProps = {
@@ -26,6 +35,7 @@ Carousel.defaultProps = {
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
   redirect: () => {},
+  trackGetStarted: () => {}
 }
 
 export { Carousel }

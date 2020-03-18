@@ -3,7 +3,10 @@ import Immutable from 'immutable'
 import tracking from 'reducers/tracking'
 
 describe('tracking reducers', () => {
-  const initialState = Immutable.Map({ asource: undefined })
+  const initialState = Immutable.Map({
+    asource: undefined,
+    utmSource: undefined
+  })
 
   describe('tracking', () => {
     test('should handle initial state', () => {
@@ -28,6 +31,21 @@ describe('tracking reducers', () => {
       }
       const expected = Immutable.Map({
         asource: 'something',
+        utmSource: undefined
+      })
+      const result = tracking.tracking(state, action)
+      expect(Immutable.is(expected, result)).toEqual(true)
+    })
+
+    test('should handle SET_UTM_SOURCE action types', () => {
+      const state = undefined
+      const action = {
+        type: actionTypes.SET_UTM_SOURCE,
+        payload: 'google.com',
+      }
+      const expected = Immutable.Map({
+        asource: undefined,
+        utmSource: 'google.com'
       })
       const result = tracking.tracking(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
