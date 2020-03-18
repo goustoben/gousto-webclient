@@ -27,26 +27,32 @@ module.exports = {
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         signup.section.boxSizeStep.goToNextStep()
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         signup.section.postcodeStep.setPostcode()
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         signup.section.postcodeStep.goToNextStep()
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         signup.section.deliveryStep.checkIfDeliverySet()
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         signup.section.deliveryStep.goToNextStep()
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         menu.section.recipes.checkIfRecipesVisible()
         done()
       })
