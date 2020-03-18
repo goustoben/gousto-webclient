@@ -62,7 +62,7 @@ const configureHistoryAndStore = (url, initialState) => {
   return { store, history }
 }
 
-const renderHTML = (store, renderProps, url, userAgent, scripts, host) => {
+const renderHTML = (store, renderProps, url, userAgent, scripts) => {
   let startTime = new Date()
   const apollo = apolloClient(store)
   const components = (
@@ -89,7 +89,7 @@ const renderHTML = (store, renderProps, url, userAgent, scripts, host) => {
       }
       startTime = new Date()
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead, host)
+      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
       if (__CLIENT__) {
         logger.notice({message: 'renderHTML/template', elapsedTime: (new Date() - startTime)})
       }
@@ -234,8 +234,7 @@ async function processRequest(ctx, next) {
                 scripts = DISABLED_SCRIPTS
               }
               await fetchContentOnChange(ctx.request.path, store)
-              const host = ctx.request && ctx.request.header && ctx.request.header['x-forwarded-host']
-              renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], scripts, host)
+              renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], scripts)
                 .then(html => {
                   ctx.body = html
                   resolve()

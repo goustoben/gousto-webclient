@@ -1,9 +1,8 @@
 const newAssetPath = require('utils/media').newAssetPath
 const head = require('./head').default
 const encodeState = require('./encodeState')
-const possibleXFH = ['production-webclient.gousto.co.uk', 'production-frontend.gousto.co.uk']
 
-const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', scripts, helmetHead, host) => (
+const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', scripts, helmetHead) => (
   `<!doctype html>
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
@@ -17,7 +16,6 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
       <meta charset="utf-8" />
       <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
       <meta name="viewport" content="width=device-width,initial-scale=1">
-      ${(host && host !== '' && possibleXFH.includes(host)) ? '<meta name="robots" content="noindex">' : ''}
       ${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
       ${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
       ${scripts.optimizely ? head.optimizely(initialState.features) : ''}
