@@ -5,7 +5,7 @@ import {
   trackAcceptRefund,
   trackUserCannotGetCompensation,
 } from 'actions/getHelp'
-import { featureShorterCompensationPeriod } from 'selectors/features'
+import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 
 import { Refund } from './Refund'
 
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   const selectedIngredients = getHelp.get('selectedIngredients').toJS()
 
   return {
-    featureShorterCompensationPeriod,
+    featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(state),
     user: {
       id: user.get('id'),
       accessToken: auth.get('accessToken'),

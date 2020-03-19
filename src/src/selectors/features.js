@@ -78,7 +78,7 @@ export const getShowUserCredit = ({ features }) => (
   features && features.getIn(['showUserCredit', 'value'], false)
 )
 
-export const featureShorterCompensationPeriod = ({ features }) => (
+export const getFeatureShorterCompensationPeriod = ({ features }) => (
   features && features.getIn(['ssrShorterCompensationPeriod', 'value'], false)
 )
 
