@@ -141,5 +141,54 @@ describe('DeliverySlot logic', () => {
         expect(wrapper.find('.stickyButton').exists()).toBe(true)
       })
     })
+
+    describe('when all slots are disabled for temp date', () => {
+      test('then CTA should be disabled', () => {
+        wrapper = shallow(
+          <DeliverySlot
+            tempOrderId="mock-order-id"
+            deliveryDays={deliveryDays}
+            disabledSlots={['2019-03-03_08-19', '2019-03-03_08-12', '2019-03-03_18-22']}
+            deliverySlotChosen={jest.fn()}
+            isAuthenticated={isAuthenticated}
+            isSubscriptionActive={isSubscriptionActive}
+            tempDate="2019-03-03"
+            clearPostcode={jest.fn()}
+            getBoxSummaryTextProps={getBoxSummaryTextProps}
+            basketRestorePreviousValues={() => { }}
+            boxSummaryNext={() => { }}
+            numPortions={2}
+            shouldDisplayFullScreenBoxSummary
+          />)
+
+        expect(
+          wrapper.find('.boxSummaryContinueButton').prop('disabled')
+        ).toBe(true)
+      })
+    })
+
+    describe('when all slots are NOT disabled for temp date', () => {
+      test('then CTA should NOT be disabled', () => {
+        wrapper = shallow(
+          <DeliverySlot
+            tempOrderId="mock-order-id"
+            deliveryDays={deliveryDays}
+            disabledSlots={['2019-03-03_08-19', '2019-03-03_08-12']}
+            deliverySlotChosen={jest.fn()}
+            isAuthenticated={isAuthenticated}
+            isSubscriptionActive={isSubscriptionActive}
+            tempDate="2019-03-03"
+            clearPostcode={jest.fn()}
+            getBoxSummaryTextProps={getBoxSummaryTextProps}
+            basketRestorePreviousValues={() => { }}
+            boxSummaryNext={() => { }}
+            numPortions={2}
+            shouldDisplayFullScreenBoxSummary
+          />)
+        expect(
+          wrapper.find('.boxSummaryContinueButton').prop('disabled')
+        ).toBe(false)
+      })
+    })
   })
 })

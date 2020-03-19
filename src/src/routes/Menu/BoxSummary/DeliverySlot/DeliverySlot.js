@@ -36,7 +36,15 @@ class DeliverySlot extends React.PureComponent {
       tempSlotId,
       deliveryDaysProps
     }
-    const { slots, deliveryDays, chosen, hasEmptyOrders, hasFullOrders, subLabelClassName } = getDeliveryDaysAndSlots(tempDate, helperProps)
+    const {
+      slots,
+      deliveryDays,
+      chosen,
+      hasEmptyOrders,
+      hasFullOrders,
+      subLabelClassName,
+      hasActiveSlotsForSelectedDate,
+    } = getDeliveryDaysAndSlots(tempDate, helperProps)
     const { deliveryLocationText, slotId, buttonText, showWarning } = getBoxSummaryTextProps(slots)
 
     return (
@@ -81,10 +89,11 @@ class DeliverySlot extends React.PureComponent {
         </div>
         <div className={shouldDisplayFullScreenBoxSummary && css.stickyButton}>
           <Button
+            className="boxSummaryContinueButton"
             width="full"
             onClick={() => boxSummaryNext(numPortions)}
             pending={menuPending || menuFetchDataPending}
-            disabled={!tempOrderId && !chosen}
+            disabled={(!tempOrderId && !chosen) || !hasActiveSlotsForSelectedDate}
             data-testing="boxSummaryContinueButton"
           >
             {buttonText}

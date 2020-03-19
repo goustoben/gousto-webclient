@@ -142,10 +142,21 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
   const deliveryDays = deliveryDaysData && deliveryDaysData.toArray().sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
 
   let chosen
+  let hasActiveSlotsForSelectedDate = true
   if (slots[newDate]) {
+    hasActiveSlotsForSelectedDate = slots[newDate].some(slot => !slot.disabled)
     const slot = slots[newDate].filter(sl => sl.value === tempSlotId)
     chosen = slot.length > 0
   }
 
-  return { slots, deliveryDays, chosen, hasOrders, hasEmptyOrders, hasFullOrders, subLabelClassName }
+  return {
+    slots,
+    deliveryDays,
+    chosen,
+    hasOrders,
+    hasEmptyOrders,
+    hasFullOrders,
+    subLabelClassName,
+    hasActiveSlotsForSelectedDate,
+  }
 }
