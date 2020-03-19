@@ -22,7 +22,7 @@ const Button = ({ children, onClick, isLastStep, ...buttonProps }) => {
       disabled={buttonProps.disabled}
       pending={buttonProps.pending}
       width={buttonProps.width}
-      data-testing={buttonProps.disabled}
+      data-testing={buttonProps['data-testing']}
       fill={buttonProps.fill}
       onClick={args => {
         if (typeof onClick === 'function') {

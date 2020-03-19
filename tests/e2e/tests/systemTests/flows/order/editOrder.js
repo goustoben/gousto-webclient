@@ -11,7 +11,14 @@ module.exports = {
           shared.section.body.login(user.customer.email, user.customer.password)
           done()
         }).catch(error => {
-          browser.assert.fail(error)
+          if (error.stack) {
+            browser.assert.fail(error.stack)
+          } else if (error.message) {
+            browser.assert.fail(error.message)
+          } else {
+            browser.asset.fail(error)
+          }
+
           done()
         })
       })

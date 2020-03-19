@@ -1,21 +1,13 @@
-# Production deploy? [Make sure you create a merge commit - don't squash!](https://gousto.atlassian.net/wiki/spaces/~484404164/pages/1378615425/How+and+Why+to+Squash+and+Merge)
+# Description
+<!--- Update the JIRA ticket below -->
+This PR relates to the following [JIRA ticket](http://gousto.atlassian.net/browse/TECH-XXXX)
 
-## Description
-Motivation behind those changes are coming from the following [JIRA ticket](http://gousto.atlassian.net/browse/TECH-XXXX)
-<!--- If applicable describe your changes in this section -->
-This PR applies the following changes:
--
-
-## How Has This Been Tested?
+# How has this been tested?
 <!--- Please describe in detail how you tested your changes. -->
 <!--- Include details of your testing environment, and the tests you ran to -->
 <!--- see how your change affects other areas of the code, etc. -->
 
-## Checklist:
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] My change required a change to the documentation.
-- [ ] I have added tests to cover my changes.
-- [ ] I have completed cross browser testing.
-
-
+# Checklist - These must be ticked to merge!
+- [ ] I have installed the [Merge Autoselector extension](https://github.com/Gousto/chrome-ext-merge-autoselector)
+- [ ] The E2E tests have passed on the most recent `develop` build
+- [ ] I have completed cross browser testing **/ or /** I have taken a decision that this work is not vulnerable to cross-browser issues
