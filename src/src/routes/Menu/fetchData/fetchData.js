@@ -5,7 +5,9 @@ import logger from 'utils/logger'
 import { actionTypes } from 'actions/actionTypes'
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
-import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
+import { getIsAdmin, getIsAuthenticated, getAccessToken } from 'selectors/auth'
+import { getMenuAccessToken, getMenuFetchVariant } from 'selectors/menu'
+import { getUserMenuVariant } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
 import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
@@ -183,15 +185,20 @@ const selectCollectionFromQuery = (store, query) => {
   selectCollection(state, collectionName, store.dispatch)
 }
 
-const shouldFetchData = (store, params, force) => {
-  const menuRecipes = store && store.getState().menuRecipes
-  const menuCollectionRecipes = store && store.getState().menuCollectionRecipes
+const shouldFetchData = (store, params, force, userMenuVariant) => {
+  const state = store.getState()
+  const menuRecipes = store && state.menuRecipes
+  const menuCollectionRecipes = store && state.menuCollectionRecipes
   const threshold = (__DEV__) ? 4 : 8
-  const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
+  const stale = moment(state.menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
   const requiresClear = requiresMenuRecipesClear(store, params.orderId)
+  const isAccessTokenDifferent = getMenuAccessToken(state) !== getAccessToken(state)
+  const isMenuVariantDifferent = userMenuVariant && getMenuFetchVariant(state) !== getUserMenuVariant(state)
 
   return (
     force
+    || isAccessTokenDifferent
+    || isMenuVariantDifferent
     || !menuRecipes
     || (menuRecipes && menuRecipes.size <= threshold)
     || stale
@@ -202,12 +209,12 @@ const shouldFetchData = (store, params, force) => {
 
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background, userMenuVariant) {
-  const accessToken = store.getState().auth.get('accessToken')
+  const accessToken = getAccessToken(store.getState())
 
   const startTime = now()
 
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
-  const shouldFetch = shouldFetchData(store, params, force)
+  const shouldFetch = shouldFetchData(store, params, force, userMenuVariant)
   const isAdminQuery = !!(query && query['preview[auth_user_id]'])
 
   if (!isAdminQuery && (isPending || !shouldFetch)) {
@@ -231,7 +238,7 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   const menuResponse = await fetchMenuPromise
 
-  store.dispatch(menuServiceDataReceived(menuResponse))
+  store.dispatch(menuServiceDataReceived(menuResponse, accessToken, userMenuVariant))
 
   try {
     const brandResponse = await fetchBrandInfo()

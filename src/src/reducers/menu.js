@@ -3,8 +3,10 @@ import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
 import moment from 'moment'
 
-const menuInitialState = Immutable.Map({
+export const menuInitialState = Immutable.Map({
   forceLoad: false,
+  accessToken: '',
+  menuVariant: ''
 })
 
 const menu = {
@@ -12,6 +14,11 @@ const menu = {
     switch (action.type) {
     case actionTypes.MENU_FORCE_LOAD: {
       return state.set('forceLoad', action.forceLoad)
+    }
+    case actionTypes.MENU_FETCH_PARAMS: {
+      return state
+        .set('accessToken', action.accessToken)
+        .set('menuVariant', action.menuVariant)
     }
 
     default:
