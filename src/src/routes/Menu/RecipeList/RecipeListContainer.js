@@ -13,11 +13,12 @@ const mapStateToProps = (state) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
 
-  const collectionId = getCurrentCollectionId(state)
-  const { recipes, recipeIds } = getSortedRecipes(state)(collectionId)
+  const currentCollectionId = getCurrentCollectionId(state)
+  const { recipes, recipeIds } = getSortedRecipes(state)(currentCollectionId)
 
   return {
     filteredRecipeIds: recipeIds,
+    currentCollectionId,
     recipes,
     cutoffDate: getCutoffDate(state),
     numPortions: state.basket.get('numPortions'),

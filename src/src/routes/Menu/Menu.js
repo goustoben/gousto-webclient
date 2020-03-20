@@ -76,24 +76,18 @@ class Menu extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isAuthenticated, menuLoadBoxPrices, menuVariation, tariffId } = this.props
-
-    // user login
-    const justLoggedIn = !isAuthenticated && nextProps.isAuthenticated
-    const variationChanged = menuVariation !== nextProps.menuVariation
-    if (justLoggedIn || variationChanged) {
-      const { store } = this.context
-      const query = nextProps.query || {}
-      const params = nextProps.params || {}
-      Menu.fetchData({ store, query, params }, true)
-    }
+    const { menuLoadBoxPrices, tariffId } = this.props
 
     if (!nextProps.disabled && !nextProps.menuLoadingBoxPrices && tariffId !== nextProps.tariffId) {
       menuLoadBoxPrices()
     }
   }
 
-  async componentDidUpdate() {
+  componentDidUpdate() {
+    const { params, query } = this.props
+    const { store } = this.context
+
+    Menu.fetchData({ store, query, params }, false)
     forceCheckLazyload()
   }
 

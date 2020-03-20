@@ -36,7 +36,6 @@ function mapStateToProps(state, ownProps) {
     isAuthenticated: state.auth.get('isAuthenticated'),
     tariffId: state.basket.get('tariffId'),
     menuLoadingBoxPrices: state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
-    menuVariation: state.features.getIn(['menuRecipes', 'value']),
     forceLoad: state.menu.get('forceLoad', false),
     recipesCount: flattenRecipes(state.basket.get('recipes')).length,
     postcode: state.basket.get('postcode'),

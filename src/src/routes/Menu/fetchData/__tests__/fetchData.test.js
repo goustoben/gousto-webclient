@@ -9,6 +9,7 @@ import { initialState as initialAuthState } from 'reducers/auth'
 import { initialState as initialBasketState } from 'reducers/basket'
 import { initialState as initialRequestState } from 'reducers/request'
 import { initialState as initialFeaturesState } from 'reducers/features'
+import { menuInitialState } from 'reducers/menu'
 import { defaultState as defaultUserState } from 'reducers/user'
 import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
@@ -16,6 +17,7 @@ import { menuLoadComplete } from 'actions/menu'
 import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import * as boxSummaryActions from 'actions/boxSummary'
+import { getUserMenuVariant } from 'selectors/features'
 
 import fetchData from '../fetchData'
 
@@ -46,7 +48,8 @@ describe('menu fetchData', () => {
     menuCollections: Immutable.OrderedMap(),
     menuCollectionRecipes: Immutable.Map({}),
     user: defaultUserState,
-    pending: Immutable.Map({})
+    pending: Immutable.Map({}),
+    menu: menuInitialState
   }
 
   const originalState = { ...state }
@@ -124,6 +127,7 @@ describe('menu fetchData', () => {
         state.menuRecipes = Immutable.List(recipes)
         state.menuCollectionRecipes = state.menuCollectionRecipes.set('123', recipes)
         state.menuRecipesUpdatedAt = moment()
+        getUserMenuVariant.mockReturnValue('')
       })
 
       test('should not dispatch', async () => {

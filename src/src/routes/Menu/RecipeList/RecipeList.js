@@ -8,34 +8,15 @@ import { MobileRecipeList } from './MobileRecipeList'
 import { TabletRecipeList } from './TabletRecipeList/TabletRecipeList'
 
 class RecipeList extends React.PureComponent {
-  static propTypes = {
-    filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
-    showDetailRecipe: PropTypes.func.isRequired,
-    isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    collectionFilterChange: PropTypes.func,
-    thematicName: PropTypes.string,
-    deliveryDate: PropTypes.string,
-    isFoodBrandClickable: PropTypes.bool,
-
-    recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-    browserType: PropTypes.string.isRequired
-  }
-
-  static defaultProps = {
-    filteredRecipeIds: Immutable.List([]),
-    isFoodBrandClickable: true
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   componentDidMount() {
     this.trackRecipeOrderDisplayed()
   }
 
-  componentDidUpdate() {
-    this.trackRecipeOrderDisplayed()
+  componentDidUpdate(prevProps) {
+    const { currentCollectionId } = this.props
+    if (currentCollectionId !== prevProps.currentCollectionId) {
+      this.trackRecipeOrderDisplayed()
+    }
   }
 
   trackRecipeOrderDisplayed() {
@@ -104,4 +85,26 @@ class RecipeList extends React.PureComponent {
   }
 }
 
+RecipeList.propTypes = {
+  filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
+  showDetailRecipe: PropTypes.func.isRequired,
+  isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
+  collectionFilterChange: PropTypes.func.isRequired,
+  thematicName: PropTypes.string,
+  deliveryDate: PropTypes.string,
+  isFoodBrandClickable: PropTypes.bool,
+  recipes: PropTypes.instanceOf(Immutable.List).isRequired,
+  browserType: PropTypes.string.isRequired,
+  currentCollectionId: PropTypes.string.isRequired
+}
+
+RecipeList.defaultProps = {
+  filteredRecipeIds: Immutable.List([]),
+  isFoodBrandClickable: true,
+  deliveryDate: null
+}
+
+RecipeList.contextTypes = {
+  store: PropTypes.object.isRequired,
+}
 export { RecipeList }
