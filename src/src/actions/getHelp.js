@@ -7,7 +7,7 @@ import logger from 'utils/logger'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
 import { appendFeatureToRequest } from 'routes/GetHelp/utils/appendFeatureToRequest'
-import { featureShorterCompensationPeriod } from 'selectors/features'
+import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
@@ -87,7 +87,7 @@ const validateSelectedIngredients = ({
         order_id: Number(orderId),
         ingredient_ids: ingredientIds
       },
-      featureShorterCompensationPeriod: featureShorterCompensationPeriod(getState()),
+      featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
     })
   ]
 
@@ -117,7 +117,7 @@ const validateLatestOrder = ({
           customer_id: Number(costumerId),
           order_id: Number(orderId),
         },
-        featureShorterCompensationPeriod: featureShorterCompensationPeriod(getState()),
+        featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
       })
     )
   } catch (error) {

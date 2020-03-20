@@ -78,7 +78,7 @@ export const getShowUserCredit = ({ features }) => (
   features && features.getIn(['showUserCredit', 'value'], false)
 )
 
-export const featureShorterCompensationPeriod = ({ features }) => (
+export const getFeatureShorterCompensationPeriod = ({ features }) => (
   features && features.getIn(['ssrShorterCompensationPeriod', 'value'], false)
 )
 
@@ -100,4 +100,4 @@ export const getShowNewMenuLayout = ({ features }) => (features && features.getI
 
 export const getPromoOfferVariant = ({ features }) => (features && features.getIn(['enableTVPromoAds', 'value']))
 
-export const getIsSignupReductionEnabled = ({ features }) => (features && features.getIn(['enableSignupReduction', 'value'], true))
+export const getIsSignupReductionEnabled = ({ features }) => (features && features.getIn(['enableSignupReduction', 'value'], false))
