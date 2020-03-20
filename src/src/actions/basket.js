@@ -21,6 +21,7 @@ import tempActions from './temp'
 import {
   getCurrentCollectionId,
 } from '../selectors/filters'
+import { getUTMAndPromoCode } from '../selectors/tracking'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
@@ -94,6 +95,17 @@ export const basketNumPortionChange = (numPortions) => (
     })
 
     dispatch(pricingActions.pricingRequest())
+
+    const {promoCode, UTM} = getUTMAndPromoCode(getState())
+    dispatch({
+      type: actionTypes.BOX_SIZE_CHANGED_TRACKING,
+      trackingData: {
+        actionType: trackingKeys.selectBoxSize,
+        boxSize: `${numPortions} people`,
+        ...UTM,
+        promoCode
+      },
+    })
   }
 )
 
@@ -258,7 +270,7 @@ export const basketPostcodeChangePure = postcode => ({
 })
 
 export const basketPostcodeChange = (postcode, forgetPrevPostcode = false) => (
-  async (dispatch) => {
+  async (dispatch, getState) => {
     const trimmedPostcode = postcode.trim()
     if (postcode) {
       dispatch({
@@ -278,6 +290,17 @@ export const basketPostcodeChange = (postcode, forgetPrevPostcode = false) => (
       dispatch({
         type: actionTypes.BASKET_POSTCODE_PENDING,
         pending: false,
+      })
+
+      const {promoCode, UTM} = getUTMAndPromoCode(getState())
+      dispatch({
+        type: actionTypes.BASKET_SELECT_POSTCODE,
+        trackingData: {
+          actionType: trackingKeys.selectPostcode,
+          ...UTM,
+          promoCode,
+          postcode: trimmedPostcode,
+        },
       })
     }
   }
@@ -455,6 +478,22 @@ export const basketSlotChange = slotId => (
       dispatch(basketIdChange(orderId))
     }
     dispatch(pricingActions.pricingRequest())
+
+    const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'])
+    if (slots) {
+      const selectedSlot = slots.find(slot => slot.get('id') === slotId)
+      const defaultDelivery = selectedSlot.get('isDefault') && state.boxSummaryDeliveryDays.getIn([date, 'isDefault'])
+      const {promoCode, UTM} = getUTMAndPromoCode(state)
+      dispatch({
+        type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
+        trackingData: {
+          actionType: trackingKeys.selectDeliverySlot,
+          ...UTM,
+          promoCode,
+          deliverySlot: defaultDelivery ? 'default' : 'not default'
+        },
+      })
+    }
   }
 )
 
