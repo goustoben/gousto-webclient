@@ -15,9 +15,9 @@ const CoronaVirusBanner = () => (
       <p className={css.bodyText}>
         Read more at&nbsp;
         <a href={COVID_19_LINK}>cook.gousto.co.uk/coronavirus</a>
-        . If you&apos;re an existing customer, please&nbsp;
+        . If you&apos;re an existing customer with an active subscription, please&nbsp;
         <GoustoLink to="#login" clientRouted={false}>log in</GoustoLink>
-        &nbsp;to place your order.
+        &nbsp;to manage your order.
       </p>
     </div>
   </div>
