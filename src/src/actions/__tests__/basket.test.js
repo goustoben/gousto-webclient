@@ -38,7 +38,7 @@ describe('basket actions', () => {
   let getStateSpy = jest.fn()
   const {
     portionSizeSelectedTracking,
-    basketCheckedOut, basketOrderItemsLoad,
+    basketCheckedOut, basketCheckoutClicked, basketOrderItemsLoad,
     basketProceedToCheckout, basketRecipesInitialise,
     basketRecipeAdd, basketRecipeRemove, basketPostcodeChange,
     basketNumPortionChange, basketSlotChange } = basket
@@ -50,6 +50,39 @@ describe('basket actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+  })
+
+  describe('basketCheckoutClicked', () => {
+    test('basketCheckoutClicked should dispatch BASKET_CHECKOUT_CLICKED', async () => {
+      const getState = () => ({
+        tracking: Immutable.fromJS({}),
+        basket: Immutable.fromJS({
+          promoCode: 'test-promo-code',
+          recipes: {
+            1122: 1,
+            1334: 3,
+          }
+        }),
+      })
+
+      const section = trackingKeys.boxSummary
+      const trackingData = {
+        type: actionTypes.BASKET_CHECKOUT_CLICKED,
+        trackingData: {
+          actionType: trackingKeys.clickCheckout,
+          promoCode: 'test-promo-code',
+          section,
+          recipes: Immutable.Map({
+            1122: 1,
+            1334: 3,
+          })
+        },
+      }
+      await basketCheckoutClicked(section)(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(dispatch).toHaveBeenCalledWith(trackingData)
+    })
   })
 
   describe('portionSizeSelectedTracking', () => {
@@ -446,6 +479,9 @@ describe('basket actions', () => {
     let basketGiftAddSpy
     beforeEach(() => {
       getStateSpy = () => ({
+        tracking: Immutable.fromJS({
+          utmSource: null,
+        }),
         basket: Immutable.fromJS({ orderId: '456' }),
         products: Immutable.fromJS({
           p1: { id: 'p1' },
@@ -768,12 +804,76 @@ describe('basket actions', () => {
     })
   })
 
+  describe('basketRecipeAdd when added at least 2 recipe', () => {
+    const pricingRequestAction = Symbol('Pricing request')
+
+    beforeEach(() => {
+      getStateSpy = jest.fn().mockReturnValueOnce({
+        tracking: Immutable.fromJS({}),
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['123', 1]]),
+          numPortions: 2,
+          limitReached: false,
+          promoCode: 'test-promo-code',
+          slotId: 'test-slot-id',
+        }),
+        filters: Immutable.Map({
+          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipeGroup: {
+            slug: 'test-food-brand'
+          },
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: {2: 30, 4: 10},
+          234: {2: 50, 4: 10},
+        }),
+        menuRecipes: Immutable.fromJS({
+          123: {},
+          234: {},
+        })
+      }).mockReturnValueOnce({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['123', 1], ['234', 1]]),
+          numPortions: 2,
+          limitReached: false,
+          promoCode: 'test-promo-code',
+          slotId: 'test-slot-id',
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: {2: 30, 4: 10},
+          234: {2: 50, 4: 10},
+        }),
+        menuRecipes: Immutable.fromJS({
+          123: {},
+          234: {},
+        })
+      })
+
+      basketUtils.limitReached = jest.fn(() => false)
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+    })
+
+    test('`BASKET_ELIGIBLE_TRACK` should be dispatched', () => {
+      basketRecipeAdd('234', 'boxsummary', {position: '57'})(dispatch, getStateSpy)
+
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
+        type: actionTypes.BASKET_ELIGIBLE_TRACK,
+        trackingData: {
+          actionType: trackingKeys.basketEligible,
+          promoCode: 'test-promo-code',
+          recipes: Immutable.Map([['123', 1], ['234', 1]]),
+        },
+      })
+    })
+  })
+
   describe('basketRecipeAdd', () => {
     describe('given a non-full basket with recipes for 2 portions', () => {
       const pricingRequestAction = Symbol('Pricing request')
 
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
+          tracking: Immutable.fromJS({}),
           basket: Immutable.Map({
             recipes: Immutable.Map([['123', 1]]),
             numPortions: 2,
@@ -856,6 +956,7 @@ describe('basket actions', () => {
 
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
+          tracking: Immutable.fromJS({}),
           basket: Immutable.Map({
             recipes: Immutable.Map([['123', 1], ['234', 1]]),
             numPortions: 4,
@@ -944,6 +1045,10 @@ describe('basket actions', () => {
             recipes: Immutable.Map([['123', 1], ['234', 2], ['345', 1]]),
             numPortions: 2,
             limitReached: true
+          }),
+          newBasket: Immutable.Map({
+            recipes: Immutable.Map([['123', 1], ['234', 2], ['345', 1]]),
+            slotId: 'test-id',
           }),
           filters: Immutable.Map({
             currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',

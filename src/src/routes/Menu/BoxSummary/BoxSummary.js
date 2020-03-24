@@ -11,6 +11,7 @@ import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverla
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
 
 class BoxSummary extends React.PureComponent {
+  // eslint-disable-next-line react/static-property-placement
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
     date: PropTypes.string,
@@ -33,10 +34,10 @@ class BoxSummary extends React.PureComponent {
     shouldShowBoxSummary: PropTypes.bool
   }
 
+  // eslint-disable-next-line react/static-property-placement
   static defaultProps = {
     deliveryDays: Immutable.Map(),
     maxRecipesNum: config.maxRecipesNum,
-    basketCheckedOut: false,
     shouldShowBoxSummary: false,
     date: null,
     menuFetchPending: false,
@@ -46,6 +47,7 @@ class BoxSummary extends React.PureComponent {
     slotId: null,
   }
 
+  // eslint-disable-next-line react/state-in-constructor
   state = {
     hideTooltip: false,
   }
@@ -91,27 +93,6 @@ class BoxSummary extends React.PureComponent {
     Overlay.forceCloseAll()
   }
 
-  tooltipError() {
-    const { orderSaveError } = this.props
-    const showTooltip = Boolean(orderSaveError) && orderSaveError !== 'no-stock'
-
-    if (!showTooltip) {
-      return false
-    }
-
-    const { hideTooltip } = this.state
-
-    if (hideTooltip) {
-      return false
-    }
-
-    if (orderSaveError === 'basket-expired') {
-      return 'Sorry, your box has expired. Please re-add your recipe choices to continue.'
-    }
-
-    return 'Sorry, there has been an issue saving your order. Please try again or contact customer care.'
-  }
-
   handleClick = (e) => {
     const { showDetails } = this.props
     if (showDetails && e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
@@ -145,6 +126,27 @@ class BoxSummary extends React.PureComponent {
     const { recipes, menuRecipes, stock, numPortions } = this.props
 
     return basketSum(okRecipes(recipes, menuRecipes, stock, numPortions))
+  }
+
+  tooltipError() {
+    const { orderSaveError } = this.props
+    const showTooltip = Boolean(orderSaveError) && orderSaveError !== 'no-stock'
+
+    if (!showTooltip) {
+      return false
+    }
+
+    const { hideTooltip } = this.state
+
+    if (hideTooltip) {
+      return false
+    }
+
+    if (orderSaveError === 'basket-expired') {
+      return 'Sorry, your box has expired. Please re-add your recipe choices to continue.'
+    }
+
+    return 'Sorry, there has been an issue saving your order. Please try again or contact customer care.'
   }
 
   render() {
@@ -191,4 +193,5 @@ class BoxSummary extends React.PureComponent {
   }
 }
 
+// eslint-disable-next-line import/no-default-export
 export default BoxSummary

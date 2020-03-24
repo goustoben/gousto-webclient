@@ -8,6 +8,7 @@ import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
 import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
+import * as trackingKeys from 'actions/trackingKeys'
 import { Portions } from './Portions'
 import css from './Details.css'
 import { BoxProgressAlert } from './BoxProgressAlert'
@@ -159,7 +160,7 @@ class Details extends React.Component {
                       {ctaText}
                     </Button>
                   )
-                    : <CheckoutContainer view={view} />
+                    : <CheckoutContainer view={view} section={ trackingKeys.boxSummary } />
                 }
               </div>
             </LayoutContentWrapper>
