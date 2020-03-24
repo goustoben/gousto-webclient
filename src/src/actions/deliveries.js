@@ -2,7 +2,7 @@ import { basketSlotChange } from 'actions/basket'
 import tempActions from 'actions/temp'
 import { getSlot } from 'utils/deliveries'
 import { getDeliveryDaysAndSlots, formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
-import { getDisabledSlots, getLogoutUserDisabledSlots } from 'selectors/features'
+import { getDisabledSlots, getLogoutUserDisabledSlots, getIsSubscriberDisabledSlotsEnabled } from 'selectors/features'
 import { getIsAuthenticated } from 'selectors/auth'
 import { actionTypes } from './actionTypes'
 
@@ -131,6 +131,7 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
 
   const { user } = getState()
   const isAuthenticated = getIsAuthenticated(getState())
+  const isSubscriberDisabledSlotsEnabled = getIsSubscriberDisabledSlotsEnabled(getState())
   const nonValidatedDisabledSlots = isAuthenticated ? getDisabledSlots(getState()) : getLogoutUserDisabledSlots(getState())
   const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
   const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
@@ -143,7 +144,7 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
     tempSlotId,
     deliveryDaysProps: deliveryDays
   }
-  const { slots } = getDeliveryDaysAndSlots(date, helperProps)
+  const { slots } = getDeliveryDaysAndSlots(date, helperProps, isSubscriberDisabledSlotsEnabled)
   const unblockedSlots = slots[date].filter(slot => !slot.disabled)
   const slotId = unblockedSlots[0] && unblockedSlots[0].value
   dispatch(tempActions.temp('slotId', slotId))

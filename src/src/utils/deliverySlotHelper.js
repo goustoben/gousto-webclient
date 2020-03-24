@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import { formatDeliveryTime } from './deliverySlot'
 import { getLandingDay } from './deliveries'
 
@@ -59,17 +60,17 @@ export const getTempDeliveryOptions = (state) => {
   return { deliveryDays, tempDate, tempSlotId, tempOrderId }
 }
 
-export const isDisabledSlotsApplicable = (isAuthenticated, isSubscriptionActive) => {
+export const isDisabledSlotsApplicable = (isAuthenticated, isSubscriptionActive, isSubscriberDisabledSlotsEnabled) => {
   // Disabled slots are applicable to logout user
   if (!isAuthenticated) {
     return true
   }
 
-  // Disabled slots are applicable to transactional user
-  return isAuthenticated && isSubscriptionActive === 'inactive'
+  // Disabled slots are applicable to transactional user & subscribed if flag is active
+  return isAuthenticated && (isSubscriptionActive === 'inactive' || isSubscriberDisabledSlotsEnabled)
 }
 
-export const getDeliveryDaysAndSlots = (newDate, props) => {
+export const getDeliveryDaysAndSlots = (newDate, props, isSubscriberDisabledSlotsEnabled) => {
   const slots = {}
   const {
     disabledSlots,
@@ -92,7 +93,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
         subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
         value: slot.get('id'),
         coreSlotId: slot.get('coreSlotId'),
-        disabled: isSlotDisabled && isDisabledSlotsApplicable(isAuthenticated, isSubscriptionActive)
+        disabled: isSlotDisabled && isDisabledSlotsApplicable(isAuthenticated, isSubscriptionActive, isSubscriberDisabledSlotsEnabled)
       }
     }).toArray()
 

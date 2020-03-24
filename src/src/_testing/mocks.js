@@ -22,3 +22,10 @@ export const safeJestMock = (obj, methodName) => {
 export const returnArgumentsFromMock = (mock, name) => {
   mock.mockImplementation((...args) => [name, args])
 }
+
+export const multiReturnMock = (array = []) => {
+  const reversedArray = array.reverse()
+
+  // eslint-disable-next-line no-undef
+  return jest.fn(() => reversedArray.pop())
+}

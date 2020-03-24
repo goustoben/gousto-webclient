@@ -21,7 +21,8 @@ jest.mock('utils/deliverySlotHelper', () => ({
 
 jest.mock('selectors/features', () => ({
   getDisabledSlots: jest.fn().mockReturnValue(''),
-  getLogoutUserDisabledSlots: jest.fn().mockReturnValue('')
+  getLogoutUserDisabledSlots: jest.fn().mockReturnValue(''),
+  getIsSubscriberDisabledSlotsEnabled: jest.fn().mockReturnValue('')
 }))
 
 describe('delivery actions', () => {

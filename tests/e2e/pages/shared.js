@@ -62,7 +62,7 @@ module.exports = {
             .then(function ({ data }) {
               const availableDays = data.pop().until
 
-              return webclient.apis.fetchDeliveryDays('', cutoffDatetimeFrom, availableDays, false, null)
+              return webclient.apis.fetchDeliveryDays('', cutoffDatetimeFrom, '', false, null)
             }).then(function ({ data }) {
               const availableDeliveryDays = webclient.getAvailableDeliveryDays(data, cutoffDatetimeFrom)
               const immutableDays = Immutable.fromJS(availableDeliveryDays)

@@ -110,16 +110,32 @@ describe('Delivery Slot Helper', () => {
         expect(slotToCheck.disabled).toEqual(true)
       })
 
-      describe('when user subscription is active', () => {
+      describe('when user subscription is active and isSubscriberDisabledSlotsEnabled is false', () => {
         let result
+        const isSubscriberDisabledSlotsEnabled = false
+
         beforeEach(() => {
           const newProps = { ...props, isSubscriptionActive: 'active' }
-          result = getDeliveryDaysAndSlots(dateToCheck, newProps)
+          result = getDeliveryDaysAndSlots(dateToCheck, newProps, isSubscriberDisabledSlotsEnabled)
         })
 
         test('should NOT return a disabled slot', () => {
           const slotToCheck = result.slots[dateToCheck][0]
           expect(slotToCheck.disabled).toEqual(false)
+        })
+      })
+
+      describe('when user subscription is active and isSubscriberDisabledSlotsEnabled is true', () => {
+        let result
+        beforeEach(() => {
+          const isSubscriberDisabledSlotsEnabled = true
+          const newProps = { ...props, isSubscriptionActive: 'active' }
+          result = getDeliveryDaysAndSlots(dateToCheck, newProps, isSubscriberDisabledSlotsEnabled)
+        })
+
+        test('then a disabled slot should be returned', () => {
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.disabled).toEqual(true)
         })
       })
 

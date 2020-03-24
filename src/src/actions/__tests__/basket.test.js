@@ -7,6 +7,7 @@ import { updateOrderItems } from 'apis/orders'
 import utilsLogger from 'utils/logger'
 import { push } from 'react-router-redux'
 import config from 'config'
+import { multiReturnMock } from '_testing/mocks.js'
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -39,7 +40,7 @@ describe('basket actions', () => {
     portionSizeSelectedTracking,
     basketCheckedOut, basketOrderItemsLoad,
     basketProceedToCheckout, basketRecipesInitialise,
-    basketRecipeAdd, basketRecipeRemove,
+    basketRecipeAdd, basketRecipeRemove, basketPostcodeChange,
     basketNumPortionChange, basketSlotChange } = basket
 
   beforeEach(() => {
@@ -53,17 +54,17 @@ describe('basket actions', () => {
 
   describe('portionSizeSelectedTracking', () => {
     test('should dispatch a PORTION_SIZE_SELECTED_TRACKING action with the correct tracking params', async () => {
-      const num_portion = 2
-      const order_id = 5
+      const numPortion = 2
+      const orderId = 5
       const numPortionChangeTracking = {
         type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
         trackingData: {
           actionType: trackingKeys.selectPortionSize,
-          num_portion,
-          order_id: order_id || null,
+          num_portion: numPortion,
+          order_id: orderId || null,
         },
       }
-      await portionSizeSelectedTracking(num_portion, order_id)(dispatch)
+      await portionSizeSelectedTracking(numPortion, orderId)(dispatch)
 
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
@@ -71,15 +72,61 @@ describe('basket actions', () => {
   })
 
   describe('basketNumPortionChange', () => {
-    test('should dispatch a pricing pricingRequest action', () => {
-      const pricingRequestResponse = Symbol()
+    getStateSpy.mockReturnValue({
+      routing: { locationBeforeTransitions: { query: null } },
+      tracking: Immutable.fromJS({
+        utmSource: null,
+      }),
+      basket: Immutable.fromJS({
+        promoCode: 'test-promo-code',
+      }),
+    })
+
+    test('should dispatch a pricing pricingRequest action', async () => {
+      const pricingRequestResponse = Symbol('Pricing request')
       pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
 
-      getStateSpy.mockReturnValue({ routing: { locationBeforeTransitions: { query: null } } })
-
-      basketNumPortionChange(2)(dispatch, getStateSpy)
+      await basketNumPortionChange(2)(dispatch, getStateSpy)
 
       expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
+    })
+
+    test('should dispatch box size changed action', async () => {
+      await basketNumPortionChange(4)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BOX_SIZE_CHANGED_TRACKING,
+        trackingData: {
+          actionType: trackingKeys.selectBoxSize,
+          boxSize: '4 people',
+          promoCode: 'test-promo-code'
+        },
+      })
+    })
+  })
+
+  describe('basketPostcodeChange', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        tracking: Immutable.fromJS({
+          utmSource: null,
+        }),
+        basket: Immutable.fromJS({
+          promoCode: 'test-promo-code',
+        }),
+      })
+    })
+
+    test('should dispatch BASKET_SELECT_POSTCODE', async () => {
+      const postcode = 'W37UP'
+      await basketPostcodeChange(postcode)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_SELECT_POSTCODE,
+        trackingData: {
+          actionType: trackingKeys.selectPostcode,
+          promoCode: 'test-promo-code',
+          postcode
+        }
+      })
     })
   })
 
@@ -670,7 +717,7 @@ describe('basket actions', () => {
   describe('basketRecipeInitialise', () => {
     describe('given a basket with recipes already contained', () => {
       let recipes
-      const pricingRequestAction = Symbol()
+      const pricingRequestAction = Symbol('Pricing request')
 
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
@@ -723,7 +770,7 @@ describe('basket actions', () => {
 
   describe('basketRecipeAdd', () => {
     describe('given a non-full basket with recipes for 2 portions', () => {
-      const pricingRequestAction = Symbol()
+      const pricingRequestAction = Symbol('Pricing request')
 
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
@@ -805,7 +852,7 @@ describe('basket actions', () => {
     })
 
     describe('given a basket with one space for 4 portions', () => {
-      const pricingRequestAction = Symbol()
+      const pricingRequestAction = Symbol('Pricing request')
 
       beforeEach(() => {
         getStateSpy = jest.fn().mockReturnValue({
@@ -983,7 +1030,7 @@ describe('basket actions', () => {
     })
 
     test('should dispatch a pricing pricingRequest action', () => {
-      const pricingRequestResponse = Symbol()
+      const pricingRequestResponse = Symbol('Pricing request')
       pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
 
       basketRecipeRemove('123')(dispatch, getStateSpy)
@@ -1075,16 +1122,26 @@ describe('basket actions', () => {
   })
 
   describe('basketSlotChange', () => {
-    const pricingRequestAction = Symbol()
+    const pricingRequestAction = Symbol('Pricing request')
 
     beforeEach(() => {
       getStateSpy = jest.fn().mockReturnValue({
+        tracking: Immutable.fromJS({
+          utmSource: null,
+        }),
         basket: Immutable.Map({
           date: '2020-02-13',
+          promoCode: 'test-promo-code',
         }),
         boxSummaryDeliveryDays: Immutable.Map({
           '2020-02-13': Immutable.Map({
-            id: 123
+            id: 123,
+            isDefault: true,
+            slots: [Immutable.Map({
+              isDefault: true,
+              id: 'slot-1-day-1',
+            })]
+
           })
         }),
         user: Immutable.fromJS({
@@ -1133,11 +1190,18 @@ describe('basket actions', () => {
         orderId: '12345'
       })
     })
+
+    test('should dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
+      const slotId = 'slot-1-day-1'
+      basketSlotChange(slotId)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
+        type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
+        trackingData: {
+          actionType: trackingKeys.selectDeliverySlot,
+          promoCode: 'test-promo-code',
+          deliverySlot: 'default'
+        },
+      })
+    })
   })
 })
-
-const multiReturnMock = (array) => {
-  const reversedArray = (array || []).reverse()
-
-  return jest.fn(() => reversedArray.pop())
-}
