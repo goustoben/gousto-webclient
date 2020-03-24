@@ -4,7 +4,6 @@ import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
 import DropdownInput from 'Form/Dropdown'
-import { CancelButton } from '../CancelButton'
 import css from './Postcode.css'
 
 class Postcode extends React.PureComponent {
@@ -59,7 +58,7 @@ class Postcode extends React.PureComponent {
           />
         </div>
         <div className={css.row}>
-          <p className={css.supportingText}>Want to have your box delivered to a new address? Visit 'My Details > My Delivery Address'</p>
+          <p className={css.supportingText}>Want to have your box delivered to a new address? Visit &apos;My Details &gt; My Delivery Address&apos;</p>
         </div>
       </span>
     )
@@ -117,7 +116,7 @@ class Postcode extends React.PureComponent {
   render = () => {
     const { shouldDisplayFullScreenBoxSummary,
       addresses, postcodePending,
-      basketRestorePreviousValues, prevPostcode } = this.props
+      prevPostcode } = this.props
     const disabled = this.getIsDisabled()
 
     return (
@@ -139,7 +138,6 @@ class Postcode extends React.PureComponent {
               {prevPostcode ? 'Show Delivery Slots' : 'Continue'}
             </Button>
           </div>
-          <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} shouldShow={!!prevPostcode} />
         </Form>
       </LayoutContentWrapper>
     )
@@ -152,10 +150,9 @@ Postcode.propTypes = {
     PropTypes.bool,
     PropTypes.object,
   ]).isRequired,
-  postcodePending: PropTypes.bool.isRequiredq,
+  postcodePending: PropTypes.bool.isRequired,
   prevPostcode: PropTypes.string.isRequired,
   addresses: PropTypes.object.isRequired,
-  basketRestorePreviousValues: PropTypes.func.isRequired,
   chosenAddress: PropTypes.object.isRequired,
   basketChosenAddressChange: PropTypes.func.isRequired,
   tempPostcode: PropTypes.string,
