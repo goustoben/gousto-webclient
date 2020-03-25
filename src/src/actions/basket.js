@@ -591,6 +591,12 @@ export const basketRestorePreviousDate = () => (
     })
     dispatch(menuLoadMenu())
     dispatch(menuLoadStock())
+    dispatch({
+      type: actionTypes.TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE,
+      trackingData: {
+        actionType: trackingKeys.undoDeliveryOptionsChange,
+      }
+    })
   }
 )
 

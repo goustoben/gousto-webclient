@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import * as reactRouterPush from 'react-router-redux'
 import basketActions from 'actions/basket'
-import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive } from 'actions/boxSummary'
+import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive, trackingUnavailableRecipeList } from 'actions/boxSummary'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
 
@@ -324,6 +324,24 @@ describe('boxSummary actions', () => {
         expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w4')
         expect(basketAddressChange).toHaveBeenCalledTimes(1)
         expect(Immutable.is(basketAddressChange.mock.calls[0][0], Immutable.Map({ postcode: 'w4' }))).toEqual(true)
+      })
+    })
+  })
+
+  describe('trackingUnavailableRecipeList', () => {
+    test('should return tracking action', () => {
+      const unavailableRecipeList = Immutable.fromJS({
+        '12ss2': {},
+        '234seds44': {}
+      })
+      const unavailableRecipeArray = ['12ss2', '234seds44']
+      const result = trackingUnavailableRecipeList(unavailableRecipeList)
+      expect(result).toEqual({
+        type: 'TRACKING_UNAVAILABLE_RECIPE_LIST',
+        trackingData: {
+          actionType: 'unavailable_recipe_list',
+          unavailableRecipeList: unavailableRecipeArray
+        }
       })
     })
   })

@@ -3,11 +3,12 @@ import basket from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import orderConfirmationActions from 'actions/orderConfirmation'
+import * as menuActions from 'actions/menu'
 import { updateOrderItems } from 'apis/orders'
 import utilsLogger from 'utils/logger'
 import { push } from 'react-router-redux'
 import config from 'config'
-import { multiReturnMock } from '_testing/mocks.js'
+import { safeJestMock, returnArgumentsFromMock, multiReturnMock } from '_testing/mocks.js'
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -32,6 +33,12 @@ jest.mock('actions/pricing', () => ({
 jest.mock('actions/orderConfirmation', () => ({
   orderConfirmationUpdateOrderTracking: jest.fn()
 }))
+
+const menuLoadMenu = safeJestMock(menuActions, 'menuLoadMenu')
+returnArgumentsFromMock(menuLoadMenu, 'menuLoadMenu')
+
+const menuLoadStock = safeJestMock(menuActions, 'menuLoadStock')
+returnArgumentsFromMock(menuLoadStock, 'menuLoadStock')
 
 describe('basket actions', () => {
   let dispatch = jest.fn()
@@ -1306,6 +1313,44 @@ describe('basket actions', () => {
           promoCode: 'test-promo-code',
           deliverySlot: 'default'
         },
+      })
+    })
+  })
+
+  describe('basketRestorePreviousDate', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.fromJS({
+          prevSlotId: 'slot-124',
+          prevDate: '2020-03-30'
+        })
+      })
+    })
+
+    test('should dispatch BASKET_DATE_CHANGE', () => {
+      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_DATE_CHANGE,
+        date: '2020-03-30',
+      })
+    })
+
+    test('should dispatch BASKET_SLOT_CHANGE', () => {
+      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_SLOT_CHANGE,
+        slotId: 'slot-124',
+      })
+    })
+
+    test('should dispatch TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE', () => {
+      basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING_UNDO_DELIVERY_OPTIONS_CHANGE,
+        trackingData: {
+          actionType: 'undo_delivery_options_change',
+        }
       })
     })
   })

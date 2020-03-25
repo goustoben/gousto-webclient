@@ -147,3 +147,11 @@ export const boxSummaryNext = () => (
     }
   }
 )
+
+export const trackingUnavailableRecipeList = (unavailableRecipeList) => ({
+  type: actionTypes.TRACKING_UNAVAILABLE_RECIPE_LIST,
+  trackingData: {
+    actionType: trackingKeys.unavailableRecipeList,
+    unavailableRecipeList: unavailableRecipeList.keySeq().toArray()
+  }
+})
