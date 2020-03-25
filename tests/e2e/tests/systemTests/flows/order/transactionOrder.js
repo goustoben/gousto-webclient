@@ -48,12 +48,12 @@ module.exports = {
         done()
       })
       .perform(done => {
-        browser.pause(2000) //BUG: checkout button becomes clickable -> loading -> clickable again
+        browser.pause(4000) //BUG: checkout button becomes clickable -> loading -> clickable again
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
       .perform(done => {
-        browser.pause(2000)
+        browser.pause(3000)
         orderConfirmation.section.orderConfirmationContainer.checkIfOrderConfirmationPageVisible(browser)
         done()
       })

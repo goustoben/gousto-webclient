@@ -13,6 +13,7 @@ describe('CheckoutButton', () => {
     propsToPass = {
       boxSummaryVisibilityChange: jest.fn(),
       basketCheckedOut: jest.fn(),
+      basketCheckoutClicked: jest.fn(),
       basketProceedToCheckout: jest.fn(),
       isAuthenticated: false,
       menuRecipes: Immutable.List(),

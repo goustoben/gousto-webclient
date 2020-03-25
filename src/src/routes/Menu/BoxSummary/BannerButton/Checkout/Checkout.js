@@ -37,17 +37,19 @@ const Checkout = (props) => {
     recipes,
     stock,
     view,
+    section,
   } = props
 
   const onClick = () => {
     const {
-      basketCheckedOut, basketProceedToCheckout, boxSummaryVisibilityChange, deliveryDayId,
+      basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout, boxSummaryVisibilityChange, deliveryDayId,
       orderUpdate, orderId, slotId,
       checkoutTransactionalOrder, userOrders
     } = props
 
     boxSummaryVisibilityChange(false)
     basketCheckedOut(recipes.size, view)
+    basketCheckoutClicked(section)
 
     if (orderId) {
       orderUpdate(orderId, formatRecipes(recipes), deliveryDayId, slotId, numPortions, getOrderAction(userOrders, orderId))
@@ -78,6 +80,7 @@ Checkout.propTypes = {
   numPortions: PropTypes.number.isRequired,
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
   view: PropTypes.string.isRequired,
+  section: PropTypes.string.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
@@ -86,6 +89,7 @@ Checkout.propTypes = {
   deliveryDayId: PropTypes.string.isRequired,
   slotId: PropTypes.string.isRequired,
   basketCheckedOut: PropTypes.func.isRequired,
+  basketCheckoutClicked: PropTypes.func.isRequired,
   basketProceedToCheckout: PropTypes.func.isRequired,
   orderUpdate: PropTypes.func,
   isAuthenticated: PropTypes.bool.isRequired,

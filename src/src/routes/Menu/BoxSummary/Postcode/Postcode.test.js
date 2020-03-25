@@ -116,13 +116,6 @@ describe('Postcode', () => {
     test('should show different text on the button', () => {
       expect(wrapper.find(Segment).at(1).text()).toEqual('Show Delivery Slots')
     })
-
-    test('should render a link with "Cancel" in it which calls the basketRestorePreviousValues prop on click', () => {
-      const basketRestorePreviousValuesSpy = jest.fn()
-      wrapper = mount(<Postcode basketRestorePreviousValues={basketRestorePreviousValuesSpy} prevPostcode="w30df" setTempPostcode={setTempPostcodeSpy} />)
-      wrapper.find('CancelButton > div > button').simulate('click')
-      expect(basketRestorePreviousValuesSpy).toHaveBeenCalled()
-    })
   })
 
   describe('with no postcode', () => {

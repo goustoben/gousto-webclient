@@ -401,6 +401,29 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
     }
 
     dispatch(pricingActions.pricingRequest())
+
+    const prevRecipes = basket.get('recipes')
+    const slotId = newBasket.get('slotId')
+    const recipes = newBasket.get('recipes')
+    const {promoCode, UTM} = getUTMAndPromoCode(state)
+
+    let recipesCount = 0
+
+    recipes.forEach(count => {
+      recipesCount += count
+    })
+
+    if (prevRecipes.size < 2 && recipesCount > 1 && slotId) {
+      dispatch({
+        type: actionTypes.BASKET_ELIGIBLE_TRACK,
+        trackingData: {
+          actionType: trackingKeys.basketEligible,
+          ...UTM,
+          promoCode,
+          recipes,
+        },
+      })
+    }
   }
 )
 
@@ -568,6 +591,24 @@ export const basketRestorePreviousDate = () => (
     })
     dispatch(menuLoadMenu())
     dispatch(menuLoadStock())
+  }
+)
+
+export const basketCheckoutClicked = section => (
+  (dispatch, getState) => {
+    const { basket } = getState()
+    const recipes = basket.get('recipes')
+    const {promoCode, UTM} = getUTMAndPromoCode(getState())
+    dispatch({
+      type: actionTypes.BASKET_CHECKOUT_CLICKED,
+      trackingData: {
+        actionType: trackingKeys.clickCheckout,
+        ...UTM,
+        promoCode,
+        section,
+        recipes,
+      },
+    })
   }
 )
 
@@ -884,6 +925,7 @@ export const actions = {
   basketRestorePreviousValues,
   basketRestorePreviousDate,
   basketCheckedOut,
+  basketCheckoutClicked,
   basketProceedToCheckout,
   basketUpdateProducts,
   basketReset,

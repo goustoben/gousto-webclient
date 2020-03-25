@@ -41,6 +41,7 @@ const mapStateToProps = (state) => ({
 
 const CheckoutContainer = connect(mapStateToProps, {
   basketCheckedOut: actions.basketCheckedOut,
+  basketCheckoutClicked: actions.basketCheckoutClicked,
   basketProceedToCheckout: actions.basketProceedToCheckout,
   orderUpdate: actions.orderUpdate,
   boxSummaryVisibilityChange,

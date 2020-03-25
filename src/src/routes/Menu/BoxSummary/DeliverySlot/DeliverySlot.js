@@ -4,7 +4,6 @@ import { Button, Heading, LayoutContentWrapper, Segment } from 'goustouicomponen
 import Immutable from 'immutable'
 import { reminder } from 'config/freeDelivery'
 import { getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'
-import { CancelButton } from '../CancelButton'
 import { DatePickerContainer } from './DatePicker'
 import { DeliverySupportingText } from './DeliverySupportingText'
 import css from './DeliverySlot.css'
@@ -15,13 +14,13 @@ class DeliverySlot extends React.PureComponent {
       numPortions,
       disabledSlots, isAuthenticated,
       isSubscriptionActive, shouldDisplayFullScreenBoxSummary,
-      boxSummaryNext, basketRestorePreviousValues,
-      prevDate, menuPending,
+      boxSummaryNext, menuPending,
       menuFetchDataPending,
       tempOrderId, tempDate,
       tempSlotId, clearPostcode, disableOnDelivery,
       userOrders, getBoxSummaryTextProps,
-      deliveryDays: deliveryDaysProps
+      deliveryDays: deliveryDaysProps,
+      isSubscriberDisabledSlotsEnabled,
     } = this.props
 
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
@@ -44,7 +43,7 @@ class DeliverySlot extends React.PureComponent {
       hasFullOrders,
       subLabelClassName,
       hasActiveSlotsForSelectedDate,
-    } = getDeliveryDaysAndSlots(tempDate, helperProps)
+    } = getDeliveryDaysAndSlots(tempDate, helperProps, isSubscriberDisabledSlotsEnabled)
     const { deliveryLocationText, slotId, buttonText, showWarning } = getBoxSummaryTextProps(slots)
 
     return (
@@ -99,14 +98,12 @@ class DeliverySlot extends React.PureComponent {
             {buttonText}
           </Button>
         </div>
-        <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} shouldShow={!!prevDate} />
       </LayoutContentWrapper>
     )
   }
 }
 
 DeliverySlot.propTypes = {
-  basketRestorePreviousValues: PropTypes.func.isRequired,
   boxSummaryNext: PropTypes.func.isRequired,
   clearPostcode: PropTypes.func.isRequired,
   deliveryDays: PropTypes.instanceOf(Immutable.Map),
@@ -118,12 +115,12 @@ DeliverySlot.propTypes = {
   menuFetchDataPending: PropTypes.bool,
   menuPending: PropTypes.bool,
   numPortions: PropTypes.number.isRequired,
-  prevDate: PropTypes.string,
   shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
   tempDate: PropTypes.string,
   tempOrderId: PropTypes.string,
   tempSlotId: PropTypes.string,
   userOrders: PropTypes.instanceOf(Immutable.Map),
+  isSubscriberDisabledSlotsEnabled: PropTypes.bool,
 }
 
 DeliverySlot.defaultProps = {
@@ -133,11 +130,11 @@ DeliverySlot.defaultProps = {
   isAuthenticated: false,
   menuFetchDataPending: false,
   menuPending: false,
-  prevDate: '',
   tempDate: '',
   tempOrderId: '',
   tempSlotId: '',
   userOrders: Immutable.fromJS({}),
-  isSubscriptionActive: ''
+  isSubscriptionActive: '',
+  isSubscriberDisabledSlotsEnabled: false,
 }
 export { DeliverySlot }

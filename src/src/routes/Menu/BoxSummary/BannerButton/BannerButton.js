@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
+import * as trackingKeys from 'actions/trackingKeys'
 
 import { isMobile } from 'utils/view'
 import { CheckoutContainer } from './Checkout'
@@ -16,7 +17,7 @@ const BannerButton = ({ view, fullWidth }) => {
 
   return (
     <div className={classnames(...classes)}>
-      <CheckoutContainer view={view} />
+      <CheckoutContainer view={view} section={ trackingKeys.menu } />
     </div>
   )
 }

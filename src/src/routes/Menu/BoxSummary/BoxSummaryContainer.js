@@ -24,6 +24,7 @@ const mapStateToProps = (state) => ({
   orderId: getBasketOrderId(state),
   disabled: state.auth.get('isAdmin'),
   basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
+  basketCheckoutClicked: state.pending.get(actionTypes.BASKET_CHECKOUT_CLICKED),
   menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),

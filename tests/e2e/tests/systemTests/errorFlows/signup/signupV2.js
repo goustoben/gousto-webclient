@@ -138,10 +138,12 @@ module.exports = {
         done()
       })
       .perform(function (done) {
+        browser.pause(1000)
         checkout.section.checkoutContainer.goToNextStep()
         done()
       })
       .perform(function (done) {
+        browser.pause(3000)
         welcome.section.welcomeContainer.checkIfWelcomePageVisible()
         done()
       })
