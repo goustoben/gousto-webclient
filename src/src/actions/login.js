@@ -8,10 +8,11 @@ import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
+import userActions from 'actions/user'
+import { getUserId } from 'selectors/user'
 import orderActions from './order'
 import pricingActions from './pricing'
 import statusActions from './status'
-
 import authActions from './auth'
 import { actionTypes } from './actionTypes'
 
@@ -60,7 +61,7 @@ const postLogoutSteps = () => (
   }
 )
 
-const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '') => (
+const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '', shouldAppendUserIdToQueryString) => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.USER_LOGIN, true))
     dispatch(error(actionTypes.USER_LOGIN, false))
@@ -71,6 +72,9 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       }
       await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken))
       await dispatch(authActions.authIdentify())
+      if (shouldAppendUserIdToQueryString) {
+        await dispatch(userActions.userLoadData())
+      }
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))
       if (userRoles.size > 0 && authorise(userRoles)) {
@@ -111,7 +115,7 @@ const cannotLogin = ({ email, password }) => (
   }
 )
 
-export const loginRedirect = (location, userIsAdmin, features) => {
+export const loginRedirect = (location, userIsAdmin, features, userId) => {
   let destination
   const { pathname, search } = location
 
@@ -142,7 +146,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
         if (isGoustoTarget) {
           destination = `${url.pathname}${url.search ? url.search : ''}`
         } else if (isZendeskTarget) {
-          destination = target
+          destination = userId ? `${target}?user_id=${userId}` : target
         }
       } catch (err) {
         // do nothing
@@ -165,26 +169,27 @@ export const loginRedirect = (location, userIsAdmin, features) => {
   return destination
 }
 
-export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
-  const location = documentLocation()
-  const onCheckout = location.pathname.includes('check-out')
-  let destination = false
-  if (!onCheckout) {
-    destination = loginRedirect(location, userIsAdmin, features)
-    if (destination && destination !== config.client.myDeliveries2) {
-      redirect(destination)
+export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
+  async (dispatch, getState) => {
+    const userId = getUserId(getState())
+    const location = documentLocation()
+    const onCheckout = location.pathname.includes('check-out')
+    let destination = false
+    if (!onCheckout) {
+      destination = loginRedirect(location, userIsAdmin, features, userId)
+      if (destination && destination !== config.client.myDeliveries2) {
+        redirect(destination)
+      }
+      if (Cookies.get('from_join')) {
+        Cookies.expire('from_join')
+      }
     }
-    if (Cookies.get('from_join')) {
-      Cookies.expire('from_join')
+
+    const windowObj = windowUtils.getWindow()
+    if (globals.client && windowObj && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
+      windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
     }
-  }
 
-  const windowObj = windowUtils.getWindow()
-  if (globals.client && windowObj && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
-    windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
-  }
-
-  return async (dispatch, getState) => {
     dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
@@ -201,7 +206,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
       }, 1000)
     }
   }
-}
+)
 
 export default {
   loginUser: login,
