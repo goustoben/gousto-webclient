@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
-import { boxSummaryVisibilityChange } from 'actions/boxSummary'
+import { boxSummaryVisibilityChange, trackingUnavailableRecipeList } from 'actions/boxSummary'
 import { getBasketSlotId } from 'selectors/basket'
 import { getFullScreenBoxSummary } from 'selectors/features'
 import {
@@ -35,6 +35,7 @@ const DetailsContainer = connect(mapStateToProps, {
   basketRestorePreviousDate: actions.basketRestorePreviousDate,
   showRecipeDetailsOnClick: actions.menuRecipeDetailVisibilityChange,
   boxSummaryVisibilityChange,
+  trackingUnavailableRecipeList,
 })(Details)
 
 export { DetailsContainer }

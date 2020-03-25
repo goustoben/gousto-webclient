@@ -18,10 +18,14 @@ const RecipeList = ({
   showRecipeDetailsOnClick,
   unavailableRecipeIds,
   basketRestorePreviousDate,
-  clearSlot
+  clearSlot,
+  trackingUnavailableRecipeList
 }) => {
   const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
   const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
+  if (unavailableRecipeList.size > 0 && !menuFetchPending) {
+    trackingUnavailableRecipeList(unavailableRecipeList)
+  }
 
   return (
     <div>
@@ -77,7 +81,8 @@ RecipeList.propTypes = {
   showRecipeDetailsOnClick: PropTypes.func.isRequired,
   unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
   basketRestorePreviousDate: PropTypes.func.isRequired,
-  clearSlot: PropTypes.func.isRequired
+  clearSlot: PropTypes.func.isRequired,
+  trackingUnavailableRecipeList: PropTypes.func.isRequired,
 }
 
 export { RecipeList }
