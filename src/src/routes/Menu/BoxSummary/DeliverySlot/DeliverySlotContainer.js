@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
-import { getDisabledSlots, getFullScreenBoxSummary, getLogoutUserDisabledSlots } from 'selectors/features'
+import { getDisabledSlots, getFullScreenBoxSummary, getLogoutUserDisabledSlots, getIsSubscriberDisabledSlotsEnabled } from 'selectors/features'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
@@ -41,7 +41,8 @@ function mapStateToProps(state) {
     isAuthenticated,
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
     shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
-    getBoxSummaryTextProps: (slots) => getBoxSummaryTextProps(state, tempDate, tempSlotId, tempOrderId, slots)
+    getBoxSummaryTextProps: (slots) => getBoxSummaryTextProps(state, tempDate, tempSlotId, tempOrderId, slots),
+    isSubscriberDisabledSlotsEnabled: getIsSubscriberDisabledSlotsEnabled(state),
   }
 }
 

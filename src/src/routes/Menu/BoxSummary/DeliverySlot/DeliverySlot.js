@@ -19,7 +19,8 @@ class DeliverySlot extends React.PureComponent {
       tempOrderId, tempDate,
       tempSlotId, clearPostcode, disableOnDelivery,
       userOrders, getBoxSummaryTextProps,
-      deliveryDays: deliveryDaysProps
+      deliveryDays: deliveryDaysProps,
+      isSubscriberDisabledSlotsEnabled,
     } = this.props
 
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
@@ -42,7 +43,7 @@ class DeliverySlot extends React.PureComponent {
       hasFullOrders,
       subLabelClassName,
       hasActiveSlotsForSelectedDate,
-    } = getDeliveryDaysAndSlots(tempDate, helperProps)
+    } = getDeliveryDaysAndSlots(tempDate, helperProps, isSubscriberDisabledSlotsEnabled)
     const { deliveryLocationText, slotId, buttonText, showWarning } = getBoxSummaryTextProps(slots)
 
     return (
@@ -119,6 +120,7 @@ DeliverySlot.propTypes = {
   tempOrderId: PropTypes.string,
   tempSlotId: PropTypes.string,
   userOrders: PropTypes.instanceOf(Immutable.Map),
+  isSubscriberDisabledSlotsEnabled: PropTypes.bool,
 }
 
 DeliverySlot.defaultProps = {
@@ -132,6 +134,7 @@ DeliverySlot.defaultProps = {
   tempOrderId: '',
   tempSlotId: '',
   userOrders: Immutable.fromJS({}),
-  isSubscriptionActive: ''
+  isSubscriptionActive: '',
+  isSubscriberDisabledSlotsEnabled: false,
 }
 export { DeliverySlot }
