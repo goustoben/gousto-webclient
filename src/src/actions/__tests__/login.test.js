@@ -5,11 +5,14 @@ import { actionTypes } from 'actions/actionTypes'
 import loginActions from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
+import userActions from 'actions/user'
 import pricingActions from '../pricing'
 import statusActions from '../status'
 import authActions from '../auth'
 
 jest.mock('config/globals')
+
+jest.mock('actions/user')
 
 jest.mock('../pricing', () => ({
   pricingRequest: jest.fn()
@@ -53,6 +56,9 @@ describe('login actions', () => {
       accessToken: 'acc-token',
       roles: ['user']
     })
+    const userState = Immutable.fromJS({
+      id: '123',
+    })
 
     beforeEach(() => {
       jest.clearAllMocks()
@@ -62,6 +68,7 @@ describe('login actions', () => {
       authActions.authIdentify.mockReturnValue(null)
       getState.mockReturnValue({
         auth: authState,
+        user: userState
       })
       isActive.mockReturnValue(true)
     })
@@ -69,6 +76,7 @@ describe('login actions', () => {
     it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /menu, no redirect', async () => {
       getState.mockReturnValue({
         auth: authState,
+        user: userState,
         routing: { locationBeforeTransitions: { pathname: '/menu' } },
       })
       documentLocation.mockReturnValueOnce({ pathname: '/menu' })
@@ -197,9 +205,36 @@ describe('login actions', () => {
         globals.domain = HOST_PRODUCTION
       })
 
-      it('then should redirect user to zendesk', async () => {
-        await loginActions.loginUser('email', 'password', true)(dispatch, getState)
-        expect(redirect).toHaveBeenCalledWith(zendesk.faqs)
+      describe('and the userId is passed', () => {
+        beforeEach(async () => {
+          getState.mockReturnValue({
+            auth: authState,
+            user: Immutable.fromJS({
+              id: '123',
+            })
+          })
+          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+        })
+
+        it('then should redirect user to zendesk with the userId appended to the url', async () => {
+          expect(redirect).toHaveBeenCalledWith(`${zendesk.faqs}?user_id=123`)
+        })
+      })
+
+      describe('and the userId is not passed', () => {
+        beforeEach(async () => {
+          getState.mockReturnValue({
+            auth: authState,
+            user: Immutable.fromJS({
+              id: null,
+            })
+          })
+          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
+        })
+
+        it('then should redirect user to zendesk', async () => {
+          expect(redirect).toHaveBeenCalledWith(zendesk.faqs)
+        })
       })
     })
 
@@ -239,6 +274,28 @@ describe('login actions', () => {
           await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true })(dispatch, getState)
           expect(redirect).toHaveBeenCalledWith('/my-gousto')
         })
+      })
+    })
+
+    describe('when shouldAppendUserIdToQueryString is set to true', () => {
+      beforeEach(async () => {
+        userActions.userLoadData.mockResolvedValue({})
+        await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true }, '123', true)(dispatch, getState)
+      })
+
+      it('should call userLoadData action', () => {
+        expect(userActions.userLoadData).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when shouldAppendUserIdToQueryString is set to false', () => {
+      beforeEach(async () => {
+        userActions.userLoadData.mockResolvedValue({})
+        await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true }, '123', false)(dispatch, getState)
+      })
+
+      it('should not call userLoadData action', () => {
+        expect(userActions.userLoadData).toHaveBeenCalledTimes(0)
       })
     })
   })
