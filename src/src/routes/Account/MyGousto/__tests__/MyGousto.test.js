@@ -40,6 +40,10 @@ describe('MyGousto', () => {
     test('should render the refer a friend component', () => {
       expect(wrapper.find(ReferAFriend).length).toEqual(1)
     })
+
+    test('the NotificationCovid is rendered', () => {
+      expect(wrapper.find('Connect(NotificationCovid)').length).toBe(1)
+    })
   })
 
   describe('componentDidMount', () => {
