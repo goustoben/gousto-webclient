@@ -174,6 +174,7 @@ module.exports = {
     link: 'https://gousto.workable.com/',
   },
   zendesk: {
+    covid: 'https://gousto.zendesk.com/hc/en-gb/articles/360006713417--How-does-the-coronavirus-situation-affect-Gousto-',
     link: 'https://gousto.zendesk.com/hc/en-gb/requests/new',
     faqs: 'https://gousto.zendesk.com/hc/en-gb',
     contactUs: 'https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us',

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
+import { NotificationCovid } from './NotificationCovid'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 import { HeaderContainer } from './Header'
@@ -52,6 +53,9 @@ class MyGousto extends React.PureComponent {
     return (
       <div>
         <div className={css.wrapper}>
+          <div className={css.notificationContent}>
+            <NotificationCovid />
+          </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />
           </div>
