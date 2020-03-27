@@ -12,6 +12,7 @@ import { safeJestMock, returnArgumentsFromMock, multiReturnMock } from '_testing
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
+import { basketReset } from '../basket'
 
 jest.mock('utils/basket')
 
@@ -1313,6 +1314,35 @@ describe('basket actions', () => {
           promoCode: 'test-promo-code',
           deliverySlot: 'default'
         },
+      })
+    })
+  })
+
+  describe('basketReset', () => {
+    describe('when chosenAddress is not set', () => {
+      test('should return the correct action', () => {
+        const result = basketReset()
+
+        expect(result).toEqual({
+          type: actionTypes.BASKET_RESET,
+          payload: {
+            chosenAddress: null
+          }
+        })
+      })
+    })
+
+    describe('when chosenAddress is set', () => {
+      test('should return the correct action', () => {
+        const address = { id: '12345' }
+        const result = basketReset(address)
+
+        expect(result).toEqual({
+          type: actionTypes.BASKET_RESET,
+          payload: {
+            chosenAddress: address
+          }
+        })
       })
     })
   })

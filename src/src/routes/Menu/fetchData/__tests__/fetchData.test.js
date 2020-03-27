@@ -271,28 +271,44 @@ describe('menu fetchData', () => {
 
       describe('params does not have order id', () => {
         describe('basket has order id', () => {
-          const firstShippingAddress = { id: 'shipping-1' }
+          const firstShippingAddress = { id: 'shipping-1', shippingDefault: false }
+          const defaultShippingAddress = { id: 'shipping-2', shippingDefault: true }
 
           beforeEach(() => {
             state.basket = state.basket.set('orderId', '123')
             state.user = state.user.setIn(['shippingAddresses', 0], firstShippingAddress)
+            state.user = state.user.setIn(['shippingAddresses', 1], defaultShippingAddress)
           })
 
-          test('should dispatch basket reset action', async () => {
+          test('should dispatch basket reset action with default shipping address', async () => {
             await fetchData({ store, query, params }, false, false)
 
             expect(store.dispatch.mock.calls[3]).toEqual([{
-              type: actionTypes.BASKET_RESET
+              type: actionTypes.BASKET_RESET,
+              payload: {
+                chosenAddress: defaultShippingAddress
+              }
             }])
           })
 
-          test('should dispatch chosen address change action with first shipping address', async () => {
-            await fetchData({ store, query, params }, false, false)
+          describe('when there is no default shipping address', async () => {
+            const secondShippingAddress = { id: 'shipping-3', shippingDefault: false }
 
-            expect(store.dispatch.mock.calls[4]).toEqual([{
-              type: actionTypes.BASKET_CHOSEN_ADDRESS_CHANGE,
-              address: firstShippingAddress
-            }])
+            beforeEach(() => {
+              state.basket = state.basket.set('orderId', '123')
+              state.user = state.user.setIn(['shippingAddresses', 1], secondShippingAddress)
+            })
+
+            test('should dispatch basket reset action with first shipping address', async () => {
+              await fetchData({ store, query, params }, false, false)
+
+              expect(store.dispatch.mock.calls[3]).toEqual([{
+                type: actionTypes.BASKET_RESET,
+                payload: {
+                  chosenAddress: firstShippingAddress
+                }
+              }])
+            })
           })
         })
 

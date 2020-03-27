@@ -110,8 +110,14 @@ const loadWithoutOrder = async (store, query, background) => {
   const isAdmin = getIsAdmin(store.getState())
 
   if (store.getState().basket.get('orderId')) {
-    await store.dispatch(actions.basketReset())
-    await store.dispatch(actions.basketChosenAddressChange(store.getState().user.get('shippingAddresses').first()))
+    const shippingAddresses = store.getState().user.get('shippingAddresses')
+
+    const addressToSelect = (
+      shippingAddresses.find(address => address.shippingDefault === true)
+      || shippingAddresses.first()
+    )
+
+    await store.dispatch(actions.basketReset(addressToSelect))
   }
 
   if (

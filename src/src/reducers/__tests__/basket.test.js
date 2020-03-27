@@ -2,6 +2,7 @@ import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import config from 'config'
 import basketReducer from 'reducers/basket'
+import * as basketActions from 'actions/basket'
 import logger from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
@@ -509,9 +510,22 @@ describe('basket reducer', () => {
     test('should return the basket to its initial state', () => {
       const address = Immutable.Map({ address: { id: '123-123-123-uuid', postcode: 'w30df', name: 'home' } })
       const state = Immutable.Map({ prevAddress: null, address })
-      const result = basket(state, { type: 'BASKET_RESET' })
+      const action = basketActions.basketReset()
+      const result = basket(state, action)
 
       expect(Immutable.is(result, initialState)).toEqual(true)
+    })
+
+    describe('when chosenAddress provided', () => {
+      test('should set chosenAddress correctly in state', () => {
+        const chosenAddress = Immutable.Map({ id: '1234567' })
+
+        const action = basketActions.basketReset(chosenAddress)
+        const result = basket(initialState, action)
+        const resultChosenAddress = result.get('chosenAddress')
+
+        expect(Immutable.is(resultChosenAddress, chosenAddress)).toEqual(true)
+      })
     })
   })
 
