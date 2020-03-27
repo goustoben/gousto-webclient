@@ -83,11 +83,11 @@ class Menu extends React.PureComponent {
     }
   }
 
-  componentDidUpdate() {
-    const { params, query } = this.props
+  componentDidUpdate(prevProps) {
+    const { params, query, isAuthenticated } = this.props
     const { store } = this.context
     const isAdminQuery = !!(query && query['preview[auth_user_id]'])
-    if (!isAdminQuery) {
+    if (!isAdminQuery && prevProps.isAuthenticated !== isAuthenticated) {
       Menu.fetchData({ store, query, params }, false)
     }
     forceCheckLazyload()
