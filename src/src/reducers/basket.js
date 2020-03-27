@@ -252,7 +252,13 @@ const basket = {
     }
 
     case actionTypes.BASKET_RESET: {
-      return initialState()
+      let newState = initialState()
+
+      if (action.payload && action.payload.chosenAddress) {
+        newState = newState.set('chosenAddress', Immutable.fromJS(action.payload.chosenAddress))
+      }
+
+      return newState
     }
 
     case actionTypes.BASKET_SIGNUP_COLLECTION_RECEIVE: {

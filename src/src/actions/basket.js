@@ -109,14 +109,14 @@ export const basketNumPortionChange = (numPortions) => (
   }
 )
 
-export const portionSizeSelectedTracking = (num_portion, order_id) => (
+export const portionSizeSelectedTracking = (numPortion, orderId) => (
   (dispatch) => {
     dispatch({
       type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
       trackingData: {
         actionType: trackingKeys.selectPortionSize,
-        num_portion,
-        order_id: order_id || null,
+        num_portion: numPortion,
+        order_id: orderId || null,
       },
     })
   }
@@ -385,7 +385,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
       },
     })
 
-    const {basket: newBasket, menuRecipes: newMenuRecipes, menuRecipeStock: newMenuRecipeStock} = getState()
+    const { basket: newBasket, menuRecipes: newMenuRecipes, menuRecipeStock: newMenuRecipeStock } = getState()
     reachedLimit = limitReached(newBasket, newMenuRecipes, newMenuRecipeStock, undefined, maxRecipesNum)
     if (reachedLimit) {
       dispatch({
@@ -886,8 +886,11 @@ export const basketUpdateProducts = (isOrderConfirmation = false) => (
   }
 )
 
-export const basketReset = () => ({
+export const basketReset = (chosenAddress = null) => ({
   type: actionTypes.BASKET_RESET,
+  payload: {
+    chosenAddress
+  }
 })
 
 export const basketSignupCollectionReceive = collection => ({
