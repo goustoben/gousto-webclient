@@ -59,3 +59,15 @@ You may merge a production deployment to `master` when:
 - The end to end tests on the most recent `develop` build has passed.
 
 ---
+
+## Failing builds on `develop`
+
+If the `develop` build is failing, especially on end-to-end tests, it makes it difficult for us to ensure code quality and so it's a blocker for us deploying more work. Therefore, to ensure that the failures get resolved promptly, there is some process around it.
+
+**There should be NO merges into `develop` if the most recent commit to `develop` has a failing build.**
+
+- If a `develop` build fails, the author of that commit must immediately re-run the build on CircleCI.
+- If the build fails again, there must be a **P2 Internal Production Incident** raised
+- The author of the failing commit is the **Incident Resolver** and must take responsibility to find an **Incident Owner**. (Ideally someone in their squad, but could be from the wider Webclient team)
+- The **Incident Owner** should then announce the incident on #guild-frontend slack channel, and follow the Gousto Production Incident Process.
+- Fixing the E2E test becomes their top priority, and any help needed from others is also a priority.
