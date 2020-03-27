@@ -291,6 +291,15 @@ describe('Menu', () => {
 
       expect(forceCheck).toHaveBeenCalledTimes(1)
     })
+
+    describe('when user authentificate', () => {
+      beforeEach(() => {
+        wrapper.setProps({isAuthenticated: true})
+      })
+      test('should call fetchData ', () => {
+        expect(fetchData).toHaveBeenCalledTimes(2)
+      })
+    })
   })
 
   describe('componentWillReceiveProps', () => {
@@ -307,19 +316,6 @@ describe('Menu', () => {
 
     afterEach(() => {
       jest.clearAllMocks()
-    })
-
-    test('should call Menu.fetchData once if menuVariation has changed', () => {
-      const wrapper = shallow(
-        <Menu
-          {...requiredProps}
-          tariffId={1}
-          menuVariation="menuA"
-        />,
-        mountOptions
-      )
-      wrapper.instance().componentWillReceiveProps({ menuVariation: 'menuB' })
-      expect(fetchData).toHaveBeenCalledTimes(2)
     })
 
     test('should call menuLoadBoxPrices twice if not disabled & tariffId has changed', async () => {
