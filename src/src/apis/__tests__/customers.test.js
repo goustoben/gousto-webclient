@@ -52,13 +52,17 @@ describe('customers api', () => {
   describe('customerSignup', () => {
     test('should fetch the correct url', async () => {
       const reqData = { a: 1, b: 2 }
+      const timeout = 50000
       await customerSignup('token', reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         'token',
         'endpoint-customersv2/signup',
         reqData,
-        'POST'
+        'POST',
+        'default',
+        {},
+        timeout
       )
     })
 

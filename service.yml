@@ -118,7 +118,7 @@ environments:
     maxInstanceSize: 8
     desiredInstanceSize: 0
     availability: alwaysOn
-    ecsDesiredTaskCount: 12
+    ecsDesiredTaskCount: 18
     ecsMemory: 2048
     ecsCpu: 1024
 
