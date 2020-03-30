@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import MockDate from 'mockdate'
+import PromiseTimeout from 'promise-timeout'
 
 const mockFetch = jest.fn()
 const mockGetState = jest.fn()
@@ -288,5 +289,54 @@ describe('fetch', () => {
     }
 
     expect(errorThrown).toEqual(true)
+  })
+
+  describe('timeout', () => {
+    const cacheMode = 'no-cache'
+    const data = {
+      status: 'ok',
+      data: {
+        recipe_title: 'Test',
+        meat_ingredients: [
+          'chicken',
+          'prawn_with_shell',
+        ],
+        nutInfo: {
+          e_nergy: 100,
+        },
+      },
+    }
+    const expected = {
+      recipeTitle: 'Test',
+      meatIngredients: [
+        'chicken',
+        'prawn_with_shell',
+      ],
+      nutInfo: {
+        eNergy: 100,
+      },
+    }
+
+    beforeEach(() => {
+      PromiseTimeout.timeout = jest.fn().mockResolvedValue({
+        text: () => JSON.stringify(data),
+        status: 200,
+      })
+    })
+
+    test('should allow timeout to be sent', async () => {
+      const timeout = 100
+      const result = await fetch('token', 'test/', { id: 1, include: ['test1', 'test2'] }, 'GET', cacheMode, {}, timeout)
+      expect(result).toEqual({ data: expected, meta: null })
+      expect(PromiseTimeout.timeout.mock.calls[0][1]).toBe(100)
+    })
+
+    test('should apply a default timeout', async () => {
+      const timeout = null
+      const result = await fetch('token', 'test/', { id: 1, include: ['test1', 'test2'] }, 'GET', cacheMode, {}, timeout)
+      expect(result).toEqual({ data: expected, meta: null })
+
+      expect(PromiseTimeout.timeout.mock.calls[0][1]).toBe(5000)
+    })
   })
 })

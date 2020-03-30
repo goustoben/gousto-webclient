@@ -4,6 +4,9 @@ import isomorphicFetch from 'isomorphic-fetch'
 import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
+import { timeout as fetchWithTimeout } from 'promise-timeout'
+
+const DEFAULT_TIME_OUT = 5000
 
 export function fetchRaw(url, data = {}, options) {
   return fetch(
@@ -103,7 +106,9 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   let responseRedirected
   let responseUrl
 
-  return isomorphicFetch(requestUrl, requestDetails)
+  const fetchPromise = isomorphicFetch(requestUrl, requestDetails)
+
+  return fetchWithTimeout(fetchPromise, timeout || DEFAULT_TIME_OUT)
     .then(response => {
       const { status, redirected, url: endpointOrRedirectedUrl } = response
       responseStatus = status
@@ -150,7 +155,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
         code: e.code || 500,
         errors: e.errors || [],
         message,
-        status: responseStatus,
+        status: responseStatus || 500,
         redirected: responseRedirected,
         url: responseUrl,
       }
