@@ -24,7 +24,7 @@ export function fetchPauseReasons(accessToken, userId = null) {
 export function customerSignup(accessToken, reqData) {
   const TIMEOUT = 50000
 
-  return fetch(accessToken, `${endpoint('customers', routes.version.customersV2)}${routes.customers.signup}`, reqData, 'POST', null, null, TIMEOUT)
+  return fetch(accessToken, `${endpoint('customers', routes.version.customersV2)}${routes.customers.signup}`, reqData, 'POST', 'default', {}, TIMEOUT)
 }
 
 export function newsletterSubscribe(email) {

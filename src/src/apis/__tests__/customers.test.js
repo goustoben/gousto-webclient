@@ -60,8 +60,8 @@ describe('customers api', () => {
         'endpoint-customersv2/signup',
         reqData,
         'POST',
-        null,
-        null,
+        'default',
+        {},
         timeout
       )
     })
