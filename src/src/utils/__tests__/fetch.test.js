@@ -336,7 +336,7 @@ describe('fetch', () => {
       const result = await fetch('token', 'test/', { id: 1, include: ['test1', 'test2'] }, 'GET', cacheMode, {}, timeout)
       expect(result).toEqual({ data: expected, meta: null })
 
-      expect(PromiseTimeout.timeout.mock.calls[0][1]).toBe(15000)
+      expect(PromiseTimeout.timeout.mock.calls[0][1]).toBe(50000)
     })
   })
 })

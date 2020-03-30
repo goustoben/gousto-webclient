@@ -6,7 +6,7 @@ import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
-const DEFAULT_TIME_OUT = 15000
+const DEFAULT_TIME_OUT = 50000
 
 export function fetchRaw(url, data = {}, options) {
   return fetch(
