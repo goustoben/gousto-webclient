@@ -59,15 +59,21 @@ describe("My Deliveries", () => {
     })
 
     describe('when all projected deliveries are cancelled', () => {
+      beforeEach(() => {
+        cy.fixture('user/userCurrentProjectedDeliveries-one-delivery').as('userCurrentProjectedDeliveries')
+        cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
+
+        cy.login()
+        cy.visit('/mydeliveries')
+        cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
+      })
+
       it("should show the modal to prompt a user to pause", () => {
-        cy.get('[data-testing="projectedDelivery"]').each(el => {
-          cy.wrap(el).click().scrollIntoView()
-          cy.contains('Cancel').should('exist')
-          cy.wrap(el).find('[data-testing="cancelButton"]').click()
-          cy.wrap(el).click().scrollIntoView()
-          cy.wait('@cancelProjectedDelivery')
-          cy.contains('Cancelled').should('exist')
-        })
+        cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
+        cy.get('[data-testing="projectedDelivery"]').first().click()
+        cy.get('[data-testing="cancelButton"]').click()
+        cy.wait('@cancelProjectedDelivery')
+        cy.contains('Cancelled').should('exist')
 
         cy.get('[data-testing="cancelledAllBoxesModal"]').should("be.visible")
       })
