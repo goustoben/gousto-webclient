@@ -8,23 +8,19 @@ import TermsAndConditions from '../TermsAndConditions'
 import css from './SubmitButton.css'
 
 class SubmitButton extends React.PureComponent {
-  static propTypes = {
-    onClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    onClick: () => {}
+  handleClick = () => {
+    const { onClick, trackUTMAndPromoCode } = this.props
+    trackUTMAndPromoCode('clickSubmitOrder')
+    onClick()
   }
 
   render() {
-    const { onClick } = this.props
-
     return (
       <div>
         <ErrorMessage />
         <CheckoutButton
           stepName="Submit Order"
-          onClick={onClick}
+          onClick={this.handleClick}
         />
         <SubscriptionTransparencyText className={css.helperText} />
         <TermsAndConditions />
@@ -33,4 +29,13 @@ class SubmitButton extends React.PureComponent {
   }
 }
 
-export default SubmitButton
+SubmitButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  trackUTMAndPromoCode: PropTypes.func,
+}
+
+SubmitButton.defaultProps = {
+  trackUTMAndPromoCode: () => {},
+}
+
+export { SubmitButton }

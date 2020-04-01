@@ -3,6 +3,7 @@ import { isValid } from 'redux-form'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getAboutYouFormName } from 'selectors/checkout'
 import { AboutYou } from './AboutYou'
 
@@ -17,13 +18,17 @@ function mapStateToProps(sectionName) {
 }
 
 function connectComponent(sectionName) {
-  const AboutYouContainer = connect(mapStateToProps(sectionName), {
+  return connect(mapStateToProps(sectionName), {
     loginVisibilityChange: actions.loginVisibilityChange,
     clearErrors: actions.checkoutClearErrors,
     trackCheckoutButtonPressed,
+    trackUTMAndPromoCode,
   })(AboutYou)
+}
 
-  return AboutYouContainer
+const mapDispatchToProps = {
+  userProspect: actions.userProspect,
+  trackUTMAndPromoCode,
 }
 
 export default sectionName => connectComponent(sectionName)
@@ -48,5 +53,5 @@ export function addInitialValues(Component, { sectionName }) {
         },
       }
     },
-    { userProspect: actions.userProspect })(Component)
+    mapDispatchToProps)(Component)
 }

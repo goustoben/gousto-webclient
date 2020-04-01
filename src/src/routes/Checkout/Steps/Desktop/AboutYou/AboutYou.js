@@ -14,9 +14,10 @@ const sectionName = 'aboutyou'
 
 const AboutYouSection = AboutYouContainer(sectionName)
 
-const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid }) => {
+export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid, trackUTMAndPromoCode }) => {
   const handleSubmit = () => {
     if (checkoutValid) {
+      trackUTMAndPromoCode('clickNextDelivery')
       userProspect()
     }
     submit()
@@ -39,15 +40,19 @@ AboutYouStep.propTypes = {
   receiveRef: PropTypes.func,
   nextStepName: PropTypes.string,
   checkoutValid: PropTypes.bool,
+  trackUTMAndPromoCode: PropTypes.func
 }
 
 AboutYouStep.defaultProps = {
   userProspect: () => {},
   receiveRef: () => {},
   checkoutValid: false,
-  nextStepName: ''
+  nextStepName: '',
+  trackUTMAndPromoCode: () => {},
 }
 
 const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
 
-export default addInitialValues(AboutYouForm, { sectionName })
+const AboutYou = addInitialValues(AboutYouForm, { sectionName })
+
+export default AboutYou

@@ -13,7 +13,7 @@ import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, bask
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
-import Checkout from 'routes/Checkout/Checkout'
+import { Checkout } from 'routes/Checkout/Checkout'
 
 jest.mock('actions', () => ({
   replace: jest.fn().mockReturnValue(Promise.resolve()),
@@ -423,10 +423,93 @@ describe('Checkout', () => {
         expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
       })
 
+      describe('CheckoutPayment props', () => {
+        describe('when stepName is "payment"', () => {
+          test('then should return prerender = false', () => {
+            expect(wrapper.find(CheckoutPayment).props().prerender).toBeFalsy()
+          })
+
+          test('then should return isLastStep = true and nextStepName is empty', () => {
+            expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeTruthy()
+            expect(wrapper.find(CheckoutPayment).props().nextStepName).toEqual('')
+          })
+        })
+
+        describe('when stepName is not "payment"', () => {
+          beforeEach(() => {
+            wrapper.setProps({ params: { stepName: 'aboutyou' } })
+          })
+
+          test('then should return prerender = true', () => {
+            expect(wrapper.find(CheckoutPayment).props().prerender).toBeTruthy()
+          })
+
+          test('then should return isLastStep = false and nextStepName is not empty', () => {
+            expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeFalsy()
+            expect(wrapper.find(CheckoutPayment).props().nextStepName).not.toEqual('')
+          })
+        })
+      })
+
       test('should call loadCheckoutScript', () => {
         wrapper.instance().componentDidMount()
-
         expect(loadCheckoutScript).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('trackClick', () => {
+    const trackCheckoutButtonPressed = jest.fn()
+
+    test('should call trackCheckoutButtonPressed with proper params', () => {
+      const instance = wrapper.instance()
+      wrapper.setProps({ trackCheckoutButtonPressed })
+      instance.trackClick('steps', 'currentStep')
+      expect(trackCheckoutButtonPressed).toHaveBeenCalledWith('steps', 'currentStep')
+    })
+  })
+
+  describe('isLastStep', () => {
+    const steps = ['boxdetails', 'yourdetails', 'payment']
+
+    test('should return true if current step is "payment"', () => {
+      const instance = wrapper.instance()
+      const currentStep = 'payment'
+      expect(instance.isLastStep(steps, currentStep)).toBeTruthy()
+    })
+
+    test('should return false if current step is "boxdetails"', () => {
+      const instance = wrapper.instance()
+      const currentStep = 'boxdetails'
+      expect(instance.isLastStep(steps, currentStep)).toBeFalsy()
+    })
+  })
+
+  describe('getNextStep', () => {
+    let instance
+    let currentStep
+    const steps = ['boxdetails', 'yourdetails', 'payment']
+
+    beforeEach(() => {
+      instance = wrapper.instance()
+      wrapper.setProps({
+        browser: 'mobile'
+      })
+    })
+
+    describe('when current step is not the last one', () => {
+      test('then should return next step', () => {
+        currentStep = 'yourdetails'
+        expect(instance.getNextStep(steps, currentStep)).toEqual('payment')
+        currentStep = 'boxdetails'
+        expect(instance.getNextStep(steps, currentStep)).toEqual('yourdetails')
+      })
+    })
+
+    describe('when current step is the last one', () => {
+      test('then should undefined', () => {
+        currentStep = 'payment'
+        expect(instance.getNextStep(steps, currentStep)).toBeUndefined()
       })
     })
   })

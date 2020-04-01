@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import SubmitButton from './SubmitButton'
+import { trackUTMAndPromoCode } from 'actions/tracking'
+import { SubmitButton } from './SubmitButton'
 
 function mapStateToProps(state, ownProps) {
   const browser = state.request.get('browser')
@@ -11,4 +12,8 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, {})(SubmitButton)
+const mapDispatchToProps = {
+  trackUTMAndPromoCode
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitButton)

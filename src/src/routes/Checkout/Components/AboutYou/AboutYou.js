@@ -4,13 +4,12 @@ import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import config from 'config/checkout'
 import { capitalizeFirstLetter } from 'utils/text'
+import { emailValidator } from 'utils/forms'
 import Login from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import css from './AboutYou.css'
 import ErrorMessage from '../ErrorMessage'
-
-const emailValidator = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Please provide a valid email address' : undefined)
 
 class AboutYou extends React.PureComponent {
   static propTypes = {

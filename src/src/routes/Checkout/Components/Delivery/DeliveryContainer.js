@@ -4,6 +4,7 @@ import { getDeliveryFormName } from 'selectors/checkout'
 
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 
 import Delivery from './Delivery'
 
@@ -27,6 +28,7 @@ const connectComponent = sectionName => connect(mapStateToProps(sectionName), {
   manualSubmit: submit,
   clearErrors: actions.checkoutClearErrors,
   change,
+  trackUTMAndPromoCode,
 })(Delivery)
 
 export default sectionName => connectComponent(sectionName)
@@ -67,5 +69,5 @@ export function addInitialValues(Component, { sectionName }) {
         },
       }
     },
-    {})(Component)
+    { trackUTMAndPromoCode })(Component)
 }

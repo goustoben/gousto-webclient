@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import SubmitButton from 'routes/Checkout/Components/SubmitButton/SubmitButton'
+import { SubmitButton } from 'routes/Checkout/Components/SubmitButton/SubmitButton'
 
 import ErrorMessage from 'routes/Checkout/Components/ErrorMessage'
 import TermsAndConditions from 'routes/Checkout/Components/TermsAndConditions'

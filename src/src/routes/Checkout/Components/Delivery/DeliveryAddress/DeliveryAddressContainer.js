@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { Map } from 'immutable'
 import { change, getFormAsyncErrors, getFormMeta, getFormSyncErrors, registerField, touch, untouch } from 'redux-form'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import actions from 'actions'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
@@ -41,7 +42,8 @@ const DeliveryAddressContainer = connect(mapStateToProps, {
   untouch,
   touch,
   registerField,
-  trackCheckoutButtonPressed
+  trackCheckoutButtonPressed,
+  trackUTMAndPromoCode
 })(Address)
 
 export default DeliveryAddressContainer
