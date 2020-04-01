@@ -45,6 +45,13 @@ const loginVisibilityChange = visibility => ({
   visibility,
 })
 
+export const helpPreLoginVisibilityChange = visibility => ({
+  type: actionTypes.HELP_PRELOGIN_VISIBILITY_CHANGE,
+  payload: {
+    visibility,
+  },
+})
+
 const logoutRedirect = () => (
   () => {
     redirect('/')

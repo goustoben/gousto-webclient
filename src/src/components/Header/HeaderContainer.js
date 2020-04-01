@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
   routing: state.routing,
   promoCodeUrl: state.basket.get('promoCodeUrl'),
-  loginOpen: state.loginVisibility,
+  isLoginOpen: state.loginVisibility.get('login'),
   disabled: state.auth.get('isAdmin'),
   features: state.features,
   fromJoin: getUserFromJoin(state),

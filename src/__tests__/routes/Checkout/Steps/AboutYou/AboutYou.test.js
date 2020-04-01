@@ -45,7 +45,7 @@ describe('AboutYou', () => {
   describe('props', () => {
     describe('when isOpen is true', () => {
       beforeEach(() => {
-        wrapper.setProps({ loginOpen: true })
+        wrapper.setProps({ isLoginOpen: true })
       })
 
       test('should be true for Login "isOpen" prop', () => {
@@ -55,7 +55,7 @@ describe('AboutYou', () => {
 
     describe('when isOpen is false', () => {
       beforeEach(() => {
-        wrapper.setProps({ loginOpen: false })
+        wrapper.setProps({ isLoginOpen: false })
       })
 
       test('should be false for Login "isOpen" prop', () => {
@@ -85,7 +85,7 @@ describe('AboutYou', () => {
 
     describe('when isOpen is true and Overlay is open', () => {
       beforeEach(() => {
-        wrapper.setProps({ loginOpen: true })
+        wrapper.setProps({ isLoginOpen: true })
       })
 
       test('should be true for Login "isOpen" and Overlay "open" props', () => {
@@ -96,7 +96,7 @@ describe('AboutYou', () => {
 
     describe('when isOpen is false and Overlay is open', () => {
       beforeEach(() => {
-        wrapper.setProps({ loginOpen: false })
+        wrapper.setProps({ isLoginOpen: false })
       })
 
       test('should be true for Login "isOpen" and Overlay "open" props', () => {
@@ -107,7 +107,7 @@ describe('AboutYou', () => {
 
     describe('inputs with a mask', () => {
       beforeEach(() => {
-        wrapper.setProps({ loginOpen: false })
+        wrapper.setProps({ isLoginOpen: false })
       })
 
       test('should be true for "mask" for first name, last name, email, password, and marketing checkboxes', () => {

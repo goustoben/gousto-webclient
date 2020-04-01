@@ -10,7 +10,7 @@ import { AboutYou } from './AboutYou'
 function mapStateToProps(sectionName) {
   return state => ({
     sectionName,
-    loginOpen: state.loginVisibility,
+    isLoginOpen: state.loginVisibility,
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
     isMobile: state.request.get('browser') === 'mobile'
