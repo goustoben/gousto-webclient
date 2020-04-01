@@ -31,7 +31,10 @@ const addressLookupRoute = require('./routes/addressLookup').default
 const routes = require('./routes').default
 const htmlTemplate = require('./template')
 const { appsRedirect } = require('./middleware/apps')
+const { sessionMiddleware } = require('./middleware/tracking')
 const { processRequest, configureHistoryAndStore } = require('./processRequest')
+
+app.use(sessionMiddleware())
 
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
