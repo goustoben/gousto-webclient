@@ -1,1 +1,1 @@
-export default from './SubIngredients'
+export { SubIngredients } from './SubIngredients'

@@ -6,7 +6,7 @@ import GoustoImage from 'Image'
 import { removeDiacritics } from 'utils/sanitizeText'
 import { SimpleStarRating } from './SimpleStarRating'
 import { SimpleRecipe } from './SimpleRecipe'
-import AddButton from '../../../Menu/Recipe/AddButton'
+import { AddButton } from '../../../Menu/Recipe/AddButton'
 
 jest.mock('utils/sanitizeText', () => ({
   removeDiacritics: jest.fn(),

@@ -87,4 +87,4 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
 DetailOverlay.propTypes = propTypes
 DetailOverlay.defaultProps = defaultProps
 
-export default DetailOverlay
+export { DetailOverlay }

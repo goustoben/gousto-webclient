@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
 import Immutable from 'immutable'
-import RangeBadge from 'routes/Menu/Recipe/RangeBadge'
+import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 
 describe('<RangeBadge />', () => {

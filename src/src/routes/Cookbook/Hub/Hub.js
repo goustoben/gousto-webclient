@@ -21,7 +21,7 @@ import Link from 'Link'
 import LoadMoreLink from 'LoadMoreLink'
 import Image from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
-import Rating from 'routes/Menu/Recipe/Rating'
+import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
 import Title from 'routes/Menu/Recipe/Title'
 import { RecipeAttribute } from 'routes/Menu/Recipe/RecipeAttribute'
@@ -205,7 +205,7 @@ class Hub extends React.PureComponent {
                   centered={false}
                   spaced={false}
                 />
-                <Rating
+                <RecipeRating
                   view="simple"
                   average={rating.average}
                   count={rating.count}

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import Nutrition from 'routes/Menu/Recipe/Detail/Nutrition'
+import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 
 describe('<Nutrition />', () => {
   let perPortion
@@ -33,7 +33,7 @@ describe('<Nutrition />', () => {
       salt: 9.999,
     }
     wrapper = shallow(
-      <Nutrition perPortion={perPortion} per100Grams={per100Grams} />,
+      <NutritionInfo perPortion={perPortion} per100Grams={per100Grams} />,
     )
   })
 

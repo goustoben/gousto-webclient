@@ -14,7 +14,11 @@ const RecipeDisclaimer = ({ disclaimer }) => (
 )
 
 RecipeDisclaimer.propTypes = {
-  disclaimer: PropTypes.string.isRequired
+  disclaimer: PropTypes.string
+}
+
+RecipeDisclaimer.defaultProps = {
+  disclaimer: null
 }
 
 export { RecipeDisclaimer }

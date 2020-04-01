@@ -7,24 +7,6 @@ import Surcharge from './Surcharge'
 import css from './Buttons.css'
 
 class Buttons extends React.Component {
-  static propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onRemove: PropTypes.func.isRequired,
-    limitReached: PropTypes.bool.isRequired,
-    recipeId: PropTypes.string.isRequired,
-    position: PropTypes.number,
-    qty: PropTypes.number.isRequired,
-    numPortions: PropTypes.number.isRequired,
-    view: PropTypes.string,
-    outOfstock: PropTypes.bool,
-    disable: PropTypes.bool.isRequired,
-    stock: PropTypes.number,
-    menuBrowseCTAVisibilityChange: PropTypes.func,
-    menuRecipeDetailVisibilityChange: PropTypes.func,
-    surchargePerPortion: PropTypes.number,
-    score: PropTypes.number
-  }
-
   constructor() {
     super()
 
@@ -223,6 +205,24 @@ class Buttons extends React.Component {
       </Button>
     )
   }
+}
+
+Buttons.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  limitReached: PropTypes.bool.isRequired,
+  recipeId: PropTypes.string.isRequired,
+  position: PropTypes.number,
+  qty: PropTypes.number.isRequired,
+  numPortions: PropTypes.number.isRequired,
+  view: PropTypes.string,
+  outOfstock: PropTypes.bool,
+  disable: PropTypes.bool.isRequired,
+  stock: PropTypes.number,
+  menuBrowseCTAVisibilityChange: PropTypes.func,
+  menuRecipeDetailVisibilityChange: PropTypes.func,
+  surchargePerPortion: PropTypes.number,
+  score: PropTypes.number
 }
 
 export default Buttons

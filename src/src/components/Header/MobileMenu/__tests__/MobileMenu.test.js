@@ -18,11 +18,11 @@ describe('MenuWrapper', () => {
     serverError: false,
   }
 
-  describe('when shouldRenderNewMenuDesign false', () => {
+  describe('when shouldRenderAccountLink is false', () => {
     beforeEach(() => {
       const newProps = {
         ...props,
-        shouldRenderNewMenuDesign: false
+        shouldRenderAccountLink: false
       }
       wrapper = shallow(<MobileMenu {...newProps} />)
     })
@@ -36,11 +36,11 @@ describe('MenuWrapper', () => {
     })
   })
 
-  describe('when shouldRenderNewMenuDesign true', () => {
+  describe('when shouldRenderAccountLink is true', () => {
     beforeEach(() => {
       const newProps = {
         ...props,
-        shouldRenderNewMenuDesign: true
+        shouldRenderAccountLink: true
       }
       wrapper = shallow(<MobileMenu {...newProps} />)
     })

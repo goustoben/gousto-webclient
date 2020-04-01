@@ -1,15 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CollectionsNav from 'routes/Menu/CollectionsNav'
 import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
+import { CollectionsNavContainer } from '../../CollectionsNav'
 import { MenuBannerContainer } from '../MenuBanner'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 
 jest.mock('routes/Menu/SubHeader')
 
-jest.mock('routes/Menu/CollectionsNav', () => ('CollectionsNav'))
+jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
 jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 
 describe('initial render', () => {
@@ -35,7 +35,7 @@ describe('initial render', () => {
     expect(wrapper.find(SubHeader).length).toBe(1)
   })
   test('should show a collections nav', () => {
-    expect(wrapper.find('CollectionsNav').length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
   })
 
   test('should not show as loading', () => {
@@ -69,7 +69,7 @@ describe('with the collections feature enabled', () => {
         selectCurrentCollection={jest.fn()}
       />,
     )
-    expect(wrapper.find(CollectionsNav).length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
   })
 })
 
@@ -91,7 +91,7 @@ describe('with the force collections feature enabled', () => {
       />,
     )
 
-    expect(wrapper.find(CollectionsNav).length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
   })
   test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
     wrapper = shallow(
@@ -108,7 +108,7 @@ describe('with the force collections feature enabled', () => {
       />,
     )
 
-    expect(wrapper.find(CollectionsNav).length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
   })
 })
 

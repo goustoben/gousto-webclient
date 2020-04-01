@@ -55,7 +55,7 @@ describe('LinkMobileMenu', () => {
       const newProps = {
         ...props,
         isAuthenticated: true,
-        shouldRenderNewMenuDesign: true,
+        shouldRenderAccountLink: true,
       }
       wrapper = shallow(<LinkMobileMenu {...newProps} />)
     })

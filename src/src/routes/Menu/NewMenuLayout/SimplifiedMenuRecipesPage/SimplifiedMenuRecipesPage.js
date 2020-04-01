@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { SimplifiedRecipeListContainer } from '../SimplifiedRecipeList'
-import DetailOverlay from '../../DetailOverlay'
+import { DetailOverlayContainer } from '../../DetailOverlay'
 import Loading from '../../Loading'
 import css from './SimplifiedMenuRecipesPage.css'
 import { VerticalCollectionsNavContainer } from '../VerticalCollectionsNav'
@@ -28,7 +28,7 @@ class SimplifiedMenuRecipesPage extends PureComponent {
         <Loading loading={showLoading} />
         <VerticalCollectionsNavContainer />
         {stateRecipeCount && <SimplifiedRecipeListContainer />}
-        <DetailOverlay
+        <DetailOverlayContainer
           showOverlay={shouldShowOverlay}
         />
       </div>

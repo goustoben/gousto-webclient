@@ -30,7 +30,7 @@ const Ingredient = ({ ingredient }) => {
 }
 
 Ingredient.propTypes = {
-  ingredient: PropTypes.instanceOf(Immutable.Map),
+  ingredient: PropTypes.instanceOf(Immutable.Map).isRequired,
 }
 
-export default Ingredient
+export { Ingredient }

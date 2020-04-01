@@ -4,11 +4,11 @@ import classnames from 'classnames'
 
 import Image from 'routes/Menu/Recipe/Image'
 import Title from 'routes/Menu/Recipe/Title'
-import Rating from 'routes/Menu/Recipe/Rating'
-import AddButton from 'routes/Menu/Recipe/AddButton'
-import RangeBadge from 'routes/Menu/Recipe/RangeBadge'
-import Ingredients from 'routes/Menu/Recipe/Ingredients'
-import Nutrition from 'routes/Menu/Recipe/Detail/Nutrition'
+import { RecipeRating } from 'routes/Menu/Recipe/Rating'
+import { AddButton } from 'routes/Menu/Recipe/AddButton'
+import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
+import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
+import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
 import { detailPropTypes } from 'routes/Menu/Recipe/Detail/Detail'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
@@ -17,7 +17,7 @@ import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
 
 import { Allergens } from '../Allergens/Allergens'
-import IngredientsList from '../IngredientsList/IngredientsList'
+import { IngredientsList } from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
@@ -36,7 +36,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             </div>
           </div>
           <div className={css.badges}>
-            <Rating count={count} average={average} isNew={isNew} />
+            <RecipeRating count={count} average={average} isNew={isNew} />
           </div>
         </div>
         <div className={css.shadow}>
@@ -100,7 +100,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             {!!perPortion.size > 0 && (
               <div className={classnames(css.section, css.splitSection)}>
                 <div className={css.sectionPanel}>
-                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} />
+                  <NutritionInfo perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} />
                   <RecipeMicronutrientsContainer id={id} />
                   <NutritionDisclaimerText />
                 </div>

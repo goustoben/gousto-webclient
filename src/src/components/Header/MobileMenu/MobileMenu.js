@@ -21,7 +21,7 @@ class MobileMenu extends React.PureComponent {
     onLogoutClick: PropTypes.func.isRequired,
     promoCodeUrl: PropTypes.string.isRequired,
     serverError: PropTypes.bool.isRequired,
-    shouldRenderNewMenuDesign: PropTypes.bool.isRequired,
+    shouldRenderAccountLink: PropTypes.bool.isRequired,
     showMobileMenu: PropTypes.func.isRequired,
     trackNavigationClick: PropTypes.func.isRequired,
   }
@@ -72,12 +72,12 @@ class MobileMenu extends React.PureComponent {
   }
 
   render() {
-    const { shouldRenderNewMenuDesign, isAuthenticated, trackNavigationClick } = this.props
+    const { shouldRenderAccountLink, isAuthenticated, trackNavigationClick } = this.props
 
     return (
       <span className={css.linkMobileContainer}>
         {
-          shouldRenderNewMenuDesign
+          shouldRenderAccountLink
             ? <LinkMobileMenu isAuthenticated={isAuthenticated} trackNavigationClick={trackNavigationClick} onLoginClick={this.onLoginClick} />
             : this.renderBurgerMenu()
         }

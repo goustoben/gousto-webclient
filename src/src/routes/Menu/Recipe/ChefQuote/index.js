@@ -1,1 +1,1 @@
-export default from './ChefQuote'
+export { ChefQuote } from './ChefQuote'

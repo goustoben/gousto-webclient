@@ -1,1 +1,1 @@
-export default from './IngredientsList'
+export { IngredientsList } from './IngredientsList'

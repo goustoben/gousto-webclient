@@ -4,16 +4,16 @@ import Immutable from 'immutable'
 import classnames from 'classnames'
 
 import Title from 'routes/Menu/Recipe/Title'
-import Rating from 'routes/Menu/Recipe/Rating'
-import AddButton from 'routes/Menu/Recipe/AddButton'
+import { RecipeRating } from 'routes/Menu/Recipe/Rating'
+import { AddButton } from 'routes/Menu/Recipe/AddButton'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
-import Ingredients from 'routes/Menu/Recipe/Ingredients'
-import Nutrition from 'routes/Menu/Recipe/Detail/Nutrition'
+import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
+import {NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import Carousel from 'routes/Menu/Recipe/Detail/Carousel'
 import { detailPropTypes } from 'routes/Menu/Recipe/Detail/Detail'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
-import IngredientsList from '../IngredientsList/IngredientsList'
+import { IngredientsList } from '../IngredientsList/IngredientsList'
 import { Allergens } from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
@@ -37,7 +37,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
               </div>
             </div>
             <div className={css.rating}>
-              <Rating count={count} average={average} isNew={isNew} />
+              <RecipeRating count={count} average={average} isNew={isNew} />
             </div>
             <hr className={css.rule} />
             <div className={classnames(css.tabletOnly, css.block)}>
@@ -83,7 +83,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
                 )}
               </div>
               <div className={css.oneColumnContainer}>
-                {perPortion.size > 0 ? <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} inset={false} /> : null}
+                {perPortion.size > 0 ? <NutritionInfo perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} inset={false} /> : null}
                 <NutritionDisclaimerText />
               </div>
             </div>
@@ -124,4 +124,4 @@ FineDineInDetail.defaultProps = {
   images: Immutable.List([]),
 }
 
-export default FineDineInDetail
+export { FineDineInDetail }

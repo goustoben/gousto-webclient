@@ -6,11 +6,11 @@ import classnames from 'classnames'
 
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import config from 'config'
-import RangeBadge from '../../Recipe/RangeBadge'
+import { RangeBadge } from '../../Recipe/RangeBadge'
 import css from './GridRecipeSmallTiles.css'
 import Image from '../../Recipe/Image'
-import Rating from '../../Recipe/Rating'
-import AddButton from '../../Recipe/AddButton'
+import { RecipeRating } from '../../Recipe/Rating'
+import { AddButton } from '../../Recipe/AddButton'
 import Title from '../../Recipe/Title'
 import { AttributeGrid } from '../../Recipe/AttributeGrid'
 
@@ -51,7 +51,7 @@ const GridRecipeSmallTiles = ({ onClick, media, title, view,
         </div>
         <div>
           {outOfStock || (
-            <Rating
+            <RecipeRating
               average={averageRating}
               count={ratingCount}
               isNew={isNew}

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
-import RangeBadge from 'routes/Menu/Recipe/RangeBadge'
+import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { recipePropTypes } from 'routes/Menu/Recipe'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
@@ -11,8 +11,8 @@ import css from './GridRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
 import Image from '../Image'
-import Rating from '../Rating'
-import AddButton from '../AddButton'
+import { RecipeRating } from '../Rating'
+import { AddButton } from '../AddButton'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
@@ -64,7 +64,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
           <div>
             {outOfStock || (
-            <Rating
+            <RecipeRating
               average={averageRating}
               count={ratingCount}
               isNew={isNew}

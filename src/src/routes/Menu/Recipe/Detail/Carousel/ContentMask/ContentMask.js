@@ -27,4 +27,4 @@ ContentMask.propTypes = {
   className: PropTypes.string,
 }
 
-export default ContentMask
+export { ContentMask }

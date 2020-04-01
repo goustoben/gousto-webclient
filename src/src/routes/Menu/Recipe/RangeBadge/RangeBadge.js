@@ -84,4 +84,4 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
 RangeBadge.propTypes = propTypes
 RangeBadge.defaultProps = defaultProps
 
-export default RangeBadge
+export { RangeBadge }

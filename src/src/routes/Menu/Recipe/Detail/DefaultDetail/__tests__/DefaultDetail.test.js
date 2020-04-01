@@ -5,7 +5,7 @@ import { shallow } from 'enzyme'
 
 import DefaultDetail from 'routes/Menu/Recipe/Detail/DefaultDetail'
 import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
-import Nutrition from 'routes/Menu/Recipe/Detail/Nutrition'
+import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
 import { NutritionDisclaimerText } from '../../NutritionDisclaimerText'
@@ -183,8 +183,8 @@ describe('<DefaultDetail />', () => {
       })
     })
 
-    test('should return the <Nutrition />', () => {
-      expect(wrapper.find(Nutrition)).toHaveLength(1)
+    test('should return the <NutritionInfo />', () => {
+      expect(wrapper.find(NutritionInfo)).toHaveLength(1)
     })
 
     describe('and showCookingInstruction is true', () => {
@@ -213,8 +213,8 @@ describe('<DefaultDetail />', () => {
       wrapper.setProps({ perPortion: Immutable.fromJS([]) })
     })
 
-    test('should not return the <Nutrition />', () => {
-      expect(wrapper.find(Nutrition).exists()).toBe(false)
+    test('should not return the <NutritionInfo />', () => {
+      expect(wrapper.find(NutritionInfo).exists()).toBe(false)
     })
 
     test('should not return the <CookingInstructions />', () => {
