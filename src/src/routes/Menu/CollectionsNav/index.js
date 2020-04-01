@@ -1,1 +1,1 @@
-export default from './CollectionsNavContainer'
+export { CollectionsNavContainer } from './CollectionsNavContainer'

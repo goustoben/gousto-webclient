@@ -161,4 +161,4 @@ NutritionInfo.defaultProps = {
   inset: true,
 }
 
-export default NutritionInfo
+export { NutritionInfo }

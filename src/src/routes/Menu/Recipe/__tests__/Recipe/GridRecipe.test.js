@@ -5,9 +5,9 @@ import Immutable from 'immutable'
 
 import Title from 'routes/Menu/Recipe/Title'
 import Image from 'routes/Menu/Recipe/Image'
-import Rating from 'routes/Menu/Recipe/Rating'
-import ChefQuote from 'routes/Menu/Recipe/ChefQuote'
-import AddButton from 'routes/Menu/Recipe/AddButton'
+import { RecipeRating } from 'routes/Menu/Recipe/Rating'
+import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
+import { AddButton } from 'routes/Menu/Recipe/AddButton'
 import RecommendedBadge from 'routes/Menu/Recipe/RecommendedBadge'
 
 import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
@@ -54,8 +54,8 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(Image).length).toEqual(1)
       })
 
-      test('should contain one Rating component', () => {
-        expect(wrapper.find(Rating).length).toEqual(1)
+      test('should contain one RecipeRating component', () => {
+        expect(wrapper.find(RecipeRating).length).toEqual(1)
       })
 
       test('should contain one Title component', () => {
@@ -176,8 +176,8 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(AttributeGrid).length).toEqual(0)
       })
 
-      test('should not contain one Rating component', () => {
-        expect(wrapper.find(Rating).length).toEqual(0)
+      test('should not contain one RecipeRating component', () => {
+        expect(wrapper.find(RecipeRating).length).toEqual(0)
       })
     })
   })

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import ChefQuote from 'routes/Menu/Recipe/ChefQuote'
+import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 
 describe('<ChefQuote />', () => {
   let wrapper

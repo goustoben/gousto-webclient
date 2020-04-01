@@ -4,8 +4,8 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import Image from 'routes/Menu/Recipe/Image'
-import Rating from 'routes/Menu/Recipe/Rating'
-import AddButton from 'routes/Menu/Recipe/AddButton'
+import { RecipeRating } from 'routes/Menu/Recipe/Rating'
+import { AddButton } from 'routes/Menu/Recipe/AddButton'
 
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
@@ -63,8 +63,8 @@ describe('<GridRecipeSmallTiles />', () => {
         expect(wrapper.find(Image).length).toEqual(1)
       })
 
-      test('should contain one Rating component', () => {
-        expect(wrapper.find(Rating).length).toEqual(1)
+      test('should contain one RecipeRating component', () => {
+        expect(wrapper.find(RecipeRating).length).toEqual(1)
       })
 
       test('should contain the recipe title', () => {
@@ -107,8 +107,8 @@ describe('<GridRecipeSmallTiles />', () => {
         expect(wrapper.find(AttributeGrid).length).toEqual(0)
       })
 
-      test('should not contain one Rating component', () => {
-        expect(wrapper.find(Rating).length).toEqual(0)
+      test('should not contain one RecipeRating component', () => {
+        expect(wrapper.find(RecipeRating).length).toEqual(0)
       })
     })
 

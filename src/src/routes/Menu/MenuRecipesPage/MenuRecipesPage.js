@@ -3,7 +3,7 @@ import { Alert } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import { CoronaVirusBanner } from 'CoronaVirusBanner'
 
-import CollectionsNav from '../CollectionsNav'
+import { CollectionsNavContainer } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { SimplifiedMenuRecipesPage } from '../NewMenuLayout/SimplifiedMenuRecipesPage'
 import { JustForYouTutorial } from '../JustForYouTutorial'
@@ -163,7 +163,7 @@ export class MenuRecipesPage extends PureComponent {
             </div>
           )}
         <Loading loading={showLoading} />
-        {!showLoading && <CollectionsNav />}
+        {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid isFoodBrandClickable />}
       </div>
     )

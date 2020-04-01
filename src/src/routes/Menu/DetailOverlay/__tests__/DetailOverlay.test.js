@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import Overlay from 'Overlay'
 import Detail from 'routes/Menu/Recipe/Detail'
-import DetailOverlay from 'routes/Menu/DetailOverlay/DetailOverlay'
+import { DetailOverlay } from 'routes/Menu/DetailOverlay/DetailOverlay'
 
 jest.mock('routes/Menu/Recipe/Detail')
 

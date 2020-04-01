@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import css from './IngredientsList.css'
-import SubIngredients from '../SubIngredients/SubIngredients'
+import { SubIngredients } from '../SubIngredients/SubIngredients'
 
 const capitalizeFirstLetter = (string) => (
   string.charAt(0).toUpperCase() + string.slice(1)
@@ -34,8 +34,8 @@ const IngredientsList = ({ ingredients, allergens, inset }) => (
 )
 
 IngredientsList.propTypes = {
-  ingredients: PropTypes.instanceOf(Immutable.List),
-  allergens: PropTypes.instanceOf(Immutable.List),
+  ingredients: PropTypes.instanceOf(Immutable.List).isRequired,
+  allergens: PropTypes.instanceOf(Immutable.List).isRequired,
   inset: PropTypes.bool,
 }
 
@@ -43,4 +43,4 @@ IngredientsList.defaultProps = {
   inset: true,
 }
 
-export default IngredientsList
+export { IngredientsList }

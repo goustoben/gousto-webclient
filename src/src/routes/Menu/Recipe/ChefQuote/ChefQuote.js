@@ -44,8 +44,8 @@ const ChefQuote = ({ chef, quote }) => {
 }
 
 ChefQuote.propTypes = {
-  chef: PropTypes.instanceOf(Immutable.Map),
+  chef: PropTypes.instanceOf(Immutable.Map).isRequired,
   quote: PropTypes.string.isRequired,
 }
 
-export default ChefQuote
+export { ChefQuote }

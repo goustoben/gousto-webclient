@@ -1,1 +1,1 @@
-export default from './DetailOverlayContainer'
+export { DetailOverlayContainer } from './DetailOverlayContainer'

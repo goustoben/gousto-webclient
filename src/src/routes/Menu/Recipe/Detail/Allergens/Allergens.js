@@ -29,7 +29,7 @@ const Allergens = ({ allergens, inset }) => (
 )
 
 Allergens.propTypes = {
-  allergens: PropTypes.instanceOf(Immutable.List),
+  allergens: PropTypes.instanceOf(Immutable.List).isRequired,
   inset: PropTypes.bool,
 }
 

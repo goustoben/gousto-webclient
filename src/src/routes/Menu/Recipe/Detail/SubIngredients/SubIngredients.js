@@ -22,8 +22,8 @@ const SubIngredients = ({ subIngredients, allergens }) => (
 )
 
 SubIngredients.propTypes = {
-  subIngredients: PropTypes.array,
-  allergens: PropTypes.instanceOf(Immutable.List),
+  subIngredients: PropTypes.array.isRequired,
+  allergens: PropTypes.instanceOf(Immutable.List).isRequired,
 }
 
-export default SubIngredients
+export { SubIngredients }

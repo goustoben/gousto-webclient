@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 
-import FineDineInDetail from 'routes/Menu/Recipe/Detail/FineDineInDetail'
+import { FineDineInDetail } from 'routes/Menu/Recipe/Detail/FineDineInDetail'
 import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
-import Nutrition from 'routes/Menu/Recipe/Detail/Nutrition'
+import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
 
 describe('<FineDineInDetail />', () => {
@@ -142,7 +142,7 @@ describe('<FineDineInDetail />', () => {
     })
   })
 
-  describe('<Nutrition />', () => {
+  describe('<NutritionInfo />', () => {
     describe('when perPortion is not empty', () => {
       beforeEach(() => {
         wrapper.setProps({
@@ -160,8 +160,8 @@ describe('<FineDineInDetail />', () => {
         })
       })
 
-      test('should return the <Nutrition />', () => {
-        expect(wrapper.find(Nutrition)).toHaveLength(1)
+      test('should return the <NutritionInfo />', () => {
+        expect(wrapper.find(NutritionInfo)).toHaveLength(1)
       })
     })
 
@@ -172,8 +172,8 @@ describe('<FineDineInDetail />', () => {
     describe('when perPortion is empty', () => {
       beforeEach(() => { wrapper.setProps({ perPortion: Immutable.fromJS([]) }) })
 
-      test('should not return the <Nutrition />', () => {
-        expect(wrapper.find(Nutrition).exists()).toBe(false)
+      test('should not return the <NutritionInfo />', () => {
+        expect(wrapper.find(NutritionInfo).exists()).toBe(false)
       })
     })
   })

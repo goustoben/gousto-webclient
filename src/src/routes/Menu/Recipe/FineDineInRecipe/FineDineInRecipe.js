@@ -5,11 +5,11 @@ import classnames from 'classnames'
 
 import { recipePropTypes } from 'routes/Menu/Recipe'
 import { getChef } from 'utils/recipe'
-import RangeBadge from 'routes/Menu/Recipe/RangeBadge'
+import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { Pill } from 'goustouicomponents'
 import css from './FineDineInRecipe.css'
 import Title from '../Title'
-import AddButton from '../AddButton'
+import { AddButton } from '../AddButton'
 import { StockBadge } from '../StockBadge'
 import { RecipeAttribute } from '../RecipeAttribute'
 import { SoldOutOverlay } from '../SoldOutOverlay'
@@ -27,7 +27,7 @@ const propTypes = {
     celebrity: PropTypes.bool,
   }),
   isRecommendedRecipe: PropTypes.bool,
-  inBasket: PropTypes.bool,
+  inBasket: PropTypes.bool.isRequired,
   cookingTime: PropTypes.number.isRequired,
   features: PropTypes.instanceOf(Immutable.Map).isRequired,
   highlight: PropTypes.func,

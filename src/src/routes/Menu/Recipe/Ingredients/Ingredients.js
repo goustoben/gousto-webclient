@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import css from './Ingredients.css'
-import Ingredient from './Ingredient.js'
+import { Ingredient } from './Ingredient.js'
 
 const Ingredients = ({ ingredients, inset }) => (
   <div>
@@ -34,4 +34,4 @@ Ingredients.defaultProps = {
   inset: true,
 }
 
-export default Ingredients
+export { Ingredients }

@@ -4,8 +4,8 @@ import Immutable from 'immutable'
 
 import Image from 'routes/Menu/Recipe/Image'
 import SlickCarousel from 'Carousel'
-import ContentMask from 'routes/Menu/Recipe/Detail/Carousel/ContentMask'
-import Arrow from 'routes/Menu/Recipe/Detail/Carousel/Arrow'
+import { ContentMask } from 'routes/Menu/Recipe/Detail/Carousel/ContentMask'
+import { Arrow } from 'routes/Menu/Recipe/Detail/Carousel/Arrow'
 import css from './Carousel.css'
 
 const Carousel = ({ images, media, view, dots, arrows, stock, inBasket }) => (

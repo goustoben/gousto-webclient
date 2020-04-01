@@ -14,14 +14,6 @@ import css from './CollectionsNav.css'
 const MOBILE_BREAKPOINT = 543
 
 class CollectionsNav extends React.PureComponent {
-  static propTypes = {
-    menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-    menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-    collectionFilterChange: PropTypes.func.isRequired,
-    menuCurrentCollectionId: PropTypes.string,
-    isPolicyAccepted: PropTypes.bool,
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -32,7 +24,8 @@ class CollectionsNav extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.centerCollection(this.props.menuCurrentCollectionId, false)
+    const { menuCurrentCollectionId } = this.props
+    this.centerCollection(menuCurrentCollectionId, false)
 
     window.addEventListener('scroll', this.onScroll)
     window.addEventListener('resize', this.onResize)
@@ -102,27 +95,31 @@ class CollectionsNav extends React.PureComponent {
       const { navBarOffsetTop, scrolledPastPoint } = this.state
       const scrollState = getScrollOffset(navBarOffsetTop, animationThreshold, scrolledPastPoint)
 
-      scrollState && this.setState({
-        ...this.state,
-        scrolledPastPoint: scrollState.scrolledPastPoint,
-        scrollJumped: scrollState.scrollJumped,
-      })
+      if (scrollState) {
+        this.setState((state) => ({
+          ...state,
+          scrolledPastPoint: scrollState.scrolledPastPoint,
+          scrollJumped: scrollState.scrollJumped,
+        }))
+      }
     }
   }
 
   checkSize = (force) => {
+    const { menuCurrentCollectionId, menuCollections } = this.props
     if (this.hasResized || force) {
       this.hasResized = false
       this.showHideArrows()
-      if (this.props.menuCollections.size > 0) {
-        this.centerCollection(this.props.menuCurrentCollectionId, true)
+      if (menuCollections.size > 0) {
+        this.centerCollection(menuCurrentCollectionId, true)
       }
     }
   }
 
   showHideArrows = () => {
-    if (this.props.menuCollections.size > 0) {
-      const collectionIds = this.props.menuCollections
+    const { menuCollections } = this.props
+    if (menuCollections.size > 0) {
+      const collectionIds = menuCollections
         .map(collection => collection.get('id'))
         .toList()
       const lastCollectionId = collectionIds.last()
@@ -136,10 +133,111 @@ class CollectionsNav extends React.PureComponent {
   }
 
   checkNavScroll = () => {
+    const { menuCurrentCollectionId } = this.props
     if (this.hasNavScrolled) {
       this.hasNavScrolled = false
-      this.evaluatePosition(this.props.menuCurrentCollectionId, this.eles.parent.scrollLeft)
+      this.evaluatePosition(menuCurrentCollectionId, this.eles.parent.scrollLeft)
     }
+  }
+
+  evaluatePosition = (newCollectionId, destinationScrollLeft) => {
+    let isAtStart = false
+    let isAtEnd = false
+
+    if (destinationScrollLeft || destinationScrollLeft === 0) {
+      const max = this.eles.parent.scrollWidth - this.eles.parent.clientWidth
+      if (destinationScrollLeft === 0) {
+        isAtStart = true
+      }
+      if (destinationScrollLeft >= max) {
+        isAtEnd = true
+      }
+    }
+
+    this.setState({
+      isAtStart,
+      isAtEnd,
+    })
+  }
+
+  prevCollection = () => {
+    const { menuCurrentCollectionId, menuCollections, collectionFilterChange } = this.props
+    const prevIdx = menuCollections
+      .map(collection => collection.get('id'))
+      .toList()
+      .indexOf(menuCurrentCollectionId) - 1
+
+    let prevCollectionId = null
+    if (prevIdx >= 0) {
+      prevCollectionId = menuCollections.toList().getIn([prevIdx, 'id'], null)
+    }
+
+    if (getWindow().innerWidth < MOBILE_BREAKPOINT && prevCollectionId) {
+      collectionFilterChange(prevCollectionId)
+    } else {
+      let offsetWidth = 0
+
+      if (this.eles[prevCollectionId]) {
+        offsetWidth = this.eles[prevCollectionId].offsetWidth
+      } else if (this.eles[menuCurrentCollectionId]) {
+        offsetWidth = this.eles[menuCurrentCollectionId].offsetWidth
+      }
+
+      if (this.eles.parent) {
+        const target = this.eles.parent.scrollLeft - offsetWidth
+        this.scrollNavbar(target, true, null, true)
+      }
+    }
+  }
+
+  nextCollection = () => {
+    const { menuCurrentCollectionId, menuCollections, collectionFilterChange } = this.props
+    const nextIdx = menuCollections
+      .map(collection => collection.get('id'))
+      .toList()
+      .indexOf(menuCurrentCollectionId) + 1
+
+    let nextCollectionId = null
+    if (nextIdx <= menuCollections.size) {
+      nextCollectionId = menuCollections.toList().getIn([nextIdx, 'id'], null)
+    }
+    if (getWindow().innerWidth < MOBILE_BREAKPOINT && nextCollectionId) {
+      collectionFilterChange(nextCollectionId)
+    } else {
+      let offsetWidth = 0
+
+      if (this.eles[nextCollectionId]) {
+        offsetWidth = this.eles[nextCollectionId].offsetWidth
+      } else if (this.eles[menuCurrentCollectionId]) {
+        offsetWidth = this.eles[menuCurrentCollectionId].offsetWidth
+      }
+
+      if (this.eles.parent) {
+        const target = this.eles.parent.scrollLeft + offsetWidth
+        this.scrollNavbar(target, true, null, true)
+      }
+    }
+  }
+
+  changeCollection = (collectionId) => {
+    const { collectionFilterChange } = this.props
+    const { navBarOffsetTop } = this.state
+    if (!collectionId) return
+    collectionFilterChange(collectionId)
+    const position = 0
+    if (document && document.body) {
+      if (actual('width', 'px') < 768) {
+        top(document.body, position)
+      }
+    }
+    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (navBarOffsetTop + 1)) {
+      window.scrollTo(0, navBarOffsetTop)
+    }
+  }
+
+  checkCollectionOffsetTop = () => {
+    const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
+    this.setState({ ...this.state, navBarOffsetTop: offsetTopNavBar})
   }
 
   isElementVisible(ele, parent) {
@@ -180,103 +278,6 @@ class CollectionsNav extends React.PureComponent {
     this.evaluatePosition(collectionId, target)
   }
 
-  evaluatePosition = (newCollectionId, destinationScrollLeft) => {
-    let isAtStart = false
-    let isAtEnd = false
-
-    if (destinationScrollLeft || destinationScrollLeft === 0) {
-      const max = this.eles.parent.scrollWidth - this.eles.parent.clientWidth
-      if (destinationScrollLeft === 0) {
-        isAtStart = true
-      }
-      if (destinationScrollLeft >= max) {
-        isAtEnd = true
-      }
-    }
-
-    this.setState({
-      isAtStart,
-      isAtEnd,
-    })
-  }
-
-  prevCollection = () => {
-    const prevIdx = this.props.menuCollections
-      .map(collection => collection.get('id'))
-      .toList()
-      .indexOf(this.props.menuCurrentCollectionId) - 1
-
-    let prevCollectionId = null
-    if (prevIdx >= 0) {
-      prevCollectionId = this.props.menuCollections.toList().getIn([prevIdx, 'id'], null)
-    }
-
-    if (getWindow().innerWidth < MOBILE_BREAKPOINT && prevCollectionId) {
-      this.props.collectionFilterChange(prevCollectionId)
-    } else {
-      let offsetWidth = 0
-
-      if (this.eles[prevCollectionId]) {
-        offsetWidth = this.eles[prevCollectionId].offsetWidth
-      } else if (this.eles[this.props.menuCurrentCollectionId]) {
-        offsetWidth = this.eles[this.props.menuCurrentCollectionId].offsetWidth
-      }
-
-      if (this.eles.parent) {
-        const target = this.eles.parent.scrollLeft - offsetWidth
-        this.scrollNavbar(target, true, null, true)
-      }
-    }
-  }
-
-  nextCollection = () => {
-    const nextIdx = this.props.menuCollections
-      .map(collection => collection.get('id'))
-      .toList()
-      .indexOf(this.props.menuCurrentCollectionId) + 1
-
-    let nextCollectionId = null
-    if (nextIdx <= this.props.menuCollections.size) {
-      nextCollectionId = this.props.menuCollections.toList().getIn([nextIdx, 'id'], null)
-    }
-    if (getWindow().innerWidth < MOBILE_BREAKPOINT && nextCollectionId) {
-      this.props.collectionFilterChange(nextCollectionId)
-    } else {
-      let offsetWidth = 0
-
-      if (this.eles[nextCollectionId]) {
-        offsetWidth = this.eles[nextCollectionId].offsetWidth
-      } else if (this.eles[this.props.menuCurrentCollectionId]) {
-        offsetWidth = this.eles[this.props.menuCurrentCollectionId].offsetWidth
-      }
-
-      if (this.eles.parent) {
-        const target = this.eles.parent.scrollLeft + offsetWidth
-        this.scrollNavbar(target, true, null, true)
-      }
-    }
-  }
-
-  changeCollection = (collectionId) => {
-    const { navBarOffsetTop } = this.state
-    if (!collectionId) return
-    this.props.collectionFilterChange(collectionId)
-    const position = 0
-    if (document && document.body) {
-      if (actual('width', 'px') < 768) {
-        top(document.body, position)
-      }
-    }
-    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (navBarOffsetTop + 1)) {
-      window.scrollTo(0, navBarOffsetTop)
-    }
-  }
-
-  checkCollectionOffsetTop = () => {
-    const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
-    this.setState({ ...this.state, navBarOffsetTop: offsetTopNavBar})
-  }
-
   render() {
     const {
       menuCollections,
@@ -284,15 +285,20 @@ class CollectionsNav extends React.PureComponent {
       menuCurrentCollectionId,
     } = this.props
 
-    let className = this.state.scrolledPastPoint ? css.navBarContainerFixed : css.navBarContainer
-    if (this.state.scrollJumped) {
+    const {
+      scrolledPastPoint,
+      scrollJumped
+    } = this.state
+
+    let className = scrolledPastPoint ? css.navBarContainerFixed : css.navBarContainer
+    if (scrollJumped) {
       className = css.navBarContainerFixedTransition
     }
 
-    let leftArrowClassName = this.state.scrolledPastPoint ? css.arrowLeftFixed : css.arrowLeft
-    let rightArrowClassName = this.state.scrolledPastPoint ? css.arrowRightFixed : css.arrowRight
+    let leftArrowClassName = scrolledPastPoint ? css.arrowLeftFixed : css.arrowLeft
+    let rightArrowClassName = scrolledPastPoint ? css.arrowRightFixed : css.arrowRight
 
-    if (this.state.scrollJumped) {
+    if (scrollJumped) {
       leftArrowClassName = css.arrowLeftFixedTransition
       rightArrowClassName = css.arrowRightFixedTransition
     }
@@ -338,7 +344,17 @@ class CollectionsNav extends React.PureComponent {
   }
 }
 
-CollectionsNav.defaultProps = {
-  menuCollections: Immutable.OrderedMap({}),
+CollectionsNav.propTypes = {
+  menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
+  menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+  collectionFilterChange: PropTypes.func.isRequired,
+  menuCurrentCollectionId: PropTypes.string,
+  isPolicyAccepted: PropTypes.bool,
 }
-export default CollectionsNav
+
+CollectionsNav.defaultProps = {
+  menuCurrentCollectionId: null,
+  isPolicyAccepted: false
+}
+
+export { CollectionsNav }

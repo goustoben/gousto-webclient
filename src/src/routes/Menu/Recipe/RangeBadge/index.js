@@ -1,1 +1,1 @@
-export default from './RangeBadge'
+export { RangeBadge } from './RangeBadge'

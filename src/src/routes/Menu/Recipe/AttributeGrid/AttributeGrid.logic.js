@@ -58,8 +58,4 @@ AttributeGrid.propTypes = {
   dairyFree: PropTypes.bool,
 }
 
-AttributeGrid.defaultProps = {
-  fiveADay: 0,
-}
-
 export { AttributeGrid }

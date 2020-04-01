@@ -1,1 +1,1 @@
-export default from './Nutrition'
+export { NutritionInfo } from './Nutrition'

@@ -7,20 +7,6 @@ import { RecipeGrid } from '../RecipeGrid'
 import css from './FilteredRecipePage.css'
 
 class FilteredRecipePage extends PureComponent {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    borderColor: PropTypes.string.isRequired,
-    backToAllRecipes: PropTypes.func.isRequired,
-    recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-    filteredRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
-    isFoodBrandClickable: PropTypes.bool
-  }
-
-  static defaultProps = {
-    isFoodBrandClickable: true
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -67,6 +53,20 @@ class FilteredRecipePage extends PureComponent {
       </section>
     )
   }
+}
+
+FilteredRecipePage.propTypes = {
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  borderColor: PropTypes.string.isRequired,
+  backToAllRecipes: PropTypes.func.isRequired,
+  recipes: PropTypes.instanceOf(Immutable.List).isRequired,
+  filteredRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
+  isFoodBrandClickable: PropTypes.bool
+}
+
+FilteredRecipePage.defaultProps = {
+  isFoodBrandClickable: true
 }
 
 export { FilteredRecipePage }

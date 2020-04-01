@@ -11,7 +11,7 @@ import Helmet from 'react-helmet'
 import Link from 'Link'
 import Image from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
-import Rating from 'routes/Menu/Recipe/Rating'
+import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
 import Title from 'routes/Menu/Recipe/Title'
 import { H1 } from 'Page/Header'
@@ -149,14 +149,14 @@ describe('Hub', () => {
       ).toHaveLength(1)
     })
 
-    test('should have a Rating child in first Col', () => {
+    test('should have a RecipeRating child in first Col', () => {
       expect(
         wrapper
           .children(PageContent)
           .children(Row)
           .children(Col)
           .first()
-          .find(Rating),
+          .find(RecipeRating),
       ).toHaveLength(1)
     })
 

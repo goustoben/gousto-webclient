@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 
 import Image from 'routes/Menu/Recipe/Image'
 import Title from 'routes/Menu/Recipe/Title'
-import ChefQuote from 'routes/Menu/Recipe/ChefQuote'
+import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
 import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'

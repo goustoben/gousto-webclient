@@ -4,18 +4,6 @@ import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 import css from './Rating.css'
 
 class RecipeRating extends React.Component {
-  static propTypes = {
-    count: PropTypes.number,
-    average: PropTypes.number,
-    view: PropTypes.string,
-    isNew: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    count: 0,
-    average: 0,
-  }
-
   showStar(avg) {
     let i
     const stars = []
@@ -36,16 +24,17 @@ class RecipeRating extends React.Component {
   }
 
   render() {
-    if (this.props.count > 0) {
+    const { count, average, view, isNew } = this.props
+    if (count > 0) {
       return (
         <span className={css.ratingContainer}>
           <span className={css.starColor}>
-            {this.showStar(this.props.average)}
+            {this.showStar(average)}
           </span>
-          {this.props.view !== 'simple' && (
+          {view !== 'simple' && (
             <span className={css.description}>
               {' '}
-              {this.props.count}
+              {count}
               {' '}
               reviews
             </span>
@@ -54,7 +43,7 @@ class RecipeRating extends React.Component {
       )
     }
 
-    const newTag = this.props.isNew ? 'New Recipe' : ''
+    const newTag = isNew ? 'New Recipe' : ''
 
     return (
       <span>
@@ -64,4 +53,17 @@ class RecipeRating extends React.Component {
   }
 }
 
-export default RecipeRating
+RecipeRating.propTypes = {
+  count: PropTypes.number,
+  average: PropTypes.number,
+  view: PropTypes.string,
+  isNew: PropTypes.bool.isRequired,
+}
+
+RecipeRating.defaultProps = {
+  count: 0,
+  average: 0,
+  view: null
+}
+
+export { RecipeRating }

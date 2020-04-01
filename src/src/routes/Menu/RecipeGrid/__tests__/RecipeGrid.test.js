@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { RecipeList } from 'routes/Menu/RecipeList'
-import DetailOverlay from 'routes/Menu/DetailOverlay'
+import { DetailOverlayContainer } from 'routes/Menu/DetailOverlay'
 
 describe('RecipeGrid', () => {
   const wrapper = shallow(
@@ -21,7 +21,7 @@ describe('RecipeGrid', () => {
     expect(wrapper.find(RecipeList)).toHaveLength(1)
   })
   test('should render a DetailOverlay component', () => {
-    expect(wrapper.find(DetailOverlay)).toHaveLength(1)
+    expect(wrapper.find(DetailOverlayContainer)).toHaveLength(1)
   })
 })
 

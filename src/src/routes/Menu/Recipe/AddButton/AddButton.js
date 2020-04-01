@@ -12,10 +12,10 @@ const AddButton = ({ id, inBasket, position, stock, view}) => (
 
 AddButton.propTypes = {
   id: PropTypes.string.isRequired,
-  inBasket: PropTypes.bool,
+  inBasket: PropTypes.bool.isRequired,
   position: PropTypes.number,
-  stock: PropTypes.number,
+  stock: PropTypes.number.isRequired,
   view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
 }
 
-export default AddButton
+export { AddButton }
