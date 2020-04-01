@@ -3,12 +3,14 @@ import React from 'react'
 import moment from 'moment'
 import config from 'config'
 import classNames from 'classnames'
+
+import { addUserIdToHelpUrl } from 'utils/url'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import Svg from 'components/Svg'
 import Link from 'Link'
 import css from './Footer.css'
 
-const Footer = ({ simple, type, copyright }) => {
+const Footer = ({ isAuthenticated, simple, type, copyright, userId }) => {
   const clientRoutes = config.routes.client
 
   const renderTermsLink = () => (
@@ -46,49 +48,47 @@ const Footer = ({ simple, type, copyright }) => {
     </ul>
   )
 
-  const renderFullList = () => {
-    const getHelpRoute = clientRoutes.getHelp
-
-    return (
-      <ul className={css.menuList}>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
-        </li>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link
-            to={`${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
-            data-selid="footer-learn-more"
-            title="Help"
-            clientRouted={false}
-            secondary
-          >
-            Help
-          </Link>
-        </li>
-        {renderTermsLink()}
-        <li className={css.menuItem}>
-          <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.weCare} data-selid="footer-we-care" title="We Care" clientRouted={false} secondary>We Care</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
-        </li>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
-        </li>
-        {renderPrivacyLink()}
-        {renderModernSlaveryLink()}
-      </ul>
-    )
-  }
+  const renderFullList = () => (
+    <ul className={css.menuList}>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
+      </li>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link
+          to={addUserIdToHelpUrl(isAuthenticated, userId)}
+          data-selid="footer-learn-more"
+          title="Help"
+          clientRouted={false}
+          secondary
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Help
+        </Link>
+      </li>
+      {renderTermsLink()}
+      <li className={css.menuItem}>
+        <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.weCare} data-selid="footer-we-care" title="We Care" clientRouted={false} secondary>We Care</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
+      </li>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
+      </li>
+      {renderPrivacyLink()}
+      {renderModernSlaveryLink()}
+    </ul>
+  )
 
   const renderSocial = () => (
     <div className={css.appLinks}>
@@ -201,15 +201,19 @@ const Footer = ({ simple, type, copyright }) => {
 }
 
 Footer.propTypes = {
+  isAuthenticated: PropTypes.bool,
   simple: PropTypes.bool,
   type: PropTypes.string,
   copyright: PropTypes.bool,
+  userId: PropTypes.string,
 }
 
 Footer.defaultProps = {
+  isAuthenticated: false,
   simple: false,
   type: 'medium',
   copyright: true,
+  userId: null,
 }
 
 export default Footer

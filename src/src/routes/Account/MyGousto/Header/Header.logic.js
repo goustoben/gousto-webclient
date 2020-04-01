@@ -7,10 +7,11 @@ import logger from 'utils/logger'
 import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import {
   findNewestOrder,
-  isOrderBeingDeliveredToday,
-  isOrderEligibleForSelfRefundResolution
+  isOrderBeingDeliveredToday
 } from 'utils/order'
 import { HeaderPresentation } from './Header.presentation'
+
+const ELIGIBILITY_DAYS = 10
 
 class Header extends PureComponent {
   constructor(props) {
@@ -121,10 +122,7 @@ class Header extends PureComponent {
       trackNextBoxTrackingClick,
       trackOrderNotEligibleForSelfServiceResolutionClick,
     } = this.props
-    const {
-      hasTooltipForNextOrder,
-      hasTooltipForPreviousOrder
-    } = this.state
+    const { hasTooltipForNextOrder, hasTooltipForPreviousOrder } = this.state
     const now = moment()
     const nextOrder = findNewestOrder(orders, true)
     const previousOrder = findNewestOrder(orders, false)
@@ -132,13 +130,12 @@ class Header extends PureComponent {
     const numberOfDaysSincePreviousOrder = previousOrder
       && now.diff(moment(previousOrder.get('deliveryDate')), 'days', true)
     const previousOrderMessage = this.formatPreviousBoxDate(previousOrder, now)
-    const isOrderEligible = isOrderEligibleForSelfRefundResolution(
-      previousOrder
-    )
-    const getHelpQueryParam = isOrderEligible
+    const isOrderElegibleForSelfRefundResolution = numberOfDaysSincePreviousOrder
+      && numberOfDaysSincePreviousOrder < ELIGIBILITY_DAYS
+    const getHelpQueryParam = isOrderElegibleForSelfRefundResolution
       && `?orderId=${previousOrder.get('id')}`
     const loaded = nextOrder || previousOrder
-    const onPreviousBoxGetHelpClick = isOrderEligible
+    const onPreviousBoxGetHelpClick = isOrderElegibleForSelfRefundResolution
       ? () => {}
       : () => {
         const parsedNumberOfDaysSincePreviousOrder = parseInt(

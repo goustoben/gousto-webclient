@@ -70,6 +70,8 @@ class BurgerMobileMenu extends React.PureComponent {
         )
       }
 
+      const openNewTab = menuItem.name === 'Help'
+
       return (
         <Link
           to={menuItem.url}
@@ -77,6 +79,8 @@ class BurgerMobileMenu extends React.PureComponent {
           key={menuItem.name}
           clientRouted={menuItem.clientRouted}
           tracking={() => trackNavigationClick(menuItem.tracking)}
+          target={openNewTab ? '_blank' : null}
+          rel={openNewTab ? 'noopener noreferrer' : null}
         >
           <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
             {menuItem.name}

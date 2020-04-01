@@ -66,10 +66,16 @@ describe('Header', () => {
     expect(wrapper.find('Connect(SubscriptionPause)').exists()).toBe(true)
   })
 
+  test('opens the Help link into a new tab', () => {
+    const helpLink = wrapper.findWhere(n => n.prop('to') === routesConfig.zendesk.faqs)
+
+    expect(helpLink.prop('target')).toBe('_blank')
+  })
+
   test('does not open other links in a new tab', () => {
     const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
 
-    expect(linksWithNewTab).toHaveLength(0)
+    expect(linksWithNewTab).toHaveLength(1)
   })
 
   describe('use app cta', () => {
@@ -287,7 +293,6 @@ describe('Header', () => {
     })
 
     test('renders menu items in correct order', () => {
-      const getHelpRoute = routesConfig.client.getHelp
       const expected = [
         {
           clientRouted: true,
@@ -345,7 +350,7 @@ describe('Header', () => {
         {
           clientRouted: false,
           name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
+          url: `${routesConfig.zendesk.faqs}/?user_id=123`,
           tracking: 'FAQNavigation Clicked',
         }
       ]
@@ -353,20 +358,20 @@ describe('Header', () => {
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
     })
 
-    test('on desktop the help links to eligibility check page', () => {
+    test('on desktop the help link has user_id as a parameter', () => {
       const helpLink = wrapper.find('GoustoLink').at(4)
 
-      expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
+      expect(helpLink.prop('to')).toContain('?user_id=123')
     })
 
-    test('on mobile the help links to eligibility check page', () => {
+    test('on mobile the help link has user_id as a parameter', () => {
       const helpMenuItem = wrapper
         .find('MobileMenu')
         .prop('mobileMenuItems')
         .filter((menuItem) => menuItem.name === 'Help')
         .pop()
 
-      expect(helpMenuItem.url).toContain('get-help/eligibility-check')
+      expect(helpMenuItem.url).toContain('?user_id=123')
     })
   })
 
@@ -388,7 +393,6 @@ describe('Header', () => {
     })
 
     test('should render menu items in correct order when logged out', () => {
-      const getHelpRoute = routesConfig.client.getHelp
       const expected = [
         {
           clientRouted: true,
@@ -416,11 +420,27 @@ describe('Header', () => {
         {
           clientRouted: false,
           name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
+          url: routesConfig.zendesk.faqs,
           tracking: 'FAQNavigation Clicked',
         }
       ]
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
+    })
+
+    test('on desktop the help link does not have user_id as a parameter', () => {
+      const helpLink = wrapper.find('GoustoLink').at(4)
+
+      expect(helpLink.prop('to')).not.toContain('?user_id=123')
+    })
+
+    test('on mobile the help link does not have user_id as a parameter', () => {
+      const helpMenuItem = wrapper
+        .find('MobileMenu')
+        .prop('mobileMenuItems')
+        .filter((menuItem) => menuItem.name === 'Help')
+        .pop()
+
+      expect(helpMenuItem.url).not.toContain('?user_id=123')
     })
   })
 

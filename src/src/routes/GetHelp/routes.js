@@ -7,15 +7,14 @@ import { checkValidSession } from 'utils/routes'
 import { GetHelpContainer } from './GetHelpContainer'
 import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 
+import { Refund } from './Refund'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
 import { Delivery } from './Delivery'
-import { EligibilityCheck } from './EligibilityCheck'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
 import { RecipeCards } from './RecipeCards'
-import { Refund } from './Refund'
 
 const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
@@ -36,7 +35,6 @@ const getHelpRoutes = (store) => {
         {Confirmation}
         {Contact}
         {Delivery}
-        {EligibilityCheck}
         {Ingredients}
         {IngredientIssues}
         {IngredientReasons}

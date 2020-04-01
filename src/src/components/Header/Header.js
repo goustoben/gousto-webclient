@@ -15,6 +15,7 @@ import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import CookieBanner from 'CookieBanner'
+import { addUserIdToHelpUrl } from 'utils/url'
 import { Button } from 'goustouicomponents'
 import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
@@ -63,7 +64,7 @@ class Header extends React.PureComponent {
   }
 
   isExternalLink = (menuItemName) => {
-    const externalLinkNames = []
+    const externalLinkNames = ['help']
 
     return externalLinkNames.includes(menuItemName.toLowerCase())
   }
@@ -87,8 +88,7 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest } = this.props
-    const getHelpRoute = client.getHelp
+    const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest, userId } = this.props
     const menuItems = isAccountTabNameTest
       ? deepCloneObject(experimentalMenuItems)
       : deepCloneObject(defaultMenuItems)
@@ -98,7 +98,7 @@ class Header extends React.PureComponent {
       pathLocal = `/${pathLocal}`
     }
 
-    menuItems.faq.url = `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`
+    menuItems.faq.url = addUserIdToHelpUrl(isAuthenticated, userId)
 
     Object.keys(menuItems).forEach(menuItem => {
       const currentMenuItem = menuItems[menuItem]
@@ -422,6 +422,7 @@ Header.propTypes = {
   small: PropTypes.bool,
   title: PropTypes.string,
   trackNavigationClick: PropTypes.func,
+  userId: PropTypes.string,
 }
 
 Header.defaultProps = {
@@ -438,6 +439,7 @@ Header.defaultProps = {
   small: false,
   title: '',
   trackNavigationClick: () => { },
+  userId: null,
 }
 
 export { Header }

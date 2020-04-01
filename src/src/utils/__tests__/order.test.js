@@ -6,7 +6,6 @@ import {
   getConfirmationPromoCode,
   getPreviewOrderErrorName,
   findNewestOrder,
-  isOrderEligibleForSelfRefundResolution,
 } from 'utils/order'
 
 const deliveryDateFormat = 'YYYY-MM-DD HH:mm:ss'
@@ -273,50 +272,6 @@ describe('order utils', () => {
           })
           expect(order).toEqual(expectedPreviousOrder)
         })
-      })
-    })
-  })
-
-  describe('given isOrderEligibleForSelfRefundResolution is called', () => {
-    describe('when number of days since previous order is under the eligibility threshold', () => {
-      let previousOrder
-
-      beforeEach(() => {
-        previousOrder = findNewestOrder(pastOrder, false)
-      })
-
-      test('order is eligible', () => {
-        expect(isOrderEligibleForSelfRefundResolution(previousOrder)).toBe(true)
-      })
-    })
-
-    describe('when number of days since previous order is not under the eligibility threshold', () => {
-      let previousOrder
-      const notEligibleOrders = Immutable.fromJS({
-        99: {
-          deliveryDate: moment().subtract(12, 'days').format(deliveryDateFormat),
-          deliverySlot: {
-            deliveryEnd: '18:59:59',
-            deliveryStart: '08:00:00'
-          },
-          id: '99',
-        },
-        100: {
-          deliveryDate: moment().subtract(20, 'days').format(deliveryDateFormat),
-          deliverySlot: {
-            deliveryEnd: '18:59:59',
-            deliveryStart: '08:00:00'
-          },
-          id: '100',
-        }
-      })
-
-      beforeEach(() => {
-        previousOrder = findNewestOrder(notEligibleOrders, false)
-      })
-
-      test('order is not eligible', () => {
-        expect(isOrderEligibleForSelfRefundResolution(previousOrder)).toBe(false)
       })
     })
   })
