@@ -18,26 +18,25 @@ const getContent = ({ content }) => ({
     || 'Contact Us',
 })
 
-const validState = (state) => (typeof state !== 'undefined')
-
 const getError = ({ error }) => {
-  const errorRequest = error.get(actionTypes.RECIPES_RECEIVE)
-    || error.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID)
+  const errorRequest = error.get(actionTypes.RECIPES_RECEIVE, null)
+    || error.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, null)
 
-  return validState(errorRequest) ? errorRequest : null
+  return errorRequest
 }
 
 const getPending = ({ pending }) => {
-  const pendingRequest = pending.get(actionTypes.RECIPES_RECEIVE)
-    || pending.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID)
+  const pendingRequest = pending.get(actionTypes.RECIPES_RECEIVE, false)
+    || pending.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, false)
 
-  return validState(pendingRequest) ? pendingRequest : true
+  return pendingRequest
 }
 
 const skipErrorByRoute = ({ pathname }) => ([
   `${routes.getHelp.index}/${routes.getHelp.contact}`,
   `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
   `${routes.getHelp.index}/${routes.getHelp.delivery}`,
+  `${routes.getHelp.index}/${routes.getHelp.eligibilityCheck}`,
 ].includes(pathname))
 
 const mapStateToProps = (state, ownProps) => {
