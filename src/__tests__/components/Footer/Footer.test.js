@@ -121,20 +121,14 @@ describe('<Footer />', () => {
 
   describe('clicking the links', () => {
     let wrapper
-    let helpLink
 
     beforeEach(() => {
       wrapper = shallow(<Footer />)
-      helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
-    })
-
-    test('opens the Help link into a new tab', () => {
-      expect(helpLink.prop('target')).toBe('_blank')
     })
 
     test('does not open other links in a new tab', () => {
       const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
-      expect(linksWithNewTab).toHaveLength(1)
+      expect(linksWithNewTab).toHaveLength(0)
     })
   })
 
@@ -147,26 +141,10 @@ describe('<Footer />', () => {
       )
     })
 
-    describe('when user is logged in', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isAuthenticated: true, userId: '123' })
-      })
-      test('the help link has user_id as a parameter', () => {
-        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+    test('the help links to eligibility check page', () => {
+      const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
 
-        expect(helpLink.prop('to')).toContain('?user_id=123')
-      })
-    })
-
-    describe('when user is logged out', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isAuthenticated: false })
-      })
-      test('the help link does not have user_id as a parameter', () => {
-        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
-
-        expect(helpLink.prop('to')).not.toContain('?user_id=123')
-      })
+      expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
     })
   })
 })

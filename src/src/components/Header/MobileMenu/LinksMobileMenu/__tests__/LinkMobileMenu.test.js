@@ -38,16 +38,6 @@ describe('LinkMobileMenu', () => {
         expect(onLoginClickSpy).toHaveBeenCalled()
       })
     })
-
-    describe('help button', () => {
-      test('should have to property equal /help', () => {
-        expect(wrapper.find('.helpMenuItem').prop('to')).toEqual('https://gousto.zendesk.com/hc/en-gb')
-      })
-
-      test('should have target property equal _blank to open link in new tab', () => {
-        expect(wrapper.find('.helpMenuItem').prop('target')).toEqual('_blank')
-      })
-    })
   })
 
   describe('when isAuthenticated is true', () => {
