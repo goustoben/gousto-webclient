@@ -3,7 +3,8 @@ import actions from 'actions'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { changeRecaptcha } from 'actions/auth'
-import Checkout from './Checkout'
+import { trackUTMAndPromoCode } from 'actions/tracking'
+import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -27,6 +28,7 @@ const CheckoutContainer = connect(mapStateToProps, {
   boxSummaryDeliveryDaysLoad,
   trackCheckoutButtonPressed,
   changeRecaptcha,
+  trackUTMAndPromoCode,
 })(Checkout)
 
 export default CheckoutContainer

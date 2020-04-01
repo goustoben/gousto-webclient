@@ -7,7 +7,8 @@ import {
   trackAffiliatePurchase,
   trackUserAttributes,
   trackGetStarted,
-  setUTMSource
+  setUTMSource,
+  trackUTMAndPromoCode
 } from 'actions/tracking'
 import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
@@ -468,6 +469,45 @@ describe('tracking actions', () => {
         expect(trackingData.actionType).toEqual(clickGetStarted)
         expect(trackingData.section).toEqual(section)
         expect(trackingData.promoCode).toEqual('123')
+      })
+    })
+  })
+
+  describe('trackUTMAndPromoCode', () => {
+    beforeEach(() => {
+      const state = {
+        basket: Immutable.fromJS({
+          promoCode: 'promo1'
+        }),
+        tracking: Immutable.fromJS({
+          utmSource: {}
+        })
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    describe('when section is passed', () => {
+      const section = 'top'
+
+      test('then trackUTMAndPromoCode should be dispatched with proper payload', () => {
+        trackUTMAndPromoCode('clickCheckoutSecurely', section)(dispatch, getState)
+        const { type, trackingData } = dispatch.mock.calls[0][0]
+        expect(type).toEqual('click_checkout_securely')
+        expect(trackingData.actionType).toEqual('click_checkout_securely')
+        expect(trackingData.promoCode).toEqual('promo1')
+        expect(trackingData.section).toEqual('top')
+      })
+    })
+
+    describe('when section is undefined', () => {
+      test('then trackUTMAndPromoCode should be dispatched with proper payload', () => {
+        trackUTMAndPromoCode('clickNextPayment')(dispatch, getState)
+        const { type, trackingData } = dispatch.mock.calls[0][0]
+        expect(type).toEqual('click_next_payment')
+        expect(trackingData.actionType).toEqual('click_next_payment')
+        expect(trackingData.promoCode).toEqual('promo1')
+        expect(trackingData.section).toBeUndefined()
       })
     })
   })

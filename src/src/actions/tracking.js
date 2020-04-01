@@ -180,10 +180,26 @@ export const trackGetStarted = (section) => (dispatch, getState) => {
   })
 }
 
+export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) => {
+  const { promoCode, UTM } = getUTMAndPromoCode(getState())
+  const type = trackingKeys[keyType]
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      ...(section && { section }),
+      ...UTM,
+      promoCode
+    }
+  })
+}
+
 export default {
   trackFirstPurchase,
   setAffiliateSource,
   trackRecipeOrderDisplayed,
   trackGetStarted,
   setUTMSource,
+  trackUTMAndPromoCode,
 }

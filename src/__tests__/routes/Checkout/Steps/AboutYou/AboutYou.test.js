@@ -43,100 +43,132 @@ describe('AboutYou', () => {
   })
 
   describe('props', () => {
-    test('should be true for Login "isOpen" prop', () => {
-      const wrapper = shallow(
-        <AboutYou loginOpen checkoutStepValidation={checkoutStepValidation} />,
-      )
-      expect(wrapper.find(Login).prop('isOpen')).toBe(true)
-    })
-    test('should be false for Login "isOpen" prop', () => {
-      const wrapper = shallow(
-        <AboutYou
-          loginOpen={false}
-          checkoutStepValidation={checkoutStepValidation}
-        />,
-      )
-      expect(wrapper.find(Login).prop('isOpen')).toBe(false)
+    describe('when isOpen is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ loginOpen: true })
+      })
+
+      test('should be true for Login "isOpen" prop', () => {
+        expect(wrapper.find(Login).prop('isOpen')).toBeTruthy()
+      })
     })
 
-    test('should be true for Login "isAuthenticated" prop', () => {
-      const wrapper = shallow(
-        <AboutYou
-          isAuthenticated
-          checkoutStepValidation={checkoutStepValidation}
-        />,
-      )
-      expect(wrapper.find(Login).prop('isAuthenticated')).toBe(true)
+    describe('when isOpen is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ loginOpen: false })
+      })
+
+      test('should be false for Login "isOpen" prop', () => {
+        expect(wrapper.find(Login).prop('isOpen')).toBeFalsy()
+      })
     })
-    test('should be false for Login "isAuthenticated" prop', () => {
-      const wrapper = shallow(
-        <AboutYou
-          isAuthenticated={false}
-          checkoutStepValidation={checkoutStepValidation}
-        />,
-      )
-      expect(wrapper.find(Login).prop('isAuthenticated')).toBe(false)
+
+    describe('when isAuthenticated is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAuthenticated: true })
+      })
+
+      test('should be false for Login "isAuthenticated" prop', () => {
+        expect(wrapper.find(Login).prop('isAuthenticated')).toBeTruthy()
+      })
     })
-    test('should be true for Login "isOpen" and Overlay "open" props', () => {
-      const wrapper = shallow(
-        <AboutYou loginOpen checkoutStepValidation={checkoutStepValidation} />,
-      )
-      expect(wrapper.find(Overlay).prop('open')).toBe(true)
-      expect(wrapper.find(Login).prop('isOpen')).toBe(true)
+
+    describe('when isAuthenticated is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAuthenticated: true })
+      })
+
+      test('should be false for Login "isAuthenticated" prop', () => {
+        expect(wrapper.find(Login).prop('isAuthenticated')).toBeTruthy()
+      })
     })
-    test('should be false for Login "isOpen" and Overlay "open" props', () => {
-      const wrapper = shallow(
-        <AboutYou
-          loginOpen={false}
-          checkoutStepValidation={checkoutStepValidation}
-        />,
-      )
-      expect(wrapper.find(Overlay).prop('open')).toBe(false)
-      expect(wrapper.find(Login).prop('isOpen')).toBe(false)
+
+    describe('when isOpen is true and Overlay is open', () => {
+      beforeEach(() => {
+        wrapper.setProps({ loginOpen: true })
+      })
+
+      test('should be true for Login "isOpen" and Overlay "open" props', () => {
+        expect(wrapper.find(Overlay).prop('open')).toBeTruthy()
+        expect(wrapper.find(Login).prop('isOpen')).toBeTruthy()
+      })
     })
-    test('should be true for "mask" for first name, last name, email, password, and marketing checkboxes', () => {
-      const wrapper = shallow(
-        <AboutYou
-          loginOpen={false}
-          checkoutStepValidation={checkoutStepValidation}
-        />,
-      )
-      expect(
-        wrapper
-          .find(Field)
-          .at(1)
-          .prop('mask'),
-      ).toEqual(true)
-      expect(
-        wrapper
-          .find(Field)
-          .at(2)
-          .prop('mask'),
-      ).toEqual(true)
-      expect(
-        wrapper
-          .find(Field)
-          .at(3)
-          .prop('mask'),
-      ).toEqual(true)
-      expect(
-        wrapper
-          .find(Field)
-          .at(4)
-          .prop('mask'),
-      ).toEqual(true)
-      expect(
-        wrapper
-          .find(Field)
-          .at(5)
-          .prop('mask'),
-      ).toEqual(true)
-      expect(
-        wrapper
-          .find(Field)
-          .at(6)
-          .prop('mask'),
-      ).toEqual(true)
+
+    describe('when isOpen is false and Overlay is open', () => {
+      beforeEach(() => {
+        wrapper.setProps({ loginOpen: false })
+      })
+
+      test('should be true for Login "isOpen" and Overlay "open" props', () => {
+        expect(wrapper.find(Overlay).prop('open')).toBeFalsy()
+        expect(wrapper.find(Login).prop('isOpen')).toBeFalsy()
+      })
     })
+
+    describe('inputs with a mask', () => {
+      beforeEach(() => {
+        wrapper.setProps({ loginOpen: false })
+      })
+
+      test('should be true for "mask" for first name, last name, email, password, and marketing checkboxes', () => {
+        const fields = Array.from(6)
+        fields.forEach((index) => {
+          expect(
+            wrapper
+              .find(Field)
+              .at(index)
+              .prop('mask'),
+          ).toBeTruthy()
+        })
+      })
+    })
+  })
+
+  test('should return proper title - About You', () => {
+    expect(wrapper.find('h3').text()).toEqual('About you')
+  })
+
+  test('should have Log in here button', () => {
+    expect(wrapper.find('.link').text().includes('Log in here')).toBeTruthy()
+  })
+
+  describe('when Log in here button clicked', () => {
+    const trackCheckoutButtonPressed = jest.fn()
+
+    describe('and isMobile false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isMobile: false,
+          isAuthenticated: true,
+          trackCheckoutButtonPressed
+        })
+      })
+
+      test('then should not call trackCheckoutButtonPressed', () => {
+        expect(trackCheckoutButtonPressed).not.toBeCalled()
+        wrapper.find('.link').simulate('click')
+        expect(trackCheckoutButtonPressed).not.toBeCalled()
+      })
+    })
+
+    describe('and isMobile true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isMobile: true,
+          isAuthenticated: true,
+          trackCheckoutButtonPressed
+        })
+      })
+
+      test('then should dispatch trackCheckoutButtonPressed with proper parameter', () => {
+        expect(trackCheckoutButtonPressed).not.toBeCalled()
+        wrapper.find('.link').simulate('click')
+        expect(trackCheckoutButtonPressed).toHaveBeenCalledWith('LogInCTA Clicked')
+      })
+    })
+  })
+
+  test('should return About you title', () => {
+    expect(wrapper.find('h3').text()).toEqual('About you')
   })
 })

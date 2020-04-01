@@ -12,15 +12,20 @@ const sectionName = 'delivery'
 
 const DeliverySection = DeliveryContainer(sectionName)
 
-const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef }) => {
+export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef, trackUTMAndPromoCode }) => {
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
+
+  const handleClick = () => {
+    trackUTMAndPromoCode('clickNextPayment', 'desktop')
+    submit()
+  }
 
   return (
     <div>
       <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
       {isAddressConfirmed && (
         <CheckoutButton
-          onClick={submit}
+          onClick={handleClick}
           stepName={`Next: ${nextStepName}`}
         />
       )}
@@ -31,9 +36,14 @@ const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFi
 DeliveryStep.propTypes = {
   submit: PropTypes.func.isRequired,
   nextStepName: PropTypes.string,
-  formValues: PropTypes.object,
+  formValues: PropTypes.objectOf(PropTypes.object),
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
+  trackUTMAndPromoCode: PropTypes.func,
+}
+
+DeliveryStep.defaultProps = {
+  trackUTMAndPromoCode: () => {},
 }
 
 DeliveryStep.defaultProps = {

@@ -22,11 +22,12 @@ const AboutYouSection = AboutYouContainer(aboutYouSectionName)
 const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
-const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick }) => {
+export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick, trackUTMAndPromoCode }) => {
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
-  const handleSubmit = () => {
+  const handleSubmit = (btnPosition) => () => {
     if (checkoutValid) {
       userProspect()
+      trackUTMAndPromoCode('clickNextPayment', btnPosition)
       trackClick('NextCTA Clicked', { succeeded: true, missing_field: null })
     }
     submit()
@@ -43,7 +44,7 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
       {isAddressConfirmed && (
         <SectionContainer>
           <CheckoutButton
-            onClick={handleSubmit}
+            onClick={handleSubmit('top')}
             stepName={`Next: ${nextStepName}`}
           />
         </SectionContainer>
@@ -56,7 +57,7 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
       </SectionContainer>
       {isAddressConfirmed && (
         <CheckoutButton
-          onClick={handleSubmit}
+          onClick={handleSubmit('bottom')}
           stepName={`Next: ${nextStepName}`}
         />
       )}
@@ -68,12 +69,13 @@ YourDetailsStep.propTypes = {
   submit: PropTypes.func.isRequired,
   userProspect: PropTypes.func,
   nextStepName: PropTypes.string,
-  formValues: PropTypes.object,
+  formValues: PropTypes.objectOf(PropTypes.object),
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
   trackClick: PropTypes.func,
   checkoutValid: PropTypes.bool,
   browser: PropTypes.string,
+  trackUTMAndPromoCode: PropTypes.func,
 }
 
 YourDetailsStep.defaultProps = {
@@ -85,6 +87,7 @@ YourDetailsStep.defaultProps = {
   scrollToFirstMatchingRef: () => { },
   trackClick: () => { },
   checkoutValid: false,
+  trackUTMAndPromoCode: () => { },
 }
 
 const validationRules = [

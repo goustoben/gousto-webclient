@@ -7,7 +7,7 @@ import SectionContainer from '../SectionContainer'
 
 import BoxDetailsContainer from '../../../Components/BoxDetails'
 
-const BoxDetails = ({ onStepChange, trackClick }) => (
+const BoxDetails = ({ onStepChange, trackClick, trackUTMAndPromoCode }) => (
   <div>
     <Summary showPromocode />
     <SectionContainer>
@@ -15,6 +15,7 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
         onClick={() => {
           onStepChange()
           trackClick('NextCTA Clicked', { position: 'first' })
+          trackUTMAndPromoCode('clickCheckoutSecurely', 'top')
         }}
         stepName="Checkout Securely"
       />
@@ -25,6 +26,7 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
     <CheckoutButton
       onClick={() => {
         onStepChange()
+        trackUTMAndPromoCode('clickCheckoutSecurely', 'bottom')
         trackClick('NextCTA Clicked', { position: 'second' })
       }}
       stepName="Checkout Securely"
@@ -34,11 +36,13 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
 
 BoxDetails.propTypes = {
   onStepChange: PropTypes.func.isRequired,
-  trackClick: PropTypes.func
+  trackClick: PropTypes.func,
+  trackUTMAndPromoCode: PropTypes.func,
 }
 
 BoxDetails.defaultProps = {
-  trackClick: () => { }
+  trackClick: () => { },
+  trackUTMAndPromoCode: () => { },
 }
 
 export default BoxDetails

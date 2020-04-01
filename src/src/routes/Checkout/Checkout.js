@@ -50,7 +50,6 @@ const propTypes = {
   browser: PropTypes.string,
   redirect: PropTypes.func,
   submitOrder: PropTypes.func,
-  menuLoadBoxPrices: PropTypes.func,
   trackSignupStep: PropTypes.func,
   tariffId: PropTypes.string,
   query: PropTypes.shape({
@@ -59,13 +58,24 @@ const propTypes = {
   loadPrices: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
   queueItFeature: PropTypes.bool,
-  changeRecaptcha: PropTypes.func
+  changeRecaptcha: PropTypes.func,
+  trackUTMAndPromoCode: PropTypes.func,
 }
 
 const defaultProps = {
   params: {},
   redirect: () => { },
-  changeRecaptcha: () => {}
+  changeRecaptcha: () => {},
+  submitOrder: () => {},
+  trackSignupStep: () => {},
+  tariffId: '',
+  query: {
+    steps: []
+  },
+  loadPrices: () => {},
+  trackCheckoutButtonPressed: () => {},
+  trackUTMAndPromoCode: () => {},
+  queueItFeature: false
 }
 
 const contextTypes = {
@@ -166,10 +176,10 @@ class Checkout extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { tariffId } = propTypes
+    const { tariffId, loadPrices } = this.props
 
     if (tariffId !== nextProps.tariffId) {
-      this.props.loadPrices()
+      loadPrices()
     }
   }
 
@@ -205,10 +215,11 @@ class Checkout extends PureComponent {
 
   onStepChange = (steps, currentStep) => () => {
     const nextStep = this.getNextStep(steps, currentStep)
+    const { trackSignupStep, redirect } = this.props
 
     if (nextStep) {
-      this.props.trackSignupStep(nextStep)
-      this.props.redirect(`${routesConfig.client['check-out']}/${nextStep}`)
+      trackSignupStep(nextStep)
+      redirect(`${routesConfig.client['check-out']}/${nextStep}`)
     }
   }
 
@@ -219,7 +230,7 @@ class Checkout extends PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, submitOrder } = this.props
+    const { browser, submitOrder, trackUTMAndPromoCode } = this.props
     const { checkoutScriptReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
@@ -232,6 +243,7 @@ class Checkout extends PureComponent {
       submitOrder,
       browser,
       checkoutScriptReady,
+      trackUTMAndPromoCode
     }
 
     let element = <div />
@@ -248,19 +260,15 @@ class Checkout extends PureComponent {
     const onPaymentStep = (currentStep === 'payment')
     const { checkoutScriptReady } = this.state
 
-    const checkoutProps = {
-      browser,
-      submitOrder,
-      checkoutScriptReady,
-      prerender: !onPaymentStep,
-      isLastStep: this.isLastStep(steps, currentStep),
-      onStepChange: this.onStepChange(steps, currentStep),
-      nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
-    }
-
     return (
       <CheckoutPayment
-        {...checkoutProps}
+        browser={browser}
+        submitOrder={submitOrder}
+        checkoutScriptReady={checkoutScriptReady}
+        prerender={!onPaymentStep}
+        isLastStep={this.isLastStep(steps, currentStep)}
+        onStepChange={this.onStepChange(steps, currentStep)}
+        nextStepName={this.getNextStepName(stepMapping, steps, currentStep)}
       />
     )
   }
@@ -335,4 +343,4 @@ Checkout.defaultProps = defaultProps
 
 Checkout.contextTypes = contextTypes
 
-export default Checkout
+export { Checkout }

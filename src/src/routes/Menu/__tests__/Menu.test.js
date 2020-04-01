@@ -300,6 +300,26 @@ describe('Menu', () => {
         expect(fetchData).toHaveBeenCalledTimes(2)
       })
     })
+
+    describe('when use previewMenu url', () => {
+      beforeEach(() => {
+        wrapper.setProps({query: {
+          'preview[auth_user_id]': 'previewUserToken'
+        }})
+      })
+      test('should not call fetch data function', () => {
+        expect(fetchData).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when component did update with recipesCount property', () => {
+      beforeEach(() => {
+        wrapper.setProps({recipesCount: 3})
+      })
+      test('should not trigger fetch ', () => {
+        expect(fetchData).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 
   describe('componentWillReceiveProps', () => {

@@ -34,6 +34,7 @@ const propTypes = {
   trackCheckoutButtonPressed: PropTypes.func,
   isNDDExperiment: PropTypes.bool,
   isMobile: PropTypes.bool,
+  trackUTMAndPromoCode: PropTypes.func
 }
 
 const defaultProps = {
@@ -52,6 +53,7 @@ const defaultProps = {
   isDelivery: true,
   receiveRef: () => { },
   scrollToFirstMatchingRef: () => { },
+  trackUTMAndPromoCode: () => { },
 }
 
 class Address extends React.PureComponent {
@@ -245,7 +247,7 @@ class Address extends React.PureComponent {
   }
 
   handleAddressConfirm = () => {
-    const { formName, sectionName, formErrors, change, touch, onAddressConfirm, trackCheckoutButtonPressed, isMobile } = this.props
+    const { formName, sectionName, formErrors, change, touch, onAddressConfirm, trackCheckoutButtonPressed, isMobile, trackUTMAndPromoCode } = this.props
 
     this.forceReValidation()
 
@@ -267,6 +269,8 @@ class Address extends React.PureComponent {
       if (onAddressConfirm) {
         onAddressConfirm(postcode)
       }
+
+      trackUTMAndPromoCode('clickUseThisAddress')
 
       if (isMobile) {
         trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: true, missing_field: null })
