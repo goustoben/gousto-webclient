@@ -374,7 +374,7 @@ class Header extends React.PureComponent {
                       this.hideMobileMenu()
                     }}
                     serverError={serverError}
-                    shouldRenderNewMenuDesign={isAuthenticated && (pathName === '/menu')}
+                    shouldRenderAccountLink={isAuthenticated && pathName && (pathName.startsWith('/menu'))}
                   />
                 </div>
               </div>
