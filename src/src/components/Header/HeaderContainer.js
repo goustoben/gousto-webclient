@@ -3,7 +3,7 @@ import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getAbandonBasket, isAccountTabNameTest } from 'selectors/features'
-import { getUserFromJoin } from 'selectors/user'
+import { getUserFromJoin, getUserId } from 'selectors/user'
 import { Header } from './Header'
 
 const mapStateToProps = (state) => ({
@@ -17,6 +17,7 @@ const mapStateToProps = (state) => ({
   fromJoin: getUserFromJoin(state),
   abandonBasketFeature: getAbandonBasket(state),
   isAccountTabNameTest: isAccountTabNameTest(state),
+  userId: getUserId(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

@@ -50,7 +50,6 @@ module.exports = {
       confirmation: 'confirmation',
       contact: 'contact',
       delivery: 'delivery',
-      eligibilityCheck: 'eligibility-check',
       index: '/get-help',
       ingredientIssues: 'ingredient-issues',
       ingredientReasons: 'ingredient-reasons',

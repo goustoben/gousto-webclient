@@ -1,6 +1,5 @@
-import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
-import { fromJS, Map, OrderedMap } from 'immutable'
+import { actionTypes } from 'actions/actionTypes'
+import { fromJS, Map } from 'immutable'
 
 const getHelpInitialState = fromJS({
   ingredientIssues: [],
@@ -9,7 +8,6 @@ const getHelpInitialState = fromJS({
     id: '',
     recipeItems: [],
   },
-  orders: Map(),
   recipes: [],
   selectedIngredients: {},
 })
@@ -34,10 +32,10 @@ const getHelp = (state, action) => {
   }
 
   switch (action.type) {
-  case webClientActionTypes.GET_HELP_STORE_ORDER_ID: {
+  case actionTypes.GET_HELP_STORE_ORDER_ID: {
     return state.setIn(['order', 'id'], action.id)
   }
-  case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
+  case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
     const selectedIngredients = action.selectedIngredientAndRecipeIds
       .reduce((accumulator, selectedIngredientAndRecipeId) => {
         const { recipeId, ingredientId } = selectedIngredientAndRecipeId
@@ -56,7 +54,7 @@ const getHelp = (state, action) => {
 
     return state.set('selectedIngredients', selectedIngredients)
   }
-  case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE: {
+  case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE: {
     const { ingredientAndRecipeId, issueName } = action
     const issueId = String(action.issueId)
 
@@ -64,7 +62,7 @@ const getHelp = (state, action) => {
       .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueId'], issueId)
       .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueName'], issueName)
   }
-  case webClientActionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS: {
+  case actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS: {
     const issueReasons = Object.keys(action.issueReasons)
       .reduce((accumulator, key) => {
         const { recipeId, ingredientId } = action.issueReasons[key]
@@ -76,12 +74,12 @@ const getHelp = (state, action) => {
 
     return state.set('selectedIngredients', issueReasons)
   }
-  case webClientActionTypes.GET_HELP_RECIPES_RECEIVE: {
+  case actionTypes.GET_HELP_RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))
 
     return state.set('recipes', recipes)
   }
-  case webClientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID: {
+  case actionTypes.GET_HELP_LOAD_ORDERS_BY_ID: {
     const { order } = action
 
     if (order) {
@@ -92,7 +90,7 @@ const getHelp = (state, action) => {
 
     return state
   }
-  case webClientActionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
+  case actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
     const formattedIssues = action.ingredientIssues.data
       .filter(ingredientIssue => ingredientIssue.type === 'category')
       .map(ingredientIssue => ({
@@ -111,28 +109,6 @@ const getHelp = (state, action) => {
 
     return state.set('ingredientIssues', fromJS(formattedIssues))
       .set('ingredientSubIssues', fromJS(formattedSubIssues))
-  }
-  case actionTypes.GET_HELP_LOAD_ORDERS: {
-    const reduceOrders = (reducerState, order) => {
-      const { id, deliveryDate, deliverySlot } = order
-      const { deliveryEnd, deliveryStart } = deliverySlot
-
-      return reducerState.set(
-        id,
-        fromJS({
-          deliveryDate,
-          deliverySlot: {
-            deliveryEnd,
-            deliveryStart,
-          },
-          id,
-        })
-      )
-    }
-
-    const actionReducedOrders = action.orders.reduce(reduceOrders, OrderedMap({}))
-
-    return state.set('orders', actionReducedOrders)
   }
   default:
     return state

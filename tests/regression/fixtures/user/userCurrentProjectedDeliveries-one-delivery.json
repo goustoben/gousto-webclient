@@ -1,0 +1,38 @@
+{
+  "status": "ok",
+  "result": {
+      "data": [
+          {
+              "id": "2008",
+              "delivery_slot_id": "6",
+              "delivery_week_id": "317",
+              "date": "2020-02-08 00:00:00",
+              "human_date": "Saturday 8th February",
+              "day_of_week": "Saturday",
+              "when_cutoff": "2020-02-05 11:59:59",
+              "is_cutoff": false,
+              "unavailable_reason": "",
+              "alternate_delivery_day": null,
+              "when_menu_live": "2020-01-28 12:00:00",
+              "human_when_menu_live": "Tuesday 28th January",
+              "delivery_slot": {
+                  "id": "6",
+                  "default_day": "Saturday",
+                  "number": "2",
+                  "cutoff_day": "Wednesday",
+                  "cutoff_time": "11:59:59",
+                  "delivery_start": "08:00:00",
+                  "delivery_end": "19:00:00",
+                  "human_delivery_day_time": "Saturday 08:00 - 19:00",
+                  "premium": false,
+                  "default": true,
+                  "deprecated": false
+              },
+              "active": "1",
+              "num_portions": "4",
+              "num_recipes": "3"
+          }
+      ],
+      "meta": []
+  }
+}
