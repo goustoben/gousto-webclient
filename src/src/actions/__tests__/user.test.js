@@ -19,6 +19,7 @@ import userActions, {
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
 import { actionTypes } from 'actions/actionTypes'
+import * as trackingKeys from 'actions/trackingKeys'
 import logger from 'utils/logger'
 
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
@@ -234,14 +235,70 @@ describe('user actions', () => {
               subscription: {},
               orderId: '12345',
               paymentMethod: {
+                id: 444,
                 card: {
                   paymentProvider: 'checkout'
                 }
-              }
+              },
             }
           })
         })
       )
+    })
+
+    describe('When successful submitted order', () => {
+      beforeEach(() => {
+        const localState = {
+          ...state,
+          features: Immutable.fromJS({
+            ndd: {
+              value: false,
+            },
+          })
+        }
+        getState.mockReturnValue(localState)
+
+        customerSignup.mockReturnValue(
+          new Promise(resolve => {
+            resolve({
+              data: {
+                customer: {
+                  id: 111,
+                  goustoReference: '9999'
+                },
+                addresses: {
+                  billing_address: 'some address'
+                },
+                subscription: {
+                  id: 222
+                },
+                orderId: 333,
+                paymentMethod: {
+                  id: 444,
+                  card: {
+                    paymentProvider: 'checkout'
+                  }
+                },
+              }
+            })
+          })
+        )
+      })
+
+      test('Then should dispatch CHECKOUT_SUBSCRIPTION_CREATED with proper data', async () => {
+        await userSubscribe()(dispatch, getState)
+        expect(dispatch).toHaveBeenNthCalledWith(7, {
+          type: actionTypes.CHECKOUT_SUBSCRIPTION_CREATED,
+          trackingData: {
+            actionType: trackingKeys.subscriptionCreated,
+            promoCode: false,
+            userId: 111,
+            orderId: 333,
+            paymentId: 444,
+            subscriptionId: 222
+          }
+        })
+      })
     })
 
     describe('checkoutPaymentFeature is enabled', () => {

@@ -74,7 +74,7 @@ class HomeSections extends Component {
               className={
                 classnames(
                   inverse ? css.inverseSection : css.section,
-                  (inverse && isSignupReductionEnabled) && css.inverseSectionSignupOverride,
+                  (inverse && isSignupReductionEnabled && order === 1) && css.inverseSectionSignupOverride,
                   css[`${name}-section`]
                 )
               }
