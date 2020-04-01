@@ -17,11 +17,14 @@ import { isChoosePlanEnabled, getNDDFeatureValue } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import * as trackingKeys from 'actions/trackingKeys'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
+import { getUTMAndPromoCode } from 'selectors/tracking'
 import statusActions from './status'
+// eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
 import { actionTypes } from './actionTypes'
 import { trackFirstPurchase, trackUserAttributes } from './tracking'
+// eslint-disable-next-line import/no-cycle
 import { subscriptionLoadData } from './subscription'
 
 const fetchShippingAddressesPending = pending => ({
@@ -43,41 +46,6 @@ const userLoadReferralDetails = referralDetails => ({
   type: actionTypes.USER_LOAD_REFERRAL_DETAILS,
   referralDetails
 })
-
-const userActions = {
-  checkCardExpiry,
-  userFetchCredit,
-  userOrderCancelNext,
-  userOrderSkipNextProjected,
-  userSubscribe,
-  userRecipeRatings,
-  userLoadData,
-  userLoadReferralDetails,
-  userFetchShippingAddresses,
-  userClearData,
-  userLoadOrder,
-  userLoadOrders,
-  userFetchOrders,
-  userLoadNewOrders,
-  userLoadOrderTrackingInfo,
-  userLoadProjectedDeliveries,
-  userReactivate,
-  userPromoApplyCode,
-  userVerifyAge,
-  userProspect,
-  userOpenCloseOrderCard,
-  userToggleEditDateSection,
-  userTrackToggleEditDateSection,
-  userTrackToggleEditAddressSection,
-  userTrackDateSelected,
-  userTrackSlotSelected,
-  userTrackAddressSelected,
-  userToggleExpiredBillingModal,
-  userAddPaymentMethod,
-  userLoadAddresses,
-  userUnsubscribe,
-  userFetchReferralOffer,
-}
 
 function userFetchCredit() {
   return async (dispatch, getState) => {
@@ -101,6 +69,82 @@ function userFetchCredit() {
   }
 }
 
+function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10) {
+  return async (dispatch, getState) => {
+    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
+    try {
+      if (forceRefresh || !getState().user.get('orders').size) {
+        const accessToken = getState().auth.get('accessToken')
+        const { data: orders } = await userApi.fetchUserOrders(accessToken, {
+          limit: number,
+          sort_order: 'desc',
+          state: orderType,
+          includes: ['shipping_address']
+        })
+
+        dispatch({
+          type: actionTypes.USER_LOAD_ORDERS,
+          orders
+        })
+      }
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
+      logger.error(err)
+      throw err
+    }
+    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
+  }
+}
+
+function userLoadProjectedDeliveries(forceRefresh = false) {
+  return async (dispatch, getState) => {
+    dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, true))
+    dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, null))
+
+    try {
+      if (forceRefresh || !getState().user.get('projectedDeliveries').size) {
+        const accessToken = getState().auth.get('accessToken')
+        const { data: projectedDeliveries } = await userApi.fetchUserProjectedDeliveries(accessToken)
+
+        dispatch({
+          type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
+          projectedDeliveries
+        })
+      }
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, err.message))
+      logger.error(err)
+      throw err
+    } finally {
+      dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, false))
+    }
+  }
+}
+
+function userVerifyAge(verified, hardSave) {
+  return async (dispatch, getState) => {
+    dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, true))
+
+    try {
+      if (verified && hardSave) {
+        const accessToken = getState().auth.get('accessToken')
+        await userApi.verifyAge(accessToken, 'current')
+      }
+
+      dispatch({
+        type: actionTypes.USER_AGE_VERIFY,
+        verified
+      })
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.USER_AGE_VERIFY, err.message))
+      dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
+      logger.error(err)
+      throw err
+    }
+    dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
+  }
+}
+
 function userOrderCancelNext(afterBoxNum = 1) {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_ORDER_CANCEL_NEXT, true))
@@ -109,7 +153,7 @@ function userOrderCancelNext(afterBoxNum = 1) {
     const cancellablePhases = ['awaiting_choices', 'open', 'pre_menu']
 
     try {
-      await dispatch(userActions.userLoadOrders())
+      await dispatch(userLoadOrders())
       const cancellableOrder = getState()
         .user.get('orders')
         .filter(order => cancellablePhases.includes(order.get('phase')) && order.get('number') > afterBoxNum)
@@ -159,6 +203,7 @@ function userOrderSkipNextProjected() {
       let projectedOrders = getState().user.get('projectedDeliveries')
 
       if (!projectedOrders.size) {
+        // eslint-disable-next-line no-use-before-define
         await dispatch(userActions.userLoadProjectedDeliveries())
         projectedOrders = getState().user.get('projectedDeliveries')
       }
@@ -287,6 +332,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
 
 function userLoadNewOrders() {
   return async (dispatch, getState) => {
+    // eslint-disable-next-line no-use-before-define
     await Promise.all([dispatch(userActions.userLoadOrders()), dispatch(userActions.userLoadProjectedDeliveries())])
 
     const pendingOrders = transformPendingOrders(getState().user.get('orders'))
@@ -294,33 +340,6 @@ function userLoadNewOrders() {
     const ordersCombined = pendingOrders.merge(projectedDeliveries)
 
     dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: ordersCombined })
-  }
-}
-
-function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10) {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
-    try {
-      if (forceRefresh || !getState().user.get('orders').size) {
-        const accessToken = getState().auth.get('accessToken')
-        const { data: orders } = await userApi.fetchUserOrders(accessToken, {
-          limit: number,
-          sort_order: 'desc',
-          state: orderType,
-          includes: ['shipping_address']
-        })
-
-        dispatch({
-          type: actionTypes.USER_LOAD_ORDERS,
-          orders
-        })
-      }
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error(err)
-      throw err
-    }
-    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
   }
 }
 
@@ -347,31 +366,6 @@ function userFetchOrders(forceRefresh = false) {
   }
 }
 
-function userLoadProjectedDeliveries(forceRefresh = false) {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, true))
-    dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, null))
-
-    try {
-      if (forceRefresh || !getState().user.get('projectedDeliveries').size) {
-        const accessToken = getState().auth.get('accessToken')
-        const { data: projectedDeliveries } = await userApi.fetchUserProjectedDeliveries(accessToken)
-
-        dispatch({
-          type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
-          projectedDeliveries
-        })
-      }
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, err.message))
-      logger.error(err)
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, false))
-    }
-  }
-}
-
 function userReactivate(user) {
   return dispatch => {
     dispatch({
@@ -386,37 +380,13 @@ function userPromoApplyCode(promoCode) {
     const accessToken = getState().auth.get('accessToken')
     const state = getState()
     if (state.promoAgeVerified && !state.user.get('ageVerified')) {
-      await dispatch(userActions.userVerifyAge(state.promoAgeVerified, true))
+      await dispatch(userVerifyAge(state.promoAgeVerified, true))
     }
     try {
       await userApi.applyPromo(accessToken, promoCode)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.PROMO_APPLY, err.message))
     }
-  }
-}
-
-function userVerifyAge(verified, hardSave) {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, true))
-
-    try {
-      if (verified && hardSave) {
-        const accessToken = getState().auth.get('accessToken')
-        await userApi.verifyAge(accessToken, 'current')
-      }
-
-      dispatch({
-        type: actionTypes.USER_AGE_VERIFY,
-        verified
-      })
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.USER_AGE_VERIFY, err.message))
-      dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
-      logger.error(err)
-      throw err
-    }
-    dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
   }
 }
 
@@ -716,7 +686,7 @@ export function userSubscribe() {
       const { data } = await customerSignup(null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
-        const { customer, addresses, subscription, orderId } = data
+        const { customer, addresses, paymentMethod, subscription, orderId } = data
         let user = Immutable.fromJS({
           ...customer,
           ...addresses,
@@ -743,6 +713,24 @@ export function userSubscribe() {
 
         dispatch(basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
+
+        const { id: customerId } = customer
+        const { id: paymentId } = paymentMethod
+        const { id: subscriptionId } = subscription
+
+        const { UTM } = getUTMAndPromoCode(getState())
+        dispatch({
+          type: actionTypes.CHECKOUT_SUBSCRIPTION_CREATED,
+          trackingData: {
+            actionType: trackingKeys.subscriptionCreated,
+            ...UTM,
+            promoCode: prices.get('promoCode'),
+            userId: customerId,
+            orderId,
+            paymentId,
+            subscriptionId
+          }
+        })
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
       }
@@ -852,4 +840,40 @@ export const userLoadOrderTrackingInfo = (orderId) => (
   }
 )
 
+const userActions = {
+  checkCardExpiry,
+  userFetchCredit,
+  userOrderCancelNext,
+  userOrderSkipNextProjected,
+  userSubscribe,
+  userRecipeRatings,
+  userLoadData,
+  userLoadReferralDetails,
+  userFetchShippingAddresses,
+  userClearData,
+  userLoadOrder,
+  userLoadOrders,
+  userFetchOrders,
+  userLoadNewOrders,
+  userLoadOrderTrackingInfo,
+  userLoadProjectedDeliveries,
+  userReactivate,
+  userPromoApplyCode,
+  userVerifyAge,
+  userProspect,
+  userOpenCloseOrderCard,
+  userToggleEditDateSection,
+  userTrackToggleEditDateSection,
+  userTrackToggleEditAddressSection,
+  userTrackDateSelected,
+  userTrackSlotSelected,
+  userTrackAddressSelected,
+  userToggleExpiredBillingModal,
+  userAddPaymentMethod,
+  userLoadAddresses,
+  userUnsubscribe,
+  userFetchReferralOffer,
+}
+
+// eslint-disable-next-line import/no-default-export
 export default userActions
