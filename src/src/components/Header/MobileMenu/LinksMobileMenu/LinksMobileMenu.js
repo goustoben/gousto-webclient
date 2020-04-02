@@ -26,8 +26,6 @@ const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick })
       className={cssMobile.helpMenuItem}
       clientRouted={defaultMenuItems.faq.clientRouted}
       tracking={() => trackNavigationClick(`New ${defaultMenuItems.faq.tracking}`)}
-      target="_blank"
-      rel="noopener noreferrer"
     >
       {defaultMenuItems.faq.name}
     </Link>

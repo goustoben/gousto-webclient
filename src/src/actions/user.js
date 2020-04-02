@@ -90,7 +90,6 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
       logger.error(err)
-      throw err
     }
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
   }

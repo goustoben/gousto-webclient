@@ -7,6 +7,10 @@ export const getOrderValidationPendingState = ({ pending }) => (
 
 export const getOrderValidationError = ({ error }) => error.get('GET_HELP_VALIDATE_ORDER', '')
 
+export const getUserOrdersForGetHelp = ({ getHelp }) => (
+  getHelp.get('orders')
+)
+
 export const getDaysSinceLastCompensation = createSelector(
   getOrderValidationError,
   ({ errors }) => {

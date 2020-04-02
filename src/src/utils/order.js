@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import moment from 'moment'
 import { formatPrice } from 'utils/format'
 
+const ELIGIBILITY_DAYS = 10
 const hyphen = String.fromCharCode(45)
 
 export function isOrderBeingDeliveredToday(deliveryDate) {
@@ -48,6 +49,14 @@ export function findNewestOrder(orders, areFutureOrdersIncluded) {
   }, null)
 
   return orders.get(orderIndex)
+}
+
+export function isOrderEligibleForSelfRefundResolution(previousOrder) {
+  const now = moment()
+  const numberOfDaysSincePreviousOrder = previousOrder
+    && now.diff(moment(previousOrder.get('deliveryDate')), 'days', true)
+
+  return numberOfDaysSincePreviousOrder && numberOfDaysSincePreviousOrder < ELIGIBILITY_DAYS
 }
 
 export function totalPrice(boxPrice, extrasPrice, slotPrice) {
