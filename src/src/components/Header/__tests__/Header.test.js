@@ -17,7 +17,10 @@ describe('Header', () => {
     basket: Immutable.fromJS({
       promoCodeUrl: '',
     }),
-    loginVisibility: '',
+    loginVisibility: Immutable.fromJS({
+      login: false,
+      helpPreLogin: false,
+    }),
     features: Immutable.fromJS({}),
     persist: Immutable.fromJS({
       simpleHeader: false,

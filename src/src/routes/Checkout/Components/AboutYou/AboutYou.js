@@ -14,7 +14,7 @@ import ErrorMessage from '../ErrorMessage'
 class AboutYou extends React.PureComponent {
   static propTypes = {
     loginVisibilityChange: PropTypes.func,
-    loginOpen: PropTypes.bool,
+    isLoginOpen: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     loginPending: PropTypes.bool,
     isMobile: PropTypes.bool,
@@ -27,7 +27,7 @@ class AboutYou extends React.PureComponent {
   static defaultProps = {
     clearErrors: () => { },
     loginVisibilityChange: () => { },
-    loginOpen: false,
+    isLoginOpen: false,
     loginPending: false,
     isAuthenticated: false,
     sectionName: '',
@@ -180,7 +180,7 @@ class AboutYou extends React.PureComponent {
             </div>
           </div>
           <Overlay
-            open={this.props.loginOpen}
+            open={this.props.isLoginOpen}
             className={css.mobileOverlay}
             contentClassName={css.mobileModalContent}
             from="top"
@@ -193,7 +193,7 @@ class AboutYou extends React.PureComponent {
             >
               <Login
                 isAuthenticated={this.props.isAuthenticated}
-                isOpen={this.props.loginOpen}
+                isOpen={this.props.isLoginOpen}
                 isPending={this.props.loginPending}
               />
             </ModalPanel>

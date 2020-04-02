@@ -297,7 +297,7 @@ class Header extends React.PureComponent {
       title,
       small,
       promoCodeUrl,
-      loginOpen,
+      isLoginOpen,
       path,
       trackNavigationClick,
       abandonBasketFeature,
@@ -380,7 +380,7 @@ class Header extends React.PureComponent {
               </div>
             </div>
           </header>
-          <Overlay open={Boolean(loginOpen)} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="top">
+          <Overlay open={Boolean(isLoginOpen)} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="top">
             <ModalPanel
               closePortal={this.onClose}
               className={css.modal}
@@ -388,7 +388,7 @@ class Header extends React.PureComponent {
               disableOverlay
               isNarrow
             >
-              <Login isAuthenticated={isAuthenticated} isOpen={loginOpen} isPending={loginPending} />
+              <Login isAuthenticated={isAuthenticated} isOpen={isLoginOpen} isPending={loginPending} />
             </ModalPanel>
           </Overlay>
           <CancelOrderModal close={this.onCloseCancelBoxModal} />
@@ -411,7 +411,7 @@ Header.propTypes = {
   fromJoin: PropTypes.bool,
   isAccountTabNameTest: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
-  loginOpen: PropTypes.bool,
+  isLoginOpen: PropTypes.bool,
   loginVisibilityChange: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   path: PropTypes.string,
@@ -431,7 +431,7 @@ Header.defaultProps = {
   fromJoin: false,
   isAccountTabNameTest: false,
   isAuthenticated: false,
-  loginOpen: false,
+  isLoginOpen: false,
   path: '',
   promoCodeUrl: '',
   serverError: false,
