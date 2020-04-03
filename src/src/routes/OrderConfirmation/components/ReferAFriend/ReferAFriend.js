@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
 import { SocialButton } from 'components/SocialLinks/SocialButton'
@@ -28,7 +29,8 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
 
   return (
     <section className={css.rafContainer}>
-      <h3 className={css.rafTitle}>Invite your friends to try Gousto</h3>
+      <h3 className={classnames(css.rafTitle, css.mobileHide)}>Invite your friends to try Gousto</h3>
+      <h2 className={classnames(css.rafTitleMobile, css.mobileShow)}>Invite your friends to try Gousto</h2>
       <div className={css.offerContainer}>
         <Offer isYourOffer offer={yourOffer} />
         <Offer isYourOffer={false} offer={theirBoxOffer} theirMonthOffer={theirMonthOffer} />
@@ -54,6 +56,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
       </div>
       <div className={css.mobileShow}>
         <SocialShareSheetCTA
+          isWelcomePageOnboardingEnabled
           referralCode={referralCode}
           trackingReferFriend={trackingReferFriend}
           isFixed={false}

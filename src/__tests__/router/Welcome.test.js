@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import WelcomeContainer from 'routes/Welcome/WelcomeContainer'
+import { WelcomeContainer } from 'routes/Welcome/WelcomeContainer'
 
 import { match, createMemoryHistory } from 'react-router'
 import { routes } from '../../src/routes'
@@ -43,19 +43,6 @@ describe('Welcome router', () => {
           throw error
         }
 
-        expect(renderProps.components[4]).toEqual(WelcomeContainer)
-      },
-    )
-  })
-  test('should display WelcomeContainer welcome page when /welcome-to-gousto/why-gousto is called', () => {
-    const path = '/welcome-to-gousto/why-gousto/1'
-    const memoryHistory = createMemoryHistory(path)
-    match(
-      { memoryHistory, routes: currentRoutes, location: path },
-      (error, redirectLocation, renderProps) => {
-        if (error) {
-          throw error
-        }
         expect(renderProps.components[4]).toEqual(WelcomeContainer)
       },
     )

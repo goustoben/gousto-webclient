@@ -24,6 +24,18 @@
 	composes: textCenter from 'styles/typography.css';
 }
 
+.footerExperiment {
+	composes: textblock;
+	composes: textLeft from 'styles/typography.css';
+	font-weight: bold;
+}
+
+.footerIcon {
+	display: inline-block;
+	margin-left: 0.3rem;
+	font-weight: bold;
+}
+
 .error {
 	composes: textblock;
 	composes: textCenter from 'styles/typography.css';

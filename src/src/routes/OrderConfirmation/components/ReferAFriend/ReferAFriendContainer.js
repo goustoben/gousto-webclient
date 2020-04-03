@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
   referralCode: getReferralCode(state),
   userFirstName: getUserFirstName(state),
   rafOffer: getReferralOffer(state) || Immutable.Map(),
-  device: state.request.get('browser')
+  device: state.request.get('browser'),
 })
 
 export const ReferAFriendContainer = connect(mapStateToProps, {

@@ -1,20 +1,26 @@
 import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import { CTA } from 'goustouicomponents'
 import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'components/Overlay'
 import SocialShareSheet from 'components/SocialLinks/SocialShareSheet'
 
 import css from './SocialShareSheetCTA.css'
 
+const propTypes = {
+  referralCode: PropTypes.string.isRequired,
+  isFixed: PropTypes.bool.isRequired,
+  trackingReferFriend: PropTypes.func.isRequired,
+  isWelcomePageOnboardingEnabled: PropTypes.bool,
+}
+
+const defaultProps = {
+  isWelcomePageOnboardingEnabled: false,
+}
+
 class SocialShareSheetCTA extends PureComponent {
   state = { isShareSheetOpen: false }
-
-  static propTypes = {
-    referralCode: PropTypes.string.isRequired,
-    isFixed: PropTypes.bool.isRequired,
-    trackingReferFriend: PropTypes.func.isRequired,
-  }
 
   openShareSheet = () => {
     const { trackingReferFriend } = this.props
@@ -30,7 +36,7 @@ class SocialShareSheetCTA extends PureComponent {
 
   render() {
     const { isShareSheetOpen } = this.state
-    const { referralCode, isFixed } = this.props
+    const { referralCode, isFixed, isWelcomePageOnboardingEnabled } = this.props
     const CTAContainerClasses = classnames(
       css.mobileShow,
       { [css.fixedMobileCTAContainer]: isFixed })
@@ -43,9 +49,19 @@ class SocialShareSheetCTA extends PureComponent {
 
     return (
       <div className={CTAContainerClasses}>
-        <div className={CTAClasses} onClick={this.openShareSheet}>
-          <span className={css.shareYourLinkText}>Share your link</span>
-        </div>
+        {
+          isWelcomePageOnboardingEnabled
+            ? (
+              <CTA isFullWidth variant="secondary" onClick={this.openShareSheet}>
+                Share your link
+              </CTA>
+            )
+            : (
+              <div className={CTAClasses} onClick={this.openShareSheet}>
+                <span className={css.shareYourLinkText}>Share your link</span>
+              </div>
+            )
+        }
         <Overlay open={isShareSheetOpen} from="bottom">
           <SocialShareSheet onClose={this.closeShareSheet} referralCode={referralCode} />
         </Overlay>
@@ -53,5 +69,8 @@ class SocialShareSheetCTA extends PureComponent {
     )
   }
 }
+
+SocialShareSheetCTA.propTypes = propTypes
+SocialShareSheetCTA.defaultProps = defaultProps
 
 export { SocialShareSheetCTA }

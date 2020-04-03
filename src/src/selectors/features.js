@@ -103,3 +103,7 @@ export const getPromoOfferVariant = ({ features }) => (features && features.getI
 export const getIsSignupReductionEnabled = ({ features }) => (features && features.getIn(['enableSignupReduction', 'value'], false))
 
 export const getIsSubscriberDisabledSlotsEnabled = ({ features }) => (features && features.getIn(['enableSubscriberDisabledSlots', 'value'], false))
+
+export const getIsWelcomePageOnboardingEnabled = ({ features }) => (
+  features && features.getIn(['isWelcomePageOnboardingEnabled', 'value'], false)
+)
