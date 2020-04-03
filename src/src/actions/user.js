@@ -23,7 +23,7 @@ import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
 import { actionTypes } from './actionTypes'
-import { trackFirstPurchase, trackUserAttributes } from './tracking'
+import { trackFirstPurchase, trackUserAttributes, trackNewUser, trackNewOrder } from './tracking'
 // eslint-disable-next-line import/no-cycle
 import { subscriptionLoadData } from './subscription'
 
@@ -686,12 +686,15 @@ export function userSubscribe() {
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
         const { customer, addresses, paymentMethod, subscription, orderId } = data
+        const { id: customerId } = customer
         let user = Immutable.fromJS({
           ...customer,
           ...addresses,
           subscription
         })
         user = user.set('goustoReference', user.get('goustoReference').toString())
+
+        dispatch(trackNewUser(customerId), { key: trackingKeys.createUser })
 
         const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider : ''
         dispatch({
@@ -709,11 +712,10 @@ export function userSubscribe() {
         })
 
         dispatch(trackFirstPurchase(orderId, prices))
-
+        dispatch(trackNewOrder(orderId, customerId), { key: trackingKeys.createOrder })
         dispatch(basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
 
-        const { id: customerId } = customer
         const { id: paymentId } = paymentMethod
         const { id: subscriptionId } = subscription
 
@@ -735,6 +737,7 @@ export function userSubscribe() {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
+      dispatch(trackNewUser())
 
       const previewOrderId = getState().basket.get('previewOrderId')
 
@@ -748,6 +751,7 @@ export function userSubscribe() {
           error_reason: err.message
         }
       })
+      dispatch(trackNewOrder(previewOrderId))
       logger.error({ message: err.message, errors: [err] })
       throw err
     } finally {
