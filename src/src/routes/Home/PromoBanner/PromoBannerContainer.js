@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import promoActions from 'actions/promos'
 import { redirect } from 'actions/redirect'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getPromoCode } from 'selectors/basket'
 import {
   getPromoBannerText,
@@ -61,6 +62,7 @@ const mapDispatchToProps = {
   redirect,
   promoChange: promoActions.promoChange,
   promoToggleModalVisibility: promoActions.promoToggleModalVisibility,
+  trackUTMAndPromoCode,
 }
 
 export const PromoBannerContainer = connect(

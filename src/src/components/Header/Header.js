@@ -8,7 +8,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import Login from 'Login'
 import SimpleHeader from 'Header/SimpleHeader'
-import PromoModal from 'PromoModal'
+import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import DuplicateOrderModal from 'DuplicateOrderModal'
 import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
@@ -416,7 +416,7 @@ Header.propTypes = {
   logoutUser: PropTypes.func.isRequired,
   path: PropTypes.string,
   promoCodeUrl: PropTypes.string,
-  routing: PropTypes.object.isRequired,
+  routing: PropTypes.objectOf(PropTypes.object).isRequired,
   serverError: PropTypes.bool,
   simple: PropTypes.bool,
   small: PropTypes.bool,

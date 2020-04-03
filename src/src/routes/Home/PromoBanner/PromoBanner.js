@@ -5,13 +5,6 @@ import Banner from 'Banner'
 import logger from 'utils/logger'
 
 export class PromoBanner extends React.Component {
-  static propTypes = {
-    hide: PropTypes.bool,
-    text: PropTypes.string,
-    linkText: PropTypes.string,
-    promoCode: PropTypes.string,
-  }
-
   async applyPromoCode(promoCode) {
     const { promoChange, promoToggleModalVisibility, redirect, canApplyPromo } = this.props || {}
 
@@ -31,15 +24,34 @@ export class PromoBanner extends React.Component {
   }
 
   render() {
-    const { promoCode, hide, text, linkText } = this.props
+    const { promoCode, hide, text, linkText, trackUTMAndPromoCode } = this.props
 
     return (
       <Banner
         hide={hide}
         text={text}
         linkText={linkText}
-        onClick={() => this.applyPromoCode(promoCode)}
+        onClick={() => {
+          this.applyPromoCode(promoCode)
+          trackUTMAndPromoCode('clickClaimDiscountBar')
+        }}
       />
     )
   }
+}
+
+PromoBanner.propTypes = {
+  hide: PropTypes.bool,
+  text: PropTypes.string,
+  linkText: PropTypes.string,
+  promoCode: PropTypes.string,
+  trackUTMAndPromoCode: PropTypes.func,
+}
+
+PromoBanner.defaultProps = {
+  hide: false,
+  text: '',
+  linkText: '',
+  promoCode: '',
+  trackUTMAndPromoCode: () => {},
 }
