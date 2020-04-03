@@ -19,7 +19,6 @@ describe('recipesTransformer', () => {
   })
   test('should return recipe data', () => {
     const menuServiceResponse = {
-      status: 'ok',
       meta: {},
       data: [
         {
@@ -67,8 +66,8 @@ describe('recipesTransformer', () => {
           }
         }
       ],
-      included: [
-        {
+      collection: {
+        'a4f1eb8e-2eda-11e9-81ec-06399ef4685e': {
           id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
           type: 'collection',
           attributes: {
@@ -83,7 +82,9 @@ describe('recipesTransformer', () => {
             order: 400
           }
         },
-        {
+      },
+      recipe: {
+        2106: {
           id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5',
           type: 'recipe',
           attributes: {
@@ -323,8 +324,10 @@ describe('recipesTransformer', () => {
               ]
             }
           }
-        },
-        {
+        }
+      },
+      ingredient: {
+        '79dc3eeb-991b-4673-913e-fbdc339f1fcf': {
           id: '79dc3eeb-991b-4673-913e-fbdc339f1fcf',
           type: 'ingredient',
           attributes: {
@@ -382,7 +385,7 @@ describe('recipesTransformer', () => {
             name: '1 brown onion'
           }
         },
-        {
+        '488d5751-dcff-4985-88c0-bf745ff54904': {
           id: '488d5751-dcff-4985-88c0-bf745ff54904',
           type: 'ingredient',
           attributes: {
@@ -438,7 +441,7 @@ describe('recipesTransformer', () => {
             name: '40g Cornish clotted cream'
           }
         },
-      ]
+      },
     }
 
     const expectedFormat = [
@@ -755,7 +758,6 @@ describe('recipesTransformer', () => {
       }
 
       const menuServiceResponse = {
-        status: 'ok',
         meta: {},
         data: [
           {
@@ -784,8 +786,8 @@ describe('recipesTransformer', () => {
             }
           }
         ],
-        included: [
-          {
+        recipe: {
+          7586: {
             id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5',
             type: 'recipe',
             attributes: {
@@ -885,7 +887,7 @@ describe('recipesTransformer', () => {
               }
             }
           }
-        ]
+        }
       }
 
       const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse)

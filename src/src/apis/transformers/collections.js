@@ -1,5 +1,3 @@
-import { normaliseData } from './normaliseData'
-
 const transformMenuCollections = (menu, normalisedData, meta) => {
   if (!menu || !menu.relationships || !menu.relationships.collections || !menu.relationships.collections.data) {
     return undefined
@@ -28,10 +26,6 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
   return formattedData
 }
 
-const collectionsTransformer = (activeMenu, response) => {
-  const normalisedData = normaliseData(response)
-
-  return transformMenuCollections(activeMenu, normalisedData, response.meta)
-}
+const collectionsTransformer = (activeMenu, menuServiceData) => transformMenuCollections(activeMenu, menuServiceData, menuServiceData.meta)
 
 export { collectionsTransformer }
