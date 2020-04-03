@@ -7,7 +7,7 @@ describe("User log in flow", () => {
     cy.fixture('auth/login').as('login')
     cy.route('POST', /login/, '@login')
     cy.fixture('auth/identify').as('identify')
-    cy.route('POST', /identify/, '@identify')
+    cy.route('POST', /identify/, '@identify').as('identifyRequest')
   })
 
   describe('on web', () => {
@@ -20,6 +20,8 @@ describe("User log in flow", () => {
         cy.get('input[name="password"]').type('password', {force: true})
         cy.get('[data-testing="loginFormSubmit"]').click()
       })
+
+      cy.wait('@identifyRequest')
       cy.get('[data-testing="logoutButton"]').should('be.visible')
     })
   })
@@ -35,6 +37,8 @@ describe("User log in flow", () => {
         cy.get('input[name="password"]').type('password', {force: true})
         cy.get('[data-testing="loginFormSubmit"]').click()
       })
+
+      cy.wait('@identifyRequest')
       cy.get('[data-testing="linkMenuAccount"]').should('be.visible')
     })
   })
