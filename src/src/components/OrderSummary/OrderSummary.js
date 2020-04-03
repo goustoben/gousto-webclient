@@ -4,6 +4,8 @@ import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import moment from 'moment'
 import Receipt from 'Receipt'
+import Icon from 'Icon'
+
 import RecipeItem from 'routes/Menu/Recipe/RecipeItem'
 import ProductItem from 'Product/ProductItem'
 import SaveButton from 'OrderSummary/SaveButton'
@@ -37,6 +39,7 @@ const propTypes = {
   isOrderConfirmation: PropTypes.bool.isRequired,
   sectionTitle: PropTypes.string.isRequired,
   onOrderConfirmationMobile: PropTypes.bool.isRequired,
+  isWelcomePageOnboardingEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -46,6 +49,7 @@ const defaultProps = {
   prices: Immutable.Map({}),
   orderNumber: '',
   orderSummaryCollapsed: true,
+  isWelcomePageOnboardingEnabled: false,
 }
 
 class OrderSummary extends PureComponent {
@@ -185,6 +189,32 @@ class OrderSummary extends PureComponent {
     )
   }
 
+  renderFooterExperiment = () => {
+    const { orderSummaryOpen } = this.state
+
+    return (
+      <footer className={classnames(css.mobileOnly, css.footerExperiment)}>
+        {orderSummaryOpen ? (
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
+            Hide order details
+            <Icon name="fa-angle-up" className={css.footerIcon} />
+          </a>
+        ) : (
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
+            View order details
+            <Icon name="fa-angle-down" className={css.footerIcon} />
+          </a>
+        )}
+      </footer>
+    )
+  }
+
   render() {
     const {
       prices,
@@ -202,6 +232,7 @@ class OrderSummary extends PureComponent {
       saveError,
       orderSummaryCollapsed,
       onOrderConfirmationMobile,
+      isWelcomePageOnboardingEnabled,
     } = this.props
     const { orderSummaryOpen } = this.state
     let vatableItemsInOrder = false
@@ -221,7 +252,7 @@ class OrderSummary extends PureComponent {
 
     return (
       <section className={css.container}>
-        {this.renderHeader()}
+        {!isWelcomePageOnboardingEnabled && this.renderHeader()}
 
         <div
           className={classnames(
@@ -273,7 +304,7 @@ class OrderSummary extends PureComponent {
           </div>
         </div>
 
-        {orderSummaryCollapsed && this.renderFooter()}
+        {orderSummaryCollapsed && ( !isWelcomePageOnboardingEnabled ? this.renderFooter() : this.renderFooterExperiment())}
       </section>
     )
   }

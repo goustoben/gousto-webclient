@@ -4,6 +4,7 @@ import productActions from 'actions/products'
 import userUtils from 'utils/user'
 import OrderSummary from 'OrderSummary'
 import { actionTypes } from 'actions/actionTypes'
+import { getIsWelcomePageOnboardingEnabled } from 'selectors/features'
 
 function mapStateToProps(state) {
   const orderId = state.basket.get('orderId')
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
     saving: state.pending.get(actionTypes.BASKET_CHECKOUT),
     surcharges: order.get('surcharges'),
     orderNumber: orderId,
+    isWelcomePageOnboardingEnabled: getIsWelcomePageOnboardingEnabled(state),
   }
 }
 

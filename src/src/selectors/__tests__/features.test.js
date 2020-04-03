@@ -28,6 +28,7 @@ import {
   getPromoOfferVariant,
   getIsSignupReductionEnabled,
   getIsSubscriberDisabledSlotsEnabled,
+  getIsWelcomePageOnboardingEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -727,6 +728,36 @@ describe('when features are defined', () => {
 
       test('should be truthy', () => {
         expect(getIsSubscriberDisabledSlotsEnabled(state)).toBeTruthy()
+      })
+    })
+  })
+
+  describe('getIsWelcomePageOnboardingEnabled', () => {
+    describe('when isWelcomePageOnboardingEnabled is NOT set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          isWelcomePageOnboardingEnabled: {
+            value: false
+          }
+        })
+      })
+
+      test('should be falsy', () => {
+        expect(getIsWelcomePageOnboardingEnabled(state)).toBeFalsy()
+      })
+    })
+
+    describe('when isWelcomePageOnboardingEnabled is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          isWelcomePageOnboardingEnabled: {
+            value: true
+          }
+        })
+      })
+
+      test('should be truthy', () => {
+        expect(getIsWelcomePageOnboardingEnabled(state)).toBeTruthy()
       })
     })
   })
