@@ -15,7 +15,7 @@ class PromoModal extends React.Component {
   }
 
   render() {
-    const { text, title, error, buttonText, needsAgeVerification, isAgeVerified, pending } = this.props
+    const { text, title, error, buttonText, needsAgeVerification, isAgeVerified, pending, trackUTMAndPromoCode } = this.props
 
     return (
       <ModalPanel closePortal={() => this.handleClick()} closePortalFromButton={() => this.handleClick()} disableOverlay>
@@ -27,7 +27,10 @@ class PromoModal extends React.Component {
               className={css.buttonSegment}
               data-testing="promoModalButton"
               disabled={(needsAgeVerification && !isAgeVerified && !error) || pending}
-              onClick={() => this.handleClick()}
+              onClick={() => {
+                this.handleClick()
+                trackUTMAndPromoCode('clickClaimDiscountPopup')
+              }}
               pending={pending}
             >
               {buttonText}
@@ -40,15 +43,25 @@ class PromoModal extends React.Component {
 }
 
 PromoModal.propTypes = {
-  text: PropTypes.string,
-  title: PropTypes.string,
-  error: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
   promoApply: PropTypes.func,
   needsAgeVerification: PropTypes.bool,
   isAgeVerified: PropTypes.bool,
-  buttonText: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
   pending: PropTypes.bool,
   justApplied: PropTypes.bool,
+  trackUTMAndPromoCode: PropTypes.func,
 }
 
-export default PromoModal
+PromoModal.defaultProps = {
+  promoApply: () => {},
+  needsAgeVerification: false,
+  isAgeVerified: false,
+  pending: false,
+  justApplied: false,
+  trackUTMAndPromoCode: () => {},
+}
+
+export { PromoModal }

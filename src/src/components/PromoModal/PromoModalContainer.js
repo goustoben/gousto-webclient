@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import Immutable from 'immutable'
-import PromoModal from './PromoModal'
+import { PromoModal } from './PromoModal'
 
 const mapStateToProps = (state) => {
   const promoCode = state.promoCurrent
@@ -73,7 +74,8 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {
+export const PromoModalContainer = connect(mapStateToProps, {
   promoApply: actions.promoApply,
   close: actions.promoCloseModal,
+  trackUTMAndPromoCode,
 })(PromoModal)

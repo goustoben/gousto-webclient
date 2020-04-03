@@ -1,1 +1,1 @@
-export default from './PromoModalWrapperContainer'
+export { PromoModalWrapper } from './PromoModalWrapperContainer'

@@ -3,7 +3,7 @@ import React from 'react'
 import Svg from 'Svg'
 import Link from 'Link'
 import classNames from 'classnames'
-import PromoModal from 'PromoModal'
+import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import { H1 } from 'Page/Header'
 import css from '../Header.css'
 
