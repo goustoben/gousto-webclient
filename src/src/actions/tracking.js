@@ -195,6 +195,41 @@ export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) =
   })
 }
 
+const getNewRecordStatus = (record) => (record ? 'success' : 'failed')
+
+export const trackNewUser = (userId) => (dispatch, getState) => {
+  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const type = trackingKeys.createUser
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      promoCode,
+      ...UTM,
+      userId,
+      status: getNewRecordStatus(userId)
+    }
+  })
+}
+
+export const trackNewOrder = (orderId, userId) => (dispatch, getState) => {
+  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const type = trackingKeys.createOrder
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      promoCode,
+      ...UTM,
+      orderId,
+      userId,
+      status: getNewRecordStatus(userId)
+    }
+  })
+}
+
 export default {
   trackFirstPurchase,
   setAffiliateSource,

@@ -21,7 +21,6 @@ import recipeActions from 'actions/recipes'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import logger from 'utils/logger'
-
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 
 jest.mock('apis/user', () => ({
@@ -287,7 +286,7 @@ describe('user actions', () => {
 
       test('Then should dispatch CHECKOUT_SUBSCRIPTION_CREATED with proper data', async () => {
         await userSubscribe()(dispatch, getState)
-        expect(dispatch).toHaveBeenNthCalledWith(7, {
+        expect(dispatch).toHaveBeenNthCalledWith(9, {
           type: actionTypes.CHECKOUT_SUBSCRIPTION_CREATED,
           trackingData: {
             actionType: trackingKeys.subscriptionCreated,
@@ -361,6 +360,61 @@ describe('user actions', () => {
                 customer: customerObject,
               }),
             )
+          })
+        })
+      })
+    })
+
+    describe('Customer signed up successfully', () => {
+      describe('Given valid request data', () => {
+        beforeEach(() => {
+          getState.mockReturnValue({
+            ...state,
+            features: Immutable.fromJS({}),
+            user: Immutable.fromJS({})
+          })
+          customerSignup.mockResolvedValue({
+            data: {
+              customer: {
+                id: '22',
+                goustoReference: '123'
+              },
+              addresses: {},
+              subscription: {},
+              orderId: '12345',
+              paymentMethod: {
+                card: {
+                  paymentProvider: 'checkout'
+                }
+              }
+            }
+          })
+        })
+
+        describe('When userSubscribe got dispatched', () => {
+          beforeEach(async () => {
+            await userSubscribe()(dispatch, getState)
+          })
+
+          test('Then new customer should be tracked', () => {
+            const [userSubscribeError, userSubscribePending, trackNewUser, checkoutOrderPlaced, trackFirstPurchase, trackNewOrderAction] = dispatch.mock.calls
+            expect(userSubscribeError[0]).toMatchObject({
+              type: actionTypes.ERROR,
+              key: actionTypes.USER_SUBSCRIBE,
+              value: null
+            })
+            expect(userSubscribePending[0]).toMatchObject({
+              type: actionTypes.PENDING,
+              key: actionTypes.USER_SUBSCRIBE,
+              value: true
+            })
+            expect(trackNewUser.pop().key).toEqual(trackingKeys.createUser)
+            expect(checkoutOrderPlaced[0]).toMatchObject({
+              type: actionTypes.CHECKOUT_ORDER_PLACED,
+              trackingData: {}
+            })
+            expect(trackFirstPurchase[0]).toEqual(expect.any(Function))
+            expect(trackNewOrderAction.pop().key).toEqual(trackingKeys.createOrder)
           })
         })
       })

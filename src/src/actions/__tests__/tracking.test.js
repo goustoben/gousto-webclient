@@ -8,11 +8,13 @@ import {
   trackUserAttributes,
   trackGetStarted,
   setUTMSource,
-  trackUTMAndPromoCode
+  trackUTMAndPromoCode,
+  trackNewUser,
+  trackNewOrder
 } from 'actions/tracking'
 import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
-import { clickGetStarted } from 'actions/trackingKeys'
+import { clickGetStarted, createOrder, createUser } from 'actions/trackingKeys'
 import { warning } from 'utils/logger'
 import moment from 'moment'
 
@@ -508,6 +510,156 @@ describe('tracking actions', () => {
         expect(trackingData.actionType).toEqual('click_next_payment')
         expect(trackingData.promoCode).toEqual('promo1')
         expect(trackingData.section).toBeUndefined()
+      })
+    })
+  })
+
+  describe('trackNewUser', () => {
+    describe('Failed to create new user', () => {
+      describe('Given no arguments is defined', () => {
+        beforeEach(() => {
+          const state = {
+            basket: Immutable.fromJS({
+              promoCode: 'abc123'
+            }),
+            tracking: Immutable.fromJS({
+              utmSource: undefined
+            })
+          }
+
+          dispatch = jest.fn()
+          getState = jest.fn().mockReturnValue(state)
+        })
+
+        describe('When trackNewUser got dispatched with no userId passed', () => {
+          beforeEach(() => {
+            trackNewUser()(dispatch, getState)
+          })
+
+          test('Then data should be tracked with failed status', () => {
+            const expected = {
+              type: createUser,
+              trackingData: {
+                actionType: createUser,
+                promoCode: 'abc123',
+                status: 'failed'
+              }
+            }
+
+            expect(dispatch).toHaveBeenCalledWith(expected)
+          })
+        })
+      })
+    })
+
+    describe('New user created successfully', () => {
+      describe('Given arguments is defined', () => {
+        describe('When trackNewUser got dispatched with userId passed', () => {
+          const userId = '9876'
+          beforeEach(() => {
+            const state = {
+              basket: Immutable.fromJS({
+                promoCode: 'abc123'
+              }),
+              tracking: Immutable.fromJS({
+                utmSource: undefined
+              })
+            }
+
+            dispatch = jest.fn()
+            getState = jest.fn().mockReturnValue(state)
+            trackNewUser(userId)(dispatch, getState)
+          })
+
+          test('Then data should be tracked with userId and success status', () => {
+            const expected = {
+              type: createUser,
+              trackingData: {
+                actionType: createUser,
+                promoCode: 'abc123',
+                status: 'success',
+                userId
+              }
+            }
+            expect(dispatch).toHaveBeenCalledWith(expected)
+          })
+        })
+      })
+    })
+  })
+
+  describe('trackNewOrder', () => {
+    describe('Checkout order failed', () => {
+      describe('Given no userId argument passed', () => {
+        describe('When trackNewOrder got dispatched with orderId', () => {
+          beforeEach(() => {
+            const state = {
+              basket: Immutable.fromJS({
+                promoCode: 'abc123'
+              }),
+              tracking: Immutable.fromJS({
+                utmSource: undefined
+              })
+            }
+
+            dispatch = jest.fn()
+            getState = jest.fn().mockReturnValue(state)
+          })
+
+          test('Then data should be tracked with failed status', () => {
+            const orderId = '765'
+            const expected = {
+              type: createOrder,
+              trackingData: {
+                actionType: createOrder,
+                promoCode: 'abc123',
+                status: 'failed',
+                orderId
+              }
+            }
+
+            trackNewOrder(orderId)(dispatch, getState)
+            expect(dispatch).toHaveBeenCalledWith(expected)
+          })
+        })
+      })
+    })
+
+    describe('Checkout order placed', () => {
+      describe('Given arguments passed', () => {
+        describe('When trackNewOrder got dispatched with orderId and userId', () => {
+          beforeEach(() => {
+            const state = {
+              basket: Immutable.fromJS({
+                promoCode: 'abc123'
+              }),
+              tracking: Immutable.fromJS({
+                utmSource: undefined
+              })
+            }
+
+            dispatch = jest.fn()
+            getState = jest.fn().mockReturnValue(state)
+          })
+
+          test('Then data should be tracked with success status', () => {
+            const userId = '546'
+            const orderId = '765'
+            const expected = {
+              type: createOrder,
+              trackingData: {
+                actionType: createOrder,
+                promoCode: 'abc123',
+                status: 'success',
+                orderId,
+                userId
+              }
+            }
+
+            trackNewOrder(orderId, userId)(dispatch, getState)
+            expect(dispatch).toHaveBeenCalledWith(expected)
+          })
+        })
       })
     })
   })
