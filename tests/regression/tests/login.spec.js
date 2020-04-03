@@ -1,31 +1,41 @@
-import { isMobile } from '../helper'
+import { withPlatformTags, MOBILE, WEB } from '../utils/tags'
 
 describe("User log in flow", () => {
-  it('should allow a user to enter credentials and then sucessfully log in', () => {
+  beforeEach(() => {
     cy.server()
 
     cy.fixture('auth/login').as('login')
     cy.route('POST', /login/, '@login')
     cy.fixture('auth/identify').as('identify')
     cy.route('POST', /identify/, '@identify')
+  })
 
-    cy.visit('/menu')
-    if (isMobile()) {
+  describe('on web', () => {
+    withPlatformTags(WEB).it('should allow a user to enter credentials and then sucessfully log in', () => {
+      cy.visit('/menu')
+      cy.contains('Login').click()
+
+      cy.get('form').within(($form) => {
+        cy.get('input[name="email"]').type('email@gmail.com', {force: true})
+        cy.get('input[name="password"]').type('password', {force: true})
+        cy.get('[data-testing="loginFormSubmit"]').click()
+      })
+      cy.get('[data-testing="logoutButton"]').should('be.visible')
+    })
+  })
+
+  describe('on mobile', () => {
+    withPlatformTags(MOBILE).it('should allow a user to enter credentials and then sucessfully log in', () => {
+      cy.visit('/menu')
       cy.get('button[data-testing="burgerMenu"]').click()
       cy.get('li[data-testing="burgerMenuLogin"]').click()
-    } else {
-      cy.contains('Login').click()
-    }
 
-    cy.get('form').within(($form) => {
-      cy.get('input[name="email"]').type('email@gmail.com', {force: true})
-      cy.get('input[name="password"]').type('password', {force: true})
-      cy.get('[data-testing="loginFormSubmit"]').click()
-    })
-    if (isMobile()) {
+      cy.get('form').within(($form) => {
+        cy.get('input[name="email"]').type('email@gmail.com', {force: true})
+        cy.get('input[name="password"]').type('password', {force: true})
+        cy.get('[data-testing="loginFormSubmit"]').click()
+      })
       cy.get('[data-testing="linkMenuAccount"]').should('be.visible')
-    } else {
-      cy.get('[data-testing="logoutButton"]').should('be.visible')
-    }
+    })
   })
 })
