@@ -61,6 +61,14 @@ class GetHelp extends PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { order } = this.props
+
+    if (order && order.id && prevProps.order.id !== order.id) {
+      this.orderLoadComplete()
+    }
+  }
+
   orderLoadComplete = () => {
     const { order, loadRecipesById } = this.props
 

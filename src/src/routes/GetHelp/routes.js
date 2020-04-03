@@ -7,21 +7,33 @@ import { checkValidSession } from 'utils/routes'
 import { GetHelpContainer } from './GetHelpContainer'
 import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 
-import { Refund } from './Refund'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
 import { Delivery } from './Delivery'
+import { EligibilityCheck } from './EligibilityCheck'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
 import { RecipeCards } from './RecipeCards'
+import { Refund } from './Refund'
 
 const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = '/'
+    const isEligibilityCheckUrl = () => {
+      const { location } = routes
+      const { getHelp } = configRoutes.client
+      const eligibilityCheckUrl = `${getHelp.index}/${getHelp.eligibilityCheck}`
+
+      return location.pathname.replace('/', '') === eligibilityCheckUrl.replace('/', '')
+    }
+
+    if (routes && routes.location && isEligibilityCheckUrl()) {
+      return next()
+    }
 
     // redirect user to the `/` in case auth session is not found
-    checkValidSession(store, redirectTo)(routes, replace, next)
+    return checkValidSession(store, redirectTo)(routes, replace, next)
   }
 
   return (
@@ -35,6 +47,7 @@ const getHelpRoutes = (store) => {
         {Confirmation}
         {Contact}
         {Delivery}
+        {EligibilityCheck}
         {Ingredients}
         {IngredientIssues}
         {IngredientReasons}
