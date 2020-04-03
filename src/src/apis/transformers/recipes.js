@@ -1,4 +1,3 @@
-import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
 import {
@@ -13,8 +12,7 @@ import {
   taxonomyTransformer
 } from './recipes/recipeHelpers'
 
-const recipesTransformer = (activeMenu, response, brandData = {}) => {
-  const normalisedData = normaliseData(response)
+const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
   if (!activeMenu || !activeMenu.relationships) {
     return undefined
   }
@@ -28,11 +26,11 @@ const recipesTransformer = (activeMenu, response, brandData = {}) => {
   }
 
   const formattedData = activeMenuRecipesIds.map((individualRecipeId, index) => {
-    const currentRecipe = normalisedData.recipe[individualRecipeId]
+    const currentRecipe = menuServiceData.recipe[individualRecipeId]
     const normalisedAttributes = currentRecipe && currentRecipe.attributes
     const normalisedRelationships = currentRecipe && currentRecipe.relationships
 
-    const formattedIngredients = formatIngredients(normalisedRelationships, normalisedData)
+    const formattedIngredients = formatIngredients(normalisedRelationships, menuServiceData)
     const finalIngredients = formattedIngredients.map(ingredientTransformer)
 
     const nutritionalInfo = normalisedAttributes.nutritional_information

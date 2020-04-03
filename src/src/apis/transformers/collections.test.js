@@ -3,7 +3,6 @@ import { collectionsTransformer } from './collections'
 describe('collectionTransformer', () => {
   test('should transform data into format expected by UI', () => {
     const menuServiceResponse = {
-      status: 'ok',
       meta: {},
       data: [
         {
@@ -53,8 +52,8 @@ describe('collectionTransformer', () => {
           }
         }
       ],
-      included: [
-        {
+      collection: {
+        'a4f1eb8e-2eda-11e9-81ec-06399ef4685e': {
           id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
           type: 'collection',
           attributes: {
@@ -70,7 +69,7 @@ describe('collectionTransformer', () => {
             order: 400
           }
         },
-        {
+        'bc5fc11e-afbf-11e8-9691-0645394f11eae': {
           id: 'bc5fc11e-afbf-11e8-9691-0645394f11eae',
           type: 'collection',
           attributes: {
@@ -86,7 +85,9 @@ describe('collectionTransformer', () => {
             order: 200
           }
         },
-        {
+      },
+      recipe: {
+        2106: {
           id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5',
           type: 'recipe',
           attributes: {
@@ -327,7 +328,9 @@ describe('collectionTransformer', () => {
             }
           }
         },
-        {
+      },
+      ingredient: {
+        '79dc3eeb-991b-4673-913e-fbdc339f1fcf': {
           id: '79dc3eeb-991b-4673-913e-fbdc339f1fcf',
           type: 'ingredient',
           attributes: {
@@ -385,7 +388,7 @@ describe('collectionTransformer', () => {
             name: '1 brown onion'
           }
         },
-      ]
+      }
     }
 
     const expectedFormat = [{
@@ -409,5 +412,12 @@ describe('collectionTransformer', () => {
 
     const result = collectionsTransformer(menuServiceResponse.data[0], menuServiceResponse)
     expect(result).toEqual(expectedFormat)
+  })
+
+  describe('when menu does not have relationships', () => {
+    test('should return undefined', () => {
+      const result = collectionsTransformer({}, {})
+      expect(result).toEqual(undefined)
+    })
   })
 })
