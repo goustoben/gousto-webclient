@@ -49,30 +49,23 @@ jobs:
             - project
             - .circlerc
 
-  test-isomorphic-jest-coverage:
+  publish-code-health:
     docker: *gousto_build_image
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run isomoprhic jest tests with coverage
-          command: cd src && npm run test:jest:ci:coverage
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/src/coverage/
-
-  publish-code-health-artifact:
-    docker: *gousto_build_image_docker
-    steps:
-      - attach_workspace:
-          at: ~/
+          name: Setup output folder
+          command: mkdir /tmp/artifacts
       - run:
-          name: Publish code health artifact
-          command: |
-            cd src
-            mkdir /tmp/artifacts
-            node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
+          name: Test coverage
+          command: cd src && npm run test:jest:ci:coverage
+      - run:
+          name: eslint coverage
+          command: cd src && scripts/run-eslint-ci.sh
+      - run:
+          name: Generate code health
+          command: cd src && node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
           path: /tmp/artifacts
 
@@ -137,19 +130,6 @@ jobs:
           name: Create & deploy image
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
           no_output_timeout: 20m
-
-  eslint:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run eslint
-          command: cd src && scripts/run-eslint-ci.sh
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/src/eslint-results.json
 
   test-e2e-selenium:
     docker: *gousto_build_image
@@ -229,7 +209,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - test-isomorphic-jest-coverage:
+      - setup-remote-image-repositories:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -238,7 +218,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - setup-remote-image-repositories:
+      - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -265,29 +245,10 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - eslint:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-                - develop
-      - publish-code-health-artifact:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-jest-coverage
-            - eslint
-          filters:
-            branches:
-              only:
-                - develop
       - build-application:
           context: gousto-beta-aws-app-circleci
           requires:
-            - test-isomorphic-jest-coverage
-            - eslint
+            - setup-remote-image-repositories
           filters:
             branches:
               only:
@@ -297,6 +258,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-application
+            - publish-code-health
           filters:
             branches:
               only:
@@ -307,6 +269,7 @@ workflows:
           requires:
             - build-nginx-image
             - build-webclient-image
+            - publish-code-health
           filters:
             branches:
               only:
