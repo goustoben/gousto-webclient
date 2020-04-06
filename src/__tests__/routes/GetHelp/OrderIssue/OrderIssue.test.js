@@ -59,7 +59,7 @@ describe('<OrderIssue />', () => {
       expect(itemLinks.at(0).prop('to')).toBe('/get-help/ingredients')
       expect(itemLinks.at(1).prop('to')).toBe('/get-help/recipe-cards')
       expect(itemLinks.at(2).prop('to')).toBe('/get-help/delivery')
-      expect(itemLinks.at(3).prop('to')).toBe('/get-help/contact')
+      expect(itemLinks.at(3).prop('to')).toBe('https://gousto.zendesk.com/hc/en-gb')
     })
 
     test('bottom bar buttons is rendering correctly', () => {
