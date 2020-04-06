@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import BottomBar from 'BottomBar'
-import { client as routes } from 'config/routes'
+import { client as routes, zendesk as zendeskRoutes } from 'config/routes'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
@@ -45,8 +45,8 @@ const OrderIssue = ({
       <ItemLink
         label={otherItem}
         trackClick={trackClick(selectOrderIssue, 'other')}
-        to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-        clientRouted
+        to={zendeskRoutes.faqs}
+        clientRouted={false}
       />
     </List>
     <BottomBar>
