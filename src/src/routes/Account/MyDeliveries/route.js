@@ -4,5 +4,5 @@ import config from 'config/routes'
 import MyDeliveriesContainer from './MyDeliveriesContainer'
 
 export default (
-  <Route path={config.client.myDeliveries2} component={MyDeliveriesContainer} />
+  <Route path={config.client.myDeliveries} component={MyDeliveriesContainer} />
 )
