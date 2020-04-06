@@ -62,6 +62,10 @@ describe('<OrderIssue />', () => {
       expect(itemLinks.at(3).prop('to')).toBe('https://gousto.zendesk.com/hc/en-gb')
     })
 
+    test('the Others option is not client route', () => {
+      expect(wrapper.find('ItemLink').at(3).prop('clientRouted')).toBe(false)
+    })
+
     test('bottom bar buttons is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
       const Button1 = BottomBar.find('BottomButton').at(0)

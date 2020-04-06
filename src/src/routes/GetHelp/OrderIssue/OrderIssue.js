@@ -46,7 +46,7 @@ const OrderIssue = ({
         label={otherItem}
         trackClick={trackClick(selectOrderIssue, 'other')}
         to={zendeskRoutes.faqs}
-        clientRouted
+        clientRouted={false}
       />
     </List>
     <BottomBar>
