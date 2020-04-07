@@ -1,9 +1,17 @@
-@value ScreenXXSMin from 'styles/screenSizes.css';
+@value ScreenXXSMin, ScreenXXSMin from 'styles/screenSizes.css';
 @value White from 'styles/colors.css';
-.stockAlert {
-  margin: 0 auto;
+
+.communicationPanelContainer {
   background-color: White;
-  padding: 0.125rem .5rem 0.25rem;
+  padding: 1rem;
+  @media ScreenXXSMin {
+    padding: 1rem 0 0;
+  }
+  
+}
+
+.communicationPanel {
+  margin: 0 auto;
   @media ScreenXXSMin {
     max-width: 1600px;
     padding-left: 1.75rem;
@@ -11,19 +19,15 @@
   }
 }
 
-.stockAlert :first-child {
-  margin-bottom: 0.5rem;
-}
-
 .willFade {
-	opacity: 1;
-	transition: 0.5s opacity;
+  opacity: 1;
+  transition: 0.5s opacity;
 }
 
 .fadeOut {
-	composes: willFade;
-	opacity: 0.4;
-	pointer-events: none;
+  composes: willFade;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .cvBanner {

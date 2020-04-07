@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react'
-import { Alert } from 'goustouicomponents'
+import { CommunicationPanel } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import { CoronaVirusBanner } from 'CoronaVirusBanner'
 
+import menuConfig from 'config/menu'
 import { CollectionsNavContainer } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { SimplifiedMenuRecipesPage } from '../NewMenuLayout/SimplifiedMenuRecipesPage'
@@ -30,7 +31,6 @@ const propTypes = {
   newMenuLayout: PropTypes.bool.isRequired,
   menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
-  showStockAlert: PropTypes.bool,
   isLoading: PropTypes.bool,
   storeOrderId: PropTypes.string,
   numPortions: PropTypes.number,
@@ -39,18 +39,19 @@ const propTypes = {
   }),
   params: PropTypes.shape({}),
   isSignupReductionEnabled: PropTypes.bool,
+  showCommunicationPanel: PropTypes.bool,
 }
 
 const defaultProps = {
   menuRecipeDetailShow: '',
   orderId: null,
-  showStockAlert: false,
   isLoading: false,
   storeOrderId: '',
   numPortions: 2,
   query: {},
   params: {},
   isSignupReductionEnabled: false,
+  showCommunicationPanel: false
 }
 
 export class MenuRecipesPage extends PureComponent {
@@ -140,28 +141,32 @@ export class MenuRecipesPage extends PureComponent {
       showLoading,
       stateRecipeCount,
       orderId,
-      showStockAlert,
       isSignupReductionEnabled,
+      showCommunicationPanel,
     } = this.props
+    const { communicationPanel } = menuConfig
     const fadeCss = (showLoading) ? css.fadeOut : css.willFade
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
         <MenuBannerContainer />
         { isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div> }
+        { showCommunicationPanel && (
+          <div className={css.communicationPanelContainer}>
+            <div className={css.communicationPanel}>
+              <CommunicationPanel
+                showIcon={communicationPanel.showIcon}
+                level={communicationPanel.level}
+                title={communicationPanel.title}
+                body={communicationPanel.body}
+              />
+            </div>
+          </div>
+        )}
         <SubHeader
           orderId={orderId}
         />
         <JustForYouTutorial />
-        {showStockAlert
-          && (
-            <div className={css.stockAlert}>
-              <Alert type="warning">
-                <h4>Recipe rush</h4>
-                <p>If you&apos;ve got your eye on a sold out recipe, try changing your delivery day.</p>
-              </Alert>
-            </div>
-          )}
         <Loading loading={showLoading} />
         {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid isFoodBrandClickable />}

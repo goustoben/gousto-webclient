@@ -52,5 +52,11 @@ module.exports = {
   ],
   defaultMenu: {
     switchoverDate: '2020-02-25T12:00:00+01:00',
+  },
+  communicationPanel: {
+    title: 'Is the menu smaller?',
+    body: 'Only temporarily! So we can get more boxes out to those in need during this tough time outside the component have logic for show only for logged in customers on menu remove recipe rush warning',
+    showIcon: true,
+    level: 'info'
   }
 }
