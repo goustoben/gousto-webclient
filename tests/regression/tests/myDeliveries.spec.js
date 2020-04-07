@@ -23,7 +23,7 @@ describe("My Deliveries", () => {
     cy.route('GET', /delivery_day/, {})
 
     cy.login()
-    cy.visit('/mydeliveries')
+    cy.visit('/my-deliveries')
     cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
   })
 
@@ -64,7 +64,7 @@ describe("My Deliveries", () => {
         cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
 
         cy.login()
-        cy.visit('/mydeliveries')
+        cy.visit('/my-deliveries')
         cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
       })
 
