@@ -20,7 +20,6 @@ import {
   getNDDFeatureValue,
   getAddOnsBeforeOrderConfirmation,
   getFullScreenBoxSummary,
-  getShowStockAlertFlag,
   getUserMenuVariant,
   isAccountTabNameTest,
   getHideMenuBanner,
@@ -29,6 +28,7 @@ import {
   getIsSignupReductionEnabled,
   getIsSubscriberDisabledSlotsEnabled,
   getIsWelcomePageOnboardingEnabled,
+  getIsCommunicationPanelEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -514,25 +514,6 @@ describe('when features are defined', () => {
     })
   })
 
-  describe('getShowStockAlertFlag', () => {
-    describe('when is NOT set', () => {
-      test('should return false', () => {
-        expect(getShowStockAlertFlag(state)).toBe(false)
-      })
-    })
-
-    describe('when is set', () => {
-      test('should return true', () => {
-        state.features = Immutable.fromJS({
-          showStockAlert: {
-            value: true
-          }
-        })
-        expect(getShowStockAlertFlag(state)).toBe(true)
-      })
-    })
-  })
-
   describe('getUserMenuVariant', () => {
     describe('when is NOT set', () => {
       test('should return an empty string', () => {
@@ -758,6 +739,36 @@ describe('when features are defined', () => {
 
       test('should be truthy', () => {
         expect(getIsWelcomePageOnboardingEnabled(state)).toBeTruthy()
+      })
+    })
+  })
+
+  describe('getIsCommunicationPanelEnabled', () => {
+    describe('when isCommunicationPanelEnabled is NOT set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          isCommunicationPanelEnabled: {
+            value: false
+          }
+        })
+      })
+
+      test('should be falsy', () => {
+        expect(getIsCommunicationPanelEnabled(state)).toBeFalsy()
+      })
+    })
+
+    describe('when isCommunicationPanelEnabled is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          isCommunicationPanelEnabled: {
+            value: true
+          }
+        })
+      })
+
+      test('should be truthy', () => {
+        expect(getIsCommunicationPanelEnabled(state)).toBeTruthy()
       })
     })
   })

@@ -4,6 +4,7 @@ export {
   Control,
   CollectionsNavigation,
   CollectionsNavigationItem,
+  CommunicationPanel,
   CTA,
   Dropdown,
   ExtraInfo,

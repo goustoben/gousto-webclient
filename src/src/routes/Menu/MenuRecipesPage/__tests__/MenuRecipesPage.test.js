@@ -51,6 +51,16 @@ describe('initial render', () => {
   test('should render JFY tutorial', () => {
     expect(wrapper.find('JustForYouTutorial').length).toBe(1)
   })
+
+  describe('when showCommunicationPanel true', () => {
+    beforeEach(() => {
+      wrapper.setProps({showCommunicationPanel: true})
+    })
+
+    test('should render CommunicationPanel', () => {
+      expect(wrapper.find('CommunicationPanel')).toHaveLength(1)
+    })
+  })
 })
 
 describe('with the collections feature enabled', () => {
@@ -176,36 +186,5 @@ describe('componentWillUnmount', () => {
   test('should call removeEventListener', () => {
     wrapper.unmount()
     expect(window.document.removeEventListener).toHaveBeenCalled()
-  })
-})
-
-describe('stockAlert', () => {
-  describe('when showStockAlert is true', () => {
-    let wrapper
-    beforeEach(() => {
-      SubHeader.mockReturnValue(<div />)
-
-      wrapper = shallow(
-        <MenuRecipes
-          orderId=""
-          basketNumPortionChange={jest.fn()}
-          fadeCss="fadeOut"
-          showLoading={false}
-          showStockAlert
-          stateRecipeCount={30}
-          menuCurrentCollectionId=""
-          menuRecipeDetailShow=""
-          selectCurrentCollection={jest.fn()}
-          detailVisibilityChange={() => { }}
-        />,
-      )
-    })
-    test('should show stock alert', () => {
-      expect(wrapper.find('Alert')).toHaveLength(1)
-    })
-
-    test('should show stock alert with Recipe rush title', () => {
-      expect(wrapper.find('Alert > h4').text()).toEqual('Recipe rush')
-    })
   })
 })
