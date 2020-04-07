@@ -22,7 +22,7 @@ export const filterOrders = (orders) => (
 export const getOrderState = (state, deliveryDate, recipeItems, phase, cancellable) => {
   const isDeliveryDay = moment().isSame(deliveryDate, 'day')
 
-  if (phase === 'pre-menu') {
+  if (phase === 'pre_menu') {
     return 'scheduled'
   }
 

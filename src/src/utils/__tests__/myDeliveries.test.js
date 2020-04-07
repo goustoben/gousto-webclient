@@ -176,7 +176,7 @@ describe('myDeliveries utils', () => {
       const state = 'pending'
       const deliveryDate = '2019-11-06T00:00:00.000Z'
       const recipeItems = Immutable.List()
-      const phase = 'pre-menu'
+      const phase = 'pre_menu'
       const cancellable = true
       const result = getOrderState(state, deliveryDate, recipeItems, phase, cancellable)
 
