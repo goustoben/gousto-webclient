@@ -2,22 +2,38 @@ import { collectionFilterChange } from 'actions/filters'
 import { getCollectionIdWithName } from 'utils/collections'
 import { getDefaultCollection } from '../selectors/collections'
 
+const getPathName = (state) => state.routing.locationBeforeTransitions.pathName
+const isOnMenu = (pathName) => pathName && (pathName === '/menu' || pathName.startsWith('/menu/'))
+const getCollectionQuery = (state) => {
+  const location = state.routing.locationBeforeTransitions
+
+  if (!location || !location.query || !location.query.collection) {
+    return null
+  }
+
+  return location.query.collection
+}
+
 export const menuSetLandingCollection = () =>
   (dispatch, getState) => {
-    let changeCollection = true
-    const prevLoc = getState().routing.locationBeforeTransitions
+    const pathName = getPathName(getState())
 
-    if (prevLoc && prevLoc.query && prevLoc.query.collection) {
-      if (getCollectionIdWithName(getState(), prevLoc.query.collection)) {
-        changeCollection = false
-      }
+    if (!isOnMenu(pathName)) {
+      return
     }
 
-    if (changeCollection) {
-      const landingCollection = getDefaultCollection(getState())
+    const collectionSlug = getCollectionQuery(getState())
 
-      if (landingCollection) {
-        dispatch(collectionFilterChange(landingCollection.get('id')))
-      }
+    // if collection already set and it's valid then don't set again
+    if (collectionSlug && getCollectionIdWithName(getState(), collectionSlug)) {
+      return
     }
+
+    const landingCollection = getDefaultCollection(getState())
+
+    if (!landingCollection) {
+      return
+    }
+
+    dispatch(collectionFilterChange(landingCollection.get('id')))
   }

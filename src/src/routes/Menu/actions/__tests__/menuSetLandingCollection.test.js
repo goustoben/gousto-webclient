@@ -48,41 +48,98 @@ describe('given menuSetLandingCollection action is called', () => {
     jest.clearAllMocks()
   })
 
-  describe('when query has a collection slug', () => {
+  describe('when not on menu page', () => {
     beforeEach(() => {
       state = {
         ...state,
         routing: {
           locationBeforeTransitions: {
-            query: {
-              collection: 'some-collection'
-            }
+            pathName: '/my-deliveries'
           }
         }
       }
     })
 
-    describe('when that collection slug is valid', () => {
-      beforeEach(() => {
-        getCollectionIdWithName.mockImplementation((_state, slug) => {
-          if (slug === 'some-collection') {
-            return 'some-collection-id'
-          }
+    test('should dispatch no actions', () => {
+      menuSetLandingCollection()(dispatch, getState)
 
-          return null
+      expect(dispatch).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when on menu page', () => {
+    beforeEach(() => {
+      state = {
+        ...state,
+        routing: {
+          locationBeforeTransitions: {
+            pathName: '/menu'
+          }
+        }
+      }
+    })
+
+    describe('when query has a collection slug', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          routing: {
+            locationBeforeTransitions: {
+              ...state.routing.locationBeforeTransitions,
+              query: {
+                collection: 'some-collection'
+              }
+            }
+          }
+        }
+      })
+
+      describe('when that collection slug is valid', () => {
+        beforeEach(() => {
+          getCollectionIdWithName.mockImplementation((_state, slug) => {
+            if (slug === 'some-collection') {
+              return 'some-collection-id'
+            }
+
+            return null
+          })
+        })
+
+        test('should dispatch no actions', () => {
+          menuSetLandingCollection()(dispatch, getState)
+
+          expect(dispatch).not.toHaveBeenCalled()
         })
       })
 
-      test('should dispatch no actions', () => {
-        menuSetLandingCollection()(dispatch, getState)
+      describe('when that collection slug is invalid', () => {
+        beforeEach(() => {
+          getCollectionIdWithName.mockReturnValue(null)
+        })
 
-        expect(dispatch).not.toHaveBeenCalled()
+        test('should dispatch collectionFilterChange with default id', () => {
+          menuSetLandingCollection()(dispatch, getState)
+
+          expect(dispatch).toHaveBeenCalledWith({
+            symbol: COLLECTION_FILTER_CHANGE_SYMBOL,
+            id: DEFAULT_COLLECTION_ID
+          })
+        })
       })
     })
 
-    describe('when that collection slug is invalid', () => {
+    describe('when query has no collection slug', () => {
       beforeEach(() => {
-        getCollectionIdWithName.mockReturnValue(null)
+        state = {
+          ...state,
+          routing: {
+            locationBeforeTransitions: {
+              ...state.routing.locationBeforeTransitions,
+              query: {
+              }
+            }
+          }
+        }
       })
 
       test('should dispatch collectionFilterChange with default id', () => {
@@ -93,28 +150,103 @@ describe('given menuSetLandingCollection action is called', () => {
           id: DEFAULT_COLLECTION_ID
         })
       })
+
+      describe('when there is no default collection', () => {
+        beforeEach(() => {
+          getDefaultCollection.mockReturnValue(null)
+        })
+
+        test('should dispatch no actions', () => {
+          menuSetLandingCollection()(dispatch, getState)
+
+          expect(dispatch).not.toHaveBeenCalled()
+        })
+      })
     })
   })
 
-  describe('when query has no collection slug', () => {
+  describe('when on menu page with an order', () => {
     beforeEach(() => {
       state = {
         ...state,
         routing: {
           locationBeforeTransitions: {
-            query: {
-            }
+            pathName: '/menu/1234'
           }
         }
       }
     })
 
-    test('should dispatch collectionFilterChange with default id', () => {
-      menuSetLandingCollection()(dispatch, getState)
+    describe('when query has a collection slug', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          routing: {
+            locationBeforeTransitions: {
+              ...state.routing.locationBeforeTransitions,
+              query: {
+                collection: 'some-collection'
+              }
+            }
+          }
+        }
+      })
 
-      expect(dispatch).toHaveBeenCalledWith({
-        symbol: COLLECTION_FILTER_CHANGE_SYMBOL,
-        id: DEFAULT_COLLECTION_ID
+      describe('when that collection slug is valid', () => {
+        beforeEach(() => {
+          getCollectionIdWithName.mockImplementation((_state, slug) => {
+            if (slug === 'some-collection') {
+              return 'some-collection-id'
+            }
+
+            return null
+          })
+        })
+
+        test('should dispatch no actions', () => {
+          menuSetLandingCollection()(dispatch, getState)
+
+          expect(dispatch).not.toHaveBeenCalled()
+        })
+      })
+
+      describe('when that collection slug is invalid', () => {
+        beforeEach(() => {
+          getCollectionIdWithName.mockReturnValue(null)
+        })
+
+        test('should dispatch collectionFilterChange with default id', () => {
+          menuSetLandingCollection()(dispatch, getState)
+
+          expect(dispatch).toHaveBeenCalledWith({
+            symbol: COLLECTION_FILTER_CHANGE_SYMBOL,
+            id: DEFAULT_COLLECTION_ID
+          })
+        })
+      })
+    })
+
+    describe('when query has no collection slug', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          routing: {
+            locationBeforeTransitions: {
+              ...state.routing.locationBeforeTransitions,
+              query: {
+              }
+            }
+          }
+        }
+      })
+
+      test('should dispatch collectionFilterChange with default id', () => {
+        menuSetLandingCollection()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          symbol: COLLECTION_FILTER_CHANGE_SYMBOL,
+          id: DEFAULT_COLLECTION_ID
+        })
       })
     })
   })
