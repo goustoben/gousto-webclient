@@ -1,0 +1,1 @@
+export { CollectionItemContainer } from './CollectionItemContainer'

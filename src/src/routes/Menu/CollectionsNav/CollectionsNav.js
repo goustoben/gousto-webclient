@@ -8,7 +8,7 @@ import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
 import { getElementOffsetTop } from 'utils/DOMhelper'
-import CollectionItem from 'CollectionItem'
+import { CollectionItemContainer } from '../components/CollectionItem'
 import css from './CollectionsNav.css'
 
 const MOBILE_BREAKPOINT = 543
@@ -281,7 +281,6 @@ class CollectionsNav extends React.PureComponent {
   render() {
     const {
       menuCollections,
-      menuCollectionRecipes,
       menuCurrentCollectionId,
     } = this.props
 
@@ -317,8 +316,7 @@ class CollectionsNav extends React.PureComponent {
                   const isCurrent = (menuCurrentCollectionId === collectionId)
 
                   return (
-                    <CollectionItem
-                      count={menuCollectionRecipes.get(collectionId, Immutable.List([])).size}
+                    <CollectionItemContainer
                       key={collectionId}
                       dataId={collectionId}
                       className={isCurrent ? css.currentItem : css.item}
@@ -331,7 +329,7 @@ class CollectionsNav extends React.PureComponent {
                       <span className={css.itemTitle}>
                         {collection.get('shortTitle')}
                       </span>
-                    </CollectionItem>
+                    </CollectionItemContainer>
                   )
                 })
                 .toArray()}
@@ -346,7 +344,6 @@ class CollectionsNav extends React.PureComponent {
 
 CollectionsNav.propTypes = {
   menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-  menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
   collectionFilterChange: PropTypes.func.isRequired,
   menuCurrentCollectionId: PropTypes.string,
   isPolicyAccepted: PropTypes.bool,

@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
 export const initialState = () => Immutable.Map({
-  currentCollectionId: '',
 })
 
 const previousState = initialState()
@@ -14,10 +13,6 @@ const filters = {
     }
 
     switch (action.type) {
-    case actionTypes.FILTERS_COLLECTION_CHANGE: {
-      return state.set('currentCollectionId', action.collectionId)
-    }
-
     case actionTypes.FILTERS_RESET: {
       return previousState
     }

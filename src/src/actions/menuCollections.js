@@ -1,10 +1,8 @@
-import Immutable from 'immutable'
 import logger from 'utils/logger'
 import { fetchCollections } from 'apis/collections'
 import { limitReached } from 'utils/basket'
-import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
+import { isAllRecipes } from 'utils/collections'
 import { menuCollectionsReceive } from 'actions/menu'
-import { collectionFilterChange } from 'actions/filters'
 import { loadRecipesForSingleCollection } from 'actions/loadRecipesForSingleCollection'
 import { actionTypes } from './actionTypes'
 
@@ -18,35 +16,13 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => async
   }
 
   let collections = transformedCollections
+
   if (!collections) {
     const response = await fetchCollections(accessToken, '', args)
     collections = response.data
   }
 
   dispatch(menuCollectionsReceive(collections))
-
-  if (!noUrlChange) {
-    let changeCollection = true
-    const prevLoc = getState().routing.locationBeforeTransitions
-    if (prevLoc && prevLoc.query && prevLoc.query.collection) {
-      if (getCollectionIdWithName(getState(), prevLoc.query.collection)) {
-        changeCollection = false
-      }
-    }
-    const preferredCollection = Immutable.Iterable.isIterable(getState().features) ? getState().features.getIn(['preferredCollection', 'value']) : ''
-    const preferredCollectionId = getCollectionIdWithName(getState(), preferredCollection)
-
-    if (changeCollection && getState().menuCollections.size > 0) {
-      const recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
-      let landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
-
-      if (recommendations) {
-        landingCollectionId = recommendations.get('id')
-      }
-
-      collectionFilterChange(landingCollectionId)(dispatch, getState)
-    }
-  }
 }
 
 const loadRecipesForAllCollections = (transformedRecipes, transformedCollectionRecipes) => (dispatch, getState) => {

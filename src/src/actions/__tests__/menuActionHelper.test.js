@@ -1,6 +1,8 @@
 import Immutable from 'immutable'
 import { loadMenuCollectionsWithMenuService, getStockAvailability } from 'actions/menuActionHelper'
 import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
+import { safeJestMock } from '_testing/mocks'
+import * as landingCollectionImport from '../../routes/Menu/actions/menuSetLandingCollection'
 
 const mockActiveMenuForDateTransformer = jest.fn()
 
@@ -22,6 +24,8 @@ jest.mock('apis/transformers/collectionRecipes', () => ({
   collectionRecipesTransformer: () => 'mock collection recipes',
 }))
 
+const menuSetLandingCollection = safeJestMock(landingCollectionImport, 'menuSetLandingCollection')
+
 describe('loadMenuCollectionsWithMenuService', () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -31,7 +35,7 @@ describe('loadMenuCollectionsWithMenuService', () => {
     const getState = () => ({
       menuService: {
         data: [ 'some element' ]
-      }
+      },
     })
 
     const dispatch = () => {}
@@ -46,6 +50,7 @@ describe('loadMenuCollectionsWithMenuService', () => {
     expect(menuLoadCollections).toHaveBeenCalledWith('any Date', background, 'mock collection')
     expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)
     expect(loadRecipesForAllCollections).toHaveBeenCalledWith('mock recipe', 'mock collection recipes')
+    expect(menuSetLandingCollection).toHaveBeenCalled()
   })
 
   describe('when menuservice is undefined', () => {
@@ -166,4 +171,3 @@ describe('getStockAvailability', () => {
     })
   })
 })
-

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 
 import { getUserAgent } from 'selectors/root'
-import { getRecommendationShortName } from '../selectors/menu'
+import { getRecommendationShortName } from '../selectors/collections'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
 const getBrowser = (userAgent) => {

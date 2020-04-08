@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { actionTypes } from '../actionTypes'
 
 import {
@@ -18,8 +17,23 @@ jest.mock('config/recipes', () => ({
 }))
 
 describe('filters actions', () => {
+  let state
+
   const dispatchSpy = jest.fn()
   const getStateSpy = jest.fn()
+
+  beforeEach(() => {
+    state = {
+      routing: {
+        locationBeforeTransitions: { query: { collection: 'gluten-free' } },
+      },
+      basket: Immutable.fromJS({
+        numPortions: 2
+      })
+    }
+
+    getStateSpy.mockReturnValue(state)
+  })
 
   afterEach(() => {
     dispatchSpy.mockClear()
@@ -29,14 +43,17 @@ describe('filters actions', () => {
   describe('collectionFilterChange', () => {
     describe('when new collection id exists as a menu collections key', () => {
       beforeEach(() => {
-        getStateSpy.mockReturnValue({
-          routing: {
-            locationBeforeTransitions: { query: { collection: 'gluten-free' } },
-          },
+        state = {
+          ...state,
           menuCollections: Immutable.fromJS({
-            newCollectionId: { slug: 'dairy-free' },
+            newCollectionId: { id: 'newCollectionId', slug: 'dairy-free', published: true },
           }),
-        })
+          menuCollectionRecipes: Immutable.fromJS({
+            newCollectionId: ['111'],
+          }),
+        }
+
+        getStateSpy.mockReturnValue(state)
       })
 
       test('should add the new collection name to the querystring', () => {
@@ -57,35 +74,85 @@ describe('filters actions', () => {
           collectionId,
         }))
       })
-    })
 
-    describe('when new collection id does not exist as a menu collections key', () => {
-      beforeEach(() => {
-        getStateSpy.mockReturnValue({
-          routing: {
-            locationBeforeTransitions: { query: { collection: 'gluten-free' } },
-          },
-          menuCollections: Immutable.fromJS({
-            notNewCollectionId: { slug: 'dairy-free' },
-          }),
+      describe('when collectionId is recommendations collection', () => {
+        const collectionId = '12345'
+
+        beforeEach(() => {
+          state = {
+            ...state,
+            menuCollections: Immutable.fromJS({
+              [collectionId]: { id: collectionId, slug: 'recommendations', published: true },
+            }),
+          }
+
+          getStateSpy.mockReturnValue(state)
         })
-      })
 
-      test('should change the new collection name from the querystring if different', () => {
-        collectionFilterChange('notNewCollectionId')(dispatchSpy, getStateSpy)
+        describe('when recommendations collection has 4 recipes', () => {
+          const recipeIds = [ '111', '222', '333', '444' ]
 
-        expect(dispatchSpy).toHaveBeenCalledTimes(2)
-      })
+          beforeEach(() => {
+            state = {
+              ...state,
+              menuCollectionRecipes: Immutable.Map({
+                [collectionId]: Immutable.List(recipeIds),
+              })
+            }
 
-      test('should dispatch a FILTERS_COLLECTION_CHANGE action', () => {
-        const collectionId = 'notNewCollectionId'
+            getStateSpy.mockReturnValue(state)
+          })
 
-        collectionFilterChange(collectionId)(dispatchSpy, getStateSpy)
+          describe('when 4 recommendation recipes are in stock', () => {
+            beforeEach(() => {
+              state = {
+                ...state,
+                menuRecipeStock: Immutable.fromJS({
+                  [recipeIds[0]]: { 2: 1000, 4: 1000 },
+                  [recipeIds[1]]: { 2: 1000, 4: 1000 },
+                  [recipeIds[2]]: { 2: 1000, 4: 1000 },
+                  [recipeIds[3]]: { 2: 1000, 4: 1000 },
+                })
+              }
 
-        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-          type: actionTypes.FILTERS_COLLECTION_CHANGE,
-          collectionId,
-        }))
+              getStateSpy.mockReturnValue(state)
+            })
+
+            test('should dispatch a FILTERS_COLLECTION_CHANGE action', () => {
+              collectionFilterChange(collectionId)(dispatchSpy, getStateSpy)
+
+              expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+                type: actionTypes.FILTERS_COLLECTION_CHANGE,
+                collectionId,
+              }))
+            })
+          })
+
+          describe('when 3 recommendation recipes are in stock', () => {
+            beforeEach(() => {
+              state = {
+                ...state,
+                menuRecipeStock: Immutable.fromJS({
+                  [recipeIds[0]]: { 2: 1000, 4: 1000 },
+                  [recipeIds[1]]: { 2: 1000, 4: 1000 },
+                  [recipeIds[2]]: { 2: 1000, 4: 1000 },
+                  [recipeIds[3]]: { 2: 0, 4: 0 },
+                })
+              }
+
+              getStateSpy.mockReturnValue(state)
+            })
+
+            test('should not dispatch a FILTERS_COLLECTION_CHANGE action', () => {
+              collectionFilterChange(collectionId)(dispatchSpy, getStateSpy)
+
+              expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({
+                type: actionTypes.FILTERS_COLLECTION_CHANGE,
+                collectionId,
+              }))
+            })
+          })
+        })
       })
     })
   })
@@ -94,16 +161,6 @@ describe('filters actions', () => {
     test('should dispatch one action', () => {
       changeCollectionById()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(1)
-    })
-
-    test('should be called with ALL_RECIPES_COLLECTION_ID if no params passed in', () => {
-      changeCollectionById()(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ collectionId: ALL_RECIPES_COLLECTION_ID }))
-    })
-
-    test('should be called with collectonId if passed in as params', () => {
-      changeCollectionById('1234')(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ collectionId: '1234' }))
     })
   })
 

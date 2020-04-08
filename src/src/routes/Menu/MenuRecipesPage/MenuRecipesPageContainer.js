@@ -9,7 +9,7 @@ import { getRecipes } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
-import { getCollectionId } from './utils/getCollectionId'
+import { getCurrentCollectionId } from '../selectors/collections'
 
 const showLoading = (state) => {
   const boxSummaryShow = state.boxSummaryShow.get('show')
@@ -27,7 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     location: { query }
   } = ownProps
 
-  const collectionId = getCollectionId(state, query)
+  const collectionId = getCurrentCollectionId(state)
 
   return ({
     stateRecipeCount: getRecipes(state).size,

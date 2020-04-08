@@ -5,8 +5,18 @@ import { getRecipes, getMenuRecipeIds, getStock, getMenuRecipes as getMenuCollec
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
+import { getRecommendationsCollection, getCollectionId } from './collections'
 
-const createSortedRecipesResponse = (recipes, inStockRecipes) => {
+const createSortedRecipesResponse = (recipes, inStockRecipes, filterOutOfStock) => {
+  if (filterOutOfStock) {
+    const filteredRecipes = recipes.filter(recipe => inStockRecipes.includes(recipe))
+
+    return {
+      recipeIds: filteredRecipes.map(getRecipeId),
+      recipes: filteredRecipes
+    }
+  }
+
   const recipeIds = recipes.map(getRecipeId)
   const sortedRecipes = sortRecipesByStock(recipes, inStockRecipes)
 
@@ -50,22 +60,24 @@ export const sortRecipesByStock = (recipes, inStockRecipes) => {
 }
 
 export const getSortedRecipes = createSelector(
-  [getMenuCollectionRecipes, getCurrentMenuRecipes, getInStockRecipes],
-  (menuCollectionRecipes, allRecipes, inStockRecipes) => (collectionId) => {
+  [getMenuCollectionRecipes, getCurrentMenuRecipes, getInStockRecipes, getRecommendationsCollection],
+  (menuCollectionRecipes, allRecipes, inStockRecipes, recommendations) => (collectionId) => {
     if (!collectionId) {
-      return createSortedRecipesResponse(allRecipes, inStockRecipes)
+      return createSortedRecipesResponse(allRecipes, inStockRecipes, false)
     }
 
     const recipesInCollection = menuCollectionRecipes.get(collectionId)
 
     if (!recipesInCollection) {
-      return createSortedRecipesResponse(allRecipes, inStockRecipes)
+      return createSortedRecipesResponse(allRecipes, inStockRecipes, false)
     }
 
     const getRecipeDetailsById = (recipeId) => allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
     // recipesInCollection is in recommended order whilst allRecipes is the default order of the menu
     const filtered = recipesInCollection.map(getRecipeDetailsById).filter(recipe => recipe !== undefined)
 
-    return createSortedRecipesResponse(filtered, inStockRecipes)
+    const isRecommendationCollection = (recommendations && collectionId === getCollectionId(recommendations))
+
+    return createSortedRecipesResponse(filtered, inStockRecipes, isRecommendationCollection)
   }
 )

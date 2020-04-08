@@ -188,4 +188,3 @@ export class MenuRecipesPage extends PureComponent {
     return this.getDefaultMenuRecipePage()
   }
 }
-

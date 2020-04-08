@@ -1,9 +1,7 @@
 import Immutable from 'immutable'
 import {
   isAllRecipes,
-  isDefault,
   getCollectionIdWithName,
-  getDefaultCollectionId,
 } from 'utils/collections'
 
 describe('utils/collections', () => {
@@ -19,24 +17,7 @@ describe('utils/collections', () => {
       expect(result).toEqual(false)
     })
   })
-  describe('isDefault', () => {
-    test('should return true for a collection which has default true', () => {
-      const collection = Immutable.Map({
-        shortTitle: 'Many Recipes',
-        default: true,
-      })
-      const result = isDefault(collection)
-      expect(result).toEqual(true)
-    })
-    test('should return false for a collection which is not default', () => {
-      const collection = Immutable.Map({
-        shortTitle: 'Many Recipes',
-        default: false,
-      })
-      const result = isDefault(collection)
-      expect(result).toEqual(false)
-    })
-  })
+
   describe('getCollectionIdWithName', () => {
     let state
 
@@ -64,6 +45,9 @@ describe('utils/collections', () => {
           234: ['', '', ''],
           456: ['', '', ''],
         }),
+        basket: Immutable.fromJS({
+          numPortions: 2
+        })
       }
     })
 
@@ -110,6 +94,9 @@ describe('utils/collections', () => {
           234: ['', '', ''],
           456: ['', '', ''],
         }),
+        basket: Immutable.fromJS({
+          numPortions: 2
+        })
       }
       const result = getCollectionIdWithName(state, 'something')
       expect(result).toEqual(null)
@@ -135,69 +122,6 @@ describe('utils/collections', () => {
     test('should cope with an undefined state', () => {
       const result = getCollectionIdWithName(undefined, undefined)
       expect(result).toEqual(null)
-    })
-  })
-
-  describe('getDefaultCollectionId', () => {
-    let state
-
-    beforeEach(() => {
-      state = {
-        menuCollections: Immutable.fromJS([
-          {
-            published: true,
-            shortTitle: 'something',
-            slug: 'something',
-            id: '123'
-          },
-          {
-            published: true,
-            shortTitle: 'some&thi!ng@s0m3where strange',
-            id: '234',
-          },
-          { published: false, shortTitle: 'secret', id: '456' },
-          {
-            published: true,
-            shortTitle: 'all recipes',
-            id: '567',
-            default: true,
-          },
-        ]),
-      }
-    })
-
-    test('should return the collection id which is default', () => {
-      const result = getDefaultCollectionId(state)
-      expect(result).toEqual('567')
-    })
-
-    test('should return first collection id if no collection default', () => {
-      const newState = {
-        menuCollections: Immutable.fromJS([
-          {
-            published: true,
-            shortTitle: 'something',
-            slug: 'something',
-            id: '123',
-            default: false,
-          },
-          {
-            published: true,
-            shortTitle: 'some&thi!ng@s0m3where strange',
-            id: '234',
-            default: false,
-          },
-          { published: false, shortTitle: 'secret', id: '456' },
-          {
-            published: true,
-            shortTitle: 'all recipes',
-            id: '567',
-            default: false,
-          },
-        ]),
-      }
-      const result = getDefaultCollectionId(newState)
-      expect(result).toEqual(newState.menuCollections.first().get('id'))
     })
   })
 })

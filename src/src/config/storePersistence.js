@@ -30,9 +30,6 @@ export default (store) => {
         promoCode: true,
         subscriptionOption: true,
       },
-      filters: {
-        currentCollectionId: true,
-      },
     })
   }
 

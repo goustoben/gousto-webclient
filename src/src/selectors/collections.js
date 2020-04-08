@@ -1,4 +1,4 @@
-import { getCurrentCollectionId } from './filters'
+import { getCurrentCollectionId } from '../routes/Menu/selectors/collections'
 import { getMenuRecipes } from './root'
 
 export const hasJustForYouCollection = ({ menuCollections }) => menuCollections.some(collection => collection.get('slug') === 'recommendations')

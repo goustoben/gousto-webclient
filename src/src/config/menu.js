@@ -4,6 +4,7 @@ module.exports = {
   length: 14,
   stockTagTreshold: 30,
   stockThreshold: 3,
+  recommendationInStockRecipeThreshold: 4,
   legal: 'In addition to the recipe specific allergen information provided, due to production and packing methods Gousto boxes may also contain low levels of the following allergens: Fish; Eggs; Soya; Sesame; Sulphur Dioxide and Sulphites; Mustard; Nuts and Peanuts.',
   helmet: {
     title: "This Week's Menu | Choose From Up To 40 Recipes | Gousto",

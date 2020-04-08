@@ -8,6 +8,9 @@ describe('Given VerticalCollectionsNavContainer', () => {
   describe('when I get collections with recipes', () => {
     beforeEach(() => {
       const getState = () => ({
+        basket: Immutable.fromJS({
+          numPortions: 2
+        }),
         menuCollections: Immutable.OrderedMap({
           234: Immutable.Map({
             published: true,

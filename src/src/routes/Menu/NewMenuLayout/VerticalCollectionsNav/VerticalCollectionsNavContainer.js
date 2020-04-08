@@ -1,13 +1,10 @@
 import { connect } from 'react-redux'
 import { collectionFilterChange } from 'actions/filters'
-import { getCurrentCollectionId } from 'selectors/filters'
-import { getMenuRecipes } from 'selectors/root'
-import { getMenuCollectionsWithRecipes } from '../../selectors/filters'
+import { getDisplayedCollections, getCurrentCollectionId } from '../../selectors/collections'
 import { VerticalCollectionsNav } from './VerticalCollectionsNav'
 
 const mapStateToProps = (state) => ({
-  menuCollections: getMenuCollectionsWithRecipes(state),
-  menuCollectionRecipes: getMenuRecipes(state),
+  menuCollections: getDisplayedCollections(state),
   menuCurrentCollectionId: getCurrentCollectionId(state)
 })
 
@@ -16,4 +13,3 @@ const VerticalCollectionsNavContainer = connect(mapStateToProps, {
 })(VerticalCollectionsNav)
 
 export { VerticalCollectionsNavContainer }
-

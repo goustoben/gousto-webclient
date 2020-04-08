@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import CollectionItem from 'CollectionItem'
+import { CollectionItem } from '../CollectionItem'
 
 describe('<CollectionItem />', () => {
   let wrapper

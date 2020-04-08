@@ -2,9 +2,8 @@ import { connect } from 'react-redux'
 
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { showDetailRecipe } from 'actions/menu'
-import { getCurrentCollectionId } from 'selectors/filters'
 import { getCutoffDate } from '../selectors/cutoff'
-import { getCurrentCollectionIsRecommendation } from '../selectors/menu'
+import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
 import { getSortedRecipes } from '../selectors/sorting'
@@ -22,7 +21,7 @@ const mapStateToProps = (state) => {
     recipes,
     cutoffDate: getCutoffDate(state),
     numPortions: state.basket.get('numPortions'),
-    isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state),
+    isCurrentCollectionRecommendation: isCurrentCollectionRecommendation(state),
     thematicName: query && query.thematic,
     deliveryDate: state.basket.get('date'),
     browserType: state.request.get('browser')
