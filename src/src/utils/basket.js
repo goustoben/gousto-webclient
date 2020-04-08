@@ -107,5 +107,4 @@ export function basketResetPersistent(cookie) {
   unset(cookie, 'goustoStateStore_basket_postcode')
   unset(cookie, 'goustoStateStore_basket_numPortions')
   unset(cookie, 'goustoStateStore_basket_date')
-  unset(cookie, 'goustoStateStore_filters_currentCollectionId')
 }

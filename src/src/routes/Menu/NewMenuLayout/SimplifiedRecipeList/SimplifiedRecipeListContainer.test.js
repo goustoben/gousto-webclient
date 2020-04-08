@@ -38,12 +38,27 @@ describe('SimplifiedRecipeListContainer', () => {
       context: {
         store: {
           getState: () => ({
-            filters: Immutable.fromJS({
-              currentCollectionId: 'collection-id'
+            basket: Immutable.fromJS({
+              numPortions: 2
             }),
-            menuCollections: Immutable.fromJS([
-              { id: 'collection'}
-            ])
+            menuCollections: Immutable.fromJS({
+              '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+                id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+                published: true,
+                default: true,
+                slug: 'foo'
+              }
+            }),
+            menuCollectionRecipes: Immutable.fromJS({
+              '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+            }),
+            routing: {
+              locationBeforeTransitions: {
+                query: {
+                  collection: 'foo'
+                }
+              }
+            }
           }),
           dispatch: () => {},
           subscribe: () => {}

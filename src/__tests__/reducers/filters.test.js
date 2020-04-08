@@ -7,7 +7,6 @@ import reducer from 'reducers/filters'
 describe('filters reducer', () => {
   let state
   const initialState = Immutable.Map({
-    currentCollectionId: ''
   })
 
   test('it should return initial state', () => {
@@ -24,20 +23,6 @@ describe('filters reducer', () => {
       expect(Immutable.is(initialState, result)).toBe(true)
     })
 
-    test('should handle a FILTERS_COLLECTION_CHANGE action', () => {
-      state = initialState
-      const action = {
-        type: actionTypes.FILTERS_COLLECTION_CHANGE,
-        collectionId: 'NEW_COLLECTION',
-      }
-      const expectedState = Immutable.Map({
-        currentCollectionId: 'NEW_COLLECTION',
-      })
-      const result = reducer.filters(state, action)
-
-      expect(Immutable.is(expectedState, result)).toBe(true)
-    })
-
     test('should handle FILTERS_PRODUCT_CATEGORY action - set selectedCategory state value', () => {
       state = initialState
       const action = {
@@ -45,7 +30,6 @@ describe('filters reducer', () => {
         value: 'all-products',
       }
       const expectedState = Immutable.Map({
-        currentCollectionId: '',
         selectedCategory: 'all-products',
       })
       const result = reducer.filters(state, action)

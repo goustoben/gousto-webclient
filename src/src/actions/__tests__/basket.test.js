@@ -826,19 +826,36 @@ describe('basket actions', () => {
           slotId: 'test-slot-id',
         }),
         filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           recipeGroup: {
             slug: 'test-food-brand'
           },
         }),
         menuRecipeStock: Immutable.fromJS({
-          123: {2: 30, 4: 10},
-          234: {2: 50, 4: 10},
+          123: { 2: 30, 4: 10 },
+          234: { 2: 50, 4: 10 },
         }),
         menuRecipes: Immutable.fromJS({
           123: {},
           234: {},
-        })
+        }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo'
+          }
+        }),
+        menuCollectionRecipes: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              collection: 'foo'
+            }
+          }
+        }
       }).mockReturnValueOnce({
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1], ['234', 1]]),
@@ -848,13 +865,31 @@ describe('basket actions', () => {
           slotId: 'test-slot-id',
         }),
         menuRecipeStock: Immutable.fromJS({
-          123: {2: 30, 4: 10},
-          234: {2: 50, 4: 10},
+          123: { 2: 30, 4: 10 },
+          234: { 2: 50, 4: 10 },
         }),
         menuRecipes: Immutable.fromJS({
           123: {},
           234: {},
-        })
+        }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo'
+          }
+        }),
+        menuCollectionRecipes: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              collection: 'foo'
+            }
+          }
+        }
       })
 
       basketUtils.limitReached = jest.fn(() => false)
@@ -862,7 +897,7 @@ describe('basket actions', () => {
     })
 
     test('`BASKET_ELIGIBLE_TRACK` should be dispatched', () => {
-      basketRecipeAdd('234', 'boxsummary', {position: '57'})(dispatch, getStateSpy)
+      basketRecipeAdd('234', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
 
       expect(dispatch).toHaveBeenNthCalledWith(4, {
         type: actionTypes.BASKET_ELIGIBLE_TRACK,
@@ -888,7 +923,6 @@ describe('basket actions', () => {
             limitReached: false
           }),
           filters: Immutable.Map({
-            currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             recipeGroup: {
               slug: 'test-food-brand'
             },
@@ -899,7 +933,25 @@ describe('basket actions', () => {
           }),
           menuRecipes: Immutable.fromJS({
             123: {},
-          })
+          }),
+          menuCollections: Immutable.fromJS({
+            '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+              id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+              published: true,
+              default: true,
+              slug: 'foo'
+            }
+          }),
+          menuCollectionRecipes: Immutable.fromJS({
+            '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+          }),
+          routing: {
+            locationBeforeTransitions: {
+              query: {
+                collection: 'foo'
+              }
+            }
+          }
         })
 
         basketUtils.limitReached = jest.fn(() => false)
@@ -971,7 +1023,6 @@ describe('basket actions', () => {
             limitReached: false
           }),
           filters: Immutable.Map({
-            currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             recipeGroup: {
               slug: 'test-food-brand'
             },
@@ -983,7 +1034,25 @@ describe('basket actions', () => {
           menuRecipes: Immutable.fromJS({
             123: {},
             234: {},
-          })
+          }),
+          menuCollections: Immutable.fromJS({
+            '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+              id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+              published: true,
+              default: true,
+              slug: 'foo'
+            }
+          }),
+          menuCollectionRecipes: Immutable.fromJS({
+            '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+          }),
+          routing: {
+            locationBeforeTransitions: {
+              query: {
+                collection: 'foo'
+              }
+            }
+          }
         })
 
         basketUtils.limitReached = multiReturnMock([false, true])
@@ -1059,7 +1128,6 @@ describe('basket actions', () => {
             slotId: 'test-id',
           }),
           filters: Immutable.Map({
-            currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             recipeGroup: {
               slug: 'test-food-brand'
             },
@@ -1073,7 +1141,25 @@ describe('basket actions', () => {
             123: {},
             234: {},
             345: {},
-          })
+          }),
+          menuCollections: Immutable.fromJS({
+            '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+              id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+              published: true,
+              default: true,
+              slug: 'foo'
+            }
+          }),
+          menuCollectionRecipes: Immutable.fromJS({
+            '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+          }),
+          routing: {
+            locationBeforeTransitions: {
+              query: {
+                collection: 'foo'
+              }
+            }
+          }
         })
 
         basketUtils.limitReached = jest.fn(() => true)
@@ -1100,8 +1186,25 @@ describe('basket actions', () => {
           limitReached: true,
         }),
         filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
         }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo'
+          }
+        }),
+        menuCollectionRecipes: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              collection: 'foo'
+            }
+          }
+        }
       })
 
       basketUtils.limitReached = jest.fn(() => false)
@@ -1195,8 +1298,25 @@ describe('basket actions', () => {
           limitReached: true,
         }),
         filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
         }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo'
+          }
+        }),
+        menuCollectionRecipes: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              collection: 'foo'
+            }
+          }
+        }
       })
       basketRecipeRemove('123')(dispatch, getStateSpy)
 
@@ -1245,6 +1365,7 @@ describe('basket actions', () => {
         basket: Immutable.Map({
           date: '2020-02-13',
           promoCode: 'test-promo-code',
+          numPortions: 2,
         }),
         boxSummaryDeliveryDays: Immutable.Map({
           '2020-02-13': Immutable.Map({
@@ -1353,6 +1474,7 @@ describe('basket actions', () => {
       getStateSpy = jest.fn().mockReturnValue({
         basket: Immutable.fromJS({
           prevSlotId: 'slot-124',
+          numPortions: 2,
           prevDate: '2020-03-30'
         })
       })

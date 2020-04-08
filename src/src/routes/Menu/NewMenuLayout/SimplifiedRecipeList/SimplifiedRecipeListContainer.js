@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { showDetailRecipe } from 'actions/menu'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
-import { getCurrentCollectionId, getShortTitle } from 'selectors/filters'
 import { getSortedRecipes } from '../../selectors/sorting'
-import { getCurrentCollectionIsRecommendation } from '../../selectors/menu'
+import { getCurrentCollectionId, isCurrentCollectionRecommendation, getCurrentCollectionShortTitle } from '../../selectors/collections'
 
 import { SimplifiedRecipeList } from './SimplifiedRecipeList'
 
@@ -16,8 +15,8 @@ const mapStateToProps = (state) => {
   return {
     recipeIds,
     recipes,
-    isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state),
-    currentCollectionTitle: getShortTitle(state)
+    isCurrentCollectionRecommendation: isCurrentCollectionRecommendation(state),
+    currentCollectionTitle: getCurrentCollectionShortTitle(state)
   }
 }
 const SimplifiedRecipeListContainer = connect(mapStateToProps, {

@@ -23,40 +23,33 @@ describe('VerticalCollectionsNav', () => {
     }),
   })
 
-  const menuCollectionRecipes = Immutable.fromJS({
-    bc234: ['123', '234'],
-    cd123: ['324', '433', '544'],
-  })
-
   describe('when render a list of 2 collections', () => {
     beforeEach(() => {
       wrapper = shallow(
         <VerticalCollectionsNav
           menuCollections={menuCollections}
-          menuCollectionRecipes={menuCollectionRecipes}
           menuCurrentCollectionId="cd123"
           collectionFilterChange={() => {}}
         />)
     })
-    test('should have 2 CollectionItems', () => {
-      expect(wrapper.find('CollectionItem')).toHaveLength(2)
+    test('should have 2 Connect(CollectionItem)s', () => {
+      expect(wrapper.find('Connect(CollectionItem)')).toHaveLength(2)
     })
   })
 
-  describe('when click on CollectionItem', () => {
+  describe('when click on Connect(CollectionItem)', () => {
     const collectionFilterChangeSpy = jest.fn()
 
     beforeEach(() => {
       wrapper = shallow(
         <VerticalCollectionsNav
           menuCollections={menuCollections}
-          menuCollectionRecipes={menuCollectionRecipes}
           menuCurrentCollectionId="cd123"
           collectionFilterChange={collectionFilterChangeSpy}
         />)
     })
     test('should call collectionFilterChange with collectionId', () => {
-      wrapper.find('CollectionItem').first().simulate('click')
+      wrapper.find('Connect(CollectionItem)').first().simulate('click')
       expect(collectionFilterChangeSpy).toHaveBeenCalledWith('bc234')
     })
 
@@ -67,7 +60,7 @@ describe('VerticalCollectionsNav', () => {
         global.scrollTo = spyOnWindowScrollTo
       })
       test('should scroll to top', () => {
-        wrapper.find('CollectionItem').first().simulate('click')
+        wrapper.find('Connect(CollectionItem)').first().simulate('click')
         expect(spyOnWindowScrollTo).toHaveBeenCalledWith(0, 61)
       })
     })

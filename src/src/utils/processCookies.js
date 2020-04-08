@@ -6,7 +6,6 @@ import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import promoActions from 'actions/promos'
 import authActions from 'actions/auth'
-import filterActions from 'actions/filters'
 import cookieActions from 'actions/cookies'
 import trackingActions from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
@@ -76,7 +75,6 @@ const processCookies = (cookies, store) => {
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
   const subscriptionOption = getCookieStoreValue(cookies, 'basket_subscriptionOption')
   const collection = getCookieStoreValue(cookies, 'basket_collection')
-  const currentCollectionId = getCookieStoreValue(cookies, 'filters_currentCollectionId')
   const promoAgeVerified = getCookieStoreValue(cookies, 'promoAgeVerified')
   const tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy')
@@ -147,10 +145,6 @@ const processCookies = (cookies, store) => {
 
   if (collection) {
     store.dispatch(basketActions.basketSignupCollectionReceive(collection))
-  }
-
-  if (currentCollectionId) {
-    store.dispatch(filterActions.collectionFilterIdReceive(currentCollectionId))
   }
 
   if (!orderId) {

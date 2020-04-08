@@ -19,6 +19,9 @@ const CollectionItem = ({ className, dataId, onClick, identifier, element, child
 )
 
 CollectionItem.propTypes = {
+  // this prop is used in the container
+  // eslint-disable-next-line react/no-unused-prop-types
+  collectionId: PropTypes.string.isRequired,
   dataId: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
@@ -35,4 +38,6 @@ CollectionItem.defaultProps = {
   showCount: true,
 }
 
-export default CollectionItem
+export {
+  CollectionItem
+}

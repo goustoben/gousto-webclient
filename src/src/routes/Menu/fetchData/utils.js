@@ -1,9 +1,10 @@
 import { hasJustForYouCollection } from 'selectors/collections'
 import { recommendationsSlug } from 'config/collections'
-import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
+import { getCollectionIdWithName } from 'utils/collections'
 import { basketDateChange, basketSlotChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { collectionFilterIdReceive } from 'actions/filters'
+import { getDefaultCollection } from '../selectors/collections'
 
 export const getPreselectedCollectionName = (state, collectionNameFromQueryParam) => {
   if (hasJustForYouCollection(state) && !collectionNameFromQueryParam) {
@@ -15,8 +16,13 @@ export const getPreselectedCollectionName = (state, collectionNameFromQueryParam
 
 export const selectCollection = (state, collectionName, dispatch) => {
   let collectionId = getCollectionIdWithName(state, collectionName)
+
   if (!collectionId) {
-    collectionId = getDefaultCollectionId(state)
+    const defaultCollection = getDefaultCollection(state)
+
+    if (defaultCollection) {
+      collectionId = defaultCollection.get('id')
+    }
   }
 
   dispatch(collectionFilterIdReceive(collectionId))

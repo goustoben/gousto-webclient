@@ -61,14 +61,18 @@ describe('selectCollection', () => {
     menuCollections: Immutable.Map({}),
     menuCollectionRecipes: Immutable.Map({
       testCollectionId: Immutable.List(['1', '2', '3'])
+    }),
+    basket: Immutable.fromJS({
+      numPortions: 2
     })
   }
 
   describe('when collection id exists for the given collection name and collection is published', () => {
     const collectionName = 'test-collection-name'
 
-    beforeEach(() => {
-      initalState.menuCollections = Immutable.Map(
+    const state = {
+      ...initalState,
+      menuCollections: Immutable.Map(
         Immutable.fromJS({
           testCollectionId: {
             id: 'testCollectionId',
@@ -78,11 +82,11 @@ describe('selectCollection', () => {
           }
         })
       )
-    })
+    }
 
     it('should dispatch FILTERS_COLLECTION_CHANGE event with collection id', () => {
       const mockStore = configureMockStore()
-      const store = mockStore(initalState)
+      const store = mockStore(state)
 
       selectCollection(store.getState(), collectionName, store.dispatch)
 
@@ -96,26 +100,31 @@ describe('selectCollection', () => {
   describe('and collection id does not exist for the give collection name', () => {
     const collectionName = 'test-collection-name'
 
-    beforeEach(() => {
-      initalState.menuCollections = Immutable.Map(
-        Immutable.fromJS({
-          differentId: {
-            id: 'differentId',
-            shortTitle: 'different name',
-            default: false
-          },
-          defaultCollection: {
-            id: 'defaultCollectionId',
-            shortTitle: 'default collection name',
-            default: true
-          }
+    const state = {
+      ...initalState,
+      menuCollections: Immutable.Map({
+        differentId: Immutable.fromJS({
+          id: 'differentId',
+          shortTitle: 'different name',
+          default: false,
+          published: true
+        }),
+        defaultCollectionId: Immutable.fromJS({
+          id: 'defaultCollectionId',
+          shortTitle: 'default collection name',
+          default: true,
+          published: true
         })
-      )
-    })
+      }),
+      menuCollectionRecipes: Immutable.Map({
+        differentId: Immutable.List(['1', '2', '3']),
+        defaultCollectionId: Immutable.List(['1', '2', '3']),
+      }),
+    }
 
     it('should dispatch FILTERS_COLLECTION_CHANGE event with default collection id', () => {
       const mockStore = configureMockStore()
-      const store = mockStore(initalState)
+      const store = mockStore(state)
 
       selectCollection(store.getState(), collectionName, store.dispatch)
 

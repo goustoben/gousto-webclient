@@ -18,10 +18,8 @@ import { boxSummaryDeliveryDaysLoad } from './boxSummary'
 import { orderConfirmationUpdateOrderTracking } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import tempActions from './temp'
-import {
-  getCurrentCollectionId,
-} from '../selectors/filters'
 import { getUTMAndPromoCode } from '../selectors/tracking'
+import { getCurrentCollectionId } from '../routes/Menu/selectors/collections'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
