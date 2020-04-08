@@ -36,3 +36,16 @@ export const getScrollOffset = (threshold, animationThreshold, scrolledPastPoint
     })
   }
 }
+
+export const getMenuLimits = (data) => {
+  const menuLimits = {}
+  data.forEach(menu => {
+    menuLimits[menu.id] = {
+      limits: menu.relationships.limits.data || [],
+      startsAt: menu.attributes.starts_at,
+      endsAt: menu.attributes.ends_at
+    }
+  })
+
+  return menuLimits
+}

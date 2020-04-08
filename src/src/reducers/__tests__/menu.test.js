@@ -39,6 +39,97 @@ describe('menu reducer', () => {
         expect(result.get('accessToken')).toEqual('access-token')
       })
     })
+
+    describe('MENU_SERVICE_DATA_RECEIVED', () => {
+      test('should set menuLimits', () => {
+        const menuLimits = [{
+          name: 'rule-name',
+          rules: {
+            per2: {
+              value: 1,
+              description: 'per2',
+            },
+            per4: {
+              value: 1,
+              description: 'per4',
+            }
+          },
+          items: [
+            {
+              type: 'recipe',
+              core_recipe_id: '12345'
+            }
+          ]
+        }]
+        const menuResponse = { data: [
+          {
+            id: '123',
+            type: 'menu',
+            attributes: {
+              starts_at: '2020-04-14T12:00:00+01:00',
+              ends_at: '2020-04-21T11:59:59+01:00',
+              is_default: true,
+              core_menu_id: '336'
+            },
+            relationships: {
+              recipes: {
+                data: []
+              },
+              recipe_options: {
+                data: []
+              },
+              limits: {
+                data: menuLimits
+              },
+              collections: {
+                data: []
+              }
+            }
+          },
+          {
+            id: '345',
+            type: 'menu',
+            attributes: {
+              starts_at: '2020-04-14T12:00:00+01:00',
+              ends_at: '2020-04-21T11:59:59+01:00',
+              is_default: true,
+              core_menu_id: '336'
+            },
+            relationships: {
+              recipes: {
+                data: []
+              },
+              recipe_options: {
+                data: []
+              },
+              limits: {
+                data: menuLimits
+              },
+              collections: {
+                data: []
+              }
+            }
+          }
+        ]}
+        const result = menu.menu(menuInitialState, {
+          type: actionTypes.MENU_SERVICE_DATA_RECEIVED,
+          response: menuResponse
+        })
+
+        expect(result.get('menuLimits')).toEqual({
+          123: {
+            limits: menuLimits,
+            startsAt: '2020-04-14T12:00:00+01:00',
+            endsAt: '2020-04-21T11:59:59+01:00'
+          },
+          345: {
+            limits: menuLimits,
+            startsAt: '2020-04-14T12:00:00+01:00',
+            endsAt: '2020-04-21T11:59:59+01:00'
+          },
+        })
+      })
+    })
   })
 
   describe('menuCutoffUntil', () => {
