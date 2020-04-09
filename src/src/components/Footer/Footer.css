@@ -122,6 +122,7 @@
 .menuItem {
 	composes: inlineBlock from 'styles/display.css';
 	composes: sizeMD axiforma from 'styles/typography.css';
+	cursor: pointer;
 	@media ScreenSMMax {
 		font-weight: normal;
 	}

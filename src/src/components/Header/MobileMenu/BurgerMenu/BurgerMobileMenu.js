@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { onEnter } from 'utils/accessibility'
 import Link from 'Link'
 import css from '../MobileMenu.css'
 
@@ -15,19 +16,9 @@ const getCssClassForMenuItem = (homeMenuItem, myGoustoMenuItem, isAuthenticated)
 }
 
 class BurgerMobileMenu extends React.PureComponent {
-  static propTypes = {
-    hideNav: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    menuItems: PropTypes.array.isRequired,
-    onLoginClick: PropTypes.func.isRequired,
-    onLogoutClick: PropTypes.func.isRequired,
-    promoCodeUrl: PropTypes.string,
-    show: PropTypes.bool.isRequired,
-    trackNavigationClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    isAuthenticated: false,
+  showHelpPreLogin = () => {
+    const { helpPreLoginVisibilityChange } = this.props
+    helpPreLoginVisibilityChange(true)
   }
 
   renderMenuItems = () => {
@@ -41,6 +32,26 @@ class BurgerMobileMenu extends React.PureComponent {
       const { isAuthenticated } = this.props
       const myGoustoMenuItem = menuItem.name === 'My Gousto'
       const homeMenuItem = menuItem.name === 'Home'
+      const isHelpPreloginNeeded = menuItem.name.toLowerCase() === 'help'
+
+      if (isHelpPreloginNeeded && !isAuthenticated) {
+        return (
+          <span
+            key={menuItem.name}
+            className={css.menuItem}
+            data-test="help-link"
+            role="button"
+            tabIndex="0"
+            onClick={this.showHelpPreLogin}
+            onKeyDown={onEnter(this.showHelpPreLogin)}
+          >
+            <li className={css.childListElement}>
+              {menuItem.name}
+            </li>
+          </span>
+        )
+      }
+
       if (homeMenuItem) {
         return (
           <Link
@@ -109,6 +120,22 @@ class BurgerMobileMenu extends React.PureComponent {
       </div>
     )
   }
+}
+
+BurgerMobileMenu.propTypes = {
+  helpPreLoginVisibilityChange: PropTypes.func.isRequired,
+  hideNav: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
+  menuItems: PropTypes.array.isRequired,
+  onLoginClick: PropTypes.func.isRequired,
+  onLogoutClick: PropTypes.func.isRequired,
+  promoCodeUrl: PropTypes.string,
+  show: PropTypes.bool.isRequired,
+  trackNavigationClick: PropTypes.func,
+}
+
+BurgerMobileMenu.defaultProps = {
+  isAuthenticated: false,
 }
 
 export { BurgerMobileMenu }

@@ -8,18 +8,21 @@ describe('login reducer', () => {
     [true, true],
     [false, false],
   ]
-  let result
 
   describe('given the reducer is called with the initial state and loginVisibilityChange action generator', () => {
     test.each(cases)('when the visibility is %s the new state.login is %s', (visibility, expectedStateValue) => {
-      result = login.loginVisibility(STATE, loginActions.loginVisibilityChange(visibility))
+      const result = login.loginVisibility(STATE, loginActions.loginVisibilityChange(visibility))
       expect(result).toEqual(Immutable.fromJS({ login: expectedStateValue, helpPreLogin: false }))
     })
   })
 
   describe('given the reducer is called with the initial state and helpPreLoginVisibilityChange action generator', () => {
     test.each(cases)('when the visibility is %s the new state.helpPreLogin is %s', (visibility, expectedStateValue) => {
-      result = login.loginVisibility(STATE, helpPreLoginVisibilityChange(visibility))
+      const dispatch = jest.fn()
+      helpPreLoginVisibilityChange(visibility)(dispatch)
+      const dispatchCalls = dispatch.mock.calls
+      const paramOfLastCallToDispatch = dispatchCalls[dispatchCalls.length - 1][0]
+      const result = login.loginVisibility(STATE, paramOfLastCallToDispatch)
       expect(result).toEqual(Immutable.fromJS({ login: false, helpPreLogin: expectedStateValue}))
     })
   })

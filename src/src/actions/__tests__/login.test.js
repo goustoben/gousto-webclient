@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import globals from 'config/globals'
 import { zendesk } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-import loginActions from 'actions/login'
+import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
 import userActions from 'actions/user'
@@ -13,6 +13,10 @@ import authActions from '../auth'
 jest.mock('config/globals')
 
 jest.mock('actions/user')
+
+jest.mock('react-router-redux', () => ({
+  push: (param) => `${JSON.stringify(param)} pushed`
+}))
 
 jest.mock('../pricing', () => ({
   pricingRequest: jest.fn()
@@ -358,6 +362,22 @@ describe('login actions', () => {
         }, false, Immutable.Map({}))
 
         expect(url).toEqual('/my-gousto')
+      })
+    })
+
+    describe('helpPreLoginVisibilityChange', () => {
+      describe('Given the action is called with visibility true', () => {
+        let dispatch
+
+        beforeEach(() => {
+          dispatch = jest.fn()
+          helpPreLoginVisibilityChange(true)(dispatch)
+        })
+
+        test('the query parameter target is set to zendesk', () => {
+          const serialisedQueryStringObject = JSON.stringify({ search: '?target=https://gousto.zendesk.com/hc/en-gb' })
+          expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)
+        })
       })
     })
   })

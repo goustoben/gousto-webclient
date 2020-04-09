@@ -1,3 +1,3 @@
-export const onEnter = (event, callback) => (
-  event.keyCode === 13 && callback()
+export const onEnter = (callback) => (event) => (
+  event.keyCode === 13 && callback(event)
 )

@@ -1,1 +1,1 @@
-export { BurgerMobileMenu } from './BurgerMobileMenu'
+export { BurgerMobileMenuContainer as BurgerMobileMenu } from './BurgerMobileMenuContainer'

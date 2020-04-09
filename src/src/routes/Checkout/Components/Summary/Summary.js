@@ -47,7 +47,7 @@ class Summary extends React.PureComponent {
         role="button"
         tabIndex="0"
         onClick={() => { promoApplyCheckoutCode() }}
-        onKeyDown={e => { onEnter(e,promoApplyCheckoutCode) }}
+        onKeyDown={onEnter(promoApplyCheckoutCode)}
       >
         Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;
         <span className={css.arrowRight} />

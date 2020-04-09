@@ -1,9 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Link from 'Link'
+import { helpPreLoginVisibilityChange } from 'actions/login'
 import { BurgerMobileMenu } from '../BurgerMobileMenu'
 
+jest.mock('actions/login')
+
 describe('given BurgerMobileMenu is called', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   const menuItems = [
     { disabled: false, name: 'Home', url: '/home', clientRouted: true },
     { disabled: false, name: 'Choose Recipes', url: '/menu' },
@@ -71,28 +78,41 @@ describe('given BurgerMobileMenu is called', () => {
         })
       })
     })
-  })
 
-  describe('when clicking the menu items', () => {
-    let wrapper
+    describe('given the user is logged out', () => {
+      let helpLink
 
-    beforeEach(() => {
-      wrapper = shallow(
-        <BurgerMobileMenu
-          show
-          menuItems={menuItems}
-          isAuthenticated={false}
-          loginFunc={jest.fn()}
-          logoutFunc={jest.fn()}
-          hideNav={false}
-          promoCodeUrl=""
-        />
-      )
-    })
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: false,
+          helpPreLoginVisibilityChange,
+        })
+        helpLink = wrapper.find('[data-test="help-link"]')
+      })
 
-    test('does not open other links in a new tab', () => {
-      const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
-      expect(linksWithNewTab).toHaveLength(0)
+      test('the help link is not a Link component', () => {
+        expect(helpLink.name()).not.toBe('GoustoLink')
+      })
+
+      describe('when Help link is clicked', () => {
+        beforeEach(() => {
+          helpLink.simulate('click')
+        })
+
+        test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
+          expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+        })
+      })
+
+      describe('when Help link is clicked using ENTER in the keyboard', () => {
+        beforeEach(() => {
+          helpLink.simulate('keyDown', { keyCode: 13 })
+        })
+
+        test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
+          expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+        })
+      })
     })
   })
 })

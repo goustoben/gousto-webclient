@@ -49,7 +49,7 @@ class ModalPanel extends React.Component {
           role="button"
           tabIndex="0"
           onClick={onGoBack}
-          onKeyDown={e => onEnter(e, onGoBack)}
+          onKeyDown={onEnter(onGoBack)}
         >
           <span className={css.back} />
           Back
@@ -91,7 +91,7 @@ class ModalPanel extends React.Component {
             role="button"
             tabIndex="0"
             onClick={closeModal}
-            onKeyDown={e => onEnter(e, closeModal)}
+            onKeyDown={onEnter(closeModal)}
             data-testing="modalClose"
           >
             <span className={css.close} />
