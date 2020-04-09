@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { client } from 'config/routes'
+import { client, zendesk } from 'config/routes'
 import Svg from 'Svg'
 import Link from 'Link'
 import ModalPanel from 'Modal/ModalPanel'
@@ -62,14 +62,14 @@ class Header extends React.PureComponent {
     }
   }
 
-  isExternalLink = (menuItemName) => {
-    const externalLinkNames = []
-
-    return externalLinkNames.includes(menuItemName.toLowerCase())
+  showHelpPreLogin = () => {
+    const { helpPreLoginVisibilityChange } = this.props
+    helpPreLoginVisibilityChange(true)
   }
 
   onClose = () => {
-    const { loginVisibilityChange } = this.props
+    const { loginVisibilityChange, helpPreLoginVisibilityChange } = this.props
+    helpPreLoginVisibilityChange(false)
     loginVisibilityChange(false)
     this.setState({ loginPending: false })
   }
@@ -79,11 +79,13 @@ class Header extends React.PureComponent {
     closeBoxModalVisibilityChange(false)
   }
 
-  onLoginClick = async (e) => {
-    const { loginVisibilityChange } = this.props
-    e.stopPropagation()
+  onLoginClick = (e) => {
+    const { isAuthenticated, loginVisibilityChange } = this.props
 
-    loginVisibilityChange(true)
+    if (!isAuthenticated) {
+      e.stopPropagation()
+      loginVisibilityChange(true)
+    }
   }
 
   getMenuItems = (device, path) => {
@@ -221,7 +223,7 @@ class Header extends React.PureComponent {
         tabIndex="0"
         className={css.linkDesktop}
         onClick={this.onLogoutClick}
-        onKeyDown={e => onEnter(e, this.onLogoutClick)}
+        onKeyDown={onEnter(this.onLogoutClick)}
         data-testing="logoutButton"
       >
         Logout
@@ -233,8 +235,8 @@ class Header extends React.PureComponent {
         role="button"
         tabIndex="0"
         className={classNames(css.authButtonsContainer, css[buttonState])}
-        onClick={e => { if (!isAuthenticated) { this.onLoginClick(e) } }}
-        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onLoginClick() } })}
+        onClick={this.onLoginClick}
+        onKeyDown={onEnter(this.onLoginClick)}
       >
         {button}
         {isAuthenticated && logoutLink}
@@ -243,7 +245,10 @@ class Header extends React.PureComponent {
   }
 
   renderMenuItems = (menu, hideNav) => {
-    const { trackNavigationClick } = this.props
+    const {
+      isAuthenticated,
+      trackNavigationClick,
+    } = this.props
 
     if (hideNav) {
       return null
@@ -262,7 +267,22 @@ class Header extends React.PureComponent {
         )
       }
 
-      const isExternalLink = this.isExternalLink(menuItem.name)
+      const isHelpPreloginNeeded = menuItem.name.toLowerCase() === 'help'
+      if (isHelpPreloginNeeded && !isAuthenticated) {
+        return (
+          <span
+            key={menuItem.name}
+            className={css.linkDesktop}
+            data-test="help-link"
+            role="button"
+            tabIndex="0"
+            onClick={this.showHelpPreLogin}
+            onKeyDown={onEnter(this.showHelpPreLogin)}
+          >
+            {menuItem.name}
+          </span>
+        )
+      }
 
       return (
         <Link
@@ -271,8 +291,6 @@ class Header extends React.PureComponent {
           className={css.linkDesktop}
           clientRouted={menuItem.clientRouted}
           tracking={() => trackNavigationClick(menuItem.tracking)}
-          target={isExternalLink ? '_blank' : null}
-          rel={isExternalLink ? 'noopener noreferrer' : null}
         >
           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
           {menuItem.name}
@@ -297,6 +315,7 @@ class Header extends React.PureComponent {
       title,
       small,
       promoCodeUrl,
+      isHelpPreLoginOpen,
       isLoginOpen,
       path,
       trackNavigationClick,
@@ -380,7 +399,12 @@ class Header extends React.PureComponent {
               </div>
             </div>
           </header>
-          <Overlay open={Boolean(isLoginOpen)} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="top">
+          <Overlay
+            open={Boolean(isLoginOpen || isHelpPreLoginOpen)}
+            className={css.mobileOverlay}
+            contentClassName={css.mobileModalContent}
+            from="top"
+          >
             <ModalPanel
               closePortal={this.onClose}
               className={css.modal}
@@ -388,7 +412,26 @@ class Header extends React.PureComponent {
               disableOverlay
               isNarrow
             >
-              <Login isAuthenticated={isAuthenticated} isOpen={isLoginOpen} isPending={loginPending} />
+              <Login
+                title={isHelpPreLoginOpen
+                  ? 'We can help you faster if you\'re logged in'
+                  : 'Login' }
+                isAuthenticated={isAuthenticated}
+                isOpen={isLoginOpen || isHelpPreLoginOpen}
+                isPending={loginPending}
+                shouldAppendUserIdToQueryString={isHelpPreLoginOpen}
+              />
+              {isHelpPreLoginOpen
+                ? (
+                  <Link
+                    to={zendesk.faqs}
+                    clientRouted={false}
+                    className={css.continueAsNewCustomerLink}
+                  >
+                    Continue as new customer
+                  </Link>
+                )
+                : null}
             </ModalPanel>
           </Overlay>
           <CancelOrderModal close={this.onCloseCancelBoxModal} />
@@ -409,8 +452,10 @@ Header.propTypes = {
   closeBoxModalVisibilityChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   fromJoin: PropTypes.bool,
+  helpPreLoginVisibilityChange: PropTypes.func.isRequired,
   isAccountTabNameTest: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
+  isHelpPreLoginOpen: PropTypes.bool,
   isLoginOpen: PropTypes.bool,
   loginVisibilityChange: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
@@ -430,6 +475,7 @@ Header.defaultProps = {
   fromJoin: false,
   isAccountTabNameTest: false,
   isAuthenticated: false,
+  isHelpPreLoginOpen: false,
   isLoginOpen: false,
   path: '',
   promoCodeUrl: '',

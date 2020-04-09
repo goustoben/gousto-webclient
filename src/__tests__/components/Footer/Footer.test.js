@@ -1,18 +1,25 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { helpPreLoginVisibilityChange } from 'actions/login'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import css from 'components/Footer/Footer.css'
 import Footer from 'Footer/Footer'
 
+jest.mock('actions/login')
+
 describe('<Footer />', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should return a <div>', () => {
     const wrapper = shallow(<Footer />)
     expect(wrapper.type()).toEqual('div')
   })
 
   test('should display the medium footer by default which conatains AppStoreLinks and full list', () => {
-    const wrapper = shallow(<Footer />)
+    const wrapper = shallow(<Footer isAuthenticated />)
     expect(wrapper.find(AppStoreLinks).length).toEqual(1)
 
     // Render app links store
@@ -78,7 +85,7 @@ describe('<Footer />', () => {
   })
 
   test("should display the Large footer when type is 'large' ", () => {
-    const wrapper = shallow(<Footer type="large" />)
+    const wrapper = shallow(<Footer type="large" isAuthenticated />)
     // render Terms
     expect(wrapper.find('[data-selid="footer-terms-of-use"]').length).toEqual(1)
     // Render Privacy links
@@ -132,12 +139,12 @@ describe('<Footer />', () => {
     })
   })
 
-  describe('given user is loggeed in/out', () => {
+  describe('given the user is loggeed in', () => {
     let wrapper
 
     beforeEach(() => {
       wrapper = shallow(
-        <Footer copyright={false} />
+        <Footer copyright={false} isAuthenticated />
       )
     })
 
@@ -145,6 +152,45 @@ describe('<Footer />', () => {
       const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
 
       expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
+    })
+  })
+
+  describe('given the user is logged out', () => {
+    let wrapper
+    let helpLink
+
+    beforeEach(() => {
+      wrapper = shallow(
+        <Footer
+          helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
+          isAuthenticated={false}
+        />
+      )
+      helpLink = wrapper.find('[data-test="help-link"]')
+    })
+
+    test('the help link is not a Link component', () => {
+      expect(helpLink.name()).not.toBe('GoustoLink')
+    })
+
+    describe('when Help link is clicked', () => {
+      beforeEach(() => {
+        helpLink.simulate('click')
+      })
+
+      test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
+        expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+      })
+    })
+
+    describe('when Help link is clicked using ENTER in the keyboard', () => {
+      beforeEach(() => {
+        helpLink.simulate('keyDown', { keyCode: 13 })
+      })
+
+      test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
+        expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+      })
     })
   })
 })

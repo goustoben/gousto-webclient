@@ -28,7 +28,7 @@ describe('MenuWrapper', () => {
     })
 
     test('should render BurgerMobileMenu', () => {
-      expect(wrapper.find('BurgerMobileMenu').exists()).toBe(true)
+      expect(wrapper.find('Connect(BurgerMobileMenu)').exists()).toBe(true)
     })
 
     test('should render burgerMenu button', () => {

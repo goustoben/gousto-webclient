@@ -3,12 +3,49 @@ import React from 'react'
 import moment from 'moment'
 import config from 'config'
 import classNames from 'classnames'
+import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import Svg from 'components/Svg'
 import Link from 'Link'
 import css from './Footer.css'
 
-const Footer = ({ simple, type, copyright }) => {
+const showHelpPreLogin = (helpPreLoginVisibilityChange) => () => (
+  helpPreLoginVisibilityChange(true)
+)
+
+const renderHelpLink = (getHelpRoute, isAuthenticated, helpPreLoginVisibilityChange) => (
+  isAuthenticated
+    ? (
+      <Link
+        to={`${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
+        data-selid="footer-learn-more"
+        title="Help"
+        clientRouted={false}
+        secondary
+      >
+        Help
+      </Link>
+    )
+    : (
+      <span
+        data-test="help-link"
+        role="button"
+        tabIndex="0"
+        onClick={showHelpPreLogin(helpPreLoginVisibilityChange)}
+        onKeyDown={onEnter(showHelpPreLogin(helpPreLoginVisibilityChange))}
+      >
+        Help
+      </span>
+    )
+)
+
+const Footer = ({
+  copyright,
+  helpPreLoginVisibilityChange,
+  isAuthenticated,
+  simple,
+  type,
+}) => {
   const clientRoutes = config.routes.client
 
   const renderTermsLink = () => (
@@ -58,15 +95,7 @@ const Footer = ({ simple, type, copyright }) => {
           <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
         </li>
         <li className={css.menuItem}>
-          <Link
-            to={`${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
-            data-selid="footer-learn-more"
-            title="Help"
-            clientRouted={false}
-            secondary
-          >
-            Help
-          </Link>
+          {renderHelpLink(getHelpRoute, isAuthenticated, helpPreLoginVisibilityChange)}
         </li>
         {renderTermsLink()}
         <li className={css.menuItem}>
@@ -201,15 +230,18 @@ const Footer = ({ simple, type, copyright }) => {
 }
 
 Footer.propTypes = {
+  copyright: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  helpPreLoginVisibilityChange: PropTypes.func.isRequired,
   simple: PropTypes.bool,
   type: PropTypes.string,
-  copyright: PropTypes.bool,
 }
 
 Footer.defaultProps = {
+  copyright: true,
+  isAuthenticated: false,
   simple: false,
   type: 'medium',
-  copyright: true,
 }
 
 export default Footer

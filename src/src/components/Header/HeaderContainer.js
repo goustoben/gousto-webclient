@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
+import { helpPreLoginVisibilityChange } from 'actions/login'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getAbandonBasket, isAccountTabNameTest } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
@@ -11,6 +12,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: getIsAuthenticated(state),
   routing: state.routing,
   promoCodeUrl: state.basket.get('promoCodeUrl'),
+  isHelpPreLoginOpen: state.loginVisibility.get('helpPreLogin'),
   isLoginOpen: state.loginVisibility.get('login'),
   disabled: state.auth.get('isAdmin'),
   features: state.features,
@@ -20,8 +22,9 @@ const mapStateToProps = (state) => ({
 })
 
 export const HeaderContainer = connect(mapStateToProps, {
+  closeBoxModalVisibilityChange: actions.cancelOrderModalToggleVisibility,
+  helpPreLoginVisibilityChange,
   logoutUser: actions.logoutUser,
   loginVisibilityChange: actions.loginVisibilityChange,
-  closeBoxModalVisibilityChange: actions.cancelOrderModalToggleVisibility,
   trackNavigationClick,
 })(Header)

@@ -20,7 +20,7 @@ const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
       role="button"
       tabIndex={0}
       onClick={() => onConfirm()}
-      onKeyDown={event => onEnter(event, onConfirm())}
+      onKeyDown={onEnter(onConfirm)}
     >
       {confirmCopy}
     </div>
@@ -28,7 +28,7 @@ const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
       className={css.keep}
       type="button"
       onClick={() => onKeep()}
-      onKeyDown={event => onEnter(event, onKeep())}
+      onKeyDown={onEnter(onKeep)}
     >
       {keepCopy}
     </button>

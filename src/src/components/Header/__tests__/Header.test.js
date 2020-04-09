@@ -2,11 +2,22 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Immutable from 'immutable'
+import actions from 'actions'
+import { helpPreLoginVisibilityChange } from 'actions/login'
 import { Header } from 'Header/Header'
-import routesConfig from 'config/routes'
+import routesConfig, { zendesk } from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
 
+jest.mock('actions')
+jest.mock('actions/login')
+
+const { loginVisibilityChange } = actions
+
 describe('Header', () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   const store = {
     serverError: false,
     auth: Immutable.Map({
@@ -30,7 +41,15 @@ describe('Header', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Header />, { context: { store } })
+    wrapper = shallow(
+      <Header
+        loginVisibilityChange={loginVisibilityChange}
+        helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
+        closeBoxModalVisibilityChange={() => {}}
+        logoutUser={() => {}}
+      />,
+      { context: { store } }
+    )
   })
 
   test('renders the <CookieBanner />', () => {
@@ -41,8 +60,12 @@ describe('Header', () => {
     expect(wrapper.find('MobileMenu').exists()).toBe(true)
   })
 
-  test('renders 5 <GoustoLink />s', () => {
-    expect(wrapper.find('GoustoLink').length).toEqual(5)
+  test('renders 1 logo link', () => {
+    expect(wrapper.find('.logoLink').length).toEqual(1)
+  })
+
+  test('renders 4 desktop links', () => {
+    expect(wrapper.find('.linkDesktop').length).toEqual(4)
   })
 
   test('renders the JS enabled MobileMenu toggle by default', () => {
@@ -225,8 +248,8 @@ describe('Header', () => {
       wrapper.setProps({ path: 'box-prices' })
     })
 
-    test('renders 4 <GoustoLink />s', () => {
-      expect(wrapper.find('GoustoLink').length).toEqual(4)
+    test('renders 4 desktop links', () => {
+      expect(wrapper.find('.linkDesktop').length).toEqual(4)
     })
   })
 
@@ -375,7 +398,7 @@ describe('Header', () => {
 
   describe('when isAuthenticated prop is false', () => {
     beforeEach(() => {
-      wrapper.setProps({ isAuthenticated: false })
+      wrapper.setProps({ isAuthenticated: false, helpPreLoginVisibilityChange })
     })
 
     test('renders boxPrices', () => {
@@ -390,7 +413,7 @@ describe('Header', () => {
       expect(wrapper.find('Button').findWhere(el => el.text() === 'Login').exists()).toEqual(false)
     })
 
-    test('should render menu items in correct order when logged out', () => {
+    test('should render menu items in correct order', () => {
       const getHelpRoute = routesConfig.client.getHelp
       const expected = [
         {
@@ -424,6 +447,72 @@ describe('Header', () => {
         }
       ]
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
+    })
+
+    test('the help link is not a Link component', () => {
+      const helpLink = wrapper.find('[data-test="help-link"]')
+      expect(helpLink.name()).not.toBe('GoustoLink')
+    })
+
+    describe('and Help link is clicked', () => {
+      beforeEach(() => {
+        const helpLink = wrapper.find('[data-test="help-link"]')
+        helpLink.simulate('click')
+      })
+
+      test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
+        expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+      })
+    })
+
+    describe('and Help link is clicked using ENTER in the keyboard', () => {
+      beforeEach(() => {
+        const helpLink = wrapper.find('[data-test="help-link"]')
+        helpLink.simulate('keyDown', { keyCode: 13 })
+      })
+
+      test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
+        expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+      })
+    })
+  })
+
+  describe('Given isHelpPreloginOpen is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isHelpPreLoginOpen: true })
+    })
+
+    test('renders the Login component with shouldAppendUserIdToQueryString set to true', () => {
+      expect(wrapper.find('Connect(Login)').prop('shouldAppendUserIdToQueryString'))
+        .toBe(true)
+    })
+
+    test('renders the Login component with pre loging Help title', () => {
+      expect(wrapper.find('Connect(Login)').prop('title'))
+        .toBe('We can help you faster if you\'re logged in')
+    })
+
+    test('renders the Continue as new customer link to Zendesk', () => {
+      expect(wrapper.find('.continueAsNewCustomerLink').prop('to'))
+        .toBe(zendesk.faqs)
+    })
+
+    test('renders the Continue as new customer link with client routed set to false', () => {
+      expect(wrapper.find('.continueAsNewCustomerLink').prop('clientRouted'))
+        .toBe(false)
+    })
+
+    describe('and the close button of the modal panel is clicked', () => {
+      beforeEach(() => {
+        wrapper.find('ModalPanel').prop('closePortal')()
+      })
+
+      test.each([
+        [loginVisibilityChange.name, loginVisibilityChange],
+        [helpPreLoginVisibilityChange.name, helpPreLoginVisibilityChange],
+      ])('%s is called with visibility set to false', (_actionName, action) => {
+        expect(action).toHaveBeenCalledWith(false)
+      })
     })
   })
 

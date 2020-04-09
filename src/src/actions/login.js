@@ -45,12 +45,19 @@ const loginVisibilityChange = visibility => ({
   visibility,
 })
 
-export const helpPreLoginVisibilityChange = visibility => ({
-  type: actionTypes.HELP_PRELOGIN_VISIBILITY_CHANGE,
-  payload: {
-    visibility,
-  },
-})
+export const helpPreLoginVisibilityChange = visibility => (
+  (dispatch) => {
+    if (visibility === true) {
+      dispatch(push({ search: '?target=https://gousto.zendesk.com/hc/en-gb' }))
+    }
+    dispatch({
+      type: actionTypes.HELP_PRELOGIN_VISIBILITY_CHANGE,
+      payload: {
+        visibility,
+      },
+    })
+  }
+)
 
 const logoutRedirect = () => (
   () => {

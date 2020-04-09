@@ -249,3 +249,10 @@ span:target .overlay {
 		content: '\0020';
 	}
 }
+
+.continueAsNewCustomerLink {
+	composes: avenirHeavy from 'styles/typography.css';
+	composes: marginXXL paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	display: flex;
+	justify-content: center;
+}
