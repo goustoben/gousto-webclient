@@ -89,14 +89,12 @@ describe('Delivery Slot Helper', () => {
                 deliveryStartTime: '08:00:00',
                 deliveryEndTime: '19:00:00',
                 id: '123sddrdfst456',
-                coreSlotId: '6',
                 disabledSlotId: '2019-03-03_08-19'
               }),
               Immutable.Map({
                 deliveryStartTime: '18:00:00',
                 deliveryEndTime: '22:00:00',
                 id: '987sddrdfst456',
-                coreSlotId: '6',
                 disabledSlotId: '2019-03-03_18-22'
               })
             ])
@@ -129,9 +127,8 @@ describe('Delivery Slot Helper', () => {
 
       describe('when user subscription is active and isSubscriberDisabledSlotsEnabled is true', () => {
         let result
-        const isSubscriberDisabledSlotsEnabled = true
-
         beforeEach(() => {
+          const isSubscriberDisabledSlotsEnabled = true
           const newProps = { ...props, isSubscriptionActive: 'active' }
           result = getDeliveryDaysAndSlots(dateToCheck, newProps, isSubscriberDisabledSlotsEnabled)
         })
@@ -139,64 +136,6 @@ describe('Delivery Slot Helper', () => {
         test('then a disabled slot should be returned', () => {
           const slotToCheck = result.slots[dateToCheck][0]
           expect(slotToCheck.disabled).toEqual(true)
-        })
-
-        describe('when an order exists for given slot', () => {
-          beforeEach(() => {
-            const newProps = {
-              ...props,
-              isSubscriptionActive: 'active',
-              userOrders: Immutable.fromJS({
-                1234: {
-                  id: '1234',
-                  deliveryDate: '2019-03-03',
-                  recipeItems: [{
-                    id: 1,
-                  },
-                  {
-                    id: 2,
-                  }],
-                  deliverySlotId: '6',
-                }
-              }),
-            }
-
-            result = getDeliveryDaysAndSlots(dateToCheck, newProps, isSubscriberDisabledSlotsEnabled)
-          })
-
-          test('then a disabled slot should NOT be returned', () => {
-            const slotToCheck = result.slots[dateToCheck][0]
-            expect(slotToCheck.disabled).toEqual(false)
-          })
-        })
-
-        describe('when an order exists for given day, but on a different slot', () => {
-          beforeEach(() => {
-            const newProps = {
-              ...props,
-              isSubscriptionActive: 'active',
-              userOrders: Immutable.fromJS({
-                1234: {
-                  id: '1234',
-                  deliveryDate: '2019-03-03',
-                  recipeItems: [{
-                    id: 1,
-                  },
-                  {
-                    id: 2,
-                  }],
-                  deliverySlotId: '33',
-                }
-              }),
-            }
-
-            result = getDeliveryDaysAndSlots(dateToCheck, newProps, isSubscriberDisabledSlotsEnabled)
-          })
-
-          test('then a disabled slot should be returned', () => {
-            const slotToCheck = result.slots[dateToCheck][0]
-            expect(slotToCheck.disabled).toEqual(true)
-          })
         })
       })
 

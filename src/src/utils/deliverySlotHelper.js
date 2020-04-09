@@ -1,14 +1,5 @@
 import moment from 'moment'
 
-import { getUserOrderDeliverySlotId } from 'selectors/user'
-import {
-  getSlotDisabledSlotId,
-  getSlotCoreSlotId,
-  getSlotDeliveryStartTime,
-  getSlotDeliveryEndTime,
-  getSlotDeliveryPrice,
-} from 'selectors/boxSummary'
-
 import { formatDeliveryTime } from './deliverySlot'
 import { getLandingDay } from './deliveries'
 
@@ -79,37 +70,6 @@ export const isDisabledSlotsApplicable = (isAuthenticated, isSubscriptionActive,
   return isAuthenticated && (isSubscriptionActive === 'inactive' || isSubscriberDisabledSlotsEnabled)
 }
 
-export const getSlotProps = ({
-  slot,
-  disabledSlots,
-  userOrder,
-  isAuthenticated,
-  isSubscriptionActive,
-  isSubscriberDisabledSlotsEnabled,
-  tempDate,
-}) => {
-  const isSlotDisabled = !!(disabledSlots && disabledSlots.includes(getSlotDisabledSlotId({ slot })))
-  const coreSlotId = getSlotCoreSlotId({ slot })
-  const hasOrderForSlot = userOrder && (getUserOrderDeliverySlotId({ userOrder }) === coreSlotId)
-  const deliveryPrice = getSlotDeliveryPrice({ slot })
-  const label = formatDeliveryTime(getSlotDeliveryStartTime({ slot }), getSlotDeliveryEndTime({ slot }), tempDate)
-  const subLabel = (deliveryPrice === '0.00') ? 'Free' : `£${deliveryPrice}`
-
-  return {
-    label,
-    subLabel,
-    value: slot.get('id'),
-    coreSlotId,
-    disabled:
-      isSlotDisabled
-      && isDisabledSlotsApplicable(
-        isAuthenticated,
-        isSubscriptionActive,
-        (isSubscriberDisabledSlotsEnabled && !hasOrderForSlot)
-      )
-  }
-}
-
 export const getDeliveryDaysAndSlots = (newDate, props, isSubscriberDisabledSlotsEnabled) => {
   const slots = {}
   const {
@@ -125,6 +85,17 @@ export const getDeliveryDaysAndSlots = (newDate, props, isSubscriberDisabledSlot
 
   const deliveryDaysData = deliveryDaysProps && deliveryDaysProps.map(deliveryDay => {
     const date = deliveryDay.get('date')
+    slots[date] = deliveryDay.get('slots').map(slot => {
+      const isSlotDisabled = !!(disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')))
+
+      return {
+        label: formatDeliveryTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
+        subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
+        value: slot.get('id'),
+        coreSlotId: slot.get('coreSlotId'),
+        disabled: isSlotDisabled && isDisabledSlotsApplicable(isAuthenticated, isSubscriptionActive, isSubscriberDisabledSlotsEnabled)
+      }
+    }).toArray()
 
     const orderIds = userOrders.toArray().filter(order => (
       moment(date).isSame(moment(order.get('deliveryDate'))))
@@ -133,12 +104,10 @@ export const getDeliveryDaysAndSlots = (newDate, props, isSubscriberDisabledSlot
     const hasOrdersToday = orderIds.length > 0
 
     let icon = hasOrdersToday ? 'full-box' : ''
-    let userOrder
     const orderId = hasOrdersToday ? orderIds[0] : ''
 
     if (orderId) {
-      userOrder = userOrders.find(order => order.get('id') === orderId)
-      const recipeItemsSize = userOrder.get('recipeItems').size
+      const recipeItemsSize = userOrders.find(order => order.get('id') === orderId).get('recipeItems').size
       hasFullOrders = recipeItemsSize > 0
       icon = recipeItemsSize === 0 ? 'empty-box' : icon
       hasEmptyOrders = recipeItemsSize === 0
@@ -147,16 +116,6 @@ export const getDeliveryDaysAndSlots = (newDate, props, isSubscriberDisabledSlot
     if (orderIds.length > 0) {
       hasOrders = true
     }
-
-    slots[date] = deliveryDay.get('slots').map(slot => getSlotProps({
-      slot,
-      disabledSlots,
-      userOrder,
-      isAuthenticated,
-      isSubscriptionActive,
-      isSubscriberDisabledSlotsEnabled,
-      tempDate,
-    })).toArray()
 
     // disabled if either are true:
     // * delivery day has an alternate delivery day
