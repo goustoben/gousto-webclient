@@ -5,9 +5,12 @@ import DeliveryInstruction from 'routes/Checkout/Components/Delivery/DeliveryDet
 
 describe('DeliveryInstruction', () => {
   let wrapper
+  const reset = jest.fn()
+  let inputFields
+  let lastInput
 
   beforeEach(() => {
-    wrapper = shallow(<DeliveryInstruction />)
+    wrapper = shallow(<DeliveryInstruction reset={reset} />)
   })
 
   describe('rendering', () => {
@@ -19,34 +22,71 @@ describe('DeliveryInstruction', () => {
       expect(wrapper.find(Field)).toHaveLength(1)
     })
 
-    test('should show another input when the value prop is "other"', () => {
-      wrapper = shallow(<DeliveryInstruction value="other" />)
-
-      const inputFields = wrapper.find(Field)
-      const lastInput = inputFields.last()
-
-      expect(inputFields).toHaveLength(2)
-      expect(lastInput.prop('label')).toEqual(
-        'More details about where to leave your box?',
-      )
+    test('should not call reset by default', () => {
+      expect(reset).not.toBeCalled()
     })
 
-    test('should show another input when the value prop is "neighbour"', () => {
-      wrapper = shallow(<DeliveryInstruction value="neighbour" />)
+    describe('when the value prop is "other"', () => {
+      beforeEach(() => {
+        wrapper.setProps({ value: 'other' })
 
-      const inputFields = wrapper.find(Field)
-      const lastInput = inputFields.last()
+        inputFields = wrapper.find(Field)
+        lastInput = inputFields.last()
+      })
 
-      expect(wrapper.find(Field)).toHaveLength(2)
-      expect(lastInput.prop('label')).toEqual(
-        'Additional information, door number, etc:',
-      )
+      test('then should show another input', () => {
+        expect(inputFields).toHaveLength(2)
+        expect(lastInput.prop('label')).toEqual(
+          'More details about where to leave your box?',
+        )
+      })
+
+      describe('and it is changed to "home"', () => {
+        beforeEach(() => {
+          jest.clearAllMocks()
+          wrapper.setProps({ value: 'home' })
+        })
+
+        test('then should call reset', () => {
+          expect(reset).toBeCalled()
+        })
+      })
+    })
+
+    describe('when the value prop is "neighbour"', () => {
+      beforeEach(() => {
+        wrapper.setProps({ value: 'neighbour' })
+
+        inputFields = wrapper.find(Field)
+        lastInput = inputFields.last()
+      })
+
+      test('then should show another input', () => {
+        expect(wrapper.find(Field)).toHaveLength(2)
+        expect(lastInput.prop('label')).toEqual(
+          'Additional information, door number, etc:',
+        )
+      })
+
+      describe('and it is changed to "other"', () => {
+        beforeEach(() => {
+          jest.clearAllMocks()
+          wrapper.setProps({ value: 'other' })
+        })
+
+        test('then should not call reset', () => {
+          expect(reset).not.toBeCalled()
+        })
+      })
     })
   })
 
   describe('sensitive data masking', () => {
+    beforeEach(() => {
+      wrapper.setProps({ value: 'other' })
+    })
+
     test('<Field /> component(s) should have prop "mask" when the value prop is "other"', () => {
-      wrapper = shallow(<DeliveryInstruction value="other" />)
       expect(
         wrapper
           .find(Field)

@@ -6,7 +6,6 @@ import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
 import { fetchDeliveryDays } from 'apis/deliveries'
-import DeliveryInfo from './DeliveryInfo'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
 import css from './Address.css'
@@ -24,7 +23,6 @@ const propTypes = {
   deliveryTariffId: PropTypes.string,
   isDelivery: PropTypes.bool,
   deliveryDate: PropTypes.string,
-  cutOffDate: PropTypes.string,
   menuCutoffUntil: PropTypes.string,
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
@@ -54,13 +52,17 @@ const defaultProps = {
   receiveRef: () => { },
   scrollToFirstMatchingRef: () => { },
   trackUTMAndPromoCode: () => { },
+  registerField: () => { },
+  checkoutAddressLookup: () => { },
+  onAddressConfirm: () => { },
+  trackCheckoutButtonPressed: () => { },
+  isMobile: false,
+  deliveryTariffId: '',
+  deliveryDate: '',
+  menuCutoffUntil: '',
 }
 
 class Address extends React.PureComponent {
-  static propTypes = propTypes
-
-  static defaultProps = defaultProps
-
   componentWillMount() {
     const { initialPostcode, sectionName, formName, change, touch } = this.props
     // use initial postcode
@@ -306,7 +308,7 @@ class Address extends React.PureComponent {
   }
 
   render() {
-    const { isDelivery, deliveryDate, cutOffDate, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef } = this.props
+    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef } = this.props
     const addresses = this.getFormValue('addresses') || []
     const postcodeTemp = this.getFormValue('postcodeTemp')
     const addressId = this.getFormValue('addressId')
@@ -318,12 +320,6 @@ class Address extends React.PureComponent {
 
     return (
       <div>
-        {isDelivery && (
-          <DeliveryInfo
-            deliveryDate={deliveryDate}
-            cutOffDate={cutOffDate}
-          />
-        )}
         <Postcode
           postcodePending={addressesPending}
           onPostcodeLookup={this.getAddresses}
@@ -354,5 +350,9 @@ class Address extends React.PureComponent {
     )
   }
 }
+
+Address.propTypes = propTypes
+
+Address.defaultProps = defaultProps
 
 export default Address

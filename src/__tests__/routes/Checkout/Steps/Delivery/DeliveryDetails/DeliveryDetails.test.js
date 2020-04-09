@@ -4,7 +4,6 @@ import DeliveryDetailsComponent from 'routes/Checkout/Components/Delivery/Delive
 
 import DeliveryInstruction from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryInstruction'
 import DeliveryPhoneNumber from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryPhoneNumber'
-import DeliveryAddressType from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryAddressType'
 
 describe('DeliveryDetails', () => {
   let wrapper
@@ -24,10 +23,6 @@ describe('DeliveryDetails', () => {
 
     test('should render 1 <DeliveryPhoneNumber> component(s)', () => {
       expect(wrapper.find(DeliveryPhoneNumber).length).toEqual(1)
-    })
-
-    test('should render 1 <DeliveryAddressType> component(s)', () => {
-      expect(wrapper.find(DeliveryAddressType).length).toEqual(1)
     })
   })
 })

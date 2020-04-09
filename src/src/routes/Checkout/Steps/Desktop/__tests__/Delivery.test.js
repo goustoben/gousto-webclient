@@ -32,11 +32,14 @@ describe('DeliveryStep', () => {
   })
 
   describe('when Button clicked', () => {
-    test('should dispatch trackUTMAndPromoCode actions with proper parameters', () => {
+    beforeEach(() => {
       expect(trackUTMAndPromoCode).not.toBeCalled()
       expect(submit).not.toBeCalled()
       wrapper.find(CheckoutButton).simulate('click')
-      expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment', 'desktop')
+    })
+
+    test('should dispatch trackUTMAndPromoCode actions with proper parameters', () => {
+      expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment')
       expect(submit).toBeCalled()
     })
   })

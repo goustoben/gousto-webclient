@@ -12,47 +12,28 @@ import css from './AboutYou.css'
 import ErrorMessage from '../ErrorMessage'
 
 class AboutYou extends React.PureComponent {
-  static propTypes = {
-    loginVisibilityChange: PropTypes.func,
-    isLoginOpen: PropTypes.bool,
-    isAuthenticated: PropTypes.bool,
-    loginPending: PropTypes.bool,
-    isMobile: PropTypes.bool,
-    sectionName: PropTypes.string,
-    clearErrors: PropTypes.func,
-    receiveRef: PropTypes.func,
-    trackCheckoutButtonPressed: PropTypes.func,
-  }
-
-  static defaultProps = {
-    clearErrors: () => { },
-    loginVisibilityChange: () => { },
-    isLoginOpen: false,
-    loginPending: false,
-    isAuthenticated: false,
-    sectionName: '',
-    receiveRef: () => { },
-  }
-
   componentDidMount() {
-    this.props.clearErrors()
+    const { clearErrors } = this.props
+    clearErrors()
   }
 
   handleLoginClose = (e) => {
+    const { loginVisibilityChange } = this.props
     if (e) {
       e.stopPropagation()
     }
-    this.props.loginVisibilityChange(false)
+    loginVisibilityChange(false)
     this.setState({ loginPending: false })
   }
 
   handleLoginOpen = (e) => {
+    const { loginVisibilityChange } = this.props
     e.stopPropagation()
-    this.props.loginVisibilityChange(true)
+    loginVisibilityChange(true)
   }
 
   render() {
-    const { sectionName, trackCheckoutButtonPressed, isMobile } = this.props
+    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen, loginPending } = this.props
     const titles = config.titles.map(title => ({
       value: title,
       label: capitalizeFirstLetter(title),
@@ -70,7 +51,7 @@ class AboutYou extends React.PureComponent {
                 <span
                   className={css.link}
                   onClick={(e) => {
-                    if (!this.props.isAuthenticated) this.handleLoginOpen(e)
+                    if (!isAuthenticated) this.handleLoginOpen(e)
                     if (isMobile) trackCheckoutButtonPressed('LogInCTA Clicked')
                   }}
                 >
@@ -89,7 +70,7 @@ class AboutYou extends React.PureComponent {
                 inputType="DropDown"
                 label="Title"
                 withRef
-                ref={this.props.receiveRef}
+                ref={receiveRef}
                 refId={`${sectionName}.title`}
               />
             </div>
@@ -103,7 +84,7 @@ class AboutYou extends React.PureComponent {
                 label="First name"
                 mask
                 withRef
-                ref={this.props.receiveRef}
+                ref={receiveRef}
                 refId={`${sectionName}.firstName`}
                 dataTesting="checkoutFirstNameInput"
               />
@@ -116,7 +97,7 @@ class AboutYou extends React.PureComponent {
                 label="Last name"
                 mask
                 withRef
-                ref={this.props.receiveRef}
+                ref={receiveRef}
                 refId={`${sectionName}.lastName`}
                 dataTesting="checkoutLastNameInput"
               />
@@ -133,7 +114,7 @@ class AboutYou extends React.PureComponent {
                 subLabel="You'll use this to log in to your account"
                 mask
                 withRef
-                ref={this.props.receiveRef}
+                ref={receiveRef}
                 refId={`${sectionName}.email`}
                 dataTesting="checkoutEmailInput"
                 validate={emailValidator}
@@ -151,7 +132,7 @@ class AboutYou extends React.PureComponent {
                 subLabel="Must be at least 8 characters"
                 mask
                 withRef
-                ref={this.props.receiveRef}
+                ref={receiveRef}
                 refId={`${sectionName}.password`}
                 dataTesting="checkoutPasswordInput"
               />
@@ -168,19 +149,9 @@ class AboutYou extends React.PureComponent {
                 mask
               />
             </div>
-            <div className={css.colHalf}>
-              <Field
-                name="allowThirdPartyEmail"
-                component={ReduxFormInput}
-                inputType="CheckBox"
-                childLabel="I would like to receive 3rd party communications from selected partners."
-                style="disclaimer"
-                mask
-              />
-            </div>
           </div>
           <Overlay
-            open={this.props.isLoginOpen}
+            open={isLoginOpen}
             className={css.mobileOverlay}
             contentClassName={css.mobileModalContent}
             from="top"
@@ -192,9 +163,9 @@ class AboutYou extends React.PureComponent {
               disableOverlay
             >
               <Login
-                isAuthenticated={this.props.isAuthenticated}
-                isOpen={this.props.isLoginOpen}
-                isPending={this.props.loginPending}
+                isAuthenticated={isAuthenticated}
+                isOpen={isLoginOpen}
+                isPending={loginPending}
               />
             </ModalPanel>
           </Overlay>
@@ -203,6 +174,30 @@ class AboutYou extends React.PureComponent {
       </FormSection>
     )
   }
+}
+
+AboutYou.propTypes = {
+  loginVisibilityChange: PropTypes.func,
+  isLoginOpen: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  loginPending: PropTypes.bool,
+  isMobile: PropTypes.bool,
+  sectionName: PropTypes.string,
+  clearErrors: PropTypes.func,
+  receiveRef: PropTypes.func,
+  trackCheckoutButtonPressed: PropTypes.func,
+}
+
+AboutYou.defaultProps = {
+  clearErrors: () => { },
+  loginVisibilityChange: () => { },
+  isloginOpen: false,
+  loginPending: false,
+  isAuthenticated: false,
+  sectionName: 'aboutyou',
+  receiveRef: () => { },
+  trackCheckoutButtonPressed: () => { },
+  isMobile: false,
 }
 
 export { AboutYou }

@@ -7,26 +7,14 @@ import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import configCheckout from 'config/checkout'
 import css from '../Delivery.css'
-import CheckoutTooltip from '../../CheckoutTooltip/CheckoutTooltip'
 
 const DELIVER_TO_OPTIONS = configCheckout.deliverToOptions
 
 class DeliveryAddressType extends React.PureComponent {
-  static propTypes = {
-    value: PropTypes.any,
-    reset: PropTypes.func.isRequired,
-    receiveRef: PropTypes.func,
-    sectionName: PropTypes.string,
-  }
-
-  static defaultProps = {
-    value: '',
-    receiveRef: () => {},
-  }
-
   componentWillReceiveProps(nextProps) {
-    if (this.shouldShowOtherInput(this.props.value) && !this.shouldShowOtherInput(nextProps.value)) {
-      this.props.reset('customAddressType')
+    const { value, reset } = this.props
+    if (this.shouldShowOtherInput(value) && !this.shouldShowOtherInput(nextProps.value)) {
+      reset('customAddressType')
     }
   }
 
@@ -34,18 +22,8 @@ class DeliveryAddressType extends React.PureComponent {
     chosenValue.toLowerCase() === 'other'
 
   render() {
-    const inputSuffix = (
-      <div className={css.checkoutTooltip}>
-        <CheckoutTooltip version="Desktop">
-          {configCheckout.tooltip.addressType}
-        </CheckoutTooltip>
-        <CheckoutTooltip version="Mobile" placement="top">
-          {configCheckout.tooltip.addressType}
-        </CheckoutTooltip>
-      </div>
-    )
-
-    const showOtherInput = this.shouldShowOtherInput(this.props.value)
+    const { value, receiveRef, sectionName } = this.props
+    const showOtherInput = this.shouldShowOtherInput(value)
 
     return (
       <div className={css.deliveryFieldWrapper}>
@@ -55,13 +33,12 @@ class DeliveryAddressType extends React.PureComponent {
               <Field
                 name="addressType"
                 component={ReduxFormInput}
-                inputSuffix={inputSuffix}
                 options={DELIVER_TO_OPTIONS}
                 inputType="DropDown"
                 label="Address type"
                 withRef
-                ref={this.props.receiveRef}
-                refId={`${this.props.sectionName}.addressType`}
+                ref={receiveRef}
+                refId={`${sectionName}.addressType`}
               />
             </div>
           </div>
@@ -78,8 +55,8 @@ class DeliveryAddressType extends React.PureComponent {
                 color="gray"
                 mask
                 withRef
-                ref={this.props.receiveRef}
-                refId={`${this.props.sectionName}.customAddressType`}
+                ref={receiveRef}
+                refId={`${sectionName}.customAddressType`}
               />
             </div>
           </div>
@@ -87,6 +64,19 @@ class DeliveryAddressType extends React.PureComponent {
       </div>
     )
   }
+}
+
+DeliveryAddressType.propTypes = {
+  value: PropTypes.any,
+  reset: PropTypes.func.isRequired,
+  receiveRef: PropTypes.func,
+  sectionName: PropTypes.string,
+}
+
+DeliveryAddressType.defaultProps = {
+  value: '',
+  receiveRef: () => {},
+  sectionName: 'delivery',
 }
 
 export default DeliveryAddressType

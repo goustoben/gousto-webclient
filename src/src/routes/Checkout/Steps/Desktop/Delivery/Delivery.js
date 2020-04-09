@@ -16,7 +16,7 @@ export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scr
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   const handleClick = () => {
-    trackUTMAndPromoCode('clickNextPayment', 'desktop')
+    trackUTMAndPromoCode('clickNextPayment')
     submit()
   }
 
