@@ -46,3 +46,8 @@ export const getBoxSummaryTextProps = (state, tempDate, tempSlotId, tempOrderId,
 
   return ({ deliveryLocationText, slotId, buttonText, showWarning })
 }
+export const getSlotDisabledSlotId = ({ slot }) => slot.get('disabledSlotId')
+export const getSlotCoreSlotId = ({ slot }) => slot.get('coreSlotId')
+export const getSlotDeliveryStartTime = ({ slot }) => slot.get('deliveryStartTime')
+export const getSlotDeliveryEndTime = ({ slot }) => slot.get('deliveryEndTime')
+export const getSlotDeliveryPrice = ({ slot }) => slot.get('deliveryPrice')

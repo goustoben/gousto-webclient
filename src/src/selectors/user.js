@@ -28,6 +28,7 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
 
   return Array.from(recipeIds)
 }
+export const getUserOrderDeliverySlotId = ({ userOrder }) => userOrder.get('deliverySlotId')
 
 export const getUsersOrdersDaySlotLeadTimeIds = createSelector(
   getUserOrders,
