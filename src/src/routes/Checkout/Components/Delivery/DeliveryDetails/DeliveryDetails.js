@@ -3,30 +3,11 @@ import PropTypes from 'prop-types'
 
 import React from 'react'
 import { showAddress } from 'routes/Checkout/utils/delivery'
-import Svg from 'Svg'
 import css from '../Delivery.css'
 import DeliveryInstruction from './DeliveryInstruction'
 import DeliveryPhoneNumber from './DeliveryPhoneNumber'
-import DeliveryAddressType from './DeliveryAddressType'
 
 class DeliveryDetails extends React.PureComponent {
-  static propTypes = {
-    deliveryAddress: PropTypes.object,
-    formValues: PropTypes.object,
-    receiveRef: PropTypes.func,
-    sectionName: PropTypes.string,
-    change: PropTypes.func.isRequired,
-    formName: PropTypes.string.isRequired,
-    untouch: PropTypes.func.isRequired,
-    onAddressEdit: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    deliveryAddress: {},
-    formValues: {},
-    receiveRef: () => { },
-  }
-
   reset = (field, value = '') => {
     const { change, formName, sectionName, untouch } = this.props
     const fieldName = `${sectionName}.${field}`
@@ -36,44 +17,50 @@ class DeliveryDetails extends React.PureComponent {
   }
 
   render() {
-    const { formValues } = this.props
+    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName } = this.props
 
     return (
       <div className={css.deliveryInfoContainer}>
         <h4>Deliver to</h4>
         <p className={css.textSM}>
-          {showAddress(this.props.deliveryAddress)}
+          {showAddress(deliveryAddress)}
 &nbsp;
-          <span onClick={this.props.onAddressEdit} className={css.linkBase}>
+          <span onClick={onAddressEdit} className={css.linkBase}>
             Edit address&nbsp;
             <span className={css.linkRight} />
           </span>
         </p>
-        <DeliveryAddressType
-          value={formValues.addressType}
-          reset={this.reset}
-          receiveRef={this.props.receiveRef}
-          sectionName={this.props.sectionName}
-        />
-        <div className={css.iconDeliverySection}>
-          <Svg fileName="icon-delivery" className={css.iconDelivery} />
-          <div className={css.iconDeliveryDescription}>
-            <p className={css.textSM}>Not going to be home? No problem. Just tell us a safe place to leave your box. Your food will keep cold for 12hrs.</p>
-          </div>
-        </div>
         <DeliveryInstruction
           value={formValues.deliveryInstruction}
           reset={this.reset}
-          receiveRef={this.props.receiveRef}
-          sectionName={this.props.sectionName}
+          receiveRef={receiveRef}
+          sectionName={sectionName}
         />
         <DeliveryPhoneNumber
-          receiveRef={this.props.receiveRef}
-          sectionName={this.props.sectionName}
+          receiveRef={receiveRef}
+          sectionName={sectionName}
         />
       </div>
     )
   }
+}
+
+DeliveryDetails.propTypes = {
+  deliveryAddress: PropTypes.objectOf(PropTypes.object),
+  formValues: PropTypes.objectOf(PropTypes.object),
+  receiveRef: PropTypes.func,
+  sectionName: PropTypes.string,
+  change: PropTypes.func.isRequired,
+  formName: PropTypes.string.isRequired,
+  untouch: PropTypes.func.isRequired,
+  onAddressEdit: PropTypes.func.isRequired,
+}
+
+DeliveryDetails.defaultProps = {
+  deliveryAddress: {},
+  formValues: {},
+  receiveRef: () => { },
+  sectionName: 'delivery',
 }
 
 export default DeliveryDetails

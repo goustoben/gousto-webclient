@@ -32,7 +32,7 @@ describe('YourDetailsStep', () => {
   })
 
   test('should have CheckoutButton button', () => {
-    expect(wrapper.find(CheckoutButton)).toHaveLength(2)
+    expect(wrapper.find(CheckoutButton)).toHaveLength(1)
   })
 
   describe('when CheckoutButton clicked', () => {
@@ -40,7 +40,7 @@ describe('YourDetailsStep', () => {
       test('then trackUTMAndPromoCode should not be called', () => {
         expect(submit).not.toBeCalled()
         expect(trackUTMAndPromoCode).not.toBeCalled()
-        wrapper.find(CheckoutButton).at(0).simulate('click')
+        wrapper.find(CheckoutButton).simulate('click')
         expect(submit).toBeCalled()
         expect(trackUTMAndPromoCode).not.toBeCalled()
       })
@@ -50,18 +50,16 @@ describe('YourDetailsStep', () => {
       beforeEach(() => {
         wrapper.setProps({ checkoutValid: true })
         jest.clearAllMocks()
-      })
-
-      test('then trackUTMAndPromoCode should be called with a proper parameter', () => {
         expect(trackUTMAndPromoCode).not.toBeCalled()
         expect(userProspect).not.toBeCalled()
         expect(submit).not.toBeCalled()
-        wrapper.find(CheckoutButton).at(0).simulate('click')
-        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment', 'top')
+        wrapper.find(CheckoutButton).simulate('click')
+      })
+
+      test('then trackUTMAndPromoCode should be called with a proper parameter', () => {
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment')
         expect(userProspect).toBeCalled()
         expect(submit).toBeCalled()
-        wrapper.find(CheckoutButton).at(1).simulate('click')
-        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment', 'bottom')
       })
     })
   })

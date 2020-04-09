@@ -5,9 +5,10 @@ import DeliveryAddressType from 'routes/Checkout/Components/Delivery/DeliveryDet
 
 describe('DeliveryAddressType', () => {
   let wrapper
+  const reset = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<DeliveryAddressType />)
+    wrapper = shallow(<DeliveryAddressType reset={reset} />)
   })
 
   describe('rendering', () => {
@@ -19,15 +20,77 @@ describe('DeliveryAddressType', () => {
       expect(wrapper.find(Field)).toHaveLength(1)
     })
 
-    test('should show an extra input with prop "mask", when the value prop is "other"', () => {
-      wrapper = shallow(<DeliveryAddressType value="other" />)
-      expect(wrapper.find(Field)).toHaveLength(2)
-      expect(
-        wrapper
-          .find(Field)
-          .at(1)
-          .prop('mask'),
-      ).toBe(true)
+    describe('when the value prop is "other"', () => {
+      beforeEach(() => {
+        wrapper.setProps({ value: 'other' })
+      })
+
+      test('should show an extra input with prop "mask"', () => {
+        expect(wrapper.find(Field)).toHaveLength(2)
+        expect(
+          wrapper
+            .find(Field)
+            .at(1)
+            .prop('mask'),
+        ).toBe(true)
+      })
+    })
+
+    describe('shouldShowOtherInput', () => {
+      let instance
+
+      describe('when value is "other"', () => {
+        beforeEach(() => {
+          wrapper.setProps({ value: 'Other' })
+          instance = wrapper.instance()
+        })
+
+        test('should return true', () => {
+          expect(instance.shouldShowOtherInput('Other')).toBeTruthy()
+        })
+      })
+
+      describe('when value is "home"', () => {
+        beforeEach(() => {
+          wrapper.setProps({ value: 'home' })
+          instance = wrapper.instance()
+        })
+
+        test('should return false', () => {
+          expect(instance.shouldShowOtherInput('home')).toBeFalsy()
+        })
+      })
+    })
+
+    test('should not call reset by default', () => {
+      expect(reset).not.toBeCalled()
+    })
+
+    describe('reset', () => {
+      beforeEach(() => {
+        wrapper.setProps({ value: 'other' })
+      })
+
+      describe('when new value is set and is not equal to "other"', () => {
+        beforeEach(() => {
+          wrapper.setProps({ value: 'gegege' })
+        })
+
+        test('should call reset', () => {
+          expect(reset).toBeCalled()
+        })
+      })
+
+      describe('when new value is set and is equal to "other"', () => {
+        beforeEach(() => {
+          jest.clearAllMocks()
+          wrapper.setProps({ value: 'other' })
+        })
+
+        test('should not call reset', () => {
+          expect(reset).not.toBeCalled()
+        })
+      })
     })
   })
 })

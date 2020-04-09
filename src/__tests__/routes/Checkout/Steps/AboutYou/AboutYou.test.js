@@ -26,7 +26,7 @@ describe('AboutYou', () => {
     })
 
     test('should render 7 Fields', () => {
-      expect(wrapper.find(Field).length).toEqual(7)
+      expect(wrapper.find(Field).length).toEqual(6)
     })
 
     test('should render 1 Overlay', () => {
@@ -111,7 +111,7 @@ describe('AboutYou', () => {
       })
 
       test('should be true for "mask" for first name, last name, email, password, and marketing checkboxes', () => {
-        const fields = Array.from(6)
+        const fields = Array.from(5)
         fields.forEach((index) => {
           expect(
             wrapper

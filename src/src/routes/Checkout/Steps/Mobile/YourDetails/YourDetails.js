@@ -6,11 +6,8 @@ import { addPrefix } from 'validations/util'
 
 import delivery from 'validations/delivery'
 
-import { Section } from 'Page/Elements'
 import formContainer from '../../../Components/formContainer'
 import CheckoutButton from '../../../Components/CheckoutButton'
-import Summary from '../../../Components/Summary'
-import BoxDetails from '../../../Components/BoxDetails'
 import SectionContainer from '../SectionContainer'
 
 import AboutYouContainer, { addInitialValues as aboutYouAddInitialValues } from '../../../Components/AboutYou'
@@ -24,10 +21,10 @@ const DeliverySection = DeliveryContainer(deliverySectionName)
 
 export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick, trackUTMAndPromoCode }) => {
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
-  const handleSubmit = (btnPosition) => () => {
+  const handleSubmit = () => {
     if (checkoutValid) {
       userProspect()
-      trackUTMAndPromoCode('clickNextPayment', btnPosition)
+      trackUTMAndPromoCode('clickNextPayment')
       trackClick('NextCTA Clicked', { succeeded: true, missing_field: null })
     }
     submit()
@@ -44,22 +41,10 @@ export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues
       {isAddressConfirmed && (
         <SectionContainer>
           <CheckoutButton
-            onClick={handleSubmit('top')}
+            onClick={handleSubmit}
             stepName={`Next: ${nextStepName}`}
           />
         </SectionContainer>
-      )}
-      <SectionContainer>
-        <Summary />
-        <Section margin={{ top: 'LG' }}>
-          <BoxDetails />
-        </Section>
-      </SectionContainer>
-      {isAddressConfirmed && (
-        <CheckoutButton
-          onClick={handleSubmit('bottom')}
-          stepName={`Next: ${nextStepName}`}
-        />
       )}
     </div>
   )
