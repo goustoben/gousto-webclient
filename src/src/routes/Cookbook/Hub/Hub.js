@@ -10,6 +10,7 @@ import routesConfig from 'config/routes'
 import templateConfig from 'config/template'
 import logger from 'utils/logger'
 import recipeUtils from 'utils/recipe'
+import { setSchemaMarkup } from 'utils/schemaMarkup'
 
 import Helmet from 'react-helmet'
 import { H1 } from 'Page/Header'
@@ -50,35 +51,6 @@ function gatherRecipeKeywords(recipes = []) {
 }
 
 class Hub extends React.PureComponent {
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
-  static limit = 20
-
-  static propTypes = {
-    endSet: PropTypes.number.isRequired,
-    fetchSetData: PropTypes.func.isRequired,
-    loadNextSet: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    resetSets: PropTypes.func.isRequired,
-    startSet: PropTypes.number.isRequired,
-    totalSets: PropTypes.number.isRequired,
-    recipesCollection: PropTypes.string.isRequired,
-    stock: PropTypes.number.isRequired,
-    collection: PropTypes.instanceOf(Immutable.Map),
-    mobileFullWidth: PropTypes.bool,
-    recipes: PropTypes.instanceOf(Immutable.List),
-    isLoading: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    collection: Immutable.Map({}),
-    mobileFullWidth: true,
-    recipes: Immutable.List([]),
-    isLoading: false
-  }
-
   static async fetchData({ store, params, setNum = 1 }) {
     await store.dispatch(collectionsLoadCollectionBySlug(params.collectionSlug))
 
@@ -110,13 +82,34 @@ class Hub extends React.PureComponent {
     return fetchSetData(startSet + 1)
   }
 
+  getCollectionImageSrc() {
+    const { collection } = this.props
+    const imageUrls = collection.getIn(['media', 'images', 'urls'])
+
+    return imageUrls && imageUrls.size && imageUrls.last().get('src')
+  }
+
+  getSchemaMarkup() {
+    const { collection, location } = this.props
+    const goustoUrl = 'https://www.gousto.co.uk'
+    const markupProps = {
+      name: collection.get('shortTitle'),
+      description: collection.get('description'),
+      thumbnail: this.getCollectionImageSrc(),
+      url: [goustoUrl, location].join(''),
+      datepublished: collection.get('createdAt'),
+      recipeingredient: collection.get('shortTitle')
+    }
+
+    return setSchemaMarkup(markupProps)
+  }
+
   renderMetaData = () => {
     const { collection, recipes } = this.props
     const metaData = []
     const metaTitle = collection.get('metaTitle')
     const metaDescription = collection.get('metaDescription')
-    const imageUrls = collection.getIn(['media', 'images', 'urls'])
-    const imageSrc = imageUrls && imageUrls.size ? imageUrls.last().get('src') : undefined
+    const imageSrc = this.getCollectionImageSrc()
 
     if (recipes) {
       metaData.push(
@@ -174,13 +167,17 @@ class Hub extends React.PureComponent {
       <Helmet
         title={metaTitle}
         meta={metaData}
+        script={[{ type: 'application/ld+json', innerHTML: this.getSchemaMarkup() }]}
       />
     )
   }
 
+  static limit = 20
+
   renderRecipe(recipe) {
     const { cookingTime, rating = {}, title, url } = recipe.toJS()
-    const tag = recipeUtils.getLowStockTag(this.props.stock, rating.count)
+    const { stock } = this.props
+    const tag = recipeUtils.getLowStockTag(stock, rating.count)
     const media = recipe.getIn(['media', 'images'], Immutable.List([])).find(obj => obj && (obj.get('type') === 'mood-image'))
     const urls = media ? media.get('urls') : Immutable.List([])
 
@@ -219,8 +216,10 @@ class Hub extends React.PureComponent {
     )
   }
 
-  renderRecipes = () => (
-    this.props.recipes.map(recipe => (
+  renderRecipes = () => {
+    const { recipes } = this.props
+
+    return recipes.map(recipe => (
       <Col
         key={recipe.get('id')}
         col-xs-12
@@ -230,7 +229,7 @@ class Hub extends React.PureComponent {
         {this.renderRecipe(recipe)}
       </Col>
     ))
-  )
+  }
 
   render() {
     const { collection, endSet, isLoading, loadNextSet, mobileFullWidth, totalSets } = this.props
@@ -282,7 +281,35 @@ class Hub extends React.PureComponent {
   }
 }
 
-export default Hub
+Hub.propTypes = {
+  endSet: PropTypes.number.isRequired,
+  fetchSetData: PropTypes.func.isRequired,
+  loadNextSet: PropTypes.func.isRequired,
+  params: PropTypes.objectOf(PropTypes.object).isRequired,
+  resetSets: PropTypes.func.isRequired,
+  startSet: PropTypes.number.isRequired,
+  totalSets: PropTypes.number.isRequired,
+  recipesCollection: PropTypes.string.isRequired,
+  stock: PropTypes.number.isRequired,
+  collection: PropTypes.instanceOf(Immutable.Map),
+  mobileFullWidth: PropTypes.bool,
+  recipes: PropTypes.instanceOf(Immutable.List),
+  isLoading: PropTypes.bool,
+  location: PropTypes.string.isRequired,
+}
+
+Hub.defaultProps = {
+  collection: Immutable.Map({}),
+  mobileFullWidth: true,
+  recipes: Immutable.List([]),
+  isLoading: false
+}
+
+Hub.contextTypes = {
+  store: PropTypes.objectOf(PropTypes.object).isRequired,
+}
+
+export { Hub }
 export const {fetchData} = Hub
 export const fetchSetData = Hub.fetchRecipes
 export const {limit} = Hub

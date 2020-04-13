@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Hub from 'routes/Cookbook/Hub/Hub'
+import { Hub } from 'routes/Cookbook/Hub/Hub'
 import { Section } from 'Page/Elements'
 import { Col, Row } from 'Page/Grid'
 import { PageContent, PageHeader } from 'Page'
@@ -41,6 +41,7 @@ describe('Hub', () => {
       ])
       const collection = Immutable.fromJS({
         recipes: ['pasta'],
+        metaTitle: 'meta title'
       })
       requiredProps = {
         endSet: 3,
@@ -52,6 +53,7 @@ describe('Hub', () => {
         totalSets: 1,
         recipesCollection: '',
         stock: 10,
+        location: 'https://www.gousto.co.uk',
       }
 
       wrapper = await shallow(
@@ -213,6 +215,20 @@ describe('Hub', () => {
           .at(1)
           .find('p'),
       ).toHaveLength(1)
+    })
+
+    describe('when Helmet is rendered', () => {
+      test('should have a meta prop', () => {
+        expect(wrapper.find(Helmet).prop('meta')).toBeTruthy()
+      })
+
+      test('should have a script prop', () => {
+        expect(wrapper.find(Helmet).prop('script')).toBeTruthy()
+      })
+
+      test('should have a title prop', () => {
+        expect(wrapper.find(Helmet).prop('title')).toBeTruthy()
+      })
     })
   })
 })
