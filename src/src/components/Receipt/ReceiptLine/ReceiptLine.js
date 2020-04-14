@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 import css from './ReceiptLine.css'
 
-const ReceiptLine = ({ label, children, style, showLineAbove }) => (
+const ReceiptLine = ({ label, children, style, showLineAbove, dataTesting }) => (
   <div>
     {
       showLineAbove
@@ -19,7 +19,7 @@ const ReceiptLine = ({ label, children, style, showLineAbove }) => (
         { [css.highlighted]: style === 'highlighted' })}
     >
       <span className={classnames(css.label, { [css.truncateLabel]: style === 'truncateLabel' })}>{label}</span>
-      <span className={css.content}>{children}</span>
+      <span className={css.content} data-testing={dataTesting}>{children}</span>
     </p>
   </div>
 )
@@ -29,10 +29,12 @@ ReceiptLine.propTypes = {
   children: PropTypes.node,
   style: PropTypes.oneOf(['small', 'normal', 'bold', 'primary', 'highlighted', 'truncateLabel']),
   showLineAbove: PropTypes.bool,
+  dataTesting: PropTypes.string,
 }
 
 ReceiptLine.defaultProps = {
   showLineAbove: false,
+  dataTesting: null
 }
 
 export default ReceiptLine

@@ -1,0 +1,498 @@
+{
+    "status": "ok",
+    "result": {
+        "data": {
+            "order": {
+                "period_id": 325,
+                "order_state_id": 1,
+                "delivery_day_id": 2067,
+                "delivery_slot_id": 12,
+                "should_cutoff_at": "2020-04-06 11:59:59",
+                "default": false,
+                "shipping_list_price": "0.00",
+                "day_slot_lead_time_id": null,
+                "updated_at": "2020-04-06 10:47:35",
+                "created_at": "2020-04-06 10:47:35",
+                "id": 15568016,
+                "box_id": "2",
+                "promo_code": null,
+                "delivery_date": {
+                    "date": "2020-04-09 00:00:00.000000",
+                    "timezone_type": 3,
+                    "timezone": "Europe\/London"
+                },
+                "when_cutoff": {
+                    "date": "2020-04-06 11:59:59.000000",
+                    "timezone_type": 3,
+                    "timezone": "Europe\/London"
+                },
+                "when_live": {
+                    "date": "2020-03-24 12:00:00.000000",
+                    "timezone_type": 3,
+                    "timezone": "Europe\/London"
+                },
+                "premium_delivery": "0",
+                "period": {
+                    "id": 325,
+                    "created_at": "2019-04-12 11:05:11",
+                    "updated_at": "2019-04-12 11:05:11",
+                    "when_start": "2020-03-31 12:00:00",
+                    "when_cutoff": "2020-04-07 11:59:59",
+                    "week": {
+                        "id": 325,
+                        "created_at": "2019-04-12 11:05:11",
+                        "updated_at": "2019-04-12 11:05:11",
+                        "period_id": "325",
+                        "when_start": "2020-04-04 00:00:00",
+                        "when_end": "2020-04-10 23:59:59",
+                        "number": "326"
+                    }
+                },
+                "delivery_day": {
+                    "id": 2067,
+                    "delivery_slot_id": "12",
+                    "delivery_week_id": "325",
+                    "date": "2020-04-09 00:00:00",
+                    "created_at": "2019-04-12 11:05:11",
+                    "updated_at": "2019-04-12 11:05:11",
+                    "when_cutoff": "2020-04-06 11:59:59",
+                    "week": {
+                        "id": 325,
+                        "created_at": "2019-04-12 11:05:11",
+                        "updated_at": "2019-04-12 11:05:11",
+                        "period_id": "325",
+                        "when_start": "2020-04-04 00:00:00",
+                        "when_end": "2020-04-10 23:59:59",
+                        "number": "326",
+                        "period": {
+                            "id": 325,
+                            "created_at": "2019-04-12 11:05:11",
+                            "updated_at": "2019-04-12 11:05:11",
+                            "when_start": "2020-03-31 12:00:00",
+                            "when_cutoff": "2020-04-07 11:59:59"
+                        }
+                    }
+                },
+                "delivery_slot": {
+                    "id": 12,
+                    "default_day": "4",
+                    "number": "5",
+                    "created_at": "2016-10-25 18:40:23",
+                    "updated_at": "2016-10-25 18:40:23",
+                    "deleted_at": null,
+                    "cutoff_day": "1",
+                    "cutoff_time": "11:59:59",
+                    "delivery_start": "08:00:00",
+                    "delivery_end": "18:59:59",
+                    "premium": "0",
+                    "default": "1",
+                    "deprecated": "0"
+                },
+                "box": {
+                    "id": 2,
+                    "created_at": "2014-08-13 12:21:11",
+                    "updated_at": "2014-08-13 12:21:11",
+                    "box_type_id": "2",
+                    "num_portions": "2",
+                    "num_recipes": "3",
+                    "erp_reference": "SKU-GMT-3-2",
+                    "name": "Gourmet couples' box",
+                    "description": "3 gourmet meals for 2 people",
+                    "price": "29.99",
+                    "tariffs": [
+                        {
+                            "id": 2,
+                            "created_at": "2015-09-28 09:28:30",
+                            "updated_at": "2015-09-28 09:32:06",
+                            "slug": "pre_20150928",
+                            "current": "0",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "2",
+                                "price": "34.99",
+                                "created_at": "2015-09-28 09:29:12",
+                                "updated_at": "2015-09-28 09:29:12"
+                            }
+                        },
+                        {
+                            "id": 3,
+                            "created_at": "2015-09-28 09:32:38",
+                            "updated_at": "2015-09-28 09:32:38",
+                            "slug": "20150928",
+                            "current": "0",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "3",
+                                "price": "34.99",
+                                "created_at": "2015-09-28 09:32:38",
+                                "updated_at": "2015-09-28 09:32:38"
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "created_at": "2016-02-02 14:11:26",
+                            "updated_at": "2016-02-02 14:11:26",
+                            "slug": "trial_20160202",
+                            "current": "0",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "4",
+                                "price": "29.99",
+                                "created_at": "2016-02-02 14:11:53",
+                                "updated_at": "2016-02-02 14:11:53"
+                            }
+                        },
+                        {
+                            "id": 5,
+                            "created_at": "2017-06-22 18:29:06",
+                            "updated_at": "2017-06-22 18:29:06",
+                            "slug": "20170622",
+                            "current": "0",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "5",
+                                "price": "34.99",
+                                "created_at": "2017-06-22 18:29:06",
+                                "updated_at": "2017-06-22 18:29:06"
+                            }
+                        },
+                        {
+                            "id": 6,
+                            "created_at": "2017-07-12 11:06:37",
+                            "updated_at": "2017-07-12 11:06:37",
+                            "slug": "20170712",
+                            "current": "1",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "6",
+                                "price": "29.99",
+                                "created_at": "2017-07-12 11:06:37",
+                                "updated_at": "2017-07-12 11:06:37"
+                            }
+                        },
+                        {
+                            "id": 7,
+                            "created_at": "2019-09-19 16:45:39",
+                            "updated_at": "2019-09-19 16:45:39",
+                            "slug": "20190915b",
+                            "current": "0",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "7",
+                                "price": "24.99",
+                                "created_at": "2019-09-19 16:45:39",
+                                "updated_at": "2019-09-19 16:45:39"
+                            }
+                        },
+                        {
+                            "id": 8,
+                            "created_at": "2019-09-19 16:45:39",
+                            "updated_at": "2019-09-19 16:45:39",
+                            "slug": "20190916c",
+                            "current": "0",
+                            "pivot": {
+                                "box_id": "2",
+                                "tariff_id": "8",
+                                "price": "26.99",
+                                "created_at": "2019-09-19 16:45:39",
+                                "updated_at": "2019-09-19 16:45:39"
+                            }
+                        }
+                    ]
+                },
+                "user": null,
+                "subscription": null,
+                "items": [
+                    {
+                        "id": "62661144",
+                        "created_at": "2020-04-06 10:47:35",
+                        "updated_at": "2020-04-06 10:47:35",
+                        "deleted_at": null,
+                        "quantity": "2",
+                        "order_id": "15568016",
+                        "list_price": "0.00",
+                        "is_vatable": "0",
+                        "serialised_item": null,
+                        "itemable_type": "Recipe",
+                        "itemable_id": "2630",
+                        "title": "Smoky 'N' Sweet BBQ Chicken Fajitas",
+                        "is_gift": "0",
+                        "recipe_id": "2630",
+                        "product_id": null
+                    },
+                    {
+                        "id": "62661145",
+                        "created_at": "2020-04-06 10:47:35",
+                        "updated_at": "2020-04-06 10:47:35",
+                        "deleted_at": null,
+                        "quantity": "2",
+                        "order_id": "15568016",
+                        "list_price": "0.00",
+                        "is_vatable": "0",
+                        "serialised_item": null,
+                        "itemable_type": "Recipe",
+                        "itemable_id": "2630",
+                        "title": "Smoky 'N' Sweet BBQ Chicken Fajitas",
+                        "is_gift": "0",
+                        "recipe_id": "2630",
+                        "product_id": null
+                    },
+                    {
+                        "id": "62661146",
+                        "created_at": "2020-04-06 10:47:35",
+                        "updated_at": "2020-04-06 10:47:35",
+                        "deleted_at": null,
+                        "quantity": "2",
+                        "order_id": "15568016",
+                        "list_price": "0.00",
+                        "is_vatable": "0",
+                        "serialised_item": null,
+                        "itemable_type": "Recipe",
+                        "itemable_id": "2630",
+                        "title": "Smoky 'N' Sweet BBQ Chicken Fajitas",
+                        "is_gift": "0",
+                        "recipe_id": "2630",
+                        "product_id": null
+                    }
+                ],
+                "prices": {
+                    "price_per_portion": "5.00",
+                    "price_per_portion_discounted": "5.00",
+                    "product_total": "0.00",
+                    "recipe_total": "29.99",
+                    "surcharge_total": "0.00",
+                    "recipe_total_discounted": "29.99",
+                    "recipe_discount": "0.00",
+                    "flat_discount_applied": true,
+                    "amount_off": "0.000",
+                    "percentage_off": null,
+                    "promo_code": false,
+                    "promo_code_valid": false,
+                    "delivery_total": "0.00",
+                    "gross_total": "29.99",
+                    "vat_charged": "0.00",
+                    "total": "29.99",
+                    "total_discount": "0.000"
+                },
+                "recipes": [
+                    {
+                        "id": "62661144",
+                        "created_at": "2020-04-06 10:47:35",
+                        "updated_at": "2020-04-06 10:47:35",
+                        "deleted_at": null,
+                        "quantity": "2",
+                        "order_id": "15568016",
+                        "list_price": "0.00",
+                        "is_vatable": "0",
+                        "serialised_item": null,
+                        "itemable_type": "Recipe",
+                        "itemable_id": "2630",
+                        "title": "Smoky 'N' Sweet BBQ Chicken Fajitas",
+                        "is_gift": "0",
+                        "recipe_id": "2630",
+                        "product_id": null
+                    },
+                    {
+                        "id": "62661145",
+                        "created_at": "2020-04-06 10:47:35",
+                        "updated_at": "2020-04-06 10:47:35",
+                        "deleted_at": null,
+                        "quantity": "2",
+                        "order_id": "15568016",
+                        "list_price": "0.00",
+                        "is_vatable": "0",
+                        "serialised_item": null,
+                        "itemable_type": "Recipe",
+                        "itemable_id": "2630",
+                        "title": "Smoky 'N' Sweet BBQ Chicken Fajitas",
+                        "is_gift": "0",
+                        "recipe_id": "2630",
+                        "product_id": null
+                    },
+                    {
+                        "id": "62661146",
+                        "created_at": "2020-04-06 10:47:35",
+                        "updated_at": "2020-04-06 10:47:35",
+                        "deleted_at": null,
+                        "quantity": "2",
+                        "order_id": "15568016",
+                        "list_price": "0.00",
+                        "is_vatable": "0",
+                        "serialised_item": null,
+                        "itemable_type": "Recipe",
+                        "itemable_id": "2630",
+                        "title": "Smoky 'N' Sweet BBQ Chicken Fajitas",
+                        "is_gift": "0",
+                        "recipe_id": "2630",
+                        "product_id": null
+                    }
+                ],
+                "products": [],
+                "state": {
+                    "created_at": "2014-08-13 12:21:06",
+                    "updated_at": "2014-08-13 12:21:06",
+                    "id": 1,
+                    "slug": "pending",
+                    "description": "Pending"
+                }
+            },
+            "prices": {
+                "price_per_portion": "5.00",
+                "price_per_portion_discounted": "5.00",
+                "product_total": "0.00",
+                "recipe_total": "29.99",
+                "surcharge_total": "0.00",
+                "recipe_total_discounted": "29.99",
+                "recipe_discount": "0.00",
+                "flat_discount_applied": true,
+                "amount_off": "0.000",
+                "percentage_off": null,
+                "promo_code": false,
+                "promo_code_valid": false,
+                "delivery_total": "0.00",
+                "gross_total": "29.99",
+                "vat_charged": "0.00",
+                "total": "29.99",
+                "total_discount": "0.000"
+            },
+            "box": {
+                "id": 2,
+                "created_at": "2014-08-13 12:21:11",
+                "updated_at": "2014-08-13 12:21:11",
+                "box_type_id": "2",
+                "num_portions": "2",
+                "num_recipes": "3",
+                "erp_reference": "SKU-GMT-3-2",
+                "name": "Gourmet couples' box",
+                "description": "3 gourmet meals for 2 people",
+                "price": "29.99",
+                "tariffs": [
+                    {
+                        "id": 2,
+                        "created_at": "2015-09-28 09:28:30",
+                        "updated_at": "2015-09-28 09:32:06",
+                        "slug": "pre_20150928",
+                        "current": "0",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "2",
+                            "price": "34.99",
+                            "created_at": "2015-09-28 09:29:12",
+                            "updated_at": "2015-09-28 09:29:12"
+                        }
+                    },
+                    {
+                        "id": 3,
+                        "created_at": "2015-09-28 09:32:38",
+                        "updated_at": "2015-09-28 09:32:38",
+                        "slug": "20150928",
+                        "current": "0",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "3",
+                            "price": "34.99",
+                            "created_at": "2015-09-28 09:32:38",
+                            "updated_at": "2015-09-28 09:32:38"
+                        }
+                    },
+                    {
+                        "id": 4,
+                        "created_at": "2016-02-02 14:11:26",
+                        "updated_at": "2016-02-02 14:11:26",
+                        "slug": "trial_20160202",
+                        "current": "0",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "4",
+                            "price": "29.99",
+                            "created_at": "2016-02-02 14:11:53",
+                            "updated_at": "2016-02-02 14:11:53"
+                        }
+                    },
+                    {
+                        "id": 5,
+                        "created_at": "2017-06-22 18:29:06",
+                        "updated_at": "2017-06-22 18:29:06",
+                        "slug": "20170622",
+                        "current": "0",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "5",
+                            "price": "34.99",
+                            "created_at": "2017-06-22 18:29:06",
+                            "updated_at": "2017-06-22 18:29:06"
+                        }
+                    },
+                    {
+                        "id": 6,
+                        "created_at": "2017-07-12 11:06:37",
+                        "updated_at": "2017-07-12 11:06:37",
+                        "slug": "20170712",
+                        "current": "1",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "6",
+                            "price": "29.99",
+                            "created_at": "2017-07-12 11:06:37",
+                            "updated_at": "2017-07-12 11:06:37"
+                        }
+                    },
+                    {
+                        "id": 7,
+                        "created_at": "2019-09-19 16:45:39",
+                        "updated_at": "2019-09-19 16:45:39",
+                        "slug": "20190915b",
+                        "current": "0",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "7",
+                            "price": "24.99",
+                            "created_at": "2019-09-19 16:45:39",
+                            "updated_at": "2019-09-19 16:45:39"
+                        }
+                    },
+                    {
+                        "id": 8,
+                        "created_at": "2019-09-19 16:45:39",
+                        "updated_at": "2019-09-19 16:45:39",
+                        "slug": "20190916c",
+                        "current": "0",
+                        "pivot": {
+                            "box_id": "2",
+                            "tariff_id": "8",
+                            "price": "26.99",
+                            "created_at": "2019-09-19 16:45:39",
+                            "updated_at": "2019-09-19 16:45:39"
+                        }
+                    }
+                ]
+            },
+            "error_code": null,
+            "delivery_day": {
+                "id": 2067,
+                "delivery_slot_id": "12",
+                "delivery_week_id": "325",
+                "date": "2020-04-09 00:00:00",
+                "created_at": "2019-04-12 11:05:11",
+                "updated_at": "2019-04-12 11:05:11",
+                "when_cutoff": "2020-04-06 11:59:59",
+                "week": {
+                    "id": 325,
+                    "created_at": "2019-04-12 11:05:11",
+                    "updated_at": "2019-04-12 11:05:11",
+                    "period_id": "325",
+                    "when_start": "2020-04-04 00:00:00",
+                    "when_end": "2020-04-10 23:59:59",
+                    "number": "326",
+                    "period": {
+                        "id": 325,
+                        "created_at": "2019-04-12 11:05:11",
+                        "updated_at": "2019-04-12 11:05:11",
+                        "when_start": "2020-03-31 12:00:00",
+                        "when_cutoff": "2020-04-07 11:59:59"
+                    }
+                }
+            }
+        }
+    }
+}

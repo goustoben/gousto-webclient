@@ -173,6 +173,7 @@ class PromoCode extends React.PureComponent {
             <input
               type="text"
               name="promoCode"
+              data-testing="promoCodeInput"
               placeholder="Enter promo code"
               value={this.props.promoCode}
               onInput={this.handleInput}
@@ -187,6 +188,7 @@ class PromoCode extends React.PureComponent {
                 [css.buttonRemove]: this.promoCodeAdded(),
               })}
               width="full"
+              data-testing="promoCodeSubmit"
             >
               <Segment
                 fill={!this.promoCodeAdded()}

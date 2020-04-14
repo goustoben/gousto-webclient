@@ -1,0 +1,66 @@
+{
+    "status": "ok",
+    "meta": {
+        "offset": 0,
+        "limit": 1,
+        "count": 1,
+        "total": 1
+    },
+    "data": {
+        "price_per_portion": "6.25",
+        "price_per_portion_discounted": "6.25",
+        "product_total": "0.00",
+        "recipe_total": "24.99",
+        "surcharge_total": "0.00",
+        "recipe_total_discounted": "24.99",
+        "recipe_discount": "0.00",
+        "flat_discount_applied": false,
+        "amount_off": null,
+        "percentage_off": "0.00",
+        "promo_code": false,
+        "promo_code_valid": false,
+        "delivery_total": "0.00",
+        "gross_total": "24.99",
+        "vat_charged": "0.00",
+        "total": "24.99",
+        "total_discount": "0.00",
+        "items": [
+            {
+                "id": "SKU-GMT-2-2",
+                "type": "RecipeBox",
+                "quantity": "1",
+                "list_price": "24.99",
+                "discount": "0.00",
+                "vat_rate": "0.000",
+                "vat_charged": "0.00"
+            },
+            {
+                "id": "db047c82-12d1-11e6-bc7b-06ddb628bdc5",
+                "type": "Delivery",
+                "quantity": "1",
+                "list_price": "0.00",
+                "discount": "0.00",
+                "vat_rate": "0.000",
+                "vat_charged": "0.00"
+            },
+            {
+                "id": "2630",
+                "type": "Recipe",
+                "quantity": "2",
+                "list_price": "0.00",
+                "discount": "0.00",
+                "vat_rate": "0.000",
+                "vat_charged": "0.00"
+            },
+            {
+                "id": "2630",
+                "type": "Recipe",
+                "quantity": "2",
+                "list_price": "0.00",
+                "discount": "0.00",
+                "vat_rate": "0.000",
+                "vat_charged": "0.00"
+            }
+        ]
+    }
+}
