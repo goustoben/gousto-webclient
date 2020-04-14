@@ -4,9 +4,9 @@ import actions from 'actions/cookbook'
 import * as cookbookUtils from 'utils/cookbook'
 import * as storeUtils from 'utils/store'
 import { addDataSets } from 'DataSetsComponent'
-import Hub, { fetchData, fetchSetData, limit } from './Hub'
+import { Hub, fetchData, fetchSetData, limit } from './Hub'
 
-function mapStateToProps({ collections, cookbook, pending, recipes }, { params }) {
+function mapStateToProps({ collections, cookbook, pending, recipes, routing }, { params }) {
   const startSet = cookbook.get('recipesStartSet')
   const endSet = cookbook.get('recipesEndSet')
   const loadedRecipesIds = cookbookUtils.getItemIds(cookbook.get('recipeSets'), { endSet, startSet })
@@ -23,6 +23,7 @@ function mapStateToProps({ collections, cookbook, pending, recipes }, { params }
     recipesCollection: cookbook.get('recipesCollectionId'),
     startSet: cookbook.get('recipesStartSet'),
     totalSets: cookbook.get('recipesTotalSets'),
+    location: routing.locationBeforeTransitions.pathname,
   }
 }
 
@@ -34,4 +35,4 @@ const HubContainer = connect(mapStateToProps, {
   resetSets: actions.cookbookResetCollectionRecipes,
 })(EnhancedHub)
 
-export default HubContainer
+export { HubContainer }
