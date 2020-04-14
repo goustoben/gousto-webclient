@@ -4,7 +4,8 @@
   "description": "Gousto regression",
   "main": "index.js",
   "scripts": {
-    "test:debug": "cypress open",
+    "test:debug:web": "cypress open --env platform=web",
+    "test:debug:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress open --env platform=mobile",
     "test:web": "cypress run --env platform=web",
     "test:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run --env platform=mobile",
     "test:staging:web": "cypress run --env platform=web",
