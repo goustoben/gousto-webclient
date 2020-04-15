@@ -23,7 +23,6 @@ import {
   getUserMenuVariant,
   isAccountTabNameTest,
   getHideMenuBanner,
-  getShowNewMenuLayout,
   getPromoOfferVariant,
   getIsSignupReductionEnabled,
   getIsSubscriberDisabledSlotsEnabled,
@@ -589,36 +588,6 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(getHideMenuBanner(state)).toBe(true)
-      })
-    })
-  })
-
-  describe('getShowNewMenuLayout', () => {
-    describe('when showNewMenuLayout is NOT set', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          showNewMenuLayout: {
-            value: false
-          }
-        })
-      })
-
-      test('should return false', () => {
-        expect(getShowNewMenuLayout(state)).toBe(false)
-      })
-    })
-
-    describe('when showNewMenuLayout is set', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          showNewMenuLayout: {
-            value: true
-          }
-        })
-      })
-
-      test('should return true', () => {
-        expect(getShowNewMenuLayout(state)).toBe(true)
       })
     })
   })

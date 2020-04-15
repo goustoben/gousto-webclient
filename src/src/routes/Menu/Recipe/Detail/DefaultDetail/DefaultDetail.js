@@ -23,7 +23,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showCookingInstruction, showRangeBadge }) => (
+  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showCookingInstruction }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -43,13 +43,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           <div className={css.imageContainer}>
             <Image media={media} title={title} view={view} stock={stock} inBasket={inBasket} />
             <div className={css.infoBox}>
-              {
-                showRangeBadge && (
-                <div className={css.rangeBadgeDetails}>
-                  <RangeBadge range={range} isFoodBrandClickable={isFoodBrandClickable} />
-                </div>
-                )
-              }
+              <div className={css.rangeBadgeDetails}>
+                <RangeBadge range={range} isFoodBrandClickable={isFoodBrandClickable} />
+              </div>
               <p className={css.infoBoxText}>{description}</p>
               <AttributeGrid
                 maxNoAttributes={20}
@@ -139,13 +135,11 @@ DefaultDetail.propTypes = {
   ...detailPropTypes,
   isFoodBrandClickable: PropTypes.bool,
   showCookingInstruction: PropTypes.bool.isRequired,
-  showRangeBadge: PropTypes.bool
 }
 
 DefaultDetail.defaultProps = {
   fiveADay: 0,
   isFoodBrandClickable: false,
-  showRangeBadge: true
 }
 
 export default DefaultDetail
