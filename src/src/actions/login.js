@@ -1,7 +1,7 @@
 import queryString from 'query-string'
 import Immutable from 'immutable'
 import Cookies from 'utils/GoustoCookies'
-import config from 'config/routes'
+import { client } from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
 import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from 'utils/auth'
 import { push } from 'react-router-redux'
@@ -48,7 +48,9 @@ const loginVisibilityChange = visibility => ({
 export const helpPreLoginVisibilityChange = visibility => (
   (dispatch) => {
     if (visibility === true) {
-      dispatch(push({ search: '?target=https://gousto.zendesk.com/hc/en-gb' }))
+      const { index, eligibilityCheck } = client.getHelp
+      const search = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`)}`
+      dispatch(push({ search }))
     }
     dispatch({
       type: actionTypes.HELP_PRELOGIN_VISIBILITY_CHANGE,
@@ -134,7 +136,7 @@ export const loginRedirect = (location, userIsAdmin, features, userId) => {
   const { pathname, search } = location
 
   if (userIsAdmin) {
-    destination = `${config.client.menu}`
+    destination = client.menu
   } else if (search) {
     const { target } = queryString.parse(search)
 
@@ -171,7 +173,7 @@ export const loginRedirect = (location, userIsAdmin, features, userId) => {
   if (!destination && !isOneOfPage(pathname, ['menu', 'check-out'])) {
     const afterLoginPage = features ? features.getIn(['afterLogin', 'value']) : undefined
 
-    destination = config.client[afterLoginPage] || config.client.myGousto
+    destination = client[afterLoginPage] || client.myGousto
   }
 
   if (search) {
@@ -191,7 +193,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     let destination = false
     if (!onCheckout) {
       destination = loginRedirect(location, userIsAdmin, features, userId)
-      if (destination && destination !== config.client.myDeliveries2) {
+      if (destination && destination !== client.myDeliveries2) {
         redirect(destination)
       }
       if (Cookies.get('from_join')) {
@@ -207,15 +209,15 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
-        dispatch(push(`${config.client.welcome}/${orderId}`))
+        dispatch(push(`${client.welcome}/${orderId}`))
       } else {
         dispatch(orderActions.orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
       }
     } else {
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))
-        if (destination === config.client.myDeliveries2) {
-          dispatch(push(config.client.myDeliveries2))
+        if (destination === client.myDeliveries2) {
+          dispatch(push(client.myDeliveries2))
         }
       }, 1000)
     }
