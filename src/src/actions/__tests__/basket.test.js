@@ -12,6 +12,7 @@ import { safeJestMock, returnArgumentsFromMock, multiReturnMock } from '_testing
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
+import * as trackingActions from '../tracking'
 import { basketReset } from '../basket'
 
 jest.mock('utils/basket')
@@ -40,6 +41,9 @@ returnArgumentsFromMock(menuLoadMenu, 'menuLoadMenu')
 
 const menuLoadStock = safeJestMock(menuActions, 'menuLoadStock')
 returnArgumentsFromMock(menuLoadStock, 'menuLoadStock')
+
+const trackingOrderCheckout = safeJestMock(trackingActions, 'trackingOrderCheckout')
+returnArgumentsFromMock(trackingOrderCheckout, 'trackingOrderCheckout')
 
 describe('basket actions', () => {
   let dispatch = jest.fn()
@@ -172,305 +176,19 @@ describe('basket actions', () => {
   })
 
   describe('basketCheckedOut', () => {
-    let getState = () => ({
-      auth: Immutable.Map({
-        isAuthenticated: true,
-      }),
-      basket: Immutable.fromJS({
-        orderId: '178',
-      }),
-      filters: Immutable.fromJS({
-      }),
-      user: Immutable.fromJS({
-        orders: {
-          178: {
-            recipeItems: [
-              '1234'
-            ]
-          },
-        },
-        subscription: {
-          state: 'active',
-        }
-      }),
-      pricing: Immutable.fromJS({
-        prices: {
-          total: '24.00',
-          grossTotal: '24.00',
-          promoCode: false,
-        }
-      }),
-      temp: Immutable.fromJS({
-        originalGrossTotal: '24.99',
-        originalNetTotal: '24.99'
-      })
-    })
-
-    test('should dispatch Order Edited tracking action for subscription box', async () => {
-      await basketCheckedOut(2, 'grid')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        trackingData: {
-          actionType: 'Order Edited',
-          order_id: '178',
-          order_total: '24.00',
-          promo_code: false,
-          signp: false,
-          subscription_active: true,
-        },
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_edited_gross',
-          tags: {
-            revenue: '-0.99'
-          }
-        }
-      })
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_edited_net',
-          tags: {
-            revenue: '-0.99'
-          }
-        }
-      })
-    })
-
-    test('should dispatch Order Edited tracking action for transactional box', async () => {
+    let getState
+    beforeEach(() => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
-        }),
-        basket: Immutable.fromJS({
-          orderId: '178',
-        }),
-        filters: Immutable.fromJS({
-        }),
-        user: Immutable.fromJS({
-          orders: {
-            178: {
-              recipeItems: [
-                '1234'
-              ]
-            },
-          },
-          subscription: {
-            state: 'inactive',
-          }
-        }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '24.00',
-            grossTotal: '24.00',
-            promoCode: false,
-          }
-        }),
-        temp: Immutable.fromJS({
-          originalGrossTotal: '24.99',
-          originalNetTotal: '24.99'
         })
-      })
-
-      await basketCheckedOut(2, 'grid')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        trackingData: {
-          actionType: 'Order Edited',
-          order_id: '178',
-          order_total: '24.00',
-          promo_code: false,
-          signp: false,
-          subscription_active: false,
-        },
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_edited_gross',
-          tags: {
-            revenue: '-0.99'
-          }
-        }
-      })
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_edited_net',
-          tags: {
-            revenue: '-0.99'
-          }
-        }
-      })
-    })
-
-    test('should dispatch Order Place tracking action for transactional box', async () => {
-      getState = () => ({
-        auth: Immutable.Map({
-          isAuthenticated: true,
-        }),
-        basket: Immutable.fromJS({
-          orderId: '',
-        }),
-        filters: Immutable.fromJS({
-        }),
-        user: Immutable.fromJS({
-          orders: {
-            178: {
-              recipeItems: [
-                '1234'
-              ]
-            },
-          },
-          subscription: {
-            state: 'active',
-          }
-        }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '24.00',
-            grossTotal: '24.00',
-            promoCode: false,
-          }
-        }),
-        temp: Immutable.fromJS({
-          originalGrossTotal: '24.99',
-          originalNetTotal: '24.99'
-        })
-      })
-      await basketCheckedOut(2, 'grid')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        trackingData: {
-          actionType: trackingKeys.placeOrder,
-          order_id: '',
-          order_total: '24.00',
-          promo_code: false,
-          signp: false,
-          subscription_active: true,
-        },
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_placed_gross',
-          tags: {
-            revenue: '24.00'
-          }
-        }
-      })
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_placed_net',
-          tags: {
-            revenue: '24.00'
-          }
-        }
-      })
-    })
-
-    test('should dispatch Order Place tracking action for subscription box', async () => {
-      getState = () => ({
-        auth: Immutable.Map({
-          isAuthenticated: true,
-        }),
-        basket: Immutable.fromJS({
-          orderId: '179',
-        }),
-        filters: Immutable.fromJS({
-        }),
-        user: Immutable.fromJS({
-          orders: {
-            179: {
-              recipeItems: []
-            },
-          },
-          subscription: {
-            state: 'active',
-          }
-        }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '22.00',
-            grossTotal: '22.00',
-            promoCode: false,
-          }
-        }),
-        temp: Immutable.fromJS({
-          originalGrossTotal: '24.99',
-          originalNetTotal: '24.99'
-        })
-      })
-      await basketCheckedOut(2, 'grid')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        trackingData: {
-          actionType: trackingKeys.placeOrder,
-          order_id: '179',
-          order_total: '22.00',
-          promo_code: false,
-          signp: false,
-          subscription_active: true,
-        },
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_placed_gross',
-          tags: {
-            revenue: '22.00'
-          }
-        }
-      })
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'TRACKING',
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_placed_net',
-          tags: {
-            revenue: '22.00'
-          }
-        }
       })
     })
 
     test('should dispatch  BASKET_CHECKOUT tracking', async () => {
-      getState = () => ({
-        auth: Immutable.Map({
-          isAuthenticated: true,
-        }),
-        basket: Immutable.fromJS({
-          orderId: '179',
-        }),
-        filters: Immutable.fromJS({
-        }),
-        user: Immutable.fromJS({
-          orders: {
-            179: {
-              recipeItems: []
-            },
-          },
-          subscription: {
-            state: 'active',
-          }
-        }),
-        pricing: Immutable.fromJS({
-          prices: {
-            total: '22.00',
-            grossTotal: '22.00',
-            promoCode: false,
-          }
-        }),
-        temp: Immutable.fromJS({
-          originalGrossTotal: '24.99',
-          originalNetTotal: '24.99'
-        })
-      })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
 
-      expect(dispatch.mock.calls[3][0]).toEqual({
+      expect(dispatch.mock.calls[2][0]).toEqual({
         type: 'BASKET_CHECKOUT',
         trackingData: {
           actionType: trackingKeys.checkOutBasketAttempt,
@@ -478,6 +196,12 @@ describe('basket actions', () => {
           view: 'grid',
         },
       })
+    })
+
+    test('should dispatch trackingOrderCheckout', async () => {
+      await basketCheckedOut(2, 'grid')(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout())
     })
   })
 
@@ -1468,6 +1192,48 @@ describe('basket actions', () => {
     })
   })
 
+  describe('basketRestorePreviousValues', () => {
+    let state
+    beforeEach(() => {
+      dispatch = jest.fn()
+      state = {
+        basket: Immutable.fromJS({
+          prevSlotId: '1ab-3esd',
+          slotId: '',
+          prevPostcode: 'W140EE',
+          postcode: '',
+          prevAddress: { id: '12345' },
+          address: null
+        })
+      }
+      getStateSpy = jest.fn().mockReturnValue(state)
+    })
+
+    test('should dispatch BASKET_SLOT_CHANGE', () => {
+      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: 'BASKET_SLOT_CHANGE',
+        slotId: '1ab-3esd',
+      })
+    })
+
+    test('should dispatch BASKET_POSTCODE_CHANGE', () => {
+      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: 'BASKET_POSTCODE_CHANGE',
+        postcode: 'W140EE',
+      })
+    })
+
+    test('should dispatch BASKET_ADDRESS_CHANGE', () => {
+      basket.basketRestorePreviousValues()(dispatch, getStateSpy)
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: 'BASKET_ADDRESS_CHANGE',
+        address: Immutable.Map({ id: '12345' }),
+      })
+    })
+  })
+
   describe('basketRestorePreviousDate', () => {
     beforeEach(() => {
       dispatch = jest.fn()
@@ -1476,15 +1242,36 @@ describe('basket actions', () => {
           prevSlotId: 'slot-124',
           numPortions: 2,
           prevDate: '2020-03-30'
-        })
+        }),
+        boxSummaryDeliveryDays: Immutable.Map({
+          '2020-02-13': Immutable.Map({
+            id: 123,
+            isDefault: true,
+            slots: [Immutable.Map({
+              isDefault: true,
+              id: 'slot-1-day-1',
+              whenCutoff: '2020-03-27T11:59:59+01:00'
+            })]
+
+          })
+        }),
+        menuService: {
+          data: [
+            { id: '123',
+              ends_at: '2020-04-03T11:59:59+01:00'
+            }
+          ]
+        }
       })
     })
 
     test('should dispatch BASKET_DATE_CHANGE', () => {
       basket.basketRestorePreviousDate()(dispatch, getStateSpy)
+      dispatch.mock.calls[0][0](dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_DATE_CHANGE,
         date: '2020-03-30',
+        menuId: '123'
       })
     })
 

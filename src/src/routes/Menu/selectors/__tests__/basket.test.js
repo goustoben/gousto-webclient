@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { okRecipes } from 'utils/basket'
-import { getOkRecipeIds, getUnavailableRecipeIds } from '../basket'
+import { getOkRecipeIds, getUnavailableRecipeIds, getFormatedRulesMessage } from '../basket'
 
 describe('the composed selectors', () => {
   describe('getOkRecipeIds', () => {
@@ -93,6 +93,58 @@ describe('the composed selectors', () => {
           expect(getUnavailableRecipeIds.resultFunc(basketRecipes, okRecipeIds)).toEqual(basketRecipes)
         })
       })
+    })
+  })
+
+  describe('getFormatedRulesMessage', () => {
+    let state
+    let rules
+    beforeEach(() => {
+      state = {
+        recipes: Immutable.fromJS({
+          123: {
+            id: 123,
+            title: 'Chicken',
+            media: {
+              images: [{
+                urls: [{
+                  src: 'url-for-image'
+                }]
+              }]
+            }
+          }
+        })
+      }
+      rules = [
+        {
+          items: ['123'],
+          message: 'Only 1 oven ready meal is available per order',
+          name: 'charlie-binghams-basket-limit'
+        },
+        {
+          items: ['123'],
+          message: 'Only 1 new-rule meal is available per order',
+          name: 'new-rule'
+        }
+      ]
+    })
+
+    test('should return formated data', () => {
+      const result = getFormatedRulesMessage(state, rules)
+      const expectedResult = [{
+        description: 'Only 1 oven ready meal is available per order',
+        recipes: [{
+          imageUrl: 'url-for-image',
+          title: 'Chicken'}]
+      },
+      {
+        description: 'Only 1 new-rule meal is available per order',
+        recipes: [{
+          imageUrl: 'url-for-image',
+          title: 'Chicken'
+        }]
+      }]
+      expect(result).toEqual(expectedResult)
     })
   })
 })

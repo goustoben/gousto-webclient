@@ -1,0 +1,82 @@
+@value headingFontStackBold, sizeLG, sizeMD from 'styles/typography.css';
+@value Bluecheese, White from 'styles/colors.css';
+@value ScreenXXSMax, ScreenXXSMin from 'styles/screenSizes.css';
+
+.basketErrorModal {
+  width: fit-content;
+  padding: 1rem;
+  border-radius: 0.5rem;
+
+  @media ScreenXXSMax {
+    margin-right: 2rem;
+  }
+}
+
+.basketErrorModalTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  position: relative;
+  padding: 0.25rem 0.5rem;
+}
+
+.basketErrorModalTitle {
+  font-family: headingFontStackBold;
+  font-size: sizeLG;
+}
+
+.basketErrorModalCloseX {
+  composes: closeIcon from 'styles/icons.css';
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.basketErrorContent {
+  text-align: left;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+.basketErrorContentTitle {
+  font-family: headingFontStackBold;
+  font-size: sizeMD;
+  margin-bottom: 0;
+  margin-top: 1.25rem;
+}
+
+.basketErrorList {
+  padding: 0;
+  margin: 0;
+}
+
+.ruleRecipeListRow {
+  display: flex;
+  padding-top: 1rem;
+}
+
+.recipeListItemImage {
+  border-radius: 100%;
+  min-width: 4rem;
+  min-height: 4rem;
+}
+
+.recipeListItemTitle {
+  padding-left: 1rem;
+  margin: 0;
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+}
+
+.basketErrorFooter {
+  margin: 0;
+  padding: 1rem 0 0.25rem;
+}
+
+.basketErrorModalCloseButton {
+  color: White;
+}

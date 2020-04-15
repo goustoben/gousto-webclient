@@ -4,12 +4,12 @@ import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuC
 import { safeJestMock } from '_testing/mocks'
 import * as landingCollectionImport from '../../routes/Menu/actions/menuSetLandingCollection'
 
-const mockActiveMenuForDateTransformer = jest.fn()
+const mockActiveMenuForDate = jest.fn()
 
 jest.mock('actions/menuCollections')
 
-jest.mock('apis/transformers/activeMenuForDate', () => ({
-  activeMenuForDateTransformer: () => mockActiveMenuForDateTransformer,
+jest.mock('routes/Menu/selectors/menu', () => ({
+  activeMenuForDate: () => mockActiveMenuForDate,
 }))
 
 jest.mock('apis/transformers/collections', () => ({

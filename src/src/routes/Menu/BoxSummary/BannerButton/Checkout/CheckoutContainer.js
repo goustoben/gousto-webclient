@@ -1,33 +1,15 @@
-import Immutable from 'immutable'
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { getAddOnsBeforeOrderConfirmation } from 'selectors/features'
-import { getSlot } from 'utils/deliveries'
 import { actionTypes } from 'actions/actionTypes'
-import { checkoutTransactionalOrder } from 'actions/checkout'
-import { boxSummaryVisibilityChange } from 'actions/boxSummary'
+import { checkoutBasket } from '../../../actions/menuCheckoutClick'
 import { Checkout } from './Checkout'
-
-function getCoreSlotId(deliveryDays, date, slotId) {
-  const slot = getSlot(deliveryDays, date, slotId)
-  let coreSlotId = ''
-  if (slot) {
-    coreSlotId = slot.get('coreSlotId', '')
-  }
-
-  return coreSlotId
-}
 
 const mapStateToProps = (state) => ({
   recipes: state.basket.get('recipes'),
   numPortions: state.basket.get('numPortions'),
   promoCode: state.basket.get('promoCode'),
   postcode: state.basket.get('postcode'),
-  orderId: state.basket.get('orderId'),
-  slotId: getCoreSlotId(state.boxSummaryDeliveryDays, state.basket.get('date'), state.basket.get('slotId')),
-  deliveryDayId: state.boxSummaryDeliveryDays.getIn([state.basket.get('date'), 'coreDayId']),
   addressId: state.basket.getIn(['address', 'id'], ''),
-  userOrders: state.user.get('orders', Immutable.List([])),
   isAuthenticated: state.auth.get('isAuthenticated'),
   checkoutPending: state.pending.get(actionTypes.BASKET_CHECKOUT),
   menuRecipes: state.menuRecipes,
@@ -40,12 +22,7 @@ const mapStateToProps = (state) => ({
 })
 
 const CheckoutContainer = connect(mapStateToProps, {
-  basketCheckedOut: actions.basketCheckedOut,
-  basketCheckoutClicked: actions.basketCheckoutClicked,
-  basketProceedToCheckout: actions.basketProceedToCheckout,
-  orderUpdate: actions.orderUpdate,
-  boxSummaryVisibilityChange,
-  checkoutTransactionalOrder,
+  checkoutBasket
 })(Checkout)
 
 export { CheckoutContainer }

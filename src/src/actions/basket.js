@@ -1,13 +1,14 @@
 import { push } from 'react-router-redux'
 import Immutable from 'immutable'
 
+import config from 'config'
 import basketActions from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import * as trackingKeys from 'actions/trackingKeys'
 import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
+import { getCutoffForDateAndSlot } from 'utils/deliveries'
 import { getUserOrderById } from 'utils/user'
-import config from 'config'
 import logger from 'utils/logger'
 import { updateOrderItems } from 'apis/orders'
 import { isChoosePlanEnabled } from 'selectors/features'
@@ -20,6 +21,8 @@ import { actionTypes } from './actionTypes'
 import tempActions from './temp'
 import { getUTMAndPromoCode } from '../selectors/tracking'
 import { getCurrentCollectionId } from '../routes/Menu/selectors/collections'
+import { activeMenuForDate } from '../routes/Menu/selectors/menu'
+import { trackingOrderCheckout } from './tracking'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
@@ -38,10 +41,18 @@ export const basketOrderLoaded = (orderId) => (
   }
 )
 
-export const basketDateChange = date => ({
-  type: actionTypes.BASKET_DATE_CHANGE,
-  date,
-})
+export const basketDateChange = date => (dispatch, getState) => {
+  const { menuService, boxSummaryDeliveryDays } = getState()
+  const cutoffTimeAndDate = getCutoffForDateAndSlot(date, '', boxSummaryDeliveryDays)
+  const currentMenu = activeMenuForDate(menuService, cutoffTimeAndDate)
+  const { id } = currentMenu
+
+  dispatch({
+    type: actionTypes.BASKET_DATE_CHANGE,
+    date,
+    menuId: id
+  })
+}
 
 export const basketGiftAdd = (giftId, type = '') => (
   (dispatch, getState) => {
@@ -579,10 +590,7 @@ export const basketRestorePreviousDate = () => (
   (dispatch, getState) => {
     const { basket } = getState()
     const slotId = basket.get('prevSlotId')
-    dispatch({
-      type: actionTypes.BASKET_DATE_CHANGE,
-      date: basket.get('prevDate'),
-    })
+    dispatch(basketDateChange(basket.get('prevDate')))
     dispatch({
       type: actionTypes.BASKET_SLOT_CHANGE,
       slotId,
@@ -618,146 +626,14 @@ export const basketCheckoutClicked = section => (
 
 export const basketCheckedOut = (numRecipes, view) => (
   (dispatch, getState) => {
-    const { auth, basket, user, pricing, temp } = getState()
+    const { auth } = getState()
     const isAuthenticated = auth.get('isAuthenticated')
-    const basketOrderId = basket.get('orderId')
-    const editingBox = basket.get('editBox')
-    const orders = user.get('orders')
-    const subscription = user.get('subscription')
-    const isActiveSubsc = subscription && (subscription.get('state') === 'active')
-    const prices = pricing.get('prices')
-    const originalGrossTotal = temp.get('originalGrossTotal')
-    const originalNetTotal = temp.get('originalNetTotal')
-    const orderTotal = prices && prices.get('total')
-    const grossTotal = prices && prices.get('grossTotal')
-    const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
-    const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
-    const promoCode = prices && prices.get('promoCode')
 
     try {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
 
       if (isAuthenticated) {
-        if (orders.get(basketOrderId)) {
-          const orderItems = orders.get(basketOrderId).get('recipeItems')
-          if (orderItems.size) {
-            dispatch({
-              type: actionTypes.TRACKING,
-              trackingData: {
-                actionType: 'Order Edited',
-                order_id: basketOrderId,
-                order_total: orderTotal,
-                promo_code: promoCode,
-                signp: false,
-                subscription_active: isActiveSubsc,
-              },
-              optimizelyData: {
-                type: 'event',
-                eventName: 'order_edited_gross',
-                tags: {
-                  revenue: editedGrossTotal
-                }
-              }
-            })
-            dispatch({
-              type: actionTypes.TRACKING,
-              optimizelyData: {
-                type: 'event',
-                eventName: 'order_edited_net',
-                tags: {
-                  revenue: editedNetTotal
-                }
-              }
-            })
-          } else {
-            dispatch({
-              type: actionTypes.TRACKING,
-              trackingData: {
-                actionType: trackingKeys.placeOrder,
-                order_id: basketOrderId,
-                order_total: orderTotal,
-                promo_code: promoCode,
-                signp: false,
-                subscription_active: isActiveSubsc,
-              },
-              optimizelyData: {
-                type: 'event',
-                eventName: 'order_placed_gross',
-                tags: {
-                  revenue: grossTotal
-                }
-              }
-            })
-            dispatch({
-              type: actionTypes.TRACKING,
-              optimizelyData: {
-                type: 'event',
-                eventName: 'order_placed_net',
-                tags: {
-                  revenue: orderTotal
-                }
-              }
-            })
-          }
-        } else if (editingBox) {
-          dispatch({
-            type: actionTypes.TRACKING,
-            trackingData: {
-              actionType: 'Order Edited',
-              order_id: basketOrderId,
-              order_total: orderTotal,
-              promo_code: promoCode,
-              signp: false,
-              subscription_active: isActiveSubsc,
-            },
-            optimizelyData: {
-              type: 'event',
-              eventName: 'order_edited_gross',
-              tags: {
-                revenue: editedGrossTotal
-              }
-            }
-          })
-          dispatch({
-            type: actionTypes.TRACKING,
-            optimizelyData: {
-              type: 'event',
-              eventName: 'order_edited_net',
-              tags: {
-                revenue: editedNetTotal
-              }
-            }
-          })
-        } else {
-          dispatch({
-            type: actionTypes.TRACKING,
-            trackingData: {
-              actionType: trackingKeys.placeOrder,
-              order_id: basketOrderId,
-              order_total: orderTotal,
-              promo_code: promoCode,
-              signp: false,
-              subscription_active: isActiveSubsc,
-            },
-            optimizelyData: {
-              type: 'event',
-              eventName: 'order_placed_gross',
-              tags: {
-                revenue: grossTotal
-              }
-            }
-          })
-          dispatch({
-            type: actionTypes.TRACKING,
-            optimizelyData: {
-              type: 'event',
-              eventName: 'order_placed_net',
-              tags: {
-                revenue: orderTotal
-              }
-            }
-          })
-        }
+        dispatch(trackingOrderCheckout())
       }
 
       dispatch({
