@@ -16,6 +16,7 @@ export const getBasketDate = ({ basket }) => basket.get('date')
 export const getBasketLimitReached = ({ basket }) => basket.get('limitReached', false)
 export const getBasketSlotId = ({ basket }) => basket.get('slotId')
 export const getBasketPostcode = ({ basket }) => basket.get('postcode')
+export const getBasketMenuId = ({ basket }) => basket.get('currentMenuId')
 
 export const getBasketProducts = ({ basket }) => basket.get('products')
 export const getBasketProductsCost = createSelector(

@@ -11,14 +11,12 @@ describe('CheckoutButton', () => {
 
   beforeEach(() => {
     propsToPass = {
-      boxSummaryVisibilityChange: jest.fn(),
-      basketCheckedOut: jest.fn(),
-      basketCheckoutClicked: jest.fn(),
-      basketProceedToCheckout: jest.fn(),
+      view: '',
+      section: 'menu',
+      checkoutBasket: jest.fn(),
       isAuthenticated: false,
       menuRecipes: Immutable.List(),
-      numPortions: 0,
-      slotId: '',
+      numPortions: 2,
       stock: Immutable.Map({}),
     }
   })
@@ -72,43 +70,15 @@ describe('CheckoutButton', () => {
 
       child.prop('onClick')()
     }
+    test('should trigger an checkoutTransactionalOrder', () => {
+      const checkoutBasket = jest.fn()
 
-    describe('when orderId is set', () => {
-      test('should trigger an orderUpdate', () => {
-        const orderUpdate = jest.fn()
-
-        wrapAndClick({
-          orderId: 'test',
-          orderUpdate,
-        })
-
-        expect(orderUpdate).toHaveBeenCalled()
+      wrapAndClick({
+        isAuthenticated: true,
+        checkoutBasket,
       })
-    })
 
-    describe('when orderId is not set and user is not authenticated', () => {
-      test('should trigger a basketProceedToCheckout', () => {
-        const basketProceedToCheckout = jest.fn()
-
-        wrapAndClick({
-          basketProceedToCheckout,
-        })
-
-        expect(basketProceedToCheckout).toHaveBeenCalled()
-      })
-    })
-
-    describe('when orderId is not set and user is authenticated', () => {
-      test('should trigger an checkoutTransactionalOrder', () => {
-        const checkoutTransactionalOrder = jest.fn()
-
-        wrapAndClick({
-          isAuthenticated: true,
-          checkoutTransactionalOrder,
-        })
-
-        expect(checkoutTransactionalOrder).toHaveBeenCalled()
-      })
+      expect(checkoutBasket).toHaveBeenCalled()
     })
   })
 })

@@ -35,3 +35,5 @@ export const getRecipeIdFromUrl = ({ routing }) => {
 
   return menuRecipeDetailShow
 }
+
+export const getRecipeById = ({ recipes }, recipeId) => recipes.get(recipeId, null)

@@ -1,5 +1,9 @@
 import Immutable from 'immutable'
-import { getRecipeTitle, getRecipeURL, getRecipeImages, getDisclaimerForRecipeID, getMicronutrientsForRecipeID, getRecipeIdFromUrl } from '../recipe'
+import {
+  getRecipeTitle, getRecipeURL, getRecipeImages,
+  getDisclaimerForRecipeID, getMicronutrientsForRecipeID,
+  getRecipeIdFromUrl, getRecipeById
+} from '../recipe'
 
 describe('the recipe selectors', () => {
   let recipe
@@ -127,5 +131,36 @@ describe('health kitchen recipe selectors', () => {
     test('should not return the recipe micronutrients', () => {
       expect(getDisclaimerForRecipeID(state, '2')).toEqual(null)
     })
+  })
+})
+
+describe('getRecipeById', () => {
+  let state = {}
+  test('should return recipe with passed id', () => {
+    state = {
+      recipes: Immutable.fromJS({
+        123: {
+          id: '123'
+        }
+      })
+    }
+    const recipeId = '123'
+    const result = getRecipeById(state, recipeId)
+    expect(result).toEqual(Immutable.fromJS({
+      id: '123'
+    }))
+  })
+
+  test('should return null', () => {
+    state = {
+      recipes: Immutable.fromJS({
+        123: {
+          id: '123'
+        }
+      })
+    }
+    const recipeId = '234'
+    const result = getRecipeById(state, recipeId)
+    expect(result).toEqual(null)
   })
 })

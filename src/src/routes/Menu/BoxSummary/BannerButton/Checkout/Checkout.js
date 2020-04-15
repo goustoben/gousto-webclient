@@ -6,24 +6,6 @@ import config from 'config/basket'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
 
-const formatRecipes = (recipes) => (
-  recipes.reduce((recipesArray, qty, recipeId) => {
-    for (let i = 1; i <= qty; i++) {
-      recipesArray.push(recipeId)
-    }
-
-    return recipesArray
-  }, [])
-)
-
-const getOrderAction = (userOrders, orderId) => {
-  const userOrder = userOrders.find(order => order.get('id') === orderId)
-  const recipeAction = (userOrder && userOrder.get('recipeItems').size > 0) ? 'update' : 'choice'
-  const orderAction = orderId ? `recipe-${recipeAction}` : 'create'
-
-  return orderAction
-}
-
 const Checkout = (props) => {
   const {
     basketPreviewOrderChangePending,
@@ -38,27 +20,8 @@ const Checkout = (props) => {
     stock,
     view,
     section,
+    checkoutBasket
   } = props
-
-  const onClick = () => {
-    const {
-      basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout, boxSummaryVisibilityChange, deliveryDayId,
-      orderUpdate, orderId, slotId,
-      checkoutTransactionalOrder, userOrders
-    } = props
-
-    boxSummaryVisibilityChange(false)
-    basketCheckedOut(recipes.size, view)
-    basketCheckoutClicked(section)
-
-    if (orderId) {
-      orderUpdate(orderId, formatRecipes(recipes), deliveryDayId, slotId, numPortions, getOrderAction(userOrders, orderId))
-    } else if (!props.isAuthenticated) {
-      basketProceedToCheckout()
-    } else {
-      checkoutTransactionalOrder('create')
-    }
-  }
 
   return (
     <BaseBannerButton
@@ -68,7 +31,7 @@ const Checkout = (props) => {
       pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
       spinnerClassName={css.coSpinner}
       spinnerContainerClassName={css.coSpinnerContainer}
-      onClick={onClick}
+      onClick={() => checkoutBasket(section, view)}
     >
       {isAddOnsFeatureFlagOn && isAuthenticated ? 'Confirm' : 'Checkout'}
     </BaseBannerButton>
@@ -81,22 +44,13 @@ Checkout.propTypes = {
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
   view: PropTypes.string.isRequired,
   section: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  checkoutBasket: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
-  deliveryDayId: PropTypes.string.isRequired,
-  slotId: PropTypes.string.isRequired,
-  basketCheckedOut: PropTypes.func.isRequired,
-  basketCheckoutClicked: PropTypes.func.isRequired,
-  basketProceedToCheckout: PropTypes.func.isRequired,
-  orderUpdate: PropTypes.func,
-  isAuthenticated: PropTypes.bool.isRequired,
-  boxSummaryVisibilityChange: PropTypes.func.isRequired,
-  checkoutTransactionalOrder: PropTypes.func,
-  orderId: PropTypes.string.isRequired,
-  userOrders: PropTypes.instanceOf(Immutable.Map),
   isAddOnsFeatureFlagOn: PropTypes.bool,
 }
 
@@ -107,9 +61,6 @@ Checkout.defaultProps = {
   recipes: Immutable.Map({}),
   basketPreviewOrderChangePending: false,
   isAddOnsFeatureFlagOn: false,
-  checkoutTransactionalOrder: () => {},
-  orderUpdate: () => {},
-  userOrders: Immutable.Map({}),
 }
 
 export { Checkout }

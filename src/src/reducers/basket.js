@@ -28,6 +28,7 @@ const initialState = () => Immutable.fromJS({
   addressTypeEdited: false,
   collection: '',
   chosenAddress: null,
+  currentMenuId: '',
   date: '',
   gifts: {},
   limitReached: false,
@@ -80,7 +81,9 @@ const basket = {
       if (state.get('date')) {
         newState = newState.set('prevDate', state.get('date'))
       }
-      newState = newState.set('date', date.format('YYYY-MM-DD'))
+      newState = newState
+        .set('date', date.format('YYYY-MM-DD'))
+        .set('currentMenuId', action.menuId)
 
       return newState
     }

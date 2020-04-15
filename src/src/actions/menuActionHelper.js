@@ -1,4 +1,4 @@
-import { activeMenuForDateTransformer } from 'apis/transformers/activeMenuForDate'
+import { activeMenuForDate } from 'routes/Menu/selectors/menu'
 import { collectionsTransformer } from 'apis/transformers/collections'
 import { recipesTransformer } from 'apis/transformers/recipes'
 import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
@@ -35,7 +35,7 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date, back
   }
 
   const brandData = state.brand
-  const activeMenu = activeMenuForDateTransformer(menuServiceData, date)
+  const activeMenu = activeMenuForDate(menuServiceData, date)
   const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
   const transformedRecipes = recipesTransformer(activeMenu, menuServiceData, brandData)
   const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)

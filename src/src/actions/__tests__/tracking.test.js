@@ -10,11 +10,12 @@ import {
   setUTMSource,
   trackUTMAndPromoCode,
   trackNewUser,
-  trackNewOrder
+  trackNewOrder,
+  trackingOrderCheckout
 } from 'actions/tracking'
 import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
-import { clickGetStarted, createOrder, createUser } from 'actions/trackingKeys'
+import { clickGetStarted, createOrder, createUser, placeOrder } from 'actions/trackingKeys'
 import { warning } from 'utils/logger'
 import moment from 'moment'
 
@@ -660,6 +661,224 @@ describe('tracking actions', () => {
             expect(dispatch).toHaveBeenCalledWith(expected)
           })
         })
+      })
+    })
+  })
+
+  describe('trackingOrderCheckout', () => {
+    const state = {
+      basket: Immutable.fromJS({
+        orderId: '178',
+      }),
+      user: Immutable.fromJS({
+        orders: {
+          178: {
+            recipeItems: [
+              '1234'
+            ]
+          },
+        },
+        subscription: {
+          state: 'active',
+        }
+      }),
+      pricing: Immutable.fromJS({
+        prices: {
+          total: '24.00',
+          grossTotal: '24.00',
+          promoCode: false,
+        }
+      }),
+      temp: Immutable.fromJS({
+        originalGrossTotal: '24.99',
+        originalNetTotal: '24.99'
+      })
+    }
+    beforeEach(() => {
+      getState = () => (state)
+    })
+    test('should dispatch Order Edited tracking action for subscription box', async () => {
+      await trackingOrderCheckout()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: 'Order Edited',
+          order_id: '178',
+          order_total: '24.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_edited_gross',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_edited_net',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+    })
+
+    test('should dispatch Order Edited tracking action for transactional box', async () => {
+      getState = () => ({
+        ...state,
+        basket: Immutable.fromJS({
+          orderId: '179',
+          editBox: true,
+        }),
+      })
+
+      await trackingOrderCheckout()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: 'Order Edited',
+          order_id: '179',
+          order_total: '24.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_edited_gross',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_edited_net',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+    })
+
+    test('should dispatch Order Place tracking action for transactional box', async () => {
+      getState = () => ({
+        ...state,
+        basket: Immutable.fromJS({
+          orderId: '',
+        }),
+        user: Immutable.fromJS({
+          orders: {
+            178: {
+              recipeItems: [
+                '1234'
+              ]
+            },
+          },
+          subscription: {
+            state: 'active',
+          }
+        }),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '24.00',
+            grossTotal: '24.00',
+            promoCode: false,
+          }
+        }),
+      })
+      await trackingOrderCheckout()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: placeOrder,
+          order_id: '',
+          order_total: '24.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_placed_gross',
+          tags: {
+            revenue: '24.00'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_placed_net',
+          tags: {
+            revenue: '24.00'
+          }
+        }
+      })
+    })
+
+    test('should dispatch Order Place tracking action for subscription box', async () => {
+      getState = () => ({
+        ...state,
+        user: Immutable.fromJS({
+          orders: {
+            178: {
+              recipeItems: []
+            },
+          },
+          subscription: {
+            state: 'active',
+          }
+        }),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '22.00',
+            grossTotal: '22.00',
+            promoCode: false,
+          }
+        }),
+      })
+      await trackingOrderCheckout()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        trackingData: {
+          actionType: placeOrder,
+          order_id: '178',
+          order_total: '22.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_placed_gross',
+          tags: {
+            revenue: '22.00'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING',
+        optimizelyData: {
+          type: 'event',
+          eventName: 'order_placed_net',
+          tags: {
+            revenue: '22.00'
+          }
+        }
       })
     })
   })

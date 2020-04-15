@@ -6,11 +6,11 @@ import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { CollectionsNavContainer } from '../../CollectionsNav'
 import { MenuBannerContainer } from '../MenuBanner'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
-
 jest.mock('routes/Menu/SubHeader')
 
 jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
 jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
+jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer'}))
 
 describe('initial render', () => {
   let wrapper
@@ -50,6 +50,10 @@ describe('initial render', () => {
 
   test('should render JFY tutorial', () => {
     expect(wrapper.find('JustForYouTutorial').length).toBe(1)
+  })
+
+  test('should render BasketValidationErrorModalContainer', () => {
+    expect(wrapper.find('BasketValidationErrorModalContainer')).toHaveLength(1)
   })
 
   describe('when showCommunicationPanel true', () => {

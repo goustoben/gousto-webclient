@@ -11,6 +11,7 @@ import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
 import { MenuBannerContainer } from './MenuBanner'
+import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 
 import css from './MenuRecipesPage.css'
 
@@ -168,6 +169,7 @@ export class MenuRecipesPage extends PureComponent {
         <Loading loading={showLoading} />
         {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid isFoodBrandClickable />}
+        <BasketValidationErrorModalContainer />
       </div>
     )
   }

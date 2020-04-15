@@ -1,0 +1,60 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
+import { Button } from 'goustouicomponents'
+import css from './BasketValidationErrorModal.css'
+
+export const BasketValidationErrorModal = ({ title, shouldShow, closeModal, brokenRulesToDisplay }) => (
+  <ModalComponent visible={shouldShow} styleName={css.basketErrorModal}>
+    <ModalTitle className={css.basketErrorModalTitleWrapper}>
+      <h1 className={css.basketErrorModalTitle}>
+        {title}
+      </h1>
+      <button type="button" className={css.basketErrorModalCloseX} onClick={closeModal} />
+    </ModalTitle>
+    <ModalContent className={css.basketErrorContent}>
+      {
+        brokenRulesToDisplay.map(({description, recipes}, idx) => (
+          <div key={`${idx + 1}`} className={css.basketErrorRuleRow}>
+            <p>{description}</p>
+            <h2 className={css.basketErrorContentTitle}>Currentely in your basket:</h2>
+            {recipes
+                  && (
+                  <ul className={css.basketErrorList}>
+                    {
+                      recipes.map((recipe, index) => (
+                        <li key={`${index + 1}`} className={css.ruleRecipeListRow}>
+                          <img src={recipe.imageUrl} alt={`imageFor-${recipe.title}`} className={css.recipeListItemImage} />
+                          <h4 className={css.recipeListItemTitle}>{recipe.title}</h4>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                  )}
+          </div>
+        ))
+      }
+    </ModalContent>
+    <ModalFooter className={css.basketErrorFooter}>
+      <Button className={css.basketErrorModalCloseButton} width="full" color="primary" onClick={closeModal}>Close</Button>
+    </ModalFooter>
+
+  </ModalComponent>
+)
+
+BasketValidationErrorModal.propTypes = {
+  title: PropTypes.string.isRequired,
+  shouldShow: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  brokenRulesToDisplay: PropTypes.arrayOf(PropTypes.shape({
+    description: PropTypes.string,
+    recipes: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string,
+      imageUrl: PropTypes.string
+    }))
+  }))
+}
+
+BasketValidationErrorModal.defaultProps = {
+  brokenRulesToDisplay: []
+}

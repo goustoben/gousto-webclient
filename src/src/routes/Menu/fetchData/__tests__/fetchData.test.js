@@ -49,7 +49,13 @@ describe('menu fetchData', () => {
     menuCollectionRecipes: Immutable.Map({}),
     user: defaultUserState,
     pending: Immutable.Map({}),
-    menu: menuInitialState
+    menu: menuInitialState,
+    menuService: {
+      data: [{
+        id: '123',
+        ends_at: '2019-01-03T11:59:59+01:00'
+      }]
+    }
   }
 
   const originalState = { ...state }
@@ -417,11 +423,12 @@ describe('menu fetchData', () => {
               getLandingDay.mockReturnValue({ date })
 
               await fetchData({ store, query, params }, false, false)
-
-              expect(store.dispatch.mock.calls[5]).toEqual([{
+              store.dispatch.mock.calls[5][0](store.dispatch, store.getState)
+              expect(store.dispatch).toHaveBeenCalledWith({
                 type: actionTypes.BASKET_DATE_CHANGE,
-                date
-              }])
+                date,
+                menuId: '123'
+              })
             })
           })
         })

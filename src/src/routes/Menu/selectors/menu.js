@@ -1,0 +1,75 @@
+import { createSelector } from 'reselect'
+import { getNumPortions, getBasketMenuId } from 'selectors/basket'
+import { getMenuLimits } from 'selectors/menu'
+
+export const activeMenuForDate = (menuServiceData, date) => {
+  const isPreviewMenu = menuServiceData.meta && menuServiceData.meta.isPreviewMenu
+  if (!menuServiceData.data) {
+    return {}
+  }
+
+  if (isPreviewMenu || !date) {
+    const defaultFallbackMenu = menuServiceData.data[0]
+
+    return defaultFallbackMenu
+  }
+
+  return menuServiceData.data.find((menu) =>
+    date <= menu.attributes.ends_at // ends_at is the last cutoff date for the menu
+  )
+}
+
+export const getMenuLimitsForBasket = createSelector(
+  [
+    getMenuLimits,
+    getNumPortions,
+    getBasketMenuId
+  ],
+  (menuLimits, numPortions, basketMenuId) => {
+    const currentMenuLimits = menuLimits[basketMenuId]
+    if (currentMenuLimits && currentMenuLimits.limits.length) {
+      return currentMenuLimits.limits.map(limit => ({
+        name: limit.name,
+        limitProps: numPortions === 2 ? limit.rules.per2 : limit.rules.per4,
+        items: limit.items
+      }))
+    }
+
+    return []
+  }
+)
+
+export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketRecipes) => {
+  const limitsReached = menuLimitsForBasket.map(limit => {
+    const { name, limitProps, items } = limit
+    const itemFound = items.some(item => item.core_recipe_id === recipeId)
+
+    if (!itemFound) {
+      return null
+    }
+
+    const recipesInBasketIds = basketRecipes.keySeq().toArray()
+    const recipesFromLimitInBasket = recipesInBasketIds && recipesInBasketIds.filter(recipe => items.some(item => item.core_recipe_id === recipe))
+    let count = 0
+
+    if (recipesFromLimitInBasket) {
+      recipesFromLimitInBasket.forEach(recipe => {
+        if (basketRecipes.get(recipe)) {
+          count += basketRecipes.get(recipe)
+        }
+      })
+    }
+
+    if (count + 1 > limitProps.value) {
+      return {
+        name,
+        message: limitProps.description,
+        items: recipesFromLimitInBasket
+      }
+    }
+
+    return null
+  })
+
+  return limitsReached.filter(item => item !== null)
+}

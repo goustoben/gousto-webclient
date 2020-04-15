@@ -66,17 +66,22 @@ export function getCutoffs(basket, boxSummaryDeliveryDays) {
   return slots
 }
 
-export function getCutoffDateTime(state) {
-  const basketDate = state.basket.get('date')
-  const basketSlotId = state.basket.get('slotId')
+export function getCutoffForDateAndSlot(date, slotId, boxSummaryDeliveryDays) {
+  const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
 
-  const slot = getSlot(state.boxSummaryDeliveryDays, basketDate, basketSlotId)
-
-  if (basketDate && slot) {
+  if (date && slot) {
     return slot.get('whenCutoff')
   }
 
   return ''
+}
+
+export function getCutoffDateTime(state) {
+  const { boxSummaryDeliveryDays, basket } = state
+  const basketDate = basket.get('date')
+  const basketSlotId = basket.get('slotId')
+
+  return getCutoffForDateAndSlot(basketDate, basketSlotId, boxSummaryDeliveryDays)
 }
 
 function getLandingOrder(userOrders, deliveryDays) {
@@ -421,7 +426,7 @@ export function cutoffDateTimeNow() {
 }
 
 export function isSlotActive(slot) {
-  return "daySlotLeadTimeActive" in slot ? slot.daySlotLeadTimeActive : true
+  return 'daySlotLeadTimeActive' in slot ? slot.daySlotLeadTimeActive : true
 }
 
 export function userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot) {
@@ -438,9 +443,9 @@ export function isDeliverySlotAvailable(
   usersOrderDaySlotLeadTimeIds
 ) {
   return (
-    (isSlotActive(slot) ||
-      userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)) &&
-    isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
+    (isSlotActive(slot)
+      || userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot))
+    && isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
   )
 }
 
