@@ -64,7 +64,7 @@ describe("My Deliveries", () => {
 
         cy.login()
         cy.visit('/mydeliveries')
-        cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
+        cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
       })
 
       it("should show the modal to prompt a user to pause", () => {

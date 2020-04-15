@@ -86,8 +86,7 @@ describe("Promo Code", () => {
         cy.get('[data-testing="discountAmount"]').should('not.exist')
         cy.get('[data-testing="totalPrice"]').contains('24.99')
 
-        cy.get('[data-testing="promoCodeInput"]').click().type('DTI-SB-5030')
-        cy.get('[data-testing="promoCodeSubmit"]').click()
+        cy.get('[data-testing="promoCodeInput"]').click().type('DTI-SB-5030', { delay:80 }).should("have.value", 'DTI-SB-5030')
         cy.wait('@pricesDiscount')
 
         cy.get('[data-testing="grossPrice"]').contains('24.99')
