@@ -1,8 +1,0 @@
-@value headingFontStackBold, sizeXL from 'styles/typography.css';
-
-.titleHeader {
-    font-family: headingFontStackBold;
-    font-size: sizeXL;
-    margin-bottom: 1rem;
-    font-weight: 600;
-}

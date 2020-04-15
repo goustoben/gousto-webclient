@@ -1,1 +1,0 @@
-export { VerticalCollectionsNavContainer } from './VerticalCollectionsNavContainer'

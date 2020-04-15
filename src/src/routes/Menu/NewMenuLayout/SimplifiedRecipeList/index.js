@@ -1,1 +1,0 @@
-export { SimplifiedRecipeListContainer } from './SimplifiedRecipeListContainer'

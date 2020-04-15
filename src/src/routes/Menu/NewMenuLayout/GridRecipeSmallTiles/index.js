@@ -1,1 +1,0 @@
-export { GridRecipeSmallTilesContainer } from './GridRecipeSmallTilesContainer'

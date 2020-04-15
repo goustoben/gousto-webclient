@@ -6,7 +6,6 @@ import { CoronaVirusBanner } from 'CoronaVirusBanner'
 import menuConfig from 'config/menu'
 import { CollectionsNavContainer } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
-import { SimplifiedMenuRecipesPage } from '../NewMenuLayout/SimplifiedMenuRecipesPage'
 import { JustForYouTutorial } from '../JustForYouTutorial'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
@@ -28,7 +27,6 @@ const propTypes = {
   shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,
   portionSizeSelectedTracking: PropTypes.func.isRequired,
-  newMenuLayout: PropTypes.bool.isRequired,
   menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -175,16 +173,6 @@ export class MenuRecipesPage extends PureComponent {
   }
 
   render() {
-    const {
-      stateRecipeCount,
-      showLoading,
-      newMenuLayout
-    } = this.props
-
-    if (newMenuLayout) {
-      return <SimplifiedMenuRecipesPage stateRecipeCount={stateRecipeCount} showLoading={showLoading} />
-    }
-
     return this.getDefaultMenuRecipePage()
   }
 }
