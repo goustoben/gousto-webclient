@@ -1,0 +1,32 @@
+{
+    "status": "ok",
+    "result": {
+        "data": {
+            "code": "RET-REACTFEB19EMOB",
+            "details": {
+                "discount-whole-order-percent": "20"
+            },
+            "codeData": {
+                "code": "RET-REACTFEB19EMOB",
+                "campaign": {
+                    "id": 6480,
+                    "media_id": null,
+                    "landing_details_1": "",
+                    "landing_details_2": "",
+                    "landing_details_3": "",
+                    "landing_url": "",
+                    "modal_text": "<p class=\"lead\">You've got 20% off all boxes for a month.</p>\r\n<p class=\"lead\">Browse from our weekly menu of 50 recipes and get cooking!</p>",
+                    "raw_modal_text": "You've got 20% off all boxes for a month.\nBrowse from our weekly menu of 50 recipes and get cooking!",
+                    "modal_title": "Hooray!",
+                    "enabled": true,
+                    "is_for_existing": true,
+                    "expiry_interval": "30 days",
+                    "is_boost": false,
+                    "boost_campaign_id": null
+                }
+            },
+            "addGiftOrderRules": []
+        },
+        "meta": []
+    }
+}

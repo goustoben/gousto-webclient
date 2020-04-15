@@ -72,6 +72,8 @@ npm run test
 To run through the Cypress UI:
 `npm run test:debug`
 
+All data should be mocked. Cypress has been configured to return a 404 for any real api calls.
+
 ### Running end-to-end tests
 You will need the following installed:
 1. Java Runtime. Check if already installed with `java --version`, and if not, install using homebrew:

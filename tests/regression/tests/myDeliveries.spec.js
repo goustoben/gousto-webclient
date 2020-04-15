@@ -19,12 +19,11 @@ describe("My Deliveries", () => {
     cy.route('POST', /user\/current\/subscription\/delivery\/disable/, '@userCurrentSubscriptionDelivery').as('cancelProjectedDelivery')
     cy.route('POST', /user\/(.*)\/subscription\/delivery\/enable/, '@userCurrentSubscriptionDelivery').as('restoreProjectedDelivery')
     cy.route('DELETE', /order/, {}).as('cancelPendingOrder')
-    cy.route('GET', /deliveries\/v1.0/, {}).as('deliveries')
     cy.route('GET', /delivery_day/, {})
 
     cy.login()
     cy.visit('/mydeliveries')
-    cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
+    cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
   })
 
   describe('add box button', () => {
@@ -65,7 +64,7 @@ describe("My Deliveries", () => {
 
         cy.login()
         cy.visit('/mydeliveries')
-        cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription', '@deliveries'])
+        cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
       })
 
       it("should show the modal to prompt a user to pause", () => {

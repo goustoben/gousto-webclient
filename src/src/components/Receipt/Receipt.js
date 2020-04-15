@@ -64,10 +64,10 @@ class Receipt extends React.Component {
             ? <div className={css.row}><p className={css.titleSection}>Order Summary</p></div>
             : null
         }
-        <ReceiptLine label={formatLabelPlural('Recipe', numRecipes)} style="normal">{formatDashOrPrice(recipeTotalPrice, numRecipes, prices, this.dash)}</ReceiptLine>
+        <ReceiptLine label={formatLabelPlural('Recipe', numRecipes)} style="normal" dataTesting="grossPrice">{formatDashOrPrice(recipeTotalPrice, numRecipes, prices, this.dash)}</ReceiptLine>
         {
           showRecipeDiscount
-            ? <ReceiptLine label={formatRecipeDiscount(recipeDiscountPercent)} style="primary">{`-${formatPrice(recipeDiscountAmount)}`}</ReceiptLine>
+            ? <ReceiptLine label={formatRecipeDiscount(recipeDiscountPercent)} style="primary" dataTesting="discountAmount">{`-${formatPrice(recipeDiscountAmount)}`}</ReceiptLine>
             : null
         }
         {
@@ -81,7 +81,7 @@ class Receipt extends React.Component {
             : null
         }
         <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? 'primary' : 'normal'}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
-        <ReceiptLine label="Total" style="bold" showLineAbove>{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
+        <ReceiptLine label="Total" style="bold" showLineAbove dataTesting="totalPrice">{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
         { hasFirstDeliveryDay && <FirstDeliveryDayContainer /> }
         {
           showAddPromocode && <PromoCode />

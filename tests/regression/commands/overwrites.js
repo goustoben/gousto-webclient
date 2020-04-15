@@ -19,3 +19,20 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 
   return originalFn(url, {options, ...removeFetch})
 })
+
+Cypress.Commands.overwrite('server', (originalFn, options) => {
+  const goustoDefaultOptions = {
+    force404: true,
+    whitelist: (xhr) => {
+      const defaultCypressWhitelist = xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+      const content = xhr.url.match(/(content)|(s3)/)
+      const tracking = xhr.url.match(/(snowplow)|(pinterest)|(optimizely)|(hotjar)|(pingdom)|(s.yimg)/)
+
+      return defaultCypressWhitelist || content || tracking
+    }
+  }
+
+  return originalFn({options, ...goustoDefaultOptions})
+})
+
+
