@@ -65,7 +65,7 @@ class Cookbook extends React.PureComponent {
     const { loading } = this.props
 
     return (
-      <div>
+      <div data-testing="myGoustoCookbook">
         {loading && (
           <p className={css.mobileShow}>Loading your most recent recipes...</p>
         )}
