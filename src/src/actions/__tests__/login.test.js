@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import globals from 'config/globals'
-import { zendesk } from 'config/routes'
+import { zendesk, client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
@@ -374,8 +374,10 @@ describe('login actions', () => {
           helpPreLoginVisibilityChange(true)(dispatch)
         })
 
-        test('the query parameter target is set to zendesk', () => {
-          const serialisedQueryStringObject = JSON.stringify({ search: '?target=https://gousto.zendesk.com/hc/en-gb' })
+        test('the query parameter target is set to the eligibility check URL', () => {
+          const { index, eligibilityCheck } = client.getHelp
+          const search = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`)}`
+          const serialisedQueryStringObject = JSON.stringify({ search })
           expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)
         })
       })
