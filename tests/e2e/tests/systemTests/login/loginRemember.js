@@ -25,8 +25,6 @@ module.exports = {
       })
     browser
       .perform(function (browser, done) {
-        menu.navigate()
-        shared.section.header.checkUserLoggedIn()
         shared.section.header.goToAccount()
         shared.section.body.logout()
         browser.pause(10000)
