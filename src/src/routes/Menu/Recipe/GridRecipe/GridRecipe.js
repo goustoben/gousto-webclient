@@ -17,7 +17,7 @@ import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew }) => {
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, isChefPrepared, numPortions }) => {
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
 
   return (
@@ -47,9 +47,14 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
       <div>
         <Chef chef={chef} />
       </div>
-      <div className={css.rangeBadgeWrapper}>
-        <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
-      </div>
+      {
+        !isChefPrepared
+        && (
+        <div className={css.rangeBadgeWrapper}>
+          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
+        </div>
+        )
+      }
       <div className={css.contentWrapper}>
         <div onClick={onClick} className={css.titleWrapper}>
           <Title
@@ -68,25 +73,30 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
               average={averageRating}
               count={ratingCount}
               isNew={isNew}
+              isChefPrepared={isChefPrepared}
             />
             )}
           </div>
         </div>
-        <div>
-          {outOfStock || (
-          <AttributeGrid
-            maxNoAttributes={4}
-            cookingTime={cookingTime}
-            useWithin={useWithin}
-            equipment={equipment}
-            diet={diet}
-            fiveADay={fiveADay}
-          />
-          )}
-        </div>
+        {
+          (!outOfStock)
+          && (
+            <div>
+              <AttributeGrid
+                maxNoAttributes={4}
+                numPortions={isChefPrepared ? numPortions : null }
+                cookingTime={!isChefPrepared ? cookingTime : null }
+                useWithin={useWithin}
+                diet={diet}
+                fiveADay={fiveADay}
+                equipment={!isChefPrepared ? equipment : null }
+              />
+            </div>
+          )
+        }
         <RecipeDisclaimerContainer id={id} />
         <div className={css.buttonContainer}>
-          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
+          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
         </div>
 
       </div>
@@ -120,7 +130,9 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  view: PropTypes.string
+  view: PropTypes.string,
+  isChefPrepared: PropTypes.bool,
+  numPortions: PropTypes.number
 }
 
 GridRecipe.defaultProps = {
@@ -130,6 +142,8 @@ GridRecipe.defaultProps = {
   averageRating: 0,
   ratingCount: 0,
   fiveADay: 0,
+  isChefPrepared: false,
+  numPortions: 2
 }
 
 export { GridRecipe }

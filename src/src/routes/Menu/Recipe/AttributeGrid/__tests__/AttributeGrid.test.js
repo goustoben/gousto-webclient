@@ -44,6 +44,42 @@ describe('AttributeGrid', () => {
       expect(wrapper.find(RecipeAttribute).find({name: 'diet'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name: 'fiveADay'}).length).toEqual(1)
     })
+
+    describe('Given cookingTime is null', () => {
+      beforeEach(() => {
+        wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={null} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} />)
+      })
+      test('then it should not return a cookingTime attribute element', () => {
+        expect(wrapper.find(RecipeAttribute).find({name: 'cookingTime'}).length).toEqual(0)
+      })
+    })
+
+    describe('Given equipment is null', () => {
+      beforeEach(() => {
+        wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={null} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} />)
+      })
+      test('then it should not return an equipment attribute element', () => {
+        expect(wrapper.find(RecipeAttribute).find({name: 'equipmentRequired'}).length).toEqual(0)
+      })
+    })
+
+    describe('Given numPortions is set', () => {
+      beforeEach(() => {
+        wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} numPortions={2} />)
+      })
+      test('then it should contain numPortions', () => {
+        expect(wrapper.find(RecipeAttribute).find({name: 'numPortions'}).length).toEqual(1)
+      })
+    })
+
+    describe('Given numPortions is null', () => {
+      beforeEach(() => {
+        wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} numPortions={null} />)
+      })
+      test('then it should not return an serving size attribute element', () => {
+        expect(wrapper.find(RecipeAttribute).find({name: 'numPortions'}).length).toEqual(0)
+      })
+    })
   })
 
   describe('Detailed Recipe Card', () => {
@@ -65,6 +101,24 @@ describe('AttributeGrid', () => {
       expect(wrapper.find(RecipeAttribute).find({name: 'diet'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name: 'cals'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name: 'cuisine'}).length).toEqual(1)
+    })
+
+    describe('When gluten free is null', () => {
+      beforeEach(() => {
+        wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} glutenFree={null} />)
+      })
+      test('then it should not return a gluten free attribute element', () => {
+        expect(wrapper.find(RecipeAttribute).find({name: 'glutenFree'}).length).toEqual(0)
+      })
+    })
+
+    describe('When dairy free is null', () => {
+      beforeEach(() => {
+        wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} dairyFree={null} />)
+      })
+      test('then it should not return a dairy free attribute element', () => {
+        expect(wrapper.find(RecipeAttribute).find({name: 'dairyFree'}).length).toEqual(0)
+      })
     })
   })
 })

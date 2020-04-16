@@ -15,13 +15,14 @@ const recipePropTypes = {
   media: PropTypes.instanceOf(Immutable.List),
   onClick: PropTypes.func,
   stock: PropTypes.number,
-  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'ctaAllRecipe', 'ctaThematic']).isRequired,
+  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'chefPrepared', 'ctaAllRecipe', 'ctaThematic']).isRequired,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
   collectionFilterChange: PropTypes.func,
   id: PropTypes.string,
   thematicName: PropTypes.string,
   selectedDate: PropTypes.string,
+  numPortions: PropTypes.number
 }
 
 class Recipe extends React.PureComponent {
@@ -39,7 +40,7 @@ class Recipe extends React.PureComponent {
   }
 
   get recipeComponent() {
-    const { view, collectionFilterChange, thematicName, selectedDate } = this.props
+    const { view, collectionFilterChange, thematicName, selectedDate, numPortions } = this.props
     const { detailHover } = this.state
 
     switch (view) {
@@ -51,6 +52,8 @@ class Recipe extends React.PureComponent {
       return <CTAToAllRecipes collectionFilterChange={collectionFilterChange} />
     case 'ctaThematic':
       return <CTAThematic name={thematicName} selectedDate={selectedDate} />
+    case 'chefPrepared':
+      return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} numPortions={numPortions} isChefPrepared />
     default:
       return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     }
@@ -69,7 +72,7 @@ class Recipe extends React.PureComponent {
     const { detailHover } = this.state
 
     const className = classnames(
-      'grid',
+      css.grid,
       css[view],
       {
         [css.gridHover]: detailHover
