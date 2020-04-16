@@ -143,7 +143,7 @@ GridRecipe.defaultProps = {
   ratingCount: 0,
   fiveADay: 0,
   isChefPrepared: false,
-  numPortions: 2
+  numPortions: null
 }
 
 export { GridRecipe }

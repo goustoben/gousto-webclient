@@ -67,6 +67,7 @@ const RecipeCard = ({
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
       isFoodBrandClickable={isFoodBrandClickable}
+      numPortions={numPortions}
     />
   )
 }
