@@ -51,3 +51,11 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
     dispatch(webClientStatusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS, false))
   }
 )
+
+export const storeGetHelpOrder = ({ id, recipeIds }) => ({
+  type: actionTypes.GET_HELP_STORE_ORDER,
+  payload: {
+    id,
+    recipeIds,
+  },
+})

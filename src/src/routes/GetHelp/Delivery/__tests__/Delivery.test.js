@@ -9,7 +9,7 @@ import { Delivery } from '../Delivery'
 const deliveryDateFormat = 'YYYY-MM-DD HH:mm:ss'
 const upcomingOrders = Immutable.fromJS({
   100: {
-    deliveryDate: moment().add(2, 'hour').format(deliveryDateFormat),
+    deliveryDate: moment().add(2, 'minutes').format(deliveryDateFormat),
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -146,7 +146,7 @@ describe('given Delivery is rendered', () => {
           deliveryStatusContent = wrapper.find('ItemExpandable').find('.deliveryStatusContent')
         })
 
-        test('the loadOrderTrackingInfo is being passing the order id', () => {
+        test('the loadOrderTrackingInfo is being passed the order id', () => {
           expect(loadOrderTrackingInfo).toHaveBeenCalledWith('100')
         })
 

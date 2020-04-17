@@ -16,12 +16,12 @@ const DELIVERY_DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 describe('given the EligibilityCheck is rendered', () => {
   let getUserOrders
-  let storeGetHelpOrderId
+  let storeGetHelpOrder
 
   beforeEach(() => {
     browserHistory.push = jest.fn()
     getUserOrders = jest.fn()
-    storeGetHelpOrderId = jest.fn()
+    storeGetHelpOrder = jest.fn()
   })
 
   describe('when customer order has not been loaded', () => {
@@ -33,7 +33,7 @@ describe('given the EligibilityCheck is rendered', () => {
           isAuthenticated
           userId="123"
           getUserOrders={getUserOrders}
-          storeGetHelpOrderId={storeGetHelpOrderId}
+          storeGetHelpOrder={storeGetHelpOrder}
         />
       )
     })
@@ -56,6 +56,7 @@ describe('given the EligibilityCheck is rendered', () => {
           deliveryStart: '08:00:00'
         },
         id: '100',
+        recipeIds: ['10', '11', '12', '13'],
       }
     })
 
@@ -66,7 +67,7 @@ describe('given the EligibilityCheck is rendered', () => {
           userId="123"
           orders={eligibleOrder}
           getUserOrders={getUserOrders}
-          storeGetHelpOrderId={storeGetHelpOrderId}
+          storeGetHelpOrder={storeGetHelpOrder}
         />
       )
     })
@@ -79,8 +80,11 @@ describe('given the EligibilityCheck is rendered', () => {
       expect(browserHistory.push).toHaveBeenCalledWith('/get-help?orderId=100')
     })
 
-    test('the storeGetHelpOrderId is called correctly', () => {
-      expect(storeGetHelpOrderId).toHaveBeenCalledWith('100')
+    test('the storeGetHelpOrder is called correctly', () => {
+      expect(storeGetHelpOrder).toHaveBeenCalledWith({
+        id: '100',
+        recipeIds: Immutable.List(['10', '11', '12', '13'])
+      })
     })
   })
 
@@ -104,7 +108,7 @@ describe('given the EligibilityCheck is rendered', () => {
           userId="123"
           orders={notEligibleOrder}
           getUserOrders={getUserOrders}
-          storeGetHelpOrderId={storeGetHelpOrderId}
+          storeGetHelpOrder={storeGetHelpOrder}
         />
       )
     })

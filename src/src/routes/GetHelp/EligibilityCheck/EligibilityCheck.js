@@ -27,7 +27,7 @@ const propTypes = {
     })
   ),
   userId: PropTypes.string.isRequired,
-  storeGetHelpOrderId: PropTypes.func.isRequired,
+  storeGetHelpOrder: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -50,12 +50,15 @@ class EligibilityCheck extends PureComponent {
   }
 
   checkOrderAndRedirect = () => {
-    const { isAuthenticated, userId, orders, storeGetHelpOrderId } = this.props
+    const { isAuthenticated, userId, orders, storeGetHelpOrder } = this.props
     const newestOrder = findNewestOrder(orders, false)
     const isOrderEligible = isOrderEligibleForSelfRefundResolution(newestOrder)
 
     if (isOrderEligible) {
-      storeGetHelpOrderId(newestOrder.get('id'))
+      storeGetHelpOrder({
+        id: newestOrder.get('id'),
+        recipeIds: newestOrder.get('recipeIds'),
+      })
       browserHistory.push(`${clientRoutes.getHelp.index}?orderId=${newestOrder.get('id')}`)
     } else {
       redirect(

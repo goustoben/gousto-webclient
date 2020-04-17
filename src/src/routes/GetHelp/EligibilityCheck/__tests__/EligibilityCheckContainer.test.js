@@ -55,6 +55,10 @@ describe('given EligibilityCheckContainer is rendered', () => {
     )
   )
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('when customer is eligible', () => {
     const eligibleOrder = [{
       deliveryDate: moment().subtract(8, 'days').format(DELIVERY_DATE_FORMAT),
@@ -63,6 +67,11 @@ describe('given EligibilityCheckContainer is rendered', () => {
         deliveryStart: '08:00:00'
       },
       id: '100',
+      recipeItems: [
+        { id: 'nobody-cares', recipeId: '10' },
+        { id: 'nobody-cares', recipeId: '20' },
+        { id: 'nobody-cares', recipeId: '30' },
+      ],
     }]
 
     beforeEach(() => {
@@ -90,6 +99,11 @@ describe('given EligibilityCheckContainer is rendered', () => {
         deliveryStart: '08:00:00'
       },
       id: '100',
+      recipeItems: [
+        { id: 'nobody-cares', recipeId: '10' },
+        { id: 'nobody-cares', recipeId: '20' },
+        { id: 'nobody-cares', recipeId: '30' },
+      ],
     }]
 
     beforeEach(() => {
