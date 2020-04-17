@@ -20,15 +20,9 @@ import { orderConfirmationUpdateOrderTracking } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import tempActions from './temp'
 import { getUTMAndPromoCode } from '../selectors/tracking'
-import { getCurrentCollectionId } from '../routes/Menu/selectors/collections'
+import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import { activeMenuForDate } from '../routes/Menu/selectors/menu'
 import { trackingOrderCheckout } from './tracking'
-
-function isOutOfStock(recipeId, numPortions, recipesStock) {
-  const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
-
-  return (stock <= config.menu.stockThreshold)
-}
 
 export const basketOrderLoaded = (orderId) => (
   (dispatch, getState) => {
@@ -179,7 +173,7 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
           const adjustedQty = Math.round(qty / parseInt(userOrder.getIn(['box', 'numPortions']), 10))
 
           for (let i = 0; i < adjustedQty; i++) {
-            dispatch(basketActions.basketRecipeAdd(itemableId, view, orderId))
+            dispatch(basketRecipeAdd(itemableId, view, orderId))
           }
           break
         }
@@ -353,131 +347,6 @@ export const basketRecipesInitialise = (recipes) => (dispatch, getState) => {
 
   dispatch(pricingActions.pricingRequest())
 }
-
-export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
-  (dispatch, getState) => {
-    const state = getState()
-    const { basket, menuRecipeStock, menuRecipes } = state
-    const numPortions = basket.get('numPortions')
-
-    let reachedLimit = limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum)
-    const outOfStock = isOutOfStock(recipeId, numPortions, menuRecipeStock)
-    if (reachedLimit || outOfStock) {
-      return
-    }
-
-    const collection = getCurrentCollectionId(state)
-    if (recipeInfo) {
-      Object.assign(recipeInfo, { collection })
-    }
-
-    dispatch({
-      type: actionTypes.BASKET_RECIPE_ADD,
-      recipeId,
-      ...recipeInfo,
-      trackingData: {
-        actionType: trackingKeys.addRecipe,
-        recipeId,
-        view,
-        position: recipeInfo && recipeInfo.position,
-        collection,
-        recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
-      },
-    })
-
-    dispatch({
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: {
-        [recipeId]: {
-          [numPortions]: -1,
-        },
-      },
-    })
-
-    const { basket: newBasket, menuRecipes: newMenuRecipes, menuRecipeStock: newMenuRecipeStock } = getState()
-    reachedLimit = limitReached(newBasket, newMenuRecipes, newMenuRecipeStock, undefined, maxRecipesNum)
-    if (reachedLimit) {
-      dispatch({
-        type: actionTypes.BASKET_LIMIT_REACHED,
-        limitReached: reachedLimit,
-        trackingData: {
-          actionType: trackingKeys.basketLimit,
-          limitReached: reachedLimit,
-          view,
-          source: actionTypes.RECIPE_ADDED,
-        },
-      })
-    }
-
-    dispatch(pricingActions.pricingRequest())
-
-    const prevRecipes = basket.get('recipes')
-    const slotId = newBasket.get('slotId')
-    const recipes = newBasket.get('recipes')
-    const {promoCode, UTM} = getUTMAndPromoCode(state)
-
-    let recipesCount = 0
-
-    recipes.forEach(count => {
-      recipesCount += count
-    })
-
-    if (prevRecipes.size < 2 && recipesCount > 1 && slotId) {
-      dispatch({
-        type: actionTypes.BASKET_ELIGIBLE_TRACK,
-        trackingData: {
-          actionType: trackingKeys.basketEligible,
-          ...UTM,
-          promoCode,
-          recipes,
-        },
-      })
-    }
-  }
-)
-
-export const basketRecipeRemove = (recipeId, view, position) => (
-  (dispatch, getState) => {
-    let state = getState()
-    const { basket } = state
-    const collection = getCurrentCollectionId(state)
-    dispatch({
-      type: actionTypes.BASKET_RECIPE_REMOVE,
-      recipeId,
-      trackingData: {
-        actionType: trackingKeys.removeRecipe,
-        recipeId,
-        view,
-        position,
-        collection,
-        recipe_count: basket.get('recipes').size - 1,// The action is performed in the same time so the size is not updated yet
-      },
-    })
-
-    const numPortions = getState().basket.get('numPortions')
-    dispatch({
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: { [recipeId]: { [numPortions]: 1 } },
-    })
-
-    state = getState()
-    const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
-    if (!reachedLimit) {
-      dispatch({
-        type: actionTypes.BASKET_LIMIT_REACHED,
-        limitReached: reachedLimit,
-        trackingData: {
-          actionType: trackingKeys.basketLimit,
-          limitReached: reachedLimit,
-          view,
-          source: actionTypes.RECIPE_REMOVED,
-        },
-      })
-    }
-
-    dispatch(pricingActions.pricingRequest())
-  }
-)
 
 export const basketIdChange = orderId => ({
   type: actionTypes.BASKET_ID_CHANGE,
@@ -797,8 +666,6 @@ export const actions = {
   basketAddressChange,
   basketStepsOrderReceive,
   basketRecipesInitialise,
-  basketRecipeAdd,
-  basketRecipeRemove,
   basketSlotChange,
   basketPreviewOrderChange,
   basketSlotClear,

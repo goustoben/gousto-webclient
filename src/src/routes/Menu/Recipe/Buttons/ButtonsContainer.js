@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
+import { basketRecipeAdd, basketRecipeRemove } from '../../actions/basketRecipes'
 import Buttons from './Buttons'
 
 const mapStateToProps = (state, props) => {
@@ -20,8 +21,8 @@ const mapStateToProps = (state, props) => {
 }
 
 const ButtonsContainer = connect(mapStateToProps, {
-  onAdd: actions.basketRecipeAdd,
-  onRemove: actions.basketRecipeRemove,
+  onAdd: basketRecipeAdd,
+  onRemove: basketRecipeRemove,
   menuRecipeDetailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
 })(Buttons)

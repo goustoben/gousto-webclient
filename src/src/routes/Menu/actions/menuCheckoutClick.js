@@ -54,14 +54,15 @@ export const checkoutBasket = (section, view) => (dispatch, getState) => {
   dispatch(basketCheckedOut(recipes.size, view))
   dispatch(basketCheckoutClicked(section))
 
-  let basketBreakingRules = []
-  recipes.keySeq().toArray().find((recipeId) => {
-    basketBreakingRules = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, recipes)
+  const basketBreakingRules = {
+    errorTitle: 'Basket Not Valid',
+    recipeId: null,
+    rules: []
+  }
 
-    return basketBreakingRules.length
-  })
+  basketBreakingRules.rules = validateRecipeAgainstRule(menuLimitsForBasket, null, recipes)
 
-  if (basketBreakingRules.length) {
+  if (basketBreakingRules.rules.length) {
     dispatch(status.error(actionTypes.BASKET_NOT_VALID, basketBreakingRules))
 
     return

@@ -18,6 +18,8 @@ import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import * as boxSummaryActions from 'actions/boxSummary'
 import { getUserMenuVariant } from 'selectors/features'
+import * as basketRecipesActions from '../../actions/basketRecipes'
+import { safeJestMock } from '../../../../_testing/mocks'
 
 import fetchData from '../fetchData'
 
@@ -35,6 +37,7 @@ jest.mock('apis/menus')
 jest.mock('apis/brand')
 jest.mock('selectors/features')
 jest.mock('actions/menu')
+jest.mock('../../actions/basketRecipes')
 
 describe('menu fetchData', () => {
   let state = {
@@ -73,13 +76,13 @@ describe('menu fetchData', () => {
 
   // we need to manually set up mocks for the thunks, because we don't want mocks around the non-thunk actions
   // otherwise they will just be stubs rather than returning { type: ..., ... } objects
+  const bsaketRecipeAddSpy = safeJestMock(basketRecipesActions, 'basketRecipeAdd')
   actions.menuLoadStock = jest.fn()
   actions.menuLoadOrderDetails = jest.fn()
   actions.menuLoadMenu = jest.fn()
   actions.menuLoadDays = jest.fn()
   boxSummaryActions.boxSummaryDeliveryDaysLoad = jest.fn()
   actions.basketNumPortionChange = jest.fn()
-  actions.basketRecipeAdd = jest.fn()
   actions.userLoadOrders = jest.fn()
   actions.userLoadData = jest.fn()
 
@@ -99,7 +102,7 @@ describe('menu fetchData', () => {
     actions.menuLoadDays.mockReset()
     boxSummaryActions.boxSummaryDeliveryDaysLoad.mockReset()
     actions.basketNumPortionChange.mockReset()
-    actions.basketRecipeAdd.mockReset()
+    bsaketRecipeAddSpy.mockReset()
 
     actions.userLoadOrders.mockReset()
 
@@ -239,7 +242,7 @@ describe('menu fetchData', () => {
               })
 
               // just make it return an object with the recipe id to make for easier assertions
-              actions.basketRecipeAdd.mockImplementation(recipeId => ({ recipeId }))
+              bsaketRecipeAddSpy.mockImplementation(recipeId => ({ recipeId }))
 
               await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
@@ -548,7 +551,7 @@ describe('menu fetchData', () => {
           state.menuRecipeStock = state.menuRecipeStock.setIn(['789', '4'], 1)
 
           // just make it return an object with the recipe id to make for easier assertions
-          actions.basketRecipeAdd.mockImplementation(recipeId => ({ isMockBasketRecipeAdd: true, recipeId }))
+          bsaketRecipeAddSpy.mockImplementation(recipeId => ({ isMockBasketRecipeAdd: true, recipeId }))
         })
 
         test('should dispatch basketRecipeAdd for in stock recipes', async () => {

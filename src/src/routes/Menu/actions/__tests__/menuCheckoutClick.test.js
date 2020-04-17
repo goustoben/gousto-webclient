@@ -88,7 +88,7 @@ describe('checkoutBasket', () => {
     expect(dispatch).toHaveBeenCalledWith(['basketCheckoutClicked', ['menu']])
   })
 
-  describe('when no basket rule are broken', () => {
+  describe('when no basket rules are broken', () => {
     beforeEach(() => {
       safeJestMock(menuSelectors, 'getMenuLimitsForBasket')
 
@@ -265,11 +265,14 @@ describe('checkoutBasket', () => {
       expect(dispatch).toHaveBeenCalledWith({
         key: 'BASKET_NOT_VALID',
         type: 'ERROR',
-        value: [{
-          items: ['123'],
-          message: 'Only 1 oven ready meal is available per order',
-          name: 'charlie-binghams-basket-limit'
-        }]
+        value: {
+          errorTitle: 'Basket Not Valid',
+          recipeId: null,
+          rules: [{
+            items: ['123'],
+            message: 'Only 1 oven ready meal is available per order',
+            name: 'charlie-binghams-basket-limit'
+          }]}
       })
     })
   })

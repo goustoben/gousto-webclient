@@ -3,20 +3,23 @@ import { getBasketNotValidError } from 'selectors/status'
 import { getFormatedRulesMessage } from '../../selectors/basket'
 import { BasketValidationErrorModal } from './BasketValidationErrorModal'
 import { clearBasketNotValidError } from '../../actions/menuCheckoutClick'
+import { basketRecipeSwap } from '../../actions/basketRecipes'
 
 const mapStateToProps = (state) => {
   const basketRuleBroken = getBasketNotValidError(state)
-  const hasBasketError = !!basketRuleBroken
+  const hasBasketError = Boolean(basketRuleBroken)
 
   return ({
-    title: 'Basket Not Valid',
+    title: hasBasketError ? basketRuleBroken.errorTitle : 'Basket Not Valid',
     shouldShow: hasBasketError,
-    brokenRulesToDisplay: hasBasketError ? getFormatedRulesMessage(state, basketRuleBroken) : []
+    shouldShowSwapButton: hasBasketError && Boolean(basketRuleBroken.recipeId),
+    brokenRulesToDisplay: hasBasketError ? getFormatedRulesMessage(state, basketRuleBroken.rules) : []
   })
 }
 
 const mapDispatchToProps = {
-  closeModal: clearBasketNotValidError
+  closeModal: clearBasketNotValidError,
+  basketRecipeSwap
 }
 
 export const BasketValidationErrorModalContainer = connect(mapStateToProps, mapDispatchToProps)(BasketValidationErrorModal)
