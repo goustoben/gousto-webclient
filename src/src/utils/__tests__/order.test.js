@@ -209,7 +209,7 @@ describe('order utils', () => {
 
         test('returns order to be deliveried today', () => {
           const expectedOrderOfToday = Immutable.fromJS({
-            deliveryDate: moment().format(deliveryDateFormat),
+            deliveryDate: upcomingOrders.getIn(['100', 'deliveryDate']),
             deliverySlot: {
               deliveryEnd: '18:59:59',
               deliveryStart: '08:00:00'
@@ -230,7 +230,7 @@ describe('order utils', () => {
 
         test('returns the most recent delivered order', () => {
           const expectedPreviousOrder = Immutable.fromJS({
-            deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+            deliveryDate: upcomingOrders.getIn(['99', 'deliveryDate']),
             deliverySlot: {
               deliveryEnd: '18:59:59',
               deliveryStart: '08:00:00'
@@ -264,7 +264,7 @@ describe('order utils', () => {
 
         test('returns the most recent delivered order', () => {
           const expectedPreviousOrder = Immutable.fromJS({
-            deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+            deliveryDate: pastOrder.getIn(['100', 'deliveryDate']),
             deliverySlot: {
               deliveryEnd: '18:59:59',
               deliveryStart: '08:00:00'
