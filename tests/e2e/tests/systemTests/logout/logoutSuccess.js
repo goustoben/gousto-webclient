@@ -24,8 +24,6 @@ module.exports = {
       })
     browser
       .perform(function (browser, done) {
-        browser.refresh()
-        shared.section.header.checkUserLoggedIn()
         shared.section.header.goToAccount()
         shared.section.body.logout()
         browser.pause(3000)

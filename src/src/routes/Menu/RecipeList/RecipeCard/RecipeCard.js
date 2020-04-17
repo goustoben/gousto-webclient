@@ -7,7 +7,11 @@ import { getFeaturedImage } from 'utils/image'
 import { formatRecipeTitle, getFoodBrand } from 'utils/recipe'
 import { isRecommendedRecipe } from 'utils/menu'
 
-const getRecipeView = (isFeatured, isFineDineIn) => {
+const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
+  if (isChefPrepared) {
+    return 'chefPrepared'
+  }
+
   if (typeof (window) !== 'undefined' && window.innerWidth < 1025) {
     return 'grid'
   }
@@ -33,10 +37,11 @@ const RecipeCard = ({
   }
 
   const recipeId = recipe.get('id')
+  const isChefPrepared = recipe.get('chefPrepared') === true
   const range = getFoodBrand(recipe)
   const isFineDineIn = range.get('slug') === 'fine-dine-in'
 
-  const view = getRecipeView(isFeatured, isFineDineIn)
+  const view = getRecipeView(isFeatured, isFineDineIn, isChefPrepared)
 
   return (
     <Recipe
@@ -62,6 +67,7 @@ const RecipeCard = ({
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
       isFoodBrandClickable={isFoodBrandClickable}
+      numPortions={numPortions}
     />
   )
 }

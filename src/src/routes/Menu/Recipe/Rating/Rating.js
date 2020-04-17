@@ -24,10 +24,11 @@ class RecipeRating extends React.Component {
   }
 
   render() {
-    const { count, average, view, isNew } = this.props
+    const { count, average, view, isNew, isChefPrepared } = this.props
     if (count > 0) {
       return (
         <span className={css.ratingContainer}>
+          {isChefPrepared ? <InfoBadge chefPrepared>Oven ready</InfoBadge> : null}
           <span className={css.starColor}>
             {this.showStar(average)}
           </span>
@@ -43,11 +44,10 @@ class RecipeRating extends React.Component {
       )
     }
 
-    const newTag = isNew ? 'New Recipe' : ''
-
     return (
       <span>
-        {newTag ? <InfoBadge newRecipe>{newTag}</InfoBadge> : null}
+        {isChefPrepared ? <InfoBadge chefPrepared>Oven ready</InfoBadge> : null}
+        {isNew ? <InfoBadge newRecipe>New Recipe</InfoBadge> : null}
       </span>
     )
   }
@@ -58,12 +58,14 @@ RecipeRating.propTypes = {
   average: PropTypes.number,
   view: PropTypes.string,
   isNew: PropTypes.bool.isRequired,
+  isChefPrepared: PropTypes.bool
 }
 
 RecipeRating.defaultProps = {
   count: 0,
   average: 0,
-  view: null
+  view: null,
+  isChefPrepared: false
 }
 
 export { RecipeRating }

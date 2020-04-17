@@ -1,4 +1,4 @@
-@value Haricot, Radish, Carrot, White, DarkChilli, White, HaricotMedium from 'styles/colors.css';
+@value Haricot, Radish, Carrot, White, DarkChilli, White, BlueCabbage, HaricotMedium from 'styles/colors.css';
 
 .badge {
 	composes: paddingSMLeftRight marginXSRight marginXSBottom from 'sass-loader!styles/spacing.scss';
@@ -28,4 +28,10 @@
 	color: White;
 	border: none;
 	background-color: DarkChilli;
+}
+
+.chefPrepared {
+	background-color: BlueCabbage;
+	font-weight: normal;
+	border: none;
 }

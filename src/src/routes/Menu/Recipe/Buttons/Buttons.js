@@ -32,7 +32,7 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surchargePerPortion } = this.props
+    const { numPortions, qty, surchargePerPortion, buttonText } = this.props
     const { tooltipVisible } = this.state
     const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected', 'sentenceCaseSegment')
 
@@ -106,7 +106,7 @@ class Buttons extends React.Component {
           fill
           className={this.getSurchargeGridClass('segment', 'sentenceCaseSegment')}
         >
-          Add Recipe
+          {buttonText}
           {surchargePerPortion && (
             <div
               className={
@@ -222,7 +222,12 @@ Buttons.propTypes = {
   menuBrowseCTAVisibilityChange: PropTypes.func,
   menuRecipeDetailVisibilityChange: PropTypes.func,
   surchargePerPortion: PropTypes.number,
-  score: PropTypes.number
+  score: PropTypes.number,
+  buttonText: PropTypes.string
+}
+
+Buttons.defaultProps = {
+  buttonText: 'Add Recipe'
 }
 
 export default Buttons

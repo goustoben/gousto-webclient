@@ -14,6 +14,7 @@ const descriptions = {
   diet: diet => ((diet === 'vegan') ? 'Plant-based' : capitalizeFirstLetter(diet)),
   glutenFree: glutenFree => glutenFree && 'Gluten free',
   dairyFree: dairyFree => dairyFree && 'Dairy free',
+  numPortions: numPortions => `${numPortions} servings`,
 }
 
 export const getDescription = (name, value, view) => (descriptions[name](value, view) || '')

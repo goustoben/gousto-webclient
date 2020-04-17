@@ -161,8 +161,8 @@ module.exports = {
         },
 
         createUser: function (userName, password) {
-          const ukPostcode = new RandExp("^(GIR ?0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]([0-9ABEHMNPRV-Y])?)|[0-9][A-HJKPS-UW]) ?[0-9][ABD-HJLNP-UW-Z]{2})$").gen()
-          const ukPhone = '020 3011 1002'
+          const ukPostcode = 'WC2E9JT'
+          const ukPhone = '7575757575'
           const pwd = password ? password : faker.internet.password()
 
           const userData = {
@@ -189,7 +189,7 @@ module.exports = {
             addresses: {
               shipping_address: {
                 type: 'shipping',
-                name: '',
+                name: 'home',
                 line1: faker.address.streetAddress(),
                 line2: '',
                 line3: '',
@@ -200,7 +200,7 @@ module.exports = {
               },
               billing_address: {
                 type: 'billing',
-                name: '',
+                name: 'home',
                 line1: faker.address.streetAddress(),
                 line2: '',
                 line3: '',
