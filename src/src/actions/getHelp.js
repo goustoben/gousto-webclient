@@ -155,21 +155,23 @@ const fetchIngredientIssues = () => async (dispatch, getState) => {
 
 const loadRecipesById = (recipeIds = []) => (
   async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_RECIPES_RECEIVE, true))
-    try {
-      const params = {
-        includes: ['ingredients'],
-        'filters[recipe_ids]': recipeIds,
-      }
-      const accessToken = getState().auth.get('accessToken')
-      const { data: recipes } = await fetchRecipes(accessToken, '', params)
+    if (recipeIds && recipeIds.length > 0) {
+      dispatch(statusActions.pending(actionTypes.GET_HELP_RECIPES_RECEIVE, true))
+      try {
+        const params = {
+          includes: ['ingredients'],
+          'filters[recipe_ids]': recipeIds,
+        }
+        const accessToken = getState().auth.get('accessToken')
+        const { data: recipes } = await fetchRecipes(accessToken, '', params)
 
-      dispatch({ type: actionTypes.GET_HELP_RECIPES_RECEIVE, recipes })
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.GET_HELP_RECIPES_RECEIVE, err.message))
-      logger.error(err)
-    } finally {
-      dispatch(statusActions.pending(actionTypes.GET_HELP_RECIPES_RECEIVE, false))
+        dispatch({ type: actionTypes.GET_HELP_RECIPES_RECEIVE, recipes })
+      } catch (err) {
+        dispatch(statusActions.error(actionTypes.GET_HELP_RECIPES_RECEIVE, err.message))
+        logger.error(err)
+      } finally {
+        dispatch(statusActions.pending(actionTypes.GET_HELP_RECIPES_RECEIVE, false))
+      }
     }
   }
 )
