@@ -34,6 +34,14 @@ const getHelp = (state, action) => {
   }
 
   switch (action.type) {
+  case actionTypes.GET_HELP_STORE_ORDER: {
+    const { id, recipeIds } = action.payload
+
+    return state.set('order', fromJS({
+      id,
+      recipeItems: recipeIds,
+    }))
+  }
   case webClientActionTypes.GET_HELP_STORE_ORDER_ID: {
     return state.setIn(['order', 'id'], action.id)
   }
@@ -114,8 +122,9 @@ const getHelp = (state, action) => {
   }
   case actionTypes.GET_HELP_LOAD_ORDERS: {
     const reduceOrders = (reducerState, order) => {
-      const { id, deliveryDate, deliverySlot } = order
+      const { id, deliveryDate, deliverySlot, recipeItems } = order
       const { deliveryEnd, deliveryStart } = deliverySlot
+      const recipeIds = recipeItems.map((item) => (item.recipeId))
 
       return reducerState.set(
         id,
@@ -126,6 +135,7 @@ const getHelp = (state, action) => {
             deliveryStart,
           },
           id,
+          recipeIds,
         })
       )
     }
