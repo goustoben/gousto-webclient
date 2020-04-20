@@ -280,28 +280,6 @@ describe('login actions', () => {
         })
       })
     })
-
-    describe('when shouldAppendUserIdToQueryString is set to true', () => {
-      beforeEach(async () => {
-        userActions.userLoadData.mockResolvedValue({})
-        await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true }, '123', true)(dispatch, getState)
-      })
-
-      it('should call userLoadData action', () => {
-        expect(userActions.userLoadData).toHaveBeenCalledTimes(1)
-      })
-    })
-
-    describe('when shouldAppendUserIdToQueryString is set to false', () => {
-      beforeEach(async () => {
-        userActions.userLoadData.mockResolvedValue({})
-        await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true }, '123', false)(dispatch, getState)
-      })
-
-      it('should not call userLoadData action', () => {
-        expect(userActions.userLoadData).toHaveBeenCalledTimes(0)
-      })
-    })
   })
 
   describe('loginRedirect', () => {

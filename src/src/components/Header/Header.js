@@ -419,7 +419,6 @@ class Header extends React.PureComponent {
                 isAuthenticated={isAuthenticated}
                 isOpen={isLoginOpen || isHelpPreLoginOpen}
                 isPending={loginPending}
-                shouldAppendUserIdToQueryString={isHelpPreLoginOpen}
               />
               {isHelpPreLoginOpen
                 ? (

@@ -77,7 +77,7 @@ const postLogoutSteps = () => (
   }
 )
 
-const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '', shouldAppendUserIdToQueryString) => (
+const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId = '') => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.USER_LOGIN, true))
     dispatch(error(actionTypes.USER_LOGIN, false))
@@ -88,9 +88,6 @@ const login = ({ email, password, rememberMe, recaptchaToken = null }, orderId =
       }
       await dispatch(authActions.authAuthenticate(email, password, rememberMe, recaptchaToken))
       await dispatch(authActions.authIdentify())
-      if (shouldAppendUserIdToQueryString) {
-        await dispatch(userActions.userLoadData())
-      }
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))
       if (userRoles.size > 0 && authorise(userRoles)) {
