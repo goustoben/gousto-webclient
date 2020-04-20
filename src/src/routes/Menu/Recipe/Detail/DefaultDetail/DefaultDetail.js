@@ -23,7 +23,8 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showCookingInstruction }) => (
+  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable,
+  showCookingInstruction, isChefPrepared, numPortions }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -50,7 +51,8 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
               <AttributeGrid
                 maxNoAttributes={20}
                 showDetailedRecipe
-                cookingTime={cookingTime}
+                numPortions={isChefPrepared ? numPortions : null }
+                cookingTime={isChefPrepared ? null : cookingTime }
                 useWithin={useWithin}
                 equipment={equipment}
                 diet={diet}
@@ -79,7 +81,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 </p>
               )}
               <span className={css.mobileHide}>
-                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
+                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
               </span>
             </div>
           </div>
@@ -124,7 +126,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             )}
           </div>
           <div className={css.stickyContainer}>
-            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
+            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
           </div>
         </div>
       </div>
@@ -134,7 +136,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
 DefaultDetail.propTypes = {
   ...detailPropTypes,
   isFoodBrandClickable: PropTypes.bool,
+  isChefPrepared: PropTypes.bool.isRequired,
   showCookingInstruction: PropTypes.bool.isRequired,
+  numPortions: PropTypes.number.isRequired
 }
 
 DefaultDetail.defaultProps = {

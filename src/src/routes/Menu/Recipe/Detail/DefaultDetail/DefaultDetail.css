@@ -220,6 +220,7 @@
 
 .section {
   composes: paddingLGTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+  width: 100%;
 }
 
 .splitSection {
