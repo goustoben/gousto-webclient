@@ -1,10 +1,9 @@
 @value headingFontStackBold, sizeLG, sizeMD from 'styles/typography.css';
-@value Bluecheese, White from 'styles/colors.css';
+@value Bluecheese, White, Mackerel from 'styles/colors.css';
 @value ScreenXXSMax, ScreenXXSMin from 'styles/screenSizes.css';
 
 .basketErrorModal {
   width: fit-content;
-  padding: 1rem;
   border-radius: 0.5rem;
 
   @media ScreenXXSMax {
@@ -17,7 +16,7 @@
   flex-direction: row;
   margin: 0;
   position: relative;
-  padding: 0.25rem 0.5rem;
+  padding: 1.25rem 1rem 0.5rem;
 }
 
 .basketErrorModalTitle {
@@ -28,8 +27,8 @@
 .basketErrorModalCloseX {
   composes: closeIcon from 'styles/icons.css';
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 1rem;
+  right: 1rem;
   border: none;
   padding: 0;
   background: none;
@@ -38,7 +37,7 @@
 .basketErrorContent {
   text-align: left;
   margin: 0;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 1rem 0.5rem;
 }
 
 .basketErrorContentTitle {
@@ -74,9 +73,21 @@
 
 .basketErrorFooter {
   margin: 0;
-  padding: 1rem 0 0.25rem;
+  padding: 1rem;
+  border-top: 1px solid Mackerel;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .basketErrorModalCloseButton {
-  color: White;
+  width: 35%;
+}
+
+.basketErrorModalSwapButton {
+  width: 60%;
+}
+
+.basketErrorModalCloseFullButton {
+  width: 100%;
 }

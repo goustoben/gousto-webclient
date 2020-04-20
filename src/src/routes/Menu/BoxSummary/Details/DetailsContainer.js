@@ -8,6 +8,7 @@ import {
   getOkRecipeIds,
   getUnavailableRecipeIds,
 } from 'routes/Menu/selectors/basket'
+import { basketRecipeRemove } from '../../actions/basketRecipes'
 import { Details } from './Details'
 
 const mapStateToProps = (state) => ({
@@ -30,7 +31,7 @@ const DetailsContainer = connect(mapStateToProps, {
   basketNumPortionChange: actions.basketNumPortionChange,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketPostcodeChange: actions.basketPostcodeChange,
-  onRemove: actions.basketRecipeRemove,
+  onRemove: basketRecipeRemove,
   clearSlot: actions.basketSlotClear,
   basketRestorePreviousDate: actions.basketRestorePreviousDate,
   showRecipeDetailsOnClick: actions.menuRecipeDetailVisibilityChange,

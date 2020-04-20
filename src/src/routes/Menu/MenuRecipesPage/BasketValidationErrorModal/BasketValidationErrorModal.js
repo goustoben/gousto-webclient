@@ -4,7 +4,7 @@ import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComp
 import { Button } from 'goustouicomponents'
 import css from './BasketValidationErrorModal.css'
 
-export const BasketValidationErrorModal = ({ title, shouldShow, closeModal, brokenRulesToDisplay }) => (
+export const BasketValidationErrorModal = ({ title, shouldShow, shouldShowSwapButton, closeModal, brokenRulesToDisplay, basketRecipeSwap }) => (
   <ModalComponent visible={shouldShow} styleName={css.basketErrorModal}>
     <ModalTitle className={css.basketErrorModalTitleWrapper}>
       <h1 className={css.basketErrorModalTitle}>
@@ -36,7 +36,15 @@ export const BasketValidationErrorModal = ({ title, shouldShow, closeModal, brok
       }
     </ModalContent>
     <ModalFooter className={css.basketErrorFooter}>
-      <Button className={css.basketErrorModalCloseButton} width="full" color="primary" onClick={closeModal}>Close</Button>
+      {
+        shouldShowSwapButton
+          ? <Button className={css.basketErrorModalCloseButton} color="secondary" onClick={closeModal}>Close</Button>
+          : <Button className={css.basketErrorModalCloseFullButton} width="full" color="primary" onClick={closeModal}>Close</Button>
+      }
+      {
+        shouldShowSwapButton
+        && <Button className={css.basketErrorModalSwapButton} color="primary" onClick={basketRecipeSwap}>Swap meal</Button>
+      }
     </ModalFooter>
 
   </ModalComponent>
@@ -45,6 +53,8 @@ export const BasketValidationErrorModal = ({ title, shouldShow, closeModal, brok
 BasketValidationErrorModal.propTypes = {
   title: PropTypes.string.isRequired,
   shouldShow: PropTypes.bool.isRequired,
+  shouldShowSwapButton: PropTypes.bool.isRequired,
+  basketRecipeSwap: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   brokenRulesToDisplay: PropTypes.arrayOf(PropTypes.shape({
     description: PropTypes.string,

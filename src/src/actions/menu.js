@@ -22,13 +22,13 @@ import {
   basketReset,
   basketDateChange,
   basketNumPortionChange,
-  basketRecipeAdd,
   basketProductAdd,
   basketIdChange,
   basketOrderLoaded,
   basketPostcodeChange,
   basketSlotChange
 } from './basket'
+import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import tempActions from './temp'
 import { actionTypes } from './actionTypes'
 

@@ -15,6 +15,7 @@ import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { brandDataReceived } from 'actions/brand'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { basketRecipeAdd } from '../actions/basketRecipes'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
@@ -70,7 +71,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
       // eslint-disable-next-line no-restricted-syntax, no-unused-vars
       for (const [recipeId, qty] of prevBasketRecipes) {
         for (let i = 0; i < qty; i++) {
-          store.dispatch(actions.basketRecipeAdd(recipeId))
+          store.dispatch(basketRecipeAdd(recipeId))
         }
       }
     }
@@ -181,7 +182,7 @@ const addRecipesFromQuery = async (store, query) => {
   const newRecipes = recipeIds.filter(el => inStockRecipes.indexOf(el) > -1).slice(0, 4)
 
   newRecipes.forEach(newRecipe => {
-    store.dispatch(actions.basketRecipeAdd(newRecipe))
+    store.dispatch(basketRecipeAdd(newRecipe))
   })
 }
 

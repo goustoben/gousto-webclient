@@ -15,9 +15,9 @@ import {
   basketAddressChange,
   basketDateChange,
   basketPostcodeChange,
-  basketRecipeRemove,
   basketSlotChange,
 } from './basket'
+import { basketRecipeRemove } from '../routes/Menu/actions/basketRecipes'
 import { actionTypes } from './actionTypes'
 
 export const basketDeliveryDaysReceive = (days) => ({

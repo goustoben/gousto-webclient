@@ -392,7 +392,7 @@ describe('validateRecipeAgainstRule', () => {
     })
   })
 
-  describe('when NO rule break', () => {
+  describe('when recipe is not in rule break items', () => {
     beforeEach(() => {
       menuLimitsForBasket = [
         {
@@ -423,6 +423,80 @@ describe('validateRecipeAgainstRule', () => {
     test('should return emptyArray', () => {
       const result = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, basketRecipes)
       expect(result).toEqual([])
+    })
+  })
+
+  describe('when recipeId is not sent', () => {
+    describe('when basket is valid', () => {
+      beforeEach(() => {
+        menuLimitsForBasket = [
+          {
+            name: 'charlie-binghams-basket-limit',
+            limitProps: {
+              value: 1,
+              description: 'Only 1 oven ready meal is available per order'
+            },
+            items: [
+              {
+                type: 'recipe',core_recipe_id: '3037'
+              },
+              {
+                type: 'recipe',core_recipe_id: '3038'
+              },
+              {
+                type: 'recipe',core_recipe_id: '3039'
+              }
+            ]
+          }
+        ]
+        basketRecipes = Immutable.fromJS({
+          3037: 1
+        })
+      })
+      test('should return emptyArray', () => {
+        const result = validateRecipeAgainstRule(menuLimitsForBasket, null, basketRecipes)
+        expect(result).toEqual([])
+      })
+    })
+
+    describe('when basket is NOT valid', () => {
+      beforeEach(() => {
+        menuLimitsForBasket = [
+          {
+            name: 'charlie-binghams-basket-limit',
+            limitProps: {
+              value: 1,
+              description: 'Only 1 oven ready meal is available per order'
+            },
+            items: [
+              {
+                type: 'recipe',core_recipe_id: '3037'
+              },
+              {
+                type: 'recipe',core_recipe_id: '3038'
+              },
+              {
+                type: 'recipe',core_recipe_id: '3039'
+              }
+            ]
+          }
+        ]
+        basketRecipes = Immutable.fromJS({
+          3037: 1,
+          3038: 2
+        })
+      })
+
+      test('should return broken rules', () => {
+        const result = validateRecipeAgainstRule(menuLimitsForBasket, null, basketRecipes)
+        expect(result).toEqual([
+          {
+            items: [ '3037', '3038',],
+            message: 'Only 1 oven ready meal is available per order',
+            name: 'charlie-binghams-basket-limit',
+          }
+        ])
+      })
     })
   })
 })

@@ -42,15 +42,15 @@ export const getMenuLimitsForBasket = createSelector(
 export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketRecipes) => {
   const limitsReached = menuLimitsForBasket.map(limit => {
     const { name, limitProps, items } = limit
-    const itemFound = items.some(item => item.core_recipe_id === recipeId)
 
-    if (!itemFound) {
+    if (recipeId && !items.some(item => item.core_recipe_id === recipeId)) {
       return null
     }
 
     const recipesInBasketIds = basketRecipes.keySeq().toArray()
     const recipesFromLimitInBasket = recipesInBasketIds && recipesInBasketIds.filter(recipe => items.some(item => item.core_recipe_id === recipe))
-    let count = 0
+    // we set the count to 1 if we trigger the validation at add and 0 if we do it at checkout
+    let count = recipeId ? 1 : 0
 
     if (recipesFromLimitInBasket) {
       recipesFromLimitInBasket.forEach(recipe => {
@@ -60,7 +60,7 @@ export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketR
       })
     }
 
-    if (count + 1 > limitProps.value) {
+    if (count > limitProps.value) {
       return {
         name,
         message: limitProps.description,
