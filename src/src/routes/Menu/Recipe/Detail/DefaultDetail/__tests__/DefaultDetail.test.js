@@ -63,6 +63,8 @@ describe('<DefaultDetail />', () => {
       useWithin="5 days"
       view="detail"
       youWillNeed={Immutable.List(['spoon', 'fork'])}
+      numPortions={2}
+      isChefPrepared={false}
     />
   )
 
@@ -349,6 +351,26 @@ describe('<DefaultDetail />', () => {
 
     test('should not return the <CookingInstructions />', () => {
       expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions).exists()).toBe(false)
+    })
+  })
+
+  describe('When isChefPrepared is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({isChefPrepared: true})
+    })
+
+    test('should send numPortions 2 to AttributeGrid', () => {
+      expect(wrapper.find('AttributeGrid').prop('numPortions')).toEqual(2)
+    })
+
+    test('should send cooking time null to AttributeGrid', () => {
+      expect(wrapper.find('AttributeGrid').prop('cookingTime')).toEqual(null)
+    })
+
+    test('should send text Add meal to Add button', () => {
+      wrapper.find('AddButton').forEach(button =>
+        expect(button.prop('buttonText')).toEqual('Add meal')
+      )
     })
   })
 })

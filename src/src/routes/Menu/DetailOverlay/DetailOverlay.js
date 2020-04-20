@@ -47,6 +47,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   const IsFineDineIn = range.size && range.get('slug') === 'fine-dine-in'
   const view = (IsFineDineIn) ? 'fineDineInDetail' : 'detail'
   const images = (IsFineDineIn) ? getRangeImages(detailRecipe) : null
+  const isChefPrepared = detailRecipe.get('chefPrepared') === true
 
   return (
     <Overlay open={showOverlay}>
@@ -79,6 +80,8 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
         glutenFree={glutenFree}
         dairyFree={dairyFree}
         position={position}
+        isChefPrepared={isChefPrepared}
+        numPortions={numPortions}
       />
     </Overlay>
   )
