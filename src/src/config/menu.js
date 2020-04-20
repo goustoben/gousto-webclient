@@ -56,7 +56,7 @@ module.exports = {
   },
   communicationPanel: {
     title: 'Is the menu smaller?',
-    body: 'Only temporarily! So we can get more boxes out to those in need during this tough time outside the component have logic for show only for logged in customers on menu remove recipe rush warning',
+    body: 'Only temporarily! So we can get more boxes out to those in need during this tough time',
     showIcon: true,
     level: 'info'
   }
