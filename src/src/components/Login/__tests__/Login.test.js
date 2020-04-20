@@ -82,18 +82,7 @@ describe('Login', () => {
         })
 
         test('calls the onSubmit with the required parameters', () => {
-          expect(onSubmitSpy).toHaveBeenCalledWith({ ...EXPECTED_CALL, shouldAppendUserIdToQueryString: false})
-        })
-
-        describe('and the shouldAppendUserIdToQueryString prop is set to true', () => {
-          beforeEach(() => {
-            wrapper.setProps({ shouldAppendUserIdToQueryString: true })
-            wrapper.instance().handleSubmit(event)
-          })
-
-          test('calls the onSubmit with the required parameters', () => {
-            expect(onSubmitSpy).toHaveBeenCalledWith({ ...EXPECTED_CALL, shouldAppendUserIdToQueryString: true})
-          })
+          expect(onSubmitSpy).toHaveBeenCalledWith({ ...EXPECTED_CALL })
         })
       })
     })

@@ -482,11 +482,6 @@ describe('Header', () => {
       wrapper.setProps({ isHelpPreLoginOpen: true })
     })
 
-    test('renders the Login component with shouldAppendUserIdToQueryString set to true', () => {
-      expect(wrapper.find('Connect(Login)').prop('shouldAppendUserIdToQueryString'))
-        .toBe(true)
-    })
-
     test('renders the Login component with pre loging Help title', () => {
       expect(wrapper.find('Connect(Login)').prop('title'))
         .toBe('We can help you faster if you\'re logged in')

@@ -83,10 +83,10 @@ class Login extends React.PureComponent {
     }
 
     const { email, password, remember, emailValid, passwordValid, recaptchaValue } = this.state
-    const { onSubmit, onInvalid, shouldAppendUserIdToQueryString } = this.props
+    const { onSubmit, onInvalid } = this.props
 
     if (emailValid && passwordValid) {
-      onSubmit({ email, password, rememberMe: remember, recaptchaToken: recaptchaValue, shouldAppendUserIdToQueryString })
+      onSubmit({ email, password, rememberMe: remember, recaptchaToken: recaptchaValue })
     } else {
       onInvalid({ email, password })
     }
@@ -247,7 +247,6 @@ Login.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onInvalid: PropTypes.func,
   rememberMeDefault: PropTypes.bool,
-  shouldAppendUserIdToQueryString: PropTypes.bool,
   statusText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
@@ -261,7 +260,6 @@ Login.defaultProps = {
   isAuthenticating: false,
   onInvalid: () => {},
   rememberMeDefault: false,
-  shouldAppendUserIdToQueryString: false,
   statusText: '',
   title: 'Login',
 }
