@@ -40,11 +40,6 @@
 	}
 }
 
-.alignBadges {
-	width: 100%;
-	display: flex;
-}
-
 .badgeItem {
 	margin-right: 6px;
 	padding-top: 5px
@@ -60,7 +55,6 @@
 
 .linkUnderlined {
 	composes: link;
-	border-bottom: 1px solid  rgba(234, 235, 236, 0.4);
 	&:hover {
 		text-decoration: underline;
 	}
@@ -96,6 +90,7 @@
 .rangeBadgeWrapper {
 	margin-top: -20px;
 	position: absolute;
+	z-index: 12;
 }
 
 .buttonContainer {
