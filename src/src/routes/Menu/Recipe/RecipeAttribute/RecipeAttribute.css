@@ -14,5 +14,4 @@
 .attribute {
 	min-height: calc(sizeMD * attributesLineHeight);
     min-width: 50%;
-    border-top: 1px solid  rgba(234, 235, 236, 0.4);
 }
