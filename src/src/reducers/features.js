@@ -63,6 +63,9 @@ const defaultFeatures = () => ({
   enableTVPromoAds: {
     value: false,
   },
+  blockedResubscription: {
+    value: false,
+  }
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())
