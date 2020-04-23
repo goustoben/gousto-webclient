@@ -1,0 +1,113 @@
+{
+  "status": "ok",
+  "meta": {
+    "offset": 0,
+    "limit": 250,
+    "count": 3,
+    "total": 3
+  },
+  "data": [
+    {
+      "id": "e3548df4-73ed-4d51-a663-a71c3be1d80d",
+      "date": "2020-04-19",
+      "is_default": false,
+      "core_day_id": "2082",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
+      "slots": [
+        {
+          "id": "6cadeebc-9ada-11e6-b24b-062a27f88e45",
+          "default_day": 0,
+          "core_slot_id": "13",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 4,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-04-16T11:59:59+01:00"
+        }
+      ],
+      "day_slots": [
+        {
+          "id": "3333",
+          "day_id": "e3548df4-73ed-4d51-a663-a71c3be1d80d",
+          "slot_id": "6cadeebc-9ada-11e6-b24b-062a27f88e45",
+          "when_cutoff": "2020-04-16T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": false,
+          "active_for_non_subscribers_one_off": false
+        }
+      ]
+    },
+    {
+      "id": "c2df88cb-b99d-46c8-ba03-2c4742a21d36",
+      "date": "2020-04-20",
+      "is_default": false,
+      "core_day_id": "2079",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
+      "slots": [
+        {
+          "id": "daf6ce02-12d1-11e6-8486-06ddb628bdc5",
+          "default_day": 1,
+          "core_slot_id": "8",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 5,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-04-17T11:59:59+01:00"
+        }
+      ],
+      "day_slots": [
+        {
+          "id": "3960",
+          "day_id": "c2df88cb-b99d-46c8-ba03-2c4742a21d36",
+          "slot_id": "daf6ce02-12d1-11e6-8486-06ddb628bdc5",
+          "when_cutoff": "2020-04-17T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": false,
+          "active_for_non_subscribers_one_off": false
+        }
+      ]
+    },
+    {
+      "id": "bf3dd456-bbf3-4ddc-bff9-0ae3cb836ff3",
+      "date": "2020-04-21",
+      "is_default": false,
+      "core_day_id": "2080",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
+      "slots": [
+        {
+          "id": "6caf6990-9ada-11e6-9b7c-062a27f88e45",
+          "default_day": 2,
+          "core_slot_id": "11",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 6,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-04-18T11:59:59+01:00"
+        }
+      ],
+      "day_slots": [
+        {
+          "id": "3386",
+          "day_id": "bf3dd456-bbf3-4ddc-bff9-0ae3cb836ff3",
+          "slot_id": "6caf6990-9ada-11e6-9b7c-062a27f88e45",
+          "when_cutoff": "2020-04-18T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": false,
+          "active_for_non_subscribers_one_off": false
+        }
+      ]
+    }
+  ]
+}

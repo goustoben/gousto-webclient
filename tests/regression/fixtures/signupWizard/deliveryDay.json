@@ -1,0 +1,20 @@
+{
+  "status":"ok",
+  "result": {
+    "data": {
+      "2036": {"recipe_id":2036,"period_id":327,"slot_number":"3","committed":"0","number":-450,"family_number":-225},
+      "2837": {"recipe_id":2837,"period_id":327,"slot_number":"3","committed":"0","number":-934,"family_number":-467},
+      "1506": {"recipe_id":1506,"period_id":327,"slot_number":"3","committed":"0","number":-1357,"family_number":-678},
+      "1533": {"recipe_id":1533,"period_id":327,"slot_number":"3","committed":"0","number":-6068,"family_number":-3034},
+      "2490": {"recipe_id":2490,"period_id":327,"slot_number":"3","committed":"0","number":-2146,"family_number":-1073},
+      "2434": {"recipe_id":2434,"period_id":327,"slot_number":"3","committed":"0","number":368,"family_number":184},
+      "464": {"recipe_id":464,"period_id":327,"slot_number":"3","committed":"0","number":-2192,"family_number":-1096},
+      "1514": {"recipe_id":1514,"period_id":327,"slot_number":"3","committed":"0","number":-2268,"family_number":-1134},
+      "2295": {"recipe_id":2295,"period_id":327,"slot_number":"3","committed":"0","number":-5142,"family_number":-2571},
+      "2418": {"recipe_id":2418,"period_id":327,"slot_number":"3","committed":"0","number":-1324,"family_number":-662},
+      "2000": {"recipe_id":2000,"period_id":327,"slot_number":"3","committed":"0","number":-1846,"family_number":-923},
+      "2842": {"recipe_id":2842,"period_id":327,"slot_number":"3","committed":"0","number":-2008,"family_number":-1004}
+    },
+    "meta": []
+  }
+}
