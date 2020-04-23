@@ -17,6 +17,7 @@ describe('given customer is on the signup/delivery-options page', () => {
     beforeEach(() => {
       cy.fixture('signupWizard/deliveryDay').as('delivery-day')
       cy.route('GET', /delivery_day\/[0-9]{4}\/stock/, '@delivery-day').as('delivery-day')
+      cy.url().should('include', 'signup/delivery-options')
       cy.get('[data-testing="signupDeliveryCTA"]')
         .should('be.visible')
         .click()

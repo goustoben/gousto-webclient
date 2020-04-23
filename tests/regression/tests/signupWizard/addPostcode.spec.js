@@ -10,6 +10,7 @@ describe('given customer is on the signup/postcode page', () => {
       .should('be.visible')
       .click()
     cy.getDeliveryOptions()
+    cy.url().should('include', postcodeURL)
   })
 
   it('should have an empty input and disabled button by default', () => {

@@ -57,6 +57,6 @@ Cypress.Commands.add('goToCheckoutFlow', (withDiscount = false) => {
 
 Cypress.Commands.add('getDeliveryOptions', () => {
   cy.server()
-  cy.route('GET', /deliveries/, updateDatesForDeliveryOptions(deliveriesJson)).as('deliveries')
+  cy.route('GET', /deliveries\/v1.0/, updateDatesForDeliveryOptions(deliveriesJson)).as('deliveries')
 })
 
