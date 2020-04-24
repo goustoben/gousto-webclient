@@ -61,6 +61,8 @@ jobs:
           root: ~/
           paths:
             - project/src
+            - project/tests
+            - project/regression
             - project/ansible
             - project/cloudformation
             - project/kubernetes
