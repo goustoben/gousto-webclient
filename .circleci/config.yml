@@ -274,6 +274,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
+            - setup-platform
           filters:
             branches:
               only:
