@@ -33,6 +33,7 @@ describe('given customer is on the signup/postcode page', () => {
     withPlatformTags(WEB).it('should take a user to a delivery options step when Continue button is clicked', () => {
       cy.get('[data-testing="signupPostcodeCTADesktop"]')
         .should('not.have.class','disabled')
+        .wait(2000)
         .click()
 
       cy.wait('@deliveries')
@@ -42,6 +43,7 @@ describe('given customer is on the signup/postcode page', () => {
     withPlatformTags(MOBILE).it('should take a user to a delivery options step when Next button is clicked', () => {
       cy.get('[data-testing="signupPostcodeCTAMobile"]')
         .should('not.have.class','disabled')
+        .wait(2000)
         .click()
 
       cy.wait('@deliveries')
