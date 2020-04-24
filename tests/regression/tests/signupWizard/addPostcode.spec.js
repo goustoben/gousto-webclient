@@ -2,14 +2,14 @@ import { withPlatformTags, MOBILE, WEB } from '../../utils/tags'
 
 describe('given customer is on the signup/postcode page', () => {
   const postcodeURL = '/signup/postcode'
+  const boxSizeURL = '/signup/box-size'
 
   beforeEach(() => {
     cy.server()
-    cy.visit(postcodeURL)
+    cy.visit(boxSizeURL)
     cy.get('[data-testing="signupBoxSize2Portions"]')
       .should('be.visible')
       .click()
-    cy.getDeliveryOptions()
     cy.url().should('include', postcodeURL)
   })
 
@@ -25,8 +25,9 @@ describe('given customer is on the signup/postcode page', () => {
 
     beforeEach(() => {
       cy.get('[data-testing="signupPostcodeInput"]')
-        .type('E1 7JB', { delay: 80 })
+        .type('E1 7JB', { delay: 40 })
         .should('have.value', 'E1 7JB')
+      cy.getDeliveryOptions()
     })
 
     withPlatformTags(WEB).it('should take a user to a delivery options step when Continue button is clicked', () => {
@@ -51,7 +52,7 @@ describe('given customer is on the signup/postcode page', () => {
   describe('when postcode is filled out with invalid data', () => {
     beforeEach(() => {
       cy.get('[data-testing="signupPostcodeInput"]')
-        .type('W3', { delay: 80 })
+        .type('W3', { delay: 40 })
         .should('have.value', 'W3')
     })
 
