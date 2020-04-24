@@ -3,8 +3,6 @@
 // // commands please read more here:
 // // https://on.cypress.io/custom-commands
 // // ***********************************************
-import { updateDatesForDeliveryOptions } from '../utils/helpers'
-import deliveriesJson from '../fixtures/signupWizard/deliveries'
 
 Cypress.Commands.add('login', () => {
   cy.server()
@@ -55,11 +53,3 @@ Cypress.Commands.add('goToCheckoutFlow', (withDiscount = false) => {
   cy.wait(['@previewOrder', '@prices'])
 })
 
-Cypress.Commands.add('getDeliveryOptions', (postcode) => {
-  if (postcode && postcode.length === 6) {
-    cy.fixture('../fixtures/signupWizard/deliveries').then(() => {
-      const response = updateDatesForDeliveryOptions(deliveriesJson)
-      cy.route('GET', /deliveries\/v1.0\/days\?/, response).as('deliveries')
-    })
-  }
-})
