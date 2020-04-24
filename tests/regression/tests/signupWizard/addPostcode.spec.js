@@ -22,18 +22,18 @@ describe('given customer is on the signup/postcode page', () => {
 
   describe('when postcode is filled out with proper value', () => {
     const deliveryOptionsURL = '/signup/delivery-options'
+    const postCode = 'E1 7JB'
 
     beforeEach(() => {
       cy.get('[data-testing="signupPostcodeInput"]')
-        .type('E1 7JB', { delay: 40 })
-        .should('have.value', 'E1 7JB')
-      cy.getDeliveryOptions()
+        .type(postCode, { delay: 40 })
+        .should('have.value', postCode)
+      cy.getDeliveryOptions(postCode)
     })
 
     withPlatformTags(WEB).it('should take a user to a delivery options step when Continue button is clicked', () => {
       cy.get('[data-testing="signupPostcodeCTADesktop"]')
         .should('not.have.class','disabled')
-        .wait(2000)
         .click()
 
       cy.wait('@deliveries')
@@ -43,7 +43,6 @@ describe('given customer is on the signup/postcode page', () => {
     withPlatformTags(MOBILE).it('should take a user to a delivery options step when Next button is clicked', () => {
       cy.get('[data-testing="signupPostcodeCTAMobile"]')
         .should('not.have.class','disabled')
-        .wait(2000)
         .click()
 
       cy.wait('@deliveries')
