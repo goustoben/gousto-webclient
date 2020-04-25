@@ -13,28 +13,6 @@ gousto_build_image_docker: &gousto_build_image_docker
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 jobs:
-  install-dependencies:
-    docker: *gousto_build_image
-    steps:
-      - checkout
-      - run:
-          name: Setup platform
-          command: /gousto/platform-setup.sh
-      - run:
-          name: Install global npm dependencies
-          command: npm i -g gulp && npm i -g concurrently@2.2.0
-      - run:
-          name: Setup common
-          command: source ~/.circlerc && setup/setup-common.sh
-      - run:
-          name: Install isomorphic npm dependencies
-          command: cd src && npm ci && npm run postinstall
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
-
   test-isomorphic-jest:
     docker: *gousto_build_image
     steps:
@@ -69,16 +47,47 @@ jobs:
       - store_artifacts:
           path: /tmp/artifacts
 
-  setup-remote-image-repositories:
+  setup-src:
+    docker: *gousto_build_image
+    steps:
+      - checkout
+      - run:
+          name: Install global npm dependencies
+          command: npm i -g gulp && npm i -g concurrently@2.2.0
+      - run:
+          name: Install isomorphic npm dependencies
+          command: cd src && npm ci && npm run postinstall
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/src
+            - project/tests
+            - project/regression
+            - project/ansible
+            - project/cloudformation
+            - project/kubernetes
+            - project/service.yml
+
+  setup-platform:
     docker: *gousto_build_image_docker
     steps:
+      - checkout
+      - run:
+          name: Setup platform
+          command: /gousto/platform-setup.sh
       - setup_remote_docker
-      - attach_workspace:
-          at: ~/
       - run:
           name: Create & deploy image
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --setup
           no_output_timeout: 10m
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/setup
+            - project/scripts
+            - project/ci_scripts
+            - project/images
+            - .circlerc
 
   build-application:
     docker: *gousto_build_image
@@ -94,8 +103,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
-            - .circlerc
+            - project/src
 
   build-nginx-image:
     docker: *gousto_build_image_docker
@@ -114,15 +122,6 @@ jobs:
       - setup_remote_docker
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install global nom dependencies
-          command: npm i -g gulp && npm i -g concurrently@2.2.0
-      - run:
-          name: Setup common
-          command: source ~/.circlerc && setup/setup-common.sh
-      - run:
-          name: Setup isomorphic
-          command: source ~/.circlerc && setup/setup-isomorphic.sh
       - run:
           name: Upload client to S3
           command: source ~/.circlerc && scripts/build-docker.sh
@@ -202,17 +201,15 @@ workflows:
   version: 2
   development-environment:
     jobs:
-      - install-dependencies:
+      - setup-src:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
               only:
                 - /^env-.*/
                 - develop
-      - setup-remote-image-repositories:
+      - setup-platform:
           context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
           filters:
             branches:
               only:
@@ -221,16 +218,15 @@ workflows:
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - setup-src
           filters:
             branches:
               only:
-                - /^env-.*/
                 - develop
       - build-nginx-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-remote-image-repositories
+            - setup-platform
           filters:
             branches:
               only:
@@ -239,7 +235,7 @@ workflows:
       - build-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-remote-image-repositories
+            - build-application
           filters:
             branches:
               only:
@@ -248,7 +244,8 @@ workflows:
       - build-application:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-remote-image-repositories
+            - setup-src
+            - setup-platform
           filters:
             branches:
               only:
@@ -278,7 +275,8 @@ workflows:
       - install-test-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - setup-src
+            - setup-platform
           filters:
             branches:
               only:
@@ -331,24 +329,14 @@ workflows:
 
   production-environment:
     jobs:
-      - install-dependencies:
+      - setup-src:
           context: gousto-prod-aws-app-circleci
           filters:
             branches:
               only:
                 - master
-      - test-isomorphic-jest:
+      - setup-platform:
           context: gousto-prod-aws-app-circleci
-          requires:
-            - install-dependencies
-          filters:
-            branches:
-              only:
-                - master
-      - setup-remote-image-repositories:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - install-dependencies
           filters:
             branches:
               only:
@@ -356,15 +344,7 @@ workflows:
       - build-nginx-image:
           context: gousto-prod-aws-app-circleci
           requires:
-            - setup-remote-image-repositories
-          filters:
-            branches:
-              only:
-                - master
-      - build-webclient-image:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - setup-remote-image-repositories
+            - setup-platform
           filters:
             branches:
               only:
@@ -372,7 +352,16 @@ workflows:
       - build-application:
           context: gousto-prod-aws-app-circleci
           requires:
-            - test-isomorphic-jest
+            - setup-src
+          filters:
+            branches:
+              only:
+                - master
+      - build-webclient-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-application
+            - setup-platform
           filters:
             branches:
               only:
