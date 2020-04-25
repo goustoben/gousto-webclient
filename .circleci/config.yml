@@ -353,6 +353,7 @@ workflows:
           context: gousto-prod-aws-app-circleci
           requires:
             - setup-src
+            - setup-platform
           filters:
             branches:
               only:
@@ -361,7 +362,6 @@ workflows:
           context: gousto-prod-aws-app-circleci
           requires:
             - build-application
-            - setup-platform
           filters:
             branches:
               only:
