@@ -39,6 +39,7 @@ const propTypes = {
   params: PropTypes.shape({}),
   isSignupReductionEnabled: PropTypes.bool,
   showCommunicationPanel: PropTypes.bool,
+  checkQueryParams: PropTypes.func.isRequired
 }
 
 const defaultProps = {
@@ -71,6 +72,7 @@ export class MenuRecipesPage extends PureComponent {
       query,
       portionSizeSelectedTracking,
       numPortions,
+      checkQueryParams
     } = this.props
 
     // if server rendered
@@ -88,6 +90,8 @@ export class MenuRecipesPage extends PureComponent {
     if (orderId) {
       portionSizeSelectedTracking(numPortions, orderId)
     }
+
+    checkQueryParams()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -131,7 +135,7 @@ export class MenuRecipesPage extends PureComponent {
   handleKeyup = (e) => {
     const { detailVisibilityChange } = this.props
     if (e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
-      detailVisibilityChange(false)
+      detailVisibilityChange()
     }
   }
 

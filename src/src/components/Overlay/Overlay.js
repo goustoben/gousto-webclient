@@ -9,19 +9,28 @@ import css from './Overlay.css'
 let __scrollFromTop // eslint-disable-line no-underscore-dangle
 let __bodyPrevStyle // eslint-disable-line no-underscore-dangle
 
-class Overlay extends React.Component {
-  static propTypes = {
-    open: PropTypes.bool.isRequired,
-    className: PropTypes.string,
-    contentClassName: PropTypes.string,
-    from: PropTypes.string,
-    resetScroll: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
-  }
+class Overlay extends React.PureComponent {
+  static closeOverlayForEachNode(nodeOverride) {
+    const reactRoot = document.getElementById('react-root')
+    reactRoot.setAttribute('style', '')
+    reactRoot.className = ''
+    if (this.reactRoot) {
+      this.reactRoot = null
+    }
+    ReactDOM.unmountComponentAtNode(nodeOverride)
+    document.body.removeChild(nodeOverride)
+    if (this.node) {
+      this.node = null
+    }
 
-  static defaultProps = {
-    rootId: 'react-root',
-    from: 'right',
-    resetScroll: false,
+    document.body.setAttribute('style', __bodyPrevStyle)
+    document.body.removeAttribute('data-gousto-overlay-open')
+
+    const scrollFromTop = this.resetScroll ? 0 : __scrollFromTop
+    window.scrollTo(0, scrollFromTop)
+    if (this.resetScroll) {
+      forceCheck()
+    }
   }
 
   static forceCloseAll() {
@@ -29,16 +38,24 @@ class Overlay extends React.Component {
       const nodes = document.querySelectorAll('.__goustoOverlayContainer__')
       if (nodes.length > 0) {
         nodes.forEach(node => {
-          Overlay.closeOverlay(node)
+          Overlay.closeOverlayForEachNode(node)
         })
       }
     }
   }
 
-  static closeOverlay(nodeOverride) {
-    const node = this.node || nodeOverride
-    const reactRoot = nodeOverride ? document.getElementById('react-root') : this.reactRoot
+  componentWillReceiveProps(newProps) {
+    if (this.props.open !== newProps.open) {
+      if (newProps.open) {
+        this.renderOverlay(newProps)
+      } else {
+        this.fadeOut()
+      }
+    }
+  }
 
+  closeOverlay = () => {
+    const { node, reactRoot, scrollFromTop, bodyPrevStyle, resetScroll } = this
     if (reactRoot) {
       reactRoot.setAttribute('style', '')
       reactRoot.className = ''
@@ -55,26 +72,13 @@ class Overlay extends React.Component {
       }
     }
 
-    const scrollFromTop = nodeOverride ? __scrollFromTop : this.scrollFromTop
-    const bodyPrevStyle = nodeOverride ? __bodyPrevStyle : this.bodyPrevStyle
-
     document.body.setAttribute('style', bodyPrevStyle)
     document.body.removeAttribute('data-gousto-overlay-open')
-    if (this.resetScroll) {
-      window.scrollTo(0, 0)
-      forceCheck()
-    } else {
-      window.scrollTo(0, scrollFromTop)
-    }
-  }
 
-  componentWillReceiveProps(newProps) {
-    if (this.props.open !== newProps.open) {
-      if (newProps.open) {
-        this.renderOverlay(newProps)
-      } else {
-        this.fadeOut()
-      }
+    const scrollFromTopValue = resetScroll ? 0 : scrollFromTop
+    window.scrollTo(0, scrollFromTopValue)
+    if (resetScroll) {
+      forceCheck()
     }
   }
 
@@ -104,7 +108,7 @@ class Overlay extends React.Component {
       this.reactRoot.className = css.reactRootOverlayBlurIn
     }
 
-    setTimeout(Overlay.closeOverlay.bind(this), 500)
+    this.closeOverlay()
   }
 
   renderOverlay = (props) => {
@@ -151,6 +155,23 @@ class Overlay extends React.Component {
   render() {
     return null
   }
+}
+
+Overlay.propTypes = {
+  open: PropTypes.bool.isRequired,
+  className: PropTypes.string,
+  contentClassName: PropTypes.string,
+  from: PropTypes.string,
+  resetScroll: PropTypes.bool,//eslint-disable-line
+  rootId: PropTypes.string //eslint-disable-line
+}
+
+Overlay.defaultProps = {
+  rootId: 'react-root',
+  from: 'right',
+  resetScroll: false,
+  contentClassName: '',
+  className: ''
 }
 
 export default Overlay

@@ -8,6 +8,7 @@ import {
   getOkRecipeIds,
   getUnavailableRecipeIds,
 } from 'routes/Menu/selectors/basket'
+import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { basketRecipeRemove } from '../../actions/basketRecipes'
 import { Details } from './Details'
 
@@ -34,7 +35,7 @@ const DetailsContainer = connect(mapStateToProps, {
   onRemove: basketRecipeRemove,
   clearSlot: actions.basketSlotClear,
   basketRestorePreviousDate: actions.basketRestorePreviousDate,
-  showRecipeDetailsOnClick: actions.menuRecipeDetailVisibilityChange,
+  showRecipeDetailsOnClick: menuRecipeDetailVisibilityChange,
   boxSummaryVisibilityChange,
   trackingUnavailableRecipeList,
 })(Details)

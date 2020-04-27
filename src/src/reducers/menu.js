@@ -32,6 +32,15 @@ const menu = {
       return state
     }
   },
+  menuRecipeDetails: (state = Immutable.Map({}), action) => {
+    switch (action.type) {
+    case actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE:
+      return state.set('recipeId', action.recipeId)
+
+    default:
+      return state
+    }
+  },
 
   menuCutoffUntil: (state = '', action) => {
     switch (action.type) {

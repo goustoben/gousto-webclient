@@ -14,7 +14,9 @@ jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalCo
 
 describe('initial render', () => {
   let wrapper
+  let checkQueryParamsSpy
   beforeEach(() => {
+    checkQueryParamsSpy = jest.fn()
     SubHeader.mockReturnValue(<div />)
 
     wrapper = shallow(
@@ -28,6 +30,7 @@ describe('initial render', () => {
         menuRecipeDetailShow=""
         selectCurrentCollection={jest.fn()}
         detailVisibilityChange={() => { }}
+        checkQueryParams={checkQueryParamsSpy}
       />,
     )
   })
@@ -56,6 +59,10 @@ describe('initial render', () => {
     expect(wrapper.find('BasketValidationErrorModalContainer')).toHaveLength(1)
   })
 
+  test('should call checkQueryParams at componentDidMount', () => {
+    expect(checkQueryParamsSpy).toHaveBeenCalledTimes(1)
+  })
+
   describe('when showCommunicationPanel true', () => {
     beforeEach(() => {
       wrapper.setProps({showCommunicationPanel: true})
@@ -81,6 +88,7 @@ describe('with the collections feature enabled', () => {
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
         selectCurrentCollection={jest.fn()}
+        checkQueryParams={() => {}}
       />,
     )
     expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
@@ -102,6 +110,7 @@ describe('with the force collections feature enabled', () => {
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
         selectCurrentCollection={jest.fn()}
+        checkQueryParams={() => {}}
       />,
     )
 
@@ -119,6 +128,7 @@ describe('with the force collections feature enabled', () => {
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
         selectCurrentCollection={jest.fn()}
+        checkQueryParams={() => {}}
       />,
     )
 
@@ -142,6 +152,7 @@ describe('selectCurrentCollection', () => {
         menuRecipeDetailShow=""
         detailVisibilityChange={() => { }}
         selectCurrentCollection={selectCurrentCollection}
+        checkQueryParams={() => {}}
       />,
     )
   })
@@ -178,6 +189,7 @@ describe('componentWillUnmount', () => {
         menuRecipeDetailShow=""
         selectCurrentCollection={() => { }}
         detailVisibilityChange={() => { }}
+        checkQueryParams={() => {}}
       />,
     )
   })

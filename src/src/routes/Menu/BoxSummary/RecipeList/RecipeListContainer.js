@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import actions from 'actions'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
+import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { RecipeList } from './RecipeList'
 
 const mapStateToProps = (state) => ({
@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
 })
 
 const RecipeListContainer = connect(mapStateToProps, {
-  detailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
+  detailVisibilityChange: menuRecipeDetailVisibilityChange,
   boxDetailsVisibilityChange: boxSummaryVisibilityChange,
 })(RecipeList)
 

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
-import { showDetailRecipe } from 'actions/menu'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
+import { showDetailRecipe } from '../actions/menuRecipeDetails'
 
 import { RecipeList } from './RecipeList'
 
