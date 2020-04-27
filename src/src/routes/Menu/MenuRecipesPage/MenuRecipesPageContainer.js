@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { changeCollectionById } from 'actions/filters'
-import { menuRecipeDetailVisibilityChange } from 'actions/menu'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getIsSignupReductionEnabled, getIsCommunicationPanelEnabled } from 'selectors/features'
 import { getRecipes } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
+import { menuRecipeDetailVisibilityChange, checkQueryParams } from '../actions/menuRecipeDetails'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCurrentCollectionId } from '../selectors/collections'
@@ -43,6 +43,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
+  checkQueryParams,
   shouldJfyTutorialBeVisible,
   selectCurrentCollection: changeCollectionById,
   detailVisibilityChange: menuRecipeDetailVisibilityChange,

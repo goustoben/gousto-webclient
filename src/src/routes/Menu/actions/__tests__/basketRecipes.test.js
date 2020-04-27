@@ -4,21 +4,21 @@ import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import * as basketActions from '../basketRecipes'
 import * as menuCheckoutClickActions from '../menuCheckoutClick'
-import { safeJestMock, multiReturnMock } from '../../../../_testing/mocks'
+import { safeJestMock, multiReturnMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
 import pricingActions from '../../../../actions/pricing'
 import * as menuSelectors from '../../selectors/menu'
+import * as menuRecipeDetailsActions from '../menuRecipeDetails'
 
 describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   let getStateSpy
   const dispatch = jest.fn()
   const pricingRequestAction = Symbol('Pricing request')
   let pricingRequestSpy
+
   beforeEach(() => {
     const limitReachSpy = safeJestMock(basketUtils, 'limitReached')
     limitReachSpy.mockReturnValue(false)
     pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
-  })
-  beforeEach(() => {
     getStateSpy = jest.fn().mockReturnValueOnce({
       tracking: Immutable.fromJS({}),
       basket: Immutable.Map({
@@ -407,6 +407,9 @@ describe('basketRecipeAdd', () => {
       basket: Immutable.Map({
         123: 1,
         345: 1
+      }),
+      menuRecipeDetails: Immutable.Map({
+        recipeId: null
       })
     }
     getStateSpy = () => (state)
@@ -474,6 +477,29 @@ describe('basketRecipeAdd', () => {
             ]
           }
         })
+    })
+
+    describe('when details screen is opened', () => {
+      beforeEach(() => {
+        const menuRecipeDetailVisibilityChangeSpy = safeJestMock(menuRecipeDetailsActions, 'menuRecipeDetailVisibilityChange')
+        returnArgumentsFromMock(menuRecipeDetailVisibilityChangeSpy, 'menuRecipeDetailVisibilityChange')
+        state = {
+          basket: Immutable.Map({
+            123: 1,
+            345: 1
+          }),
+          menuRecipeDetails: Immutable.Map({
+            recipeId: '1234'
+          })
+        }
+        getStateSpy = () => (state)
+        dispatch = jest.fn()
+      })
+
+      test('should dispatch menuRecipeDetailVisibilityChange', () => {
+        basketActions.basketRecipeAdd('1234', 'view', {}, 4)(dispatch, getStateSpy)
+        expect(dispatch).toHaveBeenCalledWith(['menuRecipeDetailVisibilityChange', []])
+      })
     })
   })
 })

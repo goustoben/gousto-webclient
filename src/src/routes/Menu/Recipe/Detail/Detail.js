@@ -48,8 +48,8 @@ export class Detail extends React.Component {
     const { menuRecipeDetailVisibilityChange } = this.props
 
     return (
-      <div onClick={() => { menuRecipeDetailVisibilityChange(false) }}>
-        <div className={css.container} onClick={(e) => { e.stopPropagation() }}>
+      <div role="button" tabIndex={0} onKeyPress={menuRecipeDetailVisibilityChange} onClick={menuRecipeDetailVisibilityChange}>
+        <div role="button" tabIndex={0} className={css.container} onKeyPress={(e) => { e.stopPropagation() }} onClick={(e) => { e.stopPropagation() }}>
           {this.detailComponent}
         </div>
       </div>
@@ -82,7 +82,7 @@ Detail.propTypes = {
   diet: PropTypes.string,
   equipment: PropTypes.instanceOf(Immutable.List),
 
-  menuRecipeDetailVisibilityChange: PropTypes.func,
+  menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   scrolledPastPoint: PropTypes.bool,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),

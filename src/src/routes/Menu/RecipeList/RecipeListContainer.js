@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
-import { showDetailRecipe } from 'actions/menu'
+import { showDetailRecipe } from '../actions/menuRecipeDetails'
 import { getCutoffDate } from '../selectors/cutoff'
 import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 

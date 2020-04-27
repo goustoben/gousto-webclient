@@ -32,7 +32,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             <div className={css.headerContentContainer}>
               <div className={css.titleFlex}>
                 <Title title={title} view={view} detail />
-                <span className={css.closeIcon} onClick={() => { menuRecipeDetailVisibilityChange(false) }} />
+                <span className={css.closeIcon} role="button" tabIndex={0} onKeyPress={menuRecipeDetailVisibilityChange} onClick={menuRecipeDetailVisibilityChange} />
               </div>
             </div>
           </div>

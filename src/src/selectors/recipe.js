@@ -28,12 +28,4 @@ export const getMicronutrientsForRecipeID = ({ recipes }, recipeID) => {
   return healthKitchenDetails && healthKitchenDetails.get('micronutrients')
 }
 
-export const getRecipeIdFromUrl = ({ routing }) => {
-  const { locationBeforeTransitions } = routing
-  const query = locationBeforeTransitions && locationBeforeTransitions.query
-  const menuRecipeDetailShow = (query && query.recipeDetailId) ? query.recipeDetailId : ''
-
-  return menuRecipeDetailShow
-}
-
 export const getRecipeById = ({ recipes }, recipeId) => recipes.get(recipeId, null)

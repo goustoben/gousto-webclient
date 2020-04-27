@@ -46,8 +46,8 @@ describe('the routing selectors', () => {
         }
       })
 
-      test('returns an empty string', () => {
-        expect(locationQuery(store)).toBe('')
+      test('returns an empty object', () => {
+        expect(locationQuery(store)).toEqual({})
       })
     })
   })

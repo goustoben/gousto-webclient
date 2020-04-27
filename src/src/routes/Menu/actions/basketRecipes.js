@@ -11,6 +11,8 @@ import { getUTMAndPromoCode } from '../../../selectors/tracking'
 import { getBasketNotValidError } from '../../../selectors/status'
 import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/menu'
 import { clearBasketNotValidError } from './menuCheckoutClick'
+import { menuRecipeDetailVisibilityChange } from './menuRecipeDetails'
+import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
@@ -110,6 +112,11 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
       rules: []
     }
     basketBreakingRules.rules = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, basketRecipes)
+    const shouldCloseDetailsScreen = basketBreakingRules.rules.length && getMenuRecipeIdForDetails(getState())
+
+    if (shouldCloseDetailsScreen) {
+      dispatch(menuRecipeDetailVisibilityChange())
+    }
 
     if (basketBreakingRules.rules.length) {
       dispatch(status.error(actionTypes.BASKET_NOT_VALID, basketBreakingRules))

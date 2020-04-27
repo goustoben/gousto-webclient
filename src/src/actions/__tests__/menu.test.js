@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from '../actionTypes'
 const mockFetchAvailableDates = jest.fn()
 const mockFetchRecipeStock = jest.fn()
@@ -337,39 +336,6 @@ describe('menu actions', () => {
         type: actionTypes.MENU_LOAD_COMPLETE,
         timeToLoadMs: 12345,
         useMenuService: true
-      })
-    })
-  })
-
-  describe('showDetailRecipe', () => {
-    describe('when boxSummaryShow is true', () => {
-      beforeAll(() => {
-        const stateWithTrueBoxSummaryShow = {
-          ...state,
-          boxSummaryShow: Immutable.fromJS({
-            show: false
-          }),
-          routing: {
-            locationBeforeTransitions: {
-              query: ''
-            }
-          }
-        }
-        const getStateForTest = () => stateWithTrueBoxSummaryShow
-
-        menuActions.showDetailRecipe('1234', false)(dispatch, getStateForTest)
-      })
-
-      test('should call menuRecipeDetailVisibilityChange', () => {
-        expect(dispatch).toHaveBeenCalledWith({
-          recipeId: '1234',
-          type: 'MENU_RECIPE_DETAIL_VISIBILITY_CHANGE',
-          trackingData: {
-            actionType: trackingKeys.changeMenuRecipeDetailVisibility,
-            recipeId: '1234',
-            show: true
-          },
-        })
       })
     })
   })

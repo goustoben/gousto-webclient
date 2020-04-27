@@ -6,11 +6,9 @@ import { fetchRecipeStock } from 'apis/recipes'
 import { getCutoffDateTime } from 'utils/deliveries'
 import { limitReached } from 'utils/basket'
 import logger from 'utils/logger'
-import { push } from 'react-router-redux'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import { loadRecipesForAllCollections } from 'actions/menuCollections'
-import * as trackingKeys from 'actions/trackingKeys'
 import menuConfig from 'config/menu'
 import statusActions from './status'
 import { redirect } from './redirect'
@@ -40,7 +38,6 @@ const menuActions = {
   menuClearStock,
   menuLoadStock,
   menuLoadDays,
-  menuRecipeDetailVisibilityChange,
   menuCollectionsReceive,
   menuAddEmptyStock,
   menuBrowseCTAVisibilityChange,
@@ -49,7 +46,6 @@ const menuActions = {
   menuReceiveMenuPending,
   loadRecipesForAllCollections,
   menuReceiveBoxPrices,
-  showDetailRecipe
 }
 
 export function menuReceiveMenu(recipes) {
@@ -311,52 +307,6 @@ export function menuLoadStock(clearStock = true) {
         dispatch(menuChangeRecipeStock({ [recipeId]: { [numPortions]: -1 } }))
       }
     })
-  }
-}
-
-export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClicked) {
-  return (dispatch, getState) => {
-    dispatch({
-      type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
-      recipeId,
-      trackingData: {
-        actionType: trackingKeys.changeMenuRecipeDetailVisibility,
-        recipeId: recipeId || getState().menuRecipeDetailShow,
-        show: !!recipeId,
-      },
-    })
-
-    if (isViewMoreDetailsClicked) {
-      dispatch({
-        type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
-        trackingData: {
-          actionType: 'View Details clicked',
-        }
-      })
-    }
-
-    const prevLoc = getState().routing.locationBeforeTransitions
-    const query = { ...prevLoc.query }
-    delete query.recipeDetailId
-
-    if (recipeId) {
-      query.recipeDetailId = recipeId
-      const newLoc = { ...prevLoc, query }
-      dispatch(push(newLoc))
-    } else {
-      const newLoc = { ...prevLoc, query }
-      dispatch(push(newLoc))
-    }
-  }
-}
-
-export function showDetailRecipe(recipeId, isViewMoreDetailsClicked) {
-  return (dispatch, getState) => {
-    const { boxSummaryShow } = getState()
-
-    if (!boxSummaryShow.get('show')) {
-      menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClicked)(dispatch, getState)
-    }
   }
 }
 
