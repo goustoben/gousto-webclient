@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux'
 import Immutable from 'immutable'
+import moment from 'moment'
 
 import config from 'config'
 import basketActions from 'actions/basket'
@@ -37,7 +38,8 @@ export const basketOrderLoaded = (orderId) => (
 
 export const basketDateChange = date => (dispatch, getState) => {
   const { menuService, boxSummaryDeliveryDays } = getState()
-  const cutoffTimeAndDate = getCutoffForDateAndSlot(date, '', boxSummaryDeliveryDays)
+  const formattedDate = moment(date).format('YYYY-MM-DD')
+  const cutoffTimeAndDate = getCutoffForDateAndSlot(formattedDate, '', boxSummaryDeliveryDays)
   const currentMenu = activeMenuForDate(menuService, cutoffTimeAndDate)
   const { id } = currentMenu
 
