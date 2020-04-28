@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 
 export const getUserFirstName = state => state.user.get('nameFirst')
@@ -10,7 +11,7 @@ export const getLoadingStateForUserCredit = ({ pending }) => pending.get('USER_C
 export const getUserFromJoin = state => (!state.auth.get('isAuthenticated') ? state.persist.get('simpleHeader', false) : false)
 export const getAgeVerified = state => state.user.get('ageVerified')
 export const getUserCredit = ({ user }) => user.get('credit', null)
-export const getUserOrders = ({ user }) => user.get('orders')
+export const getUserOrders = ({ user }) => user.get('orders', Immutable.List([]))
 export const getUserNewOrders = ({ user }) => user.get('newOrders')
 export const getUserSubscriptionState = ({ user }) => user.getIn(['subscription', 'state'])
 export const getUserRecentRecipesIds = ({ user }, number = 6) => {
