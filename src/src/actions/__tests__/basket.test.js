@@ -12,6 +12,7 @@ import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks.js'
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
+import * as deliveriesUtils from 'utils/deliveries'
 import * as basketRecipesActions from '../../routes/Menu/actions/basketRecipes'
 import * as trackingActions from '../tracking'
 import { basketReset } from '../basket'
@@ -749,6 +750,69 @@ describe('basket actions', () => {
         trackingData: {
           actionType: 'undo_delivery_options_change',
         }
+      })
+    })
+  })
+
+  describe('basketDateChange', () => {
+    let getCutoffForDateAndSlotSpy
+    const boxSummaryDeliveryDays = Immutable.Map({
+      '2020-05-02': Immutable.Map({
+        id: 123,
+        isDefault: true,
+        slots: Immutable.List([Immutable.Map({
+          isDefault: true,
+          id: 'slot-1-day-1',
+          whenCutoff: '2020-04-307T11:59:59+01:00'
+        })])
+      })
+    })
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.fromJS({
+          slotId: 'slot-124',
+          numPortions: 2,
+          date: ''
+        }),
+        boxSummaryDeliveryDays,
+        menuService: {
+          data: [
+            { id: '123',
+              attributes: {
+                ends_at: '2020-04-29T11:59:59+01:00'
+              }
+            },
+            { id: '345',
+              attributes: {
+                ends_at: '2020-05-05T11:59:59+01:00'
+              }
+            }
+          ]
+        }
+      })
+
+      getCutoffForDateAndSlotSpy = safeJestMock(deliveriesUtils, 'getCutoffForDateAndSlot')
+      getCutoffForDateAndSlotSpy.mockReturnValue('2020-04-307T11:59:59+01:00')
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('should call getCutoffForDateAndSlot with formated date', () => {
+      const date = '2020-05-02 00:00:00'
+      basket.basketDateChange(date)(dispatch, getStateSpy)
+      expect(getCutoffForDateAndSlotSpy).toHaveBeenCalledWith('2020-05-02', '', boxSummaryDeliveryDays)
+    })
+
+    test('should dispatch BASKET_DATE_CHANGE with right menuId', () => {
+      const date = '2020-05-02 00:00:00'
+      basket.basketDateChange(date)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        date: '2020-05-02 00:00:00',
+        menuId: '345',
+        type: 'BASKET_DATE_CHANGE'
       })
     })
   })
