@@ -5,15 +5,13 @@ import menu, { menuInitialState } from 'reducers/menu'
 describe('menu reducer', () => {
   describe('menu', () => {
     test('initial state', () => {
-      expect(
-        Immutable.is(menu.menu(undefined, {}), menuInitialState),
-      ).toEqual(true)
+      expect(menu.menu(undefined, {})).toEqual(menuInitialState)
     })
 
     test('unknown actions', () => {
       const result = menu.menu(menuInitialState, { type: 'unknown' })
 
-      expect(Immutable.is(result, menuInitialState)).toEqual(true)
+      expect(result).toEqual(menuInitialState)
     })
 
     describe('MENU_FORCE_LOAD', () => {
@@ -23,7 +21,7 @@ describe('menu reducer', () => {
           forceLoad: true
         })
 
-        expect(result.get('forceLoad')).toEqual(true)
+        expect(result.get('forceLoad')).toBeTruthy()
       })
     })
 
@@ -134,16 +132,17 @@ describe('menu reducer', () => {
 
   describe('menuCutoffUntil', () => {
     test('initial state', () => {
-      expect(
-        Immutable.is(menu.menuCutoffUntil('', {}), ''),
-      ).toEqual(true)
+      const result = menu.menuCutoffUntil('', {})
+
+      expect(result).toEqual('')
     })
 
     test('unknown actions', () => {
       const result = menu.menuCutoffUntil('', { type: 'unknown' })
 
-      expect(Immutable.is(result, '')).toEqual(true)
+      expect(result).toEqual('')
     })
+
     describe('MENU_CUTOFF_UNTIL_RECEIVE', () => {
       test('cutoffUntil set to value received in state', () => {
         const result = menu.menuCutoffUntil('', {
@@ -158,19 +157,23 @@ describe('menu reducer', () => {
 
   describe('menuCollectionRecipes', () => {
     test('initial state', () => {
-      expect(
-        Immutable.is(menu.menuCollectionRecipes(Immutable.Map(), {}), Immutable.Map()),
-      ).toEqual(true)
+      const result = menu.menuCollectionRecipes(Immutable.Map(), {})
+
+      expect(result).toEqual(Immutable.Map())
     })
 
     test('unknown actions', () => {
       const result = menu.menuCollectionRecipes(Immutable.Map(), { type: 'unknown' })
 
-      expect(Immutable.is(result, Immutable.Map())).toEqual(true)
+      expect(result).toEqual(Immutable.Map())
     })
 
     describe('MENU_COLLECTION_RECIPES_RECEIVE', () => {
       test('recipes ids for collection should be set in state', () => {
+        const expectedResult = Immutable.fromJS({
+          'collection-id': ['1', '2']
+        })
+
         const result = menu.menuCollectionRecipes(Immutable.Map(),
           { type: 'MENU_COLLECTION_RECIPES_RECEIVE',
             collectionId: 'collection-id',
@@ -182,9 +185,7 @@ describe('menu reducer', () => {
             ]
           })
 
-        expect(Immutable.is(result, Immutable.fromJS({
-          'collection-id': ['1', '2']
-        }))).toEqual(true)
+        expect(result).toEqual(expectedResult)
       })
     })
   })
