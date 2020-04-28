@@ -5,12 +5,14 @@ export const getUserId = state => state.user.get('id', null)
 export const getReferralOffer = state => state.user.get('referralOffer')
 export const getReferralCode = state => state.user.getIn(['referralOffer', 'code'], '') || state.user.get('referral-code', '')
 export const getLoadingStateForOffer = state => state.pending.get('USER_LOAD_REFERRAL_OFFER', true)
+export const getLoadingStateForOrder = ({ pending }) => pending.get('USER_LOAD_ORDERS', true)
 export const getLoadingStateForUserCredit = ({ pending }) => pending.get('USER_CREDIT', false)
 export const getUserFromJoin = state => (!state.auth.get('isAuthenticated') ? state.persist.get('simpleHeader', false) : false)
 export const getAgeVerified = state => state.user.get('ageVerified')
 export const getUserCredit = ({ user }) => user.get('credit', null)
 export const getUserOrders = ({ user }) => user.get('orders')
 export const getUserNewOrders = ({ user }) => user.get('newOrders')
+export const getUserSubscriptionState = ({ user }) => user.getIn(['subscription', 'state'])
 export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   const recipeIds = new Set()
   const userOrders = user.get('orders')
@@ -32,6 +34,13 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
 export const getUsersOrdersDaySlotLeadTimeIds = createSelector(
   getUserOrders,
   orders => orders.map(order => order.get('daySlotLeadTimeId')).toArray()
+)
+
+export const getUserOpenOrders = createSelector(
+  getUserOrders,
+  orders => orders.filter((order) => (
+    ['awaiting_choices', 'open', 'pre_menu'].includes(order.get('phase'))
+  ))
 )
 
 export default {

@@ -79,7 +79,9 @@ describe('Menu', () => {
       ),
       shouldJfyTutorialBeVisible: shouldJfyTutorialBeVisibleMock,
       recipesCount: 3,
-      onOverlayClick: jest.fn()
+      onOverlayClick: jest.fn(),
+      userHasAvailableSlots: true,
+      userOrderLoadingState: false,
     }
   })
 
@@ -87,7 +89,7 @@ describe('Menu', () => {
     jest.clearAllMocks()
   })
 
-  describe('rendering', () => {
+  describe('when rendering', () => {
     let wrapper
 
     mountOptions = {
@@ -142,6 +144,29 @@ describe('Menu', () => {
         test('has the isAuthenticated prop passed to it', () => {
           expect(recipesInBasketProgress.prop('isAuthenticated')).toBe(requiredProps.isAuthenticated)
         })
+      })
+    })
+
+    describe('and there is no slot available', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Menu
+            {...requiredProps}
+            userHasAvailableSlots={false}
+            userOrderLoadingState={false}
+          />,
+          mountOptions
+        )
+      })
+
+      test.each([
+        ['CapacityInfo', true],
+        ['RecipeMeta', false],
+        ['BoxSummaryContainer', false],
+        ['RecipesInBasketProgress', false],
+      ])('%s rendering is set to %s', (componentName, expected) => {
+        const foundComponent = wrapper.find(componentName).length > 0
+        expect(foundComponent).toBe(expected)
       })
     })
   })

@@ -4,7 +4,8 @@ import Immutable from 'immutable'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
-import { getDisabledSlots, getFullScreenBoxSummary, getLogoutUserDisabledSlots, getIsSubscriberDisabledSlotsEnabled } from 'selectors/features'
+import { getFullScreenBoxSummary, getIsSubscriberDisabledSlotsEnabled } from 'selectors/features'
+import { getDisabledSlotsBasedOnAuthStatus } from 'routes/Menu/selectors/boxSummary'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
@@ -13,8 +14,8 @@ import { DeliverySlot } from './DeliverySlot'
 
 function mapStateToProps(state) {
   const isAuthenticated = getIsAuthenticated(state)
-  const nonValidatedDisabledSlots = isAuthenticated ? getDisabledSlots(state) : getLogoutUserDisabledSlots(state)
-  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
+  const disabledSlotsBasedOnAuthStatus = getDisabledSlotsBasedOnAuthStatus(state)
+  const disabledSlots = formatAndValidateDisabledSlots(disabledSlotsBasedOnAuthStatus)
   const {
     deliveryDays,
     tempDate,

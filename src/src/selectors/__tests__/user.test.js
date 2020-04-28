@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getUserId, getUserRecentRecipesIds, getUsersOrdersDaySlotLeadTimeIds } from '../user'
+import { getUserId, getUserRecentRecipesIds, getUsersOrdersDaySlotLeadTimeIds, getUserOpenOrders } from '../user'
 
 describe('user selectors', () => {
   describe('getUserRecentRecipesIds', () => {
@@ -59,7 +59,7 @@ describe('user selectors', () => {
     })
   })
 
-  describe('given getUserId is called', () => {
+  describe('when getUserId is called', () => {
     test('returns user id from the store', () => {
       const state = {
         user: Immutable.fromJS({
@@ -68,6 +68,61 @@ describe('user selectors', () => {
       }
 
       expect(getUserId(state)).toBe('123')
+    })
+  })
+
+  describe('when getUserOpenOrders is called', () => {
+    describe('and user has an upcoming order', () => {
+      let expected
+      const state = {
+        user: Immutable.fromJS({
+          orders: {
+            1234: {
+              phase: 'awaiting_choices'
+            },
+            4567: {
+              phase: 'commited'
+            }
+          }
+        })
+      }
+
+      beforeEach(() => {
+        expected = getUserOpenOrders(state)
+      })
+
+      test('returns awaiting_choices order', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({
+            1234: {
+              phase: 'awaiting_choices'
+            }
+          })
+        )
+      })
+    })
+
+    describe('and user has no upcoming order', () => {
+      let expected
+      const state = {
+        user: Immutable.fromJS({
+          orders: {
+            4567: {
+              phase: 'commited'
+            }
+          }
+        })
+      }
+
+      beforeEach(() => {
+        expected = getUserOpenOrders(state)
+      })
+
+      test('returns empty', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({})
+        )
+      })
     })
   })
 })

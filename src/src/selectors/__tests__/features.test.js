@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
-  getDisabledSlots,
   getLogoutUserDisabledSlots,
   getAppBanner,
   isShowNoDiscountCTAFeatureEnabled,
@@ -64,35 +63,6 @@ describe('when features are defined', () => {
 
       test('should return value', () => {
         expect(isNextDayDeliveryPaintedDoorFeatureEnabled(state)).toEqual(false)
-      })
-    })
-  })
-
-  describe('getDisabledSlots', () => {
-    describe('when feature is set to true', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          disabledSlots: {
-            value: true,
-          },
-        })
-      })
-      test('should return true', () => {
-        expect(getDisabledSlots(state)).toEqual(true)
-      })
-    })
-
-    describe('when feature is set to false', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          disabledSlots: {
-            value: false,
-          },
-        })
-      })
-
-      test('should return value', () => {
-        expect(getDisabledSlots(state)).toEqual(false)
       })
     })
   })

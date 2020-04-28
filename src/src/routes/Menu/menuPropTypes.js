@@ -16,6 +16,8 @@ export const menuPropTypes = {
   query: PropTypes.object,
   recipesCount: PropTypes.number.isRequired,
   tariffId: PropTypes.number,
+  userHasAvailableSlots: PropTypes.bool.isRequired,
+  userOrderLoadingState: PropTypes.bool.isRequired,
 }
 
 export const defaultMenuPropTypes = {

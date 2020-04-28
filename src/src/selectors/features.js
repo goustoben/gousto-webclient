@@ -6,12 +6,6 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
 
 export const getNDDFeatureValue = ({ features }) => features.getIn(['ndd', 'value'])
 
-export const getDisabledSlots = ({ features }) => (
-  features
-    ? features.getIn(['disabledSlots', 'value'])
-    : ''
-)
-
 export const getLogoutUserDisabledSlots = ({ features }) => (
   features
     ? features.getIn(['logoutUserDisabledSlots', 'value'])
