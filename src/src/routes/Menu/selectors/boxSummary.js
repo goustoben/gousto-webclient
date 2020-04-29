@@ -24,24 +24,29 @@ export const getDisabledSlots = createSelector(
   ],
   (boxSummaryDeliveryDays, userSubscriptionState, userOpenOrders) => (
     boxSummaryDeliveryDays.reduce((acc, deliveryDay) => {
-      const daySlots = deliveryDay.get('daySlots') || deliveryDay.get('daySlotLeadTimes')
+      const daySlots = deliveryDay.get('daySlots')
+
       const hasAnOpenOrder = userOpenOrders.some(order => (
         order.get('deliveryDate').includes(deliveryDay.get('date'))
       ))
 
-      const disabledSlot = deliveryDay.get('slots').filter(slot => {
-        const daySlot = daySlots.filter(daySlotItem => (
-          daySlotItem.get('slotId') === slot.get('id')
-        )).first()
+      const disabledSlot = deliveryDay.get('slots')
+        .map(slot => (
+          slot.set('date', deliveryDay.get('date'))
+        ))
+        .filter(slot => {
+          const daySlot = daySlots.filter(daySlotItem => (
+            daySlotItem.get('slotId') === slot.get('id')
+          )).first()
 
-        return isOneOffSlotActiveForUser({
-          daySlot,
-          userSubscriptionState,
-        }) === false && hasAnOpenOrder === false
-      })
+          return isOneOffSlotActiveForUser({
+            daySlot,
+            userSubscriptionState,
+          }) === false && hasAnOpenOrder === false
+        })
 
       if (disabledSlot.size > 0) {
-        return acc.push(disabledSlot)
+        return acc.push(disabledSlot.first())
       }
 
       return acc
@@ -52,14 +57,12 @@ export const getDisabledSlots = createSelector(
 export const getDisabledSlotDates = createSelector(
   [getDisabledSlots],
   (disabledSlots) => (
-    disabledSlots.reduce((disabledSlotDates, disabledSlot, slotDate) => {
-      disabledSlot.forEach(slot => {
-        const hourEndTime = slot.get('deliveryEndTime').slice(0, 2)
-        const hourStartTime = slot.get('deliveryStartTime').slice(0, 2)
-        const formattedSlot = `${slotDate}_${hourStartTime}-${hourEndTime}`
+    disabledSlots.reduce((disabledSlotDates, slot) => {
+      const hourEndTime = slot.get('deliveryEndTime').slice(0, 2)
+      const hourStartTime = slot.get('deliveryStartTime').slice(0, 2)
+      const formattedSlot = `${slot.get('date')}_${hourStartTime}-${hourEndTime}`
 
-        disabledSlotDates.push(formattedSlot)
-      })
+      disabledSlotDates.push(formattedSlot)
 
       return disabledSlotDates
     }, []).toString()

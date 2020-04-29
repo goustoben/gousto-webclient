@@ -481,7 +481,15 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
   }
 
   return daysWithDSLTs.map(dayWithDSLTs => {
-    const { id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay } = dayWithDSLTs
+    const {
+      id,
+      date,
+      isDefault,
+      coreDayId,
+      unavailableReason,
+      alternateDeliveryDay,
+      daySlotLeadTimes
+    } = dayWithDSLTs
 
     return {
       id,
@@ -490,7 +498,8 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
       coreDayId,
       unavailableReason,
       alternateDeliveryDay,
-      slots: dayWithDSLTs.daySlotLeadTimes.map(dslt => ({
+      daySlots: daySlotLeadTimes,
+      slots: daySlotLeadTimes.map(dslt => ({
         whenCutoff: dslt.shouldCutoffAt,
         deliveryEndTime: dslt.endTime,
         deliveryPrice: dslt.deliveryPrice,
