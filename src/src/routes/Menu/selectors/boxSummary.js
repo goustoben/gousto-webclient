@@ -24,7 +24,7 @@ export const getDisabledSlots = createSelector(
   ],
   (boxSummaryDeliveryDays, userSubscriptionState, userOpenOrders) => (
     boxSummaryDeliveryDays.reduce((acc, deliveryDay) => {
-      const daySlots = deliveryDay.get('daySlots')
+      const daySlots = deliveryDay.get('daySlots') || deliveryDay.get('daySlotLeadTimes')
       const hasAnOpenOrder = userOpenOrders.some(order => (
         order.get('deliveryDate').includes(deliveryDay.get('date'))
       ))
