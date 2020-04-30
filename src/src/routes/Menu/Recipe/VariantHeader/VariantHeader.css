@@ -1,0 +1,9 @@
+@value White, Bluecheese from 'styles/colors.css';
+
+.variantHeader {
+    padding: 0.25rem 0 0.25rem 0.625rem;
+    color: White;
+    font-weight: bold;
+    box-sizing: content-box;
+    background: Bluecheese;
+}

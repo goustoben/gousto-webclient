@@ -49,3 +49,126 @@ export const getMenuLimits = (data) => {
 
   return menuLimits
 }
+
+const permutator = (inputArr) => {
+  const result = []
+
+  const permute = (arr, m = []) => {
+    if (arr.length === 0) {
+      result.push(m)
+    } else {
+      for (let i = 0; i < arr.length; i++) {
+        const curr = arr.slice()
+        const next = curr.splice(i, 1)
+        permute(curr.slice(), m.concat(next))
+      }
+    }
+  }
+
+  permute(inputArr)
+
+  return result
+}
+
+const flattenAlternatives = (variantGroup) => {
+  const main = {
+    id: variantGroup.id,
+    coreRecipeId: variantGroup.core_recipe_id,
+    displayName: variantGroup.short_display_name
+  }
+
+  const children = variantGroup.relationships
+    .filter(relation => relation.type === 'alternative' && relation.data.type === 'recipe')
+    .map(relation => ({
+      id: relation.data.id,
+      coreRecipeId: relation.data.core_recipe_id,
+      displayName: relation.data.short_display_name
+    }))
+
+  return [main, ...children]
+}
+
+// permute a variant group so that a lookup table entry is created for all recipes in that group
+// e.g. getVariantPermutations({ id: 'a', alternatives: [ { id: 'b' }, { id: 'c' } ] })
+// {
+//     'a': [ { id: 'b' }, { id: 'c' } ],
+//     'b': [ { id: 'a' }, { id: 'c' } ],
+//     'c': [ { id: 'a' }, { id: 'b' } ] 
+// }
+// this transformation makes lookups from state significantly easier
+const getVariantPermutations = (variantGroup) => {
+  const flatAlternatives = flattenAlternatives(variantGroup)
+
+  // if there is only 1 or 0 alternatives
+  if (flatAlternatives.length < 2) {
+    return null
+  }
+
+  const permutations = permutator(flatAlternatives)
+
+  // we only need a single permutation for each key,
+  // [ 'a', 'b', 'c' ] and [ 'a', 'c', 'b' ] are the same for indexing purposes (it only takes the first item as key)
+  // so we can discard any subsequent permutations for that key
+  const filteredPermutationsByKey = permutations.reduce((acc, cur) => {
+    const firstItem = cur[0]
+
+    if (acc[firstItem.coreRecipeId]) {
+      return acc
+    }
+
+    return {
+      ...acc,
+      [firstItem.coreRecipeId]: cur
+    }
+  }, {})
+
+  return Object.values(filteredPermutationsByKey)
+}
+
+const getMenuVariantsForMenu = (menuVariantGroups) => {
+  const menuOutput = {}
+
+  // a menuVariantGroup is one parent recipe and all its alternatives
+  menuVariantGroups.forEach(variantGroup => {
+    const permutations = getVariantPermutations(variantGroup)
+
+    if (!permutations) {
+      return
+    }
+
+    // for each permutation, set up a parent/child relationship
+    permutations.forEach(permutationGroup => {
+      const [parent, ...alternatives] = permutationGroup
+
+      if (menuOutput[parent.coreRecipeId]) {
+        return
+      }
+
+      menuOutput[parent.coreRecipeId] = {
+        displayName: parent.displayName,
+        alternatives
+      }
+    })
+  })
+
+  return menuOutput
+}
+
+export const getMenuVariants = (menus) => {
+  const output = {}
+
+  menus.forEach(menu => {
+    if (!menu || !menu.relationships || !menu.relationships.recipe_options || !menu.relationships.recipe_options.data) {
+      return
+    }
+
+    const {
+      id: menuId,
+      relationships: { recipe_options: { data: menuVariantGroups } }
+    } = menu
+
+    output[menuId] = getMenuVariantsForMenu(menuVariantGroups)
+  })
+
+  return output
+}

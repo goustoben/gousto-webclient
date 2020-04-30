@@ -22,15 +22,11 @@ const recipePropTypes = {
   id: PropTypes.string,
   thematicName: PropTypes.string,
   selectedDate: PropTypes.string,
-  numPortions: PropTypes.number
+  numPortions: PropTypes.number,
 }
 
 class Recipe extends React.PureComponent {
   static propTypes = recipePropTypes
-
-  static defaultProps = {
-    collectionFilterChange: () => {},
-  }
 
   constructor() {
     super()
@@ -85,6 +81,10 @@ class Recipe extends React.PureComponent {
       </div>
     )
   }
+}
+
+Recipe.defaultProps = {
+  collectionFilterChange: () => {},
 }
 
 export { Recipe }

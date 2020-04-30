@@ -12,6 +12,7 @@ import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { StockBadge } from '../../StockBadge'
+import { VariantHeaderContainer } from '../../VariantHeader'
 
 describe('<FeaturedRecipe />', () => {
   let wrapper
@@ -44,6 +45,11 @@ describe('<FeaturedRecipe />', () => {
 
   beforeEach(() => {
     wrapper = shallow(<FeaturedRecipe {...recipe} />)
+  })
+
+  test('should contain one VariantHeader component', () => {
+    const component = wrapper.find(VariantHeaderContainer)
+    expect(component.length).toBe(1)
   })
 
   test('should contain one AttributeGrid component', () => {

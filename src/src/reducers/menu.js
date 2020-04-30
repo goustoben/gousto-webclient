@@ -2,13 +2,14 @@ import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
 import moment from 'moment'
-import { getMenuLimits } from '../utils/menu'
+import { getMenuLimits, getMenuVariants } from '../utils/menu'
 
 export const menuInitialState = Immutable.Map({
   forceLoad: false,
   accessToken: '',
   menuVariant: '',
-  menuLimits: []
+  menuLimits: [],
+  menuVariants: {}
 })
 
 const menu = {
@@ -17,15 +18,21 @@ const menu = {
     case actionTypes.MENU_FORCE_LOAD: {
       return state.set('forceLoad', action.forceLoad)
     }
+
     case actionTypes.MENU_FETCH_PARAMS: {
       return state
         .set('accessToken', action.accessToken)
         .set('menuVariant', action.menuVariant)
     }
+
     case actionTypes.MENU_SERVICE_DATA_RECEIVED: {
       const menuLimits = getMenuLimits(action.response.data)
+      const menuVariants = getMenuVariants(action.response.data)
 
-      return state.set('menuLimits', menuLimits)
+      return state.merge({
+        menuLimits,
+        menuVariants
+      })
     }
 
     default:

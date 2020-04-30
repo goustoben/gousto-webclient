@@ -18,13 +18,15 @@ import { ChefQuote } from '../ChefQuote'
 import { SoldOutOverlay } from '../SoldOutOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
+import { VariantHeaderContainer } from '../VariantHeader'
 
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet }) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet}) => (
     <div>
       <div className={css.featuredRecipe}>
+
         <span onClick={onClick} className={css.link}>
           <Image
             media={media}
@@ -40,6 +42,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
           <Chef chef={chef} />
         </div>
         <div className={tag ? css.featuredDetailsWithTag : css.featuredDetails}>
+          <VariantHeaderContainer recipeId={id} stock={stock} inBasket={inBasket} />
           <div className={css.textContainer}>
             <div className={css.rangeBadgeFeatured}>
               <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />

@@ -15,6 +15,7 @@ import { RecipeRating } from '../Rating'
 import { AddButton } from '../AddButton'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
+import { VariantHeaderContainer } from '../VariantHeader'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, chef, view, detailHover, range, isRecommendedRecipe,
   features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, isChefPrepared, numPortions }) => {
@@ -22,6 +23,9 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
 
   return (
     <div className={css.recipeDetails}>
+      <div>
+        <VariantHeaderContainer recipeId={id} stock={stock} inBasket={inBasket} />
+      </div>
       <span onClick={onClick} className={css.link}>
         <Image
           media={media}
@@ -132,7 +136,7 @@ GridRecipe.propTypes = {
   selectFoodBrand: PropTypes.func,
   view: PropTypes.string,
   isChefPrepared: PropTypes.bool,
-  numPortions: PropTypes.number
+  numPortions: PropTypes.number,
 }
 
 GridRecipe.defaultProps = {
@@ -143,7 +147,7 @@ GridRecipe.defaultProps = {
   ratingCount: 0,
   fiveADay: 0,
   isChefPrepared: false,
-  numPortions: null
+  numPortions: 2
 }
 
 export { GridRecipe }
