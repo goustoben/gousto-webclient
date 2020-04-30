@@ -27,7 +27,7 @@ Cypress.Commands.add('login', () => {
 })
 
 Cypress.Commands.add('goToCheckoutFlow', (withDiscount = false) => {
-  const recipes = '{"2630": 2}'
+  const recipes = '{"2328": 2}'
   const pricesFixtureFile = withDiscount ? 'prices/2person2portionDiscount' : 'prices/2person2portionNoDiscount'
 
   cy.server()
@@ -47,6 +47,7 @@ Cypress.Commands.add('goToCheckoutFlow', (withDiscount = false) => {
   // If not present the user is redirected to the menu.
   // If we store a incorrect date/slot in a cookie then this is an infinite loop
   cy.visit('/menu')
+
   cy.get('[data-testing="boxSummaryContinueButton"]').click()
 
   cy.visit('/check-out')

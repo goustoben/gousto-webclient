@@ -25,7 +25,6 @@ import {
   isFreeSlotAvailable
 } from '../deliveries'
 
-features.getDisabledSlots = jest.fn()
 features.getLogoutUserDisabledSlots = jest.fn()
 
 const userWithDeliveryTariff = (deliveryTariffId) => Immutable.fromJS({
@@ -350,7 +349,7 @@ describe('utils/deliveries', () => {
     beforeEach(() => {
       date = null
       deliveryDays = Immutable.fromJS({})
-      userOrders = Immutable.fromJS([])
+      userOrders = Immutable.fromJS({})
       slotId = ''
       prevSlotId = ''
       defaultDay = ''
@@ -369,6 +368,9 @@ describe('utils/deliveries', () => {
         boxSummaryDeliveryDays: deliveryDays,
         user: Immutable.Map({
           orders: userOrders,
+          subscription: Immutable.Map({
+            state: 'active'
+          })
         }),
       }
     })
@@ -392,6 +394,16 @@ describe('utils/deliveries', () => {
             '2019-12-02': {
               isDefault: false,
               date: '2019-12-02',
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-2',
+              }],
               slots: [
                 {
                   id: 'paid-1',
@@ -408,6 +420,16 @@ describe('utils/deliveries', () => {
             '2019-12-20': {
               date: '2019-12-20',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'free-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              }],
               slots: [
                 {
                   id: 'free-1',
@@ -424,6 +446,16 @@ describe('utils/deliveries', () => {
             '2019-12-10': {
               date: '2019-12-10',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'free-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              }],
               slots: [
                 {
                   id: 'free-1',
@@ -456,6 +488,16 @@ describe('utils/deliveries', () => {
             '2019-12-02': {
               isDefault: false,
               date: '2019-12-02',
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-2',
+              }],
               slots: [
                 {
                   id: 'paid-1',
@@ -474,6 +516,16 @@ describe('utils/deliveries', () => {
             '2019-12-20': {
               date: '2019-12-20',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'free-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              }],
               slots: [
                 {
                   id: 'free-1',
@@ -492,6 +544,16 @@ describe('utils/deliveries', () => {
             '2019-12-10': {
               date: '2019-12-10',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'free-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              }],
               slots: [
                 {
                   id: 'free-1',
@@ -526,6 +588,16 @@ describe('utils/deliveries', () => {
             '2019-12-02': {
               isDefault: false,
               date: '2019-12-02',
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-2',
+              }],
               slots: [
                 {
                   id: 'paid-1',
@@ -544,6 +616,16 @@ describe('utils/deliveries', () => {
             '2019-12-20': {
               date: '2019-12-20',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-2',
+              }],
               slots: [
                 {
                   id: 'paid-1',
@@ -576,6 +658,11 @@ describe('utils/deliveries', () => {
             '2016-03-02': {
               isDefault: false,
               date: '2016-03-02',
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              }],
               slots: [
                 {
                   id: '123-123-123',
@@ -586,6 +673,11 @@ describe('utils/deliveries', () => {
             '2015-12-12': {
               date: '2015-12-12',
               isDefault: true,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '321-321-321',
+              }],
               slots: [
                 {
                   id: '321-321-321',
@@ -596,6 +688,11 @@ describe('utils/deliveries', () => {
             '2014-12-12': {
               date: '2014-12-12',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '456-456-456',
+              }],
               slots: [
                 {
                   id: '456-456-456',
@@ -635,6 +732,11 @@ describe('utils/deliveries', () => {
                   date: '2015-12-24',
                   isDefault: false,
                 },
+                daySlots: [{
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '321-321-321',
+                }],
                 slots: [
                   {
                     id: '321-321-321',
@@ -645,6 +747,11 @@ describe('utils/deliveries', () => {
               '2015-12-24': {
                 date: '2015-12-24',
                 isDefault: false,
+                daySlots: [{
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '12a-12a-12a',
+                }],
                 slots: [
                   {
                     id: '12a-12a-12a',
@@ -669,6 +776,11 @@ describe('utils/deliveries', () => {
             '2016-03-02': {
               date: '2016-03-02',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              }],
               slots: [
                 {
                   id: '123-123-123',
@@ -680,6 +792,11 @@ describe('utils/deliveries', () => {
             '2015-12-12': {
               date: '2015-12-12',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '321-321-321',
+              }],
               slots: [
                 {
                   id: '321-321-321',
@@ -691,6 +808,11 @@ describe('utils/deliveries', () => {
             '2014-12-12': {
               date: '2014-12-12',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '456-456-456',
+              }],
               slots: [
                 {
                   id: '456-456-456',
@@ -765,6 +887,11 @@ describe('utils/deliveries', () => {
             '2016-03-02': {
               date: '2016-03-02',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              }],
               slots: [
                 {
                   id: '123-123-123',
@@ -775,6 +902,11 @@ describe('utils/deliveries', () => {
             '2015-12-12': {
               date: '2015-12-12',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '321-321-321',
+              }],
               slots: [
                 {
                   id: '321-321-321',
@@ -785,6 +917,11 @@ describe('utils/deliveries', () => {
             '2014-12-12': {
               date: '2014-12-12',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '456-456-456',
+              }],
               slots: [
                 {
                   id: '456-456-456',
@@ -795,6 +932,11 @@ describe('utils/deliveries', () => {
             '2017-01-01': {
               date: '2017-01-01',
               isDefault: false,
+              daySlots: [{
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '789-789-789',
+              }],
               slots: [
                 {
                   id: '789-789-789',
@@ -844,45 +986,81 @@ describe('utils/deliveries', () => {
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '123-123-1234',
+            }],
             slots: [
               {
-                id: '123-123-123',
+                id: '123-123-1234',
                 whenCutoff: 'asdf',
+                deliveryEndTime: '22:00:00',
+                deliveryStartTime: '18:00:00',
               },
             ],
           },
           '2015-12-12': {
             date: '2015-12-12',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '321-321-321',
+            }],
             slots: [
               {
                 id: '321-321-321',
                 whenCutoff: 'qwerty',
+                deliveryEndTime: '22:00:00',
+                deliveryStartTime: '18:00:00',
               },
             ],
           },
           '2014-12-12': {
             date: '2014-12-12',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '456-456-456',
+            }],
             slots: [
               {
                 id: '456-456-456',
                 whenCutoff: 'zxcvb',
+                deliveryEndTime: '22:00:00',
+                deliveryStartTime: '18:00:00',
               },
             ],
           },
           '2017-01-01': {
             date: '2017-01-01',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '789-789-789',
+            },
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            }],
             slots: [
               {
                 id: '789-789-789',
                 whenCutoff: 'zxcvb',
+                isDefault: false,
+                deliveryEndTime: '22:00:00',
+                deliveryStartTime: '18:00:00',
               },
               {
                 id: '123-123-123',
                 whenCutoff: 'jfklsad',
                 isDefault: true,
+                deliveryEndTime: '19:00:00',
+                deliveryStartTime: '08:00:00',
               },
             ],
           },
@@ -891,9 +1069,14 @@ describe('utils/deliveries', () => {
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '123-123-1234',
+            }],
             slots: [
               {
-                id: '123-123-123',
+                id: '123-123-1234',
                 whenCutoff: 'asdf',
                 disabledSlotId: '2016-03-02_08-19',
               },
@@ -902,6 +1085,11 @@ describe('utils/deliveries', () => {
           '2015-12-12': {
             date: '2015-12-12',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '321-321-321',
+            }],
             slots: [
               {
                 id: '321-321-321',
@@ -913,6 +1101,11 @@ describe('utils/deliveries', () => {
           '2014-12-12': {
             date: '2014-12-12',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '456-456-456',
+            }],
             slots: [
               {
                 id: '456-456-456',
@@ -924,11 +1117,22 @@ describe('utils/deliveries', () => {
           '2017-01-01': {
             date: '2017-01-01',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: false,
+              activeForNonSubscribersOneOff: false,
+              slotId: '789-789-789',
+            },
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            }],
             slots: [
               {
                 id: '789-789-789',
                 whenCutoff: 'zxcvb',
-                disabledSlotId: '2017-01-01_08-19'
+                disabledSlotId: '2017-01-01_08-19',
+                isDefault: false,
               },
               {
                 id: '123-123-123',
@@ -939,13 +1143,13 @@ describe('utils/deliveries', () => {
             ],
           },
         })
-        state = { ...state,
+        state = {
+          ...state,
           basket: Immutable.Map({ date }),
-          boxSummaryDeliveryDays: deliveryDays,}
+          boxSummaryDeliveryDays: deliveryDays,
+        }
       })
       test('should return the default delivery slot if not disabled', () => {
-        features.getDisabledSlots.mockImplementation(() => '')
-
         const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).toEqual(expected)
@@ -966,7 +1170,74 @@ describe('utils/deliveries', () => {
 
         describe('when default delivery slot is disabled', () => {
           beforeEach(() => {
-            features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
+            date = '2017-01-01'
+            deliveryDays = Immutable.fromJS({
+              '2017-01-01': {
+                date: '2017-01-01',
+                isDefault: false,
+                daySlots: [{
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: false,
+                  slotId: '789-789-789',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '123-123-123',
+                }],
+                slots: [
+                  {
+                    id: '789-789-789',
+                    whenCutoff: 'zxcvb',
+                    isDefault: true,
+                    deliveryEndTime: '22:00:00',
+                    deliveryStartTime: '18:00:00',
+                  },
+                  {
+                    id: '123-123-123',
+                    whenCutoff: 'jfklsad',
+                    isDefault: false,
+                    deliveryEndTime: '19:00:00',
+                    deliveryStartTime: '08:00:00',
+                  },
+                ],
+              },
+            })
+            deliveryDaysWithDisabledSlotIds = Immutable.fromJS({
+              '2017-01-01': {
+                date: '2017-01-01',
+                isDefault: false,
+                daySlots: [{
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '789-789-789',
+                },
+                {
+                  activeForSubscribersOneOff: false,
+                  activeForNonSubscribersOneOff: false,
+                  slotId: '123-123-123',
+                }],
+                slots: [
+                  {
+                    id: '789-789-789',
+                    whenCutoff: 'zxcvb',
+                    disabledSlotId: '2017-01-01_08-19',
+                    isDefault: true,
+                  },
+                  {
+                    id: '123-123-123',
+                    whenCutoff: 'jfklsad',
+                    disabledSlotId: '2017-01-01_18-22',
+                    isDefault: false,
+                  },
+                ],
+              },
+            })
+            state = {
+              ...state,
+              basket: Immutable.Map({ date }),
+              boxSummaryDeliveryDays: deliveryDays,
+            }
           })
 
           test('should NOT return the default delivery slot', () => {
@@ -983,7 +1254,59 @@ describe('utils/deliveries', () => {
 
           describe('and all other slots are disabled', () => {
             beforeEach(() => {
-              features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
+              date = '2017-01-01'
+              deliveryDays = Immutable.fromJS({
+                '2017-01-01': {
+                  date: '2017-01-01',
+                  isDefault: false,
+                  daySlots: [{
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '789-789-789',
+                  },
+                  {
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '123-123-123',
+                  }],
+                  slots: [
+                    {
+                      id: '789-789-789',
+                      whenCutoff: '2016-12-29T11:59:59+01:00',
+                      deliveryEndTime: '22:00:00',
+                      deliveryStartTime: '18:00:00',
+                    },
+                    {
+                      id: '123-123-123',
+                      whenCutoff: '2016-12-29T11:59:59+01:00',
+                      deliveryEndTime: '19:00:00',
+                      deliveryStartTime: '08:00:00',
+                    },
+                  ],
+                },
+              })
+              deliveryDaysWithDisabledSlotIds = Immutable.fromJS({
+                '2017-01-01': {
+                  date: '2017-01-01',
+                  isDefault: false,
+                  daySlots: [{
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '789-789-789',
+                  },
+                  {
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '123-123-123',
+                  }],
+                  slots: [],
+                },
+              })
+              state = {
+                ...state,
+                basket: Immutable.Map({ date }),
+                boxSummaryDeliveryDays: deliveryDays,
+              }
             })
 
             test('should return nothing if the default delivery slot', () => {
@@ -1004,44 +1327,69 @@ describe('utils/deliveries', () => {
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            }],
             slots: [
               {
                 id: '123-123-123',
-                whenCutoff: 'asdf',
+                whenCutoff: '2015-12-09T11:59:59+01:00',
               },
             ],
           },
           '2015-12-12': {
             date: '2015-12-12',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '321-321-321',
+            }],
             slots: [
               {
                 id: '321-321-321',
-                whenCutoff: 'qwerty',
+                whenCutoff: '2015-12-09T11:59:59+01:00',
               },
             ],
           },
           '2014-12-12': {
             date: '2014-12-12',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '456-456-456',
+            }],
             slots: [
               {
                 id: '456-456-456',
-                whenCutoff: 'zxcvb',
+                whenCutoff: '2015-12-09T11:59:59+01:00',
               },
             ],
           },
           '2017-01-01': {
             date: '2017-01-01',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            },
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '789-789-789',
+            }],
             slots: [
               {
                 id: '789-789-789',
-                whenCutoff: 'zxcvb',
+                whenCutoff: '2017-12-28T11:59:59+01:00',
               },
               {
                 id: '123-123-123',
-                whenCutoff: 'jfklsad',
+                whenCutoff: '2017-12-28T11:59:59+01:00',
               },
             ],
           },
@@ -1071,16 +1419,26 @@ describe('utils/deliveries', () => {
           '2019-12-02': {
             isDefault: true,
             date: '2019-12-02',
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: 'paid-1',
+            },
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: 'paid-2',
+            }],
             slots: [
               {
                 id: 'paid-1',
-                whenCutoff: 'asdf',
+                whenCutoff: '2019-11-30T11:59:59+01:00',
                 deliveryPrice: 0.99,
                 daySlotLeadTimeActive: true,
               },
               {
                 id: 'paid-2',
-                whenCutoff: 'zxcvb',
+                whenCutoff: '2019-11-30T11:59:59+01:00',
                 deliveryPrice: 0.1,
                 daySlotLeadTimeActive: true,
               },
@@ -1089,16 +1447,26 @@ describe('utils/deliveries', () => {
           '2019-12-20': {
             date: '2019-12-20',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: 'free-1',
+            },
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: 'paid-1',
+            }],
             slots: [
               {
                 id: 'free-1',
-                whenCutoff: 'meme',
+                whenCutoff: '2019-12-17T11:59:59+01:00',
                 deliveryPrice: 0,
                 daySlotLeadTimeActive: true,
               },
               {
                 id: 'paid-1',
-                whenCutoff: 'qwerty',
+                whenCutoff: '2019-12-17T11:59:59+01:00',
                 deliveryPrice: 0,
                 daySlotLeadTimeActive: true,
               },
@@ -1107,16 +1475,26 @@ describe('utils/deliveries', () => {
           '2019-12-10': {
             date: '2019-12-10',
             isDefault: false,
+            daySlots: [{
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: 'free-1',
+            },
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: 'paid-1',
+            }],
             slots: [
               {
                 id: 'free-1',
-                whenCutoff: 'qwerty',
+                whenCutoff: '2019-12-07T11:59:59+01:00',
                 deliveryPrice: 0,
                 daySlotLeadTimeActive: false,
               },
               {
                 id: 'paid-1',
-                whenCutoff: 'qwerty',
+                whenCutoff: '2019-12-07T11:59:59+01:00',
                 deliveryPrice: 2,
                 daySlotLeadTimeActive: true,
               },
@@ -1142,14 +1520,19 @@ describe('utils/deliveries', () => {
       beforeEach(() => {
         const slot = {
           id: '123-123-123',
-          whenCutoff: 'asdf',
+          whenCutoff: '2016-03-01T11:59:59+01:00',
           coreSlotId: '1',
         }
+        const daySlots = [{
+          activeForSubscribersOneOff: true,
+          activeForNonSubscribersOneOff: true,
+          slotId: '123-123-123',
+        }]
         const dds = {}
         // two weeks of valid delivery days with slots
         for (let i = 1; i <= 14; i++) {
           const d = `2016-03-${i < 10 ? `0${i}` : i}`
-          dds[d] = { date: d, slots: [slot] }
+          dds[d] = { date: d, slots: [slot], daySlots }
         }
         deliveryDays = Immutable.fromJS(dds)
         state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
@@ -1431,11 +1814,16 @@ describe('utils/deliveries', () => {
             whenCutoff: 'asdf',
             coreSlotId: '1',
           }
+          const daySlots = [{
+            activeForSubscribersOneOff: true,
+            activeForNonSubscribersOneOff: true,
+            slotId: '123-123-123',
+          }]
           const dds = {}
           // two weeks of valid delivery days with slots
           for (let i = 1; i <= 14; i++) {
             const d = `2016-03-${i < 10 ? `0${i}` : i}`
-            dds[d] = { date: d, slots: [slot] }
+            dds[d] = { date: d, slots: [slot], daySlots }
           }
           dds['2016-03-05'].isDefault = true
           deliveryDays = Immutable.fromJS(dds)
@@ -1683,14 +2071,19 @@ describe('utils/deliveries', () => {
         beforeEach(() => {
           const slot = {
             id: '123-123-123',
-            whenCutoff: 'asdf',
+            whenCutoff: '2016-03-01T11:59:59+01:00',
             coreSlotId: '1',
           }
+          const daySlots = [{
+            activeForSubscribersOneOff: true,
+            activeForNonSubscribersOneOff: true,
+            slotId: '123-123-123',
+          }]
           dds = {}
           // two weeks of valid delivery days with slots
           for (let i = 1; i <= 14; i++) {
             const d = `2016-03-${i < 10 ? `0${i}` : i}`
-            dds[d] = { date: d, slots: [slot] }
+            dds[d] = { date: d, slots: [slot], daySlots }
           }
         })
 
@@ -1855,14 +2248,19 @@ describe('utils/deliveries', () => {
         beforeEach(() => {
           const slot = {
             id: '123-123-123',
-            whenCutoff: 'asdf',
+            whenCutoff: '2016-03-01T11:59:59+01:00',
             coreSlotId: '1',
           }
+          const daySlots = [{
+            activeForSubscribersOneOff: true,
+            activeForNonSubscribersOneOff: true,
+            slotId: '123-123-123',
+          }]
           dds = {}
           // two weeks of valid delivery days with slots
           for (let i = 1; i <= 14; i++) {
             const d = `2016-03-${i < 10 ? `0${i}` : i}`
-            dds[d] = { date: d, slots: [slot] }
+            dds[d] = { date: d, slots: [slot], daySlots }
           }
         })
 
@@ -2177,7 +2575,7 @@ describe('utils/deliveries', () => {
             slots: [
               {
                 id: '123-123-123',
-                whenCutoff: 'asdf',
+                whenCutoff: '2019-12-31T11:59:59+01:00',
                 disabledSlotId: '2020-01-02_08-19',
               },
             ],
@@ -2188,18 +2586,18 @@ describe('utils/deliveries', () => {
             slots: [
               {
                 id: '321-321-321',
-                whenCutoff: 'qwerty',
+                whenCutoff: '2019-12-31T11:59:59+01:00',
                 disabledSlotId: '2020-02-14_08-19'
               },
             ],
           },
-          '20202-02-13': {
+          '2020-02-13': {
             date: '20202-02-13',
             isDefault: false,
             slots: [
               {
                 id: '456-456-456',
-                whenCutoff: 'zxcvb',
+                whenCutoff: '2020-02-10T11:59:59+01:00',
                 disabledSlotId: '2020-02-13_08-19'
               },
             ],
@@ -2210,12 +2608,12 @@ describe('utils/deliveries', () => {
             slots: [
               {
                 id: '789-789-789',
-                whenCutoff: 'zxcvb',
+                whenCutoff: '2020-02-12T11:59:59+01:00',
                 disabledSlotId: '2020-02-15_08-19'
               },
               {
                 id: '123-123-123',
-                whenCutoff: 'jfklsad',
+                whenCutoff: '2020-02-12T11:59:59+01:00',
                 disabledSlotId: '2020-02-1_18-22',
                 isDefault: true,
               },
@@ -2239,8 +2637,20 @@ describe('utils/deliveries', () => {
 
       describe('when there are disabled slots', () => {
         beforeEach(() => {
-          features.getLogoutUserDisabledSlots.mockImplementation(() => '2020-01-02_08-19,2020-02-13_08-19')
+          state = {
+            ...state,
+            auth: Immutable.fromJS({
+              isAuthenticated: false,
+            }),
+            features: Immutable.fromJS({
+              logoutUserDisabledSlots: {
+                value: '2020-01-02_08-19,2020-02-13_08-19'
+              },
+            }),
+            boxSummaryDeliveryDays: deliveryDays,
+          }
         })
+
         test('then the first available chronological date is returned', () => {
           const result = getLandingDay(state, true, true, deliveryDaysWithDisabledSlotIds )
           const expected = { date: '2020-02-14', slotId: '321-321-321' }
@@ -2456,6 +2866,38 @@ describe('utils/deliveries', () => {
           coreDayId: '3',
           unavailableReason: '',
           alternateDeliveryDay: null,
+          daySlots: [
+            {
+              id: '7bdd00f7-af72-41af-8444-a35f1467be49',
+              dayId: '98b901bc-0157-11e6-bbb4-080027089d5f',
+              slotId: 'dafe3372-12d1-11e6-bee5-06ddb628bdc5',
+              leadTime: 24,
+              coreSlotId: '4',
+              isSlotDefault: true,
+              date: '2014-01-15',
+              active: true,
+              startTime: '18:00:00',
+              endTime: '22:00:00',
+              deliveryPrice: '2.99',
+              shouldCutoffAt: '2014-01-14T11:59:59+00:00',
+              isExpress: true,
+            },
+            {
+              id: '386932e5-71bd-4610-b9a4-baae4bc91be9',
+              dayId: '98b901bc-0157-11e6-bbb4-080027089d5f',
+              slotId: 'dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5',
+              leadTime: 24,
+              coreSlotId: '3',
+              isSlotDefault: false,
+              date: '2014-01-15',
+              active: true,
+              startTime: '08:00:00',
+              endTime: '19:00:00',
+              deliveryPrice: '0.00',
+              shouldCutoffAt: '2014-01-14T11:59:59+00:00',
+              isExpress: false,
+            }
+          ],
           slots: [
             {
               whenCutoff: '2014-01-14T11:59:59+00:00',

@@ -1,9 +1,9 @@
 import moment from 'moment'
 import Immutable from 'immutable'
 import GoustoException from 'utils/GoustoException'
-import { getDisabledSlots, getLogoutUserDisabledSlots, getNDDFeatureValue } from 'selectors/features'
+import { getNDDFeatureValue } from 'selectors/features'
+import { getDisabledSlotsBasedOnAuthStatus } from 'routes/Menu/selectors/boxSummary'
 import { getBasketDate } from 'selectors/basket'
-import { getIsAuthenticated } from 'selectors/auth'
 import { formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
 export const deliveryTariffTypes = {
@@ -298,9 +298,8 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
   const deliveryDays = deliveryDaysWithDisabledSlotIds || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const isAuthenticated = getIsAuthenticated(state)
-  const nonValidatedDisabledSlots = isAuthenticated ? getDisabledSlots(state) : getLogoutUserDisabledSlots(state)
-  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
+  const disabledSlotsBasedOnAuthStatus = getDisabledSlotsBasedOnAuthStatus(state)
+  const disabledSlots = formatAndValidateDisabledSlots(disabledSlotsBasedOnAuthStatus)
 
   // try and find the delivery day
   let day
@@ -395,11 +394,17 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       }
     } else {
       // try to find the default slot for that day
-      let foundSlot = day.get('slots', Immutable.List([])).find(slot => (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot.get('isDefault'))
+      let foundSlot = day.get('slots', Immutable.List([])).find(slot => (
+        (
+          !disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))
+        ) && slot.get('isDefault')
+      ))
 
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
-        foundSlot = day.get('slots', Immutable.List([])).find(slot => (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot)
+        foundSlot = day.get('slots', Immutable.List([])).find(slot => (
+          (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot
+        ))
       }
 
       if (foundSlot) {
@@ -476,7 +481,15 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
   }
 
   return daysWithDSLTs.map(dayWithDSLTs => {
-    const { id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay } = dayWithDSLTs
+    const {
+      id,
+      date,
+      isDefault,
+      coreDayId,
+      unavailableReason,
+      alternateDeliveryDay,
+      daySlotLeadTimes
+    } = dayWithDSLTs
 
     return {
       id,
@@ -485,7 +498,8 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
       coreDayId,
       unavailableReason,
       alternateDeliveryDay,
-      slots: dayWithDSLTs.daySlotLeadTimes.map(dslt => ({
+      daySlots: daySlotLeadTimes,
+      slots: daySlotLeadTimes.map(dslt => ({
         whenCutoff: dslt.shouldCutoffAt,
         deliveryEndTime: dslt.endTime,
         deliveryPrice: dslt.deliveryPrice,

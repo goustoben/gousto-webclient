@@ -4,6 +4,8 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { getOneOffSlotAvailableSlots } from 'routes/Menu/selectors/boxSummary'
+import { getLoadingStateForOrder, getUserOpenOrders } from 'selectors/user'
 
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
@@ -25,6 +27,10 @@ function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query
 
   const showOverlay = state.boxSummaryShow.get('show') || state.menuBrowseCTAShow
+  const userOpenOrders = getUserOpenOrders(state)
+  const oneOffSlotAvailableSlots = getOneOffSlotAvailableSlots(state)
+
+  const userHasAvailableSlots = userOpenOrders.size > 0 || oneOffSlotAvailableSlots.size > 0
 
   return {
     showOverlay,
@@ -39,6 +45,8 @@ function mapStateToProps(state, ownProps) {
     forceLoad: state.menu.get('forceLoad', false),
     recipesCount: flattenRecipes(state.basket.get('recipes')).length,
     postcode: state.basket.get('postcode'),
+    userHasAvailableSlots,
+    userOrderLoadingState: getLoadingStateForOrder(state),
   }
 }
 
