@@ -73,4 +73,4 @@ class Title extends React.PureComponent {
     )
   }
 }
-export default Title
+export { Title }

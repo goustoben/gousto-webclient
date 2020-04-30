@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Title from './Title'
+import { Title } from './Title'
 
 const mapStateToProps = state => ({
   pending: state.pricing.get('pending'),
@@ -8,4 +8,6 @@ const mapStateToProps = state => ({
   recipeTotalDiscounted: parseFloat(state.pricing.getIn(['prices', 'total'], 0)),
 })
 
-export default connect(mapStateToProps, {})(Title)
+const TitleContainer = connect(mapStateToProps, {})(Title)
+
+export { TitleContainer }

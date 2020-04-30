@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
-import Title from 'routes/Menu/Recipe/Title'
+import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { AddButton } from 'routes/Menu/Recipe/AddButton'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'

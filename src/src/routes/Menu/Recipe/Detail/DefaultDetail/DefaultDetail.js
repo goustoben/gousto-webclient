@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import Image from 'routes/Menu/Recipe/Image'
-import Title from 'routes/Menu/Recipe/Title'
+import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { AddButton } from 'routes/Menu/Recipe/AddButton'
 import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'

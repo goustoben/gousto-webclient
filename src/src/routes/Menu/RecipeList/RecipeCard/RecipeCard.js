@@ -5,7 +5,6 @@ import Immutable from 'immutable'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { formatRecipeTitle, getFoodBrand } from 'utils/recipe'
-import { isRecommendedRecipe } from 'utils/menu'
 
 const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
   if (isChefPrepared) {
@@ -30,7 +29,7 @@ const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
 const RecipeCard = ({
   recipe, index, showDetailRecipe, isFeatured, isFoodBrandClickable,
 
-  numPortions, cutoffDate, features, allRecipesList, recipesStore, browserType
+  numPortions, cutoffDate, browserType,
 }) => {
   if (!recipe) {
     return null
@@ -61,8 +60,6 @@ const RecipeCard = ({
       view={view}
       cutoffDate={cutoffDate}
       onClick={(isViewMoreDetailsClicked = false) => { showDetailRecipe(recipeId, isViewMoreDetailsClicked) }}
-      features={features}
-      isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
       range={range}
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
@@ -81,10 +78,7 @@ RecipeCard.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
   index: PropTypes.number.isRequired,
   numPortions: PropTypes.number.isRequired,
-  recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-  features: PropTypes.instanceOf(Immutable.Map).isRequired,
   showDetailRecipe: PropTypes.func.isRequired,
-  allRecipesList: PropTypes.instanceOf(Immutable.List).isRequired,
   isFeatured: PropTypes.bool,
   cutoffDate: PropTypes.string,
   browserType: PropTypes.string.isRequired,

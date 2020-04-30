@@ -51,4 +51,4 @@ Title.defaultProps = {
   linkUnderlined: false,
 }
 
-export default Title
+export { Title }

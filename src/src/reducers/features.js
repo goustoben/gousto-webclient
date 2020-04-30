@@ -12,9 +12,6 @@ const defaultFeatures = () => ({
   landingOrder: {
     value: true,
   },
-  recommendedBadge: {
-    value: false,
-  },
   featureRecommendedRecipe: {
     value: true,
   },
