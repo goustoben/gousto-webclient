@@ -6,7 +6,7 @@ import { boxSummaryOverlayPropTypes } from '../propTypes'
 
 const BoxSummaryOverlayDesktop = ({ onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions, orderSaveError }) => (
   <div className={css.supercontainerdesktop}>
-    <div className={showDetails ? css.detailContainerdesktopShow : css.detailContainerdesktop}>
+    <div className={showDetails ? css.detailContainerdesktopShow : css.detailContainerdesktop} data-testing="boxSummaryDesktop">
       <span>
         <div className={css.closeBtn} role="button" onClick={onCloseClick} tabIndex={0} onKeyPress={onCloseClick} />
         <BoxSummaryContentContainer
