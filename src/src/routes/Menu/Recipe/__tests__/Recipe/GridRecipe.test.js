@@ -15,6 +15,7 @@ import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
+import { VariantHeaderContainer } from '../../VariantHeader'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -30,6 +31,7 @@ describe('<GridRecipe />', () => {
       cookingTime: 1,
       cookingTimeFamily: 1,
       shelfLifeDays: '',
+      recipeVariants: null,
       media: Immutable.fromJS([
         {},
         {},
@@ -130,6 +132,11 @@ describe('<GridRecipe />', () => {
       test('should contain one Pill component and icon prop is true', () => {
         expect(wrapper.find(Pill).length).toBe(1)
         expect(wrapper.find(Pill).prop('icon')).toBe(true)
+      })
+
+      test('should contain one VariantHeader component', () => {
+        const component = wrapper.find(VariantHeaderContainer)
+        expect(component.length).toBe(1)
       })
     })
 

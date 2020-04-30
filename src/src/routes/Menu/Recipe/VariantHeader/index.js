@@ -1,0 +1,1 @@
+export { VariantHeaderContainer } from './VariantHeaderContainer'

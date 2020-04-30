@@ -34,7 +34,7 @@ describe('menus', () => {
       await fetchMenus('token')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
       expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
-        { include: 'ingredients' },
+        { addAlternatives: true, include: 'ingredients' },
         { accessToken: 'token' ,
           cache: 'default',
           headers: {},
@@ -56,7 +56,7 @@ describe('menus', () => {
       await fetchMenusWithUserId('token', 'e34rder')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
       expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
-        { include: 'ingredients', userId: 'e34rder' },
+        { addAlternatives: true, include: 'ingredients', userId: 'e34rder' },
         { accessToken: 'token' ,
           cache: 'default',
           headers: {},

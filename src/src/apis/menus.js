@@ -31,6 +31,7 @@ export function fetchMenus(accessToken, query) {
 
   return fetchRaw(`${endpoint('menu', version)}/menus`, {
     include: 'ingredients',
+    addAlternatives: true,
     ...adminLinkData,
   }, fetchOptions)
 }
@@ -41,5 +42,5 @@ export function fetchMenusWithUserId(accessToken, userId) {
     accessToken
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId: userId}, fetchOptions)
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId, addAlternatives: true}, fetchOptions)
 }
