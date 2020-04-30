@@ -3,12 +3,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import Title from 'routes/Menu/Recipe/Title'
+import { Title } from 'routes/Menu/Recipe/Title'
 import Image from 'routes/Menu/Recipe/Image'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AddButton } from 'routes/Menu/Recipe/AddButton'
-import RecommendedBadge from 'routes/Menu/Recipe/RecommendedBadge'
 
 import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
@@ -71,10 +70,6 @@ describe('<GridRecipe />', () => {
 
       test('should contain one AttributeGrid component', () => {
         expect(wrapper.find(AttributeGrid).length).toEqual(1)
-      })
-
-      test('should contain one RecommendedBadge component', () => {
-        expect(wrapper.find(RecommendedBadge).length).toEqual(1)
       })
 
       test('should contain one AddButton component', () => {

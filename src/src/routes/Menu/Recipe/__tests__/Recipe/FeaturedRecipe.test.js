@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Image from 'routes/Menu/Recipe/Image'
-import Title from 'routes/Menu/Recipe/Title'
+import { Title } from 'routes/Menu/Recipe/Title'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 

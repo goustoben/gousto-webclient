@@ -13,7 +13,7 @@ import Image from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
-import Title from 'routes/Menu/Recipe/Title'
+import { Title } from 'routes/Menu/Recipe/Title'
 import { H1 } from 'Page/Header'
 
 jest.mock('utils/logger', () => ({

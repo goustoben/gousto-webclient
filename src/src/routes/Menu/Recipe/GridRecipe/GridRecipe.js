@@ -9,16 +9,14 @@ import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import config from 'config'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
-import Title from '../Title'
+import { Title } from '../Title'
 import Image from '../Image'
 import { RecipeRating } from '../Rating'
 import { AddButton } from '../AddButton'
-import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 
-const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, isChefPrepared, numPortions }) => {
+const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, chef, view, detailHover, range, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, isChefPrepared, numPortions }) => {
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
 
   return (
@@ -70,7 +68,6 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           />
         </div>
         <div>
-          <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
           <div>
             {outOfStock || (
             <RecipeRating
@@ -119,13 +116,11 @@ GridRecipe.propTypes = {
     name: PropTypes.string,
     celebrity: PropTypes.bool,
   }),
-  isRecommendedRecipe: PropTypes.bool,
   equipment: PropTypes.instanceOf(Immutable.List),
   inBasket: PropTypes.bool,
   averageRating: PropTypes.number,
   cookingTime: PropTypes.number.isRequired,
   ratingCount: PropTypes.number,
-  features: PropTypes.instanceOf(Immutable.Map).isRequired,
   useWithin: PropTypes.string.isRequired,
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
@@ -141,7 +136,6 @@ GridRecipe.propTypes = {
 
 GridRecipe.defaultProps = {
   view: 'grid',
-  isRecommendedRecipe: false,
   chef: Immutable.Map({}),
   averageRating: 0,
   ratingCount: 0,

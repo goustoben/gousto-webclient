@@ -10,20 +10,22 @@ import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
-import Title from '../Title'
+import { Title } from '../Title'
 import Image from '../Image'
 import { AddButton } from '../AddButton'
 import { StockBadge } from '../StockBadge'
 import { ChefQuote } from '../ChefQuote'
 import { SoldOutOverlay } from '../SoldOutOverlay'
-import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 
-const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
+const FeaturedRecipe = ({
+  onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, chef, tag, detailHover,
-  description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet}) => (
+  description, range, cookingTime,
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet
+}) =>
+  (
     <div>
       <div className={css.featuredRecipe}>
 
@@ -68,7 +70,6 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
                   View details
                 </Pill>
               </div>
-              <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
               <StockBadge stock={stock} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
               <RecipeDisclaimerContainer id={id} />
@@ -83,7 +84,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
         </div>
       </div>
     </div>
-)
+  )
 
 FeaturedRecipe.propTypes = {
   ...recipePropTypes,
@@ -95,8 +96,6 @@ FeaturedRecipe.propTypes = {
   cookingTime: PropTypes.number.isRequired,
   equipment: PropTypes.instanceOf(Immutable.List),
   inBasket: PropTypes.bool,
-  features: PropTypes.instanceOf(Immutable.Map).isRequired,
-  isRecommendedRecipe: PropTypes.bool,
   chef: PropTypes.shape({
     media: PropTypes.shape({
       images: PropTypes.array,
@@ -116,7 +115,6 @@ FeaturedRecipe.propTypes = {
 FeaturedRecipe.defaultProps = {
   view: 'featured',
   tag: '',
-  isRecommendedRecipe: false,
   chef: Immutable.Map({}),
   fiveADay: 0,
 }
