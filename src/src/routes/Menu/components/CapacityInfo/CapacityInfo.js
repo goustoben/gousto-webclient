@@ -4,7 +4,7 @@ import { zendesk as zendeskRoutes } from 'config/routes'
 import css from './CapacityInfo.css'
 
 const CONTENT = {
-  title: 'Due to exremely high demand, all of our one-off box delivery slots are full',
+  title: 'Due to extremely high demand, all of our one-off box delivery slots are full',
   line1: 'We are working hard to increase capacity to make one-off delivery slots available and cannot apologise enough for this inconvenience.',
   line2: 'Unfortunately our customer care team can\'t place orders for you.',
   line3: 'If you’d like to learn more please ',
@@ -19,7 +19,7 @@ const CapacityInfo = () => (
     <p><strong>{CONTENT.line2}</strong></p>
     <p>
       {CONTENT.line3}
-      <a href={zendeskRoutes.faqs} target="_blank" rel="noopener noreferrer">{CONTENT.urlLabel}</a>
+      <a href={zendeskRoutes.covid} target="_blank" rel="noopener noreferrer">{CONTENT.urlLabel}</a>
     </p>
   </div>
 )
