@@ -69,7 +69,8 @@ logs:
   - name: apiTimeLog
 
 
-scaling: true
+scaling: 
+  ecsCpuTargetTrackingScalingPolicyPercentage: 50
 
 healthCheck:
   target : 'HTTP:80/ping'
