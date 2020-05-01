@@ -7,7 +7,9 @@ export function checkoutOrder(accessToken, reqData) {
 }
 
 export function fetchOrder(accessToken, orderId, reqData = {}) {
-  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'GET')
+  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'GET', undefined, {
+    'Content-Type': 'application/json',
+  })
 }
 
 export function createPreviewOrder(reqData = {}) {
@@ -15,15 +17,21 @@ export function createPreviewOrder(reqData = {}) {
 }
 
 export function updateOrderItems(accessToken, orderId, reqData = {}) {
-  return fetch(accessToken, `${endpoint('core')}/order/${orderId}/update-items`, reqData, 'PUT')
+  return fetch(accessToken, `${endpoint('core')}/order/${orderId}/update-items`, reqData, 'PUT', undefined, {
+    'Content-Type': 'application/json',
+  })
 }
 
 export function saveOrder(accessToken, orderId, reqData) {
-  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'PUT')
+  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'PUT', undefined, {
+    'Content-Type': 'application/json',
+  })
 }
 
 export function cancelOrder(accessToken, orderId, reqData = {}) {
-  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'DELETE')
+  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'DELETE', undefined, {
+    'Content-Type': 'application/json',
+  })
 }
 
 export function cancelExistingOrders(accessToken, reqData = {}) {
@@ -31,5 +39,7 @@ export function cancelExistingOrders(accessToken, reqData = {}) {
 }
 
 export function updateOrderAddress(accessToken, orderId, addressId) {
-  return fetch(accessToken, `${endpoint('core')}/order/${orderId}/change-address/`, { address_id: addressId }, 'PUT')
+  return fetch(accessToken, `${endpoint('core')}/order/${orderId}/change-address/`, { address_id: addressId }, 'PUT', undefined, {
+    'Content-Type': 'application/json',
+  })
 }

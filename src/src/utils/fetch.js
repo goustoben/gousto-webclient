@@ -28,8 +28,8 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
 
   let httpMethod = method.toUpperCase()
   if (method === 'PUT' || method === 'PATCH') {
+    requestData._method = httpMethod // eslint-disable-line no-underscore-dangle
     httpMethod = 'POST'
-    requestData._method = method // eslint-disable-line no-underscore-dangle
   }
 
   let body = ''
