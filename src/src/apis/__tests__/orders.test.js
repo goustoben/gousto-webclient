@@ -11,6 +11,7 @@ import {
   cancelExistingOrders,
 } from '../orders'
 
+const expectedHeaders = { 'Content-Type': 'application/json'}
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {
@@ -59,7 +60,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await fetchOrder('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'GET', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -72,7 +73,7 @@ describe('orders api', () => {
         const orderId = '123'
         await fetchOrder('token', orderId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'GET')
+        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'GET', undefined, expectedHeaders)
       })
     })
   })
@@ -105,7 +106,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await updateOrderItems('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/update-items`, reqData, 'PUT')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/update-items`, reqData, 'PUT', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -118,7 +119,7 @@ describe('orders api', () => {
         const orderId = '123'
         await updateOrderItems('token', orderId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/update-items`, {}, 'PUT')
+        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/update-items`, {}, 'PUT', undefined, expectedHeaders)
       })
     })
   })
@@ -129,7 +130,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await saveOrder('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'PUT')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'PUT', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -144,7 +145,7 @@ describe('orders api', () => {
       const reqData = { a: 1, b: 2 }
       await cancelOrder('token', orderId, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'DELETE')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'DELETE', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -157,7 +158,7 @@ describe('orders api', () => {
         const orderId = '123'
         await cancelOrder('token', orderId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'DELETE')
+        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'DELETE', undefined, expectedHeaders)
       })
     })
   })
@@ -190,7 +191,7 @@ describe('orders api', () => {
       const addressId = '456'
       await updateOrderAddress('token', orderId, addressId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/change-address/`, { address_id: addressId }, 'PUT')
+      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}/change-address/`, { address_id: addressId }, 'PUT', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
