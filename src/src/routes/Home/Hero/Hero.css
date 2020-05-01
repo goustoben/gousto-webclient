@@ -1,4 +1,4 @@
-@value ScreenSMMin, ScreenLGMin, ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenLGMin, ScreenXSMax, ScreenXXSMin from 'styles/screenSizes.css';
 @value SpacingXXXXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
 @value Coconut, White from 'styles/colors.css';
 @value desktopInfoSize: 470px;
@@ -20,13 +20,18 @@
 }
 
 .containerSignupOverride {
-	height: 300px;
+	height: 395px;
 	padding-top: 24px;
 	margin-bottom: 0;
 
 	@media ScreenSMMin {
 		min-height: calc(desktopInfoSize + 200px);
 	}
+
+	@media ScreenXXSMin {
+		height: 340px;
+	}
+
 }
 
 .container--default {
@@ -118,7 +123,7 @@
 	top: 50px;
 
 	@media ScreenSMMin {
-		top: 155px;
+		top: 175px;
 	}
 }
 
