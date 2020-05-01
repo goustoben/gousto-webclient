@@ -132,9 +132,10 @@ class Buttons extends React.Component {
       score,
       menuRecipeDetailVisibilityChange,
       menuBrowseCTAVisibilityChange,
+      basketPostcode
     } = this.props
     if (!disable) {
-      if (stock !== null) {
+      if (stock !== null && Boolean(basketPostcode)) {
         onAdd(recipeId, view, { position, score })
       } else if (config.recipeDetailViews.includes(view)) {
         menuRecipeDetailVisibilityChange()
@@ -223,11 +224,13 @@ Buttons.propTypes = {
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   surchargePerPortion: PropTypes.number,
   score: PropTypes.number,
-  buttonText: PropTypes.string
+  buttonText: PropTypes.string,
+  basketPostcode: PropTypes.string
 }
 
 Buttons.defaultProps = {
-  buttonText: 'Add Recipe'
+  buttonText: 'Add Recipe',
+  basketPostcode: ''
 }
 
 export default Buttons

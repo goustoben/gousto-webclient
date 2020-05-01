@@ -23,7 +23,6 @@ class BoxSummary extends React.PureComponent {
     basketRestorePreviousValues: PropTypes.func.isRequired,
     menuRecipes: PropTypes.instanceOf(Immutable.List).isRequired,
     stock: PropTypes.instanceOf(Immutable.Map).isRequired,
-    disabled: PropTypes.bool.isRequired,
     menuFetchPending: PropTypes.bool,
     hasUnavailableRecipes: PropTypes.bool,
     orderSaveError: PropTypes.string,
@@ -31,7 +30,8 @@ class BoxSummary extends React.PureComponent {
     pricingPending: PropTypes.bool,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
     slotId: PropTypes.string,
-    shouldShowBoxSummary: PropTypes.bool
+    shouldShowBoxSummary: PropTypes.bool,
+    shouldMenuBrowseCTAShow: PropTypes.bool
   }
 
   // eslint-disable-next-line react/static-property-placement
@@ -45,6 +45,7 @@ class BoxSummary extends React.PureComponent {
     orderSaveError: null,
     pricingPending: false,
     slotId: null,
+    shouldMenuBrowseCTAShow: false
   }
 
   // eslint-disable-next-line react/state-in-constructor
@@ -152,7 +153,6 @@ class BoxSummary extends React.PureComponent {
   render() {
     const {
       date,
-      disabled,
       maxRecipesNum,
       menuRecipesStore,
       recipes,
@@ -160,9 +160,9 @@ class BoxSummary extends React.PureComponent {
       deliveryDays,
       slotId,
       showDetails,
-      isMobile
+      isMobile,
+      shouldMenuBrowseCTAShow
     } = this.props
-    const showBrowseCTA = (date === '' || disabled)
     const numRecipes = this.numRecipes()
 
     return (
@@ -175,7 +175,7 @@ class BoxSummary extends React.PureComponent {
           date={date}
           deliveryDays={deliveryDays}
           slotId={slotId}
-          showBrowseCTA={showBrowseCTA}
+          showBrowseCTA={shouldMenuBrowseCTAShow}
           maxRecipesNum={maxRecipesNum}
           menuRecipesStore={menuRecipesStore}
           recipes={recipes}

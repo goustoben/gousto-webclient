@@ -10,6 +10,7 @@ export const getReceiveMenuPending = ({ menuReceiveMenuPending }) => menuReceive
 export const getBoxSummaryDeliveryDays = ({ boxSummaryDeliveryDays }) => boxSummaryDeliveryDays
 export const getUserAgent = ({ request }) => request.get('userAgent')
 export const getProductCategories = ({ productsCategories }) => productsCategories
+export const getMenuBrowseCTAShow = ({ menuBrowseCTAShow }) => menuBrowseCTAShow
 
 export default {
   getStock,

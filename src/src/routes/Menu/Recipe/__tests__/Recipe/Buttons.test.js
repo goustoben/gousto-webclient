@@ -21,6 +21,7 @@ describe('the Buttons component', () => {
     menuRecipeDetailVisibilityChange: jest.fn(),
     surchargePerPortion: null,
     score: null,
+    basketPostcode: 'W3'
   }
 
   afterEach(() => {
@@ -261,6 +262,23 @@ describe('the Buttons component', () => {
           test('does not add the recipe', () => {
             expect(onAdd).not.toHaveBeenCalled()
           })
+        })
+      })
+
+      describe('given postcode is empty', () => {
+        const menuBrowseCTAVisibilityChangeSpy = jest.fn()
+        beforeEach(() => {
+          const newButtonProps = {
+            ...buttonsProps,
+            menuBrowseCTAVisibilityChange: menuBrowseCTAVisibilityChangeSpy,
+            basketPostcode: ''
+          }
+          wrapper = mount(<Buttons {...newButtonProps} />)
+          buttonContent = wrapper.find('Tooltip').find('Segment')
+          buttonContent.simulate('click')
+        })
+        test('should call menuBrowseCTAVisibilityChange', () => {
+          expect(menuBrowseCTAVisibilityChangeSpy).toHaveBeenCalled()
         })
       })
     })

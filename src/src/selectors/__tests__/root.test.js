@@ -1,4 +1,4 @@
-import { getProductCategories } from '../root'
+import { getProductCategories, getMenuBrowseCTAShow } from '../root'
 
 describe('root selectors', () => {
   describe('getProductCategories', () => {
@@ -10,6 +10,16 @@ describe('root selectors', () => {
       }
 
       expect(getProductCategories(state)).toEqual({id: '1234'})
+    })
+  })
+
+  describe('getMenuBrowseCTAShow', () => {
+    test('should return the menuBrowseCTAShow value', () => {
+      const state = {
+        menuBrowseCTAShow: true
+      }
+
+      expect(getMenuBrowseCTAShow(state)).toEqual(true)
     })
   })
 })

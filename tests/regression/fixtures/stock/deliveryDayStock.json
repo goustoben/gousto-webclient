@@ -1,0 +1,224 @@
+{
+  "status": "ok",
+  "result": {
+    "data": {
+      "647": {
+        "recipeId": 647,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -5533,
+        "familyNumber": -2766
+      },
+      "923": {
+        "recipeId": 923,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -5626,
+        "familyNumber": -2813
+      },
+      "1009": {
+        "recipeId": 1009,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -7798,
+        "familyNumber": -3899
+      },
+      "1361": {
+        "recipeId": 1361,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -6944,
+        "familyNumber": -3472
+      },
+      "1451": {
+        "recipeId": 1451,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": 54,
+        "familyNumber": 27
+      },
+      "1504": {
+        "recipeId": 1504,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -2485,
+        "familyNumber": -1242
+      },
+      "1542": {
+        "recipeId": 1542,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -2068,
+        "familyNumber": -1034
+      },
+      "1772": {
+        "recipeId": 1772,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -6210,
+        "familyNumber": -3105
+      },
+      "2028": {
+        "recipeId": 2028,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -2574,
+        "familyNumber": -1287
+      },
+      "2080": {
+        "recipeId": 2080,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -3755,
+        "familyNumber": -1877
+      },
+      "2245": {
+        "recipeId": 2245,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -2583,
+        "familyNumber": -1291
+      },
+      "2251": {
+        "recipeId": 2251,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": 45,
+        "familyNumber": 22
+      },
+      "2328": {
+        "recipeId": 2328,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": 0,
+        "familyNumber": 0
+      },
+      "2350": {
+        "recipeId": 2350,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -7374,
+        "familyNumber": -3687
+      },
+      "2351": {
+        "recipeId": 2351,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -2606,
+        "familyNumber": -1303
+      },
+      "2353": {
+        "recipeId": 2353,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -3441,
+        "familyNumber": -1720
+      },
+      "2413": {
+        "recipeId": 2413,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -2881,
+        "familyNumber": -1440
+      },
+      "2485": {
+        "recipeId": 2485,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": 3,
+        "familyNumber": 1
+      },
+      "2498": {
+        "recipeId": 2498,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -4316,
+        "familyNumber": -2158
+      },
+      "2507": {
+        "recipeId": 2507,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -11062,
+        "familyNumber": -5531
+      },
+      "2850": {
+        "recipeId": 2850,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -5509,
+        "familyNumber": -2754
+      },
+      "2885": {
+        "recipeId": 2885,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -4147,
+        "familyNumber": -2073
+      },
+      "3037": {
+        "recipeId": 3037,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -1285,
+        "familyNumber": -642
+      },
+      "3038": {
+        "recipeId": 3038,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -1237,
+        "familyNumber": -618
+      },
+      "3039": {
+        "recipeId": 3039,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -1312,
+        "familyNumber": -656
+      },
+      "3040": {
+        "recipeId": 3040,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -1008,
+        "familyNumber": -504
+      },
+      "3041": {
+        "recipeId": 3041,
+        "periodId": 329,
+        "slotNumber": "3",
+        "committed": "0",
+        "number": -728,
+        "familyNumber": -364
+      }
+    },
+    "meta": []
+  }
+}
