@@ -69,13 +69,8 @@ logs:
   - name: apiTimeLog
 
 
-scaling:
-  type: cpu
-  upAt: 60 # %
-  upBy: 100 # %
-  downAt: 30 # %
-  downBy: 50 # %
-  cooldown: 1200 # The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start.
+scaling: 
+  ecsCpuTargetTrackingScalingPolicyPercentage: 50
 
 healthCheck:
   target : 'HTTP:80/ping'
@@ -91,7 +86,8 @@ environments:
     minInstanceSize: 0
     maxInstanceSize: 1
     desiredInstanceSize: 0
-    ecsDesiredTaskCount: 2
+    ecsDesiredTaskCount: 1
+    ecsMaxTaskCount: 2
     ecsMemory: 1024
     ecsCpu: 512
 
@@ -118,7 +114,8 @@ environments:
     maxInstanceSize: 8
     desiredInstanceSize: 0
     availability: alwaysOn
-    ecsDesiredTaskCount: 18
+    ecsDesiredTaskCount: 8
+    ecsMaxTaskCount: 18
     ecsMemory: 2048
     ecsCpu: 1024
 
