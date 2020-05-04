@@ -9,8 +9,16 @@ import css from '../DeliverySlot.css'
 
 const DatePicker = (props) => {
   const {
-    slots, slotId, deliveryDays, disableNewDatePicker, tempDate,
-    tempSlotId, tempOrderId, setTempSlotId, handleDateChange, subLabelClassName
+    slots,
+    slotId,
+    deliveryDays,
+    disableNewDatePicker,
+    tempDate,
+    tempSlotId,
+    tempOrderId,
+    setTempSlotId,
+    handleDateChange,
+    subLabelClassName,
   } = props
   const deliverySlotOptions = slots[tempDate] || []
 

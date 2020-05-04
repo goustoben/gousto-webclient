@@ -24,7 +24,6 @@ import {
   getHideMenuBanner,
   getPromoOfferVariant,
   getIsSignupReductionEnabled,
-  getIsSubscriberDisabledSlotsEnabled,
   getIsWelcomePageOnboardingEnabled,
   getIsCommunicationPanelEnabled,
 } from 'selectors/features'
@@ -618,36 +617,6 @@ describe('when features are defined', () => {
 
       test('should be truthy', () => {
         expect(getIsSignupReductionEnabled(state)).toBeTruthy()
-      })
-    })
-  })
-
-  describe('getIsSubscriberDisabledSlotsEnabled', () => {
-    describe('when enableSubscriberDisabledSlots is NOT set', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          enableSubscriberDisabledSlots: {
-            value: false
-          }
-        })
-      })
-
-      test('should be falsy', () => {
-        expect(getIsSubscriberDisabledSlotsEnabled(state)).toBeFalsy()
-      })
-    })
-
-    describe('when enableSubscriberDisabledSlots is set', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          enableSubscriberDisabledSlots: {
-            value: true
-          }
-        })
-      })
-
-      test('should be truthy', () => {
-        expect(getIsSubscriberDisabledSlotsEnabled(state)).toBeTruthy()
       })
     })
   })

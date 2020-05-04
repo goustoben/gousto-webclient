@@ -164,9 +164,8 @@ describe('SlotPicker', () => {
       expect(onClick.callCount).toBe(0)
     })
 
-    test('should render one set of lines when one slot on one day is disabled', () => {
-      expect(wrapper.find('.bigDisabledLine1').length).toEqual(1)
-      expect(wrapper.find('.bigDisabledLine2').length).toEqual(1)
+    test('should add disableLabel class when one slot on one day is disabled', () => {
+      expect(wrapper.find('.disableLabel').length).toEqual(1)
     })
 
     test('should not fill the segment when disabled', () => {

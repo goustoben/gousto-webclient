@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button, Heading, LayoutContentWrapper, Segment } from 'goustouicomponents'
+import { Alert, Button, Heading, LayoutContentWrapper, Segment } from 'goustouicomponents'
 import Immutable from 'immutable'
 import { reminder } from 'config/freeDelivery'
 import { getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'
@@ -20,7 +20,6 @@ class DeliverySlot extends React.PureComponent {
       tempSlotId, clearPostcode, disableOnDelivery,
       userOrders, getBoxSummaryTextProps,
       deliveryDays: deliveryDaysProps,
-      isSubscriberDisabledSlotsEnabled,
     } = this.props
 
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
@@ -43,7 +42,7 @@ class DeliverySlot extends React.PureComponent {
       hasFullOrders,
       subLabelClassName,
       hasActiveSlotsForSelectedDate,
-    } = getDeliveryDaysAndSlots(tempDate, helperProps, isSubscriberDisabledSlotsEnabled)
+    } = getDeliveryDaysAndSlots(tempDate, helperProps)
     const { deliveryLocationText, slotId, buttonText, showWarning } = getBoxSummaryTextProps(slots)
 
     return (
@@ -80,6 +79,18 @@ class DeliverySlot extends React.PureComponent {
             tempDate={tempDate}
           />
         </div>
+        {
+          isAuthenticated && (
+            <div className={css.row}>
+              <Alert type="danger">
+                <p className={css.alertContent}>
+                  Due to extremely high demand, all of our one-off box delivery slots are full.
+                  If you skipped a box you will not be able to replace it.
+                </p>
+              </Alert>
+            </div>
+          )
+        }
         <div className={css.row}>
           <p className={css.highlightText}>
             <span className={css.tick} />
@@ -120,7 +131,6 @@ DeliverySlot.propTypes = {
   tempOrderId: PropTypes.string,
   tempSlotId: PropTypes.string,
   userOrders: PropTypes.instanceOf(Immutable.Map),
-  isSubscriberDisabledSlotsEnabled: PropTypes.bool,
 }
 
 DeliverySlot.defaultProps = {
@@ -135,6 +145,5 @@ DeliverySlot.defaultProps = {
   tempSlotId: '',
   userOrders: Immutable.fromJS({}),
   isSubscriptionActive: '',
-  isSubscriberDisabledSlotsEnabled: false,
 }
 export { DeliverySlot }
