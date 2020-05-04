@@ -5,43 +5,32 @@ import classnames from 'classnames'
 
 import css from './SlotPicker.css'
 
-const SlotPicker = ({ slots, date, slotId, onClick }) => {
-  const hasMoreThanTwoSlots = slots[date] && slots[date].length > 2
-
-  return (
-    <Button color="quaternary" width="full">
-      {slots[date] && slots[date].map(slot => (
-        <Segment
-          key={slot.value}
-          fill={slot.value === slotId && !slot.disabled}
-          onClick={() => { slot.disabled ? null : onClick(slot.value) }}
-          className={classnames(
-            {[css.disabled]: slot.disabled },
-            {[css.enabled]: !slot.disabled },
-            {[css.selected]: slot.value === slotId },
-            {[css.compact]: hasMoreThanTwoSlots}
-          )}
-          noHover={slot.disabled}
-          disabled={slot.disabled}
-        >
-          <span className={css.fullWidth}>
-            <span
-              className={
-                classnames(
-                  hasMoreThanTwoSlots ? css.blockLabel : css.label,
-                  slot.disabled && css.disableLabel,
-                )
-              }
-            >
-              {slot.label}
-              <span className={hasMoreThanTwoSlots ? css.blockLabel : css.inlineLabel}>{slot.subLabel}</span>
-            </span>
-          </span>
-        </Segment>
-      ))}
-    </Button>
-  )
-}
+const SlotPicker = ({ slots, date, slotId, onClick }) => (
+  <Button color="quaternary" width="full">
+    {slots[date] && slots[date].map(slot => (
+      <Segment
+        key={slot.value}
+        fill={slot.value === slotId && !slot.disabled}
+        onClick={() => { slot.disabled ? null : onClick(slot.value) }}
+        className={classnames(
+          {[css.disabled]: slot.disabled },
+          {[css.enabled]: !slot.disabled },
+          {[css.selected]: slot.value === slotId },
+          {[css.compact]: (slots[date].length > 2)}
+        )}
+        noHover={slot.disabled}
+        disabled={slot.disabled}
+      >
+        <span className={css.fullWidth}>
+          {slot.disabled ? <div className={(slots[date].length > 2) ? css.disabledLine1 : css.bigDisabledLine1 } /> : null}
+          {slot.disabled ? <div className={(slots[date].length > 2) ? css.disabledLine2 : css.bigDisabledLine2 } /> : null}
+          <span className={(slots[date].length > 2) ? css.blockLabel : css.label}>{slot.label}</span>
+          <span className={(slots[date].length > 2) ? css.blockLabel : css.inlineLabel}>{slot.subLabel}</span>
+        </span>
+      </Segment>
+    ))}
+  </Button>
+)
 
 SlotPicker.propTypes = {
   slots: PropTypes.object.isRequired,

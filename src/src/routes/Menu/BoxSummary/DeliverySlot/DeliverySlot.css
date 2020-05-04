@@ -155,7 +155,3 @@
 	bottom: 0;
 	left: 0;
 }
-
-.alertContent {
-	composes: textLeft from 'styles/typography.css';
-}

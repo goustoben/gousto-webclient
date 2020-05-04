@@ -3,70 +3,6 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import { DeliverySlot } from '../DeliverySlot'
 
-describe('given the DeliverySlot is rendered', () => {
-  let wrapper
-  const getBoxSummaryTextProps = jest.fn()
-
-  beforeEach(() => {
-    const deliveryDays = Immutable.Map({
-      '2019-03-03': Immutable.Map({
-        date: '2019-03-03',
-        id: 'djhdhds',
-        slots: Immutable.fromJS([
-          {
-            deliveryStartTime: '08:00:00',
-            deliveryEndTime: '19:00:00',
-            id: '123sddrdfst456',
-            disabledSlotId: '2019-03-03_08-19'
-          },
-          {
-            deliveryStartTime: '18:00:00',
-            deliveryEndTime: '22:00:00',
-            id: '987sddrdfst456',
-            disabledSlotId: '2019-03-03_18-22'
-          }
-        ])
-      })
-    })
-    const disabledSlots = ['2019-03-03_08-19', '2019-02-04_08-12']
-    const isSubscriptionActive = 'inactive'
-
-    getBoxSummaryTextProps.mockReturnValue({
-      deliveryLocationText: 'W140EE',
-      slotId: '123sddrdfst456',
-      buttonText: 'Chose recipes',
-      showWarning: false
-    })
-
-    wrapper = shallow(
-      <DeliverySlot
-        deliveryDays={deliveryDays}
-        disabledSlots={disabledSlots}
-        isAuthenticated
-        isSubscriptionActive={isSubscriptionActive}
-        tempDate="2019-03-03"
-        clearPostcode={jest.fn()}
-        getBoxSummaryTextProps={getBoxSummaryTextProps}
-        basketRestorePreviousValues={() => { }}
-        boxSummaryNext={() => { }}
-        numPortions={2}
-      />)
-  })
-
-  describe.each([
-    [false, 0],
-    [true, 1]
-  ])('when user authentication is set to %s', (isAuthenticated, expected) => {
-    beforeEach(() => {
-      wrapper.setProps({ isAuthenticated })
-    })
-
-    test(`renders ${expected} Alert for the capacity message`, () => {
-      expect(wrapper.find('Alert').length).toBe(expected)
-    })
-  })
-})
-
 describe('DeliverySlot logic', () => {
   let deliveryDays
   let wrapper
@@ -256,4 +192,3 @@ describe('DeliverySlot logic', () => {
     })
   })
 })
-
