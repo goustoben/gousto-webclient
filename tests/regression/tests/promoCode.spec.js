@@ -1,3 +1,5 @@
+import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
+
 describe("Promo Code", () => {
   describe('when the url contains a promoCode parameter', () => {
     describe('and the user is logged out ', () => {
@@ -29,7 +31,7 @@ describe("Promo Code", () => {
           cy.route('POST', /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/, '@succeedInApply').as('succeedInApply')
         })
 
-        it("should show the success promo modal", () => {
+        it('should show the success promo modal', () => {
           cy.visit('/?promo_code=RET-REACTFEB19EMOB')
           cy.wait(['@promoCodeDetails', '@succeedInApply'])
           cy.get('[data-testing="promoModal"]').contains('Hooray!').should('exist')
@@ -42,58 +44,90 @@ describe("Promo Code", () => {
           cy.route('POST', /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/, '@failToApply').as('failToApply')
         })
 
-        it("should show the failure promo modal", () => {
+        const checkFailedPromoCode = () => {
           cy.visit('/?promo_code=RET-REACTFEB19EMOB')
           cy.wait(['@promoCodeDetails', '@failToApply'])
           cy.get('[data-testing="promoModal"]').contains('Something went wrong and we couldn\'t apply this promotion to your account.').should('exist')
+          cy.get('[data-testing="promoModalButton"]').click()
+        }
+
+        withPlatformTags(WEB).it('should show the failure promo modal on web', () => {
+          checkFailedPromoCode()
+          cy.get('[data-testing="logoutButton"]').click()
+        })
+
+        withPlatformTags(MOBILE).it('should show the failure promo modal on mobile', () => {
+          checkFailedPromoCode()
+          cy.get('[data-testing="burgerMenu"]').click()
+          cy.get('[data-testing="burgerMenuLogout"]').parent().click()
         })
       })
     })
   })
 
   describe('when a user checks out for the first time', () => {
+    const DATE = new Date(2020, 4, 1).getTime()
+
     beforeEach(() => {
-      cy.server()
+      cy.clearCookies()
+      cy.visit('/')
+      cy.clock(DATE, ['Date'])
     })
 
     describe('and has a promo code in their basket', () => {
       beforeEach(() => {
-        const withDiscount = true
-        cy.goToCheckoutFlow(withDiscount)
-        cy.get('[data-testing="grossPrice"]').should('be.visible')
-
+        cy.checkoutLoggedOut({ withDiscount: true })
       })
 
-      it('should display the discounted box price', () => {
+      const checkPricesInSummaryBox = () => {
         cy.get('[data-testing="grossPrice"]').contains('24.99')
         cy.get('[data-testing="discountAmount"]').contains('12.49')
         cy.get('[data-testing="totalPrice"]').contains('12.50')
+      }
+
+      withPlatformTags(WEB).it('should display the discounted box price on web', () => {
+        cy.proceedToCheckout({ platform: 'WEB' })
+
+        checkPricesInSummaryBox()
+      })
+
+      withPlatformTags(MOBILE).it('should display the discounted box price on mobile', () => {
+        cy.proceedToCheckout({ platform: 'MOBILE' })
+
+        checkPricesInSummaryBox()
       })
     })
 
     describe("and doesn't have a promo code in their basket", () => {
+      const promoCode = 'DTI-SB-5030'
+
       beforeEach(() => {
-        cy.fixture('prices/2person2portionDiscount').as('pricesDiscount')
-        cy.route('GET', /promo_code=DTI-SB-5030/, '@pricesDiscount').as('pricesDiscount')
-
-        cy.goToCheckoutFlow()
-        cy.get('[data-testing="grossPrice"]').should('be.visible')
-
+        cy.checkoutLoggedOut({ withDiscount: false })
       })
 
-      it('should be able to add a promo code in the checkout flow', () => {
-        cy.wait(500)
+      const checkPricesOnCheckout = () => {
         cy.get('[data-testing="discountAmount"]').should('not.exist')
         cy.get('[data-testing="totalPrice"]').contains('24.99')
 
-        cy.get('[data-testing="promoCodeInput"]').click().type('DTI-SB-5030', { delay:80 }).should("have.value", 'DTI-SB-5030')
-        cy.wait('@pricesDiscount')
+        cy.get('[data-testing="promoCodeInput"]').type(promoCode, { force: true })
+        cy.get('[data-testing="promoCodeInput"]').should('have.value', promoCode)
 
         cy.get('[data-testing="grossPrice"]').contains('24.99')
         cy.get('[data-testing="discountAmount"]').contains('12.49')
         cy.get('[data-testing="totalPrice"]').contains('12.50')
+      }
+
+      withPlatformTags(WEB).it('should be able to add a promo code in the checkout flow on web', () => {
+        cy.proceedToCheckout({ platform: 'WEB' })
+
+        checkPricesOnCheckout()
+      })
+
+      withPlatformTags(MOBILE).it('should be able to add a promo code in the checkout flow on mobile', () => {
+        cy.proceedToCheckout({ platform: 'MOBILE' })
+
+        checkPricesOnCheckout()
       })
     })
   })
-
 })

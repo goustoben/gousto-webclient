@@ -1,0 +1,29 @@
+{
+    "status": "ok",
+    "data": [
+        {
+            "id": "1",
+            "slug": "weekly",
+            "title": "Weekly",
+            "description": "Our most popular option!"
+        },
+        {
+            "id": "2",
+            "slug": "fortnightly",
+            "title": "Fortnightly",
+            "description": ""
+        },
+        {
+            "id": "4",
+            "slug": "monthly",
+            "title": "Monthly",
+            "description": ""
+        }
+    ],
+    "meta": {
+        "total": 3,
+        "count": 3,
+        "limit": 50,
+        "offset": 0
+    }
+}
