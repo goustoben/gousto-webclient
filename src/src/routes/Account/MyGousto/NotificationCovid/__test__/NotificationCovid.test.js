@@ -7,7 +7,7 @@ describe('given NotificationCovid is rendered', () => {
 
   beforeEach(() => {
     wrapper = mount(
-      <NotificationCovid hasSubscriptionEnabled={false} />
+      <NotificationCovid isResubscriptionBlocked={false} isTransactionalOrdersBlocked={false} />
     )
   })
 
@@ -19,51 +19,35 @@ describe('given NotificationCovid is rendered', () => {
     expect(wrapper.find('Heading').prop('type')).toBe('h3')
   })
 
-  describe('when it is a transactional customer', () => {
+  test('the copy is rendered correctly', () => {
+    expect(wrapper.find('Alert p').at(0).text()).toBe(
+      'Due to overwhelming demand, our delivery slots are nearly full.\u00a0'
+    )
+  })
+
+  describe('when blockedTransactionalOrders flag in on', () => {
     beforeEach(() => {
       wrapper = mount(
-        <NotificationCovid hasSubscriptionEnabled={false} />
+        <NotificationCovid isResubscriptionBlocked={false} isTransactionalOrdersBlocked />
       )
     })
 
     test('the copy is rendered correctly', () => {
-      expect(wrapper.find('Alert p').at(0).text()).toEqual(
-        'Due to overwhelming demand, most of our delivery slots are full. Unfortunately our customer care team can\'t place orders for you.'
-      )
-
-      expect(wrapper.find('Alert p').at(1).text()).toEqual(
-        'If you can\'t find a free slot, please try another day or the following week. Thank you for bearing with us.'
-      )
-    })
-
-    test('the link points to knowledge base', () => {
-      expect(wrapper.find('Alert a').prop('href')).toBe(
-        'https://gousto.zendesk.com/hc/en-gb/articles/360006713417--How-does-the-coronavirus-situation-affect-Gousto-'
+      expect(wrapper.find('Alert p').at(0).text()).toContain(
+        'We’re very sorry that we’re still unable to take one-off orders. '
       )
     })
   })
 
-  describe('when it is a subscription customer', () => {
+  describe('when blockedResubscription flag in on', () => {
     beforeEach(() => {
       wrapper = mount(
-        <NotificationCovid hasSubscriptionEnabled />
+        <NotificationCovid isResubscriptionBlocked isTransactionalOrdersBlocked={false} />
       )
     })
 
     test('the copy is rendered correctly', () => {
-      expect(wrapper.find('Alert p').at(0).text()).toEqual(
-        'Due to overwhelming demand, you might struggle to move your deliveries or place extra orders. Unfortunately our customer care team can\'t place orders for you.'
-      )
-
-      expect(wrapper.find('Alert p').at(1).text()).toEqual(
-        'It would also be helpful if you could choose your recipes as early as possible. Thank you for bearing with us.'
-      )
-    })
-
-    test('the link points to knowledge base', () => {
-      expect(wrapper.find('Alert a').prop('href')).toBe(
-        'https://gousto.zendesk.com/hc/en-gb/articles/360006713417--How-does-the-coronavirus-situation-affect-Gousto-'
-      )
+      expect(wrapper.find('Alert p').at(0).text()).toContain('Paused subscriptions cannot be reactivated right now.')
     })
   })
 })

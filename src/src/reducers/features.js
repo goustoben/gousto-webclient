@@ -62,6 +62,9 @@ const defaultFeatures = () => ({
   },
   blockedResubscription: {
     value: false,
+  },
+  blockedTransactionalOrders: {
+    value: false,
   }
 })
 
