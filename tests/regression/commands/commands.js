@@ -3,7 +3,6 @@
 // // commands please read more here:
 // // https://on.cypress.io/custom-commands
 // // ***********************************************
-
 Cypress.Commands.add('login', () => {
   cy.server()
   cy.fixture('auth/login').as('login')
@@ -26,31 +25,54 @@ Cypress.Commands.add('login', () => {
   document.cookie = `v1_oauth_remember=${encode(remember)};path=/`
 })
 
-Cypress.Commands.add('goToCheckoutFlow', (withDiscount = false) => {
-  const recipes = '{"2328": 2}'
-  const pricesFixtureFile = withDiscount ? 'prices/2person2portionDiscount' : 'prices/2person2portionNoDiscount'
+Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
+  const pricesFixtureFile = withDiscount
+    ? 'prices/2person2portionDiscount'
+    : 'prices/2person2portionNoDiscount'
 
   cy.server()
-  cy.fixture('boxPrices/priceNoPromocode').as('boxPrices')
-  cy.route('GET', /boxPrices/, '@boxPrices')
-  cy.fixture('order/preview').as('previewOrder')
-  cy.route('POST', /order\/preview/, '@previewOrder').as('previewOrder')
-  cy.fixture(pricesFixtureFile).as('prices')
-  cy.route('GET', /promo_code=&/, '@prices').as('prices')
-
-  cy.setCookie('v1_goustoStateStore_basket_numPortions', "2")
-  cy.setCookie('v1_goustoStateStore_basket_postcode', encodeURIComponent('"W3 7UP"'))
-  cy.setCookie('v1_goustoStateStore_basket_recipes', encodeURIComponent(JSON.stringify(recipes)))
-
-  // Due to server side rendering, we currently need to go to the menu and choose a REAL date before checkout.
-  // Checkout fetch data gets the menu days and checks that the date and slot are present in the response.
-  // If not present the user is redirected to the menu.
-  // If we store a incorrect date/slot in a cookie then this is an infinite loop
-  cy.visit('/menu')
-
-  cy.get('[data-testing="boxSummaryContinueButton"]').click()
-
-  cy.visit('/check-out')
-  cy.wait(['@previewOrder', '@prices'])
+  cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
+  cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
+  cy.route('GET', 'deliveries/**/days**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
+  cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
+  cy.route('GET', /intervals/, 'fixture:customers/intervals.json').as('getIntervals')
+  cy.route('GET', 'menu/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
+  cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
+  cy.route('GET', /promo_code=DTI-SB-5030/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
 })
 
+Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
+  const POSTCODE = 'W3 7UP'
+
+  if (platform === 'WEB') {
+    // Go to /menu
+    cy.get("[href='/menu']").first().click()
+    cy.wait(['@getBrand', '@getStock'])
+
+    // Try to add a recipe
+    cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
+    cy.get('[data-testing="menuBrowseCTAButton"]').click()
+  } else {
+    // Go to /menu
+    cy.get('[data-testing="burgerMenu"]').click()
+    cy.get("[href='/menu'] > li").first().click()
+    cy.wait(['@getBrand', '@getStock'])
+
+    // Try to add a recipe
+    cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
+    cy.get('div').contains('Get Started').click()
+  }
+
+  // Add Postcode
+  cy.get('[data-testing="menuPostcodeInput"]').click().type(`${POSTCODE}{enter}`)
+  cy.wait('@getDeliveryDays')
+  cy.get('[data-testing="boxSummaryContinueButton"]').click()
+
+  // Add recipes after adding postcode
+  cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
+  cy.get('[data-testing="menuRecipeAdd"]').eq(1).click()
+
+  // Go to /checkout
+  cy.get('[data-testing="boxSummaryButton"]').click()
+  cy.wait(['@getIntervals', '@getStock', '@getPrices', '@previewOrder'])
+})
