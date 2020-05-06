@@ -1,4 +1,4 @@
-@value Bluecheese, Bluecheese50, White from 'styles/colors.css';
+@value Bluecheese, Bluecheese50, White, Duckegg from 'styles/colors.css';
 @value sizeSM from 'styles/typography.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value TertiaryBgColor from 'styles/buttons.css';
@@ -23,6 +23,18 @@
 }
 .compact {
     line-height: 19px;
+}
+
+.disableLabel::before  {
+    content: '';
+    height: 1px;
+    width: 50%;
+    background-color: Duckegg;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
 }
 
 .disabledLine {
