@@ -6,7 +6,7 @@ import GoustoImage from 'Image'
 import { removeDiacritics } from 'utils/sanitizeText'
 import { SimpleStarRating } from './SimpleStarRating'
 import { SimpleRecipe } from './SimpleRecipe'
-import { AddButton } from '../../../Menu/Recipe/AddButton'
+import { AddRecipe } from '../../../Menu/Recipe/AddRecipe'
 
 jest.mock('utils/sanitizeText', () => ({
   removeDiacritics: jest.fn(),
@@ -47,7 +47,7 @@ describe('<SimpleRecipe />', () => {
     expect(wrapper.find(SimpleStarRating).length).toEqual(1)
   })
 
-  test('should not contain any AddButton components', () => {
-    expect(wrapper.find(AddButton).length).toEqual(0)
+  test('should not contain any AddRecipe components', () => {
+    expect(wrapper.find(AddRecipe).length).toEqual(0)
   })
 })

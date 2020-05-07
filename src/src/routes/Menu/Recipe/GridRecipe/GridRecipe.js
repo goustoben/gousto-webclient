@@ -12,7 +12,7 @@ import Chef from '../Chef'
 import { Title } from '../Title'
 import Image from '../Image'
 import { RecipeRating } from '../Rating'
-import { AddButton } from '../AddButton'
+import { AddRecipe } from '../AddRecipe'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 
@@ -97,7 +97,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
         }
         <RecipeDisclaimerContainer id={id} />
         <div className={css.buttonContainer}>
-          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
+          <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
         </div>
 
       </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
 
 import DefaultDetail from 'routes/Menu/Recipe/Detail/DefaultDetail'
 import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
@@ -67,10 +68,26 @@ describe('<DefaultDetail />', () => {
       isChefPrepared={false}
     />
   )
+  const DEFAULT_DETAIL_WITH_STORE = (
+    <Provider store={{getState: () => ({
+      basket: Immutable.Map(),
+      recipes: Immutable.Map(),
+      auth: Immutable.Map(),
+      menu: Immutable.Map({
+        menuVariants: Immutable.Map()
+      })
+    }),
+    dispatch: () => {},
+    subscribe: () => {},
+    }}
+    >
+      {DEFAULT_DETAIL}
+    </Provider>
+  )
 
   test('Render without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(DEFAULT_DETAIL, div)
+    ReactDOM.render(DEFAULT_DETAIL_WITH_STORE, div)
   })
 
   let wrapper

@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import Image from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import { AddButton } from 'routes/Menu/Recipe/AddButton'
+import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
 import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
@@ -81,7 +81,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 </p>
               )}
               <span className={css.mobileHide}>
-                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
+                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
               </span>
             </div>
           </div>
@@ -126,7 +126,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             )}
           </div>
           <div className={css.stickyContainer}>
-            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
+            <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
           </div>
         </div>
       </div>
