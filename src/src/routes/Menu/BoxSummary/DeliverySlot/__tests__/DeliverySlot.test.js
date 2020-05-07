@@ -54,11 +54,16 @@ describe('given the DeliverySlot is rendered', () => {
   })
 
   describe.each([
-    [false, 0],
-    [true, 1]
-  ])('when user authentication is set to %s', (isAuthenticated, expected) => {
+    [false, false, 1],
+    [true, true, 0],
+    [true, false, 0],
+    [false, true, 0],
+  ])('when user slots are set to %s and orders loading state is %s', (userHasAvailableSlots, userOrderLoadingState, expected) => {
     beforeEach(() => {
-      wrapper.setProps({ isAuthenticated })
+      wrapper.setProps({
+        userHasAvailableSlots,
+        userOrderLoadingState,
+      })
     })
 
     test(`renders ${expected} Alert for the capacity message`, () => {
