@@ -62,7 +62,7 @@ const flattenAlternatives = (variantGroup) => {
   const main = {
     id: variantGroup.id,
     coreRecipeId: variantGroup.core_recipe_id,
-    displayName: variantGroup.short_display_name
+    displayName: variantGroup.attributes && variantGroup.attributes.short_display_name
   }
 
   const children = variantGroup.relationships
@@ -70,7 +70,7 @@ const flattenAlternatives = (variantGroup) => {
     .map(relation => ({
       id: relation.data.id,
       coreRecipeId: relation.data.core_recipe_id,
-      displayName: relation.data.short_display_name
+      displayName: relation.data.attributes && relation.data.attributes.short_display_name
     }))
 
   return [main, ...children]
@@ -81,7 +81,7 @@ const flattenAlternatives = (variantGroup) => {
 // {
 //     'a': [ { id: 'b' }, { id: 'c' } ],
 //     'b': [ { id: 'a' }, { id: 'c' } ],
-//     'c': [ { id: 'a' }, { id: 'b' } ] 
+//     'c': [ { id: 'a' }, { id: 'b' } ]
 // }
 // this transformation makes lookups from state significantly easier
 const getVariantPermutations = (variantGroup) => {

@@ -12,7 +12,7 @@ import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
 import { Title } from '../Title'
 import Image from '../Image'
-import { AddButton } from '../AddButton'
+import { AddRecipe } from '../AddRecipe'
 import { StockBadge } from '../StockBadge'
 import { ChefQuote } from '../ChefQuote'
 import { SoldOutOverlay } from '../SoldOutOverlay'
@@ -76,7 +76,7 @@ const FeaturedRecipe = ({
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>
-                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
+                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
               </div>
             </div>
             <SoldOutOverlay stock={stock} inBasket={inBasket} />

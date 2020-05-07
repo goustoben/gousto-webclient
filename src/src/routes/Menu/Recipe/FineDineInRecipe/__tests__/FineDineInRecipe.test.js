@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import { Provider } from 'react-redux'
 
 import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 
@@ -16,6 +17,22 @@ describe('<FineDineInRecipe />', () => {
       title="title"
     />
   )
+  const FINE_DINE_IN_RECIPE_WITH_STORE = (
+    <Provider store={{getState: () => ({
+      basket: Immutable.Map(),
+      recipes: Immutable.Map(),
+      auth: Immutable.Map(),
+      menu: Immutable.Map({
+        menuVariants: Immutable.Map()
+      })
+    }),
+    dispatch: () => {},
+    subscribe: () => {},
+    }}
+    >
+      {FINE_DINE_IN_RECIPE}
+    </Provider>
+  )
 
   beforeEach(() => {
     shallow(FINE_DINE_IN_RECIPE)
@@ -23,6 +40,6 @@ describe('<FineDineInRecipe />', () => {
 
   test('Render without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(FINE_DINE_IN_RECIPE, div)
+    ReactDOM.render(FINE_DINE_IN_RECIPE_WITH_STORE, div)
   })
 })

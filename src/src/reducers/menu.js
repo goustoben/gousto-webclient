@@ -9,7 +9,8 @@ export const menuInitialState = Immutable.Map({
   accessToken: '',
   menuVariant: '',
   menuLimits: [],
-  menuVariants: {}
+  menuVariants: {},
+  currentExpandedRecipeVariantsDropdown: null
 })
 
 const menu = {
@@ -33,6 +34,10 @@ const menu = {
         menuLimits,
         menuVariants
       })
+    }
+
+    case actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED: {
+      return state.set('currentExpandedRecipeVariantsDropdown', action.payload.recipeId)
     }
 
     default:

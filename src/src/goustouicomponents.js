@@ -15,6 +15,7 @@ export {
   Item,
   InfoTip,
   InputCheck,
+  InputRadio,
   ItemExpandable,
   Layout2Cells,
   LayoutContentWrapper,

@@ -21,13 +21,13 @@ const VariantHeader = ({ recipeVariants, inBasket, stock }) => {
 }
 
 VariantHeader.propTypes = {
-  recipeVariants: PropTypes.instanceOf(Immutable.List),
+  recipeVariants: PropTypes.arrayOf(PropTypes.shape),
   inBasket: PropTypes.bool,
   stock: PropTypes.number
 }
 
 VariantHeader.defaultProps = {
-  recipeVariants: Immutable.List([]),
+  recipeVariants: [],
   inBasket: false,
   stock: null
 }

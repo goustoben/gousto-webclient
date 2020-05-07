@@ -7,7 +7,7 @@ import { Title } from 'routes/Menu/Recipe/Title'
 import Image from 'routes/Menu/Recipe/Image'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
-import { AddButton } from 'routes/Menu/Recipe/AddButton'
+import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 
 import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
@@ -72,8 +72,8 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(AttributeGrid).length).toEqual(1)
       })
 
-      test('should contain one AddButton component', () => {
-        expect(wrapper.find(AddButton).length).toEqual(1)
+      test('should contain one AddRecipe component', () => {
+        expect(wrapper.find(AddRecipe).length).toEqual(1)
       })
 
       test('should not contain a ChefQuote component', () => {

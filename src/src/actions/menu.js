@@ -340,4 +340,11 @@ export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   useMenuService
 })
 
+export const recipeVariantDropdownExpanded = (recipeId) => ({
+  type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
+  payload: {
+    recipeId
+  }
+})
+
 export default menuActions

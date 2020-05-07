@@ -1,6 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
+import { recipeVariantDropdownExpanded } from 'actions/menu'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -143,6 +144,16 @@ describe('menu reducer', () => {
 
         expect(result.get('accessToken')).toEqual('token')
         expect(result.get('menuVariant')).toEqual('variant')
+      })
+    })
+
+    describe('MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED', () => {
+      const recipeId = '1234'
+      const action = recipeVariantDropdownExpanded(recipeId)
+      test('should set recipeVariantDropdownExpanded entry to the recipe id', () => {
+        const result = menu.menu(menuInitialState, action)
+        const expectedState = menuInitialState.set('currentExpandedRecipeVariantsDropdown', recipeId)
+        expect(result).toEqual(expectedState)
       })
     })
   })

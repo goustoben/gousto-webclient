@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import { Provider } from 'react-redux'
 
 import { FineDineInDetail } from 'routes/Menu/Recipe/Detail/FineDineInDetail'
 import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
@@ -55,10 +56,26 @@ describe('<FineDineInDetail />', () => {
       youWillNeed={Immutable.List(['spoon', 'fork'])}
     />
   )
+  const FINE_DINE_IN_DETAIL_WITH_STORE = (
+    <Provider store={{getState: () => ({
+      basket: Immutable.Map(),
+      recipes: Immutable.Map(),
+      auth: Immutable.Map(),
+      menu: Immutable.Map({
+        menuVariants: Immutable.Map()
+      })
+    }),
+    dispatch: () => {},
+    subscribe: () => {},
+    }}
+    >
+      {FINE_DINE_IN_DETAIL}
+    </Provider>
+  )
 
-  test('renders without crashing', () => {
+  test('Render without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(FINE_DINE_IN_DETAIL, div)
+    ReactDOM.render(FINE_DINE_IN_DETAIL_WITH_STORE, div)
   })
 
   let wrapper

@@ -1,0 +1,20 @@
+.arrowContainer {
+    background-color: #615CFF;
+    width: 40.23px;
+    text-align: center;
+    margin-left: 0.325rem;
+    margin-top: 10px;
+    border: 1px solid #615CFF;
+    border-radius: 3px;
+    color: white;
+    position: relative;
+    border-radius: 3px;
+}
+
+.arrowDown {
+    composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+    composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}

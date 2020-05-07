@@ -206,7 +206,9 @@ describe('menu utils', () => {
                 type: 'recipe',
                 id: 'aubergine-id',
                 core_recipe_id: 'aubergine-core-id',
-                short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
+                attributes: {
+                  short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
+                },
                 relationships: [
                   {
                     type: 'alternative',
@@ -214,7 +216,9 @@ describe('menu utils', () => {
                       type: 'recipe',
                       id: 'fish-chips-id',
                       core_recipe_id: 'fish-chips-core-id',
-                      short_display_name: "Crispy Fish, Root Veg Chips & Bangin' Ketchup"
+                      attributes: {
+                        short_display_name: "Crispy Fish, Root Veg Chips & Bangin' Ketchup"
+                      }
                     }
                   }
                 ]
@@ -223,7 +227,9 @@ describe('menu utils', () => {
                 type: 'recipe',
                 id: 'chicken-taco-id',
                 core_recipe_id: 'chicken-taco-core-id',
-                short_display_name: 'Chicken Tinga Tacos With Lime Mayo',
+                attributes: {
+                  short_display_name: 'Chicken Tinga Tacos With Lime Mayo',
+                },
                 relationships: [
                   {
                     type: 'alternative',
@@ -231,7 +237,9 @@ describe('menu utils', () => {
                       type: 'recipe',
                       id: 'orange-chicken-id',
                       core_recipe_id: 'orange-chicken-core-id',
-                      short_display_name: '10-Min Sticky Orange Chicken & Rice'
+                      attributes: {
+                        short_display_name: '10-Min Sticky Orange Chicken & Rice'
+                      }
                     }
                   },
                   {
@@ -240,7 +248,9 @@ describe('menu utils', () => {
                       type: 'recipe',
                       id: 'chicken-burger-id',
                       core_recipe_id: 'chicken-burger-core-id',
-                      short_display_name: 'Mexican Pulled Chicken Burger & Paprika Fries'
+                      attributes: {
+                        short_display_name: 'Mexican Pulled Chicken Burger & Paprika Fries'
+                      }
                     }
                   }
                 ]
@@ -258,7 +268,8 @@ describe('menu utils', () => {
                 type: 'recipe',
                 id: 'aubergine-id',
                 core_recipe_id: 'aubergine-core-id',
-                short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
+                attributes: { short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
+                },
                 relationships: [
                   {
                     type: 'not-alternative',
@@ -266,7 +277,9 @@ describe('menu utils', () => {
                       type: 'recipe',
                       id: 'dec07237-3fef-462d-a2f0-0e3f671be580',
                       core_recipe_id: '9999',
-                      short_display_name: 'This recipe is not an alternative'
+                      attributes: {
+                        short_display_name: 'This recipe is not an alternative'
+                      }
                     }
                   }
                 ]

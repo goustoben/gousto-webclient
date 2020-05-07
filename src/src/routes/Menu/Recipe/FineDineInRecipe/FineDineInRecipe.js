@@ -10,7 +10,7 @@ import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { Pill } from 'goustouicomponents'
 import css from './FineDineInRecipe.css'
 import { Title } from '../Title'
-import { AddButton } from '../AddButton'
+import { AddRecipe } from '../AddRecipe'
 import { RecipeAttribute } from '../RecipeAttribute'
 import { SoldOutOverlay } from '../SoldOutOverlay'
 
@@ -104,7 +104,7 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>
-                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
+                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
               </div>
             </div>
 
