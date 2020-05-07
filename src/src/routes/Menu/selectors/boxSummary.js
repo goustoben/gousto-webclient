@@ -92,3 +92,10 @@ export const getOneOffSlotAvailableSlots = createSelector(
       })
     ))
   ))
+
+export const userHasAvailableSlots = createSelector([
+  getUserOpenOrders,
+  getOneOffSlotAvailableSlots,
+], (userOpenOrders, oneOffSlots) => (
+  userOpenOrders.size > 0 || oneOffSlots.size > 0
+))

@@ -20,6 +20,8 @@ class DeliverySlot extends React.PureComponent {
       tempSlotId, clearPostcode, disableOnDelivery,
       userOrders, getBoxSummaryTextProps,
       deliveryDays: deliveryDaysProps,
+      userHasAvailableSlots,
+      userOrderLoadingState,
     } = this.props
 
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
@@ -80,7 +82,7 @@ class DeliverySlot extends React.PureComponent {
           />
         </div>
         {
-          isAuthenticated && (
+          (userHasAvailableSlots === false && userOrderLoadingState === false) && (
             <div className={css.row}>
               <Alert type="danger">
                 <p className={css.alertContent}>
@@ -131,6 +133,8 @@ DeliverySlot.propTypes = {
   tempOrderId: PropTypes.string,
   tempSlotId: PropTypes.string,
   userOrders: PropTypes.instanceOf(Immutable.Map),
+  userHasAvailableSlots: PropTypes.bool.isRequired,
+  userOrderLoadingState: PropTypes.bool.isRequired,
 }
 
 DeliverySlot.defaultProps = {

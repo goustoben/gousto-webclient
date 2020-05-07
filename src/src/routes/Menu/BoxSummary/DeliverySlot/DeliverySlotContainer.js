@@ -5,11 +5,12 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
-import { getDisabledSlotsBasedOnAuthStatus } from 'routes/Menu/selectors/boxSummary'
+import { getDisabledSlotsBasedOnAuthStatus, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
 import { getBoxSummaryTextProps } from 'selectors/boxSummary'
+import { getLoadingStateForOrder } from 'selectors/user'
 import { DeliverySlot } from './DeliverySlot'
 
 function mapStateToProps(state) {
@@ -43,6 +44,8 @@ function mapStateToProps(state) {
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
     shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
     getBoxSummaryTextProps: (slots) => getBoxSummaryTextProps(state, tempDate, tempSlotId, tempOrderId, slots),
+    userHasAvailableSlots: userHasAvailableSlots(state),
+    userOrderLoadingState: getLoadingStateForOrder(state),
   }
 }
 
