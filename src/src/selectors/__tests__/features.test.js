@@ -26,6 +26,8 @@ import {
   getIsSignupReductionEnabled,
   getIsWelcomePageOnboardingEnabled,
   getIsCommunicationPanelEnabled,
+  getBlockedResubscription,
+  getBlockedTransactionalOrders,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -677,6 +679,48 @@ describe('when features are defined', () => {
 
       test('should be truthy', () => {
         expect(getIsCommunicationPanelEnabled(state)).toBeTruthy()
+      })
+    })
+  })
+
+  describe('getBlockedResubscription', () => {
+    const cases = [
+      [false, false],
+      [true, true],
+    ]
+
+    describe.each(cases)('when blockedResubscription value is set to %s', (featureFlagValue, selectorResult) => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          blockedResubscription: {
+            value: featureFlagValue
+          }
+        })
+      })
+
+      test(`selector should return ${selectorResult}`, () => {
+        expect(getBlockedResubscription(state)).toBe(selectorResult)
+      })
+    })
+  })
+
+  describe('getBlockedTransactionalOrders', () => {
+    const cases = [
+      [false, false],
+      [true, true],
+    ]
+
+    describe.each(cases)('when blockedTransactionalOrders value is set to %s', (featureFlagValue, selectorResult) => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          blockedTransactionalOrders: {
+            value: featureFlagValue
+          }
+        })
+      })
+
+      test(`selector should return ${selectorResult}`, () => {
+        expect(getBlockedTransactionalOrders(state)).toBe(selectorResult)
       })
     })
   })

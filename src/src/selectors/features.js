@@ -99,3 +99,11 @@ export const getIsWelcomePageOnboardingEnabled = ({ features }) => (
 export const getIsCommunicationPanelEnabled = ({ features }) => (
   features && features.getIn(['isCommunicationPanelEnabled', 'value'], false)
 )
+
+export const getBlockedResubscription = ({ features }) => (
+  features && features.getIn(['blockedResubscription', 'value'], false)
+)
+
+export const getBlockedTransactionalOrders = ({ features }) => (
+  features && features.getIn(['blockedTransactionalOrders', 'value'], false)
+)
