@@ -1,6 +1,15 @@
 import { createSelector } from 'reselect'
+import { getRecipes, getMenuRecipeIds } from 'selectors/root'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
+
+export const getCurrentMenuRecipes = createSelector(
+  [getRecipes, getMenuRecipeIds],
+  (allRecipes, currentMenuIds) => (
+    currentMenuIds && currentMenuIds.map(recipeId => allRecipes.get(recipeId) || null)
+      .filter(recipe => recipe !== null)
+  )
+)
 
 export const activeMenuForDate = (menuServiceData, date) => {
   const isPreviewMenu = menuServiceData.meta && menuServiceData.meta.isPreviewMenu

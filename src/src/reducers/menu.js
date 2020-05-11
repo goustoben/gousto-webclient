@@ -10,6 +10,7 @@ export const menuInitialState = Immutable.Map({
   menuVariant: '',
   menuLimits: [],
   menuVariants: {},
+  selectedRecipeVariants: {},
   currentExpandedRecipeVariantsDropdown: null
 })
 
@@ -34,6 +35,20 @@ const menu = {
         menuLimits,
         menuVariants
       })
+    }
+
+    case actionTypes.MENU_RECIPE_VARIANT_SELECTED: {
+      const originalVariants = state.get('selectedRecipeVariants')
+      const newVariants = {
+        ...originalVariants,
+        [action.payload.originalRecipeId]: action.payload.variantId
+      }
+
+      return state.set('selectedRecipeVariants', newVariants)
+    }
+
+    case actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS: {
+      return state.set('selectedRecipeVariants', {})
     }
 
     case actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED: {

@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getMenuRecipes as getMenuCollectionRecipes } from 'selectors/root'
-import { getCurrentMenuRecipes } from 'routes/Menu/selectors/sorting'
+import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getRecipeId } from 'utils/recipe'
 

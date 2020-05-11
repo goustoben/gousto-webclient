@@ -1,7 +1,7 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
-import { recipeVariantDropdownExpanded } from 'actions/menu'
+import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdownExpanded } from '../../actions/menu'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -60,56 +60,58 @@ describe('menu reducer', () => {
             }
           ]
         }]
-        const menuResponse = { data: [
-          {
-            id: '123',
-            type: 'menu',
-            attributes: {
-              starts_at: '2020-04-14T12:00:00+01:00',
-              ends_at: '2020-04-21T11:59:59+01:00',
-              is_default: true,
-              core_menu_id: '336'
+        const menuResponse = {
+          data: [
+            {
+              id: '123',
+              type: 'menu',
+              attributes: {
+                starts_at: '2020-04-14T12:00:00+01:00',
+                ends_at: '2020-04-21T11:59:59+01:00',
+                is_default: true,
+                core_menu_id: '336'
+              },
+              relationships: {
+                recipes: {
+                  data: []
+                },
+                recipe_options: {
+                  data: []
+                },
+                limits: {
+                  data: menuLimits
+                },
+                collections: {
+                  data: []
+                }
+              }
             },
-            relationships: {
-              recipes: {
-                data: []
+            {
+              id: '345',
+              type: 'menu',
+              attributes: {
+                starts_at: '2020-04-14T12:00:00+01:00',
+                ends_at: '2020-04-21T11:59:59+01:00',
+                is_default: true,
+                core_menu_id: '336'
               },
-              recipe_options: {
-                data: []
-              },
-              limits: {
-                data: menuLimits
-              },
-              collections: {
-                data: []
+              relationships: {
+                recipes: {
+                  data: []
+                },
+                recipe_options: {
+                  data: []
+                },
+                limits: {
+                  data: menuLimits
+                },
+                collections: {
+                  data: []
+                }
               }
             }
-          },
-          {
-            id: '345',
-            type: 'menu',
-            attributes: {
-              starts_at: '2020-04-14T12:00:00+01:00',
-              ends_at: '2020-04-21T11:59:59+01:00',
-              is_default: true,
-              core_menu_id: '336'
-            },
-            relationships: {
-              recipes: {
-                data: []
-              },
-              recipe_options: {
-                data: []
-              },
-              limits: {
-                data: menuLimits
-              },
-              collections: {
-                data: []
-              }
-            }
-          }
-        ]}
+          ]
+        }
         const result = menu.menu(menuInitialState, {
           type: actionTypes.MENU_SERVICE_DATA_RECEIVED,
           response: menuResponse
@@ -139,11 +141,60 @@ describe('menu reducer', () => {
 
         const result = menu.menu(initialState, {
           type: actionTypes.MENU_SERVICE_DATA_RECEIVED,
-          response: { data: [ ] }
+          response: { data: [] }
         })
 
         expect(result.get('accessToken')).toEqual('token')
         expect(result.get('menuVariant')).toEqual('variant')
+      })
+    })
+
+    describe('when selectRecipeVariant action is received', () => {
+      const recipeId = '1234'
+
+      describe('when variantId is null', () => {
+        const variantId = null
+        const action = selectRecipeVariant(recipeId, variantId)
+
+        test('should set selectedRecipeVariant entry to null', () => {
+          const result = menu.menu(menuInitialState, action)
+
+          const expectedState = menuInitialState.set('selectedRecipeVariants', { [recipeId]: variantId })
+
+          expect(result).toEqual(expectedState)
+        })
+      })
+
+      describe('when variantId is a recipe id', () => {
+        const variantId = '5678'
+        const action = selectRecipeVariant(recipeId, variantId)
+
+        test('should set selectedRecipeVariant entry to the selected id', () => {
+          const result = menu.menu(menuInitialState, action)
+
+          const expectedState = menuInitialState.set('selectedRecipeVariants', { [recipeId]: variantId })
+
+          expect(result).toEqual(expectedState)
+        })
+      })
+    })
+
+    describe('when clearRecipeVariants action is received', () => {
+      const stateWithSelectedVariants = menuInitialState.set(
+        'selectedRecipeVariants',
+        {
+          'recipe-1': 'variant-1',
+          'recipe-2': 'variant-2'
+        }
+      )
+
+      const expectedState = menuInitialState.set('selectedRecipeVariants', {})
+
+      test('should set selectedRecipeVariants to empty object', () => {
+        const action = clearSelectedRecipeVariants()
+
+        const result = menu.menu(stateWithSelectedVariants, action)
+        expect(result).toEqual(expectedState)
       })
     })
 
@@ -203,7 +254,8 @@ describe('menu reducer', () => {
         })
 
         const result = menu.menuCollectionRecipes(Immutable.Map(),
-          { type: 'MENU_COLLECTION_RECIPES_RECEIVE',
+          {
+            type: 'MENU_COLLECTION_RECIPES_RECEIVE',
             collectionId: 'collection-id',
             recipes: [{
               id: '1',
