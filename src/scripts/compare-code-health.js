@@ -122,8 +122,8 @@ const run = async (changedFiles) => {
     process.exit(0)
   } catch (e) {
     console.log('error: ', e)
-    console.log('exiting safely, couldn\'t perform checks')
-    process.exit(0)
+    console.log('exiting with error, couldn\'t perform checks')
+    process.exit(1)
   }
 }
 

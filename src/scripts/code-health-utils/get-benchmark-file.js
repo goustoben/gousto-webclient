@@ -9,7 +9,7 @@ const getCircleCIArtifactsUrl = (username, project, buildNumber, token, branch) 
   return `https://circleci.com/api/v1.1/project/github/${username}/${project}/${buildNumber}/artifacts?circle-token=${token}&branch=${branch}&filter=successful`
 }
 
-const CODE_HEALTH_ARTIFACT_JOB_NAME = 'publish-code-health-artifact'
+const CODE_HEALTH_ARTIFACT_JOB_NAME = 'publish-code-health'
 const RECENT_BUILD_LIMIT = 50
 const MAX_REQUESTS = 5
 
