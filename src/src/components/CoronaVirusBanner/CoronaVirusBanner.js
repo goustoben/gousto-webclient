@@ -11,12 +11,13 @@ const CoronaVirusBanner = () => (
       <span className={css.infoIcon} />
     </div>
     <div>
+      <p className={css.headerTitle}>We&apos;re full to the brim</p>
       <p className={css.headerText}>We can&apos;t take new customer orders right now, we&apos;re so sorry.</p>
       <ul className={css.bodyText}>
         <li>
-          We&apos;re doing everything we can to get more recipe boxes out, enter your details&nbsp;
-          <a href={COVID_19_LINK}>here</a>
-          &nbsp;and we&apos;ll let you know as soon as we are accepting new customers again.
+          We&apos;re doing everything we can to get out more boxes.&nbsp;
+          <a href={COVID_19_LINK}>Read more</a>
+          .
         </li>
         <li>
           If you already have a Gousto subscription, please&nbsp;

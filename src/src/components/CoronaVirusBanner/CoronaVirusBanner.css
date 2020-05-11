@@ -13,10 +13,18 @@
   grid-column-gap: 10px;
 }
 
+.headerTitle,
 .headerText {
   font-weight: 600;
-  font-size: 15px;
   line-height: 21px;
+}
+
+.headerTitle {
+  font-size: 20px;
+}
+
+.headerText {
+  font-size: 15px;
 }
 
 .bodyText {

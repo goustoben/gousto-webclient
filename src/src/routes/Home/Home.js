@@ -65,8 +65,8 @@ class Home extends React.Component {
     }
 
     return [
-      'hero', 'howItWorks', 'subscription', 'recipes',
-      'whatsInYourBox', 'emailForm', 'testimonials',
+      'emailForm', 'hero', 'howItWorks', 'subscription', 'recipes',
+      'whatsInYourBox', 'testimonials',
       'testedAndLovedBy',
     ]
   }
