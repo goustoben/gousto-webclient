@@ -25,6 +25,21 @@ describe('given NotificationCovid is rendered', () => {
     )
   })
 
+  describe.each([
+    [null, ''],
+    ['1234', '/?user_id=1234']
+  ])('when the userIdProp is %s', (userId, urlQueryParam) => {
+    beforeEach(() => {
+      wrapper.setProps({ userId })
+    })
+
+    test(`the link points to knowledge base. And it adds to the end of the url: "${urlQueryParam}"`, () => {
+      expect(wrapper.find('Alert a').prop('href')).toBe(
+        `https://gousto.zendesk.com/hc/en-gb/articles/360006713417--How-does-the-coronavirus-situation-affect-Gousto-${urlQueryParam}`
+      )
+    })
+  })
+
   describe('when blockedTransactionalOrders flag in on', () => {
     beforeEach(() => {
       wrapper = mount(

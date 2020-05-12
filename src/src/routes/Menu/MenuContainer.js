@@ -5,7 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
-import { getLoadingStateForOrder } from 'selectors/user'
+import { getLoadingStateForOrder, getUserId } from 'selectors/user'
 
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
@@ -42,6 +42,7 @@ function mapStateToProps(state, ownProps) {
     recipesCount: flattenRecipes(state.basket.get('recipes')).length,
     postcode: state.basket.get('postcode'),
     userHasAvailableSlots: userHasAvailableSlots(state),
+    userId: getUserId(state),
     userOrderLoadingState: getLoadingStateForOrder(state),
   }
 }

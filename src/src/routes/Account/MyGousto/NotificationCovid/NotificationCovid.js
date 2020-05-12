@@ -2,13 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert, Heading } from 'goustouicomponents'
 import { zendesk as zendeskRoutes } from 'config/routes'
+import { addUserIdToUrl } from 'utils/url'
 
 const propTypes = {
   isTransactionalOrdersBlocked: PropTypes.bool.isRequired,
   isResubscriptionBlocked: PropTypes.bool.isRequired,
+  userId: PropTypes.string,
 }
 
-const NotificationCovid = ({ isTransactionalOrdersBlocked, isResubscriptionBlocked }) => (
+const defaultProps = {
+  userId: null,
+}
+
+const NotificationCovid = ({
+  isTransactionalOrdersBlocked,
+  isResubscriptionBlocked,
+  userId,
+}) => (
   <Alert type="info">
     <Heading type="h3">
       Coronavirus Update
@@ -29,7 +39,11 @@ const NotificationCovid = ({ isTransactionalOrdersBlocked, isResubscriptionBlock
       <p>
         Thank you for bearing with us and all your kind support over the last weeks.
       </p>
-      <a href={zendeskRoutes.covid} target="_blank" rel="noopener noreferrer">
+      <a
+        href={addUserIdToUrl(zendeskRoutes.covid, userId)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         Visit our help centre for more info
       </a>
     </div>
@@ -37,6 +51,7 @@ const NotificationCovid = ({ isTransactionalOrdersBlocked, isResubscriptionBlock
 )
 
 NotificationCovid.propTypes = propTypes
+NotificationCovid.defaultProps = defaultProps
 
 export {
   NotificationCovid

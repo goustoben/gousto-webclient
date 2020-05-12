@@ -148,12 +148,15 @@ describe('Menu', () => {
     })
 
     describe('and there is no slot available', () => {
+      const USER_ID = '1234'
+
       beforeEach(() => {
         wrapper = shallow(
           <Menu
             {...requiredProps}
             userHasAvailableSlots={false}
             userOrderLoadingState={false}
+            userId={USER_ID}
           />,
           mountOptions
         )
@@ -167,6 +170,10 @@ describe('Menu', () => {
       ])('%s rendering is set to %s', (componentName, expected) => {
         const foundComponent = wrapper.find(componentName).length > 0
         expect(foundComponent).toBe(expected)
+      })
+
+      test('should pass the userId prop to the <CapacityInfo> component', () => {
+        expect(wrapper.find('CapacityInfo').prop('userId')).toBe(USER_ID)
       })
     })
   })

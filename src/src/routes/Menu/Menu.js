@@ -108,6 +108,7 @@ class Menu extends React.PureComponent {
       recipesCount,
       children,
       userHasAvailableSlots,
+      userId,
       userOrderLoadingState,
     } = this.props
     const { isChrome } = this.state
@@ -123,7 +124,7 @@ class Menu extends React.PureComponent {
               meta={menu.helmet.meta}
               style={menu.helmet.style}
             />
-            <CapacityInfo />
+            <CapacityInfo userId={userId} />
           </div>
         </MainLayout>
       )

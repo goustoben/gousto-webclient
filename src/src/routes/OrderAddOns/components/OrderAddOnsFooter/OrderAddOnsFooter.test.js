@@ -34,10 +34,18 @@ describe('the OrderAddOnsFooter component', () => {
       ).toBe(true)
     })
 
-    test('link points to zendesk contact us page', () => {
-      expect(
-        wrapper.find('Alert').find('a').prop('href')
-      ).toBe('https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us')
+    describe.each([
+      [null, ''],
+      ['1234', '/?user_id=1234']
+    ])('when the userIdProp is %s', (userId, urlQueryParam) => {
+      beforeEach(() => {
+        wrapper.setProps({ userId })
+      })
+
+      test(`link points to zendesk contact us page, plus "${urlQueryParam}"`, () => {
+        expect(wrapper.find('Alert').find('a').prop('href'))
+          .toBe(`https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us${urlQueryParam}`)
+      })
     })
   })
 })

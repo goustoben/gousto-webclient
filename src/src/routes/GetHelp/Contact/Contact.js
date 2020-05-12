@@ -4,6 +4,7 @@ import React from 'react'
 import { Item, ItemExpandable } from 'goustouicomponents'
 import BottomBar from 'BottomBar'
 import { client, zendesk } from 'config/routes'
+import { addUserIdToUrl } from 'utils/url'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
@@ -26,7 +27,8 @@ const Contact = ({
     emailItem,
     phoneItem,
   },
-  selectContactChannel
+  selectContactChannel,
+  userId,
 }) => (
   <GetHelpLayout title={title} body={body}>
     <List>
@@ -38,7 +40,7 @@ const Contact = ({
       <ItemLink
         label={emailItem}
         trackClick={trackClick(selectContactChannel, 'email')}
-        to={zendesk.link}
+        to={addUserIdToUrl(zendesk.emailForm, userId)}
         clientRouted={false}
       />
       <ItemExpandable
@@ -70,6 +72,7 @@ Contact.propTypes = {
     phoneItem: PropTypes.string.isRequired,
   }).isRequired,
   selectContactChannel: PropTypes.func,
+  userId: PropTypes.string.isRequired,
 }
 
 Contact.defaultProps = {

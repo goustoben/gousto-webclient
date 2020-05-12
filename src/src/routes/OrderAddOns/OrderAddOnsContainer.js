@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getBasket, getProductCategories } from 'selectors/root'
 import { getDesserts, getProductsLoadError } from 'selectors/products'
-import { getAgeVerified } from 'selectors/user'
+import { getAgeVerified, getUserId } from 'selectors/user'
 import { isOrderDetailsLoading } from 'selectors/orderConfirmation'
 import { getBasketProductsCost } from 'selectors/basket'
 import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
@@ -28,6 +28,7 @@ const mapStateToProps = (state, ownProps) => {
     productsCategories: getProductCategories(state),
     products: getDesserts(state),
     productsLoadError: getProductsLoadError(state),
+    userId: getUserId(state),
   }
 }
 

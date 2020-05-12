@@ -37,6 +37,7 @@ const propTypes = {
   trackSkipOrderAddOnsClick: PropTypes.func.isRequired,
   trackErrorSkipOrderAddOns: PropTypes.func.isRequired,
   productLoadError: PropTypes.bool,
+  userId: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
@@ -114,7 +115,8 @@ class OrderAddOns extends React.Component {
       productsCategories,
       isPageLoading,
       orderId,
-      trackSkipOrderAddOnsClick
+      trackSkipOrderAddOnsClick,
+      userId,
     } = this.props
     const { showError } = this.state
 
@@ -144,7 +146,7 @@ class OrderAddOns extends React.Component {
             />
           </LayoutPageWrapper>
 
-          <OrderAddOnsFooter showError={showError}>
+          <OrderAddOnsFooter showError={showError} userId={userId}>
             <CTA
               className="ContinueButton"
               extraInfo={areProductsSelected ? formattedProductsCost : null}

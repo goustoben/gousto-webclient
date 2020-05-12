@@ -90,7 +90,6 @@ class Header extends React.PureComponent {
 
   getMenuItems = (device, path) => {
     const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest } = this.props
-    const getHelpRoute = client.getHelp
     const menuItems = isAccountTabNameTest
       ? deepCloneObject(experimentalMenuItems)
       : deepCloneObject(defaultMenuItems)
@@ -99,8 +98,6 @@ class Header extends React.PureComponent {
     if (path.indexOf('/') === -1) {
       pathLocal = `/${pathLocal}`
     }
-
-    menuItems.faq.url = `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`
 
     Object.keys(menuItems).forEach(menuItem => {
       const currentMenuItem = menuItems[menuItem]

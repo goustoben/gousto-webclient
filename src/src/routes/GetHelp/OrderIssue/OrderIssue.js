@@ -3,6 +3,7 @@ import React from 'react'
 
 import BottomBar from 'BottomBar'
 import { client as routes, zendesk as zendeskRoutes } from 'config/routes'
+import { addUserIdToUrl } from 'utils/url'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
@@ -20,7 +21,8 @@ const OrderIssue = ({
     deliveryItem,
     otherItem,
   },
-  selectOrderIssue
+  selectOrderIssue,
+  userId,
 }) => (
   <GetHelpLayout title={title} body={body}>
     <List>
@@ -45,7 +47,7 @@ const OrderIssue = ({
       <ItemLink
         label={otherItem}
         trackClick={trackClick(selectOrderIssue, 'other')}
-        to={zendeskRoutes.faqs}
+        to={addUserIdToUrl(zendeskRoutes.faqs, userId)}
         clientRouted={false}
       />
     </List>
@@ -68,6 +70,7 @@ OrderIssue.propTypes = {
     otherItem: PropTypes.string.isRequired,
   }).isRequired,
   selectOrderIssue: PropTypes.func,
+  userId: PropTypes.string.isRequired,
 }
 
 OrderIssue.defaultProps = {

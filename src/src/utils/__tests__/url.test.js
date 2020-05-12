@@ -1,4 +1,4 @@
-import { addUserIdToHelpUrl, slugify } from 'utils/url'
+import { addUserIdToUrl, slugify } from 'utils/url'
 
 describe('slugify', () => {
   const cases = [
@@ -25,28 +25,31 @@ describe('slugify', () => {
   })
 })
 
-describe('given addUserIdToHelpUrl is called', () => {
-  describe('when the customer is authenticated', () => {
+describe('given addUserIdToUrl is called', () => {
+  const URL = 'https://some-url'
+  const USER_ID = '123'
+
+  describe('when the customer id is passed', () => {
     let result
 
     beforeEach(() => {
-      result = addUserIdToHelpUrl(true, '123')
+      result = addUserIdToUrl(URL, USER_ID)
     })
 
     test('user_id is added to the url', () => {
-      expect(result).toContain('zendesk.com/hc/en-gb/?user_id=123')
+      expect(result).toBe(`${URL}/?user_id=${USER_ID}`)
     })
   })
 
-  describe('when the customer is not authenticated', () => {
+  describe('when the customer id is not passed', () => {
     let result
 
     beforeEach(() => {
-      result = addUserIdToHelpUrl(false, null)
+      result = addUserIdToUrl(URL, '')
     })
 
     test('user_id is not added to the url', () => {
-      expect(result).not.toContain('?user_id=123')
+      expect(result).toBe(URL)
     })
   })
 })
