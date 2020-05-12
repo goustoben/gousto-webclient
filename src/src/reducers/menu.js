@@ -31,10 +31,9 @@ const menu = {
       const menuLimits = getMenuLimits(action.response.data)
       const menuVariants = getMenuVariants(action.response.data)
 
-      return state.merge({
-        menuLimits,
-        menuVariants
-      })
+      return state
+        .set('menuLimits', menuLimits)
+        .set('menuVariants', Immutable.fromJS(menuVariants))
     }
 
     case actionTypes.MENU_RECIPE_VARIANT_SELECTED: {

@@ -117,7 +117,7 @@ describe('menu reducer', () => {
           response: menuResponse
         })
 
-        expect(result.get('menuLimits')).toEqual(Immutable.fromJS({
+        expect(result.get('menuLimits')).toEqual({
           123: {
             limits: menuLimits,
             startsAt: '2020-04-14T12:00:00+01:00',
@@ -128,7 +128,7 @@ describe('menu reducer', () => {
             startsAt: '2020-04-14T12:00:00+01:00',
             endsAt: '2020-04-21T11:59:59+01:00'
           },
-        }))
+        })
       })
 
       test('should not affect initial state', () => {
