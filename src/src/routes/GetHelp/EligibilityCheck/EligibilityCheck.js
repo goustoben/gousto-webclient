@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { browserHistory } from 'react-router'
-import { client as clientRoutes } from 'config/routes'
+import { client as clientRoutes, zendesk } from 'config/routes'
 import { redirect } from 'utils/window'
 import {
   findNewestOrder,
   isOrderEligibleForSelfRefundResolution
 } from 'utils/order'
-import { addUserIdToHelpUrl } from 'utils/url'
+import { addUserIdToUrl } from 'utils/url'
 import Loading from 'Loading'
 import css from './EligibilityCheck.css'
 
@@ -50,7 +50,7 @@ class EligibilityCheck extends PureComponent {
   }
 
   checkOrderAndRedirect = () => {
-    const { isAuthenticated, userId, orders, storeGetHelpOrder } = this.props
+    const { userId, orders, storeGetHelpOrder } = this.props
     const newestOrder = findNewestOrder(orders, false)
     const isOrderEligible = isOrderEligibleForSelfRefundResolution(newestOrder)
 
@@ -62,7 +62,7 @@ class EligibilityCheck extends PureComponent {
       browserHistory.push(`${clientRoutes.getHelp.index}?orderId=${newestOrder.get('id')}`)
     } else {
       redirect(
-        addUserIdToHelpUrl(isAuthenticated, userId)
+        addUserIdToUrl(zendesk.faqs, userId)
       )
     }
   }

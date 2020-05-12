@@ -2,18 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert, LayoutContentWrapper, LayoutPageWrapper } from 'goustouicomponents'
 import routes from 'config/routes'
+import { addUserIdToUrl } from 'utils/url'
 import css from './OrderAddOnsFooter.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,
   showError: PropTypes.bool,
+  userId: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
   showError: false,
 }
 
-function OrderAddOnsFooter({ children, showError }) {
+function OrderAddOnsFooter({ children, showError, userId }) {
   return (
     <div className={css.footer}>
       <LayoutPageWrapper>
@@ -26,7 +28,9 @@ function OrderAddOnsFooter({ children, showError }) {
                     Sorry, we were unable to add item(s) to your confirmed order.
                     Please try again or contact us.
                   </p>
-                  <a href={routes.zendesk.contactUs}>Get in touch</a>
+                  <a href={addUserIdToUrl(routes.zendesk.contactUs, userId)}>
+                    Get in touch
+                  </a>
                 </Alert>
               </div>
             )}

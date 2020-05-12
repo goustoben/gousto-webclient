@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
-import { getSortedRecipes, getCurrentMenuRecipes, getInStockRecipes } from '../sorting'
+import { getSortedRecipes, getInStockRecipes } from '../sorting'
 
 jest.mock('utils/menu')
 
@@ -12,7 +12,7 @@ describe('RecipeList selectors', () => {
   const menuCollectionRecipes = Immutable.fromJS({
     [VALID_COLLECTION_ID]: ['327', '819']
   })
-  let currentMenuRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
+  const currentMenuRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
   const inStockRecipes = Immutable.fromJS([secondRecipe])
 
   describe('getSortedRecipes', () => {
@@ -54,7 +54,7 @@ describe('RecipeList selectors', () => {
 
     describe('collection id provided', () => {
       test('should return recipes in collection with in stock first', () => {
-        const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes, null)(VALID_COLLECTION_ID)
+        const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes)(VALID_COLLECTION_ID)
 
         expect(recipes).toEqual(Immutable.fromJS([
           secondRecipe, firstRecipe
@@ -62,7 +62,7 @@ describe('RecipeList selectors', () => {
       })
 
       test('should return recipe ids for recipes in collection in original order', () => {
-        const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes, null)(VALID_COLLECTION_ID)
+        const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes)(VALID_COLLECTION_ID)
 
         expect(recipeIds).toEqual(Immutable.fromJS([
           firstRecipe.get('id'), secondRecipe.get('id')
@@ -70,11 +70,10 @@ describe('RecipeList selectors', () => {
       })
 
       describe('when menuRecipes in different order than recipesInCollection', () => {
-        beforeEach(() => {
-          currentMenuRecipes = Immutable.fromJS([secondRecipe, thirdRecipe, firstRecipe])
-        })
+        const reorderedMenuRecipes = Immutable.fromJS([secondRecipe, thirdRecipe, firstRecipe])
+
         test('should return recipes in recipeInCollection order', () => {
-          const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, currentMenuRecipes, inStockRecipes, null)(VALID_COLLECTION_ID)
+          const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, reorderedMenuRecipes, inStockRecipes)(VALID_COLLECTION_ID)
 
           expect(recipeIds).toEqual(Immutable.fromJS([
             firstRecipe.get('id'), secondRecipe.get('id')
@@ -97,15 +96,6 @@ describe('RecipeList selectors', () => {
           ]))
         })
       })
-    })
-  })
-
-  describe('getCurrentMenuRecipes', () => {
-    test('should return only recipes in the current menu', () => {
-      const allRecipes = Immutable.fromJS({ recipeId1: { desc: 'recipe1Desc' }, recipeId2: { desc: 'recipe2Desc' } })
-      const currentMenuIds = ['recipeId1']
-      const result = getCurrentMenuRecipes.resultFunc(allRecipes, currentMenuIds)
-      expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
     })
   })
 

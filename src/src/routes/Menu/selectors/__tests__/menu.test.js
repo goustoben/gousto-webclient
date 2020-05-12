@@ -1,5 +1,14 @@
 import Immutable from 'immutable'
-import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule } from '../menu'
+import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes } from '../menu'
+
+describe('getCurrentMenuRecipes', () => {
+  test('should return only recipes in the current menu', () => {
+    const allRecipes = Immutable.fromJS({ recipeId1: { desc: 'recipe1Desc' }, recipeId2: { desc: 'recipe2Desc' } })
+    const currentMenuIds = ['recipeId1']
+    const result = getCurrentMenuRecipes.resultFunc(allRecipes, currentMenuIds)
+    expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
+  })
+})
 
 describe('activeMenuForDate', () => {
   test('should get the active menu for a date that is before the first menus end_at', () => {

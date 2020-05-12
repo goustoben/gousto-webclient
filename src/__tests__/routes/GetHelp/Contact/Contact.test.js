@@ -65,10 +65,19 @@ describe('<Contact />', () => {
       expect(Button2.text()).toContain(content.button2Copy)
     })
 
-    test('email link points to zendesk', () => {
-      const linkTo = wrapper.find(ItemLink).find('a').prop('href')
+    describe.each([
+      [null, ''],
+      ['1234', '/?user_id=1234']
+    ])('when the userIdProp is %s', (userId, urlQueryParam) => {
+      beforeEach(() => {
+        wrapper.setProps({ userId })
+      })
 
-      expect(linkTo).toContain(zendesk.link)
+      test(`the email link is the zendesk email form plus: "${urlQueryParam}"`, () => {
+        const linkTo = wrapper.find(ItemLink).find('a').prop('href')
+
+        expect(linkTo).toBe(`${zendesk.emailForm}${urlQueryParam}`)
+      })
     })
   })
 

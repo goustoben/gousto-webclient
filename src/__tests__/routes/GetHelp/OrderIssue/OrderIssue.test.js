@@ -62,6 +62,18 @@ describe('<OrderIssue />', () => {
       expect(itemLinks.at(3).prop('to')).toBe('https://gousto.zendesk.com/hc/en-gb')
     })
 
+    describe('when userId prop is passed', () => {
+      const USER_ID = '1234'
+      beforeEach(() => {
+        wrapper.setProps({ userId: USER_ID })
+      })
+
+      test('the link to zendesk has the user id appended at the end', () => {
+        expect(wrapper.find('ItemLink').at(3).prop('to'))
+          .toBe(`https://gousto.zendesk.com/hc/en-gb/?user_id=${USER_ID}`)
+      })
+    })
+
     test('the Others option is not client route', () => {
       expect(wrapper.find('ItemLink').at(3).prop('clientRouted')).toBe(false)
     })

@@ -65,12 +65,32 @@ brew install watchman
 
 ### Running regression tests
 ```shell
-cd ~/code/goustowebclient/tests/regression
-npm run test
+cd goustowebclient/tests/regression
+npm install
 ```
 
-To run through the Cypress UI:
-`npm run test:debug`
+#### Running them in the CLI
+For mobile
+```shell
+npm run test:mobile
+```
+
+For web
+```shell
+npm run test:web
+```
+
+#### Running them through the Cypress UI
+For mobile
+```shell
+npm run test:debug:mobile
+```
+
+For web
+```shell
+npm run test:debug:web
+```
+
 
 All data should be mocked. Cypress has been configured to return a 404 for any real api calls.
 
@@ -88,15 +108,23 @@ npm ci
 node installLocal.js
 ```
 
-#### Local environment
+#### Local environment (for your local machine, even if you point to Staging)
+First, have the application running and pointing to Staging
+
+Then build the e2e tests:
 ```shell
 cd ~/code/goustowebclient/src
 npm run build:e2e:local
+```
+(always build after changes have been made in your code and these have been rebuilt, for instance when `npm run watch` finishes to pick up your changes)
+
+Then run the e2e tests:
+```shell
 cd ~/code/goustowebclient/tests/e2e
 npm test
 ```
 
-#### Staging environment
+#### Staging environment (only for CircleCI)
 ```shell
 cd ~/code/goustowebclient/src
 npm run build:e2e
@@ -104,8 +132,8 @@ cd ~/code/goustowebclient/tests/e2e
 npm run test:staging
 ```
 
-To run a specific tag use:
-`./node_modules/.bin/nightwatch --tag gousto`
+To run a specific tag (look at the end of the test files for the tags) use:
+`npm run test -- --tag gousto`
 
 Staging e2e tests run using a selenium server hosted on AWS. You may need to check the health of this server if the tests are not running properly - the `i-staging-selenium` EC2 instance.
 

@@ -30,6 +30,8 @@ describe('<OrderAddOnsContainer />', () => {
   fetchProductCategories.mockResolvedValue({ data: {} })
   fetchProductStock.mockResolvedValue({ data: {} })
 
+  const USER_ID = '1111'
+
   const store = createStore(
     combineReducers(
       {
@@ -51,7 +53,7 @@ describe('<OrderAddOnsContainer />', () => {
         orderId: '123',
       }),
       features: featuresDefaultState(),
-      user: userDefaultState,
+      user: userDefaultState.set('id', USER_ID),
       pending: Immutable.Map()
     },
     compose(applyMiddleware(thunk))
@@ -91,6 +93,10 @@ describe('<OrderAddOnsContainer />', () => {
 
     test('order_action query parameter is mapped to orderAction prop', () => {
       expect(wrapper.find('OrderAddOns').prop('orderAction')).toBe(ORDER_ACTION)
+    })
+
+    test('userId is passed to the contained component', () => {
+      expect(wrapper.find('OrderAddOns').prop('userId')).toBe('1111')
     })
   })
 })

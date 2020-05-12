@@ -340,6 +340,18 @@ export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   useMenuService
 })
 
+export const selectRecipeVariant = (originalRecipeId, variantId) => ({
+  type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
+  payload: {
+    originalRecipeId,
+    variantId
+  }
+})
+
+export const clearSelectedRecipeVariants = () => ({
+  type: actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS
+})
+
 export const recipeVariantDropdownExpanded = (recipeId) => ({
   type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
   payload: {

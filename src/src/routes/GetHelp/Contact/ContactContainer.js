@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import { selectContactChannel } from 'actions/getHelp'
+import { getUserId } from 'selectors/user'
 
 import { Contact } from './Contact'
 
@@ -20,7 +21,8 @@ const mapStateToProps = (state) => ({
     || 'Contact us by email',
     phoneItem: state.content.get('get-help_orderissues_pagecontent_phoneitem')
     || 'Contact us by phone',
-  }
+  },
+  userId: getUserId(state),
 })
 
 const ContactContainer = connect(mapStateToProps, {

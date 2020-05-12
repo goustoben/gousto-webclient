@@ -1,12 +1,8 @@
-import config from 'config'
-
-export const addUserIdToHelpUrl = (isAuthenticated, userId) => {
-  const { routes } = config
-
-  return (isAuthenticated)
-    ? `${routes.zendesk.faqs}/?user_id=${userId}`
-    : routes.zendesk.faqs
-}
+export const addUserIdToUrl = (url, userId) => (
+  (userId)
+    ? `${url}/?user_id=${userId}`
+    : url
+)
 
 export const slugify = (text) =>
   text.toString().toLowerCase()

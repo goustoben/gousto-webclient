@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { getFoodBrand } from 'utils/recipe'
-import { getCurrentMenuRecipes, getInStockRecipes, sortRecipesByStock } from './sorting'
+import { getInStockRecipes, sortRecipesByStock } from './sorting'
+import { getCurrentMenuRecipes } from './menu'
 
 export const getFoodBrandForSlug = createSelector(
   [getCurrentMenuRecipes, getInStockRecipes],

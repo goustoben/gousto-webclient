@@ -1,7 +1,5 @@
-import config from 'config'
+import { client as clientRoutes } from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
-
-const clientRoutes = config.routes.client
 
 export const defaultMenuItems = {
   home: { name: 'Home', url: clientRoutes.home, clientRouted: true },
@@ -9,7 +7,7 @@ export const defaultMenuItems = {
   menu: { name: 'Choose Recipes', url: clientRoutes.menu, tracking: trackingKeys.clickRecipeNavigation },
   faq: {
     name: 'Help',
-    url: config.routes.zendesk.faqs,
+    url: `${clientRoutes.getHelp.index}/${clientRoutes.getHelp.eligibilityCheck}`,
     clientRouted: false,
     tracking: 'FAQNavigation Clicked'
   },

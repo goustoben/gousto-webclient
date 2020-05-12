@@ -1,6 +1,7 @@
 import { withPlatformTags, MOBILE, WEB } from '../utils/tags'
 
 describe("Menu-BrowseCTA", () => {
+  const DATE = new Date(2020, 3, 30).getTime()
   beforeEach(() => {
     cy.server()
     cy.route('GET', /boxPrices/, 'fixture:boxPrices/priceNoPromocode.json')
@@ -9,6 +10,7 @@ describe("Menu-BrowseCTA", () => {
     cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
     cy.route('/menu/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
     cy.visit('/')
+    cy.clock(DATE, ['Date'])
     cy.wait(['@getMenu', '@getBrand', '@getStock'])
   })
 

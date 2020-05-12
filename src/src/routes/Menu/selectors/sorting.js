@@ -1,11 +1,13 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 
-import { getRecipes, getMenuRecipeIds, getStock, getMenuRecipes as getMenuCollectionRecipes } from 'selectors/root'
+import { getStock, getMenuRecipes as getMenuCollectionRecipes } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
 import { getRecommendationsCollection, getCollectionId } from './collections'
+import { getCurrentMenuRecipesWithVariantsReplaced } from './variants'
+import { getCurrentMenuRecipes } from './menu'
 
 const createSortedRecipesResponse = (recipes, inStockRecipes, filterOutOfStock) => {
   if (filterOutOfStock) {
@@ -25,14 +27,6 @@ const createSortedRecipesResponse = (recipes, inStockRecipes, filterOutOfStock) 
     recipes: sortedRecipes
   }
 }
-
-export const getCurrentMenuRecipes = createSelector(
-  [getRecipes, getMenuRecipeIds],
-  (allRecipes, currentMenuIds) => (
-    currentMenuIds && currentMenuIds.map(recipeId => allRecipes.get(recipeId) || null)
-      .filter(recipe => recipe !== null)
-  )
-)
 
 export const getInStockRecipes = createSelector(
   [getCurrentMenuRecipes, getStock, getBasketRecipes, getNumPortions],
@@ -60,7 +54,7 @@ export const sortRecipesByStock = (recipes, inStockRecipes) => {
 }
 
 export const getSortedRecipes = createSelector(
-  [getMenuCollectionRecipes, getCurrentMenuRecipes, getInStockRecipes, getRecommendationsCollection],
+  [getMenuCollectionRecipes, getCurrentMenuRecipesWithVariantsReplaced, getInStockRecipes, getRecommendationsCollection],
   (menuCollectionRecipes, allRecipes, inStockRecipes, recommendations) => (collectionId) => {
     if (!collectionId) {
       return createSortedRecipesResponse(allRecipes, inStockRecipes, false)
