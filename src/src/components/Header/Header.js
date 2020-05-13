@@ -120,14 +120,14 @@ class Header extends React.PureComponent {
       !isAuthenticated && menuItems.boxPrices,
       menuItems.menu,
       isAuthenticated && menuItems.referFriend,
-      menuItems.sustainability,
+      menuItems.charityCampaign,
       menuItems.faq,
     ].filter(item => item)
 
     const mobileItems = [
       !isAuthenticated && menuItems.boxPrices,
       menuItems.menu,
-      menuItems.sustainability,
+      menuItems.charityCampaign,
       menuItems.faq,
     ].filter(item => item)
 

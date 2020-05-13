@@ -364,9 +364,9 @@ describe('Header', () => {
         },
         {
           clientRouted: false,
-          name: 'Sustainability',
-          url: routesConfig.client.weCare,
-          tracking: 'SustainabilityNavigation Clicked',
+          name: 'Table for 1 million',
+          url: 'https://cook.gousto.co.uk/table-for-1-million/',
+          tracking: 'CharityCampaignNavigation Clicked',
         },
         {
           clientRouted: false,
@@ -435,9 +435,9 @@ describe('Header', () => {
         },
         {
           clientRouted: false,
-          name: 'Sustainability',
-          url: routesConfig.client.weCare,
-          tracking: 'SustainabilityNavigation Clicked',
+          name: 'Table for 1 million',
+          url: 'https://cook.gousto.co.uk/table-for-1-million/',
+          tracking: 'CharityCampaignNavigation Clicked',
         },
         {
           clientRouted: false,
