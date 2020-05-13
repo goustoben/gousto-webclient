@@ -18,6 +18,7 @@ export const defaultMenuItems = {
   subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
   details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
   sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
+  charityCampaign: { name: 'Table for 1 million', url: 'https://cook.gousto.co.uk/table-for-1-million/', clientRouted: false, tracking: 'CharityCampaignNavigation Clicked' },
 }
 
 export const experimentalMenuItems = {
