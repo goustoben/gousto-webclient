@@ -5,7 +5,6 @@ import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 
 import { FineDineInDetail } from 'routes/Menu/Recipe/Detail/FineDineInDetail'
-import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
 import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
 
@@ -49,7 +48,6 @@ describe('<FineDineInDetail />', () => {
         protein: 1,
         salt: 1,
       })}
-      showCookingInstruction={false}
       title="title"
       useWithin="5 days"
       view="detail"
@@ -270,28 +268,6 @@ describe('<FineDineInDetail />', () => {
 
     test('should not return the <Allergens />', () => {
       expect(wrapper.find('Allergens').exists()).toBe(false)
-    })
-  })
-
-  describe('<CookingInstructions />', () => {
-    describe('when showCookingInstruction is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: true })
-      })
-
-      test('should return the <CookingInstructions />', () => {
-        expect(wrapper.find(CookingInstructions)).toHaveLength(1)
-      })
-    })
-
-    describe('when showCookingInstruction is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: false })
-      })
-
-      test('should not return the <CookingInstructions />', () => {
-        expect(wrapper.find(CookingInstructions).exists()).toBe(false)
-      })
     })
   })
 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { InputRadio } from 'goustouicomponents'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import css from './DropdownRecipeList.css'
 
 class DropdownRecipeList extends React.PureComponent {
@@ -29,13 +30,23 @@ class DropdownRecipeList extends React.PureComponent {
   }
 
   render() {
-    const { recipeVariants, selectedRecipe } = this.props
+    const { recipeVariants, selectedRecipe, isOnDetailScreen } = this.props
     const { checkedValue } = this.state
+    const itemClassName = (isChecked) => (classnames(
+      { [css.listItem]: !isOnDetailScreen },
+      { [css.listItemWithBorder]: isOnDetailScreen },
+      { [css.listItemWithBlueBorder]: isChecked && isOnDetailScreen}
+    ))
+
+    if (!recipeVariants || recipeVariants.length === 0) {
+      return null
+    }
 
     return (
       <div className={css.dropdownList} role="button" tabIndex={-1} onClick={this.preventPropagation} onKeyPress={this.preventPropagation}>
+        {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
         <ul className={css.dropdownListText}>
-          <li className={css.listItem} key={selectedRecipe.coreRecipeId}>
+          <li className={itemClassName(checkedValue === selectedRecipe.coreRecipeId)} key={selectedRecipe.coreRecipeId}>
             <InputRadio
               id={selectedRecipe.coreRecipeId}
               name="variantList"
@@ -47,7 +58,7 @@ class DropdownRecipeList extends React.PureComponent {
             </InputRadio>
           </li>
           {recipeVariants.map((variant) => (
-            <li className={css.listItem} key={variant.coreRecipeId}>
+            <li className={itemClassName(checkedValue === variant.coreRecipeId)} key={variant.coreRecipeId}>
               <InputRadio
                 id={variant.coreRecipeId}
                 name="variantList"
@@ -71,10 +82,12 @@ DropdownRecipeList.propTypes = {
     coreRecipeId: PropTypes.string,
     displayName: PropTypes.string
   }),
+  isOnDetailScreen: PropTypes.bool,
 }
 
 DropdownRecipeList.defaultProps = {
   recipeVariants: [],
   selectedRecipe: {},
+  isOnDetailScreen: false
 }
 export { DropdownRecipeList }

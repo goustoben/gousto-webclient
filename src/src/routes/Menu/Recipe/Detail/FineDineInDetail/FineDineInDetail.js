@@ -7,7 +7,6 @@ import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
-import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
 import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
 import {NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import Carousel from 'routes/Menu/Recipe/Detail/Carousel'
@@ -19,7 +18,7 @@ import css from './FineDineInDetail.css'
 
 const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens,
   id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment,
-  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showCookingInstruction }) => (
+  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew }) => (
     <div>
       <div className={css.container}>
         <div className={css.carousel}>
@@ -33,7 +32,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             <div className={css.header}>
               <Title title={title} view={view} detail />
               <div className={css.headerButton}>
-                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
+                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} isOnDetailScreen />
               </div>
             </div>
             <div className={css.rating}>
@@ -41,7 +40,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             </div>
             <hr className={css.rule} />
             <div className={classnames(css.tabletOnly, css.block)}>
-              <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
+              <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} isOnDetailScreen />
             </div>
             <p className={css.text}>{description}</p>
             <AttributeGrid
@@ -96,19 +95,10 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
                 </div>
               )}
             </div>
-            {showCookingInstruction
-              && (
-                <div>
-                  <hr className={css.rule} />
-                  <div className={css.cookingInstructions}>
-                    <CookingInstructions recipeId={id} />
-                  </div>
-                </div>
-              )}
           </div>
         </div>
         <div className={css.stickyContainer}>
-          <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
+          <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} isOnDetailScreen />
         </div>
       </div>
     </div>
@@ -117,7 +107,6 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
 FineDineInDetail.propTypes = {
   ...detailPropTypes,
   images: PropTypes.instanceOf(Immutable.List),
-  showCookingInstruction: PropTypes.bool.isRequired,
 }
 
 FineDineInDetail.defaultProps = {

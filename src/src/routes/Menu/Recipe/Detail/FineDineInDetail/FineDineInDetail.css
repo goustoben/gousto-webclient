@@ -142,9 +142,3 @@
 	padding: 0;
 	margin: 1px auto auto auto;
 }
-
-.cookingInstructions {
-  @media ScreenMDMin {
-    padding-bottom: SpacingXXL;
-  }
-}
