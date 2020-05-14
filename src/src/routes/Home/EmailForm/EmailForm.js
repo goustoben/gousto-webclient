@@ -94,10 +94,17 @@ class EmailForm extends React.PureComponent {
                         onClick={this.handleSubmit}
                         className={css.inputs}
                       >
-                        Subscribe Now
+                        Join now
                       </Button>
                     </div>
                   </Form>
+                  <P className={css.login}>
+                    <span>
+                      Already a Gousto subscriber? Please&nbsp;
+                      <a href="#login">log in</a>
+                      .
+                    </span>
+                  </P>
                 </div>
               )
               : (
