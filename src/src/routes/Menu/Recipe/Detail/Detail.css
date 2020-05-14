@@ -10,7 +10,6 @@
 	z-index: 1000;
 	background-color: Coconut;
 	width: 690px;
-	height: 100%;
 
 	@media ScreenXSMax {
 		width: 100%;

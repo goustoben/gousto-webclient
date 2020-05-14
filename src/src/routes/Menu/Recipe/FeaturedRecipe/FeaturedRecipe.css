@@ -14,7 +14,6 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: flex-start;
-		overflow: hidden;
 		position: relative;
 	}
 }
@@ -24,7 +23,7 @@
 }
 
 .featuredDetails {
-	composes: col-xs-12 col-lg-5 from 'sass-loader!styles/bootstrap.scss';
+	composes: col-xs-12 col-lg-6 from 'sass-loader!styles/bootstrap.scss';
 	composes: recipeDetails;
 
 	@media ScreenMLMin {

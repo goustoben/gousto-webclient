@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
 import moment from 'moment'
-import { getMenuLimits, getMenuVariants } from '../utils/menu'
+import { getMenuLimits, getMenuVariants, switchSelectedVariants } from '../utils/menu'
 
 export const menuInitialState = Immutable.Map({
   forceLoad: false,
@@ -38,12 +38,11 @@ const menu = {
 
     case actionTypes.MENU_RECIPE_VARIANT_SELECTED: {
       const originalVariants = state.get('selectedRecipeVariants')
-      const newVariants = {
-        ...originalVariants,
-        [action.payload.originalRecipeId]: action.payload.variantId
-      }
+      const newVariants = switchSelectedVariants(originalVariants, action.payload)
 
-      return state.set('selectedRecipeVariants', newVariants)
+      return state
+        .set('currentExpandedRecipeVariantsDropdown', null)
+        .set('selectedRecipeVariants', newVariants)
     }
 
     case actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS: {

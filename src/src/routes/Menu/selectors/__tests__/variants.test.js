@@ -1,26 +1,22 @@
 import Immutable from 'immutable'
-import { getCurrentMenuRecipesWithVariantsReplaced } from '../variants'
+import { getCurrentMenuRecipesWithVariantsReplaced, getVariantsForRecipe } from '../variants'
 
 describe('variants selector tests', () => {
-  describe('getCurrentMenuRecipesWithVariantsReplaced', () => {
-    const firstRecipe = Immutable.fromJS({ id: '327' })
-    const secondRecipe = Immutable.fromJS({ id: '819' })
-    const thirdRecipe = Immutable.fromJS({ id: '777' })
-    const variantA = Immutable.fromJS({ id: '820' })
+  const currentCollectionSlug = 'collectionId'
+  const currentCollectionId = '1234'
 
-    const allRecipes = Immutable.fromJS({
-      [firstRecipe.get('id')]: firstRecipe,
-      [secondRecipe.get('id')]: secondRecipe,
-      [thirdRecipe.get('id')]: thirdRecipe,
-      [variantA.get('id')]: variantA
-    })
-    const currentMenuRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe])
+  describe('getCurrentMenuRecipesWithVariantsReplaced', () => {
+    const firstRecipe = '327'
+    const secondRecipe = '819'
+    const thirdRecipe = '777'
+    const variantA = '820'
+    const recipesInCollection = Immutable.List([firstRecipe, secondRecipe, thirdRecipe])
 
     describe('when no variant selected', () => {
       const selectedRecipeVariants = {}
 
       test('should not replace recipe', () => {
-        const result = getCurrentMenuRecipesWithVariantsReplaced.resultFunc(allRecipes, currentMenuRecipes, selectedRecipeVariants)
+        const result = getCurrentMenuRecipesWithVariantsReplaced.resultFunc(selectedRecipeVariants, currentCollectionId)(recipesInCollection)
 
         expect(result).toEqual(Immutable.List([firstRecipe, secondRecipe, thirdRecipe]))
       })
@@ -28,11 +24,13 @@ describe('variants selector tests', () => {
 
     describe('when variant selected', () => {
       const selectedRecipeVariants = {
-        [secondRecipe.get('id')]: variantA.get('id')
+        [currentCollectionId]: {
+          [secondRecipe]: variantA
+        }
       }
 
       test('should replace recipe', () => {
-        const result = getCurrentMenuRecipesWithVariantsReplaced.resultFunc(allRecipes, currentMenuRecipes, selectedRecipeVariants)
+        const result = getCurrentMenuRecipesWithVariantsReplaced.resultFunc(selectedRecipeVariants, currentCollectionId)(recipesInCollection)
 
         expect(result).toEqual(Immutable.List([firstRecipe, variantA, thirdRecipe]))
       })
@@ -43,20 +41,41 @@ describe('variants selector tests', () => {
 
       beforeEach(() => {
         state = {
-          recipes: allRecipes,
-          menuRecipes: currentMenuRecipes.map(recipe => recipe.get('id')),
           menu: Immutable.Map({
             selectedRecipeVariants: {}
-          })
+          }),
+          basket: Immutable.Map({
+            numPortions: 2
+          }),
+          menuCollections: Immutable.Map({
+            [currentCollectionId]: Immutable.Map({
+              id: currentCollectionId,
+              slug: currentCollectionSlug,
+              published: true,
+            })
+          }),
+          menuCollectionRecipes: Immutable.Map({
+            [currentCollectionId]: Immutable.Map({
+              123: {}
+            })
+          }),
+          routing: {
+            locationBeforeTransitions: {
+              query: {
+                collection: currentCollectionSlug
+              }
+            }
+          }
         }
       })
 
       describe('when variant selected', () => {
-        const selectedRecipeVariants = {
-          [secondRecipe.get('id')]: variantA.get('id')
-        }
-
         beforeEach(() => {
+          const selectedRecipeVariants = {
+            [currentCollectionId]: {
+              [secondRecipe]: variantA
+            }
+          }
           const oldState = state
 
           state = {
@@ -66,11 +85,58 @@ describe('variants selector tests', () => {
         })
 
         test('should replace recipe', () => {
-          const result = getCurrentMenuRecipesWithVariantsReplaced(state)
+          const result = getCurrentMenuRecipesWithVariantsReplaced(state)(recipesInCollection)
 
           expect(result).toEqual(Immutable.List([firstRecipe, variantA, thirdRecipe]))
         })
       })
+    })
+  })
+})
+
+describe('getVariantsForRecipe', () => {
+  describe('when no variants', () => {
+    const variants = null
+    const coreRecipeId = '123'
+
+    test('should return null', () => {
+      const result = getVariantsForRecipe.resultFunc(variants, coreRecipeId)
+      expect(result).toBe(null)
+    })
+  })
+
+  describe('when no recipeVariants', () => {
+    const variants = Immutable.Map({
+      143: {}
+    })
+    const coreRecipeId = '123'
+
+    test('should return null', () => {
+      const result = getVariantsForRecipe.resultFunc(variants, coreRecipeId)
+      expect(result).toBe(null)
+    })
+  })
+
+  describe('when variants exists for recipe id', () => {
+    const variants = Immutable.fromJS({
+      123: {
+        displayName: 'recipe',
+        alternatives: [{
+          id: 'abd123',
+          coreRecipeId: '132',
+          displayName: 'recipeVariant'
+        }]
+      }
+    })
+    const coreRecipeId = '123'
+
+    test('should return null', () => {
+      const result = getVariantsForRecipe.resultFunc(variants, coreRecipeId)
+      expect(result).toEqual([{
+        id: 'abd123',
+        coreRecipeId: '132',
+        displayName: 'recipeVariant'
+      }])
     })
   })
 })

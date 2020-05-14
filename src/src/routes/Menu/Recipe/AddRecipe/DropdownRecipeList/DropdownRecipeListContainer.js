@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
+import { selectRecipeVariant } from 'actions/menu'
+import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { getVariantsForRecipe } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
+import { getCurrentCollectionId } from '../../../selectors/collections'
 import { DropdownRecipeList } from './DropdownRecipeList'
 
 const mapStateToProps = (state, ownProps) => {
@@ -15,11 +18,12 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
+    collectionId: getCurrentCollectionId(state),
     recipeVariants: getVariantsForRecipe(state, ownProps),
     selectedRecipe
   }
 }
 
-const DropdownRecipeListContainer = connect(mapStateToProps)(DropdownRecipeList)
+const DropdownRecipeListContainer = connect(mapStateToProps, { selectRecipeVariant, menuRecipeDetailVisibilityChange })(DropdownRecipeList)
 
 export { DropdownRecipeListContainer }

@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Overlay from 'Overlay'
 import Detail from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
 import { getLowStockTag, getSurcharge, getTaxonomyTags, getFoodBrand } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
+import Modal from 'Modal'
 
 const propTypes = {
   showOverlay: PropTypes.bool,
@@ -31,9 +31,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
 
   if (!showDetailOverlay) {
     return (
-      <Overlay open={showOverlay}>
-        {null}
-      </Overlay>
+      null
     )
   }
 
@@ -50,7 +48,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   const isChefPrepared = detailRecipe.get('chefPrepared') === true
 
   return (
-    <Overlay open={showOverlay}>
+    <Modal isOpen={showOverlay}>
       <Detail
         view={view}
         tag={getLowStockTag(stockRecipe, detailRecipe.getIn(['rating', 'count']))}
@@ -83,7 +81,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
         isChefPrepared={isChefPrepared}
         numPortions={numPortions}
       />
-    </Overlay>
+    </Modal>
   )
 }
 

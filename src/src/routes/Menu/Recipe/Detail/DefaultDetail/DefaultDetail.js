@@ -32,6 +32,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
         </div>
       </div>
       <div className={css.badges}>
+        <div className={css.titleHidden}>
+          <Title title={title} view={view} detail />
+        </div>
         <RecipeRating count={count} average={average} isNew={isNew} />
       </div>
     </div>
