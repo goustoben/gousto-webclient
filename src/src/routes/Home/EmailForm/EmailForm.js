@@ -57,11 +57,7 @@ class EmailForm extends React.PureComponent {
     return (
       <div className={css.container}>
         <h2 className={css.title}>
-          <Content
-            contentKeys="newsletterTitle"
-          >
-            <span>Want top foodie tips and exclusive offers?</span>
-          </Content>
+          <span>Join our Gousto Priority Queue</span>
         </h2>
         <div className={css.form}>
           {
@@ -69,11 +65,7 @@ class EmailForm extends React.PureComponent {
               ? (
                 <div>
                   <P className={css.description}>
-                    <Content
-                      contentKeys="newsletterDescription"
-                    >
-                      <span>Sign up now to get all our insider info straight to your inbox.</span>
-                    </Content>
+                    <span>We&apos;re full to the brim right now and can&apos;t take any new customer orders - if you leave your contact details below, we&apos;ll let you know as soon as you can place your order. Won&apos;t be long!</span>
                   </P>
                   <Form onSubmit={this.handleSubmit}>
                     <div className={css.row}>
