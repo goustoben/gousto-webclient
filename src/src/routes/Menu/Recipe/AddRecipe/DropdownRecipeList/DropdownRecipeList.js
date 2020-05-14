@@ -20,9 +20,18 @@ class DropdownRecipeList extends React.PureComponent {
   }
 
   changeCheckedRecipe = (e) => {
+    const recipeId = e.target.value
+    const { selectedRecipe: { coreRecipeId }, selectRecipeVariant, collectionId, menuRecipeDetailVisibilityChange, isOnDetailScreen} = this.props
+
+    selectRecipeVariant(coreRecipeId, recipeId, collectionId)
+
     this.setState({
-      checkedValue: e.target.value,
+      checkedValue: recipeId,
     })
+
+    if (isOnDetailScreen) {
+      menuRecipeDetailVisibilityChange(recipeId)
+    }
   }
 
   preventPropagation = (e) => {
@@ -44,7 +53,7 @@ class DropdownRecipeList extends React.PureComponent {
 
     return (
       <div className={css.dropdownList} role="button" tabIndex={-1} onClick={this.preventPropagation} onKeyPress={this.preventPropagation}>
-        {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
+        {isOnDetailScreen && <h2 className={css.variantsTitle}>Options available</h2>}
         <ul className={css.dropdownListText}>
           <li className={itemClassName(checkedValue === selectedRecipe.coreRecipeId)} key={selectedRecipe.coreRecipeId}>
             <InputRadio
@@ -77,17 +86,20 @@ class DropdownRecipeList extends React.PureComponent {
 }
 
 DropdownRecipeList.propTypes = {
+  collectionId: PropTypes.string.isRequired,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
   selectedRecipe: PropTypes.shape({
     coreRecipeId: PropTypes.string,
     displayName: PropTypes.string
   }),
   isOnDetailScreen: PropTypes.bool,
+  selectRecipeVariant: PropTypes.func.isRequired,
+  menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
 }
 
 DropdownRecipeList.defaultProps = {
   recipeVariants: [],
   selectedRecipe: {},
-  isOnDetailScreen: false
+  isOnDetailScreen: false,
 }
 export { DropdownRecipeList }

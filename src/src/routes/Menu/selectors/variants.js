@@ -1,8 +1,6 @@
-import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getBasketMenuId } from 'selectors/basket'
-import { getRecipes } from 'selectors/root'
-import { getCurrentMenuRecipes } from './menu'
+import { getCurrentCollectionId } from './collections'
 
 const getMenuVariants = state => state.menu.get('menuVariants')
 const getSelectedRecipeVariants = state => state.menu.get('selectedRecipeVariants')
@@ -15,22 +13,17 @@ const getCurrentMenuVariants = createSelector(
 )
 
 export const getCurrentMenuRecipesWithVariantsReplaced = createSelector(
-  [getRecipes, getCurrentMenuRecipes, getSelectedRecipeVariants],
-  (allRecipes, currentMenuRecipes, selectedVariants) => (
-    currentMenuRecipes.reduce((acc, recipe) => {
-      const id = recipe.get('id')
-      const variantId = selectedVariants[id]
+  [getSelectedRecipeVariants, getCurrentCollectionId],
+  (selectedVariants, currentCollectionId) => (recipesInCollection) => (
+    recipesInCollection.map((recipeId) => {
+      const variantId = selectedVariants[currentCollectionId] && selectedVariants[currentCollectionId][recipeId]
 
       if (variantId) {
-        const variant = allRecipes.get(variantId)
-
-        if (variant) {
-          return acc.push(variant)
-        }
+        return variantId
       }
 
-      return acc.push(recipe)
-    }, Immutable.List())
+      return recipeId
+    })
   )
 )
 

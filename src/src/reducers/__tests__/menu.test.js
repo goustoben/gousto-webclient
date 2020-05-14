@@ -154,12 +154,13 @@ describe('menu reducer', () => {
 
       describe('when variantId is null', () => {
         const variantId = null
-        const action = selectRecipeVariant(recipeId, variantId)
+        const collectionId = 'collection-id'
+        const action = selectRecipeVariant(recipeId, variantId, collectionId)
 
         test('should set selectedRecipeVariant entry to null', () => {
           const result = menu.menu(menuInitialState, action)
 
-          const expectedState = menuInitialState.set('selectedRecipeVariants', { [recipeId]: variantId })
+          const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: {[recipeId]: variantId }})
 
           expect(result).toEqual(expectedState)
         })
@@ -167,12 +168,13 @@ describe('menu reducer', () => {
 
       describe('when variantId is a recipe id', () => {
         const variantId = '5678'
-        const action = selectRecipeVariant(recipeId, variantId)
+        const collectionId = 'collection-id'
+        const action = selectRecipeVariant(recipeId, variantId, collectionId)
 
         test('should set selectedRecipeVariant entry to the selected id', () => {
           const result = menu.menu(menuInitialState, action)
 
-          const expectedState = menuInitialState.set('selectedRecipeVariants', { [recipeId]: variantId })
+          const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: {[recipeId]: variantId } })
 
           expect(result).toEqual(expectedState)
         })

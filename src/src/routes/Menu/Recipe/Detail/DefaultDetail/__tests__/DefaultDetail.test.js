@@ -22,6 +22,10 @@ jest.mock('routes/Menu/Recipe/AddRecipe', () => ({
   AddRecipe: () => <div />
 }))
 
+jest.mock('routes/Menu/Recipe/AddRecipe/DropdownRecipeList', () => ({
+  DropdownRecipeListContainer: () => <div />
+}))
+
 describe('<DefaultDetail />', () => {
   const DEFAULT_DETAIL = (
     <DefaultDetail

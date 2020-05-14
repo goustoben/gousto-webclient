@@ -340,9 +340,10 @@ export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   useMenuService
 })
 
-export const selectRecipeVariant = (originalRecipeId, variantId) => ({
+export const selectRecipeVariant = (originalRecipeId, variantId, collectionId) => ({
   type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
   payload: {
+    collectionId,
     originalRecipeId,
     variantId
   }

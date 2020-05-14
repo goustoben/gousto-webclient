@@ -9,6 +9,24 @@ import { getRecommendationsCollection, getCollectionId } from './collections'
 import { getCurrentMenuRecipesWithVariantsReplaced } from './variants'
 import { getCurrentMenuRecipes } from './menu'
 
+export const sortRecipesByStock = (recipes, inStockRecipes) => {
+  const { inStock, outOfStock } = recipes.reduce((acc, cur) => {
+    if (inStockRecipes.includes(cur)) {
+      return {
+        outOfStock: acc.outOfStock,
+        inStock: acc.inStock.push(cur)
+      }
+    }
+
+    return {
+      outOfStock: acc.outOfStock.push(cur),
+      inStock: acc.inStock
+    }
+  }, { outOfStock: Immutable.List(), inStock: Immutable.List() })
+
+  return inStock.concat(outOfStock)
+}
+
 const createSortedRecipesResponse = (recipes, inStockRecipes, filterOutOfStock) => {
   if (filterOutOfStock) {
     const filteredRecipes = recipes.filter(recipe => inStockRecipes.includes(recipe))
@@ -35,27 +53,9 @@ export const getInStockRecipes = createSelector(
   )
 )
 
-export const sortRecipesByStock = (recipes, inStockRecipes) => {
-  const { inStock, outOfStock } = recipes.reduce((acc, cur) => {
-    if (inStockRecipes.includes(cur)) {
-      return {
-        outOfStock: acc.outOfStock,
-        inStock: acc.inStock.push(cur)
-      }
-    }
-
-    return {
-      outOfStock: acc.outOfStock.push(cur),
-      inStock: acc.inStock
-    }
-  }, { outOfStock: Immutable.List(), inStock: Immutable.List() })
-
-  return inStock.concat(outOfStock)
-}
-
 export const getSortedRecipes = createSelector(
-  [getMenuCollectionRecipes, getCurrentMenuRecipesWithVariantsReplaced, getInStockRecipes, getRecommendationsCollection],
-  (menuCollectionRecipes, allRecipes, inStockRecipes, recommendations) => (collectionId) => {
+  [getMenuCollectionRecipes, getCurrentMenuRecipes, getInStockRecipes, getRecommendationsCollection, getCurrentMenuRecipesWithVariantsReplaced],
+  (menuCollectionRecipes, allRecipes, inStockRecipes, recommendations, getCurrentMenuRecipesReplacedByVariantsFunc) => (collectionId) => {
     if (!collectionId) {
       return createSortedRecipesResponse(allRecipes, inStockRecipes, false)
     }
@@ -67,8 +67,9 @@ export const getSortedRecipes = createSelector(
     }
 
     const getRecipeDetailsById = (recipeId) => allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
+    const recipeInCollectionsReplacesByVariant = getCurrentMenuRecipesReplacedByVariantsFunc(recipesInCollection)
     // recipesInCollection is in recommended order whilst allRecipes is the default order of the menu
-    const filtered = recipesInCollection.map(getRecipeDetailsById).filter(recipe => recipe !== undefined)
+    const filtered = recipeInCollectionsReplacesByVariant.map(getRecipeDetailsById).filter(recipe => recipe !== undefined)
 
     const isRecommendationCollection = (recommendations && collectionId === getCollectionId(recommendations))
 

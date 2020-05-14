@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import { isRecipeInStock, isRecipeInBasket, getMenuLimits } from 'utils/menu'
-import { getMenuVariants } from '../menu'
+import { getMenuVariants, switchSelectedVariants } from '../menu'
 
 describe('menu utils', () => {
   describe('isRecipeInStock', () => {
@@ -365,6 +365,58 @@ describe('menu utils', () => {
       const result = getMenuVariants(menus)
 
       expect(result).toEqual(expected)
+    })
+  })
+
+  describe('getNewMenuVariants', () => {
+    describe('when the origin recipes is not a variant', () => {
+      let originalVariants
+      let payload
+      beforeEach(() => {
+        originalVariants = {}
+        payload = {
+          collectionId: '123abc',
+          originalRecipeId: '123',
+          variantId: '234'
+        }
+      })
+      test('should return new menu variants', () => {
+        const result = switchSelectedVariants(originalVariants, payload)
+        const expectedResult = {
+          '123abc': {
+            123: '234',
+          }
+        }
+        expect(result).toEqual(expectedResult)
+      })
+    })
+
+    describe('when the origin recipes is a variant in the same collection', () => {
+      let originalVariants
+      let payload
+      beforeEach(() => {
+        originalVariants = {
+          '123abc': {
+            '123ght': '123',
+            456: '321'
+          }
+        }
+        payload = {
+          collectionId: '123abc',
+          originalRecipeId: '123',
+          variantId: '234'
+        }
+      })
+      test('should return new menu variants without the previews variant', () => {
+        const result = switchSelectedVariants(originalVariants, payload)
+        const expectedResult = {
+          '123abc': {
+            123: '234',
+            456: '321'
+          }
+        }
+        expect(result).toEqual(expectedResult)
+      })
     })
   })
 })

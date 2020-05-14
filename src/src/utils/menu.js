@@ -160,3 +160,22 @@ export const getMenuVariants = (menus) => {
 
   return output
 }
+
+export const switchSelectedVariants = (originalVariants, payload) => {
+  const currentCollectionVariants = originalVariants[payload.collectionId]
+  let filteredCollectionVariants = { ...currentCollectionVariants}
+  if (currentCollectionVariants) {
+    filteredCollectionVariants = Object.assign({}, ...Object.entries(currentCollectionVariants)
+      .filter(([ , value]) => value !== payload.originalRecipeId)
+      .map(([k, v]) => ({[k]: v})))
+  }
+  const newVariants = {
+    ...originalVariants,
+    [payload.collectionId]: {
+      ...filteredCollectionVariants,
+      [payload.originalRecipeId]: payload.variantId
+    }
+  }
+
+  return newVariants
+}

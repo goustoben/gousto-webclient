@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import Overlay from 'Overlay'
+import Modal from 'Modal'
 import Detail from 'routes/Menu/Recipe/Detail'
 import { DetailOverlay } from 'routes/Menu/DetailOverlay/DetailOverlay'
 
@@ -48,7 +48,7 @@ describe('DetailOverlay', () => {
   })
 
   test('should render 1 Overlay', () => {
-    expect(wrapper.find(Overlay).length).toBe(1)
+    expect(wrapper.find(Modal).length).toBe(1)
   })
 
   test('should render 1 Detail component', () => {
@@ -67,6 +67,6 @@ describe('recipe detail overlay', () => {
     />
   )
   test('should be closed if showOverlay flag is false', () => {
-    expect(wrapper.find(Overlay).prop('open')).toBe(false)
+    expect(wrapper.find(Modal).exists()).toBe(false)
   })
 })
