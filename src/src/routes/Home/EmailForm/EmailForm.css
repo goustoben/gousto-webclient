@@ -1,4 +1,4 @@
-@value Radish from 'styles/colors.css';
+@value Radish, White from 'styles/colors.css';
 @value ScreenXXSMin from 'styles/screenSizes.css';
 
 .container {
@@ -56,4 +56,12 @@
 .errorMsg {
 	composes: msg;
 	color: white;
+}
+
+.login {
+	composes: textCenter textMD from 'styles/typography.css';
+	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
+	color: White;
+	margin-top: 15px;
+	margin-bottom: 10px;
 }

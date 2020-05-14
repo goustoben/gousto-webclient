@@ -11,7 +11,7 @@
 }
 
 .inverseSectionSignupOverride {
-	padding-top: 280px;
+	padding-top: 250px;
 
 	@media ScreenSMMin {
 		padding-top: 80px;

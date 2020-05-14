@@ -4,31 +4,20 @@ import classnames from 'classnames'
 import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
-import { CoronaVirusBanner } from 'CoronaVirusBanner'
-import { Alert } from 'goustouicomponents'
 
 import CTAHomepage from '../CTA'
 import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted, isSignupReductionEnabled }) => (
+const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted }) => (
   <div
-    className={
-      classnames(
-        css[`container--${variant}`],
-        isSignupReductionEnabled && css.containerSignupOverride,
-      )
-    }
+    className={classnames(css[`container--${variant}`])}
     data-testing={dataTesting}
   >
-    { isSignupReductionEnabled && <CoronaVirusBanner /> }
     <div
       className={
-        classnames(
-          css[`textContainer--${variant}`],
-          isSignupReductionEnabled && css.textContainerSignupOverride,
-        )
+        classnames(css[`textContainer--${variant}`])
       }
     >
       <h1 className={css.header}>
@@ -63,7 +52,6 @@ Hero.propTypes = {
   dataTesting: PropTypes.string,
   variant: PropTypes.string,
   trackGetStarted: PropTypes.func,
-  isSignupReductionEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
@@ -71,7 +59,6 @@ Hero.defaultProps = {
   ctaText: home.CTA.main,
   variant: 'default',
   trackGetStarted: () => {},
-  isSignupReductionEnabled: false,
 }
 
 export default Hero

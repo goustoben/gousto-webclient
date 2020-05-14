@@ -20,12 +20,10 @@ class Home extends React.Component {
     isAuthenticated: PropTypes.bool,
     variant: PropTypes.string,
     redirectLoggedInUser: PropTypes.func,
-    isSignupReductionEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
     variant: 'default',
-    isSignupReductionEnabled: false,
   }
 
   componentDidMount() {
@@ -72,7 +70,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, enableStorystream, variant, isSignupReductionEnabled } = this.props
+    const { isAuthenticated, enableStorystream, variant } = this.props
     const modules = this.getModules()
     let ctaUri
     let ctaText
@@ -117,7 +115,6 @@ class Home extends React.Component {
         />
         <PromoBanner />
         <HomeSections
-          isSignupReductionEnabled={isSignupReductionEnabled}
           modules={modules}
           testimonials={{
             ctaUri,

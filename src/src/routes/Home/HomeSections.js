@@ -24,7 +24,6 @@ class HomeSections extends Component {
     whatsInYourBox: PropTypes.object,
     testedAndLovedBy: PropTypes.object,
     alternativeDesktopHero: PropTypes.bool,
-    isSignupReductionEnabled: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -41,7 +40,6 @@ class HomeSections extends Component {
     whatsInYourBox: {},
     testedAndLovedBy: {},
     alternativeDesktopHero: false,
-    isSignupReductionEnabled: false,
   };
 
   modules = {
@@ -56,7 +54,6 @@ class HomeSections extends Component {
   }
 
   renderModule(name, order) {
-    const { isSignupReductionEnabled } = this.props
     let module = null
 
     if (this.modules[name]) {
@@ -64,7 +61,7 @@ class HomeSections extends Component {
         const componentProps = this.props[name] || {}
         module = <section key={order} className={css.heroSection} data-module-name={name}>{this.modules[name](componentProps)}</section>
       } else {
-        const inverse = order % 2 !== 0
+        const inverse = order % 2 === 0
         const moduleConfig = config[name] || {}
         moduleConfig.inverse = inverse
         const componentProps = Object.assign(moduleConfig, this.props[name] || {})
@@ -74,7 +71,7 @@ class HomeSections extends Component {
               className={
                 classnames(
                   inverse ? css.inverseSection : css.section,
-                  (inverse && isSignupReductionEnabled && order === 1) && css.inverseSectionSignupOverride,
+                  order === 2 && css.inverseSectionSignupOverride,
                   css[`${name}-section`]
                 )
               }

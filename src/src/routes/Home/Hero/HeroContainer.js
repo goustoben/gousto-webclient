@@ -1,14 +1,8 @@
 import { connect } from 'react-redux'
 import redirectAction from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
-import { getIsSignupReductionEnabled } from 'selectors/features'
-import { getIsAuthenticated } from 'selectors/auth'
 
 import Hero from './Hero'
-
-const mapStateToProps = (state) => ({
-  isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
-})
 
 const mapDispatchToProps = {
   redirect: redirectAction.redirect,
@@ -16,7 +10,7 @@ const mapDispatchToProps = {
 }
 
 const HeroContainer = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(Hero)
 
