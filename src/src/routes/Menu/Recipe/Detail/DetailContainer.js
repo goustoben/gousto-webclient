@@ -5,7 +5,6 @@ import { isNew } from 'utils/recipe'
 import { getCutoffs } from 'utils/deliveries'
 import moment from 'moment'
 
-import { getCookingInstruction } from 'selectors/features'
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { Detail } from './Detail'
 
@@ -27,7 +26,6 @@ function mapStateToProps(state, ownProps) {
     isFoodBrandClickable: false,
     isNew: isNew(Immutable.fromJS(ownProps)),
     inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
-    showCookingInstruction: getCookingInstruction(state),
   }
 }
 

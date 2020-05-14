@@ -1,79 +1,102 @@
-import actionStatus from 'actions/status'
-import { actionTypes } from 'actions/actionTypes'
-import cookbookActions from 'actions/cookbook'
-import { fetchRecipeStepsById } from 'apis/recipes'
+import Immutable from 'immutable'
+import * as collectionsApi from 'apis/collections'
+import cookbookActions from '../cookbook'
+import { actionTypes } from '../actionTypes'
+import { safeJestMock } from '../../_testing/mocks'
 
-const { pending, error } = actionStatus
+describe('cookbookLoadCollectionSets', () => {
+  test('should return the right action', () => {
+    const result = cookbookActions.cookbookLoadCollectionSets({ startSet: 1, endSet: 4 })
+    expect(result).toEqual({
+      type: actionTypes.COOKBOOK_LOAD_COLLECTION_SETS,
+      startSet: 1,
+      endSet: 4
+    })
+  })
+})
 
-jest.mock('actions/status')
-jest.mock('apis/recipes')
+describe('cookbookLoadRecipeSets', () => {
+  test('should return the right action', () => {
+    const result = cookbookActions.cookbookLoadRecipeSets({ startSet: 1, endSet: 4 })
+    expect(result).toEqual({
+      type: actionTypes.COOKBOOK_LOAD_RECIPE_SETS,
+      startSet: 1,
+      endSet: 4
+    })
+  })
+})
 
-describe('Cookbook actions', () => {
+describe('cookbookResetCollectionRecipes', () => {
+  test('should return the right action', () => {
+    const result = cookbookActions.cookbookResetCollectionRecipes()
+    expect(result).toEqual({
+      type: actionTypes.COOKBOOK_RESET_RECIPE_SETS,
+    })
+  })
+})
+
+describe('cookbookLoadCollections', () => {
+  let fetchCollectionsSpy
   let dispatch
-  let err
-  let recipeId
-  let recipeStepsById
-
-  beforeEach(() => {
-    dispatch = jest.fn()
-    err = new Error('Error')
-    recipeId = '123'
-    recipeStepsById = [
-      {
-        step_number: 1,
-        instruction: 'Instruction',
-        media: {}
-      }
-    ]
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
-  describe('cookbookLoadRecipeStepsById successful', () => {
-    beforeEach(async () => {
-      fetchRecipeStepsById.mockResolvedValueOnce({ data: recipeStepsById })
-      await cookbookActions.cookbookLoadRecipeStepsById(recipeId)(dispatch)
+  let getState
+  describe('when fetchCollections returns data', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = () => ({
+        auth: Immutable.Map({
+          accessToken: ''
+        })
+      })
+      fetchCollectionsSpy = safeJestMock(collectionsApi, 'fetchCollections')
+      fetchCollectionsSpy.mockReturnValue(
+        new Promise(resolve => {
+          resolve({
+            data: [],
+            meta: {}
+          })
+        })
+      )
+    })
+    test('should call fetchCollectionsSpy', () => {
+      cookbookActions.cookbookLoadCollections({ limit: 5, setNum: 1 })(dispatch, getState)
+      expect(fetchCollectionsSpy).toHaveBeenCalled()
     })
 
-    test('should dispatch status pending true for COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', () => {
-      expect(pending).toHaveBeenCalledWith('COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', true)
-    })
+    test('should dispatch COOKBOOK_RECEIVE_COLLECTIONS', async () => {
+      await cookbookActions.cookbookLoadCollections({ limit: 5, setNum: 1 })(dispatch, getState)
 
-    test('should dispatch status pending false for COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', () => {
-      expect(pending).toHaveBeenCalledWith('COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', false)
-    })
-
-    test('should map the arguments through to fetchRecipeStepsById correctly', () => {
-      expect(fetchRecipeStepsById).toHaveBeenCalledWith(recipeId)
-    })
-
-    test('should dispatch action COOKBOOK_FETCH_RECIPE_STEPS_BY_ID with recipeId and steps', () => {
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID,
-        recipeId,
-        recipeStepsById,
-        trackingData: {
-          actionType: 'Cooking Instructions clicked',
-          recipeId,
-        },
+      expect(dispatch).toBeCalledWith({
+        type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
+        collections: [],
+        meta: {},
+        setNum: 1,
       })
     })
   })
 
-  describe('cookbookLoadRecipeStepsById error', () => {
-    beforeEach(async () => {
-      fetchRecipeStepsById.mockRejectedValue(err)
-      await cookbookActions.cookbookLoadRecipeStepsById(recipeId)(dispatch)
+  describe('when fails to get auth from state', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = () => ({})
+      fetchCollectionsSpy = safeJestMock(collectionsApi, 'fetchCollections')
+      fetchCollectionsSpy.mockReturnValue(
+        new Promise(resolve => {
+          resolve({
+            data: [],
+            meta: {}
+          })
+        })
+      )
     })
 
-    test('should dispatch status error is null as default for COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', () => {
-      expect(error).toHaveBeenCalledWith('COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', null)
-    })
+    test('should dispatch error', async () => {
+      await cookbookActions.cookbookLoadCollections({ limit: 5, setNum: 1 })(dispatch, getState)
 
-    test('should dispatch status error is err for COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', () => {
-      expect(error).toHaveBeenCalledWith('COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', err)
+      expect(dispatch).toBeCalledWith({
+        type: 'ERROR',
+        key: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
+        value: null
+      })
     })
   })
 })

@@ -1,16 +1,9 @@
-@value Bluecheese, White, Black, BlueBase, Mackerel from 'styles/colors.css';
+@value Black, Mackerel, Bluecheese from 'styles/colors.css';
+@value sizeXL from 'styles/typography.css';
 
 .dropdownList {
-    width: 300px;
-    background-color: White;
+    width: 100%;
     color: Black;
-    position: absolute;
-    top: 45px;
-    z-index: 15;
-    right: 0;
-    box-shadow: 0px 2px 4px Black;
-    border-radius: 3px;
-    padding: .5rem;
 }
 
 .dropdownListText {
@@ -19,13 +12,35 @@
     padding: 0;
 }
 
-.listItem {
-    border-bottom: 2px solid Mackerel;
-    text-align: left;
-    box-sizing: content-box;
-    padding: 0.325rem 0;
+.variantsTitle {
+    font-size: sizeXL;
 }
 
-.listItem:last-of-type {
-    border: none;
+.item {
+    text-align: left;
+    box-sizing: content-box;
+}
+
+.listItem {
+    composes: item;
+    border-bottom: 2px solid Mackerel;
+    padding: 0.325rem 0;
+    &:last-of-type {
+        border: none;
+    }
+}
+
+
+.listItemWithBorder {
+    composes: item;
+    border: 1px solid Mackerel;
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+}
+
+.listItemWithBlueBorder {
+    composes: item;
+    border: 2px solid Bluecheese;
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
 }

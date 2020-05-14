@@ -6,7 +6,6 @@ export const initialState = Immutable.fromJS({
   collectionsStartSet: 1,
   collectionsEndSet: 1,
   collectionsTotalSets: 0,
-  recipesInstructions: {},
   recipeSets: {},
   recipesCollectionId: undefined,
   recipesStartSet: 1,
@@ -83,17 +82,6 @@ const cookbookReducer = {
       newState = newState.set('recipesStartSet', initialState.get('recipesStartSet'))
       newState = newState.set('recipesEndSet', initialState.get('recipesEndSet'))
       newState = newState.set('recipesTotalSets', initialState.get('recipesTotalSets'))
-
-      return newState
-    }
-
-    case actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID: {
-      const { recipeId, recipeStepsById } = data
-      let newState = state
-
-      if ( recipeId && recipeStepsById ) {
-        newState = newState.setIn(['recipesInstructions', recipeId], Immutable.fromJS(recipeStepsById))
-      }
 
       return newState
     }

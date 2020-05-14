@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchAvailableDates, fetchRecipeStock, fetchRecipes, fetchRecipesStockByDate, fetchRecipeStepsById } from '../recipes'
+import { fetchAvailableDates, fetchRecipeStock, fetchRecipes, fetchRecipesStockByDate } from '../recipes'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -88,20 +88,6 @@ describe('recipes', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchRecipesStockByDate({})
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('fetchRecipeStepsById', () => {
-    test('should fetch the correct url', async () => {
-      const recipeId = '123'
-      await fetchRecipeStepsById(recipeId)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-recipesv2/recipes/123/steps', {}, 'GET')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchRecipeStepsById('123')
       expect(result).toEqual(mockFetchResult)
     })
   })

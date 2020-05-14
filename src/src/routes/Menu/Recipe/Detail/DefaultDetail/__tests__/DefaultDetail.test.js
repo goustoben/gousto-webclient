@@ -4,8 +4,7 @@ import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { Provider } from 'react-redux'
 
-import DefaultDetail from 'routes/Menu/Recipe/Detail/DefaultDetail'
-import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
+import { DefaultDetail } from 'routes/Menu/Recipe/Detail/DefaultDetail'
 import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
@@ -17,6 +16,10 @@ jest.mock('routes/Menu/RecipeDisclaimer', () => ({
 
 jest.mock('routes/Menu/RecipeMicronutrients', () => ({
   RecipeMicronutrientsContainer: () => <div />
+}))
+
+jest.mock('routes/Menu/Recipe/AddRecipe', () => ({
+  AddRecipe: () => <div />
 }))
 
 describe('<DefaultDetail />', () => {
@@ -59,13 +62,13 @@ describe('<DefaultDetail />', () => {
         protein: 1,
         salt: 1,
       })}
-      showCookingInstruction={false}
       title="title"
       useWithin="5 days"
       view="detail"
       youWillNeed={Immutable.List(['spoon', 'fork'])}
       numPortions={2}
       isChefPrepared={false}
+      isNew={false}
     />
   )
   const DEFAULT_DETAIL_WITH_STORE = (
@@ -205,26 +208,6 @@ describe('<DefaultDetail />', () => {
     test('should return the <NutritionInfo />', () => {
       expect(wrapper.find(NutritionInfo)).toHaveLength(1)
     })
-
-    describe('and showCookingInstruction is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: true })
-      })
-
-      test('should return the <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsDesktop').find(CookingInstructions)).toHaveLength(1)
-      })
-    })
-
-    describe('and showCookingInstruction is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: false })
-      })
-
-      test('should not return the <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsDesktop').find(CookingInstructions).exists()).toBe(false)
-      })
-    })
   })
 
   describe('When perPortion is empty', () => {
@@ -234,10 +217,6 @@ describe('<DefaultDetail />', () => {
 
     test('should not return the <NutritionInfo />', () => {
       expect(wrapper.find(NutritionInfo).exists()).toBe(false)
-    })
-
-    test('should not return the <CookingInstructions />', () => {
-      expect(wrapper.find('.cookingInstructionsDesktop').find(CookingInstructions).exists()).toBe(false)
     })
   })
 
@@ -252,22 +231,6 @@ describe('<DefaultDetail />', () => {
 
     test('should return the <Allergens />', () => {
       expect(wrapper.find('Allergens')).toHaveLength(1)
-    })
-
-    describe('and showCookingInstruction is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: true })
-      })
-
-      test('should return <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions)).toHaveLength(1)
-      })
-    })
-
-    describe('and showCookingInstruction is false', () => {
-      test('should not return <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions).exists()).toBe(false)
-      })
     })
   })
 
@@ -291,22 +254,6 @@ describe('<DefaultDetail />', () => {
 
     test('should return the <Allergens />', () => {
       expect(wrapper.find('Allergens')).toHaveLength(1)
-    })
-
-    describe('and showCookingInstruction is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: true })
-      })
-
-      test('should return <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions)).toHaveLength(1)
-      })
-    })
-
-    describe('and showCookingInstruction is false', () => {
-      test('should not return <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions).exists()).toBe(false)
-      })
     })
   })
 
@@ -332,22 +279,6 @@ describe('<DefaultDetail />', () => {
     test('should return the <Allergens />', () => {
       expect(wrapper.find('Allergens')).toHaveLength(1)
     })
-
-    describe('and showCookingInstruction is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showCookingInstruction: true })
-      })
-
-      test('should return <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions)).toHaveLength(1)
-      })
-    })
-
-    describe('and showCookingInstruction is false', () => {
-      test('should not return <CookingInstructions />', () => {
-        expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions).exists()).toBe(false)
-      })
-    })
   })
 
   describe('When allergens and ingredients is empty', () => {
@@ -364,10 +295,6 @@ describe('<DefaultDetail />', () => {
 
     test('should not return the <Allergens />', () => {
       expect(wrapper.find('Allergens').exists()).toBe(false)
-    })
-
-    test('should not return the <CookingInstructions />', () => {
-      expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions).exists()).toBe(false)
     })
   })
 

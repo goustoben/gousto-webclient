@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import DefaultDetail from 'routes/Menu/Recipe/Detail/DefaultDetail'
+import { DefaultDetail } from 'routes/Menu/Recipe/Detail/DefaultDetail'
 import { FineDineInDetail } from 'routes/Menu/Recipe/Detail/FineDineInDetail'
 import css from './Detail.css'
 
@@ -86,7 +86,6 @@ Detail.propTypes = {
   scrolledPastPoint: PropTypes.bool,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
-  showCookingInstruction: PropTypes.bool.isRequired
 }
 
 export default Detail

@@ -45,9 +45,6 @@ const defaultFeatures = () => ({
   sortMarketProducts: {
     value: false,
   },
-  showCookingInstruction: {
-    value: false,
-  },
   addOnsBeforeOrderConfirmation: {
     value: false,
   },

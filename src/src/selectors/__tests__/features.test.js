@@ -15,7 +15,6 @@ import {
   getPromoBannerEnabled,
   getPromoBannerText,
   getPromoBannerCode,
-  getCookingInstruction,
   getNDDFeatureValue,
   getAddOnsBeforeOrderConfirmation,
   getFullScreenBoxSummary,
@@ -420,25 +419,6 @@ describe('when features are defined', () => {
         }
 
         expect(getNDDFeatureValue(state)).toEqual('something')
-      })
-    })
-  })
-
-  describe('getCookingInstruction', () => {
-    describe('when feature is not set', () => {
-      test('should return false', () => {
-        expect(getCookingInstruction(state)).toEqual(false)
-      })
-    })
-    describe('when feature is set', () => {
-      test('should return true', () => {
-        state.features = Immutable.fromJS({
-          showCookingInstruction: {
-            value: true
-          }
-        })
-
-        expect(getCookingInstruction(state)).toEqual(true)
       })
     })
   })

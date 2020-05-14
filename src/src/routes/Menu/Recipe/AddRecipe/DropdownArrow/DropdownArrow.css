@@ -1,14 +1,14 @@
+@value White, Bluecheese, Black from 'styles/colors.css';
 .arrowContainer {
-    background-color: #615CFF;
-    width: 40.23px;
+    composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+    background-color: Bluecheese;
+    width: 2.5rem;
     text-align: center;
     margin-left: 0.325rem;
-    margin-top: 10px;
-    border: 1px solid #615CFF;
+    border: 1px solid Bluecheese;
     border-radius: 3px;
     color: white;
     position: relative;
-    border-radius: 3px;
 }
 
 .arrowDown {
@@ -17,4 +17,16 @@
 
 .arrowUp {
     composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}
+
+.dropdownListContainer {
+    width: 300px;
+    position: absolute;
+    top: 45px;
+    z-index: 15;
+    right: 0;
+    box-shadow: 0px 2px 4px Black;
+    border-radius: 3px;
+    padding: 0.5rem;
+    background-color: White;
 }

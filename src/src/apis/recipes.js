@@ -19,7 +19,3 @@ export function fetchRecipesStockByDate(reqData) {
 export function fetchAvailableDates(accessToken) {
   return fetch(accessToken, `${endpoint('recipes', version)}${routes.recipes.availableDates}`, {}, 'GET')
 }
-
-export const fetchRecipeStepsById = (recipeId) => (
-  fetch(null, `${endpoint('recipes', version)}${routes.recipes.recipes}/${recipeId}${routes.recipes.steps}`, {}, 'GET')
-)

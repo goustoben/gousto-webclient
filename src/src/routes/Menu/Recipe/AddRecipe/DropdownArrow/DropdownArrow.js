@@ -18,7 +18,11 @@ const DropdownArrow = ({ recipeId, recipeVariants, showDropdown, recipeVariantDr
     <button className={css.arrowContainer} type="button" onClick={onClick}>
       <span className={showDropdown ? css.arrowUp : css.arrowDown} />
       {showDropdown
-        && <DropdownRecipeListContainer recipeId={recipeId} />}
+        && (
+          <div className={css.dropdownListContainer}>
+            <DropdownRecipeListContainer recipeId={recipeId} />
+          </div>
+        )}
     </button>
   )
 }

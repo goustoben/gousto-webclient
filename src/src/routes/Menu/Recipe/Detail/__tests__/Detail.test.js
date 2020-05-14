@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import DefaultDetail from '../DefaultDetail'
+import { DefaultDetail } from '../DefaultDetail'
 import { FineDineInDetail } from '../FineDineInDetail'
 import { Detail } from '../Detail'
 

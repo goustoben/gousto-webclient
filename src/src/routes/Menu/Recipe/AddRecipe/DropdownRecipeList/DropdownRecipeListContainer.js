@@ -5,8 +5,7 @@ import { DropdownRecipeList } from './DropdownRecipeList'
 
 const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeById(state, ownProps.recipeId)
-  let selectedRecipe = {
-  }
+  let selectedRecipe = {}
 
   if (recipe) {
     selectedRecipe = {
