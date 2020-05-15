@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import classnames from 'classnames'
 
 import { recipePropTypes } from 'routes/Menu/Recipe'
-import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { getChef } from 'utils/recipe'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
@@ -20,9 +19,9 @@ import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 
 const FeaturedRecipe = ({
-  onClick, selectFoodBrand, isFoodBrandClickable, media, title,
+  onClick, media, title,
   view, highlight, unhighlight, chef, tag, detailHover,
-  description, range, cookingTime,
+  description, cookingTime,
   useWithin, equipment, id, stock, inBasket, position, fiveADay, diet
 }) =>
   (
@@ -46,9 +45,6 @@ const FeaturedRecipe = ({
         <div className={tag ? css.featuredDetailsWithTag : css.featuredDetails}>
           <VariantHeaderContainer recipeId={id} stock={stock} inBasket={inBasket} />
           <div className={css.textContainer}>
-            <div className={css.rangeBadgeFeatured}>
-              <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
-            </div>
             <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChefFeatured]: getChef(chef) })}>
               <Title
                 title={title}
@@ -107,8 +103,6 @@ FeaturedRecipe.propTypes = {
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
   fiveADay: PropTypes.number,
-  isFoodBrandClickable: PropTypes.bool,
-  selectFoodBrand: PropTypes.func,
   view: PropTypes.string,
 }
 

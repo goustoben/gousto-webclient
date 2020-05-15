@@ -16,7 +16,6 @@ const mapStateToProps = (state, ownProps) => {
       description: '',
       borderColor: '#FF0000',
       recipes: Immutable.List([]),
-      isFoodBrandClickable: true
     }
   }
 
@@ -28,7 +27,6 @@ const mapStateToProps = (state, ownProps) => {
     borderColor: collection.get('colour'),
     recipes,
     filteredRecipeIds: recipeIds,
-    isFoodBrandClickable: true
   }
 }
 const ThematicsPageContainer = connect(mapStateToProps, {

@@ -172,7 +172,7 @@ export class MenuRecipesPage extends PureComponent {
         <JustForYouTutorial />
         <Loading loading={showLoading} />
         {!showLoading && <CollectionsNavContainer />}
-        {stateRecipeCount && <RecipeGrid isFoodBrandClickable />}
+        {stateRecipeCount && <RecipeGrid />}
         <BasketValidationErrorModalContainer />
       </div>
     )

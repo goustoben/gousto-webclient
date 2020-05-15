@@ -2,23 +2,11 @@
   display: flex;
 }
 
-.mainColumnLeft {
-  flex-basis: 66%;
-  margin-right: 1rem;
-}
-
-.mainColumnRight {
+.recipeColumn {
   flex-basis: 33%;
 }
 
-.containerBelowFeatured {
-  display: flex;
-}
-
-.columnBelowFeatured {
-  flex-basis: 50%;
-}
-
-.columnBelowFeatured:first-child {
+.recipeColumn:nth-child(1),
+.recipeColumn:nth-child(2) {
   margin-right: 1rem;
 }

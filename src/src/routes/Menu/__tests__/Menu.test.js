@@ -23,10 +23,6 @@ jest.mock('../ThematicsPage', () => ({
   ThematicsPage: () => 'FilteredRecipePage'
 }))
 
-jest.mock('../FoodBrandPage', () => ({
-  FoodBrandPage: () => <div />
-}))
-
 jest.mock('react-lazyload', () => ({
   forceCheck: jest.fn(),
 }))

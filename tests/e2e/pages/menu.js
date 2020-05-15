@@ -32,13 +32,6 @@ module.exports = {
                 continueButton.click()
               })
           },
-          clickFoodBrandBanner: function () {
-            this
-              .api.execute(function () {
-                const foodBrandBanner = document.querySelector('[data-testing="foodBrandBanner"]')
-                foodBrandBanner.click()
-              })
-          },
           clickBackToAllRecipesButton: function () {
             this
               .api.execute(function () {

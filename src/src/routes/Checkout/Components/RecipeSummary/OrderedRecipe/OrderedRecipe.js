@@ -7,7 +7,7 @@ import GoustoImage from 'Image'
 import css from './OrderedRecipe.css'
 import Button from '../Buttons'
 
-const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featureBtn, featureLink, view, range }) => (
+const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featureBtn, featureLink, view, isFineDineIn }) => (
   <div className={css.container}>
     <GoustoImage media={media} title={title} className={css[`${view}Img`]} />
     <div className={classnames(css.recipeContainer, css[`${view}Flex`])}>
@@ -16,7 +16,7 @@ const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featur
           <span className={css.textBold}>{title}</span>
           {(featureLink) ? <span className={css.arrowRight} /> : null}
         </span>
-        {(range === 'fine-dine-in') ? <span className={css.detailsRow}><span className={css.fineDineIn}>Fine Dine In</span></span> : null}
+        {isFineDineIn ? <span className={css.detailsRow}><span className={css.fineDineIn}>Fine Dine In</span></span> : null}
         {(basics.size > 0 && view === 'boxdetails') ? (
           <p className={css.details}>
             <span className={css.basics}>
@@ -52,12 +52,10 @@ OrderedRecipes.propTypes = {
   featureLink: PropTypes.bool,
   media: PropTypes.instanceOf(Immutable.List),
   view: PropTypes.oneOf(['boxdetails', 'summary']),
-  range: PropTypes.string.isRequired,
+  isFineDineIn: PropTypes.bool.isRequired,
 }
 
 OrderedRecipes.defaultProps = {
-  title: '',
-  recipeId: '',
   basics: Immutable.List([]),
   stock: 0,
   serving: 0,
@@ -65,7 +63,6 @@ OrderedRecipes.defaultProps = {
   featureBtn: false,
   featureLink: false,
   view: 'boxdetails',
-  range: '',
 }
 
 export default OrderedRecipes

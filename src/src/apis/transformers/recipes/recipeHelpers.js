@@ -20,19 +20,6 @@ const dietaryTagsTransformer = (dietaryArray) => dietaryArray.map((attribute) =>
 
 const equipmentTransformer = (equipmentArray) => equipmentArray.map((piece) => piece.name)
 
-const foodBrandTransformer = (foodBrand, foodBrandColours = {}) => {
-  if (foodBrand) {
-    return [{
-      name: foodBrand.name,
-      slug: foodBrand.slug,
-      properties: foodBrandColours[foodBrand.slug] || foodBrandColours.default
-
-    }]
-  }
-
-  return {}
-}
-
 const formatIngredients = (normalisedRelationships, normalisedData) => {
   const result = []
 
@@ -120,16 +107,13 @@ const surchargeTransformer = (surcharge) => {
   }
 }
 
-const taxonomyTransformer = (attributes, foodBrandColours) => [{
+const taxonomyTransformer = (attributes) => [{
   name: 'Dietary attributes',
   slug: 'dietary-attributes',
   tags: dietaryTagsTransformer(attributes.dietary_claims)
-},
-{
-  name: 'Food Brands',
-  slug: 'food-brands',
-  tags: foodBrandTransformer(attributes.food_brand, foodBrandColours)
 }]
+
+const isFineDineInTransformer = (attributes) => Boolean(attributes.food_brand && attributes.food_brand.slug === 'fine-dine-in')
 
 export {
   allergensTransformer,
@@ -142,5 +126,6 @@ export {
   roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
-  taxonomyTransformer
+  taxonomyTransformer,
+  isFineDineInTransformer
 }

@@ -40,7 +40,6 @@ class RecipeList extends React.PureComponent {
       isCurrentCollectionRecommendation,
       deliveryDate,
       collectionFilterChange,
-      isFoodBrandClickable
     } = this.props
 
     if (browserType === 'mobile') {
@@ -52,7 +51,6 @@ class RecipeList extends React.PureComponent {
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
           collectionFilterChange={collectionFilterChange}
-          isFoodBrandClickable={isFoodBrandClickable}
         />
       )
     }
@@ -66,7 +64,6 @@ class RecipeList extends React.PureComponent {
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
           collectionFilterChange={collectionFilterChange}
-          isFoodBrandClickable={isFoodBrandClickable}
         />
       )
     }
@@ -79,7 +76,6 @@ class RecipeList extends React.PureComponent {
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
         deliveryDate={deliveryDate}
         collectionFilterChange={collectionFilterChange}
-        isFoodBrandClickable={isFoodBrandClickable}
       />
     )
   }
@@ -92,7 +88,6 @@ RecipeList.propTypes = {
   collectionFilterChange: PropTypes.func.isRequired,
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
-  isFoodBrandClickable: PropTypes.bool,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   browserType: PropTypes.string.isRequired,
   currentCollectionId: PropTypes.string.isRequired
@@ -100,7 +95,6 @@ RecipeList.propTypes = {
 
 RecipeList.defaultProps = {
   filteredRecipeIds: Immutable.List([]),
-  isFoodBrandClickable: true,
   deliveryDate: null
 }
 

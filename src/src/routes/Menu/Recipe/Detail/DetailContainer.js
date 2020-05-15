@@ -23,7 +23,6 @@ function mapStateToProps(state, ownProps) {
 
   return {
     cutoffDate,
-    isFoodBrandClickable: false,
     isNew: isNew(Immutable.fromJS(ownProps)),
     inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
   }

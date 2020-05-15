@@ -667,22 +667,8 @@ describe('recipesTransformer', () => {
               }
             ]
           },
-          {
-            name: 'Food Brands',
-            slug: 'food-brands',
-            tags: [
-              {
-                name: 'Everyday Favourites',
-                slug: 'everyday-favourites',
-                properties: {
-                  ribbonColor: '#F4EFE9',
-                  borderColor: '#C6BEB4',
-                  textColor: '#F6323E'
-                }
-              }
-            ]
-          }
         ],
+        isFineDineIn: false,
         healthKitchen: null
       }
     ]

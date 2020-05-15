@@ -28,7 +28,6 @@ class FilteredRecipePage extends PureComponent {
       backToAllRecipes,
       recipes,
       filteredRecipeIds,
-      isFoodBrandClickable
     } = this.props
     const { containerHeight } = this.state
 
@@ -48,7 +47,7 @@ class FilteredRecipePage extends PureComponent {
         <p className={css.filteredRecipePageDescription}>{description}</p>
         <div style={{ top: containerHeight, background: borderColor }} className={css.border} />
         <div className={css.filteredRecipePageRecipes}>
-          <RecipeGrid recipes={recipes} filteredRecipeIds={filteredRecipeIds} isFoodBrandClickable={isFoodBrandClickable} />
+          <RecipeGrid recipes={recipes} filteredRecipeIds={filteredRecipeIds} />
         </div>
       </section>
     )
@@ -62,11 +61,6 @@ FilteredRecipePage.propTypes = {
   backToAllRecipes: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   filteredRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
-  isFoodBrandClickable: PropTypes.bool
-}
-
-FilteredRecipePage.defaultProps = {
-  isFoodBrandClickable: true
 }
 
 export { FilteredRecipePage }
