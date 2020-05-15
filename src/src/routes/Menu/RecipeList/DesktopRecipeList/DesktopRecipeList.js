@@ -23,36 +23,24 @@ const DesktopRecipeList = ({
 
   const recipeArr = recipes.toArray()
 
-  const featured = recipeArr.shift()
   const [right, left, middle] = arrayToColumns(recipeArr, 3, 1)
 
   return (
     <div className={css.desktopRecipeList}>
-      <div className={css.mainColumnLeft}>
-        <div className="featured">
-          <RecipeCardContainer
-            recipe={featured}
-            index={0}
-            isFeatured
-            showDetailRecipe={showDetailRecipe}
-          />
-        </div>
-
-        <div className={css.containerBelowFeatured}>
-          <div className={css.columnBelowFeatured}>{left.map(createRecipeCard)}</div>
-          <div className={css.columnBelowFeatured}>
-            {middle.map(createRecipeCard)}
-
-            <CTACard
-              thematicName={thematicName}
-              isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
-              deliveryDate={deliveryDate}
-              collectionFilterChange={collectionFilterChange}
-            />
-          </div>
-        </div>
+      <div className={css.recipeColumn}>
+        {left.map(createRecipeCard)}
       </div>
-      <div className={css.mainColumnRight}>
+      <div className={css.recipeColumn}>
+        {middle.map(createRecipeCard)}
+
+        <CTACard
+          thematicName={thematicName}
+          isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+          deliveryDate={deliveryDate}
+          collectionFilterChange={collectionFilterChange}
+        />
+      </div>
+      <div className={css.recipeColumn}>
         {right.map(createRecipeCard)}
       </div>
     </div>
