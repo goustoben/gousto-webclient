@@ -23,11 +23,16 @@ describe('RecipeCard', () => {
   })
 
   describe('when given a recipe', () => {
+    global.innerWidth = 1200
     const index = 3
     const recipe = Immutable.fromJS({
       id: '1234',
       title: 'Bobs Brilliant Beef Burger',
-      url: 'example.com/food'
+      url: 'example.com/food',
+      isFineDineIn: true,
+      media: {
+        images: []
+      }
     })
     const wrapper = shallow(<RecipeCard recipe={recipe} index={index} numPortions={2} />)
 
@@ -46,6 +51,10 @@ describe('RecipeCard', () => {
     test('should render a Recipe with the correct url', () => {
       expect(wrapper.find(Recipe).prop('url')).toEqual('example.com/food')
     })
+
+    test('should render a Recipe with view fine-dine-in', () => {
+      expect(wrapper.find(Recipe).prop('view')).toEqual('fineDineIn')
+    })
   })
 
   describe('when given a chef prepared meal', () => {
@@ -54,7 +63,8 @@ describe('RecipeCard', () => {
       id: '1234',
       title: 'Bobs Brilliant Beef Burger',
       url: 'example.com/food',
-      chefPrepared: true
+      chefPrepared: true,
+      isFineDineIn: false
     })
     const wrapper = shallow(<RecipeCard recipe={recipe} index={index} numPortions={2} />)
     test('should render a Recipe with the correct view', () => {

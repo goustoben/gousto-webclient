@@ -88,22 +88,6 @@
 	}
 }
 
-.rangeBadgeFeatured {
-	position: absolute;
-	margin-left: -15px;
-	margin-top: -40px;
-
-	@media ScreenSMMin {
-		margin-top: -44px;
-	}
-	@media ScreenMLMin {
-		position: relative;
-		margin-left: -25px;
-		margin-bottom: 15px;
-		margin-top: 0px;
-	}
-}
-
 .viewDetails {
   margin-bottom: 15px;
 }

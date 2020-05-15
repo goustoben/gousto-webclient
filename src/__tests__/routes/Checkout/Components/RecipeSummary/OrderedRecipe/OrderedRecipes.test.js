@@ -12,7 +12,7 @@ describe('OrderedRecipe', () => {
 
     test('should render Fine Dine In span when range is equal fine_dine_in', () => {
 
-      const wrapper = shallow(<OrderedRecipes range="fine-dine-in" />)
+      const wrapper = shallow(<OrderedRecipes isFineDineIn />)
 
       expect(wrapper.text()).toContain('Fine Dine In')
     })

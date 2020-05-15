@@ -4,7 +4,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
-import { getFoodBrand } from 'utils/recipe'
 import OrderedRecipe from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
@@ -35,40 +34,36 @@ class RecipeSummary extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.menuRecipesStore && this.props.menuRecipesStore.size === 0) {
+    const { menuRecipesStore, recipes } = this.props
+    if (menuRecipesStore && menuRecipesStore.size === 0) {
       const {store} = this.context
-      const orderRecipeIds = this.props.recipes && this.props.recipes.size ? this.props.recipes.keySeq().toArray() : []
+      const orderRecipeIds = recipes && recipes.size ? recipes.keySeq().toArray() : []
       RecipeSummary.fetchData({ store, orderRecipeIds })
     }
   }
 
   render() {
-    const {recipes, menuRecipesStore, menuRecipeStock, numPortions, menuBoxPrices} = this.props
+    const {recipes, menuRecipesStore, menuRecipeStock, numPortions, menuBoxPrices, view} = this.props
     const prices = menuBoxPrices.getIn([numPortions.toString(), (basketSum(recipes).toString()), 'gourmet'], Immutable.Map({}))
 
     return (
       <div data-testing="checkoutRecipeSummary">
-        {recipes.map((serving, recipeId) => {
-          const range = getFoodBrand(menuRecipesStore.get(recipeId)) || Immutable.Map()
-          const rangeSlug = range.size ? range.get('slug') : null
-
-          return (
-            <OrderedRecipe
-              key={recipeId}
-              recipeId={recipeId}
-              view={this.props.view}
-              featureBtn={false}
-              serving={numPortions * recipes.get(recipeId, 0)}
-              title={menuRecipesStore.getIn([recipeId, 'title'], '')}
-              basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
-              stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
-              media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
-              range={rangeSlug}
-              pricePerServing={Number(prices.get('pricePerPortion', 0))}
-              pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
-            />
-          )
-        }).toArray()}
+        {recipes.map((serving, recipeId) => (
+          <OrderedRecipe
+            key={recipeId}
+            recipeId={recipeId}
+            view={view}
+            featureBtn={false}
+            serving={numPortions * recipes.get(recipeId, 0)}
+            title={menuRecipesStore.getIn([recipeId, 'title'], '')}
+            basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
+            stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
+            media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
+            isFineDineIn={menuRecipesStore.getIn([recipeId, 'isFineDineIn'], false)}
+            pricePerServing={Number(prices.get('pricePerPortion', 0))}
+            pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
+          />
+        )).toArray()}
       </div>
     )
   }

@@ -19,7 +19,7 @@ import { VariantHeaderContainer } from '../../VariantHeader'
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
     let wrapper
-    let recipe = {
+    const recipe = {
       id: '1',
       title: 'test',
       rating: {
@@ -40,7 +40,7 @@ describe('<GridRecipe />', () => {
       ]),
       diet: 'meat',
     }
-    let view = 'grid'
+    const view = 'grid'
 
     beforeEach(() => {
       wrapper = shallow(<GridRecipe {...recipe} view={view} />)
@@ -95,35 +95,6 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(Title).prop('large')).toBe(undefined)
       })
 
-      test('should render range ribbon for 10 min range recipe', () => {
-        recipe = {
-          id: '1',
-          title: 'test',
-          rating: {
-            count: 1,
-            average: 4,
-          },
-          url: '',
-          cookingTime: 1,
-          cookingTimeFamily: 1,
-          shelfLifeDays: '',
-          media: Immutable.fromJS([
-            {},
-            {},
-            {
-              src: 'test',
-            },
-          ]),
-          diet: 'meat',
-          range: 'ten_to_table',
-
-        }
-        view = 'grid'
-
-        wrapper.setProps({ range: recipe.range })
-        expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
-      })
-
       test('should contain one Pill component and icon prop is true', () => {
         expect(wrapper.find(Pill).length).toBe(1)
         expect(wrapper.find(Pill).prop('icon')).toBe(true)
@@ -143,35 +114,6 @@ describe('<GridRecipe />', () => {
 
       test('should not contain one Pill component', () => {
         expect(wrapper.find(Pill).length).toBe(0)
-      })
-
-      test('should render range ribbon for 10 min range recipe', () => {
-        recipe = {
-          id: '1',
-          title: 'test',
-          rating: {
-            count: 1,
-            average: 4,
-          },
-          url: '',
-          cookingTime: 1,
-          cookingTimeFamily: 1,
-          shelfLifeDays: '',
-          media: Immutable.fromJS([
-            {},
-            {},
-            {
-              src: 'test',
-            },
-          ]),
-          diet: 'meat',
-          range: 'ten_to_table',
-
-        }
-        view = 'grid'
-
-        wrapper.setProps({ range: recipe.range })
-        expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
       })
 
       test('should not contain one AttributeGrid component', () => {

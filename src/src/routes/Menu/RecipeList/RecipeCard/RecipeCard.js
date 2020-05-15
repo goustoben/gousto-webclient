@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
-import { formatRecipeTitle, getFoodBrand } from 'utils/recipe'
+import { formatRecipeTitle } from 'utils/recipe'
 
 const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
   if (isChefPrepared) {
@@ -27,7 +27,7 @@ const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
 }
 
 const RecipeCard = ({
-  recipe, index, showDetailRecipe, isFeatured, isFoodBrandClickable,
+  recipe, index, showDetailRecipe, isFeatured,
 
   numPortions, cutoffDate, browserType,
 }) => {
@@ -37,10 +37,8 @@ const RecipeCard = ({
 
   const recipeId = recipe.get('id')
   const isChefPrepared = recipe.get('chefPrepared') === true
-  const range = getFoodBrand(recipe)
-  const isFineDineIn = range.get('slug') === 'fine-dine-in'
 
-  const view = getRecipeView(isFeatured, isFineDineIn, isChefPrepared)
+  const view = getRecipeView(isFeatured, recipe.get('isFineDineIn'), isChefPrepared)
 
   return (
     <Recipe
@@ -60,10 +58,8 @@ const RecipeCard = ({
       view={view}
       cutoffDate={cutoffDate}
       onClick={(isViewMoreDetailsClicked = false) => { showDetailRecipe(recipeId, isViewMoreDetailsClicked) }}
-      range={range}
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
-      isFoodBrandClickable={isFoodBrandClickable}
       numPortions={numPortions}
     />
   )
@@ -82,7 +78,6 @@ RecipeCard.propTypes = {
   isFeatured: PropTypes.bool,
   cutoffDate: PropTypes.string,
   browserType: PropTypes.string.isRequired,
-  isFoodBrandClickable: PropTypes.bool.isRequired,
 }
 
 export { RecipeCard }

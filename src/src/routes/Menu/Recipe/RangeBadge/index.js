@@ -1,1 +1,0 @@
-export { RangeBadge } from './RangeBadge'

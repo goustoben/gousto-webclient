@@ -68,16 +68,6 @@ export function getCookingTime(time) {
   return `${time} mins`
 }
 
-export function getFoodBrand(recipe) {
-  const foodBrandTaxonomy = recipe && recipe.size && recipe.get('taxonomy')
-  const foodBrand = foodBrandTaxonomy ? foodBrandTaxonomy.find(tag => tag.get('slug') === 'food-brands') : null
-  if (foodBrand && foodBrand.get('tags').size) {
-    return foodBrand.get('tags').get(0)
-  }
-
-  return Immutable.Map([])
-}
-
 export function getTaxonomyTags(recipe, categorySlug) {
   const recipeTaxonomy = recipe.get('taxonomy')
   if (recipeTaxonomy) {

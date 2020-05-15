@@ -1,10 +1,7 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import { Recipe } from 'routes/Menu/Recipe'
-import { push } from 'react-router-redux'
 import { isNew } from 'utils/recipe'
-
-const selectFoodBrand = (slug) => push(`/menu/food-brand/${slug}`)
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -14,6 +11,6 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-const RecipeContainer = connect(mapStateToProps, { selectFoodBrand })(Recipe)
+const RecipeContainer = connect(mapStateToProps)(Recipe)
 
 export default RecipeContainer

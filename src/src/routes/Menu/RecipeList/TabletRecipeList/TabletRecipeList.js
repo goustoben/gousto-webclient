@@ -9,7 +9,7 @@ import { CTACard } from '../CTACard'
 import css from './TabletRecipeList.css'
 
 const TabletRecipeList = ({
-  recipes, showDetailRecipe, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange, isFoodBrandClickable
+  recipes, showDetailRecipe, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange
 }) => {
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = ({ index, value }) => (
@@ -18,7 +18,6 @@ const TabletRecipeList = ({
       recipe={value}
       index={index}
       showDetailRecipe={showDetailRecipe}
-      isFoodBrandClickable={isFoodBrandClickable}
     />
   )
 
@@ -55,7 +54,6 @@ TabletRecipeList.propTypes = {
   collectionFilterChange: PropTypes.func,
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
-  isFoodBrandClickable: PropTypes.bool,
 }
 
 TabletRecipeList.defaultProps = {
@@ -63,7 +61,6 @@ TabletRecipeList.defaultProps = {
   deliveryDate: null,
   collectionFilterChange: () => { },
   isCurrentCollectionRecommendation: false,
-  isFoodBrandClickable: true
 }
 
 export { TabletRecipeList }

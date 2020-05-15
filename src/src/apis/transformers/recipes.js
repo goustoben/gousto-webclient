@@ -9,7 +9,8 @@ import {
   roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
-  taxonomyTransformer
+  taxonomyTransformer,
+  isFineDineInTransformer
 } from './recipes/recipeHelpers'
 
 const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
@@ -17,13 +18,6 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
     return undefined
   }
   const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.core_recipe_id.toString() )
-  let foodBrandColours = {}
-  if (brandData.data && brandData.data.foodBrandColours) {
-    foodBrandColours = brandData.data.foodBrandColours.reduce((acc, item) => ({
-      ...acc,
-      [item.slug]: item.theme
-    }), {})
-  }
 
   const formattedData = activeMenuRecipesIds.map((individualRecipeId, index) => {
     const currentRecipe = menuServiceData.recipe[individualRecipeId]
@@ -98,7 +92,8 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
         average: normalisedAttributes.rating ? normalisedAttributes.rating.average : 0,
       },
       shelfLifeDays: normalisedAttributes.shelf_life ? shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days) : '',
-      taxonomy: taxonomyTransformer(normalisedAttributes, foodBrandColours),
+      taxonomy: taxonomyTransformer(normalisedAttributes),
+      isFineDineIn: isFineDineInTransformer(normalisedAttributes),
       title: normalisedAttributes.name
     }
   })

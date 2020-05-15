@@ -4,7 +4,6 @@ import {
   formatRecipeTitle,
   isNew,
   getCookingTime,
-  getFoodBrand,
   getLowStockTag,
   getSurcharge,
   getSurchargePerPortion,
@@ -108,38 +107,6 @@ describe('recipes', () => {
 
     test('should return the cooking over 120 mins time correctly', () => {
       expect(getCookingTime(160)).toBe('2 hrs 40 mins')
-    })
-  })
-
-  describe('getFoodBrand', () => {
-    test('should return null if no item is found', () => {
-      expect(getFoodBrand('test')).toBe(Immutable.Map())
-    })
-
-    test('should return an object if food brand matches', () => {
-      const recipe = Immutable.fromJS({
-        taxonomy: [
-          {
-            id: 2,
-            name: 'Food Brands',
-            slug: 'food-brands',
-            tags: [
-              {
-                id: '9',
-                name: 'Fine Dine In',
-                properties: { ribbon_color: '#333D47', border_color: '#282B2F', text_color: '#FFFFFF' },
-                slug: 'fine-dine-in'
-              }
-            ]
-          }
-        ]
-      })
-      expect(getFoodBrand(recipe)).toEqual(Immutable.fromJS({
-        id: '9',
-        name: 'Fine Dine In',
-        properties: { ribbon_color: '#333D47', border_color: '#282B2F', text_color: '#FFFFFF' },
-        slug: 'fine-dine-in'
-      }))
     })
   })
 

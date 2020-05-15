@@ -6,7 +6,6 @@ import classnames from 'classnames'
 import config from 'config'
 import { recipePropTypes } from 'routes/Menu/Recipe'
 import { getChef } from 'utils/recipe'
-import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { Pill } from 'goustouicomponents'
 import css from './FineDineInRecipe.css'
 import { Title } from '../Title'
@@ -30,8 +29,6 @@ const propTypes = {
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
-  isFoodBrandClickable: PropTypes.bool,
-  selectFoodBrand: PropTypes.func,
   view: PropTypes.string,
 }
 
@@ -41,9 +38,9 @@ const defaultProps = {
   media: Immutable.List([]),
 }
 
-const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
+const FineDineInRecipe = ({ media, onClick, highlight, unhighlight,
   title, view, detailHover, cookingTime, chef,
-  stock, inBasket, position, id, range }) => {
+  stock, inBasket, position, id }) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
 
@@ -62,9 +59,6 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
             View details
           </Pill>
           )}
-        </div>
-        <div className={css.rangeBadgeWrapper}>
-          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
         </div>
         <div
           role="button"

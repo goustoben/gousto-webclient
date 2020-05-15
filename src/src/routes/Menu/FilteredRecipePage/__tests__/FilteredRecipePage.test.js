@@ -27,7 +27,6 @@ describe('Filtered Recipe Page', () => {
           browser="desktop"
           backToAllRecipes={removeRecipeFilterMock}
           recipes={recipes}
-          isFoodBrandClickable
         />
       )
     })
@@ -54,7 +53,6 @@ describe('Filtered Recipe Page', () => {
     test('should render Recipes in the RecipGrid component', () => {
       expect(wrapper.find(RecipeGrid)).toHaveLength(1)
       expect(wrapper.find(RecipeGrid).prop('recipes')).toEqual(recipes)
-      expect(wrapper.find(RecipeGrid).prop('isFoodBrandClickable')).toEqual(true)
     })
   })
 })

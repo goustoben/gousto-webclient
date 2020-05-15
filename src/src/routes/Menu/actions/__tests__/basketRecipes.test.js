@@ -28,11 +28,6 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
         promoCode: 'test-promo-code',
         slotId: 'test-slot-id',
       }),
-      filters: Immutable.Map({
-        recipeGroup: {
-          slug: 'test-food-brand'
-        },
-      }),
       menuRecipeStock: Immutable.fromJS({
         123: { 2: 30, 4: 10 },
         234: { 2: 50, 4: 10 },
@@ -127,11 +122,6 @@ describe('validBasketRecipeAdd', () => {
           recipes: Immutable.Map([['123', 1]]),
           numPortions: 2,
           limitReached: false
-        }),
-        filters: Immutable.Map({
-          recipeGroup: {
-            slug: 'test-food-brand'
-          },
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },
@@ -233,11 +223,6 @@ describe('validBasketRecipeAdd', () => {
           recipes: Immutable.Map([['123', 1], ['234', 1]]),
           numPortions: 4,
           limitReached: false
-        }),
-        filters: Immutable.Map({
-          recipeGroup: {
-            slug: 'test-food-brand'
-          },
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },
@@ -343,11 +328,6 @@ describe('validBasketRecipeAdd', () => {
         newBasket: Immutable.Map({
           recipes: Immutable.Map([['123', 1], ['234', 2], ['345', 1]]),
           slotId: 'test-id',
-        }),
-        filters: Immutable.Map({
-          recipeGroup: {
-            slug: 'test-food-brand'
-          },
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30, 4: 10 },

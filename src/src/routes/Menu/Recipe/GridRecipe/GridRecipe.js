@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
-import { RangeBadge } from 'routes/Menu/Recipe/RangeBadge'
 import { recipePropTypes } from 'routes/Menu/Recipe'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
@@ -16,7 +15,10 @@ import { AddRecipe } from '../AddRecipe'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 
-const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, chef, view, detailHover, range, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, isChefPrepared, numPortions }) => {
+const GridRecipe = ({ onClick, media, title, highlight, unhighlight, chef, view, detailHover,
+  stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet,
+  fiveADay, isNew, isChefPrepared, numPortions
+}) => {
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
 
   return (
@@ -49,14 +51,6 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
       <div>
         <Chef chef={chef} />
       </div>
-      {
-        !isChefPrepared
-        && (
-        <div className={css.rangeBadgeWrapper}>
-          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
-        </div>
-        )
-      }
       <div className={css.contentWrapper}>
         <div onClick={onClick} className={css.titleWrapper}>
           <Title
@@ -125,10 +119,7 @@ GridRecipe.propTypes = {
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
-  range: PropTypes.instanceOf(Immutable.Map),
   fiveADay: PropTypes.number,
-  isFoodBrandClickable: PropTypes.bool,
-  selectFoodBrand: PropTypes.func,
   view: PropTypes.string,
   isChefPrepared: PropTypes.bool,
   numPortions: PropTypes.number,

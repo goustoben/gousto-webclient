@@ -10,13 +10,11 @@ class RecipeGrid extends PureComponent {
   static propTypes = {
     recipes: PropTypes.instanceOf(Immutable.List),
     filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
-    isFoodBrandClickable: PropTypes.bool
   }
 
   static defaultProps = {
     recipes: null,
     filteredRecipeIds: null,
-    isFoodBrandClickable: true
   }
 
   state = {
@@ -28,7 +26,7 @@ class RecipeGrid extends PureComponent {
   }
 
   render() {
-    const { recipes, filteredRecipeIds, isFoodBrandClickable } = this.props
+    const { recipes, filteredRecipeIds } = this.props
     const { shouldShowOverlay } = this.state
 
     return (
@@ -38,8 +36,8 @@ class RecipeGrid extends PureComponent {
       >
         {
           recipes === null
-            ? <RecipeListContainer isFoodBrandClickable={isFoodBrandClickable} />
-            : <FilteredRecipeListContainer recipes={recipes} filteredRecipeIds={filteredRecipeIds} isFoodBrandClickable={isFoodBrandClickable} />
+            ? <RecipeListContainer />
+            : <FilteredRecipeListContainer recipes={recipes} filteredRecipeIds={filteredRecipeIds} />
         }
         <DetailOverlayContainer
           showOverlay={shouldShowOverlay}

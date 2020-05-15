@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Detail from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
-import { getLowStockTag, getSurcharge, getTaxonomyTags, getFoodBrand } from 'utils/recipe'
+import { getLowStockTag, getSurcharge, getTaxonomyTags } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 import Modal from 'Modal'
 
@@ -41,8 +41,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
 
   const stockRecipe = stock.getIn([recipeId, String(numPortions)], 0)
   const surcharge = getSurcharge(detailRecipe.get('meals'), numPortions)
-  const range = getFoodBrand(detailRecipe)
-  const IsFineDineIn = range.size && range.get('slug') === 'fine-dine-in'
+  const IsFineDineIn = detailRecipe.get('isFineDineIn')
   const view = (IsFineDineIn) ? 'fineDineInDetail' : 'detail'
   const images = (IsFineDineIn) ? getRangeImages(detailRecipe) : null
   const isChefPrepared = detailRecipe.get('chefPrepared') === true
@@ -73,7 +72,6 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
         diet={detailRecipe.get('dietType')}
         equipment={detailRecipe.get('equipment')}
         surcharge={surcharge}
-        range={getFoodBrand(detailRecipe)}
         fiveADay={detailRecipe.get('fiveADay')}
         glutenFree={glutenFree}
         dairyFree={dairyFree}
