@@ -17,7 +17,7 @@ export const BasketValidationErrorModal = ({ title, shouldShow, shouldShowSwapBu
         brokenRulesToDisplay.map(({description, recipes}, idx) => (
           <div key={`${idx + 1}`} className={css.basketErrorRuleRow}>
             <p>{description}</p>
-            <h2 className={css.basketErrorContentTitle}>Currentely in your basket:</h2>
+            <h2 className={css.basketErrorContentTitle}>Currently in your basket:</h2>
             {recipes
                   && (
                   <ul className={css.basketErrorList}>

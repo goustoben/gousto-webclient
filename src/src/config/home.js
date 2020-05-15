@@ -80,9 +80,11 @@ module.exports = {
     applyIf: 'loggedOut',
     code: 'DTI-SB-5030',
     tvAdsCode: 'DTI-SB-P30M',
+    mayCode: 'DTI-SB-10M',
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
       tvAdsText: 'Click here to get 30% off all boxes in your first month',
+      mayText: 'Click here to get 10% off all boxes in your first month',
       linkText: 'Claim discount',
     },
   },

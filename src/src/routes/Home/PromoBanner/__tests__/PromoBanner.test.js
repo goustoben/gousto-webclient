@@ -49,4 +49,16 @@ describe('PromoBanner', () => {
       })
     })
   })
+
+  describe('when hide is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        hide: true,
+      })
+    })
+
+    test('then the Banner should have prop hide', () => {
+      expect(wrapper.find('Banner').props().hide).toBeTruthy()
+    })
+  })
 })
