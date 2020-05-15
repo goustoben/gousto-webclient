@@ -13,35 +13,37 @@ import TestedLoved from './TestedLoved'
 import { EmailForm } from './EmailForm'
 import css from './Home.css'
 
+const propTypes = {
+  modules: PropTypes.arrayOf(PropTypes.string),
+  hero: PropTypes.object,
+  recipes: PropTypes.object,
+  testimonials: PropTypes.object,
+  howItWorks: PropTypes.object,
+  subscription: PropTypes.object,
+  whatsInYourBox: PropTypes.object,
+  testedAndLovedBy: PropTypes.object,
+  alternativeDesktopHero: PropTypes.bool,
+  isSignupReductionEnabled: PropTypes.bool,
+}
+
+const defaultProps = {
+  modules: [
+    'hero', 'howItWorks', 'subscription', 'recipes',
+    'whatsInYourBox', 'emailForm', 'testimonials',
+    'testedAndLovedBy',
+  ],
+  hero: {},
+  recipes: {},
+  testimonials: {},
+  howItWorks: {},
+  subscription: {},
+  whatsInYourBox: {},
+  testedAndLovedBy: {},
+  alternativeDesktopHero: false,
+  isSignupReductionEnabled: false,
+}
+
 class HomeSections extends Component {
-  static propTypes = {
-    modules: PropTypes.arrayOf(PropTypes.string),
-    hero: PropTypes.object,
-    recipes: PropTypes.object,
-    testimonials: PropTypes.object,
-    howItWorks: PropTypes.object,
-    subscription: PropTypes.object,
-    whatsInYourBox: PropTypes.object,
-    testedAndLovedBy: PropTypes.object,
-    alternativeDesktopHero: PropTypes.bool,
-  };
-
-  static defaultProps = {
-    modules: [
-      'hero', 'howItWorks', 'subscription', 'recipes',
-      'whatsInYourBox', 'emailForm', 'testimonials',
-      'testedAndLovedBy',
-    ],
-    hero: {},
-    recipes: {},
-    testimonials: {},
-    howItWorks: {},
-    subscription: {},
-    whatsInYourBox: {},
-    testedAndLovedBy: {},
-    alternativeDesktopHero: false,
-  };
-
   modules = {
     hero: props => (this.props.alternativeDesktopHero ? <Hero2 {...props} /> : <Hero {...props} />),
     recipes: props => <Carousel {...props} />,
@@ -50,7 +52,11 @@ class HomeSections extends Component {
     subscription: props => <Subscription {...props} />,
     whatsInYourBox: props => <InYourBox {...props} />,
     testedAndLovedBy: props => <TestedLoved {...props} />,
-    emailForm: props => <EmailForm {...props} />,
+    ...(
+      this.props.isSignupReductionEnabled
+        ? { emailForm: props => <EmailForm {...props} /> }
+        : {}
+    ),
   }
 
   renderModule(name, order) {
@@ -95,5 +101,8 @@ class HomeSections extends Component {
     )
   }
 }
+
+HomeSections.propTypes = propTypes
+HomeSections.defaultProps = defaultProps
 
 export default HomeSections
