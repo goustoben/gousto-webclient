@@ -13,17 +13,21 @@ class DropdownRecipeList extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { selectedRecipe: { coreRecipeId } } = this.props
+    const { selectedRecipe: { coreRecipeId }, trackVariantListDisplay, isOnDetailScreen, recipeVariants } = this.props
+    const view = isOnDetailScreen ? 'details' : 'grid'
     this.setState({
       checkedValue: coreRecipeId,
     })
+    if (recipeVariants) {
+      trackVariantListDisplay(view)
+    }
   }
 
   changeCheckedRecipe = (e) => {
     const recipeId = e.target.value
     const { selectedRecipe: { coreRecipeId }, selectRecipeVariant, collectionId, menuRecipeDetailVisibilityChange, isOnDetailScreen} = this.props
-
-    selectRecipeVariant(coreRecipeId, recipeId, collectionId)
+    const view = isOnDetailScreen ? 'details' : 'grid'
+    selectRecipeVariant(coreRecipeId, recipeId, collectionId, view)
 
     this.setState({
       checkedValue: recipeId,
@@ -95,6 +99,7 @@ DropdownRecipeList.propTypes = {
   isOnDetailScreen: PropTypes.bool,
   selectRecipeVariant: PropTypes.func.isRequired,
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
+  trackVariantListDisplay: PropTypes.func.isRequired
 }
 
 DropdownRecipeList.defaultProps = {

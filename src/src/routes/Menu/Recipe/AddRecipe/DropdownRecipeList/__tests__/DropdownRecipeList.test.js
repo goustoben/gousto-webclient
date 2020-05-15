@@ -25,6 +25,7 @@ describe('DropdownRecipeList', () => {
           isOnDetailScreen={false}
           selectRecipeVariant={() => {}}
           menuRecipeDetailVisibilityChange={() => {}}
+          trackVariantListDisplay={() => {}}
         />)
       })
       test('then it should render the dropdown list', () => {
@@ -52,6 +53,7 @@ describe('DropdownRecipeList', () => {
 
       describe('When user clicks on variant', () => {
         const selectRecipeVariant = jest.fn()
+        const trackVariantListDisplay = jest.fn()
         beforeEach(() => {
           wrapper = mount(<DropdownRecipeList
             recipeVariants={recipeVariants}
@@ -60,11 +62,16 @@ describe('DropdownRecipeList', () => {
             isOnDetailScreen={false}
             selectRecipeVariant={selectRecipeVariant}
             menuRecipeDetailVisibilityChange={() => {}}
+            trackVariantListDisplay={trackVariantListDisplay}
           />)
         })
         test('should call selectRecipeVariant', () => {
           wrapper.find('input[value="1230"]').first().simulate('change')
-          expect(selectRecipeVariant).toHaveBeenCalledWith('6789', '1230', '1234abcd')
+          expect(selectRecipeVariant).toHaveBeenCalledWith('6789', '1230', '1234abcd', 'grid')
+        })
+
+        test('should call trackVariantListDisplay with grid', () => {
+          expect(trackVariantListDisplay).toHaveBeenCalledWith('grid')
         })
         describe('When on details screen', () => {
           const menuRecipeDetailVisibilityChange = jest.fn()
@@ -76,11 +83,16 @@ describe('DropdownRecipeList', () => {
               isOnDetailScreen
               selectRecipeVariant={() => {}}
               menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
+              trackVariantListDisplay={trackVariantListDisplay}
             />)
           })
           test('should call menuRecipeDetailVisibilityChange', () => {
             wrapper.find('input[value="1230"]').first().simulate('change')
             expect(menuRecipeDetailVisibilityChange).toHaveBeenCalledWith('1230')
+          })
+
+          test('should call trackVariantListDisplay with details', () => {
+            expect(trackVariantListDisplay).toHaveBeenCalledWith('details')
           })
         })
       })

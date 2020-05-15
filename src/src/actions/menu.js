@@ -29,6 +29,7 @@ import {
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import tempActions from './temp'
 import { actionTypes } from './actionTypes'
+import * as trackingKeys from './trackingKeys'
 
 const menuActions = {
   menuLoadMenu,
@@ -340,12 +341,19 @@ export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   useMenuService
 })
 
-export const selectRecipeVariant = (originalRecipeId, variantId, collectionId) => ({
+export const selectRecipeVariant = (originalRecipeId, variantId, collectionId, view = 'grid') => ({
   type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
   payload: {
     collectionId,
     originalRecipeId,
     variantId
+  },
+  trackingData: {
+    actionType: trackingKeys.selectRecipeVariant,
+    recipe_id: originalRecipeId,
+    recipe_variant_id: variantId,
+    collection_id: collectionId,
+    view
   }
 })
 
@@ -357,6 +365,18 @@ export const recipeVariantDropdownExpanded = (recipeId) => ({
   type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
   payload: {
     recipeId
+  },
+  trackingData: {
+    actionType: trackingKeys.discloseRecipeVariants,
+    show: Boolean(recipeId)
+  }
+})
+
+export const trackVariantListDisplay = (view) => ({
+  type: actionTypes.TRACK_VARIANT_RECIPE_LIST_DISPLAY,
+  trackingData: {
+    actionType: trackingKeys.recipeVariantActionSheet,
+    view
   }
 })
 
