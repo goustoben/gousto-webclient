@@ -7,7 +7,6 @@ import { getPromoCode } from 'selectors/basket'
 import {
   getPromoBannerText,
   getPromoBannerCode,
-  getPromoBannerEnabled,
   getIsSignupReductionEnabled,
 } from 'selectors/features'
 
@@ -30,7 +29,6 @@ export const promoApplicable = (isAuthenticated, criteria) => {
 
 const mapStateToProps = (state, ownProps) => {
   const { linkText } = home.promo.banner
-  const enabled = getPromoBannerEnabled(state)
   const isSignupReductionEnabled = getIsSignupReductionEnabled(state)
   const currentPromo = state.promoCurrent || ''
   const basketPromo = getPromoCode(state) || ''
@@ -43,8 +41,7 @@ const mapStateToProps = (state, ownProps) => {
   const hasCurrentPromo = currentPromo.length > 0
   const hasQueryStringPromo = queryStringPromo.length > 0
 
-  const hide = !enabled
-    || isAuthenticated
+  const hide = isAuthenticated
     || hasBasketPromo
     || hasQueryStringPromo
     || hasCurrentPromo
