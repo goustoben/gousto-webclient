@@ -12,7 +12,6 @@ describe('DesktopRecipeList', () => {
       const wrapper = shallow(
         <DesktopRecipeList
           recipes={Immutable.fromJS([{}, {}, {}, {}])}
-          showDetailRecipe={() => null}
           thematicName={null}
           isCurrentCollectionRecommendation={false}
           deliveryDate={null}

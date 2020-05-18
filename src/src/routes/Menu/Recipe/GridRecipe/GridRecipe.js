@@ -8,14 +8,14 @@ import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import config from 'config'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
-import { Title } from '../Title'
 import Image from '../Image'
 import { RecipeRating } from '../Rating'
 import { AddRecipe } from '../AddRecipe'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
+import { TitleContainer } from '../Title/TitleContainer'
 
-const GridRecipe = ({ onClick, media, title, highlight, unhighlight, chef, view, detailHover,
+const GridRecipe = ({ onClick, media, highlight, unhighlight, chef, view, detailHover,
   stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet,
   fiveADay, isNew, isChefPrepared, numPortions
 }) => {
@@ -29,7 +29,6 @@ const GridRecipe = ({ onClick, media, title, highlight, unhighlight, chef, view,
       <span onClick={onClick} className={css.link}>
         <Image
           media={media}
-          alt={title}
           mouseEnter={highlight}
           mouseLeave={unhighlight}
           stock={stock}
@@ -53,8 +52,8 @@ const GridRecipe = ({ onClick, media, title, highlight, unhighlight, chef, view,
       </div>
       <div className={css.contentWrapper}>
         <div onClick={onClick} className={css.titleWrapper}>
-          <Title
-            title={title}
+          <TitleContainer
+            recipeId={id}
             view={view}
             mouseEnter={highlight}
             mouseLeave={unhighlight}

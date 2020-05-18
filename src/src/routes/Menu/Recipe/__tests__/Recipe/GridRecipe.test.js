@@ -3,7 +3,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { Title } from 'routes/Menu/Recipe/Title'
 import Image from 'routes/Menu/Recipe/Image'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
@@ -15,6 +14,7 @@ import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { VariantHeaderContainer } from '../../VariantHeader'
+import { TitleContainer } from '../../Title'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -59,8 +59,9 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(RecipeRating).length).toEqual(1)
       })
 
-      test('should contain one Title component', () => {
-        expect(wrapper.find(Title).length).toEqual(1)
+      test('should contain TitleContainer', () => {
+        expect(wrapper.find(TitleContainer).length).toEqual(1)
+        expect(wrapper.find(TitleContainer).prop('recipeId')).toEqual('1')
       })
 
       test('should contain one recipe disclaimer ', () => {
@@ -89,10 +90,6 @@ describe('<GridRecipe />', () => {
             .at(0)
             .prop('style'),
         ).toBe(undefined)
-      })
-
-      test('the title component should not be large', () => {
-        expect(wrapper.find(Title).prop('large')).toBe(undefined)
       })
 
       test('should contain one Pill component and icon prop is true', () => {

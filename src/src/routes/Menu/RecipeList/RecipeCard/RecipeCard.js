@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
-import { formatRecipeTitle } from 'utils/recipe'
 
 const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
   if (isChefPrepared) {
@@ -27,7 +26,7 @@ const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
 }
 
 const RecipeCard = ({
-  recipe, index, showDetailRecipe, isFeatured,
+  recipeId, recipe, index, showDetailRecipe, isFeatured,
 
   numPortions, cutoffDate, browserType,
 }) => {
@@ -35,7 +34,6 @@ const RecipeCard = ({
     return null
   }
 
-  const recipeId = recipe.get('id')
   const isChefPrepared = recipe.get('chefPrepared') === true
 
   const view = getRecipeView(isFeatured, recipe.get('isFineDineIn'), isChefPrepared)
@@ -44,7 +42,6 @@ const RecipeCard = ({
     <Recipe
       id={recipeId}
       position={index}
-      title={formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))}
       media={getFeaturedImage(recipe, view, browserType)}
       url={recipe.get('url')}
       useWithin={recipe.get('shelfLifeDays')}
@@ -55,11 +52,11 @@ const RecipeCard = ({
       description={recipe.get('description')}
       availability={recipe.get('availability')}
       equipment={recipe.get('equipment')}
+      fiveADay={recipe.get('fiveADay')}
+      diet={recipe.get('dietType')}
       view={view}
       cutoffDate={cutoffDate}
       onClick={(isViewMoreDetailsClicked = false) => { showDetailRecipe(recipeId, isViewMoreDetailsClicked) }}
-      fiveADay={recipe.get('fiveADay')}
-      diet={recipe.get('dietType')}
       numPortions={numPortions}
     />
   )
@@ -72,6 +69,7 @@ RecipeCard.defaultProps = {
 
 RecipeCard.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
+  recipeId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   numPortions: PropTypes.number.isRequired,
   showDetailRecipe: PropTypes.func.isRequired,

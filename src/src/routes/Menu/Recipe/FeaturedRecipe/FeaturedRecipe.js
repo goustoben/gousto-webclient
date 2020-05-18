@@ -9,7 +9,7 @@ import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
-import { Title } from '../Title'
+import { TitleContainer } from '../Title/TitleContainer'
 import Image from '../Image'
 import { AddRecipe } from '../AddRecipe'
 import { StockBadge } from '../StockBadge'
@@ -19,7 +19,7 @@ import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 
 const FeaturedRecipe = ({
-  onClick, media, title,
+  onClick, media,
   view, highlight, unhighlight, chef, tag, detailHover,
   description, cookingTime,
   useWithin, equipment, id, stock, inBasket, position, fiveADay, diet
@@ -31,7 +31,6 @@ const FeaturedRecipe = ({
         <span onClick={onClick} className={css.link}>
           <Image
             media={media}
-            alt={title}
             view={view}
             mouseEnter={highlight}
             mouseLeave={unhighlight}
@@ -46,8 +45,8 @@ const FeaturedRecipe = ({
           <VariantHeaderContainer recipeId={id} stock={stock} inBasket={inBasket} />
           <div className={css.textContainer}>
             <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChefFeatured]: getChef(chef) })}>
-              <Title
-                title={title}
+              <TitleContainer
+                recipeId={id}
                 view={view}
                 mouseEnter={highlight}
                 mouseLeave={unhighlight}
