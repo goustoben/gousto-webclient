@@ -8,10 +8,10 @@ import { recipePropTypes } from 'routes/Menu/Recipe'
 import { getChef } from 'utils/recipe'
 import { Pill } from 'goustouicomponents'
 import css from './FineDineInRecipe.css'
-import { Title } from '../Title'
 import { AddRecipe } from '../AddRecipe'
 import { RecipeAttribute } from '../RecipeAttribute'
 import { SoldOutOverlay } from '../SoldOutOverlay'
+import { TitleContainer } from '../Title/TitleContainer'
 
 const propTypes = {
   ...recipePropTypes,
@@ -39,7 +39,7 @@ const defaultProps = {
 }
 
 const FineDineInRecipe = ({ media, onClick, highlight, unhighlight,
-  title, view, detailHover, cookingTime, chef,
+  view, detailHover, cookingTime, chef,
   stock, inBasket, position, id }) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
@@ -80,8 +80,8 @@ const FineDineInRecipe = ({ media, onClick, highlight, unhighlight,
               onKeyPress={onClick}
               className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}
             >
-              <Title
-                title={title}
+              <TitleContainer
+                recipeId={id}
                 view={view}
                 mouseEnter={highlight}
                 mouseLeave={unhighlight}

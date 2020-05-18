@@ -12,7 +12,6 @@ describe('MobileRecipeList', () => {
       const wrapper = shallow(
         <MobileRecipeList
           recipes={Immutable.fromJS([ {}, {}, {}, {} ])}
-          showDetailRecipe={() => null}
           thematicName={null}
           isCurrentCollectionRecommendation={false}
           deliveryDate={null}

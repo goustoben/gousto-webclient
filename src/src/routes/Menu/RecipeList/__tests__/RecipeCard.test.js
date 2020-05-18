@@ -34,7 +34,7 @@ describe('RecipeCard', () => {
         images: []
       }
     })
-    const wrapper = shallow(<RecipeCard recipe={recipe} index={index} numPortions={2} />)
+    const wrapper = shallow(<RecipeCard recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} />)
 
     test('should render a Recipe with the correct id', () => {
       expect(wrapper.find(Recipe).prop('id')).toEqual('1234')
@@ -42,10 +42,6 @@ describe('RecipeCard', () => {
 
     test('should render a Recipe with the correct position', () => {
       expect(wrapper.find(Recipe).prop('position')).toEqual(3)
-    })
-
-    test('should render a Recipe with the correct title', () => {
-      expect(wrapper.find(Recipe).prop('title')).toEqual('Bobs Brilliant Beef Burger')
     })
 
     test('should render a Recipe with the correct url', () => {

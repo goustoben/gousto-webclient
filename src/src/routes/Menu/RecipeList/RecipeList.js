@@ -35,7 +35,6 @@ class RecipeList extends React.PureComponent {
     const {
       recipes,
       browserType,
-      showDetailRecipe,
       thematicName,
       isCurrentCollectionRecommendation,
       deliveryDate,
@@ -46,7 +45,6 @@ class RecipeList extends React.PureComponent {
       return (
         <MobileRecipeList
           recipes={recipes}
-          showDetailRecipe={showDetailRecipe}
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
@@ -59,7 +57,6 @@ class RecipeList extends React.PureComponent {
       return (
         <TabletRecipeList
           recipes={recipes}
-          showDetailRecipe={showDetailRecipe}
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
@@ -71,7 +68,6 @@ class RecipeList extends React.PureComponent {
     return (
       <DesktopRecipeList
         recipes={recipes}
-        showDetailRecipe={showDetailRecipe}
         thematicName={thematicName}
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
         deliveryDate={deliveryDate}
@@ -83,7 +79,6 @@ class RecipeList extends React.PureComponent {
 
 RecipeList.propTypes = {
   filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
-  showDetailRecipe: PropTypes.func.isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
   collectionFilterChange: PropTypes.func.isRequired,
   thematicName: PropTypes.string,

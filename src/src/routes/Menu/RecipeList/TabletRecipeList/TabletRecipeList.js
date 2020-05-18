@@ -9,15 +9,14 @@ import { CTACard } from '../CTACard'
 import css from './TabletRecipeList.css'
 
 const TabletRecipeList = ({
-  recipes, showDetailRecipe, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange
+  recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange
 }) => {
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = ({ index, value }) => (
     <RecipeCardContainer
       key={`${index}-${value.get('id')}`} // eslint-disable-line react/prop-types
-      recipe={value}
+      recipeId={value.get('id')} // eslint-disable-line react/prop-types
       index={index}
-      showDetailRecipe={showDetailRecipe}
     />
   )
 
@@ -48,7 +47,6 @@ const TabletRecipeList = ({
 }
 
 TabletRecipeList.propTypes = {
-  showDetailRecipe: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   collectionFilterChange: PropTypes.func,

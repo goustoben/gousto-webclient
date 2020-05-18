@@ -3,7 +3,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Image from 'routes/Menu/Recipe/Image'
-import { Title } from 'routes/Menu/Recipe/Title'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
@@ -13,6 +12,7 @@ import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { StockBadge } from '../../StockBadge'
 import { VariantHeaderContainer } from '../../VariantHeader'
+import { TitleContainer } from '../../Title'
 
 describe('<FeaturedRecipe />', () => {
   let wrapper
@@ -72,7 +72,8 @@ describe('<FeaturedRecipe />', () => {
   })
 
   test('should have a featured title', () => {
-    expect(wrapper.find(Title).prop('view')).toBe('featured')
+    expect(wrapper.find(TitleContainer).prop('view')).toBe('featured')
+    expect(wrapper.find(TitleContainer).prop('recipeId')).toEqual('1')
   })
 
   test('should contain one Pill component and icon prop is true', () => {

@@ -7,7 +7,6 @@ import { DetailOverlayContainer } from 'routes/Menu/DetailOverlay'
 describe('RecipeGrid', () => {
   const wrapper = shallow(
     <RecipeGrid
-      showDetailRecipe={jest.fn()}
       menuCurrentCollectionId=""
       menuRecipeDetailShow=""
       isClient

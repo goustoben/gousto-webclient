@@ -10,7 +10,7 @@ import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 describe('<FineDineInRecipe />', () => {
   const FINE_DINE_IN_RECIPE = (
     <FineDineInRecipe
-      id="id"
+      id="recipe-id"
       cookingTime={1}
       features={Immutable.Map({})}
       useWithin="3 days"
@@ -20,7 +20,11 @@ describe('<FineDineInRecipe />', () => {
   const FINE_DINE_IN_RECIPE_WITH_STORE = (
     <Provider store={{getState: () => ({
       basket: Immutable.Map(),
-      recipes: Immutable.Map(),
+      recipes: Immutable.fromJS({
+        'recipe-id': {
+          title: 'Foo'
+        }
+      }),
       auth: Immutable.Map(),
       menu: Immutable.Map({
         menuVariants: Immutable.Map()
