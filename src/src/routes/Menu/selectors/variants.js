@@ -1,11 +1,10 @@
 import { createSelector } from 'reselect'
 import { getBasketMenuId } from 'selectors/basket'
 import { getCurrentCollectionId } from './collections'
+import { getRecipeIdFromProps } from './recipe'
 
 const getMenuVariants = state => state.menu.get('menuVariants')
 const getSelectedRecipeVariants = state => state.menu.get('selectedRecipeVariants')
-
-const getCoreRecipeId = (state, props) => props.recipeId
 
 const getCurrentMenuVariants = createSelector(
   [getMenuVariants, getBasketMenuId],
@@ -28,7 +27,7 @@ export const getCurrentMenuRecipesWithVariantsReplaced = createSelector(
 )
 
 export const getVariantsForRecipe = createSelector(
-  [getCurrentMenuVariants, getCoreRecipeId],
+  [getCurrentMenuVariants, getRecipeIdFromProps],
   (variants, coreRecipeId) => {
     if (!variants) {
       return null

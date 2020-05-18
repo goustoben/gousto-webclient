@@ -22,8 +22,8 @@ jest.mock('routes/Menu/Recipe/AddRecipe', () => ({
   AddRecipe: () => <div />
 }))
 
-jest.mock('routes/Menu/Recipe/AddRecipe/DropdownRecipeList', () => ({
-  DropdownRecipeListContainer: () => <div />
+jest.mock('routes/Menu/Recipe/VariantRecipeList/VariantRecipeList', () => ({
+  VariantRecipeListContainer: () => <div />
 }))
 
 describe('<DefaultDetail />', () => {

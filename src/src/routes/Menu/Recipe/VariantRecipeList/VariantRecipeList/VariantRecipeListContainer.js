@@ -4,7 +4,7 @@ import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDet
 import { getVariantsForRecipe } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
 import { getCurrentCollectionId } from '../../../selectors/collections'
-import { DropdownRecipeList } from './DropdownRecipeList'
+import { VariantRecipeList } from './VariantRecipeList'
 
 const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeById(state, ownProps.recipeId)
@@ -24,8 +24,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const DropdownRecipeListContainer = connect(mapStateToProps, {
-  selectRecipeVariant, menuRecipeDetailVisibilityChange, trackVariantListDisplay
-})(DropdownRecipeList)
+const VariantRecipeListContainer = connect(mapStateToProps, { selectRecipeVariant, menuRecipeDetailVisibilityChange, trackVariantListDisplay })(VariantRecipeList)
 
-export { DropdownRecipeListContainer }
+export { VariantRecipeListContainer }
