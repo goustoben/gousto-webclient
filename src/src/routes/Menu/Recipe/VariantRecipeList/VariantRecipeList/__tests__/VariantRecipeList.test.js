@@ -22,6 +22,7 @@ describe('VariantRecipeList', () => {
         wrapper = shallow(<VariantRecipeList
           recipeVariants={recipeVariants}
           selectedRecipe={selectedRecipe}
+          originalId="9999"
           collectionId="1234abcd"
           isOnDetailScreen={false}
           selectRecipeVariant={() => { }}
@@ -41,6 +42,7 @@ describe('VariantRecipeList', () => {
           wrapper = shallow(<VariantRecipeList
             recipeVariants={recipeVariants}
             selectedRecipe={selectedRecipe}
+            originalId="9999"
             collectionId="1234abcd"
             isOnDetailScreen={false}
             selectRecipeVariant={selectRecipeVariant}
@@ -57,7 +59,7 @@ describe('VariantRecipeList', () => {
               value: recipeVariants[0].coreRecipeId
             }
           })
-          expect(selectRecipeVariant).toHaveBeenCalledWith('6789', '1230', '1234abcd', 'grid')
+          expect(selectRecipeVariant).toHaveBeenCalledWith('9999', '1230', '1234abcd', 'grid')
         })
 
         test('should stop propagation on click event', () => {

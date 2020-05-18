@@ -26,21 +26,26 @@ describe('RecipeList', () => {
     trackRecipeOrderDisplayed.mockClear()
   })
 
+  const recipes = Immutable.List([
+    {
+      originalId: '3',
+      recipe: Immutable.Map({
+        id: '3',
+        availability: [],
+        title: 'recipe3',
+        boxType: 'vegetarian',
+        dietType: 'Vegetarian',
+        isRecommended: false,
+      })
+    },
+    {
+      originalId: '1',
+      recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
+    }
+  ])
+
   describe('when in mobile mode', () => {
     test('should render a MobileRecipeList', () => {
-      const recipes = Immutable.fromJS([
-        { id: '1', availability: [], title: 'recipe1', isRecommended: false },
-        { id: '2', availability: [], title: 'recipe2', isRecommended: false },
-        {
-          id: '3',
-          availability: [],
-          title: 'recipe3',
-          boxType: 'vegetarian',
-          dietType: 'Vegetarian',
-          isRecommended: false,
-        },
-      ])
-
       const wrapper = shallow(
         <RecipeList recipes={recipes} browserType="mobile" />,
         { context }
@@ -54,19 +59,6 @@ describe('RecipeList', () => {
 
   describe('when in tablet mode', () => {
     test('should render a TabletRecipeList', () => {
-      const recipes = Immutable.fromJS([
-        { id: '1', availability: [], title: 'recipe1', isRecommended: false },
-        { id: '2', availability: [], title: 'recipe2', isRecommended: false },
-        {
-          id: '3',
-          availability: [],
-          title: 'recipe3',
-          boxType: 'vegetarian',
-          dietType: 'Vegetarian',
-          isRecommended: false,
-        },
-      ])
-
       const wrapper = shallow(
         <RecipeList recipes={recipes} browserType="tablet" />,
         { context }
@@ -80,19 +72,6 @@ describe('RecipeList', () => {
 
   describe('when in desktop mode', () => {
     test('should render a DesktopRecipeList', () => {
-      const recipes = Immutable.fromJS([
-        { id: '1', availability: [], title: 'recipe1', isRecommended: false },
-        { id: '2', availability: [], title: 'recipe2', isRecommended: false },
-        {
-          id: '3',
-          availability: [],
-          title: 'recipe3',
-          boxType: 'vegetarian',
-          dietType: 'Vegetarian',
-          isRecommended: false,
-        },
-      ])
-
       const wrapper = shallow(
         <RecipeList recipes={recipes} browserType="desktop" />,
         { context }
@@ -108,10 +87,6 @@ describe('RecipeList', () => {
     describe('when the recipe list is initially rendered', () => {
       test('should dispatch trackRecipeOrderDisplayed once', () => {
         const filteredRecipeIds = Immutable.List(['1', '2', '3'])
-        const recipes = Immutable.fromJS([
-          { id: '3' },
-          { id: '1' }
-        ])
 
         shallow(
           <RecipeList
@@ -136,10 +111,6 @@ describe('RecipeList', () => {
     describe('when the recipe collection selection is changed', () => {
       test('should dispatch trackRecipeOrderDisplayed an additional time', () => {
         const filteredRecipeIds = Immutable.List(['1', '2', '3'])
-        const recipes = Immutable.fromJS([
-          { id: '3' },
-          { id: '1' }
-        ])
 
         const wrapper = shallow(
           <RecipeList
@@ -168,10 +139,6 @@ describe('RecipeList', () => {
     describe('when the recipe collection remains the same', () => {
       test('should not dispatch trackRecipeOrderDisplayed after initial render', () => {
         const filteredRecipeIds = Immutable.List(['1', '2', '3'])
-        const recipes = Immutable.fromJS([
-          { id: '3' },
-          { id: '1' }
-        ])
 
         const wrapper = shallow(
           <RecipeList

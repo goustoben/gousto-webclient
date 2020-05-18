@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
 import { CollectionItem } from './CollectionItem'
-import { getSortedRecipes } from '../../selectors/sorting'
+import { getRecipeListRecipes } from '../../selectors/sorting'
 
 const mapStateToProps = (state, ownProps) => ({
-  count: getSortedRecipes(state)(ownProps.collectionId).recipes.size
+  count: getRecipeListRecipes(state, { collectionId: ownProps.collectionId }).recipes.size
 })
 
 const CollectionItemContainer = connect(mapStateToProps)(CollectionItem)

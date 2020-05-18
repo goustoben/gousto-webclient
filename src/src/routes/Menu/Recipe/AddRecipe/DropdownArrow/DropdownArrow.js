@@ -4,7 +4,7 @@ import React from 'react'
 import css from './DropdownArrow.css'
 import { VariantRecipeListContainer } from '../../VariantRecipeList/VariantRecipeList'
 
-const DropdownArrow = ({ recipeId, recipeVariants, showDropdown, recipeVariantDropdownExpanded }) => {
+const DropdownArrow = ({ recipeId, originalId, recipeVariants, showDropdown, recipeVariantDropdownExpanded }) => {
   if (!recipeVariants || recipeVariants.length === 0) {
     return null
   }
@@ -20,7 +20,7 @@ const DropdownArrow = ({ recipeId, recipeVariants, showDropdown, recipeVariantDr
       {showDropdown
         && (
           <div className={css.dropdownListContainer}>
-            <VariantRecipeListContainer recipeId={recipeId} />
+            <VariantRecipeListContainer recipeId={recipeId} originalId={originalId} />
           </div>
         )}
     </button>
@@ -29,6 +29,7 @@ const DropdownArrow = ({ recipeId, recipeVariants, showDropdown, recipeVariantDr
 
 DropdownArrow.propTypes = {
   recipeId: PropTypes.string.isRequired,
+  originalId: PropTypes.string.isRequired,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
   showDropdown: PropTypes.bool.isRequired,
   recipeVariantDropdownExpanded: PropTypes.func.isRequired

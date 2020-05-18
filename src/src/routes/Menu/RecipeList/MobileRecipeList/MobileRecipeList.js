@@ -13,8 +13,9 @@ const MobileRecipeList = ({
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = (value, index) => (
     <RecipeCardContainer
-      key={`${index}-${value.get('id')}`}
-      recipeId={value.get('id')}
+      key={`${index}-${value.recipe.get('id')}`}
+      originalId={value.originalId}
+      recipeId={value.recipe.get('id')}
       index={index}
     />
   )

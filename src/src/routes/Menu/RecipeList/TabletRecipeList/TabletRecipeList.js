@@ -14,8 +14,9 @@ const TabletRecipeList = ({
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = ({ index, value }) => (
     <RecipeCardContainer
-      key={`${index}-${value.get('id')}`} // eslint-disable-line react/prop-types
-      recipeId={value.get('id')} // eslint-disable-line react/prop-types
+      key={`${index}-${value.recipe.get('id')}`} // eslint-disable-line react/prop-types
+      recipeId={value.recipe.get('id')} // eslint-disable-line react/prop-types
+      originalId={value.originalId} // eslint-disable-line react/prop-types
       index={index}
     />
   )

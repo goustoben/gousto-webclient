@@ -43,7 +43,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
     </div>
     <div className={css.sectionPanel}>
       <div className={css.variantsContainer}>
-        <VariantRecipeListContainer recipeId={id} isOnDetailScreen />
+        <VariantRecipeListContainer originalId={id} recipeId={id} isOnDetailScreen />
       </div>
       <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
       <p className={css.infoBoxText}>{description}</p>
