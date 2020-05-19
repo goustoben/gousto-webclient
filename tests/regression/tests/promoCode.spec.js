@@ -66,14 +66,6 @@ describe("Promo Code", () => {
   })
 
   describe('when a user checks out for the first time', () => {
-    const DATE = new Date(2020, 4, 1).getTime()
-
-    beforeEach(() => {
-      cy.clearCookies()
-      cy.visit('/')
-      cy.clock(DATE, ['Date'])
-    })
-
     describe('and has a promo code in their basket', () => {
       beforeEach(() => {
         cy.checkoutLoggedOut({ withDiscount: true })
