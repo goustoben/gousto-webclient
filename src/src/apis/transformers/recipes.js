@@ -6,6 +6,7 @@ import {
   equipmentTransformer,
   formatIngredients,
   healthKitchenTransformer,
+  micronutrientsTransformer,
   roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
@@ -85,7 +86,8 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
           fibre: nutritionalInfo.per_portion.fibre_mg / 1000,
           protein: nutritionalInfo.per_portion.protein_mg / 1000,
           salt: nutritionalInfo.per_portion.salt_mg / 1000,
-        }
+        },
+        micronutrients: micronutrientsTransformer(nutritionalInfo.micronutrients),
       },
       rating: {
         count: normalisedAttributes.rating ? normalisedAttributes.rating.count : 0,

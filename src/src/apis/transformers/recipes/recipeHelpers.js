@@ -49,15 +49,19 @@ const healthKitchenTransformer = (healthKitchen) => {
 
   return {
     disclaimer: healthKitchen.disclaimer,
-    micronutrients: healthKitchen.micronutrients.map(micronutrient => ({
-      name: micronutrient.name,
-      content: {
-        amount: micronutrient.content.amount,
-        unit: micronutrient.content.unit
-      },
-      nrvPercent: micronutrient.nrv_percent
-    }))
   }
+}
+
+const micronutrientsTransformer = (micronutrients) => {
+  if (!micronutrients) {
+    return null
+  }
+
+  return micronutrients.map(micronutrient => ({
+    name: micronutrient.name,
+    content: micronutrient.content,
+    nrvPercent: micronutrient.nrv_percent
+  }))
 }
 
 const imageUrlMap = (urls) => urls.map((url) => ({
@@ -122,6 +126,7 @@ export {
   equipmentTransformer,
   formatIngredients,
   healthKitchenTransformer,
+  micronutrientsTransformer,
   imageUrlMap,
   roundelTransformer,
   shelfLifeTransformer,

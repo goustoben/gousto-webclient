@@ -46,8 +46,7 @@ describe('health kitchen recipe selectors', () => {
     state = {
       recipes: Immutable.fromJS({
         1: {
-          healthKitchen: {
-            disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+          nutrtitional_information: {
             micronutrients: [
               {
                 name: 'Iron',
@@ -66,6 +65,9 @@ describe('health kitchen recipe selectors', () => {
                 nrv_percent: 52.7
               }
             ]
+          },
+          healthKitchen: {
+            disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
           }
         }
       })
@@ -87,7 +89,7 @@ describe('health kitchen recipe selectors', () => {
   describe('getMicronutrientsForRecipeID', () => {
     describe('when recipe is health kitchen', () => {
       test('should return the recipe micronutrients', () => {
-        expect(getMicronutrientsForRecipeID(state, '1')).toEqual(state.recipes.getIn(['1', 'healthKitchen', 'micronutrients']))
+        expect(getMicronutrientsForRecipeID(state, '1')).toEqual(state.recipes.getIn(['1', 'nutritional_information', 'micronutrients']))
       })
     })
   })
