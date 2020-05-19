@@ -22,7 +22,8 @@ const FeaturedRecipe = ({
   onClick, media,
   view, highlight, unhighlight, chef, tag, detailHover,
   description, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet,
+  originalId
 }) =>
   (
     <div>
@@ -71,7 +72,7 @@ const FeaturedRecipe = ({
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>
-                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
+                <AddRecipe id={id} originalId={originalId} stock={stock} inBasket={inBasket} view={view} position={position} />
               </div>
             </div>
             <SoldOutOverlay stock={stock} inBasket={inBasket} />
@@ -84,6 +85,7 @@ const FeaturedRecipe = ({
 FeaturedRecipe.propTypes = {
   ...recipePropTypes,
   id: PropTypes.string.isRequired,
+  originalId: PropTypes.string.isRequired,
   position: PropTypes.number,
   description: PropTypes.string,
   useWithin: PropTypes.string.isRequired,

@@ -23,7 +23,7 @@ class RecipeList extends React.PureComponent {
     const { filteredRecipeIds, recipes } = this.props
     const { store } = this.context
 
-    const recipeIds = recipes.map(recipe => recipe.get('id'))
+    const recipeIds = recipes.map(({ recipe }) => recipe.get('id'))
 
     store.dispatch(actions.trackRecipeOrderDisplayed(
       filteredRecipeIds.toJS(),

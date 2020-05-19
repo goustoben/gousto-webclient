@@ -16,7 +16,7 @@ import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisc
 import { Allergens } from '../Allergens/Allergens'
 import { IngredientsList } from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
-import { DropdownRecipeListContainer } from '../../AddRecipe/DropdownRecipeList'
+import { VariantRecipeListContainer } from '../../VariantRecipeList/VariantRecipeList'
 
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
@@ -43,7 +43,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
     </div>
     <div className={css.sectionPanel}>
       <div className={css.variantsContainer}>
-        <DropdownRecipeListContainer recipeId={id} isOnDetailScreen />
+        <VariantRecipeListContainer originalId={id} recipeId={id} isOnDetailScreen />
       </div>
       <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
       <p className={css.infoBoxText}>{description}</p>

@@ -26,7 +26,7 @@ const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
 }
 
 const RecipeCard = ({
-  recipeId, recipe, index, showDetailRecipe, isFeatured,
+  originalId, recipeId, recipe, index, showDetailRecipe, isFeatured,
 
   numPortions, cutoffDate, browserType,
 }) => {
@@ -41,6 +41,7 @@ const RecipeCard = ({
   return (
     <Recipe
       id={recipeId}
+      originalId={originalId}
       position={index}
       media={getFeaturedImage(recipe, view, browserType)}
       url={recipe.get('url')}
@@ -69,6 +70,7 @@ RecipeCard.defaultProps = {
 
 RecipeCard.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
+  originalId: PropTypes.string.isRequired,
   recipeId: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   numPortions: PropTypes.number.isRequired,

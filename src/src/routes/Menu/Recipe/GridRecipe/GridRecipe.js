@@ -15,8 +15,8 @@ import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 import { TitleContainer } from '../Title/TitleContainer'
 
-const GridRecipe = ({ onClick, media, highlight, unhighlight, chef, view, detailHover,
-  stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet,
+const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, chef, view, detailHover,
+  stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, diet,
   fiveADay, isNew, isChefPrepared, numPortions
 }) => {
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
@@ -90,7 +90,7 @@ const GridRecipe = ({ onClick, media, highlight, unhighlight, chef, view, detail
         }
         <RecipeDisclaimerContainer id={id} />
         <div className={css.buttonContainer}>
-          <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
+          <AddRecipe id={id} originalId={originalId} stock={stock} inBasket={inBasket} view={view} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
         </div>
 
       </div>
@@ -101,6 +101,7 @@ const GridRecipe = ({ onClick, media, highlight, unhighlight, chef, view, detail
 GridRecipe.propTypes = {
   ...recipePropTypes,
   id: PropTypes.string.isRequired,
+  originalId: PropTypes.string.isRequired,
   position: PropTypes.number,
   chef: PropTypes.shape({
     media: PropTypes.shape({

@@ -16,6 +16,7 @@ import { TitleContainer } from '../Title/TitleContainer'
 const propTypes = {
   ...recipePropTypes,
   id: PropTypes.string.isRequired,
+  originalId: PropTypes.string.isRequired,
   position: PropTypes.number,
   chef: PropTypes.shape({
     media: PropTypes.shape({
@@ -40,7 +41,7 @@ const defaultProps = {
 
 const FineDineInRecipe = ({ media, onClick, highlight, unhighlight,
   view, detailHover, cookingTime, chef,
-  stock, inBasket, position, id }) => {
+  stock, inBasket, position, id, originalId }) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
 
@@ -98,7 +99,7 @@ const FineDineInRecipe = ({ media, onClick, highlight, unhighlight,
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>
-                <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
+                <AddRecipe id={id} originalId={originalId} stock={stock} inBasket={inBasket} view={view} position={position} />
               </div>
             </div>
 

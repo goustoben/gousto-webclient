@@ -20,6 +20,7 @@ const recipePropTypes = {
   range: PropTypes.instanceOf(Immutable.Map),
   collectionFilterChange: PropTypes.func,
   id: PropTypes.string,
+  originalId: PropTypes.string.isRequired,
   thematicName: PropTypes.string,
   selectedDate: PropTypes.string,
   numPortions: PropTypes.number,

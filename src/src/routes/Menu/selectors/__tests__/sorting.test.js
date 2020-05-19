@@ -1,35 +1,161 @@
 import Immutable from 'immutable'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
-import { getSortedRecipes, getInStockRecipes } from '../sorting'
+import { getInStockRecipes, getRecipeListRecipes, getSortFn, getFilterFn } from '../sorting'
 
 jest.mock('utils/menu')
 
+// this code is replicated from sorting.js so that it's not using the same code under test
+const createRecipeView = (originalId, recipe) => ({ originalId, recipe })
+const createStandardRecipeView = (recipe) => ({ originalId: recipe.get('id'), recipe })
+
 describe('RecipeList selectors', () => {
   const VALID_COLLECTION_ID = '77d1eb54-e3e5-11e7-bf51-06543e25a81c'
-  const firstRecipe = Immutable.fromJS({ id: '327' })
-  const secondRecipe = Immutable.fromJS({ id: '819' })
-  const thirdRecipe = Immutable.fromJS({ id: '777' })
-  const variantRecipe = Immutable.fromJS({ id: '820' })
+  const firstRecipe = Immutable.fromJS({ id: '327', sortOrder: 1 })
+  const secondRecipe = Immutable.fromJS({ id: '819', sortOrder: 2 })
+  const thirdRecipe = Immutable.fromJS({ id: '777', sortOrder: 3 })
+  const variantRecipe = Immutable.fromJS({ id: '820', sortOrder: 4 })
   const menuCollectionRecipes = Immutable.fromJS({
     [VALID_COLLECTION_ID]: ['327', '819']
   })
 
   const allRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe, variantRecipe])
-  const inStockRecipes = Immutable.fromJS([secondRecipe])
-  let currentMenuRecipes = Immutable.List([firstRecipe.get('id'), secondRecipe.get('id'),thirdRecipe.get('id'),variantRecipe.get('id')])
-  let getCurrentMenuRecipesWithVariantsReplacedFunc = jest.fn().mockReturnValue(currentMenuRecipes)
+  const inStockRecipes = Immutable.fromJS([firstRecipe, secondRecipe])
 
-  describe('getSortedRecipes', () => {
+  describe('getSortFn', () => {
+    const comparator = getSortFn.resultFunc(inStockRecipes)
+
+    describe('when comparator given two in stock recipes', () => {
+      const a = firstRecipe
+      const b = secondRecipe
+
+      test('should return -1 (a first)', () => {
+        const result = comparator(a, b)
+
+        expect(result).toEqual(-1)
+      })
+    })
+
+    describe('when comparator given in stock recipe as A and out-of-stock recipe as B', () => {
+      const a = firstRecipe
+      const b = thirdRecipe
+
+      test('should return -1 (a first)', () => {
+        const result = comparator(a, b)
+
+        expect(result).toEqual(-1)
+      })
+    })
+
+    describe('when comparator given out-of-stock recipe as A and in-stock recipe as B', () => {
+      const a = thirdRecipe
+      const b = firstRecipe
+
+      test('should return 1 (b first)', () => {
+        const result = comparator(a, b)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+    describe('when comparator given out-of-stock recipe as A and out-of-stock recipe as B', () => {
+      const a = thirdRecipe
+      const b = variantRecipe
+
+      test('should return -1 (a first)', () => {
+        const result = comparator(a, b)
+
+        expect(result).toEqual(-1)
+      })
+    })
+  })
+
+  describe('getFilterFn', () => {
+    describe('when no recommendations collection', () => {
+      const recommendationCollection = null
+      const collectionId = 'not-recommmendations-collection'
+
+      test('should return null', () => {
+        const result = getFilterFn.resultFunc(collectionId, recommendationCollection, inStockRecipes)
+
+        expect(result).toEqual(null)
+      })
+    })
+
+    describe('when not on recommendations collection', () => {
+      const recommendationCollection = Immutable.fromJS({
+        id: 'recommendations-collection',
+        published: true,
+        slug: 'recommendations'
+      })
+      const collectionId = 'not-recommmendations-collection'
+
+      test('should return null', () => {
+        const result = getFilterFn.resultFunc(collectionId, recommendationCollection, inStockRecipes)
+
+        expect(result).toEqual(null)
+      })
+    })
+
+    describe('when on recommendations collection', () => {
+      const recommendationCollection = Immutable.fromJS({
+        id: 'recommendations-collection',
+        published: true,
+        slug: 'recommendations'
+      })
+      const currentCollectionId = 'recommendations-collection'
+
+      test('should return true for in-stock recipe', () => {
+        const filterFn = getFilterFn.resultFunc(currentCollectionId, recommendationCollection, inStockRecipes)
+
+        const passedFilter = filterFn(firstRecipe)
+        expect(passedFilter).toEqual(true)
+      })
+
+      test('should return false for out-of-stock recipe', () => {
+        const filterFn = getFilterFn.resultFunc(currentCollectionId, recommendationCollection, inStockRecipes)
+
+        const passedFilter = filterFn(thirdRecipe)
+        expect(passedFilter).toEqual(false)
+      })
+    })
+  })
+
+  describe('getRecipeListRecipes', () => {
+    let selectedRecipeVariants
+
+    beforeEach(() => {
+      selectedRecipeVariants = {}
+    })
+
     describe('no collection id provided', () => {
-      test('should return all recipes with in stock first', () => {
-        const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)(null)
-        expect(recipes).toEqual(Immutable.fromJS([
-          secondRecipe, firstRecipe, thirdRecipe, variantRecipe
+      const collectionId = null
+
+      // and sort in ascending order
+      const sortFn = (a, b) => a.get('sortOrder') - b.get('sortOrder')
+
+      test('should return all recipes, applying sortFn', () => {
+        const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
+
+        expect(recipes).toEqual(Immutable.List([
+          createStandardRecipeView(firstRecipe), createStandardRecipeView(secondRecipe),
+          createStandardRecipeView(thirdRecipe), createStandardRecipeView(variantRecipe)
         ]))
       })
 
+      describe('when filterFn provided', () => {
+        const filterFn = (recipe) => recipe !== secondRecipe
+
+        test('should return all recipes with filterFn applied', () => {
+          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, filterFn, sortFn)
+
+          expect(recipes).toEqual(Immutable.List([
+            createStandardRecipeView(firstRecipe), createStandardRecipeView(thirdRecipe), createStandardRecipeView(variantRecipe)
+          ]))
+        })
+      })
+
       test('should return all recipe ids in original order', () => {
-        const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)(null)
+        const { recipeIds } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
 
         expect(recipeIds).toEqual(Immutable.fromJS([
           firstRecipe.get('id'), secondRecipe.get('id'), thirdRecipe.get('id'), variantRecipe.get('id')
@@ -37,42 +163,72 @@ describe('RecipeList selectors', () => {
       })
     })
 
-    describe('wrong collection id provided', () => {
-      test('should return all recipes with in stock first', () => {
-        const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)('non-existent-collection')
+    describe('invalid collection id provided', () => {
+      const collectionId = 'non-existent-collection'
 
-        expect(recipes).toEqual(Immutable.fromJS([
-          secondRecipe, firstRecipe, thirdRecipe, variantRecipe
+      // sort in ascending order
+      const sortFn = (a, b) => a.get('sortOrder') - b.get('sortOrder')
+
+      test('should return all recipes, applying sortFn', () => {
+        const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
+
+        expect(recipes).toEqual(Immutable.List([
+          createStandardRecipeView(firstRecipe), createStandardRecipeView(secondRecipe),
+          createStandardRecipeView(thirdRecipe), createStandardRecipeView(variantRecipe)
         ]))
       })
 
-      test('should return all recipe ids in original order', () => {
-        const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)('non-existent-collection')
+      describe('when filterFn provided', () => {
+        const filterFn = (recipe) => recipe !== secondRecipe
 
-        expect(recipeIds).toEqual(Immutable.fromJS([
+        test('should return all recipes with filterFn applied', () => {
+          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, filterFn, sortFn)
+
+          expect(recipes).toEqual(Immutable.List([
+            createStandardRecipeView(firstRecipe), createStandardRecipeView(thirdRecipe), createStandardRecipeView(variantRecipe)
+          ]))
+        })
+      })
+
+      test('should return all recipe ids in original order', () => {
+        const { recipeIds } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
+
+        expect(recipeIds).toEqual(Immutable.List([
           firstRecipe.get('id'), secondRecipe.get('id'), thirdRecipe.get('id'), variantRecipe.get('id')
         ]))
       })
     })
 
     describe('collection id provided', () => {
-      beforeEach(() => {
-        currentMenuRecipes = Immutable.List([firstRecipe.get('id'), secondRecipe.get('id')])
-        getCurrentMenuRecipesWithVariantsReplacedFunc = jest.fn().mockReturnValue(currentMenuRecipes)
-      })
+      const collectionId = VALID_COLLECTION_ID
 
-      test('should return recipes in collection with in stock first', () => {
-        const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)(VALID_COLLECTION_ID)
+      // sort in descending order
+      const sortFn = (a, b) => b.get('sortOrder') - a.get('sortOrder')
 
-        expect(recipes).toEqual(Immutable.fromJS([
-          secondRecipe, firstRecipe
+      test('should return all recipes in collection, applying sortFn', () => {
+        const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
+
+        expect(recipes).toEqual(Immutable.List([
+          createStandardRecipeView(secondRecipe), createStandardRecipeView(firstRecipe)
         ]))
       })
 
-      test('should return recipe ids for recipes in collection in original order', () => {
-        const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)(VALID_COLLECTION_ID)
+      describe('when filterFn provided', () => {
+        const filterFn = (recipe) => recipe !== secondRecipe
 
-        expect(recipeIds).toEqual(Immutable.fromJS([
+        test('should return all recipes in collection with filterFn applied', () => {
+          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, filterFn, sortFn)
+
+          expect(recipes).toEqual(Immutable.List([
+            createStandardRecipeView(firstRecipe)
+          ]))
+        })
+      })
+
+      test('should return all recipe ids in for recipes in collection original order', () => {
+        const { recipeIds } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
+
+        expect(recipeIds).toEqual(Immutable.List([
           firstRecipe.get('id'), secondRecipe.get('id')
         ]))
       })
@@ -81,40 +237,29 @@ describe('RecipeList selectors', () => {
         const reorderedMenuRecipes = Immutable.fromJS([secondRecipe, thirdRecipe, firstRecipe])
 
         test('should return recipes in recipeInCollection order', () => {
-          const { recipeIds } = getSortedRecipes.resultFunc(menuCollectionRecipes, reorderedMenuRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)(VALID_COLLECTION_ID)
+          const { recipeIds } = getRecipeListRecipes.resultFunc(reorderedMenuRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
 
-          expect(recipeIds).toEqual(Immutable.fromJS([
+          expect(recipeIds).toEqual(Immutable.List([
             firstRecipe.get('id'), secondRecipe.get('id')
           ]))
         })
       })
 
-      describe('when collection id is recommendation collection', () => {
-        const recommendationCollection = Immutable.fromJS({
-          id: VALID_COLLECTION_ID,
-          published: true,
-          slug: 'recommendations'
-        })
-
-        test('should only return in stock recipes', () => {
-          const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, recommendationCollection, getCurrentMenuRecipesWithVariantsReplacedFunc)(VALID_COLLECTION_ID)
-
-          expect(recipes).toEqual(Immutable.fromJS([
-            secondRecipe
-          ]))
-        })
-      })
-
-      describe('when the currentMenuRecipes have variant replaced', () => {
+      describe('when variant selected', () => {
         beforeEach(() => {
-          currentMenuRecipes = Immutable.List([firstRecipe.get('id'), variantRecipe.get('id')])
-          getCurrentMenuRecipesWithVariantsReplacedFunc = jest.fn().mockReturnValue(currentMenuRecipes)
+          selectedRecipeVariants = {
+            [collectionId]: {
+              [firstRecipe.get('id')]: variantRecipe.get('id')
+            }
+          }
         })
-        test('should display the vaiant instead of the default value', () => {
-          const { recipes } = getSortedRecipes.resultFunc(menuCollectionRecipes, allRecipes, inStockRecipes, null, getCurrentMenuRecipesWithVariantsReplacedFunc)(VALID_COLLECTION_ID)
 
-          expect(recipes).toEqual(Immutable.fromJS([
-            firstRecipe, variantRecipe
+        test('should return all recipes in collection, applying sortFn, with variants replaced', () => {
+          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, selectedRecipeVariants, collectionId, null, sortFn)
+
+          expect(recipes).toEqual(Immutable.List([
+            createRecipeView(firstRecipe.get('id'), variantRecipe), // first recipe was replaced with variant
+            createStandardRecipeView(secondRecipe)
           ]))
         })
       })
