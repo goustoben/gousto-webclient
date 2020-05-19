@@ -23,9 +23,9 @@ export const getMicronutrientsForRecipeID = ({ recipes }, recipeID) => {
     return null
   }
 
-  const healthKitchenDetails = recipeDetails.get('healthKitchen')
+  const nutritionalInformation = recipeDetails.get('nutritionalInformation')
 
-  return healthKitchenDetails && healthKitchenDetails.get('micronutrients')
+  return nutritionalInformation && nutritionalInformation.get('micronutrients')
 }
 
 export const getRecipeById = ({ recipes }, recipeId) => recipes.get(recipeId, null)

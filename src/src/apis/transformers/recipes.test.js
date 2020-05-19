@@ -292,7 +292,8 @@ describe('recipesTransformer', () => {
                 salt_mg: 518,
                 fat_mg: 6483,
                 energy_kcal: 165
-              }
+              },
+              micronutrients: [],
             },
           },
           relationships: {
@@ -648,7 +649,8 @@ describe('recipesTransformer', () => {
             fibre: 5.154,
             salt: 2.323,
             fat: 29.062
-          }
+          },
+          micronutrients: [],
         },
         rating: {
           count: 10375,
@@ -692,57 +694,7 @@ describe('recipesTransformer', () => {
   describe('when given health kitchen recipe', () => {
     test('should transform health kitchen information', () => {
       const healthKitchenInfo = {
-        disclaimer: 'High in iron, magnesium and b vitamins, reducing tiredness and fatigue',
-        micronutrients: [
-          {
-            name: 'Iron',
-            content: {
-              amount: 6.5,
-              unit: 'µg'
-            },
-            nrv_percent: 46.4
-          },
-          {
-            name: 'Thiamin',
-            content: {
-              amount: 0.4,
-              unit: 'mg'
-            },
-            nrv_percent: 36.5
-          },
-          {
-            name: 'Niacin',
-            content: {
-              amount: 18,
-              unit: 'mg'
-            },
-            nrv_percent: 112.2
-          },
-          {
-            name: 'B6',
-            content: {
-              amount: 1.1,
-              unit: 'mg'
-            },
-            nrv_percent: 77
-          },
-          {
-            name: 'Pantothenic acid',
-            content: {
-              amount: 3.1,
-              unit: 'mg'
-            },
-            nrv_percent: 51.4
-          },
-          {
-            name: 'Magnesium',
-            content: {
-              amount: 197.5,
-              unit: 'mg'
-            },
-            nrv_percent: 52.7
-          }
-        ]
+        disclaimer: 'High in iron, magnesium and b vitamins, reducing tiredness and fatigue'
       }
 
       const menuServiceResponse = {
@@ -881,56 +833,6 @@ describe('recipesTransformer', () => {
       const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse)
       expect(result[0].healthKitchen).toEqual({
         disclaimer: 'High in iron, magnesium and b vitamins, reducing tiredness and fatigue',
-        micronutrients: [
-          {
-            name: 'Iron',
-            content: {
-              amount: 6.5,
-              unit: 'µg'
-            },
-            nrvPercent: 46.4
-          },
-          {
-            name: 'Thiamin',
-            content: {
-              amount: 0.4,
-              unit: 'mg'
-            },
-            nrvPercent: 36.5
-          },
-          {
-            name: 'Niacin',
-            content: {
-              amount: 18,
-              unit: 'mg'
-            },
-            nrvPercent: 112.2
-          },
-          {
-            name: 'B6',
-            content: {
-              amount: 1.1,
-              unit: 'mg'
-            },
-            nrvPercent: 77
-          },
-          {
-            name: 'Pantothenic acid',
-            content: {
-              amount: 3.1,
-              unit: 'mg'
-            },
-            nrvPercent: 51.4
-          },
-          {
-            name: 'Magnesium',
-            content: {
-              amount: 197.5,
-              unit: 'mg'
-            },
-            nrvPercent: 52.7
-          }
-        ]
       })
     })
   })
