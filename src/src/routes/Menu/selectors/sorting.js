@@ -17,23 +17,46 @@ export const getInStockRecipes = createSelector(
 
 const SORT_A_FIRST = -1
 const SORT_B_FIRST = 1
-export const getSortFn = createSelector(
+export const getRecipeComparatorFactory = createSelector(
   [getInStockRecipes],
   (inStockRecipes) => (
-    (a, b) => {
-      const aInStock = inStockRecipes.includes(a)
-      const bInStock = inStockRecipes.includes(b)
+    (originalOrderedRecipes) => (
+      (a, b) => {
+        const aInStock = inStockRecipes.includes(a)
+        const bInStock = inStockRecipes.includes(b)
 
-      if (aInStock) {
+        if (aInStock && !bInStock) {
+          return SORT_A_FIRST
+        }
+
+        if (bInStock && !aInStock) {
+          return SORT_B_FIRST
+        }
+
+        const aIndex = originalOrderedRecipes.indexOf(a)
+        const bIndex = originalOrderedRecipes.indexOf(b)
+
+        /* this shouldn't happen, safety catch */
+        if (aIndex === -1) {
+          return SORT_B_FIRST
+        }
+
+        if (bIndex === -1) {
+          return SORT_A_FIRST
+        }
+        /* end of safety catch */
+
+        if (aIndex < bIndex) {
+          return SORT_A_FIRST
+        }
+
+        if (bIndex < aIndex) {
+          return SORT_B_FIRST
+        }
+
         return SORT_A_FIRST
       }
-
-      if (bInStock) {
-        return SORT_B_FIRST
-      }
-
-      return SORT_A_FIRST
-    }
+    )
   )
 )
 
@@ -63,13 +86,14 @@ export const getFilterFn = createSelector(
   }
 )
 
-const createRecipesResponse = (recipes, filterFn, sortFn) => {
+const createRecipesResponse = (recipes, filterFn, recipeComparatorFactory) => {
   // only filter if there is a filter function provided
   const filtered = filterFn ? recipes.filter(({ recipe }) => filterFn(recipe)) : recipes
 
   const recipeIds = filtered.map(({ recipe }) => getRecipeId(recipe))
 
-  const sorted = filtered.sort(({ recipe: recipeA }, { recipe: recipeB }) => sortFn(recipeA, recipeB))
+  const compare = recipeComparatorFactory(filtered)
+  const sorted = filtered.sort(({ recipe: recipeA }, { recipe: recipeB }) => compare(recipeA, recipeB))
 
   return {
     recipeIds,
@@ -93,18 +117,18 @@ const createRecipeView = (originalId, recipe) => ({ originalId, recipe })
 const createStandardRecipeView = (recipe) => ({ originalId: recipe.get('id'), recipe })
 
 export const getRecipeListRecipes = createSelector(
-  [getCurrentMenuRecipes, getMenuCollectionRecipes, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getSortFn],
-  (currentMenuRecipes, collectionRecipes, selectedVariants, collectionId, filterFn, sortFn) => {
+  [getCurrentMenuRecipes, getMenuCollectionRecipes, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
+  (currentMenuRecipes, collectionRecipes, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
     if (!collectionId) {
       // return all recipes on menu
-      return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, sortFn)
+      return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
     }
 
     const recipeIdsInCollection = collectionRecipes.get(collectionId)
 
     if (!recipeIdsInCollection) {
       // return all recipes on menu
-      return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, sortFn)
+      return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
     }
 
     const findRecipe = (recipeId) => {
@@ -116,6 +140,6 @@ export const getRecipeListRecipes = createSelector(
     }
     const recipesInCollection = recipeIdsInCollection.map(findRecipe).filter(result => result.recipe !== undefined)
 
-    return createRecipesResponse(recipesInCollection, filterFn, sortFn)
+    return createRecipesResponse(recipesInCollection, filterFn, recipeComparatorFactory)
   }
 )

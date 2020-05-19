@@ -23,7 +23,7 @@ const DesktopRecipeList = ({
 
   const recipeArr = recipes.toArray()
 
-  const [right, left, middle] = arrayToColumns(recipeArr, 3, 1)
+  const [left, middle, right] = arrayToColumns(recipeArr, 3, 0)
 
   return (
     <div className={css.desktopRecipeList}>
