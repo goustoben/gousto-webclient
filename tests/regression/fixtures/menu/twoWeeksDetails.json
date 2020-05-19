@@ -273,11 +273,11 @@
                 "name": "charlie-binghams-basket-limit",
                 "rules": {
                   "per2": {
-                    "value": 1,
+                    "value": 2,
                     "description": "Only 1 oven ready meal is available per order"
                   },
                   "per4": {
-                    "value": 1,
+                    "value": 2,
                     "description": "Only 1 oven ready meal is available per order"
                   }
                 },
@@ -1209,11 +1209,11 @@
                 "name": "charlie-binghams-basket-limit",
                 "rules": {
                   "per2": {
-                    "value": 1,
+                    "value": 2,
                     "description": "Only 1 oven ready meal is available per order"
                   },
                   "per4": {
-                    "value": 1,
+                    "value": 2,
                     "description": "Only 1 oven ready meal is available per order"
                   }
                 },

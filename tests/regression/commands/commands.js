@@ -29,16 +29,21 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   const pricesFixtureFile = withDiscount
     ? 'prices/2person2portionDiscount'
     : 'prices/2person2portionNoDiscount'
-
+    
+  const DATE = new Date(2020, 4, 1).getTime()
   cy.server()
+  cy.clearCookies()
   cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
-  cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
-  cy.route('GET', 'deliveries/**/days**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
-  cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
   cy.route('GET', /intervals/, 'fixture:customers/intervals.json').as('getIntervals')
-  cy.route('GET', 'menu/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
   cy.route('GET', /promo_code=DTI-SB-5030/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
+  cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
+  cy.route('GET', 'deliveries/v1.0/days**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
+  cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
+  cy.route('/menu/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
+  cy.visit('/')
+  cy.clock(DATE, ['Date'])
+  cy.wait(['@getMenu', '@getBrand', '@getStock'])
 })
 
 Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
@@ -47,7 +52,6 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   if (platform === 'WEB') {
     // Go to /menu
     cy.get("[href='/menu']").first().click()
-    cy.wait(['@getBrand', '@getStock'])
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
@@ -56,7 +60,6 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     // Go to /menu
     cy.get('[data-testing="burgerMenu"]').click()
     cy.get("[href='/menu'] > li").first().click()
-    cy.wait(['@getBrand', '@getStock'])
 
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
