@@ -62,6 +62,9 @@ const defaultFeatures = () => ({
   },
   blockedTransactionalOrders: {
     value: false,
+  },
+  limitedCapacity: {
+    value: false,
   }
 })
 

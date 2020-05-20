@@ -103,3 +103,7 @@ export const getBlockedResubscription = ({ features }) => (
 export const getBlockedTransactionalOrders = ({ features }) => (
   features && features.getIn(['blockedTransactionalOrders', 'value'], false)
 )
+
+export const getLimitedCapacity = ({ features }) => (
+  features && features.getIn(['limitedCapacity', 'value'], false)
+)

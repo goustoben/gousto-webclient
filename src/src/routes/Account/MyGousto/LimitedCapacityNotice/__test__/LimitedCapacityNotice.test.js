@@ -1,13 +1,13 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { NotificationCovid } from '../NotificationCovid'
+import { LimitedCapacityNotice } from '../LimitedCapacityNotice'
 
-describe('given NotificationCovid is rendered', () => {
+describe('given LimitedCapacityNotice is rendered', () => {
   let wrapper
 
   beforeEach(() => {
     wrapper = mount(
-      <NotificationCovid isResubscriptionBlocked={false} isTransactionalOrdersBlocked={false} />
+      <LimitedCapacityNotice isResubscriptionBlocked={false} isTransactionalOrdersBlocked={false} />
     )
   })
 
@@ -21,7 +21,7 @@ describe('given NotificationCovid is rendered', () => {
 
   test('the copy is rendered correctly', () => {
     expect(wrapper.find('Alert p').at(0).text()).toBe(
-      'Due to overwhelming demand, our delivery slots are nearly full.\u00a0'
+      'Due to overwhelming demand, our delivery slots are nearly full.\u00a0If you’re having issues finding an available slot, try changing your delivery day.'
     )
   })
 
@@ -43,7 +43,7 @@ describe('given NotificationCovid is rendered', () => {
   describe('when blockedTransactionalOrders flag in on', () => {
     beforeEach(() => {
       wrapper = mount(
-        <NotificationCovid isResubscriptionBlocked={false} isTransactionalOrdersBlocked />
+        <LimitedCapacityNotice isResubscriptionBlocked={false} isTransactionalOrdersBlocked />
       )
     })
 
@@ -57,7 +57,7 @@ describe('given NotificationCovid is rendered', () => {
   describe('when blockedResubscription flag in on', () => {
     beforeEach(() => {
       wrapper = mount(
-        <NotificationCovid isResubscriptionBlocked isTransactionalOrdersBlocked={false} />
+        <LimitedCapacityNotice isResubscriptionBlocked isTransactionalOrdersBlocked={false} />
       )
     })
 

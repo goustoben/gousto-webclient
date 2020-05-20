@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { userGetReferralDetails } from 'actions/user'
 import { redirect } from 'actions/redirect'
+import { getLimitedCapacity } from 'selectors/features'
 import { MyGousto } from './MyGousto'
 
 function mapStateToProps(state) {
@@ -10,6 +11,7 @@ function mapStateToProps(state) {
     orders: state.user.get('orders'),
     nameFirst: state.user.get('nameFirst'),
     referralDetails: state.user.get('referralDetails'),
+    isCapacityLimited: getLimitedCapacity(state),
   }
 }
 
