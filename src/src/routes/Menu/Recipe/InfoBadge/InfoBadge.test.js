@@ -1,8 +1,6 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
-
-import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
+import { InfoBadge } from './InfoBadge'
 
 describe('InfoBadge', () => {
   describe('rendering', () => {
@@ -15,14 +13,16 @@ describe('InfoBadge', () => {
       expect(wrapper.type()).toBe('span')
     })
 
-    test('should render children', () => {
+    test('should render a span with theme', () => {
+      const brandTag = {
+        text: 'Oven ready',
+        theme: {},
+      }
+
       wrapper = shallow(
-        <InfoBadge>
-          <a href="/" />
-          <a href="/" />
-        </InfoBadge>,
+        <InfoBadge brandTag={brandTag} />,
       )
-      expect(wrapper.find('a')).toHaveLength(2)
+      expect(wrapper.find('span').text()).toBe('Oven ready')
     })
   })
 })

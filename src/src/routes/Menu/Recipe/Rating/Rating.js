@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
+import { InfoBadgeContainer, infoBadgeSlugs } from '../InfoBadge'
 import css from './Rating.css'
 
 class RecipeRating extends React.Component {
@@ -28,7 +28,7 @@ class RecipeRating extends React.Component {
     if (count > 0) {
       return (
         <span className={css.ratingContainer}>
-          {isChefPrepared ? <InfoBadge chefPrepared>Oven ready</InfoBadge> : null}
+          {isChefPrepared ? <InfoBadgeContainer slug={infoBadgeSlugs.OVEN_READY} /> : null}
           <span className={css.starColor}>
             {this.showStar(average)}
           </span>
@@ -46,8 +46,8 @@ class RecipeRating extends React.Component {
 
     return (
       <span>
-        {isChefPrepared ? <InfoBadge chefPrepared>Oven ready</InfoBadge> : null}
-        {isNew ? <InfoBadge newRecipe>New Recipe</InfoBadge> : null}
+        {isChefPrepared ? <InfoBadgeContainer slug={infoBadgeSlugs.OVEN_READY} /> : null}
+        {isNew ? <InfoBadgeContainer slug={infoBadgeSlugs.NEW_RECIPE} /> : null}
       </span>
     )
   }
