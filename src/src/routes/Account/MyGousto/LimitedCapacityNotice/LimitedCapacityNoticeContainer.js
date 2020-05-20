@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getBlockedResubscription, getBlockedTransactionalOrders } from 'selectors/features'
 import { getUserId } from 'selectors/user'
-import { NotificationCovid } from './NotificationCovid'
+import { LimitedCapacityNotice } from './LimitedCapacityNotice'
 
 const mapStateToProps = (state) => ({
   isResubscriptionBlocked: getBlockedResubscription(state),
@@ -9,8 +9,8 @@ const mapStateToProps = (state) => ({
   userId: getUserId(state),
 })
 
-const NotificationCovidContainer = connect(mapStateToProps, null)(NotificationCovid)
+const LimitedCapacityNoticeContainer = connect(mapStateToProps, null)(LimitedCapacityNotice)
 
 export {
-  NotificationCovidContainer
+  LimitedCapacityNoticeContainer
 }

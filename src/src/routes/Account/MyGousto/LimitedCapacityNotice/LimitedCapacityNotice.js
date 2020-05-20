@@ -14,19 +14,21 @@ const defaultProps = {
   userId: null,
 }
 
-const NotificationCovid = ({
+const LimitedCapacityNotice = ({
   isTransactionalOrdersBlocked,
   isResubscriptionBlocked,
   userId,
 }) => (
   <Alert type="info">
     <Heading type="h3">
-      Coronavirus Update
+      We’re full to the brim
     </Heading>
     <div>
       <p>
         Due to overwhelming demand, our delivery slots are nearly full.&nbsp;
-        {isTransactionalOrdersBlocked && 'We’re very sorry that we’re still unable to take one-off orders. '}
+        {isTransactionalOrdersBlocked
+          ? 'We’re very sorry that we’re still unable to take one-off orders. '
+          : 'If you’re having issues finding an available slot, try changing your delivery day.'}
         {isResubscriptionBlocked && 'Paused subscriptions cannot be reactivated right now.'}
       </p>
       <p>
@@ -50,9 +52,9 @@ const NotificationCovid = ({
   </Alert>
 )
 
-NotificationCovid.propTypes = propTypes
-NotificationCovid.defaultProps = defaultProps
+LimitedCapacityNotice.propTypes = propTypes
+LimitedCapacityNotice.defaultProps = defaultProps
 
 export {
-  NotificationCovid
+  LimitedCapacityNotice
 }

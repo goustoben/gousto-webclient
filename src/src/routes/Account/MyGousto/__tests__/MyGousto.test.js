@@ -41,8 +41,20 @@ describe('MyGousto', () => {
       expect(wrapper.find(ReferAFriend).length).toEqual(1)
     })
 
-    test('the NotificationCovid is rendered', () => {
-      expect(wrapper.find('Connect(NotificationCovid)').length).toBe(1)
+    test('the LimitedCapacityNotice is not rendered', () => {
+      expect(wrapper.find('Connect(LimitedCapacityNotice)').exists()).toBe(false)
+    })
+
+    describe('when limitedCapacity flag is true', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} isCapacityLimited />
+        )
+      })
+
+      test('the LimitedCapacityNotice is rendered', () => {
+        expect(wrapper.find('Connect(LimitedCapacityNotice)').exists()).toBe(true)
+      })
     })
   })
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
-import { NotificationCovid } from './NotificationCovid'
+import { LimitedCapacityNotice } from './LimitedCapacityNotice'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 import { HeaderContainer } from './Header'
@@ -18,6 +18,7 @@ const propTypes = {
   nameFirst: PropTypes.string,
   referralDetails: PropTypes.instanceOf(Immutable.Map),
   redirect: PropTypes.func,
+  isCapacityLimited: PropTypes.bool,
 }
 
 const contextTypes = {
@@ -31,6 +32,7 @@ const defaultProps = {
   nameFirst: '',
   referralDetails: Immutable.Map(),
   redirect: () => {},
+  isCapacityLimited: false,
 }
 
 class MyGousto extends React.PureComponent {
@@ -47,14 +49,14 @@ class MyGousto extends React.PureComponent {
   }
 
   render() {
-    const { card, orders, nameFirst, referralDetails, redirect } = this.props
+    const { card, orders, nameFirst, referralDetails, redirect, isCapacityLimited } = this.props
     const headerTitle = `Hello ${nameFirst},`
 
     return (
       <div>
         <div className={css.wrapper}>
           <div className={css.notificationContent}>
-            <NotificationCovid />
+            {isCapacityLimited && <LimitedCapacityNotice />}
           </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />
