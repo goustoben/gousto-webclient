@@ -37,7 +37,7 @@ export const getRecipeOutOfStock = createSelector(
   })
 
 const getTagBySlugFromProps = (state, props) => props.slug
-const getAllTags = ({ brand }) => (brand && brand.data ? brand.data.tags : [])
+const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
 
 export const getTagDefinition = createSelector(
   [getAllTags, getTagBySlugFromProps],
