@@ -5,8 +5,11 @@ import routes from 'config/routes'
 
 const version = routes.version.auth
 
-export function getUserToken({ email, password, clientId, clientSecret, xForwardedFor }) {
-  return fetch(null, `${endpoint('auth', version)}${routes.auth.userToken}`, { grant_type: 'password', username: email, password, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', { 'x-forwarded-for': xForwardedFor })
+export function getUserToken({ email, password, clientId, clientSecret, headers }) {
+  return fetch(null, `${endpoint('auth', version)}${routes.auth.userToken}`, { grant_type: 'password', username: email, password, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', {
+    'x-forwarded-for': headers['x-forwarded-for'],
+    'user-agent': headers['user-agent']
+  })
 }
 
 export function identifyUser(accessToken) {

@@ -44,7 +44,10 @@ describe('auth api', () => {
       const password = 'blabla'
       const clientId = 'abcdef'
       const clientSecret = '987654'
-      const xForwardedFor = '192.192.192'
+      const headers = {
+        'x-forwarded-for': '192.192.192',
+        'user-agent': 'test',
+      }
 
       const expectedReqData = {
         grant_type: 'password',
@@ -54,13 +57,23 @@ describe('auth api', () => {
         client_secret: clientSecret
       }
 
-      await getUserToken({ email, password, clientId, clientSecret, xForwardedFor })
+      await getUserToken({ email, password, clientId, clientSecret, headers })
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache', {'x-forwarded-for': xForwardedFor})
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache', headers)
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await getUserToken({ email: '', password: '', clientId: '', clientSecret: ''})
+      const result = await getUserToken(
+        {
+          email: '',
+          password: '',
+          clientId: '',
+          clientSecret: '',
+          headers: {
+            'x-forwarded-for': '192.192.192',
+            'user-agent': 'test',
+          }
+        })
       expect(result).toEqual(mockFetchResult)
     })
   })

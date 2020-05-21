@@ -21,7 +21,6 @@ const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
  */
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
-    const { header } = ctx.request
     const { username, password, rememberMe, recaptchaToken } = ctx.request.body
     const { authClientId, authClientSecret } = env
     const { data } = await fetchFeatures()
@@ -37,8 +36,7 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
         throw validateRecaptchaResponse
       }
     }
-
-    const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret, xForwardedFor: header['x-forwarded-for'] })
+    const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret, headers: ctx.request.headers })
 
     addSessionCookies(ctx, authResponse, rememberMe)
     ctx.response.body = authResponse
