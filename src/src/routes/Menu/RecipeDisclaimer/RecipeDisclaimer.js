@@ -3,22 +3,33 @@ import React from 'react'
 import Svg from 'Svg'
 import css from './RecipeDisclaimer.css'
 
-const RecipeDisclaimer = ({ disclaimer }) => (
-  !!disclaimer
-  && (
-    <div className={css.disclaimerWrapper}>
-      <Svg fileName="icon_health_kitchen_heart" className={css.disclaimerIcon} />
-      <p className={css.disclaimerText}>{disclaimer}</p>
+const RecipeDisclaimer = ({ claim }) => {
+  if (!claim || !claim.disclaimer) {
+    return null
+  }
+
+  return (
+    <div className={css.disclaimerWrapper} style={{backgroundColor: claim.theme.backgroundColor, color: claim.theme.color}}>
+      <Svg fileName={claim.icon} className={css.disclaimerIcon} />
+      <p className={css.disclaimerText}>{claim.disclaimer}</p>
     </div>
   )
-)
+}
 
 RecipeDisclaimer.propTypes = {
-  disclaimer: PropTypes.string
+  claim: PropTypes.shape({
+    disclaimer: PropTypes.string,
+    icon: PropTypes.string,
+    theme: PropTypes.shape({
+      color: PropTypes.string,
+      backgroundColor: PropTypes.string,
+      iconColor: PropTypes.string
+    })
+  })
 }
 
 RecipeDisclaimer.defaultProps = {
-  disclaimer: null
+  claim: null,
 }
 
 export { RecipeDisclaimer }

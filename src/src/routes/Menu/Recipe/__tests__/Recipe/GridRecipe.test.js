@@ -66,7 +66,7 @@ describe('<GridRecipe />', () => {
 
       test('should contain one recipe disclaimer ', () => {
         expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
-        expect(wrapper.find(RecipeDisclaimerContainer).prop('id')).toEqual('1')
+        expect(wrapper.find(RecipeDisclaimerContainer).prop('recipeId')).toEqual('1')
       })
 
       test('should contain one AttributeGrid component', () => {

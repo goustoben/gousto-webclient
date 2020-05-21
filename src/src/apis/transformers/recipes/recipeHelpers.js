@@ -42,16 +42,6 @@ const formatIngredients = (normalisedRelationships, normalisedData) => {
   return result
 }
 
-const healthKitchenTransformer = (healthKitchen) => {
-  if (!healthKitchen) {
-    return null
-  }
-
-  return {
-    disclaimer: healthKitchen.disclaimer,
-  }
-}
-
 const micronutrientsTransformer = (micronutrients) => {
   if (!micronutrients) {
     return null
@@ -125,7 +115,6 @@ export {
   cropsTransformer,
   equipmentTransformer,
   formatIngredients,
-  healthKitchenTransformer,
   micronutrientsTransformer,
   imageUrlMap,
   roundelTransformer,

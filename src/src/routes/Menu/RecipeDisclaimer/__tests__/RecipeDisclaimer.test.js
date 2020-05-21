@@ -4,12 +4,20 @@ import { RecipeDisclaimer } from '../RecipeDisclaimer.js'
 
 describe('RecipeDisclaimer', () => {
   let wrapper
+  const claim = {
+    disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+    icon: 'health-kitchen-heart',
+    theme: {
+      color: 'black',
+      backgroundColor: 'light-green',
+      iconColor: 'green'
+    }
+  }
   describe('when the recipe contains a disclaimer', () => {
-    const disclaimer = 'Iron, magnesium and B vitamins reducing tiredness and fatigue'
     beforeEach(() => {
       wrapper = shallow(
         <RecipeDisclaimer
-          disclaimer={disclaimer}
+          claim={claim}
         />
       )
     })
@@ -19,7 +27,7 @@ describe('RecipeDisclaimer', () => {
     })
 
     test('should display the correct disclaimer text', () => {
-      expect(wrapper.find('.disclaimerText').text()).toEqual(disclaimer)
+      expect(wrapper.find('.disclaimerText').text()).toEqual(claim.disclaimer)
     })
 
     test('should display a heart icon with the disclaimer', () => {
@@ -31,7 +39,7 @@ describe('RecipeDisclaimer', () => {
     test('should not display the disclaimer', () => {
       wrapper = shallow(
         <RecipeDisclaimer
-          disclaimer={null}
+          claim={null}
         />
       )
       expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
