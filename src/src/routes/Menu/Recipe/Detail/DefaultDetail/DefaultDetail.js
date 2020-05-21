@@ -61,7 +61,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
         glutenFree={glutenFree}
         dairyFree={dairyFree}
       />
-      <RecipeDisclaimerContainer id={id} />
+      <RecipeDisclaimerContainer recipeId={id} />
       {equipment && !!equipment.size && (
         <p className={css.additionalInfo}>
           Equipment required:

@@ -4,7 +4,8 @@ import { safeJestMock } from '../../../../_testing/mocks'
 import {
   getRecipeTitle,
   getRecipeOutOfStock,
-  getTagDefinition
+  getTagDefinition,
+  getRecipeDisclaimerProps
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -194,6 +195,109 @@ describe('menu recipe selectors', () => {
         }
         const result = getTagDefinition(state, props)
         expect(result).toEqual(null)
+      })
+    })
+  })
+
+  describe('getRecipeDisclaimerProps', () => {
+    let state
+    beforeEach(() => {
+      state = {
+        recipes: Immutable.fromJS({
+          1: {
+            health: {
+              claims: [
+                {
+                  disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+                  slug: 'health-kitchen',
+                }
+              ]
+            }
+          },
+          2: {
+            health: {}
+          },
+          4: {
+            health: {
+              claims: [{
+                slug: 'unknown',
+                disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue'
+              }]
+            }
+          },
+        }),
+        brand: {
+          data: {
+            tags: [
+              {
+                slug: 'health-kitchen',
+                icon: 'health-kitchen-heart',
+                themes: [{
+                  name: 'light',
+                  backgroundColor: 'green',
+                  iconColor: 'lightGreen'
+                }]
+              }
+            ]
+          }
+        }
+      }
+    })
+
+    describe('when recipeId is not part of recipes', () => {
+      const props = {
+        recipeId: '3'
+      }
+
+      test('should return null', () => {
+        const result = getRecipeDisclaimerProps(state, props)
+        expect(result).toBe(null)
+      })
+    })
+
+    describe('when recipe has no health claims', () => {
+      const props = {
+        recipeId: '2'
+      }
+
+      test('should return null', () => {
+        const result = getRecipeDisclaimerProps(state, props)
+        expect(result).toBe(null)
+      })
+    })
+
+    describe('when recipe health slug is not part of brand data', () => {
+      const props = {
+        recipeId: '4'
+      }
+
+      test('should return only disclaimer', () => {
+        const result = getRecipeDisclaimerProps(state, props)
+        const expectedResult = {
+          disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+        }
+        expect(result).toEqual(expectedResult)
+      })
+    })
+
+    describe('when recipe has health claims', () => {
+      const props = {
+        recipeId: '1'
+      }
+
+      test('should return disclaimer', () => {
+        const result = getRecipeDisclaimerProps(state, props)
+        const expectedResult = {
+          disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+          icon: 'health-kitchen-heart',
+          slug: 'health-kitchen',
+          theme: {
+            backgroundColor: 'green',
+            iconColor: 'lightGreen',
+            name: 'light'
+          }
+        }
+        expect(result).toEqual(expectedResult)
       })
     })
   })

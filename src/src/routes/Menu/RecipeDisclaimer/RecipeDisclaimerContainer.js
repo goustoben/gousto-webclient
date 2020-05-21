@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { getDisclaimerForRecipeID } from 'selectors/recipe'
+import { getRecipeDisclaimerProps } from '../selectors/recipe'
 import { RecipeDisclaimer } from './RecipeDisclaimer'
 
 const mapStateToProps = (state, ownProps) => ({
-  disclaimer: getDisclaimerForRecipeID(state, ownProps.id)
+  claim: getRecipeDisclaimerProps(state, ownProps)
 })
 
 const RecipeDisclaimerContainer = connect(mapStateToProps)(RecipeDisclaimer)

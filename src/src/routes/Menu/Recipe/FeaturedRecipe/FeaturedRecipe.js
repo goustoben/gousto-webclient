@@ -66,7 +66,7 @@ const FeaturedRecipe = ({
                 </Pill>
               </div>
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
-              <RecipeDisclaimerContainer id={id} />
+              <RecipeDisclaimerContainer recipeId={id} />
             </div>
             <div className={css.buttonContainer}>
               <div className={css.addButton}>

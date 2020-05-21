@@ -105,7 +105,7 @@ describe('<DefaultDetail />', () => {
 
   test('should contain one recipe disclaimer ', () => {
     expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
-    expect(wrapper.find(RecipeDisclaimerContainer).prop('id')).toEqual('123')
+    expect(wrapper.find(RecipeDisclaimerContainer).prop('recipeId')).toEqual('123')
   })
 
   test('should contain micronutrients if in health kitchen', () => {

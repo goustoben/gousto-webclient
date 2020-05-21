@@ -88,7 +88,7 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
             </div>
           )
         }
-        <RecipeDisclaimerContainer id={id} />
+        <RecipeDisclaimerContainer recipeId={id} />
         <div className={css.buttonContainer}>
           <AddRecipe id={id} originalId={originalId} stock={stock} inBasket={inBasket} view={view} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} />
         </div>

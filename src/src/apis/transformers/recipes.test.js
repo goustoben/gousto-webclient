@@ -295,6 +295,9 @@ describe('recipesTransformer', () => {
               },
               micronutrients: [],
             },
+            roundel: {
+              slug: 'health-kitchen-healthy-heart'
+            }
           },
           relationships: {
             ingredients: {
@@ -460,7 +463,25 @@ describe('recipesTransformer', () => {
           'Vegetable oil'
         ],
         boxType: 'gourmet',
-        // "chef":null,
+        chef: {
+          name: 'Health Kitchen - Healthy heart',
+          celebrity: true,
+          media: {
+            images: [
+              {
+                title: 'Health Kitchen - Healthy heart',
+                description: '',
+                type: 'headshot-image',
+                urls: [
+                  {
+                    src: 'url/img.png',
+                    width: 0,
+                  }
+                ]
+              }
+            ]
+          }
+        },
         chefPrepared: true,
         cookingTime: 25,
         cookingTimeFamily: 30,
@@ -671,7 +692,7 @@ describe('recipesTransformer', () => {
           },
         ],
         isFineDineIn: false,
-        healthKitchen: null
+        health: null
       }
     ]
 
@@ -684,7 +705,19 @@ describe('recipesTransformer', () => {
             borderColor: '#C6BEB4',
             textColor: '#F6323E'
           }
-        }]
+        }],
+        roundels: [
+          {
+            slug: 'health-kitchen-healthy-heart',
+            name: 'Health Kitchen - Healthy heart',
+            images: [
+              {
+                url: 'url/img.png',
+                type: 'headshot'
+              }
+            ]
+          }
+        ]
       }
     }
     const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse, brandData)
@@ -694,7 +727,12 @@ describe('recipesTransformer', () => {
   describe('when given health kitchen recipe', () => {
     test('should transform health kitchen information', () => {
       const healthKitchenInfo = {
-        disclaimer: 'High in iron, magnesium and b vitamins, reducing tiredness and fatigue'
+        claims: [
+          {
+            slug: 'health-kitchen',
+            disclaimer: 'High in iron, magnesium and b vitamins, reducing tiredness and fatigue'
+          }
+        ]
       }
 
       const menuServiceResponse = {
@@ -819,7 +857,7 @@ describe('recipesTransformer', () => {
                   energy_kcal: 165
                 }
               },
-              health_kitchen: healthKitchenInfo
+              health: healthKitchenInfo
             },
             relationships: {
               ingredients: {
@@ -831,8 +869,9 @@ describe('recipesTransformer', () => {
       }
 
       const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse)
-      expect(result[0].healthKitchen).toEqual({
+      expect(result[0].health.claims[0]).toEqual({
         disclaimer: 'High in iron, magnesium and b vitamins, reducing tiredness and fatigue',
+        slug: 'health-kitchen',
       })
     })
   })

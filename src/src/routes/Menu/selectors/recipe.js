@@ -39,22 +39,57 @@ export const getRecipeOutOfStock = createSelector(
 const getTagBySlugFromProps = (state, props) => props.slug
 const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
 
+const findTag = (allTags, tag) => {
+  const foundTag = allTags && allTags.find((tagData) => tagData.slug === tag)
+
+  if (foundTag) {
+    const foundTheme = foundTag.themes.find((theme) => theme.name === 'light')
+
+    return {
+      ...foundTag,
+      themes: undefined,
+      theme: foundTheme
+    }
+  }
+
+  return null
+}
 export const getTagDefinition = createSelector(
   [getAllTags, getTagBySlugFromProps],
-  (allTags, tag) => {
-    const foundTag = allTags.find((tagData) => tagData.slug === tag)
+  (allTags, tag) => findTag(allTags, tag)
+)
 
-    if (foundTag) {
-      const foundTheme = foundTag.themes.find((theme) => theme.name === 'light')
+const getClaimForRecipeId = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipeDetails = recipes.get(recipeId)
 
+    if (!recipeDetails) {
+      return null
+    }
+
+    const healthClaims = recipeDetails.getIn(['health', 'claims', 0], null)
+    if (healthClaims) {
       return {
-        type: foundTag.type,
-        slug: foundTag.slug,
-        text: foundTag.text,
-        theme: foundTheme
+        disclaimer: healthClaims.get('disclaimer'),
+        slug: healthClaims.get('slug')
       }
     }
 
     return null
+  }
+)
+
+export const getRecipeDisclaimerProps = createSelector(
+  [getClaimForRecipeId, getAllTags],
+  (claim, allTags) => {
+    if (!claim) {
+      return null
+    }
+
+    return {
+      disclaimer: claim.disclaimer,
+      ...findTag(allTags, claim.slug)
+    }
   }
 )
