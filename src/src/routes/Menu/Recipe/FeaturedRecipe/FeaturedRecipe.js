@@ -12,7 +12,6 @@ import Chef from '../Chef'
 import { TitleContainer } from '../Title/TitleContainer'
 import Image from '../Image'
 import { AddRecipe } from '../AddRecipe'
-import { StockBadge } from '../StockBadge'
 import { ChefQuote } from '../ChefQuote'
 import { SoldOutOverlay } from '../SoldOutOverlay'
 import { AttributeGrid } from '../AttributeGrid'
@@ -66,7 +65,6 @@ const FeaturedRecipe = ({
                   View details
                 </Pill>
               </div>
-              <StockBadge stock={stock} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
               <RecipeDisclaimerContainer id={id} />
             </div>

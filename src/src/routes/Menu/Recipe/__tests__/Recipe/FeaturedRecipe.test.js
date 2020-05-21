@@ -10,7 +10,6 @@ import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
-import { StockBadge } from '../../StockBadge'
 import { VariantHeaderContainer } from '../../VariantHeader'
 import { TitleContainer } from '../../Title'
 
@@ -79,10 +78,5 @@ describe('<FeaturedRecipe />', () => {
   test('should contain one Pill component and icon prop is true', () => {
     expect(wrapper.find(Pill).length).toBe(1)
     expect(wrapper.find(Pill).prop('icon')).toBe(true)
-  })
-
-  test('should have stock badge with provided stock volume', () => {
-    expect(wrapper.find(StockBadge).length).toBe(1)
-    expect(wrapper.find(StockBadge).prop('stock')).toBe(recipe.stock)
   })
 })

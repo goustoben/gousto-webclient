@@ -1,7 +1,11 @@
 import Immutable from 'immutable'
 import * as recipeUtils from 'utils/recipe'
 import { safeJestMock } from '../../../../_testing/mocks'
-import { getRecipeTitle, getRecipeOutOfStock } from '../recipe'
+import {
+  getRecipeTitle,
+  getRecipeOutOfStock,
+  getTagDefinition
+} from '../recipe'
 
 jest.mock('config/menu', () => ({
   stockThreshold: 3
@@ -134,6 +138,62 @@ describe('menu recipe selectors', () => {
         }
         const result = getRecipeOutOfStock(state, props)
         expect(result).toEqual(false)
+      })
+    })
+  })
+
+  describe('getTagDefinition', () => {
+    describe('when matching tag for slug exists', () => {
+      test('should return the tag theme info', () => {
+        const props = {
+          slug: 'new',
+        }
+
+        const state = {
+          brand: {
+            data: {
+              tags: [{
+                type: 'general',
+                slug: 'new',
+                text: 'New',
+                themes: [{
+                  name: 'light',
+                  color: '#01A92B',
+                  borderColor: '#01A92B'
+                }]
+              }]
+            }
+          }
+        }
+        const result = getTagDefinition(state, props)
+        expect(result).toEqual({
+          type: 'general',
+          slug: 'new',
+          text: 'New',
+          theme: {
+            name: 'light',
+            color: '#01A92B',
+            borderColor: '#01A92B'
+          }
+        })
+      })
+    })
+
+    describe('when no matching tag for slug exists', () => {
+      test('should return null', () => {
+        const props = {
+          slug: 'new',
+        }
+
+        const state = {
+          brand: {
+            data: {
+              tags: []
+            }
+          }
+        }
+        const result = getTagDefinition(state, props)
+        expect(result).toEqual(null)
       })
     })
   })

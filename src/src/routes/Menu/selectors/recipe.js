@@ -35,3 +35,26 @@ export const getRecipeOutOfStock = createSelector(
 
     return (stock <= config.stockThreshold && stock !== null && !inBasket)
   })
+
+const getTagBySlugFromProps = (state, props) => props.slug
+const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
+
+export const getTagDefinition = createSelector(
+  [getAllTags, getTagBySlugFromProps],
+  (allTags, tag) => {
+    const foundTag = allTags.find((tagData) => tagData.slug === tag)
+
+    if (foundTag) {
+      const foundTheme = foundTag.themes.find((theme) => theme.name === 'light')
+
+      return {
+        type: foundTag.type,
+        slug: foundTag.slug,
+        text: foundTag.text,
+        theme: foundTheme
+      }
+    }
+
+    return null
+  }
+)
