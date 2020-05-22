@@ -183,4 +183,8 @@ module.exports = {
   recaptcha: {
     verify: 'https://www.google.com/recaptcha/api/siteverify',
   },
+
+  unbounce: {
+    covid: 'https://cook.gousto.co.uk/coronavirus-3/',
+  },
 }

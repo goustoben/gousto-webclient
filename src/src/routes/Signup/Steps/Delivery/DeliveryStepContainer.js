@@ -4,6 +4,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'
+import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
   getLogoutUserDisabledSlots,
@@ -36,6 +37,7 @@ function mapStateToProps(state) {
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
     isNDDPaintedDoorOpened,
     disabledSlots,
+    userHasAvailableSlots: userHasAvailableSlots(state),
   }
 }
 
