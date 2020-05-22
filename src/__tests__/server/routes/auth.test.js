@@ -72,7 +72,8 @@ describe('auth', () => {
             rememberMe,
             recaptchaToken,
           },
-          header: {
+          headers: {
+            'user-agent': 'test',
             'x-forwarded-for': '192.192.192'
           }
         },
@@ -111,7 +112,10 @@ describe('auth', () => {
           password,
           clientId: 'authClientId',
           clientSecret: 'authClientSecret',
-          xForwardedFor: '192.192.192'
+          headers: {
+            'user-agent': 'test',
+            'x-forwarded-for': '192.192.192',
+          },
         })
       })
 
@@ -163,7 +167,10 @@ describe('auth', () => {
           password,
           clientId: 'authClientId',
           clientSecret: 'authClientSecret',
-          xForwardedFor: '192.192.192',
+          headers: {
+            'x-forwarded-for': '192.192.192',
+            'user-agent': 'test',
+          },
         })
       })
     })
@@ -189,7 +196,10 @@ describe('auth', () => {
           password,
           clientId: 'authClientId',
           clientSecret: 'authClientSecret',
-          xForwardedFor: '192.192.192',
+          headers: {
+            'x-forwarded-for': '192.192.192',
+            'user-agent': 'test',
+          },
         })
       })
     })
@@ -215,7 +225,10 @@ describe('auth', () => {
           password,
           clientId: 'authClientId',
           clientSecret: 'authClientSecret',
-          xForwardedFor: '192.192.192',
+          headers: {
+            'x-forwarded-for': '192.192.192',
+            'user-agent': 'test',
+          },
         })
       })
     })
