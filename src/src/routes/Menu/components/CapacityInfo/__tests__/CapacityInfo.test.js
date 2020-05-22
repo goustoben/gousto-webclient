@@ -11,16 +11,16 @@ describe('Given we render the CapacityInfo', () => {
   })
 
   describe.each([
-    [null, ''],
-    ['1234', '/?user_id=1234']
-  ])('when the userIdProp is %s', (userId, urlQueryParam) => {
+    [null, 'https://cook.gousto.co.uk/coronavirus-3/'],
+    ['1234', `${zendesk.covid}/?user_id=1234`]
+  ])('when the userIdProp is %s', (userId, url) => {
     beforeEach(() => {
       wrapper.setProps({ userId })
     })
 
-    test(`it renders a link to zendesk, plus: "${urlQueryParam}"`, () => {
+    test(`it renders a link to zendesk, plus: "${url}"`, () => {
       expect(wrapper.find('a').prop('href'))
-        .toBe(`${zendesk.covid}${urlQueryParam}`)
+        .toBe(url)
     })
   })
 })

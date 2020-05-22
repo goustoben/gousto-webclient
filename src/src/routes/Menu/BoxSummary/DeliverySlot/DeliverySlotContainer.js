@@ -5,7 +5,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryNext } from 'actions/boxSummary'
 import { getFullScreenBoxSummary } from 'selectors/features'
-import { getDisabledSlotsBasedOnAuthStatus, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
+import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
@@ -15,8 +15,9 @@ import { DeliverySlot } from './DeliverySlot'
 
 function mapStateToProps(state) {
   const isAuthenticated = getIsAuthenticated(state)
-  const disabledSlotsBasedOnAuthStatus = getDisabledSlotsBasedOnAuthStatus(state)
-  const disabledSlots = formatAndValidateDisabledSlots(disabledSlotsBasedOnAuthStatus)
+  const disabledSlots = formatAndValidateDisabledSlots(
+    getDisabledSlotDates(state)
+  )
   const {
     deliveryDays,
     tempDate,

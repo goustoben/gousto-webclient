@@ -201,25 +201,25 @@ describe('delivery actions', () => {
       getTempDeliveryOptions.mockReturnValue({
         tempDate: '2019-03-03',
         tempSlotId: '',
-        deliveryDays: Immutable.List([
-          Immutable.Map({
+        deliveryDays: Immutable.fromJS([
+          {
             date: '2019-03-03',
             id: 'djhdhds',
-            slots: Immutable.List([
-              Immutable.Map({
+            slots: [
+              {
                 deliveryStartTime: '08:00:00',
                 deliveryEndTime: '19:00:00',
                 id: '123sddrdfst456',
                 disabledSlotId: '2019-03-03_08-19'
-              }),
-              Immutable.Map({
+              },
+              {
                 deliveryStartTime: '18:00:00',
                 deliveryEndTime: '22:00:00',
                 id: '987sddrdfst456',
                 disabledSlotId: '2019-03-03_18-22'
-              })
-            ])
-          })
+              }
+            ]
+          }
         ])
       })
     })
@@ -234,7 +234,42 @@ describe('delivery actions', () => {
           },
           orders: []
         }),
-        boxSummaryDeliveryDays: Immutable.fromJS({})
+        boxSummaryDeliveryDays: Immutable.fromJS({
+          '2019-03-03': {
+            date: '2019-03-03',
+            isDefault: false,
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123sddrdfst456',
+                activeForSignups: true,
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '987sddrdfst456',
+                activeForSignups: true,
+              }
+            ],
+            slots: [
+              {
+                id: '123sddrdfst456',
+                whenCutoff: '2019-12-31T11:59:59+01:00',
+                disabledSlotId: '2019-03-03_08-19',
+                deliveryEndTime: '19:00:00',
+                deliveryStartTime: '08:00:00',
+              },
+              {
+                id: '987sddrdfst456',
+                whenCutoff: '2019-12-31T11:59:59+01:00',
+                disabledSlotId: '2019-03-03_18-22',
+                deliveryEndTime: '19:00:00',
+                deliveryStartTime: '08:00:00',
+              },
+            ],
+          },
+        })
       })
       getDeliveryDaysAndSlots.mockReturnValueOnce({
         slots: {

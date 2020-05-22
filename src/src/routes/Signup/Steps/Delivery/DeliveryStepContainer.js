@@ -4,10 +4,9 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import { getLandingDay } from 'utils/deliveries'
-import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
+import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
-  getLogoutUserDisabledSlots,
 } from 'selectors/features'
 import { formatAndValidateDisabledSlots, addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import { DeliveryStep } from './DeliveryStep'
@@ -26,7 +25,7 @@ function mapStateToProps(state) {
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
   const isNDDPaintedDoorOpened = state.temp.get('isNDDPaintedDoorOpened', false)
-  const nonValidatedDisabledSlots = getLogoutUserDisabledSlots(state)
+  const nonValidatedDisabledSlots = getDisabledSlotDates(state)
   const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
 
   return {
