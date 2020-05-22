@@ -2,96 +2,244 @@ import Immutable, { fromJS } from 'immutable'
 import { getOneOffSlotAvailableSlots, getDisabledSlots, userHasAvailableSlots } from '../boxSummary'
 
 describe('given getOneOffSlotAvailableSlots is called', () => {
-  describe('and there is available active slots', () => {
-    let expected
+  describe('when customer is logged in', () => {
+    describe('and there is available active slots', () => {
+      let expected
 
-    beforeEach(() => {
-      const state = {
-        user: Immutable.fromJS({
-          subscription: {
-            state: 'active'
-          }
-        }),
-        boxSummaryDeliveryDays: Immutable.fromJS({
-          '2020-04-19': {
-            daySlots: [{
-              activeForNonSubscribersOneOff: false,
-              activeForSubscribersOneOff: false,
-            }],
-          },
-          '2020-04-20': {
-            daySlots: [{
-              activeForNonSubscribersOneOff: true,
-              activeForSubscribersOneOff: true,
-            }],
-          }
-        })
-      }
+      beforeEach(() => {
+        const state = {
+          auth: Immutable.fromJS({
+            isAuthenticated: true
+          }),
+          user: Immutable.fromJS({
+            subscription: {
+              state: 'active'
+            }
+          }),
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+              }],
+            },
+            '2020-04-20': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: true,
+              }],
+            }
+          })
+        }
 
-      expected = getOneOffSlotAvailableSlots(state)
+        expected = getOneOffSlotAvailableSlots(state)
+      })
+
+      test('returns the days with active slots', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({
+            '2020-04-20': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: true,
+              }],
+            }
+          })
+        )
+      })
     })
 
-    test('returns the days with active slots', () => {
-      expect(expected).toEqual(
-        Immutable.fromJS({
-          '2020-04-20': {
-            daySlots: [{
-              activeForNonSubscribersOneOff: true,
-              activeForSubscribersOneOff: true,
-            }],
-          }
-        })
-      )
+    describe('and there is no available active slots', () => {
+      let expected
+
+      beforeEach(() => {
+        const state = {
+          auth: Immutable.fromJS({
+            isAuthenticated: true
+          }),
+          user: Immutable.fromJS({
+            subscription: {
+              state: 'active'
+            }
+          }),
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+              }],
+            },
+            '2020-04-20': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+              }],
+            }
+          })
+        }
+
+        expected = getOneOffSlotAvailableSlots(state)
+      })
+
+      test('returns empty', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({})
+        )
+      })
+    })
+
+    describe('and subscription is set to inactive', () => {
+      let expected
+
+      beforeEach(() => {
+        const state = {
+          auth: Immutable.fromJS({
+            isAuthenticated: true
+          }),
+          user: Immutable.fromJS({
+            subscription: {
+              state: 'inactive'
+            }
+          }),
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: false,
+              }],
+            },
+            '2020-04-20': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+              }],
+            }
+          })
+        }
+
+        expected = getOneOffSlotAvailableSlots(state)
+      })
+
+      test('returns available slot', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: false,
+              }],
+            }
+          })
+        )
+      })
     })
   })
 
-  describe('and there is no available active slots', () => {
-    let expected
+  describe('when a customer is not logged in', () => {
+    describe('and there are available slots', () => {
+      let expected
 
-    beforeEach(() => {
-      const state = {
-        user: Immutable.fromJS({
-          subscription: {
-            state: 'active'
-          }
-        }),
-        boxSummaryDeliveryDays: Immutable.fromJS({
-          '2020-04-19': {
-            daySlots: [{
-              activeForNonSubscribersOneOff: false,
-              activeForSubscribersOneOff: false,
-            }],
-          },
-          '2020-04-20': {
-            daySlots: [{
-              activeForNonSubscribersOneOff: false,
-              activeForSubscribersOneOff: false,
-            }],
-          }
-        })
-      }
+      beforeEach(() => {
+        const state = {
+          auth: Immutable.fromJS({
+            isAuthenticated: false
+          }),
+          user: Immutable.fromJS({}),
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+                activeForSignups: true,
+              }],
+            },
+            '2020-04-20': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: true,
+                activeForSignups: false,
+              }],
+            }
+          })
+        }
 
-      expected = getOneOffSlotAvailableSlots(state)
+        expected = getOneOffSlotAvailableSlots(state)
+      })
+
+      test('returns the days with active slots', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+                activeForSignups: true,
+              }],
+            }
+          })
+        )
+      })
     })
 
-    test('returns empty', () => {
-      expect(expected).toEqual(
-        Immutable.fromJS({})
-      )
+    describe('and there are no available slots', () => {
+      let expected
+
+      beforeEach(() => {
+        const state = {
+          auth: Immutable.fromJS({
+            isAuthenticated: false
+          }),
+          user: Immutable.fromJS({}),
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+                activeForSignups: false,
+              }],
+            },
+            '2020-04-20': {
+              daySlots: [{
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+                activeForSignups: false,
+              }],
+            }
+          })
+        }
+
+        expected = getOneOffSlotAvailableSlots(state)
+      })
+
+      test('returns the days with active slots', () => {
+        expect(expected).toEqual(
+          Immutable.fromJS({})
+        )
+      })
     })
   })
 })
 
 describe('given the getDisabledSlots is called', () => {
   let expected
+  const OPEN_ORDER = {
+    'order-id-1': {
+      phase: 'open'
+    }
+  }
 
   beforeEach(() => {
     const state = {
+      auth: Immutable.fromJS({
+        isAuthenticated: true
+      }),
       user: Immutable.fromJS({
         subscription: {
           state: 'active'
         },
-        orders: [],
+        orders: [
+          OPEN_ORDER,
+        ],
       }),
       boxSummaryDeliveryDays: Immutable.fromJS({
         '2020-04-19': {
@@ -201,6 +349,9 @@ describe('given the userHasAvailableSlots is called', () => {
 
     beforeEach(() => {
       const state = {
+        auth: Immutable.fromJS({
+          isAuthenticated: true
+        }),
         user: Immutable.fromJS({
           subscription: {
             state: 'active'
@@ -223,6 +374,9 @@ describe('given the userHasAvailableSlots is called', () => {
 
     beforeEach(() => {
       const state = {
+        auth: Immutable.fromJS({
+          isAuthenticated: true
+        }),
         user: Immutable.fromJS({
           subscription: {
             state: 'active'
@@ -245,6 +399,9 @@ describe('given the userHasAvailableSlots is called', () => {
 
     beforeEach(() => {
       const state = {
+        auth: Immutable.fromJS({
+          isAuthenticated: true
+        }),
         user: Immutable.fromJS({
           subscription: {
             state: 'active'

@@ -2,6 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import DropdownInput from 'Form/Dropdown'
+import { unbounce as unbounceRoutes } from 'config/routes'
 import { DeliveryStep } from '../DeliveryStep'
 
 describe('Delivery Step', () => {
@@ -66,6 +67,41 @@ describe('Delivery Step', () => {
       tempDate="2020-02-14"
       tempSlotId="1"
     />)
+  })
+
+  describe('Capacity Message', () => {
+    describe('When all slots are disabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          disabledSlots: [
+            '2020-02-14_08-12',
+            '2020-02-14_08-19'
+          ],
+          userHasAvailableSlots: false,
+        })
+      })
+
+      test('should display the capacity alert', () => {
+        expect(wrapper.find('a').prop('href'))
+          .toBe(unbounceRoutes.covid)
+      })
+    })
+
+    describe('When slots are available', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          disabledSlots: [
+            '2020-02-14_08-12',
+            '2020-02-14_08-19'
+          ],
+          userHasAvailableSlots: true,
+        })
+      })
+
+      test('should not display the capacity alert', () => {
+        expect(wrapper.find('Alert').exists()).toBeFalsy()
+      })
+    })
   })
 
   describe('Delivery day dropdown', () => {

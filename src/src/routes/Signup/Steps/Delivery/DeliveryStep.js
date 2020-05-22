@@ -8,7 +8,8 @@ import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
-import { Button as GoustoButton } from 'goustouicomponents'
+import { Button as GoustoButton, Heading, Alert } from 'goustouicomponents'
+import { unbounce as unbounceRoutes } from 'config/routes'
 import Svg from 'Svg'
 import { Button } from '../../Button'
 
@@ -24,7 +25,7 @@ const formatDate = (date) => (
   `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
 )
 
-const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, disabledSlots) => {
+const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, disabledSlots, userHasAvailableSlots) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
@@ -39,7 +40,9 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, disabledSlots
         disabled: isSlotDisabled
       }
     }).toArray()
-    const disabled = (dd && dd.get('alternateDeliveryDay') !== null) || slots[date].every(slot => slot.disabled)
+    const disabled = userHasAvailableSlots === false
+    || (dd && dd.get('alternateDeliveryDay') !== null)
+    || slots[date].every(slot => slot.disabled)
 
     return { date, value: date, disabled, label: formatDate(moment(date))}
   })
@@ -70,12 +73,14 @@ const DeliveryStep = ({
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceModalClosed,
   trackDeliveryPreferenceSelected,
-  disabledSlots
+  disabledSlots,
+  userHasAvailableSlots
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
     tempDate,
-    disabledSlots
+    disabledSlots,
+    userHasAvailableSlots
   )
 
   if (nextDayDeliveryPaintedDoorFeature) {
@@ -144,6 +149,38 @@ const DeliveryStep = ({
     if (event.target.checked) {
       trackDeliveryPreferenceSelected(tempDate, getDateOffset(tempDate), tempSlotId, event.target.value)
     }
+  }
+
+  if (userHasAvailableSlots === false) {
+    return (
+      <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
+        <div className={signupCss.fullWidth}>
+          <div className={signupCss.header}>
+            <Image name="delivery-day" />
+            <h1 className={signupCss.heading}>Which delivery day would you like?</h1>
+          </div>
+          <div className={signupCss.body}>
+            <div className={css.container}>
+              <div className={`${css.row} ${css.centralize}`}>
+                <Alert type="info">
+                  <Heading type="h3">Due to extremely high demand, we don’t have any available slots right now.</Heading>
+                  <p>
+                    <a
+                      href={unbounceRoutes.covid}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Register your interest
+                    </a>
+                    &nbsp;to be notified when more slots open up or check back soon!
+                  </p>
+                </Alert>
+              </div>
+            </div>
+          </div>
+        </div>
+      </span>
+    )
   }
 
   return (
@@ -252,6 +289,7 @@ DeliveryStep.propTypes = {
   trackDeliveryPreferenceSelected: PropTypes.func,
   next: PropTypes.func,
   disabledSlots: PropTypes.arrayOf(PropTypes.string),
+  userHasAvailableSlots: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -275,7 +313,8 @@ DeliveryStep.defaultProps = {
   trackDeliveryPreferenceModalClosed: () => {},
   trackDeliveryPreferenceSelected: () => {},
   next: () => {},
-  disabledSlots: []
+  disabledSlots: [],
+  userHasAvailableSlots: true,
 }
 
 export { DeliveryStep }

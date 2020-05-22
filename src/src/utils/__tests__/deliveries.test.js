@@ -2637,17 +2637,59 @@ describe('utils/deliveries', () => {
 
       describe('when there are disabled slots', () => {
         beforeEach(() => {
+          const currentDeliveryDays = deliveryDays.toJS()
+
           state = {
             ...state,
             auth: Immutable.fromJS({
               isAuthenticated: false,
             }),
-            features: Immutable.fromJS({
-              logoutUserDisabledSlots: {
-                value: '2020-01-02_08-19,2020-02-13_08-19'
+            features: Immutable.fromJS({}),
+            boxSummaryDeliveryDays: Immutable.fromJS({
+              ...currentDeliveryDays,
+              '2020-01-02': {
+                date: '2020-01-02',
+                isDefault: false,
+                daySlots: [
+                  {
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '123-123-123',
+                    activeForSignups: false,
+                  }
+                ],
+                slots: [
+                  {
+                    id: '123-123-123',
+                    whenCutoff: '2019-12-31T11:59:59+01:00',
+                    disabledSlotId: '2020-01-02_08-19',
+                    deliveryEndTime: '19:00:00',
+                    deliveryStartTime: '08:00:00',
+                  },
+                ],
+              },
+              '2020-02-13': {
+                date: '2020-02-13',
+                isDefault: false,
+                daySlots: [
+                  {
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    activeForSignups: false,
+                    slotId: '125-125-125',
+                  }
+                ],
+                slots: [
+                  {
+                    id: '125-125-125',
+                    whenCutoff: '2019-12-31T11:59:59+01:00',
+                    disabledSlotId: '2020-02-13_08-19',
+                    deliveryEndTime: '19:00:00',
+                    deliveryStartTime: '08:00:00',
+                  },
+                ],
               },
             }),
-            boxSummaryDeliveryDays: deliveryDays,
           }
         })
 

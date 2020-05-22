@@ -114,8 +114,7 @@ class Menu extends React.PureComponent {
     const { isChrome } = this.state
 
     const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null
-
-    if (userHasAvailableSlots === false && userOrderLoadingState === false) {
+    if (userHasAvailableSlots === false && (userOrderLoadingState === false || isAuthenticated === false)) {
       return (
         <MainLayout>
           <div data-testing="menuContainer">

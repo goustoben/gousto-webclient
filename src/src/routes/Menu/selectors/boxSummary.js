@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getIsAuthenticated } from 'selectors/auth'
-import { getLogoutUserDisabledSlots } from 'selectors/features'
 import { getUserOpenOrders, getUserSubscriptionState } from 'selectors/user'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
 
@@ -16,13 +15,29 @@ const isOneOffSlotActiveForUser = ({ daySlot, userSubscriptionState }) => {
   }
 }
 
+const isOneOffSlotActiveForSignup = ({ daySlot }) => (
+  daySlot.get('activeForSignups', true)
+)
+
+const isOneOffSlotActive = ({ isUserAuthenticated, daySlot, userSubscriptionState }) => {
+  switch (isUserAuthenticated) {
+  case true:
+    return isOneOffSlotActiveForUser({daySlot, userSubscriptionState})
+  case false:
+    return isOneOffSlotActiveForSignup({daySlot})
+  default:
+    return true
+  }
+}
+
 export const getDisabledSlots = createSelector(
   [
     getBoxSummaryDeliveryDays,
     getUserSubscriptionState,
-    getUserOpenOrders
+    getUserOpenOrders,
+    getIsAuthenticated
   ],
-  (boxSummaryDeliveryDays, userSubscriptionState, userOpenOrders) => (
+  (boxSummaryDeliveryDays, userSubscriptionState, userOpenOrders, isUserAuthenticated) => (
     boxSummaryDeliveryDays.reduce((acc, deliveryDay) => {
       const daySlots = deliveryDay.get('daySlots')
 
@@ -39,9 +54,10 @@ export const getDisabledSlots = createSelector(
             daySlotItem.get('slotId') === slot.get('id')
           )).first()
 
-          return isOneOffSlotActiveForUser({
+          return isOneOffSlotActive({
             daySlot,
             userSubscriptionState,
+            isUserAuthenticated,
           }) === false && hasAnOpenOrder === false
         })
 
@@ -69,26 +85,18 @@ export const getDisabledSlotDates = createSelector(
   )
 )
 
-export const getDisabledSlotsBasedOnAuthStatus = createSelector(
-  [
-    getIsAuthenticated,
-    getDisabledSlotDates,
-    getLogoutUserDisabledSlots,
-  ],
-  (isUserAuthenticated, disabledSlots, logoutDisabledSlots) => (
-    (isUserAuthenticated) ? disabledSlots : logoutDisabledSlots
-  ))
-
 export const getOneOffSlotAvailableSlots = createSelector(
   [
     getBoxSummaryDeliveryDays,
-    getUserSubscriptionState
+    getUserSubscriptionState,
+    getIsAuthenticated
   ],
-  (boxSummaryDeliveryDays, userSubscriptionState) => (
+  (boxSummaryDeliveryDays, userSubscriptionState, isUserAuthenticated) => (
     boxSummaryDeliveryDays.filter(deliveryDay => (
-      isOneOffSlotActiveForUser({
+      isOneOffSlotActive({
         daySlot: deliveryDay.get('daySlots').first(),
         userSubscriptionState,
+        isUserAuthenticated,
       })
     ))
   ))

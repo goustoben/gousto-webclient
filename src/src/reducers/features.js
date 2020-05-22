@@ -24,9 +24,6 @@ const defaultFeatures = () => ({
   disabledSlots: {
     value: '',
   },
-  logoutUserDisabledSlots: {
-    value: '',
-  },
   goToMyGousto: {
     value: false,
   },
