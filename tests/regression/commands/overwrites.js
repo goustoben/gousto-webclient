@@ -17,7 +17,11 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
     },
   }
 
-  return originalFn(url, {options, ...removeFetch})
+  return originalFn(url, {options, ...removeFetch, ...{
+    headers: { 
+      "x-pre-render": false
+    } 
+  }})
 })
 
 Cypress.Commands.overwrite('server', (originalFn, options) => {

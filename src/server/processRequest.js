@@ -1,4 +1,5 @@
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
+import { isServerSideRenderEligible } from './utils/renderType'
 const React = require('react')
 
 const { renderToString } = require('react-dom/server')
@@ -26,9 +27,15 @@ const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
 
-const fetchAllData = (renderProps, store) => {
+const fetchAllData = (renderProps, store, headers) => {
   const { location, params } = renderProps
   const queries = []
+
+  const serverSideRenderEligible = isServerSideRenderEligible(headers)
+
+  if (!serverSideRenderEligible) {
+    return Promise.resolve()
+  }
 
   renderProps.components.forEach(component => {
     if (component) {
@@ -217,7 +224,7 @@ async function processRequest(ctx, next) {
           resolve()
         } else if (renderProps) {
           const is404 = renderProps.routes.find(r => (r.component && r.component.displayName && r.component.displayName === 'Connect(ErrorPage)')) !== undefined
-          fetchAllData(renderProps, store).then(async () => {
+          fetchAllData(renderProps, store, headers).then(async () => {
             const {redirect} = store.getState()
 
             if (redirect) {
