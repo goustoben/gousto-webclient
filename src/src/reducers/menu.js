@@ -11,7 +11,8 @@ export const menuInitialState = Immutable.Map({
   menuLimits: [],
   menuVariants: {},
   selectedRecipeVariants: {},
-  currentExpandedRecipeVariantsDropdown: null
+  currentExpandedRecipeVariantsDropdown: null,
+  collectionHeaders: {}
 })
 
 const menu = {
@@ -51,6 +52,10 @@ const menu = {
 
     case actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED: {
       return state.set('currentExpandedRecipeVariantsDropdown', action.payload.recipeId)
+    }
+
+    case actionTypes.MENU_COLLECTIONS_HEADERS_RECEIVED: {
+      return state.set('collectionHeaders', action.payload.collectionHeaders)
     }
 
     default:

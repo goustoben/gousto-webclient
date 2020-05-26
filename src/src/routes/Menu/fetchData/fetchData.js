@@ -16,6 +16,7 @@ import { menuServiceDataReceived } from 'actions/menuService'
 import { brandDataReceived } from 'actions/brand'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { basketRecipeAdd } from '../actions/basketRecipes'
+import { getBrandMenuHeaders } from '../actions/brandHeaders'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
@@ -253,6 +254,8 @@ export default async function fetchData({ store, query, params }, force, backgro
   } catch (err) {
     logger.notice({ message: `Brand Theme failed to load: ${err.message}`, errors: [err] })
   }
+
+  store.dispatch(getBrandMenuHeaders())
 
   try {
     if (query.error) {

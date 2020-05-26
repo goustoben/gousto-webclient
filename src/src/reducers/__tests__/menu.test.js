@@ -2,6 +2,7 @@ import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
 import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdownExpanded } from '../../actions/menu'
+import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -206,6 +207,42 @@ describe('menu reducer', () => {
       test('should set recipeVariantDropdownExpanded entry to the recipe id', () => {
         const result = menu.menu(menuInitialState, action)
         const expectedState = menuInitialState.set('currentExpandedRecipeVariantsDropdown', recipeId)
+        expect(result).toEqual(expectedState)
+      })
+    })
+
+    describe('MENU_COLLECTIONS_HEADERS_RECEIVED', () => {
+      const menuHeaderData = {
+        id: '342',
+        type: 'menu',
+        relationships: {
+          collections: {
+            data: [{
+              header: 'header-wave-id',
+              id: 'collection-id',
+              type: 'collection'
+            }]
+          }
+        }
+      }
+
+      const headerData = {
+        attributes: {},
+        id: 'header-wave-id',
+        type: 'wave-link-header'
+      }
+
+      test('should set recipeVariantDropdownExpanded entry to the recipe id', () => {
+        const action = menuCollectionsHeadersReceived({
+          collectionsPerMenu: [menuHeaderData],
+          headers: [headerData]
+        })
+        const result = menu.menu(menuInitialState, action)
+        const expectedState = menuInitialState.set('collectionHeaders', {
+          collectionsPerMenu: [menuHeaderData],
+          headers: [headerData]
+        })
+
         expect(result).toEqual(expectedState)
       })
     })

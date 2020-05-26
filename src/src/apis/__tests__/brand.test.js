@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchBrandInfo } from '../brand'
+import { fetchBrandInfo, fetchBrandMenuHeaders } from '../brand'
 
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {
@@ -31,6 +31,16 @@ describe('brand api', () => {
       await fetchBrandInfo()
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(null, 'endpoint-brand/v2/theme', expectedReqData, 'GET')
+    })
+  })
+
+  describe('fetchBrandInfo', () => {
+    test('should fetch the correct url', async () => {
+      const expectedReqData = {}
+
+      await fetchBrandMenuHeaders()
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-brand/v2/menu-headers', expectedReqData, 'GET')
     })
   })
 })
