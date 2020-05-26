@@ -4,7 +4,6 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import Image from 'routes/Menu/Recipe/Image'
-import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 
@@ -15,6 +14,7 @@ import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { VariantHeaderContainer } from '../../VariantHeader'
 import { TitleContainer } from '../../Title'
+import { RecipeRatingContainer } from '../../Rating'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -55,8 +55,8 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(Image).length).toEqual(1)
       })
 
-      test('should contain one RecipeRating component', () => {
-        expect(wrapper.find(RecipeRating).length).toEqual(1)
+      test('should contain one RecipeRatingContainer component', () => {
+        expect(wrapper.find(RecipeRatingContainer).length).toEqual(1)
       })
 
       test('should contain TitleContainer', () => {
@@ -117,8 +117,8 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(AttributeGrid).length).toEqual(0)
       })
 
-      test('should not contain one RecipeRating component', () => {
-        expect(wrapper.find(RecipeRating).length).toEqual(0)
+      test('should not contain one RecipeRatingContainer component', () => {
+        expect(wrapper.find(RecipeRatingContainer).length).toEqual(0)
       })
     })
   })

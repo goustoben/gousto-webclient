@@ -8,7 +8,7 @@ import { CTACard } from '../CTACard'
 import css from './MobileRecipeList.css'
 
 const MobileRecipeList = ({
-  recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange
+  recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate
 }) => {
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = (value, index) => (
@@ -25,10 +25,9 @@ const MobileRecipeList = ({
       {recipes.map(createRecipeCard)}
 
       <CTACard
-        thematicName={thematicName}
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+        thematicName={thematicName}
         deliveryDate={deliveryDate}
-        collectionFilterChange={collectionFilterChange}
       />
     </div>
   )
@@ -37,7 +36,6 @@ const MobileRecipeList = ({
 MobileRecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  collectionFilterChange: PropTypes.func,
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
 }
@@ -45,7 +43,6 @@ MobileRecipeList.propTypes = {
 MobileRecipeList.defaultProps = {
   thematicName: null,
   deliveryDate: null,
-  collectionFilterChange: () => {},
   isCurrentCollectionRecommendation: false,
 }
 

@@ -38,7 +38,6 @@ class RecipeList extends React.PureComponent {
       thematicName,
       isCurrentCollectionRecommendation,
       deliveryDate,
-      collectionFilterChange,
     } = this.props
 
     if (browserType === 'mobile') {
@@ -48,7 +47,6 @@ class RecipeList extends React.PureComponent {
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
-          collectionFilterChange={collectionFilterChange}
         />
       )
     }
@@ -60,7 +58,6 @@ class RecipeList extends React.PureComponent {
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
           deliveryDate={deliveryDate}
-          collectionFilterChange={collectionFilterChange}
         />
       )
     }
@@ -71,7 +68,6 @@ class RecipeList extends React.PureComponent {
         thematicName={thematicName}
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
         deliveryDate={deliveryDate}
-        collectionFilterChange={collectionFilterChange}
       />
     )
   }
@@ -80,7 +76,6 @@ class RecipeList extends React.PureComponent {
 RecipeList.propTypes = {
   filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  collectionFilterChange: PropTypes.func.isRequired,
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,

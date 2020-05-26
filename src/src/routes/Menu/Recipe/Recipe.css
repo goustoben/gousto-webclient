@@ -53,11 +53,3 @@
 .fineDineIn {
 	composes: grid;
 }
-
-.ctaAllRecipe, .ctaThematic {
-	flex-basis: 100%;
-
-	@media ScreenSMMin {
-		flex-basis: ColumnWidth;
-	}
-}

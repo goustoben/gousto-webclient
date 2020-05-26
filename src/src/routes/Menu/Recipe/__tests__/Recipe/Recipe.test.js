@@ -7,8 +7,6 @@ import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
 import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 import { Recipe } from 'routes/Menu/Recipe'
 import css from 'routes/Menu/Recipe/Recipe.css'
-import { CTAToAllRecipes } from '../../CTAToAllRecipes'
-import { CTAThematic } from '../../CTAThematic'
 
 describe('Recipe', () => {
   describe('rendering', () => {
@@ -25,8 +23,6 @@ describe('Recipe', () => {
           grid: GridRecipe,
           featured: FeaturedRecipe,
           fineDineIn: FineDineInRecipe,
-          ctaAllRecipe: CTAToAllRecipes,
-          ctaThematic: CTAThematic
         }),
       )
 

@@ -20,7 +20,6 @@ describe('MobileRecipeList', () => {
           thematicName={null}
           isCurrentCollectionRecommendation={false}
           deliveryDate={null}
-          collectionFilterChange={() => null}
         />
       )
 

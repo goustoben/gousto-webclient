@@ -2,8 +2,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import moment from 'moment'
 
-import Recipe from 'containers/menu/Recipe'
 import { CTACard } from '../CTACard'
+import { CTAToAllRecipesContainer } from '../../Recipe/CTAToAllRecipes/CTAToAllRecipesContainer'
+import { CTAThematic } from '../../Recipe/CTAThematic'
 
 jest.mock('moment')
 
@@ -14,13 +15,13 @@ describe('CTACard', () => {
     describe('when delivery date is provided', () => {
       const deliveryDate = '2011-10-05T14:48:00.000Z'
 
-      test('should render Recipe with thematic name and delivery date', () => {
+      test('should render CTAThematic with thematic name and delivery date', () => {
         const wrapper = shallow(<CTACard thematicName={thematicName} deliveryDate={deliveryDate} />)
 
-        const recipe = wrapper.find(Recipe)
+        const ctaThematic = wrapper.find(CTAThematic)
 
-        expect(recipe.prop('thematicName')).toBe(thematicName)
-        expect(recipe.prop('selectedDate')).toBe(deliveryDate)
+        expect(ctaThematic.prop('name')).toBe(thematicName)
+        expect(ctaThematic.prop('selectedDate')).toBe(deliveryDate)
       })
     })
 
@@ -36,25 +37,22 @@ describe('CTACard', () => {
         moment.mockClear()
       })
 
-      test('should render Recipe with thematic name and delivery date', () => {
+      test('should render CTAThematic with thematic name and delivery date', () => {
         const wrapper = shallow(<CTACard thematicName={thematicName} />)
 
-        const recipe = wrapper.find(Recipe)
+        const ctaThematic = wrapper.find(CTAThematic)
 
-        expect(recipe.prop('thematicName')).toBe(thematicName)
-        expect(recipe.prop('selectedDate')).toBe(mockMomentDate)
+        expect(ctaThematic.prop('name')).toBe(thematicName)
+        expect(ctaThematic.prop('selectedDate')).toBe(mockMomentDate)
       })
     })
   })
 
   describe('when current collection is recommendation', () => {
-    test('should render Recipe with collectionFilterChange', () => {
-      const collectionFilterChange = () => { }
-      const wrapper = shallow(<CTACard isCurrentCollectionRecommendation collectionFilterChange={collectionFilterChange} />)
+    test('should render CTAToAllRecipesContainer', () => {
+      const wrapper = shallow(<CTACard isCurrentCollectionRecommendation />)
 
-      const recipe = wrapper.find(Recipe)
-
-      expect(recipe.prop('collectionFilterChange')).toBe(collectionFilterChange)
+      expect(wrapper.find(CTAToAllRecipesContainer).length).toEqual(1)
     })
   })
 
