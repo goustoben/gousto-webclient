@@ -13,6 +13,12 @@ describe("Menu-BrowseCTA", () => {
     cy.clock(DATE, ['Date'])
     cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveries'])
   })
+  
+  afterEach(() => {
+    cy.clock().then((clock) => {
+      clock.restore()
+    })
+  })
 
   describe('add recipe', () => {
     withPlatformTags(WEB).it('should open browse CTA overlay', () => {

@@ -1,6 +1,11 @@
 import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
 
 describe("Promo Code", () => {
+  afterEach(() => {
+    cy.clock().then((clock) => {
+      clock.restore()
+    })
+  })
   describe('when the url contains a promoCode parameter', () => {
     describe('and the user is logged out ', () => {
       beforeEach(() => {
