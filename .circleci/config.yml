@@ -158,11 +158,6 @@ jobs:
           command: source ~/.circlerc && scripts/validate-regression.sh
       - store_artifacts:
           path: ~/project/tests/regression/screenshots
-          destination: screenshots
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/tests/regression/screenshots
 
   test-regression-mobile:
     docker: *gousto_build_image
@@ -174,11 +169,6 @@ jobs:
           command: source ~/.circlerc && scripts/validate-regression-mobile.sh
       - store_artifacts:
           path: ~/project/tests/regression/screenshots
-          destination: screenshots
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/tests/regression/screenshots
 
   deploy-application:
     docker: *gousto_build_image
