@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run test:web
+npm run test:staging:web

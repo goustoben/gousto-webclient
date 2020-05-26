@@ -156,6 +156,8 @@ jobs:
       - run:
           name: Run regression tests
           command: source ~/.circlerc && scripts/validate-regression.sh
+      - store_artifacts:
+          path: ~/project/tests/regression/screenshots
 
   test-regression-mobile:
     docker: *gousto_build_image
@@ -165,6 +167,8 @@ jobs:
       - run:
           name: Run regression tests mobile
           command: source ~/.circlerc && scripts/validate-regression-mobile.sh
+      - store_artifacts:
+          path: ~/project/tests/regression/screenshots
 
   deploy-application:
     docker: *gousto_build_image
@@ -281,6 +285,7 @@ workflows:
             branches:
               only:
                 - develop
+                - env-radishes
                 - env-rockets
       - test-e2e-selenium:
           context: gousto-beta-aws-app-circleci
@@ -312,6 +317,7 @@ workflows:
             branches:
               only:
                 - env-rockets
+                - env-radishes
                 - develop
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
@@ -323,6 +329,7 @@ workflows:
             branches:
               only:
                 - env-rockets
+                - env-radishes
                 - develop
 
 
