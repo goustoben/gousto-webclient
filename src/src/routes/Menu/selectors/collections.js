@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getNumPortions } from 'selectors/basket'
+import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getCollectionIdWithName } from 'utils/collections'
 import menuConfig from 'config/menu'
 
@@ -169,4 +169,31 @@ export const getCurrentCollectionShortTitle = createSelector(
       'shortTitle',
     ], 'All Recipes')
   )
+)
+
+const getCollectionHeaders = ({ menu }) => menu.get('collectionHeaders')
+const getHeaders = (state) => getCollectionHeaders(state).headers
+
+const getCurrentMenuCollectionsWithHeaders = createSelector(
+  [getCollectionHeaders, getBasketMenuId],
+  (collectionHeaders, menuId) => {
+    const currentMenuCollections = collectionHeaders.collectionsPerMenu.find(menu => menu.id === menuId)
+    if (currentMenuCollections) {
+      return currentMenuCollections.relationships.collections.data
+    }
+
+    return null
+  }
+)
+
+export const getCollectionsHeaders = createSelector(
+  [getCurrentMenuCollectionsWithHeaders, getCurrentCollectionId, getHeaders],
+  (collectionWithHeaders, collectionId, headers) => {
+    const collectionInfo = collectionWithHeaders && collectionWithHeaders.find(collection => collection.id === collectionId)
+    if (collectionInfo) {
+      return headers.find(header => header.id === collectionInfo.header)
+    }
+
+    return null
+  }
 )

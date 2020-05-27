@@ -1,5 +1,15 @@
 import Immutable from 'immutable'
-import { getMenuCollections, getMenuCollectionRecipes, getRecommendationsCollection, getDisplayedCollections, getMenuRecipeStock, getDefaultCollection, getCollectionSlugFromQuery, getRecommendationShortName, getCurrentCollectionSlug } from '../collections'
+import {
+  getMenuCollections,
+  getMenuCollectionRecipes,
+  getRecommendationsCollection,
+  getDisplayedCollections,
+  getMenuRecipeStock,
+  getDefaultCollection,
+  getCollectionSlugFromQuery,
+  getRecommendationShortName,
+  getCurrentCollectionSlug,
+  getCollectionsHeaders } from '../collections'
 
 describe('collections selectors', () => {
   describe('getCollectionSlugFromQuery', () => {
@@ -432,6 +442,80 @@ describe('collections selectors', () => {
       test('should return null', () => {
         const result = getCurrentCollectionSlug.resultFunc(INVALID_COLLECTION_ID, menuCollections)
 
+        expect(result).toEqual(null)
+      })
+    })
+  })
+
+  describe('getCollectionsHeaders', () => {
+    let state
+    beforeEach(() => {
+      state = {
+        menu: Immutable.Map({
+          collectionHeaders: {
+            collectionsPerMenu: [
+              {
+                id: '342',
+                type: 'menu',
+                relationships: {
+                  collections: {
+                    data: [{
+                      header: 'header-wave-id',
+                      id: 'collection-id',
+                      type: 'collection'
+                    }]
+                  }
+                }
+              }
+            ],
+            headers: [
+              {
+                attributes: {},
+                id: 'header-wave-id',
+                type: 'wave-link-header'
+              }
+            ]
+          }
+        }),
+        menuCollections: Immutable.fromJS([
+          {
+            published: true,
+            shortTitle: 'something',
+            slug: 'gluten-free',
+            id: 'collection-id',
+            default: true,
+          },
+        ]),
+        menuCollectionRecipes: Immutable.fromJS({
+          'collection-id': ['123', '321', '4578']
+        }),
+        basket: Immutable.fromJS({
+          numPortions: 2,
+          currentMenuId: '342'
+        })
+      }
+    })
+    test('should return the correct collections headers', () => {
+      const result = getCollectionsHeaders(state)
+      expect(result).toEqual({
+        attributes: {},
+        id: 'header-wave-id',
+        type: 'wave-link-header'
+      })
+    })
+
+    describe('When the current menu does not have any collections headers', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          basket: Immutable.fromJS({
+            numPortions: 2,
+            currentMenuId: '340'
+          })
+        }
+      })
+      test('should return null', () => {
+        const result = getCollectionsHeaders(state)
         expect(result).toEqual(null)
       })
     })
