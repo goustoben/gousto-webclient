@@ -1,0 +1,78 @@
+{
+  "status": "ok",
+  "meta": {},
+  "data": [
+    {
+      "type": "menu",
+      "id": "336",
+      "relationships": {
+        "collections": {
+          "data": [
+            {
+              "type": "collection",
+              "id": "5c117c20-8b05-11e6-8538-065f01f5b2df",
+              "header": "c71eded3-ce00-4854-8928-d245fa64eb7b"
+            },
+            {
+              "type": "collection",
+              "id": "ca8f71be-63ac-11e6-a693-068306404bab",
+              "header": "c71eded3-ce00-4854-8928-d245fa64eb7b"
+            },
+            {
+              "type": "collection",
+              "id": "6067fb3e-afbe-11e8-8ee6-0645394f11ea",
+              "header": "6304a3a3-56ef-49c4-88cc-0fb31a295f1e"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "c71eded3-ce00-4854-8928-d245fa64eb7b",
+      "type": "wave-link-header",
+      "attributes": {
+        "link": {
+          "collectionSlug": "healthy-choices",
+          "collectionId": "6067fb3e-afbe-11e8-8ee6-0645394f11ea"
+        },
+        "headerImage": [
+          {
+            "width": 238,
+            "height": 25,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/JOEWICKSLeanin15_header_white.png"
+          }
+        ],
+        "description": "Support your home workout with recipes from Joe's Lean in 15 range.",
+        "color": "#FFFFFF",
+        "backgroundColor": "#3A4696",
+        "waveColor": "#FF0032"
+      }
+    },
+    {
+      "id": "6304a3a3-56ef-49c4-88cc-0fb31a295f1e",
+      "type": "gradient-info-header",
+      "attributes": {
+        "headerImage": [
+          {
+            "width": 136,
+            "height": 25,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/JOEWICKS_header_white.png"
+          }
+        ],
+        "description": "\"Get fitter, stronger, healthier and happier - if you've been thinking about it now is the time to give Lean in 15 a go\"",
+        "color": "#FFFFFF",
+        "gradientColor": "#0053C7",
+        "image": [
+          {
+            "width": 7792,
+            "height": 4480,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/Joe_Wicks_December_2019_0988.png"
+          }
+        ],
+        "imageLocation": "right"
+      }
+    }
+  ]
+}

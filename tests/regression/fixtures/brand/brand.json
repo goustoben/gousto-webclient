@@ -619,6 +619,111 @@
           "textColor": "#FFFFFF"
         }
       }
+    ],
+    "tags": [
+      {
+        "type": "general",
+        "slug": "new",
+        "text": "New",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#01A92B",
+            "borderColor": "#01A92B"
+          }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "oven-ready",
+        "text": "Oven ready",
+        "themes": [
+          {
+            "name": "light",
+            "backgroundColor": "#f2f6f9",
+            "fontWeight": 400,
+            "border": "none",
+            "color": "#333d47"
+          }
+        ]
+      },
+      {
+        "type": "promotion",
+        "slug": "joe-wicks",
+        "text": "JOE WICKS",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#FFFFFF",
+            "backgroundColor": "#3A4696"
+          },
+          {
+            "name": "dark",
+            "color": "#3A4696",
+            "backgroundColor": "#F4F7FA"
+          }
+        ]
+      },
+      {
+        "type": "health-claim",
+        "slug": "carb-refuel",
+        "text": "Carb refuel",
+        "icon": "arrow-up",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#333D47",
+            "backgroundColor": "#E2F9E9",
+            "iconColor": "#00B066"
+          },
+          {
+            "name": "dark",
+            "color": "#D3D6D9",
+            "backgroundColor": "#2A5032",
+            "iconColor": "#63AA70"
+          }
+        ]
+      },
+      {
+        "type": "health-claim",
+        "slug": "reduced-carbs",
+        "text": "Reduced carbs",
+        "icon": "arrow-down",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#333D47",
+            "backgroundColor": "#E2F9E9",
+            "iconColor": "#00B066"
+          },
+          {
+            "name": "dark",
+            "color": "#D3D6D9",
+            "backgroundColor": "#2A5032",
+            "iconColor": "#63AA70"
+          }
+        ]
+      },
+      {
+        "type": "health-claim",
+        "slug": "health-kitchen",
+        "text": "Good for you",
+        "icon": "health-kitchen-heart",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#333D47",
+            "backgroundColor": "#E2F9E9",
+            "iconColor": "#00B066"
+          },
+          {
+            "name": "dark",
+            "color": "#D3D6D9",
+            "backgroundColor": "#2A5032",
+            "iconColor": "#63AA70"
+          }
+        ]
+      }
     ]
   }
 }
