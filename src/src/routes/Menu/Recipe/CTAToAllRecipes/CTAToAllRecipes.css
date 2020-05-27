@@ -1,4 +1,7 @@
 @value White, BlueBase, BlueBaseDarker from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
+
+@value ColumnWidth 32%;
 
 .ctaWrapper {
   display: flex;
@@ -37,4 +40,12 @@
 .ctaButton:hover {
   background-color: BlueBaseDarker;
   cursor: pointer;
+}
+
+.ctaAllRecipe {
+	flex-basis: 100%;
+
+	@media ScreenSMMin {
+		flex-basis: ColumnWidth;
+	}
 }

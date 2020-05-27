@@ -4,11 +4,13 @@ import Svg from 'Svg'
 import css from './CTAToAllRecipes.css'
 
 const CTAToAllRecipes = ({ collectionFilterChange }) => (
-  <section className={css.ctaWrapper}>
-    <Svg fileName="cta-recommendation" className={css.panIcon} />
-    <p className={css.ctaText}>Want to see more?</p>
-    <button className={css.ctaButton} type="button" onClick={collectionFilterChange} onKeyPress={collectionFilterChange}>View all recipes</button>
-  </section>
+  <div className={css.ctaAllRecipe}>
+    <section className={css.ctaWrapper}>
+      <Svg fileName="cta-recommendation" className={css.panIcon} />
+      <p className={css.ctaText}>Want to see more?</p>
+      <button className={css.ctaButton} type="button" onClick={collectionFilterChange} onKeyPress={collectionFilterChange}>View all recipes</button>
+    </section>
+  </div>
 )
 
 CTAToAllRecipes.propTypes = {

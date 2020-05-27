@@ -10,3 +10,10 @@ export function fetchBrandInfo() {
 
   return fetch(accessToken, `${endpoint('brand', version)}/theme`, reqData, 'GET')
 }
+
+export function fetchBrandMenuHeaders() {
+  const accessToken = null
+  const reqData = {}
+
+  return fetch(accessToken, `${endpoint('brand', version)}/menu-headers`, reqData, 'GET')
+}

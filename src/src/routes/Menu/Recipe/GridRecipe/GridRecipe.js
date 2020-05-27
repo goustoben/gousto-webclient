@@ -9,15 +9,15 @@ import config from 'config'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
 import Image from '../Image'
-import { RecipeRating } from '../Rating'
+import { RecipeRatingContainer } from '../Rating'
 import { AddRecipe } from '../AddRecipe'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 import { TitleContainer } from '../Title/TitleContainer'
 
 const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, chef, view, detailHover,
-  stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, diet,
-  fiveADay, isNew, isChefPrepared, numPortions
+  stock, cookingTime, useWithin, equipment, inBasket, position, diet,
+  fiveADay, isChefPrepared, numPortions
 }) => {
   const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
 
@@ -62,14 +62,7 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
         </div>
         <div>
           <div>
-            {outOfStock || (
-            <RecipeRating
-              average={averageRating}
-              count={ratingCount}
-              isNew={isNew}
-              isChefPrepared={isChefPrepared}
-            />
-            )}
+            {outOfStock || <RecipeRatingContainer recipeId={id} />}
           </div>
         </div>
         {
@@ -112,9 +105,7 @@ GridRecipe.propTypes = {
   }),
   equipment: PropTypes.instanceOf(Immutable.List),
   inBasket: PropTypes.bool,
-  averageRating: PropTypes.number,
   cookingTime: PropTypes.number.isRequired,
-  ratingCount: PropTypes.number,
   useWithin: PropTypes.string.isRequired,
   highlight: PropTypes.func,
   unhighlight: PropTypes.func,
@@ -128,8 +119,6 @@ GridRecipe.propTypes = {
 GridRecipe.defaultProps = {
   view: 'grid',
   chef: Immutable.Map({}),
-  averageRating: 0,
-  ratingCount: 0,
   fiveADay: 0,
   isChefPrepared: false,
   numPortions: 2

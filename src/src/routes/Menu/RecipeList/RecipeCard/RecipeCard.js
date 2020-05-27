@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
-import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
+import { Recipe } from '../../Recipe'
 
 const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
   if (isChefPrepared) {
@@ -47,8 +47,6 @@ const RecipeCard = ({
       url={recipe.get('url')}
       useWithin={recipe.get('shelfLifeDays')}
       cookingTime={numPortions === 2 ? recipe.get('cookingTime') : recipe.get('cookingTimeFamily')}
-      averageRating={recipe.getIn(['rating', 'average'])}
-      ratingCount={recipe.getIn(['rating', 'count'])}
       chef={recipe.get('chef')}
       description={recipe.get('description')}
       availability={recipe.get('availability')}

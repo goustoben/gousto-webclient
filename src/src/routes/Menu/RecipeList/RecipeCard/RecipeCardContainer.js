@@ -8,18 +8,28 @@ import { getRecipes } from 'selectors/root'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { RecipeCard } from './RecipeCard'
 
+const getIdForRecipeCard = (state, props) => props.recipeId
+
 // this allows RecipeCardContainer to be rendered with just a recipeId
 const getRecipeForRecipeCard = createSelector(
-  [getRecipes, (state, props) => props.recipeId],
+  [getRecipes, getIdForRecipeCard],
   (allRecipes, recipeId) => allRecipes.get(recipeId)
 )
 
-const mapStateToProps = (state, ownProps) => ({
-  recipe: getRecipeForRecipeCard(state, ownProps),
-  numPortions: getNumPortions(state),
-  cutoffDate: getCutoffDate(state),
-  browserType: state.request.get('browser')
-})
+const mapStateToProps = (state, ownProps) => {
+  const numPortions = getNumPortions(state)
+  const recipe = getRecipeForRecipeCard(state, ownProps)
+  const recipeId = getIdForRecipeCard(state, ownProps)
+
+  return {
+    recipe,
+    numPortions,
+    cutoffDate: getCutoffDate(state),
+    browserType: state.request.get('browser'),
+    stock: state.menuRecipeStock.getIn([recipeId, String(numPortions)], 0),
+    inBasket: state.basket.hasIn(['recipes', recipeId]),
+  }
+}
 
 const RecipeCardContainer = connect(mapStateToProps, { showDetailRecipe })(RecipeCard)
 

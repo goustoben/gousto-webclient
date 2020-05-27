@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { getCutoffDate } from '../selectors/cutoff'
 import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 
@@ -26,8 +25,6 @@ const mapStateToProps = (state) => {
     browserType: state.request.get('browser')
   }
 }
-const RecipeListContainer = connect(mapStateToProps, {
-  collectionFilterChange: changeCollectionToAllRecipesViaCTA
-})(RecipeList)
+const RecipeListContainer = connect(mapStateToProps)(RecipeList)
 
 export { RecipeListContainer }

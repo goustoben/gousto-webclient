@@ -9,7 +9,7 @@ import { CTACard } from '../CTACard'
 import css from './DesktopRecipeList.css'
 
 const DesktopRecipeList = ({
-  recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate, collectionFilterChange
+  recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate
 }) => {
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = ({ index, value }) => (
@@ -34,10 +34,9 @@ const DesktopRecipeList = ({
         {middle.map(createRecipeCard)}
 
         <CTACard
-          thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+          thematicName={thematicName}
           deliveryDate={deliveryDate}
-          collectionFilterChange={collectionFilterChange}
         />
       </div>
       <div className={css.recipeColumn}>
@@ -50,7 +49,6 @@ const DesktopRecipeList = ({
 DesktopRecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  collectionFilterChange: PropTypes.func,
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
 }
@@ -58,7 +56,6 @@ DesktopRecipeList.propTypes = {
 DesktopRecipeList.defaultProps = {
   thematicName: null,
   deliveryDate: null,
-  collectionFilterChange: () => { },
   isCurrentCollectionRecommendation: false,
 }
 

@@ -32,9 +32,11 @@ const CTAThematic = ({ name, selectedDate }) => {
   }
 
   return (
-    <section className={css.staticImgContainer}>
-      <ThematicImage imageName={currentImage} />
-    </section>
+    <div className={css.ctaThematic}>
+      <section className={css.staticImgContainer}>
+        <ThematicImage imageName={currentImage} />
+      </section>
+    </div>
   )
 }
 

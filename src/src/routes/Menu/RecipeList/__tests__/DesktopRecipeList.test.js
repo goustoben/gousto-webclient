@@ -20,7 +20,6 @@ describe('DesktopRecipeList', () => {
           thematicName={null}
           isCurrentCollectionRecommendation={false}
           deliveryDate={null}
-          collectionFilterChange={() => null}
         />
       )
 
