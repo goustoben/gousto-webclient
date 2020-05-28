@@ -297,7 +297,11 @@ describe('recipesTransformer', () => {
             },
             roundel: {
               slug: 'health-kitchen-healthy-heart'
-            }
+            },
+            promotions: [
+              { slug: 'some-promotion-name' },
+              { slug: 'another-cool-promotion' }
+            ]
           },
           relationships: {
             ingredients: {
@@ -692,7 +696,8 @@ describe('recipesTransformer', () => {
           },
         ],
         isFineDineIn: false,
-        health: null
+        health: null,
+        promotions: [ 'some-promotion-name', 'another-cool-promotion' ]
       }
     ]
 

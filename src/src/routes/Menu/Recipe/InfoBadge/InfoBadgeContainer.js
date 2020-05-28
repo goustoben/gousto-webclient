@@ -6,6 +6,6 @@ const mapStateToProps = (state, ownProps) => ({
   brandTag: getTagDefinition(state, ownProps)
 })
 
-const InfoBadgeContainer = connect(mapStateToProps, {})(InfoBadge)
+const InfoBadgeContainer = connect(mapStateToProps)(InfoBadge)
 
 export { InfoBadgeContainer }

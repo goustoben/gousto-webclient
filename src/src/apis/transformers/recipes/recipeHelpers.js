@@ -109,6 +109,8 @@ const taxonomyTransformer = (attributes) => [{
 
 const isFineDineInTransformer = (attributes) => Boolean(attributes.food_brand && attributes.food_brand.slug === 'fine-dine-in')
 
+const promotionsTransformer = (attributes) => (attributes.promotions ? attributes.promotions.map(p => p.slug) : [])
+
 export {
   allergensTransformer,
   basicsTransformer,
@@ -121,5 +123,6 @@ export {
   shelfLifeTransformer,
   surchargeTransformer,
   taxonomyTransformer,
-  isFineDineInTransformer
+  isFineDineInTransformer,
+  promotionsTransformer
 }

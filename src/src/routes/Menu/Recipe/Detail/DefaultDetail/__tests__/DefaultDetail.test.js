@@ -72,7 +72,6 @@ describe('<DefaultDetail />', () => {
       youWillNeed={Immutable.List(['spoon', 'fork'])}
       numPortions={2}
       isChefPrepared={false}
-      isNew={false}
     />
   )
   const DEFAULT_DETAIL_WITH_STORE = (

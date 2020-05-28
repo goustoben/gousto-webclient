@@ -1,4 +1,4 @@
-import { micronutrientsTransformer } from './recipeHelpers'
+import { micronutrientsTransformer, promotionsTransformer } from './recipeHelpers'
 
 describe('micronutrientsTransformer', () => {
   test('should return micronutrients from nutritional information', () => {
@@ -24,5 +24,34 @@ describe('micronutrientsTransformer', () => {
     ]
     const result = micronutrientsTransformer(micronutrients)
     expect(result).toEqual(expectedFormat)
+  })
+})
+
+describe('promotionsTransformer', () => {
+  describe('when attributes has promotions', () => {
+    const attributes = {
+      promotions: [
+        { slug: 'some-promotion-name' },
+        { slug: 'another-cool-promotion' }
+      ]
+    }
+
+    test('should return promotions from attributes', () => {
+      const expected = ['some-promotion-name', 'another-cool-promotion']
+
+      const result = promotionsTransformer(attributes)
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('when attributes has no promotions', () => {
+    const attributes = { }
+
+    test('should return empty array', () => {
+      const expected = []
+
+      const result = promotionsTransformer(attributes)
+      expect(result).toEqual(expected)
+    })
   })
 })

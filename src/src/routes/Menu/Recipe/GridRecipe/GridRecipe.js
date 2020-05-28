@@ -14,6 +14,7 @@ import { AddRecipe } from '../AddRecipe'
 import { AttributeGrid } from '../AttributeGrid'
 import { VariantHeaderContainer } from '../VariantHeader'
 import { TitleContainer } from '../Title/TitleContainer'
+import { RecipeInfoBadgesContainer } from '../InfoBadge/RecipeInfoBadgesContainer'
 
 const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, chef, view, detailHover,
   stock, cookingTime, useWithin, equipment, inBasket, position, diet,
@@ -62,6 +63,7 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
         </div>
         <div>
           <div>
+            {outOfStock || <RecipeInfoBadgesContainer recipeId={id} />}
             {outOfStock || <RecipeRatingContainer recipeId={id} />}
           </div>
         </div>

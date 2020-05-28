@@ -8,17 +8,18 @@ import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
-import {NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
+import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
 import Carousel from 'routes/Menu/Recipe/Detail/Carousel'
 import { detailPropTypes } from 'routes/Menu/Recipe/Detail/Detail'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
 import { IngredientsList } from '../IngredientsList/IngredientsList'
 import { Allergens } from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
+import { RecipeInfoBadgesContainer } from '../../InfoBadge/RecipeInfoBadgesContainer'
 
 const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens,
   id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment,
-  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew }) => (
+  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree }) => (
     <div>
       <div className={css.container}>
         <div className={css.carousel}>
@@ -36,7 +37,8 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
               </div>
             </div>
             <div className={css.rating}>
-              <RecipeRating count={count} average={average} isNew={isNew} />
+              <RecipeInfoBadgesContainer recipeId={id} />
+              <RecipeRating count={count} average={average} />
             </div>
             <hr className={css.rule} />
             <div className={classnames(css.tabletOnly, css.block)}>

@@ -17,11 +17,12 @@ import { Allergens } from '../Allergens/Allergens'
 import { IngredientsList } from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 import { VariantRecipeListContainer } from '../../VariantRecipeList/VariantRecipeList'
+import { RecipeInfoBadgesContainer } from '../../InfoBadge/RecipeInfoBadgesContainer'
 
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  position, surcharge, fiveADay, glutenFree, dairyFree, isNew, isChefPrepared, numPortions
+  position, surcharge, fiveADay, glutenFree, dairyFree, isChefPrepared, numPortions
 }) => (
   <div className={css.container}>
     <div className={css.header}>
@@ -35,7 +36,8 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
         <div className={css.titleHidden}>
           <Title title={title} view={view} detail />
         </div>
-        <RecipeRating count={count} average={average} isNew={isNew} />
+        <RecipeInfoBadgesContainer recipeId={id} />
+        <RecipeRating count={count} average={average} />
       </div>
     </div>
     <div className={css.imageContainer}>
