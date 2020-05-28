@@ -2,7 +2,6 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import { InfoBadgeContainer } from '../InfoBadge'
 
 describe('<RecipeRating />', () => {
   let count
@@ -22,11 +21,10 @@ describe('<RecipeRating />', () => {
       expect(node.type()).toEqual('span')
     })
   })
-  test('should render one <InfoBadgeContainer> when the count prop is 0', () => {
+  test('should render null when the count prop is 0', () => {
     count = 0
-    const wrapper = shallow(<RecipeRating count={count} average={average} isNew />)
-    expect(wrapper.find(InfoBadgeContainer).length).toEqual(1)
-    expect(wrapper.find(InfoBadgeContainer).first().prop('slug')).toEqual('new')
+    const wrapper = shallow(<RecipeRating count={count} average={average} />)
+    expect(wrapper.getElement()).toEqual(null)
   })
   test('should have one child when the count prop is greater than 0 but the view is simple', () => {
     const wrapper = shallow(

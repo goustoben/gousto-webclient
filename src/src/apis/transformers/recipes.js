@@ -10,7 +10,8 @@ import {
   shelfLifeTransformer,
   surchargeTransformer,
   taxonomyTransformer,
-  isFineDineInTransformer
+  isFineDineInTransformer,
+  promotionsTransformer
 } from './recipes/recipeHelpers'
 
 const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
@@ -95,7 +96,8 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
       shelfLifeDays: normalisedAttributes.shelf_life ? shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days) : '',
       taxonomy: taxonomyTransformer(normalisedAttributes),
       isFineDineIn: isFineDineInTransformer(normalisedAttributes),
-      title: normalisedAttributes.name
+      title: normalisedAttributes.name,
+      promotions: promotionsTransformer(normalisedAttributes)
     }
   })
 

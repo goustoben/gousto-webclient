@@ -1,11 +1,7 @@
 import { InfoBadgeContainer } from './InfoBadgeContainer'
-
-const infoBadgeSlugs = {
-  OVEN_READY: 'oven-ready',
-  NEW_RECIPE: 'new',
-}
+import { InfoBadgeSlugs } from './InfoBadgeSlugs'
 
 export {
   InfoBadgeContainer,
-  infoBadgeSlugs
+  InfoBadgeSlugs
 }

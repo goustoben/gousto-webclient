@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { InfoBadgeContainer, infoBadgeSlugs } from '../InfoBadge'
 import css from './Rating.css'
 
 class RecipeRating extends React.Component {
@@ -24,30 +23,25 @@ class RecipeRating extends React.Component {
   }
 
   render() {
-    const { count, average, view, isNew, isChefPrepared } = this.props
-    if (count > 0) {
-      return (
-        <span className={css.ratingContainer}>
-          {isChefPrepared ? <InfoBadgeContainer slug={infoBadgeSlugs.OVEN_READY} /> : null}
-          <span className={css.starColor}>
-            {this.showStar(average)}
-          </span>
-          {view !== 'simple' && (
-            <span className={css.description}>
-              {' '}
-              {count}
-              {' '}
-              reviews
-            </span>
-          )}
-        </span>
-      )
+    const { count, average, view } = this.props
+
+    if (!count) {
+      return null
     }
 
     return (
-      <span>
-        {isChefPrepared ? <InfoBadgeContainer slug={infoBadgeSlugs.OVEN_READY} /> : null}
-        {isNew ? <InfoBadgeContainer slug={infoBadgeSlugs.NEW_RECIPE} /> : null}
+      <span className={css.ratingContainer}>
+        <span className={css.starColor}>
+          {this.showStar(average)}
+        </span>
+        {view !== 'simple' && (
+          <span className={css.description}>
+            {' '}
+            {count}
+            {' '}
+            reviews
+          </span>
+        )}
       </span>
     )
   }
@@ -57,15 +51,12 @@ RecipeRating.propTypes = {
   count: PropTypes.number,
   average: PropTypes.number,
   view: PropTypes.string,
-  isNew: PropTypes.bool.isRequired,
-  isChefPrepared: PropTypes.bool
 }
 
 RecipeRating.defaultProps = {
   count: 0,
   average: 0,
   view: null,
-  isChefPrepared: false
 }
 
 export { RecipeRating }
