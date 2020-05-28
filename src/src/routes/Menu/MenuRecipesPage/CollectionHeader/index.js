@@ -1,0 +1,1 @@
+export { CollectionHeaderWrapperContainer } from './CollectionHeaderWrapperContainer'
