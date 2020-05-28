@@ -4,22 +4,22 @@
     {
       "id": "58ecf7d5-8e57-42a0-b5e5-24a82262ffd0",
       "date": "2020-05-03",
-      "isDefault": false,
-      "coreDayId": "2096",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2096",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "6cadeebc-9ada-11e6-b24b-062a27f88e45",
-          "defaultDay": 0,
-          "coreSlotId": "13",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 4,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-04-30T11:59:59+01:00"
+          "default_day": 0,
+          "core_slot_id": "13",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 4,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-04-30T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -27,33 +27,34 @@
           "id": "3335",
           "dayId": "58ecf7d5-8e57-42a0-b5e5-24a82262ffd0",
           "slotId": "6cadeebc-9ada-11e6-b24b-062a27f88e45",
-          "whenCutoff": "2020-04-30T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-04-30T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "340e5cba-ebb7-43fe-8d69-e2285bda29ee",
       "date": "2020-05-04",
-      "isDefault": false,
-      "coreDayId": "2093",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2093",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "daf6ce02-12d1-11e6-8486-06ddb628bdc5",
-          "defaultDay": 1,
-          "coreSlotId": "8",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 5,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-01T11:59:59+01:00"
+          "default_day": 1,
+          "core_slot_id": "8",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 5,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-01T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -61,33 +62,34 @@
           "id": "3962",
           "dayId": "340e5cba-ebb7-43fe-8d69-e2285bda29ee",
           "slotId": "daf6ce02-12d1-11e6-8486-06ddb628bdc5",
-          "whenCutoff": "2020-05-01T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-01T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "68a3dd06-66d9-4d4d-a02c-60b13a0c4d7e",
       "date": "2020-05-05",
-      "isDefault": false,
-      "coreDayId": "2094",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2094",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "6caf6990-9ada-11e6-9b7c-062a27f88e45",
-          "defaultDay": 2,
-          "coreSlotId": "11",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 6,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-02T11:59:59+01:00"
+          "default_day": 2,
+          "core_slot_id": "11",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 6,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-02T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -95,33 +97,34 @@
           "id": "3388",
           "dayId": "68a3dd06-66d9-4d4d-a02c-60b13a0c4d7e",
           "slotId": "6caf6990-9ada-11e6-9b7c-062a27f88e45",
-          "whenCutoff": "2020-05-02T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-02T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "e154edac-eddb-4b6d-a5c5-3b5870053685",
       "date": "2020-05-06",
-      "isDefault": false,
-      "coreDayId": "2090",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2090",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
-          "defaultDay": 3,
-          "coreSlotId": "3",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 0,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-03T11:59:59+01:00"
+          "default_day": 3,
+          "core_slot_id": "3",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 0,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-03T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -129,33 +132,34 @@
           "id": "4015",
           "dayId": "e154edac-eddb-4b6d-a5c5-3b5870053685",
           "slotId": "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
-          "whenCutoff": "2020-05-03T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-03T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "b25bef62-e5f1-4cd4-8ae6-123a7820d5d3",
       "date": "2020-05-07",
-      "isDefault": false,
-      "coreDayId": "2095",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2095",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "6caff252-9ada-11e6-9912-062a27f88e45",
-          "defaultDay": 4,
-          "coreSlotId": "12",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 1,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-04T11:59:59+01:00"
+          "default_day": 4,
+          "core_slot_id": "12",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 1,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-04T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -163,40 +167,33 @@
           "id": "3440",
           "dayId": "b25bef62-e5f1-4cd4-8ae6-123a7820d5d3",
           "slotId": "6caff252-9ada-11e6-9912-062a27f88e45",
-          "whenCutoff": "2020-05-04T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-04T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "acc08223-7cc0-4163-9c57-832bfe99b1e6",
       "date": "2020-05-08",
-      "isDefault": false,
-      "coreDayId": "2091",
-      "unavailableReason": "2020-05-08 is Bank Holiday, alt_day=2020-05-07",
-      "alternateDeliveryDay": {
-        "id": "b25bef62-e5f1-4cd4-8ae6-123a7820d5d3",
-        "date": "2020-05-07",
-        "isDefault": false,
-        "coreDayId": "2095",
-        "unavailableReason": "",
-        "alternateDeliveryDay": null
-      },
+      "is_default": false,
+      "core_day_id": "2091",
+      "unavailable_reason": "",
       "slots": [
         {
           "id": "db015db8-12d1-11e6-b30b-06ddb628bdc5",
-          "defaultDay": 5,
-          "coreSlotId": "4",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 2,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-05T11:59:59+01:00"
+          "default_day": 5,
+          "core_slot_id": "4",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 2,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-05T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -204,40 +201,34 @@
           "id": "4119",
           "dayId": "acc08223-7cc0-4163-9c57-832bfe99b1e6",
           "slotId": "db015db8-12d1-11e6-b30b-06ddb628bdc5",
-          "whenCutoff": "2020-05-05T11:59:59+01:00",
-          "unavailableReason": "2020-05-08 is Bank Holiday, alt_day=2020-05-07",
-          "alternateDay": {
-            "id": "b25bef62-e5f1-4cd4-8ae6-123a7820d5d3",
-            "date": "2020-05-07",
-            "isDefault": false,
-            "coreDayId": "2095",
-            "unavailableReason": "",
-            "alternateDeliveryDay": null
-          },
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-05T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "5ffd6c4c-483d-476e-b6fb-eb63331ad7cf",
       "date": "2020-05-09",
-      "isDefault": false,
-      "coreDayId": "2099",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2099",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "db047c82-12d1-11e6-bc7b-06ddb628bdc5",
-          "defaultDay": 6,
-          "coreSlotId": "6",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 3,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-06T11:59:59+01:00"
+          "default_day": 6,
+          "core_slot_id": "6",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 3,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-06T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -245,33 +236,34 @@
           "id": "4172",
           "dayId": "5ffd6c4c-483d-476e-b6fb-eb63331ad7cf",
           "slotId": "db047c82-12d1-11e6-bc7b-06ddb628bdc5",
-          "whenCutoff": "2020-05-06T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-06T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "17901723-6369-4203-a961-48d7b747141e",
       "date": "2020-05-10",
-      "isDefault": false,
-      "coreDayId": "2103",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2103",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "6cadeebc-9ada-11e6-b24b-062a27f88e45",
-          "defaultDay": 0,
-          "coreSlotId": "13",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 4,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-07T11:59:59+01:00"
+          "default_day": 0,
+          "core_slot_id": "13",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 4,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-07T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -279,33 +271,34 @@
           "id": "3336",
           "dayId": "17901723-6369-4203-a961-48d7b747141e",
           "slotId": "6cadeebc-9ada-11e6-b24b-062a27f88e45",
-          "whenCutoff": "2020-05-07T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-07T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "474018a1-8d64-4f1a-b656-275b2abc18fe",
       "date": "2020-05-11",
-      "isDefault": false,
-      "coreDayId": "2100",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2100",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "daf6ce02-12d1-11e6-8486-06ddb628bdc5",
-          "defaultDay": 1,
-          "coreSlotId": "8",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 5,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-08T11:59:59+01:00"
+          "default_day": 1,
+          "core_slot_id": "8",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 5,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-08T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -313,33 +306,34 @@
           "id": "3963",
           "dayId": "474018a1-8d64-4f1a-b656-275b2abc18fe",
           "slotId": "daf6ce02-12d1-11e6-8486-06ddb628bdc5",
-          "whenCutoff": "2020-05-08T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-08T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "f5cdd569-91d1-4759-b816-beded8fd8910",
       "date": "2020-05-12",
-      "isDefault": false,
-      "coreDayId": "2101",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2101",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "6caf6990-9ada-11e6-9b7c-062a27f88e45",
-          "defaultDay": 2,
-          "coreSlotId": "11",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 6,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-09T11:59:59+01:00"
+          "default_day": 2,
+          "core_slot_id": "11",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 6,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-09T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -347,33 +341,34 @@
           "id": "3389",
           "dayId": "f5cdd569-91d1-4759-b816-beded8fd8910",
           "slotId": "6caf6990-9ada-11e6-9b7c-062a27f88e45",
-          "whenCutoff": "2020-05-09T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-09T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "ab7c93fe-583f-4eb9-af43-aaedc0589205",
       "date": "2020-05-13",
-      "isDefault": false,
-      "coreDayId": "2097",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2097",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
-          "defaultDay": 3,
-          "coreSlotId": "3",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 0,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-10T11:59:59+01:00"
+          "default_day": 3,
+          "core_slot_id": "3",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 0,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-10T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -381,33 +376,34 @@
           "id": "4016",
           "dayId": "ab7c93fe-583f-4eb9-af43-aaedc0589205",
           "slotId": "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
-          "whenCutoff": "2020-05-10T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-10T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "2387cb9c-67cb-4947-b53e-74f854aa5f04",
       "date": "2020-05-14",
-      "isDefault": false,
-      "coreDayId": "2102",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2102",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "6caff252-9ada-11e6-9912-062a27f88e45",
-          "defaultDay": 4,
-          "coreSlotId": "12",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 1,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-11T11:59:59+01:00"
+          "default_day": 4,
+          "core_slot_id": "12",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 1,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-11T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -415,33 +411,34 @@
           "id": "3441",
           "dayId": "2387cb9c-67cb-4947-b53e-74f854aa5f04",
           "slotId": "6caff252-9ada-11e6-9912-062a27f88e45",
-          "whenCutoff": "2020-05-11T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-11T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     },
     {
       "id": "5244d893-09d7-4679-9f7e-aebfb8a2e578",
       "date": "2020-05-15",
-      "isDefault": false,
-      "coreDayId": "2098",
-      "unavailableReason": "",
-      "alternateDeliveryDay": null,
+      "is_default": false,
+      "core_day_id": "2098",
+      "unavailable_reason": "",
+      "alternate_delivery_day": null,
       "slots": [
         {
           "id": "db015db8-12d1-11e6-b30b-06ddb628bdc5",
-          "defaultDay": 5,
-          "coreSlotId": "4",
-          "deliveryStartTime": "08:00:00",
-          "deliveryEndTime": "19:00:00",
-          "cutoffDay": 2,
-          "cutoffTime": "11:59:59",
-          "deliveryPrice": "0.00",
-          "isDefault": true,
-          "whenCutoff": "2020-05-12T11:59:59+01:00"
+          "default_day": 5,
+          "core_slot_id": "4",
+          "delivery_start_time": "08:00:00",
+          "delivery_end_time": "19:00:00",
+          "cutoff_day": 2,
+          "cutoff_time": "11:59:59",
+          "delivery_price": "0.00",
+          "is_default": true,
+          "when_cutoff": "2020-05-12T11:59:59+01:00"
         }
       ],
       "daySlots": [
@@ -449,11 +446,12 @@
           "id": "4120",
           "dayId": "5244d893-09d7-4679-9f7e-aebfb8a2e578",
           "slotId": "db015db8-12d1-11e6-b30b-06ddb628bdc5",
-          "whenCutoff": "2020-05-12T11:59:59+01:00",
-          "unavailableReason": "",
-          "alternateDay": null,
-          "activeForSubscribersOneOff": false,
-          "activeForNonSubscribersOneOff": false
+          "when_cutoff": "2020-05-12T11:59:59+01:00",
+          "unavailable_reason": "",
+          "alternate_day": null,
+          "active_for_subscribers_one_off": true,
+          "active_for_non_subscribers_one_off": true,
+          "active_for_signups": true
         }
       ]
     }
