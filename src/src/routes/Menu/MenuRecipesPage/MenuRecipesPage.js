@@ -10,7 +10,6 @@ import { JustForYouTutorial } from '../JustForYouTutorial'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
-import { MenuBannerContainer } from './MenuBanner'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 
 import css from './MenuRecipesPage.css'
@@ -152,7 +151,6 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        <MenuBannerContainer />
         { isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div> }
         { showCommunicationPanel && (
           <div className={css.communicationPanelContainer}>

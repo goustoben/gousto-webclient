@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
+import { CollectionHeaderWrapperContainer } from '../MenuRecipesPage/CollectionHeader'
 
 import css from '../Menu.css'
 
@@ -34,6 +35,7 @@ class RecipeGrid extends PureComponent {
         className={css.menuContainer}
         data-testing="menuRecipesList"
       >
+        <CollectionHeaderWrapperContainer />
         {
           recipes === null
             ? <RecipeListContainer />

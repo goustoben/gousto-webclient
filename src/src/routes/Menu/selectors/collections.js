@@ -177,7 +177,7 @@ const getHeaders = (state) => getCollectionHeaders(state).headers
 const getCurrentMenuCollectionsWithHeaders = createSelector(
   [getCollectionHeaders, getBasketMenuId],
   (collectionHeaders, menuId) => {
-    const currentMenuCollections = collectionHeaders.collectionsPerMenu.find(menu => menu.id === menuId)
+    const currentMenuCollections = collectionHeaders.collectionsPerMenu && collectionHeaders.collectionsPerMenu.find(menu => menu.id === menuId)
     if (currentMenuCollections) {
       return currentMenuCollections.relationships.collections.data
     }
