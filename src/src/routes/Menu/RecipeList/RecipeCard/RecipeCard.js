@@ -27,8 +27,7 @@ const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
 
 const RecipeCard = ({
   originalId, recipeId, recipe, index, showDetailRecipe, isFeatured,
-
-  numPortions, cutoffDate, browserType,
+  numPortions, cutoffDate, browserType, stock,
 }) => {
   if (!recipe) {
     return null
@@ -57,6 +56,7 @@ const RecipeCard = ({
       cutoffDate={cutoffDate}
       onClick={(isViewMoreDetailsClicked = false) => { showDetailRecipe(recipeId, isViewMoreDetailsClicked) }}
       numPortions={numPortions}
+      stock={stock}
     />
   )
 }
@@ -76,6 +76,7 @@ RecipeCard.propTypes = {
   isFeatured: PropTypes.bool,
   cutoffDate: PropTypes.string,
   browserType: PropTypes.string.isRequired,
+  stock: PropTypes.number.isRequired,
 }
 
 export { RecipeCard }
