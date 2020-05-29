@@ -63,12 +63,14 @@ GradientInfoHeader.propTypes = {
     color: PropTypes.string,
     description: PropTypes.string,
     gradientColor: PropTypes.string,
-    headerImage: PropTypes.arrayOf([
-      PropTypes.shape()
-    ]),
-    image: PropTypes.arrayOf([
-      PropTypes.shape()
-    ]),
+    headerImage: PropTypes.arrayOf(PropTypes.shape({
+      width: PropTypes.number,
+      height: PropTypes.number,
+      url: PropTypes.string
+    })),
+    image: PropTypes.arrayOf(PropTypes.shape({
+      url: PropTypes.string
+    })),
     imageLocation: PropTypes.string,
   }).isRequired
 }

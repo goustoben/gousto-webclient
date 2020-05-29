@@ -44,4 +44,19 @@ describe('CollectionHeaderWrapper', () => {
       expect(wrapper.find('GradientInfoHeader')).toHaveLength(1)
     })
   })
+
+  describe('when collectionsHeaders is gradient-info-header', () => {
+    beforeEach(() => {
+      collectionsHeaders = {
+        id: 'header-id',
+        type: 'wave-link-header',
+        attributes: {}
+      }
+      wrapper = shallow(<CollectionHeaderWrapper collectionsHeaders={collectionsHeaders} />)
+    })
+
+    test('should return null', () => {
+      expect(wrapper.find('WaveLinkHeader')).toHaveLength(1)
+    })
+  })
 })

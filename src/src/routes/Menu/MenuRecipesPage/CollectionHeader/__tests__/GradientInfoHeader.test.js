@@ -9,7 +9,7 @@ describe('CollectionHeaderWrapper', () => {
     beforeEach(() => {
       headerAttributes = {
         color: '#F2F2F2',
-        description: 'Header descriotion',
+        description: 'Header description',
         gradientColor: '#0C3FC2',
         headerImage: [{
           url: 'gradientTitleImage-url'
@@ -33,7 +33,7 @@ describe('CollectionHeaderWrapper', () => {
     beforeEach(() => {
       headerAttributes = {
         color: '#F2F2F2',
-        description: 'Header descriotion',
+        description: 'Header description',
         gradientColor: '#0C3FC2',
         headerImage: [],
         image: [{
@@ -54,7 +54,7 @@ describe('CollectionHeaderWrapper', () => {
     beforeEach(() => {
       headerAttributes = {
         color: '#F2F2F2',
-        description: 'Header descriotion',
+        description: 'Header description',
         gradientColor: '#0C3FC2',
         headerImage: [{
           url: 'gradientTitleImage-url'
