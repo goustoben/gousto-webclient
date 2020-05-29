@@ -5,7 +5,7 @@ import { WaveLinkHeader } from '../WaveLinkHeader'
 describe('WaveLinkHeader', () => {
   let wrapper
   let headerAttributes
-  const changeCollectionById = jest.fn()
+  const onClick = jest.fn()
   describe('when headerImage is defined', () => {
     beforeEach(() => {
       headerAttributes = {
@@ -22,16 +22,16 @@ describe('WaveLinkHeader', () => {
         }
       }
 
-      wrapper = shallow(<WaveLinkHeader headerAttributes={headerAttributes} changeCollectionById={changeCollectionById} />)
+      wrapper = shallow(<WaveLinkHeader headerAttributes={headerAttributes} onClick={onClick} />)
     })
 
     test('should render image waveLinkTitleImage with src', () => {
       expect(wrapper.find('.waveLinkTitleImage').prop('src')).toEqual('waveLinkTitleImage-url')
     })
 
-    test('should call changeCollectionById at click on header', () => {
+    test('should call onClick at click on header', () => {
       wrapper.find('.waveLinkHeader').simulate('click')
-      expect(changeCollectionById).toHaveBeenCalled()
+      expect(onClick).toHaveBeenCalled()
     })
   })
 

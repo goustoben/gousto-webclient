@@ -2,12 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import css from './WaveLinkHeader.css'
 
-const WaveLinkHeader = ({ headerAttributes, changeCollectionById }) => {
+const WaveLinkHeader = ({ headerAttributes, onClick }) => {
   const { backgroundColor, color, headerImage, description } = headerAttributes
-
-  const onClick = () => {
-    changeCollectionById(headerAttributes.link.collectionId)
-  }
 
   return (
     <div
@@ -61,7 +57,7 @@ WaveLinkHeader.propTypes = {
       collectionId: PropTypes.string
     })
   }).isRequired,
-  changeCollectionById: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired
 }
 
 export { WaveLinkHeader }
