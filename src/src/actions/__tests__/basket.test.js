@@ -12,7 +12,6 @@ import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks.js'
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
-import * as deliveriesUtils from 'utils/deliveries'
 import * as basketRecipesActions from '../../routes/Menu/actions/basketRecipes'
 import * as trackingActions from '../tracking'
 import { basketReset } from '../basket'
@@ -55,7 +54,7 @@ describe('basket actions', () => {
     basketCheckedOut, basketCheckoutClicked, basketOrderItemsLoad,
     basketProceedToCheckout, basketRecipesInitialise,
     basketPostcodeChange,
-    basketNumPortionChange, basketSlotChange } = basket
+    basketNumPortionChange, basketSlotChange, basketOrderLoaded } = basket
 
   beforeEach(() => {
     basketUtils.basketSumMock = jest.fn(() => false)
@@ -64,6 +63,27 @@ describe('basket actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+  })
+
+  describe('basketOrderLoaded', () => {
+    const getState = jest.fn()
+    beforeEach(() => {
+      getState.mockReturnValue({
+        basket: Immutable.fromJS({
+          recipes: []
+        })
+      })
+    })
+    test('should dispatch BASKET_ORDER_LOADED', () => {
+      const orderId = '123'
+      basketOrderLoaded(orderId)(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_ORDER_LOADED,
+        orderId,
+        editBox: false,
+      })
+    })
   })
 
   describe('basketCheckoutClicked', () => {
@@ -727,11 +747,9 @@ describe('basket actions', () => {
 
     test('should dispatch BASKET_DATE_CHANGE', () => {
       basket.basketRestorePreviousDate()(dispatch, getStateSpy)
-      dispatch.mock.calls[0][0](dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenCalledWith({
+      expect( dispatch.mock.calls[0][0]).toEqual({
         type: actionTypes.BASKET_DATE_CHANGE,
         date: '2020-03-30',
-        menuId: '123'
       })
     })
 
@@ -755,63 +773,19 @@ describe('basket actions', () => {
   })
 
   describe('basketDateChange', () => {
-    let getCutoffForDateAndSlotSpy
-    const boxSummaryDeliveryDays = Immutable.Map({
-      '2020-05-02': Immutable.Map({
-        id: 123,
-        isDefault: true,
-        slots: Immutable.List([Immutable.Map({
-          isDefault: true,
-          id: 'slot-1-day-1',
-          whenCutoff: '2020-04-307T11:59:59+01:00'
-        })])
-      })
-    })
     beforeEach(() => {
       dispatch = jest.fn()
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.fromJS({
-          slotId: 'slot-124',
-          numPortions: 2,
-          date: ''
-        }),
-        boxSummaryDeliveryDays,
-        menuService: {
-          data: [
-            { id: '123',
-              attributes: {
-                ends_at: '2020-04-29T11:59:59+01:00'
-              }
-            },
-            { id: '345',
-              attributes: {
-                ends_at: '2020-05-05T11:59:59+01:00'
-              }
-            }
-          ]
-        }
-      })
-
-      getCutoffForDateAndSlotSpy = safeJestMock(deliveriesUtils, 'getCutoffForDateAndSlot')
-      getCutoffForDateAndSlotSpy.mockReturnValue('2020-04-307T11:59:59+01:00')
     })
 
     afterEach(() => {
       jest.resetAllMocks()
     })
 
-    test('should call getCutoffForDateAndSlot with formated date', () => {
+    test('should dispatch BASKET_DATE_CHANGE with right date', () => {
       const date = '2020-05-02 00:00:00'
-      basket.basketDateChange(date)(dispatch, getStateSpy)
-      expect(getCutoffForDateAndSlotSpy).toHaveBeenCalledWith('2020-05-02', '', boxSummaryDeliveryDays)
-    })
-
-    test('should dispatch BASKET_DATE_CHANGE with right menuId', () => {
-      const date = '2020-05-02 00:00:00'
-      basket.basketDateChange(date)(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenCalledWith({
+      const result = basket.basketDateChange(date)
+      expect(result).toEqual({
         date: '2020-05-02 00:00:00',
-        menuId: '345',
         type: 'BASKET_DATE_CHANGE'
       })
     })

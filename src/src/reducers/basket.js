@@ -83,9 +83,12 @@ const basket = {
       }
       newState = newState
         .set('date', date.format('YYYY-MM-DD'))
-        .set('currentMenuId', action.menuId)
 
       return newState
+    }
+
+    case actionTypes.BASKET_CURRENT_MENU_ID_CHANGE: {
+      return state.set('currentMenuId', action.menuId)
     }
 
     case actionTypes.BASKET_GIFT_ADD: {

@@ -428,11 +428,9 @@ describe('menu fetchData', () => {
               getLandingDay.mockReturnValue({ date })
 
               await fetchData({ store, query, params }, false, false)
-              store.dispatch.mock.calls[6][0](store.dispatch, store.getState)
-              expect(store.dispatch).toHaveBeenCalledWith({
+              expect(store.dispatch.mock.calls[6][0]).toEqual({
                 type: actionTypes.BASKET_DATE_CHANGE,
                 date,
-                menuId: '123'
               })
             })
           })

@@ -1,6 +1,5 @@
 import { push } from 'react-router-redux'
 import Immutable from 'immutable'
-import moment from 'moment'
 
 import config from 'config'
 import basketActions from 'actions/basket'
@@ -8,7 +7,6 @@ import pricingActions from 'actions/pricing'
 import * as trackingKeys from 'actions/trackingKeys'
 import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
-import { getCutoffForDateAndSlot } from 'utils/deliveries'
 import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import { updateOrderItems } from 'apis/orders'
@@ -22,7 +20,6 @@ import { actionTypes } from './actionTypes'
 import tempActions from './temp'
 import { getUTMAndPromoCode } from '../selectors/tracking'
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
-import { activeMenuForDate } from '../routes/Menu/selectors/menu'
 import { trackingOrderCheckout } from './tracking'
 
 export const basketOrderLoaded = (orderId) => (
@@ -36,19 +33,10 @@ export const basketOrderLoaded = (orderId) => (
   }
 )
 
-export const basketDateChange = date => (dispatch, getState) => {
-  const { menuService, boxSummaryDeliveryDays } = getState()
-  const formattedDate = moment(date).format('YYYY-MM-DD')
-  const cutoffTimeAndDate = getCutoffForDateAndSlot(formattedDate, '', boxSummaryDeliveryDays)
-  const currentMenu = activeMenuForDate(menuService, cutoffTimeAndDate)
-  const { id } = currentMenu
-
-  dispatch({
-    type: actionTypes.BASKET_DATE_CHANGE,
-    date,
-    menuId: id
-  })
-}
+export const basketDateChange = (date) => ({
+  type: actionTypes.BASKET_DATE_CHANGE,
+  date,
+})
 
 export const basketGiftAdd = (giftId, type = '') => (
   (dispatch, getState) => {
