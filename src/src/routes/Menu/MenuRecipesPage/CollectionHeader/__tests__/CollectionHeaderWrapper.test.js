@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { CollectionHeaderWrapper } from '../ CollectionHeaderWrapper'
+import { CollectionHeaderWrapper } from '../CollectionHeaderWrapper'
+import { WaveLinkHeaderContainer } from '../WaveLinkHeaderContainer'
 
 describe('CollectionHeaderWrapper', () => {
   let collectionsHeaders
@@ -40,7 +41,7 @@ describe('CollectionHeaderWrapper', () => {
       wrapper = shallow(<CollectionHeaderWrapper collectionsHeaders={collectionsHeaders} />)
     })
 
-    test('should return null', () => {
+    test('should return GradientInfoHeader', () => {
       expect(wrapper.find('GradientInfoHeader')).toHaveLength(1)
     })
   })
@@ -55,8 +56,8 @@ describe('CollectionHeaderWrapper', () => {
       wrapper = shallow(<CollectionHeaderWrapper collectionsHeaders={collectionsHeaders} />)
     })
 
-    test('should return null', () => {
-      expect(wrapper.find('WaveLinkHeader')).toHaveLength(1)
+    test('should return WaveLinkHeaderContainer', () => {
+      expect(wrapper.find(WaveLinkHeaderContainer)).toHaveLength(1)
     })
   })
 })

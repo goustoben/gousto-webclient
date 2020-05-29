@@ -1,9 +1,9 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { GradientInfoHeader } from './GradientInfoHeader'
-import { WaveLinkHeader } from './WaveLinkHeader'
+import { WaveLinkHeaderContainer } from './WaveLinkHeaderContainer'
 
-const CollectionHeaderWrapper = ({ collectionsHeaders, changeCollectionById }) => {
+const CollectionHeaderWrapper = ({ collectionsHeaders }) => {
   if (!collectionsHeaders) {
     return null
   }
@@ -15,7 +15,7 @@ const CollectionHeaderWrapper = ({ collectionsHeaders, changeCollectionById }) =
     )
   case 'wave-link-header':
     return (
-      <WaveLinkHeader headerAttributes={collectionsHeaders.attributes} changeCollectionById={changeCollectionById} />
+      <WaveLinkHeaderContainer headerAttributes={collectionsHeaders.attributes} />
     )
   default:
     return null
@@ -28,12 +28,10 @@ CollectionHeaderWrapper.propTypes = {
     type: PropTypes.string,
     attributes: PropTypes.shape()
   }),
-  changeCollectionById: PropTypes.func
 }
 
 CollectionHeaderWrapper.defaultProps = {
   collectionsHeaders: null,
-  changeCollectionById: () => {}
 }
 
 export { CollectionHeaderWrapper }
