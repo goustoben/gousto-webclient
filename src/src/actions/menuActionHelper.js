@@ -3,7 +3,13 @@ import { collectionsTransformer } from 'apis/transformers/collections'
 import { recipesTransformer } from 'apis/transformers/recipes'
 import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
 import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
+import { actionTypes } from './actionTypes'
 import { menuSetLandingCollection } from '../routes/Menu/actions/menuSetLandingCollection'
+
+const basketCurrentMenuIdChange = ({id}) => ({
+  type: actionTypes.BASKET_CURRENT_MENU_ID_CHANGE,
+  menuId: id
+})
 
 function getStockAvailability(getState, recipeStock) {
   const includedData = getState().recipes
@@ -48,6 +54,7 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date, back
   // it doesn't work without this as the thunk runs before all the store updates have completed
   await Promise.resolve()
 
+  dispatch(basketCurrentMenuIdChange(activeMenu))
   dispatch(menuSetLandingCollection())
 }
 

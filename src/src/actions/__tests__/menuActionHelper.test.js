@@ -4,7 +4,7 @@ import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuC
 import { safeJestMock } from '_testing/mocks'
 import * as landingCollectionImport from '../../routes/Menu/actions/menuSetLandingCollection'
 
-const mockActiveMenuForDate = jest.fn()
+const mockActiveMenuForDate = {}
 
 jest.mock('actions/menuCollections')
 
@@ -29,6 +29,7 @@ const menuSetLandingCollection = safeJestMock(landingCollectionImport, 'menuSetL
 describe('loadMenuCollectionsWithMenuService', () => {
   beforeEach(() => {
     jest.clearAllMocks()
+    mockActiveMenuForDate.id = '234'
   })
 
   test('calls menuLoadCollections and loadRecipesForAllCollections with menuservice data', async () => {
@@ -38,7 +39,7 @@ describe('loadMenuCollectionsWithMenuService', () => {
       },
     })
 
-    const dispatch = () => {}
+    const dispatch = jest.fn()
     const background = true
 
     const mockMenuLoadDispatcher = jest.fn()
@@ -51,6 +52,10 @@ describe('loadMenuCollectionsWithMenuService', () => {
     expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)
     expect(loadRecipesForAllCollections).toHaveBeenCalledWith('mock recipe', 'mock collection recipes')
     expect(menuSetLandingCollection).toHaveBeenCalled()
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'BASKET_CURRENT_MENU_ID_CHANGE',
+      menuId: '234'
+    })
   })
 
   describe('when menuservice is undefined', () => {

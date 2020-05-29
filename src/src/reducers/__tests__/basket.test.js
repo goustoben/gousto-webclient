@@ -62,23 +62,33 @@ describe('basket reducer', () => {
   describe('BASKET_DATE_CHANGE action type', () => {
     test('should put date into the state if valid format', () => {
       const state = Immutable.Map({ date: '' })
-      const result = basket(state, { type: 'BASKET_DATE_CHANGE', date: '2016-08-09', menuId: '123' })
-      const expected = Immutable.Map({ date: '2016-08-09', currentMenuId: '123' })
+      const result = basket(state, { type: 'BASKET_DATE_CHANGE', date: '2016-08-09' })
+      const expected = Immutable.Map({ date: '2016-08-09' })
 
       expect(Immutable.is(result, expected)).toEqual(true)
     })
     test('should put the current date into the prevDate state', () => {
       const state = Immutable.Map({ prevDate: null, date: '2016-08-09' })
-      const result = basket(state, { type: 'BASKET_DATE_CHANGE', date: '2016-10-09', menuId: '123' })
-      const expected = Immutable.Map({ prevDate: '2016-08-09', date: '2016-10-09', currentMenuId: '123' })
+      const result = basket(state, { type: 'BASKET_DATE_CHANGE', date: '2016-10-09' })
+      const expected = Immutable.Map({ prevDate: '2016-08-09', date: '2016-10-09' })
 
       expect(Immutable.is(result, expected)).toEqual(true)
     })
 
     test('should not put the current date into the prevDate state if the current date is blank', () => {
       const state = Immutable.Map({ date: '' })
-      const result = basket(state, { type: 'BASKET_DATE_CHANGE', date: '2016-10-09', menuId: '123' })
-      const expected = Immutable.Map({ date: '2016-10-09', currentMenuId: '123' })
+      const result = basket(state, { type: 'BASKET_DATE_CHANGE', date: '2016-10-09' })
+      const expected = Immutable.Map({ date: '2016-10-09' })
+
+      expect(Immutable.is(result, expected)).toEqual(true)
+    })
+  })
+
+  describe('BASKET_CURRENT_MENU_ID_CHANGE action type', () => {
+    test('should put currentMenuId into the state if valid format', () => {
+      const state = Immutable.Map({ currentMenuId: '' })
+      const result = basket(state, { type: 'BASKET_CURRENT_MENU_ID_CHANGE', menuId: '123' })
+      const expected = Immutable.Map({ currentMenuId: '123' })
 
       expect(Immutable.is(result, expected)).toEqual(true)
     })
