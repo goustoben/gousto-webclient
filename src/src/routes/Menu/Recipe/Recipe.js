@@ -8,7 +8,7 @@ import { FeaturedRecipe } from './FeaturedRecipe'
 import { FineDineInRecipe } from './FineDineInRecipe'
 import css from './Recipe.css'
 
-const recipePropTypes = {
+export const recipePropTypes = {
   media: PropTypes.instanceOf(Immutable.List),
   onClick: PropTypes.func,
   view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'chefPrepared']).isRequired,
@@ -19,6 +19,7 @@ const recipePropTypes = {
   thematicName: PropTypes.string,
   selectedDate: PropTypes.string,
   numPortions: PropTypes.number,
+  stock: PropTypes.number.isRequired,
 }
 
 class Recipe extends React.PureComponent {
