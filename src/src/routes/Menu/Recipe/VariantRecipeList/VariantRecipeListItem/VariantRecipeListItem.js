@@ -21,8 +21,10 @@ const VariantRecipeListItem = ({recipeId, recipeName, changeCheckedRecipe, isChe
       onChange={changeCheckedRecipe}
       isChecked={isChecked}
     >
-      <span>{recipeName}</span>
-      {outOfStock && <span className={css.soldOutText}>Sold out</span>}
+      <div className={outOfStock ? css.labelContainerOutOfStock : css.labelContainer}>
+        <span>{recipeName}</span>
+        {outOfStock && <span className={css.soldOutText}>Sold out</span>}
+      </div>
     </InputRadio>
   </li>
 )
