@@ -29,7 +29,7 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   const pricesFixtureFile = withDiscount
     ? 'prices/2person2portionDiscount'
     : 'prices/2person2portionNoDiscount'
-
+    
   const DATE = new Date(2020, 4, 1).getTime()
   cy.server()
   cy.clearCookies()
