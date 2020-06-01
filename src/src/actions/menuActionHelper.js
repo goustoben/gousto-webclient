@@ -3,6 +3,7 @@ import { collectionsTransformer } from 'apis/transformers/collections'
 import { recipesTransformer } from 'apis/transformers/recipes'
 import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
 import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
+import { locationQuery } from '../selectors/routing'
 import { actionTypes } from './actionTypes'
 import { menuSetLandingCollection } from '../routes/Menu/actions/menuSetLandingCollection'
 
@@ -12,9 +13,24 @@ const basketCurrentMenuIdChange = ({id}) => ({
 })
 
 function getStockAvailability(getState, recipeStock) {
-  const includedData = getState().recipes
+  const { recipes } = getState()
+  const query = locationQuery(getState())
+  const isAdminLink = query && query['preview[menu_id]']
+  const includedData = recipes
   const storedRecipes = Object.values(includedData.toJS())
   const recipeStockList = Object.values(recipeStock)
+
+  if (isAdminLink) {
+    return storedRecipes.reduce((acc, recipe) => {
+      acc[recipe.id] = {
+        2: 1000,
+        4: 1000,
+        committed: false,
+      }
+
+      return acc
+    }, {})
+  }
 
   return recipeStockList.reduce((acc, stockEntry) => {
     const committed = stockEntry.committed === '1'

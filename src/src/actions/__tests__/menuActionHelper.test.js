@@ -129,7 +129,10 @@ describe('getStockAvailability', () => {
         123: {
           id: '123',
         }
-      })
+      }),
+      routing: {
+        locationBeforeTransitions: {query: {}}
+      }
     })
 
     const result = getStockAvailability(getState, recipeStock)
@@ -162,7 +165,10 @@ describe('getStockAvailability', () => {
         456: {
           id: '456'
         }
-      })
+      }),
+      routing: {
+        locationBeforeTransitions: {query: {}}
+      }
     })
 
     const result = getStockAvailability(getState, recipeStock)
@@ -173,6 +179,53 @@ describe('getStockAvailability', () => {
         4: 4,
         committed: true,
       },
+    })
+  })
+
+  describe('when preview menu', () => {
+    let getState
+    const recipeStock = {
+      123: {
+        committed: '1',
+        recipeId: 123,
+        number: '5',
+        familyNumber: '4'
+      }
+    }
+    beforeEach(() => {
+      getState = () => ({
+        recipes: Immutable.Map({
+          125: {
+            id: '125',
+          },
+          126: {
+            id: '126'
+          }
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              'preview[menu_id]': 360
+            }
+          }
+        }
+      })
+    })
+
+    test('should return 1000 stock for all recipes', () => {
+      const result = getStockAvailability(getState, recipeStock)
+      expect(result).toEqual({
+        125: {
+          2: 1000,
+          4: 1000,
+          committed: false,
+        },
+        126: {
+          2: 1000,
+          4: 1000,
+          committed: false,
+        },
+      })
     })
   })
 })
