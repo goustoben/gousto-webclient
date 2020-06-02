@@ -7,7 +7,6 @@ import Form from 'Form'
 import { validateEmail } from 'utils/auth'
 import { newsletterSubscribe } from 'apis/customers'
 import config from 'config/home'
-import Content from 'containers/Content'
 import css from './EmailForm.css'
 
 class EmailForm extends React.PureComponent {
@@ -101,9 +100,7 @@ class EmailForm extends React.PureComponent {
               )
               : (
                 <P className={css.description}>
-                  <Content contentKeys="newsletterDescriptionSignup">
-                    <span>Wahoo! You’re now signed up.</span>
-                  </Content>
+                  <span>Thank you, you&apos;re in the queue. We&apos;ll let you know as soon as you can place your order</span>
                 </P>
               )
           }
