@@ -4,8 +4,7 @@ import { EmailForm } from 'routes/Home/EmailForm'
 import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
-import Content from 'containers/Content'
-// import Immutable from 'immutable'
+import { P } from 'Page/Elements'
 import { newsletterSubscribe } from 'apis/customers'
 
 let wrapper
@@ -49,7 +48,7 @@ describe('EmailForm', () => {
 
   test('should display successful message for newsletter subscription', () => {
     wrapper.setState({ emailSubmitted: true })
-    expect(wrapper.find(Content).at(0).find('span').text()).toEqual('Wahoo! You’re now signed up.')
+    expect(wrapper.find(P).at(0).find('span').text()).toEqual('Thank you, you\'re in the queue. We\'ll let you know as soon as you can place your order')
   })
 
   test('should show an error message if email not valid', () => {
