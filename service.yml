@@ -68,6 +68,15 @@ logs:
 
   - name: apiTimeLog
 
+ecs_log_filters:
+  - name: applicationlog
+    filters:
+      - name: AuthServiceTimeoutCount
+        pattern: '''{$.message = "auth/login catch {\"code\":500,\"errors\":[],\"message\":\"Timeout\",\"status\":500}"}'''
+        alarm:
+          description: Alarm to indicate that login requests to auth service are timing out.
+          owner: squad-haricots
+          level: critical
 
 scaling: 
   ecsCpuTargetTrackingScalingPolicyPercentage: 50
