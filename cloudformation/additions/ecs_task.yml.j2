@@ -77,3 +77,45 @@
 
   {% endif %}
 {% endfor %}
+
+{% if ecs_log_filters is defined %}
+
+  {% for log in ecs_log_filters %}
+
+  {% for filter in log.filters %}
+
+  {{ filter.name }}:
+    Type: AWS::Logs::MetricFilter
+    Properties:
+      LogGroupName: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-{{ log.name}}
+      FilterPattern: {{ filter.pattern }}
+      MetricTransformations:
+        -
+          MetricValue: 1
+          MetricNamespace: Gousto/{{ ENVIRONMENT }}-{{ serviceName }}
+          MetricName: {{ filter.name }}
+
+  {% if filter.alarm is defined %}
+
+  {% set alarm_owner = filter.alarm.owner|default(owner) %}
+  {% set alarm_level = filter.alarm.level|default(None) %}
+
+  {{ filter.name }}Alarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: {{ filter.alarm.description }}
+      AlarmActions: [ "{{ get_alarm_topic_arn_for_owner(alarm_owner, type=alarm_level) }}" ]
+      ComparisonOperator: GreaterThanThreshold
+      EvaluationPeriods: 1
+      MetricName: {{ filter.name }}
+      Namespace: Gousto/{{ENVIRONMENT}}-{{serviceName}}
+      Period: 30
+      Statistic: Sum
+      Threshold: 0
+
+  {% endif %}
+
+  {% endfor %}
+  {% endfor %}
+
+{% endif %}
