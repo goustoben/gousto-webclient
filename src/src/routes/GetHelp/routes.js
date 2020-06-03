@@ -14,6 +14,7 @@ import { EligibilityCheck } from './EligibilityCheck'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
+import { IngredientIssues as EligibilityCheckIngredientIssues } from './EligibilityCheck/IngredientIssues'
 import { RecipeCards } from './RecipeCards'
 import { Refund } from './Refund'
 
@@ -51,6 +52,7 @@ const getHelpRoutes = (store) => {
         {Ingredients}
         {IngredientIssues}
         {IngredientReasons}
+        {EligibilityCheckIngredientIssues}
         {RecipeCards}
         {Refund}
         <Redirect to={configRoutes.client.login} />

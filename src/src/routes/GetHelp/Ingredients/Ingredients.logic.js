@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
-import Loading from 'Loading'
+import { LoadingWrapper } from '../LoadingWrapper'
 import { IngredientsPresentation } from './Ingredients.presentation'
 import { RecipeList } from '../components/RecipeList'
 import { RecipeIngredients } from '../components/RecipeIngredients'
@@ -140,11 +140,7 @@ class Ingredients extends PureComponent {
 
     return (
       (isValidateOrderLoading) ? (
-        <div className={css.loading__container}>
-          <div className={css.loading__item}>
-            <Loading className={css.loading__image} />
-          </div>
-        </div>
+        <LoadingWrapper />
       ) : (
         <IngredientsPresentation
           content={content}

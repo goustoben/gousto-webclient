@@ -10,8 +10,7 @@ import {
   isOrderEligibleForSelfRefundResolution
 } from 'utils/order'
 import { addUserIdToUrl } from 'utils/url'
-import Loading from 'Loading'
-import css from './EligibilityCheck.css'
+import { LoadingWrapper } from '../LoadingWrapper'
 
 const propTypes = {
   getUserOrders: PropTypes.func.isRequired,
@@ -69,11 +68,7 @@ class EligibilityCheck extends PureComponent {
 
   render() {
     return (
-      <div className={css.loading__container}>
-        <div className={css.loading__item}>
-          <Loading className={css.loading__image} />
-        </div>
-      </div>
+      <LoadingWrapper />
     )
   }
 }
