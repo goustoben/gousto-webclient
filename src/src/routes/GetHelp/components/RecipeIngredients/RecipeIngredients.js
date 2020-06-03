@@ -10,13 +10,14 @@ const RecipeIngredients = ({ onChange, recipe, selectedIngredients }) => (
       const isChecked = selectedIngredients.get(ingredientFullId) || false
 
       return (
-        <InputCheck
-          key={ingredient.id}
-          id={ingredientFullId}
-          label={ingredient.label}
-          isChecked={isChecked}
-          onChange={onChange}
-        />
+        <div data-testing="getHelpIngredientInputCheck" key={ingredient.id}>
+          <InputCheck
+            id={ingredientFullId}
+            label={ingredient.label}
+            isChecked={isChecked}
+            onChange={onChange}
+          />
+        </div>
       )
     })}
   </div>

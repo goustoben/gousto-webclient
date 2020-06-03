@@ -8,7 +8,7 @@ export const defaultMenuItems = {
   faq: {
     name: 'Help',
     url: `${clientRoutes.getHelp.index}/${clientRoutes.getHelp.eligibilityCheck}`,
-    clientRouted: false,
+    clientRouted: true,
     tracking: 'FAQNavigation Clicked'
   },
   myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true, tracking: 'MyGoustoNavigation Clicked' },

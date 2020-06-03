@@ -26,12 +26,14 @@ const OrderIssue = ({
 }) => (
   <GetHelpLayout title={title} body={body}>
     <List>
-      <ItemLink
-        label={ingredientsItem}
-        trackClick={trackClick(selectOrderIssue, 'ingredients')}
-        to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
-        clientRouted
-      />
+      <div data-testing="getHelpIssuesIngredient">
+        <ItemLink
+          label={ingredientsItem}
+          trackClick={trackClick(selectOrderIssue, 'ingredients')}
+          to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
+          clientRouted
+        />
+      </div>
       <ItemLink
         label={recipeCardItem}
         trackClick={trackClick(selectOrderIssue, 'recipe_card')}

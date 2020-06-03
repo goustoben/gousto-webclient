@@ -369,7 +369,7 @@ describe('Header', () => {
           tracking: 'SustainabilityNavigation Clicked',
         },
         {
-          clientRouted: false,
+          clientRouted: true,
           name: 'Help',
           url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
           tracking: 'FAQNavigation Clicked',
@@ -440,7 +440,7 @@ describe('Header', () => {
           tracking: 'SustainabilityNavigation Clicked',
         },
         {
-          clientRouted: false,
+          clientRouted: true,
           name: 'Help',
           url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
           tracking: 'FAQNavigation Clicked',

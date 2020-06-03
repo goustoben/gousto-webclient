@@ -1,0 +1,21 @@
+{
+  "status": "ok",
+  "data": {
+    "id": "616206",
+    "when_opened": "2020-05-29T15:07:36+01:00",
+    "created_by_administrator_id": "3b32af12-14e3-4c62-8a39-0c0ab13e33bc",
+    "updated_by_administrator_id": "3b32af12-14e3-4c62-8a39-0c0ab13e33bc",
+    "user_id": "259559",
+    "order_id": "16269494",
+    "description": "It is not in the box | It is just missing",
+    "origin": "SSR",
+    "category_name": "Missing Ingredients, Missing Ingredients",
+    "status": "pending",
+    "available_statuses": [
+      "pending",
+      "approved",
+      "rejected"
+    ],
+    "channel_id": "7"
+  }
+}
