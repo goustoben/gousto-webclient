@@ -1,5 +1,13 @@
-export const clickPrimaryCTA = () => {
-  cy.get('[class^=BottomBar__bottomBar] [class^=Button__container]').eq(1).click()
+export const clickAcceptCTA = () => {
+  cy.get('[role=button]').contains('Accept').click()
+}
+
+export const clickContinueCTA = () => {
+  cy.get('[role=button]').contains('Continue').click()
+}
+
+export const clickSubmitCTA = () => {
+  cy.get('[role=button]').contains('Submit').click()
 }
 
 export const expandRecipes = (recipeIndexes) => {
@@ -10,7 +18,7 @@ export const expandRecipes = (recipeIndexes) => {
 
 export const fillIngredientIssueDescriptions = (descriptions) => {
   descriptions.forEach((description, index) => {
-    cy.get('[class^=IngredientReasons__issueDetails] textarea')
+    cy.get('textarea')
       .eq(index)
       .type(description)
   })

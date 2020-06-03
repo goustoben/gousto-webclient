@@ -1,6 +1,8 @@
 import { clickHelp } from '../pageUtils/home'
 import {
-  clickPrimaryCTA,
+  clickAcceptCTA,
+  clickContinueCTA,
+  clickSubmitCTA,
   expandRecipes,
   fillIngredientIssueDescriptions,
   selectIngredients,
@@ -59,21 +61,21 @@ describe('Given the customer is logged in', () => {
 
           expandRecipes([1])
           selectIngredients([4, 6])
-          clickPrimaryCTA()
+          clickContinueCTA()
           cy.wait('@categoriesRequest')
-          clickPrimaryCTA()
+          clickContinueCTA()
         })
 
         describe('And the descriptions about the ingredient issues are filled', () => {
           beforeEach(() => {
             cy.fixture('getHelp/ssr/value').as('value')
-            cy.route('POST', /ssr\/v2\/value/, '@value')
+            cy.route('POST', /ssr\/v2\/value/, '@value').as('valueRequest')
 
             fillIngredientIssueDescriptions([
               'It is not in the box',
               'It is just missing'
             ])
-            clickPrimaryCTA()
+            clickSubmitCTA()
           })
 
           describe('And the credit is accepted', () => {
@@ -81,7 +83,12 @@ describe('Given the customer is logged in', () => {
               cy.fixture('getHelp/ssr/refund').as('refund')
               cy.route('POST', /ssr\/v2\/refund/, '@refund')
 
-              clickPrimaryCTA()
+              cy.wait('@valueRequest')
+
+              // This is an antipattern, we should be able to remove it when we fix data-testing in <Button> component
+              cy.wait(2000)
+
+              clickAcceptCTA()
             })
 
             it('shows the refund confirmation step', () => {
@@ -104,7 +111,7 @@ describe('Given the customer is logged in', () => {
 
           expandRecipes([0, 1, 2])
           selectIngredients([0, 5, 13])
-          clickPrimaryCTA()
+          clickContinueCTA()
         })
 
         it('shows the Contact Us step', () => {
