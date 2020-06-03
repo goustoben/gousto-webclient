@@ -4,8 +4,8 @@ import classnames from 'classnames'
 import React, { PureComponent } from 'react'
 import { browserHistory } from 'react-router'
 
-import Loading from 'Loading'
 import { client } from 'config/routes'
+import { LoadingWrapper } from './LoadingWrapper'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
 
@@ -91,9 +91,7 @@ class GetHelp extends PureComponent {
         />
         <div className={classnames(contentClasses)}>
           {(isRequestPending) ? (
-            <div className={css.loading__container}>
-              <Loading className={css.loading__image} />
-            </div>
+            <LoadingWrapper />
           ) : (
             <Error content={content} hasError={didRequestError}>
               {children}
