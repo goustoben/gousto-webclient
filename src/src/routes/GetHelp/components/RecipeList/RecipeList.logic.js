@@ -14,9 +14,11 @@ function RecipeList({ children, recipes }) {
     const recipeContent = cloneElement(children, {...children.props, recipe })
 
     return (
-      <ItemExpandable key={recipe.id} label={recipe.title}>
-        {recipeContent}
-      </ItemExpandable>
+      <div key={recipe.id} data-testing="getHelpRecipe">
+        <ItemExpandable label={recipe.title}>
+          {recipeContent}
+        </ItemExpandable>
+      </div>
     )
   })
 

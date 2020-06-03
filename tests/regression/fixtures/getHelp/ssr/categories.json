@@ -1,0 +1,95 @@
+{
+  "status": "ok",
+  "data": [
+    {
+      "type": "category",
+      "group_label": null,
+      "category": {
+        "id": "3",
+        "name": "Missing Ingredients",
+        "require_description": false
+      }
+    },
+    {
+      "type": "category",
+      "group_label": null,
+      "category": {
+        "id": "4",
+        "name": "Wrong Ingredients",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "13",
+        "name": "Fruit & Veg | Mouldy",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "14",
+        "name": "Fruit & Veg | Not Fresh",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "15",
+        "name": "Meat | Gristle/Bones",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "17",
+        "name": "Meat | Odour",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "18",
+        "name": "Size",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "20",
+        "name": "Shelf Life",
+        "require_description": false
+      }
+    },
+    {
+      "type": "subcategory",
+      "group_label": "Ingredient quality",
+      "category": {
+        "id": "21",
+        "name": "Other",
+        "require_description": false
+      }
+    },
+    {
+      "type": "category",
+      "group_label": null,
+      "category": {
+        "id": "22",
+        "name": "Damaged Ingredient",
+        "require_description": true
+      }
+    }
+  ]
+}

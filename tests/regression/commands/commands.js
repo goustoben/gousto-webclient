@@ -8,7 +8,7 @@ Cypress.Commands.add('login', () => {
   cy.fixture('auth/login').as('login')
   cy.route('POST', /login/, '@login')
   cy.fixture('auth/identify').as('identify')
-  cy.route('POST', /identify/, '@identify')
+  cy.route('POST', /identify/, '@identify').as('identifyRequest')
   cy.fixture('auth/refresh').as('refresh')
   cy.route('POST', /refresh/, '@refresh')
 
@@ -29,7 +29,7 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   const pricesFixtureFile = withDiscount
     ? 'prices/2person2portionDiscount'
     : 'prices/2person2portionNoDiscount'
-    
+
   const DATE = new Date(2020, 4, 1).getTime()
   cy.server()
   cy.clearCookies()
