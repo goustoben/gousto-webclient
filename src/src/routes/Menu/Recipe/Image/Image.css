@@ -67,21 +67,9 @@
 }
 
 .fineDineInDetail img {
-	max-width: 100%;
-	width: auto;
-	top: 45%;
-
-	@media ScreenXXSMin {
-		top: 65%;
-	}
-
-	@media ScreenMDMin {
-		top: 65%;
-	}
-
-	@media ScreenLGMin {
-		top: 70%;
-	}
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .featured .recipeImg {

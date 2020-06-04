@@ -6,7 +6,9 @@
 	composes: textXS from 'styles/typography.css';
 	font-weight: bold;
 	border-radius: 4px;
-	border: 1px solid
+	border: 1px solid;
+	padding-top: 0.125rem;
+	padding-bottom: 0.125rem;
 }
 
 .newRecipe {
