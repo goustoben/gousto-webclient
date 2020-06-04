@@ -5,9 +5,8 @@ import Immutable from 'immutable'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
 import { RecipeList } from '../RecipeList'
-import { MobileRecipeList } from '../MobileRecipeList'
-import { DesktopRecipeList } from '../DesktopRecipeList'
-import { TabletRecipeList } from '../TabletRecipeList/TabletRecipeList'
+import { SingleColumnRecipeList } from '../SingleColumnRecipeList'
+import { ThreeColumnRecipeList } from '../ThreeColumnRecipeList'
 
 jest.mock('actions/tracking', () => ({
   trackRecipeOrderDisplayed: jest.fn()
@@ -45,41 +44,38 @@ describe('RecipeList', () => {
   ])
 
   describe('when in mobile mode', () => {
-    test('should render a MobileRecipeList', () => {
+    test('should render a SingleColumnRecipeList', () => {
       const wrapper = shallow(
         <RecipeList recipes={recipes} browserType="mobile" />,
         { context }
       )
 
-      expect(wrapper.find(MobileRecipeList)).toHaveLength(1)
-      expect(wrapper.find(TabletRecipeList)).toHaveLength(0)
-      expect(wrapper.find(DesktopRecipeList)).toHaveLength(0)
+      expect(wrapper.find(SingleColumnRecipeList)).toHaveLength(1)
+      expect(wrapper.find(ThreeColumnRecipeList)).toHaveLength(0)
     })
   })
 
   describe('when in tablet mode', () => {
-    test('should render a TabletRecipeList', () => {
+    test('should render a ThreeColumnRecipeList', () => {
       const wrapper = shallow(
         <RecipeList recipes={recipes} browserType="tablet" />,
         { context }
       )
 
-      expect(wrapper.find(TabletRecipeList)).toHaveLength(1)
-      expect(wrapper.find(MobileRecipeList)).toHaveLength(0)
-      expect(wrapper.find(DesktopRecipeList)).toHaveLength(0)
+      expect(wrapper.find(ThreeColumnRecipeList)).toHaveLength(1)
+      expect(wrapper.find(SingleColumnRecipeList)).toHaveLength(0)
     })
   })
 
   describe('when in desktop mode', () => {
-    test('should render a DesktopRecipeList', () => {
+    test('should render a ThreeColumnRecipeList', () => {
       const wrapper = shallow(
         <RecipeList recipes={recipes} browserType="desktop" />,
         { context }
       )
 
-      expect(wrapper.find(DesktopRecipeList)).toHaveLength(1)
-      expect(wrapper.find(TabletRecipeList)).toHaveLength(0)
-      expect(wrapper.find(MobileRecipeList)).toHaveLength(0)
+      expect(wrapper.find(ThreeColumnRecipeList)).toHaveLength(1)
+      expect(wrapper.find(SingleColumnRecipeList)).toHaveLength(0)
     })
   })
 

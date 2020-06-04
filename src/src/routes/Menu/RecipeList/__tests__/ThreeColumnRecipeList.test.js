@@ -2,15 +2,15 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { DesktopRecipeList } from '../DesktopRecipeList'
+import { ThreeColumnRecipeList } from '../ThreeColumnRecipeList'
 import { CTACard } from '../CTACard'
 import { RecipeCardContainer } from '../RecipeCard'
 
-describe('DesktopRecipeList', () => {
+describe('ThreeColumnRecipeList', () => {
   describe('when given 4 recipes', () => {
     test('should render 4 recipes', () => {
       const wrapper = shallow(
-        <DesktopRecipeList
+        <ThreeColumnRecipeList
           recipes={Immutable.List([
             { originalId: '123', recipe: Immutable.fromJS({ id: '123' }) },
             { originalId: '124', recipe: Immutable.fromJS({ id: '124' }) },
@@ -30,7 +30,7 @@ describe('DesktopRecipeList', () => {
 
   test('should render a CTACard', () => {
     const wrapper = shallow(
-      <DesktopRecipeList
+      <ThreeColumnRecipeList
         recipes={Immutable.fromJS([])}
       />
     )

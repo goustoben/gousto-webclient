@@ -3,9 +3,8 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import actions from 'actions/tracking'
 
-import { DesktopRecipeList } from './DesktopRecipeList'
-import { MobileRecipeList } from './MobileRecipeList'
-import { TabletRecipeList } from './TabletRecipeList/TabletRecipeList'
+import { ThreeColumnRecipeList } from './ThreeColumnRecipeList'
+import { SingleColumnRecipeList } from './SingleColumnRecipeList'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -42,18 +41,7 @@ class RecipeList extends React.PureComponent {
 
     if (browserType === 'mobile') {
       return (
-        <MobileRecipeList
-          recipes={recipes}
-          thematicName={thematicName}
-          isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
-          deliveryDate={deliveryDate}
-        />
-      )
-    }
-
-    if (browserType === 'tablet') {
-      return (
-        <TabletRecipeList
+        <SingleColumnRecipeList
           recipes={recipes}
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
@@ -63,7 +51,7 @@ class RecipeList extends React.PureComponent {
     }
 
     return (
-      <DesktopRecipeList
+      <ThreeColumnRecipeList
         recipes={recipes}
         thematicName={thematicName}
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}

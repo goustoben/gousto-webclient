@@ -5,9 +5,9 @@ import Immutable from 'immutable'
 import { RecipeCardContainer } from '../RecipeCard'
 import { CTACard } from '../CTACard'
 
-import css from './MobileRecipeList.css'
+import css from './SingleColumnRecipeList.css'
 
-const MobileRecipeList = ({
+const SingleColumnRecipeList = ({
   recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate
 }) => {
   // eslint-disable-next-line react/prop-types
@@ -21,7 +21,7 @@ const MobileRecipeList = ({
   )
 
   return (
-    <div className={css.mobileRecipeList}>
+    <div className={css.singleColumnRecipeList}>
       {recipes.map(createRecipeCard)}
 
       <CTACard
@@ -33,17 +33,17 @@ const MobileRecipeList = ({
   )
 }
 
-MobileRecipeList.propTypes = {
+SingleColumnRecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
 }
 
-MobileRecipeList.defaultProps = {
+SingleColumnRecipeList.defaultProps = {
   thematicName: null,
   deliveryDate: null,
   isCurrentCollectionRecommendation: false,
 }
 
-export { MobileRecipeList }
+export { SingleColumnRecipeList }

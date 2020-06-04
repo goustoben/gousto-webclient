@@ -1,1 +1,0 @@
-export { DesktopRecipeList } from './DesktopRecipeList'

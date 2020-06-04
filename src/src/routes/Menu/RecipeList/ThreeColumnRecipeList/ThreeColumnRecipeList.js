@@ -6,9 +6,9 @@ import { arrayToColumns } from '../arrayToColumns'
 import { RecipeCardContainer } from '../RecipeCard'
 import { CTACard } from '../CTACard'
 
-import css from './DesktopRecipeList.css'
+import css from './ThreeColumnRecipeList.css'
 
-const DesktopRecipeList = ({
+const ThreeColumnRecipeList = ({
   recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate
 }) => {
   // eslint-disable-next-line react/prop-types
@@ -26,7 +26,7 @@ const DesktopRecipeList = ({
   const [left, middle, right] = arrayToColumns(recipeArr, 3, 0)
 
   return (
-    <div className={css.desktopRecipeList}>
+    <div className={css.threeColumnRecipeList}>
       <div className={css.recipeColumn}>
         {left.map(createRecipeCard)}
       </div>
@@ -46,17 +46,17 @@ const DesktopRecipeList = ({
   )
 }
 
-DesktopRecipeList.propTypes = {
+ThreeColumnRecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string,
 }
 
-DesktopRecipeList.defaultProps = {
+ThreeColumnRecipeList.defaultProps = {
   thematicName: null,
   deliveryDate: null,
   isCurrentCollectionRecommendation: false,
 }
 
-export { DesktopRecipeList }
+export { ThreeColumnRecipeList }
