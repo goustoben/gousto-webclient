@@ -2,15 +2,15 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { MobileRecipeList } from '../MobileRecipeList'
+import { SingleColumnRecipeList } from '../SingleColumnRecipeList'
 import { CTACard } from '../CTACard'
 import { RecipeCardContainer } from '../RecipeCard'
 
-describe('MobileRecipeList', () => {
+describe('SingleColumnRecipeList', () => {
   describe('when given 4 recipes', () => {
     test('should render correctly', () => {
       const wrapper = shallow(
-        <MobileRecipeList
+        <SingleColumnRecipeList
           recipes={Immutable.List([
             { originalId: '123', recipe: Immutable.fromJS({ id: '123' }) },
             { originalId: '124', recipe: Immutable.fromJS({ id: '124' }) },
@@ -30,7 +30,7 @@ describe('MobileRecipeList', () => {
 
   test('should render a CTACard', () => {
     const wrapper = shallow(
-      <MobileRecipeList
+      <SingleColumnRecipeList
         recipes={Immutable.fromJS([])}
       />
     )
