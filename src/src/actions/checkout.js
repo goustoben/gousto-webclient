@@ -422,7 +422,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
   }
 }
 
-export function trackingCardTokenisationFailed(err) {
+export function trackingCardTokenizationFailed(err) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.CHECKOUT_CARD_TOKENIZATION_FAILED,
@@ -434,7 +434,7 @@ export function trackingCardTokenisationFailed(err) {
   }
 }
 
-export function trackingCardTokenisationSuccessfully() {
+export function trackingCardTokenizationSuccessfully() {
   return (dispatch) => {
     dispatch({
       type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,

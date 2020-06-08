@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom'
 
-import { loadCheckoutScript } from '../loadCheckoutScript'
+import { CDN_CHECKOUT_COM, loadCheckoutScript } from '../loadCheckoutScript'
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
 const { window } = jsdom
@@ -8,6 +8,7 @@ global.window = window
 
 describe('loadCheckoutScript', () => {
   const callback = jest.fn()
+
   afterEach(() => {
     callback.mockClear()
   })
@@ -25,12 +26,12 @@ describe('loadCheckoutScript', () => {
       global.document = window.document
     })
 
-    describe('when script doesn\'t exist', () => {
+    describe('when script does not exist', () => {
       test('should create a new script element and append it to body', () => {
         loadCheckoutScript(callback)
 
         expect(document.getElementById('checkout-com-frames').getAttribute('src')).toEqual(
-          'https://cdn.checkout.com/js/frames.js'
+          CDN_CHECKOUT_COM
         )
       })
 
@@ -53,7 +54,7 @@ describe('loadCheckoutScript', () => {
       test('should create a new script element and append it to body', () => {
         loadCheckoutScript(callback)
 
-        expect(document.querySelectorAll('[id="checkout-com-frames"][src="https://cdn.checkout.com/js/frames.js"]')).toHaveLength(1)
+        expect(document.querySelectorAll(`[id="checkout-com-frames"][src="${CDN_CHECKOUT_COM}"]`)).toHaveLength(1)
       })
 
       test('and should invoke callback once script has loaded', () => {

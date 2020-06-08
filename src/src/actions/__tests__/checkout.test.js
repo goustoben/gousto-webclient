@@ -376,10 +376,10 @@ describe('checkout actions', () => {
     it('should dispatch an error with no value', async () => {
       getState.mockReturnValue(createState())
 
-      await fireCheckoutError('CARD_TOKENISATION_FAILED')(dispatch, getState)
+      await fireCheckoutError('CARD_TOKENIZATION_FAILED')(dispatch, getState)
 
       expect(error).toHaveBeenCalledWith(
-        'CARD_TOKENISATION_FAILED',
+        'CARD_TOKENIZATION_FAILED',
         true,
       )
     })
@@ -388,10 +388,10 @@ describe('checkout actions', () => {
       getState.mockReturnValue(createState())
       const errorText = 'card not accepted'
 
-      await fireCheckoutError('CARD_TOKENISATION_FAILED', errorText)(dispatch, getState)
+      await fireCheckoutError('CARD_TOKENIZATION_FAILED', errorText)(dispatch, getState)
 
       expect(error).toHaveBeenCalledWith(
-        'CARD_TOKENISATION_FAILED',
+        'CARD_TOKENIZATION_FAILED',
         errorText,
       )
     })
