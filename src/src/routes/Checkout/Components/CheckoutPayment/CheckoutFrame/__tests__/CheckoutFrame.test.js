@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 
 import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
+import css from '../CheckoutFrame.css'
 
 jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
   publicKey: 'checkout-com-public-key',
@@ -10,393 +11,543 @@ jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
 
 describe('CheckoutFrame', () => {
   let wrapper
-  const Frames = {
-    init: jest.fn(),
-    setCustomerName: jest.fn(),
-    setBillingDetails: jest.fn(),
-    submitCard: jest.fn(),
-    addCardToken: jest.fn(),
-    unblockFields: jest.fn()
-  }
-
-  beforeEach(() => {
-    global.Frames = Frames
-  })
-  Frames.submitCard.mockResolvedValue({})
-
+  let Frames
   const change = jest.fn()
   const cardTokenReady = jest.fn()
   const fireCheckoutError = jest.fn()
-  const disableCardSubmission = jest.fn()
   const fireCheckoutPendingEvent = jest.fn()
+  const trackingCardTokenizationSuccessfully = jest.fn()
+  const trackingCardTokenizationFailed = jest.fn()
+  const disableCardSubmission = jest.fn()
+  const cardholderGetter = jest.fn()
+  const cardholderSetter = jest.fn()
+
+  beforeEach(() => {
+    Frames = {
+      init: jest.fn(),
+      submitCard: jest.fn(() => Promise.resolve({})),
+      addCardToken: jest.fn(),
+      enableSubmitForm: jest.fn()
+    }
+
+    Object.defineProperty(Frames, 'cardholder', {
+      get: cardholderGetter,
+      set: cardholderSetter
+    })
+
+    global.Frames = Frames
+  })
 
   afterEach(() => {
-    Frames.init.mockClear()
-    Frames.setCustomerName.mockClear()
-    Frames.setBillingDetails.mockClear()
-    Frames.submitCard.mockClear()
-    Frames.addCardToken.mockClear()
-    Frames.unblockFields.mockClear()
     change.mockClear()
     cardTokenReady.mockClear()
     fireCheckoutError.mockClear()
+    fireCheckoutPendingEvent.mockClear()
+    trackingCardTokenizationSuccessfully.mockClear()
+    trackingCardTokenizationFailed.mockClear()
     disableCardSubmission.mockClear()
+    cardholderGetter.mockClear()
+    cardholderSetter.mockClear()
+
+    delete global.Frames
   })
 
-  describe('componentDidMount', () => {
-    describe('with checkout script not ready', () => {
+  describe('checkout.com script is not ready', () => {
+    describe('when component mounted', () => {
       beforeEach(() => {
         wrapper = mount(<CheckoutFrame />)
-        wrapper.instance().componentDidMount()
       })
 
-      test('should not call Frames.init', () => {
+      it('then Frames should not be initialized', () => {
         expect(Frames.init).not.toHaveBeenCalled()
       })
     })
+  })
 
-    describe('with checkout script loaded', () => {
-      describe('should call Frames.init', () => {
-        beforeEach(() => {
-          wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-          wrapper.instance().componentDidMount()
-        })
+  describe('checkout.com script loaded', () => {
+    describe('when component mounted', () => {
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+      })
 
-        test('with the correct container selector', () => {
-          const selector = wrapper.find('div').first().prop('className')
-
-          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
-            containerSelector: `.${selector}`,
-          }))
-        })
-
-        test('with the correct public key', () => {
-          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
+      describe('then checkout.com Frames should be initialized', () => {
+        it('with the correct public key', () => {
+          const expected = {
             publicKey: 'checkout-com-public-key',
-          }))
+          }
+
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
         })
 
-        test('with the correct class callbacks', () => {
-          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
-            frameActivated: wrapper.instance().frameActivated,
-          }))
+        it('with the correct frames selectors', () => {
+          const expected = {
+            cardNumber: {
+              frameSelector: `.${css.cardNumberFramesContainer} [data-frames]`,
+            },
+            expiryDate: {
+              frameSelector: `.${css.expiryDateFramesContainer} [data-frames]`,
+            },
+            cvv: {
+              frameSelector: `.${css.cvvFramesContainer} [data-frames]`,
+            },
+          }
+
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
+        })
+
+        it('with the correct cardholder details', () => {
+          const expected = {
+            cardholder: {
+              name: expect.any(String),
+              billingAddress: {
+                addressLine1: expect.any(String),
+                addressLine2: expect.any(String),
+                city: expect.any(String),
+                zip: expect.any(String),
+              }
+            },
+          }
+
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
+        })
+
+        it('with the correct callbacks', () => {
+          const instance = wrapper.instance()
+          const expected = {
+            frameValidationChanged: instance.frameValidationChanged,
+            cardSubmitted: instance.cardSubmitted,
+            cardTokenized: instance.cardTokenized,
+            cardTokenizationFailed: instance.cardTokenizationFailed,
+          }
+
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
         })
       })
     })
   })
 
-  describe('componentDidUpdate', () => {
-    describe('card name', () => {
-      const testName = 'test name'
-      test('should call Frames.setCustomerName when updated', () => {
+  describe('cardName prop is updated', () => {
+    const testName = 'test name'
+
+    describe('when changed', () => {
+      it('then cardholder data should be updated', () => {
+        const expected = {
+          name: testName,
+          billingAddress: {
+            addressLine1: expect.any(String),
+            addressLine2: expect.any(String),
+            city: expect.any(String),
+            zip: expect.any(String),
+          },
+        }
+
         wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-        Frames.setCustomerName.mockClear()
         wrapper.setProps({ cardName: testName })
 
-        expect(Frames.setCustomerName).toHaveBeenCalled()
+        expect(cardholderSetter).toHaveBeenCalledWith(expected)
       })
+    })
 
-      test('should not call Frames.setCustomerName when not updated', () => {
+    describe('when not changed', () => {
+      it('cardholder data should not be updated', () => {
         wrapper = mount(<CheckoutFrame checkoutScriptReady cardName={testName} />)
-        Frames.setCustomerName.mockClear()
         wrapper.setProps({ cardName: testName })
 
-        expect(Frames.setCustomerName).not.toHaveBeenCalled()
+        expect(cardholderSetter).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('billingAddress prop is updated', () => {
+    const testAddress = {
+      addressLine1: '1',
+      addressLine2: 'Test street',
+      city: 'London',
+      postcode: 'L0N D0N',
+    }
+
+    describe('when changed', () => {
+      it('cardholder data should be updated', () => {
+        const expected = {
+          name: expect.any(String),
+          billingAddress: {
+            addressLine1: testAddress.addressLine1,
+            addressLine2: testAddress.addressLine2,
+            city: testAddress.city,
+            zip: testAddress.postcode,
+          },
+        }
+
+        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper.setProps({ billingAddress: testAddress })
+
+        expect(cardholderSetter).toHaveBeenCalledWith(expected)
       })
     })
 
-    describe('billing address ', () => {
-      const testAddress = {
-        addressLine1: '1 Test street',
-        city: 'London',
-        postcode: 'L0N D0N'
-      }
-
-      test('should call Frames.setBillingDetails when updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-        Frames.setBillingDetails.mockClear()
-        wrapper.setProps({ billingAddress: testAddress })
-
-        expect(Frames.setBillingDetails).toHaveBeenCalled()
-      })
-
-      test('should not call Frames.setBillingDetails when not updated', () => {
+    describe('when not changed', () => {
+      it('cardholder data should not be updated', () => {
         wrapper = mount(<CheckoutFrame checkoutScriptReady billingAddress={testAddress} />)
-        Frames.setBillingDetails.mockClear()
         wrapper.setProps({ billingAddress: testAddress })
 
-        expect(Frames.setBillingDetails).not.toHaveBeenCalled()
+        expect(cardholderSetter).not.toHaveBeenCalled()
       })
     })
+  })
 
-    describe('has checkout error ', () => {
-      const hasCheckoutError = true
+  describe('hasCheckoutError prop is updated', () => {
+    const hasCheckoutError = true
 
-      test('should call Frames.unblockFields when updated and value is true', () => {
+    describe('when value is true', () => {
+      it('should call Frames.enableSubmitForm()', () => {
         wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-        Frames.unblockFields.mockClear()
         wrapper.setProps({ hasCheckoutError })
 
-        expect(Frames.unblockFields).toHaveBeenCalled()
+        expect(Frames.enableSubmitForm).toHaveBeenCalled()
       })
+    })
 
-      test('should call Frames.unblockFields when updated and value is false', () => {
+    describe('when value is false', () => {
+      it('should not call Frames.enableSubmitForm()', () => {
         wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-        Frames.unblockFields.mockClear()
         wrapper.setProps({ hasCheckoutError: false })
 
-        expect(Frames.unblockFields).not.toHaveBeenCalled()
-      })
-
-      test('should not call Frames.unblockFields when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
-        Frames.unblockFields.mockClear()
-        wrapper.setProps({ hasCheckoutError })
-
-        expect(Frames.unblockFields).not.toHaveBeenCalled()
+        expect(Frames.enableSubmitForm).not.toHaveBeenCalled()
       })
     })
 
-    describe('submit checkout frame', () => {
-      test('should call submitCard when updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
+    describe('when value is true and not changed', () => {
+      it('should not call Frames.enableSubmitForm()', () => {
+        wrapper = mount(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
+        wrapper.setProps({ hasCheckoutError })
 
+        expect(Frames.enableSubmitForm).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('isSubmitCardEnabled prop is updated', () => {
+    describe('when changed', () => {
+      it('should submit card details', () => {
         const submitCard = jest.fn()
+        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
         wrapper.instance().submitCard = submitCard
-        wrapper.update()
 
         wrapper.setProps({ isSubmitCardEnabled: true })
 
         expect(submitCard).toHaveBeenCalled()
       })
+    })
 
-      test('should not call submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
-        wrapper.setProps({ isSubmitCardEnabled: true })
-
+    describe('when not changed', () => {
+      it('should not submit card details', () => {
         const submitCard = jest.fn()
+        wrapper = mount(<CheckoutFrame checkoutScriptReady isSubmitCardEnabled />)
         wrapper.instance().submitCard = submitCard
-        wrapper.update()
+
+        wrapper.setProps({ isSubmitCardEnabled: true })
 
         expect(submitCard).not.toHaveBeenCalled()
       })
     })
   })
 
-  describe('componentWillUnmount', () => {
-    const reloadCheckoutScript = jest.fn()
+  describe('Frames defined', () => {
+    describe('when component unmounted', () => {
+      const reloadCheckoutScript = jest.fn()
 
-    beforeEach(() => {
-      wrapper = mount(<CheckoutFrame
-        reloadCheckoutScript={reloadCheckoutScript}
-      />)
-      wrapper.unmount()
-    })
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame
+          reloadCheckoutScript={reloadCheckoutScript}
+        />)
+        wrapper.unmount()
+      })
 
-    test('should remove the global Frames reference', () => {
-      expect(global.Frames).toBe(undefined)
-    })
+      it('should remove the global Frames reference', () => {
+        expect(global.Frames).not.toBeDefined()
+      })
 
-    test('should call reloadCheckoutScript', () => {
-      expect(reloadCheckoutScript).toHaveBeenCalled()
+      it('should call reloadCheckoutScript', () => {
+        expect(reloadCheckoutScript).toHaveBeenCalled()
+      })
     })
   })
 
-  describe('rendering', () => {
+  describe('component is rendered', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame />)
     })
 
-    test('should create a framesContainer for the iframe', () => {
-      expect(wrapper.find('.framesContainer')).toHaveLength(1)
+    it('should create 3 containers for checkout.com <iframe>s', () => {
+      expect(wrapper.find('.framesContainer')).toHaveLength(3)
     })
   })
 
-  describe('cardTokenised', () => {
-    beforeEach(() => {
-      wrapper = mount(<CheckoutFrame
-        change={change}
-        formName="payment"
-        sectionName="payment"
-        cardTokenReady={cardTokenReady}
-        trackingCardTokenisationSuccessfully={jest.fn()}
-        trackingCardTokenisationFailed={jest.fn()}
-        fireCheckoutPendingEvent={fireCheckoutPendingEvent}
-      />)
-
-      const mockEvent = {
-        data: {
-          cardToken: 'test-token'
+  describe('card number frame validation changed', () => {
+    describe('when card number is not valid', () => {
+      it('should show card number error', () => {
+        const event = {
+          element: 'card-number',
+          isValid: false,
         }
-      }
-      wrapper.instance().cardTokenised(
-        mockEvent,
-        wrapper.instance().paymentForm,
-      )
+
+        wrapper.instance().frameValidationChanged(event)
+
+        expect(wrapper.instance().state.showCardNumberError).toBe(true)
+      })
     })
 
-    test('should call Frames.addCardToken', () => {
-      expect(Frames.addCardToken).toHaveBeenCalledWith(
-        wrapper.instance().paymentForm,
-        'test-token',
-      )
-    })
+    describe('when card number is valid', () => {
+      it('should hide card number error', () => {
+        const event = {
+          element: 'card-number',
+          isValid: true,
+        }
+        wrapper.setState({ showCardNumberError: true })
 
-    test('should call change with the correct parameters', () => {
-      expect(change).toHaveBeenCalledWith('payment', 'payment.token', 'test-token')
-    })
+        wrapper.instance().frameValidationChanged(event)
 
-    test('should call the cardTokenReady prop', () => {
-      expect(wrapper.find('.framesContainer')).toHaveLength(1)
+        expect(wrapper.instance().state.showCardNumberError).toBe(false)
+      })
     })
   })
 
-  describe('frameActivated', () => {
-    let cardName
-    let billingAddress
-    const checkoutFrameReady = jest.fn()
+  describe('card expiry date frame validation changed', () => {
+    describe('when card expiry date is not valid', () => {
+      it('should show card expiry date error', () => {
+        const event = {
+          element: 'expiry-date',
+          isValid: false,
+        }
 
-    const mountCheckoutFrameWithProps = (props) => (
-      mount(
-        <CheckoutFrame
+        wrapper.instance().frameValidationChanged(event)
+
+        expect(wrapper.instance().state.showExpiryDateError).toBe(true)
+      })
+    })
+
+    describe('when card expiry date is not valid', () => {
+      it('should hide card expiry date error', () => {
+        const event = {
+          element: 'expiry-date',
+          isValid: true,
+        }
+        wrapper.setState({ showExpiryDateError: true })
+
+        wrapper.instance().frameValidationChanged(event)
+
+        expect(wrapper.instance().state.showExpiryDateError).toBe(false)
+      })
+    })
+  })
+
+  describe('cvv frame validation changed', () => {
+    describe('when cvv is not valid', () => {
+      it('should show cvv error', () => {
+        const event = {
+          element: 'cvv',
+          isValid: false,
+        }
+
+        wrapper.instance().frameValidationChanged(event)
+
+        expect(wrapper.instance().state.showCVVError).toBe(true)
+      })
+    })
+
+    describe('when cvv is not valid', () => {
+      it('should hide cvv error', () => {
+        const event = {
+          element: 'cvv',
+          isValid: true,
+        }
+        wrapper.setState({ showCVVError: true })
+
+        wrapper.instance().frameValidationChanged(event)
+
+        expect(wrapper.instance().state.showCVVError).toBe(false)
+      })
+    })
+  })
+
+  describe('card submitted', () => {
+    describe('when any checkout errors are shown', () => {
+      const checkoutClearErrors = jest.fn()
+
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame
+          checkoutClearErrors={checkoutClearErrors}
+        />)
+      })
+
+      it('should clear checkout.com errors', () => {
+        wrapper.instance().cardSubmitted()
+
+        expect(checkoutClearErrors).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('card tokenized', () => {
+    describe('when card token is ready', () => {
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame
           change={change}
           formName="payment"
           sectionName="payment"
           cardTokenReady={cardTokenReady}
-          checkoutFrameReady={checkoutFrameReady}
-          {...props}
-        />
-      )
-    )
+          trackingCardTokenizationSuccessfully={trackingCardTokenizationSuccessfully}
+          fireCheckoutPendingEvent={fireCheckoutPendingEvent}
+        />)
 
-    test('should call checkoutFrameReady prop', () => {
-      wrapper = mountCheckoutFrameWithProps()
-
-      wrapper.instance().frameActivated()
-
-      expect(checkoutFrameReady).toHaveBeenCalled()
-    })
-
-    describe('when props contain a valid customer name', () => {
-      beforeEach(() => {
-        cardName = 'Joe Bloggs'
-      })
-
-      test('should call Frames.setCustomerName', () => {
-        wrapper = mountCheckoutFrameWithProps({ cardName })
-
-        wrapper.instance().frameActivated()
-
-        expect(Frames.setCustomerName).toHaveBeenCalledWith(cardName)
-      })
-    })
-
-    describe('when props do not contain a valid customer name', () => {
-      beforeEach(() => {
-        cardName = ''
-      })
-
-      test('should not call Frames.setCustomerName', () => {
-        wrapper = mountCheckoutFrameWithProps({ cardName })
-
-        wrapper.instance().frameActivated()
-
-        expect(Frames.setCustomerName).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('when props contain a valid billing address', () => {
-      beforeEach(() => {
-        billingAddress = {
-          addressLine1: 'THE SHARD',
-          addressLine2: '32 LONDON BRIDGE STREET',
-          city: 'LONDON',
-          postcode: 'SE1 9SG',
+        const mockEvent = {
+          token: 'test-token'
         }
+        wrapper.instance().cardTokenized(mockEvent)
       })
 
-      test('should call Frames.setBillingDetails', () => {
-        wrapper = mountCheckoutFrameWithProps({ billingAddress })
-
-        wrapper.instance().frameActivated()
-
-        expect(Frames.setBillingDetails).toHaveBeenCalledWith(billingAddress)
-      })
-    })
-
-    describe('when props do not contain a valid billing address', () => {
-      beforeEach(() => {
-        billingAddress = null
+      it('should call Frames.addCardToken', () => {
+        expect(Frames.addCardToken).toHaveBeenCalledWith(
+          wrapper.instance().paymentForm,
+          'test-token',
+        )
       })
 
-      test('should not call Frames.setBillingDetails', () => {
-        wrapper = mountCheckoutFrameWithProps({ billingAddress })
+      it('should call fireCheckoutPendingEvent', () => {
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+      })
 
-        wrapper.instance().frameActivated()
+      it('should call change with the correct parameters', () => {
+        expect(change).toHaveBeenCalledWith('payment', 'payment.token', 'test-token')
+      })
 
-        expect(Frames.setBillingDetails).not.toHaveBeenCalled()
+      it('should call cardTokenReady', () => {
+        expect(cardTokenReady).toHaveBeenCalled()
+      })
+
+      it('should call trackingCardTokenizationSuccessfully', () => {
+        expect(trackingCardTokenizationSuccessfully).toHaveBeenCalled()
       })
     })
   })
 
-  describe('cardTokenisationFailed', () => {
+  describe('cardTokenizationFailed', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame
         fireCheckoutError={fireCheckoutError}
-        trackingCardTokenisationSuccessfully={jest.fn()}
-        trackingCardTokenisationFailed={jest.fn()}
+        trackingCardTokenizationFailed={trackingCardTokenizationFailed}
         fireCheckoutPendingEvent={fireCheckoutPendingEvent}
       />)
     })
 
-    test('should call the fireCheckoutError prop with correct action type when no error code in the event', () => {
+    describe('when no error code in the event', () => {
       const event = {
         data: {
           errorCode: '',
-          message: ''
+          message: '',
         }
       }
-      wrapper.instance().cardTokenisationFailed(event)
 
-      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.NETWORK_FAILURE)
+      beforeEach(() => {
+        wrapper.instance().cardTokenizationFailed(event)
+      })
+
+      it('should call fireCheckoutError with correct action type', () => {
+        expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.NETWORK_FAILURE)
+      })
+
+      it('should call fireCheckoutPendingEvent', () => {
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+      })
+
+      it('should call trackingCardTokenizationFailed with correct error message', () => {
+        expect(trackingCardTokenizationFailed).toHaveBeenCalledWith(event.data.message)
+      })
     })
 
-    test('should call the fireCheckoutError prop with correct action type when error code in the event', () => {
+    describe('when error code in the event', () => {
       const event = {
         data: {
           errorCode: '82031',
-          message: 'card tokenisation failure'
+          message: 'card tokenization failure',
         }
       }
-      wrapper.instance().cardTokenisationFailed(event)
 
-      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
+      beforeEach(() => {
+        wrapper.instance().cardTokenizationFailed(event)
+      })
+
+      it('should call the fireCheckoutError prop with correct action type', () => {
+        expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENIZATION_FAILED)
+      })
+
+      it('should call fireCheckoutPendingEvent', () => {
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+      })
+
+      it('should call trackingCardTokenizationFailed with correct error message', () => {
+        expect(trackingCardTokenizationFailed).toHaveBeenCalledWith(event.data.message)
+      })
     })
   })
 
   describe('submit card', () => {
-    beforeEach(async () => {
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
-
-      await wrapper.instance().submitCard()
+    beforeEach(() => {
+      wrapper = mount(
+        <CheckoutFrame
+          disableCardSubmission={disableCardSubmission}
+          fireCheckoutError={fireCheckoutError}
+          fireCheckoutPendingEvent={fireCheckoutPendingEvent}
+        />
+      )
     })
 
-    test('should call Frames.submitCard', () => {
-      expect(Frames.submitCard).toHaveBeenCalled()
+    describe('when submission is successful', () => {
+      beforeEach(async () => {
+        await wrapper.instance().submitCard()
+      })
+
+      it('should call Frames.submitCard', () => {
+        expect(Frames.submitCard).toHaveBeenCalled()
+      })
+
+      it('should not call fireCheckoutError', () => {
+        expect(fireCheckoutError).not.toHaveBeenCalled()
+      })
+
+      it('should call fireCheckoutPendingEvent once', () => {
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, true)
+      })
+
+      it('should call disableCardSubmission', () => {
+        expect(disableCardSubmission).toHaveBeenCalled()
+      })
     })
 
-    test('should call fireCheckoutError if the Frames.submitCard call fails', async () => {
-      Frames.submitCard.mockClear()
-      Frames.submitCard.mockRejectedValue({})
+    describe('when submission is failed', () => {
+      beforeEach(async () => {
+        Frames.submitCard.mockClear()
+        Frames.submitCard.mockRejectedValue({})
 
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
+        await wrapper.instance().submitCard()
+      })
 
-      await wrapper.instance().submitCard()
-      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
-    })
+      it('should call Frames.submitCard', () => {
+        expect(Frames.submitCard).toHaveBeenCalled()
+      })
 
-    test('should call the disableCardSubmission prop', () => {
-      expect(disableCardSubmission).toHaveBeenCalled()
+      it('should call fireCheckoutError', () => {
+        expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+      })
+
+      it('should call fireCheckoutPendingEvent twice', () => {
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, true)
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+      })
+
+      it('should call disableCardSubmission', () => {
+        expect(disableCardSubmission).toHaveBeenCalled()
+      })
     })
   })
 })

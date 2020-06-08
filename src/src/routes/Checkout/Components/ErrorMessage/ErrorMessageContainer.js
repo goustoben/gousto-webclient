@@ -37,8 +37,8 @@ function mapStateToProps(state, ownProps) {
           errorType = 'generic'
           break
         }
-      } else if (errors.get(actionTypes.CARD_TOKENISATION_FAILED)) {
-        errorType = 'card-tokenisation-failed'
+      } else if (errors.get(actionTypes.CARD_TOKENIZATION_FAILED)) {
+        errorType = 'card-tokenization-failed'
       } else if (errors.get(actionTypes.NETWORK_FAILURE)) {
         errorType = 'network-failure'
       } else if (errors.get(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)) {

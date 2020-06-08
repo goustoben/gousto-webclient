@@ -6,15 +6,18 @@ import {
   fireCheckoutError,
   checkoutClearErrors,
   fireCheckoutPendingEvent,
-  trackingCardTokenisationSuccessfully,
-  trackingCardTokenisationFailed
+  trackingCardTokenizationSuccessfully,
+  trackingCardTokenizationFailed
 } from 'actions/checkout'
-import { sectionName } from '../config'
+import { sectionName, deliveryAddressSectionName } from '../config'
 import { getBillingAddress } from './utils'
 import { CheckoutFrame } from './CheckoutFrame'
 
 const mapStateToProps = state => {
-  const formValues = getFormValues(sectionName)(state)
+  const formValues = {
+    ...getFormValues(sectionName)(state),
+    ...getFormValues(deliveryAddressSectionName)(state),
+  }
 
   return {
     sectionName,
@@ -29,8 +32,8 @@ const mapDispatchToProps = {
   checkoutClearErrors,
   fireCheckoutError,
   fireCheckoutPendingEvent,
-  trackingCardTokenisationSuccessfully,
-  trackingCardTokenisationFailed,
+  trackingCardTokenizationSuccessfully,
+  trackingCardTokenizationFailed,
 }
 
 export const CheckoutFrameContainer = connect(

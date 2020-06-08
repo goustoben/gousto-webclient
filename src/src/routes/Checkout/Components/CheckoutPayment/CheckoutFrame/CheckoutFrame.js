@@ -4,47 +4,23 @@ import PropTypes from 'prop-types'
 import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
 import { actionTypes } from 'actions/actionTypes'
+import InputError from 'Form/InputError'
 import { publicKey } from '../config'
 import { getErrorType } from './utils'
+import { checkoutStyles } from './checkoutStyles'
 
 import css from './CheckoutFrame.css'
 
 /* global Frames */
 class CheckoutFrame extends React.Component {
-  static propTypes = {
-    change: PropTypes.func,
-    fireCheckoutError: PropTypes.func,
-    checkoutClearErrors: PropTypes.func,
-    disableCardSubmission: PropTypes.func,
-    reloadCheckoutScript: PropTypes.func,
-    cardTokenReady: PropTypes.func,
-    billingAddress: PropTypes.object,
-    cardName: PropTypes.string,
-    sectionName: PropTypes.string,
-    checkoutScriptReady: PropTypes.bool,
-    checkoutFrameReady: PropTypes.func,
-    isSubmitCardEnabled: PropTypes.bool,
-    hasCheckoutError: PropTypes.bool,
-    fireCheckoutPendingEvent: PropTypes.func,
-    trackingCardTokenisationSuccessfully: PropTypes.func,
-    trackingCardTokenisationFailed: PropTypes.func,
+  constructor() {
+    super()
 
-  }
-
-  static defaultProps = {
-    change: () => {},
-    fireCheckoutError: () => {},
-    checkoutClearErrors: () => {},
-    disableCardSubmission: () => {},
-    cardTokenReady: () => {},
-    reloadCheckoutScript: () => {},
-    checkoutFrameReady: () => {},
-    billingAddress: {},
-    cardName: '',
-    sectionName: 'payment',
-    checkoutScriptReady: false,
-    isSubmitCardEnabled: false,
-    hasCheckoutError: false,
+    this.state = {
+      showCardNumberError: false,
+      showExpiryDateError: false,
+      showCVVError: false,
+    }
   }
 
   componentDidMount() {
@@ -58,66 +34,109 @@ class CheckoutFrame extends React.Component {
   componentDidUpdate(prevProps) {
     const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } = this.props
 
-    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
-      this.initFrames()
-    }
+    if (checkoutScriptReady) {
+      if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
+        this.initFrames()
+      }
 
-    if (checkoutScriptReady && hasPropUpdated(cardName, prevProps.cardName)) {
-      Frames.setCustomerName(cardName)
-    }
+      if (hasPropUpdated(cardName, prevProps.cardName)
+        || hasPropUpdated(billingAddress, prevProps.billingAddress)) {
+        Frames.cardholder = this.getCardholderDetails()
+      }
 
-    if (checkoutScriptReady && hasPropUpdated(billingAddress, prevProps.billingAddress)) {
-      Frames.setBillingDetails(billingAddress)
-    }
+      if (hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError)) {
+        Frames.enableSubmitForm()
+      }
 
-    if (checkoutScriptReady && hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError)) {
-      Frames.unblockFields()
-    }
-
-    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled)) {
-      this.submitCard()
+      if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled)) {
+        this.submitCard()
+      }
     }
   }
 
   componentWillUnmount() {
     const { reloadCheckoutScript } = this.props
 
-    if (Frames) {
-      Frames = undefined // eslint-disable-line no-global-assign
-    }
+    delete window.Frames
 
     reloadCheckoutScript()
   }
 
-  initFrames = () => {
-    const { paymentForm } = this
+  setPaymentFormRef = (ref) => {
+    this.paymentForm = ref
+  }
+
+  getCardholderDetails() {
+    const {
+      billingAddress: {
+        addressLine1,
+        addressLine2,
+        city,
+        postcode: zip,
+      },
+      cardName: name
+    } = this.props
+
+    return {
+      name,
+      billingAddress: {
+        addressLine1,
+        addressLine2,
+        city,
+        zip,
+      }
+    }
+  }
+
+  frameValidationChanged = (event) => {
+    let newState = {}
+
+    switch (event.element) {
+    case 'card-number':
+      newState = { showCardNumberError: !event.isValid }
+      break
+    case 'expiry-date':
+      newState = { showExpiryDateError: !event.isValid }
+      break
+    case 'cvv':
+      newState = { showCVVError: !event.isValid }
+      break
+    default:
+    }
+
+    this.setState(newState)
+  }
+
+  cardSubmitted = () => {
     const { checkoutClearErrors } = this.props
 
-    Frames.init({
-      publicKey,
-      style: checkoutStyle,
-      containerSelector: `.${css.framesContainer}`,
-      localisation: {
-        cardNumberPlaceholder: 'Card number',
-      },
-      cardSubmitted: () => {
-        checkoutClearErrors()
-      },
-      cardTokenised: (e) => {
-        this.cardTokenised(e, paymentForm)
-      },
-      cardTokenisationFailed: (e) => {
-        this.cardTokenisationFailed(e)
-      },
-      frameActivated: this.frameActivated
-    })
+    checkoutClearErrors()
   }
 
-  setPaymentFormRef = element => {
-    this.paymentForm = element
+  cardTokenized = (event) => {
+    const { paymentForm } = this
+    const { change, cardTokenReady, sectionName, fireCheckoutPendingEvent, trackingCardTokenizationSuccessfully } = this.props
+    const { token } = event
+
+    Frames.addCardToken(paymentForm, token)
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+    change(sectionName, `${sectionName}.token`, token)
+    cardTokenReady()
+    trackingCardTokenizationSuccessfully()
   }
 
-  submitCard = () => {
+  cardTokenizationFailed = (event) => {
+    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenizationFailed } = this.props
+    const errorMessage = event ? event.data.message : ''
+    const errorType = getErrorType(event.data.errorCode)
+
+    logger.error('card tokenization failure')
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+    fireCheckoutError(errorType)
+    trackingCardTokenizationFailed(errorMessage)
+  }
+
+  submitCard() {
     const { disableCardSubmission, fireCheckoutError, fireCheckoutPendingEvent } = this.props
 
     fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, true)
@@ -130,100 +149,99 @@ class CheckoutFrame extends React.Component {
     disableCardSubmission()
   }
 
-  cardTokenised = (event, paymentForm) => {
-    const { cardToken } = event.data
-    const { change, cardTokenReady, sectionName, fireCheckoutPendingEvent, trackingCardTokenisationSuccessfully } = this.props
-
-    Frames.addCardToken(paymentForm, cardToken)
-    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
-    change(sectionName, `${sectionName}.token`, cardToken)
-    cardTokenReady()
-    trackingCardTokenisationSuccessfully()
-  }
-
-  frameActivated = () => {
-    const { billingAddress, cardName, checkoutFrameReady } = this.props
-
-    checkoutFrameReady()
-
-    if (cardName) {
-      Frames.setCustomerName(cardName)
-    }
-    if (billingAddress) {
-      Frames.setBillingDetails(billingAddress)
-    }
-  }
-
-  cardTokenisationFailed = (event) => {
-    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenisationFailed } = this.props
-    const errorMessage = event ? event.data.message : ''
-    const errorType = getErrorType(event.data.errorCode)
-
-    logger.error('card tokenisation failure')
-    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
-    fireCheckoutError(errorType)
-    trackingCardTokenisationFailed(errorMessage)
+  initFrames() {
+    Frames.init({
+      publicKey,
+      style: checkoutStyles,
+      cardNumber: {
+        frameSelector: `.${css.cardNumberFramesContainer} [data-frames]`,
+      },
+      expiryDate: {
+        frameSelector: `.${css.expiryDateFramesContainer} [data-frames]`,
+      },
+      cvv: {
+        frameSelector: `.${css.cvvFramesContainer} [data-frames]`,
+      },
+      localization: {
+        cardNumberPlaceholder: 'Card number',
+        expiryMonthPlaceholder: 'MM',
+        expiryYearPlaceholder: 'YY',
+        cvvPlaceholder: 'CVV',
+      },
+      cardholder: this.getCardholderDetails(),
+      frameValidationChanged: this.frameValidationChanged,
+      cardSubmitted: this.cardSubmitted,
+      cardTokenized: this.cardTokenized,
+      cardTokenizationFailed: this.cardTokenizationFailed,
+    })
   }
 
   render() {
+    const { showCardNumberError, showExpiryDateError, showCVVError } = this.state
+
     return (
-      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form">
-        <div className={css.framesContainer} />
+      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" className={css.framesForm}>
+        <div className={css.cardNumberFramesContainer}>
+          <div data-frames className={css.framesContainer} />
+          <div>{showCardNumberError && (<InputError>Please enter a valid card number</InputError>)}</div>
+        </div>
+        <div className={css.expiryDateFramesContainer}>
+          <div data-frames className={css.framesContainer} />
+          <div>{showExpiryDateError && (<InputError>Please enter a valid expiry date</InputError>)}</div>
+        </div>
+        <div className={css.cvvFramesContainer}>
+          <div data-frames className={css.framesContainer} />
+          <div>{showCVVError && (<InputError>Please enter a valid CVV code</InputError>)}</div>
+        </div>
       </form>
     )
   }
 }
 
-const checkoutStyle = {
-  '.embedded .card-form .input-group .input-control': {
-    fontSize: '18px'
+CheckoutFrame.propTypes = {
+  change: PropTypes.func,
+  fireCheckoutError: PropTypes.func,
+  fireCheckoutPendingEvent: PropTypes.func,
+  checkoutClearErrors: PropTypes.func,
+  disableCardSubmission: PropTypes.func,
+  reloadCheckoutScript: PropTypes.func,
+  cardTokenReady: PropTypes.func,
+  trackingCardTokenizationSuccessfully: PropTypes.func,
+  trackingCardTokenizationFailed: PropTypes.func,
+  billingAddress: PropTypes.shape({
+    addressLine1: PropTypes.string,
+    addressLine2: PropTypes.string,
+    postcode: PropTypes.string,
+    city: PropTypes.string,
+  }),
+  cardName: PropTypes.string,
+  sectionName: PropTypes.string,
+  checkoutScriptReady: PropTypes.bool,
+  isSubmitCardEnabled: PropTypes.bool,
+  hasCheckoutError: PropTypes.bool,
+}
+
+CheckoutFrame.defaultProps = {
+  change: () => {},
+  fireCheckoutError: () => {},
+  fireCheckoutPendingEvent: () => {},
+  checkoutClearErrors: () => {},
+  disableCardSubmission: () => {},
+  reloadCheckoutScript: () => {},
+  cardTokenReady: () => {},
+  trackingCardTokenizationSuccessfully: () => {},
+  trackingCardTokenizationFailed: () => {},
+  billingAddress: {
+    addressLine1: '',
+    addressLine2: '',
+    postcode: '',
+    city: ''
   },
-  '.embedded .card-form .input-group label.icon+*': {
-    paddingLeft: '15px'
-  },
-  '.embedded .card-form .input-group': {
-    borderRadius: '5px',
-    border: '1px solid #D2D6D9',
-    margin: '10px 0'
-  },
-  '.embedded .card-form .input-group.focus:not(.error)': {
-    border: '1px solid #C0C5C9'
-  },
-  '.embedded .card-form .input-group .icon': {
-    display: 'none'
-  },
-  '.embedded .card-form .input-group.error': {
-    border: '1px solid #C20026',
-    background: '#FBF4F4'
-  },
-  '.embedded .card-form .input-group.error .hint.error-message': {
-    color: '#fff'
-  },
-  '.embedded .card-form .input-group.error .hint-icon:hover': {
-    color: '#C20026'
-  },
-  '.embedded .card-form .input-group.focus': {
-    backgroundColor: '#fff'
-  },
-  '.embedded .card-form .input-group.focus input': {
-    color: '#333D49',
-    borderColor: '#C0C5C9'
-  },
-  '.embedded .card-form .input-group.error input': {
-    color: '#C20026'
-  },
-  '.embedded .card-form .input-group input::-webkit-input-placeholder': {
-    fontStyle: 'normal'
-  },
-  '.embedded .card-form .input-group input::-moz-placeholder': {
-    fontStyle: 'normal'
-  },
-  '.embedded .card-form .input-group input:-ms-input-placeholder': {
-    fontStyle: 'normal'
-  },
-  '.embedded .card-form .input-group input:-moz-placeholder': {
-    fontStyle: 'normal'
-  },
+  cardName: '',
+  sectionName: 'payment',
+  checkoutScriptReady: false,
+  isSubmitCardEnabled: false,
+  hasCheckoutError: false,
 }
 
 export { CheckoutFrame }

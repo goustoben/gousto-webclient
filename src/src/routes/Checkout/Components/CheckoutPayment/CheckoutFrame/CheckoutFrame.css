@@ -1,15 +1,54 @@
-@value avenirBookFontStack from 'styles/typography.css';
+@value inputBorderColor, inputBorderColorFocus, errorBorderColor from 'styles/forms.css';
+@value RadiusSM from 'styles/borders.css';
 
-.framesContainer iframe {
-    min-height: 150px;
+.framesForm {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  padding: 10px 0;
 }
 
-.framesContainer input {
-    font-weight: normal;
-    font-family: avenirBookFontStack;
+.cardNumberFramesContainer {
+  flex: 1 100%;
+  margin: 0 0 20px;
 }
 
-.framesContainer input::-webkit-input-placeholder {
+.expiryDateFramesContainer {
+  flex: 1 50%;
+  padding-right: 5px;
+}
+
+.cvvFramesContainer {
+  flex: 1 50%;
+  padding-left: 5px;
+}
+
+.framesContainer {
+  composes: block from 'styles/display.css';
+  composes: borderSM from 'styles/borders.css';
+  composes: textLG from 'styles/typography.css';
+  width: 100%;
+  height: 41px;
+  outline: none;
+  visibility: hidden;
+  border-color: inputBorderColor;
+
+  iframe {
     font-weight: normal;
-    font-family: avenirBookFontStack;
+    /* duplicate border-radius because it's not inherited from the parent element */
+    border-radius: RadiusSM;
+  }
+
+  &[class~="frame--activated"] {
+    visibility: visible;
+  }
+
+  &:hover,
+  &[class~="frame--focus"] {
+    border-color: inputBorderColorFocus;
+  }
+
+  &[class~="frame--invalid"] {
+    border-color: errorBorderColor;
+  }
 }

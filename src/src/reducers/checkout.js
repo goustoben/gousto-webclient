@@ -6,7 +6,7 @@ const errorsToCapture = [
   actionTypes.CHECKOUT_SIGNUP,
   actionTypes.CHECKOUT_SIGNUP_LOGIN,
   actionTypes.ORDER_SAVE,
-  actionTypes.CARD_TOKENISATION_FAILED,
+  actionTypes.CARD_TOKENIZATION_FAILED,
   actionTypes.NETWORK_FAILURE,
   actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED,
 ]
@@ -17,13 +17,11 @@ const initialState = () => Immutable.fromJS({
   confirmedAddress: false,
   selectedAddress: {},
   deliveryAddress: {
-    companyName: '',
-    line1: '',
-    line2: '',
-    line3: '',
+    houseNo: '',
+    street: '',
     town: '',
-    county: '',
     postcode: '',
+    county: '',
   },
   deliveryAddresses: [],
   selectedAddressId: '',
@@ -32,13 +30,11 @@ const initialState = () => Immutable.fromJS({
   billingAddressId: '',
   selectedBillingAddress: {},
   billingAddress: {
-    companyName: '',
-    line1: '',
-    line2: '',
-    line3: '',
+    houseNo: '',
+    street: '',
     town: '',
-    county: '',
     postcode: '',
+    county: '',
   },
   intervals: [],
   errors: {},
@@ -56,7 +52,7 @@ const checkout = {
     }
 
     case actionTypes.CHECKOUT_ADDRESSES_RECEIVE: {
-      const addresses = action.addresses
+      const { addresses } = action
       const addressList = []
       addresses.forEach((address) => {
         addressList.push({
@@ -78,7 +74,7 @@ const checkout = {
     case actionTypes.ERROR: {
       if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
         if (errorsToCapture.indexOf(action.key) !== -1) {
-          let value = action.value
+          let { value } = action
 
           if (value instanceof Error) {
             value = value.message
