@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   const isCurrentCollectionRecommendation = false
 
   return {
-    filteredRecipeIds: ownProps.filteredRecipeIds,
+    originalOrderRecipeIds: ownProps.originalOrderRecipeIds,
     recipes: ownProps.recipes,
     cutoffDate: getCutoffDate(state),
     numPortions: state.basket.get('numPortions'),

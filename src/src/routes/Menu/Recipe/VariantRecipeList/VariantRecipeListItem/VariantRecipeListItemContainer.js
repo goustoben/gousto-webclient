@@ -3,7 +3,7 @@ import { getRecipeOutOfStock } from '../../../selectors/recipe'
 import { VariantRecipeListItem } from './VariantRecipeListItem'
 
 const mapStateToProps = (state, ownProps) => ({
-  outOfStock: getRecipeOutOfStock(state, ownProps)
+  isOutOfStock: getRecipeOutOfStock(state, ownProps)
 })
 
 const VariantRecipeListItemContainer = connect(mapStateToProps)(VariantRecipeListItem)

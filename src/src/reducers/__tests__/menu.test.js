@@ -156,7 +156,7 @@ describe('menu reducer', () => {
       describe('when variantId is null', () => {
         const variantId = null
         const collectionId = 'collection-id'
-        const action = selectRecipeVariant(recipeId, variantId, collectionId)
+        const action = selectRecipeVariant(recipeId, variantId, collectionId, false)
 
         test('should set selectedRecipeVariant entry to null', () => {
           const result = menu.menu(menuInitialState, action)
@@ -170,7 +170,7 @@ describe('menu reducer', () => {
       describe('when variantId is a recipe id', () => {
         const variantId = '5678'
         const collectionId = 'collection-id'
-        const action = selectRecipeVariant(recipeId, variantId, collectionId)
+        const action = selectRecipeVariant(recipeId, variantId, collectionId, false)
 
         test('should set selectedRecipeVariant entry to the selected id', () => {
           const result = menu.menu(menuInitialState, action)

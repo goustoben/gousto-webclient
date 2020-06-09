@@ -4,19 +4,19 @@ import { getCutoffDate } from '../selectors/cutoff'
 import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
-import { getRecipeListRecipes } from '../selectors/sorting'
+import { getRecipeListRecipes } from '../selectors/recipeList'
 
 const mapStateToProps = (state) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
 
   const currentCollectionId = getCurrentCollectionId(state)
-  const { recipes, recipeIds } = getRecipeListRecipes(state)
+  const { recipes, originalOrderRecipeIds } = getRecipeListRecipes(state)
 
   return {
-    filteredRecipeIds: recipeIds,
     currentCollectionId,
     recipes,
+    originalOrderRecipeIds,
     cutoffDate: getCutoffDate(state),
     numPortions: state.basket.get('numPortions'),
     isCurrentCollectionRecommendation: isCurrentCollectionRecommendation(state),

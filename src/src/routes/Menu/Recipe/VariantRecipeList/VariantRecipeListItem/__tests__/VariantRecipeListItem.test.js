@@ -1,15 +1,15 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { InputRadio } from 'goustouicomponents'
 import { VariantRecipeListItem } from '../VariantRecipeListItem'
 
 describe('VariantRecipeListItem', () => {
   describe('When the variant list is on the details screen', () => {
     describe('When the recipe is checked', () => {
       const wrapper = mount(<VariantRecipeListItem
-        key="1230"
         recipeId="1230"
         recipeName="Chicken curry"
-        changeCheckedRecipe={() => {}}
+        changeCheckedRecipe={() => { }}
         isChecked
         isOnDetailScreen
       />)
@@ -20,10 +20,9 @@ describe('VariantRecipeListItem', () => {
 
     describe('When the recipe is not checked', () => {
       const wrapper = mount(<VariantRecipeListItem
-        key="1230"
         recipeId="1230"
         recipeName="Chicken curry"
-        changeCheckedRecipe={() => {}}
+        changeCheckedRecipe={() => { }}
         isChecked={false}
         isOnDetailScreen
       />)
@@ -34,13 +33,12 @@ describe('VariantRecipeListItem', () => {
 
     describe('When the recipe is sold out', () => {
       const wrapper = mount(<VariantRecipeListItem
-        key="1230"
         recipeId="1230"
         recipeName="Chicken curry"
-        changeCheckedRecipe={() => {}}
+        changeCheckedRecipe={() => { }}
         isChecked={false}
         isOnDetailScreen
-        outOfStock
+        isOutOfStock
       />)
       test('then it should render a sold out tag', () => {
         expect(wrapper.find('.soldOutText')).toHaveLength(1)
@@ -50,10 +48,9 @@ describe('VariantRecipeListItem', () => {
     describe('When the variant list is on the recipe grid', () => {
       describe('When the the recipe is checked', () => {
         const wrapper = mount(<VariantRecipeListItem
-          key="1230"
           recipeId="1230"
           recipeName="Chicken curry"
-          changeCheckedRecipe={() => {}}
+          changeCheckedRecipe={() => { }}
           isChecked
           isOnDetailScreen={false}
         />)
@@ -64,10 +61,9 @@ describe('VariantRecipeListItem', () => {
 
       describe('When the recipe is not checked', () => {
         const wrapper = mount(<VariantRecipeListItem
-          key="1230"
           recipeId="1230"
           recipeName="Chicken curry"
-          changeCheckedRecipe={() => {}}
+          changeCheckedRecipe={() => { }}
           isChecked={false}
           isOnDetailScreen={false}
         />)
@@ -75,6 +71,29 @@ describe('VariantRecipeListItem', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
         })
       })
+    })
+  })
+
+  describe('when radio button is changed', () => {
+    const recipeId = '1230'
+    const isOutOfStock = true
+
+    const changeCheckedRecipe = jest.fn()
+    const wrapper = mount(<VariantRecipeListItem
+      recipeId={recipeId}
+      recipeName="Chicken curry"
+      changeCheckedRecipe={changeCheckedRecipe}
+      isChecked={false}
+      isOnDetailScreen={false}
+      isOutOfStock={isOutOfStock}
+    />)
+
+    const changeRadio = wrapper.find(InputRadio).first().prop('onChange')
+
+    test('should call changeCheckedRecipe', () => {
+      changeRadio()
+
+      expect(changeCheckedRecipe).toHaveBeenCalledWith(recipeId, isOutOfStock)
     })
   })
 })

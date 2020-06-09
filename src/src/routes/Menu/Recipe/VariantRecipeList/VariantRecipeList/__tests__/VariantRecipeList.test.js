@@ -54,12 +54,10 @@ describe('VariantRecipeList', () => {
           }
         })
         test('should call selectRecipeVariant', () => {
-          wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')({
-            target: {
-              value: recipeVariants[0].coreRecipeId
-            }
-          })
-          expect(selectRecipeVariant).toHaveBeenCalledWith('9999', '1230', '1234abcd', 'grid')
+          const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+          changeCheckedRecipe(recipeVariants[0].coreRecipeId, false)
+          expect(selectRecipeVariant).toHaveBeenCalledWith('9999', '1230', '1234abcd', false, 'grid')
         })
 
         test('should stop propagation on click event', () => {
@@ -84,11 +82,10 @@ describe('VariantRecipeList', () => {
             />)
           })
           test('should call menuRecipeDetailVisibilityChange', () => {
-            wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')({
-              target: {
-                value: recipeVariants[0].coreRecipeId
-              }
-            })
+            const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+            changeCheckedRecipe(recipeVariants[0].coreRecipeId, false)
+
             expect(menuRecipeDetailVisibilityChange).toHaveBeenCalledWith('1230')
           })
 

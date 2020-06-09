@@ -82,7 +82,7 @@ module.exports = {
     mayCode: 'DTI-SB-10M',
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-      mayText: 'Get cooking with 10% of all boxes in your first month',
+      mayText: 'Get cooking with 10% off all boxes in your first month',
       linkText: 'Claim discount',
     },
   },

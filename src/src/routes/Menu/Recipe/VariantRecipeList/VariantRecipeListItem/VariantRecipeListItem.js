@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import css from './VariantRecipeListItem.css'
 
-const VariantRecipeListItem = ({recipeId, recipeName, changeCheckedRecipe, isChecked, isOnDetailScreen, outOfStock}) => (
+const VariantRecipeListItem = ({recipeId, recipeName, changeCheckedRecipe, isChecked, isOnDetailScreen, isOutOfStock}) => (
   <li
     className={
       classnames(
@@ -17,13 +17,12 @@ const VariantRecipeListItem = ({recipeId, recipeName, changeCheckedRecipe, isChe
     <InputRadio
       id={recipeId}
       name="variantList"
-      value={recipeId}
-      onChange={changeCheckedRecipe}
+      onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
       isChecked={isChecked}
     >
-      <div className={outOfStock ? css.labelContainerOutOfStock : css.labelContainer}>
+      <div className={isOutOfStock ? css.labelContainerOutOfStock : css.labelContainer}>
         <span>{recipeName}</span>
-        {outOfStock && <span className={css.soldOutText}>Sold out</span>}
+        {isOutOfStock && <span className={css.soldOutText}>Sold out</span>}
       </div>
     </InputRadio>
   </li>
@@ -35,7 +34,7 @@ VariantRecipeListItem.propTypes = {
   changeCheckedRecipe: PropTypes.func.isRequired,
   isChecked: PropTypes.bool.isRequired,
   isOnDetailScreen: PropTypes.bool.isRequired,
-  outOfStock: PropTypes.bool.isRequired
+  isOutOfStock: PropTypes.bool.isRequired
 }
 
 export { VariantRecipeListItem }

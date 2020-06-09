@@ -1,6 +1,11 @@
 @value inputBorderColor, inputBorderColorFocus, errorBorderColor from 'styles/forms.css';
 @value RadiusSM from 'styles/borders.css';
 
+:global #controllerFrame {
+  width: 0 !important;
+  height: 0 !important;
+}
+
 .framesForm {
   display: flex;
   flex-flow: row wrap;
