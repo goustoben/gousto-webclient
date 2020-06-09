@@ -17,7 +17,7 @@ const VariantRecipeListItem = ({recipeId, recipeName, changeCheckedRecipe, isChe
     <InputRadio
       id={recipeId}
       name="variantList"
-      value={recipeId}
+      value={({ recipeId, outOfStock })}
       onChange={changeCheckedRecipe}
       isChecked={isChecked}
     >

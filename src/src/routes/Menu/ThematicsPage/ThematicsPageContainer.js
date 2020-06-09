@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import Immutable from 'immutable'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
 import { FilteredRecipePage } from '../FilteredRecipePage'
-import { getRecipeListRecipes } from '../selectors/sorting'
+import { getRecipeListRecipes } from '../selectors/recipeList'
 
 const mapStateToProps = (state, ownProps) => {
   const { params } = ownProps
@@ -19,14 +19,14 @@ const mapStateToProps = (state, ownProps) => {
     }
   }
 
-  const { recipes, recipeIds } = getRecipeListRecipes(state, { collectionId: collection.get('id') })
+  const { recipes, originalOrderRecipeIds } = getRecipeListRecipes(state, { collectionId: collection.get('id') })
 
   return {
     name: collection.get('shortTitle'),
     description: collection.get('description'),
     borderColor: collection.get('colour'),
     recipes,
-    filteredRecipeIds: recipeIds,
+    originalOrderRecipeIds,
   }
 }
 const ThematicsPageContainer = connect(mapStateToProps, {

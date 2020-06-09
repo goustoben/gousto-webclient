@@ -10,12 +10,12 @@ import css from '../Menu.css'
 class RecipeGrid extends PureComponent {
   static propTypes = {
     recipes: PropTypes.instanceOf(Immutable.List),
-    filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
+    originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
   }
 
   static defaultProps = {
     recipes: null,
-    filteredRecipeIds: null,
+    originalOrderRecipeIds: null,
   }
 
   state = {
@@ -27,7 +27,7 @@ class RecipeGrid extends PureComponent {
   }
 
   render() {
-    const { recipes, filteredRecipeIds } = this.props
+    const { recipes, originalOrderRecipeIds } = this.props
     const { shouldShowOverlay } = this.state
 
     return (
@@ -39,7 +39,7 @@ class RecipeGrid extends PureComponent {
         {
           recipes === null
             ? <RecipeListContainer />
-            : <FilteredRecipeListContainer recipes={recipes} filteredRecipeIds={filteredRecipeIds} />
+            : <FilteredRecipeListContainer recipes={recipes} originalOrderRecipeIds={originalOrderRecipeIds} />
         }
         <DetailOverlayContainer
           showOverlay={shouldShowOverlay}

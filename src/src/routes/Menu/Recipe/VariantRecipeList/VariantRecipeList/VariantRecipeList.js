@@ -23,10 +23,10 @@ class VariantRecipeList extends React.PureComponent {
   }
 
   changeCheckedRecipe = (e) => {
-    const recipeId = e.target.value
+    const { recipeId, outOfStock } = e.target.value
     const { originalId, selectRecipeVariant, collectionId, menuRecipeDetailVisibilityChange, isOnDetailScreen} = this.props
     const view = isOnDetailScreen ? 'details' : 'grid'
-    selectRecipeVariant(originalId, recipeId, collectionId, view)
+    selectRecipeVariant(originalId, recipeId, collectionId, outOfStock, view)
 
     this.setState({
       checkedValue: recipeId,

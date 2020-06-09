@@ -82,11 +82,11 @@ describe('RecipeList', () => {
   describe('trackRecipeOrderDisplayed', () => {
     describe('when the recipe list is initially rendered', () => {
       test('should dispatch trackRecipeOrderDisplayed once', () => {
-        const filteredRecipeIds = Immutable.List(['1', '2', '3'])
+        const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
 
         shallow(
           <RecipeList
-            filteredRecipeIds={filteredRecipeIds}
+            originalOrderRecipeIds={originalOrderRecipeIds}
             recipes={recipes}
           />,
           { context },
@@ -106,11 +106,11 @@ describe('RecipeList', () => {
 
     describe('when the recipe collection selection is changed', () => {
       test('should dispatch trackRecipeOrderDisplayed an additional time', () => {
-        const filteredRecipeIds = Immutable.List(['1', '2', '3'])
+        const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
 
         const wrapper = shallow(
           <RecipeList
-            filteredRecipeIds={filteredRecipeIds}
+            originalOrderRecipeIds={originalOrderRecipeIds}
             recipes={recipes}
             currentCollectionId="123"
           />,
@@ -134,11 +134,11 @@ describe('RecipeList', () => {
 
     describe('when the recipe collection remains the same', () => {
       test('should not dispatch trackRecipeOrderDisplayed after initial render', () => {
-        const filteredRecipeIds = Immutable.List(['1', '2', '3'])
+        const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
 
         const wrapper = shallow(
           <RecipeList
-            filteredRecipeIds={filteredRecipeIds}
+            originalOrderRecipeIds={originalOrderRecipeIds}
             recipes={recipes}
             currentCollectionId="123"
           />,

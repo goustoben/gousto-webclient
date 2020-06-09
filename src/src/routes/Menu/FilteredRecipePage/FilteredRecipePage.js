@@ -27,7 +27,7 @@ class FilteredRecipePage extends PureComponent {
       borderColor,
       backToAllRecipes,
       recipes,
-      filteredRecipeIds,
+      originalOrderRecipeIds,
     } = this.props
     const { containerHeight } = this.state
 
@@ -47,7 +47,7 @@ class FilteredRecipePage extends PureComponent {
         <p className={css.filteredRecipePageDescription}>{description}</p>
         <div style={{ top: containerHeight, background: borderColor }} className={css.border} />
         <div className={css.filteredRecipePageRecipes}>
-          <RecipeGrid recipes={recipes} filteredRecipeIds={filteredRecipeIds} />
+          <RecipeGrid recipes={recipes} originalOrderRecipeIds={originalOrderRecipeIds} />
         </div>
       </section>
     )
@@ -60,7 +60,7 @@ FilteredRecipePage.propTypes = {
   borderColor: PropTypes.string.isRequired,
   backToAllRecipes: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-  filteredRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
+  originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
 }
 
 export { FilteredRecipePage }
