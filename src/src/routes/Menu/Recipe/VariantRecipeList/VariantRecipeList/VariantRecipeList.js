@@ -7,7 +7,7 @@ class VariantRecipeList extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      checkedValue: ''
+      selectedRecipeId: ''
     }
   }
 
@@ -15,21 +15,20 @@ class VariantRecipeList extends React.PureComponent {
     const { selectedRecipe: { coreRecipeId }, trackVariantListDisplay, isOnDetailScreen, recipeVariants } = this.props
     const view = isOnDetailScreen ? 'details' : 'grid'
     this.setState({
-      checkedValue: coreRecipeId,
+      selectedRecipeId: coreRecipeId,
     })
     if (recipeVariants) {
       trackVariantListDisplay(view)
     }
   }
 
-  changeCheckedRecipe = (e) => {
-    const { recipeId, outOfStock } = e.target.value
+  changeCheckedRecipe = (recipeId, isOutOfStock) => {
     const { originalId, selectRecipeVariant, collectionId, menuRecipeDetailVisibilityChange, isOnDetailScreen} = this.props
     const view = isOnDetailScreen ? 'details' : 'grid'
-    selectRecipeVariant(originalId, recipeId, collectionId, outOfStock, view)
+    selectRecipeVariant(originalId, recipeId, collectionId, isOutOfStock, view)
 
     this.setState({
-      checkedValue: recipeId,
+      selectedRecipeId: recipeId,
     })
 
     if (isOnDetailScreen) {
@@ -43,7 +42,7 @@ class VariantRecipeList extends React.PureComponent {
 
   render() {
     const { recipeVariants, selectedRecipe, isOnDetailScreen } = this.props
-    const { checkedValue } = this.state
+    const { selectedRecipeId } = this.state
 
     if (!recipeVariants || recipeVariants.length === 0) {
       return null
@@ -61,7 +60,7 @@ class VariantRecipeList extends React.PureComponent {
               recipeId={coreRecipeId}
               recipeName={displayName}
               changeCheckedRecipe={this.changeCheckedRecipe}
-              isChecked={checkedValue === coreRecipeId}
+              isChecked={selectedRecipeId === coreRecipeId}
               isOnDetailScreen={isOnDetailScreen}
             />
           ))}

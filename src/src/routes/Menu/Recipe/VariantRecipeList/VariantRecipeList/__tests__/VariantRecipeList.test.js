@@ -54,14 +54,9 @@ describe('VariantRecipeList', () => {
           }
         })
         test('should call selectRecipeVariant', () => {
-          wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')({
-            target: {
-              value: {
-                recipeId: recipeVariants[0].coreRecipeId,
-                outOfStock: false
-              }
-            }
-          })
+          const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+          changeCheckedRecipe(recipeVariants[0].coreRecipeId, false)
           expect(selectRecipeVariant).toHaveBeenCalledWith('9999', '1230', '1234abcd', false, 'grid')
         })
 
@@ -87,14 +82,10 @@ describe('VariantRecipeList', () => {
             />)
           })
           test('should call menuRecipeDetailVisibilityChange', () => {
-            wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')({
-              target: {
-                value: {
-                  recipeId: recipeVariants[0].coreRecipeId,
-                  outOfStock: false
-                }
-              }
-            })
+            const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+            changeCheckedRecipe(recipeVariants[0].coreRecipeId, false)
+
             expect(menuRecipeDetailVisibilityChange).toHaveBeenCalledWith('1230')
           })
 
