@@ -1,1 +1,0 @@
-export { FineDineInDetail } from './FineDineInDetail'

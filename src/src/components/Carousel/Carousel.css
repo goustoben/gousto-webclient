@@ -112,10 +112,6 @@
 }
 
 /* Dots */
-:global .carousel-dotted .slick-slider
-{
-	padding-bottom: SpacingXXL;
-}
 :global .slick-dots
 {
 	display: block;

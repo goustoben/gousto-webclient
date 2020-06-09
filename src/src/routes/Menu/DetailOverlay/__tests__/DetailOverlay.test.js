@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import Modal from 'Modal'
-import Detail from 'routes/Menu/Recipe/Detail'
+import { DetailContainer } from 'routes/Menu/Recipe/Detail'
 import { DetailOverlay } from 'routes/Menu/DetailOverlay/DetailOverlay'
 
 jest.mock('routes/Menu/Recipe/Detail')
@@ -44,7 +44,7 @@ describe('DetailOverlay', () => {
       />
     )
 
-    Detail.mockReturnValue(<div />)
+    DetailContainer.mockReturnValue(<div />)
   })
 
   test('should render 1 Overlay', () => {
@@ -52,7 +52,7 @@ describe('DetailOverlay', () => {
   })
 
   test('should render 1 Detail component', () => {
-    expect(wrapper.find(Detail).length).toBe(1)
+    expect(wrapper.find(DetailContainer).length).toBe(1)
   })
 })
 

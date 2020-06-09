@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Detail from 'routes/Menu/Recipe/Detail'
+import { DetailContainer } from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
 import { getLowStockTag, getSurcharge, getTaxonomyTags } from 'utils/recipe'
@@ -41,18 +41,18 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
 
   const stockRecipe = stock.getIn([recipeId, String(numPortions)], 0)
   const surcharge = getSurcharge(detailRecipe.get('meals'), numPortions)
-  const IsFineDineIn = detailRecipe.get('isFineDineIn')
-  const view = (IsFineDineIn) ? 'fineDineInDetail' : 'detail'
-  const images = (IsFineDineIn) ? getRangeImages(detailRecipe) : null
+  const isFineDineIn = detailRecipe.get('isFineDineIn')
+  const view = isFineDineIn ? 'fineDineInDetail' : 'detail'
+  const images = (isFineDineIn) ? getRangeImages(detailRecipe) : null
   const isChefPrepared = detailRecipe.get('chefPrepared') === true
+  const media = isFineDineIn ? images : getFeaturedImage(detailRecipe, 'detail', browserType)
 
   return (
     <Modal isOpen={showOverlay}>
-      <Detail
+      <DetailContainer
         view={view}
         tag={getLowStockTag(stockRecipe, detailRecipe.getIn(['rating', 'count']))}
-        media={getFeaturedImage(detailRecipe, 'detail', browserType)}
-        images={images}
+        media={media}
         title={detailRecipe.get('title', '')}
         count={detailRecipe.getIn(['rating', 'count'], 0)}
         average={detailRecipe.getIn(['rating', 'average'], 0)}
@@ -78,6 +78,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
         position={position}
         isChefPrepared={isChefPrepared}
         numPortions={numPortions}
+        isFineDineIn={isFineDineIn}
       />
     </Modal>
   )

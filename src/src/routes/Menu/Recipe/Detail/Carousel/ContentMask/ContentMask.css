@@ -3,28 +3,9 @@
 
 .container {
 	position: relative;
+	background-color: Bronze;
 }
 
 .content {
-	width: 100%;
-	position: absolute;
-	bottom: 40px;
-}
-
-.mask {
-	margin-top: -7px;
-	padding-bottom: 100px;
-	background-color: Bronze;
-
-	@media ScreenXXSMin {
-		padding-bottom: 60px;
-	}
-
-	@media ScreenMDMin {
-		padding-bottom: 30px;
-	}
-
-	@media ScreenLGMin {
-		padding-bottom: 0px;
-	}
+	padding: 1rem 0 2.5rem;
 }

@@ -4,7 +4,8 @@ const mediaTransformer = (images, title) => {
   const imagesMap = images.map((image) => ({
     type: image.type,
     urls: cropsTransformer(image.crops),
-    title,
+    title: image.title || title,
+    description: image.description
   }))
 
   return imagesMap
