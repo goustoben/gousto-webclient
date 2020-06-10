@@ -18,6 +18,7 @@ exports[`Banner Initial Render should render with given text 1`] = `
   >
     <div
       className="spinnerContainer  base tertiary fill noHover autoWidthPadding"
+      data-testing={null}
       onClick={[Function]}
       onKeyUp={[Function]}
       onMouseEnter={[Function]}

@@ -12,6 +12,7 @@ describe('VariantRecipeListItem', () => {
         changeCheckedRecipe={() => { }}
         isChecked
         isOnDetailScreen
+        isOutOfStock={false}
       />)
       test('then it should render a radio button input in a highlighted blue box', () => {
         expect(wrapper.find('.listItemWithBlueBorder')).toHaveLength(1)
@@ -25,6 +26,7 @@ describe('VariantRecipeListItem', () => {
         changeCheckedRecipe={() => { }}
         isChecked={false}
         isOnDetailScreen
+        isOutOfStock={false}
       />)
       test('then it should render a radio button input in a grey box', () => {
         expect(wrapper.find('.listItemWithBorder')).toHaveLength(1)
@@ -45,6 +47,23 @@ describe('VariantRecipeListItem', () => {
       })
     })
 
+    describe('When the recipe has a surcharge', () => {
+      const wrapper = mount(<VariantRecipeListItem
+        key="1230"
+        recipeId="1230"
+        recipeName="Chicken curry"
+        changeCheckedRecipe={() => {}}
+        isChecked={false}
+        isOnDetailScreen
+        isOutOfStock={false}
+        surcharge={0.75}
+      />)
+      test('then it should render surcharge info', () => {
+        expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
+        expect(wrapper.find('.perServingText')).toHaveLength(1)
+      })
+    })
+
     describe('When the variant list is on the recipe grid', () => {
       describe('When the the recipe is checked', () => {
         const wrapper = mount(<VariantRecipeListItem
@@ -53,6 +72,7 @@ describe('VariantRecipeListItem', () => {
           changeCheckedRecipe={() => { }}
           isChecked
           isOnDetailScreen={false}
+          isOutOfStock={false}
         />)
         test('then it should render a radio button input not in a box', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
@@ -66,9 +86,27 @@ describe('VariantRecipeListItem', () => {
           changeCheckedRecipe={() => { }}
           isChecked={false}
           isOnDetailScreen={false}
+          isOutOfStock={false}
         />)
         test('then it should render a radio button input not in a box', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
+        })
+      })
+
+      describe('When the recipe has a surcharge', () => {
+        const wrapper = mount(<VariantRecipeListItem
+          key="1230"
+          recipeId="1230"
+          recipeName="Chicken curry"
+          changeCheckedRecipe={() => {}}
+          isChecked={false}
+          isOnDetailScreen={false}
+          surcharge={0.75}
+          isOutOfStock={false}
+        />)
+        test('then it should render surcharge info', () => {
+          expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
+          expect(wrapper.find('.perServingText')).toHaveLength(1)
         })
       })
     })
