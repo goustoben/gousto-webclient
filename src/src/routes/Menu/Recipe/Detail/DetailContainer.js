@@ -30,4 +30,4 @@ const DetailContainer = connect(mapStateToProps, {
   menuRecipeDetailVisibilityChange: () => menuRecipeDetailVisibilityChange(),
 })(Detail)
 
-export default DetailContainer
+export { DetailContainer }
