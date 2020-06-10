@@ -4,6 +4,7 @@ import { safeJestMock } from '../../../../_testing/mocks'
 import {
   getRecipeTitle,
   getRecipeOutOfStock,
+  getRecipeSurcharge,
   getTagDefinition,
   getRecipeDisclaimerProps
 } from '../recipe'
@@ -139,6 +140,42 @@ describe('menu recipe selectors', () => {
         }
         const result = getRecipeOutOfStock(state, props)
         expect(result).toEqual(false)
+      })
+    })
+  })
+
+  describe('getRecipeSurcharge', () => {
+    const recipeId = '111'
+    const recipes = Immutable.fromJS({
+      [recipeId]: {
+        meals: [
+          {
+            numPortions: 2,
+            surcharge: {
+              listPrice: 1.49
+            }
+          }
+        ]
+      },
+    })
+    let props
+
+    beforeEach(() => {
+      props = {
+        recipeId
+      }
+    })
+
+    describe('When recipe has a surcharge', () => {
+      test('should return the amount of the surcharge', () => {
+        const state = {
+          basket: Immutable.fromJS({
+            numPortions: 2
+          }),
+          recipes
+        }
+        const result = getRecipeSurcharge(state, props)
+        expect(result).toEqual(0.75)
       })
     })
   })

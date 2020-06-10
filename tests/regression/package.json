@@ -16,5 +16,8 @@
   "dependencies": {
     "moment": "^2.25.3",
     "cypress": "^4.5.0"
+  },
+  "devDependencies": {
+    "cypress-pipe": "^1.7.0"
   }
 }

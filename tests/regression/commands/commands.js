@@ -3,6 +3,11 @@
 // // commands please read more here:
 // // https://on.cypress.io/custom-commands
 // // ***********************************************
+Cypress.Commands.add('mockDate', () => {
+  const DATE = new Date(2020, 4, 1).getTime()
+  cy.clock(DATE, ['Date'])
+})
+
 Cypress.Commands.add('login', () => {
   cy.server()
   cy.fixture('auth/login').as('login')

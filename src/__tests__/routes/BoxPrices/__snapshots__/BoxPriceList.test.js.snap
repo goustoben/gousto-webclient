@@ -150,6 +150,7 @@ exports[`BoxPriceList Will snap BoxPriceList 1`] = `
       >
         <div
           className="spinnerContainer  base primary fill noHover autoWidthPadding"
+          data-testing={null}
           onClick={[Function]}
           onKeyUp={[Function]}
           onMouseEnter={[Function]}
@@ -373,6 +374,7 @@ exports[`BoxPriceList Will snap BoxPriceList 1`] = `
       >
         <div
           className="spinnerContainer  base primary fill noHover autoWidthPadding"
+          data-testing={null}
           onClick={[Function]}
           onKeyUp={[Function]}
           onMouseEnter={[Function]}

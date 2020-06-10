@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { getRecipes, getStock, getBasket } from 'selectors/root'
-import { formatRecipeTitle } from 'utils/recipe'
+import { formatRecipeTitle, getSurcharge, getSurchargePerPortion } from 'utils/recipe'
 import { getNumPortions } from 'selectors/basket'
 import config from 'config/menu'
 
@@ -34,7 +34,19 @@ export const getRecipeOutOfStock = createSelector(
     const stock = menuRecipeStock.getIn([recipeId, String(numPortions)], 0)
 
     return (stock <= config.stockThreshold && stock !== null && !inBasket)
-  })
+  }
+)
+
+export const getRecipeSurcharge = createSelector(
+  [getRecipeIdFromProps, getNumPortions, getRecipes],
+  (recipeId, numPortions, recipes) => {
+    const meals = recipes.getIn([recipeId, 'meals'])
+    const overallSurcharge = getSurcharge(meals, numPortions)
+    const surchargePerPortion = overallSurcharge ? getSurchargePerPortion(overallSurcharge, numPortions) : null
+
+    return surchargePerPortion
+  }
+)
 
 const getTagBySlugFromProps = (state, props) => props.slug
 const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
