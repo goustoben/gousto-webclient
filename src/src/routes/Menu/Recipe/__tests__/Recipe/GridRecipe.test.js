@@ -39,6 +39,20 @@ describe('<GridRecipe />', () => {
         },
       ]),
       diet: 'meat',
+      useWithin: '2-3',
+      outOfStock: false,
+      originalId: '2',
+      onClick: () => {},
+      highlight: () => {},
+      unhighlight: () => {},
+      chef: {
+        media: {},
+        name: '',
+        celebrity: false,
+      },
+      view: 'grid',
+      detailHover: true,
+      equipment: Immutable.List(),
     }
     const view = 'grid'
 
@@ -97,6 +111,15 @@ describe('<GridRecipe />', () => {
         expect(wrapper.find(Pill).prop('icon')).toBe(true)
       })
 
+      describe('when click on Pill', () => {
+        const onClickSpy = jest.fn()
+        test('should call onClick', () => {
+          wrapper.setProps({onClick: onClickSpy})
+          wrapper.find(Pill).simulate('click')
+          expect(onClickSpy).toHaveBeenCalled()
+        })
+      })
+
       test('should contain one VariantHeader component', () => {
         const component = wrapper.find(VariantHeaderContainer)
         expect(component.length).toBe(1)
@@ -105,8 +128,7 @@ describe('<GridRecipe />', () => {
 
     describe('when a recipe is not in stock ', () => {
       beforeEach(() => {
-        wrapper.setProps({ stock: 0 })
-        wrapper.setProps({ inBasket: false })
+        wrapper.setProps({ outOfStock: true })
       })
 
       test('should not contain one Pill component', () => {
@@ -119,6 +141,28 @@ describe('<GridRecipe />', () => {
 
       test('should not contain one RecipeRatingContainer component', () => {
         expect(wrapper.find(RecipeRatingContainer).length).toEqual(0)
+      })
+
+      test('should send outOfStock to AddRecipe button', () => {
+        expect(wrapper.find(AddRecipe).prop('outOfStock')).toEqual(true)
+      })
+    })
+
+    describe('when recipe render fineDineInStyle ', () => {
+      beforeEach(() => {
+        wrapper.setProps({ fineDineInStyle: true, outOfStock: false })
+      })
+
+      test('should not render RecipeRatingContainer', () => {
+        expect(wrapper.find(RecipeRatingContainer)).toHaveLength(0)
+      })
+
+      test('should apply fineDineInStyle class name', () => {
+        expect(wrapper.find('.fineDineInStyle')).toHaveLength(1)
+      })
+
+      test('should send maxNoAttributes 2 to AttributeGrid', () => {
+        expect(wrapper.find(AttributeGrid).prop('maxNoAttributes')).toEqual(2)
       })
     })
   })

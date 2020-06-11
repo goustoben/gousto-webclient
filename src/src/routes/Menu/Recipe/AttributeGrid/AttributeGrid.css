@@ -1,5 +1,5 @@
 @value sizeMD from 'styles/typography.css';
-@value Basa from 'styles/colors.css';
+@value Basa, NewGrey from 'styles/colors.css';
 @value attributesLineHeight 1.8;
 @value ScreenLGMin from 'styles/screenSizes.css';
 
@@ -15,4 +15,8 @@
 	@media ScreenLGMin {
 		grid-template-columns: repeat(2, minmax(145px, 1fr));
 	}
+}
+
+.fineDineInStyleBorder {
+	border-top: 1px solid NewGrey;
 }

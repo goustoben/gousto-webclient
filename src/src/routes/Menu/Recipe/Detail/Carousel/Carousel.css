@@ -26,6 +26,7 @@
 .imageTitle {
 	composes: slideContent;
 	font-size: sizeLG;
+	font-weight: bold;
 }
 
 .imageDescription {

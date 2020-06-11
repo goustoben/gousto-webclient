@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount, shallow } from 'enzyme'
+import Immutable from 'immutable'
 import Buttons from 'routes/Menu/Recipe/Buttons/Buttons'
+import ButtonsContainer from '../../Buttons'
 
 describe('the Buttons component', () => {
   let wrapper
@@ -387,5 +389,47 @@ describe('the Buttons component', () => {
         })
       })
     })
+  })
+})
+
+describe('ButtonsContainer', () => {
+  let state
+  let wrapper
+  beforeEach(() => {
+    state = {
+      auth: Immutable.fromJS({
+        isAdmin: false
+      }),
+      basket: Immutable.fromJS({
+        numPortions: 2
+      }),
+      recipes: Immutable.fromJS({
+        1: {
+          meals: [{
+            numPortions: 2,
+            surcharge: null
+          }]
+        }
+      }),
+      menuRecipeStock: Immutable.fromJS({
+        1: {
+          2: 1000
+        }
+      })
+    }
+
+    wrapper = shallow(<ButtonsContainer recipeId="1" />, {
+      context: {
+        store: {
+          getState: () => state,
+          dispatch: () => {},
+          subscribe: () => {}
+        }
+      }
+    })
+  })
+
+  test('should render Buttons component', () => {
+    expect(wrapper.find('Buttons')).toHaveLength(1)
   })
 })

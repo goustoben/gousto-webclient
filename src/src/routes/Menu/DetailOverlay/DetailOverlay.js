@@ -14,7 +14,8 @@ const propTypes = {
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-  browserType: PropTypes.string.isRequired
+  browserType: PropTypes.string.isRequired,
+  outOfStock: PropTypes.bool.isRequired
 }
 
 const defaultProps = {
@@ -23,7 +24,7 @@ const defaultProps = {
   position: null
 }
 
-const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position, browserType }) => {
+const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position, browserType, outOfStock }) => {
   const recipeId = menuRecipeDetailShow
   const detailRecipe = recipesStore.get(recipeId)
 
@@ -62,7 +63,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
         allergens={detailRecipe.get('allergens', Immutable.List([]))}
         id={detailRecipe.get('id')}
         recipeId={recipeId}
-        stock={stockRecipe}
+        outOfStock={outOfStock}
         useWithin={detailRecipe.get('shelfLifeDays')}
         cookingTime={numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
         description={detailRecipe.get('description')}

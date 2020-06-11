@@ -20,10 +20,12 @@ describe('VariantHeader', () => {
 
     describe('When there are 3 recipe variants', () => {
       test('then it should render the correct number of recipe variants on the header', () => {
-        const wrapper = mount(<VariantHeader recipeVariants={[
-          { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
-          { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
-        ]}
+        const wrapper = mount(<VariantHeader
+          recipeVariants={[
+            { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
+            { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
+          ]}
+          outOfStock={false}
         />)
         expect(wrapper.find('.variantHeader').text()).toContain('3 options available')
       })
@@ -31,13 +33,15 @@ describe('VariantHeader', () => {
 
     describe('When there are 5 recipe variants', () => {
       test('then it should render the correct number of recipe variants on the header', () => {
-        const wrapper = mount(<VariantHeader recipeVariants={[
-          { id: '1230'},
-          { id: '125'},
-          { id: '126'},
-          { id: '127'},
-          { id: '1284'}
-        ]}
+        const wrapper = mount(<VariantHeader
+          recipeVariants={[
+            { id: '1230'},
+            { id: '125'},
+            { id: '126'},
+            { id: '127'},
+            { id: '1284'}
+          ]}
+          outOfStock={false}
         />)
         expect(wrapper.find('.variantHeader').text()).toContain('6 options available')
       })
@@ -50,8 +54,7 @@ describe('VariantHeader', () => {
             { id: '1230'},
             { id: '125'},
           ]}
-          stock={0}
-          inBasket={false}
+          outOfStock
         />)
         expect(wrapper.find('.variantHeader')).toHaveLength(0)
       })

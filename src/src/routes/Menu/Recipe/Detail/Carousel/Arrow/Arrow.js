@@ -20,7 +20,10 @@ const Arrow = ({ direction, onClick }) => (
 
 Arrow.propTypes = {
   direction: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 }
 
+Arrow.defaultProps = {
+  onClick: () => {}
+}
 export { Arrow }

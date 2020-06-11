@@ -1,1 +1,0 @@
-export { FeaturedRecipe } from './FeaturedRecipe'

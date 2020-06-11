@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { getRecipePosition } from 'selectors/collections'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
+import { getMenuRecipeDetailShowIsOutOfStock } from '../selectors/basket'
 import { DetailOverlay } from './DetailOverlay'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -11,6 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   position: getRecipePosition(state, getMenuRecipeIdForDetails(state)),
   browserType: state.request.get('browser'),
   menuRecipeDetailShow: getMenuRecipeIdForDetails(state),
+  outOfStock: getMenuRecipeDetailShowIsOutOfStock(state),
 })
 
 const DetailOverlayContainer = connect(mapStateToProps, {})(DetailOverlay)

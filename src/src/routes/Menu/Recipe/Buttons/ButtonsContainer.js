@@ -19,7 +19,8 @@ const mapStateToProps = (state, props) => {
     limitReached: state.basket.get('limitReached'),
     disable: state.auth.get('isAdmin'),
     score: props.score,
-    basketPostcode: getBasketPostcode(state)
+    basketPostcode: getBasketPostcode(state),
+    stock: state.menuRecipeStock.getIn([props.recipeId, String(numPortions)], 0)
   }
 }
 
