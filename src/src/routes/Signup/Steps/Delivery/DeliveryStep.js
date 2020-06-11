@@ -151,9 +151,9 @@ const DeliveryStep = ({
     }
   }
 
-  if (userHasAvailableSlots === false) {
+  if (userHasAvailableSlots === false && boxSummaryDeliveryDays.size > 0) {
     return (
-      <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
+      <span className={signupCss.stepContainer} data-testing="signupDeliveryStepCapacityAlert">
         <div className={signupCss.fullWidth}>
           <div className={signupCss.header}>
             <Image name="delivery-day" />
