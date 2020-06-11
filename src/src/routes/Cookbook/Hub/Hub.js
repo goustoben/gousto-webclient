@@ -26,6 +26,7 @@ import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeAttribute } from 'routes/Menu/Recipe/RecipeAttribute'
+import { ReadMoreText } from './ReadMoreText'
 
 import css from './Hub.css'
 
@@ -239,7 +240,7 @@ class Hub extends React.PureComponent {
         {this.renderMetaData()}
         {collection && (
           <PageHeader title={collection.get('shortTitle')}>
-            <p>{collection.get('description')}</p>
+            <ReadMoreText lines={3} text={collection.get('description')} />
           </PageHeader>
         )}
         {isLoading && <LoadingOverlay />}

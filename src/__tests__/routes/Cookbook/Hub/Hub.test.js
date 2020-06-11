@@ -15,6 +15,7 @@ import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { H1 } from 'Page/Header'
+import { ReadMoreText } from 'routes/Cookbook/Hub/ReadMoreText'
 
 jest.mock('utils/logger', () => ({
   error: () => { }
@@ -67,7 +68,8 @@ describe('Hub', () => {
                 collections: Immutable.Map({
                   1234: Immutable.Map({
                     id: '1234',
-                    slug: 'all-recipes'
+                    slug: 'all-recipes',
+                    description: 'Not sure what to cook for dinner? Browse our full library of delicious recipe ideas'
                   })
                 })
               })
@@ -95,6 +97,10 @@ describe('Hub', () => {
 
     test('should have a PageHeader child', () => {
       expect(wrapper.children(PageHeader)).toHaveLength(1)
+    })
+
+    test('should have a ReadMoreText child', () => {
+      expect(wrapper.find(ReadMoreText).exists()).toBe(true)
     })
 
     test('should have a PageContent child', () => {
