@@ -25,4 +25,5 @@ if (!Object.entries) {
     return resArray
   }
 }
+
 Enzyme.configure({ adapter: new EnzymeAdapter() });

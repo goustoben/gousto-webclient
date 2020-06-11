@@ -1,0 +1,1 @@
+export { ReadMoreText } from './ReadMoreText'
