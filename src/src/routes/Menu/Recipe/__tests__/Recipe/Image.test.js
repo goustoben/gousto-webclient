@@ -31,7 +31,7 @@ describe('<Image />', () => {
   })
 
   it('shouldn\'t render a GoustoImage without media', () => {
-    wrapper = shallow(<Image />)
+    wrapper = shallow(<Image media={Immutable.List()} />)
 
     expect(wrapper.find(GoustoImage)).toHaveLength(0)
   })
