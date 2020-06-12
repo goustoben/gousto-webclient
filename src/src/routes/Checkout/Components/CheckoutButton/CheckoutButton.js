@@ -3,7 +3,7 @@ import React from 'react'
 import { Button } from 'goustouicomponents'
 import css from './CheckoutButton.css'
 
-const CheckoutButton = ({ color, fill, onClick, stepName, submitting }) => (
+const CheckoutButton = ({ color, fill, onClick, stepName, submitting, valid }) => (
   <Button
     color={color}
     fill={fill}
@@ -11,7 +11,7 @@ const CheckoutButton = ({ color, fill, onClick, stepName, submitting }) => (
     onClick={onClick}
     pending={submitting}
     className={css.marginTop}
-    disabled={submitting}
+    disabled={!valid}
     data-testing="checkoutCTA"
   >
     {stepName}
@@ -24,6 +24,7 @@ CheckoutButton.propTypes = {
   submitting: PropTypes.bool,
   onClick: PropTypes.func,
   color: PropTypes.string,
+  valid: PropTypes.bool,
 }
 
 CheckoutButton.defaultProps = {
@@ -32,6 +33,7 @@ CheckoutButton.defaultProps = {
   fill: true,
   stepName: '',
   submitting: false,
+  valid: true,
 }
 
 export default CheckoutButton

@@ -29,6 +29,7 @@ export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, c
       <CheckoutButton
         onClick={handleSubmit}
         stepName={`Next: ${nextStepName}`}
+        valid={checkoutValid}
       />
     </div>
   )
