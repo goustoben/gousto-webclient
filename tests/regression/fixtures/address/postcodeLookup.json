@@ -1,0 +1,401 @@
+{
+    "deliveryPoints":[
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 10, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675129",
+          "dps":"1N"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 11, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675130",
+          "dps":"1P"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 12, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675131",
+          "dps":"1Q"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 13, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675132",
+          "dps":"1R"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 14, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675133",
+          "dps":"1S"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 15, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675134",
+          "dps":"1T"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 16, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675135",
+          "dps":"1U"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 17, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675136",
+          "dps":"1W"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 18, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675137",
+          "dps":"1X"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 19, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675138",
+          "dps":"1Y"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 20, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675139",
+          "dps":"1Z"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 21, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675140",
+          "dps":"2A"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 22, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675141",
+          "dps":"2B"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 23, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675142",
+          "dps":"2D"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 24, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675143",
+          "dps":"2E"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 25, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675144",
+          "dps":"2F"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 26, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675145",
+          "dps":"2G"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 27, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675146",
+          "dps":"2H"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 28, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675147",
+          "dps":"2J"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 29, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675148",
+          "dps":"2L"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 30, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675149",
+          "dps":"2N"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 31, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675150",
+          "dps":"2P"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 32, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675151",
+          "dps":"2Q"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 33, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675152",
+          "dps":"2R"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 34, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675153",
+          "dps":"2S"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 35, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675154",
+          "dps":"2T"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 36, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675155",
+          "dps":"2U"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 37, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675156",
+          "dps":"2W"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 38, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675157",
+          "dps":"2X"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 39, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675158",
+          "dps":"2Y"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 40, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675159",
+          "dps":"2Z"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 41, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675160",
+          "dps":"3A"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 42, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675161",
+          "dps":"3B"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 43, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675162",
+          "dps":"3D"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 44, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675163",
+          "dps":"3E"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 45, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675164",
+          "dps":"3F"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 46, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675165",
+          "dps":"3G"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 47, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675166",
+          "dps":"3H"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 48, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675167",
+          "dps":"3J"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 49, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675168",
+          "dps":"3L"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"FLAT 50, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675169",
+          "dps":"3N"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"UNIT 1, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675120",
+          "dps":"1A"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"UNIT 2, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675121",
+          "dps":"1B"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"UNIT 3, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675122",
+          "dps":"1D"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"UNIT 4, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675123",
+          "dps":"1E"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"UNIT 5, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675124",
+          "dps":"1F"
+       },
+       {
+          "organisationName":"",
+          "departmentName":"",
+          "line1":"UNIT 6, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675125",
+          "dps":"1G"
+       },
+       {
+          "organisationName":"ARTHOUSE HIRE LTD",
+          "departmentName":"",
+          "line1":"UNIT 7, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675126",
+          "dps":"1H"
+       },
+       {
+          "organisationName":"ACTION WEST LONDON",
+          "departmentName":"",
+          "line1":"UNIT 9, MORRIS HOUSE",
+          "line2":"SWAINSON ROAD",
+          "udprn":"28675128",
+          "dps":"1L"
+       }
+    ],
+    "deliveryPointCount":49,
+    "postalCounty":"GREATER LONDON",
+    "traditionalCounty":"MIDDLESEX",
+    "town":"LONDON",
+    "postcode":"W3 7UP"
+ }

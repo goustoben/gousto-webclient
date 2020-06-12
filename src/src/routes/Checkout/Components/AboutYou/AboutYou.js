@@ -147,6 +147,7 @@ class AboutYou extends React.PureComponent {
                 childLabel="I'd like to receive the latest news and offers from Gousto, and be contacted occasionally for Customer Success purposes. I can unsubscribe at any time."
                 style="disclaimer"
                 mask
+                dataTesting="checkoutAllowEmailCheckbox"
               />
             </div>
           </div>
