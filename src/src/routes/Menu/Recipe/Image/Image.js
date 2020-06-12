@@ -7,7 +7,7 @@ import { SoldOutOverlay } from '../SoldOutOverlay'
 
 import css from './Image.css'
 
-const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, outOfStock }) => (
+const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, outOfStock, lazy }) => (
   <div
     className={classnames(
       { [css[view]]: ['list', 'fineDineIn'].indexOf(view) !== -1 },
@@ -22,13 +22,13 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize, outOf
   >
     {(media.size > 0) && (<SoldOutOverlay outOfStock={outOfStock} />) }
     {(media.size > 0) && (
-    <GoustoImage
-      media={media}
-      title={title}
-      maxMediaSize={maxMediaSize}
-      className={css.recipeImg}
-      lazy
-    />
+      <GoustoImage
+        media={media}
+        title={title}
+        maxMediaSize={maxMediaSize}
+        className={css.recipeImg}
+        lazy={lazy}
+      />
     ) }
   </div>
 )
@@ -41,6 +41,7 @@ Image.propTypes = {
   mouseLeave: PropTypes.func,
   maxMediaSize: PropTypes.number,
   outOfStock: PropTypes.bool,
+  lazy: PropTypes.bool,
 }
 
 Image.defaultProps = {
@@ -48,8 +49,9 @@ Image.defaultProps = {
   view: 'grid',
   mouseEnter: () => {},
   mouseLeave: () => {},
-  media: Immutable.List([]),
-  outOfStock: false
+  outOfStock: false,
+  maxMediaSize: null,
+  lazy: true
 }
 
 export default Image
