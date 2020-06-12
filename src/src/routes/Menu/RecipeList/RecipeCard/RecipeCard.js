@@ -5,17 +5,9 @@ import Immutable from 'immutable'
 import { getFeaturedImage } from 'utils/image'
 import { Recipe } from '../../Recipe'
 
-const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
+const getRecipeView = (isFineDineIn, isChefPrepared) => {
   if (isChefPrepared) {
     return 'chefPrepared'
-  }
-
-  if (typeof (window) !== 'undefined' && window.innerWidth < 1025) {
-    return 'grid'
-  }
-
-  if (isFeatured) {
-    return 'featured'
   }
 
   if (isFineDineIn) {
@@ -26,7 +18,7 @@ const getRecipeView = (isFeatured, isFineDineIn, isChefPrepared) => {
 }
 
 const RecipeCard = ({
-  originalId, recipeId, recipe, index, showDetailRecipe, isFeatured,
+  originalId, recipeId, recipe, index, showDetailRecipe,
   numPortions, cutoffDate, browserType, stock, inBasket
 }) => {
   if (!recipe) {
@@ -35,7 +27,7 @@ const RecipeCard = ({
 
   const isChefPrepared = recipe.get('chefPrepared') === true
 
-  const view = getRecipeView(isFeatured, recipe.get('isFineDineIn'), isChefPrepared)
+  const view = getRecipeView(recipe.get('isFineDineIn'), isChefPrepared)
 
   return (
     <Recipe
@@ -63,7 +55,6 @@ const RecipeCard = ({
 }
 
 RecipeCard.defaultProps = {
-  isFeatured: false,
   cutoffDate: ''
 }
 
@@ -74,7 +65,6 @@ RecipeCard.propTypes = {
   index: PropTypes.number.isRequired,
   numPortions: PropTypes.number.isRequired,
   showDetailRecipe: PropTypes.func.isRequired,
-  isFeatured: PropTypes.bool,
   cutoffDate: PropTypes.string,
   browserType: PropTypes.string.isRequired,
   stock: PropTypes.number.isRequired,

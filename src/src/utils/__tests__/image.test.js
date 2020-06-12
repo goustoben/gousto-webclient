@@ -73,12 +73,6 @@ describe('getFeaturedImage when there IS a homepage image', () => {
     })
   })
 
-  test('should return the homepage image if it is the featured image', () => {
-    expect(JSON.stringify(getFeaturedImage(recipe, 'featured', 'desktop'))).toContain(
-      'homepage-image',
-    )
-  })
-
   describe('when requesting detail image', () => {
     describe('when browser is desktop', () => {
       test('should return the homepage image', () => {
@@ -131,12 +125,6 @@ describe('getFeaturedImage when there IS NOT a homepage image', () => {
         ],
       },
     })
-  })
-
-  test('if it is a featured section should return the mood image if there is no homepage image', () => {
-    expect(JSON.stringify(getFeaturedImage(recipe, 'featured', 'desktop'))).toContain(
-      'mood-image',
-    )
   })
 
   test('if it is a detail section should return the mood image if there is no homepage image', () => {

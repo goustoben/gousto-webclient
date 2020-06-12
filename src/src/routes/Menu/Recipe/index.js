@@ -1,1 +1,1 @@
-export { Recipe, recipePropTypes } from './Recipe'
+export { Recipe } from './Recipe'

@@ -1,21 +1,24 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Button from '../Buttons'
 
-import config from 'config'
 import css from './AddRecipe.css'
-import { AddButton } from './AddButton'
 import { DropdownArrowContainer } from './DropdownArrow'
 
-const AddRecipe = ({ id, originalId, view, position, stock, inBasket, isOnDetailScreen = false }) => {
-  const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
-
+const AddRecipe = ({ id, originalId, view, position, outOfStock, buttonText, isOnDetailScreen }) => {
   if (outOfStock) {
     return null
   }
 
   return (
     <div className={css.addRecipeWrapper}>
-      <AddButton recipeId={id} view={view} stock={stock} position={position} outOfStock={outOfStock} />
+      <Button
+        position={position}
+        recipeId={id}
+        view={view}
+        outOfstock={outOfStock}
+        buttonText={buttonText}
+      />
       {!isOnDetailScreen && <DropdownArrowContainer recipeId={id} originalId={originalId} />}
     </div>
 
@@ -25,15 +28,16 @@ const AddRecipe = ({ id, originalId, view, position, stock, inBasket, isOnDetail
 AddRecipe.propTypes = {
   id: PropTypes.string.isRequired,
   originalId: PropTypes.string.isRequired,
-  inBasket: PropTypes.bool.isRequired,
+  outOfStock: PropTypes.bool.isRequired,
   position: PropTypes.number.isRequired,
-  stock: PropTypes.number.isRequired,
+  buttonText: PropTypes.string,
   view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'chefPrepared', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
   isOnDetailScreen: PropTypes.bool
 }
 
 AddRecipe.defaultProps = {
-  isOnDetailScreen: false
+  isOnDetailScreen: false,
+  buttonText: 'Add Recipe'
 }
 
 export { AddRecipe }

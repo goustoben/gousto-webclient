@@ -22,25 +22,16 @@
 	}
 }
 
+.fineDineIn {
+	composes: grid;
+	padding-bottom: 100%;
+}
+
 .list {
 	composes: container;
 	width: 80px;
 	min-width: 80px;
 	height: 55px;
-}
-
-.featured {
-	composes: grid;
-	@media ScreenMLMin {
-		height: 100%;
-		position: absolute;
-		left: 0;
-		top: 0;
-	}
-}
-
-.simple {
-	min-height: 160px;
 }
 
 .detail {

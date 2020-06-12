@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import config from 'config'
 import css from './SoldOutOverlay.css'
 
-const SoldOutOverlay = ({ inBasket, stock }) => {
+const SoldOutOverlay = ({ outOfStock }) => {
   const message = (
     <div className={css.overlay}>
       <span className={css.overlayText}>
@@ -13,11 +12,7 @@ const SoldOutOverlay = ({ inBasket, stock }) => {
     </div>
   )
 
-  if (stock === undefined || stock === null) {
-    return null
-  }
-
-  if (stock <= config.menu.stockThreshold && !inBasket) {
+  if (outOfStock) {
     return message
   }
 
@@ -25,12 +20,10 @@ const SoldOutOverlay = ({ inBasket, stock }) => {
 }
 
 SoldOutOverlay.propTypes = {
-  stock: PropTypes.number,
-  inBasket: PropTypes.bool,
+  outOfStock: PropTypes.bool,
 }
 
 SoldOutOverlay.defaultProps = {
-  stock: null,
-  inBasket: false,
+  outOfStock: false,
 }
 export { SoldOutOverlay }

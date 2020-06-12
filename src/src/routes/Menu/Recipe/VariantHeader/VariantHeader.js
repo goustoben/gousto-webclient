@@ -1,12 +1,8 @@
 import React from 'react'
-import Immutable from 'immutable'
-import config from 'config'
 import PropTypes from 'prop-types'
 import css from './VariantHeader.css'
 
-const VariantHeader = ({ recipeVariants, inBasket, stock }) => {
-  const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
-
+const VariantHeader = ({ recipeVariants, outOfStock }) => {
   if (!recipeVariants || recipeVariants.length === 0 || outOfStock) {
     return null
   }
@@ -22,13 +18,11 @@ const VariantHeader = ({ recipeVariants, inBasket, stock }) => {
 
 VariantHeader.propTypes = {
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
-  inBasket: PropTypes.bool,
-  stock: PropTypes.number
+  outOfStock: PropTypes.bool,
 }
 
 VariantHeader.defaultProps = {
   recipeVariants: [],
-  inBasket: false,
-  stock: null
+  outOfStock: false
 }
 export { VariantHeader }

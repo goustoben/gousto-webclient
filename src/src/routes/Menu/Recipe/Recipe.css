@@ -29,27 +29,3 @@
 		box-shadow: 0 4px 4px 0 rgba(51,61,71,0.40);
 	}
 }
-
-.simple {
-	composes: grid;
-	width: 100%;
-	height: 100%;
-	pointer-events: none;
-	cursor: default;
-	margin: 0;
-	padding: 0;
-}
-
-.featured {
-	composes: grid;
-	@media ScreenMLMin {
-		flex-basis: FeaturedWidth;
-	}
-	@media ScreenXSMax {
-		flex-basis: MobColumnWidth;
-	}
-}
-
-.fineDineIn {
-	composes: grid;
-}

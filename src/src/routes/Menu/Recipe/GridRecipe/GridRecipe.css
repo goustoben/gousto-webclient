@@ -1,6 +1,7 @@
 @value sizeMD from 'styles/typography.css';
-@value attributesLineHeight 1.8;
 @value ScreenSMMin from 'styles/screenSizes.css';
+@value Blackberry, White from 'styles/colors.css';
+@value attributesLineHeight 1.8;
 
 .recipeDetails {
   composes: relative from 'styles/position.css';
@@ -13,6 +14,11 @@
 .contentWrapper {
   composes: paddingMD from 'sass-loader!styles/spacing.scss';
   padding-top: 1rem;
+}
+
+.fineDineInStyle {
+  background-color: Blackberry;
+  color: White;
 }
 
 .titleWrapper {

@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import classnames from 'classnames'
 import css from './AttributeGrid.css'
 import { recipePriorityOrder, detailedRecipePriorityOrder} from './config'
 import { RecipeAttribute } from '../RecipeAttribute'
 
-const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine, dairyFree, numPortions, glutenFree}) => {
+const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine, dairyFree, numPortions, glutenFree, fineDineInStyle}) => {
   const attributes = [
-    { name: 'cookingTime', value: cookingTime, icon: 'icon-time', show: cookingTime !== null },
-    { name: 'useWithin', value: useWithin, icon: 'icon-use-within'},
+    { name: 'cookingTime', value: cookingTime, icon: fineDineInStyle ? 'icon-time-white' : 'icon-time', show: cookingTime !== null },
+    { name: 'useWithin', value: useWithin, icon: fineDineInStyle ? 'icon-use-within-white' : 'icon-use-within'},
     { name: 'equipmentRequired', value: equipment, icon: 'icon-equipment', show: Boolean(equipment && equipment.size > 0)},
     { name: 'diet', value: diet, icon: 'icon-diet', show: ['vegetarian', 'vegan'].includes(diet.toLowerCase())},
     { name: 'fiveADay', value: fiveADay, icon: 'icon-five-a-day', show: fiveADay > 0},
@@ -16,7 +17,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
     { name: 'cuisine', value: cuisine, icon: 'icon-cuisine'},
     { name: 'glutenFree', value: glutenFree, icon: 'icon-gluten-free', show: Boolean(glutenFree)},
     { name: 'dairyFree', value: dairyFree, icon: 'icon-dairy-free', show: Boolean(dairyFree)},
-    { name: 'numPortions', value: numPortions, icon: 'icon-servings', show: Boolean(numPortions)}
+    { name: 'numPortions', value: numPortions, icon: 'icon-servings', show: Boolean(numPortions) && !fineDineInStyle}
   ]
 
   const getAttributesInPriorityOrder = priorityOrder => {
@@ -33,7 +34,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
   let attributeCount = 0
 
   return (
-    <div className={css.attributes}>
+    <div className={classnames(css.attributes, { [css.fineDineInStyleBorder]: fineDineInStyle })}>
       {attributesInPriorityOrder.map(({name, value, icon, show}) => {
         if (show !== false && attributeCount < maxNoAttributes) {
           attributeCount += 1
@@ -57,12 +58,16 @@ AttributeGrid.propTypes = {
   cuisine: PropTypes.string,
   glutenFree: PropTypes.bool,
   dairyFree: PropTypes.bool,
-  numPortions: PropTypes.number
+  numPortions: PropTypes.number,
+  fineDineInStyle: PropTypes.bool
 }
 
 AttributeGrid.defaultProps = {
   cookingTime: null,
-  numPortions: null
+  numPortions: null,
+  dairyFree: false,
+  glutenFree: false,
+  fineDineInStyle: false
 }
 
 export { AttributeGrid }

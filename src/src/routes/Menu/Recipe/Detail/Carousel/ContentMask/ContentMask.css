@@ -1,9 +1,10 @@
-@value Bronze from 'styles/colors.css';
+@value Blackberry, White from 'styles/colors.css';
 @value ScreenXXSMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
 
 .container {
 	position: relative;
-	background-color: Bronze;
+	background-color: Blackberry;
+	color: White;
 }
 
 .content {

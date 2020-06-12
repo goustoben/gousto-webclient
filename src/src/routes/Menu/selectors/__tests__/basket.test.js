@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { okRecipes } from 'utils/basket'
-import { getOkRecipeIds, getUnavailableRecipeIds, getFormatedRulesMessage } from '../basket'
+import { getOkRecipeIds, getUnavailableRecipeIds, getFormatedRulesMessage, getMenuRecipeDetailShowIsOutOfStock } from '../basket'
 
 describe('the composed selectors', () => {
   describe('getOkRecipeIds', () => {
@@ -145,6 +145,80 @@ describe('the composed selectors', () => {
         }]
       }]
       expect(result).toEqual(expectedResult)
+    })
+  })
+
+  describe('getMenuRecipeDetailShowIsOutOfStock', () => {
+    let state
+    describe('when recipe in detail screen is out of stock', () => {
+      beforeEach(() => {
+        state = {
+          basket: Immutable.fromJS({
+            numPortions: 2,
+            recipes: {}
+          }),
+          menuRecipeDetails: Immutable.fromJS({
+            recipeId: '1'
+          }),
+          menuRecipeStock: Immutable.fromJS({
+            1: {
+              2: -100
+            }
+          })
+        }
+      })
+      test('should return true', () => {
+        const result = getMenuRecipeDetailShowIsOutOfStock(state)
+        expect(result).toBe(true)
+      })
+    })
+
+    describe('when recipe in detail screen is in stock', () => {
+      beforeEach(() => {
+        state = {
+          basket: Immutable.fromJS({
+            numPortions: 2,
+            recipes: {}
+          }),
+          menuRecipeDetails: Immutable.fromJS({
+            recipeId: '1'
+          }),
+          menuRecipeStock: Immutable.fromJS({
+            1: {
+              2: 1000
+            }
+          })
+        }
+      })
+      test('should return false', () => {
+        const result = getMenuRecipeDetailShowIsOutOfStock(state)
+        expect(result).toBe(false)
+      })
+    })
+
+    describe('when recipe in detail screen is out of stock and inBasket', () => {
+      beforeEach(() => {
+        state = {
+          basket: Immutable.fromJS({
+            numPortions: 2,
+            recipes: {
+              1: 1
+            }
+          }),
+          menuRecipeDetails: Immutable.fromJS({
+            recipeId: '1'
+          }),
+          menuRecipeStock: Immutable.fromJS({
+            1: {
+              2: -1000
+            }
+          })
+        }
+      })
+      test('should return false', () => {
+        const result = getMenuRecipeDetailShowIsOutOfStock(state)
+        expect(result).toBe(false)
+      })
     })
   })
 })

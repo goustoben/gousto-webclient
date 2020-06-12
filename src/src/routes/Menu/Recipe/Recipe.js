@@ -1,30 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import Immutable from 'immutable'
+import config from 'config'
 
 import { GridRecipe } from './GridRecipe'
-import { FeaturedRecipe } from './FeaturedRecipe'
-import { FineDineInRecipe } from './FineDineInRecipe'
 import css from './Recipe.css'
 
-export const recipePropTypes = {
-  media: PropTypes.instanceOf(Immutable.List),
-  onClick: PropTypes.func,
-  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'chefPrepared']).isRequired,
-  surcharge: PropTypes.number,
-  range: PropTypes.instanceOf(Immutable.Map),
-  id: PropTypes.string,
-  originalId: PropTypes.string.isRequired,
-  thematicName: PropTypes.string,
-  selectedDate: PropTypes.string,
-  numPortions: PropTypes.number,
-  stock: PropTypes.number.isRequired,
-}
-
 class Recipe extends React.PureComponent {
-  static propTypes = recipePropTypes
-
   constructor() {
     super()
     this.state = {
@@ -33,18 +15,16 @@ class Recipe extends React.PureComponent {
   }
 
   get recipeComponent() {
-    const { view, numPortions } = this.props
+    const { view, numPortions, stock, inBasket } = this.props
     const { detailHover } = this.state
+    const outOfStock = stock <= config.menu.stockThreshold && stock !== null && !inBasket
+    const fineDineInStyle = view === 'fineDineIn'
 
     switch (view) {
-    case 'featured':
-      return <FeaturedRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
-    case 'fineDineIn':
-      return <FineDineInRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     case 'chefPrepared':
-      return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} numPortions={numPortions} isChefPrepared />
+      return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} numPortions={numPortions} isChefPrepared outOfStock={outOfStock} />
     default:
-      return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
+      return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} outOfStock={outOfStock} fineDineInStyle={fineDineInStyle} />
     }
   }
 
@@ -76,7 +56,12 @@ class Recipe extends React.PureComponent {
   }
 }
 
-Recipe.defaultProps = {
+Recipe.propTypes = {
+  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'chefPrepared']).isRequired,
+  numPortions: PropTypes.number.isRequired,
+  originalId: PropTypes.string.isRequired,
+  stock: PropTypes.number.isRequired,
+  inBasket: PropTypes.bool.isRequired
 }
 
 export { Recipe }

@@ -26,7 +26,7 @@ export const Detail = (props) => {
     media, title,
     view, count, average, perPortion,
     per100Grams, ingredients, allergens,
-    id, stock, inBasket, cookingTime,
+    id, outOfStock, cookingTime,
     useWithin, description, youWillNeed,
     cuisine, diet, equipment,
     position, surcharge, fiveADay, glutenFree,
@@ -54,9 +54,9 @@ export const Detail = (props) => {
         <div className={css.imageContainer}>
           {isFineDineIn
             ? (
-              <Carousel images={media} stock={stock} inBasket={inBasket} />
+              <Carousel images={media} outOfStock={outOfStock} />
             ) : (
-              <Image media={media} title={title} view={view} stock={stock} inBasket={inBasket} />
+              <Image media={media} title={title} view={view} outOfStock={outOfStock} />
             )}
         </div>
         <div className={css.sectionPanel}>
@@ -124,7 +124,15 @@ export const Detail = (props) => {
         </div>
 
         <div className={css.stickyContainer}>
-          <AddRecipe id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'} isOnDetailScreen />
+          <AddRecipe
+            id={id}
+            outOfStock={outOfStock}
+            view={view}
+            surcharge={surcharge}
+            position={position}
+            buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'}
+            isOnDetailScreen
+          />
         </div>
       </div>
     </div>
@@ -136,13 +144,12 @@ Detail.propTypes = {
   title: PropTypes.string.isRequired,
   view: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
-  average: PropTypes.number.isRequired,
+  average: PropTypes.number,
   per100Grams: PropTypes.instanceOf(Immutable.Map).isRequired,
   perPortion: PropTypes.instanceOf(Immutable.Map).isRequired,
   ingredients: PropTypes.instanceOf(Immutable.List).isRequired,
   allergens: PropTypes.instanceOf(Immutable.List).isRequired,
-  stock: PropTypes.number.isRequired,
-  inBasket: PropTypes.bool.isRequired,
+  outOfStock: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   useWithin: PropTypes.string.isRequired,
   cookingTime: PropTypes.number.isRequired,
@@ -165,5 +172,6 @@ Detail.propTypes = {
 Detail.defaultProps = {
   surcharge: 0,
   position: 0,
+  average: 0,
   isFineDineIn: false
 }

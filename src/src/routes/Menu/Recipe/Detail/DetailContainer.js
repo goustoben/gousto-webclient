@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import Immutable from 'immutable'
 
 import { getCutoffs } from 'utils/deliveries'
 import moment from 'moment'
@@ -7,7 +6,7 @@ import moment from 'moment'
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { Detail } from './Detail'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const
   if (!cutoffDate) {
     cutoffDate = moment()
@@ -16,13 +15,9 @@ function mapStateToProps(state, ownProps) {
       .milliseconds(0)
       .toISOString()
   }
-  function getBasketRecipes(recipes) {
-    return Array.from(recipes.keys())
-  }
 
   return {
     cutoffDate,
-    inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
   }
 }
 
