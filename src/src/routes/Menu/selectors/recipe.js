@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { getRecipes, getStock, getBasket } from 'selectors/root'
 import { formatRecipeTitle, getSurcharge, getSurchargePerPortion } from 'utils/recipe'
 import { getNumPortions } from 'selectors/basket'
-import config from 'config/menu'
+import menuConfig from 'config/menu'
 
 export const getRecipeIdFromProps = (state, props) => props.recipeId
 
@@ -28,13 +28,15 @@ const getRecipeIdInBasket = createSelector(
   (basket, recipeId) => basket.hasIn(['recipes', recipeId])
 )
 
+export const isOutOfStock = (recipeId, numPortions, recipesStock) => {
+  const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
+
+  return (stock <= menuConfig.stockThreshold)
+}
+
 export const getRecipeOutOfStock = createSelector(
   [getRecipeIdFromProps, getStock, getNumPortions, getRecipeIdInBasket],
-  (recipeId, menuRecipeStock, numPortions, inBasket) => {
-    const stock = menuRecipeStock.getIn([recipeId, String(numPortions)], 0)
-
-    return (stock <= config.stockThreshold && stock !== null && !inBasket)
-  }
+  (recipeId, menuRecipeStock, numPortions, inBasket) => (isOutOfStock(recipeId, numPortions, menuRecipeStock) && !inBasket)
 )
 
 export const getRecipeSurcharge = createSelector(

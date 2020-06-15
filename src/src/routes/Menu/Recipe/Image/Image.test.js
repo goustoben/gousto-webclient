@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import Image from 'routes/Menu/Recipe/Image'
+import { Image } from 'routes/Menu/Recipe/Image'
 import GoustoImage from 'Image'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
 

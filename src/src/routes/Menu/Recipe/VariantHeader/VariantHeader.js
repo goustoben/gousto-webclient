@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import css from './VariantHeader.css'
 
-const VariantHeader = ({ recipeVariants, outOfStock }) => {
-  if (!recipeVariants || recipeVariants.length === 0 || outOfStock) {
+const VariantHeader = ({ recipeVariants, isOutOfStock }) => {
+  if (!recipeVariants || recipeVariants.length === 0 || isOutOfStock) {
     return null
   }
 
@@ -18,11 +18,11 @@ const VariantHeader = ({ recipeVariants, outOfStock }) => {
 
 VariantHeader.propTypes = {
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
-  outOfStock: PropTypes.bool,
+  isOutOfStock: PropTypes.bool,
 }
 
 VariantHeader.defaultProps = {
   recipeVariants: [],
-  outOfStock: false
+  isOutOfStock: false
 }
 export { VariantHeader }

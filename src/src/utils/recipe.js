@@ -1,27 +1,5 @@
 
-import config from 'config'
 import Immutable from 'immutable'
-
-export function getStockTag(stock) {
-  let tag = ''
-  if (config.menu.stockTagTreshold >= stock && stock !== null) {
-    if (stock <= config.menu.stockThreshold) {
-      tag = 'Sold Out'
-    } else if (stock !== null) {
-      tag = `Just ${stock - config.menu.stockThreshold} left`
-    }
-  }
-
-  return tag
-}
-
-export function getNewTag(ratingCount) {
-  return ratingCount < 1 ? 'New Recipe' : ''
-}
-
-export function getLowStockTag(stock, ratingCount) {
-  return getStockTag(stock) || getNewTag(ratingCount)
-}
 
 export function formatRecipeTitle(title, boxType, dietType) {
   if (dietType.toLowerCase() === 'vegan') {
@@ -47,6 +25,10 @@ export function getSurcharge(meals = Immutable.List([]), numPortions) {
   }
 
   return meal.getIn(['surcharge', 'listPrice'], null)
+}
+
+export function roundUp(value, precision = 0.01) {
+  return Math.ceil(value / precision) * precision
 }
 
 export function getSurchargePerPortion(surcharge, numberOfPortions) {
@@ -87,14 +69,6 @@ export function isNew(recipe) {
   return !hasBeenOnAPreviousMenu
 }
 
-export function roundUp(value, precision = 0.01) {
-  return Math.ceil(value / precision) * precision
-}
-
 export const isAvailableRecipeList = (recipeIds, recipesStore) => recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
 
 export const getRecipeId = (recipe) => recipe.get('id')
-
-export default {
-  getLowStockTag,
-}

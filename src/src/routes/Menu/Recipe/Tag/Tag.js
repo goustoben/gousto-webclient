@@ -20,7 +20,7 @@ const Tag = ({ tag, view, centered, spaced }) => (
 )
 
 Tag.propTypes = {
-  tag: PropTypes.string.isRequired,
+  tag: PropTypes.string,
   view: PropTypes.string,
   centered: PropTypes.bool,
   spaced: PropTypes.bool,
@@ -29,6 +29,7 @@ Tag.propTypes = {
 Tag.defaultProps = {
   centered: true,
   spaced: true,
+  tag: null
 }
 
 export default Tag

@@ -4,7 +4,6 @@ import {
   formatRecipeTitle,
   isNew,
   getCookingTime,
-  getLowStockTag,
   getSurcharge,
   getSurchargePerPortion,
   getTaxonomyTags,
@@ -22,27 +21,6 @@ jest.mock('config', () => ({
 }))
 
 describe('recipes', () => {
-  describe('getLowStockTag', () => {
-    test('should return nothing if theres enough stock and not new', () => {
-      expect(getLowStockTag(100, 10)).toBe('')
-    })
-
-    test('should return new when no rating count', () => {
-      expect(getLowStockTag(100, 0)).toBe('New Recipe')
-    })
-
-    test('should return new recipe when no rating count and view is simple', () => {
-      expect(getLowStockTag(100, 0, 'simple')).toBe('New Recipe')
-    })
-
-    test('should show sold out when no stock', () => {
-      expect(getLowStockTag(0, 10)).toBe('Sold Out')
-    })
-
-    test('should show #no left when below treshold', () => {
-      expect(getLowStockTag(4, 10)).toBe('Just 4 left')
-    })
-  })
 
   describe('formatRecipeTitle', () => {
     const title = 'A Test Recipe'

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { mount, shallow } from 'enzyme'
 import Immutable from 'immutable'
 import Buttons from 'routes/Menu/Recipe/Buttons/Buttons'
-import ButtonsContainer from '../../Buttons'
+import ButtonsContainer from '.'
 
 describe('the Buttons component', () => {
   let wrapper
@@ -16,7 +16,7 @@ describe('the Buttons component', () => {
     qty: 0,
     numPortions: 2,
     view: 'grid',
-    outOfstock: false,
+    isOutOfStock: false,
     disable: false,
     stock: 1000,
     menuBrowseCTAVisibilityChange: jest.fn(),
@@ -186,7 +186,7 @@ describe('the Buttons component', () => {
 
       describe('and the recipe is out of stock', () => {
         beforeEach(() => {
-          wrapper.setProps({ outOfstock: true })
+          wrapper.setProps({ isOutOfStock: true })
         })
 
         test('shows the add button as disabled', () => {

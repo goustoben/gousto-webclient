@@ -25,7 +25,7 @@ describe('VariantHeader', () => {
             { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
             { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
           ]}
-          outOfStock={false}
+          isOutOfStock={false}
         />)
         expect(wrapper.find('.variantHeader').text()).toContain('3 options available')
       })
@@ -41,7 +41,7 @@ describe('VariantHeader', () => {
             { id: '127'},
             { id: '1284'}
           ]}
-          outOfStock={false}
+          isOutOfStock={false}
         />)
         expect(wrapper.find('.variantHeader').text()).toContain('6 options available')
       })
@@ -54,7 +54,7 @@ describe('VariantHeader', () => {
             { id: '1230'},
             { id: '125'},
           ]}
-          outOfStock
+          isOutOfStock
         />)
         expect(wrapper.find('.variantHeader')).toHaveLength(0)
       })

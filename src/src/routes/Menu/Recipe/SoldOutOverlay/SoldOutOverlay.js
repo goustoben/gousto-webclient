@@ -3,7 +3,7 @@ import React from 'react'
 
 import css from './SoldOutOverlay.css'
 
-const SoldOutOverlay = ({ outOfStock }) => {
+const SoldOutOverlay = ({ isOutOfStock }) => {
   const message = (
     <div className={css.overlay}>
       <span className={css.overlayText}>
@@ -12,7 +12,7 @@ const SoldOutOverlay = ({ outOfStock }) => {
     </div>
   )
 
-  if (outOfStock) {
+  if (isOutOfStock) {
     return message
   }
 
@@ -20,10 +20,10 @@ const SoldOutOverlay = ({ outOfStock }) => {
 }
 
 SoldOutOverlay.propTypes = {
-  outOfStock: PropTypes.bool,
+  isOutOfStock: PropTypes.bool,
 }
 
 SoldOutOverlay.defaultProps = {
-  outOfStock: false,
+  isOutOfStock: false,
 }
 export { SoldOutOverlay }
