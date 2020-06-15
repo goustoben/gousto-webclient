@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run test:${ENVIRONMENT}:mobile
+npm run test:staging:mobile
