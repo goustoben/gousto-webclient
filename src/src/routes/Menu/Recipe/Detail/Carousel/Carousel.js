@@ -28,7 +28,7 @@ const Carousel = ({ images, media, view, dots, arrows, isOutOfStock }) => (
                 <p className={css.imageTitle}>{image.get('title')}</p>
                 <p className={css.imageDescription}>{image.get('description')}</p>
               </ContentMask>
-              <Image media={image.get('urls')} title={image.title} view={view} isOutOfStock={isOutOfStock} lazy={false} />
+              <Image media={image.get('urls')} title={image.get('title')} view={view} isOutOfStock={isOutOfStock} lazy={false} />
             </div>
           ))}
         </SlickCarousel>
