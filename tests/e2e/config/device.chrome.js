@@ -6,7 +6,8 @@ module.exports = () => ({
     chromeOptions: {
       args: [
         '--window-size=1300,800'
-      ]
+      ],
+      w3c: false
     }
   }
 })

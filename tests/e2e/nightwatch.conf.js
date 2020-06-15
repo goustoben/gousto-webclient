@@ -1,13 +1,4 @@
-const cucumber  = require('nightwatch-cucumber');
 const { params, testSettings }  = require('./config');
-
-cucumber({
-  cucumberArgs: [
-    '--require', 'features/step-definitions',
-    '--format', 'node_modules/cucumber-pretty',
-    'features'
-  ]
-});
 
 module.exports = {
   src_folders: [
