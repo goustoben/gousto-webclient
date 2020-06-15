@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getCollectionIdWithName } from 'utils/collections'
 import menuConfig from 'config/menu'
+import { isOutOfStock } from './recipe'
 
 export const getCollectionId = collection => collection.get('id')
 const getCollectionSlug = collection => collection.get('slug')
@@ -41,12 +42,6 @@ const collectionHasRecipes = (menuCollectionRecipes, collectionId) => {
   return recipes.size > 0
 }
 
-const isInStock = (recipeId, menuRecipeStock, numPortions) => {
-  const stock = menuRecipeStock.getIn([recipeId, String(numPortions)], 0)
-
-  return (stock > menuConfig.stockThreshold)
-}
-
 export const getDisplayedCollections = createSelector(
   getMenuCollections,
   getMenuCollectionRecipes,
@@ -81,7 +76,7 @@ export const getDisplayedCollections = createSelector(
       for (let i = 0; i < collectionRecipes.size; i++) {
         const recipeId = collectionRecipes.get(i)
 
-        if (isInStock(recipeId, menuRecipeStock, numPortions)) {
+        if (!isOutOfStock(recipeId, numPortions, menuRecipeStock)) {
           collectionRecipesInStock += 1
         }
 

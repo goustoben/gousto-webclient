@@ -1,10 +1,8 @@
 import { createSelector } from 'reselect'
-import { getMenuRecipeIds, getStock, getBasket } from 'selectors/root'
+import { getMenuRecipeIds, getStock } from 'selectors/root'
 import { getBasketRecipes, getNumPortions } from 'selectors/basket'
 import { getRecipeById, getRecipeTitle, getRecipeImages } from 'selectors/recipe'
 import { okRecipes } from 'utils/basket'
-import menuConfig from 'config/menu'
-import { getMenuRecipeIdForDetails } from './menuRecipeDetails'
 
 export const getOkRecipeIds = createSelector(
   getBasketRecipes,
@@ -41,14 +39,3 @@ export const getFormatedRulesMessage = (state, rules) => {
 
   return rulesToDisplay
 }
-
-export const getMenuRecipeDetailShowIsOutOfStock = createSelector(
-  [getMenuRecipeIdForDetails, getNumPortions, getStock, getBasket],
-  (detailRecipeId, numPortions, menuRecipeStock, basket) => {
-    const inBasket = basket.hasIn(['recipes', detailRecipeId])
-
-    const stock = menuRecipeStock.getIn([detailRecipeId, String(numPortions)], 0)
-
-    return stock <= menuConfig.stockThreshold && stock !== null && !inBasket
-  }
-)

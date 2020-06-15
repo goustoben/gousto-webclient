@@ -1,6 +1,5 @@
 
 import { limitReached } from 'utils/basket'
-import menuConfig from 'config/menu'
 import status from '.../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
 import { getBasketRecipes } from '../../../selectors/basket'
@@ -13,12 +12,7 @@ import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/
 import { clearBasketNotValidError } from './menuCheckoutClick'
 import { menuRecipeDetailVisibilityChange } from './menuRecipeDetails'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
-
-function isOutOfStock(recipeId, numPortions, recipesStock) {
-  const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
-
-  return (stock <= menuConfig.stockThreshold)
-}
+import { isOutOfStock } from '../selectors/recipe'
 
 export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
   (dispatch, getState) => {

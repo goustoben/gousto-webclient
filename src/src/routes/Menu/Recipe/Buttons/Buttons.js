@@ -152,15 +152,15 @@ class Buttons extends React.Component {
   }
 
   tooltipToggle = (visible) => {
-    const { outOfstock, limitReached } = this.props
-    if (outOfstock || limitReached) {
+    const { isOutOfStock, limitReached } = this.props
+    if (isOutOfStock || limitReached) {
       this.setState({ tooltipVisible: visible })
     }
   }
 
   tooltipHover = (event) => {
-    const { outOfstock, limitReached } = this.props
-    if (outOfstock || limitReached) {
+    const { isOutOfStock, limitReached } = this.props
+    if (isOutOfStock || limitReached) {
       if (event.type === 'mouseenter') {
         this.setState({ tooltipVisible: true })
       } else if (event.type === 'mouseleave') {
@@ -170,9 +170,9 @@ class Buttons extends React.Component {
   }
 
   disabledClick = () => {
-    const { outOfstock, limitReached } = this.props
+    const { isOutOfStock, limitReached } = this.props
     const { visible } = this.state
-    if (outOfstock || limitReached) {
+    if (isOutOfStock || limitReached) {
       if (visible) {
         this.setState({ tooltipVisible: false })
       } else {
@@ -182,10 +182,10 @@ class Buttons extends React.Component {
   }
 
   render() {
-    const { outOfstock, limitReached, qty } = this.props
-    const disabled = outOfstock || limitReached
+    const { isOutOfStock, limitReached, qty } = this.props
+    const disabled = isOutOfStock || limitReached
     let tooltipMessage = ''
-    if (outOfstock) {
+    if (isOutOfStock) {
       tooltipMessage = 'You got the last one'
     } else if (limitReached) {
       tooltipMessage = 'You\'ve run out of space in your box!'
@@ -217,7 +217,7 @@ Buttons.propTypes = {
   qty: PropTypes.number.isRequired,
   numPortions: PropTypes.number.isRequired,
   view: PropTypes.string,
-  outOfstock: PropTypes.bool,
+  isOutOfStock: PropTypes.bool,
   disable: PropTypes.bool.isRequired,
   stock: PropTypes.number,
   menuBrowseCTAVisibilityChange: PropTypes.func,
@@ -230,7 +230,8 @@ Buttons.propTypes = {
 
 Buttons.defaultProps = {
   buttonText: 'Add Recipe',
-  basketPostcode: ''
+  basketPostcode: '',
+  isOutOfStock: false
 }
 
 export default Buttons

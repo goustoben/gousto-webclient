@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 
 import { shallow } from 'enzyme'
 
-import Image from 'routes/Menu/Recipe/Image'
+import { Image } from 'routes/Menu/Recipe/Image'
 import SlickCarousel from 'Carousel'
 import { ContentMask } from 'routes/Menu/Recipe/Detail/Carousel/ContentMask'
 

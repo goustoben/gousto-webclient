@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 
-import Image from 'routes/Menu/Recipe/Image'
+import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
@@ -26,7 +26,7 @@ export const Detail = (props) => {
     media, title,
     view, count, average, perPortion,
     per100Grams, ingredients, allergens,
-    id, outOfStock, cookingTime,
+    id, isOutOfStock, cookingTime,
     useWithin, description, youWillNeed,
     cuisine, diet, equipment,
     position, surcharge, fiveADay, glutenFree,
@@ -54,9 +54,9 @@ export const Detail = (props) => {
         <div className={css.imageContainer}>
           {isFineDineIn
             ? (
-              <Carousel images={media} outOfStock={outOfStock} />
+              <Carousel images={media} isOutOfStock={isOutOfStock} />
             ) : (
-              <Image media={media} title={title} view={view} outOfStock={outOfStock} />
+              <Image media={media} title={title} view={view} isOutOfStock={isOutOfStock} />
             )}
         </div>
         <div className={css.sectionPanel}>
@@ -126,7 +126,7 @@ export const Detail = (props) => {
         <div className={css.stickyContainer}>
           <AddRecipe
             id={id}
-            outOfStock={outOfStock}
+            isOutOfStock={isOutOfStock}
             view={view}
             surcharge={surcharge}
             position={position}
@@ -149,7 +149,7 @@ Detail.propTypes = {
   perPortion: PropTypes.instanceOf(Immutable.Map).isRequired,
   ingredients: PropTypes.instanceOf(Immutable.List).isRequired,
   allergens: PropTypes.instanceOf(Immutable.List).isRequired,
-  outOfStock: PropTypes.bool.isRequired,
+  isOutOfStock: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   useWithin: PropTypes.string.isRequired,
   cookingTime: PropTypes.number.isRequired,

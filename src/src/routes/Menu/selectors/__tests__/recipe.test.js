@@ -124,24 +124,6 @@ describe('menu recipe selectors', () => {
         expect(result).toEqual(false)
       })
     })
-
-    describe('when stock is null', () => {
-      test('should return false', () => {
-        const menuRecipeStock = Immutable.fromJS({
-          [recipeId]: { [numPortions]: null, 4: null },
-          222: { 2: 1000, 4: 1000 },
-        })
-        const state = {
-          menuRecipeStock,
-          basket: Immutable.fromJS({
-            numPortions,
-            recipes: {}
-          }),
-        }
-        const result = getRecipeOutOfStock(state, props)
-        expect(result).toEqual(false)
-      })
-    })
   })
 
   describe('getRecipeSurcharge', () => {

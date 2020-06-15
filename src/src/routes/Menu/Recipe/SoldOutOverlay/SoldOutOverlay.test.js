@@ -6,7 +6,7 @@ describe('<SoldOutOverlay', () => {
   let wrapper
   describe('when a recipe has is in stock', () => {
     beforeEach(() => {
-      wrapper = shallow(<SoldOutOverlay outOfStock={false} />)
+      wrapper = shallow(<SoldOutOverlay isOutOfStock={false} />)
     })
 
     test('the out of stock text does not render', () => {
@@ -16,7 +16,7 @@ describe('<SoldOutOverlay', () => {
 
   describe('when recipe is not in stock', () => {
     beforeEach(() => {
-      wrapper = shallow(<SoldOutOverlay outOfStock />)
+      wrapper = shallow(<SoldOutOverlay isOutOfStock />)
     })
 
     test('the overlay with out of stock text renders', () => {

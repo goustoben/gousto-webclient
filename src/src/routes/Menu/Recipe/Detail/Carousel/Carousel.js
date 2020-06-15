@@ -2,13 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 
-import Image from 'routes/Menu/Recipe/Image'
+import { Image } from 'routes/Menu/Recipe/Image'
 import SlickCarousel from 'Carousel'
 import { ContentMask } from 'routes/Menu/Recipe/Detail/Carousel/ContentMask'
 import { Arrow } from 'routes/Menu/Recipe/Detail/Carousel/Arrow'
 import css from './Carousel.css'
 
-const Carousel = ({ images, media, view, dots, arrows, outOfStock }) => (
+const Carousel = ({ images, media, view, dots, arrows, isOutOfStock }) => (
   (images.size)
     ? (
       <div className={css.carousel}>
@@ -28,13 +28,13 @@ const Carousel = ({ images, media, view, dots, arrows, outOfStock }) => (
                 <p className={css.imageTitle}>{image.get('title')}</p>
                 <p className={css.imageDescription}>{image.get('description')}</p>
               </ContentMask>
-              <Image media={image.get('urls')} title={image.get('title')} view={view} outOfStock={outOfStock} lazy={false} />
+              <Image media={image.get('urls')} title={image.title} view={view} isOutOfStock={isOutOfStock} lazy={false} />
             </div>
           ))}
         </SlickCarousel>
       </div>
     ) : (
-      <Image media={media} outOfStock={outOfStock} />
+      <Image media={media} isOutOfStock={isOutOfStock} />
     )
 )
 
@@ -44,7 +44,7 @@ Carousel.propTypes = {
   view: PropTypes.oneOf(['fineDineInDetail']),
   dots: PropTypes.bool,
   arrows: PropTypes.bool,
-  outOfStock: PropTypes.bool
+  isOutOfStock: PropTypes.bool
 }
 
 Carousel.defaultProps = {
@@ -53,7 +53,7 @@ Carousel.defaultProps = {
   view: 'fineDineInDetail',
   dots: true,
   arrows: true,
-  outOfStock: false
+  isOutOfStock: false
 }
 
 export default Carousel

@@ -7,6 +7,7 @@ import { getRecipes } from 'selectors/root'
 
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
 import { RecipeCard } from './RecipeCard'
+import { getRecipeOutOfStock } from '../../selectors/recipe'
 
 const getIdForRecipeCard = (state, props) => props.recipeId
 
@@ -26,7 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     numPortions,
     cutoffDate: getCutoffDate(state),
     browserType: state.request.get('browser'),
-    stock: state.menuRecipeStock.getIn([recipeId, String(numPortions)], 0),
+    isOutOfStock: getRecipeOutOfStock(state, ownProps),
     inBasket: state.basket.hasIn(['recipes', recipeId]),
   }
 }

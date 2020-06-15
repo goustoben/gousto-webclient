@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { DetailContainer } from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
-import { getLowStockTag, getSurcharge, getTaxonomyTags } from 'utils/recipe'
+import { getSurcharge, getTaxonomyTags } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 import Modal from 'Modal'
 
@@ -11,11 +11,10 @@ const propTypes = {
   showOverlay: PropTypes.bool,
   menuRecipeDetailShow: PropTypes.string,
   position: PropTypes.number,
-  stock: PropTypes.instanceOf(Immutable.Map).isRequired,
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
   browserType: PropTypes.string.isRequired,
-  outOfStock: PropTypes.bool.isRequired
+  isOutOfStock: PropTypes.bool.isRequired
 }
 
 const defaultProps = {
@@ -24,7 +23,7 @@ const defaultProps = {
   position: null
 }
 
-const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position, browserType, outOfStock }) => {
+const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, position, browserType, isOutOfStock }) => {
   const recipeId = menuRecipeDetailShow
   const detailRecipe = recipesStore.get(recipeId)
 
@@ -40,7 +39,6 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   const dairyFree = dietaryTagSlugs.some(slug => slug === 'dairy-free')
   const glutenFree = dietaryTagSlugs.some(slug => slug === 'gluten-free')
 
-  const stockRecipe = stock.getIn([recipeId, String(numPortions)], 0)
   const surcharge = getSurcharge(detailRecipe.get('meals'), numPortions)
   const isFineDineIn = detailRecipe.get('isFineDineIn')
   const view = isFineDineIn ? 'fineDineInDetail' : 'detail'
@@ -52,7 +50,6 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
     <Modal isOpen={showOverlay}>
       <DetailContainer
         view={view}
-        tag={getLowStockTag(stockRecipe, detailRecipe.getIn(['rating', 'count']))}
         media={media}
         title={detailRecipe.get('title', '')}
         count={detailRecipe.getIn(['rating', 'count'], 0)}
@@ -63,7 +60,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
         allergens={detailRecipe.get('allergens', Immutable.List([]))}
         id={detailRecipe.get('id')}
         recipeId={recipeId}
-        outOfStock={outOfStock}
+        isOutOfStock={isOutOfStock}
         useWithin={detailRecipe.get('shelfLifeDays')}
         cookingTime={numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
         description={detailRecipe.get('description')}

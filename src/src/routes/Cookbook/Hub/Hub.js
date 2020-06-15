@@ -9,7 +9,6 @@ import { actionTypes } from 'actions/actionTypes'
 import routesConfig from 'config/routes'
 import templateConfig from 'config/template'
 import logger from 'utils/logger'
-import recipeUtils from 'utils/recipe'
 import { setSchemaMarkup } from 'utils/schemaMarkup'
 
 import Helmet from 'react-helmet'
@@ -20,7 +19,7 @@ import { Col, Row } from 'Page/Grid'
 import { LoadingOverlay } from 'Loading'
 import Link from 'Link'
 import LoadMoreLink from 'LoadMoreLink'
-import Image from 'routes/Menu/Recipe/Image'
+import { Image } from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
@@ -49,6 +48,45 @@ function gatherRecipeKeywords(recipes = []) {
   }
 
   return keywords
+}
+
+function renderRecipe(recipe) {
+  const { cookingTime, rating = {}, title, url } = recipe.toJS()
+  const media = recipe.getIn(['media', 'images'], Immutable.List([])).find(obj => obj && (obj.get('type') === 'mood-image'))
+  const urls = media ? media.get('urls') : Immutable.List([])
+
+  return (
+    <div className={classNames(css.recipe)}>
+      <Link to={url} className={css.cookbookLink} clientRouted={false}>
+        <Image
+          view="simple"
+          media={urls}
+          alt={title}
+        />
+        <Info regular>
+          <div className={css.recipeInfo}>
+            <Title
+              title={title}
+              linkUnderlined
+              headlineFont
+            />
+            <span>
+              <Tag
+                centered={false}
+                spaced={false}
+              />
+              <RecipeRating
+                view="simple"
+                average={rating.average}
+                count={rating.count}
+              />
+              <RecipeAttribute name="cookingTime" value={cookingTime} icon="icon-time" />
+            </span>
+          </div>
+        </Info>
+      </Link>
+    </div>
+  )
 }
 
 class Hub extends React.PureComponent {
@@ -175,48 +213,6 @@ class Hub extends React.PureComponent {
 
   static limit = 20
 
-  renderRecipe(recipe) {
-    const { cookingTime, rating = {}, title, url } = recipe.toJS()
-    const { stock } = this.props
-    const tag = recipeUtils.getLowStockTag(stock, rating.count)
-    const media = recipe.getIn(['media', 'images'], Immutable.List([])).find(obj => obj && (obj.get('type') === 'mood-image'))
-    const urls = media ? media.get('urls') : Immutable.List([])
-
-    return (
-      <div className={classNames(css.recipe)}>
-        <Link to={url} className={css.cookbookLink} clientRouted={false}>
-          <Image
-            view="simple"
-            media={urls}
-            alt={title}
-          />
-          <Info regular>
-            <div className={css.recipeInfo}>
-              <Title
-                title={title}
-                linkUnderlined
-                headlineFont
-              />
-              <span>
-                <Tag
-                  tag={tag}
-                  centered={false}
-                  spaced={false}
-                />
-                <RecipeRating
-                  view="simple"
-                  average={rating.average}
-                  count={rating.count}
-                />
-                <RecipeAttribute name="cookingTime" value={cookingTime} icon="icon-time" />
-              </span>
-            </div>
-          </Info>
-        </Link>
-      </div>
-    )
-  }
-
   renderRecipes = () => {
     const { recipes } = this.props
 
@@ -227,7 +223,7 @@ class Hub extends React.PureComponent {
         col-sm-6
         col-xl-4
       >
-        {this.renderRecipe(recipe)}
+        {renderRecipe(recipe)}
       </Col>
     ))
   }
@@ -291,7 +287,6 @@ Hub.propTypes = {
   startSet: PropTypes.number.isRequired,
   totalSets: PropTypes.number.isRequired,
   recipesCollection: PropTypes.string.isRequired,
-  stock: PropTypes.number.isRequired,
   collection: PropTypes.instanceOf(Immutable.Map),
   mobileFullWidth: PropTypes.bool,
   recipes: PropTypes.instanceOf(Immutable.List),

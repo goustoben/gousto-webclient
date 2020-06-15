@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import Image from 'routes/Menu/Recipe/Image'
+import { Image } from 'routes/Menu/Recipe/Image'
 import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 
@@ -12,9 +12,9 @@ import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
-import { VariantHeaderContainer } from '../../VariantHeader'
-import { TitleContainer } from '../../Title'
-import { RecipeRatingContainer } from '../../Rating'
+import { VariantHeaderContainer } from '../VariantHeader'
+import { TitleContainer } from '../Title'
+import { RecipeRatingContainer } from '../Rating'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -40,7 +40,7 @@ describe('<GridRecipe />', () => {
       ]),
       diet: 'meat',
       useWithin: '2-3',
-      outOfStock: false,
+      isOutOfStock: false,
       originalId: '2',
       onClick: () => {},
       highlight: () => {},
@@ -128,7 +128,7 @@ describe('<GridRecipe />', () => {
 
     describe('when a recipe is not in stock ', () => {
       beforeEach(() => {
-        wrapper.setProps({ outOfStock: true })
+        wrapper.setProps({ isOutOfStock: true })
       })
 
       test('should not contain one Pill component', () => {
@@ -144,13 +144,13 @@ describe('<GridRecipe />', () => {
       })
 
       test('should send outOfStock to AddRecipe button', () => {
-        expect(wrapper.find(AddRecipe).prop('outOfStock')).toEqual(true)
+        expect(wrapper.find(AddRecipe).prop('isOutOfStock')).toEqual(true)
       })
     })
 
     describe('when recipe render fineDineInStyle ', () => {
       beforeEach(() => {
-        wrapper.setProps({ fineDineInStyle: true, outOfStock: false })
+        wrapper.setProps({ fineDineInStyle: true, isOutOfStock: false })
       })
 
       test('should not render RecipeRatingContainer', () => {

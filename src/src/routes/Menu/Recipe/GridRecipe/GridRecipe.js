@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import Chef from '../Chef'
-import Image from '../Image'
+import { Image } from '../Image'
 import { RecipeRatingContainer } from '../Rating'
 import { AddRecipe } from '../AddRecipe'
 import { AttributeGrid } from '../AttributeGrid'
@@ -17,11 +17,11 @@ import css from './GridRecipe.css'
 
 const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, chef, view, detailHover,
   cookingTime, useWithin, equipment, position, diet,
-  fiveADay, isChefPrepared, numPortions, outOfStock, fineDineInStyle
+  fiveADay, isChefPrepared, numPortions, isOutOfStock, fineDineInStyle
 }) => (
   <div className={css.recipeDetails}>
     <div>
-      <VariantHeaderContainer recipeId={id} outOfStock={outOfStock} />
+      <VariantHeaderContainer recipeId={id} isOutOfStock={isOutOfStock} />
     </div>
     <span role="button" tabIndex={0} onKeyPress={onClick} onClick={onClick} className={css.link}>
       <Image
@@ -29,19 +29,19 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
         media={media}
         mouseEnter={highlight}
         mouseLeave={unhighlight}
-        outOfStock={outOfStock}
+        isOutOfStock={isOutOfStock}
       />
     </span>
     <div className={css.viewDetails}>
-      {outOfStock || (
-      <Pill
-        mouseEnter={highlight}
-        mouseLeave={unhighlight}
-        onClick={() => { onClick(true) }}
-        icon
-      >
-        View details
-      </Pill>
+      {isOutOfStock || (
+        <Pill
+          mouseEnter={highlight}
+          mouseLeave={unhighlight}
+          onClick={() => { onClick(true) }}
+          icon
+        >
+          View details
+        </Pill>
       )}
     </div>
     <div>
@@ -59,12 +59,12 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
       </div>
       <div>
         <div>
-          {outOfStock || <RecipeInfoBadgesContainer recipeId={id} />}
-          {outOfStock || (!fineDineInStyle && <RecipeRatingContainer recipeId={id} />)}
+          {isOutOfStock || <RecipeInfoBadgesContainer recipeId={id} />}
+          {isOutOfStock || (!fineDineInStyle && <RecipeRatingContainer recipeId={id} />)}
         </div>
       </div>
       {
-        (!outOfStock)
+        (!isOutOfStock)
           && (
             <div>
               <AttributeGrid
@@ -85,7 +85,7 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
         <AddRecipe
           id={id}
           originalId={originalId}
-          outOfStock={outOfStock}
+          isOutOfStock={isOutOfStock}
           view={view}
           position={position}
           buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'}
@@ -114,7 +114,7 @@ GridRecipe.propTypes = {
   cookingTime: PropTypes.number.isRequired,
   useWithin: PropTypes.string.isRequired,
   equipment: PropTypes.instanceOf(Immutable.List).isRequired,
-  outOfStock: PropTypes.bool.isRequired,
+  isOutOfStock: PropTypes.bool.isRequired,
   position: PropTypes.number,
   diet: PropTypes.string.isRequired,
   fiveADay: PropTypes.number,
