@@ -39,6 +39,8 @@ export const getBasketProductsCost = createSelector(
 
 export const shouldShowBoxSummary = (state) => !getBasketSlotId(state) && !!getBasketPostcode(state)
 
+export const getChosenAddressId = ({ basket }) => (basket.getIn(['chosenAddress', 'id'], null))
+
 export default {
   getBasketOrderId,
   getBasketRecipes,

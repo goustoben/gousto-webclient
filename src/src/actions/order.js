@@ -22,6 +22,7 @@ import {
   getNDDFeatureValue,
   getAddOnsBeforeOrderConfirmation,
 } from 'selectors/features'
+import { getChosenAddressId } from 'selectors/basket'
 import { orderTrackingActions } from 'config/order'
 import userActions from './user'
 import tempActions from './temp'
@@ -82,13 +83,15 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
     const date = basket.get('date')
     const slotId = basket.get('slotId')
     const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
+    const chosenAddressId = getChosenAddressId({ basket })
 
     const order = {
       recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
       order_action: orderAction,
       delivery_slot_id: coreSlotId,
       delivery_day_id: coreDayId,
-      day_slot_lead_time_id: slot.get('daySlotLeadTimeId', '')
+      day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
+      address_id: chosenAddressId
     }
 
     const accessToken = getState().auth.get('accessToken')

@@ -52,10 +52,50 @@ describe('basket utils', () => {
           { id: '160', quantity: 2, type: 'Recipe'},
           { id: '161', quantity: 2, type: 'Recipe'}
         ],
-        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid',
+        address_id: null
       }
 
       expect(actualResult).toEqual(expectedResult)
+    })
+
+    describe('when customer chose address', () => {
+      test('returns a object containing the address_id for choosen address', () => {
+        const basket = Immutable.fromJS({
+          date: '2019-10-10',
+          slotId: '4',
+          recipes: { 160: 1, 161: 1 },
+          numPortions: 2,
+          chosenAddress: {
+            id: '1234'
+          }
+        })
+
+        const deliveryDays = Immutable.fromJS({
+          '2019-10-10': { coreDayId: '5' }
+        })
+
+        getSlot.mockReturnValue(Immutable.fromJS({
+          coreSlotId: '4',
+          id: 'deliveries-uuid',
+          daySlotLeadTimeId: 'day-slot-lead-time-uuid'
+        }))
+
+        const actualResult = getOrderDetails(basket, deliveryDays)
+
+        const expectedResult = {
+          delivery_day_id: '5',
+          delivery_slot_id: '4',
+          recipe_choices: [
+            { id: '160', quantity: 2, type: 'Recipe'},
+            { id: '161', quantity: 2, type: 'Recipe'}
+          ],
+          day_slot_lead_time_id: 'day-slot-lead-time-uuid',
+          address_id: '1234'
+        }
+
+        expect(actualResult).toEqual(expectedResult)
+      })
     })
   })
 
