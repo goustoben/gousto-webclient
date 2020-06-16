@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { merchandisingBannerClick } from '../../actions/merchandisingBannerClick'
 import { WaveLinkHeader } from './WaveLinkHeader'
+import { SimpleLinkHeader } from './SimpleLinkHeader'
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onClick: () => {
@@ -19,5 +20,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 const WaveLinkHeaderContainer = connect(null, mapDispatchToProps)(WaveLinkHeader)
+const SimpleLinkHeaderContainer = connect(null, mapDispatchToProps)(SimpleLinkHeader)
 
-export { WaveLinkHeaderContainer }
+export { WaveLinkHeaderContainer, SimpleLinkHeaderContainer }
