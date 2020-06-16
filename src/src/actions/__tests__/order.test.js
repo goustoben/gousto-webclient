@@ -238,7 +238,8 @@ describe('order actions', () => {
         order_action: 'transaction',
         delivery_slot_id: 8,
         delivery_day_id: 3,
-        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid',
+        address_id: null
       }
 
       await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
@@ -258,6 +259,40 @@ describe('order actions', () => {
         '5678',
         'something',
       )
+    })
+
+    describe('when customer choseAddress', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.Map({ accessToken: 'access-token' }),
+          basket: Immutable.fromJS({
+            chosenAddress: {
+              id: '1234'
+            }
+          })
+        })
+      })
+
+      test('should send address_id to saveOrder', async () => {
+        const order = {
+          recipe_choices: [
+            { id: 1, type: 'Recipe', quantity: 3 },
+            { id: 2, type: 'Recipe', quantity: 3 },
+            { id: 3, type: 'Recipe', quantity: 3 },
+            { id: 4, type: 'Recipe', quantity: 3 },
+            { id: 5, type: 'Recipe', quantity: 3 },
+          ],
+          order_action: 'transaction',
+          delivery_slot_id: 8,
+          delivery_day_id: 3,
+          day_slot_lead_time_id: 'day-slot-lead-time-uuid',
+          address_id: '1234'
+        }
+
+        await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+        expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)
+      })
     })
 
     describe('when addOnsBeforeOrderConfirmation feature flag is on', () => {
@@ -939,6 +974,9 @@ describe('order actions', () => {
               isCurrentPeriod: true
             })
           })
+        }),
+        basket: Immutable.fromJS({
+          chosenAddress: {}
         })
       })
     })
@@ -995,7 +1033,7 @@ describe('order actions', () => {
       const order = {
         delivery_day_id: 3,
         delivery_slot_id: 8,
-        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid',
       }
 
       expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)

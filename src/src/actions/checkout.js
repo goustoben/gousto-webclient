@@ -31,6 +31,7 @@ import statusActions from './status'
 import pricingActions from './pricing'
 import tempActions from './temp'
 import { orderAssignToUser } from './order'
+import { getChosenAddressId } from '../selectors/basket'
 
 const { pending, error } = statusActions
 
@@ -106,6 +107,7 @@ export function checkoutCreatePreviewOrder() {
     const slotId = basket.get('slotId')
     const userId = auth.get('id')
     const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
+    const chosenAddressId = getChosenAddressId({ basket })
 
     dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, true))
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
@@ -156,7 +158,8 @@ export function checkoutCreatePreviewOrder() {
         delivery_slot_id: deliverySlotId,
         recipe_choices: recipeChoices,
         day_slot_lead_time_id: daySlotLeadTimeId,
-        delivery_tariff_id: deliveryTariffId
+        delivery_tariff_id: deliveryTariffId,
+        address_id: chosenAddressId
       }
 
       if (basket.get('orderId')) {
@@ -191,7 +194,7 @@ export function checkoutCreatePreviewOrder() {
       }
     } catch (e) {
       logger.error({ message: 'checkoutCreatePreviewOrder failed, logging error below...', actor: userId })
-      logger.error(e)
+      logger.error({ error: e })
       dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, e.message))
     } finally {
       dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false))

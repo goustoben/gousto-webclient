@@ -12,7 +12,8 @@ import {
   getBasketOrderId,
   getBasketLimitReached,
   getBasketProductsCost,
-  getBasketProducts
+  getBasketProducts,
+  getChosenAddressId
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -315,3 +316,34 @@ describe('the getBasketProductsCost selector', () => {
     })
   })
 })
+
+describe('getChosenAddressId', () => {
+  let state
+  describe('when chosenAddress exists', () => {
+    beforeEach(() => {
+      state = {
+        basket: Immutable.fromJS({
+          chosenAddress: {
+            id: '1234'
+          }
+        })
+      }
+    })
+
+    test('should return the id', () => {
+      expect(getChosenAddressId(state)).toEqual('1234')
+    })
+  })
+  describe('when chosenAddress is not in basket', () => {
+    beforeEach(() => {
+      state = {
+        basket: Immutable.fromJS({})
+      }
+    })
+
+    test('should return null', () => {
+      expect(getChosenAddressId(state)).toEqual(null)
+    })
+  })
+})
+

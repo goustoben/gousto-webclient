@@ -2,6 +2,7 @@ import config from 'config'
 import { getSlot } from 'utils/deliveries'
 import { getAllBasketProducts, getFirstProductCategoryAtLimit, getProductItemLimitReached, productsOverallLimitReached } from 'utils/basketProductLimits'
 import { unset } from './cookieHelper2'
+import { getChosenAddressId } from '../selectors/basket'
 
 export function basketSum(items) {
   return Array.from(items.values()).reduce((sum, qty) => sum + qty, 0)
@@ -19,6 +20,8 @@ export function getOrderDetails(basket, deliveryDays) {
 
   const recipes = basket.get('recipes')
   const quantity = basket.get('numPortions')
+
+  const chosenAddressId = getChosenAddressId({ basket })
 
   const recipeChoices = (
     recipes.reduce((recipesArray, qty, id) => {
@@ -38,7 +41,8 @@ export function getOrderDetails(basket, deliveryDays) {
     delivery_day_id: deliveryDayId,
     delivery_slot_id: deliverySlotId,
     recipe_choices: recipeChoices,
-    day_slot_lead_time_id: daySlotLeadTimeId
+    day_slot_lead_time_id: daySlotLeadTimeId,
+    address_id: chosenAddressId
   }
 }
 

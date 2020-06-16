@@ -82,6 +82,9 @@ const createState = (stateOverrides) => ({
     slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
     postcode: 'W6 0DH',
     prevPostcode: 'OX18 1EN',
+    chosenAddress: {
+      id: '123456'
+    }
   }),
   boxSummaryDeliveryDays: Immutable.fromJS({
     '2016-11-21': {
@@ -180,6 +183,7 @@ const createPreviewOrderObj = (previewOrderOverrides) => ({
   ],
   day_slot_lead_time_id: '',
   delivery_tariff_id: '',
+  address_id: '123456',
   ...previewOrderOverrides
 })
 
