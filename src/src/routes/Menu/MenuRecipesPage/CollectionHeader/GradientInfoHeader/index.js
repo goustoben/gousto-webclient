@@ -1,0 +1,1 @@
+export { GradientInfoHeader } from './GradientInfoHeader'
