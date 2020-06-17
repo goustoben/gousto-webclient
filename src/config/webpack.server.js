@@ -6,6 +6,7 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
+const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
@@ -125,11 +126,13 @@ const config = {
   ],
   resolve: {
     alias: {
+      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), ''),
       spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
     },
     modules: [
       path.resolve(__dirname, '../src'),
       path.resolve(__dirname, '../src/components'),
+      path.resolve('./libs/goustouicomponents/src'),
       path.resolve(__dirname, '../node_modules/spinkit'),
     ],
     extensions: ['.js', '.json', '.css'],

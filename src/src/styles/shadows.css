@@ -1,8 +1,0 @@
-/* opacity */
-
-@value shadowOpacityMedium rgba(0,0,0,0.2);
-
-/* intensity */
-
-@value shadowIntensityNone 0 0 0 0;
-@value shadowIntensityMedium 0 0.3rem 0.5rem 0;

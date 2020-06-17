@@ -122,7 +122,7 @@ class Postcode extends React.PureComponent {
     return (
       <LayoutContentWrapper>
         <Form onSubmit={this.handleClick}>
-          <Heading center size="large" type="h2">Delivery Options</Heading>
+          <Heading isCenter size="_legacy_large" type="h2">Delivery Options</Heading>
           <div className={css.row}>
             <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
           </div>

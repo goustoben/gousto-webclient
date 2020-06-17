@@ -15,7 +15,7 @@ function OrderAddOnsHeader({
   return (
     <div className={css.headerWrapper}>
       <div className={css.headerTop}>
-        <Heading type="h1" size="large">You may also like</Heading>
+        <Heading type="h1" size="_legacy_large">You may also like</Heading>
         <button
           type="button"
           className={css.skipButton}
@@ -24,7 +24,7 @@ function OrderAddOnsHeader({
           Skip
         </button>
       </div>
-      <Heading type="h2">{`(${numberOfProducts} products)`}</Heading>
+      <Heading type="h2" size="_legacy_medium">{`(${numberOfProducts} products)`}</Heading>
     </div>
   )
 }

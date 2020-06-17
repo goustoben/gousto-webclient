@@ -49,7 +49,7 @@ class DeliverySlot extends React.PureComponent {
 
     return (
       <LayoutContentWrapper>
-        <Heading center size="large" type="h2">Delivery Options</Heading>
+        <Heading isCenter size="_legacy_large" type="h2">Delivery Options</Heading>
         <div className={css.row}>
           <p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
         </div>

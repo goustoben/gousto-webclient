@@ -1,8 +1,7 @@
 @value sizeXS, sizeLG, sizeXL, sizeXXL from 'styles/typography.css';
 @value SpacingXXS, SpacingXS, SpacingSM, SpacingMD, SpacingLG, SpacingXL, SpacingXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
 @value Black, Blackberry, Cacao, Chia, Mushroom50, Spruce, White from 'styles/colors.css';
-@value MaxBreakPointXS from 'styles/screenSizes.css';
-@value ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenLGMin, ScreenMDMax from 'styles/screenSizes.css';
+@value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenLGMin, ScreenMDMax from 'styles/screenSizes.css';
 
 .superContainer {
 	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';

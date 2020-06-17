@@ -20,7 +20,7 @@ const LimitedCapacityNotice = ({
   userId,
 }) => (
   <Alert type="info">
-    <Heading type="h3">
+    <Heading type="h3" size="_legacy_medium">
       We’re full to the brim
     </Heading>
     <div>

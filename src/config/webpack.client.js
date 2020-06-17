@@ -17,6 +17,8 @@ const PostcssPresetEnv = require('postcss-preset-env')
 const PostcssReporter = require('postcss-reporter')
 const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
 const ExitCodePlugin = require('./exitCode')
+const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
+
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
@@ -189,8 +191,9 @@ const config = {
   ],
   resolve: {
     alias: {
+      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), ''),
       styles: path.resolve('./src/styles'),
-      jsdom: path.resolve('./fallbacks/jsdom')
+      jsdom: path.resolve('./fallbacks/jsdom'),
     },
     modules: [
       path.resolve('./src'),
@@ -314,4 +317,3 @@ const smp = new SpeedMeasurePlugin({
 })
 
 module.exports = smp.wrap(config)
-
