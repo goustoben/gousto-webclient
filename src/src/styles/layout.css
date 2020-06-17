@@ -1,4 +1,4 @@
-@value MinBreakPointXL, MinBreakPointLG, ScreenXSMax from './screenSizes.css';
+@value MinBreakPointXL, MinBreakPointLG, ScreenXSMax from 'styles/screenSizes.css';
 @value Radish, Radish60, Radish40, Parsley, Parsley60, Parsley40 from 'styles/colors.css';
 @value SpacingXXXL from 'sass-loader!styles/spacing.scss';
 

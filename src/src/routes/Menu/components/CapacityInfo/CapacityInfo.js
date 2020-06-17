@@ -35,7 +35,7 @@ const CapacityInfo = ({ userId }) => {
   return (
     <div className={css.contentWrapper}>
       <span className={css.iconNoSlotAvailable} />
-      <Heading type="h3" size="large">{content.title}</Heading>
+      <Heading type="h3" size="_legacy_large">{content.title}</Heading>
       <p>{content.line1}</p>
       <p><strong>{content.line2}</strong></p>
       <p>

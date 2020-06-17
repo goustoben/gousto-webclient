@@ -163,7 +163,7 @@ const DeliveryStep = ({
             <div className={css.container}>
               <div className={`${css.row} ${css.centralize}`}>
                 <Alert type="info">
-                  <Heading type="h3">Due to extremely high demand, we don’t have any available slots right now.</Heading>
+                  <Heading type="h3" size="_legacy_medium">Due to extremely high demand, we don’t have any available slots right now.</Heading>
                   <p>
                     <a
                       href={unbounceRoutes.covid}

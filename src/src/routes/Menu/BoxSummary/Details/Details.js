@@ -90,7 +90,7 @@ class Details extends React.Component {
         <div className={css[`container${view}`]}>
           <div className={contentClass}>
             <LayoutContentWrapper>
-              <Heading center size="large" type="h2">Box Summary</Heading>
+              <Heading isCenter size="_legacy_large" type="h2">Box Summary</Heading>
               <DateHeader
                 orderId={orderId}
                 date={date}
