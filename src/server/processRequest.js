@@ -6,23 +6,23 @@ const { renderToString } = require('react-dom/server')
 const { match, RouterContext, createMemoryHistory } = require('react-router')
 const { syncHistoryWithStore } = require('react-router-redux')
 const { routes } = require('routes')
-const {configureStore} = require('store')
+const { configureStore } = require('store')
 const { ApolloProvider, getDataFromTree } = require('react-apollo')
 const apolloClient = require('apis/apollo').default
-const {Provider} = require('react-redux')
+const { Provider } = require('react-redux')
 const promoActions = require('actions/promos').default
 const logger = require('utils/logger').default
 const { Header } = require('Header/Header')
-const {clearPersistentStore} = require('middlewares/persist/persistStore')
+const { clearPersistentStore } = require('middlewares/persist/persistStore')
 const { processCookies } = require('utils/processCookies')
 const basketActions = require('actions/basket').default
 const processFeaturesQuery = require('utils/processFeaturesQuery').default
-const {newAssetPath} = require('utils/media')
-const {authorise} = require('utils/clientAuthorise')
+const { newAssetPath } = require('utils/media')
+const { authorise } = require('utils/clientAuthorise')
 const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
-const {loggerSetUuid} = require('actions/logger')
+const { loggerSetUuid } = require('actions/logger')
 const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
@@ -92,13 +92,13 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
     .then(() => {
       const reactHTML = renderToString(components)
       if (__CLIENT__) {
-        logger.notice({message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime)})
+        logger.notice({ message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime) })
       }
       startTime = new Date()
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
       if (__CLIENT__) {
-        logger.notice({message: 'renderHTML/template', elapsedTime: (new Date() - startTime)})
+        logger.notice({ message: 'renderHTML/template', elapsedTime: (new Date() - startTime) })
       }
 
       return template
@@ -127,8 +127,12 @@ async function processRequest(ctx, next) {
   const currentRoutes = routes(store)
 
   if (ctx.cookies) {
+    const { header, request: { path } } = ctx
+
+    logger.notice({ message: '[START] processRequest -> cookies', requestUrl: path, uuid: ctx.uuid, headers: header })
     processCookies(ctx.cookies, store) // read auth cookies into the store
     createCookies(ctx, store)
+    logger.notice({ message: '[END] processRequest -> cookies', requestUrl: path, uuid: ctx.uuid, headers: header })
   }
 
   await authorise(store, ctx.cookies)
@@ -224,11 +228,18 @@ async function processRequest(ctx, next) {
           resolve()
         } else if (renderProps) {
           const is404 = renderProps.routes.find(r => (r.component && r.component.displayName && r.component.displayName === 'Connect(ErrorPage)')) !== undefined
+
+          const { header, request: { path } } = ctx
+
+          logger.notice({ message: '[START] processRequest -> fetchAllData', requestUrl: path, uuid: ctx.uuid, headers: header })
+
           fetchAllData(renderProps, store, headers).then(async () => {
-            const {redirect} = store.getState()
+            logger.notice({ message: '[END] processRequest -> fetchAllData (success)', requestUrl: path, uuid: ctx.uuid, headers: header })
+
+            const { redirect } = store.getState()
 
             if (redirect) {
-              const {clearCookies} = store.getState()
+              const { clearCookies } = store.getState()
               if (clearCookies) {
                 clearPersistentStore(ctx.cookies)
               }
@@ -240,17 +251,26 @@ async function processRequest(ctx, next) {
               if (store.getState().basket && store.getState().basket.get('promoCode', '').toLowerCase() === 'fruit') {
                 scripts = DISABLED_SCRIPTS
               }
+
+              logger.notice({ message: '[START] processRequest -> fetchContentOnChange', requestUrl: path, uuid: ctx.uuid, headers: header })
               await fetchContentOnChange(ctx.request.path, store)
+              logger.notice({ message: '[END] processRequest -> fetchContentOnChange', requestUrl: path, uuid: ctx.uuid, headers: header })
+
+              logger.notice({ message: '[START] processRequest -> renderHTML', requestUrl: path, uuid: ctx.uuid, headers: header })
               renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], scripts)
                 .then(html => {
                   ctx.body = html
+                  logger.notice({ message: '[END] processRequest -> renderHTML (success)', requestUrl: path, uuid: ctx.uuid, headers: header })
                   resolve()
                 })
                 .catch(err => {
+                  logger.notice({ message: '[END] processRequest -> renderHTML (error)', requestUrl: path, uuid: ctx.uuid, headers: header })
                   reject(err)
                 })
             }
           }).catch(err => {
+            logger.notice({ message: '[END] processRequest -> fetchAllData (error)', requestUrl: path, uuid: ctx.uuid, headers: header })
+
             reject(err)
           })
         } else {

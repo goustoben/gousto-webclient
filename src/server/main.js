@@ -156,11 +156,14 @@ app.listen(port, () => {
 })
 
 if (__HMR__) {
-  /* eslint-disable global-require */
   const hotPort = port + 1
+
+  /* eslint-disable global-require, import/no-extraneous-dependencies */
   const WebpackDevServer = require('webpack-dev-server')
   const webpack = require('webpack')
   const config = require('config/webpack.client.js')
+  /* eslint-enable */
+
   new WebpackDevServer(webpack(config), {
     port,
     hot: true,
