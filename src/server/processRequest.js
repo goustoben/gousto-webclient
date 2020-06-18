@@ -1,5 +1,5 @@
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
-import { isServerSideRenderEligible } from './utils/renderType'
+import { isServerSideFetchEligible } from './utils/renderType'
 const React = require('react')
 
 const { renderToString } = require('react-dom/server')
@@ -27,11 +27,11 @@ const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
 
-const fetchAllData = (renderProps, store, headers) => {
+const fetchAllData = (renderProps, store, headers, path) => {
   const { location, params } = renderProps
   const queries = []
 
-  const serverSideRenderEligible = isServerSideRenderEligible(headers)
+  const serverSideRenderEligible = isServerSideFetchEligible(headers, path)
 
   if (!serverSideRenderEligible) {
     return Promise.resolve()
@@ -233,7 +233,7 @@ async function processRequest(ctx, next) {
 
           logger.notice({ message: '[START] processRequest -> fetchAllData', requestUrl: path, uuid: ctx.uuid, headers: header })
 
-          fetchAllData(renderProps, store, headers).then(async () => {
+          fetchAllData(renderProps, store, headers, path).then(async () => {
             logger.notice({ message: '[END] processRequest -> fetchAllData (success)', requestUrl: path, uuid: ctx.uuid, headers: header })
 
             const { redirect } = store.getState()
