@@ -193,4 +193,29 @@ describe('<Footer />', () => {
       })
     })
   })
+
+  describe('homepageRedesign', () => {
+    const wrapper = shallow(<Footer />)
+    describe('Given home page redesign is disabled', () => {
+      describe('When isHomePageRedesignEnabled set to false/default', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHomePageRedesignEnabled: false })
+        })
+        test('Then Footer should be rendered without homepageRedesign class attribute', () => {
+          expect(wrapper.hasClass('homepageRedesign')).toBeFalsy()
+        })
+      })
+    })
+
+    describe('Given home page redesign is enabled', () => {
+      describe('When isHomePageRedesignEnabled set to true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHomePageRedesignEnabled: true })
+        })
+        test('Then Footer should be rendered with homepageRedesign class attribute', () => {
+          expect(wrapper.hasClass('homepageRedesign')).toBeTruthy()
+        })
+      })
+    })
+  })
 })

@@ -45,6 +45,7 @@ const Footer = ({
   isAuthenticated,
   simple,
   type,
+  isHomePageRedesignEnabled
 }) => {
   const clientRoutes = config.routes.client
 
@@ -223,7 +224,7 @@ const Footer = ({
   }
 
   return (
-    <div className={css.footer}>
+    <div className={classNames(css.footer, {[css.homepageRedesign]: isHomePageRedesignEnabled})}>
       {renderFooter()}
     </div>
   )
@@ -235,6 +236,7 @@ Footer.propTypes = {
   helpPreLoginVisibilityChange: PropTypes.func.isRequired,
   simple: PropTypes.bool,
   type: PropTypes.string,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 Footer.defaultProps = {
@@ -242,6 +244,7 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
+  isHomePageRedesignEnabled: false
 }
 
 export default Footer

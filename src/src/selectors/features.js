@@ -107,3 +107,7 @@ export const getBlockedTransactionalOrders = ({ features }) => (
 export const getLimitedCapacity = ({ features }) => (
   features && features.getIn(['limitedCapacity', 'value'], false)
 )
+
+export const getHomePageRedesign = ({ features }) => (
+  features && features.getIn(['isHomePageRedesignEnabled', 'value'], false)
+)

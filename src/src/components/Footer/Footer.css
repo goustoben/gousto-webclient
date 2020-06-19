@@ -1,6 +1,6 @@
 @value sizeXS, sizeLG, sizeXL, sizeXXL from 'styles/typography.css';
 @value SpacingXXS, SpacingXS, SpacingSM, SpacingMD, SpacingLG, SpacingXL, SpacingXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
-@value Black, Blackberry, Cacao, Chia, Mushroom50, Spruce, White from 'styles/colors.css';
+@value Black, Blackberry, Cacao, Chia, Mushroom50, Spruce, White, Bluecheese, Mackerel, LightestAccessible from 'styles/colors.css';
 @value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenLGMin, ScreenMDMax from 'styles/screenSizes.css';
 
 .superContainer {
@@ -109,6 +109,38 @@
 	@media ScreenMLMin {
 		padding-top: 40px;
 	}
+
+  .homepageRedesign & {
+
+    @media ScreenMLMin {
+      max-width: 840px;
+      margin: auto;
+    }
+
+    li {
+      &, * {
+        color: Bluecheese;
+      }
+
+      &::after {
+         content: '';
+         border-bottom: 2px solid Mackerel;
+         display: block;
+      }
+    }
+  }
+}
+
+.homepageRedesign {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  .menuList li {
+    @media ScreenLGMin {
+      margin: 0 1rem 1rem;
+    }
+    @media ScreenSMMax {
+      margin: 0.5rem 0.75rem;
+    }
+  }
 }
 
 .menuList li {
@@ -148,7 +180,11 @@
 	composes: paragraphXS from 'styles/typography.css';
 	composes: textXXS from 'styles/typography.css';
 	padding-bottom: 5px;
-	/*color: White;*/
+  .homepageRedesign & {
+    color: LightestAccessible;
+    font-size: 12px;
+    font-weight: normal;
+  }
 }
 
 .contact {
