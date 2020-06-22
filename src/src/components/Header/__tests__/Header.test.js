@@ -548,5 +548,29 @@ describe('Header', () => {
       expect(result).toEqual({ fromWizard: false, newPath: '/my-referrals' })
     })
   })
+
+  describe('homepageRedesign', () => {
+    describe('Given home page redesign is disabled', () => {
+      describe('When isHomePageRedesignEnabled set to false/default', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHomePageRedesignEnabled: false })
+        })
+        test('Then Header should be rendered without homepageRedesign class attribute', () => {
+          expect(wrapper.hasClass('homepageRedesign')).toBeFalsy()
+        })
+      })
+    })
+
+    describe('Given home page redesign is enabled', () => {
+      describe('When isHomePageRedesignEnabled set to true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHomePageRedesignEnabled: true })
+        })
+        test('Then Header should be rendered with homepageRedesign class attribute', () => {
+          expect(wrapper.hasClass('homepageRedesign')).toBeTruthy()
+        })
+      })
+    })
+  })
 })
 

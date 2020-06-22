@@ -180,7 +180,7 @@ class Header extends React.PureComponent {
   }
 
   renderAuthLink = () => {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, isHomePageRedesignEnabled } = this.props
     const { logoutPending } = this.state
     let buttonState
     let button
@@ -208,9 +208,10 @@ class Header extends React.PureComponent {
       )
     } else {
       buttonState = 'loggedOut'
+      const loginText = isHomePageRedesignEnabled ? 'Log in' : 'Login'
       button = (
-        <button type="button" className={css.btn} data-testing="loginButton">
-          Login
+        <button type="button" className={classNames(css.btn, { [css.loginBtn]: isHomePageRedesignEnabled })} data-testing="loginButton">
+          {loginText}
         </button>
       )
     }
@@ -317,7 +318,8 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
-      routing
+      routing,
+      isHomePageRedesignEnabled
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen, loginPending } = this.state
@@ -346,7 +348,7 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div>
+      <div className={classNames({[css.homepageRedesign]: isHomePageRedesignEnabled})}>
         <CookieBanner />
         <AppBanner />
         {shouldShowAbandonBasketModal ? <AbandonBasketModal /> : null}
@@ -463,6 +465,7 @@ Header.propTypes = {
   small: PropTypes.bool,
   title: PropTypes.string,
   trackNavigationClick: PropTypes.func,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 Header.defaultProps = {
@@ -480,6 +483,7 @@ Header.defaultProps = {
   small: false,
   title: '',
   trackNavigationClick: () => { },
+  isHomePageRedesignEnabled: false,
 }
 
 export { Header }

@@ -1,10 +1,10 @@
 @value White, Pomegranate, Blackberry from 'styles/colors.css';
 @value MainFontColor White;
-@value sizeXXL from 'styles/typography.css';
 @value ScreenXSMax, ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 @value mobileLogoSize 25px;
-@value bodyFontStackBold, sizeXS from 'styles/typography.css';
+@value bodyFontStackBold, sizeXS, sizeXXL from 'styles/typography.css';
+@value FontBodySize from 'design-language/typography.css';
 
 .header {
 	position: relative;
@@ -156,6 +156,16 @@ span:target .overlay {
 	margin: 0;
 }
 
+.btn.loginBtn {
+  text-transform: lowercase;
+  height: 45px;
+  padding: 0 1.67rem;
+}
+
+.loginBtn::first-letter {
+  text-transform: uppercase;
+}
+
 .btnLink {
 	composes: block from 'styles/display.css';
 	composes: textRight noDecor from 'styles/typography.css';
@@ -255,4 +265,14 @@ span:target .overlay {
 	composes: marginXXL paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
 	display: flex;
 	justify-content: center;
+}
+
+.homepageRedesign {
+  a,
+  span,
+  button {
+    font-size: FontBodySize;
+    font-weight: normal !important;
+    text-transform: capitalize;
+  }
 }
