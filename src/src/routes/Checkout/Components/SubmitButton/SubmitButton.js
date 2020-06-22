@@ -19,7 +19,7 @@ class SubmitButton extends React.PureComponent {
       <div>
         <ErrorMessage />
         <CheckoutButton
-          stepName="Submit Order"
+          stepName="Start Your Subscription"
           onClick={this.handleClick}
         />
         <SubscriptionTransparencyText className={css.helperText} />
