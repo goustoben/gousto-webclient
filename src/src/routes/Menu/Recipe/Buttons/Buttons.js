@@ -75,6 +75,7 @@ class Buttons extends React.Component {
           onVisibleChange={this.tooltipToggle}
           style="button"
           className={tooltipWidth}
+          data-testing="menuAddServings"
         >
           <Segment
             onClick={this.handleAdd}
@@ -184,6 +185,7 @@ class Buttons extends React.Component {
   render() {
     const { isOutOfStock, limitReached, qty } = this.props
     const disabled = isOutOfStock || limitReached
+    const dataTesting = qty < 1 ? 'menuRecipeAdd' : 'menuAddServings'
     let tooltipMessage = ''
     if (isOutOfStock) {
       tooltipMessage = 'You got the last one'
@@ -195,7 +197,9 @@ class Buttons extends React.Component {
       <Button
         fill={false}
         className={css.btnWrapper}
-        data-testing={qty < 1 ? 'menuRecipeAdd' : undefined}
+        data-testing={
+          disabled ? 'menuRecipeAddDisabled' : dataTesting
+        }
         width="full"
       >
         {this.getSegments(

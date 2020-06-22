@@ -19,7 +19,10 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
   cookingTime, useWithin, equipment, position, diet,
   fiveADay, isChefPrepared, numPortions, isOutOfStock, fineDineInStyle
 }) => (
-  <div className={css.recipeDetails}>
+  <div
+    className={css.recipeDetails}
+    data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipe'}
+  >
     <div>
       <VariantHeaderContainer recipeId={id} isOutOfStock={isOutOfStock} />
     </div>
@@ -32,16 +35,17 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
         isOutOfStock={isOutOfStock}
       />
     </span>
-    <div className={css.viewDetails}>
+    <div className={css.viewDetails} data-testing="menuRecipeViewDetails">
       {isOutOfStock || (
-        <Pill
-          mouseEnter={highlight}
-          mouseLeave={unhighlight}
-          onClick={() => { onClick(true) }}
-          icon
-        >
-          View details
-        </Pill>
+      <Pill
+        mouseEnter={highlight}
+        mouseLeave={unhighlight}
+        onClick={() => { onClick(true) }}
+        icon
+        data-testing="menuRecipeViewDetails"
+      >
+        View details
+      </Pill>
       )}
     </div>
     <div>

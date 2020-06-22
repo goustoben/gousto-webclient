@@ -34,13 +34,27 @@ export const Detail = (props) => {
   } = props
 
   return (
-    <div className={css.modalContainer} role="button" tabIndex={0} onKeyPress={menuRecipeDetailVisibilityChange} onClick={menuRecipeDetailVisibilityChange}>
+    <div
+      className={css.modalContainer}
+      role="button"
+      tabIndex={0}
+      onKeyPress={menuRecipeDetailVisibilityChange}
+      onClick={menuRecipeDetailVisibilityChange}
+      data-testing="menuRecipeDetailsClose"
+    >
       <div role="button" tabIndex={0} className={css.container} onKeyPress={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
         <div className={css.header}>
           <div className={css.stickyHeader}>
             <div className={css.titleFlex}>
               <Title title={title} view={view} detail />
-              <span className={css.closeIcon} role="button" tabIndex={0} onKeyPress={menuRecipeDetailVisibilityChange} onClick={menuRecipeDetailVisibilityChange} />
+              <span
+                className={css.closeIcon}
+                role="button"
+                tabIndex={0}
+                onKeyPress={menuRecipeDetailVisibilityChange}
+                onClick={menuRecipeDetailVisibilityChange}
+                data-testing="menuRecipeDetailsClose"
+              />
             </div>
           </div>
           <div className={css.badges}>
