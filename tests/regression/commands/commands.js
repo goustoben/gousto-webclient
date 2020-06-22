@@ -51,13 +51,32 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   cy.wait(['@getMenu', '@getBrand', '@getStock'])
 })
 
+Cypress.Commands.add('setupMenu', ({ platform }) => {
+  const POSTCODE = 'W3 7UP'
+
+  if (platform === 'WEB') {
+    // Try to add a recipe
+    cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
+    cy.get('[data-testing="menuBrowseCTAButton"]').click()
+  } else {
+    // Try to add a recipe
+    cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
+    cy.get('div').contains('Get Started').click()
+  }
+
+  // Add Postcode
+  cy.get('[data-testing="menuPostcodeInput"]').click().type(`${POSTCODE}{enter}`)
+  cy.wait('@getDeliveryDays')
+  cy.get('[data-testing="boxSummaryContinueButton"]').click()
+})
+
 Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   const POSTCODE = 'W3 7UP'
 
   if (platform === 'WEB') {
     // Go to /menu
     cy.get("[href='/menu']").first().click()
-
+    
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
     cy.get('[data-testing="menuBrowseCTAButton"]').click()
