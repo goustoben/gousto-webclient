@@ -13,7 +13,7 @@ describe("User log in flow", () => {
   describe('on web', () => {
     withPlatformTags(WEB).it('should allow a user to enter credentials and then sucessfully log in', () => {
       cy.visit('/menu')
-      cy.contains('Login').click()
+      cy.get('[data-testing="loginButton"]').click()
 
       cy.get('form').within(($form) => {
         cy.get('input[name="email"]').type('email@gmail.com', {force: true})
