@@ -6,34 +6,6 @@
 	composes: textXS from 'styles/typography.css';
 	font-weight: bold;
 	border-radius: 4px;
-	border: 1px solid;
 	padding-top: 0.125rem;
 	padding-bottom: 0.125rem;
-}
-
-.newRecipe {
-	color: Haricot;
-	border-color: HaricotMedium;
-}
-
-.stockInfo {
-	color: Radish;
-	border-color: Radish;
-}
-
-.recommended {
-	color: Carrot;
-	border-color: Carrot;
-}
-
-.inverse {
-	color: White;
-	border: none;
-	background-color: DarkChilli;
-}
-
-.chefPrepared {
-	background-color: BlueCabbage;
-	font-weight: normal;
-	border: none;
 }
