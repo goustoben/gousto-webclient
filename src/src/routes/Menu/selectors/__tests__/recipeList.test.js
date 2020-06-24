@@ -10,10 +10,17 @@ const createStandardRecipeView = (recipe) => ({ originalId: recipe.get('id'), re
 
 describe('RecipeList selectors', () => {
   const VALID_COLLECTION_ID = '77d1eb54-e3e5-11e7-bf51-06543e25a81c'
-  const firstRecipe = Immutable.fromJS({ id: '327', sortOrder: 1 })
-  const secondRecipe = Immutable.fromJS({ id: '819', sortOrder: 2 })
-  const thirdRecipe = Immutable.fromJS({ id: '777', sortOrder: 3 })
-  const variantRecipe = Immutable.fromJS({ id: '820', sortOrder: 4 })
+  const taxonomy = [{
+    name: 'Dietary attributes',
+    slug: 'dietary-attributes',
+    tags: [{
+      slug: 'gluten-free'
+    }]
+  }]
+  const firstRecipe = Immutable.fromJS({ id: '327', sortOrder: 1, taxonomy})
+  const secondRecipe = Immutable.fromJS({ id: '819', sortOrder: 2, taxonomy })
+  const thirdRecipe = Immutable.fromJS({ id: '777', sortOrder: 3, taxonomy })
+  const variantRecipe = Immutable.fromJS({ id: '820', sortOrder: 4, taxonomy })
 
   const allRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe, variantRecipe])
 
@@ -215,9 +222,11 @@ describe('RecipeList selectors', () => {
 
   describe('getRecipeListRecipes', () => {
     let selectedRecipeVariants
+    let collectionDietaryClaims
 
     beforeEach(() => {
       selectedRecipeVariants = {}
+      collectionDietaryClaims = null
     })
 
     describe('no collection id provided', () => {
@@ -227,7 +236,7 @@ describe('RecipeList selectors', () => {
       const comparatorFactory = () => (a, b) => a.get('sortOrder') - b.get('sortOrder')
 
       test('should return all recipes, applying comparator', () => {
-        const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+        const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
         expect(recipes).toEqual(Immutable.List([
           createStandardRecipeView(firstRecipe), createStandardRecipeView(secondRecipe),
@@ -239,7 +248,7 @@ describe('RecipeList selectors', () => {
         const filterFn = (recipe) => recipe !== secondRecipe
 
         test('should return all recipes with filterFn applied', () => {
-          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, filterFn, comparatorFactory)
+          const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, filterFn, comparatorFactory)
 
           expect(recipes).toEqual(Immutable.List([
             createStandardRecipeView(firstRecipe), createStandardRecipeView(thirdRecipe), createStandardRecipeView(variantRecipe)
@@ -248,7 +257,7 @@ describe('RecipeList selectors', () => {
       })
 
       test('should return all recipe ids in original order', () => {
-        const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+        const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
         expect(originalOrderRecipeIds).toEqual(Immutable.fromJS([
           firstRecipe.get('id'), secondRecipe.get('id'), thirdRecipe.get('id'), variantRecipe.get('id')
@@ -263,7 +272,7 @@ describe('RecipeList selectors', () => {
       const comparatorFactory = () => (a, b) => a.get('sortOrder') - b.get('sortOrder')
 
       test('should return all recipes, applying comparator', () => {
-        const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+        const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims ,allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
         expect(recipes).toEqual(Immutable.List([
           createStandardRecipeView(firstRecipe), createStandardRecipeView(secondRecipe),
@@ -275,7 +284,7 @@ describe('RecipeList selectors', () => {
         const filterFn = (recipe) => recipe !== secondRecipe
 
         test('should return all recipes with filterFn applied', () => {
-          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, filterFn, comparatorFactory)
+          const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, filterFn, comparatorFactory)
 
           expect(recipes).toEqual(Immutable.List([
             createStandardRecipeView(firstRecipe), createStandardRecipeView(thirdRecipe), createStandardRecipeView(variantRecipe)
@@ -284,7 +293,7 @@ describe('RecipeList selectors', () => {
       })
 
       test('should return all recipe ids in original order', () => {
-        const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+        const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
         expect(originalOrderRecipeIds).toEqual(Immutable.List([
           firstRecipe.get('id'), secondRecipe.get('id'), thirdRecipe.get('id'), variantRecipe.get('id')
@@ -299,7 +308,7 @@ describe('RecipeList selectors', () => {
       const comparatorFactory = () => (a, b) => b.get('sortOrder') - a.get('sortOrder')
 
       test('should return all recipes in collection, applying comparator', () => {
-        const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+        const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
         expect(recipes).toEqual(Immutable.List([
           createStandardRecipeView(secondRecipe), createStandardRecipeView(firstRecipe)
@@ -310,7 +319,7 @@ describe('RecipeList selectors', () => {
         const filterFn = (recipe) => recipe !== secondRecipe
 
         test('should return all recipes in collection with filterFn applied', () => {
-          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, filterFn, comparatorFactory)
+          const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, filterFn, comparatorFactory)
 
           expect(recipes).toEqual(Immutable.List([
             createStandardRecipeView(firstRecipe)
@@ -319,7 +328,7 @@ describe('RecipeList selectors', () => {
       })
 
       test('should return all recipe ids in for recipes in collection original order', () => {
-        const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+        const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
         expect(originalOrderRecipeIds).toEqual(Immutable.List([
           firstRecipe.get('id'), secondRecipe.get('id')
@@ -330,7 +339,7 @@ describe('RecipeList selectors', () => {
         const reorderedMenuRecipes = Immutable.fromJS([secondRecipe, thirdRecipe, firstRecipe])
 
         test('should return recipes in recipeInCollection order', () => {
-          const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(reorderedMenuRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+          const { originalOrderRecipeIds } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, reorderedMenuRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
           expect(originalOrderRecipeIds).toEqual(Immutable.List([
             firstRecipe.get('id'), secondRecipe.get('id')
@@ -350,7 +359,7 @@ describe('RecipeList selectors', () => {
         })
 
         test('should return all recipes in collection with variants replaced', () => {
-          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+          const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
           expect(recipes).toEqual(Immutable.List([
             createStandardRecipeView(secondRecipe),
@@ -371,7 +380,7 @@ describe('RecipeList selectors', () => {
         })
 
         test('should return all recipes in collection with variants replaced', () => {
-          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+          const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
           expect(recipes).toEqual(Immutable.List([
             createStandardRecipeView(secondRecipe),
@@ -398,7 +407,7 @@ describe('RecipeList selectors', () => {
             })
 
             test('should return variant in place of recipe', () => {
-              const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+              const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
               expect(recipes).toEqual(Immutable.List([
                 createStandardRecipeView(secondRecipe),
@@ -413,7 +422,7 @@ describe('RecipeList selectors', () => {
             })
 
             test('should return variant in place of recipe', () => {
-              const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+              const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
               expect(recipes).toEqual(Immutable.List([
                 createRecipeView(firstRecipe.get('id'), variantRecipe), // first recipe was replaced with variant
@@ -428,7 +437,7 @@ describe('RecipeList selectors', () => {
             })
 
             test('should return original recipe', () => {
-              const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+              const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
               expect(recipes).toEqual(Immutable.List([
                 createStandardRecipeView(secondRecipe),
@@ -448,7 +457,7 @@ describe('RecipeList selectors', () => {
           })
 
           test('should return original recipe', () => {
-            const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+            const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
             expect(recipes).toEqual(Immutable.List([
               createStandardRecipeView(secondRecipe),
@@ -465,7 +474,7 @@ describe('RecipeList selectors', () => {
           })
 
           test('should return original recipe', () => {
-            const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+            const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
             expect(recipes).toEqual(Immutable.List([
               createStandardRecipeView(secondRecipe),
@@ -480,7 +489,7 @@ describe('RecipeList selectors', () => {
           })
 
           test('should return original recipe', () => {
-            const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+            const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
             expect(recipes).toEqual(Immutable.List([
               createStandardRecipeView(secondRecipe),
@@ -498,7 +507,7 @@ describe('RecipeList selectors', () => {
         })
 
         test('should return all recipes that can be found', () => {
-          const { recipes } = getRecipeListRecipes.resultFunc(allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
+          const { recipes } = getRecipeListRecipes.resultFunc(collectionDietaryClaims, allRecipes, menuCollectionRecipes, inStockRecipes, currentMenuVariants, selectedRecipeVariants, collectionId, null, comparatorFactory)
 
           expect(recipes).toEqual(Immutable.List([
             createStandardRecipeView(secondRecipe), createStandardRecipeView(firstRecipe)
@@ -555,7 +564,10 @@ describe('RecipeList selectors', () => {
             [CURRENT_COLLECTION_ID]: {
               id: CURRENT_COLLECTION_ID,
               slug: 'current-collection',
-              published: true
+              published: true,
+              requirements: {
+                dietary_claims: ['gluten-free']
+              }
             }
           }),
           routing: {
@@ -615,6 +627,49 @@ describe('RecipeList selectors', () => {
 
           expect(originalOrderRecipeIds).toEqual(Immutable.List([
             variantRecipe.get('id'), secondRecipe.get('id')
+          ]))
+        })
+      })
+
+      describe('when collection requirements are not part of recipe dietary-attributes', () => {
+        const props = { collectionId: CURRENT_COLLECTION_ID }
+        beforeEach(() => {
+          state.menuCollections = Immutable.fromJS({
+            [CURRENT_COLLECTION_ID]: {
+              id: CURRENT_COLLECTION_ID,
+              slug: 'current-collection',
+              published: true,
+              requirements: {
+                dietary_claims: ['dairy-free']
+              }
+            }
+          })
+          state.menu = Immutable.Map({
+            menuVariants: Immutable.fromJS({
+              [CURRENT_MENU_ID]: {
+                [firstRecipe.get('id')]: {
+                  alternatives: [
+                    {
+                      coreRecipeId: variantRecipe.get('id')
+                    }
+                  ]
+                }
+              }
+            }),
+            selectedRecipeVariants: {}
+          })
+        })
+
+        test('should return correct list', () => {
+          const { recipes, originalOrderRecipeIds } = getRecipeListRecipes(state, props)
+
+          expect(recipes).toEqual(Immutable.List([
+            createStandardRecipeView(firstRecipe),
+            createStandardRecipeView(secondRecipe)
+          ]))
+
+          expect(originalOrderRecipeIds).toEqual(Immutable.List([
+            firstRecipe.get('id'), secondRecipe.get('id')
           ]))
         })
       })

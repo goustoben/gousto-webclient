@@ -4,8 +4,9 @@ import { getStock, getMenuRecipes as getMenuCollectionRecipes } from 'selectors/
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
-import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId } from './collections'
+import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getCurrentCollectionDietaryClaims } from './collections'
 import { getCurrentMenuRecipes } from './menu'
+import { getVariantsForRecipeForCurrentCollection } from './recipe'
 import { getSelectedRecipeVariants, getCurrentMenuVariants } from './variants'
 
 export const getInStockRecipes = createSelector(
@@ -150,26 +151,6 @@ const getSelectedVariantId = (selectedVariants, collectionId, recipeId) => {
   return selectedVariants[collectionId][recipeId]
 }
 
-const getVariantsForRecipe = (variants, recipeId) => {
-  if (!variants) {
-    return null
-  }
-
-  const recipeVariants = variants.get(recipeId)
-
-  if (!recipeVariants) {
-    return null
-  }
-
-  const alternatives = recipeVariants.get('alternatives')
-
-  if (!alternatives || !alternatives.size) {
-    return null
-  }
-
-  return alternatives
-}
-
 const getInStockVariantRecipe = (variants, menuRecipes, inStockRecipes) => {
   const inStockVariant = variants.find(variant => {
     const coreRecipeId = variant.get('coreRecipeId')
@@ -204,7 +185,7 @@ const getRecipesForIds = (recipeList, ids) => (
 )
 
 // take in recipes and return RecipeViews with out-of-stock recipes replaced with in-stock variants, where possible
-const replaceOutOfStockWithVariants = (recipes, currentMenuRecipes, inStockRecipes, selectedVariants, currentMenuVariants, collectionId) => (
+const replaceOutOfStockWithVariants = (recipes, currentMenuRecipes, inStockRecipes, selectedVariants, currentMenuVariants, collectionId, collectionDietaryClaims) => (
   recipes.map(recipe => {
     // if recipe is in stock then just use it
     if (inStockRecipes.includes(recipe)) {
@@ -220,7 +201,7 @@ const replaceOutOfStockWithVariants = (recipes, currentMenuRecipes, inStockRecip
     }
 
     // if there are no variants then just use the original recipe
-    const recipeVariants = getVariantsForRecipe(currentMenuVariants, recipeId)
+    const recipeVariants = getVariantsForRecipeForCurrentCollection(currentMenuVariants, recipeId, currentMenuRecipes, collectionDietaryClaims)
     if (recipeVariants === null) {
       return createStandardRecipeView(recipe)
     }
@@ -255,8 +236,8 @@ const getReplacements = (recipeList, recipeIds, getVariantFn) => (
 )
 
 export const getRecipeListRecipes = createSelector(
-  [getCurrentMenuRecipes, getMenuCollectionRecipes, getInStockRecipes, getCurrentMenuVariants, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
-  (currentMenuRecipes, collectionRecipes, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
+  [getCurrentCollectionDietaryClaims, getCurrentMenuRecipes, getMenuCollectionRecipes, getInStockRecipes, getCurrentMenuVariants, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
+  (collectionDietaryClaims, currentMenuRecipes, collectionRecipes, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
     if (!collectionId) {
       // return all recipes on menu
       return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
@@ -277,7 +258,8 @@ export const getRecipeListRecipes = createSelector(
       inStockRecipes,
       selectedVariants,
       currentMenuVariants,
-      collectionId
+      collectionId,
+      collectionDietaryClaims
     )
 
     const replacements = getReplacements(

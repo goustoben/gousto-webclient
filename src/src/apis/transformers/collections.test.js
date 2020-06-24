@@ -398,7 +398,8 @@ describe('collectionTransformer', () => {
       order: 400,
       published: true,
       shortTitle: 'Chicken',
-      slug: 'chicken'
+      slug: 'chicken',
+      requirements: {}
     },
     {
       colour: '#6ACBB8',
@@ -407,7 +408,8 @@ describe('collectionTransformer', () => {
       order: 200,
       published: true,
       shortTitle: '10-Minute Meals',
-      slug: '10-minute-meals'
+      slug: '10-minute-meals',
+      requirements: {}
     }]
 
     const result = collectionsTransformer(menuServiceResponse.data[0], menuServiceResponse)

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { getRecipes, getStock, getBasket } from 'selectors/root'
-import { formatRecipeTitle, getSurcharge, getSurchargePerPortion } from 'utils/recipe'
+import { formatRecipeTitle, getSurcharge, getSurchargePerPortion, getDietaryTags } from 'utils/recipe'
 import { getNumPortions } from 'selectors/basket'
 import menuConfig from 'config/menu'
 
@@ -107,3 +107,35 @@ export const getRecipeDisclaimerProps = createSelector(
     }
   }
 )
+
+export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, menuRecipes, collectionDietaryClaims) => {
+  if (!variants) {
+    return null
+  }
+
+  const recipeVariants = variants.get(recipeId)
+
+  if (!recipeVariants) {
+    return null
+  }
+
+  const alternatives = recipeVariants.get('alternatives')
+
+  if (!alternatives || !alternatives.size) {
+    return null
+  }
+
+  if (!collectionDietaryClaims) {
+    return alternatives
+  }
+
+  return alternatives.filter((variant) => {
+    const variantRecipeDietaryAttributes = getDietaryTags(menuRecipes.get(variant.get('coreRecipeId')))
+
+    if (!variantRecipeDietaryAttributes || !variantRecipeDietaryAttributes.size) {
+      return false
+    }
+
+    return (collectionDietaryClaims.every(claim => variantRecipeDietaryAttributes.includes(claim)))
+  })
+}
