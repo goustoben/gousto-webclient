@@ -14,6 +14,7 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
       published: true,
       shortTitle: normalisedAttributes.short_title || '',
       slug: normalisedAttributes.slug || '',
+      requirements: normalisedAttributes.requirements || {}
     }
 
     if (normalisedAttributes.slug === 'recommendations') {

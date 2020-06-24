@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { DetailContainer } from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
-import { getSurcharge, getTaxonomyTags } from 'utils/recipe'
+import { getSurcharge, getDietaryTags } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 import Modal from 'Modal'
 
@@ -35,7 +35,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
     )
   }
 
-  const dietaryTagSlugs = getTaxonomyTags(detailRecipe, 'dietary-attributes').map(tag => tag.get('slug'))
+  const dietaryTagSlugs = getDietaryTags(detailRecipe)
   const dairyFree = dietaryTagSlugs.some(slug => slug === 'dairy-free')
   const glutenFree = dietaryTagSlugs.some(slug => slug === 'gluten-free')
 

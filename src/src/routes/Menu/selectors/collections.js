@@ -192,3 +192,8 @@ export const getCollectionsHeaders = createSelector(
     return null
   }
 )
+
+export const getCurrentCollectionDietaryClaims = createSelector(
+  [getMenuCollections, getCurrentCollectionId],
+  (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'requirements', 'dietary_claims'], null)
+)

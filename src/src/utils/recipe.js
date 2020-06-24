@@ -62,6 +62,14 @@ export function getTaxonomyTags(recipe, categorySlug) {
   return Immutable.List([])
 }
 
+export function getDietaryTags(recipe) {
+  if (recipe) {
+    return getTaxonomyTags(recipe, 'dietary-attributes').map(tag => tag.get('slug'))
+  }
+
+  return []
+}
+
 export function isNew(recipe) {
   const availability = recipe.get('availability')
   const hasBeenOnAPreviousMenu = availability && availability.find(date => (date.get('offset') < 0))

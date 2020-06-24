@@ -6,7 +6,8 @@ import {
   getRecipeOutOfStock,
   getRecipeSurcharge,
   getTagDefinition,
-  getRecipeDisclaimerProps
+  getRecipeDisclaimerProps,
+  getVariantsForRecipeForCurrentCollection
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -317,6 +318,143 @@ describe('menu recipe selectors', () => {
           }
         }
         expect(result).toEqual(expectedResult)
+      })
+    })
+  })
+
+  describe('getVariantsForRecipeForCurrentCollection', () => {
+    const recipeId = '1'
+    let variants
+    let menuRecipes = Immutable.Map()
+    let collectionDietaryClaims = null
+    describe('when no variants', () => {
+      beforeEach(() => {
+        variants = null
+      })
+      test('should return null', () => {
+        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        expect(result).toEqual(null)
+      })
+    })
+    describe('when variants not include recipe id', () => {
+      beforeEach(() => {
+        variants = Immutable.fromJS({
+          2: {},
+          3: {}
+        })
+      })
+      test('should return null', () => {
+        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        expect(result).toEqual(null)
+      })
+    })
+
+    describe('when variants for recipe have no alternatives', () => {
+      beforeEach(() => {
+        variants = Immutable.fromJS({
+          1: {
+            alternatives: []
+          },
+          2: {}
+        })
+      })
+      test('should return null', () => {
+        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        expect(result).toEqual(null)
+      })
+    })
+
+    describe('when collectionDietaryClaims is null', () => {
+      beforeEach(() => {
+        collectionDietaryClaims = null
+        variants = Immutable.fromJS({
+          1: {
+            alternatives: [{
+              id: '1sds1231sds',
+              coreRecipeId: '2'
+            }]
+          },
+          2: {}
+        })
+      })
+      test('should return recipe variants', () => {
+        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        expect(result).toEqual(Immutable.fromJS([{
+          id: '1sds1231sds',
+          coreRecipeId: '2'
+        }]))
+      })
+    })
+
+    describe('when collectionDietaryClaims is not null', () => {
+      beforeEach(() => {
+        collectionDietaryClaims = Immutable.List(['gluten-free'])
+        variants = Immutable.fromJS({
+          1: {
+            alternatives: [{
+              id: '1sds1231sds',
+              coreRecipeId: '2'
+            }]
+          },
+          2: {
+            alternatives: [{
+              id: '1sds1231sds',
+              coreRecipeId: '1'
+            }]
+          }
+        })
+        menuRecipes = Immutable.fromJS({
+          1: {
+            taxonomy: [{
+              slug: 'dietary-attributes',
+              tags: [{
+                slug: 'gluten-free'
+              }]
+            }]
+          },
+          2: {
+            taxonomy: [{
+              slug: 'dietary-attributes',
+              tags: [{
+                slug: 'gluten-free'
+              }]
+            }]
+          }
+        })
+      })
+      test('should return recipe variants that have same claims', () => {
+        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        expect(result).toEqual(Immutable.fromJS([{
+          id: '1sds1231sds',
+          coreRecipeId: '2'
+        }]))
+      })
+
+      describe('when variant has different claim', () => {
+        beforeEach(() => {
+          menuRecipes = Immutable.fromJS({
+            1: {
+              taxonomy: [{
+                slug: 'dietary-attributes',
+                tags: [{
+                  slug: 'gluten-free'
+                }]
+              }]
+            },
+            2: {
+              taxonomy: [{
+                slug: 'dietary-attributes',
+                tags: [{
+                  slug: 'vegetarian'
+                }]
+              }]
+            }
+          })
+        })
+        test('should return recipe variants that have same claims', () => {
+          const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+          expect(result).toEqual(Immutable.List())
+        })
       })
     })
   })
