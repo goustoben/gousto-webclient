@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
-import ModuleHeader from 'ModuleHeader'
+import { ModuleHeaderContainer } from 'ModuleHeader'
 import TestimonialCarousel from './TestimonialCarousel'
 import Storystream from '../Storystream'
 import css from './Testimonials.css'
@@ -11,7 +11,7 @@ import CTAHomepage from '../CTA'
 const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, trackGetStarted, ...props }) => (
 
   <div className={css.testimonials}>
-    <ModuleHeader>Over 1 million meals delivered</ModuleHeader>
+    <ModuleHeaderContainer>Over 1 million meals delivered</ModuleHeaderContainer>
     <h3 className={css.subHeader}>And the reviews are pouring in:</h3>
     <TestimonialCarousel showLink={showLink} />
     {enableStorystream && (

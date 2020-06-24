@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ModuleHeader from 'ModuleHeader'
+import { ModuleHeaderContainer } from 'ModuleHeader'
 import { P } from 'Page/Elements'
 import css from './Guide.css'
-import Panel from './Panel'
+import { PanelContainer } from './Panel'
 
 const Guide = ({ steps, header, description, graphicType }) => (
   <div className={css.container}>
-    <ModuleHeader>{header}</ModuleHeader>
+    <ModuleHeaderContainer>{header}</ModuleHeaderContainer>
     <P className={css.description}>{description}</P>
     <div className={css.panels}>
       {steps.map((step, index) => (
-        <Panel
+        <PanelContainer
           key={index}
           path={step.path}
           graphicType={graphicType}

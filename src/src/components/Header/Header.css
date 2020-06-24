@@ -272,7 +272,6 @@ span:target .overlay {
   span,
   button {
     font-size: FontBodySize;
-    font-weight: normal !important;
     text-transform: capitalize;
   }
 }

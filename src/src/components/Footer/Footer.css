@@ -2,6 +2,7 @@
 @value SpacingXXS, SpacingXS, SpacingSM, SpacingMD, SpacingLG, SpacingXL, SpacingXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
 @value Black, Blackberry, Cacao, Chia, Mushroom50, Spruce, White, Bluecheese, Mackerel, LightestAccessible from 'styles/colors.css';
 @value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenLGMin, ScreenMDMax from 'styles/screenSizes.css';
+@value BreakpointFromLarge, BreakpointToLarge from 'design-language/breakpoints.css';
 
 .superContainer {
 	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
@@ -134,10 +135,10 @@
 .homepageRedesign {
   composes: fontStyleSubHead from 'design-language/typography.css';
   .menuList li {
-    @media ScreenLGMin {
+    @media BreakpointFromLarge {
       margin: 0 1rem 1rem;
     }
-    @media ScreenSMMax {
+    @media BreakpointToLarge {
       margin: 0.5rem 0.75rem;
     }
   }
@@ -157,6 +158,12 @@
 	@media ScreenSMMax {
 		font-weight: normal;
 	}
+
+  .homepageRedesign & {
+    @media ScreenSMMax {
+      font-weight: inherit;
+    }
+  }
 
 	&:not(:last-child):after{
 		 content: '';

@@ -44,6 +44,11 @@
 	text-align: center;
 }
 
+.titleRedesign {
+  composes: fontStyleM from 'design-language/typography.css';
+  text-align: center;
+}
+
 .descriptionContainer {
 	min-height: 50px;
 }
