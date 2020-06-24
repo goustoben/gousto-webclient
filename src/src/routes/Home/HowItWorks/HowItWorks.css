@@ -1,0 +1,35 @@
+@value LightestAccessible, Blackberry from 'styles/colors.css';
+@value BreakpointFromLarge from 'design-language/breakpoints.css';
+
+.homepageRedesign {
+  composes: fontStyleBody from 'design-language/typography.css';
+  color: LightestAccessible;
+
+  img {
+    width: 169px;
+    height: 169px;
+    border-radius: 0;
+  }
+
+  > div > div {
+    + p {
+      font-size: inherit;
+      line-height: inherit;
+      margin-bottom: 2rem;
+    }
+
+    > div {
+      > p {
+        margin: 1rem 0 0.5rem;
+        color: Blackberry;
+      }
+      > div p {
+        font-size: inherit;
+        color: LightestAccessible;
+        @media BreakpointFromLarge {
+          padding: 0 2rem;
+        }
+      }
+    }
+  }
+}

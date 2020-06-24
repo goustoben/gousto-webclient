@@ -1,1 +1,2 @@
-export default from './ModuleHeader'
+export { ModuleHeaderContainer } from './ModuleHeaderContainer'
+export { ModuleHeader } from './ModuleHeader'

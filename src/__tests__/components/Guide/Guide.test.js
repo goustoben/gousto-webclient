@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ModuleHeader from 'components/ModuleHeader'
+import { ModuleHeaderContainer } from 'components/ModuleHeader'
 import { P } from 'components/Page/Elements'
-import Panel from 'components/Guide/Panel'
+import { PanelContainer } from 'components/Guide/Panel'
 
 import GuideOriginal from 'components/Guide'
 
@@ -19,8 +19,8 @@ describe('Guide', () => {
       expect(wrapper.type()).toEqual('div')
     })
 
-    test('should render 1 <ModuleHeader> component(s)', () => {
-      expect(wrapper.find(ModuleHeader).length).toEqual(1)
+    test('should render 1 <ModuleHeaderContainer> component(s)', () => {
+      expect(wrapper.find(ModuleHeaderContainer).length).toEqual(1)
     })
 
     test('should render 1 <P> component(s)', () => {
@@ -51,7 +51,7 @@ describe('Guide', () => {
 
       wrapper = shallow(<GuideOriginal steps={steps} />)
 
-      expect(wrapper.find(Panel)).toHaveLength(3)
+      expect(wrapper.find(PanelContainer)).toHaveLength(3)
     })
   })
 })

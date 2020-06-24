@@ -5,7 +5,7 @@ import { Carousel } from 'routes/Home/Carousel/Carousel'
 
 import CTA from 'routes/Home/CTA'
 import { RecipeCarousel } from 'routes/Home/Carousel/RecipeCarousel'
-import ModuleHeader from 'components/ModuleHeader'
+import { ModuleHeaderContainer } from 'components/ModuleHeader'
 
 describe('Carousel', () => {
   let wrapper
@@ -15,7 +15,7 @@ describe('Carousel', () => {
   })
 
   test('should have Header and CTA elements, but no RecipeCarousel', () => {
-    expect(wrapper.find(ModuleHeader)).toHaveLength(1)
+    expect(wrapper.find(ModuleHeaderContainer)).toHaveLength(1)
     expect(wrapper.find(RecipeCarousel)).toHaveLength(0)
     expect(wrapper.find(CTA)).toHaveLength(1)
   })

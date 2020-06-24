@@ -49,9 +49,33 @@ describe('HowItWorks', () => {
 
   test('should request steps by variant', () => {
     wrapper = shallow(<HowItWorks steps={steps} />)
-    expect(steps).toHaveBeenCalledWith('default')
+    expect(steps).toHaveBeenCalledWith('default', false)
 
     wrapper = shallow(<HowItWorks steps={steps} variant="rebrand" />)
-    expect(steps).toHaveBeenCalledWith('rebrand')
+    expect(steps).toHaveBeenCalledWith('rebrand', false)
+  })
+
+  describe('homepageRedesign', () => {
+    describe('Given home page redesign is disabled', () => {
+      describe('When isHomePageRedesignEnabled set to false/default', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHomePageRedesignEnabled: false })
+        })
+        test('Then HowItWorks should be rendered without homepageRedesign class attribute', () => {
+          expect(wrapper.hasClass('homepageRedesign')).toBeFalsy()
+        })
+      })
+    })
+
+    describe('Given home page redesign is enabled', () => {
+      describe('When isHomePageRedesignEnabled set to true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHomePageRedesignEnabled: true })
+        })
+        test('Then HowItWorks should be rendered with homepageRedesign class attribute', () => {
+          expect(wrapper.hasClass('homepageRedesign')).toBeTruthy()
+        })
+      })
+    })
   })
 })

@@ -49,19 +49,19 @@ module.exports = {
   howItWorks: {
     header: <Content contentKeys={'productBenefitTitleDefault'}><span>3 simple reasons to choose Gousto</span></Content>,
     description: <Content contentKeys={'productBenefitDescriptionDefault'}><span>With the right ingredients, you can create something amazing.</span></Content>,
-    steps: (variant) => ([
+    steps: (variant, redesignEnabled) => ([
       {
-        path: (variant === 'tv') ? require('media/photos/quality-alt.jpg') : require('media/photos/quality.jpg'), // eslint-disable-line global-require
+        path: (variant === 'tv') ? require('media/photos/quality-alt.jpg') : (redesignEnabled ? require('media/photos/quality-redesign.jpg') : require('media/photos/quality.jpg')), // eslint-disable-line global-require
         title: <Content contentKeys={'firstProductBenefitTitleDefault'}><span>Quality</span></Content>,
         description: <Content contentKeys={'firstProductBenefitDescriptionDefault'}><span>Fresh ingredients for tasty, home-cooked dinners.</span></Content>,
       },
       {
-        path: (variant === 'tv') ? require('media/photos/simplicity-alt.jpg') : require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
+        path: (variant === 'tv') ? require('media/photos/simplicity-alt.jpg') : (redesignEnabled ? require('media/photos/simplicity-redesign.jpg') : require('media/photos/simplicity.jpg')) , // eslint-disable-line global-require
         title: <Content contentKeys={'secondProductBenefitTitleDefault'}><span>Simplicity</span></Content>,
         description: <Content contentKeys={'secondProductBenefitDescriptionDefault'}><span>Easy to follow recipes and perfectly measured ingredients.</span></Content>,
       },
       {
-        path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : require('media/photos/variety.jpg'), // eslint-disable-line global-require
+        path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : (redesignEnabled ? require('media/photos/variety-redesign.jpg') : require('media/photos/variety.jpg')), // eslint-disable-line global-require
         title: <Content contentKeys={'thirdProductBenefitTitleDefault'}><span>Variety</span></Content>,
         description: <Content contentKeys={'thirdProductBenefitDescriptionDefault'}><span>From family classics and ten minute meals to Fine Dine In.</span></Content>,
       },

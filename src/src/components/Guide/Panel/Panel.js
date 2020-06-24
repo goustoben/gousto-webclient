@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
+import classNames from 'classnames'
 import css from './Panel.css'
 
-const Panel = ({ path, title, description, graphicType }) => (
+const Panel = ({ path, title, description, graphicType, isHomePageRedesignEnabled }) => (
   <div className={css.container}>
     <div className={css.imageContainer}>
       {graphicType === 'img' ? <img className={css.image} src={path} alt={title} /> : null}
       {graphicType === 'svg' ? <Svg fileName={path} className={css.svg} /> : null}
     </div>
-    <p className={css.title}>{title}</p>
+    <p className={classNames({ [css.title]: !isHomePageRedesignEnabled, [css.titleRedesign]: isHomePageRedesignEnabled })}>{title}</p>
     <div className={css.descriptionContainer}>
       <p className={css.description}>{description}</p>
     </div>
@@ -21,6 +22,7 @@ Panel.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   graphicType: PropTypes.oneOf(['img', 'svg']),
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 Panel.defaultProps = {
@@ -28,6 +30,7 @@ Panel.defaultProps = {
   title: [],
   description: '',
   graphicType: 'img',
+  isHomePageRedesignEnabled: false,
 }
 
-export default Panel
+export { Panel }

@@ -1,1 +1,2 @@
-export default from './Panel'
+export { PanelContainer } from './PanelContainer'
+export { Panel } from './Panel'

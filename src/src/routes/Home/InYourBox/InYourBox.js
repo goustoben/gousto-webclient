@@ -2,14 +2,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
-import ModuleHeader from 'ModuleHeader'
+import { ModuleHeaderContainer } from 'ModuleHeader'
 import css from './InYourBox.css'
 import CTAHomepage from '../CTA'
 
 const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted }) => (
   <div className={css.container}>
     <div className={inverse ? css.inverseContent : css.content}>
-      <ModuleHeader>It starts with a box</ModuleHeader>
+      <ModuleHeaderContainer>It starts with a box</ModuleHeaderContainer>
       <p className={css.bodyText}>A Gousto recipe box is packed with everything you need to reinvent dinnertimes.</p>
       <ul className={css.list}>
         <li className={css.listItem}>

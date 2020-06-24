@@ -1,11 +1,21 @@
+@value Blackberry from 'styles/colors.css';
+
 .container {
 	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
+
+  &.homepageRedesign {
+     margin-bottom: 0.5rem;
+  }
 }
 
 .header {
 	line-height: 1;
 	text-align: center;
 	margin: 0;
+
+  .homepageRedesign & {
+    color: Blackberry;
+  }
 }
 
 .big {

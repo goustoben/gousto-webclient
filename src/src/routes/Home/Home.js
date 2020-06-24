@@ -21,11 +21,13 @@ class Home extends React.Component {
     variant: PropTypes.string,
     redirectLoggedInUser: PropTypes.func,
     isSignupReductionEnabled: PropTypes.bool,
+    isHomePageRedesignEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
     variant: 'default',
     isSignupReductionEnabled: false,
+    isHomePageRedesignEnabled: false,
   }
 
   componentDidMount() {
@@ -72,7 +74,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, enableStorystream, variant, isSignupReductionEnabled } = this.props
+    const { isAuthenticated, enableStorystream, variant, isSignupReductionEnabled, isHomePageRedesignEnabled } = this.props
     const modules = this.getModules()
     let ctaUri
     let ctaText
@@ -140,6 +142,7 @@ class Home extends React.Component {
           }}
           howItWorks={{
             variant,
+            isHomePageRedesignEnabled,
           }}
         />
       </span>
