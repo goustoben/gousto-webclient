@@ -1,5 +1,6 @@
 @value Coconut, InYourBoxBg, White from 'styles/colors.css';
 @value ScreenXSMax, ScreenSMMax, ScreenSMMin, ScreenXXSMax from 'styles/screenSizes.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
 
 .section {
 	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
@@ -16,6 +17,14 @@
 	@media ScreenSMMin {
 		padding-top: 80px;
 	}
+
+  &.homepageRedesign {
+     padding-top: 380px;
+
+    @media BreakpointFromMedium {
+      padding-top: 5rem;
+    }
+  }
 }
 
 .sectionContainer {
@@ -31,6 +40,16 @@
 	background: url('routes/Home/InYourBox/unboxing-x1200.jpg') no-repeat InYourBoxBg;
 	background-position: 100% bottom;
 	background-size: auto 100%;
+
+  &.homepageRedesign {
+    background: url('routes/Home/InYourBox/unboxing-redesign-mobile.jpg') center top / contain no-repeat;
+
+    @media BreakpointFromMedium {
+      max-height: 622px;
+      background: url('routes/Home/InYourBox/unboxing-redesign.jpg') center center / cover no-repeat;
+      padding-top: 0;
+    }
+  }
 
 	@media (width <= 1215px) {
 		background-position: calc(100% + 150px) bottom;

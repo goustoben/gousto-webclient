@@ -120,6 +120,7 @@ class Home extends React.Component {
         <PromoBanner />
         <HomeSections
           isSignupReductionEnabled={isSignupReductionEnabled}
+          isHomePageRedesignEnabled={isHomePageRedesignEnabled}
           modules={modules}
           testimonials={{
             ctaUri,
@@ -139,6 +140,7 @@ class Home extends React.Component {
           whatsInYourBox={{
             ctaUri,
             ctaText,
+            isHomePageRedesignEnabled,
           }}
           howItWorks={{
             variant,
