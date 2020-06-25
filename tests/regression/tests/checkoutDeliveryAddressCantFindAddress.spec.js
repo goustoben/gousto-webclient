@@ -1,0 +1,51 @@
+import * as checkoutAboutYou  from '../pageUtils/checkoutAboutYou'
+import * as checkoutDelivery  from '../pageUtils/checkoutDelivery'
+import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
+
+describe('Given I’m a gousto logged-out website visitor', () => {
+  describe('When I land on the delivery step of the checkout', () => {
+    before(() => {
+      cy.setCookie('v1_goustoStateStore_basket_postcode', '"W140EE"')
+
+      checkoutDelivery.setMocks({ validPostcode: true })
+      cy.clock(new Date(2020, 4, 1).getTime(), ['Date'])
+      checkoutAboutYou.goToCheckout()
+
+      checkoutAboutYou.clearAndFillCheckoutForm({
+        firstname: 'Joe',
+        lastname: 'Tester',
+        email: 'test@email.com',
+        password: '1234abcd'
+      })
+    })
+
+    withPlatformTags(WEB).describe('And entered a valid postcode on desktop', () => {
+      before(() => {
+        cy.get('[data-testing="checkoutCTA"]').click()
+      })
+
+      describe('And when I click on `Can’t find your address` button', () => {
+        before(() => {
+          cy.get('[data-testing="checkoutFindAddressButton"]').click()
+          cy.get('[data-testing="addressNotFound"]').click()
+        })
+
+        it('Then an empty addresses fields appear', () => {
+          cy.get('input[data-testing="houseNo"]').should('have.value', '')
+        })
+      })
+    })
+
+    withPlatformTags(MOBILE).describe('And entered a valid postcode on mobile', () => {
+      describe('And when I click on `Can’t find your address` button', () => {
+        before(() => {
+          cy.get('[data-testing="addressNotFound"]').click()
+        })
+
+        it('Then an empty addresses fields appear', () => {
+          cy.get('input[data-testing="houseNo"]').should('have.value', '')
+        })
+      })
+    })
+  })
+})

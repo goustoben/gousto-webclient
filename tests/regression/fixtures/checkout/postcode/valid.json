@@ -1,0 +1,17 @@
+{
+    "deliveryPoints": [
+        {
+            "organisationName": "ENDEMOL UK LTD",
+            "departmentName": "",
+            "line1": "THE SHEPHERDS BUILDING",
+            "line2": "CHARECROFT WAY",
+            "udprn": "25953315",
+            "dps": "1A"
+        }
+    ],
+    "deliveryPointCount": 1,
+    "postalCounty": "GREATER LONDON",
+    "traditionalCounty": "MIDDLESEX",
+    "town": "LONDON",
+    "postcode": "W14 0EE"
+}

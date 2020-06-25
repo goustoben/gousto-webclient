@@ -29,10 +29,11 @@ Cypress.Commands.overwrite('server', (originalFn, options) => {
     force404: true,
     whitelist: (xhr) => {
       const defaultCypressWhitelist = xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
+      const checkoutCom = xhr.url.match(/(checkout.com)/)
       const content = xhr.url.match(/(content)|(s3)/)
       const tracking = xhr.url.match(/(snowplow)|(pinterest)|(optimizely)|(hotjar)|(pingdom)|(s.yimg)/)
 
-      return defaultCypressWhitelist || content || tracking
+      return defaultCypressWhitelist || content || tracking || checkoutCom
     }
   }
 

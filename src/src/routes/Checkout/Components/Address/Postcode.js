@@ -23,7 +23,7 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
             mask
             withRef
             ref={receiveRef}
-
+            data-testing="checkoutPostcode"
           />
         </div>
 
@@ -33,6 +33,7 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
             onClick={() => { onPostcodeLookup(postcodeTemp) }}
             pending={postcodePending}
             color="secondary"
+            data-testing="checkoutFindAddressButton"
           >
             Find Address
           </Button>
