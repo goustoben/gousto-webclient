@@ -4,8 +4,8 @@ import Content from 'containers/Content'
 
 module.exports = {
   hero: {
-    header: 'A recipe box full of flavour',
-    subheader: 'Precise ingredients, delicious recipes and a dollop of adventure.',
+    header: (redesignEnabled) => redesignEnabled ? 'Reinvent dinnertime with our recipe box' : 'A recipe box full of flavour',
+    subheader: (redesignEnabled) => redesignEnabled ? 'Precise ingredients and foolproof recipes, direct to your door' : 'Precise ingredients, delicious recipes and a dollop of adventure.',
   },
   testimonials: [
     {

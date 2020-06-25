@@ -15,15 +15,16 @@ import css from './Home.css'
 
 const propTypes = {
   modules: PropTypes.arrayOf(PropTypes.string),
-  hero: PropTypes.object,
-  recipes: PropTypes.object,
-  testimonials: PropTypes.object,
-  howItWorks: PropTypes.object,
-  subscription: PropTypes.object,
-  whatsInYourBox: PropTypes.object,
-  testedAndLovedBy: PropTypes.object,
+  hero: PropTypes.objectOf(PropTypes.object),
+  recipes: PropTypes.objectOf(PropTypes.object),
+  testimonials: PropTypes.objectOf(PropTypes.object),
+  howItWorks: PropTypes.objectOf(PropTypes.object),
+  subscription: PropTypes.objectOf(PropTypes.object),
+  whatsInYourBox: PropTypes.objectOf(PropTypes.object),
+  testedAndLovedBy: PropTypes.objectOf(PropTypes.object),
   alternativeDesktopHero: PropTypes.bool,
   isSignupReductionEnabled: PropTypes.bool,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -41,6 +42,7 @@ const defaultProps = {
   testedAndLovedBy: {},
   alternativeDesktopHero: false,
   isSignupReductionEnabled: false,
+  isHomePageRedesignEnabled: false,
 }
 
 class HomeSections extends Component {
@@ -61,6 +63,7 @@ class HomeSections extends Component {
 
   renderModule(name, order) {
     let module = null
+    const { isHomePageRedesignEnabled } = this.props
 
     if (this.modules[name]) {
       if (name.includes('hero')) {
@@ -78,7 +81,8 @@ class HomeSections extends Component {
                 classnames(
                   inverse ? css.inverseSection : css.section,
                   order === 2 && css.inverseSectionSignupOverride,
-                  css[`${name}-section`]
+                  css[`${name}-section`],
+                  { [css.homepageRedesign]: isHomePageRedesignEnabled }
                 )
               }
               data-module-name={name}

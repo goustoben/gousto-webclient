@@ -1,6 +1,7 @@
 @value ScreenSMMin, ScreenLGMin, ScreenXSMax, ScreenXXSMin from 'styles/screenSizes.css';
 @value SpacingXXXXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
-@value Coconut, White from 'styles/colors.css';
+@value Coconut, White, Blackberry from 'styles/colors.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge, BreakpointFromXLarge from 'design-language/breakpoints.css';
 @value desktopInfoSize: 470px;
 @value mobileInfoSize: 300px;
 @value mobileInfoBgSize: 220px;
@@ -10,6 +11,14 @@
 	position: relative;
 	min-height: 0;
 	height: 300px;
+
+  &.homepageRedesign {
+    height: 320px;
+
+    @media BreakpointFromMedium {
+      height: 670px;
+    }
+  }
 
 	@media ScreenSMMin {
 		height: calc(100vh - 90px);
@@ -30,7 +39,6 @@
 	@media ScreenXXSMin {
 		height: 340px;
 	}
-
 }
 
 .container--default {
@@ -40,6 +48,18 @@
 	@media ScreenSMMin {
 		background: Coconut url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
 	}
+
+  &.homepageRedesign {
+    background: Coconut url('routes/Home/Hero/hero-redesign-mobile.jpg') center top / cover no-repeat;
+
+    @media BreakpointFromMedium {
+      background: Coconut url('routes/Home/Hero/hero-redesign-tablet.jpg') center center / cover no-repeat;
+    }
+
+    @media BreakpointFromXLarge {
+      background: Coconut url('routes/Home/Hero/hero-redesign.jpg') center center / cover no-repeat;
+    }
+  }
 }
 
 .container--tv {
@@ -62,6 +82,10 @@
 	@media ScreenXSMax {
 		height: mobileInfoBgSize;
 	}
+
+  .homepageRedesign & {
+    display: none;
+  }
 }
 
 .textContainer {
@@ -75,17 +99,28 @@
 	z-index: 2;
 	margin: 0 auto;
 
+  .homepageRedesign & {
+    @media BreakpointFromMedium {
+      position: absolute;
+      width: desktopInfoSize;
+      height: desktopInfoSize;
+      top: SpacingXXXL;
+      padding: SpacingXXXXXL SpacingXXXL;
+      margin: 0;
+    }
+  }
+
 	@media ScreenSMMin {
 		position: absolute;
 		width: desktopInfoSize;
 		height: desktopInfoSize;
-		top: 50px;
+		top: SpacingXXXL;
 		padding: SpacingXXXXXL SpacingXXXL;
 		margin: 0;
 	}
 
 	@media ScreenLGMin {
-		top: 100px;
+		top: SpacingXXXXXL;
 	}
 }
 
@@ -94,10 +129,52 @@
 	background-color: White;
 	left: auto;
 
+  .homepageRedesign & {
+    top: 100%;
+    background-color: Blackberry;
+    padding: 2rem 1rem;
+    border-radius: 0;
+    width: 100%;
+    height: auto;
+
+    & > * {
+      margin-right: auto;
+      margin-left: auto;
+
+      @media BreakpointFromMedium {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-top: 1rem;
+
+        @media BreakpointFromMedium {
+          margin-top: 0;
+        }
+      }
+    }
+
+    @media BreakpointFromMedium {
+      text-align: left;
+      background-color: transparent;
+      top: 9.19rem;
+      left: 4.17%;
+      width: 460px;
+      padding: 0;
+    }
+
+    @media BreakpointFromLarge {
+      width: 460px;
+      padding: 0;
+      top: 7rem;
+      left: 10.56%;
+    }
+  }
+
 	@media ScreenSMMin {
 		left: 8%;
-		top: 50px;
-	}	
+		top: SpacingXXXL;
+	}
 }
 
 .textContainer--tv {
@@ -129,17 +206,43 @@
 .headerBase {
 	text-align: center;
 	width: 100%;
+
+  .homepageRedesign & {
+    text-align: left;
+  }
+}
+
+.homepageRedesign {
+  .header,
+  .subHeader {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: White;
+
+    @media BreakpointFromMedium {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 .header {
 	composes: headerBase;
 	composes: headerXXL2 headlineFont from 'styles/typography.css';
 	margin-bottom: auto;
+
+  .homepageRedesign & {
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .subHeader {
 	composes: headerBase;
 	composes: headerXL from 'styles/typography.css';
+
+  .homepageRedesign & {
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .cta {
@@ -149,11 +252,35 @@
 
 	& > div {
 		margin: 0 auto;
-	}
+
+    .homepageRedesign & {
+      max-width: 310px;
+      padding-top: 0;
+
+      @media BreakpointFromMedium {
+        text-align: left;
+        margin: 1rem 0 0;
+        max-width: 310px;
+      }
+    }
+  }
+
+  .homepageRedesign & {
+    margin-top: 0;
+
+    @media BreakpointFromXLarge {
+      width: 340px;
+    }
+  }
+
 
 	@media ScreenXSMax {
 		& > div {
 			width: auto;
+
+      .homepageRedesign & {
+        width: 225px;
+      }
 		}
 	}
 }

@@ -1,16 +1,21 @@
 import { connect } from 'react-redux'
 import redirectAction from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
+import { getHomePageRedesign } from 'selectors/features'
 
 import Hero from './Hero'
 
 const mapDispatchToProps = {
   redirect: redirectAction.redirect,
-  trackGetStarted
+  trackGetStarted,
 }
 
+const mapStateToProps = (state) => ({
+  isHomePageRedesignEnabled: getHomePageRedesign(state)
+})
+
 const HeroContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Hero)
 

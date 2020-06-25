@@ -4,15 +4,15 @@ import classnames from 'classnames'
 import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
-
+import typography from 'design-language/typography.css'
 import CTAHomepage from '../CTA'
 import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted }) => (
+const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted, isHomePageRedesignEnabled }) => (
   <div
-    className={classnames(css[`container--${variant}`])}
+    className={classnames(css[`container--${variant}`], { [css.homepageRedesign]: isHomePageRedesignEnabled })}
     data-testing={dataTesting}
   >
     <div
@@ -20,13 +20,13 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted
         classnames(css[`textContainer--${variant}`])
       }
     >
-      <h1 className={css.header}>
+      <h1 className={classnames(css.header, { [typography.fontStyle4XL]: isHomePageRedesignEnabled })}>
         <Content contentKeys="propositionMainHeadlineDefault">
-          <span>{home.hero.header}</span>
+          <span>{home.hero.header(isHomePageRedesignEnabled)}</span>
         </Content>
       </h1>
-      <h2 className={css.subHeader}>
-        <Content contentKeys="propositionSupportingHeadlineDefault"><span>{home.hero.subheader}</span></Content>
+      <h2 className={classnames(css.subHeader, { [typography.fontStyleM]: isHomePageRedesignEnabled })}>
+        <Content contentKeys="propositionSupportingHeadlineDefault"><span>{home.hero.subheader(isHomePageRedesignEnabled)}</span></Content>
       </h2>
       <div className={css.cta}>
         <CTAHomepage
@@ -52,6 +52,7 @@ Hero.propTypes = {
   dataTesting: PropTypes.string,
   variant: PropTypes.string,
   trackGetStarted: PropTypes.func,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
@@ -59,6 +60,7 @@ Hero.defaultProps = {
   ctaText: home.CTA.main,
   variant: 'default',
   trackGetStarted: () => {},
+  isHomePageRedesignEnabled: false,
 }
 
 export default Hero

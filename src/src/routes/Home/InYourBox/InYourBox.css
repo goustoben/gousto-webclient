@@ -1,6 +1,8 @@
 @value ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value InYourBoxBg, White from 'styles/colors.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
 @value cutleryIconSize 125px;
+@value FontBodySize from 'design-language/typography.css';
 
 .container {
 	composes: pageContainer from 'styles/layout.css';
@@ -20,6 +22,19 @@
 		display: table;
 		clear: both;
 	}
+
+  &.homepageRedesign {
+    background-color: transparent;
+    padding: 0;
+    @media BreakpointFromMedium {
+      padding: 5rem 2rem;
+    }
+
+    @media BreakpointFromXLarge {
+      padding: 5rem 9.4rem;
+      margin: 0;
+    }
+  }
 }
 
 .content {
@@ -42,6 +57,33 @@
 	@media ScreenXXSMax {
 		max-width: 500px;
 	}
+
+  .homepageRedesign & {
+    padding: 2rem;
+    margin-left: 0;
+    width: 100%;
+
+    h2,
+    p {
+      text-align: left;
+      padding: 0;
+    }
+
+    @media BreakpointFromMedium {
+      max-width: 460px;
+    }
+  }
+
+  & > div:last-child {
+    .homepageRedesign & {
+      margin: 0 auto;
+      padding-top: 0;
+
+      @media BreakpointFromMedium {
+        margin-left: 0;
+      }
+    }
+  }
 }
 
 .inverseContent {
@@ -52,11 +94,21 @@
 .list {
 	composes: textCenter textLG from 'styles/typography.css';
 	composes: paddingLGLeftRight marginLGTop marginXLBottom from 'sass-loader!styles/spacing.scss';
+
+  .homepageRedesign & {
+    margin: 1.5rem 0 2rem;
+    text-align: left;
+    padding: 0;
+  }
 }
 
 .listItem {
 	list-style: none;
 	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+
+  .homepageRedesign & {
+    margin-top: 1rem;
+  }
 }
 
 .bodyText {
@@ -67,4 +119,8 @@
 .tick {
 	composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
 	margin-right: 5px;
+
+  .homepageRedesign & {
+    font-size: FontBodySize;
+  }
 }
