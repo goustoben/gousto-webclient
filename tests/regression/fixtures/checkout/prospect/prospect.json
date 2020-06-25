@@ -1,0 +1,22 @@
+{
+    "status": "ok",
+    "result": {
+        "data": {
+            "created": {
+                "allow_marketing_email": false,
+                "email": "egege@dgdg.com",
+                "preview_order_id": 17375349,
+                "promocode": null,
+                "user_name_first": "aaa",
+                "user_name_last": "aadd",
+                "step": "aboutyou",
+                "id": "91b98d9c-b539-11ea-85a7-062574683f18",
+                "updated_at": "2020-06-23 11:09:05",
+                "created_at": "2020-06-23 11:09:05",
+                "complete": false,
+                "when_complete": null,
+                "user": null
+            }
+        }
+    }
+}
