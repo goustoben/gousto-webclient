@@ -183,15 +183,21 @@ class CheckoutFrame extends React.Component {
       <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" className={css.framesForm}>
         <div className={css.cardNumberFramesContainer}>
           <div data-frames className={css.framesContainer} />
-          <div>{showCardNumberError && (<InputError>Please enter a valid card number</InputError>)}</div>
+          <div data-testing="checkoutFrameCardNoError">
+            {showCardNumberError && (<InputError>Please enter a valid card number</InputError>)}
+          </div>
         </div>
         <div className={css.expiryDateFramesContainer}>
           <div data-frames className={css.framesContainer} />
-          <div>{showExpiryDateError && (<InputError>Please enter a valid expiry date</InputError>)}</div>
+          <div data-testing="checkoutFrameExpiryError">
+            {showExpiryDateError && (<InputError>Please enter a valid expiry date</InputError>)}
+          </div>
         </div>
         <div className={css.cvvFramesContainer}>
           <div data-frames className={css.framesContainer} />
-          <div>{showCVVError && (<InputError>Please enter a valid CVV code</InputError>)}</div>
+          <div data-testing="checkoutFrameCVVError">
+            {showCVVError && (<InputError>Please enter a valid CVV code</InputError>)}
+          </div>
         </div>
       </form>
     )

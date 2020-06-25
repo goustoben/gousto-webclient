@@ -1,0 +1,9 @@
+{
+    "status": "error",
+    "errors": [
+        {
+            "error": "validation.phone.customer.phone_number",
+            "message": "validation_messages.phone"
+        }
+    ]
+}

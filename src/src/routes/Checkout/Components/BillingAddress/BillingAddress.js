@@ -33,7 +33,7 @@ export class BillingAddress extends React.PureComponent {
     return (
       <div>
         <p>Billing Address</p>
-        {!isBillingAddressDifferent && <p className={css.textSMWithBottomMargin}>{showAddress(deliveryAddress)}</p>}
+        {!isBillingAddressDifferent && <p className={css.textSMWithBottomMargin} data-testing="checkoutBillingAddress">{showAddress(deliveryAddress)}</p>}
         <p>
           <span
             data-testing="checkout_payment_toggle"
