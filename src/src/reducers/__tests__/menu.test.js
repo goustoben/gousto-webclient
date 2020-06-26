@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
 import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdownExpanded } from '../../actions/menu'
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
+import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -161,7 +162,7 @@ describe('menu reducer', () => {
         test('should set selectedRecipeVariant entry to null', () => {
           const result = menu.menu(menuInitialState, action)
 
-          const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: {[recipeId]: variantId }})
+          const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: { [recipeId]: variantId } })
 
           expect(result).toEqual(expectedState)
         })
@@ -175,7 +176,7 @@ describe('menu reducer', () => {
         test('should set selectedRecipeVariant entry to the selected id', () => {
           const result = menu.menu(menuInitialState, action)
 
-          const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: {[recipeId]: variantId } })
+          const expectedState = menuInitialState.set('selectedRecipeVariants', { [collectionId]: { [recipeId]: variantId } })
 
           expect(result).toEqual(expectedState)
         })
@@ -305,6 +306,75 @@ describe('menu reducer', () => {
           })
 
         expect(result).toEqual(expectedResult)
+      })
+    })
+
+    describe('MENU_CALCULATE_TIME_TO_USABLE', () => {
+      test('should set hasCalculatedTimeToUsable to true', () => {
+        const result = menu.menu(menuInitialState, trackTimeToUsable(123, 456))
+
+        expect(result.get('hasCalculatedTimeToUsable')).toBeTruthy()
+      })
+    })
+
+    describe('@@router/LOCATION_CHANGE (this comes from Redux Router)', () => {
+      let result
+
+      beforeEach(() => {
+        result = menuInitialState
+      })
+
+      describe('when landing on the menu first', () => {
+        beforeEach(() => {
+          result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
+        })
+        // trigger first reducer action
+        describe('and not going elsewhere', () => {
+          test('should set to false', () => {
+            expect(result.get('hasVisitedNonMenuPage')).toBeFalsy()
+          })
+        })
+        describe('and user goes to a non menu page', () => {
+          beforeEach(() => {
+            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'PUSH' } })
+          })
+
+          test('should set to true', () => {
+            expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+          })
+        })
+        describe('and user goes to the menu', () => {
+          beforeEach(() => {
+            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'POP' } })
+          })
+
+          // trigger secod reducer action
+          test('should set to false', () => {
+            expect(result.get('hasVisitedNonMenuPage')).toBeFalsy()
+          })
+        })
+      })
+
+      describe('when landing on the home page first', () => {
+        beforeEach(() => {
+          result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/', action: 'POP' } })
+        })
+        // trigger first reducer action
+        describe('and not going elsewhere', () => {
+          test('should set to true', () => {
+            expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+          })
+        })
+        describe('and go to the menu', () => {
+          beforeEach(() => {
+            result = menu.menu(result, { type: '@@router/LOCATION_CHANGE', payload: { pathname: '/menu', action: 'PUSH' } })
+          })
+
+          // trigger secod reducer action
+          test('should set to true', () => {
+            expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
+          })
+        })
       })
     })
   })

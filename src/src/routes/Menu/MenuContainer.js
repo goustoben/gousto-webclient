@@ -9,12 +9,13 @@ import { getLoadingStateForOrder, getUserId } from 'selectors/user'
 
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
+import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
 
 const flattenRecipes = (recipes) => {
   const recipesToJs = recipes.toJS()
   const flattenedRecipes = []
 
-  Object.keys(recipesToJs).forEach(key => {
+  Object.keys(recipesToJs).forEach((key) => {
     for (let i = 0; i < recipesToJs[key]; i++) {
       flattenedRecipes.push(key)
     }
@@ -25,7 +26,6 @@ const flattenRecipes = (recipes) => {
 
 function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query
-
   const showOverlay = state.boxSummaryShow.get('show') || state.menuBrowseCTAShow
 
   return {
@@ -37,7 +37,10 @@ function mapStateToProps(state, ownProps) {
     disabled: state.auth.get('isAdmin'),
     isAuthenticated: state.auth.get('isAuthenticated'),
     tariffId: state.basket.get('tariffId'),
-    menuLoadingBoxPrices: state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
+    menuLoadingBoxPrices: state.pending.get(
+      actionTypes.MENU_BOX_PRICES_RECEIVE,
+      false
+    ),
     forceLoad: state.menu.get('forceLoad', false),
     recipesCount: flattenRecipes(state.basket.get('recipes')).length,
     postcode: state.basket.get('postcode'),
@@ -59,11 +62,9 @@ const mapDispatchToProps = {
   selectCurrentCollection: actions.changeCollectionById,
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
+  menuCalculateTimeToUsable,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
-export {
-  flattenRecipes,
-  MenuContainer
-}
+export { flattenRecipes, MenuContainer }

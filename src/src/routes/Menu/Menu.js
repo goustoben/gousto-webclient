@@ -35,7 +35,8 @@ class Menu extends React.PureComponent {
   }
 
   async componentDidMount() {
-    this.setState({ // eslint-disable-line react/no-did-mount-set-state
+    this.setState({
+      // eslint-disable-line react/no-did-mount-set-state
       isChrome: browserHelper.isChrome(),
     })
 
@@ -50,6 +51,7 @@ class Menu extends React.PureComponent {
       menuLoadingBoxPrices,
       menuLoadBoxPrices,
       shouldJfyTutorialBeVisible,
+      menuCalculateTimeToUsable,
     } = this.props
 
     const { store } = this.context
@@ -63,17 +65,23 @@ class Menu extends React.PureComponent {
 
     await Menu.fetchData({ store, query, params }, forceDataLoad)
 
+    const promises = []
+
     if (boxSummaryDeliveryDays.size === 0 && !disabled) {
-      menuLoadDays().then(() => {
-        boxSummaryDeliveryDaysLoad()
-      })
+      promises.push(
+        menuLoadDays().then(() => {
+          boxSummaryDeliveryDaysLoad()
+        })
+      )
     }
 
     if (!disabled && !menuLoadingBoxPrices) {
-      menuLoadBoxPrices()
+      promises.push(menuLoadBoxPrices())
     }
 
-    shouldJfyTutorialBeVisible()
+    promises.push(shouldJfyTutorialBeVisible())
+    await Promise.all(promises)
+    menuCalculateTimeToUsable()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -141,7 +149,10 @@ class Menu extends React.PureComponent {
           <div className={classnames(css.container, overlayShowCSS)}>
             {children}
             <p className={css.legal}>{menu.legal}</p>
-            <div className={showOverlay ? css.greyOverlayShow : css.greyOverlay} onClick={onOverlayClick} />
+            <div
+              className={showOverlay ? css.greyOverlayShow : css.greyOverlay}
+              onClick={onOverlayClick}
+            />
           </div>
           <BoxSummaryContainer />
           <RecipesInBasketProgress
