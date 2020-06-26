@@ -12,7 +12,9 @@ export const menuInitialState = Immutable.Map({
   menuVariants: {},
   selectedRecipeVariants: {},
   currentExpandedRecipeVariantsDropdown: null,
-  collectionHeaders: {}
+  collectionHeaders: {},
+  hasCalculatedTimeToUsable: false,
+  hasVisitedNonMenuPage: false,
 })
 
 const menu = {
@@ -56,6 +58,25 @@ const menu = {
 
     case actionTypes.MENU_COLLECTIONS_HEADERS_RECEIVED: {
       return state.set('collectionHeaders', action.payload.collectionHeaders)
+    }
+
+    case actionTypes.MENU_SET_CALCULATED_TIME_TO_USABLE: {
+      return state
+        .set('hasCalculatedTimeToUsable', true)
+    }
+
+    case '@@router/LOCATION_CHANGE': {
+      if (__SERVER__) {
+        return state
+      }
+
+      const { payload: { pathname} } = action
+
+      if (pathname !== '/menu') {
+        return state.set('hasVisitedNonMenuPage', true)
+      }
+
+      return state
     }
 
     default:
