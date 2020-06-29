@@ -3,6 +3,10 @@ const getFormState = (win) => {
   return win.__store__.getState().form
 }
 
+const getCheckoutAddressDropdown = () => (
+  cy.get('[data-testing="checkoutAddressDropdown"]')
+)
+
 export const getAllowEmail = (win) => {
   if (PLATFORM === 'WEB'){
     return getFormState(win).aboutyou.values.aboutyou.allowEmail
@@ -37,4 +41,27 @@ export const clearAndFillCheckoutForm = ({ firstname: firstname, lastname: lastn
   cy.get('[data-testing="checkoutLastNameInput"]').click().clear().type(lastname)
   cy.get('[data-testing="checkoutEmailInput"]').click().clear().type(email)
   cy.get('[data-testing="checkoutPasswordInput"]').click().clear().type(password)
+}
+
+export const goToCheckoutDeliveryDetails = () => {
+  clearAndFillCheckoutForm({
+    firstname: 'Joe',
+    lastname: 'Tester',
+    email: 'test@email.com',
+    password: '1234abcd'
+  })
+
+  if (Cypress.env().platform === 'web') {
+    cy.get('[data-testing="checkoutCTA"]').click()
+
+    cy.pipe(getCheckoutAddressDropdown)
+      .click()
+      .get('.Select-menu-outer .Select-menu .Select-option')
+      .eq(1)
+      .click()
+  } else {
+    cy.get('select[data-testing="houseNo"]').select('"25953315"')
+  }
+
+  cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
 }

@@ -29,7 +29,7 @@ class DeliveryInstruction extends React.PureComponent {
       <div className={css.deliveryFieldWrapper}>
         <div className={css.row}>
           <div className={css.colMD}>
-            <div className="deliveryDropdown">
+            <div className="deliveryDropdown" data-testing="checkoutDeliveryDetailsInstruction">
               <Field
                 name="deliveryInstruction"
                 component={ReduxFormInput}
