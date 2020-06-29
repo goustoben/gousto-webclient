@@ -22,10 +22,14 @@ class DeliveryDetails extends React.PureComponent {
     return (
       <div className={css.deliveryInfoContainer}>
         <h4>Deliver to</h4>
-        <p className={css.textSM}>
+        <p className={css.textSM} data-testing="checkoutDeliveryDetailsAddress">
           {showAddress(deliveryAddress)}
 &nbsp;
-          <span onClick={onAddressEdit} className={css.linkBase}>
+          <span
+            onClick={onAddressEdit}
+            className={css.linkBase}
+            data-testing="checkoutDeliveryDetailsEditAddress"
+          >
             Edit address&nbsp;
             <span className={css.linkRight} />
           </span>
