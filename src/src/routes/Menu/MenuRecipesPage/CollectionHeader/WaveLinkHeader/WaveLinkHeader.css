@@ -28,7 +28,7 @@
 }
 
 .waveLinkInfo {
-  height: 80%;
+  height: 100%;
   position: relative;
   padding-left: 1rem;
   width: 90%;
@@ -39,31 +39,6 @@
 
   @media ScreenXXSMin {
     padding-left: 2rem;
-    height: 70%
-  }
-}
-
-.waveTop {
-  background: url('media/svgs/icon-wavy-line-top-mobile.svg') center top no-repeat;
-  height: 10%;
-  width: 100%;
-  background-size: cover;
-  @media ScreenXXSMin {
-    background: url('media/svgs/icon-wavy-line-top.svg') center top no-repeat;
-    height: 15%;
-    background-size: cover;
-  }
-}
-
-.waveBottom {
-  background: url('media/svgs/icon-wavy-line-bottom-mobile.svg') center bottom no-repeat;
-  height: 10%;
-  width: 100%;
-  background-size: cover;
-  @media ScreenXXSMin {
-    background: url('media/svgs/icon-wavy-line-bottom.svg') center bottom no-repeat;
-    height: 15%;
-    background-size: cover;
   }
 }
 

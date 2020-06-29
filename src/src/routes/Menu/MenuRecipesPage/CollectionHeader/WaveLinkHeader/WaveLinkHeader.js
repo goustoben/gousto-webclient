@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Waves } from './components/Waves'
 import css from './WaveLinkHeader.css'
 
 const WaveLinkHeader = ({ headerAttributes, onClick }) => {
-  const { backgroundColor, color, headerImage, description } = headerAttributes
+  const { backgroundColor, color, headerImage, description, link: { collectionSlug}, waveColor } = headerAttributes
 
   return (
     <div
@@ -20,14 +21,13 @@ const WaveLinkHeader = ({ headerAttributes, onClick }) => {
       <div className={css.arrowRightWrapper}>
         <span className={css.arrowRight} />
       </div>
-      <div className={css.waveTop} />
       <div style={{color: `${color}`}} className={css.waveLinkInfo}>
         {headerImage[0]
           && (
           <img
             className={css.waveLinkTitleImage}
             src={headerImage[0].url}
-            alt="Joe Wicks title"
+            alt={collectionSlug}
             style={{
               width: headerImage[0].width,
               height: headerImage[0].height
@@ -38,7 +38,7 @@ const WaveLinkHeader = ({ headerAttributes, onClick }) => {
           {description}
         </p>
       </div>
-      <div className={css.waveBottom} />
+      <Waves fillColor={waveColor} />
     </div>
   )
 }
@@ -54,8 +54,10 @@ WaveLinkHeader.propTypes = {
       url: PropTypes.string
     })),
     link: PropTypes.shape({
-      collectionId: PropTypes.string
-    })
+      collectionId: PropTypes.string,
+      collectionSlug: PropTypes.string,
+    }),
+    waveColor: PropTypes.string
   }).isRequired,
   onClick: PropTypes.func.isRequired
 }
