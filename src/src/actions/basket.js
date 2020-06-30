@@ -370,10 +370,10 @@ export const basketSlotChange = slotId => (
     }
     dispatch(pricingActions.pricingRequest())
 
-    const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'])
-    if (slots) {
+    const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'], null)
+    if (slots && slots.size > 0) {
       const selectedSlot = slots.find(slot => slot.get('id') === slotId)
-      const defaultDelivery = selectedSlot.get('isDefault') && state.boxSummaryDeliveryDays.getIn([date, 'isDefault'])
+      const defaultDelivery = selectedSlot && selectedSlot.get('isDefault') && state.boxSummaryDeliveryDays.getIn([date, 'isDefault'])
       const {promoCode, UTM} = getUTMAndPromoCode(state)
       dispatch({
         type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
