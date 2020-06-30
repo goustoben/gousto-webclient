@@ -77,7 +77,7 @@ class Summary extends React.PureComponent {
     }
 
     return (
-      <div className={css.summaryContainer}>
+      <div className={css.summaryContainer} data-testing="checkoutOrderSummary">
         {!isLoading && (
           <Alert type="info">
             <PricePerServingMessage />
