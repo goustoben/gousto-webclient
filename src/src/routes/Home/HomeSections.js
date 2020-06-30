@@ -68,7 +68,7 @@ class HomeSections extends Component {
     if (this.modules[name]) {
       if (name.includes('hero')) {
         const componentProps = this.props[name] || {}
-        module = <section key={order} className={css.heroSection} data-module-name={name}>{this.modules[name](componentProps)}</section>
+        module = <section key={order} className={classnames(css.heroSection, { [css.heroSectionRedesign]: isHomePageRedesignEnabled })} data-module-name={name}>{this.modules[name](componentProps)}</section>
       } else {
         const inverse = order % 2 === 0
         const moduleConfig = config[name] || {}

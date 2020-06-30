@@ -1,1 +1,2 @@
-export default from './CTA'
+export { CTAHomepageContainer } from './CTAHomepageContainer'
+export { CTA } from './CTA'

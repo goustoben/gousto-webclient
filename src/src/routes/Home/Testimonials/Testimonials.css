@@ -1,4 +1,5 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
+@value LightestAccessible from 'styles/colors.css';
 
 .headerBase {
 	text-align: center;
@@ -7,10 +8,18 @@
 .subHeader {
 	composes: headerBase;
 	composes: headerXL from 'styles/typography.css';
+
+  .homepageRedesign & {
+    color: LightestAccessible;
+    margin: 0.5rem 0 2rem;
+  }
 }
 
 .testimonials {
 	composes: paddingXXXLTop from 'sass-loader!styles/spacing.scss';
+  &.homepageRedesign {
+    padding: 0;
+  }
 
 	@media ScreenXSMax {
 		padding-top: 55px;

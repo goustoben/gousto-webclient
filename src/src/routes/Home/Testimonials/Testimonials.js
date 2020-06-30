@@ -1,26 +1,27 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import home from 'config/home'
 import config from 'config/routes'
 import { ModuleHeaderContainer } from 'ModuleHeader'
+import typography from 'design-language/typography.css'
 import TestimonialCarousel from './TestimonialCarousel'
 import Storystream from '../Storystream'
 import css from './Testimonials.css'
-import CTAHomepage from '../CTA'
+import { CTAHomepageContainer } from '../CTA'
 
-const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, trackGetStarted, ...props }) => (
-
-  <div className={css.testimonials}>
+const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, trackGetStarted, isHomePageRedesignEnabled, ...props }) => (
+  <div className={classNames(css.testimonials, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
     <ModuleHeaderContainer>Over 1 million meals delivered</ModuleHeaderContainer>
-    <h3 className={css.subHeader}>And the reviews are pouring in:</h3>
-    <TestimonialCarousel showLink={showLink} />
+    <h3 className={classNames(css.subHeader, { [typography.fontStyleBody]: isHomePageRedesignEnabled })}>And the reviews are pouring in:</h3>
+    <TestimonialCarousel showLink={showLink} isHomePageRedesignEnabled={isHomePageRedesignEnabled} />
     {enableStorystream && (
       <section className={css.storystreamContainer}>
         <Storystream {...props} />
       </section>
     )}
 
-    <CTAHomepage
+    <CTAHomepageContainer
       width={240}
       onClick={() => {
         redirect(ctaUri)
@@ -28,7 +29,7 @@ const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, 
       }}
     >
       {ctaText}
-    </CTAHomepage>
+    </CTAHomepageContainer>
   </div>
 )
 
@@ -39,6 +40,7 @@ Testimonials.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ctaUri: PropTypes.string,
   trackGetStarted: PropTypes.func,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 Testimonials.defaultProps = {
@@ -46,7 +48,8 @@ Testimonials.defaultProps = {
   enableStorystream: false,
   ctaText: home.CTA.main,
   ctaUri: config.client.signup,
-  trackGetStarted: () => {}
+  trackGetStarted: () => {},
+  isHomePageRedesignEnabled: false
 }
 
 export default Testimonials

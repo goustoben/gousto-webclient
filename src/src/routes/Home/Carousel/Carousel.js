@@ -4,13 +4,13 @@ import home from 'config/home'
 import config from 'config/routes'
 import { ModuleHeaderContainer } from 'ModuleHeader'
 import { RecipeCarousel } from './RecipeCarousel'
-import CTAHomepage from '../CTA'
+import { CTAHomepageContainer } from '../CTA'
 
 const Carousel = ({ redirect, numRecipes, ctaUri, ctaText, trackGetStarted }) => (
   <div>
     <ModuleHeaderContainer>Mmmmmm</ModuleHeaderContainer>
     {numRecipes > 0 ? <RecipeCarousel /> : null}
-    <CTAHomepage
+    <CTAHomepageContainer
       width={240}
       onClick={() => {
         redirect(ctaUri)
@@ -18,7 +18,7 @@ const Carousel = ({ redirect, numRecipes, ctaUri, ctaText, trackGetStarted }) =>
       }}
     >
       {ctaText}
-    </CTAHomepage>
+    </CTAHomepageContainer>
   </div>
 )
 

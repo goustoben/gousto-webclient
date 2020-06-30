@@ -5,7 +5,7 @@ import { shallow } from 'enzyme'
 
 import Hero2 from 'routes/Home/Hero2/Hero2'
 
-import CTA from 'routes/Home/CTA'
+import { CTAHomepageContainer } from 'routes/Home/CTA'
 
 describe('Hero2', () => {
   test('should include a main header', () => {
@@ -22,6 +22,6 @@ describe('Hero2', () => {
     const redirect = sinon.spy()
 
     const wrapper = shallow(<Hero2 redirect={redirect} />)
-    expect(wrapper.find(CTA)).toHaveLength(1)
+    expect(wrapper.find(CTAHomepageContainer)).toHaveLength(1)
   })
 })

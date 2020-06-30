@@ -249,7 +249,7 @@ export default async function fetchData({ store, query, params }, force, backgro
   store.dispatch(menuServiceDataReceived(menuResponse, accessToken, userMenuVariant))
 
   try {
-    const brandResponse = await fetchBrandInfo()
+    const brandResponse = await fetchBrandInfo(accessToken)
     store.dispatch(brandDataReceived(brandResponse))
   } catch (err) {
     logger.notice({ message: `Brand Theme failed to load: ${err.message}`, errors: [err] })

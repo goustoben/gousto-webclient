@@ -9,6 +9,11 @@
 .inverseSection {
 	composes: section;
 	background-color: Coconut;
+  &.homepageRedesign {
+    &.testimonials-section {
+      background-color:White;
+    }
+  }
 }
 
 .inverseSectionSignupOverride {
@@ -19,10 +24,13 @@
 	}
 
   &.homepageRedesign {
-     padding-top: 380px;
-
     @media BreakpointFromMedium {
       padding-top: 5rem;
+    }
+
+    @media BreakpointToMedium {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
     }
   }
 }
@@ -33,6 +41,13 @@
 
 .heroSection {
 	display: inline;
+}
+
+.heroSectionRedesign {
+  @media BreakpointToMedium {
+    min-height: 689px;
+    display: block;
+  }
 }
 
 .whatsInYourBox-section {
@@ -72,9 +87,11 @@
 }
 
 .recipes-section, .subscription-section {
-	@media ScreenXSMax {
-		padding-bottom: 90px;
-	}
+  &:not(.homepageRedesign) {
+    @media ScreenXSMax {
+      padding-bottom: 90px;
+    }
+  }
 }
 
 .testedAndLovedBy-section {

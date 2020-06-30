@@ -24,7 +24,7 @@ export class PromoBanner extends React.Component {
   }
 
   render() {
-    const { promoCode, hide, text, linkText, trackUTMAndPromoCode } = this.props
+    const { promoCode, hide, text, linkText, trackUTMAndPromoCode, isHomePageRedesignEnabled } = this.props
 
     return (
       <Banner
@@ -35,6 +35,7 @@ export class PromoBanner extends React.Component {
           this.applyPromoCode(promoCode)
           trackUTMAndPromoCode('clickClaimDiscountBar')
         }}
+        isHomePageRedesignEnabled={isHomePageRedesignEnabled}
       />
     )
   }
@@ -46,6 +47,7 @@ PromoBanner.propTypes = {
   linkText: PropTypes.string,
   promoCode: PropTypes.string,
   trackUTMAndPromoCode: PropTypes.func,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 PromoBanner.defaultProps = {
@@ -54,4 +56,5 @@ PromoBanner.defaultProps = {
   linkText: '',
   promoCode: '',
   trackUTMAndPromoCode: () => {},
+  isHomePageRedesignEnabled: false,
 }

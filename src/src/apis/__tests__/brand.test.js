@@ -28,9 +28,9 @@ describe('brand api', () => {
     test('should fetch the correct url', async () => {
       const expectedReqData = {}
 
-      await fetchBrandInfo()
+      await fetchBrandInfo('access-token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-brand/v2/theme', expectedReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/theme', expectedReqData, 'GET')
     })
   })
 
@@ -38,9 +38,9 @@ describe('brand api', () => {
     test('should fetch the correct url', async () => {
       const expectedReqData = {}
 
-      await fetchBrandMenuHeaders()
+      await fetchBrandMenuHeaders('access-token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-brand/v2/menu-headers', expectedReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/menu-headers', expectedReqData, 'GET')
     })
   })
 })

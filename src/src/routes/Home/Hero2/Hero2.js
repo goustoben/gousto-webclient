@@ -3,7 +3,7 @@ import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
-import CTAHomepage from '../CTA'
+import { CTAHomepageContainer } from '../CTA'
 import css from './Hero2.css'
 
 const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
@@ -15,7 +15,7 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
       <h2 className={css.subHeader}>
         <Content contentKeys="propositionSupportingHeadline"><span>{home.hero.subheader}</span></Content>
       </h2>
-      <CTAHomepage width={240} onClick={() => redirect(ctaUri)} align="left" responsive dataTesting="homepageHeroCTA">{ctaText}</CTAHomepage>
+      <CTAHomepageContainer width={240} onClick={() => redirect(ctaUri)} align="left" responsive dataTesting="homepageHeroCTA">{ctaText}</CTAHomepageContainer>
     </div>
   </div>
 )

@@ -1,5 +1,6 @@
 @value sizeLG, sizeXL from 'styles/typography.css';
 @value ScreenXXSMax, ScreenMDMax, HeightMDMax from 'styles/screenSizes.css';
+@value BreakpointToMedium from 'design-language/breakpoints.css';
 
 .buttonSimple {
 	text-align: center;
@@ -33,6 +34,10 @@
 	max-height: none;
 	min-height: 45px;
 	padding-top: 2px;
+
+  .homepageRedesign & {
+    padding-top: 0.3rem;
+  }
 }
 
 .left {}
@@ -54,4 +59,10 @@
 		min-height: 40px;
 		font-size: sizeLG;
 	}
+}
+
+.homepageRedesign {
+  @media BreakpointToMedium {
+    width: 311px;
+  }
 }

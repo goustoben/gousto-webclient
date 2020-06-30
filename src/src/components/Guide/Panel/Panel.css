@@ -2,6 +2,7 @@
 @value SpacingXXL from 'sass-loader!styles/spacing.scss';
 @value graphicMinSize 150px;
 @value graphicMaxSize 250px;
+@value NewGrey from 'styles/colors.css';
 
 .container {
 	composes: col-xs-12 col-sm-4 from 'sass-loader!styles/bootstrap.scss';
@@ -58,4 +59,10 @@
 	text-align: center;
 	margin: -5px auto 0 auto;
 	max-width: 310px;
+}
+
+.homepageRedesign {
+  .description {
+    color: NewGrey;
+  }
 }

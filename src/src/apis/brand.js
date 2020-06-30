@@ -4,15 +4,13 @@ import routes from 'config/routes'
 
 const version = routes.version.brand
 
-export function fetchBrandInfo() {
-  const accessToken = null
+export function fetchBrandInfo(accessToken) {
   const reqData = {}
 
   return fetch(accessToken, `${endpoint('brand', version)}/theme`, reqData, 'GET')
 }
 
-export function fetchBrandMenuHeaders() {
-  const accessToken = null
+export function fetchBrandMenuHeaders(accessToken) {
   const reqData = {}
 
   return fetch(accessToken, `${endpoint('brand', version)}/menu-headers`, reqData, 'GET')

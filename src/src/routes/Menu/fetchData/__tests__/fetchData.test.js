@@ -667,7 +667,7 @@ describe('menu fetchData', () => {
         await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
 
         expect(fetchMenusWithUserId).not.toHaveBeenCalled()
-        expect(fetchBrandInfo).toHaveBeenCalled()
+        expect(fetchBrandInfo).toHaveBeenCalledWith('')
       })
     })
 
@@ -686,8 +686,8 @@ describe('menu fetchData', () => {
 
         await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-        expect(fetchMenusWithUserId).toHaveBeenCalled()
-        expect(fetchBrandInfo).toHaveBeenCalled()
+        expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', 'test-id')
+        expect(fetchBrandInfo).toHaveBeenCalledWith('test-token')
       })
     })
 

@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import css from './Panel.css'
 
 const Panel = ({ path, title, description, graphicType, isHomePageRedesignEnabled }) => (
-  <div className={css.container}>
+  <div className={classNames(css.container, {[css.homepageRedesign]: isHomePageRedesignEnabled})}>
     <div className={css.imageContainer}>
       {graphicType === 'img' ? <img className={css.image} src={path} alt={title} /> : null}
       {graphicType === 'svg' ? <Svg fileName={path} className={css.svg} /> : null}

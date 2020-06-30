@@ -6,7 +6,9 @@ import config from 'config/routes'
 import { ModuleHeaderContainer } from 'ModuleHeader'
 import typography from 'design-language/typography.css'
 import css from './InYourBox.css'
-import CTAHomepage from '../CTA'
+import { CTAHomepageContainer } from '../CTA'
+
+const { subheading, subheadingRedesign } = home.inYourBox
 
 const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHomePageRedesignEnabled }) => (
   <div className={classNames(css.container, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
@@ -17,7 +19,7 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHome
         { [typography.fontStyleBody]: isHomePageRedesignEnabled },
         { [typography.fontWeightBold]: isHomePageRedesignEnabled })}
       >
-        A Gousto recipe box is packed with everything you need to reinvent dinnertimes.
+        {isHomePageRedesignEnabled ? subheadingRedesign : subheading}
       </p>
       <ul className={classNames(css.list, { [typography.fontStyleBody]: isHomePageRedesignEnabled })}>
         <li className={css.listItem}>
@@ -41,7 +43,7 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHome
           Meals for 2 or 4 people
         </li>
       </ul>
-      <CTAHomepage
+      <CTAHomepageContainer
         width={240}
         onClick={() => {
           redirect(ctaUri)
@@ -50,7 +52,7 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHome
         buttonContainer={false}
       >
         {ctaText}
-      </CTAHomepage>
+      </CTAHomepageContainer>
     </div>
   </div>
 )

@@ -150,6 +150,7 @@
 
         @media BreakpointFromMedium {
           margin-top: 0;
+          max-width: 266px;
         }
       }
     }
@@ -260,7 +261,6 @@
       @media BreakpointFromMedium {
         text-align: left;
         margin: 1rem 0 0;
-        max-width: 310px;
       }
     }
   }
@@ -277,10 +277,6 @@
 	@media ScreenXSMax {
 		& > div {
 			width: auto;
-
-      .homepageRedesign & {
-        width: 225px;
-      }
 		}
 	}
 }

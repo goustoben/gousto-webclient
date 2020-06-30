@@ -560,85 +560,131 @@ describe('basket actions', () => {
 
   describe('basketSlotChange', () => {
     const pricingRequestAction = Symbol('Pricing request')
-
-    beforeEach(() => {
-      getStateSpy = jest.fn().mockReturnValue({
-        tracking: Immutable.fromJS({
-          utmSource: null,
-        }),
-        basket: Immutable.Map({
-          date: '2020-02-13',
-          promoCode: 'test-promo-code',
-          numPortions: 2,
-        }),
-        boxSummaryDeliveryDays: Immutable.Map({
-          '2020-02-13': Immutable.Map({
-            id: 123,
-            isDefault: true,
-            slots: [Immutable.Map({
+    describe('when slot contains default slot', () => {
+      beforeEach(() => {
+        getStateSpy = jest.fn().mockReturnValue({
+          tracking: Immutable.fromJS({
+            utmSource: null,
+          }),
+          basket: Immutable.Map({
+            date: '2020-02-13',
+            promoCode: 'test-promo-code',
+            numPortions: 2,
+          }),
+          boxSummaryDeliveryDays: Immutable.Map({
+            '2020-02-13': Immutable.Map({
+              id: 123,
               isDefault: true,
-              id: 'slot-1-day-1',
-            })]
-
-          })
-        }),
-        user: Immutable.fromJS({
-          orders: {
-            12345: {
-              id: '12345',
-              deliveryDate: '2020-02-13 08:00:00'
-            },
-            12305: {
-              id: '12305',
-              deliveryDate: '2020-02-28 08:00:00'
+              slots: Immutable.List([Immutable.Map({
+                isDefault: true,
+                id: 'slot-1-day-1',
+              })])
+            })
+          }),
+          user: Immutable.fromJS({
+            orders: {
+              12345: {
+                id: '12345',
+                deliveryDate: '2020-02-13 08:00:00'
+              },
+              12305: {
+                id: '12305',
+                deliveryDate: '2020-02-28 08:00:00'
+              }
             }
-          }
+          })
+        })
+        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+      })
+      test('should dispatch BASKET_SLOT_CHANGE', () => {
+        const slotId = 'slot-1-day-1'
+        basketSlotChange(slotId)(dispatch, getStateSpy)
+        const expectedResult = {
+          type: 'BASKET_SLOT_CHANGE',
+          slotId: 'slot-1-day-1',
+          trackingData: {
+            actionType: trackingKeys.changeBasketSlot,
+            date: '2020-02-13',
+            dayId: 123,
+            slotId: 'slot-1-day-1',
+          },
+        }
+        expect(dispatch).toHaveBeenNthCalledWith(1, expectedResult)
+      })
+
+      test('should dispatch pricingRequestAction', () => {
+        const slotId = 'slot-1-day-1'
+        basketSlotChange(slotId)(dispatch, getStateSpy)
+        expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
+      })
+
+      test('should dispatch pricingRequestAction', () => {
+        const slotId = 'slot-1-day-1'
+        basketSlotChange(slotId)(dispatch, getStateSpy)
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: actionTypes.BASKET_ID_CHANGE,
+          orderId: '12345'
         })
       })
-      pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
-    })
 
-    test('should dispatch BASKET_SLOT_CHANGE', () => {
-      const slotId = 'slot-1-day-1'
-      basketSlotChange(slotId)(dispatch, getStateSpy)
-      const expectedResult = {
-        type: 'BASKET_SLOT_CHANGE',
-        slotId: 'slot-1-day-1',
-        trackingData: {
-          actionType: trackingKeys.changeBasketSlot,
-          date: '2020-02-13',
-          dayId: 123,
-          slotId: 'slot-1-day-1',
-        },
-      }
-      expect(dispatch).toHaveBeenNthCalledWith(1, expectedResult)
-    })
-
-    test('should dispatch pricingRequestAction', () => {
-      const slotId = 'slot-1-day-1'
-      basketSlotChange(slotId)(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenNthCalledWith(3, pricingRequestAction)
-    })
-
-    test('should dispatch pricingRequestAction', () => {
-      const slotId = 'slot-1-day-1'
-      basketSlotChange(slotId)(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenNthCalledWith(2, {
-        type: actionTypes.BASKET_ID_CHANGE,
-        orderId: '12345'
+      test('should dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
+        const slotId = 'slot-1-day-1'
+        basketSlotChange(slotId)(dispatch, getStateSpy)
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
+          type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
+          trackingData: {
+            actionType: trackingKeys.selectDeliverySlot,
+            promoCode: 'test-promo-code',
+            deliverySlot: 'default'
+          },
+        })
       })
     })
+    describe('when slots is empty', () => {
+      beforeEach(() => {
+        getStateSpy = jest.fn().mockReturnValue({
+          tracking: Immutable.fromJS({
+            utmSource: null,
+          }),
+          basket: Immutable.Map({
+            date: '2020-02-13',
+            promoCode: 'test-promo-code',
+            numPortions: 2,
+          }),
+          boxSummaryDeliveryDays: Immutable.Map({
+            '2020-02-13': Immutable.Map({
+              id: 123,
+              isDefault: true,
+              slots: Immutable.List()
+            })
+          }),
+          user: Immutable.fromJS({
+            orders: {
+              12345: {
+                id: '12345',
+                deliveryDate: '2020-02-13 08:00:00'
+              },
+              12305: {
+                id: '12305',
+                deliveryDate: '2020-02-28 08:00:00'
+              }
+            }
+          })
+        })
+        pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
+      })
 
-    test('should dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
-      const slotId = 'slot-1-day-1'
-      basketSlotChange(slotId)(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenNthCalledWith(4, {
-        type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
-        trackingData: {
-          actionType: trackingKeys.selectDeliverySlot,
-          promoCode: 'test-promo-code',
-          deliverySlot: 'default'
-        },
+      test('should not dispatch BASKET_SELECT_DELIVERY_SLOT', () => {
+        const slotId = 'slot-1-day-1'
+        basketSlotChange(slotId)(dispatch, getStateSpy)
+        expect(dispatch).not.toHaveBeenNthCalledWith(4, {
+          type: actionTypes.BASKET_SELECT_DELIVERY_SLOT,
+          trackingData: {
+            actionType: trackingKeys.selectDeliverySlot,
+            promoCode: 'test-promo-code',
+            deliverySlot: 'default'
+          },
+        })
       })
     })
   })
