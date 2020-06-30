@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import CTA from 'routes/Home/CTA'
+import { CTAHomepageContainer } from 'routes/Home/CTA'
 import ContentMask from 'ContentMask'
 
 import Hero from 'routes/Home/Hero/Hero'
@@ -41,11 +41,11 @@ describe('Hero', () => {
     })
 
     test('should have a CTA button', () => {
-      expect(wrapper.find(CTA)).toHaveLength(1)
+      expect(wrapper.find(CTAHomepageContainer)).toHaveLength(1)
     })
 
     test('should dispatch redirect, and trackGetStarted actions with properly', () => {
-      wrapper.find(CTA).simulate('click')
+      wrapper.find(CTAHomepageContainer).simulate('click')
       expect(redirect).toHaveBeenCalledWith('/hero')
       expect(trackGetStarted).toHaveBeenCalledWith('hero')
     })

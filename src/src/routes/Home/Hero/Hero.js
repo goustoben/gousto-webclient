@@ -5,7 +5,7 @@ import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
 import typography from 'design-language/typography.css'
-import CTAHomepage from '../CTA'
+import { CTAHomepageContainer } from '../CTA'
 import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
@@ -29,7 +29,7 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted
         <Content contentKeys="propositionSupportingHeadlineDefault"><span>{home.hero.subheader(isHomePageRedesignEnabled)}</span></Content>
       </h2>
       <div className={css.cta}>
-        <CTAHomepage
+        <CTAHomepageContainer
           width={240}
           onClick={() => {
             redirect(ctaUri)
@@ -38,7 +38,7 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted
           dataTesting="homepageHeroCTA"
         >
           {ctaText}
-        </CTAHomepage>
+        </CTAHomepageContainer>
       </div>
     </div>
     <div className={css.spacer} />

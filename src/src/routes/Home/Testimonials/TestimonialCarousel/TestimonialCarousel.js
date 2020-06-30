@@ -6,7 +6,7 @@ import config from 'config/home'
 import Testimonial from './Testimonial'
 import css from './TestimonialCarousel.css'
 
-const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) => (
+const TestimonialCarousel = ({ testimonials = config.testimonials, showLink, isHomePageRedesignEnabled }) => (
   <div className={css.container}>
     <Carousel
       adaptiveHeight={false}
@@ -29,7 +29,11 @@ const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) =
         .map((testimonial, idx) => (
           <div className={css.testimonialContainer} key={idx}>
             <div className={css.testimonial}>
-              <Testimonial testimonial={Immutable.Map(testimonial)} showLink={showLink} />
+              <Testimonial
+                testimonial={Immutable.Map(testimonial)}
+                showLink={showLink}
+                isHomePageRedesignEnabled={isHomePageRedesignEnabled}
+              />
             </div>
           </div>
         ))}
@@ -40,10 +44,12 @@ const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) =
 TestimonialCarousel.propTypes = {
   testimonials: PropTypes.array,
   showLink: PropTypes.bool,
+  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 TestimonialCarousel.defaultProps = {
   showLink: true,
+  isHomePageRedesignEnabled: true,
 }
 
 export default TestimonialCarousel

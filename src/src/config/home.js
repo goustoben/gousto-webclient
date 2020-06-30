@@ -69,6 +69,7 @@ module.exports = {
   },
   CTA: {
     main: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
+    mainRedesign: <span>Get started</span>,
     join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     loggedIn: {
       main: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
@@ -95,4 +96,8 @@ module.exports = {
     'tv',
   ],
   defaultVariant: 'default',
+  inYourBox: {
+    subheading: 'A Gousto recipe box is packed with everything you need to reinvent dinnertimes.',
+    subheadingRedesign: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.'
+  }
 }

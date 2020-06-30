@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 
 import React from 'react'
-import CTAHomepage from 'routes/Home/CTA'
+import { CTA } from 'routes/Home/CTA'
 import { shallow, mount } from 'enzyme'
 import { Button, Segment } from 'goustouicomponents'
 
@@ -14,9 +14,9 @@ describe('CTA', () => {
     onClickSpy = sinon.spy()
     width = 100
     wrapper = shallow(
-      <CTAHomepage onClick={onClickSpy} width={width}>
+      <CTA onClick={onClickSpy} width={width}>
         click here
-      </CTAHomepage>,
+      </CTA>,
     )
   })
 
@@ -41,9 +41,9 @@ describe('CTA', () => {
   describe('default props', () => {
     beforeEach(() => {
       wrapper = mount(
-        <CTAHomepage onClick={onClickSpy} width={width}>
+        <CTA onClick={onClickSpy} width={width}>
           click here
-        </CTAHomepage>,
+        </CTA>,
       )
     })
 

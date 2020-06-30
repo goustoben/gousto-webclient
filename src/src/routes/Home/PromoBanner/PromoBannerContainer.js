@@ -8,6 +8,7 @@ import {
   getPromoBannerText,
   getPromoBannerCode,
   getIsSignupReductionEnabled,
+  getHomePageRedesign,
 } from 'selectors/features'
 
 import home from 'config/home'
@@ -56,6 +57,7 @@ const mapStateToProps = (state, ownProps) => {
     linkText,
     promoCode,
     canApplyPromo,
+    isHomePageRedesignEnabled: getHomePageRedesign(state)
   }
 }
 

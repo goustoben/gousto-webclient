@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { Carousel } from 'routes/Home/Carousel/Carousel'
 
-import CTA from 'routes/Home/CTA'
+import { CTAHomepageContainer } from 'routes/Home/CTA'
 import { RecipeCarousel } from 'routes/Home/Carousel/RecipeCarousel'
 import { ModuleHeaderContainer } from 'components/ModuleHeader'
 
@@ -17,7 +17,7 @@ describe('Carousel', () => {
   test('should have Header and CTA elements, but no RecipeCarousel', () => {
     expect(wrapper.find(ModuleHeaderContainer)).toHaveLength(1)
     expect(wrapper.find(RecipeCarousel)).toHaveLength(0)
-    expect(wrapper.find(CTA)).toHaveLength(1)
+    expect(wrapper.find(CTAHomepageContainer)).toHaveLength(1)
   })
 
   describe('CTA', () => {
@@ -33,7 +33,7 @@ describe('Carousel', () => {
     })
 
     test('should dispatch redirect, and trackGetStarted actions with properly', () => {
-      wrapper.find(CTA).simulate('click')
+      wrapper.find(CTAHomepageContainer).simulate('click')
       expect(redirect).toHaveBeenCalledWith('/carousel')
       expect(trackGetStarted).toHaveBeenCalledWith('recipecarousel')
     })

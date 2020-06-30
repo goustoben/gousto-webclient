@@ -146,6 +146,9 @@ class Home extends React.Component {
             variant,
             isHomePageRedesignEnabled,
           }}
+          testedAndLovedBy={{
+            isHomePageRedesignEnabled,
+          }}
         />
       </span>
     )
