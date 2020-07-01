@@ -8,7 +8,6 @@ import menu from 'config/menu'
 import browserHelper from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
-import { CapacityInfo } from './components/CapacityInfo'
 import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
@@ -115,27 +114,10 @@ class Menu extends React.PureComponent {
       query,
       recipesCount,
       children,
-      userHasAvailableSlots,
-      userId,
-      userOrderLoadingState,
     } = this.props
     const { isChrome } = this.state
 
     const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null
-    if (userHasAvailableSlots === false && (userOrderLoadingState === false || isAuthenticated === false)) {
-      return (
-        <MainLayout>
-          <div data-testing="menuContainer">
-            <Helmet
-              title={menu.helmet.title}
-              meta={menu.helmet.meta}
-              style={menu.helmet.style}
-            />
-            <CapacityInfo userId={userId} />
-          </div>
-        </MainLayout>
-      )
-    }
 
     return (
       <MainLayout route={{ withRecipeBar: true }}>

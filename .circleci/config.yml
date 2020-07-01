@@ -203,6 +203,39 @@ jobs:
 
 workflows:
   version: 2
+  e2e:
+    triggers:
+      - schedule:
+          cron: "0 19 * * 1-5"
+          filters:
+            branches:
+              only:
+                - develop
+    jobs:
+      - setup-src:
+          context: gousto-beta-aws-app-circleci
+      - setup-platform:
+          context: gousto-beta-aws-app-circleci
+      - build-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+      - install-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+      - test-e2e-selenium:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+            - build-application
+      - test-e2e-selenium-mobile:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+            - build-application
   development-environment:
     jobs:
       - setup-src:

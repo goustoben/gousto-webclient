@@ -12,14 +12,14 @@ jest.mock('utils/browserHelper', () => ({
   isChrome: () => { }
 }))
 jest.mock('actions/order')
-jest.mock('../BoxSummary', () => ({
+jest.mock('./BoxSummary', () => ({
   BoxSummaryContainer: () => <div />
 }))
 jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
-jest.mock('../RecipeMeta', () => ({
+jest.mock('./RecipeMeta', () => ({
   RecipeMeta: () => <div />
 }))
-jest.mock('../ThematicsPage', () => ({
+jest.mock('./ThematicsPage', () => ({
   ThematicsPage: () => 'FilteredRecipePage'
 }))
 
@@ -140,36 +140,6 @@ describe('Menu', () => {
         test('has the isAuthenticated prop passed to it', () => {
           expect(recipesInBasketProgress.prop('isAuthenticated')).toBe(requiredProps.isAuthenticated)
         })
-      })
-    })
-
-    describe('and there is no slot available', () => {
-      const USER_ID = '1234'
-
-      beforeEach(() => {
-        wrapper = shallow(
-          <Menu
-            {...requiredProps}
-            userHasAvailableSlots={false}
-            userOrderLoadingState={false}
-            userId={USER_ID}
-          />,
-          mountOptions
-        )
-      })
-
-      test.each([
-        ['CapacityInfo', true],
-        ['RecipeMeta', false],
-        ['BoxSummaryContainer', false],
-        ['RecipesInBasketProgress', false],
-      ])('%s rendering is set to %s', (componentName, expected) => {
-        const foundComponent = wrapper.find(componentName).length > 0
-        expect(foundComponent).toBe(expected)
-      })
-
-      test('should pass the userId prop to the <CapacityInfo> component', () => {
-        expect(wrapper.find('CapacityInfo').prop('userId')).toBe(USER_ID)
       })
     })
   })

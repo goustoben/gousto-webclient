@@ -6,6 +6,8 @@ import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getIsSignupReductionEnabled, getIsCommunicationPanelEnabled } from 'selectors/features'
 import { getRecipes } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
+import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
+import { getLoadingStateForOrder, getUserId } from 'selectors/user'
 import { menuRecipeDetailVisibilityChange, checkQueryParams } from '../actions/menuRecipeDetails'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
@@ -38,7 +40,9 @@ const mapStateToProps = (state, ownProps) => {
     storeOrderId: state.basket.get('orderId'),
     numPortions: state.basket.get('numPortions'),
     isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
-    showCommunicationPanel: getIsCommunicationPanelEnabled(state) && !!getIsAuthenticated(state)
+    showCommunicationPanel: getIsCommunicationPanelEnabled(state) && !!getIsAuthenticated(state),
+    userId: getUserId(state),
+    shouldShowCapacityInfo: !userHasAvailableSlots(state) && (!getLoadingStateForOrder(state) || !getIsAuthenticated(state))
   })
 }
 
