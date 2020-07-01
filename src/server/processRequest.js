@@ -28,11 +28,13 @@ const encodeState = require('./encodeState')
 const processHeaders = require('./processHeaders')
 const htmlTemplate = require('./template')
 
-const fetchAllData = (renderProps, store, headers, path) => {
+const fetchAllData = (renderProps, store, headers, path, sessionId) => {
   const { location, params } = renderProps
   const queries = []
 
-  const serverSideRenderEligible = isServerSideFetchEligible(headers, path)
+  const userId = store.getState().auth.get('id')
+
+  const serverSideRenderEligible = isServerSideFetchEligible(headers, path, userId, sessionId)
 
   store.dispatch(setMenuPrefetched(serverSideRenderEligible))
 
@@ -236,7 +238,7 @@ async function processRequest(ctx, next) {
 
           logger.notice({ message: '[START] processRequest -> fetchAllData', requestUrl: path, uuid: ctx.uuid, headers: header })
 
-          fetchAllData(renderProps, store, headers, path).then(async () => {
+          fetchAllData(renderProps, store, headers, path, ctx.uuid).then(async () => {
             logger.notice({ message: '[END] processRequest -> fetchAllData (success)', requestUrl: path, uuid: ctx.uuid, headers: header })
 
             const { redirect } = store.getState()
