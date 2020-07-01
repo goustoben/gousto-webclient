@@ -15,6 +15,7 @@ export const menuInitialState = Immutable.Map({
   collectionHeaders: {},
   hasCalculatedTimeToUsable: false,
   hasVisitedNonMenuPage: false,
+  menuPrefetched: true,
 })
 
 const menu = {
@@ -63,6 +64,10 @@ const menu = {
     case actionTypes.MENU_SET_CALCULATED_TIME_TO_USABLE: {
       return state
         .set('hasCalculatedTimeToUsable', true)
+    }
+
+    case actionTypes.MENU_PREFETCHED: {
+      return state.set('menuPrefetched', action.payload.menuPrefetched)
     }
 
     case '@@router/LOCATION_CHANGE': {

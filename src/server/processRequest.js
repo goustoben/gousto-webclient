@@ -1,3 +1,4 @@
+import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
 const React = require('react')
@@ -32,6 +33,8 @@ const fetchAllData = (renderProps, store, headers, path) => {
   const queries = []
 
   const serverSideRenderEligible = isServerSideFetchEligible(headers, path)
+
+  store.dispatch(setMenuPrefetched(serverSideRenderEligible))
 
   if (!serverSideRenderEligible) {
     return Promise.resolve()
