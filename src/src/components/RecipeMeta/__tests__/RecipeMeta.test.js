@@ -18,26 +18,6 @@ describe('RecipeMeta', () => {
         }],
       }],
     },
-    taxonomy: [
-      {},
-      {
-        id: 2,
-        name: 'Food Brands',
-        slug: 'food-brands',
-        tags: [
-          {
-            id: '9',
-            name: 'Great Food',
-            properties: {
-              ribbon_color: '#000000',
-              border_color: '#222222',
-              text_color: '#FFFFFF',
-            },
-            slug: 'great-food',
-          }
-        ]
-      }
-    ]
   })
 
   it('should render helmet component if recipe exists', () => {

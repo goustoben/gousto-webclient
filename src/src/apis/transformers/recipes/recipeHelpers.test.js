@@ -1,4 +1,4 @@
-import { micronutrientsTransformer, promotionsTransformer } from './recipeHelpers'
+import { micronutrientsTransformer, promotionsTransformer, surchargeTransformer } from './recipeHelpers'
 
 describe('micronutrientsTransformer', () => {
   test('should return micronutrients from nutritional information', () => {
@@ -53,5 +53,14 @@ describe('promotionsTransformer', () => {
       const result = promotionsTransformer(attributes)
       expect(result).toEqual(expected)
     })
+  })
+})
+
+describe('surchargeTransformer', () => {
+  test('should return decimal price', () => {
+    const surcharge = 399
+    const result = surchargeTransformer(surcharge)
+    const expectedPrice = 3.99
+    expect(result).toEqual({listPrice: expectedPrice})
   })
 })

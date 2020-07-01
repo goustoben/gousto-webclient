@@ -325,20 +325,7 @@
       "range_id": null,
       "range": null,
       "five_a_day": 1,
-      "taxonomy": [
-        {
-          "id": "1",
-          "name": "Dietary attributes",
-          "slug": "dietary-attributes",
-          "tags": []
-        },
-        {
-          "id": "2",
-          "name": "Food Brands",
-          "slug": "food-brands",
-          "tags": []
-        }
-      ],
+      "dietaryClaims": [],
       "recommendation_data": []
     },
     {
@@ -1194,38 +1181,12 @@
       "range_id": null,
       "range": null,
       "five_a_day": 1,
-      "taxonomy": [
-        {
-          "id": "1",
-          "name": "Dietary attributes",
-          "slug": "dietary-attributes",
-          "tags": [
-            {
-              "id": "2",
-              "name": "Dairy free",
-              "slug": "dairy-free",
-              "properties": null
-            }
-          ]
-        },
-        {
-          "id": "2",
-          "name": "Food Brands",
-          "slug": "food-brands",
-          "tags": [
-            {
-              "id": "5",
-              "name": "Takeaway Night",
-              "slug": "takeaway-night",
-              "properties": {
-                "ribbon_color": "#17B7BF",
-                "border_color": "#1A9298",
-                "text_color": "#FFFFFF"
-              }
-            }
-          ]
-        }
-      ]
+      "dietaryClaims": [ {
+        "id": "2",
+        "name": "Dairy free",
+        "slug": "dairy-free",
+        "properties": null
+      }]
     },
     {
       "id": "2151",
@@ -1989,31 +1950,7 @@
       "range_id": 4,
       "range": "ten_to_table",
       "five_a_day": 1,
-      "taxonomy": [
-        {
-          "id": "1",
-          "name": "Dietary attributes",
-          "slug": "dietary-attributes",
-          "tags": []
-        },
-        {
-          "id": "2",
-          "name": "Food Brands",
-          "slug": "food-brands",
-          "tags": [
-            {
-              "id": "4",
-              "name": "10-Minute Meals",
-              "slug": "10-minute-meals",
-              "properties": {
-                "ribbon_color": "#FB6126",
-                "border_color": "#BB481C",
-                "text_color": "#FFFFFF"
-              }
-            }
-          ]
-        }
-      ]
+      "dietaryClaims": []
     },
     {
       "id": "2026",
@@ -3049,38 +2986,12 @@
       "range_id": null,
       "range": null,
       "five_a_day": 2,
-      "taxonomy": [
-        {
-          "id": "1",
-          "name": "Dietary attributes",
-          "slug": "dietary-attributes",
-          "tags": [
-            {
-              "id": "2",
-              "name": "Dairy free",
-              "slug": "dairy-free",
-              "properties": null
-            }
-          ]
-        },
-        {
-          "id": "2",
-          "name": "Food Brands",
-          "slug": "food-brands",
-          "tags": [
-            {
-              "id": "8",
-              "name": "Global Kitchen",
-              "slug": "global-kitchen",
-              "properties": {
-                "ribbon_color": "#F6323E",
-                "border_color": "#C51E29",
-                "text_color": "#FFFFFF"
-              }
-            }
-          ]
-        }
-      ]
+      "dietaryClaims": [{
+        "id": "2",
+        "name": "Dairy free",
+        "slug": "dairy-free",
+        "properties": null
+      }]
     }
   ]
 }

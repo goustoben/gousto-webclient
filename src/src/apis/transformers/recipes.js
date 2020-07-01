@@ -9,7 +9,6 @@ import {
   roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
-  taxonomyTransformer,
   isFineDineInTransformer,
   promotionsTransformer
 } from './recipes/recipeHelpers'
@@ -94,7 +93,7 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
         average: normalisedAttributes.rating ? normalisedAttributes.rating.average : 0,
       },
       shelfLifeDays: normalisedAttributes.shelf_life ? shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days) : '',
-      taxonomy: taxonomyTransformer(normalisedAttributes),
+      dietaryClaims: normalisedAttributes.dietary_claims,
       isFineDineIn: isFineDineInTransformer(normalisedAttributes),
       title: normalisedAttributes.name,
       promotions: promotionsTransformer(normalisedAttributes)

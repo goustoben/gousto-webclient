@@ -405,20 +405,20 @@ describe('menu recipe selectors', () => {
         })
         menuRecipes = Immutable.fromJS({
           1: {
-            taxonomy: [{
-              slug: 'dietary-attributes',
-              tags: [{
-                slug: 'gluten-free'
-              }]
-            }]
+            dietaryClaims: [
+              {
+                name: 'Gluten free',
+                slug: 'gluten-free',
+              }
+            ],
           },
           2: {
-            taxonomy: [{
-              slug: 'dietary-attributes',
-              tags: [{
-                slug: 'gluten-free'
-              }]
-            }]
+            dietaryClaims: [
+              {
+                name: 'Gluten free',
+                slug: 'gluten-free',
+              }
+            ],
           }
         })
       })
@@ -434,20 +434,20 @@ describe('menu recipe selectors', () => {
         beforeEach(() => {
           menuRecipes = Immutable.fromJS({
             1: {
-              taxonomy: [{
-                slug: 'dietary-attributes',
-                tags: [{
-                  slug: 'gluten-free'
-                }]
-              }]
+              dietaryClaims: [
+                {
+                  name: 'Gluten free',
+                  slug: 'gluten-free',
+                }
+              ],
             },
             2: {
-              taxonomy: [{
-                slug: 'dietary-attributes',
-                tags: [{
-                  slug: 'vegetarian'
-                }]
-              }]
+              dietaryClaims: [
+                {
+                  name: 'Vegetarian',
+                  slug: 'vegetarian',
+                }
+              ],
             }
           })
         })

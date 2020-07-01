@@ -23,10 +23,6 @@ Array [
     "property": "og:image",
   },
   Object {
-    "content": "Great Food",
-    "property": "product:brand",
-  },
-  Object {
     "content": "new",
     "property": "product:condition",
   },
