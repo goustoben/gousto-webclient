@@ -11,6 +11,7 @@ import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
+import { CapacityInfo } from '../components/CapacityInfo'
 
 import css from './MenuRecipesPage.css'
 
@@ -18,47 +19,8 @@ const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
 }
 
-const propTypes = {
-  showLoading: PropTypes.bool.isRequired,
-  stateRecipeCount: PropTypes.number.isRequired,
-  menuCurrentCollectionId: PropTypes.string.isRequired,
-  selectCurrentCollection: PropTypes.func.isRequired,
-  detailVisibilityChange: PropTypes.func.isRequired,
-  shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
-  basketOrderLoaded: PropTypes.func.isRequired,
-  portionSizeSelectedTracking: PropTypes.func.isRequired,
-  menuRecipeDetailShow: PropTypes.string,
-  orderId: PropTypes.string,
-  isLoading: PropTypes.bool,
-  storeOrderId: PropTypes.string,
-  numPortions: PropTypes.number,
-  query: PropTypes.shape({
-    reload: PropTypes.bool
-  }),
-  params: PropTypes.shape({}),
-  isSignupReductionEnabled: PropTypes.bool,
-  showCommunicationPanel: PropTypes.bool,
-  checkQueryParams: PropTypes.func.isRequired
-}
-
-const defaultProps = {
-  menuRecipeDetailShow: '',
-  orderId: null,
-  isLoading: false,
-  storeOrderId: '',
-  numPortions: 2,
-  query: {},
-  params: {},
-  isSignupReductionEnabled: false,
-  showCommunicationPanel: false
-}
-
 export class MenuRecipesPage extends PureComponent {
-  static propTypes = propTypes
-
   static contextTypes = contextTypes
-
-  static defaultProps = defaultProps
 
   async componentDidMount() {
     const { store } = this.context
@@ -138,37 +100,33 @@ export class MenuRecipesPage extends PureComponent {
     }
   }
 
-  getDefaultMenuRecipePage = () => {
+  getMenuRecipeListContent = () => {
     const {
       showLoading,
       stateRecipeCount,
       orderId,
       isSignupReductionEnabled,
-      showCommunicationPanel,
+      showCommunicationPanel
     } = this.props
     const { communicationPanel } = menuConfig
-    const fadeCss = (showLoading) ? css.fadeOut : css.willFade
 
     return (
-      <div className={fadeCss} data-testing="menuRecipes">
-        { isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div> }
-        { showCommunicationPanel && (
-          <div className={css.communicationPanelContainer}>
-            <div className={css.communicationPanel}>
-              <CommunicationPanel
-                showIcon={communicationPanel.showIcon}
-                level={communicationPanel.level}
-                title={communicationPanel.title}
-                body={communicationPanel.body}
-              />
-            </div>
+      <div>
+        {isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div>}
+        {showCommunicationPanel && (
+        <div className={css.communicationPanelContainer}>
+          <div className={css.communicationPanel}>
+            <CommunicationPanel
+              showIcon={communicationPanel.showIcon}
+              level={communicationPanel.level}
+              title={communicationPanel.title}
+              body={communicationPanel.body}
+            />
           </div>
+        </div>
         )}
-        <SubHeader
-          orderId={orderId}
-        />
+        <SubHeader orderId={orderId} />
         <JustForYouTutorial />
-        <Loading loading={showLoading} />
         {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid />}
         <BasketValidationErrorModalContainer />
@@ -176,7 +134,72 @@ export class MenuRecipesPage extends PureComponent {
     )
   }
 
-  render() {
-    return this.getDefaultMenuRecipePage()
+  getMenuContent = () => {
+    const {
+      userId,
+      shouldShowCapacityInfo
+    } = this.props
+
+    if (shouldShowCapacityInfo) {
+      return <CapacityInfo userId={userId} />
+    }
+
+    return this.getMenuRecipeListContent()
   }
+
+  render() {
+    const { showLoading } = this.props
+    const fadeCss = (showLoading) ? css.fadeOut : css.willFade
+
+    return (
+      <div className={fadeCss} data-testing="menuRecipes">
+        {
+          showLoading
+            ? <Loading loading={showLoading} />
+            : this.getMenuContent()
+        }
+      </div>
+    )
+  }
+}
+
+MenuRecipesPage.propTypes = {
+  showLoading: PropTypes.bool.isRequired,
+  stateRecipeCount: PropTypes.number.isRequired,
+  menuCurrentCollectionId: PropTypes.string.isRequired,
+  selectCurrentCollection: PropTypes.func.isRequired,
+  detailVisibilityChange: PropTypes.func.isRequired,
+  shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
+  basketOrderLoaded: PropTypes.func.isRequired,
+  portionSizeSelectedTracking: PropTypes.func.isRequired,
+  menuRecipeDetailShow: PropTypes.string,
+  orderId: PropTypes.string,
+  isLoading: PropTypes.bool,
+  storeOrderId: PropTypes.string,
+  numPortions: PropTypes.number,
+  query: PropTypes.shape({
+    reload: PropTypes.bool
+  }),
+  params: PropTypes.shape({}),
+  isSignupReductionEnabled: PropTypes.bool,
+  showCommunicationPanel: PropTypes.bool,
+  checkQueryParams: PropTypes.func.isRequired,
+  userId: PropTypes.string,
+  shouldShowCapacityInfo: PropTypes.bool
+
+}
+
+MenuRecipesPage.defaultProps = {
+  menuRecipeDetailShow: '',
+  orderId: null,
+  isLoading: false,
+  storeOrderId: '',
+  numPortions: 2,
+  query: {},
+  params: {},
+  isSignupReductionEnabled: false,
+  showCommunicationPanel: false,
+  userId: '',
+  shouldShowCapacityInfo: false
+
 }
