@@ -20,6 +20,7 @@ describe('given menuCalculateTimeToUsable action is called', () => {
       menu: Immutable.fromJS({
         hasCalculatedTimeToUsable: false,
         hasVisitedNonMenuPage: false,
+        menuPrefetched: true
       })
     }
   })
@@ -48,6 +49,7 @@ describe('given menuCalculateTimeToUsable action is called', () => {
               actionType: menuTimeToUsable,
               timeToFirstByte: 456,
               timeToUsable: 123,
+              menuPrefetched: true
             }
           }
         ])

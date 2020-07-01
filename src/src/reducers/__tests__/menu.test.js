@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
 import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdownExpanded } from '../../actions/menu'
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
+import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 
 describe('menu reducer', () => {
@@ -314,6 +315,14 @@ describe('menu reducer', () => {
         const result = menu.menu(menuInitialState, trackTimeToUsable(123, 456))
 
         expect(result.get('hasCalculatedTimeToUsable')).toBeTruthy()
+      })
+    })
+
+    describe('MENU_PREFETCHED', () => {
+      test('should set menuPrefetched to true', () => {
+        const result = menu.menu(menuInitialState, setMenuPrefetched(true))
+
+        expect(result.get('menuPrefetched')).toBe(true)
       })
     })
 

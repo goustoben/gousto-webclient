@@ -8,7 +8,7 @@ import { updateOrderItems } from 'apis/orders'
 import utilsLogger from 'utils/logger'
 import { push } from 'react-router-redux'
 import config from 'config'
-import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks.js'
+import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
 
 import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
