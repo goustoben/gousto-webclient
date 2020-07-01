@@ -206,7 +206,7 @@ workflows:
   e2e:
     triggers:
       - schedule:
-          cron: "0 0 * * *"
+          cron: "0 19 * * 1-5"
           filters:
             branches:
               only:
