@@ -169,7 +169,7 @@ Create a CircleCI access token (“Personal API Tokens” https://circleci.com/a
 ```
 export CIRCLECI_ACCESS_TOKEN=XXXX
 ```
-Then run:
+Then in `src` run:
 ```
-./src/scripts/compare-code-health.sh
+./scripts/compare-code-health.sh
 ```
