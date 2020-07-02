@@ -1,1 +1,1 @@
-export default from './Chef'
+export { Chef } from './Chef'

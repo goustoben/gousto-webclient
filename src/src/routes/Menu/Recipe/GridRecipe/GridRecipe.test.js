@@ -4,7 +4,6 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { Image } from 'routes/Menu/Recipe/Image'
-import { ChefQuote } from 'routes/Menu/Recipe/ChefQuote'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 
 import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
@@ -89,10 +88,6 @@ describe('<GridRecipe />', () => {
 
       test('should contain one AddRecipe component', () => {
         expect(wrapper.find(AddRecipe).length).toEqual(1)
-      })
-
-      test('should not contain a ChefQuote component', () => {
-        expect(wrapper.find(ChefQuote).length).toEqual(0)
       })
 
       test('should not have a background image', () => {
