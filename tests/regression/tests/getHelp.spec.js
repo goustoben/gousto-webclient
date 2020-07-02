@@ -1,4 +1,4 @@
-import { clickHelp } from '../pageUtils/home'
+import { clickHelp } from '../pageUtils/home/home'
 import {
   clickAcceptCTA,
   clickContinueCTA,
@@ -7,7 +7,7 @@ import {
   fillIngredientIssueDescriptions,
   selectIngredients,
   selectOrderIssue,
-} from '../pageUtils/getHelp'
+} from '../pageUtils/help/getHelp'
 
 describe('Given the customer is logged in', () => {
   beforeEach(() => {

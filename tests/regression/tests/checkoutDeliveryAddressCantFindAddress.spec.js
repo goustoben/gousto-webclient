@@ -1,5 +1,5 @@
-import * as checkoutAboutYou  from '../pageUtils/checkoutAboutYou'
-import * as checkoutDelivery  from '../pageUtils/checkoutDelivery'
+import * as checkoutAboutYou  from '../pageUtils/checkout/checkoutAboutYou'
+import * as checkoutDelivery  from '../pageUtils/checkout/checkoutDelivery'
 import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
 
 describe('Given I’m a gousto logged-out website visitor', () => {

@@ -3,7 +3,7 @@
   "integrationFolder": "tests",
   "screenshotsFolder": "screenshots",
   "fixturesFolder": "fixtures",
-  "supportFile" : "commands",
+  "supportFile" : "support/index.js",
   "pluginsFile": false,
   "video": false,
   "chromeWebSecurity": false

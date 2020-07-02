@@ -1,5 +1,5 @@
-import { goToCheckout, goToCheckoutDeliveryDetails } from '../pageUtils/checkoutAboutYou'
-import { setMocks } from '../pageUtils/checkoutDelivery'
+import { goToCheckout, goToCheckoutDeliveryDetails } from '../pageUtils/checkout/checkoutAboutYou'
+import { setMocks } from '../pageUtils/checkout/checkoutDelivery'
 
 describe("Given I'm a logged out user", () => {
   describe('When I land on the delivery detail step of the checkout', () => {
@@ -45,7 +45,7 @@ describe("Given I'm a logged out user", () => {
           .type('778b238233')
         cy.get('[data-testing="checkoutCTA"]').click()
       })
-      
+
       it('Then no non-numerical characters will be registered in the input', () => {
         cy.get('[data-testing="checkoutPhoneNumberInput"]')
           .should('have.value', '778238233')

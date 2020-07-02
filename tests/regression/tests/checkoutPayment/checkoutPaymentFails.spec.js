@@ -1,7 +1,7 @@
 import {
   goToPayment,
   fillAllIframe
-} from '../../pageUtils/checkoutPayment'
+} from '../../pageUtils/checkout/checkoutPayment'
 
 describe("Given I'm a logged out user who has made a mistake in the first steps of checkout", () => {
   before(() => {
