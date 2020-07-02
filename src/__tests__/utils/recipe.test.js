@@ -6,7 +6,6 @@ import {
   getCookingTime,
   getSurcharge,
   getSurchargePerPortion,
-  getTaxonomyTags,
   roundUp,
   isAvailableRecipeList
 } from 'utils/recipe'
@@ -85,56 +84,6 @@ describe('recipes', () => {
 
     test('should return the cooking over 120 mins time correctly', () => {
       expect(getCookingTime(160)).toBe('2 hrs 40 mins')
-    })
-  })
-
-  describe('getTaxonomyTags', () => {
-    let recipe
-
-    test('if no taxonomy is found should return an empty Immutable.List', () => {
-      recipe = Immutable.fromJS({
-        id: '327',
-        dietType: 'Meat',
-        taxonomy: [
-          {
-            id: 1,
-            name: 'Dietary attributes',
-            slug: 'dietary-attributes',
-            tags: [],
-          },
-        ],
-      })
-
-      expect(getTaxonomyTags(recipe, 'test-category')).toEqual(Immutable.List([]))
-    })
-
-    test('should return taxonomy tags in the given category', () => {
-      recipe = Immutable.fromJS({
-        id: '327',
-        dietType: 'Meat',
-        taxonomy: [
-          {
-            id: 1,
-            name: 'Test Category',
-            slug: 'test-category',
-            tags: [
-              { slug: 'test-attribute' },
-            ],
-          },
-          {
-            id: 2,
-            name: 'Alternate Category',
-            slug: 'alternate-category',
-            tags: [
-              { slug: 'alternate-attribute-1' },
-              { slug: 'alternate-attribute-2' },
-            ],
-          },
-        ],
-      })
-
-      expect(getTaxonomyTags(recipe, 'test-category').size).toEqual(1)
-      expect(getTaxonomyTags(recipe, 'alternate-category').size).toEqual(2)
     })
   })
 

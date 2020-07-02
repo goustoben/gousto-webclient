@@ -34,10 +34,6 @@ const RecipeMeta = ({ recipe }) => (
           content: getMetaImageLink(recipe),
         },
         {
-          property: 'product:brand',
-          content: recipe.getIn(['taxonomy', 1, 'tags', 0, 'name'], ''),
-        },
-        {
           property: 'product:condition',
           content: 'new',
         },

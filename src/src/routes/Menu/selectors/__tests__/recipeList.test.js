@@ -10,17 +10,16 @@ const createStandardRecipeView = (recipe) => ({ originalId: recipe.get('id'), re
 
 describe('RecipeList selectors', () => {
   const VALID_COLLECTION_ID = '77d1eb54-e3e5-11e7-bf51-06543e25a81c'
-  const taxonomy = [{
-    name: 'Dietary attributes',
-    slug: 'dietary-attributes',
-    tags: [{
-      slug: 'gluten-free'
-    }]
-  }]
-  const firstRecipe = Immutable.fromJS({ id: '327', sortOrder: 1, taxonomy})
-  const secondRecipe = Immutable.fromJS({ id: '819', sortOrder: 2, taxonomy })
-  const thirdRecipe = Immutable.fromJS({ id: '777', sortOrder: 3, taxonomy })
-  const variantRecipe = Immutable.fromJS({ id: '820', sortOrder: 4, taxonomy })
+  const dietaryClaims = [
+    {
+      name: 'Gluten free',
+      slug: 'gluten-free',
+    }
+  ]
+  const firstRecipe = Immutable.fromJS({ id: '327', sortOrder: 1, dietaryClaims})
+  const secondRecipe = Immutable.fromJS({ id: '819', sortOrder: 2, dietaryClaims })
+  const thirdRecipe = Immutable.fromJS({ id: '777', sortOrder: 3, dietaryClaims })
+  const variantRecipe = Immutable.fromJS({ id: '820', sortOrder: 4, dietaryClaims })
 
   const allRecipes = Immutable.fromJS([firstRecipe, secondRecipe, thirdRecipe, variantRecipe])
 

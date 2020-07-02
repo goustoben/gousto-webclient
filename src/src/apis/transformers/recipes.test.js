@@ -682,18 +682,11 @@ describe('recipesTransformer', () => {
           average: 4.44
         },
         shelfLifeDays: '2-3',
-        taxonomy: [
+        dietaryClaims: [
           {
-
-            name: 'Dietary attributes',
-            slug: 'dietary-attributes',
-            tags: [
-              {
-                name: 'Gluten free',
-                slug: 'gluten-free',
-              }
-            ]
-          },
+            name: 'Gluten free',
+            slug: 'gluten-free',
+          }
         ],
         isFineDineIn: false,
         health: null,

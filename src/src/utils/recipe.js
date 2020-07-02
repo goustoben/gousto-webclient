@@ -12,10 +12,6 @@ export function formatRecipeTitle(title, boxType, dietType) {
   return `${title}`
 }
 
-export function getChef(chef) {
-  return Immutable.Iterable.isIterable(chef) && chef.size > 0 ? chef : null
-}
-
 export function getSurcharge(meals = Immutable.List([]), numPortions) {
   let meal
   if (meals.size > 0) {
@@ -50,24 +46,12 @@ export function getCookingTime(time) {
   return `${time} mins`
 }
 
-export function getTaxonomyTags(recipe, categorySlug) {
-  const recipeTaxonomy = recipe.get('taxonomy')
-  if (recipeTaxonomy) {
-    const taxonomyCategory = recipeTaxonomy.find(item => item.get('slug') === categorySlug)
-    if (taxonomyCategory) {
-      return taxonomyCategory.get('tags')
-    }
+export function getDietaryTags(recipe) {
+  if (recipe && recipe.get('dietaryClaims')) {
+    return recipe.get('dietaryClaims').map(tag => tag.get('slug'))
   }
 
   return Immutable.List([])
-}
-
-export function getDietaryTags(recipe) {
-  if (recipe) {
-    return getTaxonomyTags(recipe, 'dietary-attributes').map(tag => tag.get('slug'))
-  }
-
-  return []
 }
 
 export function isNew(recipe) {

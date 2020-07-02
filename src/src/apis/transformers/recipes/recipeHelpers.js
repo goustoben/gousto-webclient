@@ -13,11 +13,6 @@ const cropsTransformer = (media) => media.map((url) => ({
   width: url.width,
 }))
 
-const dietaryTagsTransformer = (dietaryArray) => dietaryArray.map((attribute) => ({
-  name: attribute.name,
-  slug: attribute.slug,
-}))
-
 const equipmentTransformer = (equipmentArray) => equipmentArray.map((piece) => piece.name)
 
 const formatIngredients = (normalisedRelationships, normalisedData) => {
@@ -101,12 +96,6 @@ const surchargeTransformer = (surcharge) => {
   }
 }
 
-const taxonomyTransformer = (attributes) => [{
-  name: 'Dietary attributes',
-  slug: 'dietary-attributes',
-  tags: dietaryTagsTransformer(attributes.dietary_claims)
-}]
-
 const isFineDineInTransformer = (attributes) => Boolean(attributes.food_brand && attributes.food_brand.slug === 'fine-dine-in')
 
 const promotionsTransformer = (attributes) => (attributes.promotions ? attributes.promotions.map(p => p.slug) : [])
@@ -122,7 +111,6 @@ export {
   roundelTransformer,
   shelfLifeTransformer,
   surchargeTransformer,
-  taxonomyTransformer,
   isFineDineInTransformer,
   promotionsTransformer
 }
