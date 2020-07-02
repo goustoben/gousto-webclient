@@ -79,10 +79,13 @@ class HomeSections extends Component {
             <section
               className={
                 classnames(
-                  inverse ? css.inverseSection : css.section,
-                  order === 2 && css.inverseSectionSignupOverride,
                   css[`${name}-section`],
-                  { [css.homepageRedesign]: isHomePageRedesignEnabled }
+                  {
+                    [css.inverseSection]: inverse,
+                    [css.section]: !inverse,
+                    [css.inverseSectionSignupOverride]: name === 'howItWorks',
+                    [css.homepageRedesign]: isHomePageRedesignEnabled,
+                  }
                 )
               }
               data-module-name={name}
