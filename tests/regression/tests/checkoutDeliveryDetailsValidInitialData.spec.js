@@ -1,5 +1,5 @@
-import { goToCheckout, goToCheckoutDeliveryDetails } from '../pageUtils/checkoutAboutYou'
-import { setMocks } from '../pageUtils/checkoutDelivery'
+import { goToCheckout, goToCheckoutDeliveryDetails } from '../pageUtils/checkout/checkoutAboutYou'
+import { setMocks } from '../pageUtils/checkout/checkoutDelivery'
 import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
 
 describe("Given I'm a logged out user", () => {

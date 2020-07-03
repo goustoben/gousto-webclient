@@ -5,7 +5,7 @@ import {
   getSyncErrors,
   goToCheckout,
   clearAndFillCheckoutForm
-} from '../pageUtils/checkoutAboutYou'
+} from '../pageUtils/checkout/checkoutAboutYou'
 const DATE = new Date(2020, 4, 1).getTime()
 const NAME_ERROR = {
   firstName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters.",

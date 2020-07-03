@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
-import Chef from '../Chef'
+import { Chef } from '../Chef'
 import { Image } from '../Image'
 import { RecipeRatingContainer } from '../Rating'
 import { AddRecipe } from '../AddRecipe'

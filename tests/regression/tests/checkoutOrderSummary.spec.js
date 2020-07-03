@@ -2,7 +2,7 @@ import {
   setMocks,
   visitCheckout,
   addRecipeDispatch
-} from '../pageUtils/checkoutRecipeSummary'
+} from '../pageUtils/checkout/checkoutRecipeSummary'
 
 describe('Given I’m a gousto logged-out website visitor', () => {
   describe('When I land on the delivery step of the checkout', () => {

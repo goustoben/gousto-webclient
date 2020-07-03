@@ -4,7 +4,7 @@ import {
   getPaymentSyncErrors,
   fillAllIframe,
   clearAndFillNumberIframe
-} from '../../pageUtils/checkoutPayment'
+} from '../../pageUtils/checkout/checkoutPayment'
 
 const CARDNAME_ERROR = { cardName: 'Card name is required' }
 const ADDRESS = "FLAT 10, MORRIS HOUSE, SWAINSON ROAD, LONDON, MIDDLESEX, W3 7UP"

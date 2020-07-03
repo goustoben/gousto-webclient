@@ -33,4 +33,4 @@ Chef.propTypes = {
   }),
 }
 
-export default Chef
+export { Chef }
