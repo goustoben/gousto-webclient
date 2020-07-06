@@ -35,6 +35,7 @@ const propTypes = {
     ingredientId: PropTypes.string.isRequired,
     issueDescription: PropTypes.string.isRequired,
     issueId: PropTypes.string.isRequired,
+    recipeGoustoReference: PropTypes.string.isRequired,
     recipeId: PropTypes.string.isRequired,
   })).isRequired,
   trackAcceptRefund: PropTypes.func.isRequired,
@@ -102,13 +103,23 @@ class Refund extends PureComponent {
       trackAcceptRefund,
       trackUserCannotGetCompensation,
     } = this.props
-    const issues = Object.keys(selectedIngredients).map(key => (
-      {
-        category_id: Number(selectedIngredients[key].issueId),
-        ingredient_id: selectedIngredients[key].ingredientId,
-        description: sanitize(selectedIngredients[key].issueDescription),
+
+    const issues = Object.keys(selectedIngredients).map(key => {
+      const {
+        issueId,
+        ingredientId,
+        issueDescription,
+        recipeGoustoReference,
+      } = selectedIngredients[key]
+
+      return {
+        category_id: Number(issueId),
+        ingredient_id: ingredientId,
+        description: sanitize(issueDescription),
+        recipe_gousto_reference: recipeGoustoReference,
       }
-    ))
+    })
+
     const setComplaintParams = [
       user.accessToken,
       appendFeatureToRequest({
