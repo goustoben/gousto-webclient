@@ -25,6 +25,10 @@ describe('<IngredientsContainer />', () => {
       order: {
         id: '6765330',
         recipeItems: ['1917', '1494'],
+        recipeDetailedItems: {
+          1917: '123',
+          1494: '546',
+        }
       },
       recipes: [
         {
@@ -89,7 +93,7 @@ describe('<IngredientsContainer />', () => {
       await ContinueButton.prop('onClick')()
 
       expect(store.getState().getHelp.get('selectedIngredients'))
-        .toEqual(fromJS({'1917-aaa': {ingredientId: 'aaa', label: '1 beef stock cube', recipeId: '1917'}}))
+        .toEqual(fromJS({'1917-aaa': {ingredientId: 'aaa', label: '1 beef stock cube', recipeId: '1917', recipeGoustoReference: '123'}}))
     })
 
     test('/v2/validate-ingredients endpoint is called correctly', async () => {

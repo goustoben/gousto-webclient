@@ -8,6 +8,7 @@ const getHelpInitialState = fromJS({
   order: {
     id: '',
     recipeItems: [],
+    recipeDetailedItems: [],
   },
   orders: Map(),
   recipes: [],
@@ -35,17 +36,19 @@ const getHelp = (state, action) => {
 
   switch (action.type) {
   case actionTypes.GET_HELP_STORE_ORDER: {
-    const { id, recipeIds } = action.payload
+    const { id, recipeIds, recipeDetailedItems } = action.payload
 
     return state.set('order', fromJS({
       id,
       recipeItems: recipeIds,
+      recipeDetailedItems,
     }))
   }
   case webClientActionTypes.GET_HELP_STORE_ORDER_ID: {
     return state.setIn(['order', 'id'], action.id)
   }
   case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
+    const orderRecipeItems = state.getIn(['order', 'recipeDetailedItems']).toJS()
     const selectedIngredients = action.selectedIngredientAndRecipeIds
       .reduce((accumulator, selectedIngredientAndRecipeId) => {
         const { recipeId, ingredientId } = selectedIngredientAndRecipeId
@@ -59,6 +62,7 @@ const getHelp = (state, action) => {
         return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
           ...selectedIngredientAndRecipeId,
           label: currentIngredient.get('label'),
+          recipeGoustoReference: orderRecipeItems[recipeId],
         }))
       }, Map())
 
@@ -94,8 +98,15 @@ const getHelp = (state, action) => {
 
     if (order) {
       const recipeItems = order.recipeItems.map((item) => (item.recipeId))
+      const recipeDetailedItems = {}
 
-      return state.setIn(['order', 'recipeItems'], fromJS(recipeItems))
+      order.recipeItems.forEach((item) => {
+        recipeDetailedItems[item.recipeId] = item.recipeGoustoReference
+      })
+
+      return state
+        .setIn(['order', 'recipeItems'], fromJS(recipeItems))
+        .setIn(['order', 'recipeDetailedItems'], fromJS(recipeDetailedItems))
     }
 
     return state
@@ -125,6 +136,11 @@ const getHelp = (state, action) => {
       const { id, deliveryDate, deliverySlot, recipeItems } = order
       const { deliveryEnd, deliveryStart } = deliverySlot
       const recipeIds = recipeItems.map((item) => (item.recipeId))
+      const recipeDetailedItems = {}
+
+      recipeItems.forEach((item) => {
+        recipeDetailedItems[item.recipeId] = item.recipeGoustoReference
+      })
 
       return reducerState.set(
         id,
@@ -136,6 +152,7 @@ const getHelp = (state, action) => {
           },
           id,
           recipeIds,
+          recipeDetailedItems,
         })
       )
     }
