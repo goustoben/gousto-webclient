@@ -7,7 +7,6 @@ import boxSummary from './boxSummary'
 import checkout from './checkout'
 import content from './content'
 import { cookbookRecipes } from './cookbookRecipes'
-import example from './example'
 import features from './features'
 import filters from './filters'
 import jobs from './jobs'
@@ -54,7 +53,6 @@ const reducers = {
   ...cookbookRecipes,
   ...cookies,
   ...content,
-  ...example,
   ...features,
   ...filters,
   ...jobs,
