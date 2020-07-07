@@ -1,5 +1,5 @@
-import { goToCheckout, goToCheckoutDeliveryDetails } from '../pageUtils/checkout/checkoutAboutYou'
-import { setMocks } from '../pageUtils/checkout/checkoutDelivery'
+import { goToCheckout, goToCheckoutDeliveryDetails } from './pageUtils/checkout/checkoutAboutYou'
+import { setMocks } from './pageUtils/checkout/checkoutDelivery'
 
 describe("Given I'm a logged out user", () => {
   describe('When I land on the delivery detail step of the checkout', () => {

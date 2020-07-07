@@ -29,9 +29,9 @@ describe('Given I land on postcode slide of the wizard', () => {
     })
 
     it('And the postcode is stored in the basket object of the redux store', () => {
-      const getTempPostCode = (win) => {
-        return win.__store__.getState().temp.get('postcode')
-      }
+      const getTempPostCode = (win) => (
+        win.__store__.getState().temp.get('postcode')
+      )
 
       cy.window().then(getTempPostCode).should('equal', POSTCODE_6_CHARS)
     })

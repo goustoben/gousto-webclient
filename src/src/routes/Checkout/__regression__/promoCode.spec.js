@@ -1,4 +1,4 @@
-import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
+import { withPlatformTags, WEB, MOBILE } from '../../../utils/regression/tags'
 
 describe("Promo Code", () => {
   afterEach(() => {

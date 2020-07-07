@@ -1,8 +1,8 @@
 const PAGE_URL = 'signup/box-size'
 
-const getNumPortions = (win) => {
-  return win.__store__.getState().basket.get('numPortions')
-}
+const getNumPortions = (win) => (
+  win.__store__.getState().basket.get('numPortions')
+)
 
 describe('Given I am a logged out user', () => {
   describe('When I land on the num portions code slide of the wizard', () => {

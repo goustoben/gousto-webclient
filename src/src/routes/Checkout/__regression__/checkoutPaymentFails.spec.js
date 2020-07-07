@@ -1,7 +1,7 @@
 import {
   goToPayment,
   fillAllIframe
-} from '../../pageUtils/checkout/checkoutPayment'
+} from './pageUtils/checkout/checkoutPayment'
 
 describe("Given I'm a logged out user who has made a mistake in the first steps of checkout", () => {
   before(() => {
@@ -39,7 +39,6 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
         cy.wait(['@signupError'])
         cy.url().should('include', 'check-out/payment')
         cy.get('[data-testing="user-phone-number-invalid"]')
-
       })
     })
   })

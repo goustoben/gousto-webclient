@@ -1,11 +1,11 @@
-import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
+import { withPlatformTags, WEB, MOBILE } from '../../../utils/regression/tags'
 import {
   getAllowEmail,
   getAboutYouSyncErrors,
   getSyncErrors,
   goToCheckout,
   clearAndFillCheckoutForm
-} from '../pageUtils/checkout/checkoutAboutYou'
+} from './pageUtils/checkout/checkoutAboutYou'
 const DATE = new Date(2020, 4, 1).getTime()
 const NAME_ERROR = {
   firstName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters.",
@@ -14,7 +14,7 @@ const NAME_ERROR = {
 const EMAIL_ERROR = { email: "Please provide a valid email address" }
 const PASSWORD_ERROR = { password: "password must be at least 8 characters" }
 
-describe("Given I'm a logged out user", () =>{
+describe("Given I'm a logged out user", () => {
   describe('When I land on the first step of checkout ', () => {
     before(() => {
       cy.server()

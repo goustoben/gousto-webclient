@@ -7,8 +7,8 @@ export const withPlatformTags = (...tags) => {
 
   const filteredTags = tags.filter(tag => platformTags.includes(tag))
   if(filteredTags.length === 0) {
-    return { it: window.it.skip, describe: window.describe.skip };
+    return { it: window.it.skip, describe: window.describe.skip }
   }
 
-  return { it: window.it, describe: window.describe };
+  return { it: window.it, describe: window.describe }
 }

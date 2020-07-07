@@ -1,7 +1,7 @@
 import {
   goToCheckout,
   clearAndFillCheckoutForm
- } from './checkoutAboutYou'
+} from './checkoutAboutYou'
 
 const selectAddress = () => {
   if (Cypress.env().platform === 'mobile') {
@@ -11,8 +11,7 @@ const selectAddress = () => {
       .get('select')
       .eq(1)
       .select("FLAT 10, MORRIS HOUSE, SWAINSON ROAD")
-      cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
-
+    cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
   } else {
     cy.get('[data-testing="checkoutCTA"]').click()
     cy.get('[data-testing="checkoutFindAddressButton"]').click()
@@ -42,23 +41,22 @@ export const goToPayment = () => {
   phoneNoStep()
 }
 
-const getFormState = (win) => {
-  return win.__store__.getState().form
-}
+const getFormState = (win) => (
+  win.__store__.getState().form
+)
 
-const getIframeDocument = (element) => {
-  return cy
-  .get('iframe')
-  .eq(element)
-  .its('0.contentDocument').should('exist')
-}
+const getIframeDocument = (element) => (
+  cy
+    .get('iframe')
+    .eq(element)
+    .its('0.contentDocument').should('exist')
+)
 
-const getIframeBody = (element) => {
-  return getIframeDocument(element)
-  .its('body').should('not.be.undefined')
-  .then(cy.wrap)
-}
-
+const getIframeBody = (element) => (
+  getIframeDocument(element)
+    .its('body').should('not.be.undefined')
+    .then(cy.wrap)
+)
 
 export const getHouseNo = (win) => {
   if (Cypress.env().platform === 'mobile') {
@@ -68,9 +66,9 @@ export const getHouseNo = (win) => {
   }
 }
 
-export const getPaymentSyncErrors = (win) => {
-  return getFormState(win).payment.syncErrors.payment
-}
+export const getPaymentSyncErrors = (win) => (
+  getFormState(win).payment.syncErrors.payment
+)
 
 export const fillAllIframe = ({number, expiry, cvv}) => {
   getIframeBody(0).find('#checkout-frames-card-number').click().type(number, {force: true})
@@ -79,5 +77,6 @@ export const fillAllIframe = ({number, expiry, cvv}) => {
 }
 
 export const clearAndFillNumberIframe = ({number}) => {
-  getIframeBody(0).find('#checkout-frames-card-number').click().clear({force: true}).type(number, {force: true})
+  getIframeBody(0).find('#checkout-frames-card-number').click().clear({force: true})
+    .type(number, {force: true})
 }

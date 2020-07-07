@@ -1,8 +1,8 @@
 const PAGE_URL = 'menu'
 
-const getRecipes = (win) => {
-  return win.__store__.getState().basket.get('recipes').toArray()
-}
+const getRecipes = (win) => (
+  win.__store__.getState().basket.get('recipes').toArray()
+)
 
 describe('Given I am a logged out user', () => {
   describe('When I land on the menu', () => {
@@ -27,7 +27,7 @@ describe('Given I am a logged out user', () => {
         clock.restore()
       })
     })
-  
+
     describe('And I click on “Add recipe“ for a given recipe', () => {
       before(() => {
         cy.get('[data-testing="menuRecipeAdd"]').first().click()
@@ -65,7 +65,7 @@ describe('Given I am a logged out user', () => {
         before(() => {
           cy.get('[data-testing="menuRecipeDetailsClose"]').first().find('[data-testing="menuRecipeAdd"]').click()
         })
-  
+
         it('Then that recipe is added to my basket', () => {
           cy.window().then(getRecipes).then(
             recipes => recipes.length
@@ -75,9 +75,10 @@ describe('Given I am a logged out user', () => {
 
       describe('And I click on “Add recipe“ for the selected recipe again', () => {
         before(() => {
-          cy.get('[data-testing="menuRecipeDetailsClose"]').first().find('[data-testing="menuAddServings"]').eq(2).click()
+          cy.get('[data-testing="menuRecipeDetailsClose"]').first().find('[data-testing="menuAddServings"]').eq(2)
+            .click()
         })
-  
+
         it('Then that recipe is added to my basket twice', () => {
           cy.window().then(getRecipes).then(
             recipes => recipes[1]
@@ -97,7 +98,7 @@ describe('Given I am a logged out user', () => {
     })
 
     describe('And the menu has recipes out of stock', () => {
-     it('Then the out of stock recipe menuRecipeAdd CTA should not exist', () => {
+      it('Then the out of stock recipe menuRecipeAdd CTA should not exist', () => {
         cy.get('[data-testing="menuRecipeOutOfStock"]').find('[data-testing="menuRecipeAdd"]').should('not.exist')
       })
     })

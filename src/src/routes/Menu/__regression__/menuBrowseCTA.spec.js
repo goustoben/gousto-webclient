@@ -1,4 +1,4 @@
-import { withPlatformTags, MOBILE, WEB } from '../utils/tags'
+import { withPlatformTags, MOBILE, WEB } from '../../../utils/regression/tags'
 
 describe("Menu-BrowseCTA", () => {
   before(() => {
@@ -28,7 +28,7 @@ describe("Menu-BrowseCTA", () => {
       cy.get('[data-testing="menuBrowseCTAOverlay"]').should('be.visible')
     })
   })
-  
+
   describe('click on browseCTA', () => {
     beforeEach(() => {
       cy.get('[data-testing="menuBrowseCTAOverlay"]').click()
@@ -36,7 +36,7 @@ describe("Menu-BrowseCTA", () => {
     withPlatformTags(WEB).it('should open box summary desktop', () => {
       cy.get('[data-testing="boxSummaryDesktop"]').should('be.visible')
     })
-    
+
     withPlatformTags(MOBILE).it('should open box summary mobile', () => {
       cy.get('[data-testing="boxSummaryMobile"]').should('be.visible')
     })

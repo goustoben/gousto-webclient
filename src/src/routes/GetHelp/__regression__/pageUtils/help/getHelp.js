@@ -32,12 +32,12 @@ export const selectIngredients = (ingredientIndexes) => {
 
 export const selectOrderIssue = (issue) => {
   switch (issue) {
-    case 'ingredient': {
-      cy.get('[data-testing="getHelpIssuesIngredient"]').click()
-      break
-    }
-    default: {
-      throw new Error('selectOrderIssue: unkown issue')
-    }
+  case 'ingredient': {
+    cy.get('[data-testing="getHelpIssuesIngredient"]').click()
+    break
+  }
+  default: {
+    throw new Error('selectOrderIssue: unkown issue')
+  }
   }
 }
