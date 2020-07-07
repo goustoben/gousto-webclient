@@ -34,6 +34,33 @@ describe('VariantRecipeList', () => {
         expect(wrapper.find('.recipeList')).toHaveLength(1)
       })
 
+      test('should render sorted variants', () => {
+        expect(wrapper.find(VariantRecipeListItemContainer).at(0).prop('recipeName')).toEqual('Variant One')
+        expect(wrapper.find(VariantRecipeListItemContainer).at(1).prop('recipeName')).toEqual('Variant Two')
+        expect(wrapper.find(VariantRecipeListItemContainer).at(2).prop('recipeName')).toEqual('Chicken curry')
+      })
+
+      describe('When user is on details screen', () => {
+        beforeEach(() => {
+          wrapper = shallow(<VariantRecipeList
+            recipeVariants={recipeVariants}
+            selectedRecipe={selectedRecipe}
+            originalId="9999"
+            collectionId="1234abcd"
+            isOnDetailScreen
+            selectRecipeVariant={() => { }}
+            menuRecipeDetailVisibilityChange={() => { }}
+            trackVariantListDisplay={() => { }}
+          />)
+        })
+
+        it('should not sort variants', () => {
+          expect(wrapper.find(VariantRecipeListItemContainer).at(0).prop('recipeName')).toEqual('Chicken curry')
+          expect(wrapper.find(VariantRecipeListItemContainer).at(1).prop('recipeName')).toEqual('Variant One')
+          expect(wrapper.find(VariantRecipeListItemContainer).at(2).prop('recipeName')).toEqual('Variant Two')
+        })
+      })
+
       describe('When user clicks on variant', () => {
         const selectRecipeVariant = jest.fn()
         const trackVariantListDisplay = jest.fn()
