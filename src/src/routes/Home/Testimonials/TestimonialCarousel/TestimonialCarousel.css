@@ -1,6 +1,7 @@
 @value ScreenXXSMax from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 @value Chia, Mushroom50, Pepper from 'styles/colors.css';
+@value BreakpointToMedium from 'design-language/breakpoints.css';
 
 .container {
 	width: 100%;
@@ -18,6 +19,13 @@
 	@media (width > 480px) and (width < 769px) {
 		margin: 0 5px;
 	}
+
+  .homepageRedesign & {
+    @media BreakpointToMedium {
+      margin-right: 2.3rem;
+      margin-left: 2.3rem;
+    }
+  }
 }
 
 .container :global .carousel-dotted .slick-slider {

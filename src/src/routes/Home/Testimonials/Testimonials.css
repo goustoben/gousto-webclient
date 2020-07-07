@@ -1,5 +1,6 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
-@value LightestAccessible from 'styles/colors.css';
+@value NewGrey from 'styles/colors.css';
+@value BreakpointToMedium from 'design-language/breakpoints.css';
 
 .headerBase {
 	text-align: center;
@@ -10,7 +11,7 @@
 	composes: headerXL from 'styles/typography.css';
 
   .homepageRedesign & {
-    color: LightestAccessible;
+    color: NewGrey;
     margin: 0.5rem 0 2rem;
   }
 }
@@ -19,6 +20,13 @@
 	composes: paddingXXXLTop from 'sass-loader!styles/spacing.scss';
   &.homepageRedesign {
     padding: 0;
+
+    @media BreakpointToMedium {
+      h2 {
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+    }
   }
 
 	@media ScreenXSMax {

@@ -1,0 +1,32 @@
+@value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
+
+.homepageRedesign {
+  > div > div {
+    &:first-of-type {
+      padding-bottom: 1.5rem;
+    }
+
+    > div > div:first-of-type {
+      margin-bottom: 0;
+
+      @media BreakpointFromMedium {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  p:empty {
+    display: none;
+  }
+
+  @media BreakpointToMedium {
+    p {
+      margin-top: 1rem;
+    }
+
+    > div {
+      padding-right: 2.5rem;
+      padding-left: 2.5rem;
+    }
+  }
+}

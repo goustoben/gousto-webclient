@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import home from 'config/home'
 import { CTAHomepageContainer } from '../CTAHomepageContainer'
 
 describe('CTAHomepageContainer', () => {
@@ -61,7 +60,6 @@ describe('CTAHomepageContainer', () => {
         }
         const renderedHTML = wrapper.dive()
         expect(renderedHTML.exists('.buttonContainer.homepageRedesign.fontStyleBodyL')).toBeTruthy()
-        expect(renderedHTML.contains(home.CTA.mainRedesign)).toBeTruthy()
         expect(wrapper.props()).toEqual(expect.objectContaining(expected))
       })
     })

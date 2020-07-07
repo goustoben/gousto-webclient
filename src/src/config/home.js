@@ -31,17 +31,17 @@ module.exports = {
     header: 'How does Gousto work?',
     description: '',
     graphicType: 'svg',
-    steps: [{
-      path: 'icon-choose',
-      title: 'Click Click',
+    steps: (redesignEnabled) => [{
+      path: redesignEnabled ? 'icon-choose-redesign' : 'icon-choose',
+      title: redesignEnabled ? '' : 'Click Click',
       description: 'Discover 40+ tasty recipes each week including new cuisines, family favourites, and ten minute meals.',
     }, {
-      path: 'icon-delivery',
-      title: 'Ding-dong',
+      path: redesignEnabled ? 'icon-delivery-redesign' : 'icon-delivery',
+      title: redesignEnabled ? '' : 'Ding-dong',
       description: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.',
     }, {
-      path: 'icon-cook',
-      title: 'Ta-da!',
+      path: redesignEnabled ? 'icon-cook-redesign' : 'icon-cook',
+      title: redesignEnabled ? '' : 'Ta-da!',
       description: 'Cook up impressive meals from just £2.98 per serving, with all of the flavour and none of the fuss.',
     }],
   },
@@ -50,6 +50,11 @@ module.exports = {
     header: <Content contentKeys={'productBenefitTitleDefault'}><span>3 simple reasons to choose Gousto</span></Content>,
     description: <Content contentKeys={'productBenefitDescriptionDefault'}><span>With the right ingredients, you can create something amazing.</span></Content>,
     steps: (variant, redesignEnabled) => ([
+      {
+        path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : (redesignEnabled ? require('media/photos/variety-redesign.jpg') : require('media/photos/variety.jpg')), // eslint-disable-line global-require
+        title: <Content contentKeys={'thirdProductBenefitTitleDefault'}><span>Variety</span></Content>,
+        description: <Content contentKeys={'thirdProductBenefitDescriptionDefault'}><span>From family classics and ten minute meals to Fine Dine In.</span></Content>,
+      },
       {
         path: (variant === 'tv') ? require('media/photos/quality-alt.jpg') : (redesignEnabled ? require('media/photos/quality-redesign.jpg') : require('media/photos/quality.jpg')), // eslint-disable-line global-require
         title: <Content contentKeys={'firstProductBenefitTitleDefault'}><span>Quality</span></Content>,
@@ -60,11 +65,6 @@ module.exports = {
         title: <Content contentKeys={'secondProductBenefitTitleDefault'}><span>Simplicity</span></Content>,
         description: <Content contentKeys={'secondProductBenefitDescriptionDefault'}><span>Easy to follow recipes and perfectly measured ingredients.</span></Content>,
       },
-      {
-        path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : (redesignEnabled ? require('media/photos/variety-redesign.jpg') : require('media/photos/variety.jpg')), // eslint-disable-line global-require
-        title: <Content contentKeys={'thirdProductBenefitTitleDefault'}><span>Variety</span></Content>,
-        description: <Content contentKeys={'thirdProductBenefitDescriptionDefault'}><span>From family classics and ten minute meals to Fine Dine In.</span></Content>,
-      },
     ]),
   },
   CTA: {
@@ -73,6 +73,7 @@ module.exports = {
     join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     loggedIn: {
       main: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
+      mainRedesign: <span>See Menu</span>,
       join: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     },
   },

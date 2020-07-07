@@ -2,7 +2,9 @@
 @value SpacingXXL from 'sass-loader!styles/spacing.scss';
 @value graphicMinSize 150px;
 @value graphicMaxSize 250px;
+@value graphicDefaultSize 169px;
 @value NewGrey from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
 	composes: col-xs-12 col-sm-4 from 'sass-loader!styles/bootstrap.scss';
@@ -37,6 +39,21 @@
 		width: graphicMinSize;
 		min-height: graphicMinSize;
 	}
+}
+
+.homepageRedesign {
+  .svg, .image {
+    width: graphicMaxSize;
+    height: graphicMaxSize;
+    border-radius: 0;
+  }
+
+  @media BreakpointFromMedium {
+    .svg, .image {
+      width: graphicDefaultSize;
+      height: graphicDefaultSize;
+    }
+  }
 }
 
 .title {

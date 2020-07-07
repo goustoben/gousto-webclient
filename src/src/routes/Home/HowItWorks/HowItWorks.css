@@ -1,14 +1,15 @@
 @value Blackberry, NewGrey from 'styles/colors.css';
-@value BreakpointFromLarge from 'design-language/breakpoints.css';
+@value BreakpointFromLarge, BreakpointToMedium from 'design-language/breakpoints.css';
 
 .homepageRedesign {
   composes: fontStyleBody from 'design-language/typography.css';
   color: NewGrey;
 
-  img {
-    width: 169px;
-    height: 169px;
-    border-radius: 0;
+  @media BreakpointToMedium {
+    > div {
+      padding-right: 2.5rem;
+      padding-left: 2.5rem;
+    }
   }
 
   > div > div {
