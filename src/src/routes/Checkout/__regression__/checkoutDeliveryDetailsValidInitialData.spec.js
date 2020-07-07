@@ -1,6 +1,6 @@
-import { goToCheckout, goToCheckoutDeliveryDetails } from '../pageUtils/checkout/checkoutAboutYou'
-import { setMocks } from '../pageUtils/checkout/checkoutDelivery'
-import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
+import { goToCheckout, goToCheckoutDeliveryDetails } from './pageUtils/checkout/checkoutAboutYou'
+import { setMocks } from './pageUtils/checkout/checkoutDelivery'
+import { withPlatformTags, WEB, MOBILE } from '../../../utils/regression/tags'
 
 describe("Given I'm a logged out user", () => {
   describe('When I land on the delivery detail step of the checkout', () => {

@@ -4,7 +4,7 @@ import {
   getPaymentSyncErrors,
   fillAllIframe,
   clearAndFillNumberIframe
-} from '../../pageUtils/checkout/checkoutPayment'
+} from './pageUtils/checkout/checkoutPayment'
 
 const CARDNAME_ERROR = { cardName: 'Card name is required' }
 const ADDRESS = "FLAT 10, MORRIS HOUSE, SWAINSON ROAD, LONDON, MIDDLESEX, W3 7UP"
@@ -32,7 +32,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
     it("Then my address has persisted from the previous step", () => {
       cy.get('[data-testing="checkoutBillingAddress"]')
         .should('contain', ADDRESS)
-        cy.window().then(getHouseNo).should('equal', HOUSENO)
+      cy.window().then(getHouseNo).should('equal', HOUSENO)
     })
 
     describe('And I have not filled in my card name', () => {
@@ -76,7 +76,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
           })
         })
         describe('And I click the CTA', () => {
-          beforeEach(() =>{
+          beforeEach(() => {
             cy.get('[data-testing="checkoutCTA"]')
               .click()
           })

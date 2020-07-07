@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://frontend.gousto.local/",
-  "integrationFolder": "tests",
+  "integrationFolder": "../../src/src",
+  "testFiles": "**/__regression__/*",
   "screenshotsFolder": "screenshots",
   "fixturesFolder": "fixtures",
   "supportFile" : "support/index.js",

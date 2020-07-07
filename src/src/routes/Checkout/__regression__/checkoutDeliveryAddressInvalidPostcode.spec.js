@@ -1,6 +1,6 @@
-import { withPlatformTags, WEB, MOBILE } from '../utils/tags'
-import * as checkoutAboutYou  from '../pageUtils/checkout/checkoutAboutYou'
-import * as checkoutDelivery  from '../pageUtils/checkout/checkoutDelivery'
+import { withPlatformTags, WEB, MOBILE } from '../../../utils/regression/tags'
+import * as checkoutAboutYou from './pageUtils/checkout/checkoutAboutYou'
+import * as checkoutDelivery from './pageUtils/checkout/checkoutDelivery'
 
 describe('Given I’m a gousto logged-out website visitor', () => {
   describe('When I land on the delivery step of the checkout', () => {
@@ -27,10 +27,10 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         cy.get('[data-testing="checkoutPostcodeError"] p').contains('postcode must be at least 5 characters')
 
         cy.get('[data-testing="checkoutAddressDropdown"]')
-        .click()
-        .get('.Select-menu-outer .Select-menu .Select-option')
-        .eq(1)
-        .should('not.exist')
+          .click()
+          .get('.Select-menu-outer .Select-menu .Select-option')
+          .eq(1)
+          .should('not.exist')
       })
     })
 

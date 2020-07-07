@@ -1,8 +1,8 @@
 const DATE = new Date(2020, 4, 1).getTime()
 
-const getStore = (win) => {
-  return win.__store__
-}
+const getStore = (win) => (
+  win.__store__
+)
 
 export const setMocks = () => {
   cy.server()

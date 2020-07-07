@@ -1,4 +1,4 @@
-import { withPlatformTags, MOBILE, WEB } from '../utils/tags'
+import { withPlatformTags, MOBILE, WEB } from '../../../utils/regression/tags'
 
 describe("User log in flow", () => {
   beforeEach(() => {

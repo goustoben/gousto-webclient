@@ -199,7 +199,7 @@
     ],
     "testMatch": [
       "**/__tests__/**/[^.]*.js?(x)",
-      "**/?(*.)(spec|test).js?(x)"
+      "**/?(*.)(test).js?(x)"
     ],
     "moduleNameMapper": {
       "^.+\\.(css|scss)$": "identity-obj-proxy"
