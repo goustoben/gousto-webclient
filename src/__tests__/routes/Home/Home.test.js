@@ -78,12 +78,12 @@ describe('Home', () => {
       wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated={false} />, { context: { store } })
       expect(wrapper.find(HomeSections)).toHaveLength(1)
       expect(wrapper.find(HomeSections).prop('modules')).toEqual([
-        'emailForm',
         'hero',
         'howItWorks',
         'subscription',
         'recipes',
         'whatsInYourBox',
+        'emailForm',
         'testimonials',
         'testedAndLovedBy',
       ])

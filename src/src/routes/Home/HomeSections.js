@@ -54,11 +54,7 @@ class HomeSections extends Component {
     subscription: props => <Subscription {...props} />,
     whatsInYourBox: props => <InYourBox {...props} />,
     testedAndLovedBy: props => <TestedLoved {...props} />,
-    ...(
-      this.props.isSignupReductionEnabled
-        ? { emailForm: props => <EmailForm {...props} /> }
-        : {}
-    ),
+    emailForm: props => <EmailForm {...props} />,
   }
 
   renderModule(name, order) {

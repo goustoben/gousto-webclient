@@ -223,6 +223,7 @@
     @media BreakpointFromMedium {
       text-align: left;
       margin-bottom: 1rem;
+      max-width: 340px;
     }
   }
 }

@@ -67,8 +67,8 @@ class Home extends React.Component {
     }
 
     return [
-      'emailForm', 'hero', 'howItWorks', 'subscription', 'recipes',
-      'whatsInYourBox', 'testimonials',
+      'hero', 'howItWorks', 'subscription', 'recipes',
+      'whatsInYourBox', 'emailForm', 'testimonials',
       'testedAndLovedBy',
     ]
   }
@@ -81,10 +81,10 @@ class Home extends React.Component {
 
     if (isAuthenticated) {
       ctaUri = routes.client.menu
-      ctaText = home.CTA.loggedIn.main
+      ctaText = isHomePageRedesignEnabled ? home.CTA.loggedIn.mainRedesign : home.CTA.loggedIn.main
     } else {
       ctaUri = routes.client.signup
-      ctaText = home.CTA.main
+      ctaText = isHomePageRedesignEnabled ? home.CTA.mainRedesign : home.CTA.main
     }
 
     const link = [
@@ -147,6 +147,12 @@ class Home extends React.Component {
             isHomePageRedesignEnabled,
           }}
           testedAndLovedBy={{
+            isHomePageRedesignEnabled,
+          }}
+          subscription={{
+            isHomePageRedesignEnabled,
+          }}
+          emailForm={{
             isHomePageRedesignEnabled,
           }}
         />

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
 import classNames from 'classnames'
+import typography from 'design-language/typography.css'
 import css from './Panel.css'
 
 const Panel = ({ path, title, description, graphicType, isHomePageRedesignEnabled }) => (
@@ -12,7 +13,7 @@ const Panel = ({ path, title, description, graphicType, isHomePageRedesignEnable
     </div>
     <p className={classNames({ [css.title]: !isHomePageRedesignEnabled, [css.titleRedesign]: isHomePageRedesignEnabled })}>{title}</p>
     <div className={css.descriptionContainer}>
-      <p className={css.description}>{description}</p>
+      <p className={classNames(css.description, {[typography.fontStyleBody]: isHomePageRedesignEnabled })}>{description}</p>
     </div>
   </div>
 )

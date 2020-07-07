@@ -22,7 +22,6 @@ import LoadMoreLink from 'LoadMoreLink'
 import { Image } from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import Tag from 'routes/Menu/Recipe/Tag'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeAttribute } from 'routes/Menu/Recipe/RecipeAttribute'
 import { ReadMoreText } from './ReadMoreText'
@@ -71,10 +70,6 @@ function renderRecipe(recipe) {
               headlineFont
             />
             <span>
-              <Tag
-                centered={false}
-                spaced={false}
-              />
               <RecipeRating
                 view="simple"
                 average={rating.average}

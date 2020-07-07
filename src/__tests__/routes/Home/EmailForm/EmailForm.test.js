@@ -48,7 +48,7 @@ describe('EmailForm', () => {
 
   test('should display successful message for newsletter subscription', () => {
     wrapper.setState({ emailSubmitted: true })
-    expect(wrapper.find(P).at(0).find('span').text()).toEqual('Thank you, you\'re in the queue. We\'ll let you know as soon as you can place your order')
+    expect(wrapper.find(P).at(0).find('span').text()).toEqual('Hooray! You are now subscribed to our delicious emails.')
   })
 
   test('should show an error message if email not valid', () => {

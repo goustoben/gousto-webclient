@@ -1,5 +1,6 @@
-/* eslint-disable global-require */
 import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { P } from 'Page/Elements'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
@@ -7,6 +8,7 @@ import Form from 'Form'
 import { validateEmail } from 'utils/auth'
 import { newsletterSubscribe } from 'apis/customers'
 import config from 'config/home'
+import typography from 'design-language/typography.css'
 import css from './EmailForm.css'
 
 class EmailForm extends React.PureComponent {
@@ -52,19 +54,20 @@ class EmailForm extends React.PureComponent {
 
   render() {
     const { email, emailSubmitted, errorMessage } = this.state
+    const { isHomePageRedesignEnabled } = this.props
 
     return (
-      <div className={css.container}>
-        <h2 className={css.title}>
-          <span>Join our Gousto Priority Queue</span>
+      <div className={classnames(css.container, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
+        <h2 className={classnames(css.title, { [typography.fontStyleXL]: isHomePageRedesignEnabled })}>
+          <span>Hungry for cooking ideas?</span>
         </h2>
         <div className={css.form}>
           {
             !emailSubmitted
               ? (
                 <div>
-                  <P className={css.description}>
-                    <span>We&apos;re full to the brim right now and can&apos;t take any new customer orders - if you leave your contact details below, we&apos;ll let you know as soon as you can place your order. Won&apos;t be long!</span>
+                  <P className={classnames(css.description, {[typography.fontStyleBody]: isHomePageRedesignEnabled })}>
+                    <span>Get weekly recipe inspiration and our best cooking tips delivered straight to your inbox</span>
                   </P>
                   <Form onSubmit={this.handleSubmit}>
                     <div className={css.row}>
@@ -83,24 +86,17 @@ class EmailForm extends React.PureComponent {
                       </div>
                       <Button
                         onClick={this.handleSubmit}
-                        className={css.inputs}
+                        className={classnames(css.inputs, {[typography.fontStyleSubHead]: isHomePageRedesignEnabled })}
                       >
-                        Join now
+                        Subscribe now
                       </Button>
                     </div>
                   </Form>
-                  <P className={css.login}>
-                    <span>
-                      Already a Gousto subscriber? Please&nbsp;
-                      <a href="#login">log in</a>
-                      .
-                    </span>
-                  </P>
                 </div>
               )
               : (
                 <P className={css.description}>
-                  <span>Thank you, you&apos;re in the queue. We&apos;ll let you know as soon as you can place your order</span>
+                  <span>Hooray! You are now subscribed to our delicious emails.</span>
                 </P>
               )
           }
@@ -117,6 +113,14 @@ class EmailForm extends React.PureComponent {
       </div>
     )
   }
+}
+
+EmailForm.propTypes = {
+  isHomePageRedesignEnabled: PropTypes.bool,
+}
+
+EmailForm.defaultProps = {
+  isHomePageRedesignEnabled: false,
 }
 
 export {

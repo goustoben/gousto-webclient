@@ -2,12 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Carousel from 'Carousel'
 import Immutable from 'immutable'
+import classnames from 'classnames'
 import config from 'config/home'
 import Testimonial from './Testimonial'
 import css from './TestimonialCarousel.css'
 
 const TestimonialCarousel = ({ testimonials = config.testimonials, showLink, isHomePageRedesignEnabled }) => (
-  <div className={css.container}>
+  <div className={classnames(css.container, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
     <Carousel
       adaptiveHeight={false}
       speed={400}

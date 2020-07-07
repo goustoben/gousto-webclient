@@ -12,7 +12,6 @@ import Link from 'Link'
 import { Image } from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import Tag from 'routes/Menu/Recipe/Tag'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { H1 } from 'Page/Header'
 import { ReadMoreText } from 'routes/Cookbook/Hub/ReadMoreText'
@@ -165,17 +164,6 @@ describe('Hub', () => {
           .children(Col)
           .first()
           .find(RecipeRating),
-      ).toHaveLength(1)
-    })
-
-    test('should have a Tag child in first Col', () => {
-      expect(
-        wrapper
-          .children(PageContent)
-          .children(Row)
-          .children(Col)
-          .first()
-          .find(Tag),
       ).toHaveLength(1)
     })
 
