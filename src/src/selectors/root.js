@@ -3,7 +3,6 @@ export const getStock = ({ menuRecipeStock }) => menuRecipeStock
 export const getBasket = ({ basket }) => basket
 export const getRecipes = ({ recipes }) => recipes
 export const getMenuRecipeIds = ({ menuRecipes }) => menuRecipes
-export const getMenuRecipes = ({ menuCollectionRecipes }) => menuCollectionRecipes
 export const getMenuCollections = ({ menuCollections }) => menuCollections
 export const getMenuCutoffUntil = ({ menuCutoffUntil }) => menuCutoffUntil
 export const getReceiveMenuPending = ({ menuReceiveMenuPending }) => menuReceiveMenuPending
@@ -17,7 +16,6 @@ export default {
   getBasket,
   getRecipes,
   getUserAgent,
-  getMenuRecipes,
   getMenuCollections,
   getMenuCutoffUntil,
   getReceiveMenuPending,

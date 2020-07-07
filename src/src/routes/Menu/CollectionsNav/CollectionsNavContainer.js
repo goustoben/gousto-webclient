@@ -9,7 +9,6 @@ function mapStateToProps(state) {
   return {
     menuCollections: getDisplayedCollections(state),
     features: state.features,
-    menuCollectionRecipes: state.menuCollectionRecipes,
     isPolicyAccepted: state.cookies && state.cookies.get('isPolicyAccepted'),
     menuCurrentCollectionId: collectionId
   }

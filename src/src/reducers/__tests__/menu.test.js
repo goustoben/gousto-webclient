@@ -248,67 +248,6 @@ describe('menu reducer', () => {
         expect(result).toEqual(expectedState)
       })
     })
-  })
-
-  describe('menuCutoffUntil', () => {
-    test('initial state', () => {
-      const result = menu.menuCutoffUntil('', {})
-
-      expect(result).toEqual('')
-    })
-
-    test('unknown actions', () => {
-      const result = menu.menuCutoffUntil('', { type: 'unknown' })
-
-      expect(result).toEqual('')
-    })
-
-    describe('MENU_CUTOFF_UNTIL_RECEIVE', () => {
-      test('cutoffUntil set to value received in state', () => {
-        const result = menu.menuCutoffUntil('', {
-          type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
-          cutoffUntil: '2020-02-20'
-        })
-
-        expect(result).toEqual('2020-02-20')
-      })
-    })
-  })
-
-  describe('menuCollectionRecipes', () => {
-    test('initial state', () => {
-      const result = menu.menuCollectionRecipes(Immutable.Map(), {})
-
-      expect(result).toEqual(Immutable.Map())
-    })
-
-    test('unknown actions', () => {
-      const result = menu.menuCollectionRecipes(Immutable.Map(), { type: 'unknown' })
-
-      expect(result).toEqual(Immutable.Map())
-    })
-
-    describe('MENU_COLLECTION_RECIPES_RECEIVE', () => {
-      test('recipes ids for collection should be set in state', () => {
-        const expectedResult = Immutable.fromJS({
-          'collection-id': ['1', '2']
-        })
-
-        const result = menu.menuCollectionRecipes(Immutable.Map(),
-          {
-            type: 'MENU_COLLECTION_RECIPES_RECEIVE',
-            collectionId: 'collection-id',
-            recipes: [{
-              id: '1',
-            }, {
-              id: '2'
-            }
-            ]
-          })
-
-        expect(result).toEqual(expectedResult)
-      })
-    })
 
     describe('MENU_CALCULATE_TIME_TO_USABLE', () => {
       test('should set hasCalculatedTimeToUsable to true', () => {
@@ -385,6 +324,60 @@ describe('menu reducer', () => {
           })
         })
       })
+    })
+  })
+
+  describe('menuCutoffUntil', () => {
+    test('initial state', () => {
+      const result = menu.menuCutoffUntil('', {})
+
+      expect(result).toEqual('')
+    })
+
+    test('unknown actions', () => {
+      const result = menu.menuCutoffUntil('', { type: 'unknown' })
+
+      expect(result).toEqual('')
+    })
+
+    describe('MENU_CUTOFF_UNTIL_RECEIVE', () => {
+      test('cutoffUntil set to value received in state', () => {
+        const result = menu.menuCutoffUntil('', {
+          type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
+          cutoffUntil: '2020-02-20'
+        })
+
+        expect(result).toEqual('2020-02-20')
+      })
+    })
+  })
+
+  describe('menuRecipeDetails', () => {
+    describe('when action type MENU_RECIPE_DETAIL_VISIBILITY_CHANGE', () => {
+      test('should set menuRecipeDetails', () => {
+        const recipeId = '123'
+        const result = menu.menuRecipeDetails(Immutable.Map({}), {
+          type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+          recipeId
+        })
+        expect(result).toEqual(Immutable.Map({
+          recipeId
+        }))
+      })
+    })
+  })
+
+  describe('menuBoxPrices', () => {
+    test('should return menuPrices', () => {
+      const result = menu.menuBoxPrices(Immutable.Map({}), {
+        type: actionTypes.MENU_BOX_PRICES_RECEIVE,
+        prices: {
+          items: []
+        }
+      })
+      expect(result).toEqual(Immutable.fromJS({
+        items: []
+      }))
     })
   })
 })

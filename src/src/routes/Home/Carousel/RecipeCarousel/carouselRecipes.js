@@ -1,18 +1,19 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
-import { getMenuRecipes as getMenuCollectionRecipes } from 'selectors/root'
+import { getMenuCollections } from 'selectors/root'
 import { getCurrentMenuRecipes } from 'routes/Menu/selectors/menu'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getRecipeId } from 'utils/recipe'
+import { getRecipesInCollection } from '../../../Menu/selectors/collections'
 
 const getRecipesFromAllRecipesCollection = createSelector(
-  [getMenuCollectionRecipes, getCurrentMenuRecipes],
-  (menuCollectionRecipeIds, allRecipes) => {
+  [getMenuCollections, getCurrentMenuRecipes],
+  (menuCollections, allRecipes) => {
     if (allRecipes.size <= 0) {
       return Immutable.OrderedMap({})
     }
 
-    const recipesIdsInCollection = menuCollectionRecipeIds.get(ALL_RECIPES_COLLECTION_ID) || []
+    const recipesIdsInCollection = getRecipesInCollection(menuCollections, ALL_RECIPES_COLLECTION_ID) || []
 
     const getRecipeDetailsById = (recipeId) => allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
 

@@ -109,16 +109,6 @@ const menu = {
     }
   },
 
-  menuCollectionRecipes: (state = Immutable.Map({}), action) => {
-    switch (action.type) {
-    case actionTypes.MENU_COLLECTION_RECIPES_RECEIVE: {
-      return state.set(action.collectionId, Immutable.List(action.recipes.map(recipe => recipe.id)))
-    }
-    default:
-      return state
-    }
-  },
-
   menuRecipes: (state = Immutable.List(), action) => {
     switch (action.type) {
     case actionTypes.RECIPES_RECEIVE: {
@@ -134,7 +124,6 @@ const menu = {
 
   menuRecipesUpdatedAt: (state = null, action) => {
     switch (action.type) {
-    case actionTypes.MENU_COLLECTION_RECIPES_RECEIVE:
     case actionTypes.RECIPES_RECEIVE: {
       return moment.now()
     }

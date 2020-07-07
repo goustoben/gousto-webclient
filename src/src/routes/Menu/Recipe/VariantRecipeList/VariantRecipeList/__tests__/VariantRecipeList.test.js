@@ -200,12 +200,10 @@ describe('VariantRecipeListContainer', () => {
               {
                 id: '1234adb',
                 slug: 'all-recipes',
-                published: true
+                published: true,
+                recipesInCollection: ['2334']
               }
             ]),
-            menuCollectionRecipes: Immutable.Map({
-              '1234adb': Immutable.List(['2334']),
-            }),
             menu: Immutable.Map({
               menuVariants: Immutable.Map({
                 123: []

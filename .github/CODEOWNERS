@@ -9,8 +9,6 @@
 /src/src/actions/__tests__/basket.test.js       @Gousto/squad-radishes
 /src/src/actions/boxSummary.js       @Gousto/squad-radishes
 /src/src/actions/__tests__/boxSummary.test.js       @Gousto/squad-radishes
-/src/src/actions/loadRecipesForSingleCollection.js       @Gousto/squad-radishes
-/src/src/actions/__tests__/loadRecipesForSingleCollection.test.js       @Gousto/squad-radishes
 /src/src/actions/menu.js       @Gousto/squad-radishes
 /src/src/actions/__tests__/menu.test.js       @Gousto/squad-radishes
 /src/src/actions/menuActionHelper.js       @Gousto/squad-radishes

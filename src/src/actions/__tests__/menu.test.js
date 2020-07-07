@@ -5,7 +5,6 @@ const mockFetchRecipeStock = jest.fn()
 const mockLimitReached = jest.fn()
 const mockGetCutoffDateTime = jest.fn()
 
-const mockDispatchLoadRecipesForAllCollections = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
 
@@ -19,10 +18,6 @@ jest.mock('utils/basket', () => ({
 
 jest.mock('utils/deliveries', () => ({
   getCutoffDateTime: mockGetCutoffDateTime
-}))
-
-jest.mock('actions/menuCollections', () => ({
-  loadRecipesForAllCollections: () => mockDispatchLoadRecipesForAllCollections
 }))
 
 jest.mock('actions/menuServiceLoadDays', () => ({
@@ -77,16 +72,6 @@ describe('menu actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  describe('menuReceiveMenu', () => {
-    test('should return RECIPES_RECEIVE action', () => {
-      const result = menuActions.menuReceiveMenu(['234', '235'])
-      expect(result).toEqual({
-        type: actionTypes.RECIPES_RECEIVE,
-        recipes: ['234', '235'],
-      })
-    })
   })
 
   describe('findSlot', () => {
@@ -365,6 +350,21 @@ describe('menu actions', () => {
           variant_out_of_stock: variantOutOfStock,
           view
         }
+      })
+    })
+  })
+
+  describe('menuReceiveBoxPrices', () => {
+    const prices = {
+      items: []
+    }
+    const tariffId = '233'
+    test('should return action MENU_BOX_PRICES_RECEIVE with price and tariffId', () => {
+      const result = menuActions.menuReceiveBoxPrices(prices, tariffId)
+      expect(result).toEqual({
+        type: actionTypes.MENU_BOX_PRICES_RECEIVE,
+        prices,
+        tariffId,
       })
     })
   })

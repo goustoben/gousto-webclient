@@ -8,7 +8,6 @@ import { limitReached } from 'utils/basket'
 import logger from 'utils/logger'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
-import { loadRecipesForAllCollections } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
 import statusActions from './status'
 import { redirect } from './redirect'
@@ -39,29 +38,10 @@ const menuActions = {
   menuClearStock,
   menuLoadStock,
   menuLoadDays,
-  menuCollectionsReceive,
   menuAddEmptyStock,
   menuBrowseCTAVisibilityChange,
-  menuReceiveCollectionRecipes,
-  menuReceiveMenu,
   menuReceiveMenuPending,
-  loadRecipesForAllCollections,
   menuReceiveBoxPrices,
-}
-
-export function menuReceiveMenu(recipes) {
-  return ({
-    type: actionTypes.RECIPES_RECEIVE,
-    recipes,
-  })
-}
-
-export function menuReceiveCollectionRecipes(collectionId, recipes) {
-  return ({
-    type: actionTypes.MENU_COLLECTION_RECIPES_RECEIVE,
-    collectionId,
-    recipes,
-  })
 }
 
 export function menuReceiveBoxPrices(prices, tariffId) {
@@ -126,13 +106,6 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 export function menuLoadDays() {
   return async (dispatch, getState) => {
     menuServiceLoadDays(dispatch, getState)
-  }
-}
-
-export function menuCollectionsReceive(collections) {
-  return {
-    type: actionTypes.MENU_COLLECTIONS_RECEIVE,
-    collections,
   }
 }
 

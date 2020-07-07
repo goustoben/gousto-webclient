@@ -196,7 +196,7 @@ const selectCollectionFromQuery = (store, query) => {
 const shouldFetchData = (store, params, force, userMenuVariant) => {
   const state = store.getState()
   const menuRecipes = store && state.menuRecipes
-  const menuCollectionRecipes = store && state.menuCollectionRecipes
+  const menuCollections = store && state.menuCollections
   const threshold = (__DEV__) ? 4 : 8
   const stale = moment(state.menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
   const requiresClear = requiresMenuRecipesClear(store, params.orderId)
@@ -211,7 +211,7 @@ const shouldFetchData = (store, params, force, userMenuVariant) => {
     || (menuRecipes && menuRecipes.size <= threshold)
     || stale
     || requiresClear
-    || !menuCollectionRecipes.size
+    || !menuCollections.size
   )
 }
 

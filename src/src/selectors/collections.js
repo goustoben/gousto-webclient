@@ -1,12 +1,11 @@
-import { getCurrentCollectionId } from '../routes/Menu/selectors/collections'
-import { getMenuRecipes } from './root'
+import { getCurrentCollectionId, getMenuCollections, getRecipesInCollection } from '../routes/Menu/selectors/collections'
 
 export const hasJustForYouCollection = ({ menuCollections }) => menuCollections.some(collection => collection.get('slug') === 'recommendations')
 
 export const getRecipePosition = (state, recipeId) => {
-  const menuCollectionRecipes = getMenuRecipes(state)
+  const menuCollections = getMenuCollections(state)
   const currentCollection = getCurrentCollectionId(state)
-  const currentCollectionRecipes = menuCollectionRecipes.get(currentCollection)
+  const currentCollectionRecipes = getRecipesInCollection(menuCollections, currentCollection)
   const indexOfRecipe = currentCollectionRecipes && currentCollectionRecipes.indexOf(recipeId)
 
   return (indexOfRecipe + 1) || null

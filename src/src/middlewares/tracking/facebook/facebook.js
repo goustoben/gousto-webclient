@@ -3,6 +3,7 @@ import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
 import { getPathName } from 'middlewares/tracking/utils'
 import { getWindow } from 'utils/window'
+import { getRecipesInCollection } from '../../../routes/Menu/selectors/collections'
 import { getUserData } from './router'
 
 /**
@@ -36,10 +37,10 @@ export const showRecipeTracking = ({ recipeId }, { recipes, routing }) => {
  * Whenever a collection change
  * @param collectionName
  * @param collectionId
- * @param menuCollectionRecipes
+ * @param menuCollections
  */
-export const showCollectionTracking = ({ collectionName, collectionId }, { menuCollectionRecipes }) => {
-  const recipeIdsByCollection = menuCollectionRecipes.get(collectionId)
+export const showCollectionTracking = ({ collectionName, collectionId }, { menuCollections }) => {
+  const recipeIdsByCollection = getRecipesInCollection(menuCollections, collectionId)
 
   if (recipeIdsByCollection) {
     const recipesIds = recipeIdsByCollection.toArray()

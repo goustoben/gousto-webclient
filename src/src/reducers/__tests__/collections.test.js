@@ -158,65 +158,23 @@ describe('collections reducer', () => {
     })
   })
 
-  describe('COLLECTIONS_RECEIVE_COLLECTION_RECIPES', () => {
-    test('should load recipes ids into given collection', () => {
-      const initialState = Immutable.OrderedMap({
-        'collection-1': Immutable.fromJS({
-          id: 'collection-1',
-          title: 'collection 1',
-          recipes: [4, 5, 6],
-        }),
-        'collection-2': Immutable.fromJS({
-          id: 'collection-2',
-          title: 'collection 2',
-          recipes: [1, 2],
-        }),
-      })
+  describe('COOKBOOK_RECEIVE_COLLECTION_RECIPES', () => {
+    const initialState = Immutable.OrderedMap({})
+    test('should set recipe ids for collection', () => {
       const action = {
-        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
-        collectionId: 'collection-1',
-        recipes: [
-          { id: 1, title: 'recipe 1' },
-          { id: 2, title: 'recipe 2' },
-          { id: 3, title: 'recipe 3' },
-        ],
+        type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
+        recipes: [{
+          id: 1
+        }],
+        collectionId: '1234'
       }
+
       const result = collectionsReducer.collections(initialState, action)
-      const expectedState = Immutable.OrderedMap({
-        'collection-1': Immutable.fromJS({
-          id: 'collection-1',
-          title: 'collection 1',
-          recipes: [1, 2, 3],
-        }),
-        'collection-2': Immutable.fromJS({
-          id: 'collection-2',
-          title: 'collection 2',
-          recipes: [1, 2],
-        }),
-      })
-
-      expect(Immutable.is(result, expectedState)).toEqual(true)
-    })
-
-    test("should load collection with recipes if collection doesn't exist yet", () => {
-      const action = {
-        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
-        collectionId: 'collection-1',
-        recipes: [
-          { id: 1, title: 'recipe 1' },
-          { id: 2, title: 'recipe 2' },
-          { id: 3, title: 'recipe 3' },
-        ],
-      }
-      const result = collectionsReducer.collections(
-        Immutable.OrderedMap({}),
-        action,
-      )
-      const expectedState = Immutable.OrderedMap({
-        'collection-1': Immutable.fromJS({ recipes: [1, 2, 3] }),
-      })
-
-      expect(Immutable.is(result, expectedState)).toEqual(true)
+      expect(result).toEqual(Immutable.OrderedMap({
+        1234: Immutable.fromJS({
+          recipes: [1]
+        })
+      }))
     })
   })
 })

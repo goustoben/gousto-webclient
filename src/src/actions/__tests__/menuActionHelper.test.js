@@ -1,12 +1,10 @@
 import Immutable from 'immutable'
-import { loadMenuCollectionsWithMenuService, getStockAvailability } from 'actions/menuActionHelper'
-import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
+import { getStockAvailability, loadMenuCollectionsWithMenuService } from 'actions/menuActionHelper'
 import { safeJestMock } from '_testing/mocks'
 import * as landingCollectionImport from '../../routes/Menu/actions/menuSetLandingCollection'
 
 const mockActiveMenuForDate = {}
-
-jest.mock('actions/menuCollections')
+const menuSetLandingCollection = safeJestMock(landingCollectionImport, 'menuSetLandingCollection')
 
 jest.mock('routes/Menu/selectors/menu', () => ({
   activeMenuForDate: () => mockActiveMenuForDate,
@@ -20,19 +18,13 @@ jest.mock('apis/transformers/recipes', () => ({
   recipesTransformer: () => 'mock recipe',
 }))
 
-jest.mock('apis/transformers/collectionRecipes', () => ({
-  collectionRecipesTransformer: () => 'mock collection recipes',
-}))
-
-const menuSetLandingCollection = safeJestMock(landingCollectionImport, 'menuSetLandingCollection')
-
 describe('loadMenuCollectionsWithMenuService', () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockActiveMenuForDate.id = '234'
   })
 
-  test('calls menuLoadCollections and loadRecipesForAllCollections with menuservice data', async () => {
+  test('calls menuLoadCollections with menuservice data', async () => {
     const getState = () => ({
       menuService: {
         data: [ 'some element' ]
@@ -42,19 +34,34 @@ describe('loadMenuCollectionsWithMenuService', () => {
     const dispatch = jest.fn()
     const background = true
 
-    const mockMenuLoadDispatcher = jest.fn()
-    menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-    loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-
     await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', background)
 
-    expect(menuLoadCollections).toHaveBeenCalledWith('any Date', background, 'mock collection')
-    expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)
-    expect(loadRecipesForAllCollections).toHaveBeenCalledWith('mock recipe', 'mock collection recipes')
     expect(menuSetLandingCollection).toHaveBeenCalled()
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'MENU_COLLECTIONS_RECEIVE',
+      collections: 'mock collection'
+    })
     expect(dispatch).toHaveBeenCalledWith({
       type: 'BASKET_CURRENT_MENU_ID_CHANGE',
       menuId: '234'
+    })
+  })
+
+  test('calls menuReceiveMenu with recipes', async () => {
+    const getState = () => ({
+      menuService: {
+        data: [ 'some element' ]
+      },
+    })
+
+    const dispatch = jest.fn()
+    const background = true
+
+    await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', background)
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'RECIPES_RECEIVE',
+      recipes: 'mock recipe'
     })
   })
 
@@ -63,15 +70,11 @@ describe('loadMenuCollectionsWithMenuService', () => {
       menuService: undefined
     })
 
-    test('should not call menuLoadCollections or loadRecipesForAllCollections', async () => {
-      const mockMenuLoadDispatcher = jest.fn()
-      menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-      loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
+    test('should not call menuLoadCollections', async () => {
+      const dispatch = jest.fn()
+      await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', true)
 
-      await loadMenuCollectionsWithMenuService(() => {}, getState, 'any Date', true)
-
-      expect(menuLoadCollections).not.toHaveBeenCalled()
-      expect(loadRecipesForAllCollections).not.toHaveBeenCalled()
+      expect(dispatch).not.toHaveBeenCalled()
     })
   })
 
@@ -83,14 +86,11 @@ describe('loadMenuCollectionsWithMenuService', () => {
     })
 
     test('should not call menuLoadCollections or loadRecipesForAllCollections', async () => {
-      const mockMenuLoadDispatcher = jest.fn()
-      menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-      loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
+      const dispatch = jest.fn()
 
-      await loadMenuCollectionsWithMenuService(() => {}, getState, 'any Date', true)
+      await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', true)
 
-      expect(menuLoadCollections).not.toHaveBeenCalled()
-      expect(loadRecipesForAllCollections).not.toHaveBeenCalled()
+      expect(dispatch).not.toHaveBeenCalled()
     })
   })
 
@@ -102,14 +102,11 @@ describe('loadMenuCollectionsWithMenuService', () => {
     })
 
     test('should not call menuLoadCollections or loadRecipesForAllCollections', async () => {
-      const mockMenuLoadDispatcher = jest.fn()
-      menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-      loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
+      const dispatch = jest.fn()
 
-      await loadMenuCollectionsWithMenuService(() => {}, getState, 'any Date', true)
+      await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', true)
 
-      expect(menuLoadCollections).not.toHaveBeenCalled()
-      expect(loadRecipesForAllCollections).not.toHaveBeenCalled()
+      expect(dispatch).not.toHaveBeenCalled()
     })
   })
 })

@@ -28,7 +28,6 @@ function mapStateToProps(state, ownProps) {
 
   return {
     showOverlay,
-    menuCollectionRecipes: state.menuCollectionRecipes,
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
     query: query || {},
     params: ownProps.params,

@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect'
 
-import { getStock, getMenuRecipes as getMenuCollectionRecipes } from 'selectors/root'
+import { getStock } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
-import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getCurrentCollectionDietaryClaims } from './collections'
+import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getCurrentCollectionDietaryClaims, getMenuCollections , getRecipesInCollection } from './collections'
 import { getCurrentMenuRecipes } from './menu'
 import { getVariantsForRecipeForCurrentCollection } from './recipe'
 import { getSelectedRecipeVariants, getCurrentMenuVariants } from './variants'
@@ -236,14 +236,14 @@ const getReplacements = (recipeList, recipeIds, getVariantFn) => (
 )
 
 export const getRecipeListRecipes = createSelector(
-  [getCurrentCollectionDietaryClaims, getCurrentMenuRecipes, getMenuCollectionRecipes, getInStockRecipes, getCurrentMenuVariants, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
-  (collectionDietaryClaims, currentMenuRecipes, collectionRecipes, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
+  [getCurrentCollectionDietaryClaims, getCurrentMenuRecipes, getMenuCollections, getInStockRecipes, getCurrentMenuVariants, getSelectedRecipeVariants, getCollectionIdForFiltering, getFilterFn, getRecipeComparatorFactory],
+  (collectionDietaryClaims, currentMenuRecipes, menuCollections, inStockRecipes, currentMenuVariants, selectedVariants, collectionId, filterFn, recipeComparatorFactory) => {
     if (!collectionId) {
       // return all recipes on menu
       return createRecipesResponse(currentMenuRecipes.map(createStandardRecipeView), filterFn, recipeComparatorFactory)
     }
 
-    const recipeIdsInCollection = collectionRecipes.get(collectionId)
+    const recipeIdsInCollection = getRecipesInCollection(menuCollections, collectionId)
 
     if (!recipeIdsInCollection) {
       // return all recipes on menu
