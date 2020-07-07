@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import css from './VariantRecipeList.css'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItem'
 
+const compareCoreRecipeIds = (a, b) => a.coreRecipeId - b.coreRecipeId
+
 class VariantRecipeList extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -48,7 +50,9 @@ class VariantRecipeList extends React.PureComponent {
       return null
     }
 
-    const allVariants = [selectedRecipe, ...recipeVariants]
+    const allVariants = isOnDetailScreen
+      ? [selectedRecipe, ...recipeVariants]
+      : [selectedRecipe, ...recipeVariants].sort(compareCoreRecipeIds)
 
     return (
       <div className={css.recipeList} role="button" tabIndex={-1} onClick={this.preventPropagation} onKeyPress={this.preventPropagation}>
