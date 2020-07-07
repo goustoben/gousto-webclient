@@ -38,7 +38,7 @@ const RecipeCard = ({
       url={recipe.get('url')}
       useWithin={recipe.get('shelfLifeDays')}
       cookingTime={numPortions === 2 ? recipe.get('cookingTime') : recipe.get('cookingTimeFamily')}
-      chef={recipe.get('chef')}
+      roundelImage={recipe.get('roundelImage')}
       description={recipe.get('description')}
       availability={recipe.get('availability')}
       equipment={recipe.get('equipment')}

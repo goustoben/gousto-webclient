@@ -222,7 +222,7 @@
           }
         }
       ],
-      "chef": null,
+      "roundelImage": null,
       "availability": [
         {
           "id": "331",
@@ -1158,7 +1158,7 @@
           }
         }
       ],
-      "chef": null,
+      "roundelImage": null,
       "availability": [
         {
           "id": "332",
@@ -1886,7 +1886,7 @@
           }
         }
       ],
-      "chef": null,
+      "roundelImage": null,
       "availability": [
         {
           "id": "284",
@@ -2919,7 +2919,7 @@
           }
         }
       ],
-      "chef": {
+      "roundelImage": {
         "name": "Joe Wicks",
         "celebrity": true,
         "media": {
