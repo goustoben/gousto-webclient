@@ -1,0 +1,18 @@
+@value White from 'styles/colors.css';
+@value roundelImageBorderWidth 2px;
+@value roundelImageSize calc(70px + roundelImageBorderWidth);
+
+.roundelImage {
+	height: roundelImageSize;
+	margin-top: 10px;
+	position: absolute;
+	right: 10px;
+	top: 0;
+}
+
+.roundelImage :local img {
+	height: 100%;
+	border: roundelImageBorderWidth solid White;
+	background-color: White;
+	border-radius: 50%;
+}

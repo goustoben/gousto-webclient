@@ -44,7 +44,7 @@ describe('<GridRecipe />', () => {
       onClick: () => {},
       highlight: () => {},
       unhighlight: () => {},
-      chef: {
+      roundelImage: {
         media: {},
         name: '',
         celebrity: false,

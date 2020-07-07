@@ -3,11 +3,11 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { Chef } from 'routes/Menu/Recipe/Chef'
+import { RoundelImage } from 'routes/Menu/Recipe/RoundelImage'
 
-describe('<Chef />', () => {
+describe('<RoundelImage />', () => {
   let wrapper
-  const chef = Immutable.fromJS({
+  const roundelImage = Immutable.fromJS({
     name: 'Shu Han Lee ',
     celebrity: true,
     media: {
@@ -18,7 +18,7 @@ describe('<Chef />', () => {
           type: 'signature-image',
           urls: [
             {
-              src: 'Chef.jpg',
+              src: 'RoundelImage.jpg',
               width: 0,
             },
           ],
@@ -39,12 +39,12 @@ describe('<Chef />', () => {
   })
 
   test('should not render img by default', () => {
-    wrapper = shallow(<Chef />)
+    wrapper = shallow(<RoundelImage />)
     expect(wrapper.find('img').length).toEqual(0)
   })
 
-  test('should render chef image', () => {
-    wrapper = shallow(<Chef chef={chef} />)
+  test('should render roundel image', () => {
+    wrapper = shallow(<RoundelImage roundelImage={roundelImage} />)
     expect(wrapper.find('img').length).toEqual(1)
   })
 })

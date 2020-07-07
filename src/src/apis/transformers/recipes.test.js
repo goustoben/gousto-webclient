@@ -467,7 +467,7 @@ describe('recipesTransformer', () => {
           'Vegetable oil'
         ],
         boxType: 'gourmet',
-        chef: {
+        roundelImage: {
           name: 'Health Kitchen - Healthy heart',
           celebrity: true,
           media: {

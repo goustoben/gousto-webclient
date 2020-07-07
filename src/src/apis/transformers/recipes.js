@@ -36,7 +36,7 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
       allergens: allergensTransformer(normalisedAttributes.allergens),
       basics: basicsTransformer(normalisedAttributes.basics),
       boxType: normalisedAttributes.box_type ? normalisedAttributes.box_type.slug : '',
-      chef: roundelTransformer(normalisedAttributes.roundel, brandData),
+      roundelImage: roundelTransformer(normalisedAttributes.roundel, brandData),
       chefPrepared: normalisedAttributes.chef_prepared,
       cookingTime: normalisedAttributes.prep_times.for2,
       cookingTimeFamily: normalisedAttributes.prep_times.for4,

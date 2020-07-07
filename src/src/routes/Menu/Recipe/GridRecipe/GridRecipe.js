@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
-import { Chef } from '../Chef'
+import { RoundelImage } from '../RoundelImage'
 import { Image } from '../Image'
 import { RecipeRatingContainer } from '../Rating'
 import { AddRecipe } from '../AddRecipe'
@@ -15,7 +15,7 @@ import { TitleContainer } from '../Title/TitleContainer'
 import { RecipeInfoBadgesContainer } from '../InfoBadge/RecipeInfoBadgesContainer'
 import css from './GridRecipe.css'
 
-const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, chef, view, detailHover,
+const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, roundelImage, view, detailHover,
   cookingTime, useWithin, equipment, position, diet,
   fiveADay, isChefPrepared, numPortions, isOutOfStock, fineDineInStyle
 }) => (
@@ -49,7 +49,7 @@ const GridRecipe = ({ id, originalId, onClick, media, highlight, unhighlight, ch
       )}
     </div>
     <div>
-      <Chef chef={chef} />
+      <RoundelImage roundelImage={roundelImage} />
     </div>
     <div className={classnames(css.contentWrapper, {[css.fineDineInStyle]: fineDineInStyle})}>
       <div role="button" tabIndex={0} onClick={onClick} onKeyPress={onClick} className={css.titleWrapper}>
@@ -106,7 +106,7 @@ GridRecipe.propTypes = {
   media: PropTypes.instanceOf(Immutable.List).isRequired,
   highlight: PropTypes.func.isRequired,
   unhighlight: PropTypes.func.isRequired,
-  chef: PropTypes.shape({
+  roundelImage: PropTypes.shape({
     media: PropTypes.shape({
       images: PropTypes.array,
     }),
@@ -129,7 +129,7 @@ GridRecipe.propTypes = {
 
 GridRecipe.defaultProps = {
   view: 'grid',
-  chef: Immutable.Map({}),
+  roundelImage: Immutable.Map({}),
   fiveADay: 0,
   isChefPrepared: false,
   numPortions: 2,
