@@ -1,0 +1,82 @@
+@value ScreenXSMax, ScreenMLMin, ScreenSMMin from 'styles/screenSizes.css';
+@value SpacingLG as GutterSize, SpacingXS from 'sass-loader!styles/spacing.scss';
+@value Blackberry, White from 'styles/colors.css';
+@value sizeMD from 'styles/typography.css';
+@value attributesLineHeight 1.8;
+
+@value ColumnWidth 32%;
+@value FeaturedWidth 66%;
+@value MobColumnWidth 100%;
+@value MobGridWidth 50%;
+
+.grid {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderXS from 'styles/borders.css';
+	composes: flex, verticalCenter from 'styles/flex.css';
+	background: White;
+	border-radius: 0;
+	vertical-align: top;
+	composes: inlineBlock from 'styles/display.css';
+	position: relative;
+	width: 100%;
+	@media ScreenXSMax {
+		flex-basis: MobColumnWidth;
+		border-left-width: 0;
+		border-right-width: 0;
+	}
+}
+
+.gridHover {
+	&:hover {
+		box-shadow: 0 4px 4px 0 rgba(51,61,71,0.40);
+	}
+}
+
+.recipeDetails {
+  composes: relative from 'styles/position.css';
+}
+
+.link {
+  cursor: pointer;
+}
+
+.contentWrapper {
+  composes: paddingMD from 'sass-loader!styles/spacing.scss';
+  padding-top: 1rem;
+}
+
+.fineDineInStyle {
+  background-color: Blackberry;
+  color: White;
+}
+
+.titleWrapper {
+  padding-right: 1rem;
+  composes: link;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.score {
+  position: absolute;
+  left: 10px;
+  margin-top: -40px;
+}
+
+.viewDetails {
+  position: relative;
+  float: right;
+  margin-top: -40px;
+  margin-right: 10px;
+  z-index: 12;
+
+  @media ScreenSMMin {
+    margin-top: -50px;
+  }
+}
+
+.buttonContainer {
+	display: flex;
+  align-items: stretch;
+}

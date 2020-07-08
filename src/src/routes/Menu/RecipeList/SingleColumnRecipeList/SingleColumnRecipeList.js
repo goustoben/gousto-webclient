@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
-import { RecipeCardContainer } from '../RecipeCard'
+import { RecipeTileContainer } from '../../Recipe'
 import { CTACard } from '../CTACard'
 
 import css from './SingleColumnRecipeList.css'
@@ -11,8 +11,8 @@ const SingleColumnRecipeList = ({
   recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate
 }) => {
   // eslint-disable-next-line react/prop-types
-  const createRecipeCard = (value, index) => (
-    <RecipeCardContainer
+  const createRecipeTile = (value, index) => (
+    <RecipeTileContainer
       key={`${index}-${value.recipe.get('id')}`}
       originalId={value.originalId}
       recipeId={value.recipe.get('id')}
@@ -22,7 +22,7 @@ const SingleColumnRecipeList = ({
 
   return (
     <div className={css.singleColumnRecipeList}>
-      {recipes.map(createRecipeCard)}
+      {recipes.map(createRecipeTile)}
 
       <CTACard
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}

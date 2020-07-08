@@ -22,7 +22,7 @@ describe('InfoBadgeContainer', () => {
     expect(wrapper.find('InfoBadge').exists()).toBe(true)
   })
 
-  test('should not render InfoBadge even when no slug prop is supplied', () => {
+  test('should render InfoBadge even when no slug prop is supplied', () => {
     const wrapper = shallow(<InfoBadgeContainer otherProp="test" />, {
       context: {
         store: {
