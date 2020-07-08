@@ -58,9 +58,10 @@ describe('getPreselectedCollectionName', () => {
 describe('selectCollection', () => {
   const initalState = {
     features: Immutable.Map({}),
-    menuCollections: Immutable.Map({}),
-    menuCollectionRecipes: Immutable.Map({
-      testCollectionId: Immutable.List(['1', '2', '3'])
+    menuCollections: Immutable.fromJS({
+      testCollectionId: {
+        recipesInCollection: ['1', '2', '3']
+      }
     }),
     basket: Immutable.fromJS({
       numPortions: 2
@@ -78,7 +79,8 @@ describe('selectCollection', () => {
             id: 'testCollectionId',
             shortTitle: 'test collection name',
             slug: 'test-collection-name',
-            published: true
+            published: true,
+            recipesInCollection: ['1', '2', '3']
           }
         })
       )
@@ -107,18 +109,17 @@ describe('selectCollection', () => {
           id: 'differentId',
           shortTitle: 'different name',
           default: false,
-          published: true
+          published: true,
+          recipesInCollection: ['1', '2', '3']
         }),
         defaultCollectionId: Immutable.fromJS({
           id: 'defaultCollectionId',
           shortTitle: 'default collection name',
           default: true,
-          published: true
+          published: true,
+          recipesInCollection: ['1', '2', '3']
+
         })
-      }),
-      menuCollectionRecipes: Immutable.Map({
-        differentId: Immutable.List(['1', '2', '3']),
-        defaultCollectionId: Immutable.List(['1', '2', '3']),
       }),
     }
 

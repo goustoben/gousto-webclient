@@ -50,7 +50,6 @@ describe('menu fetchData', () => {
     menuRecipeStock: Immutable.Map({}),
     menuRecipesUpdatedAt: null,
     menuCollections: Immutable.OrderedMap(),
-    menuCollectionRecipes: Immutable.Map({}),
     user: defaultUserState,
     pending: Immutable.Map({}),
     menu: menuInitialState,
@@ -136,7 +135,7 @@ describe('menu fetchData', () => {
       beforeEach(() => {
         const recipes = ['001', '002', '003', '004', '005', '006', '007', '008', '009']
         state.menuRecipes = Immutable.List(recipes)
-        state.menuCollectionRecipes = state.menuCollectionRecipes.set('123', recipes)
+        state.menuCollections = state.menuCollections.set('123', { recipesInCollection: recipes } )
         state.menuRecipesUpdatedAt = moment()
         getUserMenuVariant.mockReturnValue('')
       })

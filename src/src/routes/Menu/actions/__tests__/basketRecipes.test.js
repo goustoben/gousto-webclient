@@ -41,11 +41,9 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
           id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           published: true,
           default: true,
-          slug: 'foo'
+          slug: 'foo',
+          recipesInCollection: ['123', '234']
         }
-      }),
-      menuCollectionRecipes: Immutable.fromJS({
-        '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
       }),
       routing: {
         locationBeforeTransitions: {
@@ -75,11 +73,9 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
           id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           published: true,
           default: true,
-          slug: 'foo'
+          slug: 'foo',
+          recipesInCollection: ['123', '234']
         }
-      }),
-      menuCollectionRecipes: Immutable.fromJS({
-        '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
       }),
       routing: {
         locationBeforeTransitions: {
@@ -135,11 +131,9 @@ describe('validBasketRecipeAdd', () => {
             id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             published: true,
             default: true,
-            slug: 'foo'
+            slug: 'foo',
+            recipesInCollection: ['123', '234']
           }
-        }),
-        menuCollectionRecipes: Immutable.fromJS({
-          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
         }),
         routing: {
           locationBeforeTransitions: {
@@ -237,11 +231,9 @@ describe('validBasketRecipeAdd', () => {
             id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             published: true,
             default: true,
-            slug: 'foo'
+            slug: 'foo',
+            recipesInCollection: ['123', '234']
           }
-        }),
-        menuCollectionRecipes: Immutable.fromJS({
-          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
         }),
         routing: {
           locationBeforeTransitions: {
@@ -344,11 +336,9 @@ describe('validBasketRecipeAdd', () => {
             id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
             published: true,
             default: true,
-            slug: 'foo'
+            slug: 'foo',
+            recipesInCollection: ['123', '234']
           }
-        }),
-        menuCollectionRecipes: Immutable.fromJS({
-          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
         }),
         routing: {
           locationBeforeTransitions: {
@@ -501,11 +491,9 @@ describe('basketRecipeRemove', () => {
           id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           published: true,
           default: true,
-          slug: 'foo'
+          slug: 'foo',
+          recipesInCollection: ['123', '234']
         }
-      }),
-      menuCollectionRecipes: Immutable.fromJS({
-        '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
       }),
       routing: {
         locationBeforeTransitions: {
@@ -619,11 +607,9 @@ describe('basketRecipeRemove', () => {
           id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           published: true,
           default: true,
-          slug: 'foo'
+          slug: 'foo',
+          recipesInCollection: ['123', '234']
         }
-      }),
-      menuCollectionRecipes: Immutable.fromJS({
-        '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': ['123', '234']
       }),
       routing: {
         locationBeforeTransitions: {

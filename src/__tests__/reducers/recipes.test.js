@@ -37,23 +37,6 @@ describe('recipes reducer', () => {
     })
   })
 
-  describe('COLLECTIONS_RECEIVE_COLLECTION_RECIPES', () => {
-    test('should load recipes into state', () => {
-      const result = recipesReducer.recipes(Immutable.Map({}), {
-        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
-        recipes: [
-          { id: '1', title: 'recipe 1' },
-          { id: '2', title: 'recipe 2' },
-        ],
-      })
-      const expectedState = Immutable.Map()
-        .set('1', Immutable.Map({ id: '1', title: 'recipe 1' }))
-        .set('2', Immutable.Map({ id: '2', title: 'recipe 2' }))
-
-      expect(Immutable.is(result, expectedState)).toEqual(true)
-    })
-  })
-
   describe('RECIPES_PERIOD_STOCK_RECEIVE', () => {
     test('should load recipes stock into state', () => {
       const stock = [

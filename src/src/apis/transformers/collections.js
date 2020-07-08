@@ -14,7 +14,8 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
       published: true,
       shortTitle: normalisedAttributes.short_title || '',
       slug: normalisedAttributes.slug || '',
-      requirements: normalisedAttributes.requirements || {}
+      requirements: normalisedAttributes.requirements || {},
+      recipesInCollection: collectionItem.relationships.recipes.data.map(recipe => recipe.core_recipe_id)
     }
 
     if (normalisedAttributes.slug === 'recommendations') {

@@ -61,8 +61,10 @@ describe('fbTracking', () => {
   })
 
   test('should call showCollectionTracking with actions.FILTERS_COLLECTION_CHANGE', () => {
-    const menuCollectionRecipes = Immutable.fromJS({
-      1: ['123', '234', '345', '456'],
+    const menuCollections = Immutable.fromJS({
+      1: {
+        recipesInCollection: ['123', '234', '345', '456']
+      },
     })
     Tracker(
       {
@@ -70,7 +72,7 @@ describe('fbTracking', () => {
         collectionName: 'test-collection',
         collectionId: '1',
       },
-      { menuCollectionRecipes },
+      { menuCollections },
     )
     expect(fbq).toHaveBeenCalled()
     expect(fbq).toHaveBeenCalledWith('trackCustom', 'ViewCategory', {

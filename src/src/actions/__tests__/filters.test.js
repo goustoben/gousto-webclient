@@ -46,10 +46,7 @@ describe('filters actions', () => {
         state = {
           ...state,
           menuCollections: Immutable.fromJS({
-            newCollectionId: { id: 'newCollectionId', slug: 'dairy-free', published: true },
-          }),
-          menuCollectionRecipes: Immutable.fromJS({
-            newCollectionId: ['111'],
+            newCollectionId: { id: 'newCollectionId', slug: 'dairy-free', published: true, recipesInCollection: ['111'] },
           }),
         }
 
@@ -95,8 +92,13 @@ describe('filters actions', () => {
           beforeEach(() => {
             state = {
               ...state,
-              menuCollectionRecipes: Immutable.Map({
-                [collectionId]: Immutable.List(recipeIds),
+              menuCollections: Immutable.fromJS({
+                [collectionId]: {
+                  id: collectionId,
+                  slug: 'recommendations',
+                  published: true,
+                  recipesInCollection: recipeIds
+                },
               })
             }
 

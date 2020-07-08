@@ -4,6 +4,8 @@ import { getCollectionIdWithName } from 'utils/collections'
 import menuConfig from 'config/menu'
 import { isOutOfStock } from './recipe'
 
+export const getRecipesInCollection = (menuCollections, collectionId) => menuCollections.getIn([collectionId, 'recipesInCollection'], null)
+
 export const getCollectionId = collection => collection.get('id')
 const getCollectionSlug = collection => collection.get('slug')
 const isCollectionPublished = collection => Boolean(collection.get('published'))
@@ -12,7 +14,6 @@ const isCollectionDefault = collection => Boolean(collection.get('default'))
 const isCollectionRecommendations = collection => getCollectionSlug(collection) === 'recommendations'
 
 export const getMenuCollections = state => state.menuCollections
-export const getMenuCollectionRecipes = state => state.menuCollectionRecipes
 export const getMenuRecipeStock = state => state.menuRecipeStock
 export const getCollectionSlugFromQuery = state => {
   if (
@@ -32,8 +33,8 @@ export const getRecommendationsCollection = createSelector(
   menuCollections => menuCollections.find(isCollectionRecommendations) || null
 )
 
-const collectionHasRecipes = (menuCollectionRecipes, collectionId) => {
-  const recipes = menuCollectionRecipes.get(collectionId, null)
+const collectionHasRecipes = (menuCollections, collectionId) => {
+  const recipes = getRecipesInCollection(menuCollections, collectionId)
 
   if (!recipes) {
     return false
@@ -44,13 +45,12 @@ const collectionHasRecipes = (menuCollectionRecipes, collectionId) => {
 
 export const getDisplayedCollections = createSelector(
   getMenuCollections,
-  getMenuCollectionRecipes,
   getMenuRecipeStock,
   getNumPortions,
   getRecommendationsCollection,
-  (menuCollections, menuCollectionRecipes, menuRecipeStock, numPortions, recommendations) => {
+  (menuCollections, menuRecipeStock, numPortions, recommendations) => {
     const collections = menuCollections.filter(
-      collection => isCollectionPublished(collection) && collectionHasRecipes(menuCollectionRecipes, getCollectionId(collection))
+      collection => isCollectionPublished(collection) && collectionHasRecipes(menuCollections, getCollectionId(collection))
     )
 
     if (!recommendations) {
@@ -67,7 +67,7 @@ export const getDisplayedCollections = createSelector(
         return true
       }
 
-      const collectionRecipes = menuCollectionRecipes.get(collectionId)
+      const collectionRecipes = getRecipesInCollection(menuCollections, collectionId) || []
 
       let collectionRecipesInStock = 0
 

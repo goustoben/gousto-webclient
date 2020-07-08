@@ -24,26 +24,29 @@ describe('utils/collections', () => {
     beforeEach(() => {
       state = {
         features: Immutable.Map(),
-        menuCollections: Immutable.fromJS([
-          {
+        menuCollections: Immutable.fromJS({
+          123: {
             published: true,
             shortTitle: 'something',
             slug: 'something',
             id: '123',
             default: true,
+            recipesInCollection: ['', '', ''],
           },
-          {
+          234: {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',
             slug: 'somethings0m3where-strange',
             id: '234',
+            recipesInCollection: ['', '', ''],
           },
-          { published: false, shortTitle: 'secret', slug: 'secret', id: '456' },
-        ]),
-        menuCollectionRecipes: Immutable.fromJS({
-          123: ['', '', ''],
-          234: ['', '', ''],
-          456: ['', '', ''],
+          456: {
+            published: false,
+            shortTitle: 'secret',
+            slug: 'secret',
+            id: '456',
+            recipesInCollection: ['', '', ''],
+          },
         }),
         basket: Immutable.fromJS({
           numPortions: 2
@@ -73,26 +76,23 @@ describe('utils/collections', () => {
     test('should return null for collections which dont have recipes', () => {
       state = {
         features: Immutable.Map(),
-        menuCollections: Immutable.fromJS([
-          {
+        menuCollections: Immutable.fromJS({
+          123: {
             published: true,
             shortTitle: 'something',
             slug: 'something',
             id: '123',
             default: true,
+            recipesInCollection: [],
           },
-          {
+          234: {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',
             slug: 'some&thi!ng@s0m3where strange',
             id: '234',
+            recipesInCollection: ['', '', ''],
           },
-          { published: false, shortTitle: 'secret', id: '456' },
-        ]),
-        menuCollectionRecipes: Immutable.fromJS({
-          123: [],
-          234: ['', '', ''],
-          456: ['', '', ''],
+          456: { published: false, shortTitle: 'secret', id: '456', recipesInCollection: ['', '', '']},
         }),
         basket: Immutable.fromJS({
           numPortions: 2

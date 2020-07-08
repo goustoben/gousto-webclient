@@ -24,7 +24,8 @@ describe('collectionTransformer', () => {
                       data: [
                         {
                           type: 'recipes',
-                          id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5'
+                          id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5',
+                          core_recipe_id: '2106'
                         },
                       ]
                     }
@@ -35,12 +36,7 @@ describe('collectionTransformer', () => {
                   type: 'collection',
                   relationships: {
                     recipes: {
-                      data: [
-                        // {
-                        //   "type": "recipes",
-                        //   "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
-                        // },
-                      ]
+                      data: []
                     }
                   }
                 }
@@ -399,7 +395,8 @@ describe('collectionTransformer', () => {
       published: true,
       shortTitle: 'Chicken',
       slug: 'chicken',
-      requirements: {}
+      requirements: {},
+      recipesInCollection: ['2106']
     },
     {
       colour: '#6ACBB8',
@@ -409,7 +406,8 @@ describe('collectionTransformer', () => {
       published: true,
       shortTitle: '10-Minute Meals',
       slug: '10-minute-meals',
-      requirements: {}
+      requirements: {},
+      recipesInCollection: []
     }]
 
     const result = collectionsTransformer(menuServiceResponse.data[0], menuServiceResponse)

@@ -1,11 +1,23 @@
 import { activeMenuForDate } from 'routes/Menu/selectors/menu'
 import { collectionsTransformer } from 'apis/transformers/collections'
 import { recipesTransformer } from 'apis/transformers/recipes'
-import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
-import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
 import { locationQuery } from '../selectors/routing'
 import { actionTypes } from './actionTypes'
 import { menuSetLandingCollection } from '../routes/Menu/actions/menuSetLandingCollection'
+
+export function menuCollectionsReceive(collections) {
+  return {
+    type: actionTypes.MENU_COLLECTIONS_RECEIVE,
+    collections,
+  }
+}
+
+export function menuReceiveMenu(recipes) {
+  return ({
+    type: actionTypes.RECIPES_RECEIVE,
+    recipes,
+  })
+}
 
 const basketCurrentMenuIdChange = ({id}) => ({
   type: actionTypes.BASKET_CURRENT_MENU_ID_CHANGE,
@@ -48,7 +60,7 @@ function getStockAvailability(getState, recipeStock) {
   }, {})
 }
 
-const loadMenuCollectionsWithMenuService = async (dispatch, getState, date, background) => {
+const loadMenuCollectionsWithMenuService = async (dispatch, getState, date) => {
   const state = getState()
   const menuServiceData = state.menuService
 
@@ -60,10 +72,9 @@ const loadMenuCollectionsWithMenuService = async (dispatch, getState, date, back
   const activeMenu = activeMenuForDate(menuServiceData, date)
   const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
   const transformedRecipes = recipesTransformer(activeMenu, menuServiceData, brandData)
-  const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
 
-  await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
-  await loadRecipesForAllCollections(transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
+  dispatch(menuCollectionsReceive(transformedCollections))
+  dispatch(menuReceiveMenu(transformedRecipes))
 
   // this is unfortunately required because menuSetLandingCollection
   // requires collections, collectionRecipes and recipeStock to all be loaded

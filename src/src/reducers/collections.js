@@ -16,8 +16,7 @@ const collectionsReducer = {
       }, state)
     }
 
-    case actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES:
-    case actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES: {
+    case actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES: {
       const { collectionId, recipes = [] } = action
       const recipeIds = recipes.reduce((accumulator, currentRecipe) => (
         accumulator.push(currentRecipe.id)
