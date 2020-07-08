@@ -3,10 +3,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { RoundelImage } from 'routes/Menu/Recipe/RoundelImage'
+import { RoundelImageContainer } from './RoundelImageContainer'
 
-describe('<RoundelImage />', () => {
-  let wrapper
+describe('<RoundelImageContainer />', () => {
   const roundelImage = Immutable.fromJS({
     name: 'Shu Han Lee ',
     celebrity: true,
@@ -38,13 +37,32 @@ describe('<RoundelImage />', () => {
     },
   })
 
-  test('should not render img by default', () => {
-    wrapper = shallow(<RoundelImage />)
-    expect(wrapper.find('img').length).toEqual(0)
-  })
+  const recipeId = '123'
 
-  test('should render roundel image', () => {
-    wrapper = shallow(<RoundelImage roundelImage={roundelImage} />)
-    expect(wrapper.find('img').length).toEqual(1)
+  const state = {
+    recipes: Immutable.fromJS({
+      [recipeId]: {
+        roundelImage
+      }
+    })
+  }
+
+  const wrapperOptions = {
+    context: {
+      store: {
+        getState: () => state,
+        dispatch: () => {},
+        subscribe: () => {},
+      }
+    }
+  }
+
+  const wrapper = shallow(
+    <RoundelImageContainer recipeId={recipeId} />,
+    wrapperOptions
+  )
+
+  test('should pass down correct props', () => {
+    expect(wrapper.prop('roundelImage')).toEqual(roundelImage)
   })
 })

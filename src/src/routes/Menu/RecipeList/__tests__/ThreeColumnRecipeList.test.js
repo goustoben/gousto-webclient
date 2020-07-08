@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import { ThreeColumnRecipeList } from '../ThreeColumnRecipeList'
 import { CTACard } from '../CTACard'
-import { RecipeCardContainer } from '../RecipeCard'
+import { RecipeTileContainer } from '../../Recipe'
 
 describe('ThreeColumnRecipeList', () => {
   describe('when given 4 recipes', () => {
@@ -23,8 +23,8 @@ describe('ThreeColumnRecipeList', () => {
         />
       )
 
-      expect(wrapper.find(RecipeCardContainer)).toHaveLength(4)
-      expect(wrapper.find(RecipeCardContainer).find({ recipeId: '125' }).prop('originalId')).toEqual('125')
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(4)
+      expect(wrapper.find(RecipeTileContainer).find({ recipeId: '125' }).prop('originalId')).toEqual('125')
     })
   })
 

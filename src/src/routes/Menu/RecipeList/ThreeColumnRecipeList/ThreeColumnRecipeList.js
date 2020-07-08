@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
 import { arrayToColumns } from '../arrayToColumns'
-import { RecipeCardContainer } from '../RecipeCard'
+import { RecipeTileContainer } from '../../Recipe'
 import { CTACard } from '../CTACard'
 
 import css from './ThreeColumnRecipeList.css'
@@ -12,8 +12,8 @@ const ThreeColumnRecipeList = ({
   recipes, thematicName, isCurrentCollectionRecommendation, deliveryDate
 }) => {
   // eslint-disable-next-line react/prop-types
-  const createRecipeCard = ({ index, value }) => (
-    <RecipeCardContainer
+  const createRecipeTile = ({ index, value }) => (
+    <RecipeTileContainer
       key={`${index}-${value.recipe.get('id')}`} // eslint-disable-line react/prop-types
       recipeId={value.recipe.get('id')} // eslint-disable-line react/prop-types
       originalId={value.originalId} // eslint-disable-line react/prop-types
@@ -28,10 +28,10 @@ const ThreeColumnRecipeList = ({
   return (
     <div className={css.threeColumnRecipeList}>
       <div className={css.recipeColumn}>
-        {left.map(createRecipeCard)}
+        {left.map(createRecipeTile)}
       </div>
       <div className={css.recipeColumn}>
-        {middle.map(createRecipeCard)}
+        {middle.map(createRecipeTile)}
 
         <CTACard
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
@@ -40,7 +40,7 @@ const ThreeColumnRecipeList = ({
         />
       </div>
       <div className={css.recipeColumn}>
-        {right.map(createRecipeCard)}
+        {right.map(createRecipeTile)}
       </div>
     </div>
   )

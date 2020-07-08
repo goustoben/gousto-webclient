@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 
-import { getCutoffDate } from '../selectors/cutoff'
 import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
@@ -17,7 +16,6 @@ const mapStateToProps = (state) => {
     currentCollectionId,
     recipes,
     originalOrderRecipeIds,
-    cutoffDate: getCutoffDate(state),
     numPortions: state.basket.get('numPortions'),
     isCurrentCollectionRecommendation: isCurrentCollectionRecommendation(state),
     thematicName: query && query.thematic,

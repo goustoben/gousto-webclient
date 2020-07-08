@@ -1,5 +1,5 @@
 .staticImgContainer {
-  composes: grid from '../Recipe.css';
+  composes: grid from '../RecipeTile.css';
   display: flex;
   justify-content: center;
   align-items: center;
