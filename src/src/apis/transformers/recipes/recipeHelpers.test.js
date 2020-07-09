@@ -1,4 +1,4 @@
-import { micronutrientsTransformer, promotionsTransformer, surchargeTransformer } from './recipeHelpers'
+import { micronutrientsTransformer, promotionsTransformer, surchargeTransformer, isNewTransformer } from './recipeHelpers'
 
 describe('micronutrientsTransformer', () => {
   test('should return micronutrients from nutritional information', () => {
@@ -62,5 +62,49 @@ describe('surchargeTransformer', () => {
     const result = surchargeTransformer(surcharge)
     const expectedPrice = 3.99
     expect(result).toEqual({listPrice: expectedPrice})
+  })
+})
+
+describe('isNewTransformer', () => {
+  let debutRecipes
+  const recipeId = '1234'
+  describe('when there is no debut recipes', () => {
+    beforeEach(() => {
+      debutRecipes = {
+        data: []
+      }
+    })
+    test('should return false', () => {
+      const result = isNewTransformer(debutRecipes, recipeId)
+      expect(result).toBe(false)
+    })
+  })
+
+  describe('when debut recipes contain recipe id', () => {
+    beforeEach(() => {
+      debutRecipes = {
+        data: [{
+          core_recipe_id: '1234'
+        }]
+      }
+    })
+    test('should return true', () => {
+      const result = isNewTransformer(debutRecipes, recipeId)
+      expect(result).toBe(true)
+    })
+  })
+
+  describe('when debut recipes doesn not contain recipe id', () => {
+    beforeEach(() => {
+      debutRecipes = {
+        data: [{
+          core_recipe_id: '2345'
+        }]
+      }
+    })
+    test('should return true', () => {
+      const result = isNewTransformer(debutRecipes, recipeId)
+      expect(result).toBe(false)
+    })
   })
 })

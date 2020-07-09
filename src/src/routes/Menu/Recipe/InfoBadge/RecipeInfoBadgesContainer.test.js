@@ -36,7 +36,7 @@ describe('RecipeInfoBadgesContainer', () => {
       beforeEach(() => {
         state = {
           ...state,
-          recipes: state.recipes.setIn([recipeId, 'availability'], undefined)
+          recipes: state.recipes.setIn([recipeId, 'isNew'], true)
         }
       })
 
@@ -46,11 +46,11 @@ describe('RecipeInfoBadgesContainer', () => {
         expect(wrapper.find(InfoBadges).prop('slugs')).toContain(InfoBadgeSlugs.NEW_RECIPE)
       })
 
-      describe('when recipe has a rating', () => {
+      describe('when recipe is not new', () => {
         beforeEach(() => {
           state = {
             ...state,
-            recipes: state.recipes.setIn([recipeId, 'rating', 'count'], 50)
+            recipes: state.recipes.setIn([recipeId, 'isNew'], false)
           }
         })
 

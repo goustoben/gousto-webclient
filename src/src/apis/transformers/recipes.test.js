@@ -690,7 +690,8 @@ describe('recipesTransformer', () => {
         ],
         isFineDineIn: false,
         health: null,
-        promotions: [ 'some-promotion-name', 'another-cool-promotion' ]
+        promotions: [ 'some-promotion-name', 'another-cool-promotion' ],
+        isNew: false
       }
     ]
 
