@@ -100,6 +100,14 @@ const isFineDineInTransformer = (attributes) => Boolean(attributes.food_brand &&
 
 const promotionsTransformer = (attributes) => (attributes.promotions ? attributes.promotions.map(p => p.slug) : [])
 
+const isNewTransformer = (debutRecipes, recipeId) => {
+  if (debutRecipes && debutRecipes.data && debutRecipes.data.length) {
+    return debutRecipes.data.some(recipe => recipe.core_recipe_id === recipeId)
+  }
+
+  return false
+}
+
 export {
   allergensTransformer,
   basicsTransformer,
@@ -112,5 +120,6 @@ export {
   shelfLifeTransformer,
   surchargeTransformer,
   isFineDineInTransformer,
-  promotionsTransformer
+  promotionsTransformer,
+  isNewTransformer
 }

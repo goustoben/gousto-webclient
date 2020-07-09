@@ -17,7 +17,7 @@ describe('getRecipeInfoBadgeSlugs', () => {
 
     describe('when recipe is new', () => {
       beforeEach(() => {
-        recipes = recipes.setIn([recipeId, 'availability'], [])
+        recipes = recipes.setIn([recipeId, 'isNew'], true)
       })
 
       test('should return array containing NEW_RECIPE slug', () => {
@@ -26,9 +26,9 @@ describe('getRecipeInfoBadgeSlugs', () => {
         expect(result).toContain(InfoBadgeSlugs.NEW_RECIPE)
       })
 
-      describe('when recipe has a rating', () => {
+      describe('when recipe is not new', () => {
         beforeEach(() => {
-          recipes = recipes.setIn([recipeId, 'rating', 'count'], 50)
+          recipes = recipes.setIn([recipeId, 'isNew'], false)
         })
 
         test('should render array without NEW_RECIPE slug', () => {

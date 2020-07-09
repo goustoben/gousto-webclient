@@ -10,7 +10,8 @@ import {
   shelfLifeTransformer,
   surchargeTransformer,
   isFineDineInTransformer,
-  promotionsTransformer
+  promotionsTransformer,
+  isNewTransformer
 } from './recipes/recipeHelpers'
 
 const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
@@ -96,7 +97,8 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
       dietaryClaims: normalisedAttributes.dietary_claims,
       isFineDineIn: isFineDineInTransformer(normalisedAttributes),
       title: normalisedAttributes.name,
-      promotions: promotionsTransformer(normalisedAttributes)
+      promotions: promotionsTransformer(normalisedAttributes),
+      isNew: isNewTransformer(activeMenu.relationships.debut_recipes, individualRecipeId)
     }
   })
 

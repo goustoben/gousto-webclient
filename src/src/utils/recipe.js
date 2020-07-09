@@ -54,13 +54,6 @@ export function getDietaryTags(recipe) {
   return Immutable.List([])
 }
 
-export function isNew(recipe) {
-  const availability = recipe.get('availability')
-  const hasBeenOnAPreviousMenu = availability && availability.find(date => (date.get('offset') < 0))
-
-  return !hasBeenOnAPreviousMenu
-}
-
 export const isAvailableRecipeList = (recipeIds, recipesStore) => recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
 
 export const getRecipeId = (recipe) => recipe.get('id')

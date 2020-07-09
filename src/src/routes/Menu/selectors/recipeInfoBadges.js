@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
-import { isNew } from 'utils/recipe'
 import { InfoBadgeSlugs } from '../Recipe/InfoBadge'
 
 export const getRecipeInfoBadgeSlugs = createSelector(
@@ -20,8 +19,8 @@ export const getRecipeInfoBadgeSlugs = createSelector(
       slugs.push(InfoBadgeSlugs.OVEN_READY)
     }
 
-    const ratingCount = recipe.getIn(['rating', 'count'], 0)
-    if (ratingCount === 0 && isNew(recipe)) {
+    const recipeIsNew = recipe.get('isNew')
+    if (recipeIsNew) {
       slugs.push(InfoBadgeSlugs.NEW_RECIPE)
     }
 
