@@ -1,0 +1,24 @@
+@value axiformaFontStack, sizeSM from 'styles/typography.css';
+@value White from 'styles/colors.css';
+
+.recipeTileContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: White;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+    height: 200px;
+    position: relative;
+}
+
+.titleWrapper {
+    width: 33%;
+    margin: 0.825rem;
+}
+
+.recipeTitle {
+    font-family: axiformaFontStack;
+    font-size: sizeSM;
+    font-weight: 600;
+    line-height: 1.7;
+}
