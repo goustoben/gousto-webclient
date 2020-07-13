@@ -10,7 +10,7 @@ jest.mock('utils/fetch', () =>
 )
 
 jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}/`)
+  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
 )
 
 jest.mock('config/routes', () => ({

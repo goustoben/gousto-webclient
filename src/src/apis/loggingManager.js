@@ -3,7 +3,7 @@ import endpoint from 'config/endpoint'
 
 const triggerLoggingManagerEvent = ({ accessToken, body }) => fetch(
   accessToken,
-  `${endpoint('loggingmanager')}log/${body && body.eventName}`,
+  `${endpoint('loggingmanager')}/log/${body && body.eventName}`,
   body,
   'POST',
   'default',
