@@ -8,6 +8,7 @@ describe('Referral', () => {
   describe('rendering', () => {
     describe('render all sections', () => {
       let wrapper
+      const trackUserFreeFoodPageViewSpy = jest.fn()
       const rafOffer = Immutable.fromJS({
         title: 'Invite your friends to try out Gousto!',
         creditFormatted: '£15',
@@ -17,7 +18,22 @@ describe('Referral', () => {
       })
 
       beforeEach(() => {
-        wrapper = shallow(<Referral referralCode="RAF-TEST-1234" rafOffer={rafOffer} isLoading={false} />)
+        wrapper = shallow(
+          <Referral
+            referralCode="RAF-TEST-1234"
+            rafOffer={rafOffer}
+            isLoading={false}
+            trackUserFreeFoodPageView={trackUserFreeFoodPageViewSpy}
+          />
+        )
+      })
+
+      describe('componentDidMount', () => {
+        describe('when the free food page is loaded', () => {
+          test('then trackUserFreeFoodPageView should be called on mount', () => {
+            expect(trackUserFreeFoodPageViewSpy).toHaveBeenCalled()
+          })
+        })
       })
 
       test('should render a <div> with no props', () => {

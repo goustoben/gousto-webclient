@@ -30,6 +30,7 @@ module.exports = {
     identify: '/identify',
     forget: '/forget',
     validate: '/validate',
+    authenticateClient: '/authenticate-client',
   },
   client: {
     appsRedirect: '/apps',
