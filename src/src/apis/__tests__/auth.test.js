@@ -1,6 +1,20 @@
 import fetch from 'utils/fetch'
-import { getUserToken, identifyUser, refreshUserToken, forgetUserToken, validateUserPassword, resetUserPassword, serverAuthenticate, serverLogout, serverRefresh, serverIdentify, serverForget, serverValidatePassword } from '../auth'
-
+import {
+  getUserToken,
+  identifyUser,
+  refreshUserToken,
+  forgetUserToken,
+  validateUserPassword,
+  resetUserPassword,
+  serverAuthenticate,
+  serverLogout,
+  serverRefresh,
+  serverIdentify,
+  serverForget,
+  serverValidatePassword,
+  clientServerAuthenticate,
+  getClientToken,
+} from '../auth'
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {
@@ -29,7 +43,8 @@ jest.mock('config/routes', () => ({
     refresh: '/refresh',
     identify: '/identify',
     forget: '/forget',
-    validate: '/validate'
+    validate: '/validate',
+    authenticateClient: '/authenticate-client',
   }
 }))
 
@@ -285,6 +300,51 @@ describe('auth api', () => {
     test('should return the results of the fetch unchanged', async () => {
       const result = await serverValidatePassword('password')
       expect(result).toEqual(mockFetchResult)
+    })
+  })
+
+  describe('clientServerAuthenticate', () => {
+    describe('when the client authentication is requested', () => {
+      let result
+      beforeEach(async () => {
+        result = await clientServerAuthenticate()
+      })
+
+      test('then the correct url should be fetched', async () => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(null, '/authenticate-client', null, 'POST', 'no-cache', {}, null, true)
+      })
+
+      test('should return the results of the fetch unchanged', async () => {
+        expect(result).toEqual(mockFetchResult)
+      })
+    })
+  })
+
+  describe('getClientToken', () => {
+    describe('when the client token is requested', () => {
+      const authClientId = 1
+      const authClientSecret = '12345'
+      let result
+
+      beforeEach(async () => {
+        result = await getClientToken({ authClientId, authClientSecret })
+      })
+
+      test('then the correct url should be fetched', async () => {
+        const expectedReqData = {
+          grant_type: 'client_credentials',
+          client_id: authClientId,
+          client_secret: authClientSecret
+        }
+
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache')
+      })
+
+      test('then it should return the results of the fetch unchanged', async () => {
+        expect(result).toEqual(mockFetchResult)
+      })
     })
   })
 })

@@ -7,18 +7,19 @@ import {
   forgetUserToken,
   validateRecaptchaUserToken,
   validateUserPassword,
+  getClientToken,
 } from 'apis/auth'
 import env from 'utils/env'
 import routes from 'config/routes'
-import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from './utils'
+import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue, addClientSessionCookies } from './utils'
 import { RECAPTCHA_PRIVATE_KEY } from '../config/recaptcha'
 
 const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
 
 /**
- * Login Route
- * @param {*} ctx
- */
+* Login Route
+* @param {*} ctx
+*/
 export async function login(ctx) { /* eslint-disable no-param-reassign */
   try {
     const { username, password, rememberMe, recaptchaToken } = ctx.request.body
@@ -51,9 +52,9 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
 }
 
 /**
- * Logout Route
- * @param {*} ctx
- */
+* Logout Route
+* @param {*} ctx
+*/
 export function logout(ctx) {
   removeSessionCookies(ctx)
   ctx.response.status = 200
@@ -61,9 +62,9 @@ export function logout(ctx) {
 }
 
 /**
- * Refresh Route
- * @param {*} ctx
- */
+* Refresh Route
+* @param {*} ctx
+*/
 export async function refresh(ctx) {
   let refreshToken
   try {
@@ -87,9 +88,9 @@ export async function refresh(ctx) {
 }
 
 /**
- * Identify Route
- * @param {*} ctx
- */
+* Identify Route
+* @param {*} ctx
+*/
 export async function identify(ctx) {
   let accessToken
   try {
@@ -110,9 +111,9 @@ export async function identify(ctx) {
 }
 
 /**
- * Forget Route
- * @param {*} ctx
- */
+* Forget Route
+* @param {*} ctx
+*/
 export async function forget(ctx) {
   const { accessToken } = ctx.request.body
   try {
@@ -131,9 +132,9 @@ export async function forget(ctx) {
 }
 
 /**
- * Validate User Password Route
- * @param {*} ctx
- */
+* Validate User Password Route
+* @param {*} ctx
+*/
 export async function validate(ctx) {
   const { password } = ctx.request.body
   try {
@@ -151,8 +152,28 @@ export async function validate(ctx) {
   }
 }
 
+/**
+* Authenticate Client Route
+* @param {*} ctx
+*/
+const authenticateClient = async (ctx) => {
+  try {
+    const { authClientId, authClientSecret } = env
+
+    const authResponse = await getClientToken({ authClientId, authClientSecret })
+
+    addClientSessionCookies(ctx, authResponse)
+    ctx.response.body = authResponse
+  } catch (e) {
+    ctx.response.status = 401
+    ctx.response.body = {
+      error: 'client_authentication_failed',
+    }
+  }
+}
+
 /* eslint-disable consistent-return */
-export default function authRoutes(app) {
+const auth = (app) => {
   app.use(async (ctx, next) => {
     if (routeMatches(ctx, routes.auth.login, 'POST')) {
       await login(ctx)
@@ -166,8 +187,15 @@ export default function authRoutes(app) {
       await forget(ctx)
     } else if (routeMatches(ctx, routes.auth.validate, 'POST')) {
       await validate(ctx)
+    } else if (routeMatches(ctx, routes.auth.authenticateClient, 'POST')) {
+      await authenticateClient(ctx)
     } else {
       return next()
     }
   })
+}
+
+export {
+  auth,
+  authenticateClient,
 }

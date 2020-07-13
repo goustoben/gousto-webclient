@@ -20,7 +20,12 @@ describe('auth reducer', () => {
       isRecaptchaEnabled: false,
       recaptcha: {
         signupToken: null,
-      }
+      },
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
 
     expect(Immutable.is(result, expected)).toEqual(true)
@@ -44,7 +49,12 @@ describe('auth reducer', () => {
       isRecaptchaEnabled: false,
       recaptcha: {
         signupToken: null,
-      }
+      },
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -62,6 +72,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       const action = {
         type: 'USER_IDENTIFIED',
@@ -84,6 +99,11 @@ describe('auth reducer', () => {
         name: 'someone random',
         roles: ['user'],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -99,6 +119,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       const action = {
         type: 'USER_IDENTIFIED',
@@ -121,6 +146,11 @@ describe('auth reducer', () => {
         name: 'gousto employee',
         roles: ['admin'],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -136,6 +166,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       const action = {
         type: 'USER_IDENTIFIED',
@@ -158,6 +193,11 @@ describe('auth reducer', () => {
         name: 'gousto employee',
         roles: ['*'],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -176,6 +216,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       const action = {
         type: 'USER_AUTHENTICATED',
@@ -194,6 +239,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '2017-01-01',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -210,6 +260,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       const action = {
         type: 'USER_AUTHENTICATED',
@@ -229,6 +284,11 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '2017-01-01',
+        client: {
+          accessToken: '',
+          refreshToken: '',
+          expiresAt: '',
+        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -246,6 +306,11 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     const action = {
       type: 'USER_REMEMBER_ME',
@@ -263,6 +328,11 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -279,6 +349,11 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     const action = {
       type: 'USER_LOGGED_IN',
@@ -295,6 +370,11 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -314,7 +394,12 @@ describe('auth reducer', () => {
       isRecaptchaEnabled: false,
       recaptcha: {
         signupToken: null,
-      }
+      },
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     const action = {
       type: 'USER_LOGGED_OUT',
@@ -334,7 +419,12 @@ describe('auth reducer', () => {
       isRecaptchaEnabled: false,
       recaptcha: {
         signupToken: null,
-      }
+      },
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -351,7 +441,12 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      isRecaptchaEnabled: false
+      isRecaptchaEnabled: false,
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     const action = {
       type: 'CHANGE_RECAPTCHA',
@@ -369,9 +464,60 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      isRecaptchaEnabled: true
+      isRecaptchaEnabled: true,
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
+  test('should handle CLIENT_AUTHENTICATED action', () => {
+    const state = Immutable.fromJS({
+      accessToken: '',
+      refreshToken: '',
+      isAuthenticated: false,
+      isAdmin: false,
+      rememberMe: false,
+      email: '',
+      id: '',
+      name: '',
+      roles: [],
+      expiresAt: '',
+      isRecaptchaEnabled: false,
+      client: {
+        accessToken: '',
+        refreshToken: '',
+        expiresAt: '',
+      },
+    })
+    const action = {
+      type: 'CLIENT_AUTHENTICATED',
+      accessToken: 'mock-access-token',
+      refreshToken: 'mock-refresh-token',
+      expiresAt: '100',
+    }
+    const result = auth.auth(state, action)
+    const expected = Immutable.fromJS({
+      accessToken: '',
+      refreshToken: '',
+      isAuthenticated: false,
+      isAdmin: false,
+      rememberMe: false,
+      email: '',
+      id: '',
+      name: '',
+      roles: [],
+      expiresAt: '',
+      isRecaptchaEnabled: false,
+      client: {
+        accessToken: 'mock-access-token',
+        refreshToken: 'mock-refresh-token',
+        expiresAt: '100',
+      },
+    })
+    expect(Immutable.is(result, expected)).toEqual(true)
+  })
 })

@@ -1,16 +1,42 @@
-import actions, { changeRecaptcha } from 'actions/auth'
+import actions, { changeRecaptcha, authenticateClient } from 'actions/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
+
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
+import { clientServerAuthenticate } from 'apis/auth'
 
 jest.mock('utils/window')
+
 jest.mock('apis/fetchS3', () => ({
   fetchFeatures: jest.fn()
 }))
+
 jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))
+
+jest.mock('apis/auth', () => ({
+  clientServerAuthenticate: jest.fn().mockReturnValue({
+    data: {
+      data: {
+        accessToken: 'mock-access-token',
+        refreshToken: 'mock-refresh-token',
+        expiresIn: '123456789',
+      }
+    }
+  })
+}))
+
+jest.mock('moment', () => {
+  const momentMethods = {
+    add: jest.fn(() => ({
+      toISOString: jest.fn().mockReturnValue('2020-03-10')
+    })),
+  }
+
+  return jest.fn(() => momentMethods)
+})
 
 describe('redirectLoggedInUser', () => {
   let getState
@@ -161,6 +187,30 @@ describe('changeRecaptcha', () => {
     test('should call logger.error', async () => {
       await changeRecaptcha()(dispatch)
       expect(loggerErrorSpy).toHaveBeenCalledWith({ message: 'S3File fetch failed' })
+    })
+  })
+})
+
+describe('authenticateClient', () => {
+  let dispatch
+
+  describe('when client authentication is requested', () => {
+    beforeEach(async () => {
+      dispatch = jest.fn()
+      await authenticateClient()(dispatch)
+    })
+
+    test('then clientServerAuthenticate should be called', async () => {
+      expect(clientServerAuthenticate).toHaveBeenCalled()
+    })
+
+    test('then clientAuthenticated should be called with the correct params', async () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        accessToken: 'mock-access-token',
+        expiresAt: '2020-03-10',
+        refreshToken: 'mock-refresh-token',
+        type: 'CLIENT_AUTHENTICATED',
+      })
     })
   })
 })
