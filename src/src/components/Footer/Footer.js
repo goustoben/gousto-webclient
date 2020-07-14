@@ -18,6 +18,7 @@ const renderHelpLink = (getHelpRoute, isAuthenticated, helpPreLoginVisibilityCha
     ? (
       <Link
         to={`${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
+        data-optimizely="footer-help-link"
         data-selid="footer-learn-more"
         title="Help"
         clientRouted={false}

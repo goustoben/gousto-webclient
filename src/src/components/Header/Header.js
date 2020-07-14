@@ -282,9 +282,12 @@ class Header extends React.PureComponent {
         )
       }
 
+      const isHelpLink = menuItem.name === 'Help'
+
       return (
         <Link
           key={menuItem.name}
+          data-optimizely={isHelpLink ? 'desktop-header-help-link' : null}
           to={menuItem.url}
           className={css.linkDesktop}
           clientRouted={menuItem.clientRouted}
@@ -423,6 +426,7 @@ class Header extends React.PureComponent {
                 ? (
                   <Link
                     to={zendesk.faqs}
+                    data-optimizely="new-customer-help-link"
                     clientRouted={false}
                     className={css.continueAsNewCustomerLink}
                   >

@@ -81,9 +81,12 @@ class BurgerMobileMenu extends React.PureComponent {
         )
       }
 
+      const isHelpLink = menuItem.name === 'Help'
+
       return (
         <Link
           to={menuItem.url}
+          data-optimizely={isHelpLink ? 'mobile-header-help-link' : null}
           className={css.menuItem}
           key={menuItem.name}
           clientRouted={menuItem.clientRouted}
