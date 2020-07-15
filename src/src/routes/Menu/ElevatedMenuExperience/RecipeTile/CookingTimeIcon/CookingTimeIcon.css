@@ -1,0 +1,50 @@
+@value Black from 'styles/colors.css';
+
+.cookingTimeIcon {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px;
+}
+
+.circularChart {
+  display: block;
+}
+
+.circularChartCircleBg {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 4;
+}
+
+.circularChartCircle {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  animation: progress 1s ease-out forwards;
+  stroke: Black;
+}
+
+.time {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  top: 0;
+  left: 0;
+  font-weight: 600;
+  font-size: 12px;
+  fill: Black;
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+}

@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import { EMERecipeTile } from './EMERecipeTile'
 import { TileImageContainer } from '../TileImage'
+import { CookingTimeIconContainer } from '../CookingTimeIcon'
 
 describe('EMERecipeTile', () => {
   describe('when given null recipe', () => {
@@ -51,6 +52,28 @@ describe('EMERecipeTile', () => {
 
       test('should contain a title ', () => {
         expect(wrapper.find('h2').length).toEqual(1)
+      })
+    })
+  })
+
+  describe('when given a recipe', () => {
+    describe('when has a cooking time', () => {
+      test('should contain one CookingTimeIcon component', () => {
+        global.innerWidth = 1200
+        const showDetailRecipe = jest.fn()
+        const index = 3
+        const recipe = Immutable.fromJS({
+          id: '1234',
+          title: 'Bobs Brilliant Beef Burger',
+          url: 'example.com/food',
+          media: {
+            images: []
+          },
+          cookingTime: 30,
+          cookingTimeFamily: 30
+        })
+        const wrapper = shallow(<EMERecipeTile recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} />)
+        expect(wrapper.find(CookingTimeIconContainer).length).toEqual(1)
       })
     })
   })
