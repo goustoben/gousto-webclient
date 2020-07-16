@@ -394,6 +394,18 @@ describe('Header', () => {
 
       expect(helpMenuItem.url).toContain('get-help/eligibility-check')
     })
+
+    describe('when the isHelpCentreActive prop is passed as true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isHelpCentreActive: true })
+      })
+
+      test('on desktop the help links to the help center page', () => {
+        const helpLink = wrapper.find('GoustoLink').at(4)
+
+        expect(helpLink.prop('to')).toContain('/help-centre')
+      })
+    })
   })
 
   describe('when isAuthenticated prop is false', () => {
@@ -495,6 +507,17 @@ describe('Header', () => {
     test('renders the Continue as new customer link with client routed set to false', () => {
       expect(wrapper.find('.continueAsNewCustomerLink').prop('clientRouted'))
         .toBe(false)
+    })
+
+    describe('when the isHelpCentreActive is passed as true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isHelpCentreActive: true })
+      })
+
+      test('renders the Continue as new customer link to Help Centre', () => {
+        expect(wrapper.find('.continueAsNewCustomerLink').prop('to'))
+          .toBe('/help-centre')
+      })
     })
 
     describe('and the close button of the modal panel is clicked', () => {

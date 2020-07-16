@@ -14,7 +14,7 @@ describe('given BurgerMobileMenu is called', () => {
   const menuItems = [
     { disabled: false, name: 'Home', url: '/home', clientRouted: true },
     { disabled: false, name: 'Choose Recipes', url: '/menu' },
-    { disabled: false, name: 'Help', url: '/help', clientRouted: false },
+    { disabled: false, name: 'Help', url: '/help', clientRouted: true },
     { disabled: false, name: 'Rate My Recipes', url: '/rate-my-recipes', clientRouted: false },
   ]
 
@@ -46,6 +46,26 @@ describe('given BurgerMobileMenu is called', () => {
         expect(wrapper.find(Link).find({ to: '/menu' })).toHaveLength(1)
         expect(wrapper.find(Link).find({ to: '/help' })).toHaveLength(1)
         expect(wrapper.find(Link).find({ to: '/rate-my-recipes' })).toHaveLength(1)
+      })
+
+      describe('and the feature isHelpCentreActive is true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHelpCentreActive: true })
+        })
+
+        test('the help link points to the help centre', () => {
+          const helpLink = wrapper
+            .find(Link)
+            .filterWhere((link) => link.prop('to') === '/help-centre')
+          expect(helpLink.exists()).toBe(true)
+        })
+
+        test('the help link is not clientRouted', () => {
+          const helpLink = wrapper
+            .find(Link)
+            .filterWhere((link) => link.prop('to') === '/help-centre')
+          expect(helpLink.prop('clientRouted')).toBe(false)
+        })
       })
 
       describe('when a menu option is set as disabled', () => {

@@ -10,6 +10,7 @@ import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import userActions from 'actions/user'
 import { getUserId } from 'selectors/user'
+import { getIsHelpCentreActive } from 'selectors/features'
 import orderActions from './order'
 import pricingActions from './pricing'
 import statusActions from './status'
@@ -46,10 +47,13 @@ const loginVisibilityChange = visibility => ({
 })
 
 export const helpPreLoginVisibilityChange = visibility => (
-  (dispatch) => {
+  (dispatch, getState) => {
     if (visibility === true) {
+      const isHelpCentreActive = getIsHelpCentreActive(getState())
       const { index, eligibilityCheck } = client.getHelp
-      const search = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`)}`
+      const eligibilityCheckUrl = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`)}`
+      const helpCentreUrl = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${client.helpCentre}`)}`
+      const search = isHelpCentreActive ? helpCentreUrl : eligibilityCheckUrl
       dispatch(push({ search }))
     }
     dispatch({

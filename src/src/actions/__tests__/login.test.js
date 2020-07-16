@@ -344,17 +344,46 @@ describe('login actions', () => {
     })
 
     describe('helpPreLoginVisibilityChange', () => {
-      describe('Given the action is called with visibility true', () => {
-        let dispatch
+      let dispatch
+      const getState = jest.fn()
 
+      beforeEach(() => {
+        dispatch = jest.fn()
+      })
+
+      describe('Given the action is called with visibility true and isHelpCentreActive feature flag false', () => {
         beforeEach(() => {
-          dispatch = jest.fn()
-          helpPreLoginVisibilityChange(true)(dispatch)
+          getState.mockReturnValue({
+            features: Immutable.fromJS({
+              isHelpCentreActive: { value: false },
+            }),
+          })
+          helpPreLoginVisibilityChange(true)(dispatch, getState)
         })
 
         test('the query parameter target is set to the eligibility check URL', () => {
           const { index, eligibilityCheck } = client.getHelp
-          const search = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`)}`
+          const eligibilityCheckURL = `${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`
+          const search = `?target=${encodeURIComponent(eligibilityCheckURL)}`
+          const serialisedQueryStringObject = JSON.stringify({ search })
+          expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)
+        })
+      })
+
+      describe('Given the action is called with visibility true and isHelpCentreActive feature flag true', () => {
+        beforeEach(() => {
+          getState.mockReturnValue({
+            features: Immutable.fromJS({
+              isHelpCentreActive: { value: true },
+            }),
+          })
+          helpPreLoginVisibilityChange(true)(dispatch, getState)
+        })
+
+        test('the query parameter target is set to the Help Centre URL', () => {
+          const { helpCentre } = client
+          const helpCentreURL = `${__CLIENT_PROTOCOL__}://${__DOMAIN__}${helpCentre}`
+          const search = `?target=${encodeURIComponent(helpCentreURL)}`
           const serialisedQueryStringObject = JSON.stringify({ search })
           expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)
         })

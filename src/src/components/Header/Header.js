@@ -246,6 +246,7 @@ class Header extends React.PureComponent {
     const {
       isAuthenticated,
       trackNavigationClick,
+      isHelpCentreActive,
     } = this.props
 
     if (hideNav) {
@@ -288,9 +289,9 @@ class Header extends React.PureComponent {
         <Link
           key={menuItem.name}
           data-optimizely={isHelpLink ? 'desktop-header-help-link' : null}
-          to={menuItem.url}
+          to={isHelpLink && isHelpCentreActive ? client.helpCentre : menuItem.url}
           className={css.linkDesktop}
-          clientRouted={menuItem.clientRouted}
+          clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
           tracking={() => trackNavigationClick(menuItem.tracking)}
         >
           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
@@ -322,7 +323,8 @@ class Header extends React.PureComponent {
       trackNavigationClick,
       abandonBasketFeature,
       routing,
-      isHomePageRedesignEnabled
+      isHomePageRedesignEnabled,
+      isHelpCentreActive,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen, loginPending } = this.state
@@ -425,7 +427,7 @@ class Header extends React.PureComponent {
               {isHelpPreLoginOpen
                 ? (
                   <Link
-                    to={zendesk.faqs}
+                    to={isHelpCentreActive ? client.helpCentre : zendesk.faqs}
                     data-optimizely="new-customer-help-link"
                     clientRouted={false}
                     className={css.continueAsNewCustomerLink}
@@ -470,6 +472,7 @@ Header.propTypes = {
   title: PropTypes.string,
   trackNavigationClick: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
+  isHelpCentreActive: PropTypes.bool,
 }
 
 Header.defaultProps = {
@@ -488,6 +491,7 @@ Header.defaultProps = {
   title: '',
   trackNavigationClick: () => { },
   isHomePageRedesignEnabled: false,
+  isHelpCentreActive: false,
 }
 
 export { Header }

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import config from 'config'
+import { client as clientRoutes } from 'config/routes'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
@@ -13,32 +14,38 @@ const showHelpPreLogin = (helpPreLoginVisibilityChange) => () => (
   helpPreLoginVisibilityChange(true)
 )
 
-const renderHelpLink = (getHelpRoute, isAuthenticated, helpPreLoginVisibilityChange) => (
-  isAuthenticated
-    ? (
-      <Link
-        to={`${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
-        data-optimizely="footer-help-link"
-        data-selid="footer-learn-more"
-        title="Help"
-        clientRouted={false}
-        secondary
-      >
-        Help
-      </Link>
-    )
-    : (
-      <span
-        data-test="help-link"
-        role="button"
-        tabIndex="0"
-        onClick={showHelpPreLogin(helpPreLoginVisibilityChange)}
-        onKeyDown={onEnter(showHelpPreLogin(helpPreLoginVisibilityChange))}
-      >
-        Help
-      </span>
-    )
-)
+const renderHelpLink = (isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive) => {
+  const getHelpRoute = clientRoutes.getHelp
+
+  return (
+    isAuthenticated
+      ? (
+        <Link
+          to={isHelpCentreActive
+            ? `${clientRoutes.helpCentre}`
+            : `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
+          data-optimizely="footer-help-link"
+          data-selid="footer-learn-more"
+          title="Help"
+          clientRouted={false}
+          secondary
+        >
+          Help
+        </Link>
+      )
+      : (
+        <span
+          data-test="help-link"
+          role="button"
+          tabIndex="0"
+          onClick={showHelpPreLogin(helpPreLoginVisibilityChange)}
+          onKeyDown={onEnter(showHelpPreLogin(helpPreLoginVisibilityChange))}
+        >
+          Help
+        </span>
+      )
+  )
+}
 
 const Footer = ({
   copyright,
@@ -46,10 +53,9 @@ const Footer = ({
   isAuthenticated,
   simple,
   type,
-  isHomePageRedesignEnabled
+  isHomePageRedesignEnabled,
+  isHelpCentreActive,
 }) => {
-  const clientRoutes = config.routes.client
-
   const renderTermsLink = () => (
     <li className={css.menuItem}>
       Terms
@@ -85,41 +91,37 @@ const Footer = ({
     </ul>
   )
 
-  const renderFullList = () => {
-    const getHelpRoute = clientRoutes.getHelp
-
-    return (
-      <ul className={css.menuList}>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
-        </li>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
-        </li>
-        <li className={css.menuItem}>
-          {renderHelpLink(getHelpRoute, isAuthenticated, helpPreLoginVisibilityChange)}
-        </li>
-        {renderTermsLink()}
-        <li className={css.menuItem}>
-          <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.weCare} data-selid="footer-we-care" title="We Care" clientRouted={false} secondary>We Care</Link>
-        </li>
-        <li className={css.menuItem}>
-          <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
-        </li>
-        <li className={classNames(css.mobileHide, css.menuItem)}>
-          <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
-        </li>
-        {renderPrivacyLink()}
-        {renderModernSlaveryLink()}
-      </ul>
-    )
-  }
+  const renderFullList = () => (
+    <ul className={css.menuList}>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
+      </li>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
+      </li>
+      <li className={css.menuItem}>
+        {renderHelpLink(isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive)}
+      </li>
+      {renderTermsLink()}
+      <li className={css.menuItem}>
+        <Link data-selid="footer-cookbook" to={clientRoutes.cookbook} title="Cookbook" clientRouted={false} secondary>Cookbook</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.jobs} data-selid="footer-jobs" title="Jobs" clientRouted={false} secondary>Jobs</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.weCare} data-selid="footer-we-care" title="We Care" clientRouted={false} secondary>We Care</Link>
+      </li>
+      <li className={css.menuItem}>
+        <Link to={clientRoutes.blog} data-selid="footer-blog" title="Blog" clientRouted={false} secondary>Blog</Link>
+      </li>
+      <li className={classNames(css.mobileHide, css.menuItem)}>
+        <Link to={clientRoutes.ourSuppliers} data-selid="footer-our-suppliers" title="Our Suppliers" clientRouted={false} secondary>Our Suppliers</Link>
+      </li>
+      {renderPrivacyLink()}
+      {renderModernSlaveryLink()}
+    </ul>
+  )
 
   const renderSocial = () => (
     <div className={css.appLinks}>
@@ -238,6 +240,7 @@ Footer.propTypes = {
   simple: PropTypes.bool,
   type: PropTypes.string,
   isHomePageRedesignEnabled: PropTypes.bool,
+  isHelpCentreActive: PropTypes.bool,
 }
 
 Footer.defaultProps = {
@@ -245,7 +248,8 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
-  isHomePageRedesignEnabled: false
+  isHomePageRedesignEnabled: false,
+  isHelpCentreActive: false,
 }
 
 export default Footer
