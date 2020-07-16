@@ -120,6 +120,9 @@ module.exports = {
                 })
               })
 
+              console.log('Available recipe choice Ids: ', JSON.stringify(availableRecipeIds))
+              console.log('Available recipe choices: ', JSON.stringify(recipeChoices))
+
               order.recipe_choices = recipeChoices
 
               return webclient.apis.createPreviewOrder(order)
