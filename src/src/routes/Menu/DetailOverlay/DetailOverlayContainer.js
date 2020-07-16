@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { getBrowserType } from 'selectors/browser'
 import { getRecipePosition } from 'selectors/collections'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { getRecipeOutOfStock } from '../selectors/recipe'
@@ -9,7 +10,7 @@ const mapStateToProps = (state, ownProps) => ({
   numPortions: state.basket.get('numPortions'),
   showOverlay: (Boolean(getMenuRecipeIdForDetails(state)) && ownProps.showOverlay),
   position: getRecipePosition(state, getMenuRecipeIdForDetails(state)),
-  browserType: state.request.get('browser'),
+  browserType: getBrowserType(state),
   menuRecipeDetailShow: getMenuRecipeIdForDetails(state),
   isOutOfStock: getRecipeOutOfStock(state, { recipeId: getMenuRecipeIdForDetails(state)}),
 })

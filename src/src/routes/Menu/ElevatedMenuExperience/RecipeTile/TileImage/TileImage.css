@@ -1,13 +1,40 @@
-.imageWrapper {
+.mobileImageWrapper {
     height: 100%;
     width: 66%;
     border: none;
     background: none;
     position: relative;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
 }
 
-.image {
-    height: 100%;
-    object-fit: cover;
+.desktopImageWrapper {
+    height: 75%;
     width: 100%;
+    border: none;
+    background: none;
+    position: relative;
+    padding: 0;
+    padding-top: 100%;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.mobileImage {
+    position: absolute;
+    top: -16%;
+    left: -10%;
+    width: 120%;
+    max-width: none;
+    max-height: none;
+}
+
+.desktopImage {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    max-width: none;
+    width: 120%;
 }

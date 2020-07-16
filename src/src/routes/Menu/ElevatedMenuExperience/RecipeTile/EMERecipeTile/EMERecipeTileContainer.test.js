@@ -23,7 +23,10 @@ describe('<EMERecipeTileContainer />', () => {
     }),
     menuRecipeStock: Immutable.fromJS({
       [recipeId]: { 2: 1000, 4: 1000 }
-    })
+    }),
+    request: Immutable.fromJS({
+      browser: 'mobile'
+    }),
   }
 
   const wrapperOptions = {
@@ -44,6 +47,7 @@ describe('<EMERecipeTileContainer />', () => {
   test('should pass down correct props', () => {
     expect(wrapper.prop('recipe')).toEqual(recipe)
     expect(wrapper.prop('isOutOfStock')).toEqual(false)
+    expect(wrapper.prop('isMobile')).toEqual(true)
     expect(wrapper.prop('title')).toEqual('Chicken curry')
     expect(wrapper.prop('showDetailRecipe')).toEqual(expect.any(Function))
   })

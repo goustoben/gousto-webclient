@@ -4,6 +4,8 @@ import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
 import { getNumPortions } from 'selectors/basket'
 
+import { getBrowserType } from 'selectors/browser'
+import { isMobile } from 'utils/view'
 import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
 import { CookingTimeIcon } from './CookingTimeIcon'
 
@@ -21,7 +23,8 @@ const mapStateToProps = (state, ownProps) => {
   const cookingTime = numPortions === 2 ? recipe.get('cookingTime') : recipe.get('cookingTimeFamily')
 
   return {
-    cookingTime
+    cookingTime,
+    isMobile: isMobile(getBrowserType(state))
   }
 }
 
