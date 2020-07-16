@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     recipe,
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
-    title: getRecipeTitle(state, ownProps)
+    title: getRecipeTitle(state, ownProps),
   }
 }
 

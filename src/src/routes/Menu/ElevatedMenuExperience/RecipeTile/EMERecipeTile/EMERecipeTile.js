@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { TileImageContainer } from '../TileImage'
+import { CookingTimeIconContainer } from '../CookingTimeIcon'
 import css from './EMERecipeTile.css'
 
 const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title }) => {
@@ -20,6 +21,7 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
         recipeId={recipeId}
         onClick={onClick}
       />
+      <CookingTimeIconContainer recipeId={recipeId} />
       <div
         role="button"
         tabIndex={0}
