@@ -62,6 +62,9 @@ const defaultFeatures = () => ({
   },
   limitedCapacity: {
     value: false,
+  },
+  isHelpCentreActive: {
+    value: false,
   }
 })
 

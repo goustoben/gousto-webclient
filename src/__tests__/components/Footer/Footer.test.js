@@ -139,7 +139,7 @@ describe('<Footer />', () => {
     })
   })
 
-  describe('given the user is loggeed in', () => {
+  describe('given the user is logged in', () => {
     let wrapper
 
     beforeEach(() => {
@@ -152,6 +152,17 @@ describe('<Footer />', () => {
       const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
 
       expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
+    })
+
+    describe('when the isHelpCentreActive prop is passed as true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isHelpCentreActive: true })
+      })
+
+      test('the help links to the help center page', () => {
+        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+        expect(helpLink.prop('to')).toContain('/help-centre')
+      })
     })
   })
 

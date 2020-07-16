@@ -62,6 +62,7 @@ module.exports = {
     },
 
     help: '/help',
+    helpCentre: '/help-centre',
 
     home: '/',
     home2: '/home',

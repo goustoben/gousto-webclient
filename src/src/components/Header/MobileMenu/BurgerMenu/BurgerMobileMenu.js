@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { client } from 'config/routes'
 import { onEnter } from 'utils/accessibility'
 import Link from 'Link'
 import css from '../MobileMenu.css'
@@ -25,7 +26,8 @@ class BurgerMobileMenu extends React.PureComponent {
     const {
       menuItems,
       promoCodeUrl,
-      trackNavigationClick
+      trackNavigationClick,
+      isHelpCentreActive,
     } = this.props
 
     return menuItems.map(menuItem => {
@@ -85,11 +87,11 @@ class BurgerMobileMenu extends React.PureComponent {
 
       return (
         <Link
-          to={menuItem.url}
+          to={isHelpLink && isHelpCentreActive ? client.helpCentre : menuItem.url}
           data-optimizely={isHelpLink ? 'mobile-header-help-link' : null}
           className={css.menuItem}
           key={menuItem.name}
-          clientRouted={menuItem.clientRouted}
+          clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
           tracking={() => trackNavigationClick(menuItem.tracking)}
         >
           <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
@@ -135,10 +137,12 @@ BurgerMobileMenu.propTypes = {
   promoCodeUrl: PropTypes.string,
   show: PropTypes.bool.isRequired,
   trackNavigationClick: PropTypes.func,
+  isHelpCentreActive: PropTypes.bool,
 }
 
 BurgerMobileMenu.defaultProps = {
   isAuthenticated: false,
+  isHelpCentreActive: false,
 }
 
 export { BurgerMobileMenu }

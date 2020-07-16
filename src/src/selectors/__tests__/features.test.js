@@ -29,7 +29,8 @@ import {
   getBlockedResubscription,
   getBlockedTransactionalOrders,
   getLimitedCapacity,
-  getHomePageRedesign
+  getHomePageRedesign,
+  getIsHelpCentreActive,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -75,6 +76,7 @@ describe('when features are defined', () => {
     [isShowNoDiscountCTAFeatureEnabled, 'showNoDiscountCTA'],
     [isSubscriptionPauseOsrFeatureEnabled, 'subscriptionPauseOsr'],
     [getHomePageRedesign, 'isHomePageRedesignEnabled'],
+    [getIsHelpCentreActive, 'isHelpCentreActive'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

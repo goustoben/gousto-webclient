@@ -1,7 +1,12 @@
 import { connect } from 'react-redux'
 import { helpPreLoginVisibilityChange } from 'actions/login'
+import { getIsHelpCentreActive } from 'selectors/features'
 import { BurgerMobileMenu } from './BurgerMobileMenu'
 
-export const BurgerMobileMenuContainer = connect(null, {
+const mapStateToProps = (state) => ({
+  isHelpCentreActive: getIsHelpCentreActive(state),
+})
+
+export const BurgerMobileMenuContainer = connect(mapStateToProps, {
   helpPreLoginVisibilityChange,
 })(BurgerMobileMenu)

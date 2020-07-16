@@ -111,3 +111,7 @@ export const getLimitedCapacity = ({ features }) => (
 export const getHomePageRedesign = ({ features }) => (
   features && features.getIn(['isHomePageRedesignEnabled', 'value'], false)
 )
+
+export const getIsHelpCentreActive = ({ features }) => (
+  features && features.getIn(['isHelpCentreActive', 'value'], false)
+)
