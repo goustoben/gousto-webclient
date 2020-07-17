@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-
+import { getBrowserType } from 'selectors/browser'
 import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
     isCurrentCollectionRecommendation: isCurrentCollectionRecommendation(state),
     thematicName: query && query.thematic,
     deliveryDate: state.basket.get('date'),
-    browserType: state.request.get('browser')
+    browserType: getBrowserType(state)
   }
 }
 const RecipeListContainer = connect(mapStateToProps)(RecipeList)

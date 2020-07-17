@@ -1,6 +1,8 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 
+import { getBrowserType } from 'selectors/browser'
+import { isMobile } from 'utils/view'
 import { getRecipes } from 'selectors/root'
 import { getFeaturedImage } from 'utils/image'
 
@@ -17,14 +19,15 @@ const getRecipeForRecipeImage = createSelector(
 const mapStateToProps = (state, ownProps) => {
   const { view } = ownProps
 
-  const browserType = state.request.get('browser')
+  const browserType = getBrowserType(state)
   const recipe = getRecipeForRecipeImage(state, ownProps)
 
   const media = getFeaturedImage(recipe, view, browserType)
 
   return {
     media,
-    isOutOfStock: getRecipeOutOfStock(state, ownProps)
+    isOutOfStock: getRecipeOutOfStock(state, ownProps),
+    isMobile: isMobile(getBrowserType(state))
   }
 }
 

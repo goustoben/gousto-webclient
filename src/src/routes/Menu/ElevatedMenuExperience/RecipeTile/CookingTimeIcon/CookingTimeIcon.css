@@ -1,6 +1,17 @@
 @value Black from 'styles/colors.css';
 
-.cookingTimeIcon {
+.mobileCookingTimeIcon {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px;
+}
+
+.desktopCookingTimeIcon {
   position: absolute;
   bottom: 0.5rem;
   left: 0.5rem;

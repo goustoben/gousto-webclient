@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import css from './CookingTimeIcon.css'
 import { getPercentageFromCookingTime } from '../../utils/recipeUtils'
 
-const CookingTimeIcon = ({ cookingTime }) => {
+const CookingTimeIcon = ({ cookingTime, isMobile }) => {
   if (!cookingTime) {
     return null
   }
@@ -11,7 +12,13 @@ const CookingTimeIcon = ({ cookingTime }) => {
   const percentage = getPercentageFromCookingTime(cookingTime)
 
   return (
-    <div className={css.cookingTimeIcon}>
+    <div className={
+      classnames(
+        { [css.mobileCookingTimeIcon]: isMobile },
+        { [css.desktopCookingTimeIcon]: !isMobile }
+      )
+    }
+    >
       <svg viewBox="0 0 36 36" className={css.circularChart}>
         <path
           className={css.circularChartCircleBg}
@@ -35,6 +42,7 @@ const CookingTimeIcon = ({ cookingTime }) => {
 
 CookingTimeIcon.propTypes = {
   cookingTime: PropTypes.number.isRequired,
+  isMobile: PropTypes.bool.isRequired,
 }
 
 export { CookingTimeIcon }

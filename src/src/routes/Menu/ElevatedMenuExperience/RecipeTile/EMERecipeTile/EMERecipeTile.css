@@ -1,24 +1,46 @@
-@value axiformaFontStack, sizeSM from 'styles/typography.css';
+@value axiformaFontStack, sizeSM, sizeMD from 'styles/typography.css';
 @value White from 'styles/colors.css';
 
-.recipeTileContainer {
+.mobileRecipeTileContainer {
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: White;
+    background-color: #FFFFFF;
     margin: 0 0.5rem 0.5rem 0.5rem;
-    height: 200px;
+    height: 235px;
     position: relative;
 }
 
-.titleWrapper {
+.desktopRecipeTileContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: White;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.mobileTitleWrapper {
     width: 33%;
     margin: 0.825rem;
 }
 
-.recipeTitle {
+.desktopTitleWrapper {
+    width: 100%;
+    margin: 1rem;
+}
+
+.mobileRecipeTitle {
     font-family: axiformaFontStack;
     font-size: sizeSM;
     font-weight: 600;
     line-height: 1.7;
+}
+
+.desktopRecipeTitle {
+    font-family: axiformaFontStack;
+    font-size: sizeMD;
+    font-weight: 600;
+    line-height: 1.7;
+    padding-right: 2rem;
 }

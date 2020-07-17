@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryVisibilityChange, boxSummaryNext } from 'actions/boxSummary'
+import { getBrowserType } from 'selectors/browser'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { isMobile } from 'utils/view'
@@ -10,7 +11,7 @@ import { getMenuBrowseCTAShow } from '../../../selectors/root'
 import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes, shouldShowBoxSummary } from '../../../selectors/basket'
 
 const mapStateToProps = (state) => ({
-  isMobile: isMobile(state.request.get('browser')),
+  isMobile: isMobile(getBrowserType(state)),
   date: getBasketDate(state),
   numPortions: getNumPortions(state),
   recipes: getBasketRecipes(state),
