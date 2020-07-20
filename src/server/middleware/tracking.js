@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid')
 
 const cookieOptions = {
-  secure: false,
+  secure: true,
   httpOnly: false,
 }
 

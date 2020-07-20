@@ -65,7 +65,7 @@ describe('tracking', () => {
 
           it('then should set cookie', () => {
             expect(context.cookies.set).toHaveBeenCalledWith('session', 'generated-uuid', {
-              secure: false,
+              secure: true,
               httpOnly: false,
             })
           })
@@ -121,7 +121,7 @@ describe('tracking', () => {
 
           it('then should set cookie', () => {
             expect(context.cookies.set).toHaveBeenCalledWith(sessionCookieName, 'generated-uuid', {
-              secure: false,
+              secure: true,
               httpOnly: false,
             })
           })
