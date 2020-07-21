@@ -1,12 +1,11 @@
 .mobileImageWrapper {
     height: 100%;
-    width: 66%;
+    width: 200px;
     border: none;
     background: none;
     position: relative;
     padding: 0;
     overflow: hidden;
-    position: relative;
 }
 
 .desktopImageWrapper {
@@ -19,16 +18,16 @@
     padding-top: 100%;
     height: auto;
     overflow: hidden;
-    position: relative;
 }
 
 .mobileImage {
     position: absolute;
-    top: -16%;
-    left: -10%;
-    width: 120%;
+    top: 0;
+    left: 0;
+    width: 100%;
     max-width: none;
     max-height: none;
+    transform: scale(1.2);
 }
 
 .desktopImage {

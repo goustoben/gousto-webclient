@@ -1,5 +1,5 @@
 @value axiformaFontStack, sizeSM, sizeMD from 'styles/typography.css';
-@value White from 'styles/colors.css';
+@value White, Blackberry from 'styles/colors.css';
 
 .mobileRecipeTileContainer {
     width: 100%;
@@ -7,7 +7,7 @@
     flex-direction: row;
     background-color: #FFFFFF;
     margin: 0 0.5rem 0.5rem 0.5rem;
-    height: 235px;
+    height: 200px;
     position: relative;
 }
 
@@ -21,12 +21,15 @@
 }
 
 .mobileTitleWrapper {
-    width: 33%;
+    width: calc(100% - 200px);
     margin: 0.825rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .desktopTitleWrapper {
-    width: 100%;
     margin: 1rem;
 }
 
@@ -43,4 +46,31 @@
     font-weight: 600;
     line-height: 1.7;
     padding-right: 2rem;
+}
+
+.purchaseInfoWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.surchargeInfo {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0.5rem;
+}
+
+.surchargeAmountText {
+    color: Blackberry;
+    font-weight: 600;
+    white-space: nowrap;
+    align-self: flex-end;
+}
+
+.perServingText {
+    color: Blackberry;
+    font-weight: 500;
+    white-space: nowrap;
+    font-size: sizeSM;
+    line-height: 13px;
 }
