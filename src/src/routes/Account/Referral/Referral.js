@@ -23,7 +23,6 @@ const propTypes = {
   trackingReferFriendSocialSharing: PropTypes.func,
   isLoading: PropTypes.bool,
   device: PropTypes.string,
-  trackUserFreeFoodPageView: PropTypes.func,
 }
 
 const defaultProps = {
@@ -34,13 +33,10 @@ const defaultProps = {
   trackingReferFriendSocialSharing: () => { },
   isLoading: false,
   device: 'desktop',
-  trackUserFreeFoodPageView: () => {},
 }
 
 class Referral extends Component {
   componentDidMount() {
-    const { trackUserFreeFoodPageView } = this.props
-    trackUserFreeFoodPageView()
     this.fetchReferralOffer()
   }
 
