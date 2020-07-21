@@ -40,7 +40,6 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 window.docReady(() => {
   clientAuthorise(store)
-  store.dispatch(actions.authenticateClient())
 
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
