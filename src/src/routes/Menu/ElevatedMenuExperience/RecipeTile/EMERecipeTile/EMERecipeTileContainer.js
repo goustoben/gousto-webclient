@@ -3,9 +3,8 @@ import { createSelector } from 'reselect'
 import { getBrowserType } from 'selectors/browser'
 import { getRecipes } from 'selectors/root'
 import { isMobile } from 'utils/view'
-
+import { getRecipeSurcharge , getRecipeOutOfStock, getRecipeTitle } from '../../../selectors/recipe'
 import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
-import { getRecipeOutOfStock, getRecipeTitle } from '../../../selectors/recipe'
 import { EMERecipeTile } from './EMERecipeTile'
 
 const getIdForRecipeTile = (state, props) => props.recipeId
@@ -23,7 +22,8 @@ const mapStateToProps = (state, ownProps) => {
     recipe,
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
     title: getRecipeTitle(state, ownProps),
-    isMobile: isMobile(getBrowserType(state))
+    isMobile: isMobile(getBrowserType(state)),
+    surcharge: getRecipeSurcharge(state, ownProps)
   }
 }
 

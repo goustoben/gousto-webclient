@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { TileImageContainer } from '../TileImage'
 import css from './EMERecipeTile.css'
 
-const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, isMobile }) => {
+const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, isMobile, surcharge }) => {
   if (!recipe) {
     return null
   }
@@ -47,6 +47,18 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
         >
           {title}
         </h2>
+        <div className={css.purchaseInfoWrapper}>
+          {surcharge && !isOutOfStock ? (
+            <div className={css.surchargeInfo}>
+              <span className={css.surchargeAmountText}>
+                +£
+                {surcharge.toFixed(2)}
+              </span>
+              <span className={css.perServingText}>per serving</span>
+            </div>
+          ) : null}
+          <div className={css.addRecipeButton}>CTA</div>
+        </div>
       </div>
     </div>
   )
@@ -58,7 +70,12 @@ EMERecipeTile.propTypes = {
   showDetailRecipe: PropTypes.func.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool.isRequired,
+  surcharge: PropTypes.number
+}
+
+EMERecipeTile.defaultProps = {
+  surcharge: 0
 }
 
 export { EMERecipeTile }
