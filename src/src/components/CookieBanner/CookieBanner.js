@@ -9,37 +9,40 @@ const CookieBanner = ({
   copy,
   isCookiePolicyAccepted,
   trackCookiePolicyAccepted,
+  trackCookiePolicyVisible,
 }) => {
-  if (isCookiePolicyAccepted) {
-    return null
+  if (!isCookiePolicyAccepted) {
+    trackCookiePolicyVisible()
+
+    return (
+      <div className={css.container} data-testing="cookiePolicyBanner">
+        <div>
+          <p className={css.description}>
+            {copy.description}
+            <Link to={config.findOutMoreLink} clientRouted={false}>
+              <span className={css.linkMessage}>
+                {copy.findMore}
+              </span>
+            </Link>
+          </p>
+          <button
+            type="button"
+            tabIndex="0"
+            className={css.button}
+            data-testing="cookiePolicyBannerBtn"
+            onClick={() => {
+              cookiePolicyAcceptanceChange(true)
+              trackCookiePolicyAccepted()
+            }}
+          >
+            {copy.button}
+          </button>
+        </div>
+      </div>
+    )
   }
 
-  return (
-    <div className={css.container} data-testing="cookiePolicyBanner">
-      <div>
-        <p className={css.description}>
-          {copy.description}
-          <Link to={config.findOutMoreLink} clientRouted={false}>
-            <span className={css.linkMessage}>
-              {copy.findMore}
-            </span>
-          </Link>
-        </p>
-        <button
-          type="button"
-          tabIndex="0"
-          className={css.button}
-          data-testing="cookiePolicyBannerBtn"
-          onClick={() => {
-            cookiePolicyAcceptanceChange(true)
-            trackCookiePolicyAccepted()
-          }}
-        >
-          {copy.button}
-        </button>
-      </div>
-    </div>
-  )
+  return null
 }
 
 CookieBanner.propTypes = {
@@ -51,6 +54,7 @@ CookieBanner.propTypes = {
   isCookiePolicyAccepted: PropTypes.bool,
   cookiePolicyAcceptanceChange: PropTypes.func.isRequired,
   trackCookiePolicyAccepted: PropTypes.func.isRequired,
+  trackCookiePolicyVisible: PropTypes.func.isRequired,
 }
 
 CookieBanner.defaultProps = {

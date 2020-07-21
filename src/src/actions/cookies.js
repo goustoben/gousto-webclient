@@ -23,7 +23,15 @@ const trackCookiePolicyAccepted = () => ({
   }
 })
 
+const trackCookiePolicyVisible = () => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'cookie_banner_displayed',
+  }
+})
+
 export {
   cookiePolicyAcceptanceChange,
   trackCookiePolicyAccepted,
+  trackCookiePolicyVisible,
 }

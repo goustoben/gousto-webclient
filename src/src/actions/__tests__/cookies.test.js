@@ -1,6 +1,10 @@
 import { actionTypes } from 'actions/actionTypes'
 import * as cookieHelper from 'utils/cookieHelper2'
-import { cookiePolicyAcceptanceChange, trackCookiePolicyAccepted } from '../cookies'
+import {
+  cookiePolicyAcceptanceChange,
+  trackCookiePolicyAccepted,
+  trackCookiePolicyVisible,
+} from '../cookies'
 
 describe('cookie actions', () => {
   describe('cookiePolicyAcceptanceChange', () => {
@@ -43,6 +47,17 @@ describe('cookie actions', () => {
         type: actionTypes.TRACKING,
         trackingData: {
           actionType: 'cookie_banner_ok_clicked',
+        }
+      })
+    })
+  })
+
+  describe('trackCookiePolicyVisible', () => {
+    test('creates the tracking action', () => {
+      expect(trackCookiePolicyVisible()).toEqual({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'cookie_banner_displayed',
         }
       })
     })

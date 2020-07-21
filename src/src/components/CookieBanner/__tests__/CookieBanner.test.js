@@ -5,18 +5,20 @@ import { CookieBanner } from '../CookieBanner'
 
 describe('CookieBanner', () => {
   let wrapper
+  const PROPS = {
+    copy: {
+      button: '',
+      findMore: '',
+      description: '',
+    },
+    cookiePolicyAcceptanceChange: jest.fn(),
+    isCookiePolicyAccepted: true,
+    trackCookiePolicyAccepted: jest.fn(),
+    trackCookiePolicyVisible: jest.fn(),
+  }
 
   beforeEach(() => {
-    wrapper = shallow(<CookieBanner
-      copy={{
-        button: '',
-        findMore: '',
-        description: '',
-      }}
-      cookiePolicyAcceptanceChange={() => {}}
-      isCookiePolicyAccepted
-      trackCookiePolicyAccepted={() => {}}
-    />)
+    wrapper = shallow(<CookieBanner {...PROPS} />)
   })
 
   describe('when isCookiePolicyAccepted is true', () => {
@@ -26,6 +28,10 @@ describe('CookieBanner', () => {
 
     test('cookie banner not rendering', () => {
       expect(wrapper.children().length).toBe(0)
+    })
+
+    test('does not trigger the trackCookiePolicyVisible', () => {
+      expect(PROPS.trackCookiePolicyVisible).not.toHaveBeenCalled()
     })
   })
 
@@ -48,24 +54,21 @@ describe('CookieBanner', () => {
       expect(wrapper.find('.description').text().indexOf('description')).toBeGreaterThan(-1)
     })
 
-    describe('and the accept cookie policy button is clicked', () => {
-      const cookiePolicyAcceptanceChangeSpy = jest.fn()
-      const trackCookiePolicyAcceptedSpy = jest.fn()
+    test('triggers the trackCookiePolicyVisible', () => {
+      expect(PROPS.trackCookiePolicyVisible).toHaveBeenCalled()
+    })
 
+    describe('and the accept cookie policy button is clicked', () => {
       beforeEach(() => {
-        wrapper.setProps({
-          cookiePolicyAcceptanceChange: cookiePolicyAcceptanceChangeSpy,
-          trackCookiePolicyAccepted: trackCookiePolicyAcceptedSpy,
-        })
         wrapper.find('button').simulate('click')
       })
 
       test('triggers the cookiePolicyAcceptanceChange', () => {
-        expect(cookiePolicyAcceptanceChangeSpy).toHaveBeenCalledWith(true)
+        expect(PROPS.cookiePolicyAcceptanceChange).toHaveBeenCalledWith(true)
       })
 
       test('triggers the trackCookiePolicyAccepted', () => {
-        expect(trackCookiePolicyAcceptedSpy).toHaveBeenCalled()
+        expect(PROPS.trackCookiePolicyAccepted).toHaveBeenCalled()
       })
     })
   })

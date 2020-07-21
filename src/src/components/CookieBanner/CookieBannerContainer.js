@@ -1,5 +1,9 @@
 import { connect } from 'react-redux'
-import { cookiePolicyAcceptanceChange, trackCookiePolicyAccepted } from 'actions/cookies'
+import {
+  cookiePolicyAcceptanceChange,
+  trackCookiePolicyAccepted,
+  trackCookiePolicyVisible,
+} from 'actions/cookies'
 import { getIsPolicyAccepted } from 'selectors/cookies'
 import { CookieBanner } from './CookieBanner'
 
@@ -18,6 +22,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   cookiePolicyAcceptanceChange,
   trackCookiePolicyAccepted,
+  trackCookiePolicyVisible,
 }
 
 const CookieBannerContainer = connect(mapStateToProps, mapDispatchToProps)(CookieBanner)
