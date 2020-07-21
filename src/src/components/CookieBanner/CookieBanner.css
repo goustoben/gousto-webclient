@@ -28,6 +28,8 @@
 }
 
 .button {
+	appearance: none;
+	background: none;
 	color: White;
 	border: 1px solid White;
 	border-radius: 3px;
@@ -60,7 +62,7 @@
 	.container {
 		padding: 10px 30px;
 	}
-	
+
 	.description {
 		font-size: 14px;
 	}

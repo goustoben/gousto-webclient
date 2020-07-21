@@ -4,7 +4,12 @@ import config from 'config/cookies'
 import Link from 'Link'
 import css from './CookieBanner.css'
 
-const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChange }) => {
+const CookieBanner = ({
+  cookiePolicyAcceptanceChange,
+  copy,
+  isCookiePolicyAccepted,
+  trackCookiePolicyAccepted,
+}) => {
   if (isCookiePolicyAccepted) {
     return null
   }
@@ -20,17 +25,18 @@ const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChan
             </span>
           </Link>
         </p>
-        <a
-          role="button"
+        <button
+          type="button"
           tabIndex="0"
           className={css.button}
           data-testing="cookiePolicyBannerBtn"
           onClick={() => {
             cookiePolicyAcceptanceChange(true)
+            trackCookiePolicyAccepted()
           }}
         >
           {copy.button}
-        </a>
+        </button>
       </div>
     </div>
   )
@@ -44,10 +50,11 @@ CookieBanner.propTypes = {
   }).isRequired,
   isCookiePolicyAccepted: PropTypes.bool,
   cookiePolicyAcceptanceChange: PropTypes.func.isRequired,
+  trackCookiePolicyAccepted: PropTypes.func.isRequired,
 }
 
 CookieBanner.defaultProps = {
   isCookiePolicyAccepted: false,
 }
 
-export default CookieBanner
+export { CookieBanner }

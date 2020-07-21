@@ -6,7 +6,7 @@ import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import promoActions from 'actions/promos'
 import authActions from 'actions/auth'
-import cookieActions from 'actions/cookies'
+import { cookiePolicyAcceptanceChange } from 'actions/cookies'
 import trackingActions from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
@@ -85,7 +85,7 @@ const processCookies = (cookies, store) => {
   const tutorialsViewed = get(cookies, 'tutorial_viewed')
 
   if (cookiePolicy) {
-    store.dispatch(cookieActions.cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
+    store.dispatch(cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
   }
 
   if (appBannerDismissed) {
