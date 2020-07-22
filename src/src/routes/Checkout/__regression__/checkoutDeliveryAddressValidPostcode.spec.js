@@ -28,6 +28,7 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         cy.get('[data-testing="checkoutPostcode"]').should('have.value', 'W140EE')
 
         cy.get('[data-testing="checkoutAddressDropdown"]')
+          .find('.Select')
           .click()
           .get('.Select-menu-outer .Select-menu .Select-option')
           .eq(1)
