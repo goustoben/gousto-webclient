@@ -191,7 +191,8 @@ const config = {
   ],
   resolve: {
     alias: {
-      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), ''),
+      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', false),
+      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', true),
       styles: path.resolve('./src/styles'),
       jsdom: path.resolve('./fallbacks/jsdom'),
     },
