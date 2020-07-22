@@ -14,7 +14,7 @@ import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
-import CookieBanner from 'CookieBanner'
+import { CookieBannerContainer } from 'CookieBanner'
 import { Button } from 'goustouicomponents'
 import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
@@ -354,7 +354,7 @@ class Header extends React.PureComponent {
 
     return (
       <div className={classNames({[css.homepageRedesign]: isHomePageRedesignEnabled})}>
-        <CookieBanner />
+        <CookieBannerContainer />
         <AppBanner />
         {shouldShowAbandonBasketModal ? <AbandonBasketModal /> : null}
         <span id={serverError ? 'mobileMenu' : null} data-testing="header">

@@ -16,8 +16,22 @@ function cookiePolicyAcceptanceChange(isAccepted) {
   }
 }
 
-const cookieActions = {
-  cookiePolicyAcceptanceChange,
-}
+const trackCookiePolicyAccepted = () => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'cookie_banner_ok_clicked',
+  }
+})
 
-export default cookieActions
+const trackCookiePolicyVisible = () => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'cookie_banner_displayed',
+  }
+})
+
+export {
+  cookiePolicyAcceptanceChange,
+  trackCookiePolicyAccepted,
+  trackCookiePolicyVisible,
+}

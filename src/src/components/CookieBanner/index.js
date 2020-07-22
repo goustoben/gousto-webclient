@@ -1,2 +1,1 @@
-import CookieBannerContainer from './CookieBannerContainer'
-export default CookieBannerContainer
+export { CookieBannerContainer } from './CookieBannerContainer'
