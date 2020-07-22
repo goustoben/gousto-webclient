@@ -13,7 +13,7 @@ const checkIfSectionsVisible = function () {
 
 module.exports = {
   url: function () {
-    return this.api.launchUrl + '/mydeliveries'
+    return this.api.launchUrl + '/my-deliveries'
   },
 
   sections: {

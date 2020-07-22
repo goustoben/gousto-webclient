@@ -47,19 +47,17 @@ class Account extends React.PureComponent {
     const { rateRecipeCount, cardExpiryDate, renderChildren, children, location, isAccountTabNameTest } = this.props
 
     const pageTitles = {
-      '/my-gousto': 'My Gousto',
-      '/my-deliveries': 'My Deliveries',
       '/my-subscription': 'Manage my Subscription',
       '/my-details': 'My Details',
-      '/my-referrals': 'Refer a Friend',
       '/rate-my-recipes': 'Rate my Recipes',
     }
+    const currentPageTitle = pageTitles[location.pathname]
 
     return (
       <div className={css.accountWrap}>
         <NavBar currentPath={location.pathname} rateRecipeCount={rateRecipeCount} cardExpiryDate={cardExpiryDate} isAccountTabNameTest={isAccountTabNameTest} />
         {!renderChildren ? children : <div />}
-        {location.pathname != '/my-gousto' && <Banner title={pageTitles[location.pathname]} />}
+        {currentPageTitle && <Banner title={currentPageTitle} />}
       </div>
     )
   }

@@ -194,7 +194,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     let destination = false
     if (!onCheckout) {
       destination = loginRedirect(location, userIsAdmin, features, userId)
-      if (destination && destination !== client.myDeliveries2) {
+      if (destination && destination !== client.myDeliveries) {
         redirect(destination)
       }
       if (Cookies.get('from_join')) {
@@ -217,8 +217,8 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     } else {
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))
-        if (destination === client.myDeliveries2) {
-          dispatch(push(client.myDeliveries2))
+        if (destination === client.myDeliveries) {
+          dispatch(push(client.myDeliveries))
         }
       }, 1000)
     }
