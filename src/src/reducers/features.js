@@ -15,9 +15,6 @@ const defaultFeatures = () => ({
   featureRecommendedRecipe: {
     value: true,
   },
-  queueIt: {
-    value: false,
-  },
   nextDayDeliveryPaintedDoor: {
     value: false
   },

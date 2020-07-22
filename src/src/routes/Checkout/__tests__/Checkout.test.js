@@ -47,13 +47,7 @@ describe('Checkout', () => {
   let onCheckoutSpy
   let fetchData
 
-  const QueueIt = {
-    validateUser: jest.fn()
-  }
-
   beforeEach(() => {
-    global.QueueIt = QueueIt
-
     store = {
       basket: Immutable.Map({
         stepsOrder: Immutable.List(),
@@ -346,7 +340,7 @@ describe('Checkout', () => {
       fetchData = jest.fn().mockReturnValue(Promise.resolve())
       Checkout.fetchData = fetchData
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false} />,
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
         { context },
       )
       wrapper.instance().componentDidMount()
@@ -359,30 +353,6 @@ describe('Checkout', () => {
         query: { query: true },
         params: { params: true },
       })
-    })
-
-    test('should call QueueIt.validateUser if queueIt feature flag is set to true', () => {
-      wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature />,
-        { context },
-      )
-
-      wrapper.instance().componentDidMount()
-
-      expect(QueueIt.validateUser).toHaveBeenCalled()
-    })
-
-    test('should not call QueueIt.validateUser if queueIt feature flag is set to false', () => {
-      wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false} />,
-        { context },
-      )
-
-      QueueIt.validateUser.mockClear()
-
-      wrapper.instance().componentDidMount()
-
-      expect(QueueIt.validateUser).not.toHaveBeenCalled()
     })
   })
 
@@ -511,6 +481,36 @@ describe('Checkout', () => {
         currentStep = 'payment'
         expect(instance.getNextStep(steps, currentStep)).toBeUndefined()
       })
+    })
+  })
+
+  describe('when onStepChange is called', () => {
+    let trackSignupStep
+    let redirectAction
+
+    beforeEach(() => {
+      trackSignupStep = jest.fn()
+      redirectAction = jest.fn()
+
+      wrapper = shallow(
+        <Checkout
+          params={{ stepName: 'boxdetails' }}
+          browser="mobile"
+          checkoutPaymentFeature
+          redirect={redirectAction}
+          trackSignupStep={trackSignupStep}
+        />
+      )
+
+      wrapper.find('BoxDetails').props().onStepChange()
+    })
+
+    test('trackSignupStep is called with the next step', () => {
+      expect(trackSignupStep).toHaveBeenCalledWith('yourdetails')
+    })
+
+    test('redirect is called with the next step', () => {
+      expect(redirectAction).toHaveBeenCalledWith('/check-out/yourdetails')
     })
   })
 })

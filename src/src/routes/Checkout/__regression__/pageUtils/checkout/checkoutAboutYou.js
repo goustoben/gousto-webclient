@@ -55,6 +55,7 @@ export const goToCheckoutDeliveryDetails = () => {
     cy.get('[data-testing="checkoutCTA"]').click()
 
     cy.pipe(getCheckoutAddressDropdown)
+      .find('.Select')
       .click()
       .get('.Select-menu-outer .Select-menu .Select-option')
       .eq(1)

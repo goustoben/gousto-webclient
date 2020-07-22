@@ -27,6 +27,7 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         cy.get('[data-testing="checkoutPostcodeError"] p').contains('postcode must be at least 5 characters')
 
         cy.get('[data-testing="checkoutAddressDropdown"]')
+          .find('.Select')
           .click()
           .get('.Select-menu-outer .Select-menu .Select-option')
           .eq(1)

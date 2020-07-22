@@ -120,41 +120,6 @@ describe('htmlTemplate', () => {
     })
   })
 
-  describe('queueit', () => {
-    const STATIC_QUEUE_IT = '<script type="text/javascript" src="https://static.queue-it.net/script/queueclient.min.js"></script>'
-
-    beforeEach(() => {
-      output = ''
-      initialState = {
-        auth: {
-          get: jest.fn(() => false)
-        },
-      }
-    })
-
-    describe('when is not authenticated', () => {
-      test('should contain static.queue-it script tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
-        expect(output).toContain(STATIC_QUEUE_IT)
-      })
-    })
-
-    describe('when isAuthenticated', () => {
-      beforeEach(() => {
-        initialState = {
-          auth: {
-            get: jest.fn(() => true)
-          },
-        }
-      })
-
-      test('should not contain static.queue-it script tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
-        expect(output).not.toContain(STATIC_QUEUE_IT)
-      })
-    })
-  })
-
   describe('link', () => {
     const LINK_TAG = '<link rel="stylesheet" href="mock.css"/>'
 

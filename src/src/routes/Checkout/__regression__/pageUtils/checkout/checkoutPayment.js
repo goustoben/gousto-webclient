@@ -16,6 +16,7 @@ const selectAddress = () => {
     cy.get('[data-testing="checkoutCTA"]').click()
     cy.get('[data-testing="checkoutFindAddressButton"]').click()
     cy.get('[data-testing="checkoutAddressDropdown"]')
+      .find('.Select')
       .click()
       .get('.Select-option')
       .eq(1)

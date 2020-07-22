@@ -126,7 +126,8 @@ const config = {
   ],
   resolve: {
     alias: {
-      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), ''),
+      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', false),
+      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', true),
       spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
     },
     modules: [
