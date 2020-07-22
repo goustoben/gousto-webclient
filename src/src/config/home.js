@@ -81,10 +81,10 @@ module.exports = {
     // loggedIn|loggedOut|any
     applyIf: 'loggedOut',
     code: 'DTI-SB-5030',
-    mayCode: 'DTI-SB-P30M',
+    mayCode: 'DTI-SB-5030',
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-      mayText: 'Get cooking with 30% off all boxes in your first month',
+      mayText: 'Get cooking with 50% off your first box & 30% off in your first month',
       linkText: 'Claim discount',
     },
   },
