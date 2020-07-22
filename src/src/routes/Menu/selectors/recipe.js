@@ -51,9 +51,9 @@ export const getRecipeSurcharge = createSelector(
 )
 
 const getTagBySlugFromProps = (state, props) => props.slug
-const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
+export const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
 
-const findTag = (allTags, tag) => {
+export const findTag = (allTags, tag) => {
   const foundTag = allTags && allTags.find((tagData) => tagData.slug === tag)
 
   if (foundTag) {

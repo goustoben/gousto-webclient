@@ -6,6 +6,7 @@ import { isMobile } from 'utils/view'
 import { getRecipeSurcharge , getRecipeOutOfStock, getRecipeTitle } from '../../../selectors/recipe'
 import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
 import { EMERecipeTile } from './EMERecipeTile'
+import { getElevatedMenuExperienceRecipeTags } from '../../../selectors/elevatedMenuExperienceRecipeTags'
 
 const getIdForRecipeTile = (state, props) => props.recipeId
 
@@ -23,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
     title: getRecipeTitle(state, ownProps),
     isMobile: isMobile(getBrowserType(state)),
+    brandTags: getElevatedMenuExperienceRecipeTags(state, ownProps),
     surcharge: getRecipeSurcharge(state, ownProps)
   }
 }

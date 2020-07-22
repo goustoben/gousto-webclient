@@ -4,6 +4,8 @@ import Immutable from 'immutable'
 
 import { EMERecipeTile } from './EMERecipeTile'
 import { TileImageContainer } from '../TileImage'
+import { RecipeTag } from '../RecipeTag'
+import { RecipeTagTitle } from '../RecipeTagTitle'
 
 describe('EMERecipeTile', () => {
   let wrapper
@@ -26,6 +28,22 @@ describe('EMERecipeTile', () => {
       isOutOfStock: false,
       isMobile: false,
       surcharge: 0,
+      brandTags: {
+        topLeftTag: {
+          type: 'general',
+          slug: 'new-eme',
+          text: 'New',
+          themes: undefined,
+          theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
+        },
+        topRightTag: {
+          type: 'general',
+          slug: 'joe-wicks-eme',
+          text: 'Joe Wicks',
+          themes: undefined,
+          theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
+        }
+      }
     }
   })
   describe('when given null recipe', () => {
@@ -67,8 +85,16 @@ describe('EMERecipeTile', () => {
         expect(wrapper.find(TileImageContainer).length).toEqual(1)
       })
 
-      test('should contain a title ', () => {
+      test('should contain a title', () => {
         expect(wrapper.find('h2').length).toEqual(1)
+      })
+
+      test('should contain one RecipeTag component', () => {
+        expect(wrapper.find(RecipeTag).length).toEqual(1)
+      })
+
+      test('should contain one RecipeTagTitle component', () => {
+        expect(wrapper.find(RecipeTagTitle).length).toEqual(1)
       })
     })
 
