@@ -57,7 +57,6 @@ const propTypes = {
   }),
   loadPrices: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
-  queueItFeature: PropTypes.bool,
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
 }
@@ -75,7 +74,6 @@ const defaultProps = {
   loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
-  queueItFeature: false
 }
 
 const contextTypes = {
@@ -152,12 +150,7 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, queueItFeature, changeRecaptcha } = this.props
-
-    /* global QueueIt */
-    if (queueItFeature) {
-      QueueIt.validateUser(true)
-    }
+    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha } = this.props
 
     Checkout.fetchData({ store, query, params, browser }).then(() => {
       trackSignupStep(1)

@@ -7,8 +7,7 @@ const head = {
   pingdom: require('./pingdom').default,
   favicon: require('./favicon').default,
   mobileMeta: require('./mobileMeta').default,
-  optimizely: require('./optimizely').default,
-  queueit: require('./queueit').default
+  optimizely: require('./optimizely').default
 }
 
 /* eslint-disable-next-line import/no-default-export */
