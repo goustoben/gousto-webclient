@@ -27,7 +27,6 @@ describe('TestimonialsContainer', () => {
       test('Then should be rendered properly', () => {
         const expected = {
           showLink: true,
-          enableStorystream: false,
           isHomePageRedesignEnabled: false,
         }
         const renderedHTML = wrapper.dive()
@@ -51,14 +50,12 @@ describe('TestimonialsContainer', () => {
         wrapper = shallow(<TestimonialsContainer store={store} />)
         wrapper.setProps({
           showLink: false,
-          enableStorystream: true,
         })
       })
 
       test('Then should be rendered with updates', () => {
         const expected = {
           showLink: false,
-          enableStorystream: true,
           isHomePageRedesignEnabled: true,
         }
         const renderedHTML = wrapper.dive()

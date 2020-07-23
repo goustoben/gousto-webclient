@@ -95,7 +95,6 @@ class Join extends Home {
         <HomeSections
           modules={modules}
           testimonials={{
-            enableStorystream: this.props.enableStorystream,
             showLink: false,
             ctaText: home.CTA.join,
           }}

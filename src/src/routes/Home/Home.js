@@ -15,7 +15,6 @@ class Home extends React.Component {
   }
 
   static propTypes = {
-    enableStorystream: PropTypes.bool,
     moduleOrder: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     variant: PropTypes.string,
@@ -74,7 +73,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, enableStorystream, variant, isSignupReductionEnabled, isHomePageRedesignEnabled } = this.props
+    const { isAuthenticated, variant, isSignupReductionEnabled, isHomePageRedesignEnabled } = this.props
     const modules = this.getModules()
     let ctaUri
     let ctaText
@@ -125,7 +124,6 @@ class Home extends React.Component {
           testimonials={{
             ctaUri,
             ctaText,
-            enableStorystream,
           }}
           hero={{
             ctaUri,
