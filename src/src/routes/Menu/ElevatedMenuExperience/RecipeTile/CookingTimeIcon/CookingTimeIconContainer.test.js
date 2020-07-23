@@ -26,9 +26,6 @@ describe('<CookingTimeIconContainer />', () => {
       menuRecipeStock: Immutable.fromJS({
         [recipeId]: { 2: 1000, 4: 1000 }
       }),
-      request: Immutable.fromJS({
-        browser: 'mobile'
-      }),
     }
 
     const wrapperOptions = {
@@ -62,9 +59,6 @@ describe('<CookingTimeIconContainer />', () => {
       }),
       menuRecipeStock: Immutable.fromJS({
         [recipeId]: { 2: 1000, 4: 1000 }
-      }),
-      request: Immutable.fromJS({
-        browser: 'mobile'
       }),
     }
 

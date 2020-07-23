@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import { TileImageContainer } from '../TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from '../RecipeTagTitle'
+import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './EMERecipeTile.css'
 
 const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, isMobile, brandTags, surcharge }) => {
@@ -16,12 +17,7 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
 
   return (
     <div
-      className={
-        classnames(
-          { [css.mobileRecipeTileContainer]: isMobile },
-          { [css.desktopRecipeTileContainer]: !isMobile }
-        )
-      }
+      className={css.recipeTileContainer}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipe'}
     >
       <TileImageContainer
@@ -32,43 +28,51 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
       {brandTags && brandTags.topLeftTag && (
         <RecipeTag brandTag={brandTags.topLeftTag} />
       )}
-
-      <div
-        role="button"
-        tabIndex={0}
-        onClick={onClick}
-        onKeyPress={onClick}
-        className={
-          classnames(
-            { [css.mobileTitleWrapper]: isMobile },
-            { [css.desktopTitleWrapper]: !isMobile }
-          )
-        }
-      >
-        <h2 className={
-          classnames(
-            { [css.mobileRecipeTitle]: isMobile },
-            { [css.desktopRecipeTitle]: !isMobile }
-          )
-        }
-        >
+      <div className={css.recipeTileInfo}>
+        <div>
           {brandTags && brandTags.topRightTag && (
-            <RecipeTagTitle brandTag={brandTags.topRightTag} />
+          <RecipeTagTitle brandTag={brandTags.topRightTag} />
           )}
-          {title}
-        </h2>
-        <div className={css.purchaseInfoWrapper}>
-          {surcharge && !isOutOfStock ? (
-            <div className={css.surchargeInfo}>
-              <span className={css.surchargeAmountText}>
-                +£
-                {surcharge.toFixed(2)}
-              </span>
-              <span className={css.perServingText}>per serving</span>
-            </div>
-          ) : null}
-          <div className={css.addRecipeButton}>CTA</div>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={onClick}
+            onKeyPress={onClick}
+            className={
+              classnames(
+                { [css.mobileTitleWrapper]: isMobile },
+                { [css.desktopTitleWrapper]: !isMobile }
+              )
+            }
+          >
+            <h2 className={
+              classnames(
+                { [css.mobileRecipeTitle]: isMobile },
+                { [css.desktopRecipeTitle]: !isMobile }
+              )
+            }
+            >
+              {title}
+            </h2>
+          </div>
         </div>
+        {!isOutOfStock ? (
+          <div className={css.purchaseInfoWrapper}>
+            {surcharge ? (
+              <div className={css.surchargeInfo}>
+                <span className={css.surchargeAmountText}>
+                  +£
+                  {surcharge.toFixed(2)}
+                </span>
+                <span className={css.perServingText}>
+                  <span className={css.perText}>per</span>
+                  serving
+                </span>
+              </div>
+            ) : null}
+            <AddRecipeButtonContainer recipeId={recipeId} />
+          </div>
+        ) : null}
       </div>
     </div>
   )
