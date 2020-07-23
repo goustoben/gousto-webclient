@@ -6,7 +6,7 @@ import { EMERecipeTile } from './EMERecipeTile'
 import { TileImageContainer } from '../TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from '../RecipeTagTitle'
-import { AddRecipeButtonContainer } from '../AddRecipeButton'
+import { RecipeTilePurchaseInfoContainer } from '../RecipeTilePurchaseInfo'
 
 describe('EMERecipeTile', () => {
   let wrapper
@@ -27,7 +27,6 @@ describe('EMERecipeTile', () => {
       showDetailRecipe: jest.fn(),
       title: 'Bobs Brilliant Beef Burger',
       isOutOfStock: false,
-      isMobile: false,
       surcharge: 0,
       brandTags: {
         topLeftTag: {
@@ -97,8 +96,8 @@ describe('EMERecipeTile', () => {
       test('should contain one RecipeTagTitle component', () => {
         expect(wrapper.find(RecipeTagTitle).length).toEqual(1)
       })
-      test('should contain an add button ', () => {
-        expect(wrapper.find(AddRecipeButtonContainer).length).toEqual(1)
+      test('should contain an RecipeTilePurchaseInfoContainer ', () => {
+        expect(wrapper.find(RecipeTilePurchaseInfoContainer).length).toEqual(1)
       })
     })
 
@@ -118,60 +117,23 @@ describe('EMERecipeTile', () => {
         expect(wrapper.find('h2').length).toEqual(1)
         expect(wrapper.find('h2').text()).toEqual('Bobs Brilliant Beef Burger')
       })
-
-      test('should not contain an add button ', () => {
-        expect(wrapper.find(AddRecipeButtonContainer).length).toEqual(0)
-      })
     })
 
-    describe('When the recipe has a surcharge', () => {
+    describe('when hovering over TileImage', () => {
       beforeEach(() => {
         wrapper = shallow(<EMERecipeTile
           {...defaultProps}
-          surcharge={0.75}
         />)
       })
-      test('then it should render surcharge info', () => {
-        expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
-        expect(wrapper.find('.perServingText')).toHaveLength(1)
+
+      test('should set detailHover state to true', () => {
+        wrapper.find('.titleWrapper').simulate('mouseEnter')
+        expect(wrapper.state().detailHover).toBe(true)
       })
 
-      describe('when the surcharge prop is more than two decimal places', () => {
-        test('should render the surcharge per portion to the nearest 1p', () => {
-          wrapper = shallow(<EMERecipeTile
-            {...defaultProps}
-            surcharge={1.992342}
-          />)
-
-          expect(wrapper.find('.surchargeAmountText').text()).toEqual('+£1.99')
-        })
-        test('should add 2 zeros for a whole number', () => {
-          wrapper = shallow(<EMERecipeTile
-            {...defaultProps}
-            surcharge={2}
-          />)
-
-          expect(wrapper.find('.surchargeAmountText').text()).toEqual('+£2.00')
-        })
-      })
-      describe('when the surcharge provided is zero', () => {
-        test('should render nothing', () => {
-          wrapper = shallow(<EMERecipeTile
-            {...defaultProps}
-            surcharge={0}
-          />)
-          expect(wrapper.find('.surchargeAmountText')).toHaveLength(0)
-        })
-      })
-      describe('when the recipe is out of stock', () => {
-        test('should render nothing', () => {
-          wrapper = shallow(<EMERecipeTile
-            {...defaultProps}
-            surcharge={2}
-            isOutOfStock
-          />)
-          expect(wrapper.find('.surchargeInfo')).toHaveLength(0)
-        })
+      test('should set detailHover state to false', () => {
+        wrapper.find('.titleWrapper').simulate('mouseLeave')
+        expect(wrapper.state().detailHover).toBe(false)
       })
     })
   })

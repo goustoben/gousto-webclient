@@ -8,7 +8,7 @@ import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 const mapStateToProps = (state, ownProps) => ({
   isInBasket: getRecipeIdInBasket(state, ownProps),
   isBasketLimitReached: getBasketTotalRecipes(state) === 4,
-  basketProps: getRecipeButtonProps(state, ownProps)
+  buttonProps: getRecipeButtonProps(state, ownProps)
 
 })
 const mapDispatchToProps = {

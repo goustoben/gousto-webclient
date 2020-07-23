@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 
 import { getBrowserType } from 'selectors/browser'
-import { isMobile } from 'utils/view'
 import { getRecipes } from 'selectors/root'
 import { getFeaturedImage } from 'utils/image'
 
@@ -27,7 +26,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     media,
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
-    isMobile: isMobile(getBrowserType(state))
   }
 }
 

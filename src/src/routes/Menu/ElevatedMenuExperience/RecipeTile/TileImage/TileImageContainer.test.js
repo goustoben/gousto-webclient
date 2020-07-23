@@ -43,14 +43,17 @@ describe('<TileImageContainer />', () => {
       }
     }
   }
-
+  const mouseEnter = jest.fn()
+  const mouseLeave = jest.fn()
   const wrapper = shallow(
-    <TileImageContainer recipeId={recipeId} />,
+    <TileImageContainer recipeId={recipeId} mouseEnter={mouseEnter} mouseLeave={mouseLeave} />,
     wrapperOptions
   )
 
   test('should pass down correct props', () => {
     expect(wrapper.prop('media')).toEqual(moodImageUrls)
     expect(wrapper.prop('isOutOfStock')).toEqual(false)
+    expect(wrapper.prop('mouseEnter')).toEqual(mouseEnter)
+    expect(wrapper.prop('mouseLeave')).toEqual(mouseLeave)
   })
 })

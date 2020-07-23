@@ -1,6 +1,11 @@
+@value sizeXXS, sizeXS from 'styles/typography.css';
+
 .recipeTagTitle {
   text-transform: uppercase;
-  font-size: 11px;
+  font-size: sizeXXS;
   font-weight: 600;
   margin-bottom: 0.25rem;
+  @media screen {
+    font-size: sizeXS;
+  }
 }

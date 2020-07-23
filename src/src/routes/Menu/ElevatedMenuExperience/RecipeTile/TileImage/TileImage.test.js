@@ -10,6 +10,8 @@ import { CookingTimeIconContainer } from '../CookingTimeIcon'
 describe('<TileImage />', () => {
   let wrapper
   let media
+  const mouseEnter = jest.fn()
+  const mouseLeave = jest.fn()
   beforeEach(() => {
     media = Immutable.fromJS([
       {
@@ -38,7 +40,7 @@ describe('<TileImage />', () => {
   })
 
   it('should render a GoustoImage with media', () => {
-    wrapper = shallow(<TileImage media={media} isMobile />)
+    wrapper = shallow(<TileImage media={media} />)
 
     expect(wrapper.find(GoustoImage)).toHaveLength(1)
   })
@@ -76,7 +78,7 @@ describe('<TileImage />', () => {
       cookingTime: 30,
       cookingTimeFamily: 30
     })
-    wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
+    wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} mouseEnter={mouseEnter} mouseLeave={mouseLeave} />)
     expect(wrapper.find(CookingTimeIconContainer).length).toEqual(1)
   })
 })
