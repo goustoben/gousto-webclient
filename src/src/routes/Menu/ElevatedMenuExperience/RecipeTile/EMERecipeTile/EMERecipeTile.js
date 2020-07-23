@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 import { TileImageContainer } from '../TileImage'
+import { RecipeTag } from '../RecipeTag'
+import { RecipeTagTitle } from '../RecipeTagTitle'
 import css from './EMERecipeTile.css'
 
-const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, isMobile, surcharge }) => {
+const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, isMobile, brandTags, surcharge }) => {
   if (!recipe) {
     return null
   }
@@ -26,6 +28,11 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
         recipeId={recipeId}
         onClick={onClick}
       />
+
+      {brandTags && brandTags.topLeftTag && (
+        <RecipeTag brandTag={brandTags.topLeftTag} />
+      )}
+
       <div
         role="button"
         tabIndex={0}
@@ -45,6 +52,9 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
           )
         }
         >
+          {brandTags && brandTags.topRightTag && (
+            <RecipeTagTitle brandTag={brandTags.topRightTag} />
+          )}
           {title}
         </h2>
         <div className={css.purchaseInfoWrapper}>
@@ -71,10 +81,15 @@ EMERecipeTile.propTypes = {
   isOutOfStock: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
+  brandTags: PropTypes.shape({
+    topLeftTag: PropTypes.object,
+    topRightTag: PropTypes.object,
+  }),
   surcharge: PropTypes.number
 }
 
 EMERecipeTile.defaultProps = {
+  brandTags: null,
   surcharge: 0
 }
 

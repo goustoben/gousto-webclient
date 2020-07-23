@@ -11,6 +11,7 @@ describe('<EMERecipeTileContainer />', () => {
   const recipe = Immutable.fromJS({
     id: recipeId,
     title: 'Chicken curry',
+    isNew: true,
   })
 
   const state = {

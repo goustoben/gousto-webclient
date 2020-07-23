@@ -70,14 +70,5 @@ describe('Account', () => {
       )
       expect(wrapper.find(Banner).length).toEqual(0)
     })
-
-    test('should render <Banner> component(s) for the new mydeliveries page', () => {
-      location = { pathname: '/mydeliveries' }
-      wrapper = shallow(
-        <AccountComponent location={location}>{children}</AccountComponent>,
-        { context }
-      )
-      expect(wrapper.find(Banner).length).toEqual(1)
-    })
   })
 })

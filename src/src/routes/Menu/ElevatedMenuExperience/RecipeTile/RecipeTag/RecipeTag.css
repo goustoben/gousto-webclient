@@ -1,0 +1,13 @@
+@value White from 'styles/colors.css';
+
+.recipeTag {
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  width: 50px;
+  padding: 0.25rem 0.5rem 0.2rem 0.5rem;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: White;
+}
