@@ -23,7 +23,7 @@ export const getRecipeTitle = createSelector(
   }
 )
 
-const getRecipeIdInBasket = createSelector(
+export const getRecipeIdInBasket = createSelector(
   [getBasket, getRecipeIdFromProps],
   (basket, recipeId) => basket.hasIn(['recipes', recipeId])
 )

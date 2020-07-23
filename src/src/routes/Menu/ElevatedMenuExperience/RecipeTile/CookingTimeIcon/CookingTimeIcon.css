@@ -1,25 +1,20 @@
-@value Black from 'styles/colors.css';
+@value Black, White from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
 
-.mobileCookingTimeIcon {
+.cookingTimeIcon {
   position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
+  bottom: 0.75rem;
+  left: 0.75rem;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 2px;
-}
-
-.desktopCookingTimeIcon {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 2px;
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 3px;
+  @media ScreenSMMin {
+    width: 40px;
+    height: 40px;
+    padding: 4px;
+  }
 }
 
 .circularChart {
@@ -28,7 +23,7 @@
 
 .circularChartCircleBg {
   fill: none;
-  stroke: #fff;
+  stroke: White;
   stroke-width: 4;
 }
 
@@ -52,6 +47,12 @@
   font-weight: 600;
   font-size: 12px;
   fill: Black;
+  color: Black;
+  @media ScreenSMMin {
+    width: 40px;
+    height: 40px;
+    font-size: 13px;
+  }
 }
 
 @keyframes progress {

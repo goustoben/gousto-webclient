@@ -6,6 +6,7 @@ import { EMERecipeTile } from './EMERecipeTile'
 import { TileImageContainer } from '../TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from '../RecipeTagTitle'
+import { AddRecipeButtonContainer } from '../AddRecipeButton'
 
 describe('EMERecipeTile', () => {
   let wrapper
@@ -95,6 +96,31 @@ describe('EMERecipeTile', () => {
 
       test('should contain one RecipeTagTitle component', () => {
         expect(wrapper.find(RecipeTagTitle).length).toEqual(1)
+      })
+      test('should contain an add button ', () => {
+        expect(wrapper.find(AddRecipeButtonContainer).length).toEqual(1)
+      })
+    })
+
+    describe('when a recipe is not in stock', () => {
+      beforeEach(() => {
+        wrapper = shallow(<EMERecipeTile
+          {...defaultProps}
+          isOutOfStock
+        />)
+      })
+
+      test('should contain one TileImageContainer component', () => {
+        expect(wrapper.find(TileImageContainer).length).toEqual(1)
+      })
+
+      test('should contain a title ', () => {
+        expect(wrapper.find('h2').length).toEqual(1)
+        expect(wrapper.find('h2').text()).toEqual('Bobs Brilliant Beef Burger')
+      })
+
+      test('should not contain an add button ', () => {
+        expect(wrapper.find(AddRecipeButtonContainer).length).toEqual(0)
       })
     })
 

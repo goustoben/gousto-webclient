@@ -1,51 +1,91 @@
-@value axiformaFontStack, sizeSM, sizeMD from 'styles/typography.css';
+@value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
 @value White, Blackberry from 'styles/colors.css';
+@value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
 
-.mobileRecipeTileContainer {
+.recipeTileContainer {
     width: 100%;
     display: flex;
     flex-direction: row;
-    background-color: #FFFFFF;
-    margin: 0 0.5rem 0.5rem 0.5rem;
-    height: 200px;
-    position: relative;
-}
-
-.desktopRecipeTileContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
     background-color: White;
-    margin-bottom: 1rem;
+    margin: 0 0.5rem 0.5rem 0.5rem;
     position: relative;
+    height: 200px;
+    @media ScreenSMMin {
+        width: 48%;
+        height: auto;
+        flex-direction: column;
+        margin: 0 1rem 1rem 0;
+        height: auto;
+    }
+
+    @media ScreenMDMin {
+        width: 30%;
+        height: auto;
+    }
+
+    @media ScreenLGMin {
+        width: 24%;
+    }
 }
 
-.mobileTitleWrapper {
-    width: calc(100% - 200px);
-    margin: 0.825rem;
+.recipeTileContainer:nth-child(2n) {
+    @media ScreenSMMin and ScreenSMMax {
+        margin-right: 0;
+    }
+}
+
+.recipeTileContainer:nth-child(3n) {
+    @media ScreenMDMin and ScreenMDMax {
+        margin-right: 0;
+    }
+}
+
+.recipeTileContainer:nth-child(4n) {
+    @media ScreenLGMin {
+        margin-right: 0;
+    }
+}
+
+.recipeTileInfo {
+    margin: 1rem;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
+    @media ScreenXSMax {
+        margin: 0.75rem;
+        height: auto;
+        width: 35%;
+    }
+}
+
+.mobileTitleWrapper {
+    width: 100%;
 }
 
 .desktopTitleWrapper {
-    margin: 1rem;
+    margin-bottom: 1rem;
 }
 
 .mobileRecipeTitle {
     font-family: axiformaFontStack;
-    font-size: sizeSM;
+    font-size: sizeXS;
     font-weight: 600;
-    line-height: 1.7;
+    line-height: 1.6;
+    @media ScreenSMMin {
+        font-size: sizeMD;
+    }
 }
 
 .desktopRecipeTitle {
     font-family: axiformaFontStack;
-    font-size: sizeMD;
+    font-size: sizeXS;
     font-weight: 600;
-    line-height: 1.7;
-    padding-right: 2rem;
+    line-height: 1.6;
+    @media ScreenSMMin {
+        font-size: sizeMD;
+    }
 }
 
 .purchaseInfoWrapper {
@@ -57,7 +97,8 @@
 .surchargeInfo {
     display: flex;
     flex-direction: column;
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
+    padding-top: 0.125rem;
 }
 
 .surchargeAmountText {
@@ -65,12 +106,28 @@
     font-weight: 600;
     white-space: nowrap;
     align-self: flex-end;
+    font-size: sizeSM;
+}
+
+.perText {
+    color: Blackberry;
+    font-weight: 500;
+    white-space: nowrap;
+    font-size: 13px;
+    line-height: 16px;
+    @media ScreenXXSMax {
+        display: none;
+    }
 }
 
 .perServingText {
     color: Blackberry;
     font-weight: 500;
     white-space: nowrap;
-    font-size: sizeSM;
-    line-height: 13px;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: right;
+    @media ScreenXXSMax {
+        font-size: 12px;
+    }
 }

@@ -1,0 +1,77 @@
+@value Bluecheese, Oyster, White, Blueberry from 'styles/colors.css';
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value axiformaFontStack from 'styles/typography.css';
+
+.addButton {
+    background-color: Bluecheese;
+    color: White;
+    display: flex;
+    padding: 0 1rem;
+    height: 40px;
+    width: 40px;
+    border-radius: 3px;
+    border: none;
+    justify-content: center;
+    @media ScreenSMMin {
+        min-width: 175px;
+    }
+}
+
+.addButton:hover {
+    background-color: Blueberry;
+}
+
+.addButton:disabled {
+    color: White;
+    display: flex;
+    padding: 0 1rem;
+    height: 40px;
+    width: 40px;
+    border-radius: 3px;
+    background-color: Oyster;
+    justify-content: center;
+    @media ScreenSMMin {
+        min-width: 175px;
+    }
+}
+
+.removeButton {
+    border: 1px solid Bluecheese;
+    color: Bluecheese;
+    background-color: White;
+    display: flex;
+    padding: 0 1rem;
+    height: 40px;
+    width: 40px;
+    border-radius: 3px;
+    justify-content: center;
+    @media ScreenSMMin {
+        min-width: 175px;
+    }
+}
+
+.hideOnMobile {
+    margin-left: 0.75rem;
+    @media ScreenXSMax {
+        display: none;
+    };
+}
+
+.buttonText {
+    align-self: center;
+    font-family: axiformaFontStack;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 24px;
+    margin: .75px 0;
+    display: flex;
+    align-items: center;
+}
+
+.removeButtonLine {
+    stroke: Bluecheese;
+}
+
+.addButtonLine {
+    stroke: White;
+}

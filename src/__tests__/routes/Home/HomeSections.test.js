@@ -38,11 +38,6 @@ describe('rendered output', () => {
     expect(wrapper.find('TestedLoved')).toHaveLength(1)
   })
 
-  test('should not have a Storystream element', () => {
-    wrapper = shallow(<HomeSections />)
-    expect(wrapper.find('Storystream')).toHaveLength(0)
-  })
-
   test('should have an EmailForm element when signup flag is on', () => {
     wrapper = shallow(<HomeSections isSignupReductionEnabled />)
     expect(wrapper.find('EmailForm')).toHaveLength(1)

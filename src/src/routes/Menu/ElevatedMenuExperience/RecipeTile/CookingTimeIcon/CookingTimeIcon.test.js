@@ -24,7 +24,7 @@ describe('EMERecipeTile', () => {
     test('should find cooking time icon', () => {
       const wrapper = shallow(<CookingTimeIcon cookingTime={30} />)
 
-      expect(wrapper.find('div').first().prop('className')).toEqual('desktopCookingTimeIcon')
+      expect(wrapper.find('div').first().prop('className')).toEqual('cookingTimeIcon')
     })
   })
 })

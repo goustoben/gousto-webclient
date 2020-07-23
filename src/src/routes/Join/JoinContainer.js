@@ -3,7 +3,6 @@ import action from 'actions/persist'
 import Join from './Join'
 
 const JoinContainer = connect(state => ({
-  enableStorystream: state.features.getIn(['enableStorystream', 'value'], true),
   moduleOrder: state.features.getIn(['hp_module_order', 'value']),
   enableSubscription: state.features.getIn(['join_subscription', 'value'], false),
   heroLeftAlignedBox570: state.features.getIn(['heroLeftAlignedBox570', 'value'], false),
