@@ -335,6 +335,7 @@ describe('MyGousto - Header', () => {
   describe('when a user has previously delivered orders', () => {
     let previousDeliveryDetails
     const mockOrderNotEligibleClick = jest.fn()
+    const mockOrderEligibleClick = jest.fn()
 
     beforeEach(() => {
       wrapper = mount(
@@ -420,6 +421,7 @@ describe('MyGousto - Header', () => {
             accessToken={ACCESS_TOKEN}
             orders={onlyOldOrders}
             trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
+            trackOrderEligibleForSelfServiceResolutionClick={mockOrderEligibleClick}
           />
         )
 
@@ -429,6 +431,10 @@ describe('MyGousto - Header', () => {
       test('should link to general getHelp contact page', () => {
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
         expect(linkUrl.includes(config.routes.client.getHelp.contact)).toBe(true)
+      })
+
+      test('does not dispatches the "eligible tracking action"', () => {
+        expect(mockOrderEligibleClick).not.toHaveBeenCalled()
       })
 
       test('dispatches the "non-eligible tracking action"', () => {
@@ -443,6 +449,7 @@ describe('MyGousto - Header', () => {
             accessToken={ACCESS_TOKEN}
             trackOrderNotEligibleForSelfServiceResolutionClick={mockOrderNotEligibleClick}
             orders={previousOrders}
+            trackOrderEligibleForSelfServiceResolutionClick={mockOrderEligibleClick}
           />
         )
 
@@ -452,6 +459,10 @@ describe('MyGousto - Header', () => {
       test('should link to getHelp page with order id', () => {
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
         expect(linkUrl.includes('/get-help?orderId=101')).toBe(true)
+      })
+
+      test('dispatches the "eligible tracking action"', () => {
+        expect(mockOrderEligibleClick).toHaveBeenCalledWith('101')
       })
 
       test('does not dispatches the "non-eligible tracking action"', () => {

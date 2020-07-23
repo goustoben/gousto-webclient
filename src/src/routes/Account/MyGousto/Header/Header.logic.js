@@ -120,6 +120,7 @@ class Header extends PureComponent {
       nextOrderTracking,
       trackNextBoxTrackingClick,
       trackOrderNotEligibleForSelfServiceResolutionClick,
+      trackOrderEligibleForSelfServiceResolutionClick,
     } = this.props
     const {
       hasTooltipForNextOrder,
@@ -139,7 +140,9 @@ class Header extends PureComponent {
       && `?orderId=${previousOrder.get('id')}`
     const loaded = nextOrder || previousOrder
     const onPreviousBoxGetHelpClick = isOrderEligible
-      ? () => {}
+      ? () => {
+        trackOrderEligibleForSelfServiceResolutionClick(previousOrder.get('id'))
+      }
       : () => {
         const parsedNumberOfDaysSincePreviousOrder = parseInt(
           numberOfDaysSincePreviousOrder,
@@ -181,6 +184,7 @@ Header.propTypes = {
   nextOrderTracking: PropTypes.string,
   trackNextBoxTrackingClick: PropTypes.func,
   trackOrderNotEligibleForSelfServiceResolutionClick: PropTypes.func,
+  trackOrderEligibleForSelfServiceResolutionClick: PropTypes.func,
 }
 
 Header.defaultProps = {
@@ -189,6 +193,7 @@ Header.defaultProps = {
   nextOrderTracking: null,
   trackNextBoxTrackingClick: () => {},
   trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
+  trackOrderEligibleForSelfServiceResolutionClick: () => {},
 }
 
 export { Header }

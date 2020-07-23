@@ -2,8 +2,11 @@ import { connect } from 'react-redux'
 import { userLoadOrderTrackingInfo } from 'actions/user'
 import {
   trackNextBoxTrackingClick,
-  trackOrderNotEligibleForSelfServiceResolutionClick
 } from 'actions/myGousto'
+import {
+  trackOrderNotEligibleForSelfServiceResolutionClick,
+  trackOrderEligibleForSelfServiceResolutionClick,
+} from '../actions/tracking'
 import { Header } from './Header.logic'
 
 const mapStateToProps = state => ({
@@ -15,4 +18,5 @@ export const HeaderContainer = connect(mapStateToProps, {
   loadOrderTrackingInfo: userLoadOrderTrackingInfo,
   trackNextBoxTrackingClick,
   trackOrderNotEligibleForSelfServiceResolutionClick,
+  trackOrderEligibleForSelfServiceResolutionClick,
 })(Header)

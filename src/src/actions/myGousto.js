@@ -1,13 +1,5 @@
 import { actionTypes } from 'actions/actionTypes'
 
-export const trackNotificationLinkClick = notification => ({
-  type: actionTypes.TRACKING,
-  trackingData: {
-    actionType: 'NotificationBanner Clicked',
-    notification,
-  },
-})
-
 export const trackNextBoxTrackingClick = orderId => ({
   type: actionTypes.TRACKING,
   trackingData: {
@@ -15,12 +7,3 @@ export const trackNextBoxTrackingClick = orderId => ({
     orderId,
   }
 })
-
-export const trackOrderNotEligibleForSelfServiceResolutionClick = numberOfDaysSincePreviousOrder =>
-  ({
-    type: actionTypes.TRACKING,
-    trackingData: {
-      actionType: 'OrderNotEligibleForSelfServiceResolution Clicked',
-      numberOfDaysSincePreviousOrder,
-    }
-  })
