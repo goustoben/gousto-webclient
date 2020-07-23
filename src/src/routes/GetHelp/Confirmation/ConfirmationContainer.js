@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-
+import { trackConfirmationCTA } from '../actions/getHelp'
 import { Confirmation } from './Confirmation'
 
 const mapStateToProps = (state) => ({
@@ -17,7 +17,9 @@ const mapStateToProps = (state) => ({
   }
 })
 
-const ConfirmationContainer = connect(mapStateToProps)(Confirmation)
+const ConfirmationContainer = connect(mapStateToProps, {
+  trackConfirmationCTA,
+})(Confirmation)
 
 export {
   ConfirmationContainer

@@ -15,18 +15,24 @@ const propTypes = {
     button2: PropTypes.string.isRequired,
     confirmationBody: PropTypes.string.isRequired,
   }),
+  trackConfirmationCTA: PropTypes.func.isRequired,
 }
 const defaultProps = {
   content: {}
 }
 
-const Confirmation = ({ content }) => (
+const Confirmation = ({ content, trackConfirmationCTA }) => (
   <GetHelpLayout title={content.title} body={content.confirmationBody}>
     <BottomBar>
       <BottomButton color="secondary" url={routes.myDetails} clientRouted={false}>
         {content.button1}
       </BottomButton>
-      <BottomButton color="primary" url={routes.myGousto} clientRouted={false}>
+      <BottomButton
+        clientRouted={false}
+        color="primary"
+        onClick={trackConfirmationCTA}
+        url={routes.myGousto}
+      >
         {content.button2}
       </BottomButton>
     </BottomBar>

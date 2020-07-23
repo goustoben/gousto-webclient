@@ -4,6 +4,7 @@ import { fetchUserOrders } from 'apis/user'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import {
   getUserOrders,
+  trackConfirmationCTA,
   trackDeliveryOther,
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
@@ -127,6 +128,17 @@ describe('trackRejectRefund', () => {
       trackingData: {
         actionType: 'click_declined_refund',
         amount,
+      }
+    })
+  })
+})
+
+describe('trackConfirmationCTA', () => {
+  test('creates the tracking action', () => {
+    expect(trackConfirmationCTA()).toEqual({
+      type: webClientActionTypes.TRACKING,
+      trackingData: {
+        actionType: 'click_done_refund_accepted',
       }
     })
   })
