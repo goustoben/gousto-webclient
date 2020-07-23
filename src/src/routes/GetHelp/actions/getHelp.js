@@ -60,3 +60,11 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems }) => ({
     recipeDetailedItems,
   },
 })
+
+export const trackRejectRefund = (amount) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: 'click_declined_refund',
+    amount,
+  }
+})

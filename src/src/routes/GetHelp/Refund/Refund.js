@@ -39,6 +39,7 @@ const propTypes = {
     recipeId: PropTypes.string.isRequired,
   })).isRequired,
   trackAcceptRefund: PropTypes.func.isRequired,
+  trackRejectRefund: PropTypes.func.isRequired,
   trackUserCannotGetCompensation: PropTypes.func.isRequired,
 }
 
@@ -162,11 +163,11 @@ class Refund extends PureComponent {
   }
 
   render() {
-    const { content } = this.props
+    const { content, trackRejectRefund } = this.props
     const {
       isFetching,
       refund,
-      didFetchError
+      didFetchError,
     } = this.state
 
     const infoBodyWithAmount = replaceWithValues(
@@ -217,6 +218,7 @@ class Refund extends PureComponent {
                   color="secondary"
                   url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
                   clientRouted
+                  onClick={() => trackRejectRefund(refund.value)}
                 >
                   {content.button1}
                 </BottomButton>

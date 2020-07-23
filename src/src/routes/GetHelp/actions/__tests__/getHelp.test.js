@@ -1,11 +1,13 @@
 import Immutable from 'immutable'
 import logger from 'utils/logger'
 import { fetchUserOrders } from 'apis/user'
+import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import {
   getUserOrders,
   trackDeliveryOther,
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
+  trackRejectRefund,
 } from '../getHelp'
 
 jest.mock('utils/logger', () => ({
@@ -112,6 +114,20 @@ describe('given getUserOrders is called', () => {
 
     test('logger is called correctly', () => {
       expect(logger.error).toHaveBeenCalledWith('error')
+    })
+  })
+})
+
+describe('trackRejectRefund', () => {
+  test('creates the tracking action', () => {
+    const amount = '12345'
+
+    expect(trackRejectRefund(amount)).toEqual({
+      type: webClientActionTypes.TRACKING,
+      trackingData: {
+        actionType: 'click_declined_refund',
+        amount,
+      }
     })
   })
 })
