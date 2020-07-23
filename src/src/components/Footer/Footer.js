@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import config from 'config'
+import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes } from 'config/routes'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
@@ -10,11 +11,16 @@ import Svg from 'components/Svg'
 import Link from 'Link'
 import css from './Footer.css'
 
-const showHelpPreLogin = (helpPreLoginVisibilityChange) => () => (
+const showHelpPreLogin = (helpPreLoginVisibilityChange) => (
   helpPreLoginVisibilityChange(true)
 )
 
-const renderHelpLink = (isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive) => {
+const renderHelpLink = (
+  isAuthenticated,
+  helpPreLoginVisibilityChange,
+  isHelpCentreActive,
+  trackNavigationClick
+) => {
   const getHelpRoute = clientRoutes.getHelp
 
   return (
@@ -29,6 +35,7 @@ const renderHelpLink = (isAuthenticated, helpPreLoginVisibilityChange, isHelpCen
           title="Help"
           clientRouted={false}
           secondary
+          tracking={() => trackNavigationClick(trackingKeys.clickHelpFooter)}
         >
           Help
         </Link>
@@ -38,8 +45,11 @@ const renderHelpLink = (isAuthenticated, helpPreLoginVisibilityChange, isHelpCen
           data-test="help-link"
           role="button"
           tabIndex="0"
-          onClick={showHelpPreLogin(helpPreLoginVisibilityChange)}
-          onKeyDown={onEnter(showHelpPreLogin(helpPreLoginVisibilityChange))}
+          onClick={() => {
+            showHelpPreLogin(helpPreLoginVisibilityChange)
+            trackNavigationClick(trackingKeys.clickHelpFooter)
+          }}
+          onKeyDown={onEnter(() => showHelpPreLogin(helpPreLoginVisibilityChange))}
         >
           Help
         </span>
@@ -55,6 +65,7 @@ const Footer = ({
   type,
   isHomePageRedesignEnabled,
   isHelpCentreActive,
+  trackNavigationClick,
 }) => {
   const renderTermsLink = () => (
     <li className={css.menuItem}>
@@ -100,7 +111,7 @@ const Footer = ({
         <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
       </li>
       <li className={css.menuItem}>
-        {renderHelpLink(isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive)}
+        {renderHelpLink(isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive, trackNavigationClick)}
       </li>
       {renderTermsLink()}
       <li className={css.menuItem}>
@@ -241,6 +252,7 @@ Footer.propTypes = {
   type: PropTypes.string,
   isHomePageRedesignEnabled: PropTypes.bool,
   isHelpCentreActive: PropTypes.bool,
+  trackNavigationClick: PropTypes.func.isRequired,
 }
 
 Footer.defaultProps = {

@@ -6,6 +6,7 @@ import {
   trackUserCannotGetCompensation,
 } from 'actions/getHelp'
 import { getFeatureShorterCompensationPeriod } from 'selectors/features'
+import { trackRejectRefund } from '../actions/getHelp'
 
 import { Refund } from './Refund'
 
@@ -43,6 +44,7 @@ const mapStateToProps = (state) => {
 const RefundContainer = connect(mapStateToProps, {
   selectOrderIssue,
   trackAcceptRefund,
+  trackRejectRefund,
   trackUserCannotGetCompensation,
 })(Refund)
 

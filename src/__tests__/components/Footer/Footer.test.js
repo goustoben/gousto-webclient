@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { helpPreLoginVisibilityChange } from 'actions/login'
+import * as trackingKeys from 'actions/trackingKeys'
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import css from 'components/Footer/Footer.css'
 import Footer from 'Footer/Footer'
@@ -9,6 +10,8 @@ import Footer from 'Footer/Footer'
 jest.mock('actions/login')
 
 describe('<Footer />', () => {
+  const trackNavigationClick = jest.fn()
+
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -144,7 +147,11 @@ describe('<Footer />', () => {
 
     beforeEach(() => {
       wrapper = shallow(
-        <Footer copyright={false} isAuthenticated />
+        <Footer
+          copyright={false}
+          isAuthenticated
+          trackNavigationClick={trackNavigationClick}
+        />
       )
     })
 
@@ -175,6 +182,7 @@ describe('<Footer />', () => {
         <Footer
           helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
           isAuthenticated={false}
+          trackNavigationClick={trackNavigationClick}
         />
       )
       helpLink = wrapper.find('[data-test="help-link"]')
@@ -191,6 +199,10 @@ describe('<Footer />', () => {
 
       test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
         expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+      })
+
+      test('trackNavigationClick action generator is called with the clickHelpFooter variable', () => {
+        expect(trackNavigationClick).toHaveBeenCalledWith(trackingKeys.clickHelpFooter)
       })
     })
 

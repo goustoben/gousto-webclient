@@ -2,6 +2,7 @@ import logger from 'utils/logger'
 import * as userApi from 'apis/user'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from './actionTypes'
 
 export const trackDeliveryOther = () => ({
@@ -59,4 +60,19 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems }) => ({
     recipeIds,
     recipeDetailedItems,
   },
+})
+
+export const trackRejectRefund = (amount) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.clickDeclinedRefund,
+    amount,
+  }
+})
+
+export const trackConfirmationCTA = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.clickDoneRefundAccepted,
+  }
 })

@@ -6,11 +6,18 @@ import Link from 'Link'
 
 import css from './BottomButton.css'
 
-const BottomButton = ({ color, clientRouted, url, children }) => (
+const BottomButton = ({
+  children,
+  clientRouted,
+  color,
+  onClick,
+  url,
+}) => (
   <Button
     areChildrenInSegment
     color={color}
     className={css.button}
+    onClick={onClick}
     width="auto"
   >
     <Link
@@ -28,7 +35,12 @@ BottomButton.propTypes = {
   children: PropTypes.node.isRequired,
   clientRouted: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   url: PropTypes.string.isRequired,
+}
+
+BottomButton.defaultProps = {
+  onClick: null,
 }
 
 export {
