@@ -1,25 +1,19 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 import GoustoImage from 'Image'
 import { CookingTimeIconContainer } from '../CookingTimeIcon'
 import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
 
 import css from './TileImage.css'
 
-const TileImage = ({ media, title, mouseEnter, mouseLeave, maxMediaSize, isOutOfStock, lazy, onClick, recipeId, isMobile }) => (
+const TileImage = ({ media, title, mouseEnter, mouseLeave, maxMediaSize, isOutOfStock, lazy, onClick, recipeId }) => (
   <button
     onClick={onClick}
     type="button"
     onMouseEnter={mouseEnter}
     onMouseLeave={mouseLeave}
-    className={
-      classnames(
-        { [css.mobileImageWrapper]: isMobile },
-        { [css.desktopImageWrapper]: !isMobile }
-      )
-    }
+    className={css.imageWrapper}
   >
     {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
     {(media.size > 0) && (
@@ -28,12 +22,7 @@ const TileImage = ({ media, title, mouseEnter, mouseLeave, maxMediaSize, isOutOf
         media={media}
         title={title}
         maxMediaSize={maxMediaSize}
-        className={
-          classnames(
-            { [css.mobileImage]: isMobile },
-            { [css.desktopImage]: !isMobile }
-          )
-        }
+        className={css.imageStyle}
         lazy={lazy}
       />
       <CookingTimeIconContainer recipeId={recipeId} />
@@ -51,7 +40,6 @@ TileImage.propTypes = {
   isOutOfStock: PropTypes.bool,
   lazy: PropTypes.bool,
   onClick: PropTypes.func,
-  isMobile: PropTypes.bool,
   recipeId: PropTypes.string.isRequired,
 }
 
@@ -63,7 +51,6 @@ TileImage.defaultProps = {
   isOutOfStock: false,
   maxMediaSize: null,
   lazy: true,
-  isMobile: false
 }
 
 export { TileImage }
