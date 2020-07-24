@@ -96,7 +96,7 @@ describe('user actions', () => {
     transformPendingOrders.mockReturnValue(Immutable.Map())
     transformProjectedDeliveries.mockReturnValue(Immutable.Map())
 
-    it('should dispatch userLoadOrders and userLoadProjectedDeliveries actions', async () => {
+    test('should dispatch userLoadOrders and userLoadProjectedDeliveries actions', async () => {
       await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy.mock.calls.length).toEqual(3)
@@ -104,19 +104,19 @@ describe('user actions', () => {
       expect(userActions.userLoadProjectedDeliveries).toHaveBeenCalled()
     })
 
-    it('should call transformPendingOrders function with the correct params', async () => {
+    test('should call transformPendingOrders function with the correct params', async () => {
       await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
 
       expect(transformPendingOrders).toHaveBeenCalledWith(getStateSpy().user.get('orders'))
     })
 
-    it('should call transformProjectedDeliveries function with the correct params', async () => {
+    test('should call transformProjectedDeliveries function with the correct params', async () => {
       await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
 
       expect(transformProjectedDeliveries).toHaveBeenCalledWith(getStateSpy().user.get('projectedDeliveries'))
     })
 
-    it('should dispatch an action with the correct parameters', async () => {
+    test('should dispatch an action with the correct parameters', async () => {
       await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy.mock.calls[2][0]).toEqual({
@@ -142,7 +142,7 @@ describe('user actions', () => {
         })
       })
 
-      it('should not dispatch a referAFriend request', () => {
+      test('should not dispatch a referAFriend request', () => {
         userReferAFriend(email)(dispatch, getState)
 
         expect(referAFriend).not.toHaveBeenCalled()
@@ -158,7 +158,7 @@ describe('user actions', () => {
         })
       })
 
-      it('should dispatch a referAFriend request with the given email and accessToken', () => {
+      test('should dispatch a referAFriend request with the given email and accessToken', () => {
         userReferAFriend(email)(dispatch, getState)
 
         expect(referAFriend).toHaveBeenCalledWith('user-access-token', email)
@@ -300,6 +300,50 @@ describe('user actions', () => {
       })
     })
 
+    describe('enable3DSForSignup feature is enabled', () => {
+      const sca3ds = true
+      const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
+
+      beforeEach(() => {
+        state = {
+          ...state,
+          features: Immutable.fromJS({
+            ndd: {
+              value: deliveryTariffTypes.NON_NDD,
+            },
+            checkoutPayment: {
+              value: true,
+            },
+          })
+        }
+        getState.mockReturnValue(state)
+      })
+
+      test('should add "3ds=true" param to the user signup request', async () => {
+        const expected = expect.objectContaining({
+          '3ds': true
+        })
+
+        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
+
+        expect(customerSignup).toHaveBeenCalledWith(null, expected)
+      })
+
+      test('should replace card token by checkout session id for the user signup request', async () => {
+        const expected = expect.objectContaining({
+          payment_method: expect.objectContaining({
+            card: expect.objectContaining({
+              card_token: sessionId
+            })
+          })
+        })
+
+        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
+
+        expect(customerSignup).toHaveBeenCalledWith(null, expected)
+      })
+    })
+
     describe('checkoutPaymentFeature is enabled', () => {
       beforeEach(() => {
         state = {
@@ -313,7 +357,7 @@ describe('user actions', () => {
         getState.mockReturnValue(state)
       })
 
-      it('should call customerSignup', async () => {
+      test('should call customerSignup', async () => {
         await userSubscribe()(dispatch, getState)
         expect(customerSignup).toHaveBeenCalled()
       })
@@ -349,7 +393,7 @@ describe('user actions', () => {
         }
 
         describe('when not in NDD experiment', () => {
-          it('should call customerSignup with the correct delivery_tariff_id', async () => {
+          test('should call customerSignup with the correct delivery_tariff_id', async () => {
             setNddExperiment(deliveryTariffTypes.NON_NDD)
 
             await userSubscribe()(dispatch, getState)
@@ -722,7 +766,7 @@ describe('user actions', () => {
       dispatchSpy = jest.fn()
     })
 
-    it('should dispatch an action given as parameters', async () => {
+    test('should dispatch an action given as parameters', async () => {
       await trackingReferFriend(actionType, trackingType)(dispatchSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
@@ -733,13 +777,13 @@ describe('user actions', () => {
       })
     })
 
-    it('should not dispatch an action if actionType is undefined', async () => {
+    test('should not dispatch an action if actionType is undefined', async () => {
       await trackingReferFriend('', trackingType)(dispatchSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalled()
     })
 
-    it('should not dispatch an action if trackingType is undefined', async () => {
+    test('should not dispatch an action if trackingType is undefined', async () => {
       await trackingReferFriend(actionType)(dispatchSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalled()
@@ -756,7 +800,7 @@ describe('user actions', () => {
       dispatchSpy = jest.fn()
     })
 
-    it('should dispatch an action and channel given as parameters', async () => {
+    test('should dispatch an action and channel given as parameters', async () => {
       await trackingReferFriendSocialSharing(actionType, trackingType, channel)(dispatchSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
@@ -768,13 +812,13 @@ describe('user actions', () => {
       })
     })
 
-    it('should not dispatch an action if actionType is undefined', async () => {
+    test('should not dispatch an action if actionType is undefined', async () => {
       await trackingReferFriendSocialSharing('', trackingType, channel)(dispatchSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalled()
     })
 
-    it('should not dispatch an action if trackingType is undefined', async () => {
+    test('should not dispatch an action if trackingType is undefined', async () => {
       await trackingReferFriendSocialSharing(actionType, '', channel)(dispatchSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalled()
@@ -830,7 +874,7 @@ describe('user actions', () => {
       })
     })
 
-    it('should dispatch an action with the correct parameters', async () => {
+    test('should dispatch an action with the correct parameters', async () => {
       await userGetReferralDetails()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
@@ -839,7 +883,7 @@ describe('user actions', () => {
       })
     })
 
-    it('should return an error if api is not called with the correct access token', async () => {
+    test('should return an error if api is not called with the correct access token', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({
           accessToken: '123456'

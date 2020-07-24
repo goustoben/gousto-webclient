@@ -62,7 +62,10 @@ const defaultFeatures = () => ({
   },
   isHelpCentreActive: {
     value: false,
-  }
+  },
+  enable3DSForSignUp: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

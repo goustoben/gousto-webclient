@@ -9,3 +9,7 @@ export const getPaymentDetails = state => {
     card_token: payment.get('token')
   }
 }
+
+export const getChallengeUrl = state => state.payment.get('challengeUrl')
+
+export const isModalOpen = state => state.payment.get('isModalVisible')

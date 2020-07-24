@@ -33,6 +33,9 @@ function mapStateToProps(state, ownProps) {
         case 'validation.phone.customer.phone_number':
           errorType = 'user-phone-number-invalid'
           break
+        case '3ds-challenge-failed':
+          errorType = '3ds-challenge-failed'
+          break
         default:
           errorType = 'generic'
           break

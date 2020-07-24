@@ -85,6 +85,11 @@ module.exports = {
 
     ourSuppliers: '/blog/suppliers',
 
+    payment: {
+      success: '/payment/success',
+      failure: '/payment/failure',
+    },
+
     privacyPolicy: '/privacy-statement',
 
     modernSlavery: '/modern-slavery-statement',

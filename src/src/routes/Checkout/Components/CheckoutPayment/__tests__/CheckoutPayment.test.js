@@ -3,11 +3,11 @@ import { shallow } from 'enzyme'
 
 import SubmitButton from 'routes/Checkout/Components/SubmitButton'
 import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
-import { CheckoutName } from 'routes/Checkout/Components/CheckoutPayment/CheckoutName'
-import { CheckoutFrame } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame'
-import { CheckoutAddress } from 'routes/Checkout/Components/CheckoutPayment/CheckoutAddress'
-
-import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment/CheckoutPayment'
+import { CheckoutName } from '../CheckoutName'
+import { CheckoutFrame } from '../CheckoutFrame'
+import { CheckoutAddress } from '../CheckoutAddress'
+import { Checkout3DSModal } from '../Checkout3DSModal'
+import { CheckoutPayment } from '../CheckoutPayment'
 import BoxDetails from '../../BoxDetails'
 import Summary from '../../Summary'
 
@@ -178,6 +178,36 @@ describe('CheckoutPayment', () => {
       cardTokenReady()
 
       expect(submit).toHaveBeenCalled()
+    })
+  })
+
+  describe('when 3DS is enabled', () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <CheckoutPayment
+          is3DSEnabled
+          submit={submit}
+        />
+      )
+    })
+
+    test('should render 3DS modal', () => {
+      expect(wrapper.find(Checkout3DSModal).exists()).toBe(true)
+    })
+  })
+
+  describe('when 3DS is disabled', () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <CheckoutPayment
+          is3DSEnabled={false}
+          submit={submit}
+        />
+      )
+    })
+
+    test('should not render 3DS modal', () => {
+      expect(wrapper.find(Checkout3DSModal).exists()).toBe(false)
     })
   })
 })

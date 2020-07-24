@@ -521,6 +521,21 @@ describe('tracking actions', () => {
         expect(trackingData.section).toBeUndefined()
       })
     })
+
+    describe('when keyType is not defined in trackingKeys', () => {
+      test('then keyType should be used as actionType', () => {
+        const keyType = '3dsmodal_display'
+
+        trackUTMAndPromoCode(keyType)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: keyType,
+          trackingData: expect.objectContaining({
+            actionType: keyType
+          })
+        })
+      })
+    })
   })
 
   describe('trackNewUser', () => {

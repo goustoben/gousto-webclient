@@ -19,6 +19,7 @@ import BoxPrices from './BoxPrices'
 import Unsubscribe from './Unsubscribe'
 import { GetHelp } from './GetHelp'
 import OrderConfirmation from './OrderConfirmation'
+import { Payment } from './Payment'
 import { PrivacyStatement } from './PrivacyStatement'
 import ChoosePlan from './ChoosePlan'
 import { OrderAddOns } from './OrderAddOns'
@@ -40,6 +41,7 @@ const routes = (store) => (
     {PrivacyStatement}
     {GetHelp(store)}
     {ModernSlaveryStatement}
+    {Payment}
 
     <Route component={MainLayout}>
       {Welcome(store)}

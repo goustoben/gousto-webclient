@@ -115,3 +115,7 @@ export const getHomePageRedesign = ({ features }) => (
 export const getIsHelpCentreActive = ({ features }) => (
   features && features.getIn(['isHelpCentreActive', 'value'], false)
 )
+
+export const getIs3DSForSignUpEnabled = ({ features }) => (
+  features && features.getIn(['enable3DSForSignUp', 'value'], false)
+)

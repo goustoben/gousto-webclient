@@ -1,37 +1,42 @@
 import Immutable from 'immutable'
 import { getFormSyncErrors } from 'redux-form'
 
-import logger from 'utils/logger'
 import routes from 'config/routes'
 import gaID from 'config/head/gaTracking'
+
+import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
-import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
-import { redirect } from 'actions/redirect'
-import { createPreviewOrder } from 'apis/orders'
-import { fetchIntervals } from 'apis/customers'
 import GoustoException from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
-import { trackAffiliatePurchase } from 'actions/tracking'
-import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { getNDDFeatureValue } from 'selectors/features'
+import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
-import * as trackingKeys from 'actions/trackingKeys'
+import { fetchAddressByPostcode } from 'apis/addressLookup'
+import { fetchIntervals } from 'apis/customers'
+import { authPayment, checkPayment } from 'apis/payments'
+import { createPreviewOrder } from 'apis/orders'
+
+import { getChosenAddressId } from 'selectors/basket'
+import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { getNDDFeatureValue, getIs3DSForSignUpEnabled } from 'selectors/features'
+import { getPaymentDetails } from 'selectors/payment'
+
 import { actionTypes } from './actionTypes'
+import * as trackingKeys from './trackingKeys'
 import {
   basketPreviewOrderChange,
   basketPromoCodeChange,
   basketPromoCodeAppliedChange,
   basketReset
 } from './basket'
-import loginActions from './login'
 import { userSubscribe } from './user'
+import { trackAffiliatePurchase, trackUTMAndPromoCode } from './tracking'
+import { redirect } from './redirect'
+import { orderAssignToUser } from './order'
+import loginActions from './login'
 import statusActions from './status'
 import pricingActions from './pricing'
 import tempActions from './temp'
-import { orderAssignToUser } from './order'
-import { getChosenAddressId } from '../selectors/basket'
 
 const { pending, error } = statusActions
 
@@ -41,6 +46,8 @@ const checkoutActions = {
   checkoutPostSignup,
   checkoutAddressLookup,
   checkoutSignup,
+  checkoutNon3DSSignup,
+  checkout3DSSignup,
   resetDuplicateCheck,
   trackSignupPageChange,
   checkoutFetchIntervals,
@@ -48,6 +55,11 @@ const checkoutActions = {
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
   trackPromocodeChange
+}
+
+const errorCodes = {
+  duplicateDetails: '409-duplicate-details',
+  challengeFailed: '3ds-challenge-failed',
 }
 
 function resetDuplicateCheck() {
@@ -233,6 +245,20 @@ export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => d
 
 export function checkoutSignup() {
   return async (dispatch, getState) => {
+    dispatch(checkoutActions.trackSignupPageChange('Submit'))
+
+    const is3DSEnabled = getIs3DSForSignUpEnabled(getState())
+
+    if (is3DSEnabled) {
+      await dispatch(checkoutActions.checkout3DSSignup())
+    } else {
+      await dispatch(checkoutActions.checkoutNon3DSSignup())
+    }
+  }
+}
+
+export function checkoutNon3DSSignup() {
+  return async (dispatch, getState) => {
     const { basket, auth } = getState()
     const orderId = basket.get('previewOrderId')
     const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
@@ -242,14 +268,13 @@ export function checkoutSignup() {
 
     try {
       dispatch(checkoutActions.resetDuplicateCheck())
-      dispatch(trackSignupPageChange('Submit'))
       await dispatch(userSubscribe())
       await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
-      if (err.code === '409-duplicate-details') {
+      if (err.code === errorCodes.duplicateDetails) {
         dispatch(basketPromoCodeChange(''))
         dispatch(basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
@@ -260,6 +285,80 @@ export function checkoutSignup() {
     }
   }
 }
+
+export function checkout3DSSignup() {
+  return async (dispatch, getState) => {
+    dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
+    dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
+
+    try {
+      const state = getState()
+      const { basket } = state
+      const orderId = basket.get('previewOrderId')
+      const { card_token: cardToken } = getPaymentDetails(state)
+      const prices = state.pricing.get('prices')
+      const amountInPence = prices.get('total', 0) * 100
+      const { success, failure } = routes.client.payment
+
+      const reqData = {
+        order_id: orderId,
+        card_token: cardToken,
+        amount: amountInPence,
+        '3ds': true,
+        success_url: window.location.origin + success,
+        failure_url: window.location.origin + failure,
+      }
+
+      const { data } = await authPayment(reqData)
+      dispatch({
+        type: actionTypes.PAYMENT_SHOW_MODAL,
+        challengeUrl: data.responsePayload.redirectLink,
+      })
+      dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
+    } catch (err) {
+      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+      dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+    }
+  }
+}
+
+export const checkPaymentAuth = (sessionId) => (
+  async (dispatch, getState) => {
+    dispatch({ type: actionTypes.PAYMENT_HIDE_MODAL })
+    dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
+
+    try {
+      const { data } = await checkPayment(sessionId)
+      if (data && data.data && data.data.approved) {
+        dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
+
+        const { basket, auth } = getState()
+        const orderId = basket.get('previewOrderId')
+        const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
+
+        dispatch(checkoutActions.resetDuplicateCheck())
+        await dispatch(userSubscribe(true, data.data.sourceId))
+        await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
+        dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
+      } else {
+        dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
+        dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))
+      }
+    } catch (err) {
+      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+      dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
+      if (err.code === errorCodes.duplicateDetails) {
+        dispatch(basketPromoCodeChange(''))
+        dispatch(basketPromoCodeAppliedChange(false))
+        dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+        dispatch(pricingActions.pricingRequest())
+      }
+    } finally {
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+    }
+  }
+)
 
 export const checkoutTransactionalOrder = (orderAction) => (
   async (dispatch, getState) => {
@@ -276,15 +375,13 @@ export const checkoutTransactionalOrder = (orderAction) => (
     if (previewOrderError || !orderId) {
       logger.warning(`Preview order id failed to create, persistent basket might be expired, error: ${previewOrderErrorName}`)
 
-      return dispatch(redirect(`${routes.client.menu}?from=newcheckout&error=${previewOrderErrorName}`, true))
-    }
-
-    if (orderId && isAuthenticated) {
+      await dispatch(redirect(`${routes.client.menu}?from=newcheckout&error=${previewOrderErrorName}`, true))
+    } else if (orderId && isAuthenticated) {
       if (userStatus === 'onhold') {
-        return dispatch(redirect(`${routes.client.myGousto}`))
+        await dispatch(redirect(`${routes.client.myGousto}`))
+      } else {
+        await dispatch(orderAssignToUser(orderAction, orderId))
       }
-
-      return dispatch(orderAssignToUser(orderAction, orderId))
     }
   }
 )
@@ -409,7 +506,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
     const prices = pricing.get('prices')
     const deliveryFormName = getDeliveryFormName(getState())
     const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
-    const interval_id = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
+    const intervalId = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT_SUCCEEDED,
@@ -418,7 +515,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
         order_id: basket.get('previewOrderId'),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),
-        interval_id,
+        interval_id: intervalId,
         payment_provider: 'checkout'
       }
     })
@@ -453,13 +550,13 @@ export const trackSubscriptionIntervalChanged = () => (
     try {
       const deliveryFormName = getDeliveryFormName(getState())
       const checkoutInputs = Immutable.fromJS(getState().form[deliveryFormName].values)
-      const interval_id = checkoutInputs.getIn(['delivery', 'interval_id'], '1')
+      const intervalId = checkoutInputs.getIn(['delivery', 'interval_id'], '1')
 
       dispatch({
         type: actionTypes.TRACKING,
         trackingData: {
           actionType: 'SubscriptionFrequency Changed',
-          interval_id,
+          interval_id: intervalId,
         }
       })
     } catch (e) {
