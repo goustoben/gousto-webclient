@@ -31,6 +31,7 @@ import {
   getLimitedCapacity,
   getHomePageRedesign,
   getIsHelpCentreActive,
+  getIs3DSForSignUpEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -77,6 +78,7 @@ describe('when features are defined', () => {
     [isSubscriptionPauseOsrFeatureEnabled, 'subscriptionPauseOsr'],
     [getHomePageRedesign, 'isHomePageRedesignEnabled'],
     [getIsHelpCentreActive, 'isHelpCentreActive'],
+    [getIs3DSForSignUpEnabled, 'enable3DSForSignUp'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

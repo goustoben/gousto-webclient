@@ -75,6 +75,11 @@
     }
 }
 
+.recipeTileIsFineDineIn {
+    background: Blackberry;
+    color: White;
+}
+
 .recipeTitle:hover {
     text-decoration: underline;
 }

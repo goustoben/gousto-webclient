@@ -23,6 +23,23 @@ export const getRecipeTitle = createSelector(
   }
 )
 
+export const getRecipeIsFineDineIn = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (allRecipes, recipeId) => {
+    if (!recipeId) {
+      return false
+    }
+
+    const recipe = allRecipes.get(recipeId)
+
+    if (!recipe) {
+      return false
+    }
+
+    return recipe.get('isFineDineIn')
+  }
+)
+
 export const getRecipeIdInBasket = createSelector(
   [getBasket, getRecipeIdFromProps],
   (basket, recipeId) => basket.hasIn(['recipes', recipeId])

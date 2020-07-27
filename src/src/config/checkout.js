@@ -149,6 +149,7 @@ module.exports = {
     'network-failure': 'Please check your network connection and try again.',
     'valid-card-details-not-provided': 'Your Card Number, Expiry Date and Security Number are required',
     'user-phone-number-invalid': 'Oh dear, it looks like there was a problem with the phone number you gave us. Please go back a step and try again.',
+    '3ds-challenge-failed': 'Please try again or try a different bank card. If you’re experiencing difficulties, please contact your bank.',
   },
   errorsRequireGoBack: ['user-phone-number-invalid'],
   terms: 'By placing your order you agree to our',

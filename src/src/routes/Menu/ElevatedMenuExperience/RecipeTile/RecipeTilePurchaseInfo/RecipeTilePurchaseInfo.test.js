@@ -8,7 +8,8 @@ describe('RecipeTilePurchaseInfo', () => {
   const defaultProps = {
     surcharge: 0,
     isOutOfStock: false,
-    recipeId: '123'
+    recipeId: '123',
+    isFineDineIn: false,
   }
 
   describe('when the recipe is out of stock', () => {
@@ -75,6 +76,33 @@ describe('RecipeTilePurchaseInfo', () => {
     })
     test('should render AddRecipeButtonContainer', () => {
       expect(wrapper.find(AddRecipeButtonContainer)).toHaveLength(1)
+    })
+  })
+
+  describe('when isFineDineIn is true', () => {
+    beforeEach(() => {
+      wrapper = shallow(<RecipeTilePurchaseInfo
+        {...defaultProps}
+        surcharge={0.75}
+        isFineDineIn
+      />)
+    })
+
+    test('should have class of surchargeInfoIsFineDineIn', () => {
+      expect(wrapper.find('.surchargeInfoIsFineDineIn').length).toEqual(1)
+    })
+  })
+
+  describe('when isFineDineIn is false', () => {
+    beforeEach(() => {
+      wrapper = shallow(<RecipeTilePurchaseInfo
+        {...defaultProps}
+        surcharge={0.75}
+      />)
+    })
+
+    test('should have class of surchargeInfoIsFineDineIn', () => {
+      expect(wrapper.find('.surchargeInfoIsFineDineIn').length).toEqual(0)
     })
   })
 })

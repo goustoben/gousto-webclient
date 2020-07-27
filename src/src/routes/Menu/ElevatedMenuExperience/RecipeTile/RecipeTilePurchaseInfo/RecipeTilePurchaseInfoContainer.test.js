@@ -3,16 +3,23 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { EMERecipeTileContainer } from './EMERecipeTileContainer'
+import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfoContainer'
 
 describe('<EMERecipeTileContainer />', () => {
   const recipeId = '123'
 
   const recipe = Immutable.fromJS({
     id: recipeId,
-    title: 'Chicken curry',
-    isNew: true,
+    isOutOfStock: false,
     isFineDineIn: true,
+    meals: [
+      {
+        numPortions: 2,
+        surcharge: {
+          listPrice: 1.49
+        }
+      }
+    ]
   })
 
   const state = {
@@ -39,15 +46,13 @@ describe('<EMERecipeTileContainer />', () => {
   }
 
   const wrapper = shallow(
-    <EMERecipeTileContainer recipeId={recipeId} />,
+    <RecipeTilePurchaseInfoContainer recipeId={recipeId} />,
     wrapperOptions
   )
 
   test('should pass down correct props', () => {
-    expect(wrapper.prop('recipe')).toEqual(recipe)
     expect(wrapper.prop('isOutOfStock')).toEqual(false)
-    expect(wrapper.prop('title')).toEqual('Chicken curry')
-    expect(wrapper.prop('showDetailRecipe')).toEqual(expect.any(Function))
+    expect(wrapper.prop('surcharge')).toEqual(0.75)
     expect(wrapper.prop('isFineDineIn')).toEqual(true)
   })
 })

@@ -1,70 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ReCAPTCHA from 'components/Recaptcha'
+
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
-
+import ReCAPTCHA from 'components/Recaptcha'
 import { Section } from 'Page/Elements'
+
 import BoxDetails from '../BoxDetails'
-import Summary from '../Summary'
-
 import { PaymentHeader } from '../PaymentHeader'
+import Summary from '../Summary'
 import SubmitButton from '../SubmitButton'
-import css from './CheckoutPayment.css'
-
 import { CheckoutName } from './CheckoutName'
 import { CheckoutFrame } from './CheckoutFrame'
 import { CheckoutAddress } from './CheckoutAddress'
+import { Checkout3DSModal } from './Checkout3DSModal'
 
-export class CheckoutPayment extends React.Component {
-  static propTypes = {
-    submit: PropTypes.func.isRequired,
-    receiveRef: PropTypes.func,
-    scrollToFirstMatchingRef: PropTypes.func,
-    asyncValidate: PropTypes.func,
-    trackingOrderPlaceAttempt: PropTypes.func,
-    trackingOrderPlaceAttemptFailed: PropTypes.func,
-    trackingOrderPlaceAttemptSucceeded: PropTypes.func,
-    touch: PropTypes.func,
-    formErrors: PropTypes.object,
-    sectionName: PropTypes.string,
-    browser: PropTypes.string,
-    checkoutScriptReady: PropTypes.bool,
-    reloadCheckoutScript: PropTypes.func,
-    /* prerender - We allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only */
-    prerender: PropTypes.bool,
-    isRecaptchaEnabled: PropTypes.bool,
-    storeSignupRecaptchaToken: PropTypes.func,
-    recaptchaValue: PropTypes.string.isRequired,
-  }
+import css from './CheckoutPayment.css'
 
-  static defaultProps = {
-    receiveRef: () => {},
-    scrollToFirstMatchingRef: () => {},
-    asyncValidate: () => {},
-    trackingOrderPlaceAttempt: () => {},
-    trackingOrderPlaceAttemptFailed: () => {},
-    trackingOrderPlaceAttemptSucceeded: () => {},
-    reloadCheckoutScript: () => {},
-    touch: () => {},
-    formErrors: {},
-    sectionName: 'payment',
-    browser: 'mobile',
-    checkoutScriptReady: false,
-    isRecaptchaEnabled: false,
-    storeSignupRecaptchaToken: () => {},
-  }
+class CheckoutPayment extends React.Component {
+  constructor() {
+    super()
 
-  state = {
-    isSubmitCardEnabled: false,
+    this.state = {
+      isSubmitCardEnabled: false,
+    }
   }
 
   applyValidationErrors = () => {
     const { formErrors, touch, sectionName } = this.props
 
     if (formErrors && formErrors[sectionName]) {
-      for (const formError in formErrors[sectionName]) {
-        touch(sectionName, `${sectionName}[${formError}]`)
-      }
+      Object.keys(formErrors[sectionName]).forEach((formErrorName) => {
+        touch(sectionName, `${sectionName}[${formErrorName}]`)
+      })
     }
   }
 
@@ -98,7 +65,7 @@ export class CheckoutPayment extends React.Component {
   }
 
   processSignup = () => {
-    const { trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed, trackingOrderPlaceAttemptSucceeded, isRecaptchaEnabled, recaptchaValue } = this.props
+    const { trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed, trackingOrderPlaceAttemptSucceeded } = this.props
 
     trackingOrderPlaceAttempt()
 
@@ -130,7 +97,11 @@ export class CheckoutPayment extends React.Component {
   }
 
   render() {
-    const { asyncValidate, browser, checkoutScriptReady, prerender, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, isRecaptchaEnabled } = this.props
+    const {
+      asyncValidate, browser, checkoutScriptReady, prerender, receiveRef,
+      reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, isRecaptchaEnabled,
+      is3DSEnabled,
+    } = this.props
     const { isSubmitCardEnabled } = this.state
 
     return (
@@ -192,7 +163,53 @@ export class CheckoutPayment extends React.Component {
             ) : null}
           </div>
         )}
+        {is3DSEnabled && <Checkout3DSModal />}
       </div>
     )
   }
 }
+
+CheckoutPayment.propTypes = {
+  submit: PropTypes.func.isRequired,
+  receiveRef: PropTypes.func,
+  scrollToFirstMatchingRef: PropTypes.func,
+  asyncValidate: PropTypes.func,
+  trackingOrderPlaceAttempt: PropTypes.func,
+  trackingOrderPlaceAttemptFailed: PropTypes.func,
+  trackingOrderPlaceAttemptSucceeded: PropTypes.func,
+  touch: PropTypes.func,
+  // eslint-disable-next-line react/forbid-prop-types
+  formErrors: PropTypes.object,
+  sectionName: PropTypes.string,
+  browser: PropTypes.string,
+  // we allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only
+  prerender: PropTypes.bool,
+  checkoutScriptReady: PropTypes.bool,
+  reloadCheckoutScript: PropTypes.func,
+  is3DSEnabled: PropTypes.bool,
+  isRecaptchaEnabled: PropTypes.bool,
+  recaptchaValue: PropTypes.string,
+  storeSignupRecaptchaToken: PropTypes.func,
+}
+
+CheckoutPayment.defaultProps = {
+  receiveRef: () => {},
+  scrollToFirstMatchingRef: () => {},
+  asyncValidate: () => {},
+  trackingOrderPlaceAttempt: () => {},
+  trackingOrderPlaceAttemptFailed: () => {},
+  trackingOrderPlaceAttemptSucceeded: () => {},
+  touch: () => {},
+  formErrors: {},
+  sectionName: 'payment',
+  browser: 'mobile',
+  prerender: false,
+  checkoutScriptReady: false,
+  reloadCheckoutScript: () => {},
+  is3DSEnabled: false,
+  isRecaptchaEnabled: false,
+  recaptchaValue: '',
+  storeSignupRecaptchaToken: () => {},
+}
+
+export { CheckoutPayment }

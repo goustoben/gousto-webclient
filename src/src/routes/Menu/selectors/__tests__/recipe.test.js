@@ -7,7 +7,8 @@ import {
   getRecipeSurcharge,
   getTagDefinition,
   getRecipeDisclaimerProps,
-  getVariantsForRecipeForCurrentCollection
+  getVariantsForRecipeForCurrentCollection,
+  getRecipeIsFineDineIn,
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -455,6 +456,47 @@ describe('menu recipe selectors', () => {
           const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
           expect(result).toEqual(Immutable.List())
         })
+      })
+    })
+  })
+
+  describe('getRecipeIsFineDineIn', () => {
+    const allRecipes = Immutable.fromJS({
+      123: {
+        title: 'foo',
+        boxType: 'bar',
+        dietType: 'quz',
+        isFineDineIn: true,
+      }
+    })
+
+    describe('when recipe id is null', () => {
+      const recipeId = null
+
+      test('should return null', () => {
+        const result = getRecipeIsFineDineIn.resultFunc(allRecipes, recipeId)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('when recipe id is not a recipe', () => {
+      const recipeId = '567'
+
+      test('should return null', () => {
+        const result = getRecipeIsFineDineIn.resultFunc(allRecipes, recipeId)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('when recipe id is valid', () => {
+      const recipeId = '123'
+
+      test('should return true', () => {
+        const result = getRecipeIsFineDineIn.resultFunc(allRecipes, recipeId)
+
+        expect(result).toEqual(true)
       })
     })
   })

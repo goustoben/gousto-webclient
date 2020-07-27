@@ -1,3 +1,5 @@
+import { actionTypes } from 'actions/actionTypes'
+
 export const isSubmitting = state => {
   let submitting = false
 
@@ -7,7 +9,11 @@ export const isSubmitting = state => {
     false)
   }
 
-  if (state.pending && state.pending.get('CHECKOUT_CARD_SUBMIT')) {
+  if (state.pending && state.pending.get(actionTypes.CHECKOUT_CARD_SUBMIT)) {
+    submitting = true
+  }
+
+  if (state.pending && state.pending.get(actionTypes.CHECKOUT_SIGNUP)) {
     submitting = true
   }
 

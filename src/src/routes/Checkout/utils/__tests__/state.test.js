@@ -1,31 +1,16 @@
 import Immutable from 'immutable'
+import { actionTypes } from 'actions/actionTypes'
 import { isSubmitting, isBillingAddressDifferent } from '../state'
 
-let formValues = {}
-const sectionName = 'payment'
-let state = {}
+describe('Checkout state selectors', () => {
+  describe('isSubmitting', () => {
+    let state
 
-describe('is submitting', () => {
-  test('should return true if the form "submitting" value is true', () => {
-    state = {
-      pending: Immutable.Map({
-        CHECKOUT_CARD_SUBMIT: false
-      }),
-      form: {
-        checkout: {
-          submitting: true
-        }
-      }
-    }
-
-    expect(isSubmitting(state)).toEqual(true)
-  })
-
-  describe('when the form "submitting" value is false', () => {
-    test('and "CHECKOUT_CARD_SUBMIT" is pending it should return true', () => {
+    beforeEach(() => {
       state = {
         pending: Immutable.Map({
-          CHECKOUT_CARD_SUBMIT: true
+          [actionTypes.CHECKOUT_CARD_SUBMIT]: false,
+          [actionTypes.CHECKOUT_SIGNUP]: false
         }),
         form: {
           checkout: {
@@ -33,49 +18,76 @@ describe('is submitting', () => {
           }
         }
       }
-      expect(isSubmitting(state)).toEqual(true)
     })
 
-    test('and "CHECKOUT_CARD_SUBMIT" is not pending it should return false', () => {
-      state = {
-        pending: Immutable.Map({
-          CHECKOUT_CARD_SUBMIT: false
-        }),
-        form: {
-          checkout: {
-            submitting: false
-          }
-        }
+    describe('when the form "submitting" value is true', () => {
+      test('should return true', () => {
+        state.form.checkout.submitting = true
+
+        const result = isSubmitting(state)
+
+        expect(result).toBe(true)
+      })
+    })
+
+    describe('when CHECKOUT_CARD_SUBMIT is pending', () => {
+      test('should return true', () => {
+        state.pending = state.pending.set(actionTypes.CHECKOUT_CARD_SUBMIT, true)
+
+        const result = isSubmitting(state)
+
+        expect(result).toBe(true)
+      })
+    })
+
+    describe('when CHECKOUT_SIGNUP is pending', () => {
+      test('should return true', () => {
+        state.pending = state.pending.set(actionTypes.CHECKOUT_SIGNUP, true)
+
+        const result = isSubmitting(state)
+
+        expect(result).toBe(true)
+      })
+    })
+
+    describe('in any other case', () => {
+      test('should return false', () => {
+        const result = isSubmitting(state)
+
+        expect(result).toBe(false)
+      })
+    })
+  })
+
+  describe('isBillingAddressDifferent', () => {
+    let formValues
+    const sectionName = 'payment'
+
+    beforeEach(() => {
+      formValues = {
+        delivery: {},
+        payment: {},
       }
-
-      expect(isSubmitting(state)).toEqual(false)
     })
-  })
-})
 
-describe('is billing address different', () => {
-  beforeEach(() => {
-    formValues = {
-      delivery: {},
-      payment: {},
-    }
-  })
+    test('should return false if form values is empty', () => {
+      expect(isBillingAddressDifferent({}, sectionName)).toBe(false)
+    })
 
-  test('should return false if form values is empty', () => {
-    expect(isBillingAddressDifferent({}, sectionName)).toEqual(false)
-  })
+    test('should return false if the section name is empty', () => {
+      expect(isBillingAddressDifferent(formValues, sectionName)).toBe(false)
+    })
 
-  test('should return false if the section name is empty', () => {
-    expect(isBillingAddressDifferent(formValues, sectionName)).toEqual(false)
-  })
+    test('should return false if the "isBillingAddressDifferent" value is false', () => {
+      formValues.payment.isBillingAddressDifferent = false
 
-  test('should return false if the "isBillingAddressDifferent" value is false', () => {
-    formValues.payment.isBillingAddressDifferent = false
-    expect(isBillingAddressDifferent(formValues, sectionName)).toEqual(false)
-  })
+      expect(isBillingAddressDifferent(formValues, sectionName)).toBe(false)
+    })
 
-  test('should return true if the "isBillingAddressDifferent" value is true', () => {
-    formValues.payment.isBillingAddressDifferent = true
-    expect(isBillingAddressDifferent(formValues, sectionName)).toEqual(true)
+    test('should return true if the "isBillingAddressDifferent" value is true', () => {
+      formValues.payment.isBillingAddressDifferent = true
+
+      expect(isBillingAddressDifferent(formValues, sectionName)).toBe(true)
+    })
   })
 })

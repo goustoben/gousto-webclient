@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { storeSignupRecaptchaToken } from 'actions/auth'
 import { trackingOrderPlaceAttemptSucceeded, trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed } from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
+import { getIs3DSForSignUpEnabled } from 'selectors/features'
 import formContainer from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
@@ -10,6 +11,7 @@ import { CheckoutPayment } from './CheckoutPayment'
 
 const mapStateToProps = state => ({
   formErrors: { ...getFormSyncErrors(sectionName)(state), ...getFormAsyncErrors(sectionName)(state)},
+  is3DSEnabled: getIs3DSForSignUpEnabled(state),
   isRecaptchaEnabled: getIsRecaptchaEnabled(state),
   recaptchaValue: getSignupRecaptchaToken(state),
   sectionName,

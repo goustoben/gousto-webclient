@@ -182,7 +182,7 @@ export const trackGetStarted = (section) => (dispatch, getState) => {
 
 export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) => {
   const { promoCode, UTM } = getUTMAndPromoCode(getState())
-  const type = trackingKeys[keyType]
+  const type = trackingKeys[keyType] || keyType
 
   dispatch({
     type,

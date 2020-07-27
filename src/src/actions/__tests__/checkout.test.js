@@ -1,20 +1,25 @@
 import Immutable from 'immutable'
 
+import routes from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-
+import * as trackingKeys from 'actions/trackingKeys'
 import { warning } from 'utils/logger'
-import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
+import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 import { redirect } from 'actions/redirect'
 import { pending, error } from 'actions/status'
-import { createPreviewOrder } from 'apis/orders'
 import { orderAssignToUser } from 'actions/order'
+import { userSubscribe } from 'actions/user'
 import { basketResetPersistent } from 'utils/basket'
-import { trackAffiliatePurchase } from 'actions/tracking'
+import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
+import { createPreviewOrder } from 'apis/orders'
+import { authPayment, checkPayment } from 'apis/payments'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 
-import {
+import checkoutActions, {
   trackPurchase,
-  checkoutSignup,
+  checkoutNon3DSSignup,
+  checkout3DSSignup,
+  checkPaymentAuth,
   fireCheckoutError,
   checkoutPostSignup,
   checkoutClearErrors,
@@ -25,45 +30,213 @@ import {
   trackCheckoutButtonPressed,
 } from 'actions/checkout'
 
-jest.mock('actions/login')
-jest.mock('actions/menu')
-jest.mock('actions/user')
-jest.mock('actions/basket')
-jest.mock('selectors/features')
-jest.mock('utils/deliveries')
-
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
 }))
+jest.mock('utils/logger', () => ({
+  warning: jest.fn(),
+  error: jest.fn()
+}))
+jest.mock('utils/deliveries')
 
+jest.mock('actions/login')
+jest.mock('actions/menu')
+jest.mock('actions/user', () => ({
+  userSubscribe: jest.fn(() => Promise.resolve({
+    status: 'ok',
+    data: {
+      orderId: '18057148',
+      customer: {
+        id: '41892653',
+        authUserId: '1bc752cc-98d0-4937-a2a6-6e9cad21749d',
+        email: 'john.doe@test.com',
+        nameFirst: 'John',
+        nameLast: 'Doe',
+        phone: '07503075906',
+        goustoReference: 2007339011,
+        cancelled: false,
+        createdAt: '2020-07-20T15:59:27+01:00',
+        vip: false,
+        marketingDoAllowThirdparty: false,
+        marketingDoAllowEmail: false,
+        marketingDoAllowSms: false,
+        marketingDoAllowPost: false,
+        marketingDoAllowPhone: false,
+        shippingAddressId: '84350206',
+        billingAddressId: '84350207',
+        deliveryTariffId: '9037a447-e11a-4960-ae69-d89a029569af',
+        salutation: {id: 1, label: 'Miss.', slug: 'miss'}
+      },
+      addresses: {
+        billingAddress: {
+          id: '84350207',
+          customerId: '41892653',
+          name: 'My Address',
+          companyName: '',
+          line1: 'FLAT 15, MORRIS HOUSE',
+          line2: 'SWAINSON ROAD',
+          line3: '',
+          town: 'LONDON',
+          county: 'MIDDLESEX',
+          postcode: 'W3 7UP',
+          deliveryInstructions: '',
+          state: 'unset',
+          type: 'billing',
+          deleted: false
+        },
+        shippingAddress: {
+          id: '84350206',
+          customerId: '41892653',
+          name: 'My Address',
+          companyName: '',
+          line1: 'FLAT 15, MORRIS HOUSE',
+          line2: 'SWAINSON ROAD',
+          line3: '',
+          town: 'LONDON',
+          county: 'MIDDLESEX',
+          postcode: 'W3 7UP',
+          deliveryInstructions: 'Front Porch',
+          state: 'unset',
+          type: 'shipping',
+          deleted: false
+        }
+      },
+      paymentMethod: {
+        id: 'ed79add7-f7ff-41da-8524-f64b04dd9e70',
+        type: 'card',
+        isDefault: true,
+        name: 'My Card',
+        card: {
+          id: '69524945',
+          number: '424242#######4242',
+          expiryMonth: 10,
+          expiryYear: 20,
+          cardToken: 'src_qvgsjghtdjjuhdznipp5najdza',
+          paymentProvider: 'checkout'
+        }
+      },
+      subscription: {
+        id: '36613038',
+        stateReason: null,
+        interval: {id: '1', slug: 'weekly', title: 'Weekly', description: 'Our most popular option!'},
+        status: {id: 1, slug: 'active'},
+        box: {id: '18', portions: 2, recipes: 4},
+        slot: null
+      }
+    }
+  }))
+}))
+jest.mock('actions/basket')
 jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
 }))
-
-jest.mock('apis/orders', () => ({
-  createPreviewOrder: jest.fn(),
+jest.mock('actions/status', () => ({
+  error: jest.fn(),
+  pending: jest.fn(),
+}))
+jest.mock('actions/order', () => ({
+  orderAssignToUser: jest.fn(),
+}))
+jest.mock('actions/tracking', () => ({
+  trackAffiliatePurchase: jest.fn(),
+  trackUTMAndPromoCode: jest.fn()
 }))
 
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
 }))
-
-jest.mock('actions/status', () => ({
-  error: jest.fn(),
-  pending: jest.fn(),
+jest.mock('apis/orders', () => ({
+  createPreviewOrder: jest.fn(),
 }))
-
-jest.mock('utils/logger', () => ({
-  warning: jest.fn(),
-  error: jest.fn()
-}))
-
-jest.mock('actions/order', () => ({
-  orderAssignToUser: jest.fn(),
-}))
-
-jest.mock('actions/tracking', () => ({
-  trackAffiliatePurchase: jest.fn(),
+jest.mock('apis/payments', () => ({
+  authPayment: jest.fn(() => Promise.resolve({
+    status: 'ok',
+    data: {
+      id: 'da850c38-c077-41cf-b860-0100ee48c0f1',
+      cardToken: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
+      reference: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+      status: 'challenge-pending',
+      value: 3499,
+      message: 'Requested redirect link for 3ds authorisation',
+      responsePayload: {
+        transactionId: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+        reference: 'da850c38-c077-41cf-b860-0100ee48c0f1',
+        redirectLink: 'https://bank.uk/3dschallenge',
+        message: 'Requested redirect link for 3ds authorisation',
+        paymentStatus: 'challenge-pending',
+      },
+      createdAt: '2020-07-20 14:52:09.661152+00:00',
+      updatedAt: '2020-07-20 14:52:10.242845+00:00',
+    }
+  })),
+  checkPayment: jest.fn((sessionId) => Promise.resolve({
+    data: {
+      data: sessionId === 'success_session_id'
+        ? {
+          id: 'pay_556fkurbopnu3ckcpk7h4a5wfi',
+          amount: 3499,
+          approved: true,
+          status: 'Authorized',
+          sourceId: 'src_qvgsjghtdjjuhdznipp5najdza',
+          source: {
+            id: 'src_qvgsjghtdjjuhdznipp5najdza',
+            type: 'card',
+            billingAddress: {
+              addressLine1: 'FLAT 15, MORRIS HOUSE',
+              addressLine2: 'SWAINSON ROAD',
+              city: 'LONDON',
+              zip: 'W3 7UP'
+            },
+            expiryMonth: 10,
+            expiryYear: 2020,
+            name: 'test test',
+            scheme: 'Visa',
+            last4: '4242',
+            fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
+            bin: '424242',
+            cardType: 'Credit',
+            cardCategory: 'Consumer',
+            issuer: 'JPMORGAN CHASE BANK NA',
+            issuerCountry: 'US',
+            productId: 'A',
+            productType: 'Visa Traditional',
+            avsCheck: 'S',
+            cvvCheck: 'Y',
+            payouts: true,
+            fastFunds: 'd'
+          }
+        }
+        : {
+          id: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+          amount: 3499,
+          approved: false,
+          status: 'Declined',
+          sourceId: '',
+          source: {
+            type: 'card',
+            billingAddress: {
+              addressLine1: 'FLAT 15, MORRIS HOUSE',
+              addressLine2: 'SWAINSON ROAD',
+              city: 'LONDON',
+              zip: 'W3 7UP'
+            },
+            expiryMonth: 10,
+            expiryYear: 2020,
+            name: 'test test',
+            scheme: 'Visa',
+            last4: '4242',
+            fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
+            bin: '424242',
+            cardType: 'Credit',
+            cardCategory: 'Consumer',
+            issuer: 'JPMORGAN CHASE BANK NA',
+            issuerCountry: 'US',
+            productId: 'A',
+            productType: 'Visa Traditional'
+          }
+        }
+    }
+  })),
 }))
 
 const createState = (stateOverrides) => ({
@@ -71,6 +244,7 @@ const createState = (stateOverrides) => ({
     id: '',
   }),
   basket: Immutable.fromJS({
+    previewOrderId: '100004',
     address: '3 Moris House, London',
     date: '2016-11-21',
     numPortions: 4,
@@ -134,10 +308,11 @@ const createState = (stateOverrides) => ({
     },
     payment: {
       values: {
-        payment: {
+        payment: Immutable.Map({
+          token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
           postcode: 'w37un',
           houseNo: '1',
-        },
+        })
       }
     }
   },
@@ -168,6 +343,15 @@ const createState = (stateOverrides) => ({
     prices: {
       grossTotal: 28.00,
       deliveryTotal: 2.99,
+      total: '34.99',
+    }
+  }),
+  features: Immutable.fromJS({
+    ndd: {
+      value: deliveryTariffTypes.NON_NDD
+    },
+    enable3DSForSignUp: {
+      value: false
     }
   }),
   ...stateOverrides,
@@ -230,7 +414,7 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutClearErrors', () => {
-    it('should dispatch CHECKOUT_ERRORS_CLEAR', async () => {
+    test('should dispatch CHECKOUT_ERRORS_CLEAR', async () => {
       const result = checkoutClearErrors()
 
       expect(result.type).toBe(actionTypes.CHECKOUT_ERRORS_CLEAR)
@@ -238,7 +422,7 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutCreatePreviewOrder', () => {
-    it('should call create preview order', async () => {
+    test('should call create preview order', async () => {
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
@@ -248,7 +432,7 @@ describe('checkout actions', () => {
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
 
-    it('should call create preview order and log the error, coreDayId empty', async () => {
+    test('should call create preview order and log the error, coreDayId empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: Immutable.fromJS({
           '2016-11-21': {
@@ -282,7 +466,7 @@ describe('checkout actions', () => {
       )
     })
 
-    it('should call create preview order and log the error, boxSummaryDeliveryDays empty', async () => {
+    test('should call create preview order and log the error, boxSummaryDeliveryDays empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: null,
       }))
@@ -320,7 +504,7 @@ describe('checkout actions', () => {
         }))
       })
 
-      it('should call create preview order with day_slot_lead_time_id', async () => {
+      test('should call create preview order with day_slot_lead_time_id', async () => {
         getSlot.mockReturnValue(Immutable.fromJS({
           coreSlotId: '4',
           id: '3e952522-a778-11e6-8197-080027596944',
@@ -345,7 +529,7 @@ describe('checkout actions', () => {
     describe('when deliveryTariffId is returned from state', () => {
       const deliveryTariffId = 'delivery-tariff-uuid'
 
-      it('should call create preview order with delivery_tariff_id', async () => {
+      test('should call create preview order with delivery_tariff_id', async () => {
         getDeliveryTariffId.mockReturnValue(deliveryTariffId)
 
         await checkoutCreatePreviewOrder()(
@@ -364,7 +548,7 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutAddressLookup', () => {
-    it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
+    test('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
       const postcode = 'W6 0DH'
 
       await checkoutAddressLookup(postcode)(dispatch)
@@ -377,7 +561,7 @@ describe('checkout actions', () => {
   })
 
   describe('fireCheckoutError', () => {
-    it('should dispatch an error with no value', async () => {
+    test('should dispatch an error with no value', async () => {
       getState.mockReturnValue(createState())
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED')(dispatch, getState)
@@ -388,7 +572,7 @@ describe('checkout actions', () => {
       )
     })
 
-    it('should dispatch an error with an error value', async () => {
+    test('should dispatch an error with an error value', async () => {
       getState.mockReturnValue(createState())
       const errorText = 'card not accepted'
 
@@ -402,12 +586,205 @@ describe('checkout actions', () => {
   })
 
   describe('checkoutSignup', () => {
-    it('should redirect to invalid step', async () => {
+    let checkout3DSSignupOrig
+    let checkoutNon3DSSignupOrig
+    let trackSignupPageChangeOrig
+
+    beforeEach(() => {
+      checkout3DSSignupOrig = checkoutActions.checkout3DSSignup
+      checkoutNon3DSSignupOrig = checkoutActions.checkoutNon3DSSignup
+      trackSignupPageChangeOrig = checkoutActions.trackSignupPageChange
+
+      checkoutActions.checkout3DSSignup = jest.fn()
+      checkoutActions.checkoutNon3DSSignup = jest.fn()
+      checkoutActions.trackSignupPageChange = jest.fn()
+    })
+
+    afterEach(() => {
+      checkoutActions.checkout3DSSignup = checkout3DSSignupOrig
+      checkoutActions.checkoutNon3DSSignup = checkoutNon3DSSignupOrig
+      checkoutActions.trackSignupPageChange = trackSignupPageChangeOrig
+    })
+
+    describe('when 3DS enabled', () => {
+      beforeEach(() => {
+        getState.mockReturnValue(createState({
+          features: Immutable.fromJS({
+            enable3DSForSignUp: {
+              value: true
+            }
+          })
+        }))
+      })
+
+      test('should send "Submit" tracking event', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
+      })
+
+      test('should init 3DS signup flow', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.checkout3DSSignup).toHaveBeenCalled()
+      })
+    })
+
+    describe('when 3DS disabled', () => {
+      test('should send "Submit" tracking event', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
+      })
+
+      test('should init non-3DS signup flow', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('checkoutNon3DSSignup', () => {
+    beforeEach(() => {
       getState.mockReturnValue(createState())
+    })
 
-      await checkoutSignup()(dispatch, getState)
+    test('should subscribe user', async () => {
+      await checkoutNon3DSSignup()(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledTimes(8)
+      expect(userSubscribe).toHaveBeenCalled()
+    })
+
+    test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
+      await checkoutNon3DSSignup()(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId: '100004' })
+    })
+  })
+
+  describe('checkout3DSSignup', () => {
+    beforeEach(() => {
+      getState.mockReturnValue(createState())
+    })
+
+    test('should make payment auth request', async () => {
+      const expected = {
+        order_id: '100004',
+        card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
+        amount: 3499,
+        '3ds': true,
+        success_url: `http://localhost${routes.client.payment.success}`,
+        failure_url: `http://localhost${routes.client.payment.failure}`,
+      }
+
+      await checkout3DSSignup()(dispatch, getState)
+
+      expect(authPayment).toHaveBeenCalledWith(expected)
+    })
+
+    test('should show 3ds challenge modal', async () => {
+      await checkout3DSSignup()(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.PAYMENT_SHOW_MODAL,
+        challengeUrl: 'https://bank.uk/3dschallenge',
+      })
+    })
+
+    test('should trigger 3dsmodal_display event', async () => {
+      await checkout3DSSignup()(dispatch, getState)
+
+      expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
+    })
+  })
+
+  describe('checkPaymentAuth', () => {
+    beforeEach(() => {
+      getState.mockReturnValue(createState())
+    })
+
+    describe('when payment authorization successful', () => {
+      const successSessionId = 'success_session_id'
+
+      test('should hide 3ds challenge modal', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.PAYMENT_HIDE_MODAL })
+      })
+
+      test('should check payment result', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(checkPayment).toHaveBeenCalledWith(successSessionId)
+      })
+
+      test('should subscribe user', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza')
+      })
+
+      test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId: '100004' })
+      })
+
+      test('should trigger 3ds_success event', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeSuccessful)
+      })
+
+      test('should not trigger 3ds_failed event', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
+      })
+    })
+
+    describe('when payment authorization failed', () => {
+      const failedSessionId = 'failed_session_id'
+
+      test('should hide 3ds challenge modal', async () => {
+        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.PAYMENT_HIDE_MODAL })
+      })
+
+      test('should check payment result', async () => {
+        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+
+        expect(checkPayment).toHaveBeenCalledWith(failedSessionId)
+      })
+
+      test('should trigger signup error', async () => {
+        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+
+        expect(error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
+      })
+
+      test('should not trigger 3ds_success event', async () => {
+        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+
+        expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeSuccessful)
+      })
+
+      test('should trigger 3ds_failed event', async () => {
+        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
+      })
+    })
+
+    test('should show payment modal', async () => {
+      await checkout3DSSignup()(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.PAYMENT_SHOW_MODAL,
+        challengeUrl: 'https://bank.uk/3dschallenge',
+      })
     })
   })
 
@@ -437,7 +814,7 @@ describe('checkout actions', () => {
         global.ga = undefined
       })
 
-      it('should not call ga with order details', async () => {
+      test('should not call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
 
         expect(ga).not.toHaveBeenCalled()
@@ -449,7 +826,7 @@ describe('checkout actions', () => {
         global.ga = ga
       })
 
-      it('should call ga with order details', async () => {
+      test('should call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
 
         expect(ga).toHaveBeenCalled()
@@ -484,13 +861,13 @@ describe('checkout actions', () => {
       ga.mockClear()
     })
 
-    it('should call post signup', async () => {
+    test('should call post signup', async () => {
       await checkoutPostSignup()(dispatch, getState)
 
       expect(basketResetPersistent).toHaveBeenCalledTimes(1)
     })
 
-    it('should dispatch a call to trackPurchase', async () => {
+    test('should dispatch a call to trackPurchase', async () => {
       global.ga = ga
 
       await checkoutPostSignup()(dispatch, getState)
@@ -530,18 +907,8 @@ describe('checkout actions', () => {
     })
   })
 
-  describe('checkoutSignup on MOBILE', () => {
-    it('should redirect to invalid step', async () => {
-      getState.mockReturnValue(createState())
-
-      await checkoutSignup()(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledTimes(8)
-    })
-  })
-
   describe('trackPromocodeChange', () => {
-    it('should dispatch trackPromocodeChange with actionType Promocode Applied', () => {
+    test('should dispatch trackPromocodeChange with actionType Promocode Applied', () => {
       trackPromocodeChange('promo', true)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -553,7 +920,7 @@ describe('checkout actions', () => {
       })
     })
 
-    it('should dispatch trackPromocodeChange with actionType Promocode Removed', () => {
+    test('should dispatch trackPromocodeChange with actionType Promocode Removed', () => {
       trackPromocodeChange('promo', false)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({

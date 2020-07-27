@@ -614,7 +614,7 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
   }
 }
 
-export function userSubscribe() {
+export function userSubscribe(sca3ds = false, sourceId = null) {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
@@ -672,7 +672,12 @@ export function userSubscribe() {
           interval_id: intervalId,
           delivery_slot_id: basket.get('slotId'),
           box_id: basket.get('boxId')
-        }
+        },
+      }
+
+      if (sca3ds) {
+        reqData['3ds'] = true
+        reqData.payment_method.card.card_token = sourceId
       }
 
       if (

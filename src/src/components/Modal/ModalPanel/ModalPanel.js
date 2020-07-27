@@ -69,6 +69,7 @@ class ModalPanel extends React.Component {
       containerClassName,
       disableOverlay,
       isNarrow,
+      showCloseButton,
     } = this.props
 
     const modalClasses = classNames(
@@ -86,16 +87,18 @@ class ModalPanel extends React.Component {
         {!disableOverlay && <div className={css.modalOverlay} />}
         <div className={modalClasses} ref="content">
           {this.renderBackButton()}
-          <div
-            className={css.rightControl}
-            role="button"
-            tabIndex="0"
-            onClick={closeModal}
-            onKeyDown={onEnter(closeModal)}
-            data-testing="modalClose"
-          >
-            <span className={css.close} />
-          </div>
+          {showCloseButton && (
+            <div
+              className={css.rightControl}
+              role="button"
+              tabIndex="0"
+              onClick={closeModal}
+              onKeyDown={onEnter(closeModal)}
+              data-testing="modalClose"
+            >
+              <span className={css.close} />
+            </div>
+          )}
           {children}
         </div>
       </div>
@@ -113,6 +116,7 @@ ModalPanel.propTypes = {
   disableClickOutside: PropTypes.bool,
   isNarrow: PropTypes.bool,
   onGoBack: PropTypes.func,
+  showCloseButton: PropTypes.bool,
 }
 
 ModalPanel.defaultProps = {
@@ -125,6 +129,7 @@ ModalPanel.defaultProps = {
   disableClickOutside: false,
   isNarrow: false,
   onGoBack: null,
+  showCloseButton: true,
 }
 
 export default ModalPanel
