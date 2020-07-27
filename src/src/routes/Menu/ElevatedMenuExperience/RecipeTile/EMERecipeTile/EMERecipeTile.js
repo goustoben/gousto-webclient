@@ -27,7 +27,7 @@ class EMERecipeTile extends PureComponent {
 
   render() {
     const { detailHover } = this.state
-    const { recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags } = this.props
+    const { recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags, isFineDineIn } = this.props
     if (!recipe) {
       return null
     }
@@ -37,7 +37,8 @@ class EMERecipeTile extends PureComponent {
     return (
       <div
         className={classnames(css.recipeTileContainer, {
-          [css.recipeTileHover]: detailHover
+          [css.recipeTileHover]: detailHover,
+          [css.recipeTileIsFineDineIn]: isFineDineIn
         })}
         data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipe'}
       >
@@ -87,6 +88,7 @@ EMERecipeTile.propTypes = {
     topLeftTag: PropTypes.object,
     topRightTag: PropTypes.object,
   }),
+  isFineDineIn: PropTypes.bool.isRequired
 }
 
 EMERecipeTile.defaultProps = {

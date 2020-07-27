@@ -27,6 +27,7 @@ describe('EMERecipeTile', () => {
       showDetailRecipe: jest.fn(),
       title: 'Bobs Brilliant Beef Burger',
       isOutOfStock: false,
+      isFineDineIn: false,
       surcharge: 0,
       brandTags: {
         topLeftTag: {
@@ -134,6 +135,29 @@ describe('EMERecipeTile', () => {
       test('should set detailHover state to false', () => {
         wrapper.find('.titleWrapper').simulate('mouseLeave')
         expect(wrapper.state().detailHover).toBe(false)
+      })
+    })
+
+    describe('when isFineDineIn is true', () => {
+      beforeEach(() => {
+        wrapper = shallow(<EMERecipeTile
+          {...defaultProps}
+          isFineDineIn
+        />)
+      })
+
+      test('should have class of recipeTileIsFineDineIn', () => {
+        expect(wrapper.find('.recipeTileIsFineDineIn').length).toEqual(1)
+      })
+    })
+
+    describe('when isFineDineIn is false', () => {
+      beforeEach(() => {
+        wrapper = shallow(<EMERecipeTile {...defaultProps} />)
+      })
+
+      test('should have class of recipeTileIsFineDineIn', () => {
+        expect(wrapper.find('.recipeTileIsFineDineIn').length).toEqual(0)
       })
     })
   })

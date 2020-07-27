@@ -1,7 +1,6 @@
 @value sizeSM, sizeMD, sizeXS from 'styles/typography.css';
-@value Blackberry from 'styles/colors.css';
+@value Blackberry, White from 'styles/colors.css';
 @value ScreenXXSMax from 'styles/screenSizes.css';
-
 .purchaseInfoWrapper {
   display: flex;
   flex-direction: row;
@@ -13,10 +12,14 @@
   flex-direction: column;
   margin-right: 0.75rem;
   padding-top: 0.125rem;
+  color: Blackberry;
+}
+
+.surchargeInfoIsFineDineIn {
+  color: White;
 }
 
 .surchargeAmountText {
-  color: Blackberry;
   font-weight: 600;
   white-space: nowrap;
   align-self: flex-end;
@@ -24,24 +27,23 @@
 }
 
 .perText {
-  color: Blackberry;
   font-weight: 500;
   white-space: nowrap;
   font-size: sizeXS;
   line-height: sizeMD;
   @media ScreenXXSMax {
-      display: none;
+    display: none;
   }
 }
 
 .perServingText {
-  color: Blackberry;
   font-weight: 500;
   white-space: nowrap;
   font-size: sizeXS;
   line-height: sizeMD;
   text-align: right;
   @media ScreenXXSMax {
-      font-size: 12px;  /* We don't have defined 12px font size */
+    font-size: 12px;
+    /* We don't have defined 12px font size */
   }
 }
