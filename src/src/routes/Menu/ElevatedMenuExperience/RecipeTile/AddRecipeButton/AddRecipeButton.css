@@ -19,6 +19,11 @@
 
 .addButton:hover {
     background-color: Blueberry;
+    cursor: pointer;
+}
+
+.removeButton:hover {
+    cursor: pointer;
 }
 
 .addButton:disabled {
@@ -52,6 +57,7 @@
 
 .hideOnMobile {
     margin-left: 0.75rem;
+    padding-top: 0.125rem;
     @media ScreenXSMax {
         display: none;
     };

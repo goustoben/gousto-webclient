@@ -120,21 +120,13 @@ describe('EMERecipeTile', () => {
       })
     })
 
-    describe('when hovering over TileImage', () => {
-      beforeEach(() => {
-        wrapper = shallow(<EMERecipeTile
-          {...defaultProps}
-        />)
-      })
+    describe('when click on recipe Tile', () => {
+      test('should call showDetailRecipe function', () => {
+        wrapper.simulate('click', {
+          stopPropagation: () => {}
+        })
 
-      test('should set detailHover state to true', () => {
-        wrapper.find('.titleWrapper').simulate('mouseEnter')
-        expect(wrapper.state().detailHover).toBe(true)
-      })
-
-      test('should set detailHover state to false', () => {
-        wrapper.find('.titleWrapper').simulate('mouseLeave')
-        expect(wrapper.state().detailHover).toBe(false)
+        expect(defaultProps.showDetailRecipe).toHaveBeenCalled()
       })
     })
 

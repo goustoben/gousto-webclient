@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import css from './AddRecipeButton.css'
 
 export const AddRecipeButton = ({basketRecipeAdd, basketRecipeRemove, recipeId, isInBasket, isBasketLimitReached, buttonProps}) => {
-  const buttonAction = () => {
+  const buttonAction = (e) => {
+    e.stopPropagation()
     if (isInBasket) {
       basketRecipeRemove(recipeId)
     } else {

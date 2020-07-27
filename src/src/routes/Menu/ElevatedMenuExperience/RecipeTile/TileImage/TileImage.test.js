@@ -10,8 +10,6 @@ import { CookingTimeIconContainer } from '../CookingTimeIcon'
 describe('<TileImage />', () => {
   let wrapper
   let media
-  const mouseEnter = jest.fn()
-  const mouseLeave = jest.fn()
   beforeEach(() => {
     media = Immutable.fromJS([
       {
@@ -78,7 +76,7 @@ describe('<TileImage />', () => {
       cookingTime: 30,
       cookingTimeFamily: 30
     })
-    wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} mouseEnter={mouseEnter} mouseLeave={mouseLeave} />)
+    wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
     expect(wrapper.find(CookingTimeIconContainer).length).toEqual(1)
   })
 })

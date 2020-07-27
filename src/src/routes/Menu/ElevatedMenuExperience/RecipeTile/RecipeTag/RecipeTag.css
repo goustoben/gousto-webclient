@@ -1,4 +1,5 @@
 @value White from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
 
 .recipeTag {
   position: absolute;
@@ -10,4 +11,7 @@
   font-size: 13px;
   text-transform: uppercase;
   color: White;
+  @media ScreenSMMin {
+    top: 1rem;
+  }
 }
