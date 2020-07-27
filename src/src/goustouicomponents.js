@@ -24,6 +24,7 @@ export {
   ProgressBar,
   Segment,
   Spinner,
+  StepIndicator,
   Tooltip,
   VerticalStages,
   VerticalStagesItem,

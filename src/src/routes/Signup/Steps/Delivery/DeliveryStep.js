@@ -187,8 +187,8 @@ const DeliveryStep = ({
     <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
+          <Heading type="h1" className={signupCss.heading}>Which delivery day would you like?</Heading>
           <Image name="delivery-day" />
-          <h1 className={signupCss.heading}>Which delivery day would you like?</h1>
         </div>
         <div className={signupCss.body}>
           <div className={css.container}>

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import TextInput from 'Form/Input'
 import {reminder} from 'config/freeDelivery'
+import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
 import postcodeCss from './PostcodeStep.css'
@@ -22,8 +23,8 @@ class PostcodeStep extends React.PureComponent {
       <span className={css.stepContainer} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
           <div className={css.header}>
+            <Heading type="h1" className={css.heading}>Where would you like your boxes delivered?</Heading>
             <Image name="where-to-deliver" />
-            <h1 className={css.heading}>Where would you like your boxes delivered?</h1>
           </div>
           <div className={css.body}>
             <div className={postcodeCss.inputContainer}>
