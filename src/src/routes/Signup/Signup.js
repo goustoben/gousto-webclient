@@ -8,13 +8,12 @@ import actions from 'actions'
 import { stepByName, stepBySlug, getPromocodeQueryParam } from 'utils/signup'
 import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
+import { StepIndicator } from 'goustouicomponents'
 import css from './Signup.css'
 
 import { BoxSizeStep } from './Steps/BoxSize'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
-
-import { Dots } from './Dots'
 
 const components = {
   boxSize: BoxSizeStep,
@@ -211,13 +210,13 @@ class Signup extends React.PureComponent {
         />
         <div className={css.stepsContainer}>
           <div className={css.animationContainer}>
+            <div className={css.stepIndicatorContainer}>
+              <StepIndicator current={stepNumber + 1} size={steps.size} />
+            </div>
             <div className={css.animation} style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}>
               {this.renderSteps(steps, stepNumber)}
             </div>
           </div>
-        </div>
-        <div className={css.dotsContainer}>
-          <Dots steps={steps.size} stepNo={stepNumber} />
         </div>
       </div>
     )

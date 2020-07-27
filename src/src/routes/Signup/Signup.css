@@ -52,13 +52,14 @@
 
 .stepsContainer, .stepContainer, .step {
 	composes: flex from 'styles/display.css';
-	min-height: 520px;
+	min-height: 580px;
 	height: 100%;
 	width: 100%;
 	float: left;
+	justify-content: normal;
 
 	@media HeightSMMax {
-		min-height: minHeight;
+		min-height: 580px;
 	}
 
 	@media ScreenXSMax {
@@ -78,13 +79,9 @@
 	}
 }
 
-.dotsContainer {
-	text-align: center;
-	margin-top: SpacingMD;
-
-	@media HeightSMMax and ScreenXSMax {
-		margin-top: SpacingSM;
-	}
+.stepIndicatorContainer {
+	composes: marginXXLTop from 'sass-loader!styles/spacing.scss';
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
 }
 
 .header, .regularHeader, .body, .footer {
@@ -92,8 +89,7 @@
 }
 
 .header {
-	composes: textCenter from 'styles/typography.css';
-	min-height: 205px;
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
 
 	@media HeightMDMin and ScreenXSMax {
 		min-height: calc((minHeight - 10px) * 0.5);
@@ -129,7 +125,6 @@
 .bodyText {
 	composes: textRegular from 'styles/typography.css';
 	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
-	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
 }
 
 .basicInputContainer {
@@ -164,10 +159,6 @@
 
 .footer {
 	composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
-
-	@media ScreenXXSMax {
-		margin-top: 10px;
-	}
 }
 
 .containerFluid {
