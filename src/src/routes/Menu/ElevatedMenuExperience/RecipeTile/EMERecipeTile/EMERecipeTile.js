@@ -1,81 +1,56 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import classnames from 'classnames'
+import Immutable from 'immutable'
 import { TileImageContainer } from '../TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from '../RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from '../RecipeTilePurchaseInfo'
 import css from './EMERecipeTile.css'
 
-class EMERecipeTile extends PureComponent {
-  constructor() {
-    super()
-
-    this.state = {
-      detailHover: true
-    }
+const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags, isFineDineIn }) => {
+  if (!recipe) {
+    return null
   }
 
-  highlight = () => {
-    this.setState({ detailHover: true })
+  const onClick = (e) => {
+    e.stopPropagation()
+    showDetailRecipe(recipeId, false)
   }
 
-  unhighlight = () => {
-    this.setState({ detailHover: false })
-  }
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      className={classnames(css.recipeTileContainer, {
+        [css.recipeTileIsFineDineIn]: isFineDineIn
+      })}
+      data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipe'}
+      onClick={onClick}
+      onKeyPress={onClick}
+    >
+      <TileImageContainer recipeId={recipeId} />
 
-  render() {
-    const { detailHover } = this.state
-    const { recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags, isFineDineIn } = this.props
-    if (!recipe) {
-      return null
-    }
-
-    const onClick = (isViewMoreDetailsClicked = false) => { showDetailRecipe(recipeId, isViewMoreDetailsClicked) }
-
-    return (
-      <div
-        className={classnames(css.recipeTileContainer, {
-          [css.recipeTileHover]: detailHover,
-          [css.recipeTileIsFineDineIn]: isFineDineIn
-        })}
-        data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipe'}
-      >
-        <TileImageContainer
-          recipeId={recipeId}
-          onClick={onClick}
-          mouseEnter={this.highlight}
-          mouseLeave={this.unhighlight}
-        />
-
-        {brandTags && brandTags.topLeftTag && (
+      {brandTags && brandTags.topLeftTag && (
         <RecipeTag brandTag={brandTags.topLeftTag} />
-        )}
-        <div className={css.recipeTileInfo}>
-          <div>
-            {brandTags && brandTags.topRightTag && (
+      )}
+      <div className={css.recipeTileInfo}>
+        <div>
+          {brandTags && brandTags.topRightTag && (
             <RecipeTagTitle brandTag={brandTags.topRightTag} />
-            )}
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={onClick}
-              onKeyPress={onClick}
-              className={css.titleWrapper}
-              onMouseEnter={this.highlight}
-              onMouseLeave={this.unhighlight}
-            >
-              <h2 className={css.recipeTitle}>
-                {title}
-              </h2>
-            </div>
+          )}
+          <div
+            className={css.titleWrapper}
+          >
+            <h2 className={css.recipeTitle}>
+              {title}
+            </h2>
           </div>
-          <RecipeTilePurchaseInfoContainer recipeId={recipeId} />
         </div>
+        <RecipeTilePurchaseInfoContainer recipeId={recipeId} />
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 EMERecipeTile.propTypes = {

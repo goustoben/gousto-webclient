@@ -135,7 +135,7 @@ class RecipeTile extends React.Component {
               isOutOfStock={isOutOfStock}
               view={view}
               position={index}
-              buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'}
+              buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
             />
           </div>
         </div>

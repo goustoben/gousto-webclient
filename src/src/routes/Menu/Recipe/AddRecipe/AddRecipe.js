@@ -37,7 +37,7 @@ AddRecipe.propTypes = {
 
 AddRecipe.defaultProps = {
   isOnDetailScreen: false,
-  buttonText: 'Add Recipe',
+  buttonText: 'Add recipe',
   isOutOfStock: false
 }
 

@@ -74,16 +74,16 @@
         font-size: sizeMD;
     }
 }
-
 .recipeTileIsFineDineIn {
     background: Blackberry;
     color: White;
 }
 
-.recipeTitle:hover {
-    text-decoration: underline;
+.recipeTileContainer:hover {
+    box-shadow: 0 4px 14px 0 rgba(51,61,71,0.2);
+    cursor: pointer;
 }
 
-.recipeTileHover {
-    box-shadow: 0 4px 14px 0 rgba(51,61,71,0.2);
+.recipeTileContainer:hover .recipeTitle {
+    text-decoration: underline;
 }

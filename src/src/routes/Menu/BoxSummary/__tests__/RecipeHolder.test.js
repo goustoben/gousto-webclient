@@ -20,7 +20,7 @@ describe('RecipeHolder', () => {
     expect(wrapper.find(Image).length).toBe(1)
   })
 
-  test('should say "Add Recipe" when no recipe is defined', () => {
+  test('should say "Add recipe" when no recipe is defined', () => {
     const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" />)
     expect(
       wrapper
@@ -28,7 +28,7 @@ describe('RecipeHolder', () => {
         .children()
         .first()
         .text(),
-    ).toBe('Add Recipe')
+    ).toBe('Add recipe')
   })
 
   test('should not break if the recipe has no images', () => {

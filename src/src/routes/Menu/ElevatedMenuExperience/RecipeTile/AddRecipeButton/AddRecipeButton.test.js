@@ -62,7 +62,9 @@ describe('AddRecipeButton', () => {
     })
     describe('when recipe not in basket', () => {
       test('should call basketRecipeAdd', () => {
-        wrapper.find('.addButton').simulate('click')
+        wrapper.find('.addButton').simulate('click', {
+          stopPropagation: () => {}
+        })
         expect(buttonsProps.basketRecipeAdd).toHaveBeenCalledWith('1234')
       })
     })
@@ -79,7 +81,9 @@ describe('AddRecipeButton', () => {
         })
       })
       test('should call basketRecipeRemove', () => {
-        wrapper.find('.removeButton').simulate('click')
+        wrapper.find('.removeButton').simulate('click', {
+          stopPropagation: () => {}
+        })
         expect(buttonsProps.basketRecipeRemove).toHaveBeenCalledWith('1234')
       })
     })

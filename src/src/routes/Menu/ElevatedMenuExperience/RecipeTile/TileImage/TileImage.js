@@ -7,12 +7,10 @@ import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
 
 import css from './TileImage.css'
 
-const TileImage = ({ media, title, mouseEnter, mouseLeave, maxMediaSize, isOutOfStock, lazy, onClick, recipeId }) => (
+const TileImage = ({ media, title, maxMediaSize, isOutOfStock, lazy, onClick, recipeId }) => (
   <button
     onClick={onClick}
     type="button"
-    onMouseEnter={mouseEnter}
-    onMouseLeave={mouseLeave}
     className={css.imageWrapper}
   >
     {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
@@ -34,8 +32,6 @@ const TileImage = ({ media, title, mouseEnter, mouseLeave, maxMediaSize, isOutOf
 TileImage.propTypes = {
   media: PropTypes.instanceOf(Immutable.List).isRequired,
   title: PropTypes.string,
-  mouseEnter: PropTypes.func,
-  mouseLeave: PropTypes.func,
   maxMediaSize: PropTypes.number,
   isOutOfStock: PropTypes.bool,
   lazy: PropTypes.bool,
@@ -45,8 +41,6 @@ TileImage.propTypes = {
 
 TileImage.defaultProps = {
   title: '',
-  mouseEnter: () => {},
-  mouseLeave: () => {},
   onClick: () => {},
   isOutOfStock: false,
   maxMediaSize: null,

@@ -233,7 +233,7 @@ Buttons.propTypes = {
 }
 
 Buttons.defaultProps = {
-  buttonText: 'Add Recipe',
+  buttonText: 'Add recipe',
   basketPostcode: '',
   isOutOfStock: false
 }

@@ -144,7 +144,7 @@ export const Detail = (props) => {
             view={view}
             surcharge={surcharge}
             position={position}
-            buttonText={isChefPrepared ? 'Add meal' : 'Add Recipe'}
+            buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
             isOnDetailScreen
           />
         </div>
