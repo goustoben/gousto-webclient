@@ -5,6 +5,7 @@ import actions from 'actions/tracking'
 
 import { ThreeColumnRecipeList } from './ThreeColumnRecipeList'
 import { SingleColumnRecipeList } from './SingleColumnRecipeList'
+import { EMERecipeList } from '../ElevatedMenuExperience/EMERecipeList'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -37,7 +38,12 @@ class RecipeList extends React.PureComponent {
       thematicName,
       isCurrentCollectionRecommendation,
       deliveryDate,
+      isEnabledRecipeTileFoundation
     } = this.props
+
+    if (isEnabledRecipeTileFoundation) {
+      return <EMERecipeList recipes={recipes} />
+    }
 
     if (browserType === 'mobile') {
       return (
@@ -68,12 +74,15 @@ RecipeList.propTypes = {
   deliveryDate: PropTypes.string,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   browserType: PropTypes.string.isRequired,
-  currentCollectionId: PropTypes.string.isRequired
+  currentCollectionId: PropTypes.string.isRequired,
+  isEnabledRecipeTileFoundation: PropTypes.bool
 }
 
 RecipeList.defaultProps = {
   originalOrderRecipeIds: Immutable.List([]),
-  deliveryDate: null
+  deliveryDate: null,
+  thematicName: '',
+  isEnabledRecipeTileFoundation: false
 }
 
 RecipeList.contextTypes = {

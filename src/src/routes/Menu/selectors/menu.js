@@ -82,3 +82,5 @@ export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketR
 
   return limitsReached.filter(item => item !== null)
 }
+
+export const getIsEnabledRecipeTileFoundation = ({menu}) => menu.getIn(['features', 'recipe_tile_foundations'], false)

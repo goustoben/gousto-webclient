@@ -18,7 +18,12 @@ import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
+import optimizelyRollouts from 'config/head/optimizelyRollouts'
 import { configureStore } from './store'
+import { setMenuFeature } from './routes/Menu/actions/menuFeatures'
+import { getIsEnabledRecipeTileFoundation } from './routes/Menu/selectors/menu'
+
+const optimizelySdk = require('@optimizely/optimizely-sdk')
 
 docReady('docReady', window)
 
@@ -36,11 +41,25 @@ const store = configureStore(browserHistory, initialState, Cookies)
 processCookies(Cookies, store)
 store.dispatch(actions.setUTMSource())
 
+const optimizelyRolloutsInstance = optimizelySdk.createInstance({
+  sdkKey: optimizelyRollouts[__ENV__], //eslint-disable-line
+})
+
 const history = syncHistoryWithStore(browserHistory, store)
 
 window.docReady(() => {
   clientAuthorise(store)
 
+  const isFeatureInStore = getIsEnabledRecipeTileFoundation(store.getState())
+
+  if (!isFeatureInStore) {
+    const userId = store.getState().auth.get('id')
+    optimizelyRolloutsInstance.onReady().then(() => {
+      const featureKey = 'recipe_tile_foundations'
+      const recipeTileFoundationsValue = optimizelyRolloutsInstance.isFeatureEnabled(featureKey, userId)
+      store.dispatch(setMenuFeature(featureKey, recipeTileFoundationsValue))
+    })
+  }
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
   processQuery(query, store, {hashTag: window.location.hash})
