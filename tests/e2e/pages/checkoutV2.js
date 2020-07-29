@@ -134,7 +134,11 @@ module.exports = {
             setCardNumber: function (browser) {
               this
                 .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', `${browser.Keys.TAB} 4242424242424242 ${browser.Keys.TAB}`)
+                .setValue('@cardNameInput', '')
+
+              browser.keys(browser.Keys.TAB)
+              browser.keys('4485040371536584')
+              browser.keys(browser.Keys.TAB)
             },
             setCardExpiryDate: function (browser) {
               browser.keys('01')

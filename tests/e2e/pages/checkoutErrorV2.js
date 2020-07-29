@@ -149,29 +149,42 @@ module.exports = {
                 .waitForElementVisible('@cardNameInput')
                 .setValue('@cardNameInput', `${faker.name.firstName()} ${faker.name.lastName()}`)
             },
-            setCardNumber: function (browser) {
+            setCardNumber: function (browser, cardNumber = '4485040371536584') {
               this
                 .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', `${browser.Keys.TAB} 4242424242424242 ${browser.Keys.TAB}`)
+                .setValue('@cardNameInput', ``)
+
+              browser.keys(browser.Keys.TAB)
+              browser.keys(browser.Keys.BACK_SPACE.repeat(16))
+              browser.keys(cardNumber)
             },
             setCardNumberEmpty: function (browser) {
+              this.setCardNumber(browser, '')
+            },
+            setCardExpiryDate: function (browser, month = '01', year = '25') {
               this
                 .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', `${browser.Keys.TAB}${browser.Keys.BACK_SPACE}`)
-            },
-            setCardExpiryDate: function (browser) {
-              browser.keys('01')
-              browser.keys('25')
+                .setValue('@cardNameInput', ``)
+
+              browser.keys(browser.Keys.TAB)
+              browser.keys(browser.Keys.TAB)
+              browser.keys(browser.Keys.BACK_SPACE.repeat(4))
+              browser.keys(month)
+              browser.keys(year)
             },
             setCardExpiryDateEmpty: function (browser) {
+              this.setCardExpiryDate(browser, '', '')
+            },
+            setCardSecurityCode: function (browser, cvv = '100') {
               this
                 .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', `${browser.Keys.TAB}${browser.Keys.BACK_SPACE}${browser.Keys.TAB}`)
-              browser.keys(`${browser.Keys.BACK_SPACE}${browser.Keys.TAB}`)
-              browser.keys(`${browser.Keys.BACK_SPACE}${browser.Keys.TAB}`)
-            },
-            setCardSecurityCode: function (browser) {
-              browser.keys('100')
+                .setValue('@cardNameInput', ``)
+
+              browser.keys(browser.Keys.TAB)
+              browser.keys(browser.Keys.TAB)
+              browser.keys(browser.Keys.TAB)
+              browser.keys(browser.Keys.BACK_SPACE.repeat(4))
+              browser.keys(cvv)
             },
             setInvalidBillingAddress: function (browser) {
               this.waitForElementVisible('@billingAddressChange')

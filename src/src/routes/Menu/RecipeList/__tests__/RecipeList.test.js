@@ -160,4 +160,18 @@ describe('RecipeList', () => {
       })
     })
   })
+
+  describe('when isEnabledRecipeTileFoundation is true', () => {
+    let wrapper
+    beforeEach(() => {
+      wrapper = shallow(
+        <RecipeList recipes={recipes} browserType="desktop" isEnabledRecipeTileFoundation />,
+        { context }
+      )
+    })
+
+    test('should return EMERecipeList', () => {
+      expect(wrapper.find('EMERecipeList')).toHaveLength(1)
+    })
+  })
 })

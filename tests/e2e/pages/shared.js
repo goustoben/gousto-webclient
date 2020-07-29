@@ -132,16 +132,6 @@ module.exports = {
             })
         },
         getCardToken: function (billingAddress) {
-          const card = {
-            number: "4242424242424242",
-            expiryMonth: "09",
-            expiryYear: "23",
-            cvv: "100",
-            name: "Test Test",
-            billingDetails: {},
-            requestSource: "JS"
-          }
-
           return fetch('https://sandbox.checkout.com/api2/v2/tokens/card', {
             method: 'POST',
             headers: {
@@ -150,7 +140,7 @@ module.exports = {
             },
             body: JSON.stringify({
               "name": "Test User",
-              "number": "4242424242424242",
+              "number": "4485040371536584",
               "expiryMonth": "08",
               "expiryYear": "2028",
               "cvv": "100",

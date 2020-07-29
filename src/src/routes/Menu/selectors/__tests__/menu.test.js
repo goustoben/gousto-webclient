@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes } from '../menu'
+import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes, getIsEnabledRecipeTileFoundation } from '../menu'
 
 describe('getCurrentMenuRecipes', () => {
   test('should return only recipes in the current menu', () => {
@@ -506,6 +506,37 @@ describe('validateRecipeAgainstRule', () => {
           }
         ])
       })
+    })
+  })
+})
+
+describe('getIsEnabledRecipeTileFoundation', () => {
+  let state
+  describe('when feature recipe tile foundation is true in store', () => {
+    beforeEach(() => {
+      state = {
+        menu: Immutable.fromJS({
+          features: {
+            recipe_tile_foundations: true
+          }
+        })
+      }
+    })
+    test('should return true', () => {
+      expect(getIsEnabledRecipeTileFoundation(state)).toBe(true)
+    })
+  })
+
+  describe('when feature is not in store', () => {
+    beforeEach(() => {
+      state = {
+        menu: Immutable.fromJS({
+          features: {}
+        })
+      }
+    })
+    test('should return false', () => {
+      expect(getIsEnabledRecipeTileFoundation(state)).toBe(false)
     })
   })
 })
