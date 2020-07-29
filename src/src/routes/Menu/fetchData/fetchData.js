@@ -10,13 +10,13 @@ import { getMenuAccessToken, getMenuFetchVariant } from 'selectors/menu'
 import { getUserMenuVariant } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
-import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
 import { brandDataReceived } from 'actions/brand'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { basketRecipeAdd } from '../actions/basketRecipes'
 import { getBrandMenuHeaders } from '../actions/brandHeaders'
+import { fetchMenus, fetchMenusWithUserId } from './menuApi'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
@@ -237,9 +237,9 @@ export default async function fetchData({ store, query, params }, force, backgro
   let fetchMenuPromise
 
   if (isAuthenticated && userId) {
-    fetchMenuPromise = fetchMenusWithUserId(accessToken, userId)
+    fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userId)
   } else if (userMenuVariant) { // A/B test on signup page
-    fetchMenuPromise = fetchMenusWithUserId(accessToken, userMenuVariant)
+    fetchMenuPromise = fetchMenusWithUserId(accessToken, query, userMenuVariant)
   } else {
     fetchMenuPromise = fetchMenus(accessToken, query)
   }

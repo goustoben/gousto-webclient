@@ -14,10 +14,10 @@ import { defaultState as defaultUserState } from 'reducers/user'
 import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
-import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { fetchBrandInfo } from 'apis/brand'
 import * as boxSummaryActions from 'actions/boxSummary'
 import { getUserMenuVariant } from 'selectors/features'
+import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
 import * as basketRecipesActions from '../../actions/basketRecipes'
 import { safeJestMock } from '../../../../_testing/mocks'
 import * as brandHeadersActions from '../../actions/brandHeaders'
@@ -34,10 +34,10 @@ jest.mock('../utils')
 jest.mock('utils/deliveries')
 jest.mock('utils/logger')
 jest.mock('performance-now')
-jest.mock('apis/menus')
 jest.mock('apis/brand')
 jest.mock('selectors/features')
 jest.mock('actions/menu')
+jest.mock('../menuApi')
 jest.mock('../../actions/basketRecipes')
 
 describe('menu fetchData', () => {
@@ -685,7 +685,7 @@ describe('menu fetchData', () => {
 
         await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-        expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', 'test-id')
+        expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', query, 'test-id')
         expect(fetchBrandInfo).toHaveBeenCalledWith('test-token')
       })
     })
@@ -706,7 +706,7 @@ describe('menu fetchData', () => {
 
         await fetchData({ store, query, params: paramsWithOrderId }, false, false, userMenuVariant)
 
-        expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', 'menuA')
+        expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', query, 'menuA')
       })
     })
   })

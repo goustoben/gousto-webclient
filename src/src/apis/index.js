@@ -5,13 +5,14 @@ import * as checkout from './checkout'
 import * as collections from './collections'
 import * as content from './content'
 import * as deliveries from './deliveries'
-import * as menus from './menus'
 import * as newsletter from './newsletter'
 import * as orders from './orders'
 import * as products from './products'
 import * as recipes from './recipes'
 import * as user from './user'
 import * as workable from './workable'
+
+import { fetchMenus } from '../routes/Menu/fetchData/menuApi'
 
 const apis = {
   ...addressLookup,
@@ -21,13 +22,13 @@ const apis = {
   ...collections,
   ...content,
   ...deliveries,
-  ...menus,
   ...newsletter,
   ...orders,
   ...products,
   ...recipes,
   ...user,
   ...workable,
+  fetchMenus, // required for e2e tests
 }
 
 export default apis
