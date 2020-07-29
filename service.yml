@@ -55,17 +55,6 @@ logs:
   - name: accessLogGroup
   - name: errorLogGroup
   - name: pm2Log
-    filters:
-      - name: errorCount
-        pattern: '{$.log_level = \"error\"}'
-        threshold: 7
-      - name: criticalCount
-        pattern: '{$.log_level = \"critical\"}'
-        threshold: 1
-      - name: unparseableCookieCount
-        pattern: '{($.log_level = \"critical\") && ($.message =\"un-parsable cookie value*\")}'
-        threshold: 1
-
   - name: apiTimeLog
 
 ecs_log_filters:

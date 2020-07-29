@@ -13,6 +13,14 @@ const options = {
   useMenuService: true
 }
 
+const getTasteProfileIdFromQuery = (query) => {
+  if (query && query.tasteProfileId) {
+    return query.tasteProfileId
+  }
+
+  return null
+}
+
 export function fetchMenus(accessToken, query) {
   const fetchOptions = {
     ...options,
@@ -29,18 +37,38 @@ export function fetchMenus(accessToken, query) {
     }
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {
+  const requestQueryParams = {
     include: 'ingredients',
     addAlternatives: true,
     ...adminLinkData,
-  }, fetchOptions)
+  }
+
+  const tasteProfileId = getTasteProfileIdFromQuery(query)
+
+  if (tasteProfileId) {
+    requestQueryParams.tasteProfileId = tasteProfileId
+  }
+
+  return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
 }
 
-export function fetchMenusWithUserId(accessToken, userId) {
+export function fetchMenusWithUserId(accessToken, query, userId) {
   const fetchOptions = {
     ...options,
     accessToken
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId, addAlternatives: true}, fetchOptions)
+  const requestQueryParams = {
+    include: 'ingredients',
+    addAlternatives: true,
+    userId
+  }
+
+  const tasteProfileId = getTasteProfileIdFromQuery(query)
+
+  if (tasteProfileId) {
+    requestQueryParams.tasteProfileId = tasteProfileId
+  }
+
+  return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
 }
