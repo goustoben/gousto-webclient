@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { getRecipes, getMenuRecipeIds } from 'selectors/root'
-import { getNumPortions, getBasketMenuId } from 'selectors/basket'
+import { getRecipes, getMenuRecipeIds, getMenuService } from 'selectors/root'
+import { getNumPortions, getBasketMenuId, getBasketOrderDetailDate } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
 
 export const getCurrentMenuRecipes = createSelector(
@@ -27,6 +27,19 @@ export const activeMenuForDate = (menuServiceData, date) => {
     date <= menu.attributes.ends_at // ends_at is the last cutoff date for the menu
   )
 }
+
+export const getActiveMenuIdForOrderDate = createSelector(
+  [
+    getBasketOrderDetailDate,
+    getMenuService
+  ],
+  (orderDate, menuService) => {
+    const activeMenu = activeMenuForDate(menuService, orderDate)
+    const menuId = activeMenu.id
+
+    return menuId
+  }
+)
 
 export const getMenuLimitsForBasket = createSelector(
   [

@@ -1,12 +1,87 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { fetchProducts } from 'apis/products'
-import { productsLoadProducts, trackProductFiltering } from '../products'
+import { fetchProducts, fetchProductCategories, fetchRandomProducts } from 'apis/products'
+import { productsLoadProducts, trackProductFiltering, productsLoadCategories, productsLoadRandomProducts } from '../products'
 import statusActions from '../status'
 
 jest.mock('apis/products', () => ({
-  fetchProducts: jest.fn()
+  fetchProducts: jest.fn(),
+  fetchProductCategories: jest.fn(),
+  fetchRandomProducts: jest.fn(),
 }))
+
+describe('productsLoadCategories', () => {
+  let dispatchSpy
+  let getStateSpy
+  const statusPendingSpy = jest.spyOn(statusActions, 'pending')
+  const statusErrorSpy = jest.spyOn(statusActions, 'error')
+
+  beforeEach(() => {
+    fetchProducts.mockReturnValue(Promise.resolve(
+      {
+        data: [
+          { id: '1', isForSale: true },
+          { id: '2', isForSale: true }
+        ]
+      }
+    ))
+
+    fetchProductCategories.mockReturnValue(Promise.resolve(
+      { data: {} }
+    ))
+
+    dispatchSpy = jest.fn()
+    getStateSpy = () => ({
+      auth: Immutable.Map({ accessToken: 'access-token' }),
+      products: Immutable.OrderedMap({}),
+      productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000 }),
+      productsCategories: Immutable.OrderedMap({}),
+      basket: Immutable.fromJS({
+        products: {},
+        orderDetails: {
+          deliveryDate: '2020-08-05 00:00:00'
+        }
+      }),
+      features: Immutable.fromJS({}),
+      user: Immutable.fromJS({
+        id: '321'
+      }),
+      menuService: {
+        data: [
+          { id: '1234',
+            attributes: {
+              ends_at: '2020-08-11T11:59:59+01:00',
+            }
+          }
+        ]
+      }
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('should dispatch status "pending" true for PRODUCT_CATEGORIES_RECEIVE action before fetching products', async () => {
+    await productsLoadCategories()(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy.mock.calls[0]).toEqual([actionTypes.PRODUCT_CATEGORIES_RECEIVE, true])
+  })
+
+  test('should dispatch status "pending" false for PRODUCT_CATEGORIES_RECEIVE action after fetching products', async () => {
+    await productsLoadCategories()(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy.mock.calls[1]).toEqual([actionTypes.PRODUCT_CATEGORIES_RECEIVE, false])
+  })
+
+  test('should dispatch status "error" true for PRODUCT_CATEGORIES_RECEIVE action if an error occurs while fetching products', async () => {
+    fetchProductCategories.mockReturnValue(Promise.reject(new Error('error!')))
+
+    await productsLoadCategories()(dispatchSpy, getStateSpy)
+
+    expect(statusErrorSpy.mock.calls[0]).toEqual([actionTypes.PRODUCT_CATEGORIES_RECEIVE, new Error('error!').message])
+  })
+})
 
 describe('productsLoadProducts', () => {
   let dispatchSpy
@@ -31,8 +106,23 @@ describe('productsLoadProducts', () => {
       productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000 }),
       basket: Immutable.fromJS({
         products: {},
+        orderDetails: {
+          deliveryDate: '2020-08-05 00:00:00'
+        }
       }),
       features: Immutable.fromJS({}),
+      user: Immutable.fromJS({
+        id: '321'
+      }),
+      menuService: {
+        data: [
+          { id: '1234',
+            attributes: {
+              ends_at: '2020-08-11T11:59:59+01:00',
+            }
+          }
+        ]
+      }
     })
   })
 
@@ -74,7 +164,7 @@ describe('productsLoadProducts', () => {
       cutoffDate,
       reload: false,
     })
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' })
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' }, '321', '1234')
   })
 
   test('should not fetch products by default if there are all products in product store & no cutoffDate is passed in', async () => {
@@ -85,7 +175,22 @@ describe('productsLoadProducts', () => {
       }),
       basket: Immutable.fromJS({
         products: {},
+        orderDetails: {
+          deliveryDate: '2020-08-05 00:00:00'
+        }
       }),
+      user: Immutable.fromJS({
+        id: '321'
+      }),
+      menuService: {
+        data: [
+          { id: '1234',
+            attributes: {
+              ends_at: '2020-08-11T11:59:59+01:00',
+            }
+          }
+        ]
+      }
     })
 
     await productsLoadProducts()(dispatchSpy, getStateSpy)
@@ -103,7 +208,22 @@ describe('productsLoadProducts', () => {
         products: {
           1: { id: '1' }
         },
+        orderDetails: {
+          deliveryDate: '2020-08-05 00:00:00'
+        }
       }),
+      user: Immutable.fromJS({
+        id: '321'
+      }),
+      menuService: {
+        data: [
+          { id: '1234',
+            attributes: {
+              ends_at: '2020-08-11T11:59:59+01:00',
+            }
+          }
+        ]
+      }
     })
 
     await productsLoadProducts()(dispatchSpy, getStateSpy)
@@ -125,7 +245,7 @@ describe('productsLoadProducts', () => {
       reload: false,
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' })
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' }, '321', '1234')
   })
 
   test('should fetch products for given period when periodId is passed in', async () => {
@@ -142,7 +262,7 @@ describe('productsLoadProducts', () => {
       reload: false,
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' })
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' }, '321', '1234')
   })
 
   describe('when reload is true', async () => {
@@ -156,7 +276,22 @@ describe('productsLoadProducts', () => {
         basket: Immutable.fromJS({
           products: {
           },
+          orderDetails: {
+            deliveryDate: '2020-08-05 00:00:00'
+          }
         }),
+        user: Immutable.fromJS({
+          id: '321'
+        }),
+        menuService: {
+          data: [
+            { id: '1234',
+              attributes: {
+                ends_at: '2020-08-11T11:59:59+01:00',
+              }
+            }
+          ]
+        }
       })
 
       await productsLoadProducts(undefined, undefined, {reload: true})(dispatchSpy, getStateSpy)
@@ -243,6 +378,71 @@ describe('productsLoadProducts', () => {
         })
       })
     })
+  })
+})
+
+describe('productsLoadRandomProducts', () => {
+  let dispatchSpy
+  let getStateSpy
+  const statusPendingSpy = jest.spyOn(statusActions, 'pending')
+  const statusErrorSpy = jest.spyOn(statusActions, 'error')
+
+  beforeEach(() => {
+    fetchRandomProducts.mockReturnValue(Promise.resolve(
+      { data: {} }
+    ))
+
+    dispatchSpy = jest.fn()
+    getStateSpy = () => ({
+      auth: Immutable.Map({ accessToken: 'access-token' }),
+      products: Immutable.OrderedMap({}),
+      randomProducts: Immutable.OrderedMap({}),
+      productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000 }),
+      productsCategories: Immutable.OrderedMap({}),
+      basket: Immutable.fromJS({
+        products: {},
+        orderDetails: {
+          deliveryDate: '2020-08-05 00:00:00'
+        }
+      }),
+      features: Immutable.fromJS({}),
+      user: Immutable.fromJS({
+        id: '321'
+      }),
+      menuService: {
+        data: [
+          { id: '1234',
+            attributes: {
+              ends_at: '2020-08-11T11:59:59+01:00',
+            }
+          }
+        ]
+      }
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('should dispatch status "pending" true for PRODUCTS_RANDOM_RECEIVE action before fetching products', async () => {
+    await productsLoadRandomProducts()(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy.mock.calls[0]).toEqual([actionTypes.PRODUCTS_RANDOM_RECEIVE, true])
+  })
+
+  test('should dispatch status "pending" false for PRODUCTS_RANDOM_RECEIVE action after fetching products', async () => {
+    await productsLoadRandomProducts()(dispatchSpy, getStateSpy)
+
+    expect(statusPendingSpy.mock.calls[1]).toEqual([actionTypes.PRODUCTS_RANDOM_RECEIVE, false])
+  })
+
+  test('should dispatch status "error" true for PRODUCTS_RANDOM_RECEIVE action if an error occurs while fetching products', async () => {
+    fetchRandomProducts.mockReturnValue(Promise.reject(new Error('error!')))
+
+    await productsLoadRandomProducts()(dispatchSpy, getStateSpy)
+
+    expect(statusErrorSpy.mock.calls[0]).toEqual([actionTypes.PRODUCTS_RANDOM_RECEIVE, null])
   })
 })
 

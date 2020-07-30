@@ -10,16 +10,27 @@ const reqData = {
   includes: config.fetchIncludes,
 }
 
-export function fetchProduct(accessToken, productId) {
-  return fetch(accessToken, `${endpoint('products', version)}/products/${productId}`, reqData, 'GET')
+export function fetchProduct(accessToken, productId, userId, menuId) {
+  const data = {
+    ...reqData,
+    userId,
+    menuId,
+  }
+
+  return fetch(accessToken, `${endpoint('products', version)}/products/${productId}`, data, 'GET')
 }
 
 export function fetchProductCategories(accessToken) {
   return fetch(accessToken, `${endpoint('products', version)}${routes.products.categories}`, { includes: config.categoryFetchIncludes }, 'GET')
 }
 
-export function fetchProducts(accessToken, cutoffDate, productsData) {
-  const data = { ...reqData, ...productsData }
+export function fetchProducts(accessToken, cutoffDate, productsData, userId, menuId) {
+  const data = {
+    ...reqData,
+    ...productsData,
+    userId,
+    menuId,
+  }
 
   if (cutoffDate) {
     data.date = cutoffDate
@@ -28,11 +39,13 @@ export function fetchProducts(accessToken, cutoffDate, productsData) {
   return fetch(accessToken, `${endpoint('products', version)}${routes.products.getProducts}`, data, 'GET')
 }
 
-export function fetchRandomProducts(accessToken, limit, imageSizes) {
+export function fetchRandomProducts(accessToken, limit, imageSizes, userId, menuId) {
   const data = {
     sort: 'shuffle',
     limit,
     image_sizes: imageSizes,
+    userId,
+    menuId,
   }
 
   return fetch(accessToken, `${endpoint('products', version)}${routes.products.getProducts}`, data, 'GET')
