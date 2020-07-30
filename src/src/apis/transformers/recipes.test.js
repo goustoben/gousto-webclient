@@ -495,6 +495,10 @@ describe('recipesTransformer', () => {
         dietType: 'meat',
         equipment: [],
         fiveADay: 2,
+        foodBrand: {
+          name: 'Everyday Favourites',
+          slug: 'everyday-favourites'
+        },
         ingredients: [
           {
             subIngredients: 'brown onion',

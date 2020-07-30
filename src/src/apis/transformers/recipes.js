@@ -98,7 +98,8 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
       isFineDineIn: isFineDineInTransformer(normalisedAttributes),
       title: normalisedAttributes.name,
       promotions: promotionsTransformer(normalisedAttributes),
-      isNew: isNewTransformer(activeMenu.relationships.debut_recipes, individualRecipeId)
+      isNew: isNewTransformer(activeMenu.relationships.debut_recipes, individualRecipeId),
+      foodBrand: normalisedAttributes.food_brand,
     }
   })
 

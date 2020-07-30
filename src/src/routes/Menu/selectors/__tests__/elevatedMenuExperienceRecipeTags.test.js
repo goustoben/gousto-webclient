@@ -5,6 +5,9 @@ import {
 
 describe('getElevatedMenuExperienceRecipeTags', () => {
   const recipeId = '123'
+  const defaultRecipe = {
+    id: recipeId,
+  }
   const brand = {
     data: {
       tags: [
@@ -38,6 +41,36 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
             borderColor: '#01A92B'
           }]
         },
+        {
+          slug: 'health-kitchen-eme',
+          text: 'Health Kitchen',
+          type: 'general',
+          themes: [{
+            name: 'light',
+            color: '#01A92B',
+            borderColor: '#01A92B'
+          }]
+        },
+        {
+          slug: 'fine-dine-in-eme',
+          text: 'Fine Dine In',
+          type: 'general',
+          themes: [{
+            name: 'light',
+            color: '#01A92B',
+            borderColor: '#01A92B'
+          }]
+        },
+        {
+          slug: 'available-weekly-eme',
+          text: 'Everyday Favourites',
+          type: 'general',
+          themes: [{
+            name: 'light',
+            color: '#01A92B',
+            borderColor: '#01A92B'
+          }]
+        },
       ]
     }
   }
@@ -62,6 +95,27 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
     themes: undefined,
     type: 'general',
   }
+  const healthKitchenTag = {
+    slug: 'health-kitchen-eme',
+    text: 'Health Kitchen',
+    theme: {borderColor: '#01A92B', color: '#01A92B', name: 'light'},
+    themes: undefined,
+    type: 'general',
+  }
+  const fineDineInTag = {
+    slug: 'fine-dine-in-eme',
+    text: 'Fine Dine In',
+    theme: {borderColor: '#01A92B', color: '#01A92B', name: 'light'},
+    themes: undefined,
+    type: 'general',
+  }
+  const everydayFavouritesTag = {
+    slug: 'available-weekly-eme',
+    text: 'Everyday Favourites',
+    theme: {borderColor: '#01A92B', color: '#01A92B', name: 'light'},
+    themes: undefined,
+    type: 'general',
+  }
   let recipes
 
   beforeEach(() => {
@@ -71,7 +125,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
   describe('when recipe does not exist', () => {
     describe('when brand exists', () => {
       test('should return null', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
         expect(result).toEqual(null)
       })
@@ -79,7 +133,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
 
     describe('when brand does not exists', () => {
       test('should return null', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand: null })
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, null, false, false, false)
 
         expect(result).toEqual(null)
       })
@@ -88,7 +142,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
 
   describe('when recipe exists', () => {
     beforeEach(() => {
-      recipes = recipes.set(recipeId, Immutable.Map({ id: recipeId }))
+      recipes = recipes.set(recipeId, Immutable.Map({ ...defaultRecipe }))
     })
 
     describe('when recipe is new and without promotion', () => {
@@ -98,7 +152,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
 
       test('should return new recipe tag', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
         expect(result).toEqual({
           topLeftTag: newTag,
@@ -114,7 +168,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
 
       test('should return null', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
         expect(result).toEqual({
           topLeftTag: null,
@@ -130,7 +184,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
 
       test('should return limited edition recipe tag', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
         expect(result).toEqual({
           topLeftTag: limitedEditionTag,
@@ -146,7 +200,7 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
 
       test('should return limited edition recipe tag', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
         expect(result).toEqual({
           topLeftTag: limitedEditionTag,
@@ -155,18 +209,20 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
     })
 
-    describe('when recipe is new and with joe-wicks-eme promotion', () => {
-      beforeEach(() => {
-        recipes = recipes.setIn([recipeId, 'isNew'], true)
-        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['joe-wicks-eme']))
-      })
+    describe('when joe-wicks-eme promotion', () => {
+      describe('when recipe is new and with joe-wicks-eme promotion', () => {
+        beforeEach(() => {
+          recipes = recipes.setIn([recipeId, 'isNew'], true)
+          recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['joe-wicks-eme']))
+        })
 
-      test('should return new recipe tag', () => {
-        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+        test('should return new recipe tag', () => {
+          const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
-        expect(result).toEqual({
-          topLeftTag: newTag,
-          topRightTag: joeWicksTag
+          expect(result).toEqual({
+            topLeftTag: newTag,
+            topRightTag: joeWicksTag
+          })
         })
       })
 
@@ -177,12 +233,76 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
         })
 
         test('should return joe wicks tag', () => {
-          const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, { recipeId, brand })
+          const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
 
           expect(result).toEqual({
             topLeftTag: null,
             topRightTag: joeWicksTag,
           })
+        })
+      })
+    })
+
+    describe('when recipe is fine dine in', () => {
+      beforeEach(() => {
+        recipes = recipes.setIn([recipeId, 'isFineDineIn'], true)
+        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List([]))
+      })
+
+      test('should return null', () => {
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, true, false, false)
+
+        expect(result).toEqual({
+          topLeftTag: null,
+          topRightTag: fineDineInTag,
+        })
+      })
+    })
+
+    describe('when recipe food brand is everyday favourites', () => {
+      beforeEach(() => {
+        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List([]))
+        recipes = recipes.setIn([recipeId, 'foodBrand'], Immutable.fromJS({ name: 'Everyday Favourites', slug: 'everyday-favourites' }))
+      })
+
+      test('should return available-weekly-eme', () => {
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, true, false)
+
+        expect(result).toEqual({
+          topLeftTag: null,
+          topRightTag: everydayFavouritesTag,
+        })
+      })
+    })
+
+    describe('when promotion is health kitchen', () => {
+      beforeEach(() => {
+        recipes = recipes.setIn([recipeId, 'isNew'], false)
+        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List([]))
+      })
+
+      test('should return health-kitchen-eme', () => {
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, true)
+
+        expect(result).toEqual({
+          topLeftTag: null,
+          topRightTag: healthKitchenTag,
+        })
+      })
+    })
+
+    describe('when promotion is not part of EME', () => {
+      beforeEach(() => {
+        recipes = recipes.setIn([recipeId, 'isNew'], false)
+        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['something-else']))
+      })
+
+      test('should return null', () => {
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
+
+        expect(result).toEqual({
+          topLeftTag: null,
+          topRightTag: null,
         })
       })
     })
