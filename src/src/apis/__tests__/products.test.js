@@ -37,12 +37,19 @@ describe('products api', () => {
   beforeEach(() => {
     fetch.mockClear()
   })
+  const userId = 'mock-user-id'
+  const menuId = 'mock-menu-id'
 
   describe('fetchProduct', () => {
+    const expectedReqData = {
+      ...mockReqData,
+      userId,
+      menuId
+    }
     test('should fetch the correct url', async () => {
-      await fetchProduct('token', 'product-id')
+      await fetchProduct('token', 'product-id', userId, menuId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/products/product-id', mockReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/products/product-id', expectedReqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -73,10 +80,12 @@ describe('products api', () => {
         const expectedReqData = {
           ...mockReqData,
           ...productData,
-          date: cutoffDate
+          date: cutoffDate,
+          userId,
+          menuId
         }
 
-        await fetchProducts('token', cutoffDate, productData)
+        await fetchProducts('token', cutoffDate, productData, userId, menuId)
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')
       })
@@ -89,10 +98,12 @@ describe('products api', () => {
 
         const expectedReqData = {
           ...mockReqData,
-          ...productData
+          ...productData,
+          userId,
+          menuId
         }
 
-        await fetchProducts('token', cutoffDate, productData)
+        await fetchProducts('token', cutoffDate, productData, userId, menuId)
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')
       })
@@ -111,16 +122,18 @@ describe('products api', () => {
       const expectedReqData = {
         sort: 'shuffle',
         limit,
-        image_sizes: imageSizes
+        image_sizes: imageSizes,
+        userId,
+        menuId
       }
 
-      await fetchRandomProducts('token', limit, imageSizes)
+      await fetchRandomProducts('token', limit, imageSizes, userId, menuId)
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchRandomProducts('token', 987, 15)
+      const result = await fetchRandomProducts('token', 987, 15, userId, menuId)
       expect(result).toEqual(mockFetchResult)
     })
   })

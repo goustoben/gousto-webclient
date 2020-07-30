@@ -5,6 +5,7 @@ import { mount } from 'enzyme'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import basketReducer, { initialState as basketDefaultState } from 'reducers/basket'
+import { menuService } from 'reducers/menuService'
 import productsReducer from 'reducers/products'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import featuresReducer, { initialState as featuresDefaultState } from 'reducers/features'
@@ -41,6 +42,7 @@ describe('<OrderAddOnsContainer />', () => {
         ...productsReducer,
         ...userReducer,
         ...status,
+        menuService,
       }
     ),
     {
@@ -54,7 +56,7 @@ describe('<OrderAddOnsContainer />', () => {
       }),
       features: featuresDefaultState(),
       user: userDefaultState.set('id', USER_ID),
-      pending: Immutable.Map()
+      pending: Immutable.Map(),
     },
     compose(applyMiddleware(thunk))
   )

@@ -9,6 +9,7 @@ export const getPromoCode = state => state.basket.get('promoCode', false)
 export const getSignupChosenCollection = state => state.basket.get('collection')
 export const getBasketOrderDetails = state => state.basket.get('orderDetails', false)
 export const getBasketOrderDetailId = state => state.basket.getIn(['orderDetails', 'id'])
+export const getBasketOrderDetailDate = state => state.basket.getIn(['orderDetails', 'deliveryDate'])
 export const getBasketOrderPrices = state => state.basket.getIn(['orderDetails', 'prices'], null)
 export const getBasketOrderTotal = state => state.basket.getIn(['orderDetails', 'prices', 'total'])
 export const getBasketOrderPromoCode = state => state.basket.getIn(['orderDetails', 'prices', 'promoCode'])
@@ -50,6 +51,7 @@ export default {
   getSignupChosenCollection,
   getBasketOrderDetails,
   getBasketOrderDetailId,
+  getBasketOrderDetailDate,
   getBasketOrderPrices,
   getBasketOrderTotal,
   getBasketOrderPromoCode,
