@@ -90,7 +90,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
 
       describe('And I have filled in my card details correctly', () => {
         beforeEach(() => {
-          clearAndFillNumberIframe({ number: '4242 4242 4242 4242'})
+          clearAndFillNumberIframe({ number: '4485 0403 7153 6584'})
           cy.get('[data-testing="checkoutCTA"]')
             .click()
         })

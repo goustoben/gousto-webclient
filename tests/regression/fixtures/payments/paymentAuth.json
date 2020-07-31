@@ -1,0 +1,20 @@
+{
+    "status": "ok",
+    "data": {
+        "id": "1bdec6e2-0287-4c40-9862-0051615a701b",
+        "cardToken": "tok_r6ypmsowikzutmdbmjevwo55ym",
+        "reference": "pay_c574pto6na4urgn4yv2v4435bq",
+        "status": "challenge-pending",
+        "value": 3499,
+        "message": "Requested redirect link for 3ds authorisation",
+        "responsePayload": {
+            "transactionId": "pay_c574pto6na4urgn4yv2v4435bq",
+            "reference": "1bdec6e2-0287-4c40-9862-0051615a701b",
+            "redirectLink": "/payment/success?cko-session-id=sid_uc5jwt6ox4ue7bi2l5tpcnvr4i",
+            "message": "Requested redirect link for 3ds authorisation",
+            "paymentStatus": "challenge-pending"
+        },
+        "createdAt": "2020-07-15 09:17:15.974891+00:00",
+        "updatedAt": "2020-07-15 09:17:19.217302+00:00"
+    }
+}
