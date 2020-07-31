@@ -1,0 +1,1 @@
+export { BannerTastePreferencesContainer } from './BannerTastePreferencesContainer'

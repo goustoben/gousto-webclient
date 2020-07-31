@@ -82,8 +82,6 @@ export const isAccountTabNameTest = ({ features }) => (
   features && features.getIn(['accountTabNameTest', 'value'], false)
 )
 
-export const getHideMenuBanner = ({ features }) => (features && features.getIn(['hideMenuBanner', 'value'], false))
-
 export const getPromoOfferVariant = ({ features }) => (features && features.getIn(['enableTVPromoAds', 'value']))
 
 export const getIsSignupReductionEnabled = ({ features }) => (features && features.getIn(['enableSignupReduction', 'value'], false))
@@ -118,4 +116,8 @@ export const getIsHelpCentreActive = ({ features }) => (
 
 export const getIs3DSForSignUpEnabled = ({ features }) => (
   features && features.getIn(['enable3DSForSignUp', 'value'], false)
+)
+
+export const getIsTastePreferencesEnabled = ({ features }) => (
+  features && features.getIn(['tastePreferences', 'value'], false)
 )

@@ -12,7 +12,6 @@ import {
 
 const ALLOWED_PROMOTIONS = [
   'joe-wicks-eme',
-  'limited-edition-eme',
 ]
 
 const getBrandFromState = (state) => state.brand
@@ -43,31 +42,36 @@ export const getElevatedMenuExperienceRecipeTags = createSelector(
     let topRightTagId
     let promotion
 
-    if (ALLOWED_PROMOTIONS.includes(promotions.get(0))) {
-      promotion = promotions.get(0)
-    }
+    const promotionIsMexico = promotions.get(0) === 'mexico-limited-edition'
+    const promotionLimitedEditionEME = promotions.get(0) === 'limited-edition-eme'
 
     switch (true) {
     case isHealthKitchen === true:
       promotion = 'health-kitchen-eme'
       break
-    case isFineDineIn === true:
+    case (isFineDineIn === true && !promotionIsMexico):
       promotion = 'fine-dine-in-eme'
       break
     case isEverydayFavourites === true:
       promotion = 'available-weekly-eme'
       break
-
+    case promotions.get(0) === 'joe-wicks':
+      promotion = 'joe-wicks-eme'
+      break
     default:
       break
     }
 
-    if (promotion && promotion !== 'limited-edition-eme') {
+    if (promotion) {
       topRightTagId = promotion
     }
 
-    if (promotion === 'limited-edition-eme') {
-      topLeftTagId = promotion
+    if (ALLOWED_PROMOTIONS.includes(promotions.get(0))) {
+      topRightTagId = promotions.get(0)
+    }
+
+    if (promotionIsMexico || promotionLimitedEditionEME) {
+      topLeftTagId = 'limited-edition-eme'
     } else if (recipe.get('isNew')) {
       topLeftTagId = 'new-eme'
     }

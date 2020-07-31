@@ -243,18 +243,50 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
     })
 
+    describe('when joe-wicks promotion', () => {
+      describe('when recipe is new and with joe-wicks promotion', () => {
+        beforeEach(() => {
+          recipes = recipes.setIn([recipeId, 'isNew'], true)
+          recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['joe-wicks']))
+        })
+
+        test('should return joe wicks tag on right and new on left', () => {
+          const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, false, false, false)
+
+          expect(result).toEqual({
+            topLeftTag: newTag,
+            topRightTag: joeWicksTag,
+          })
+        })
+      })
+    })
+
     describe('when recipe is fine dine in', () => {
       beforeEach(() => {
         recipes = recipes.setIn([recipeId, 'isFineDineIn'], true)
         recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List([]))
       })
 
-      test('should return null', () => {
+      test('should return only right tag', () => {
         const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, true, false, false)
 
         expect(result).toEqual({
           topLeftTag: null,
           topRightTag: fineDineInTag,
+        })
+      })
+
+      describe('And has mexico limited edition promotion', () => {
+        beforeEach(() => {
+          recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['mexico-limited-edition']))
+        })
+        test('should return left tag limited edition eme', () => {
+          const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, true, false, false)
+
+          expect(result).toEqual({
+            topLeftTag: limitedEditionTag,
+            topRightTag: null,
+          })
         })
       })
     })

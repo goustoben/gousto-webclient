@@ -6,6 +6,7 @@ import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { CollectionsNavContainer } from '../../CollectionsNav'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../../components/CapacityInfo'
+import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
 
 jest.mock('routes/Menu/SubHeader')
 jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
@@ -66,6 +67,9 @@ describe('initial render', () => {
       expect(checkQueryParamsSpy).toHaveBeenCalledTimes(1)
     })
 
+    test('should render BannerTastePreferencesContainer', () => {
+      expect(wrapper.find(BannerTastePreferencesContainer)).toHaveLength(1)
+    })
     describe('when showCommunicationPanel true', () => {
       beforeEach(() => {
         wrapper.setProps({showCommunicationPanel: true})

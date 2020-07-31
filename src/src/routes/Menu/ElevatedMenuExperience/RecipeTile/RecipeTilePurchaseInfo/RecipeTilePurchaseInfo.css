@@ -31,6 +31,7 @@
   white-space: nowrap;
   font-size: sizeXS;
   line-height: sizeMD;
+  padding-right: 0.25rem;
   @media ScreenXXSMax {
     display: none;
   }

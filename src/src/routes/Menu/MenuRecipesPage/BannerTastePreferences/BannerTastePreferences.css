@@ -1,0 +1,29 @@
+@value White from 'styles/colors.css';
+@value axiformaBookFontStack, sizeMD from 'styles/typography.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
+
+
+.bannerContainer {
+  width: 100%;
+  background-color: White;
+  padding-top: 1rem;
+  @media ScreenSMMin {
+    padding-top: 0;
+  }
+}
+
+.tasteProfileBannerContainer {
+  composes: pageContainer from 'styles/layout.css';
+  display: flex;
+  font-family: axiformaBookFontStack;
+  font-size: sizeMD;
+}
+
+.tasteProfileBannerMessage {
+  margin: 0;
+  padding-left: 0.5rem;
+  line-height: 1.4;
+  @media ScreenSMMin {
+    line-height: 1.8;
+  }
+}

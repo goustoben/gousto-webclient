@@ -21,7 +21,6 @@ import {
   getFullScreenBoxSummary,
   getUserMenuVariant,
   isAccountTabNameTest,
-  getHideMenuBanner,
   getPromoOfferVariant,
   getIsSignupReductionEnabled,
   getIsWelcomePageOnboardingEnabled,
@@ -32,6 +31,7 @@ import {
   getHomePageRedesign,
   getIsHelpCentreActive,
   getIs3DSForSignUpEnabled,
+  getIsTastePreferencesEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -53,7 +53,6 @@ describe('when features are defined', () => {
     [getFullScreenBoxSummary, 'fullScreenBoxSummary'],
     [getGoToMyDeliveries, 'goToMyDeliveries'],
     [getGoToMyGousto, 'goToMyGousto'],
-    [getHideMenuBanner, 'hideMenuBanner'],
     [getIsCommunicationPanelEnabled, 'isCommunicationPanelEnabled'],
     [getIsSignupReductionEnabled, 'enableSignupReduction'],
     [getIsWelcomePageOnboardingEnabled, 'isWelcomePageOnboardingEnabled'],
@@ -79,6 +78,7 @@ describe('when features are defined', () => {
     [getHomePageRedesign, 'isHomePageRedesignEnabled'],
     [getIsHelpCentreActive, 'isHelpCentreActive'],
     [getIs3DSForSignUpEnabled, 'enable3DSForSignUp'],
+    [getIsTastePreferencesEnabled, 'tastePreferences']
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

@@ -12,6 +12,7 @@ import Loading from '../Loading'
 import fetchData from '../fetchData'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 import { CapacityInfo } from '../components/CapacityInfo'
+import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 
 import css from './MenuRecipesPage.css'
 
@@ -126,6 +127,7 @@ export class MenuRecipesPage extends PureComponent {
         </div>
         )}
         <SubHeader orderId={orderId} />
+        <BannerTastePreferencesContainer />
         <JustForYouTutorial />
         {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid />}
