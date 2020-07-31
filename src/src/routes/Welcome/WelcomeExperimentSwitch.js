@@ -21,11 +21,17 @@ const propTypes = {
   }).isRequired,
   device: PropTypes.string.isRequired,
   trackWelcomeAppPromoClick: PropTypes.func.isRequired,
+  updateUserTasteProfile: PropTypes.func.isRequired,
 }
 
 const defaultProps = {}
 
 class WelcomeExperimentSwitch extends React.PureComponent {
+  componentDidMount() {
+    const { updateUserTasteProfile } = this.props
+    updateUserTasteProfile()
+  }
+
   render() {
     const {
       params,
