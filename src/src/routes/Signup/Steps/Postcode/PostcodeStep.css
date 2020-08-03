@@ -2,12 +2,6 @@
 @value Radish, Haricot from 'styles/colors.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 
-.xsMaxHidden {
-	display: inherit;
-	@media ScreenXSMax {
-		display: none;
-	}
-}
 .smMinHidden {
 	display: inherit;
 	@media ScreenSMMin {
@@ -37,13 +31,6 @@
 .left, .right {
 	@media ScreenXSMax {
 		display: inline-block;
-	}
-}
-.right {
-	composes: smMinHidden;
-	@media ScreenXSMax {
-		width: 60px;
-		margin-left: 10px;
 	}
 }
 
