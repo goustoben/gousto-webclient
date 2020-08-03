@@ -14,6 +14,7 @@ module.exports = {
     recipes: 'v2',
     ssr: 'v1',
     ssrV2: 'v2',
+    tastePreferences: 'v1',
   },
   address: {
     postcodeLookup: '/address/postcode-lookup',
@@ -193,4 +194,8 @@ module.exports = {
   unbounce: {
     covid: 'https://cook.gousto.co.uk/coronavirus-3/',
   },
+  
+  tastePreferences: {
+    profile: '/preferences/profile'
+  }
 }

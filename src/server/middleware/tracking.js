@@ -5,7 +5,7 @@ const cookieOptions = {
   httpOnly: false,
 }
 
-export const sessionMiddleware = (sessionCookieName = 'session') => async (ctx, next) => {
+export const sessionMiddleware = (sessionCookieName = 'gousto_session_id') => async (ctx, next) => {
   // Allow for setting of secure cookies
   ctx.cookies.secure = true
 

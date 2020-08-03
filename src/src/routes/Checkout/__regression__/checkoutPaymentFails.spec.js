@@ -13,6 +13,8 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
     cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
     cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as('getIntervals')
     cy.route('POST', '/customers/v2/signup', 'fixture:customers/signupError.json').as('signupError')
+    cy.route('POST', '/payments/v1/payments/payment-auth', 'fixture:payments/paymentAuth.json')
+    cy.route('GET', '/payments/v1/payments/payments/**', 'fixture:payments/payment.json')
     cy.route('GET', '/prices**', 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
     cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
     cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
@@ -27,7 +29,7 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
       beforeEach(() => {
         cy.get('[data-testing="checkoutCardNameInput"]').click().type('Test')
         fillAllIframe({
-          number: '4242 4242 4242 4242',
+          number: '4485 0403 7153 6584',
           expiry: '0550',
           cvv: '100'
         })

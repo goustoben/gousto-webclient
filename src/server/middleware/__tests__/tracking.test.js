@@ -36,7 +36,7 @@ describe('tracking', () => {
           })
 
           it('then get cookies should have been called with default name', () => {
-            expect(context.cookies.get).toHaveBeenCalledWith('session')
+            expect(context.cookies.get).toHaveBeenCalledWith('gousto_session_id')
           })
 
           it('then should set cookie should not have been called', () => {
@@ -60,11 +60,11 @@ describe('tracking', () => {
           })
 
           it('then get cookies should have been called with default name', () => {
-            expect(context.cookies.get).toHaveBeenCalledWith('session')
+            expect(context.cookies.get).toHaveBeenCalledWith('gousto_session_id')
           })
 
           it('then should set cookie', () => {
-            expect(context.cookies.set).toHaveBeenCalledWith('session', 'generated-uuid', {
+            expect(context.cookies.set).toHaveBeenCalledWith('gousto_session_id', 'generated-uuid', {
               secure: true,
               httpOnly: false,
             })

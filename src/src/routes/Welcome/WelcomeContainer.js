@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { productDetailVisibilityChange } from 'actions/products'
 import { userFetchReferralOffer } from 'actions/user'
 import { trackWelcomeAppPromoClick } from 'actions/welcome'
+import { updateUserTasteProfile } from 'actions/tastePreferences'
+
 import { getIsWelcomePageOnboardingEnabled } from 'selectors/features'
 
 import { WelcomeExperimentSwitch } from './WelcomeExperimentSwitch'
@@ -26,6 +28,7 @@ const WelcomeContainer = connect(mapStateToProps, {
   productDetailVisibilityChange,
   userFetchReferralOffer,
   trackWelcomeAppPromoClick,
+  updateUserTasteProfile
 })(WelcomeExperimentSwitch)
 
 export { WelcomeContainer }
