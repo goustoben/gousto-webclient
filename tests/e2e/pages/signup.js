@@ -40,12 +40,9 @@ module.exports = {
         postcodeInput: {
           selector: '*[data-testing="signupPostcodeInput"]',
         },
-        CTAMobile: {
-          selector: '*[data-testing="signupPostcodeCTAMobile"]',
+        CTA: {
+          selector: '*[data-testing="signupPostcodeCTA"]',
         },
-        CTADesktop: {
-          selector: '*[data-testing="signupPostcodeCTADesktop"]',
-        }
       },
 
       commands: [{
@@ -57,7 +54,7 @@ module.exports = {
           return this
         },
         goToNextStep: function () {
-          clickElement.call(this, this.api.globals.browser === 'mobile' ? '@CTAMobile' : '@CTADesktop')
+          clickElement.call(this, '@CTA')
         },
       }],
     },

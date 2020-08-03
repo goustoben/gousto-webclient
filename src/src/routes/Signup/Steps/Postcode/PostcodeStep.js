@@ -43,17 +43,6 @@ class PostcodeStep extends React.PureComponent {
                     data-testing="signupPostcodeInput"
                   />
                 </div>
-                <div className={postcodeCss.right}>
-                  <Button
-                    disabled={tempPostcode.length < 5}
-                    data-testing="signupPostcodeCTAMobile"
-                    onClick={() => {
-                      changePostcode(tempPostcode, nextStepName)
-                    }}
-                    pending={postcodePending}
-                    width="full"
-                  />
-                </div>
               </form>
             </div>
             <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
@@ -81,9 +70,8 @@ class PostcodeStep extends React.PureComponent {
         <div className={css.footer}>
           <div className={css.inputContainer}>
             <Button
-              className={postcodeCss.xsMaxHidden}
               disabled={tempPostcode.length < 5}
-              data-testing="signupPostcodeCTADesktop"
+              data-testing="signupPostcodeCTA"
               onClick={() => {
                 changePostcode(tempPostcode, nextStepName)
               }}

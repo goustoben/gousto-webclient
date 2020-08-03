@@ -47,7 +47,7 @@ describe('Given I land on postcode slide of the wizard', () => {
     })
 
     it('Then I’m not able to proceed to the next wizard step', () => {
-      cy.get('[data-testing="signupPostcodeCTADesktop"]').click()
+      cy.get('[data-testing="signupPostcodeCTA"]').click()
 
       cy.window().pipe(getBoxSummaryError).should('equal', 'do-not-deliver')
       cy.url().should('not.include', 'signup/delivery-options')
@@ -64,7 +64,7 @@ describe('Given I land on postcode slide of the wizard', () => {
     })
 
     it('Then I’m not able to proceed to the next wizard step', () => {
-      cy.get('[data-testing="signupPostcodeCTADesktop"]').click()
+      cy.get('[data-testing="signupPostcodeCTA"]').click()
 
       cy.window().pipe(getBoxSummaryError).should('equal', 'do-not-deliver')
       cy.url().should('include', 'signup/postcode?steps=postcode')
