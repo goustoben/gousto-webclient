@@ -4,13 +4,11 @@ import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
 
-import ModalPanel from 'Modal/ModalPanel'
-import Overlay from 'Overlay'
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
-import { Button as GoustoButton, Heading, Alert } from 'goustouicomponents'
+import { redirect } from 'utils/window'
+import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
-import Svg from 'Svg'
 import { Button } from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -67,14 +65,9 @@ const DeliveryStep = ({
   trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited,
   trackDeliverySlotEdited,
-  isNDDPaintedDoorOpened,
-  openNDDPaintedDoor,
-  closeNDDPaintedDoor,
-  trackDeliveryPreferenceModalViewed,
-  trackDeliveryPreferenceModalClosed,
-  trackDeliveryPreferenceSelected,
   disabledSlots,
-  userHasAvailableSlots
+  userHasAvailableSlots,
+  isTastePreferencesEnabled,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -104,18 +97,15 @@ const DeliveryStep = ({
     }
   }
 
-  const isNDDSlotSelected = () => slots[tempDate][0].coreSlotId === 'NULL'
-
   const onShowRecipe = () => {
-    if (isNDDSlotSelected()) {
-      openNDDPaintedDoor()
-      trackDeliveryPreferenceModalViewed(tempDate, getDateOffset(tempDate), tempSlotId)
-    } else {
-      boxSummaryDeliverySlotChosen({
-        date: tempDate,
-        slotId: tempSlotId,
-      }).then(next)
-    }
+    const nextStep = isTastePreferencesEnabled
+      ? () => redirect('/taste-preferences')
+      : next
+
+    boxSummaryDeliverySlotChosen({
+      date: tempDate,
+      slotId: tempSlotId,
+    }).then(nextStep)
   }
 
   const onTempSlotChange = slotId => {
@@ -137,18 +127,6 @@ const DeliveryStep = ({
 
   const onSlotDropdownOpen = () => {
     trackDeliverySlotDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
-  }
-
-  const onPopupClose = () => {
-    const answer = document.querySelector('[name="ndd"]:checked') ? document.querySelector('[name="ndd"]:checked').value : ''
-    trackDeliveryPreferenceModalClosed(tempDate, getDateOffset(tempDate), tempSlotId, answer)
-    closeNDDPaintedDoor()
-  }
-
-  const onClickNddPreference = event => {
-    if (event.target.checked) {
-      trackDeliveryPreferenceSelected(tempDate, getDateOffset(tempDate), tempSlotId, event.target.value)
-    }
   }
 
   if (userHasAvailableSlots === false) {
@@ -231,38 +209,6 @@ const DeliveryStep = ({
           />
         </div>
       </div>
-      <Overlay open={isNDDPaintedDoorOpened} from="top">
-        <ModalPanel className={css.modal} closePortal={onPopupClose}>
-          <div className={css.modalTitleDiv}>
-            <h2 className={css.modalFirstTitle}>
-              We&#39;re working on speeding
-              <span>up our deliveries</span>
-            </h2>
-          </div>
-          <div className={css.modalrow}>
-            <p>The delivery date you selected isn&#39;t available yet but we would love to get your feedback about deliveries.</p>
-          </div>
-          <div className={css.modalrow}>
-            <p>Please help us improve and tell us which statement you agree with:</p>
-          </div>
-          <div className={css.modalrow}>
-            <label className={css.label} htmlFor="ndd">
-              <input id="ndd" className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference} />
-              <span>Fast delivery (24-48 hour) is very important to me</span>
-            </label>
-          </div>
-          <div className={css.modalrow}>
-            <label className={css.label} htmlFor="no-ndd">
-              <input id="no-ndd" className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference} />
-              <span>I am OK with 3 day delivery</span>
-            </label>
-          </div>
-          <div className={css.iconDeliverySection}>
-            <Svg fileName="icon-delivery" className={css.iconDelivery} />
-          </div>
-          <GoustoButton width="full" onClick={onPopupClose}>Back to delivery options</GoustoButton>
-        </ModalPanel>
-      </Overlay>
     </span>
   )
 }
@@ -281,15 +227,10 @@ DeliveryStep.propTypes = {
   trackDeliverySlotEdited: PropTypes.func,
   menuFetchDataPending: PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: PropTypes.bool,
-  isNDDPaintedDoorOpened: PropTypes.bool,
-  openNDDPaintedDoor: PropTypes.func,
-  closeNDDPaintedDoor: PropTypes.func,
-  trackDeliveryPreferenceModalViewed: PropTypes.func,
-  trackDeliveryPreferenceModalClosed: PropTypes.func,
-  trackDeliveryPreferenceSelected: PropTypes.func,
   next: PropTypes.func,
   disabledSlots: PropTypes.arrayOf(PropTypes.string),
   userHasAvailableSlots: PropTypes.bool,
+  isTastePreferencesEnabled: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -306,15 +247,10 @@ DeliveryStep.defaultProps = {
   trackDeliverySlotEdited: () => {},
   menuFetchDataPending: false,
   nextDayDeliveryPaintedDoorFeature: false,
-  isNDDPaintedDoorOpened: false,
-  openNDDPaintedDoor: () => {},
-  closeNDDPaintedDoor: () => {},
-  trackDeliveryPreferenceModalViewed: () => {},
-  trackDeliveryPreferenceModalClosed: () => {},
-  trackDeliveryPreferenceSelected: () => {},
   next: () => {},
   disabledSlots: [],
   userHasAvailableSlots: true,
+  isTastePreferencesEnabled: false,
 }
 
 export { DeliveryStep }
