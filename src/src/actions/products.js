@@ -4,6 +4,7 @@ import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProduct
 import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
 import logger from 'utils/logger'
 import { getActiveMenuIdForOrderDate } from 'routes/Menu/selectors/menu'
+import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
@@ -50,13 +51,13 @@ export const productsLoadCategories = (forceRefresh = false) => (
 )
 
 function getProductParameters(state) {
-  const accessToken = state.auth.get('accessToken')
-  const userId = state.user.get('id', null)
+  const accessToken = getAccessToken(state)
+  const authUserId = getAuthUserId(state)
   const menuId = getActiveMenuIdForOrderDate(state)
 
   return {
     accessToken,
-    userId,
+    authUserId,
     menuId
   }
 }
@@ -77,7 +78,7 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       sort,
     }
 
-    const { accessToken, userId, menuId } = getProductParameters(getState())
+    const { accessToken, authUserId, menuId } = getProductParameters(getState())
 
     if (periodId) {
       reqData.period_id = periodId
@@ -87,7 +88,7 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       || (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
-        const { data: productsFromApi } = await fetchProducts(accessToken, cutoffDate, reqData, userId, menuId)
+        const { data: productsFromApi } = await fetchProducts(accessToken, cutoffDate, reqData, authUserId, menuId)
         const productsToDisplay = productsFromApi.reduce((productsForSaleAccumulator, product) => {
           product.stock = productsStock.get(product.id)
           if (product.isForSale) {
@@ -121,13 +122,13 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
 
 export const productsLoadRandomProducts = (limit, imageSizes) => (
   async (dispatch, getState) => {
-    const { accessToken, userId, menuId } = getProductParameters(getState())
+    const { accessToken, authUserId, menuId } = getProductParameters(getState())
 
     if (!getState().randomProducts.size) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, true))
       dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, null))
       try {
-        const { data: products } = await fetchRandomProducts(accessToken, limit, imageSizes, userId, menuId)
+        const { data: products } = await fetchRandomProducts(accessToken, limit, imageSizes, authUserId, menuId)
         dispatch({ type: actionTypes.PRODUCTS_RANDOM_RECEIVE, products })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, err.message))
@@ -142,13 +143,13 @@ export const productsLoadRandomProducts = (limit, imageSizes) => (
 export const productsLoadProductsById = (productIds = []) => (
   async (dispatch, getState) => {
     const newProductIds = productIds.filter(productId => !getState().products.has(productId)).sort()
-    const { accessToken, userId, menuId } = getProductParameters(getState())
+    const { accessToken, authUserId, menuId } = getProductParameters(getState())
 
     if (newProductIds.length) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
         const productPromises = newProductIds.map(async productId => {
-          const { data } = await fetchProduct(accessToken, productId, userId, menuId)
+          const { data } = await fetchProduct(accessToken, productId, authUserId, menuId)
 
           return data
         })
