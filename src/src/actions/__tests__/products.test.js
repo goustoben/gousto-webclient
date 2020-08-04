@@ -32,7 +32,10 @@ describe('productsLoadCategories', () => {
 
     dispatchSpy = jest.fn()
     getStateSpy = () => ({
-      auth: Immutable.Map({ accessToken: 'access-token' }),
+      auth: Immutable.Map({
+        accessToken: 'access-token',
+        id: 'auth-1234-user-id'
+      }),
       products: Immutable.OrderedMap({}),
       productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000 }),
       productsCategories: Immutable.OrderedMap({}),
@@ -101,7 +104,7 @@ describe('productsLoadProducts', () => {
 
     dispatchSpy = jest.fn()
     getStateSpy = () => ({
-      auth: Immutable.Map({ accessToken: 'access-token' }),
+      auth: Immutable.fromJS({ accessToken: 'access-token', id: 'auth-1234-user-id' }),
       products: Immutable.OrderedMap({}),
       productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000 }),
       basket: Immutable.fromJS({
@@ -164,12 +167,12 @@ describe('productsLoadProducts', () => {
       cutoffDate,
       reload: false,
     })
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' }, '321', '1234')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' }, 'auth-1234-user-id', '1234')
   })
 
   test('should not fetch products by default if there are all products in product store & no cutoffDate is passed in', async () => {
     getStateSpy = () => ({
-      auth: Immutable.fromJS({ accessToken: 'accessToken' }),
+      auth: Immutable.fromJS({ accessToken: 'accessToken', id: 'auth-1234-user-id' }),
       products: Immutable.fromJS({
         1: { id: '1', title: 'Title 1' },
       }),
@@ -200,7 +203,7 @@ describe('productsLoadProducts', () => {
 
   test('should fetch products by default if the products in product store are the one from basket', async () => {
     getStateSpy = () => ({
-      auth: Immutable.fromJS({ accessToken: 'accessToken' }),
+      auth: Immutable.fromJS({ accessToken: 'accessToken', id: 'auth-1234-user-id' }),
       products: Immutable.fromJS({
         1: { id: '1', title: 'Title 1' },
       }),
@@ -245,7 +248,7 @@ describe('productsLoadProducts', () => {
       reload: false,
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' }, '321', '1234')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' }, 'auth-1234-user-id', '1234')
   })
 
   test('should fetch products for given period when periodId is passed in', async () => {
@@ -262,13 +265,13 @@ describe('productsLoadProducts', () => {
       reload: false,
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' }, '321', '1234')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' }, 'auth-1234-user-id', '1234')
   })
 
   describe('when reload is true', async () => {
     test('should still fetch products if there are all products in product store & no cutoffDate is passed in ', async () => {
       getStateSpy = () => ({
-        auth: Immutable.fromJS({ accessToken: 'accessToken' }),
+        auth: Immutable.fromJS({ accessToken: 'accessToken', id: 'auth-1234-user-id' }),
         products: Immutable.fromJS({
           1: { id: '1', title: 'Title 1' },
           2: { id: '2', title: 'Title 2' },
