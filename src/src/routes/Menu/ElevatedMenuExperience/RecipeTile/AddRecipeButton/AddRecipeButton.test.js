@@ -7,7 +7,7 @@ describe('AddRecipeButton', () => {
   let wrapper
   const buttonsProps = {
     recipeId: '1234',
-    basketRecipeAdd: jest.fn(),
+    basketRecipeAddAttempt: jest.fn(),
     basketRecipeRemove: jest.fn(),
     isInBasket: false,
     isBasketLimitReached: false,
@@ -61,11 +61,11 @@ describe('AddRecipeButton', () => {
       wrapper = shallow(<AddRecipeButton {...buttonsProps} />)
     })
     describe('when recipe not in basket', () => {
-      test('should call basketRecipeAdd', () => {
+      test('should call basketRecipeAddAttempt', () => {
         wrapper.find('.addButton').simulate('click', {
           stopPropagation: () => {}
         })
-        expect(buttonsProps.basketRecipeAdd).toHaveBeenCalledWith('1234')
+        expect(buttonsProps.basketRecipeAddAttempt).toHaveBeenCalledWith('1234')
       })
     })
 
