@@ -235,7 +235,8 @@ describe('productsLoadProducts', () => {
   })
 
   test('should fetch products for given cutoff date when cutoffDate is passed in', async () => {
-    await productsLoadProducts('whenCutoff timestamp')(dispatchSpy, getStateSpy)
+    const cutoff = '2020-08-11T11:59:59+01:00'
+    await productsLoadProducts(cutoff)(dispatchSpy, getStateSpy)
 
     const dispatchSpyCalls = dispatchSpy.mock.calls[1]
     expect(dispatchSpyCalls[0]).toEqual({
@@ -244,15 +245,16 @@ describe('productsLoadProducts', () => {
         { id: '1', isForSale: true, stock: 1000 },
         { id: '2', isForSale: true, stock: 1000 },
       ],
-      cutoffDate: 'whenCutoff timestamp',
+      cutoffDate: cutoff,
       reload: false,
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' }, 'auth-1234-user-id', '1234')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoff, { sort: 'position' }, 'auth-1234-user-id', '1234')
   })
 
   test('should fetch products for given period when periodId is passed in', async () => {
-    await productsLoadProducts('whenCutoff timestamp', '1234')(dispatchSpy, getStateSpy)
+    const cutoff = '2020-08-11T11:59:59+01:00'
+    await productsLoadProducts(cutoff, '1234')(dispatchSpy, getStateSpy)
 
     const dispatchSpyCalls = dispatchSpy.mock.calls[1]
     expect(dispatchSpyCalls[0]).toEqual({
@@ -261,11 +263,11 @@ describe('productsLoadProducts', () => {
         { id: '1', isForSale: true, stock: 1000 },
         { id: '2', isForSale: true, stock: 1000 },
       ],
-      cutoffDate: 'whenCutoff timestamp',
+      cutoffDate: cutoff,
       reload: false,
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' }, 'auth-1234-user-id', '1234')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoff, { period_id: '1234', sort: 'position' }, 'auth-1234-user-id', '1234')
   })
 
   describe('when reload is true', async () => {

@@ -96,7 +96,7 @@ describe('orderConfirmation actions', () => {
   describe('orderDetails', () => {
     test('should attempt to fetch the order details for the orderId given', async () => {
       fetchOrder.mockReturnValue(
-        Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } })
+        Promise.resolve({ data: { id: '1234', whenCutoff: '2019-04-12 19:00:00' } })
       )
 
       await orderDetails('1234')(dispatch, getState)
@@ -110,7 +110,7 @@ describe('orderConfirmation actions', () => {
           Promise.resolve({
             data: {
               id: '1234',
-              whenCutOff: '2019-04-12 19:00:00',
+              whenCutoff: '2019-04-12 19:00:00',
               recipeItems: [
                 { itemableId: '1' },
                 { itemableId: '2' },
@@ -133,7 +133,7 @@ describe('orderConfirmation actions', () => {
           Promise.resolve({
             data: {
               id: '1234',
-              whenCutOff: '2019-04-12 19:00:00',
+              whenCutoff: '2019-04-12 19:00:00',
               periodId: '5678'
             },
           })
@@ -151,7 +151,7 @@ describe('orderConfirmation actions', () => {
 
         expect(basketOrderLoad).toHaveBeenCalledWith('1234', Immutable.Map({
           id: '1234',
-          whenCutOff: '2019-04-12 19:00:00',
+          whenCutoff: '2019-04-12 19:00:00',
           periodId: '5678',
         }))
       })

@@ -31,7 +31,9 @@ export const orderDetails = (orderId) => (
       const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
-      await dispatch(productsLoadProducts(order.whenCutOff, order.periodId, {reload: true}))
+
+      await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}))
+
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
