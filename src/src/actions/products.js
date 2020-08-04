@@ -50,10 +50,10 @@ export const productsLoadCategories = (forceRefresh = false) => (
   }
 )
 
-function getProductParameters(state) {
+function getProductParameters(state, props = {}) {
   const accessToken = getAccessToken(state)
   const authUserId = getAuthUserId(state)
-  const menuId = getActiveMenuIdForOrderDate(state)
+  const menuId = getActiveMenuIdForOrderDate(state, props)
 
   return {
     accessToken,
@@ -78,7 +78,7 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       sort,
     }
 
-    const { accessToken, authUserId, menuId } = getProductParameters(getState())
+    const { accessToken, authUserId, menuId } = getProductParameters(getState(), { cutoffDate })
 
     if (periodId) {
       reqData.period_id = periodId

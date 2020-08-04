@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
+import moment from 'moment'
 import { getRecipes, getMenuRecipeIds, getMenuService } from 'selectors/root'
-import { getNumPortions, getBasketMenuId, getBasketOrderDetailDate } from 'selectors/basket'
+import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
 
 export const getCurrentMenuRecipes = createSelector(
@@ -30,11 +31,21 @@ export const activeMenuForDate = (menuServiceData, date) => {
 
 export const getActiveMenuIdForOrderDate = createSelector(
   [
-    getBasketOrderDetailDate,
+    (state, props) => props.cutoffDate,
     getMenuService
   ],
-  (orderDate, menuService) => {
-    const activeMenu = activeMenuForDate(menuService, orderDate)
+  (date, menuServiceData) => {
+    if (!menuServiceData.data) {
+      return undefined
+    }
+
+    const activeMenu = menuServiceData.data.find((menu) =>
+      moment(date) <= moment(menu.attributes.ends_at) // ends_at is the last cutoff date for the menu
+    )
+
+    if (!activeMenu) {
+      return undefined
+    }
     const menuId = activeMenu.id
 
     return menuId
