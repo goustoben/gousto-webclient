@@ -25,7 +25,7 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
       className={classnames(css.recipeTileContainer, {
         [css.recipeTileIsFineDineIn]: isFineDineIn
       })}
-      data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipe'}
+      data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       onClick={onClick}
       onKeyPress={onClick}
     >

@@ -58,7 +58,7 @@ describe('Given I am a logged out user', () => {
 
     describe('And I’ve opened a detail screen for a recipe', () => {
       before(() => {
-        cy.get('[data-testing="menuRecipe"]').eq(3).click()
+        cy.get('[data-testing="menuRecipeViewDetails"]').eq(3).click()
       })
 
       describe('And I click on “Add recipe“ for the selected recipe', () => {
