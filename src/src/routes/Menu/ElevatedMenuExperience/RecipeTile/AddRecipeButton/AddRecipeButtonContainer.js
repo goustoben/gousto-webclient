@@ -1,18 +1,18 @@
 import { connect } from 'react-redux'
 import { getBasketTotalRecipes } from 'selectors/basket'
 import { AddRecipeButton } from './AddRecipeButton'
-import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
+import { basketRecipeAddAttempt, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getRecipeIdInBasket } from '../../../selectors/recipe'
 import { getRecipeButtonProps } from './recipeButtonPropsSelector'
 
 const mapStateToProps = (state, ownProps) => ({
   isInBasket: getRecipeIdInBasket(state, ownProps),
   isBasketLimitReached: getBasketTotalRecipes(state) === 4,
-  buttonProps: getRecipeButtonProps(state, ownProps)
+  buttonProps: getRecipeButtonProps(state, ownProps),
 
 })
 const mapDispatchToProps = {
-  basketRecipeAdd,
+  basketRecipeAddAttempt,
   basketRecipeRemove
 }
 

@@ -1,7 +1,9 @@
-
+import React from 'react'
 import Immutable from 'immutable'
+import { shallow } from 'enzyme'
 import { menuLoadDays, redirect } from 'actions'
 import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
+import { StepIndicator } from 'goustouicomponents'
 
 import { Signup } from 'routes/Signup/Signup'
 
@@ -56,6 +58,29 @@ describe('Signup', () => {
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
       expect(dispatch).toHaveBeenCalled()
       expect(menuLoadDays).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('Step size on Signup', () => {
+    let wrapper
+    describe('when isTastePreferencesEnabled is true', () => {
+      beforeEach(() => {
+        wrapper = shallow(<Signup isTastePreferencesEnabled />, { context })
+      })
+
+      test('should display step size 5', () => {
+        expect(wrapper.find(StepIndicator).prop('size')).toEqual(5)
+      })
+    })
+
+    describe('when isTastePreferencesEnabled is false', () => {
+      beforeEach(() => {
+        wrapper = shallow(<Signup isTastePreferencesEnabled={false} />, { context })
+      })
+
+      test('should display step size 3', () => {
+        expect(wrapper.find(StepIndicator).prop('size')).toEqual(3)
+      })
     })
   })
 })

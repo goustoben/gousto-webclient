@@ -1,8 +1,9 @@
 
+import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { limitReached } from 'utils/basket'
 import status from '.../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
-import { getBasketRecipes } from '../../../selectors/basket'
+import { getBasketRecipes , getBasketPostcode} from '../../../selectors/basket'
 import { actionTypes } from '../../../actions/actionTypes'
 import pricingActions from '../../../actions/pricing'
 import * as trackingKeys from '../../../actions/trackingKeys'
@@ -179,3 +180,14 @@ export const basketRecipeSwap = () =>
     }
   }
 
+export const basketRecipeAddAttempt = (recipeId) => (
+  (dispatch, getState) => {
+    const basketPostcode = getBasketPostcode(getState())
+
+    if (basketPostcode) {
+      dispatch(exports.basketRecipeAdd(recipeId))
+    } else {
+      dispatch(menuBrowseCTAVisibilityChange(true))
+    }
+  }
+)

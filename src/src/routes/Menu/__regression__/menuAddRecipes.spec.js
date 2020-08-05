@@ -40,14 +40,14 @@ describe('Given I am a logged out user', () => {
       })
     })
 
-    describe('And I click on “Add recipe“ for the same recipe', () => {
+    describe('And I click on “Add recipe“ for another recipe', () => {
       before(() => {
-        cy.get('[data-testing="menuAddServings"]').eq(2).click()
+        cy.get('[data-testing="menuRecipeAdd"]').eq(4).click()
       })
 
-      it('Then that recipe is added to my basket twice', () => {
+      it('Then that recipe is also added to my basket', () => {
         cy.window().then(getRecipes).then(
-          recipes => recipes[0]
+          recipes => recipes.length
         ).should('equal', 2)
       })
 
@@ -58,7 +58,7 @@ describe('Given I am a logged out user', () => {
 
     describe('And I’ve opened a detail screen for a recipe', () => {
       before(() => {
-        cy.get('[data-testing="menuRecipeViewDetails"]').eq(1).click()
+        cy.get('[data-testing="menuRecipe"]').eq(3).click()
       })
 
       describe('And I click on “Add recipe“ for the selected recipe', () => {
@@ -69,7 +69,7 @@ describe('Given I am a logged out user', () => {
         it('Then that recipe is added to my basket', () => {
           cy.window().then(getRecipes).then(
             recipes => recipes.length
-          ).should('equal', 2)
+          ).should('equal', 3)
         })
       })
 
@@ -81,8 +81,8 @@ describe('Given I am a logged out user', () => {
 
         it('Then that recipe is added to my basket twice', () => {
           cy.window().then(getRecipes).then(
-            recipes => recipes[1]
-          ).should('equal', 2)
+            recipes => recipes.length
+          ).should('equal', 3)
         })
       })
     })

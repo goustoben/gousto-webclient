@@ -38,6 +38,7 @@ const propTypes = {
   }),
   currentStepName: PropTypes.string,
   changeStep: PropTypes.func.isRequired,
+  isTastePreferencesEnabled: PropTypes.bool
 }
 
 const defaultProps = {
@@ -54,6 +55,7 @@ const defaultProps = {
     stepName: '',
   },
   currentStepName: '',
+  isTastePreferencesEnabled: false
 }
 
 const contextTypes = {
@@ -193,6 +195,15 @@ class Signup extends React.PureComponent {
     )).toArray()
   )
 
+  getStepSize = (stepsSize) => {
+    const { isTastePreferencesEnabled } = this.props
+    if (isTastePreferencesEnabled) {
+      return stepsSize + 2
+    }
+
+    return stepsSize
+  }
+
   render() {
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
@@ -211,7 +222,7 @@ class Signup extends React.PureComponent {
         <div className={css.stepsContainer}>
           <div className={css.animationContainer}>
             <div className={css.stepIndicatorContainer}>
-              <StepIndicator current={stepNumber + 1} size={steps.size} />
+              <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
             </div>
             <div className={css.animation} style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}>
               {this.renderSteps(steps, stepNumber)}

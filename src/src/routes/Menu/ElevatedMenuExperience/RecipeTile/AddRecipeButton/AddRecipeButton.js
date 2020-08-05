@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import css from './AddRecipeButton.css'
 
-export const AddRecipeButton = ({basketRecipeAdd, basketRecipeRemove, recipeId, isInBasket, isBasketLimitReached, buttonProps}) => {
+export const AddRecipeButton = ({basketRecipeAddAttempt, basketRecipeRemove, recipeId, isInBasket, isBasketLimitReached, buttonProps}) => {
   const buttonAction = (e) => {
     e.stopPropagation()
     if (isInBasket) {
       basketRecipeRemove(recipeId)
     } else {
-      basketRecipeAdd(recipeId)
+      basketRecipeAddAttempt(recipeId)
     }
   }
   const disabled = isBasketLimitReached && !isInBasket
@@ -19,6 +19,9 @@ export const AddRecipeButton = ({basketRecipeAdd, basketRecipeRemove, recipeId, 
       type="button"
       disabled={disabled}
       onClick={buttonAction}
+      data-testing={
+        disabled ? 'menuRecipeAddDisabled' : 'menuRecipeAdd'
+      }
     >
       <span className={css.buttonText}>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +37,7 @@ export const AddRecipeButton = ({basketRecipeAdd, basketRecipeRemove, recipeId, 
 }
 AddRecipeButton.propTypes = {
   recipeId: PropTypes.string.isRequired,
-  basketRecipeAdd: PropTypes.func.isRequired,
+  basketRecipeAddAttempt: PropTypes.func.isRequired,
   basketRecipeRemove: PropTypes.func.isRequired,
   isInBasket: PropTypes.bool.isRequired,
   isBasketLimitReached: PropTypes.bool.isRequired,
