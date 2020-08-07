@@ -196,175 +196,230 @@ describe('menu utils', () => {
   })
 
   describe('getMenuVariants', () => {
-    const menus = [
-      {
-        id: '1111',
-        relationships: {
-          recipe_options: {
-            data: [
-              {
-                type: 'recipe',
-                id: 'aubergine-id',
-                core_recipe_id: 'aubergine-core-id',
-                attributes: {
-                  short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
-                },
-                relationships: [
-                  {
-                    type: 'alternative',
-                    data: {
-                      type: 'recipe',
-                      id: 'fish-chips-id',
-                      core_recipe_id: 'fish-chips-core-id',
-                      attributes: {
-                        short_display_name: "Crispy Fish, Root Veg Chips & Bangin' Ketchup"
-                      }
-                    }
-                  }
-                ]
-              },
-              {
-                type: 'recipe',
-                id: 'chicken-taco-id',
-                core_recipe_id: 'chicken-taco-core-id',
-                attributes: {
-                  short_display_name: 'Chicken Tinga Tacos With Lime Mayo',
-                },
-                relationships: [
-                  {
-                    type: 'alternative',
-                    data: {
-                      type: 'recipe',
-                      id: 'orange-chicken-id',
-                      core_recipe_id: 'orange-chicken-core-id',
-                      attributes: {
-                        short_display_name: '10-Min Sticky Orange Chicken & Rice'
-                      }
-                    }
-                  },
-                  {
-                    type: 'alternative',
-                    data: {
-                      type: 'recipe',
-                      id: 'chicken-burger-id',
-                      core_recipe_id: 'chicken-burger-core-id',
-                      attributes: {
-                        short_display_name: 'Mexican Pulled Chicken Burger & Paprika Fries'
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
+    describe('When there are no permutations', () => {
+      const menu = [
+        {
+          id: '1111',
+          relationships: {
+            recipe_options: {
+              data: [
+                {
+                  type: 'sandwich',
+                  id: '1234-5678-9090-1111',
+                  attributes: { short_display_name: 'Sarnie' },
+                  relationships: []
+                }
+              ]
+            }
           }
-        }
-      },
-      {
-        id: '2222',
-        relationships: {
-          recipe_options: {
-            data: [
-              {
-                type: 'recipe',
-                id: 'aubergine-id',
-                core_recipe_id: 'aubergine-core-id',
-                attributes: { short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
-                },
-                relationships: [
-                  {
-                    type: 'not-alternative',
-                    data: {
-                      type: 'recipe',
-                      id: 'dec07237-3fef-462d-a2f0-0e3f671be580',
-                      core_recipe_id: '9999',
-                      attributes: {
-                        short_display_name: 'This recipe is not an alternative'
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      }
-    ]
-
-    test('should parse menus correctly', () => {
-      const expected = {
-        1111: {
-          'aubergine-core-id': {
-            displayName: 'Aubergine & Tomato Orzo With Rocket Pesto',
-            alternatives: [
-              {
-                id: 'fish-chips-id',
-                coreRecipeId: 'fish-chips-core-id',
-                displayName: "Crispy Fish, Root Veg Chips & Bangin' Ketchup"
-              }
-            ]
-          },
-          'fish-chips-core-id': {
-            displayName: "Crispy Fish, Root Veg Chips & Bangin' Ketchup",
-            alternatives: [
-              {
-                id: 'aubergine-id',
-                coreRecipeId: 'aubergine-core-id',
-                displayName: 'Aubergine & Tomato Orzo With Rocket Pesto'
-              }
-            ]
-          },
-          'chicken-taco-core-id': {
-            displayName: 'Chicken Tinga Tacos With Lime Mayo',
-            alternatives: [
-              {
-                id: 'orange-chicken-id',
-                coreRecipeId: 'orange-chicken-core-id',
-                displayName: '10-Min Sticky Orange Chicken & Rice'
-              },
-              {
-                id: 'chicken-burger-id',
-                coreRecipeId: 'chicken-burger-core-id',
-                displayName: 'Mexican Pulled Chicken Burger & Paprika Fries'
-              }
-            ]
-          },
-          'orange-chicken-core-id': {
-            displayName: '10-Min Sticky Orange Chicken & Rice',
-            alternatives: [
-              {
-                id: 'chicken-taco-id',
-                coreRecipeId: 'chicken-taco-core-id',
-                displayName: 'Chicken Tinga Tacos With Lime Mayo'
-              },
-              {
-                id: 'chicken-burger-id',
-                coreRecipeId: 'chicken-burger-core-id',
-                displayName: 'Mexican Pulled Chicken Burger & Paprika Fries'
-              }
-            ]
-          },
-          'chicken-burger-core-id': {
-            displayName: 'Mexican Pulled Chicken Burger & Paprika Fries',
-            alternatives: [
-              {
-                id: 'chicken-taco-id',
-                coreRecipeId: 'chicken-taco-core-id',
-                displayName: 'Chicken Tinga Tacos With Lime Mayo'
-              },
-              {
-                id: 'orange-chicken-id',
-                coreRecipeId: 'orange-chicken-core-id',
-                displayName: '10-Min Sticky Orange Chicken & Rice'
-              },
-            ]
-          },
         },
-        2222: { }
-      }
+      ]
+      test('should return an empty object', () => {
+        expect(getMenuVariants(menu)).toEqual({1111: {}})
+      })
+    })
 
-      const result = getMenuVariants(menus)
+    describe('When the menu contains alternatives and sides', () => {
+      const menus = [
+        {
+          id: '1111',
+          relationships: {
+            recipe_options: {
+              data: [
+                {
+                  type: 'recipe',
+                  id: 'aubergine-id',
+                  core_recipe_id: 'aubergine-core-id',
+                  attributes: {
+                    short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
+                  },
+                  relationships: [
+                    {
+                      type: 'alternative',
+                      data: {
+                        type: 'recipe',
+                        id: 'fish-chips-id',
+                        core_recipe_id: 'fish-chips-core-id',
+                        attributes: {
+                          short_display_name: "Crispy Fish, Root Veg Chips & Bangin' Ketchup"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: 'recipe',
+                  id: 'chicken-taco-id',
+                  core_recipe_id: 'chicken-taco-core-id',
+                  attributes: {
+                    short_display_name: 'Chicken Tinga Tacos With Lime Mayo',
+                  },
+                  relationships: [
+                    {
+                      type: 'alternative',
+                      data: {
+                        type: 'recipe',
+                        id: 'orange-chicken-id',
+                        core_recipe_id: 'orange-chicken-core-id',
+                        attributes: {
+                          short_display_name: '10-Min Sticky Orange Chicken & Rice'
+                        }
+                      }
+                    },
+                    {
+                      type: 'alternative',
+                      data: {
+                        type: 'recipe',
+                        id: 'chicken-burger-id',
+                        core_recipe_id: 'chicken-burger-core-id',
+                        attributes: {
+                          short_display_name: 'Mexican Pulled Chicken Burger & Paprika Fries'
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  type: 'recipe',
+                  id: '010ec2d4-e7e0-41c8-bc8f-e5fc176beb7f',
+                  core_recipe_id: 'curry-with-side-core-id',
+                  attributes: {
+                    short_display_name: 'Chicken Tikka Masala With Basmati Rice'
+                  },
+                  relationships: [
+                    {
+                      type: 'side',
+                      data: {
+                        type: 'recipe',
+                        id: 'naan-bread',
+                        core_recipe_id: 'curry-with-naan-core-id',
+                        attributes: {
+                          short_display_name: 'Naan bread'
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          id: '2222',
+          relationships: {
+            recipe_options: {
+              data: [
+                {
+                  type: 'recipe',
+                  id: 'aubergine-id',
+                  core_recipe_id: 'aubergine-core-id',
+                  attributes: { short_display_name: 'Aubergine & Tomato Orzo With Rocket Pesto',
+                  },
+                  relationships: [
+                    {
+                      type: 'not-alternative',
+                      data: {
+                        type: 'recipe',
+                        id: 'dec07237-3fef-462d-a2f0-0e3f671be580',
+                        core_recipe_id: '9999',
+                        attributes: {
+                          short_display_name: 'This recipe is not an alternative'
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+      test('should parse menus correctly', () => {
+        const expected = {
+          1111: {
+            'aubergine-core-id': {
+              displayName: 'Aubergine & Tomato Orzo With Rocket Pesto',
+              alternatives: [
+                {
+                  id: 'fish-chips-id',
+                  coreRecipeId: 'fish-chips-core-id',
+                  displayName: "Crispy Fish, Root Veg Chips & Bangin' Ketchup"
+                }
+              ]
+            },
+            'fish-chips-core-id': {
+              displayName: "Crispy Fish, Root Veg Chips & Bangin' Ketchup",
+              alternatives: [
+                {
+                  id: 'aubergine-id',
+                  coreRecipeId: 'aubergine-core-id',
+                  displayName: 'Aubergine & Tomato Orzo With Rocket Pesto'
+                }
+              ]
+            },
+            'chicken-taco-core-id': {
+              displayName: 'Chicken Tinga Tacos With Lime Mayo',
+              alternatives: [
+                {
+                  id: 'orange-chicken-id',
+                  coreRecipeId: 'orange-chicken-core-id',
+                  displayName: '10-Min Sticky Orange Chicken & Rice'
+                },
+                {
+                  id: 'chicken-burger-id',
+                  coreRecipeId: 'chicken-burger-core-id',
+                  displayName: 'Mexican Pulled Chicken Burger & Paprika Fries'
+                }
+              ]
+            },
+            'orange-chicken-core-id': {
+              displayName: '10-Min Sticky Orange Chicken & Rice',
+              alternatives: [
+                {
+                  id: 'chicken-taco-id',
+                  coreRecipeId: 'chicken-taco-core-id',
+                  displayName: 'Chicken Tinga Tacos With Lime Mayo'
+                },
+                {
+                  id: 'chicken-burger-id',
+                  coreRecipeId: 'chicken-burger-core-id',
+                  displayName: 'Mexican Pulled Chicken Burger & Paprika Fries'
+                }
+              ]
+            },
+            'chicken-burger-core-id': {
+              displayName: 'Mexican Pulled Chicken Burger & Paprika Fries',
+              alternatives: [
+                {
+                  id: 'chicken-taco-id',
+                  coreRecipeId: 'chicken-taco-core-id',
+                  displayName: 'Chicken Tinga Tacos With Lime Mayo'
+                },
+                {
+                  id: 'orange-chicken-id',
+                  coreRecipeId: 'orange-chicken-core-id',
+                  displayName: '10-Min Sticky Orange Chicken & Rice'
+                },
+              ]
+            },
+            'curry-with-side-core-id': {
+              displayName: 'Chicken Tikka Masala With Basmati Rice',
+              sides: [
+                {
+                  id: 'naan-bread',
+                  coreRecipeId: 'curry-with-naan-core-id',
+                  displayName: 'Naan bread'
+                },
+              ]
+            },
+          },
+          2222: { }
+        }
 
-      expect(result).toEqual(expected)
+        const result = getMenuVariants(menus)
+
+        expect(result).toEqual(expected)
+      })
     })
   })
 
