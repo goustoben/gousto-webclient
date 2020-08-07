@@ -66,7 +66,7 @@ const flattenAlternatives = (variantGroup) => {
   }
 
   const children = variantGroup.relationships
-    .filter(relation => relation.type === 'alternative' && relation.data.type === 'recipe')
+    .filter(relation => relation.data.type === 'recipe')
     .map(relation => ({
       id: relation.data.id,
       coreRecipeId: relation.data.core_recipe_id,
@@ -123,20 +123,37 @@ const getMenuVariantsForMenu = (menuVariantGroups) => {
     if (!permutations) {
       return
     }
+    if (!variantGroup.relationships || !variantGroup.relationships[0] || !variantGroup.relationships[0].type) {
+      return
+    }
 
-    // for each permutation, set up a parent/child relationship
-    permutations.forEach(permutationGroup => {
-      const [parent, ...alternatives] = permutationGroup
+    if (variantGroup.relationships[0].type === 'alternative') {
+      // for each permutation, set up a parent/child relationship
+      permutations.forEach(permutationGroup => {
+        const [parent, ...alternatives] = permutationGroup
 
+        if (menuOutput[parent.coreRecipeId]) {
+          return
+        }
+
+        menuOutput[parent.coreRecipeId] = {
+          displayName: parent.displayName,
+          alternatives
+        }
+      })
+    }
+
+    if (variantGroup.relationships[0].type === 'side') {
+      const [parent, ...sides] = flattenAlternatives(variantGroup)
       if (menuOutput[parent.coreRecipeId]) {
         return
       }
 
       menuOutput[parent.coreRecipeId] = {
         displayName: parent.displayName,
-        alternatives
+        sides
       }
-    })
+    }
   })
 
   return menuOutput

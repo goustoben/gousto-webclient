@@ -10,6 +10,7 @@ const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, when
       {deliveryDate}
       {' '}
       between
+      {' '}
       {deliveryStart}
       {' '}
       -
