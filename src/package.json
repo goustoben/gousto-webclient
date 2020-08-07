@@ -36,7 +36,9 @@
     "deploy": "npm run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
     "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd ..",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "codeowners:report": "node ./scripts/codeowners-report/codeowners-report.js",
+    "codeowners:unowned": "node ./scripts/codeowners-report/codeowners-report.js --unowned"
   },
   "dependencies": {
     "@optimizely/optimizely-sdk": "^4.1.0",
@@ -119,6 +121,7 @@
     "babel-preset-react": "6.24.1",
     "babel-preset-react-optimize": "1.0.1",
     "babel-preset-stage-0": "6.24.1",
+    "codeowners": "^4.2.0",
     "concat-stream": "^2.0.0",
     "cookie": "0.3.1",
     "css-loader": "1.0.1",
@@ -137,6 +140,7 @@
     "gousto-gulp": "git@github.com:Gousto/gousto-gulp.git#v3.2.0",
     "husky": "^4.2.2",
     "identity-obj-proxy": "3.0.0",
+    "ignore": "^5.1.8",
     "image-webpack-loader": "4.6.0",
     "inject-loader": "4.0.1",
     "jest": "23.4.0",
