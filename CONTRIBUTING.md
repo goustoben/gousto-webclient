@@ -71,3 +71,34 @@ If the `develop` build is failing, especially on end-to-end tests, it makes it d
 - The author of the failing commit is the **Incident Resolver** and must take responsibility to find an **Incident Owner**. (Ideally someone in their squad, but could be from the wider Webclient team)
 - The **Incident Owner** should then announce the incident on #guild-frontend slack channel, and follow the Gousto Production Incident Process.
 - Fixing the E2E test becomes their top priority, and any help needed from others is also a priority.
+
+## Seeing file ownership
+
+There is a script which does some reporting of the repo based on the `CODEOWNERS` file. You can use this script from inside the `src` directory, with the following commands:
+
+### npm run codeowners:report
+
+Lists the number of files owned by each owner
+
+```
+Files by owner:
+ - @Gousto/guild-frontend: 1627 files
+ - @Gousto/squad-radishes: 537 files
+ - @Gousto/squad-rockets: 617 files
+ - @Gousto/squad-haricots: 199 files
+```
+
+### npm run codeowners:unowned
+
+Lists the number of unowned files in the repository (i.e. owned by `@Gousto/guild-frontend`)
+
+```
+...
+ - tests\regression\runtests.sh
+ - tests\regression\runtestsmobile.sh
+ - tests\regression\support\commands\index.js
+ - tests\regression\support\index.js
+ - tests\regression\support\overwrites\index.js
+
+1627 unowned files
+```
