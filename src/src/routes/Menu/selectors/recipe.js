@@ -170,6 +170,12 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
     return null
   }
 
+  const sides = recipeVariants.get('sides')
+
+  if (sides && sides.size) {
+    return { type: 'sides', sides }
+  }
+
   const alternatives = recipeVariants.get('alternatives')
 
   if (!alternatives || !alternatives.size) {
@@ -177,10 +183,10 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   }
 
   if (!collectionDietaryClaims) {
-    return alternatives
+    return { type: 'alternatives', alternatives }
   }
 
-  return alternatives.filter((variant) => {
+  const alternativesDietaryClaims = alternatives.filter((variant) => {
     const variantRecipeDietaryAttributes = getDietaryTags(menuRecipes.get(variant.get('coreRecipeId')))
 
     if (!variantRecipeDietaryAttributes || !variantRecipeDietaryAttributes.size) {
@@ -189,4 +195,6 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
 
     return (collectionDietaryClaims.every(claim => variantRecipeDietaryAttributes.includes(claim)))
   })
+
+  return { type: 'alternatives', alternatives: alternativesDietaryClaims }
 }

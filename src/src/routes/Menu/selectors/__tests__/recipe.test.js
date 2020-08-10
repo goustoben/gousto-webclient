@@ -15,8 +15,7 @@ import {
 
 jest.mock('config/menu', () => ({
   stockThreshold: 3
-})
-)
+}))
 
 describe('menu recipe selectors', () => {
   describe('getRecipeTitle', () => {
@@ -382,10 +381,13 @@ describe('menu recipe selectors', () => {
       })
       test('should return recipe variants', () => {
         const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
-        expect(result).toEqual(Immutable.fromJS([{
-          id: '1sds1231sds',
-          coreRecipeId: '2'
-        }]))
+        expect(result).toEqual({
+          type: 'alternatives',
+          alternatives: Immutable.fromJS([{
+            id: '1sds1231sds',
+            coreRecipeId: '2'
+          }])
+        })
       })
     })
 
@@ -427,10 +429,13 @@ describe('menu recipe selectors', () => {
       })
       test('should return recipe variants that have same claims', () => {
         const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
-        expect(result).toEqual(Immutable.fromJS([{
-          id: '1sds1231sds',
-          coreRecipeId: '2'
-        }]))
+        expect(result).toEqual({
+          type: 'alternatives',
+          alternatives: Immutable.fromJS([{
+            id: '1sds1231sds',
+            coreRecipeId: '2'
+          }])
+        })
       })
 
       describe('when variant has different claim', () => {
@@ -456,7 +461,59 @@ describe('menu recipe selectors', () => {
         })
         test('should return recipe variants that have same claims', () => {
           const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
-          expect(result).toEqual(Immutable.List())
+          expect(result).toEqual({
+            type: 'alternatives',
+            alternatives: Immutable.List()
+          })
+        })
+      })
+    })
+
+    describe('when variant is sides', () => {
+      beforeEach(() => {
+        collectionDietaryClaims = Immutable.List(['gluten-free'])
+        variants = Immutable.fromJS({
+          1: {
+            sides: [{
+              id: '1sds1231sds',
+              coreRecipeId: '2'
+            }]
+          },
+          2: {
+            sides: [{
+              id: '1sds1231sds',
+              coreRecipeId: '1'
+            }]
+          }
+        })
+        menuRecipes = Immutable.fromJS({
+          1: {
+            dietaryClaims: [
+              {
+                name: 'Gluten free',
+                slug: 'gluten-free',
+              }
+            ],
+          },
+          2: {
+            dietaryClaims: [
+              {
+                name: 'Gluten free',
+                slug: 'gluten-free',
+              }
+            ],
+          }
+        })
+      })
+
+      test('should return recipe variants as sides', () => {
+        const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+        expect(result).toEqual({
+          type: 'sides',
+          sides: Immutable.fromJS([{
+            id: '1sds1231sds',
+            coreRecipeId: '2'
+          }])
         })
       })
     })
