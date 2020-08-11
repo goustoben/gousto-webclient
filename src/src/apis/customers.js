@@ -35,4 +35,8 @@ export const fetchIntervals = () => (
   fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.intervals}`, {}, 'GET')
 )
 
+export const fetchReference = () => (
+  fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.reference}`, {}, 'GET')
+)
+
 export default customersApi
