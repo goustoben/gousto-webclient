@@ -171,6 +171,9 @@ describe('user actions', () => {
     beforeEach(() => {
       state = {
         basket: Immutable.fromJS({}),
+        checkout: Immutable.fromJS({
+          goustoRef: '105979923',
+        }),
         pricing: Immutable.fromJS({
           prices: {
             total: '24.55',
@@ -303,6 +306,7 @@ describe('user actions', () => {
     describe('enable3DSForSignup feature is enabled', () => {
       const sca3ds = true
       const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
+      const goustoRef = '105979923'
 
       beforeEach(() => {
         state = {
@@ -335,6 +339,18 @@ describe('user actions', () => {
             card: expect.objectContaining({
               card_token: sessionId
             })
+          })
+        })
+
+        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
+
+        expect(customerSignup).toHaveBeenCalledWith(null, expected)
+      })
+
+      test('should add gousto_ref param for the user signup request', async () => {
+        const expected = expect.objectContaining({
+          customer: expect.objectContaining({
+            gousto_ref: goustoRef
           })
         })
 
@@ -468,6 +484,9 @@ describe('user actions', () => {
       let expectedParam
       const trimState = {
         basket: Immutable.fromJS({}),
+        checkout: Immutable.fromJS({
+          goustoRef: '105979923',
+        }),
         pricing: Immutable.fromJS({
           prices: {
             total: '24.55',

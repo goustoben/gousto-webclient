@@ -678,6 +678,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       if (sca3ds) {
         reqData['3ds'] = true
         reqData.payment_method.card.card_token = sourceId
+        reqData.customer.gousto_ref = state.checkout.get('goustoRef')
       }
 
       if (

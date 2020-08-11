@@ -14,9 +14,15 @@ export const getCurrentMenuVariants = createSelector(
 
 export const getVariantsForRecipe = createSelector(
   [getCurrentMenuVariants, getRecipeIdFromProps, getCurrentMenuRecipes, getCurrentCollectionDietaryClaims],
-  (variants, coreRecipeId, menuRecipes, collectionDietaryClaims) => {
-    const alternatives = getVariantsForRecipeForCurrentCollection(variants, coreRecipeId, menuRecipes, collectionDietaryClaims)
+  (variants, coreRecipeId, menuRecipes, collectionDietaryClaims) => getVariantsForRecipeForCurrentCollection(variants, coreRecipeId, menuRecipes, collectionDietaryClaims)
+)
 
-    return alternatives ? alternatives.toJS() : null
+export const getAlternativesForRecipe = createSelector(
+  [getCurrentMenuVariants, getRecipeIdFromProps, getCurrentMenuRecipes, getCurrentCollectionDietaryClaims],
+  (variants, coreRecipeId, menuRecipes, collectionDietaryClaims) => {
+    const variantsForRecipe = getVariantsForRecipeForCurrentCollection(variants, coreRecipeId, menuRecipes, collectionDietaryClaims)
+    const alternatives = variantsForRecipe ? variantsForRecipe.alternatives : null
+
+    return alternatives || null
   }
 )

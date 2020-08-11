@@ -202,11 +202,11 @@ const replaceOutOfStockWithVariants = (recipes, currentMenuRecipes, inStockRecip
 
     // if there are no variants then just use the original recipe
     const recipeVariants = getVariantsForRecipeForCurrentCollection(currentMenuVariants, recipeId, currentMenuRecipes, collectionDietaryClaims)
-    if (recipeVariants === null) {
+    if (recipeVariants === null || (recipeVariants && recipeVariants.type !== 'alternatives')) {
       return createStandardRecipeView(recipe)
     }
 
-    const inStockVariant = getInStockVariantRecipe(recipeVariants, currentMenuRecipes, inStockRecipes)
+    const inStockVariant = getInStockVariantRecipe(recipeVariants.alternatives, currentMenuRecipes, inStockRecipes)
 
     // if there is no in stock variant then just use the original recipe
     if (!inStockVariant) {

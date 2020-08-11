@@ -27,5 +27,28 @@ describe('checkout reducer', () => {
         ).toBe(true)
       })
     })
+
+    describe('CHECKOUT_SET_GOUSTO_REF action type', () => {
+      test('should set goustoRef', () => {
+        const action = {
+          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+          goustoRef: 1234567
+        }
+
+        const initialState = Immutable.Map({
+          goustoRef: null
+        })
+
+        const result = checkoutReducer.checkout(initialState, action)
+        expect(
+          Immutable.is(
+            result,
+            Immutable.fromJS({
+              goustoRef: 1234567,
+            }),
+          ),
+        ).toBe(true)
+      })
+    })
   })
 })

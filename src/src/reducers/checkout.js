@@ -37,6 +37,7 @@ const initialState = () => Immutable.fromJS({
     county: '',
   },
   intervals: [],
+  goustoRef: null,
   errors: {},
 })
 
@@ -69,6 +70,12 @@ const checkout = {
       const { intervals } = action
 
       return state.set('intervals', Immutable.fromJS(intervals))
+    }
+
+    case actionTypes.CHECKOUT_SET_GOUSTO_REF: {
+      const { goustoRef } = action
+
+      return state.set('goustoRef', goustoRef)
     }
 
     case actionTypes.ERROR: {

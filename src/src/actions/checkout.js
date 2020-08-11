@@ -12,7 +12,7 @@ import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchIntervals } from 'apis/customers'
+import { fetchIntervals, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment } from 'apis/payments'
 import { createPreviewOrder } from 'apis/orders'
 
@@ -291,8 +291,20 @@ export function checkout3DSSignup() {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
 
+    const state = getState()
+
     try {
-      const state = getState()
+      let goustoRef = state.checkout.get('goustoRef')
+      if (!goustoRef) {
+        const { data } = await fetchReference()
+        goustoRef = data.goustoRef
+
+        dispatch({
+          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+          goustoRef,
+        })
+      }
+
       const { basket } = state
       const orderId = basket.get('previewOrderId')
       const { card_token: cardToken } = getPaymentDetails(state)
@@ -304,6 +316,7 @@ export function checkout3DSSignup() {
         order_id: orderId,
         card_token: cardToken,
         amount: amountInPence,
+        gousto_ref: goustoRef,
         '3ds': true,
         success_url: window.location.origin + success,
         failure_url: window.location.origin + failure,
@@ -341,6 +354,7 @@ export const checkPaymentAuth = (sessionId) => (
         await dispatch(userSubscribe(true, data.data.sourceId))
         await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
         dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
+        dispatch({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       } else {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
         dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))

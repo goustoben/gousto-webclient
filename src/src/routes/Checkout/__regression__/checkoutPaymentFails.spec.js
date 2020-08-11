@@ -12,6 +12,7 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
     cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
     cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
     cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as('getIntervals')
+    cy.route('GET', '/customers/v1/customers/reference', 'fixture:customers/reference.json')
     cy.route('POST', '/customers/v2/signup', 'fixture:customers/signupError.json').as('signupError')
     cy.route('POST', '/payments/v1/payments/payment-auth', 'fixture:payments/paymentAuth.json')
     cy.route('GET', '/payments/v1/payments/payments/**', 'fixture:payments/payment.json')
@@ -37,7 +38,7 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
           .click()
       })
 
-      it("Then the button will be disabled and I will see the correct error", () => {
+      it('Then the button will be disabled and I will see the correct error', () => {
         cy.wait(['@signupError'])
         cy.url().should('include', 'check-out/payment')
         cy.get('[data-testing="user-phone-number-invalid"]')

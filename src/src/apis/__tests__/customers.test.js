@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchIntervals } from '../customers'
+import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchIntervals, fetchReference } from '../customers'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -22,7 +22,8 @@ jest.mock('config/routes', () => ({
   customers: {
     signup: '/signup',
     newsletterSubscribers: '/newsletterSubscribers',
-    intervals: '/intervals'
+    intervals: '/intervals',
+    reference: '/reference',
   }
 }))
 
@@ -104,6 +105,26 @@ describe('customers api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchIntervals()
+      expect(result).toEqual(mockFetchResult)
+    })
+  })
+
+  describe('fetchReference', () => {
+    test('should fetch the correct url', async () => {
+      await fetchReference()
+
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        'endpoint-customersv1/reference',
+        {},
+        'GET'
+      )
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await fetchReference()
+
       expect(result).toEqual(mockFetchResult)
     })
   })

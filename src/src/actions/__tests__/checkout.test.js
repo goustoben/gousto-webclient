@@ -11,9 +11,10 @@ import { orderAssignToUser } from 'actions/order'
 import { userSubscribe } from 'actions/user'
 import { basketResetPersistent } from 'utils/basket'
 import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
+import { fetchAddressByPostcode } from 'apis/addressLookup'
+import { fetchReference } from 'apis/customers'
 import { createPreviewOrder } from 'apis/orders'
 import { authPayment, checkPayment } from 'apis/payments'
-import { fetchAddressByPostcode } from 'apis/addressLookup'
 
 import checkoutActions, {
   trackPurchase,
@@ -144,6 +145,14 @@ jest.mock('actions/tracking', () => ({
 
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
+}))
+jest.mock('apis/customers', () => ({
+  fetchReference: jest.fn(() => Promise.resolve({
+    status: 'ok',
+    data: {
+      goustoRef: '105979923'
+    }
+  })),
 }))
 jest.mock('apis/orders', () => ({
   createPreviewOrder: jest.fn(),
@@ -288,6 +297,7 @@ const createState = (stateOverrides) => ({
       delivery: true,
       payment: true,
     },
+    goustoRef: null,
   }),
   form: {
     aboutyou: {
@@ -668,11 +678,54 @@ describe('checkout actions', () => {
       getState.mockReturnValue(createState())
     })
 
+    describe('when gousto reference is not retrieved', () => {
+      test('should retrieve gousto reference', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(fetchReference).toHaveBeenCalled()
+      })
+
+      test('should store gousto reference', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+          goustoRef: '105979923'
+        })
+      })
+    })
+
+    describe('when gousto reference has been already retrieved', () => {
+      beforeEach(() => {
+        const checkoutState = createState()
+          .checkout.set('goustoRef', '105979923')
+        getState.mockReturnValue(createState({
+          checkout: checkoutState
+        }))
+      })
+
+      test('should not retrieve new reference', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(fetchReference).not.toHaveBeenCalled()
+      })
+
+      test('should not store new reference', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(dispatch).not.toHaveBeenCalledWith({
+          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+          goustoRef: expect.any(Number)
+        })
+      })
+    })
+
     test('should make payment auth request', async () => {
       const expected = {
         order_id: '100004',
         card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
         amount: 3499,
+        gousto_ref: '105979923',
         '3ds': true,
         success_url: `http://localhost${routes.client.payment.success}`,
         failure_url: `http://localhost${routes.client.payment.failure}`,
@@ -742,6 +795,12 @@ describe('checkout actions', () => {
 
         expect(trackUTMAndPromoCode).not.toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
       })
+
+      test('should clear gousto reference', async () => {
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      })
     })
 
     describe('when payment authorization failed', () => {
@@ -775,6 +834,12 @@ describe('checkout actions', () => {
         await checkPaymentAuth(failedSessionId)(dispatch, getState)
 
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
+      })
+
+      test('should not clear gousto reference', async () => {
+        await checkPaymentAuth(failedSessionId)(dispatch, getState)
+
+        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       })
     })
 

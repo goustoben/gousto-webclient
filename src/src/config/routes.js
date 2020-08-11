@@ -154,6 +154,7 @@ module.exports = {
     addresses: '/addresses',
     intervals: '/intervals',
     newsletterSubscribers: '/newsletter-subscribers',
+    reference: '/customers/reference',
   },
   deliveries: {
     days: '/days',
