@@ -6,6 +6,7 @@ import actions from 'actions/tracking'
 import { ThreeColumnRecipeList } from './ThreeColumnRecipeList'
 import { SingleColumnRecipeList } from './SingleColumnRecipeList'
 import { EMERecipeList } from '../ElevatedMenuExperience/EMERecipeList'
+import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -38,31 +39,36 @@ class RecipeList extends React.PureComponent {
       thematicName,
       isCurrentCollectionRecommendation,
       deliveryDate,
-      isEnabledRecipeTileFoundation
     } = this.props
 
-    if (isEnabledRecipeTileFoundation) {
-      return <EMERecipeList recipes={recipes} />
-    }
-
-    if (browserType === 'mobile') {
-      return (
-        <SingleColumnRecipeList
-          recipes={recipes}
-          thematicName={thematicName}
-          isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
-          deliveryDate={deliveryDate}
-        />
-      )
-    }
-
     return (
-      <ThreeColumnRecipeList
-        recipes={recipes}
-        thematicName={thematicName}
-        isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
-        deliveryDate={deliveryDate}
-      />
+      <div>
+        <OptimizelyRolloutsContainer featureName="recipe_tile_foundations" featureEnabled>
+          <EMERecipeList recipes={recipes} />
+        </OptimizelyRolloutsContainer>
+
+        <OptimizelyRolloutsContainer featureName="recipe_tile_foundations" featureEnabled={false}>
+          {
+            browserType === 'mobile'
+              ? (
+                <SingleColumnRecipeList
+                  recipes={recipes}
+                  thematicName={thematicName}
+                  isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+                  deliveryDate={deliveryDate}
+                />
+              )
+              : (
+                <ThreeColumnRecipeList
+                  recipes={recipes}
+                  thematicName={thematicName}
+                  isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+                  deliveryDate={deliveryDate}
+                />
+              )
+          }
+        </OptimizelyRolloutsContainer>
+      </div>
     )
   }
 }
@@ -75,14 +81,12 @@ RecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   browserType: PropTypes.string.isRequired,
   currentCollectionId: PropTypes.string.isRequired,
-  isEnabledRecipeTileFoundation: PropTypes.bool
 }
 
 RecipeList.defaultProps = {
   originalOrderRecipeIds: Immutable.List([]),
   deliveryDate: null,
   thematicName: '',
-  isEnabledRecipeTileFoundation: false
 }
 
 RecipeList.contextTypes = {
