@@ -19,9 +19,13 @@
 	text-align: center;
 }
 
+.loading--taste-preferences {
+	width: 150px;
+}
+
 .spinner {
 	height: 150px;
-	width: 150px; 
+	width: 150px;
 }
 
 .loading-text {

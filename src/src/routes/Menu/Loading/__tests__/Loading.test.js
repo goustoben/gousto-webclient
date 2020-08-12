@@ -27,4 +27,16 @@ describe('Menu Loading', () => {
       expect(loadingComponent).toHaveLength(1)
     })
   })
+
+  describe('when showTastePreferencesLoading is set to true', () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <Loading loading showTastePreferencesLoading />
+      )
+    })
+
+    test('LoadingTastePreferences is rendered', () => {
+      expect(wrapper.find('LoadingTastePreferences').length).toBe(1)
+    })
+  })
 })

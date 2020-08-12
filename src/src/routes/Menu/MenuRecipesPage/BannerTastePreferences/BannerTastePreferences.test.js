@@ -10,7 +10,7 @@ describe('BannerTastePreferences', () => {
     })
 
     test('should show banner message', () => {
-      expect(wrapper.find('.tasteProfileBannerMessage').text()).toEqual('Heres the full menu, ordered to your preferences')
+      expect(wrapper.find('.tasteProfileBannerMessage').text()).toEqual('Here\'s the full menu, ordered to your preferences')
     })
 
     test('should show banner icon', () => {

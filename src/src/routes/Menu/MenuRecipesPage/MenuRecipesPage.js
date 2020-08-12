@@ -150,15 +150,20 @@ export class MenuRecipesPage extends PureComponent {
   }
 
   render() {
-    const { showLoading } = this.props
+    const { showLoading, showTastePreferencesLoading } = this.props
     const fadeCss = (showLoading) ? css.fadeOut : css.willFade
 
     return (
-      <div className={fadeCss} data-testing="menuRecipes">
+      <div data-testing="menuRecipes">
         {
           showLoading
-            ? <Loading loading={showLoading} />
-            : this.getMenuContent()
+            ? (
+              <Loading
+                loading={showLoading}
+                showTastePreferencesLoading={showTastePreferencesLoading}
+              />
+            )
+            : <div className={fadeCss}>{this.getMenuContent()}</div>
         }
       </div>
     )
@@ -166,6 +171,7 @@ export class MenuRecipesPage extends PureComponent {
 }
 
 MenuRecipesPage.propTypes = {
+  showTastePreferencesLoading: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
   stateRecipeCount: PropTypes.number.isRequired,
   menuCurrentCollectionId: PropTypes.string.isRequired,
