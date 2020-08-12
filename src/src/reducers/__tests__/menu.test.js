@@ -4,7 +4,6 @@ import menu, { menuInitialState } from 'reducers/menu'
 import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdownExpanded } from '../../actions/menu'
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
-import { setMenuFeature } from '../../routes/Menu/actions/menuFeatures'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 
 describe('menu reducer', () => {
@@ -326,31 +325,6 @@ describe('menu reducer', () => {
         })
       })
     })
-
-    describe('MENU_SET_FEATURE', () => {
-      test('should set features with sent name and value', () => {
-        const result = menu.menu(menuInitialState, setMenuFeature('new_feature', true))
-
-        expect(result.get('features')).toEqual(Immutable.fromJS({
-          new_feature: true
-        }))
-      })
-
-      describe('when there are other features in menu state', () => {
-        let newState
-        beforeEach(() => {
-          newState = menuInitialState.setIn(['features', 'existing_feature'], true )
-        })
-        test('should set features with sent name and value without deleting existing features', () => {
-          const result = menu.menu(newState, setMenuFeature('new_feature', true))
-
-          expect(result.get('features')).toEqual(Immutable.fromJS({
-            new_feature: true,
-            existing_feature: true
-          }))
-        })
-      })
-    })
   })
 
   describe('menuCutoffUntil', () => {
@@ -404,6 +378,20 @@ describe('menu reducer', () => {
       expect(result).toEqual(Immutable.fromJS({
         items: []
       }))
+    })
+  })
+
+  describe('menuRecipes', () => {
+    test('should return menuRecipes', () => {
+      const result = menu.menuRecipes(Immutable.List([]), {
+        type: actionTypes.RECIPES_RECEIVE,
+        recipes: [{
+          id: 1
+        }, {
+          id: 2
+        }]
+      })
+      expect(result).toEqual(Immutable.fromJS([1, 2]))
     })
   })
 })

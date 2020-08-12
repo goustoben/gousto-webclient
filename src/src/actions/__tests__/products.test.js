@@ -167,7 +167,7 @@ describe('productsLoadProducts', () => {
       cutoffDate,
       reload: false,
     })
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' }, 'auth-1234-user-id', '1234')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' }, 'auth-1234-user-id', undefined)
   })
 
   test('should not fetch products by default if there are all products in product store & no cutoffDate is passed in', async () => {

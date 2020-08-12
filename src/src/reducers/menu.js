@@ -16,7 +16,6 @@ export const menuInitialState = Immutable.Map({
   hasCalculatedTimeToUsable: false,
   hasVisitedNonMenuPage: false,
   menuPrefetched: true,
-  features: Immutable.Map({})
 })
 
 const menu = {
@@ -83,14 +82,6 @@ const menu = {
       }
 
       return state
-    }
-
-    case actionTypes.MENU_SET_FEATURE: {
-      const { payload: { name, value }} = action
-      let newState = state
-      newState = newState.setIn(['features', name], value)
-
-      return newState
     }
 
     default:
