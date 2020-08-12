@@ -8,6 +8,8 @@ import userUtils from 'utils/user'
 import { basketOrderLoad } from 'actions/basket'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
+import { getAuthUserId, getAccessToken } from '../selectors/auth'
+import { fetchSimpleMenu } from '../routes/Menu/fetchData/menuApi'
 import recipeActions from './recipes'
 import { actionTypes } from './actionTypes'
 
@@ -21,18 +23,19 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (
 
 export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
+    const accessToken = getAccessToken(getState())
+    const userId = getAuthUserId(getState())
 
     try {
       dispatch(productsLoadCategories())
       dispatch(productsLoadStock())
       const { data: order } = await fetchOrder(accessToken, orderId)
+      const { data: menus } = await fetchSimpleMenu(accessToken, userId)
       const immutableOrderDetails = Immutable.fromJS(order)
       const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
-
-      await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}))
+      await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}, menus))
 
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({

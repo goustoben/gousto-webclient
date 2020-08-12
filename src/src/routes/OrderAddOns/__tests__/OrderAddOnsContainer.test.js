@@ -13,11 +13,16 @@ import status from 'reducers/status'
 import { fetchOrder } from 'apis/orders'
 import { fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
 import { OrderAddOnsContainer } from '../OrderAddOnsContainer'
+import { fetchSimpleMenu } from '../../Menu/fetchData/menuApi'
 
 jest.mock('apis/products')
 jest.mock('apis/orders')
+jest.mock('../../Menu/fetchData/menuApi', () => ({
+  fetchSimpleMenu: jest.fn()
+}))
 
 describe('<OrderAddOnsContainer />', () => {
+  fetchSimpleMenu.mockResolvedValue({data: []})
   fetchOrder.mockResolvedValue({
     data: { id: '123', whenCutOff: '', periodId: '' }
   })
@@ -74,6 +79,8 @@ describe('<OrderAddOnsContainer />', () => {
 
   describe('when products are loaded', () => {
     test('product list are rendered with desserts option only', async () => {
+      // need this to ensure promises are resolved and mocked
+      await Promise.resolve()
       await wrapper.update()
 
       const ProductList = wrapper.find('ProductList')
