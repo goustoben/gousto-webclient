@@ -3,7 +3,11 @@ import { changeCollectionById } from 'actions/filters'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
-import { getIsSignupReductionEnabled, getIsCommunicationPanelEnabled } from 'selectors/features'
+import {
+  getIsSignupReductionEnabled,
+  getIsCommunicationPanelEnabled,
+  getIsTastePreferencesEnabled
+} from 'selectors/features'
 import { getRecipes } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
@@ -32,6 +36,7 @@ const mapStateToProps = (state, ownProps) => {
   const collectionId = getCurrentCollectionId(state)
 
   return ({
+    showTastePreferencesLoading: getIsTastePreferencesEnabled(state),
     stateRecipeCount: getRecipes(state).size,
     menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     menuCurrentCollectionId: collectionId,

@@ -1,10 +1,12 @@
-import actions, { changeRecaptcha, authenticateClient } from 'actions/auth'
+import actions, { changeRecaptcha } from 'actions/auth'
+import { resetUserPassword } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
-import { clientServerAuthenticate } from 'apis/auth'
+
+jest.mock('apis/auth')
 
 jest.mock('utils/window')
 
@@ -14,18 +16,6 @@ jest.mock('apis/fetchS3', () => ({
 
 jest.mock('utils/logger', () => ({
   error: jest.fn()
-}))
-
-jest.mock('apis/auth', () => ({
-  clientServerAuthenticate: jest.fn().mockReturnValue({
-    data: {
-      data: {
-        accessToken: 'mock-access-token',
-        refreshToken: 'mock-refresh-token',
-        expiresIn: '123456789',
-      }
-    }
-  })
 }))
 
 jest.mock('moment', () => {
@@ -191,26 +181,71 @@ describe('changeRecaptcha', () => {
   })
 })
 
-describe('authenticateClient', () => {
+describe('resetPassword', () => {
   let dispatch
 
-  describe('when client authentication is requested', () => {
-    beforeEach(async () => {
+  describe('when resetUserPassword response is successfull', () => {
+    beforeEach(() => {
       dispatch = jest.fn()
-      await authenticateClient()(dispatch)
+      resetUserPassword.mockResolvedValue({ data: { email: 'email-test' } })
+      actions.authResetPassword()(dispatch)
     })
 
-    test('then clientServerAuthenticate should be called', async () => {
-      expect(clientServerAuthenticate).toHaveBeenCalled()
+    test('redirects to my-deliveries', () => {
+      expect(redirect).toHaveBeenCalledWith('/my-deliveries')
     })
 
-    test('then clientAuthenticated should be called with the correct params', async () => {
-      expect(dispatch).toHaveBeenCalledWith({
-        accessToken: 'mock-access-token',
-        expiresAt: '2020-03-10',
-        refreshToken: 'mock-refresh-token',
-        type: 'CLIENT_AUTHENTICATED',
+    test('set pending to false', () => {
+      const callsLength = dispatch.mock.calls.length - 1
+
+      expect(dispatch.mock.calls[callsLength][0]).toEqual(
+        { type: 'PENDING', key: 'AUTH_PASSWORD_RESET', value: false }
+      )
+    })
+  })
+
+  describe('when resetUserPassword response errors', () => {
+    beforeEach(() => {
+      dispatch = jest.fn()
+      resetUserPassword.mockRejectedValue({ code: 'test' })
+      actions.authResetPassword()(dispatch)
+    })
+
+    test('error is dispatched', () => {
+      const callBeforeSettingToPending = dispatch.mock.calls.length - 2
+
+      expect(dispatch.mock.calls[callBeforeSettingToPending][0]).toEqual(
+        { type: 'ERROR', key: 'AUTH_PASSWORD_RESET', value: 'test' }
+      )
+    })
+
+    test('set pending to false', () => {
+      const lastCallMade = dispatch.mock.calls.length - 1
+
+      expect(dispatch.mock.calls[lastCallMade][0]).toEqual(
+        { type: 'PENDING', key: 'AUTH_PASSWORD_RESET', value: false }
+      )
+    })
+  })
+})
+
+describe('validate', () => {
+  describe('when refreshToken is set', () => {
+    let dispatch
+    let getState
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = () => ({
+        auth: Immutable.Map({
+          accessToken: 'test-access-token',
+        }),
       })
+      actions.authValidate(null, 'test-refresh-token', '2018-04-10T12:00:00Z')(dispatch, getState)
+    })
+
+    test('refresh and identify actions are dispatched', () => {
+      expect(dispatch).toHaveBeenCalledTimes(2)
     })
   })
 })

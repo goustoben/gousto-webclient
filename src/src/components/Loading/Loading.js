@@ -7,13 +7,16 @@ import css from './Loading.css'
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
-const Loading = ({ className }) => (
-  <Image media={getImage('Loading-Icon.gif')} title="animation" className={`${css.gif} ${className}`} />
+export const LoadingTastePreferences = () => (
+  <div>
+    <Image
+      media={getImage('Loading-Icon-building-menu.gif')}
+      title="animation"
+      className={css.tastePreferences}
+    />
+    <p className={css.tastePreferencesContent}><strong>Building your menu</strong></p>
+  </div>
 )
-
-Loading.propTypes = {
-  className: PropType.string,
-}
 
 export const LoadingOverlay = () => (
   <Div
@@ -37,5 +40,13 @@ export const LoadingOverlay = () => (
     </Div>
   </Div>
 )
+
+const Loading = ({ className }) => (
+  <Image media={getImage('Loading-Icon.gif')} title="animation" className={`${css.gif} ${className}`} />
+)
+
+Loading.propTypes = {
+  className: PropType.string,
+}
 
 export default Loading

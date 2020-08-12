@@ -17,7 +17,7 @@ export const BannerTastePreferences = ({ shouldBannerShow }) => {
             <path fillRule="evenodd" clipRule="evenodd" d="M16.3059 4.24338C16.7097 3.72292 17.2782 3.25 18 3.25H18.75V20C18.75 20.4142 18.4142 20.75 18 20.75C17.5858 20.75 17.25 20.4142 17.25 20V13.75H14.25V13C14.25 10.4331 14.634 8.09784 15.2288 6.37967C15.5248 5.52448 15.8858 4.78487 16.3059 4.24338ZM17.25 12.25V5.52014C17.044 5.86577 16.8377 6.31722 16.6462 6.87033C16.1711 8.24285 15.8279 10.1235 15.7616 12.25H17.25Z" fill="#333D47" />
           </svg>
         </span>
-        <p className={css.tasteProfileBannerMessage}>Heres the full menu, ordered to your preferences</p>
+        <p className={css.tasteProfileBannerMessage}>Here&apos;s the full menu, ordered to your preferences</p>
       </div>
     </div>
   )

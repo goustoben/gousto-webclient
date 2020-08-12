@@ -2,3 +2,15 @@
 	width: 150px;
 	height: auto;
 }
+
+.tastePreferences {
+	width: 100px;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+}
+
+.tastePreferencesContent {
+	text-align: center;
+	padding: 1.5rem 0;
+}
