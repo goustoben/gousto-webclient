@@ -17,11 +17,6 @@ export const initialState = () => Immutable.fromJS({
   recaptcha: {
     signupToken: null,
   },
-  client: {
-    accessToken: '',
-    refreshToken: '',
-    expiresAt: '',
-  },
 })
 
 const auth = {
@@ -69,17 +64,6 @@ const auth = {
 
     case actionTypes.STORE_SIGNUP_RECAPTCHA_TOKEN: {
       return state.setIn(['recaptcha', 'signupToken'], action.token)
-    }
-
-    case actionTypes.CLIENT_AUTHENTICATED: {
-      return state.set(
-        'client',
-        Immutable.fromJS({
-          accessToken: action.accessToken,
-          refreshToken: action.refreshToken,
-          expiresAt: action.expiresAt,
-        }),
-      )
     }
 
     default:

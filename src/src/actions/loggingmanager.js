@@ -1,4 +1,4 @@
-import { triggerLoggingManagerEvent } from 'apis/loggingManager'
+import { logEventToServer } from 'apis/loggingManager'
 
 export const trackUserFreeFoodPageView = () => (
   async (dispatch, getState) => {
@@ -6,20 +6,15 @@ export const trackUserFreeFoodPageView = () => (
     const authUserId = auth.get('id')
     const device = request.get('browser')
     const eventName = 'rafPage-visited'
-    const accessToken = auth.get('client').get('accessToken')
 
     const loggingManagerEvent = {
-      accessToken,
-      body: {
-        eventName,
-        data: {
-          auth_user_id: authUserId,
-          event: eventName,
-          device,
-        }
+      eventName,
+      authUserId,
+      data: {
+        device,
       },
     }
 
-    triggerLoggingManagerEvent(loggingManagerEvent)
+    logEventToServer(loggingManagerEvent)
   }
 )

@@ -42,7 +42,7 @@ describe('loggingManager api', () => {
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith(
           'mock-access-token',
-          'endpoint-loggingmanager/log/test-event',
+          'endpoint-loggingmanager/log',
           {
             eventName: 'test-event',
             data: {

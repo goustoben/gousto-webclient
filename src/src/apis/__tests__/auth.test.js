@@ -1,4 +1,5 @@
 import fetch from 'utils/fetch'
+import isomorphicFetch from 'isomorphic-fetch'
 import {
   getUserToken,
   identifyUser,
@@ -12,8 +13,8 @@ import {
   serverIdentify,
   serverForget,
   serverValidatePassword,
-  clientServerAuthenticate,
   getClientToken,
+  validateRecaptchaUserToken,
 } from '../auth'
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -27,6 +28,8 @@ jest.mock('utils/fetch', () =>
 jest.mock('config/endpoint', () =>
   jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
 )
+
+jest.mock('isomorphic-fetch')
 
 jest.mock('config/routes', () => ({
   version: {
@@ -44,8 +47,10 @@ jest.mock('config/routes', () => ({
     identify: '/identify',
     forget: '/forget',
     validate: '/validate',
-    authenticateClient: '/authenticate-client',
-  }
+  },
+  recaptcha: {
+    verify: 'https://www.google.com/recaptcha/api/siteverify',
+  },
 }))
 
 describe('auth api', () => {
@@ -303,24 +308,6 @@ describe('auth api', () => {
     })
   })
 
-  describe('clientServerAuthenticate', () => {
-    describe('when the client authentication is requested', () => {
-      let result
-      beforeEach(async () => {
-        result = await clientServerAuthenticate()
-      })
-
-      test('then the correct url should be fetched', async () => {
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith(null, '/authenticate-client', null, 'POST', 'no-cache', {}, null, true)
-      })
-
-      test('should return the results of the fetch unchanged', async () => {
-        expect(result).toEqual(mockFetchResult)
-      })
-    })
-  })
-
   describe('getClientToken', () => {
     describe('when the client token is requested', () => {
       const authClientId = 1
@@ -344,6 +331,44 @@ describe('auth api', () => {
 
       test('then it should return the results of the fetch unchanged', async () => {
         expect(result).toEqual(mockFetchResult)
+      })
+    })
+  })
+
+  describe('validateRecaptchaUserToken', () => {
+    describe('when validateRecaptchaUserToken call succeeds', () => {
+      let expected
+
+      beforeEach(async () => {
+        isomorphicFetch.mockResolvedValue({ json: () => (
+          Promise.resolve({ data: [] })
+        ) })
+
+        expected = await validateRecaptchaUserToken('test-token', 'test-key')
+      })
+
+      test('data is returned', () => {
+        expect(expected).toEqual({data: []})
+      })
+    })
+
+    describe('when validateRecaptchaUserToken call errors', () => {
+      let expected
+
+      beforeEach(async () => {
+        isomorphicFetch.mockResolvedValue({ json: () => (
+          Promise.reject(Error('error'))
+        ) })
+
+        try {
+          expected = await validateRecaptchaUserToken('test-token', 'test-key')
+        } catch (error) {
+          expected = error
+        }
+      })
+
+      test('error is returned', () => {
+        expect(expected).toEqual(Error('error'))
       })
     })
   })

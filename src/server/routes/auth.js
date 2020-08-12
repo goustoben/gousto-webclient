@@ -1,5 +1,6 @@
 import { fetchFeatures } from 'apis/fetchS3'
 import logger from 'utils/logger'
+import { v4 as uuidv4 } from 'uuid'
 import {
   getUserToken,
   identifyUser,
@@ -9,9 +10,16 @@ import {
   validateUserPassword,
   getClientToken,
 } from 'apis/auth'
+import { triggerLoggingManagerEvent } from 'apis/loggingManager'
 import env from 'utils/env'
 import routes from 'config/routes'
-import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue, addClientSessionCookies } from './utils'
+import {
+  routeMatches,
+  addSessionCookies,
+  removeSessionCookies,
+  getCookieValue,
+  addClientSessionCookies,
+} from './utils'
 import { RECAPTCHA_PRIVATE_KEY } from '../config/recaptcha'
 
 const PINGDOM_USER = 'shaun.pearce+codetest@gmail.com'
@@ -153,17 +161,33 @@ export async function validate(ctx) {
 }
 
 /**
-* Authenticate Client Route
+* Authenticate Client and log event Route
 * @param {*} ctx
 */
-const authenticateClient = async (ctx) => {
+const logEventWithClientAuth = async (ctx) => {
   try {
+    const { body: { eventName, authUserId, data } } = ctx.request
     const { authClientId, authClientSecret } = env
+    const expiresAt = getCookieValue(ctx, 'client_oauth_expiry', 'expires_at')
+    const currentDateISO = new Date().toISOString()
 
-    const authResponse = await getClientToken({ authClientId, authClientSecret })
+    const request = {
+      id: uuidv4(),
+      name: eventName,
+      authUserId,
+      occurredAt: currentDateISO,
+      data
+    }
 
-    addClientSessionCookies(ctx, authResponse)
-    ctx.response.body = authResponse
+    if (!expiresAt || expiresAt < currentDateISO) {
+      const authResponse = await getClientToken({ authClientId, authClientSecret })
+      addClientSessionCookies(ctx, authResponse)
+    }
+
+    const accessToken = getCookieValue(ctx, 'client_oauth_token', 'access_token')
+    triggerLoggingManagerEvent({ accessToken, body: request })
+
+    ctx.response.body = 'Event logged successfully'
   } catch (e) {
     ctx.response.status = 401
     ctx.response.body = {
@@ -187,8 +211,8 @@ const auth = (app) => {
       await forget(ctx)
     } else if (routeMatches(ctx, routes.auth.validate, 'POST')) {
       await validate(ctx)
-    } else if (routeMatches(ctx, routes.auth.authenticateClient, 'POST')) {
-      await authenticateClient(ctx)
+    } else if (routeMatches(ctx, routes.auth.logEvent, 'POST')) {
+      await logEventWithClientAuth(ctx)
     } else {
       return next()
     }
@@ -197,5 +221,5 @@ const auth = (app) => {
 
 export {
   auth,
-  authenticateClient,
+  logEventWithClientAuth,
 }

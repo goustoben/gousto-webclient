@@ -75,10 +75,6 @@ export function validateRecaptchaUserToken(token, secret) {
   })
 }
 
-export function clientServerAuthenticate() {
-  return fetch(null, `${routes.auth.authenticateClient}`, null, 'POST', 'no-cache', {}, null, true)
-}
-
 export function getClientToken({ authClientId, authClientSecret }) {
   return fetch(null, `${endpoint('auth', version)}${routes.auth.userToken}`, { grant_type: 'client_credentials', client_id: authClientId, client_secret: authClientSecret }, 'POST', 'no-cache')
 }

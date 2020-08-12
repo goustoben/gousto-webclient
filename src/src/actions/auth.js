@@ -6,7 +6,6 @@ import {
   serverForget,
   resetUserPassword,
   identifyUser,
-  clientServerAuthenticate,
 } from 'apis/auth'
 import { isActive } from 'utils/auth'
 import config from 'config/auth'
@@ -23,13 +22,6 @@ import { actionTypes } from './actionTypes'
 /* action creators */
 const userAuthenticated = (accessToken, refreshToken, expiresAt) => ({
   type: actionTypes.USER_AUTHENTICATED,
-  accessToken,
-  refreshToken,
-  expiresAt,
-})
-
-const clientAuthenticated = (accessToken, refreshToken, expiresAt) => ({
-  type: actionTypes.CLIENT_AUTHENTICATED,
   accessToken,
   refreshToken,
   expiresAt,
@@ -79,29 +71,6 @@ const authenticate = (email, password, rememberMe, recaptchaToken) => (
       if (err.status === 401) {
         err.message = config.FAILED_LOGIN_TEXT
       } else if (err.status >= 500) {
-        err.message = config.DEFAULT_ERROR
-      } else {
-        err.message = config.DEFAULT_ERROR
-      }
-
-      throw err
-    }
-  }
-)
-
-export const authenticateClient = () => (
-  async (dispatch) => {
-    try {
-      const { data: authResponse } = await clientServerAuthenticate()
-      const {
-        accessToken,
-        refreshToken,
-        expiresIn,
-      } = authResponse.data
-      const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
-      await dispatch(clientAuthenticated(accessToken, refreshToken, expiresAt))
-    } catch (err) {
-      if (err.status >= 500) {
         err.message = config.DEFAULT_ERROR
       } else {
         err.message = config.DEFAULT_ERROR
@@ -228,8 +197,6 @@ const authActions = {
   userRememberMe,
   userAuthenticated,
   redirectLoggedInUser,
-  clientAuthenticated,
-  authenticateClient,
 }
 
 export default authActions

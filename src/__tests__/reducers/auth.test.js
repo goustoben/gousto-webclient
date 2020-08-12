@@ -21,11 +21,6 @@ describe('auth reducer', () => {
       recaptcha: {
         signupToken: null,
       },
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
 
     expect(Immutable.is(result, expected)).toEqual(true)
@@ -50,11 +45,6 @@ describe('auth reducer', () => {
       recaptcha: {
         signupToken: null,
       },
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -72,11 +62,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       const action = {
         type: 'USER_IDENTIFIED',
@@ -99,11 +84,6 @@ describe('auth reducer', () => {
         name: 'someone random',
         roles: ['user'],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -119,11 +99,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       const action = {
         type: 'USER_IDENTIFIED',
@@ -146,11 +121,6 @@ describe('auth reducer', () => {
         name: 'gousto employee',
         roles: ['admin'],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -166,11 +136,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       const action = {
         type: 'USER_IDENTIFIED',
@@ -193,11 +158,6 @@ describe('auth reducer', () => {
         name: 'gousto employee',
         roles: ['*'],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -216,11 +176,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       const action = {
         type: 'USER_AUTHENTICATED',
@@ -239,11 +194,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '2017-01-01',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -260,11 +210,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       const action = {
         type: 'USER_AUTHENTICATED',
@@ -284,11 +229,6 @@ describe('auth reducer', () => {
         name: '',
         roles: [],
         expiresAt: '2017-01-01',
-        client: {
-          accessToken: '',
-          refreshToken: '',
-          expiresAt: '',
-        },
       })
       expect(Immutable.is(result, expected)).toEqual(true)
     })
@@ -306,11 +246,6 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     const action = {
       type: 'USER_REMEMBER_ME',
@@ -328,11 +263,6 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -349,11 +279,6 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     const action = {
       type: 'USER_LOGGED_IN',
@@ -370,11 +295,6 @@ describe('auth reducer', () => {
       name: '',
       roles: [],
       expiresAt: '',
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -394,11 +314,6 @@ describe('auth reducer', () => {
       isRecaptchaEnabled: false,
       recaptcha: {
         signupToken: null,
-      },
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
       },
     })
     const action = {
@@ -420,11 +335,6 @@ describe('auth reducer', () => {
       recaptcha: {
         signupToken: null,
       },
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
@@ -442,11 +352,6 @@ describe('auth reducer', () => {
       roles: [],
       expiresAt: '',
       isRecaptchaEnabled: false,
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     const action = {
       type: 'CHANGE_RECAPTCHA',
@@ -465,16 +370,11 @@ describe('auth reducer', () => {
       roles: [],
       expiresAt: '',
       isRecaptchaEnabled: true,
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
-      },
     })
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 
-  test('should handle CLIENT_AUTHENTICATED action', () => {
+  test('should handle STORE_SIGNUP_RECAPTCHA_TOKEN action', () => {
     const state = Immutable.fromJS({
       accessToken: '',
       refreshToken: '',
@@ -487,17 +387,13 @@ describe('auth reducer', () => {
       roles: [],
       expiresAt: '',
       isRecaptchaEnabled: false,
-      client: {
-        accessToken: '',
-        refreshToken: '',
-        expiresAt: '',
+      recaptcha: {
+        signupToken: '',
       },
     })
     const action = {
-      type: 'CLIENT_AUTHENTICATED',
-      accessToken: 'mock-access-token',
-      refreshToken: 'mock-refresh-token',
-      expiresAt: '100',
+      type: 'STORE_SIGNUP_RECAPTCHA_TOKEN',
+      token: 'token-sign-up-recaptcha'
     }
     const result = auth.auth(state, action)
     const expected = Immutable.fromJS({
@@ -512,12 +408,11 @@ describe('auth reducer', () => {
       roles: [],
       expiresAt: '',
       isRecaptchaEnabled: false,
-      client: {
-        accessToken: 'mock-access-token',
-        refreshToken: 'mock-refresh-token',
-        expiresAt: '100',
-      },
+      recaptcha: {
+        signupToken: 'token-sign-up-recaptcha',
+      }
     })
+
     expect(Immutable.is(result, expected)).toEqual(true)
   })
 })

@@ -1,15 +1,11 @@
 import Immutable from 'immutable'
-import { triggerLoggingManagerEvent } from 'apis/loggingManager'
+import { logEventToServer } from 'apis/loggingManager'
 import {
   trackUserFreeFoodPageView,
 } from 'actions/loggingmanager'
 
-jest.mock('actions/auth', () => ({
-  authenticateClient: jest.fn().mockReturnValue({ accessToken: '12345' }),
-}))
-
 jest.mock('apis/loggingManager', () => ({
-  triggerLoggingManagerEvent: jest.fn(),
+  logEventToServer: jest.fn(),
 }))
 
 describe('trackUserFreeFoodPageView', () => {
@@ -18,7 +14,6 @@ describe('trackUserFreeFoodPageView', () => {
   const id = 'mock-user-id'
   const browser = 'mobile'
   const accessToken = '12345'
-  const eventName = 'rafPage-visited'
 
   const state = {
     request: Immutable.fromJS({
@@ -41,16 +36,12 @@ describe('trackUserFreeFoodPageView', () => {
     })
 
     test('then the logging manager event should be triggered', async () => {
-      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
-        accessToken,
-        body: {
-          eventName,
-          data: {
-            auth_user_id: id,
-            event: eventName,
-            device: browser,
-          }
-        },
+      expect(logEventToServer).toHaveBeenCalledWith({
+        eventName: 'rafPage-visited',
+        authUserId: id,
+        data: {
+          device: browser,
+        }
       })
     })
   })

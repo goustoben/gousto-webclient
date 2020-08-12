@@ -23,10 +23,6 @@ jest.mock('utils/logger', () => ({
   warning: jest.fn(),
 }))
 
-jest.mock('actions/auth', () => ({
-  authenticateClient: jest.fn().mockReturnValue({ accessToken: '12345' }),
-}))
-
 jest.mock('apis/loggingManager', () => ({
   triggerLoggingManagerEvent: jest.fn(),
 }))
