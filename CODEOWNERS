@@ -60,16 +60,16 @@
 /src/src/utils/__tests__/recipe.test.js       @Gousto/squad-radishes
 
 
-/src/src/routes/ResetPassword       @Gousto/squad-haricots
-/src/src/routes/Jobs       @Gousto/squad-haricots
-/src/src/routes/GetHelp       @Gousto/squad-haricots
-/src/src/routes/OrderConfirmation       @Gousto/squad-haricots
+/src/src/routes/ResetPassword/       @Gousto/squad-haricots
+/src/src/routes/Jobs/       @Gousto/squad-haricots
+/src/src/routes/GetHelp/       @Gousto/squad-haricots
+/src/src/routes/OrderConfirmation/       @Gousto/squad-haricots
 
 
-/src/src/routes/BoxPrices       @Gousto/squad-rockets
-/src/src/routes/Account       @Gousto/squad-rockets
-/src/src/routes/Checkout       @Gousto/squad-rockets
-/src/src/routes/Signup       @Gousto/squad-rockets
-/src/src/routes/Welcome       @Gousto/squad-rockets
-/src/src/routes/Join       @Gousto/squad-rockets
-/src/src/routes/Home       @Gousto/squad-rockets
+/src/src/routes/BoxPrices/       @Gousto/squad-rockets
+/src/src/routes/Account/       @Gousto/squad-rockets
+/src/src/routes/Checkout/       @Gousto/squad-rockets
+/src/src/routes/Signup/       @Gousto/squad-rockets
+/src/src/routes/Welcome/       @Gousto/squad-rockets
+/src/src/routes/Join/       @Gousto/squad-rockets
+/src/src/routes/Home/       @Gousto/squad-rockets
