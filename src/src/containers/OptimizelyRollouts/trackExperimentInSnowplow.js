@@ -1,16 +1,17 @@
-import windowUtils from 'utils/window'
-
-export const trackExperimentInSnowplow = (optimizelyConfig, featureName, isOptimizelyFeatureEnabled) => {
+import { optimizelyRolloutsExperiment } from '../../actions/trackingKeys'
+export const trackExperimentInSnowplow = (optimizelyConfig, featureName, isOptimizelyFeatureEnabled) => (dispatch) => {
   const experimentsForFeatureName = optimizelyConfig.featuresMap[featureName].experimentsMap
-  const clientWindow = windowUtils.getWindow()
   Object.keys(experimentsForFeatureName).forEach(experiment => {
     const experimentData = experimentsForFeatureName[experiment]
-
-    clientWindow.snowplow('trackSelfDescribingEvent', {
-      experiment_id: experimentData.id,
-      experiment_name: experimentData.key,
-      variation_id: isOptimizelyFeatureEnabled ? experimentData.variationsMap.variant.id : experimentData.variationsMap.default.id,
-      variation_name: isOptimizelyFeatureEnabled ? experimentData.variationsMap.variant.key : experimentData.variationsMap.default.key
+    dispatch({
+      type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
+      trackingData: {
+        actionType: optimizelyRolloutsExperiment,
+        experiment_id: experimentData.id,
+        experiment_name: experimentData.key,
+        variation_id: isOptimizelyFeatureEnabled ? experimentData.variationsMap.variant.id : experimentData.variationsMap.default.id,
+        variation_name: isOptimizelyFeatureEnabled ? experimentData.variationsMap.variant.key : experimentData.variationsMap.default.key
+      }
     })
   })
 }
