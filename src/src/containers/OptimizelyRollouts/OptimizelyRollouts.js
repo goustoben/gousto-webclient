@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 import { getOptimizelyInstance } from './optimizelySDK'
 
 export class OptimizelyRollouts extends React.PureComponent {
@@ -25,7 +24,7 @@ export class OptimizelyRollouts extends React.PureComponent {
   }
 
   updateInstance = async () => {
-    const { featureName, authUserId } = this.props
+    const { featureName, authUserId, trackExperimentInSnowplow } = this.props
 
     if (authUserId) {
       const optimizelyInstance = await getOptimizelyInstance()
@@ -70,6 +69,7 @@ OptimizelyRollouts.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.element,
-  ])
+  ]),
+  trackExperimentInSnowplow: PropTypes.func.isRequired
 }
 

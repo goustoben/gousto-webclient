@@ -5,9 +5,9 @@ import config from 'config/home'
 import Guide from 'Guide'
 import css from './Subscription.css'
 
-const Subscription = ({ steps, header, description, isHomePageRedesignEnabled }) => (
-  <div className={classnames({ [css.homepageRedesign]: isHomePageRedesignEnabled })}>
-    <Guide steps={steps(isHomePageRedesignEnabled)} header={header} description={description} graphicType="svg" />
+const Subscription = ({ steps, header, description, isHomePageRedesignEnabled, isBoxPricesPageRedesignEnabled }) => (
+  <div className={classnames({ [css.homepageRedesign]: isHomePageRedesignEnabled }, {[css.boxPricesRedesign]: isBoxPricesPageRedesignEnabled})}>
+    <Guide steps={steps(isHomePageRedesignEnabled || isBoxPricesPageRedesignEnabled)} header={header} description={description} graphicType="svg" />
   </div>
 )
 
@@ -20,11 +20,13 @@ Subscription.propTypes = {
     description: PropTypes.string.isRequired,
   })),
   isHomePageRedesignEnabled: PropTypes.bool,
+  isBoxPricesPageRedesignEnabled: PropTypes.bool,
 }
 
 Subscription.defaultProps = {
   steps: config.subscription.steps,
   isHomePageRedesignEnabled: false,
+  isBoxPricesPageRedesignEnabled: false,
 }
 
 export { Subscription }

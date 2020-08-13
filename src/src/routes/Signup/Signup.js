@@ -31,7 +31,8 @@ const propTypes = {
     query: PropTypes.shape({
       steps: PropTypes.string,
       promo_code: PropTypes.string,
-    })
+    }),
+    pathname: PropTypes.string
   }),
   params: PropTypes.shape({
     stepName: PropTypes.string,
@@ -61,6 +62,8 @@ const defaultProps = {
 const contextTypes = {
   store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
+
+const postCodePath = '/signup/postcode'
 
 class Signup extends React.PureComponent {
   static fetchData = async ({ store, params = {}, query = {}}) => {
@@ -116,7 +119,7 @@ class Signup extends React.PureComponent {
     }
 
     // Step landed is not the first step
-    if (params.stepName && firstStep.get('slug') !== params.stepName) {
+    if (params.stepName && firstStep.get('slug') !== params.stepName && params.pathname !== postCodePath) {
       return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
     }
 
@@ -127,7 +130,9 @@ class Signup extends React.PureComponent {
     const { location, params } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
-    Signup.fetchData({ store, query, params })
+    const boxPricesExperimentParams = { stepName: 'postcode', pathname: postCodePath }
+    const signupParams = location.pathname === routes.client.signup ? params : boxPricesExperimentParams
+    Signup.fetchData({ store, query, params: signupParams })
   }
 
   componentWillReceiveProps(nextProps) {

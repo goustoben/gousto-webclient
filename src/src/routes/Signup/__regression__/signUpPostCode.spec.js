@@ -67,7 +67,7 @@ describe('Given I land on postcode slide of the wizard', () => {
       cy.get('[data-testing="signupPostcodeCTA"]').click()
 
       cy.window().pipe(getBoxSummaryError).should('equal', 'do-not-deliver')
-      cy.url().should('include', 'signup/postcode?steps=postcode')
+      cy.url().should('include', 'steps=postcode')
     })
   })
 })

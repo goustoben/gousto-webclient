@@ -31,7 +31,8 @@ import {
   getHomePageRedesign,
   getIsHelpCentreActive,
   getIs3DSForSignUpEnabled,
-  getIsTastePreferencesEnabled
+  getIsTastePreferencesEnabled,
+  getBoxPricesPageRedesign
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -78,7 +79,8 @@ describe('when features are defined', () => {
     [getHomePageRedesign, 'isHomePageRedesignEnabled'],
     [getIsHelpCentreActive, 'isHelpCentreActive'],
     [getIs3DSForSignUpEnabled, 'enable3DSForSignUp'],
-    [getIsTastePreferencesEnabled, 'tastePreferences']
+    [getIsTastePreferencesEnabled, 'tastePreferences'],
+    [getBoxPricesPageRedesign, 'isBoxPricesPageRedesignEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

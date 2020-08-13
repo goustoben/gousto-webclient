@@ -121,3 +121,7 @@ export const getIs3DSForSignUpEnabled = ({ features }) => (
 export const getIsTastePreferencesEnabled = ({ features }) => (
   features && features.getIn(['tastePreferences', 'value'], false)
 )
+
+export const getBoxPricesPageRedesign = ({ features }) => (
+  features && features.getIn(['isBoxPricesPageRedesignEnabled', 'value'], false)
+)

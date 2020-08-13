@@ -1,7 +1,6 @@
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
 describe('trackExperimentInSnowplow', () => {
-  global.snowplow = jest.fn()
   const optimizelyConfig = {
     featuresMap: {
       testFeature: {
@@ -27,33 +26,47 @@ describe('trackExperimentInSnowplow', () => {
       }
     }
   }
+  let dispatch
   let featureName = 'testFeature'
+  beforeEach(() => {
+    dispatch = jest.fn()
+  })
   describe('when optimizelyConfig has experiments for featureName', () => {
     describe('when optimizelyExperiment is enabled', () => {
       beforeEach(() => {
         const isOptimizelyFeatureEnabled = true
-        trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)
+        trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)(dispatch)
       })
       test('should call snowplow with experiment data', () => {
-        expect(global.snowplow).toHaveBeenCalledWith('trackSelfDescribingEvent', {
-          experiment_id: 1234,
-          experiment_name: 'experimentTag',
-          variation_id: 4556,
-          variation_name: 'variant'})
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
+          trackingData: {
+            actionType: 'optimizely_rollouts_experiment',
+            experiment_id: 1234,
+            experiment_name: 'experimentTag',
+            variation_id: 4556,
+            variation_name: 'variant'
+          }
+        })
       })
     })
 
     describe('when optimizelyExperiment is enabled', () => {
       beforeEach(() => {
         const isOptimizelyFeatureEnabled = false
-        trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)
+        trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)(dispatch)
       })
       test('should call snowplow with experiment data', () => {
-        expect(global.snowplow).toHaveBeenCalledWith('trackSelfDescribingEvent', {
-          experiment_id: 1234,
-          experiment_name: 'experimentTag',
-          variation_id: 2344,
-          variation_name: 'default'})
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'TRACKING_OPTIMIZELY_ROLLOUTS',
+          trackingData: {
+            actionType: 'optimizely_rollouts_experiment',
+            experiment_id: 1234,
+            experiment_name: 'experimentTag',
+            variation_id: 2344,
+            variation_name: 'default'
+          }
+        })
       })
     })
   })
@@ -62,10 +75,10 @@ describe('trackExperimentInSnowplow', () => {
     beforeEach(() => {
       featureName = 'testFeatureWithNoData'
       const isOptimizelyFeatureEnabled = false
-      trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)
+      trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)(dispatch)
     })
-    test('should not call snowplow', () => {
-      expect(global.snowplow).toHaveBeenCalled()
+    test('should not call dispatch', () => {
+      expect(dispatch).not.toHaveBeenCalled()
     })
   })
 })

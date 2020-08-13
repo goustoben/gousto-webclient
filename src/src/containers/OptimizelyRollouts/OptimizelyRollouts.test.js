@@ -1,11 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { safeJestMock } from '_testing/mocks'
-import * as snowplow from './trackExperimentInSnowplow'
 import * as optimizelySDK from './optimizelySDK'
 import { OptimizelyRollouts } from './OptimizelyRollouts'
 
-const mockedTrackExperimentInSnowplow = safeJestMock(snowplow, 'trackExperimentInSnowplow')
 const mockedGetOptimizelyInstance = safeJestMock(optimizelySDK, 'getOptimizelyInstance')
 
 describe('OptimizelyRollouts', () => {
@@ -18,7 +16,7 @@ describe('OptimizelyRollouts', () => {
     })
 
     wrapper = shallow(
-      <OptimizelyRollouts featureName="mock-feature">
+      <OptimizelyRollouts featureName="mock-feature" trackExperimentInSnowplow={() => {}}>
         <div>mock-child</div>
       </OptimizelyRollouts>
     )
@@ -58,6 +56,7 @@ describe('OptimizelyRollouts', () => {
       })
 
       describe('And optimizely feature is enabled', () => {
+        const mockedTrackExperimentInSnowplow = jest.fn()
         beforeEach(async () => {
           mockedGetOptimizelyInstance.mockResolvedValue({
             isFeatureEnabled: () => true,
@@ -67,7 +66,7 @@ describe('OptimizelyRollouts', () => {
           })
 
           wrapper = await shallow(
-            <OptimizelyRollouts featureName="mock-feature" featureEnabled authUserId="mock-auth-id">
+            <OptimizelyRollouts featureName="mock-feature" featureEnabled authUserId="mock-auth-id" trackExperimentInSnowplow={mockedTrackExperimentInSnowplow}>
               <div>mock-child</div>
             </OptimizelyRollouts>
           )
