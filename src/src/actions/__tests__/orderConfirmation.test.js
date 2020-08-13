@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
+import { safeJestMock } from '_testing/mocks'
 
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'utils/window'
@@ -20,6 +21,7 @@ import {
 } from 'actions/orderConfirmation'
 
 import { orderAddOnRedirect } from 'actions/orderAddOn'
+import * as menuApis from '../../routes/Menu/fetchData/menuApi'
 
 jest.mock('apis/orders')
 jest.mock('actions/basket')
@@ -49,6 +51,7 @@ describe('orderConfirmation actions', () => {
   const getState = jest.fn()
 
   beforeEach(() => {
+    safeJestMock(menuApis, 'fetchSimpleMenu').mockResolvedValue()
     getState.mockReturnValue({
       auth: Immutable.Map({
         accessToken: 'access-token',
@@ -94,6 +97,10 @@ describe('orderConfirmation actions', () => {
   })
 
   describe('orderDetails', () => {
+    beforeEach(() => {
+      safeJestMock(menuApis, 'fetchSimpleMenu').mockResolvedValue({ data: [] })
+    })
+
     test('should attempt to fetch the order details for the orderId given', async () => {
       fetchOrder.mockReturnValue(
         Promise.resolve({ data: { id: '1234', whenCutoff: '2019-04-12 19:00:00' } })
@@ -143,7 +150,7 @@ describe('orderConfirmation actions', () => {
       test('should fetch the products for the returned cutoff date', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678', {reload: true})
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678', {reload: true}, [])
       })
 
       test('should call basket order load for the returned order', async () => {
@@ -154,6 +161,24 @@ describe('orderConfirmation actions', () => {
           whenCutoff: '2019-04-12 19:00:00',
           periodId: '5678',
         }))
+      })
+
+      test('should fetch the products for the returned menu data', async () => {
+        safeJestMock(menuApis, 'fetchSimpleMenu').mockResolvedValue({ data: [{
+          id: '1234',
+          attributes: {
+            ends_at: '2020-08-11T11:59:59+01:00',
+          }
+        }]})
+
+        await orderDetails('1234')(dispatch, getState)
+
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678', {reload: true}, [{
+          id: '1234',
+          attributes: {
+            ends_at: '2020-08-11T11:59:59+01:00',
+          }
+        }])
       })
     })
 

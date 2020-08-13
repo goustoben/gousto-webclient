@@ -62,7 +62,7 @@ function getProductParameters(state, props = {}) {
   }
 }
 
-export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}) => (
+export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}, menus) => (
   async (dispatch, getState) => {
     const {
       basket,
@@ -78,7 +78,7 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       sort,
     }
 
-    const { accessToken, authUserId, menuId } = getProductParameters(getState(), { cutoffDate })
+    const { accessToken, authUserId, menuId } = getProductParameters(getState(), { cutoffDate, menus })
 
     if (periodId) {
       reqData.period_id = periodId

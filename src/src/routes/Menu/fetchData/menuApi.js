@@ -72,3 +72,17 @@ export function fetchMenusWithUserId(accessToken, query, userId) {
 
   return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
 }
+
+export function fetchSimpleMenu(accessToken, userId) {
+  const fetchOptions = {
+    ...options,
+    accessToken
+  }
+
+  const requestQueryParams = {
+    includeMenuRelationships: false,
+    userId
+  }
+
+  return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
+}

@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes } from '../menu'
+import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes, getActiveMenuIdForOrderDate } from '../menu'
 
 describe('getCurrentMenuRecipes', () => {
   test('should return only recipes in the current menu', () => {
@@ -158,6 +158,111 @@ describe('activeMenuForDate', () => {
       }
       const result = activeMenuForDate(testData, '2019-10-25T12:00:00+01:000')
       expect(result.id).toEqual('999')
+    })
+  })
+})
+
+describe('getActiveMenuIdForOrderDate', () => {
+  test('should get the active menu id for a date that is before the first menus end_at', () => {
+    const testData = [{
+      id: '295',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-04-03T11:59:59+01:00'
+      }
+    }, {
+      id: '296',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-10-20T11:59:59+01:00'
+      }
+    }]
+
+    const result = getActiveMenuIdForOrderDate(null, { menus: testData, cutoffDate: '2019-04-01T11:59:59+01:00'})
+    expect(result).toEqual('295')
+  })
+
+  test('should get the active menu id for a date that is after the first menus end_at', () => {
+    const testData = [{
+      id: '295',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-04-03T11:59:59+01:00'
+      }
+    }, {
+      id: '296',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-10-20T11:59:59+01:00'
+      }
+    }]
+
+    const result = getActiveMenuIdForOrderDate(null, { menus: testData, cutoffDate: '2019-06-13T11:59:59+01:00'})
+    expect(result).toEqual('296')
+  })
+
+  test('should get the active menu id for a date that is just after the first menus end_at', () => {
+    const testData = [{
+      id: '295',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-04-03T11:59:59+01:00'
+      }
+    }, {
+      id: '296',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-10-20T11:59:59+01:00'
+      }
+    }]
+
+    const result = getActiveMenuIdForOrderDate(null, { menus: testData, cutoffDate: '2019-04-03T12:00:00+01:00'})
+    expect(result).toEqual('296')
+  })
+
+  test('should return undefined if no date is passed in', () => {
+    const testData = [{
+      id: '295',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-04-03T11:59:59+01:00'
+      }
+    }, {
+      id: '296',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-10-20T11:59:59+01:00'
+      }
+    }]
+
+    const result = getActiveMenuIdForOrderDate(null, { menus: testData, cutoffDate: null})
+    expect(result).toEqual(undefined)
+  })
+
+  test('should return undefined for a date that is just after the second menus end_at', () => {
+    const testData = [{
+      id: '295',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-04-03T11:59:59+01:00'
+      }
+    }, {
+      id: '296',
+      type: 'menus',
+      attributes: {
+        ends_at: '2019-10-20T11:59:59+01:00'
+      }
+    }]
+
+    const result = getActiveMenuIdForOrderDate(testData, '2019-10-25T12:00:00+01:000')
+    expect(result).toEqual(undefined)
+  })
+
+  describe('when no menuServiceData', () => {
+    test('should return empty object', () => {
+      const testData = []
+      const result = getActiveMenuIdForOrderDate(null, { menus: testData, cutoffDate: '2019-10-25T12:00:00+01:000'})
+      expect(result).toEqual(undefined)
     })
   })
 })

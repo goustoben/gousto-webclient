@@ -91,6 +91,13 @@ describe('productsLoadProducts', () => {
   let getStateSpy
   const statusPendingSpy = jest.spyOn(statusActions, 'pending')
   const statusErrorSpy = jest.spyOn(statusActions, 'error')
+  const menus = [
+    { id: '1234',
+      attributes: {
+        ends_at: '2020-08-11T11:59:59+01:00',
+      }
+    }
+  ]
 
   beforeEach(() => {
     fetchProducts.mockReturnValue(Promise.resolve(
@@ -236,7 +243,7 @@ describe('productsLoadProducts', () => {
 
   test('should fetch products for given cutoff date when cutoffDate is passed in', async () => {
     const cutoff = '2020-08-11T11:59:59+01:00'
-    await productsLoadProducts(cutoff)(dispatchSpy, getStateSpy)
+    await productsLoadProducts(cutoff, undefined, undefined, menus)(dispatchSpy, getStateSpy)
 
     const dispatchSpyCalls = dispatchSpy.mock.calls[1]
     expect(dispatchSpyCalls[0]).toEqual({
@@ -254,7 +261,7 @@ describe('productsLoadProducts', () => {
 
   test('should fetch products for given period when periodId is passed in', async () => {
     const cutoff = '2020-08-11T11:59:59+01:00'
-    await productsLoadProducts(cutoff, '1234')(dispatchSpy, getStateSpy)
+    await productsLoadProducts(cutoff, '1234', undefined, menus)(dispatchSpy, getStateSpy)
 
     const dispatchSpyCalls = dispatchSpy.mock.calls[1]
     expect(dispatchSpyCalls[0]).toEqual({

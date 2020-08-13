@@ -1,5 +1,5 @@
 import * as fetchModule from 'utils/fetch'
-import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
+import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
 
 const mockFetchResult = { data: [1, 2, 3] }
 
@@ -151,6 +151,26 @@ describe('menus', () => {
           expect.any(Object)
         )
       })
+    })
+  })
+
+  describe('fetchSimpleMenu', () => {
+    test('should fetch the correct url', async () => {
+      await fetchSimpleMenu('token', 'user-id')
+      expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+        {
+          includeMenuRelationships: false,
+          userId: 'user-id', },
+        {
+          accessToken: 'token',
+          cache: 'default',
+          headers: {},
+          includeCookies: false,
+          method: 'GET',
+          timeout: null,
+          useMenuService: true,
+        })
     })
   })
 })
