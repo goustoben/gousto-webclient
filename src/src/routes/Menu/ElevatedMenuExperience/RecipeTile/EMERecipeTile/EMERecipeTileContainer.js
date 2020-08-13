@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
 import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../../../selectors/recipe'
+import { getVariantsForRecipe } from '../../../selectors/variants'
 import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
 import { EMERecipeTile } from './EMERecipeTile'
 import { getElevatedMenuExperienceRecipeTags } from '../../../selectors/elevatedMenuExperienceRecipeTags'
@@ -22,6 +23,7 @@ const mapStateToProps = (state, ownProps) => {
     title: getRecipeTitle(state, ownProps),
     brandTags: getElevatedMenuExperienceRecipeTags(state, ownProps),
     isFineDineIn: getRecipeIsFineDineIn(state, ownProps),
+    recipeVariants: getVariantsForRecipe(state, ownProps)
   }
 }
 

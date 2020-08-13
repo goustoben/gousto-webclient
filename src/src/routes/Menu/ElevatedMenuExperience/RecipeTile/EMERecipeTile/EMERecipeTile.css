@@ -7,9 +7,9 @@
     display: flex;
     flex-direction: row;
     background-color: White;
-    margin: 0 0.5rem 0.5rem 0.5rem;
     position: relative;
     height: 200px;
+    margin: 0 0.5rem 0.5rem 0.5rem;
     @media ScreenSMMin {
         width: 48%;
         height: auto;
@@ -77,6 +77,12 @@
 .recipeTileIsFineDineIn {
     background: Blackberry;
     color: White;
+}
+
+.recipeTileInfoShowVariantHeader {
+    @media ScreenXSMax {
+        padding-top: 1.5rem
+    }
 }
 
 .recipeTileContainer:hover {
