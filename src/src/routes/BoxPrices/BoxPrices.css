@@ -1,3 +1,6 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value NewGrey from 'styles/colors.css';
+
 .loadingOverlay {
 	display: flex;
 	position: fixed;
@@ -13,4 +16,19 @@
 
 .loading {
 	filter: blur(3px);
+}
+
+.boxPriceTitle {
+  margin: 3rem 1rem 0;
+
+  @media BreakpointFromMedium {
+    margin: 5rem 0 0;
+  }
+}
+
+.boxPriceSubTitle {
+  color: NewGrey;
+  composes: fontStyleBodyL from 'design-language/typography.css';
+  text-align: center;
+  margin: 0;
 }

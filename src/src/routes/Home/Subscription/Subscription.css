@@ -1,6 +1,8 @@
 @value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
+@value White from 'styles/colors.css';
 
-.homepageRedesign {
+.homepageRedesign,
+.boxPricesRedesign {
   > div > div {
     &:first-of-type {
       padding-bottom: 1.5rem;
@@ -27,6 +29,21 @@
     > div {
       padding-right: 2.5rem;
       padding-left: 2.5rem;
+    }
+  }
+}
+
+.boxPricesRedesign {
+  background: White;
+  padding: 3rem 0;
+
+  @media BreakpointFromMedium {
+    padding: 5rem 0;
+  }
+
+  > div > div {
+    &:first-of-type {
+       padding-bottom: 0.5rem;
     }
   }
 }

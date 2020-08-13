@@ -6,6 +6,7 @@ module.exports = {
     image: require('media/images/box-prices/box-prices-hero.png'),
   },
   cta: 'Build My Box',
+  ctaRedesign: 'Get started',
   boxTypes: {
     2: {
       type: '2-Person',
@@ -16,6 +17,16 @@ module.exports = {
       type: 'Family',
       description: 'Tasty meals for 2 adults and 2-3 children',
       image: require('media/images/box-prices/family-box.jpg'),
+    },
+  },
+  boxTypesRedesign: {
+    2: {
+      description: 'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
+      image: require('media/images/box-prices/two-person-box.jpg'),
+    },
+    4: {
+      description: 'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
+      image: require('media/images/box-prices/four-person-box.jpg'),
     },
   },
   icons: [
