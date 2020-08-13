@@ -23,7 +23,7 @@ class BoxType extends React.PureComponent {
         <div className={css.boxWrapper}>
           <h2 className={css.title}>
             {numPersons}
-            people
+            &nbsp;people
           </h2>
           <p className={css.subtitle}>{boxType.description}</p>
 
@@ -40,7 +40,7 @@ class BoxType extends React.PureComponent {
 
           <p className={css.portionsSign}>
             {numPersons}
-            portions per recipe
+            &nbsp;portions per recipe
           </p>
 
           <ul className={css.list}>

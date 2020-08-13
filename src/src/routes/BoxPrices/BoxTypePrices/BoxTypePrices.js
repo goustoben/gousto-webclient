@@ -7,7 +7,7 @@ const BoxTypePrices = ({ numPortions, totalPrice }) => (
   <div className={css.container}>
     <p className={css.recipes}>
       {numPortions}
-      recipes
+      &nbsp;recipes
     </p>
     <p className={css.boxPrice}>
       &pound;
