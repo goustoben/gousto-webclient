@@ -22,6 +22,7 @@ const propTypes = {
   device: PropTypes.string.isRequired,
   trackWelcomeAppPromoClick: PropTypes.func.isRequired,
   updateUserTasteProfile: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
 }
 
 const defaultProps = {}
@@ -45,6 +46,7 @@ class WelcomeExperimentSwitch extends React.PureComponent {
       userFetchReferralOffer,
       device,
       trackWelcomeAppPromoClick,
+      fetchData,
     } = this.props
     const Welcome = isWelcomePageOnboardingEnabled ? WelcomeExperiment : WelcomeOriginal
 
@@ -60,6 +62,7 @@ class WelcomeExperimentSwitch extends React.PureComponent {
         userFetchReferralOffer={userFetchReferralOffer}
         device={device}
         trackWelcomeAppPromoClick={trackWelcomeAppPromoClick}
+        fetchData={fetchData}
       />
     )
   }
