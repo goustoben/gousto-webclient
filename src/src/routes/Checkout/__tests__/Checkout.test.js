@@ -11,9 +11,8 @@ import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
 import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
-
 import { Checkout } from 'routes/Checkout/Checkout'
+import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 
 jest.mock('actions', () => ({
   replace: jest.fn().mockReturnValue(Promise.resolve()),
@@ -35,7 +34,7 @@ jest.mock('routes/Checkout/loadCheckoutScript', () => ({
   loadCheckoutScript: jest.fn()
 }))
 
-jest.mock('utils/menuService')
+jest.mock('../../Menu/fetchData/menuService')
 
 describe('Checkout', () => {
   let wrapper

@@ -35,7 +35,7 @@ class Home extends React.Component {
     redirectLoggedInUser()
 
     this.prefetchTimer = setTimeout(() => {
-      menuFetchData({ store, query: {}, params: {} }, false, true)
+      store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
     }, 500)
   }
 

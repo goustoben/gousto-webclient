@@ -11,7 +11,7 @@ import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
 import { getPreviewOrderErrorName } from 'utils/order'
-import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
+import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
 import css from './Checkout.css'
 import { loadCheckoutScript } from './loadCheckoutScript'
@@ -97,7 +97,7 @@ class Checkout extends PureComponent {
     }
 
     // defensive code to ensure menu load days works below for deeplinks
-    await loadMenuServiceDataIfDeepLinked(store)
+    await store.dispatch(loadMenuServiceDataIfDeepLinked())
 
     if (!store.getState().boxSummaryDeliveryDays || (typeof store.getState().boxSummaryDeliveryDays === 'object' && store.getState().boxSummaryDeliveryDays.size === 0)) {
       await store.dispatch(actions.menuLoadDays())

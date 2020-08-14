@@ -6,9 +6,9 @@ import config from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
 import { stepByName, stepBySlug, getPromocodeQueryParam } from 'utils/signup'
-import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
-
 import { StepIndicator } from 'goustouicomponents'
+import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
+
 import css from './Signup.css'
 
 import { BoxSizeStep } from './Steps/BoxSize'
@@ -91,7 +91,7 @@ class Signup extends React.PureComponent {
 
     // defensive code to ensure menu load days works below for deeplinks
     const isSignUpPage = true
-    await loadMenuServiceDataIfDeepLinked(store, isSignUpPage)
+    await store.dispatch(loadMenuServiceDataIfDeepLinked(isSignUpPage))
 
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())
