@@ -49,6 +49,8 @@
 /src/src/selectors/__tests__/filters.test.js       @Gousto/squad-radishes
 /src/src/selectors/recipe.js       @Gousto/squad-radishes
 /src/src/selectors/__tests__/recipe.test.js       @Gousto/squad-radishes
+/src/src/selectors/menu.js       @Gousto/squad-radishes
+/src/src/selectors/__tests__/menu.test.js       @Gousto/squad-radishes
 /src/src/utils/basket.js       @Gousto/squad-radishes
 /src/src/utils/__tests__/basket.test.js       @Gousto/squad-radishes
 /src/src/utils/boxSummary.js       @Gousto/squad-radishes
