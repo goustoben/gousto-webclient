@@ -13,28 +13,21 @@ describe('Welcome Page', () => {
   const userFetchReferralOffer = jest.fn()
   const query = {}
   const params = { orderId: '1234'}
-
-  beforeEach(() => {
-    const store = {
-      auth: Immutable.fromJS({ accessToken: 'access-token', isAuthenticated: true }),
-      user: Immutable.fromJS({ nameFirst: 'User', ageVerified: false, orders: [] }),
-      products: Immutable.fromJS([]),
-      recipes: Immutable.fromJS({}),
-    }
-    const dispatch = jest.fn().mockReturnValue(Promise.resolve())
-    const getState = jest.fn().mockReturnValue(store)
-
-    context = {
-      store: {
-        getState,
-        dispatch,
-      },
-    }
-  })
+  const fetchData = jest.fn().mockReturnValue(Promise.resolve())
 
   describe('when welcomePageAppPromo is true', () => {
     beforeEach(() => {
-      wrapper = shallow(<Welcome orderId={orderId} products={products} user={user} welcomePageAppPromo={welcomePageAppPromo} userFetchReferralOffer={userFetchReferralOffer} query={query} params={params} />, { context })
+      wrapper = shallow(
+        <Welcome
+          orderId={orderId}
+          products={products}
+          user={user}
+          welcomePageAppPromo={welcomePageAppPromo}
+          userFetchReferralOffer={userFetchReferralOffer}
+          query={query}
+          params={params}
+          fetchData={fetchData}
+        />, { context })
     })
     it('should render Vertical Stages component', () => {
       expect(wrapper.find('VerticalStages').length).toEqual(1)

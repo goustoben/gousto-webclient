@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { VerticalStages, VerticalStagesItem } from 'goustouicomponents'
 
-import actions from 'actions'
-import logger from 'utils/logger'
-import userUtils from 'utils/user'
 import Content from 'containers/Content'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
@@ -17,84 +14,25 @@ import { AwinPixel } from './AwinPixel'
 import css from './Welcome.css'
 import { AppPromo } from './AppPromo'
 
+const propTypes = {
+  orderId: PropTypes.string.isRequired,
+  productDetailId: PropTypes.string,
+  productDetailVisibilityChange: PropTypes.func,
+  products: PropTypes.instanceOf(Immutable.Map).isRequired,
+  user: PropTypes.instanceOf(Immutable.Map).isRequired,
+  userFetchReferralOffer: PropTypes.func.isRequired,
+  query: PropTypes.shape({
+    var: PropTypes.string
+  }).isRequired,
+  params: PropTypes.shape({
+    orderId: PropTypes.string
+  }).isRequired,
+  device: PropTypes.string,
+  trackWelcomeAppPromoClick: PropTypes.func.isRequired,
+  fetchData: PropTypes.func.isRequired,
+}
+
 class Welcome extends React.PureComponent {
-  static propTypes = {
-    orderId: PropTypes.string.isRequired,
-    productDetailId: PropTypes.string,
-    productDetailVisibilityChange: PropTypes.func,
-    products: PropTypes.instanceOf(Immutable.Map).isRequired,
-    user: PropTypes.instanceOf(Immutable.Map).isRequired,
-    userFetchReferralOffer: PropTypes.func.isRequired,
-    query: PropTypes.shape({
-      var: PropTypes.string
-    }).isRequired,
-    params: PropTypes.shape({
-      orderId: PropTypes.string
-    }).isRequired,
-    device: PropTypes.string,
-    trackWelcomeAppPromoClick: PropTypes.func.isRequired,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
-  static fetchData({ store, params, query }) {
-    const { orderId } = params
-    let userOrder
-
-    return store
-      .dispatch(actions.userLoadOrder(orderId))
-      .then(() => {
-        userOrder = userUtils.getUserOrderById(
-          orderId,
-          store.getState().user.get('orders')
-        )
-
-        if (userOrder.get('phase') !== 'open') {
-          return Promise.reject(
-            new Error({
-              level: 'warning',
-              message: `Can't view welcome page with non open order ${orderId}`
-            })
-          )
-        }
-
-        const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
-
-        return Promise.all([
-          store.dispatch(
-            actions.contentLoadContentByPageSlug('welcome_immediate', query.var)
-          ),
-          store.dispatch(
-            actions.productsLoadProducts(userOrder.get('whenCutoff'))
-          ),
-          store.dispatch(actions.productsLoadStock()),
-          store.dispatch(actions.productsLoadCategories()),
-          store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds))
-        ])
-      })
-      .then(() => {
-        const orderProductIds = [
-          ...userUtils.getUserOrderProductIds(userOrder),
-          ...userUtils.getUserOrderGiftProductIds(userOrder)
-        ]
-
-        return store.dispatch(actions.productsLoadProductsById(orderProductIds))
-      })
-      .then(() => {
-        store.dispatch(actions.basketOrderLoad(orderId))
-      })
-      .catch(err => {
-        if (err && err.level && typeof logger[err.level] === 'function') {
-          logger[err.level](err.message)
-        } else {
-          logger.error(err)
-        }
-        store.dispatch(actions.redirect('/'))
-      })
-  }
-
   state = {
     isClient: false
   }
@@ -102,10 +40,9 @@ class Welcome extends React.PureComponent {
   componentDidMount() {
     this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
 
-    const { store } = this.context
-    const { query = {}, params = {}, userFetchReferralOffer } = this.props
+    const { query = {}, params = {}, userFetchReferralOffer, fetchData } = this.props
 
-    Welcome.fetchData({ store, query, params })
+    fetchData({ query, params })
     userFetchReferralOffer()
   }
 
@@ -193,5 +130,7 @@ class Welcome extends React.PureComponent {
     )
   }
 }
+
+Welcome.propTypes = propTypes
 
 export default Welcome
