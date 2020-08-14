@@ -26,6 +26,16 @@ describe('<EMERecipeTileContainer />', () => {
     menuRecipeStock: Immutable.fromJS({
       [recipeId]: { 2: 1000, 4: 1000 }
     }),
+    menuCollections: Immutable.fromJS({
+      a12345: {}
+    }),
+    menu: Immutable.fromJS({
+      menuVariants: {
+        321: {
+
+        }
+      }
+    }),
   }
 
   const wrapperOptions = {

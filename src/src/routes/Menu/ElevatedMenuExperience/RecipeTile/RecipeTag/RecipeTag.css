@@ -15,3 +15,10 @@
     top: 1rem;
   }
 }
+
+.recipeTagShowVariantHeader {
+  top: 2.2rem;
+  @media ScreenSMMin {
+    top: 2.2rem;
+  }
+}

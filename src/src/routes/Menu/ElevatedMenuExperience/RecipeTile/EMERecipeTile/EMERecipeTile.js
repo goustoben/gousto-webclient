@@ -6,9 +6,10 @@ import { TileImageContainer } from '../TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from '../RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from '../RecipeTilePurchaseInfo'
+import { VariantHeaderContainer } from '../../../Recipe/VariantHeader'
 import css from './EMERecipeTile.css'
 
-const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags, isFineDineIn }) => {
+const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags, isFineDineIn, recipeVariants }) => {
   if (!recipe) {
     return null
   }
@@ -18,7 +19,10 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
     showDetailRecipe(recipeId, false)
   }
 
+  const showVariantHeader = !(!recipeVariants || isOutOfStock)
+
   return (
+
     <div
       role="button"
       tabIndex={0}
@@ -29,12 +33,15 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
       onClick={onClick}
       onKeyPress={onClick}
     >
+      <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} />
       <TileImageContainer recipeId={recipeId} />
-
       {brandTags && brandTags.topLeftTag && (
-        <RecipeTag brandTag={brandTags.topLeftTag} />
+        <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
       )}
-      <div className={css.recipeTileInfo}>
+      <div className={classnames(css.recipeTileInfo, {
+        [css.recipeTileInfoShowVariantHeader]: showVariantHeader
+      })}
+      >
         <div>
           {brandTags && brandTags.topRightTag && (
             <RecipeTagTitle brandTag={brandTags.topRightTag} />
@@ -63,7 +70,8 @@ EMERecipeTile.propTypes = {
     topLeftTag: PropTypes.object,
     topRightTag: PropTypes.object,
   }),
-  isFineDineIn: PropTypes.bool.isRequired
+  isFineDineIn: PropTypes.bool.isRequired,
+  recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
 }
 
 EMERecipeTile.defaultProps = {
