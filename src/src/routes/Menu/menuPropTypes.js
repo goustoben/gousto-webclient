@@ -16,16 +16,12 @@ export const menuPropTypes = {
   query: PropTypes.object,
   recipesCount: PropTypes.number.isRequired,
   tariffId: PropTypes.number,
-  userHasAvailableSlots: PropTypes.bool.isRequired,
-  userOrderLoadingState: PropTypes.bool.isRequired,
 }
 
 export const defaultMenuPropTypes = {
   boxSummaryDeliveryDays: Immutable.Map(),
   boxSummaryDeliveryDaysLoad: () => { },
   showOverlay: false,
-  disabled: false,
-  isAuthenticated: false,
   loginVisibilityChange: () => { },
   menuLoadDays: () => { },
   menuLoadingBoxPrices: false,
