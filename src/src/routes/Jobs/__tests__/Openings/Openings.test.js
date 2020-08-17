@@ -10,6 +10,7 @@ describe('The Openings component', () => {
   let departments
   let selectedDepartment
   let selectDepartment
+  const fetchOpenJobs = jest.fn()
 
   describe('the layout', () => {
     beforeEach(() => {
@@ -22,7 +23,7 @@ describe('The Openings component', () => {
         3: { title: 'another job2' },
         4: { title: 'another job3' },
       })
-      wrapper = shallow(<Openings jobs={jobs} depts={departments} />,
+      wrapper = shallow(<Openings jobs={jobs} depts={departments} fetchOpenJobs={fetchOpenJobs} />,
         {
           context: {
             store: {
@@ -31,6 +32,10 @@ describe('The Openings component', () => {
             }
           }
         })
+    })
+
+    test('fetchOpenJobs has been called', () => {
+      expect(fetchOpenJobs).toHaveBeenCalledTimes(1)
     })
 
     test('renders a pre-header', () => {
@@ -46,7 +51,7 @@ describe('The Openings component', () => {
     })
 
     test('renders one deptContainer with a jobSelector per department', () => {
-      wrapper = shallow(<Openings jobs={jobs} depts={departments} />,
+      wrapper = shallow(<Openings jobs={jobs} depts={departments} fetchOpenJobs={fetchOpenJobs} />,
         {
           context: {
             store: {
@@ -65,6 +70,7 @@ describe('The Openings component', () => {
           jobs={jobs}
           depts={departments}
           selectedDepartment={selectedDepartment}
+          fetchOpenJobs={fetchOpenJobs}
         />,
         {
           context: {
@@ -90,6 +96,7 @@ describe('The Openings component', () => {
           jobs={jobs}
           depts={departments}
           selectedDepartment={selectedDepartment}
+          fetchOpenJobs={fetchOpenJobs}
         />,
         {
           context: {
@@ -129,6 +136,7 @@ describe('The Openings component', () => {
           depts={departments}
           selectedDepartment={selectedDepartment}
           selectDepartment={selectDepartment}
+          fetchOpenJobs={fetchOpenJobs}
         />,
         {
           context: {
@@ -143,6 +151,12 @@ describe('The Openings component', () => {
     test('calls the function to filters jobs when a department is selected', () => {
       const targetJobSelector = wrapper.find('.jobSelector').at(1)
       targetJobSelector.simulate('click')
+      expect(selectDepartment).toHaveBeenCalledWith(targetJobSelector.key())
+    })
+
+    test('calls the function to filters jobs when a department is selected when hitting enter key', () => {
+      const targetJobSelector = wrapper.find('.jobSelector').at(1)
+      targetJobSelector.simulate('keyup', { key: 'Enter' })
       expect(selectDepartment).toHaveBeenCalledWith(targetJobSelector.key())
     })
   })

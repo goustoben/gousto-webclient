@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import actions from 'actions/jobs'
 import Immutable from 'immutable'
 import Link from 'Link'
 import Content from 'containers/Content'
@@ -8,13 +7,10 @@ import css from './Openings.css'
 import { JobCard } from './JobCard'
 
 class Openings extends React.PureComponent {
-  static fetchData = async ({ store }) => {
-    await store.dispatch(actions.fetchOpenJobs())
-  }
-
   componentDidMount() {
-    const { store } = this.context
-    Openings.fetchData({ store })
+    const { fetchOpenJobs } = this.props
+
+    fetchOpenJobs()
   }
 
   renderJobItems = () => {
@@ -109,6 +105,7 @@ Openings.propTypes = {
   jobs: PropTypes.instanceOf(Immutable.Map),
   depts: PropTypes.arrayOf(PropTypes.string),
   selectDepartment: PropTypes.func,
+  fetchOpenJobs: PropTypes.func.isRequired,
   selectedDepartment: PropTypes.string,
 }
 
