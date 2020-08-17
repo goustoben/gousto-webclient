@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import userActions from 'actions/user'
 import subscriptionActions from 'actions/subscriptionPause'
-import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
+import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 
 import NavBar from './NavBar'
 import css from './Account.css'
@@ -38,7 +38,7 @@ class Account extends React.PureComponent {
       store.dispatch(userActions.userLoadData()),
       store.dispatch(userActions.userRecipeRatings()),
 
-      loadMenuServiceDataIfDeepLinked(store),
+      store.dispatch(loadMenuServiceDataIfDeepLinked()),
       store.dispatch(subscriptionActions.subscriptionLoadData()),
     ]).then(() => store.dispatch(userActions.checkCardExpiry()))
   }

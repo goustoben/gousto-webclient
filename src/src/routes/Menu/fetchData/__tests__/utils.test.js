@@ -90,7 +90,7 @@ describe('selectCollection', () => {
       const mockStore = configureMockStore()
       const store = mockStore(state)
 
-      selectCollection(store.getState(), collectionName, store.dispatch)
+      selectCollection(collectionName)(store.dispatch, store.getState)
 
       expect(store.getActions()).toContainEqual({
         type: actionTypes.FILTERS_COLLECTION_CHANGE,
@@ -127,7 +127,7 @@ describe('selectCollection', () => {
       const mockStore = configureMockStore()
       const store = mockStore(state)
 
-      selectCollection(store.getState(), collectionName, store.dispatch)
+      selectCollection(collectionName)(store.dispatch, store.getState)
 
       expect(store.getActions()).toContainEqual({
         type: actionTypes.FILTERS_COLLECTION_CHANGE,
@@ -139,6 +139,7 @@ describe('selectCollection', () => {
 
 describe('setSlotFromIds', () => {
   const dispatchSpy = jest.fn()
+  let getState
   const state = {
     boxSummaryDeliveryDays: {}
   }
@@ -177,6 +178,8 @@ describe('setSlotFromIds', () => {
         ]
       },
     })
+
+    getState = () => state
     jest.clearAllMocks()
   })
   describe('when a valid day_id and slot_id are provided', () => {
@@ -186,7 +189,7 @@ describe('setSlotFromIds', () => {
       const coreSlotId = '5'
       const coreDayId = '1801'
 
-      setSlotFromIds(state, coreSlotId, coreDayId, dispatchSpy)
+      setSlotFromIds(coreSlotId, coreDayId)(dispatchSpy, getState)
 
       expect(basketDateChange).toHaveBeenCalledWith(date)
       expect(basketSlotChange).toHaveBeenCalledWith(slotId)
@@ -196,7 +199,7 @@ describe('setSlotFromIds', () => {
     it('should set the given date and reset the slot id', () => {
       const dayId = '1801'
 
-      setSlotFromIds(state, null, dayId, dispatchSpy)
+      setSlotFromIds(null, dayId)(dispatchSpy, getState)
 
       expect(basketDateChange).toHaveBeenCalledWith('2019-08-03')
       expect(basketSlotChange).toHaveBeenCalledWith('')
@@ -206,7 +209,7 @@ describe('setSlotFromIds', () => {
     it('should set redirect to menu', () => {
       const slotId = 'invalid-id'
 
-      setSlotFromIds(state, slotId, null, dispatchSpy)
+      setSlotFromIds(slotId, null)(dispatchSpy, getState)
 
       expect(basketDateChange).not.toHaveBeenCalled()
       expect(basketSlotChange).not.toHaveBeenCalled()

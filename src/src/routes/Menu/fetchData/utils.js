@@ -14,7 +14,8 @@ export const getPreselectedCollectionName = (state, collectionNameFromQueryParam
   return collectionNameFromQueryParam
 }
 
-export const selectCollection = (state, collectionName, dispatch) => {
+export const selectCollection = (collectionName) => (dispatch, getState) => {
+  const state = getState()
   let collectionId = getCollectionIdWithName(state, collectionName)
 
   if (!collectionId) {
@@ -28,10 +29,10 @@ export const selectCollection = (state, collectionName, dispatch) => {
   dispatch(collectionFilterIdReceive(collectionId))
 }
 
-export const setSlotFromIds = (state, slot_id, day_id, dispatch) => {
-  const deliveryDays = state.boxSummaryDeliveryDays
+export const setSlotFromIds = (slot_id, day_id) => (dispatch, getState) => {
+  const { boxSummaryDeliveryDays } = getState()
   if (day_id) {
-    const day = deliveryDays.find(deliveryDay => deliveryDay.get('coreDayId') === day_id)
+    const day = boxSummaryDeliveryDays.find(deliveryDay => deliveryDay.get('coreDayId') === day_id)
     if (day) {
       const date = day.get('date')
       dispatch(basketDateChange(date))

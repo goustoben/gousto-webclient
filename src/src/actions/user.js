@@ -691,7 +691,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       const { data } = await customerSignup(null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
-        const { customer, addresses, paymentMethod, subscription, orderId } = data
+        const { customer, addresses, subscription, orderId } = data
         const { id: customerId } = customer
         let user = Immutable.fromJS({
           ...customer,
@@ -702,7 +702,6 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
 
         dispatch(trackNewUser(customerId), { key: trackingKeys.createUser })
 
-        const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider : ''
         dispatch({
           type: actionTypes.CHECKOUT_ORDER_PLACED,
           trackingData: {
@@ -712,7 +711,6 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
             promo_code: prices.get('promoCode'),
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
-            payment_provider: paymentProvider,
             interval_id: intervalId
           }
         })
@@ -722,7 +720,6 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         dispatch(basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
 
-        const { id: paymentId } = paymentMethod
         const { id: subscriptionId } = subscription
 
         const { UTM } = getUTMAndPromoCode(getState())
@@ -734,7 +731,6 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
             promoCode: prices.get('promoCode'),
             userId: customerId,
             orderId,
-            paymentId,
             subscriptionId
           }
         })

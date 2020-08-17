@@ -46,7 +46,7 @@ export class MenuRecipesPage extends PureComponent {
     // TODO: Add back logic to check what needs to be reloaded
 
     if (forceDataLoad) {
-      await fetchData({ store, query, params }, forceDataLoad)
+      await store.dispatch(fetchData({ query, params }, forceDataLoad))
     }
 
     if (orderId) {
@@ -70,7 +70,7 @@ export class MenuRecipesPage extends PureComponent {
       const { store } = this.context
       const query = nextProps.query || {}
       const params = nextProps.params || {}
-      fetchData({ store, query, params }, true)
+      store.dispatch(fetchData({query, params }, true))
     }
   }
 

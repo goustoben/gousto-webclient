@@ -102,20 +102,6 @@ jest.mock('actions/user', () => ({
           deleted: false
         }
       },
-      paymentMethod: {
-        id: 'ed79add7-f7ff-41da-8524-f64b04dd9e70',
-        type: 'card',
-        isDefault: true,
-        name: 'My Card',
-        card: {
-          id: '69524945',
-          number: '424242#######4242',
-          expiryMonth: 10,
-          expiryYear: 20,
-          cardToken: 'src_qvgsjghtdjjuhdznipp5najdza',
-          paymentProvider: 'checkout'
-        }
-      },
       subscription: {
         id: '36613038',
         stateReason: null,

@@ -236,12 +236,6 @@ describe('user actions', () => {
               addresses: {},
               subscription: {},
               orderId: '12345',
-              paymentMethod: {
-                id: 444,
-                card: {
-                  paymentProvider: 'checkout'
-                }
-              },
             }
           })
         })
@@ -275,12 +269,6 @@ describe('user actions', () => {
                   id: 222
                 },
                 orderId: 333,
-                paymentMethod: {
-                  id: 444,
-                  card: {
-                    paymentProvider: 'checkout'
-                  }
-                },
               }
             })
           })
@@ -296,7 +284,6 @@ describe('user actions', () => {
             promoCode: false,
             userId: 111,
             orderId: 333,
-            paymentId: 444,
             subscriptionId: 222
           }
         })
@@ -442,11 +429,6 @@ describe('user actions', () => {
               addresses: {},
               subscription: {},
               orderId: '12345',
-              paymentMethod: {
-                card: {
-                  paymentProvider: 'checkout'
-                }
-              }
             }
           })
         })

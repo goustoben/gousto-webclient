@@ -2,10 +2,10 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { menuLoadDays, redirect } from 'actions'
-import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 import { StepIndicator } from 'goustouicomponents'
 
 import { Signup } from 'routes/Signup/Signup'
+import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 
 jest.mock('actions', () => ({
   signupStepsReceive: jest.fn().mockReturnValue(Promise.resolve()),
@@ -14,7 +14,7 @@ jest.mock('actions', () => ({
   menuLoadDays: jest.fn().mockReturnValue(Promise.resolve()),
 }))
 
-jest.mock('utils/menuService')
+jest.mock('../../Menu/fetchData/menuService')
 
 describe('Signup', () => {
   let store

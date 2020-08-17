@@ -8,7 +8,7 @@ import { menuLoadDays } from 'actions/menu'
 import * as boxSummaryActions from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import userActions from 'actions/user'
-import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
+import { loadMenuServiceDataIfDeepLinked } from '../../../routes/Menu/fetchData/menuService'
 import { AbandonBasketModal } from '../AbandonBasketModal'
 
 jest.mock('actions/menu', () => ({
@@ -27,7 +27,7 @@ jest.mock('actions/user', () => ({
   userLoadOrders: jest.fn()
 }))
 
-jest.mock('utils/menuService')
+jest.mock('../../../routes/Menu/fetchData/menuService')
 
 const recipes = Immutable.fromJS({
   1: {

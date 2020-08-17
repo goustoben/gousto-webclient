@@ -7,6 +7,7 @@ import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
+import fetchData from './fetchData'
 import { menuCalculateTimeToUsable } from './actions/menuCalculateTimeToUsable'
 
 const flattenRecipes = (recipes) => {
@@ -57,6 +58,7 @@ const mapDispatchToProps = {
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,
+  fetchData
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

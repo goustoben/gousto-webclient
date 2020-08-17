@@ -17,7 +17,13 @@ describe('MyGousto', () => {
 
   beforeEach(() => {
     jest.useFakeTimers()
-    wrapper = shallow(<MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} />)
+    wrapper = shallow(<MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} />, {
+      context: {
+        store: {
+          dispatch: jest.fn()
+        }
+      }
+    })
   })
 
   afterEach(() => {
@@ -48,7 +54,13 @@ describe('MyGousto', () => {
     describe('when limitedCapacity flag is true', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} isCapacityLimited />
+          <MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} isCapacityLimited />, {
+            context: {
+              store: {
+                dispatch: jest.fn()
+              }
+            }
+          }
         )
       })
 

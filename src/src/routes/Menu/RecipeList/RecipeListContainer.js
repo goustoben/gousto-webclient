@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getBrowserType } from 'selectors/browser'
+import { trackRecipeOrderDisplayed } from 'actions/tracking'
 import { getCurrentCollectionId, isCurrentCollectionRecommendation } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
@@ -23,6 +24,6 @@ const mapStateToProps = (state) => {
     browserType: getBrowserType(state),
   }
 }
-const RecipeListContainer = connect(mapStateToProps)(RecipeList)
+const RecipeListContainer = connect(mapStateToProps, {trackRecipeOrderDisplayed})(RecipeList)
 
 export { RecipeListContainer }

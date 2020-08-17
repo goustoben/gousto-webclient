@@ -2,8 +2,6 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
-import fetchData from 'routes/Menu/fetchData'
-
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
 
@@ -26,14 +24,6 @@ jest.mock('./ThematicsPage', () => ({
 jest.mock('react-lazyload', () => ({
   forceCheck: jest.fn(),
 }))
-
-jest.mock('routes/Menu/fetchData', () => (
-  jest.fn().mockReturnValue(
-    new Promise(resolve => {
-      resolve()
-    })
-  )
-))
 
 jest.mock('react-helmet', () => () => <div />)
 
@@ -76,8 +66,8 @@ describe('Menu', () => {
       shouldJfyTutorialBeVisible: shouldJfyTutorialBeVisibleMock,
       recipesCount: 3,
       onOverlayClick: jest.fn(),
-      userHasAvailableSlots: true,
-      userOrderLoadingState: false,
+      fetchData: jest.fn(),
+      menuCalculateTimeToUsable: jest.fn()
     }
   })
 
@@ -220,7 +210,7 @@ describe('Menu', () => {
         />,
         mountOptions,
       )
-      expect(fetchData).toHaveBeenCalled()
+      expect(requiredProps.fetchData).toHaveBeenCalled()
     })
 
     test('should call basketNumPortionChange if num portions query parameter is given', async () => {
@@ -295,7 +285,7 @@ describe('Menu', () => {
         wrapper.setProps({isAuthenticated: true})
       })
       test('should call fetchData ', () => {
-        expect(fetchData).toHaveBeenCalledTimes(2)
+        expect(requiredProps.fetchData).toHaveBeenCalledTimes(2)
       })
     })
 
@@ -306,7 +296,7 @@ describe('Menu', () => {
         }})
       })
       test('should not call fetch data function', () => {
-        expect(fetchData).toHaveBeenCalledTimes(1)
+        expect(requiredProps.fetchData).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -315,7 +305,7 @@ describe('Menu', () => {
         wrapper.setProps({recipesCount: 3})
       })
       test('should not trigger fetch ', () => {
-        expect(fetchData).toHaveBeenCalledTimes(1)
+        expect(requiredProps.fetchData).toHaveBeenCalledTimes(1)
       })
     })
   })

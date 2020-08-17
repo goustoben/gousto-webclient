@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import { forceCheck as forceCheckLazyload } from 'react-lazyload'
@@ -13,24 +12,14 @@ import { RecipeMeta } from './RecipeMeta'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
 import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
-import fetchData from './fetchData'
 import css from './Menu.css'
 
 class Menu extends React.PureComponent {
-  static propTypes = menuPropTypes
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
-  static defaultProps = defaultMenuPropTypes
-
-  static fetchData(args, force) {
-    return fetchData(args, force)
-  }
-
-  state = {
-    isChrome: false,
+  constructor(props) {
+    super(props)
+    this.state = {
+      isChrome: false,
+    }
   }
 
   async componentDidMount() {
@@ -51,9 +40,8 @@ class Menu extends React.PureComponent {
       menuLoadBoxPrices,
       shouldJfyTutorialBeVisible,
       menuCalculateTimeToUsable,
+      fetchData
     } = this.props
-
-    const { store } = this.context
 
     const forceDataLoad = Boolean(query.reload)
     // TODO: Add back logic to check what needs to be reloaded
@@ -62,7 +50,7 @@ class Menu extends React.PureComponent {
       basketNumPortionChange(query.num_portions)
     }
 
-    await Menu.fetchData({ store, query, params }, forceDataLoad)
+    await fetchData({ query, params }, forceDataLoad)
 
     const promises = []
 
@@ -92,11 +80,10 @@ class Menu extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { params, query, isAuthenticated } = this.props
-    const { store } = this.context
+    const { params, query, isAuthenticated, fetchData } = this.props
     const isAdminQuery = !!(query && query['preview[auth_user_id]'])
     if (!isAdminQuery && prevProps.isAuthenticated !== isAuthenticated) {
-      Menu.fetchData({ store, query, params }, false)
+      fetchData({ query, params }, false)
     }
     forceCheckLazyload()
   }
@@ -146,5 +133,7 @@ class Menu extends React.PureComponent {
     )
   }
 }
+Menu.propTypes = menuPropTypes
+Menu.defaultProps = defaultMenuPropTypes
 
 export default Menu
