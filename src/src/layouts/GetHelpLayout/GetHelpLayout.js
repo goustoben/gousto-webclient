@@ -1,33 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classnames from 'classnames'
 
-import { PageContent, PageHeader } from 'Page'
-import BottomBar from 'BottomBar'
-
+import { Card, Heading } from 'goustouicomponents'
+import { BottomFixedContentWrapper } from '../../routes/GetHelp/components/BottomFixedContentWrapper'
 import css from './GetHelpLayout.css'
 
 const propTypes = {
   body: PropTypes.string,
   title: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
-  fullWidthContent: PropTypes.bool,
 }
 
 const defaultProps = {
-  fullWidthContent: false,
   body: '',
 }
 
-const GetHelpLayout = ({ title, body, children, fullWidthContent }) => {
+const GetHelpLayout = ({ title, body, children }) => {
   const bodyContent = []
   const footerContent = []
-  const bodyContentCss = classnames(css.bodyContent, {
-    [css.bodyContentFullWidth]: fullWidthContent
-  })
 
   React.Children.forEach(children, child => {
-    if (child.type === BottomBar) {
+    if (child.type === BottomFixedContentWrapper) {
       footerContent.push(child)
     } else {
       bodyContent.push(child)
@@ -35,19 +28,21 @@ const GetHelpLayout = ({ title, body, children, fullWidthContent }) => {
   })
 
   return (
-    <div className={css.rootContainer}>
-      <div className={css.header}>
-        <PageHeader title={title} />
+    <div>
+      <div className={css.pageHeader}>
+        <Heading size="fontStyleL">{title}</Heading>
       </div>
-      <PageContent className={css.pageContent}>
+      <Card>
         <p className={css.bodyDescription}>
           {body}
         </p>
-        <div className={bodyContentCss}>
+        <div className={css.bodyContent}>
           {bodyContent}
         </div>
-        {footerContent}
-      </PageContent>
+        <div className={css.footerContent}>
+          {footerContent}
+        </div>
+      </Card>
     </div>
   )
 }
@@ -55,4 +50,4 @@ const GetHelpLayout = ({ title, body, children, fullWidthContent }) => {
 GetHelpLayout.propTypes = propTypes
 GetHelpLayout.defaultProps = defaultProps
 
-export default GetHelpLayout
+export { GetHelpLayout }

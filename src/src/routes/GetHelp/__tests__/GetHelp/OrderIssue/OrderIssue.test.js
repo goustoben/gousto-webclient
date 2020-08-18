@@ -26,7 +26,7 @@ describe('<OrderIssue />', () => {
     })
 
     test('layout is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
@@ -78,7 +78,7 @@ describe('<OrderIssue />', () => {
     })
 
     test('bottom bar buttons is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const Button1 = BottomBar.find('BottomButton').at(0)
 
       expect(Button1.text()).toContain(content.buttonCopy)

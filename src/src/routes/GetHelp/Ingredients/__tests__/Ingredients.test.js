@@ -51,7 +51,7 @@ describe('<Ingredients />', () => {
     })
 
     test('layout is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
@@ -67,7 +67,7 @@ describe('<Ingredients />', () => {
     })
 
     test('bottom bar buttons is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const buttons = BottomBar.find('Button')
 
       expect(buttons.at(0).text()).toContain(content.button1Copy)
@@ -75,13 +75,13 @@ describe('<Ingredients />', () => {
     })
 
     test('the Back button links to the correct url', () => {
-      const Button1 = getHelpLayout.find('BottomBar').find('BottomButton')
+      const Button1 = getHelpLayout.find('BottomFixedContentWrapper').find('BottomButton')
 
       expect(Button1.prop('url')).toBe('/get-help')
     })
 
     test('the Continue button is disable by default', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const ContinueButton = BottomBar.find('Button').at(1)
 
       expect(ContinueButton.prop('disabled')).toBe(true)
@@ -130,7 +130,7 @@ describe('<Ingredients />', () => {
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
-      ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
+      ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button').at(1)
     })
 
     describe('ingredients', () => {
@@ -176,11 +176,11 @@ describe('<Ingredients />', () => {
 
       test('the button is enabled only when one or more ingredients are selected', () => {
         const ingredientCheckbox = selectIngredientAndGetCheckbox(wrapper)
-        ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
+        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button').at(1)
         expect(ContinueButton.prop('disabled')).toBe(false)
 
         ingredientCheckbox.simulate('change')
-        ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
+        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button').at(1)
 
         expect(ContinueButton.prop('disabled')).toBe(true)
       })

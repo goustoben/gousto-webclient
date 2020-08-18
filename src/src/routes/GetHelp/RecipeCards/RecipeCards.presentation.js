@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BottomBar from 'BottomBar'
-import GetHelpLayout from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { BottomButton } from '../components/BottomButton'
+import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 
 const propTypes = {
   children: PropTypes.node.isRequired,
@@ -21,11 +21,11 @@ const RecipeCardsPresentation = ({
 }) => (
   <GetHelpLayout title={title} body="Which recipe had a recipe card issue?">
     {children}
-    <BottomBar>
+    <BottomFixedContentWrapper>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         Back
       </BottomButton>
-    </BottomBar>
+    </BottomFixedContentWrapper>
   </GetHelpLayout>
 )
 

@@ -44,7 +44,7 @@ describe('<IngredientReasons />', () => {
 
   describe('rendering', () => {
     test('layout is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
@@ -79,7 +79,7 @@ describe('<IngredientReasons />', () => {
     })
 
     test('bottom bar buttons is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const buttons = BottomBar.find('Button')
 
       expect(buttons.at(0).text()).toContain(content.button1Copy)

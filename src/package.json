@@ -207,6 +207,7 @@
       "**/?(*.)(test).js?(x)"
     ],
     "moduleNameMapper": {
+      "goustouicomponents": "<rootDir>/libs/goustouicomponents/src/main",
       "gousto-config": "<rootDir>/libs/goustouicomponents/src/gousto-config",
       "design-language/icons/(.*)$": "<rootDir>/libs/goustouicomponents/src/design-language/icons/$1",
       "design-language/media/(.*)$": "<rootDir>/libs/goustouicomponents/src/design-language/media/$1",

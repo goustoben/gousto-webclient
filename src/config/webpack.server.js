@@ -31,7 +31,6 @@ const config = {
   target: 'node',
   entry: [
     'babel-polyfill',
-    './src/goustouicomponents.js',
     './server/main.js',
   ],
   output: {
@@ -129,6 +128,7 @@ const config = {
       ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', false),
       ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', true),
       spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
+      goustouicomponents: path.resolve(__dirname, '../libs/goustouicomponents/src/main'),
     },
     modules: [
       path.resolve(__dirname, '../src'),

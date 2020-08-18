@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import BottomBar from 'BottomBar'
 import { client as routes, zendesk as zendeskRoutes } from 'config/routes'
 import { addUserIdToUrl } from 'utils/url'
-import GetHelpLayout from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
+import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
 
 const trackClick = (selectOrderIssue, issue) => () => selectOrderIssue(issue)
@@ -53,11 +53,11 @@ const OrderIssue = ({
         clientRouted={false}
       />
     </List>
-    <BottomBar>
+    <BottomFixedContentWrapper>
       <BottomButton color="secondary" url={routes.myGousto} clientRouted={false}>
         {buttonCopy}
       </BottomButton>
-    </BottomBar>
+    </BottomFixedContentWrapper>
   </GetHelpLayout>
 )
 

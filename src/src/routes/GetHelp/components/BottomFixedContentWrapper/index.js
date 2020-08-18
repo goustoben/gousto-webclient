@@ -1,0 +1,1 @@
+export { BottomFixedContentWrapper } from './BottomFixedContentWrapper'

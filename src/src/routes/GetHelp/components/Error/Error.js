@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import GetHelpLayout from 'layouts/GetHelpLayout'
-import BottomBar from 'BottomBar'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { client as routes } from 'config/routes'
+import { BottomFixedContentWrapper } from '../BottomFixedContentWrapper'
 import { BottomButton } from '../BottomButton'
 
 const propTypes = {
@@ -29,10 +29,9 @@ const Error = ({ hasError, content, children }) => {
     return (
       <GetHelpLayout
         title={content.title}
-        fullWidthContent
       >
         <p>{content.errorBody}</p>
-        <BottomBar>
+        <BottomFixedContentWrapper>
           <BottomButton
             color="secondary"
             url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
@@ -40,7 +39,7 @@ const Error = ({ hasError, content, children }) => {
           >
             {content.button1}
           </BottomButton>
-        </BottomBar>
+        </BottomFixedContentWrapper>
       </GetHelpLayout>
     )
   }

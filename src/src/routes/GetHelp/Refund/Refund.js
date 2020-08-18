@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
-import BottomBar from 'BottomBar'
-import GetHelpLayout from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
@@ -10,6 +9,7 @@ import { sanitize } from 'utils/sanitizer'
 import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
+import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
 
 import css from './Refund.css'
@@ -201,7 +201,6 @@ class Refund extends PureComponent {
     return (
       <GetHelpLayout
         title={content.title}
-        fullWidthContent
       >
         {(isFetching)
           ? (
@@ -213,7 +212,7 @@ class Refund extends PureComponent {
             <div>
               <p className={css.confirmationBody}>{getHelpLayoutbody}</p>
               <p className={css.confirmationQuestion}>{confirmationContent}</p>
-              <BottomBar>
+              <BottomFixedContentWrapper>
                 <BottomButton
                   color="secondary"
                   url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
@@ -223,7 +222,7 @@ class Refund extends PureComponent {
                   {content.button1}
                 </BottomButton>
                 {acceptButton}
-              </BottomBar>
+              </BottomFixedContentWrapper>
             </div>
           )}
       </GetHelpLayout>

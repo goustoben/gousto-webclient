@@ -1,51 +1,11 @@
-@value ScreenXXSMin from 'styles/screenSizes.css';
-
-.flexColumnWrap {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-}
-
-.rootContainer {
-	composes: flexColumnWrap;
-}
-
-.pageContent {
-	composes: flexColumnWrap;
-	width: 100%;
-}
-
-.header {
-	display: inline-block;
-
-	@media ScreenXXSMin {
-		align-self: center;
-	}
-}
-
-.header h1 {
-	text-align: left;
+.pageHeader {
+	margin-bottom: 1rem;
 }
 
 .bodyDescription {
-	font-weight: bold;
-
-	@media ScreenXXSMin {
-		align-self: center;
-	}
+	composes: fontStyleSubHead from 'design-language/typography.module.css';
 }
 
-.bodyContent {
-	width: 100%;
-
-	@media ScreenXXSMin {
-		align-self: center;
-		width: 400px;
-	}
-}
-
-.bodyContentFullWidth {
-	@media ScreenXXSMin {
-		width: 100%;
-	}
+.bodyContent:not(:last-child) {
+	margin-bottom: 1rem;
 }

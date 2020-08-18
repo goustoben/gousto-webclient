@@ -63,7 +63,7 @@ describe('<Refund />', () => {
       await wrapper.setState({
         isFetching: false,
       })
-      const BottomBar = wrapper.find('BottomBar')
+      const BottomBar = wrapper.find('BottomFixedContentWrapper')
       const confirmationBody = wrapper.find('.confirmationBody')
       getHelpLayout = wrapper.find('GetHelpLayout')
 
@@ -81,7 +81,7 @@ describe('<Refund />', () => {
       await wrapper.setState({
         isFetching: false,
       })
-      const BottomBar = wrapper.find('BottomBar')
+      const BottomBar = wrapper.find('BottomFixedContentWrapper')
       const Button1 = BottomBar.find('BottomButton')
       const Button2 = BottomBar.find('Button').at(1)
       const { index, contact } = routes.getHelp
