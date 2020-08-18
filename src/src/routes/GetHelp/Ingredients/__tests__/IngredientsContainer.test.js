@@ -89,7 +89,7 @@ describe('<IngredientsContainer />', () => {
       const ingredientCheckbox = wrapper.find('input[type="checkbox"]').at(0)
       ingredientCheckbox.simulate('change')
 
-      const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)
+      const ContinueButton = wrapper.find('Ingredients').find('BottomFixedContentWrapper').find('Button').at(1)
       await ContinueButton.prop('onClick')()
 
       expect(store.getState().getHelp.get('selectedIngredients'))
@@ -103,7 +103,7 @@ describe('<IngredientsContainer />', () => {
       const ingredientCheckbox = wrapper.find('input[type="checkbox"]').at(0)
       ingredientCheckbox.simulate('change')
 
-      const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)
+      const ContinueButton = wrapper.find('Ingredients').find('BottomFixedContentWrapper').find('Button').at(1)
       await ContinueButton.prop('onClick')()
 
       expect(validateIngredients).toHaveBeenCalledWith(

@@ -83,7 +83,7 @@ describe('<IngredientIssues />', () => {
     const getHelpLayout = wrapper.find('GetHelpLayout')
 
     test('layout is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
@@ -150,7 +150,7 @@ describe('<IngredientIssues />', () => {
     })
 
     test('bottom bar buttons is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const Button1 = BottomBar.find('BottomButton').at(0)
       const Button2 = BottomBar.find('Button').at(1)
 
@@ -159,7 +159,7 @@ describe('<IngredientIssues />', () => {
     })
 
     test('button link to correct urls', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const Button1 = BottomBar.find('BottomButton').at(0)
 
       expect(Button1.prop('url')).toBe('/get-help/ingredients')
@@ -200,7 +200,7 @@ describe('<IngredientIssues />', () => {
     })
 
     test('tracking action and redirect is being called when Continue button is clicked', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
       const Button2 = BottomBar.find('Button').at(1)
       Button2.props().onClick()
 

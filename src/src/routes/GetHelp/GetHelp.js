@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import React, { PureComponent } from 'react'
 import { browserHistory } from 'react-router'
-
+import { LayoutPageWrapper } from 'goustouicomponents'
 import { client } from 'config/routes'
 import { LoadingWrapper } from './LoadingWrapper'
 import { Error } from './components/Error'
@@ -77,28 +77,32 @@ class GetHelp extends PureComponent {
 
   render() {
     const { children, content, didRequestError, isRequestPending } = this.props
-    const contentClasses = {
-      [css.getHelpContent]: true,
-      [css.getHelpContent__loading]: isRequestPending,
-    }
+    const contentClasses = classnames(
+      css.getHelpContent,
+      {
+        [css.getHelpContent__loading]: isRequestPending,
+      }
+    )
 
     return (
-      <div className={css.getHelpContainer}>
-        <Helmet
-          style={[{
-            cssText: '#react-root { height: 100%; }',
-          }]}
-        />
-        <div className={classnames(contentClasses)}>
-          {(isRequestPending) ? (
-            <LoadingWrapper />
-          ) : (
-            <Error content={content} hasError={didRequestError}>
-              {children}
-            </Error>
-          )}
+      <LayoutPageWrapper>
+        <div className={css.getHelpContainer}>
+          <Helmet
+            style={[{
+              cssText: '#react-root { height: 100%; }',
+            }]}
+          />
+          <div className={contentClasses}>
+            {(isRequestPending) ? (
+              <LoadingWrapper />
+            ) : (
+              <Error content={content} hasError={didRequestError}>
+                {children}
+              </Error>
+            )}
+          </div>
         </div>
-      </div>
+      </LayoutPageWrapper>
     )
   }
 }

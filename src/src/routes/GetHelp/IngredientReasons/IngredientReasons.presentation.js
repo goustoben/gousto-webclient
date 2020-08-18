@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BottomBar from 'BottomBar'
-import GetHelpLayout from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { Button } from 'goustouicomponents'
 import { BottomButton } from '../components/BottomButton'
+import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import css from './IngredientReasons.css'
 
 const propTypes = {
@@ -72,7 +72,7 @@ const IngredientReasonsPresentation = ({
   <GetHelpLayout title={title} body={body}>
     <p>{secondBody}</p>
     {renderIngredientReasonsForm(ingredientReasons, onChange)}
-    <BottomBar>
+    <BottomFixedContentWrapper>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
       </BottomButton>
@@ -84,7 +84,7 @@ const IngredientReasonsPresentation = ({
       >
         {button2Copy}
       </Button>
-    </BottomBar>
+    </BottomFixedContentWrapper>
   </GetHelpLayout>
 )
 

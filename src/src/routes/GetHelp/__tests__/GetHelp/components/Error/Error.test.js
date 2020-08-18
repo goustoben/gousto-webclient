@@ -32,7 +32,7 @@ describe('<Error />', () => {
       )
 
       const getHelpLayout = wrapper.find('GetHelpLayout')
-      const BottomBar = getHelpLayout.find('BottomBar')
+      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
 
       expect(getHelpLayout.prop('title')).toBe('test title')
       expect(BottomBar.find('BottomButton').prop('children')).toBe('test button')

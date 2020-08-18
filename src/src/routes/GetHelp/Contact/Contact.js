@@ -2,13 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Item, ItemExpandable } from 'goustouicomponents'
-import BottomBar from 'BottomBar'
 import { client, zendesk } from 'config/routes'
 import { addUserIdToUrl } from 'utils/url'
-import GetHelpLayout from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import { PhoneContent } from './PhoneContent'
+import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
 
 const openLiveChat = () => {
@@ -50,14 +50,14 @@ const Contact = ({
         <PhoneContent />
       </ItemExpandable>
     </List>
-    <BottomBar>
+    <BottomFixedContentWrapper>
       <BottomButton color="secondary" url={client.getHelp.index} clientRouted>
         {button1Copy}
       </BottomButton>
       <BottomButton color="primary" url={client.myGousto} clientRouted={false}>
         {button2Copy}
       </BottomButton>
-    </BottomBar>
+    </BottomFixedContentWrapper>
   </GetHelpLayout>
 )
 

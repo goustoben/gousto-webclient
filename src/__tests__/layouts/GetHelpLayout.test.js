@@ -1,37 +1,30 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import GetHelpLayout from 'layouts/GetHelpLayout/GetHelpLayout'
-import BottomBar from 'BottomBar'
+import { mount } from 'enzyme'
+import { GetHelpLayout } from 'layouts/GetHelpLayout/GetHelpLayout'
+import { BottomFixedContentWrapper } from '../../src/routes/GetHelp/components/BottomFixedContentWrapper'
 
 describe('GetHelpLayout', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(
+    wrapper = mount(
       <GetHelpLayout title="test title" body="test body description">
         <div className="unique" />
-        <BottomBar><div /></BottomBar>
+        <BottomFixedContentWrapper><div /></BottomFixedContentWrapper>
       </GetHelpLayout>
     )
   })
 
   test('component is rendering header correctly', () => {
-    expect(wrapper.find('PageHeader').prop('title')).toBe('test title')
+    expect(wrapper.find('Heading').text()).toBe('test title')
   })
 
   test('component is rendering bottom bar correctly', () => {
-    const PageContent = wrapper.find('PageContent')
-    const bodyContent = PageContent.find('.bodyContent')
-
-    expect(bodyContent.find('BottomBar')).toHaveLength(0)
-    expect(PageContent.find('BottomBar')).toHaveLength(1)
+    expect(wrapper.find('.bodyContent').find('BottomFixedContentWrapper').exists()).toBe(false)
+    expect(wrapper.find('.footerContent').find('BottomFixedContentWrapper').exists()).toBe(true)
   })
 
   test('component content is rendering correctly', () => {
-    const bodyContent = wrapper
-      .find('PageContent')
-      .find('.bodyContent')
-
-    expect(bodyContent.find('.unique')).toHaveLength(1)
+    expect(wrapper.find('.bodyContent').find('.unique').exists()).toBe(true)
   })
 })

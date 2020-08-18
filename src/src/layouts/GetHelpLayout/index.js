@@ -1,1 +1,1 @@
-export { default } from './GetHelpLayout'
+export { GetHelpLayout } from './GetHelpLayout'

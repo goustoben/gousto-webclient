@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import BottomBar from 'BottomBar'
-
-import GetHelpLayout from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from 'layouts/GetHelpLayout'
 
 import { client as routes } from 'config/routes'
+import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
 
 const propTypes = {
@@ -23,7 +22,7 @@ const defaultProps = {
 
 const Confirmation = ({ content, trackConfirmationCTA }) => (
   <GetHelpLayout title={content.title} body={content.confirmationBody}>
-    <BottomBar>
+    <BottomFixedContentWrapper>
       <BottomButton color="secondary" url={routes.myDetails} clientRouted={false}>
         {content.button1}
       </BottomButton>
@@ -35,7 +34,7 @@ const Confirmation = ({ content, trackConfirmationCTA }) => (
       >
         {content.button2}
       </BottomButton>
-    </BottomBar>
+    </BottomFixedContentWrapper>
   </GetHelpLayout>
 )
 

@@ -17,7 +17,7 @@ describe('<Confirmation />', () => {
     />
   )
   const getHelpLayout = wrapper.find('GetHelpLayout')
-  const BottomBar = getHelpLayout.find('BottomBar')
+  const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
   const Button1 = BottomBar.find('BottomButton').at(0)
   const Button2 = BottomBar.find('BottomButton').at(1)
 
