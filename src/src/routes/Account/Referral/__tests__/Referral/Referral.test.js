@@ -28,6 +28,14 @@ describe('Referral', () => {
         )
       })
 
+      describe('componentDidMount', () => {
+        describe('when the free food page is loaded', () => {
+          test('then trackUserFreeFoodPageView should be called on mount', () => {
+            expect(trackUserFreeFoodPageViewSpy).toHaveBeenCalled()
+          })
+        })
+      })
+
       test('should render a <div> with no props', () => {
         expect(wrapper.type()).toEqual('div')
       })

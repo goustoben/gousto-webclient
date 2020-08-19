@@ -12,7 +12,7 @@ jest.mock('utils/env', () => ({
 }))
 
 jest.mock('apis/loggingManager', () => ({
-  triggerLoggingManagerEvent: jest.fn(),
+  triggerLoggingManagerEvent: jest.fn().mockReturnValue('Event logged successfully'),
 }))
 
 jest.mock('../utils', () => ({
