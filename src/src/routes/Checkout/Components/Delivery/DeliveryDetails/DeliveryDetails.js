@@ -6,6 +6,7 @@ import { showAddress } from 'routes/Checkout/utils/delivery'
 import css from '../Delivery.css'
 import DeliveryInstruction from './DeliveryInstruction'
 import DeliveryPhoneNumber from './DeliveryPhoneNumber'
+import { DeliveryEducationBanner } from './DeliveryEducationBanner'
 
 class DeliveryDetails extends React.PureComponent {
   reset = (field, value = '') => {
@@ -40,6 +41,7 @@ class DeliveryDetails extends React.PureComponent {
           receiveRef={receiveRef}
           sectionName={sectionName}
         />
+        <DeliveryEducationBanner />
         <DeliveryPhoneNumber
           receiveRef={receiveRef}
           sectionName={sectionName}
