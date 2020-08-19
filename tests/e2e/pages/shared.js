@@ -58,12 +58,8 @@ module.exports = {
         fetchMenuLandingDays: function (cutoffDatetime = '') {
           const cutoffDatetimeFrom = cutoffDatetime ? cutoffDatetime : webclient.cutoffDateTimeNow()
 
-          return webclient.apis.fetchAvailableDates()
+          return webclient.apis.fetchDeliveryDays('', cutoffDatetimeFrom, '', false, null)
             .then(function ({ data }) {
-              const availableDays = data.pop().until
-
-              return webclient.apis.fetchDeliveryDays('', cutoffDatetimeFrom, '', false, null)
-            }).then(function ({ data }) {
               const availableDeliveryDays = webclient.getAvailableDeliveryDays(data, cutoffDatetimeFrom)
               const immutableDays = Immutable.fromJS(availableDeliveryDays)
               const state = {

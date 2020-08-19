@@ -16,6 +16,3 @@ export function fetchRecipesStockByDate(reqData) {
   return fetch(null, `${endpoint('orders', routes.version.orders)}${routes.orders.recipesStock}`, reqData, 'GET')
 }
 
-export function fetchAvailableDates(accessToken) {
-  return fetch(accessToken, `${endpoint('recipes', version)}${routes.recipes.availableDates}`, {}, 'GET')
-}
