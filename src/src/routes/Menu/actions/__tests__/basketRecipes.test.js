@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import * as basketUtils from 'utils/basket'
 import * as basketSelectors from 'selectors/basket'
+import * as loggingmanagerActions from 'actions/loggingmanager'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import * as basketActions from '../basketRecipes'
@@ -10,6 +11,8 @@ import pricingActions from '../../../../actions/pricing'
 import * as menuActions from '../../../../actions/menu'
 import * as menuSelectors from '../../selectors/menu'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
+
+jest.mock('actions/loggingmanager')
 
 describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   let getStateSpy
@@ -390,9 +393,11 @@ describe('basketRecipeAdd', () => {
 
   describe('when there are no rules that will break the basket ', () => {
     beforeEach(() => {
+      safeJestMock(loggingmanagerActions, 'trackUserAddRemoveRecipe')
       safeJestMock(basketActions, 'validBasketRecipeAdd')
         .mockReturnValue('mockedValidBasketRecipeAddReturn')
       validateRecipeAgainstRuleSpy.mockReturnValue([])
+      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
     })
 
     afterEach(() => {
@@ -400,8 +405,11 @@ describe('basketRecipeAdd', () => {
     })
 
     test('then it should dispatch validBasketRecipeAdd', () => {
-      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
       expect(dispatch).toHaveBeenCalledWith('mockedValidBasketRecipeAddReturn')
+    })
+
+    test('then trackUserAddRemoveRecipe is called correctly', () => {
+      expect(loggingmanagerActions.trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -513,40 +521,48 @@ describe('basketRecipeRemove', () => {
     jest.resetAllMocks()
   })
 
-  test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', () => {
-    basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
+  describe('when basketRecipeRemove is called passing recipeId only', () => {
+    beforeEach(() => {
+      basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
+    })
 
-    expect(getStateSpy.mock.calls).toHaveLength(3)
-    expect(dispatch.mock.calls).toHaveLength(4)
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', () => {
+      expect(getStateSpy.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(5)
 
-    expect(dispatch.mock.calls[0]).toEqual([{
-      type: actionTypes.BASKET_RECIPE_REMOVE,
-      recipeId: '123',
-      trackingData: {
-        actionType: trackingKeys.removeRecipe,
+      expect(dispatch.mock.calls[0]).toEqual([{
+        type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
-        view: undefined,
-        position: undefined,
-        collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-        recipe_count: 0
-      },
-    }])
+        trackingData: {
+          actionType: trackingKeys.removeRecipe,
+          recipeId: '123',
+          view: undefined,
+          position: undefined,
+          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipe_count: 0
+        },
+      }])
 
-    expect(dispatch.mock.calls[1]).toEqual([{
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: { 123: { 2: 1 } },
-    }])
+      expect(dispatch.mock.calls[1]).toEqual([{
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: { 123: { 2: 1 } },
+      }])
 
-    expect(dispatch.mock.calls[2]).toEqual([{
-      type: actionTypes.BASKET_LIMIT_REACHED,
-      limitReached: false,
-      trackingData: {
-        view: undefined,
-        source: actionTypes.RECIPE_REMOVED,
-        actionType: trackingKeys.basketLimit,
+      expect(dispatch.mock.calls[2]).toEqual([{
+        type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
-      },
-    }])
+        trackingData: {
+          view: undefined,
+          source: actionTypes.RECIPE_REMOVED,
+          actionType: trackingKeys.basketLimit,
+          limitReached: false,
+        },
+      }])
+    })
+
+    test('then trackUserAddRemoveRecipe is called correctly', () => {
+      expect(loggingmanagerActions.trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
+    })
   })
 
   test('should dispatch a pricing pricingRequest action', () => {
@@ -563,7 +579,7 @@ describe('basketRecipeRemove', () => {
     basketActions.basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
-    expect(dispatch.mock.calls).toHaveLength(4)
+    expect(dispatch.mock.calls).toHaveLength(5)
 
     expect(dispatch.mock.calls[0]).toEqual([{
       type: actionTypes.BASKET_RECIPE_REMOVE,
@@ -624,7 +640,7 @@ describe('basketRecipeRemove', () => {
     basketActions.basketRecipeRemove('123')(dispatch, getStateSpy)
 
     expect(getStateSpy.mock.calls).toHaveLength(3)
-    expect(dispatch.mock.calls).toHaveLength(4)
+    expect(dispatch.mock.calls).toHaveLength(5)
 
     expect(dispatch.mock.calls[0]).toEqual([{
       type: actionTypes.BASKET_RECIPE_REMOVE,

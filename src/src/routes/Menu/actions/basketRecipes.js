@@ -1,6 +1,7 @@
 
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { limitReached } from 'utils/basket'
+import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
 import status from '.../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
 import { getBasketRecipes , getBasketPostcode} from '../../../selectors/basket'
@@ -120,6 +121,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
     }
 
     dispatch(exports.validBasketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum))
+    dispatch(trackUserAddRemoveRecipe())
   }
 )
 
@@ -163,6 +165,7 @@ export const basketRecipeRemove = (recipeId, view, position) => (
     }
 
     dispatch(pricingActions.pricingRequest())
+    dispatch(trackUserAddRemoveRecipe())
   }
 )
 
