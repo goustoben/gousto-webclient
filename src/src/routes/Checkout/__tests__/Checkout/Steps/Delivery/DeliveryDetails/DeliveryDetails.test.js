@@ -24,5 +24,9 @@ describe('DeliveryDetails', () => {
     test('should render 1 <DeliveryPhoneNumber> component(s)', () => {
       expect(wrapper.find(DeliveryPhoneNumber).length).toEqual(1)
     })
+
+    test('should render 1 <DeliveryEducationBanner> component', () => {
+      expect(wrapper.find('DeliveryEducationBanner')).toHaveLength(1)
+    })
   })
 })

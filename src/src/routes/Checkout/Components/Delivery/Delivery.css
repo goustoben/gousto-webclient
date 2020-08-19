@@ -1,7 +1,8 @@
 @value SpacingLG, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value ScreenMDMin, ScreenSMMax from 'styles/screenSizes.css';
-@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White from 'styles/colors.css';
+@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White, BlueberryLight from 'styles/colors.css';
 @value avenirBookFontStack from 'styles/typography.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .row {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
@@ -215,4 +216,43 @@
 	@media ScreenSMMax {
 		padding-top: 5px;
 	}
+}
+
+.deliveryEducationBanner {
+  padding: 0.75rem 1rem;
+  margin: 1rem 0 1rem;
+  background-color: BlueberryLight;
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontWeightBold from 'design-language/typography.module.css';
+
+  p {
+    margin: 0;
+  }
+}
+
+.deliverySection {
+  display: flex;
+}
+
+.deliverySlot {
+  composes: fa-basic-class fa-truck from 'styles/vendor/font-awesome-module.css';
+  color: Bluecheese;
+  transform: scale(-1, 1);
+  font-size: 1rem;
+  margin-right: 0.5rem;
+
+  p {
+    margin-bottom: 0.25rem;
+
+    @media BreakpointFromMedium {
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.insulatedPackaging {
+  background: url('media/svgs/icon-snowflake.svg');
+  min-width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
 }
