@@ -57,7 +57,7 @@ const getSubdomain = (service, isServerSide, environment) => {
     return 'api'
   }
 
-  if (isServerSide) {
+  if (isServerSide && service !== 'loggingmanager') {
     return `${environment}-${service}`
   }
 
