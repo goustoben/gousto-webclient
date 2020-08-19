@@ -1,10 +1,10 @@
 import actions, { changeRecaptcha } from 'actions/auth'
-import { resetUserPassword } from 'apis/auth'
+import { resetUserPassword, identifyUser } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
-
 import { redirect, documentLocation } from 'utils/window'
 import logger from 'utils/logger'
+import { trackUserLogin } from 'actions/loggingmanager'
 
 jest.mock('apis/auth')
 
@@ -27,6 +27,10 @@ jest.mock('moment', () => {
 
   return jest.fn(() => momentMethods)
 })
+
+jest.mock('actions/loggingmanager', () => ({
+  trackUserLogin: jest.fn()
+}))
 
 describe('redirectLoggedInUser', () => {
   let getState
@@ -246,6 +250,33 @@ describe('validate', () => {
 
     test('refresh and identify actions are dispatched', () => {
       expect(dispatch).toHaveBeenCalledTimes(2)
+    })
+  })
+})
+
+describe('authIdentify', () => {
+  describe('when authIdentify is called', () => {
+    let dispatch
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+      // eslint-disable-next-line no-global-assign
+      __SERVER__ = true
+      identifyUser.mockResolvedValue({ data: { roles: ['user'] }})
+      actions.authIdentify('test-access-token')(dispatch)
+    })
+
+    test('userIdentified, trackUserLogin and userLoggedIn actions are dispatched', () => {
+      expect(dispatch).toHaveBeenCalledWith({type: 'USER_LOGGED_IN'})
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'USER_IDENTIFIED',
+        user: {
+          roles: [
+            'user',
+          ],
+        },
+      })
+      expect(trackUserLogin).toHaveBeenCalledTimes(1)
     })
   })
 })

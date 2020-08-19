@@ -2,6 +2,8 @@ import { logEventToServer } from 'apis/loggingManager'
 
 const EVENT_NAMES = {
   basketUpdated: 'basket-updated',
+  rafPageVisited: 'rafPage-visited',
+  userLoggedIn: 'user-loggedin',
 }
 
 const getDefaultParams = (state) => {
@@ -14,10 +16,10 @@ const getDefaultParams = (state) => {
   }
 }
 
-export const trackUserFreeFoodPageView = () => (
+const trackUserFreeFoodPageView = () => (
   async (dispatch, getState) => {
     const { authUserId, device } = getDefaultParams(getState())
-    const eventName = 'rafPage-visited'
+    const eventName = EVENT_NAMES.rafPageVisited
 
     const loggingManagerEvent = {
       eventName,
@@ -31,7 +33,24 @@ export const trackUserFreeFoodPageView = () => (
   }
 )
 
-export const trackUserAddRemoveRecipe = () => (
+const trackUserLogin = () => (
+  async (dispatch, getState) => {
+    const { authUserId, device } = getDefaultParams(getState())
+    const eventName = EVENT_NAMES.userLoggedIn
+
+    const loggingManagerEvent = {
+      eventName,
+      authUserId,
+      data: {
+        device,
+      },
+    }
+
+    logEventToServer(loggingManagerEvent)
+  }
+)
+
+const trackUserAddRemoveRecipe = () => (
   async (dispatch, getState) => {
     const state = getState()
     const { basket, boxSummaryDeliveryDays } = state
@@ -65,3 +84,9 @@ export const trackUserAddRemoveRecipe = () => (
     }
   }
 )
+
+export {
+  trackUserFreeFoodPageView,
+  trackUserLogin,
+  trackUserAddRemoveRecipe,
+}

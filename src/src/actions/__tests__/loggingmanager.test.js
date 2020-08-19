@@ -3,6 +3,7 @@ import { logEventToServer } from 'apis/loggingManager'
 import {
   trackUserAddRemoveRecipe,
   trackUserFreeFoodPageView,
+  trackUserLogin,
 } from 'actions/loggingmanager'
 
 jest.mock('apis/loggingManager', () => ({
@@ -14,16 +15,12 @@ describe('trackUserFreeFoodPageView', () => {
   let dispatch
   const id = 'mock-user-id'
   const browser = 'mobile'
-  const accessToken = '12345'
 
   const state = {
     request: Immutable.fromJS({
       browser,
     }),
     auth: Immutable.fromJS({
-      client: Immutable.fromJS({
-        accessToken,
-      }),
       id,
     }),
   }
@@ -48,6 +45,62 @@ describe('trackUserFreeFoodPageView', () => {
           device: browser,
         }
       })
+    })
+  })
+})
+
+describe('trackUserLogin', () => {
+  let getState
+  let dispatch
+  const id = 'mock-user-id'
+  const browser = 'mobile'
+  const eventName = 'user-loggedin'
+
+  describe('when the user is authed', async () => {
+    beforeEach(async () => {
+      const state = {
+        request: Immutable.fromJS({
+          browser,
+        }),
+        auth: Immutable.fromJS({
+          id,
+        }),
+      }
+
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+
+      await trackUserLogin()(dispatch, getState)
+    })
+
+    test('then the logging manager event should be triggered', async () => {
+      expect(logEventToServer).toHaveBeenCalledWith({
+        eventName,
+        authUserId: id,
+        data: {
+          device: browser,
+        },
+      })
+    })
+  })
+
+  describe('when the user is NOT authed', async () => {
+    beforeEach(async () => {
+      const state = {
+        request: Immutable.fromJS({
+          browser,
+        }),
+        auth: Immutable.fromJS({}),
+      }
+
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+
+      await trackUserLogin()(dispatch, getState)
+    })
+
+    test('then the logging manager event should NOT be triggered', async () => {
+      expect(logEventToServer).not.toHaveBeenCalledWith()
     })
   })
 })

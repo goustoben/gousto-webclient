@@ -14,6 +14,8 @@ import moment from 'moment'
 import logger from 'utils/logger'
 import { redirect, documentLocation } from 'utils/window'
 import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
+import { trackUserLogin } from 'actions/loggingmanager'
+
 import statusActions from './status'
 import loginActions from './login'
 import { fetchFeatures } from '../apis/fetchS3'
@@ -114,7 +116,9 @@ const identify = (accessToken) => (
 
     const user = data.data
     dispatch(userIdentified(user))
+
     if (isActive(user.roles)) {
+      dispatch(trackUserLogin())
       dispatch(userLoggedIn())
     }
   }
