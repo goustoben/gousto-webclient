@@ -123,7 +123,7 @@ describe('auth', () => {
 
       beforeEach(async () => {
         apis.getClientToken.mockImplementation(() => {
-          throw new Error()
+          throw new Error('error')
         })
 
         await logEventWithClientAuth(ctx)
@@ -137,9 +137,9 @@ describe('auth', () => {
           },
           response: {
             body: {
-              error: 'client_authentication_failed',
+              error: new Error('error'),
             },
-            status: 401,
+            status: 500,
           },
         })
       })
