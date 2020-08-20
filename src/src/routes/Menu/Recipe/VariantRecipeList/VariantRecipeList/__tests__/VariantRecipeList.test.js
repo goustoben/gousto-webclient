@@ -216,4 +216,33 @@ describe('VariantRecipeListContainer', () => {
     })
     expect(wrapper.find('VariantRecipeList').exists()).toBe(true)
   })
+
+  describe('is in sides modal', () => {
+    let wrapper
+    const recipeVariants = [
+      { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
+      { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
+    ]
+    const selectedRecipe = {
+      displayName: 'Chicken curry',
+      coreRecipeId: '6789'
+    }
+
+    beforeEach(() => {
+      wrapper = shallow(<VariantRecipeList
+        recipeVariants={recipeVariants}
+        selectedRecipe={selectedRecipe}
+        originalId="9999"
+        collectionId="1234abcd"
+        isOnDetailScreen={false}
+        selectRecipeVariant={() => { }}
+        menuRecipeDetailVisibilityChange={() => { }}
+        trackVariantListDisplay={() => { }}
+        isOnSidesModal
+      />)
+    })
+    test('then it renders recipeList', () => {
+      expect(wrapper.find('.recipeList')).toHaveLength(1)
+    })
+  })
 })

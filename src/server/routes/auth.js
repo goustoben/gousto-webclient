@@ -185,13 +185,13 @@ const logEventWithClientAuth = async (ctx) => {
     }
 
     const accessToken = getCookieValue(ctx, 'client_oauth_token', 'access_token')
-    triggerLoggingManagerEvent({ accessToken, body: request })
+    const loggingManagerResponse = await triggerLoggingManagerEvent({ accessToken, body: request })
 
-    ctx.response.body = 'Event logged successfully'
-  } catch (e) {
-    ctx.response.status = 401
+    ctx.response.body = loggingManagerResponse
+  } catch (error) {
+    ctx.response.status = 500
     ctx.response.body = {
-      error: 'client_authentication_failed',
+      error,
     }
   }
 }

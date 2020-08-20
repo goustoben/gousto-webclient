@@ -26,3 +26,13 @@ export const getAlternativesForRecipe = createSelector(
     return alternatives || null
   }
 )
+
+export const getSidesForRecipe = createSelector(
+  [getCurrentMenuVariants, getRecipeIdFromProps, getCurrentMenuRecipes, getCurrentCollectionDietaryClaims],
+  (variants, coreRecipeId, menuRecipes, collectionDietaryClaims) => {
+    const variantsForRecipe = getVariantsForRecipeForCurrentCollection(variants, coreRecipeId, menuRecipes, collectionDietaryClaims)
+    const sides = variantsForRecipe ? variantsForRecipe.sides : null
+
+    return sides || null
+  }
+)

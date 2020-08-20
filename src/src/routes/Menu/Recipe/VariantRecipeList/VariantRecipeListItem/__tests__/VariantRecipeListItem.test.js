@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { InputRadio } from 'goustouicomponents'
+import { InputRadio, InputCheck } from 'goustouicomponents'
 import { VariantRecipeListItem } from '../VariantRecipeListItem'
 
 describe('VariantRecipeListItem', () => {
@@ -132,6 +132,35 @@ describe('VariantRecipeListItem', () => {
       changeRadio()
 
       expect(changeCheckedRecipe).toHaveBeenCalledWith(recipeId, isOutOfStock)
+    })
+  })
+
+  describe('when isOnSidesModal is true', () => {
+    const recipeId = '1230'
+    const isOutOfStock = true
+
+    const changeCheckedRecipe = jest.fn()
+    const wrapper = mount(<VariantRecipeListItem
+      recipeId={recipeId}
+      recipeName="Chicken curry"
+      changeCheckedRecipe={changeCheckedRecipe}
+      isChecked={false}
+      isOnDetailScreen={false}
+      isOutOfStock={isOutOfStock}
+      isOnSidesModal
+    />)
+
+    test('should render InputCheck', () => {
+      expect(wrapper.find(InputCheck)).toHaveLength(1)
+    })
+
+    describe('when check input is clicked', () => {
+      const clickCheck = wrapper.find(InputCheck).first().prop('onClick')
+
+      test('should call changeCheckedRecipe', () => {
+        clickCheck()
+        expect(changeCheckedRecipe).toHaveBeenCalled()
+      })
     })
   })
 })

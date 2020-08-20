@@ -25,7 +25,13 @@ class VariantRecipeList extends React.PureComponent {
   }
 
   changeCheckedRecipe = (recipeId, isOutOfStock) => {
-    const { originalId, selectRecipeVariant, collectionId, menuRecipeDetailVisibilityChange, isOnDetailScreen} = this.props
+    const {
+      originalId,
+      selectRecipeVariant,
+      collectionId,
+      menuRecipeDetailVisibilityChange,
+      isOnDetailScreen,
+    } = this.props
     const view = isOnDetailScreen ? 'details' : 'grid'
     selectRecipeVariant(originalId, recipeId, collectionId, isOutOfStock, view)
 
@@ -43,7 +49,7 @@ class VariantRecipeList extends React.PureComponent {
   }
 
   render() {
-    const { recipeVariants, selectedRecipe, isOnDetailScreen } = this.props
+    const { recipeVariants, selectedRecipe, isOnDetailScreen, isOnSidesModal } = this.props
     const { selectedRecipeId } = this.state
 
     if (!recipeVariants || recipeVariants.length === 0) {
@@ -52,7 +58,11 @@ class VariantRecipeList extends React.PureComponent {
 
     const allVariants = isOnDetailScreen
       ? [selectedRecipe, ...recipeVariants]
-      : [selectedRecipe, ...recipeVariants].sort(compareCoreRecipeIds)
+      : (
+        isOnSidesModal
+          ? recipeVariants
+          : [selectedRecipe, ...recipeVariants]
+      ).sort(compareCoreRecipeIds)
 
     return (
       <div className={css.recipeList} role="button" tabIndex={-1} onClick={this.preventPropagation} onKeyPress={this.preventPropagation}>
@@ -66,8 +76,10 @@ class VariantRecipeList extends React.PureComponent {
               changeCheckedRecipe={this.changeCheckedRecipe}
               isChecked={selectedRecipeId === coreRecipeId}
               isOnDetailScreen={isOnDetailScreen}
+              isOnSidesModal={isOnSidesModal}
             />
-          ))}
+          )
+          )}
         </ul>
       </div>
     )
@@ -83,6 +95,7 @@ VariantRecipeList.propTypes = {
     displayName: PropTypes.string
   }),
   isOnDetailScreen: PropTypes.bool,
+  isOnSidesModal: PropTypes.bool,
   selectRecipeVariant: PropTypes.func.isRequired,
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   trackVariantListDisplay: PropTypes.func.isRequired
@@ -92,5 +105,6 @@ VariantRecipeList.defaultProps = {
   recipeVariants: [],
   selectedRecipe: {},
   isOnDetailScreen: false,
+  isOnSidesModal: false,
 }
 export { VariantRecipeList }

@@ -1,5 +1,5 @@
 const getProtocol = (service, isServerSide, environment) => {
-  if (isServerSide) {
+  if (isServerSide && service !== 'loggingmanager') {
     return 'http'
   }
 
@@ -21,7 +21,7 @@ const getPath = (service, isServerSide, environment, version) => {
     return `/${service}/${version}`
   }
 
-  if (isServerSide) {
+  if (isServerSide && service !== 'loggingmanager') {
     return ''
   }
 
@@ -57,7 +57,7 @@ const getSubdomain = (service, isServerSide, environment) => {
     return 'api'
   }
 
-  if (isServerSide) {
+  if (isServerSide && service !== 'loggingmanager') {
     return `${environment}-${service}`
   }
 

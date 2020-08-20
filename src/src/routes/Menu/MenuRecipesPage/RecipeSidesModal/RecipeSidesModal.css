@@ -1,0 +1,74 @@
+@value headingFontStackBold, sizeLG, sizeMD, sizeXS from 'styles/typography.css';
+@value Bluecheese, White, Mackerel from 'styles/colors.css';
+@value ScreenXXSMax, ScreenXXSMin, ScreenXSMax from 'styles/screenSizes.css';
+.recipeSidesModal {
+  width: fit-content;
+  border-radius: 0.5rem;
+  max-width: 30rem;
+  @media ScreenXXSMax {
+    margin-right: 2rem;
+  }
+}
+
+.recipeSidesModalTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  position: relative;
+  padding: 1.25rem 1rem 0.5rem;
+}
+
+.recipeSidesModalTitle {
+  font-family: headingFontStackBold;
+  font-size: sizeLG;
+  text-align: left;
+  padding-right: 2rem;
+}
+
+.recipeSidesModalCloseX {
+  composes: closeIcon from 'styles/icons.css';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.recipeSidesModalContent {
+  text-align: left;
+  margin: 0;
+  padding: 0.25rem 1rem 0.5rem;
+}
+
+.recipeSidesModalFooter {
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid Mackerel;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  @media ScreenXSMax {
+    flex-wrap: wrap;
+  }
+}
+
+.recipeSidesModalNoSideButton {
+  width: 49%;
+  @media ScreenXSMax {
+    width: 100%;
+  }
+}
+
+.recipeSidesModalAddSideButton {
+  width: 49%;
+  @media ScreenXSMax {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}
+
+.addASideLabel {
+  font-weight: 600;
+  font-size: sizeXS;
+}

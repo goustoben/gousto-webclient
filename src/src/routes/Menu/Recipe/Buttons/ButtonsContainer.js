@@ -3,7 +3,9 @@ import actions from 'actions'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { basketRecipeAdd, basketRecipeRemove } from '../../actions/basketRecipes'
+import { setSidesModalRecipeId } from '../../actions/menuRecipeSidesModal'
 import { getBasketPostcode } from '../../../../selectors/basket'
+import { getVariantsForRecipe } from '../../selectors/variants'
 import Buttons from './Buttons'
 
 const mapStateToProps = (state, props) => {
@@ -20,7 +22,8 @@ const mapStateToProps = (state, props) => {
     disable: state.auth.get('isAdmin'),
     score: props.score,
     basketPostcode: getBasketPostcode(state),
-    stock: state.menuRecipeStock.getIn([props.recipeId, String(numPortions)], 0)
+    stock: state.menuRecipeStock.getIn([props.recipeId, String(numPortions)], 0),
+    recipeVariants: getVariantsForRecipe(state, props)
   }
 }
 
@@ -29,6 +32,7 @@ const ButtonsContainer = connect(mapStateToProps, {
   onRemove: basketRecipeRemove,
   menuRecipeDetailVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
+  setSidesModalRecipeId,
 })(Buttons)
 
 export default ButtonsContainer

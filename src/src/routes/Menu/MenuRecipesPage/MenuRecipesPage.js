@@ -13,6 +13,7 @@ import fetchData from '../fetchData'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
+import { RecipeSidesModalContainer } from './RecipeSidesModal'
 
 import css from './MenuRecipesPage.css'
 
@@ -132,6 +133,7 @@ export class MenuRecipesPage extends PureComponent {
         {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid />}
         <BasketValidationErrorModalContainer />
+        <RecipeSidesModalContainer />
       </div>
     )
   }

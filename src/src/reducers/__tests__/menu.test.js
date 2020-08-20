@@ -5,6 +5,7 @@ import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdown
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
+import { setSidesModalRecipeId, clearSidesModalRecipeId } from '../../routes/Menu/actions/menuRecipeSidesModal'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -392,6 +393,31 @@ describe('menu reducer', () => {
         }]
       })
       expect(result).toEqual(Immutable.fromJS([1, 2]))
+    })
+  })
+
+  describe('menu sides modal', () => {
+    describe('when setting the menu sides modal recipe ID', () => {
+      test('should correctly set sidesModalRecipeId', () => {
+        const initialState = Immutable.Map({
+          sidesModalRecipeId: null,
+        })
+        const recipeId = '123'
+        const result = menu.menu(initialState, setSidesModalRecipeId(recipeId))
+
+        expect(result.get('sidesModalRecipeId')).toEqual(recipeId)
+      })
+    })
+
+    describe('when clearing the menu sides modal recipe ID', () => {
+      test('should set sidesModalRecipeId to null', () => {
+        const initialState = Immutable.Map({
+          sidesModalRecipeId: '123',
+        })
+        const result = menu.menu(initialState, clearSidesModalRecipeId())
+
+        expect(result.get('sidesModalRecipeId')).toEqual(null)
+      })
     })
   })
 })
