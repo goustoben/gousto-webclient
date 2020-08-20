@@ -7,7 +7,7 @@ const triggerLoggingManagerEvent = ({ accessToken, body }) => fetch(
   `${endpoint('loggingmanager')}/log`,
   body,
   'POST',
-  'default',
+  'no-cache',
   { 'Content-Type': 'application/json' },
 )
 
@@ -16,7 +16,7 @@ const logEventToServer = (body) => fetch(
   `${routes.auth.logEvent}`,
   body,
   'POST',
-  'default',
+  'no-cache',
   { 'Content-Type': 'application/json' }
 )
 

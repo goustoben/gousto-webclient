@@ -50,7 +50,7 @@ describe('loggingManager api', () => {
             },
           },
           'POST',
-          'default',
+          'no-cache',
           { 'Content-Type': 'application/json' },
         )
       })
