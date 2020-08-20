@@ -21,7 +21,7 @@ const getPath = (service, isServerSide, environment, version) => {
     return `/${service}/${version}`
   }
 
-  if (isServerSide) {
+  if (isServerSide && service !== 'loggingmanager') {
     return ''
   }
 
