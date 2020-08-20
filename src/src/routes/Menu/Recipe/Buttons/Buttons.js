@@ -133,11 +133,17 @@ class Buttons extends React.Component {
       score,
       menuRecipeDetailVisibilityChange,
       menuBrowseCTAVisibilityChange,
-      basketPostcode
+      basketPostcode,
+      recipeVariants,
+      setSidesModalRecipeId,
     } = this.props
     if (!disable) {
       if (stock !== null && Boolean(basketPostcode)) {
-        onAdd(recipeId, view, { position, score })
+        if (recipeVariants && recipeVariants.type === 'sides') {
+          setSidesModalRecipeId(recipeId)
+        } else {
+          onAdd(recipeId, view, { position, score })
+        }
       } else if (config.recipeDetailViews.includes(view)) {
         menuRecipeDetailVisibilityChange()
         setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)
@@ -229,13 +235,20 @@ Buttons.propTypes = {
   surchargePerPortion: PropTypes.number,
   score: PropTypes.number,
   buttonText: PropTypes.string,
-  basketPostcode: PropTypes.string
+  basketPostcode: PropTypes.string,
+  recipeVariants: PropTypes.shape({
+    type: PropTypes.string,
+    alternatives: PropTypes.arrayOf(PropTypes.shape),
+    sides: PropTypes.arrayOf(PropTypes.shape),
+  }),
+  setSidesModalRecipeId: PropTypes.func.isRequired,
 }
 
 Buttons.defaultProps = {
   buttonText: 'Add recipe',
   basketPostcode: '',
-  isOutOfStock: false
+  isOutOfStock: false,
+  recipeVariants: null,
 }
 
 export default Buttons

@@ -23,7 +23,8 @@ describe('the Buttons component', () => {
     menuRecipeDetailVisibilityChange: jest.fn(),
     surchargePerPortion: null,
     score: null,
-    basketPostcode: 'W3'
+    basketPostcode: 'W3',
+    setSidesModalRecipeId: jest.fn(),
   }
 
   afterEach(() => {
@@ -390,6 +391,32 @@ describe('the Buttons component', () => {
       })
     })
   })
+
+  describe('the functionality with variants', () => {
+    const { recipeId, setSidesModalRecipeId } = buttonsProps
+    const recipeVariants = {
+      type: 'sides',
+    }
+    const buttonsPropsWithRecipeVariants = {
+      ...buttonsProps,
+      recipeVariants,
+    }
+
+    beforeEach(() => {
+      wrapper = mount(<Buttons { ...buttonsPropsWithRecipeVariants} />)
+    })
+
+    describe('when the recipe has sides', () => {
+      test('should set setSidesModalRecipeId to recipeId', () => {
+        const buttonContent = wrapper.find('Tooltip').find('Segment')
+        buttonContent.simulate('click')
+
+        expect(setSidesModalRecipeId).toHaveBeenCalledWith(
+          recipeId,
+        )
+      })
+    })
+  })
 })
 
 describe('ButtonsContainer', () => {
@@ -411,11 +438,18 @@ describe('ButtonsContainer', () => {
           }]
         }
       }),
+      menu: Immutable.fromJS({
+        menuVariants: {
+          321: {}
+        }
+      }),
       menuRecipeStock: Immutable.fromJS({
         1: {
           2: 1000
         }
-      })
+      }),
+      menuCollections: Immutable.fromJS({
+      }),
     }
 
     wrapper = shallow(<ButtonsContainer recipeId="1" />, {

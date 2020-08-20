@@ -12,6 +12,7 @@ jest.mock('routes/Menu/SubHeader')
 jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
 jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 jest.mock('../BasketValidationErrorModal', () => ({ BasketValidationErrorModalContainer: 'BasketValidationErrorModalContainer'}))
+jest.mock('../RecipeSidesModal', () => ({ RecipeSidesModalContainer: 'RecipeSidesModalContainer'}))
 
 describe('initial render', () => {
   let wrapper
@@ -61,6 +62,10 @@ describe('initial render', () => {
 
     test('should render BasketValidationErrorModalContainer', () => {
       expect(wrapper.find('BasketValidationErrorModalContainer')).toHaveLength(1)
+    })
+
+    test('should render RecipeSidesModalContainer', () => {
+      expect(wrapper.find('RecipeSidesModalContainer')).toHaveLength(1)
     })
 
     test('should call checkQueryParams at componentDidMount', () => {

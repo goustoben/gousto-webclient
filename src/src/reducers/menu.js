@@ -16,6 +16,7 @@ export const menuInitialState = Immutable.Map({
   hasCalculatedTimeToUsable: false,
   hasVisitedNonMenuPage: false,
   menuPrefetched: true,
+  sidesModalRecipeId: null,
 })
 
 const menu = {
@@ -68,6 +69,14 @@ const menu = {
 
     case actionTypes.MENU_PREFETCHED: {
       return state.set('menuPrefetched', action.payload.menuPrefetched)
+    }
+
+    case actionTypes.MENU_SET_SIDES_MODAL_RECIPE_ID: {
+      return state.set('sidesModalRecipeId', action.payload.recipeId)
+    }
+
+    case actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE_ID: {
+      return state.set('sidesModalRecipeId', null)
     }
 
     case '@@router/LOCATION_CHANGE': {
