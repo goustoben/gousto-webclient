@@ -144,7 +144,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
         requestUrl,
         errors: [e],
         uuid,
-        extra: { serverSide: __SERVER__ === true, },
+        extra: { serverSide: __SERVER__ === true },
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {

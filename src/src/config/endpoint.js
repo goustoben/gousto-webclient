@@ -1,5 +1,5 @@
 const getProtocol = (service, isServerSide, environment) => {
-  if (isServerSide) {
+  if (isServerSide && service !== 'loggingmanager') {
     return 'http'
   }
 
