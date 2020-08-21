@@ -41,9 +41,11 @@ describe('auth', () => {
 
       beforeEach(async () => {
         apis.getClientToken.mockImplementation(() => ({
-          accessToken: 'mock-access-token',
-          refreshToken: 'mock-refresh-token',
-          expiresIn: '123456789',
+          data: {
+            accessToken: 'mock-access-token',
+            refreshToken: 'mock-refresh-token',
+            expiresIn: '123456789',
+          }
         }))
 
         await logEventWithClientAuth(ctx)
@@ -68,17 +70,17 @@ describe('auth', () => {
             }
           },
           {
-            accessToken: 'mock-access-token',
-            refreshToken: 'mock-refresh-token',
-            expiresIn: '123456789',
+            data: {
+              accessToken: 'mock-access-token',
+              refreshToken: 'mock-refresh-token',
+              expiresIn: '123456789',
+            }
           },
         )
       })
     })
 
     describe('when logEventWithClientAuth is called with a valid cookie', () => {
-      const datePlusOneHour = new Date('2020-08-06T12:00:00.000Z')
-
       const ctx = {
         response: {},
         request: {
@@ -92,7 +94,7 @@ describe('auth', () => {
 
       beforeEach(async () => {
         getCookieValue
-          .mockReturnValueOnce(datePlusOneHour.toISOString())
+          .mockReturnValueOnce('2020-08-06T13:00:00.000Z')
           .mockReturnValueOnce('mock-access-token')
 
         await logEventWithClientAuth(ctx)
@@ -100,6 +102,54 @@ describe('auth', () => {
 
       test('then getClientToken should NOT have been called', () => {
         expect(apis.getClientToken).not.toHaveBeenCalled()
+      })
+
+      test('then triggerLoggingManagerEvent should be called with the correct params', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledWith(
+          {
+            accessToken: 'mock-access-token',
+            body: {
+              name: 'mock-event-name',
+              authUserId: '12345',
+              occurredAt: '2020-08-06T11:00:00.000Z',
+              id: uuidV4(),
+              data: {},
+            },
+          },
+        )
+      })
+    })
+
+    describe('when logEventWithClientAuth is called with a invalid cookie', () => {
+      const ctx = {
+        response: {},
+        request: {
+          body: {
+            eventName: 'mock-event-name',
+            authUserId: '12345',
+            data: {},
+          },
+        },
+      }
+
+      beforeEach(async () => {
+        apis.getClientToken.mockImplementation(() => ({
+          data: {
+            accessToken: 'mock-access-token',
+            refreshToken: 'mock-refresh-token',
+            expiresIn: '123456789',
+          }
+        }))
+
+        getCookieValue
+          .mockReturnValueOnce('2020-08-06T10:00:00.000Z')
+          .mockReturnValueOnce('mock-access-token')
+
+        await logEventWithClientAuth(ctx)
+      })
+
+      test('then getClientToken should have been called', () => {
+        expect(apis.getClientToken).toHaveBeenCalled()
       })
 
       test('then triggerLoggingManagerEvent should be called with the correct params', () => {
