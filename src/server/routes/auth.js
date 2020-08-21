@@ -169,22 +169,23 @@ const logEventWithClientAuth = async (ctx) => {
     const { body: { eventName, authUserId, data } } = ctx.request
     const { authClientId, authClientSecret } = env
     const expiresAt = getCookieValue(ctx, 'client_oauth_expiry', 'expires_at')
-    const currentDateISO = new Date().toISOString()
+    const currentDateISOString = new Date().toISOString()
+    let accessToken = getCookieValue(ctx, 'client_oauth_token', 'access_token')
 
     const request = {
       id: uuidv4(),
       name: eventName,
       authUserId,
-      occurredAt: currentDateISO,
+      occurredAt: currentDateISOString,
       data
     }
 
-    if (!expiresAt || expiresAt < currentDateISO) {
+    if (!expiresAt || expiresAt <= currentDateISOString) {
       const authResponse = await getClientToken({ authClientId, authClientSecret })
       addClientSessionCookies(ctx, authResponse)
+      accessToken = authResponse.data.accessToken
     }
 
-    const accessToken = getCookieValue(ctx, 'client_oauth_token', 'access_token')
     const loggingManagerResponse = await triggerLoggingManagerEvent({ accessToken, body: request })
 
     ctx.response.body = loggingManagerResponse
