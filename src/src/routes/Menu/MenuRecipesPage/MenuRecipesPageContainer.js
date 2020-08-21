@@ -8,7 +8,7 @@ import {
   getIsCommunicationPanelEnabled,
   getIsTastePreferencesEnabled
 } from 'selectors/features'
-import { getRecipes } from 'selectors/root'
+import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getLoadingStateForOrder, getUserId } from 'selectors/user'
@@ -47,7 +47,7 @@ const mapStateToProps = (state, ownProps) => {
     isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
     showCommunicationPanel: getIsCommunicationPanelEnabled(state) && !!getIsAuthenticated(state),
     userId: getUserId(state),
-    shouldShowCapacityInfo: !userHasAvailableSlots(state) && (!getLoadingStateForOrder(state) || !getIsAuthenticated(state))
+    shouldShowCapacityInfo: !userHasAvailableSlots(state) && getBoxSummaryDeliveryDays(state).size > 0 && (!getLoadingStateForOrder(state) || !getIsAuthenticated(state))
   })
 }
 
