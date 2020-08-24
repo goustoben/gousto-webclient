@@ -71,6 +71,16 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
             borderColor: '#01A92B'
           }]
         },
+        {
+          slug: 'mexico-limited-edition-eme',
+          text: 'Dough It Yourself Pizza',
+          type: 'general',
+          themes: [{
+            name: 'light',
+            color: '#01A92B',
+            borderColor: '#01A92B'
+          }]
+        },
       ]
     }
   }
@@ -116,6 +126,14 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
     themes: undefined,
     type: 'general',
   }
+  const mexicoLimitedEditionTag = {
+    slug: 'mexico-limited-edition-eme',
+    text: 'Dough It Yourself Pizza',
+    theme: {borderColor: '#01A92B', color: '#01A92B', name: 'light'},
+    themes: undefined,
+    type: 'general'
+  }
+
   let recipes
 
   beforeEach(() => {
@@ -209,6 +227,46 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
       })
     })
 
+    describe('when recipe is new with mexico-limited-edition promotion', () => {
+      beforeEach(() => {
+        recipes = recipes.setIn([recipeId, 'isNew'], true)
+        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['mexico-limited-edition']))
+      })
+
+      test('should return new tag and mexico limited edition tag', () => {
+        const isFineDineInRecipe = false
+        const isEverydayFavouritesRecipe = false
+        const isHealthKitchenRecipe = false
+
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, isFineDineInRecipe, isEverydayFavouritesRecipe, isHealthKitchenRecipe)
+
+        expect(result).toEqual({
+          topLeftTag: newTag,
+          topRightTag: mexicoLimitedEditionTag,
+        })
+      })
+    })
+
+    describe('when recipe is not new with mexico-limited-edition promotion', () => {
+      beforeEach(() => {
+        recipes = recipes.setIn([recipeId, 'isNew'], false)
+        recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['mexico-limited-edition']))
+      })
+
+      test('should return mexico limited edition tag', () => {
+        const isFineDineInRecipe = false
+        const isEverydayFavouritesRecipe = false
+        const isHealthKitchenRecipe = false
+
+        const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, isFineDineInRecipe, isEverydayFavouritesRecipe, isHealthKitchenRecipe)
+
+        expect(result).toEqual({
+          topLeftTag: null,
+          topRightTag: mexicoLimitedEditionTag,
+        })
+      })
+    })
+
     describe('when joe-wicks-eme promotion', () => {
       describe('when recipe is new and with joe-wicks-eme promotion', () => {
         beforeEach(() => {
@@ -273,20 +331,6 @@ describe('getElevatedMenuExperienceRecipeTags', () => {
         expect(result).toEqual({
           topLeftTag: null,
           topRightTag: fineDineInTag,
-        })
-      })
-
-      describe('And has mexico limited edition promotion', () => {
-        beforeEach(() => {
-          recipes = recipes.setIn([recipeId, 'promotions'], Immutable.List(['mexico-limited-edition']))
-        })
-        test('should return left tag limited edition eme', () => {
-          const result = getElevatedMenuExperienceRecipeTags.resultFunc(recipes, recipeId, brand, true, false, false)
-
-          expect(result).toEqual({
-            topLeftTag: limitedEditionTag,
-            topRightTag: null,
-          })
         })
       })
     })

@@ -46,10 +46,13 @@ export const getElevatedMenuExperienceRecipeTags = createSelector(
     const promotionLimitedEditionEME = promotions.get(0) === 'limited-edition-eme'
 
     switch (true) {
+    case promotionIsMexico === true:
+      promotion = 'mexico-limited-edition-eme'
+      break
     case isHealthKitchen === true:
       promotion = 'health-kitchen-eme'
       break
-    case (isFineDineIn === true && !promotionIsMexico):
+    case isFineDineIn === true:
       promotion = 'fine-dine-in-eme'
       break
     case isEverydayFavourites === true:
@@ -70,7 +73,7 @@ export const getElevatedMenuExperienceRecipeTags = createSelector(
       topRightTagId = promotions.get(0)
     }
 
-    if (promotionIsMexico || promotionLimitedEditionEME) {
+    if (promotionLimitedEditionEME) {
       topLeftTagId = 'limited-edition-eme'
     } else if (recipe.get('isNew')) {
       topLeftTagId = 'new-eme'
