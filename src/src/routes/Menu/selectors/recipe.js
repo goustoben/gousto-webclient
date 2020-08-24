@@ -121,7 +121,11 @@ export const findTag = (allTags, tag) => {
 }
 export const getTagDefinition = createSelector(
   [getAllTags, getTagBySlugFromProps],
-  (allTags, tag) => findTag(allTags, tag)
+  (allTags, tag) => {
+    const nonEmeTags = (allTags || []).filter((tagData) => !tagData.slug.endsWith('-eme'))
+
+    return findTag(nonEmeTags, tag)
+  }
 )
 
 const getClaimForRecipeId = createSelector(
