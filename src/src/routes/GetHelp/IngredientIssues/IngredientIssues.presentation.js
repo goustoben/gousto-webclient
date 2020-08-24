@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { Button, Dropdown } from 'goustouicomponents'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
-import { BottomButton } from '../components/BottomButton'
 
 import css from './IngredientIssues.css'
 
@@ -12,7 +11,6 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   changeHandler: PropTypes.func.isRequired,
   continueHandler: PropTypes.func.isRequired,
@@ -25,7 +23,6 @@ const propTypes = {
       label: PropTypes.string.isRequired,
     })
   ),
-  buttonLeftUrl: PropTypes.string,
   issues: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -44,7 +41,6 @@ const propTypes = {
 }
 
 const defaultProps = {
-  buttonLeftUrl: '',
   ingredients: [],
   issues: [],
   subIssues: [],
@@ -79,10 +75,8 @@ const IngredientIssuesPresentation = ({
     title,
     body,
     button1Copy,
-    button2Copy,
   },
   ingredients,
-  buttonLeftUrl,
   issues,
   subIssues,
   changeHandler,
@@ -91,15 +85,12 @@ const IngredientIssuesPresentation = ({
   <GetHelpLayout title={title} body={body}>
     {renderIngredientsIssues(ingredients, issues, subIssues, changeHandler)}
     <BottomFixedContentWrapper>
-      <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
-        {button1Copy}
-      </BottomButton>
       <Button
         className={css.button}
         color="primary"
         onClick={continueHandler}
       >
-        {button2Copy}
+        {button1Copy}
       </Button>
     </BottomFixedContentWrapper>
   </GetHelpLayout>

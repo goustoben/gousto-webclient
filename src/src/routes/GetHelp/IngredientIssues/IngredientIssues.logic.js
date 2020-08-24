@@ -9,7 +9,6 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   fetchIngredientIssues: PropTypes.func.isRequired,
   ingredients: PropTypes.objectOf(
@@ -49,8 +48,6 @@ const defaultProps = {
 }
 
 class IngredientIssues extends PureComponent {
-  buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
-
   componentDidMount() {
     this.fetchData()
   }
@@ -90,7 +87,6 @@ class IngredientIssues extends PureComponent {
       <IngredientIssuesPresentation
         content={content}
         ingredients={ingredients}
-        buttonLeftUrl={this.buttonLeftUrl}
         issues={issues}
         subIssues={subIssues}
         continueHandler={this.continueHandler}

@@ -7,7 +7,6 @@ describe('<OrderIssue />', () => {
   const content = {
     title: 'test title',
     body: 'text...',
-    buttonCopy: 'test buttonCopy',
     ingredientsItem: 'test ingredientsItem',
     recipeCardItem: 'test recipeCardItem',
     deliveryItem: 'test deliveryItem',
@@ -26,11 +25,7 @@ describe('<OrderIssue />', () => {
     })
 
     test('layout is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-
       expect(getHelpLayout).toHaveLength(1)
-      expect(BottomBar).toHaveLength(1)
-      expect(BottomBar.find('BottomButton')).toHaveLength(1)
     })
 
     test('header is rendering correctly', () => {
@@ -75,13 +70,6 @@ describe('<OrderIssue />', () => {
 
     test('the Others option is not client route', () => {
       expect(wrapper.find('ItemLink').at(3).prop('clientRouted')).toBe(false)
-    })
-
-    test('bottom bar buttons is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const Button1 = BottomBar.find('BottomButton').at(0)
-
-      expect(Button1.text()).toContain(content.buttonCopy)
     })
   })
 })

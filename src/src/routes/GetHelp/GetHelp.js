@@ -5,6 +5,7 @@ import React, { PureComponent } from 'react'
 import { browserHistory } from 'react-router'
 import { LayoutPageWrapper } from 'goustouicomponents'
 import { client } from 'config/routes'
+import { CTABack } from '../../../libs/goustouicomponents/dist/CTABack'
 import { LoadingWrapper } from './LoadingWrapper'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
@@ -31,6 +32,7 @@ const propTypes = {
   isRequestPending: PropTypes.bool.isRequired,
   storeGetHelpOrderId: PropTypes.func.isRequired,
   loadOrderById: PropTypes.func.isRequired,
+  location: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
@@ -76,30 +78,36 @@ class GetHelp extends PureComponent {
   }
 
   render() {
-    const { children, content, didRequestError, isRequestPending } = this.props
+    const { children, content, didRequestError, isRequestPending, location, orderId } = this.props
     const contentClasses = classnames(
       css.getHelpContent,
       {
         [css.getHelpContent__loading]: isRequestPending,
       }
     )
+    const { getHelp: {index, contact}, myGousto } = client
+    const isContactPage = location.pathname === `${index}/${contact}`
+    const ctaBackUrl = orderId ? `${index}?orderId=${orderId}` : myGousto
 
     return (
       <LayoutPageWrapper>
         <div className={css.getHelpContainer}>
-          <Helmet
-            style={[{
-              cssText: '#react-root { height: 100%; }',
-            }]}
-          />
-          <div className={contentClasses}>
-            {(isRequestPending) ? (
-              <LoadingWrapper />
-            ) : (
-              <Error content={content} hasError={didRequestError}>
-                {children}
-              </Error>
-            )}
+          <div className={css.getHelpContentWrapper}>
+            <CTABack url={isContactPage ? ctaBackUrl : null} />
+            <Helmet
+              style={[{
+                cssText: '#react-root { height: 100%; }',
+              }]}
+            />
+            <div className={contentClasses}>
+              {(isRequestPending) ? (
+                <LoadingWrapper />
+              ) : (
+                <Error content={content} hasError={didRequestError}>
+                  {children}
+                </Error>
+              )}
+            </div>
           </div>
         </div>
       </LayoutPageWrapper>

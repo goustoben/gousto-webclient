@@ -9,8 +9,7 @@ describe('<Ingredients />', () => {
   const content = {
     title: 'test title',
     body: 'text...',
-    button1Copy: 'Back',
-    button2Copy: 'Done',
+    button1Copy: 'Done',
   }
   const recipes = [
     { id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
@@ -55,7 +54,7 @@ describe('<Ingredients />', () => {
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
-      expect(BottomBar.find('Button')).toHaveLength(2)
+      expect(BottomBar.find('Button')).toHaveLength(1)
     })
 
     test('header is rendering correctly', () => {
@@ -68,21 +67,13 @@ describe('<Ingredients />', () => {
 
     test('bottom bar buttons is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const buttons = BottomBar.find('Button')
 
-      expect(buttons.at(0).text()).toContain(content.button1Copy)
-      expect(buttons.at(1).text()).toContain(content.button2Copy)
-    })
-
-    test('the Back button links to the correct url', () => {
-      const Button1 = getHelpLayout.find('BottomFixedContentWrapper').find('BottomButton')
-
-      expect(Button1.prop('url')).toBe('/get-help')
+      expect(BottomBar.find('Button').text()).toContain(content.button1Copy)
     })
 
     test('the Continue button is disable by default', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const ContinueButton = BottomBar.find('Button').at(1)
+      const ContinueButton = BottomBar.find('Button')
 
       expect(ContinueButton.prop('disabled')).toBe(true)
     })
@@ -130,7 +121,7 @@ describe('<Ingredients />', () => {
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
-      ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button').at(1)
+      ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
     })
 
     describe('ingredients', () => {
@@ -176,11 +167,11 @@ describe('<Ingredients />', () => {
 
       test('the button is enabled only when one or more ingredients are selected', () => {
         const ingredientCheckbox = selectIngredientAndGetCheckbox(wrapper)
-        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button').at(1)
+        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
         expect(ContinueButton.prop('disabled')).toBe(false)
 
         ingredientCheckbox.simulate('change')
-        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button').at(1)
+        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
 
         expect(ContinueButton.prop('disabled')).toBe(true)
       })

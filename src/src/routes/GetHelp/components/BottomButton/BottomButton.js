@@ -12,13 +12,13 @@ const BottomButton = ({
   color,
   onClick,
   url,
+  fullWidth,
 }) => (
   <Button
     areChildrenInSegment
     color={color}
-    className={css.button}
+    className={fullWidth ? css.buttonFullWidth : css.button}
     onClick={onClick}
-    width="auto"
   >
     <Link
       noDecoration
@@ -36,11 +36,13 @@ BottomButton.propTypes = {
   clientRouted: PropTypes.bool.isRequired,
   color: PropTypes.string.isRequired,
   onClick: PropTypes.func,
+  fullWidth: PropTypes.bool,
   url: PropTypes.string.isRequired,
 }
 
 BottomButton.defaultProps = {
   onClick: null,
+  fullWidth: false,
 }
 
 export {

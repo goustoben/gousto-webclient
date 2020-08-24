@@ -8,8 +8,7 @@ describe('<IngredientReasons />', () => {
     title: 'test title',
     body: 'text...',
     secondBody: 'second body',
-    button1Copy: 'Back',
-    button2Copy: 'Done',
+    button1Copy: 'Done',
   }
   const ingredientsAndIssues = {
     '1917-bbb': {
@@ -48,7 +47,7 @@ describe('<IngredientReasons />', () => {
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
-      expect(BottomBar.find('Button')).toHaveLength(2)
+      expect(BottomBar.find('Button')).toHaveLength(1)
     })
 
     test('header is rendering correctly', () => {
@@ -78,25 +77,17 @@ describe('<IngredientReasons />', () => {
       expect(issueDetails.at(1).find('textarea').prop('id')).toBe('1494-bbb')
     })
 
-    test('bottom bar buttons is rendering correctly', () => {
+    test('bottom bar button is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const buttons = BottomBar.find('Button')
 
-      expect(buttons.at(0).text()).toContain(content.button1Copy)
-      expect(buttons.at(1).text()).toContain(content.button2Copy)
-    })
-
-    test('buttons link to correct urls', () => {
-      const Button1 = getHelpLayout.find('BottomButton').at(0)
-
-      expect(Button1.prop('url')).toBe('/get-help/ingredient-issues')
+      expect(BottomBar.find('Button').text()).toContain(content.button1Copy)
     })
 
     test('submit button is disable when there no description set', () => {
-      const Button2 = getHelpLayout.find('Button').at(1)
+      const Button = getHelpLayout.find('Button')
 
-      expect(Button2.prop('disabled')).toBe(true)
-      expect(Button2.text()).toContain(content.button2Copy)
+      expect(Button.prop('disabled')).toBe(true)
+      expect(Button.text()).toContain(content.button1Copy)
     })
   })
 
@@ -123,16 +114,16 @@ describe('<IngredientReasons />', () => {
       await textarea2.simulate(
         'change', { target: { value: 'Another description...' } }
       )
-      const Button2 = wrapper.find('Button')
+      const Button = wrapper.find('Button')
 
       expect(textarea1.text()).toBe('This is my issue...')
       expect(textarea2.text()).toBe('Another description...')
-      expect(Button2.at(1).prop('disabled')).toBe(false)
-      expect(Button2.at(1).text()).toContain(content.button2Copy)
+      expect(Button.prop('disabled')).toBe(false)
+      expect(Button.text()).toContain(content.button1Copy)
     })
 
     test('submit button is disabled if some description becomes less than 1 character', () => {
-      const Button2 = getHelpLayout.find('Button').at(1)
+      const Button = getHelpLayout.find('Button')
       const issueDetails = getHelpLayout.find('div.issueDetails')
       const textarea1 = issueDetails.at(0).find('textarea')
       const textarea2 = issueDetails.at(1).find('textarea')
@@ -147,7 +138,7 @@ describe('<IngredientReasons />', () => {
         'change', { target: { value: '' } }
       )
 
-      expect(Button2.prop('disabled')).toBe(true)
+      expect(Button.prop('disabled')).toBe(true)
     })
 
     test('action being called with issue ids and issue descriptions when submit button is clicked', () => {
@@ -172,7 +163,7 @@ describe('<IngredientReasons />', () => {
       const issueDetails = getHelpLayout.find('div.issueDetails')
       const textarea1 = issueDetails.at(0).find('textarea')
       const textarea2 = issueDetails.at(1).find('textarea')
-      const Button2 = getHelpLayout.find('Button').at(1)
+      const Button = getHelpLayout.find('Button')
 
       textarea1.simulate(
         'change', { target: { value: 'This is my issue...' } }
@@ -181,14 +172,14 @@ describe('<IngredientReasons />', () => {
         'change', { target: { value: 'And this is my other issue...' } }
       )
 
-      Button2.props().onClick()
+      Button.props().onClick()
 
       expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(expectedIssueReasons)
     })
 
     test('redirect happens when the Submit button is clicked', () => {
-      const Button2 = getHelpLayout.find('Button').at(1)
-      Button2.props().onClick()
+      const Button = getHelpLayout.find('Button')
+      Button.props().onClick()
 
       expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
     })
