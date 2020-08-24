@@ -9,7 +9,6 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   ingredientsAndIssues: PropTypes.objectOf(
     PropTypes.shape({
@@ -79,7 +78,6 @@ class IngredientReasons extends PureComponent {
   render() {
     const { content, ingredientsAndIssues } = this.props
     const { issueReasons } = this.state
-    const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
     const ingredientsWithIssueReasons = Object.keys(issueReasons).length > 0
       ? issueReasons
       : ingredientsAndIssues
@@ -87,7 +85,6 @@ class IngredientReasons extends PureComponent {
     return (
       <IngredientReasonsPresentation
         content={content}
-        buttonLeftUrl={buttonLeftUrl}
         ingredientReasons={ingredientsWithIssueReasons}
         onChange={this.changeHandler}
         onSubmit={this.submitHandler}

@@ -22,7 +22,6 @@ const Contact = ({
     title,
     body,
     button1Copy,
-    button2Copy,
     chatItem,
     emailItem,
     phoneItem,
@@ -51,11 +50,13 @@ const Contact = ({
       </ItemExpandable>
     </List>
     <BottomFixedContentWrapper>
-      <BottomButton color="secondary" url={client.getHelp.index} clientRouted>
+      <BottomButton
+        color="primary"
+        url={client.myGousto}
+        clientRouted={false}
+        fullWidth
+      >
         {button1Copy}
-      </BottomButton>
-      <BottomButton color="primary" url={client.myGousto} clientRouted={false}>
-        {button2Copy}
       </BottomButton>
     </BottomFixedContentWrapper>
   </GetHelpLayout>
@@ -66,7 +67,6 @@ Contact.propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
     chatItem: PropTypes.string.isRequired,
     emailItem: PropTypes.string.isRequired,
     phoneItem: PropTypes.string.isRequired,

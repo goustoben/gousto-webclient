@@ -6,8 +6,6 @@ import { addUserIdToUrl } from 'utils/url'
 import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
-import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
-import { BottomButton } from '../components/BottomButton'
 
 const trackClick = (selectOrderIssue, issue) => () => selectOrderIssue(issue)
 
@@ -15,7 +13,6 @@ const OrderIssue = ({
   content: {
     title,
     body,
-    buttonCopy,
     ingredientsItem,
     recipeCardItem,
     deliveryItem,
@@ -53,11 +50,6 @@ const OrderIssue = ({
         clientRouted={false}
       />
     </List>
-    <BottomFixedContentWrapper>
-      <BottomButton color="secondary" url={routes.myGousto} clientRouted={false}>
-        {buttonCopy}
-      </BottomButton>
-    </BottomFixedContentWrapper>
   </GetHelpLayout>
 )
 
@@ -65,7 +57,6 @@ OrderIssue.propTypes = {
   content: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
-    buttonCopy: PropTypes.string.isRequired,
     ingredientsItem: PropTypes.string.isRequired,
     recipeCardItem: PropTypes.string.isRequired,
     deliveryItem: PropTypes.string.isRequired,

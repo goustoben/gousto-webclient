@@ -7,8 +7,7 @@ describe('<IngredientIssues />', () => {
   const content = {
     title: 'test title',
     body: 'text...',
-    button1Copy: 'Back',
-    button2Copy: 'Done',
+    button1Copy: 'Done',
   }
   const ingredients = {
     'recipId1-ingId1': {
@@ -87,7 +86,7 @@ describe('<IngredientIssues />', () => {
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
-      expect(BottomBar.find('Button')).toHaveLength(2)
+      expect(BottomBar.find('Button')).toHaveLength(1)
     })
 
     test('header is rendering correctly', () => {
@@ -149,20 +148,11 @@ describe('<IngredientIssues />', () => {
       expect(suboptions23.text()).toBe('Meat - gristle or bones')
     })
 
-    test('bottom bar buttons is rendering correctly', () => {
+    test('bottom bar button is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const Button1 = BottomBar.find('BottomButton').at(0)
-      const Button2 = BottomBar.find('Button').at(1)
+      const Button = BottomBar.find('Button')
 
-      expect(Button1.text()).toContain(content.button1Copy)
-      expect(Button2.text()).toContain(content.button2Copy)
-    })
-
-    test('button link to correct urls', () => {
-      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const Button1 = BottomBar.find('BottomButton').at(0)
-
-      expect(Button1.prop('url')).toBe('/get-help/ingredients')
+      expect(Button.text()).toContain(content.button1Copy)
     })
   })
 
@@ -201,8 +191,8 @@ describe('<IngredientIssues />', () => {
 
     test('tracking action and redirect is being called when Continue button is clicked', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const Button2 = BottomBar.find('Button').at(1)
-      Button2.props().onClick()
+      const Button = BottomBar.find('Button')
+      Button.props().onClick()
 
       expect(trackIngredientIssuesSpy).toHaveBeenCalledWith([
         { ingredientId: '1234', issueName: 'issue name 1', recipeId: '1010' },

@@ -11,8 +11,6 @@ const mapStateToProps = (state) => ({
     || 'Get help with your box',
     body: state.content.get('get-help_orderissues_pagecontent_copy')
     || 'What part of your order had an issue?',
-    buttonCopy: state.content.get('get-help_orderissues_pagecontent_buttoncopy')
-    || 'Back',
     ingredientsItem: state.content.get('get-help_orderissues_pagecontent_ingredientsitem')
     || 'Ingredients (missing, damaged, wrong)',
     recipeCardItem: state.content.get('get-help_orderissues_pagecontent_recipecarditem')

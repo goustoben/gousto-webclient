@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { Button } from 'goustouicomponents'
-import { BottomButton } from '../components/BottomButton'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import css from './IngredientReasons.css'
 
@@ -12,9 +11,7 @@ const propTypes = {
     body: PropTypes.string.isRequired,
     secondBody: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
   }).isRequired,
-  buttonLeftUrl: PropTypes.string.isRequired,
   isSubmitDisabled: PropTypes.bool.isRequired,
   ingredientReasons: PropTypes.objectOf(
     PropTypes.shape({
@@ -61,9 +58,7 @@ const IngredientReasonsPresentation = ({
     body,
     secondBody,
     button1Copy,
-    button2Copy,
   },
-  buttonLeftUrl,
   isSubmitDisabled,
   ingredientReasons,
   onChange,
@@ -73,16 +68,13 @@ const IngredientReasonsPresentation = ({
     <p>{secondBody}</p>
     {renderIngredientReasonsForm(ingredientReasons, onChange)}
     <BottomFixedContentWrapper>
-      <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
-        {button1Copy}
-      </BottomButton>
       <Button
         className={css.button}
         color="primary"
         disabled={isSubmitDisabled}
         onClick={onSubmit}
       >
-        {button2Copy}
+        {button1Copy}
       </Button>
     </BottomFixedContentWrapper>
   </GetHelpLayout>

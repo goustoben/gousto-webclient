@@ -14,7 +14,6 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   daysSinceLastCompensation: PropTypes.number,
   isValidateOrderLoading: PropTypes.bool.isRequired,
