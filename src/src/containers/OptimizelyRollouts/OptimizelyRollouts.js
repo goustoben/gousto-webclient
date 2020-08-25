@@ -17,18 +17,20 @@ export class OptimizelyRollouts extends React.PureComponent {
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { authUserId } = this.props
-    if (authUserId !== nextProps.authUserId) {
+    const { authUserId, sessionId } = this.props
+    if (authUserId !== nextProps.authUserId || sessionId !== nextProps.sessionId) {
       await this.updateInstance()
     }
   }
 
   updateInstance = async () => {
-    const { featureName, authUserId, trackExperimentInSnowplow } = this.props
+    const { featureName, authUserId, sessionId, trackExperimentInSnowplow } = this.props
 
-    if (authUserId) {
+    const userId = authUserId || sessionId
+
+    if (userId) {
       const optimizelyInstance = await getOptimizelyInstance()
-      const isOptimizelyFeatureEnabled = optimizelyInstance.isFeatureEnabled(featureName, authUserId)
+      const isOptimizelyFeatureEnabled = optimizelyInstance.isFeatureEnabled(featureName, userId)
 
       this.setState({
         optimizelyInstance,
@@ -42,9 +44,9 @@ export class OptimizelyRollouts extends React.PureComponent {
 
   render() {
     const { optimizelyInstance, isOptimizelyFeatureEnabled } = this.state
-    const { authUserId, featureEnabled, children } = this.props
+    const { authUserId, sessionId, featureEnabled, children } = this.props
 
-    if (!authUserId && !featureEnabled) {
+    if (!authUserId && !sessionId && !featureEnabled) {
       return children
     }
 
@@ -57,6 +59,7 @@ export class OptimizelyRollouts extends React.PureComponent {
 }
 
 OptimizelyRollouts.defaultProps = {
+  sessionId: null,
   authUserId: null,
   featureEnabled: false,
   children: null
@@ -66,6 +69,7 @@ OptimizelyRollouts.propTypes = {
   featureName: PropTypes.string.isRequired,
   featureEnabled: PropTypes.bool,
   authUserId: PropTypes.string,
+  sessionId: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.element,
