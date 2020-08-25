@@ -5,15 +5,16 @@ import * as optimizelySDK from './optimizelySDK'
 import { OptimizelyRollouts } from './OptimizelyRollouts'
 
 const mockedGetOptimizelyInstance = safeJestMock(optimizelySDK, 'getOptimizelyInstance')
+const mockedHasValidInstance = safeJestMock(optimizelySDK, 'hasValidInstance')
 
 describe('OptimizelyRollouts', () => {
   let wrapper
-
   beforeEach(() => {
     mockedGetOptimizelyInstance.mockResolvedValue({
       isFeatureEnabled: () => false,
       getOptimizelyConfig: jest.fn()
     })
+    mockedHasValidInstance.mockResolvedValue(true)
 
     wrapper = shallow(
       <OptimizelyRollouts featureName="mock-feature" trackExperimentInSnowplow={() => {}}>

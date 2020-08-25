@@ -9,4 +9,8 @@ const mapStateToProps = state => ({
   sessionId: Cookies.get('gousto_session_id'),
 })
 
-export const OptimizelyRolloutsContainer = connect(mapStateToProps, { trackExperimentInSnowplow })(OptimizelyRollouts)
+const mapDispatchToProps = {
+  trackExperimentInSnowplow,
+}
+
+export const OptimizelyRolloutsContainer = connect(mapStateToProps, mapDispatchToProps)(OptimizelyRollouts)

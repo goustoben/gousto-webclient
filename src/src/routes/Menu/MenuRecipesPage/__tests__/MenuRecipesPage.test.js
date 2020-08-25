@@ -29,7 +29,8 @@ describe('initial render', () => {
         basketOrderLoaded: jest.fn(),
         portionSizeSelectedTracking: jest.fn(),
         userId: '1234',
-        isAuthenticated: true
+        isAuthenticated: true,
+        loadOptimizelySDK: jest.fn(),
       }
       checkQueryParamsSpy = jest.fn()
       SubHeader.mockReturnValue(<div />)
@@ -147,7 +148,8 @@ describe('with the collections feature enabled', () => {
       basketOrderLoaded: jest.fn(),
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
-      isAuthenticated: true
+      isAuthenticated: true,
+      loadOptimizelySDK: jest.fn(),
     }
     wrapper = shallow(
       <MenuRecipes
@@ -177,7 +179,8 @@ describe('with the force collections feature enabled', () => {
       basketOrderLoaded: jest.fn(),
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
-      isAuthenticated: true
+      isAuthenticated: true,
+      loadOptimizelySDK: jest.fn(),
     }
   })
 
@@ -227,7 +230,8 @@ describe('selectCurrentCollection', () => {
       basketOrderLoaded: jest.fn(),
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
-      isAuthenticated: true
+      isAuthenticated: true,
+      loadOptimizelySDK: jest.fn(),
     }
     wrapper = shallow(
       <MenuRecipes
@@ -277,7 +281,8 @@ describe('componentWillUnmount', () => {
       basketOrderLoaded: jest.fn(),
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
-      isAuthenticated: true
+      isAuthenticated: true,
+      loadOptimizelySDK: jest.fn(),
     }
 
     wrapper = shallow(
