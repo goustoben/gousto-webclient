@@ -39,4 +39,8 @@ export const fetchReference = () => (
   fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.reference}`, {}, 'GET')
 )
 
+export const fetchPromoCodeValidity = (params) => (
+  fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.promocode}`, params, 'GET')
+)
+
 export default customersApi

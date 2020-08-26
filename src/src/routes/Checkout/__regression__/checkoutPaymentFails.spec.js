@@ -13,6 +13,7 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
     cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
     cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as('getIntervals')
     cy.route('GET', '/customers/v1/customers/reference', 'fixture:customers/reference.json')
+    cy.route('GET', '/customers/v1/customers/promocode', 'fixture:customers/promocode.json')
     cy.route('POST', '/customers/v2/signup', 'fixture:customers/signupError.json').as('signupError')
     cy.route('POST', '/payments/v1/payments/payment-auth', 'fixture:payments/paymentAuth.json')
     cy.route('GET', '/payments/v1/payments/payments/**', 'fixture:payments/payment.json')
