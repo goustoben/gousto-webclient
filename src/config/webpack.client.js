@@ -196,6 +196,7 @@ const config = {
       styles: path.resolve('./src/styles'),
       jsdom: path.resolve('./fallbacks/jsdom'),
       goustouicomponents: path.resolve(__dirname, '../libs/goustouicomponents/src/main'),
+      zest: path.resolve(__dirname, '../libs/goustouicomponents/dist'),
     },
     modules: [
       path.resolve('./src'),

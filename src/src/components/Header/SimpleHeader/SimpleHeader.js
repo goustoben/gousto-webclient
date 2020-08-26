@@ -2,15 +2,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
 import Link from 'Link'
-import classNames from 'classnames'
 import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import { H1 } from 'Page/Header'
 import css from '../Header.css'
 
-const SimpleHeader = ({ serverError, className, homeUrl, title, small }) => (
+const SimpleHeader = ({ serverError, className, homeUrl, title }) => (
   <span id={serverError ? 'mobileMenu' : null}>
     <a className={className} href={serverError ? '#' : null} />
-    <header className={classNames(css.header, { [css.smallContainer]: small })}>
+    <header className={css.header}>
       <div>
         <div className={css.container}>
           <div className={css.mainBar}>
@@ -35,7 +34,6 @@ SimpleHeader.propTypes = {
   className: PropTypes.string.isRequired,
   homeUrl: PropTypes.string.isRequired,
   title: PropTypes.string,
-  small: PropTypes.bool,
 }
 
 SimpleHeader.defaultProps = {

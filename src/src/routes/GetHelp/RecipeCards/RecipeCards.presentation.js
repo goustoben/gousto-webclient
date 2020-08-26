@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GetHelpLayout } from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from '../layouts/GetHelpLayout'
 
 const propTypes = {
   children: PropTypes.node.isRequired,

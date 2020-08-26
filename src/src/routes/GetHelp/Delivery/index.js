@@ -1,1 +1,1 @@
-export { Delivery } from './route'
+export { DeliveryContainer } from './DeliveryContainer'

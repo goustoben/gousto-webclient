@@ -34,15 +34,6 @@ describe('<GetHelp />', () => {
       )
     })
 
-    test('component is redering correctly', () => {
-      expect(wrapper.find(Helmet)).toHaveLength(1)
-      expect(wrapper.contains(<div className="test" />)).toBe(true)
-    })
-
-    test('renders the default CTABack', () => {
-      expect(wrapper.find('CTABack').exists()).toBe(true)
-    })
-
     test('error component is being displayed', () => {
       wrapper = mount(
         <GetHelp
@@ -126,20 +117,6 @@ describe('<GetHelp />', () => {
         expect(loadOrderByIdSpy).not.toHaveBeenCalled()
 
         expect(wrapper.contains(<div className="test" />)).toBe(true)
-      })
-
-      test('CTABack button links to MyGousto', () => {
-        expect(wrapper.find('CTABack').prop('url')).toBe(client.myGousto)
-      })
-
-      describe('when orderId is passed', () => {
-        beforeEach(() => {
-          wrapper.setProps({ orderId: '12345' })
-        })
-
-        test('CTABack button links to SSR entry page', () => {
-          expect(wrapper.find('CTABack').prop('url')).toBe(`${client.getHelp.index}?orderId=12345`)
-        })
       })
     })
   })

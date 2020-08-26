@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
-import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { windowOpen } from 'utils/window'
 import { client } from 'config/routes'
 import { CTA, ItemExpandable } from 'goustouicomponents'
 import { findNewestOrder, isOrderBeingDeliveredToday } from 'utils/order'
+import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import css from './Delivery.css'
@@ -74,7 +74,7 @@ class Delivery extends PureComponent {
     const { ctaLabel, deliveryDescription } = this.getContent(this.props)
 
     return (
-      <GetHelpLayout title="Get help with box issue?">
+      <GetHelpLayout2 headingText="Get help with box issue?">
         <List>
           <ItemExpandable
             label="Day of delivery tracking"
@@ -94,7 +94,7 @@ class Delivery extends PureComponent {
             clientRouted
           />
         </List>
-      </GetHelpLayout>
+      </GetHelpLayout2>
     )
   }
 }

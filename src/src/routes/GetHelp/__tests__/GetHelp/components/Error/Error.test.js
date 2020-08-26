@@ -5,56 +5,38 @@ import { Error } from 'routes/GetHelp/components/Error'
 import { client as routes } from 'config/routes'
 
 describe('<Error />', () => {
-  describe('rendering', () => {
-    const content = {
-      button1: 'test button',
-      errorBody: 'test error body message',
-      infoBody: '',
-      title: 'test title',
-    }
+  let wrapper
+  const content = {
+    button1: 'test button',
+    errorBody: 'test error body message',
+    title: 'test title',
+  }
 
-    test('error component renders when an error is present', () => {
-      const wrapper = mount(
-        <Error hasError content={content}>
-          <div className="test" />
-        </Error>
-      )
+  beforeEach(() => {
+    wrapper = mount(<Error />)
+  })
 
-      expect(wrapper.contains(<div className="test" />)).toBe(false)
-      expect(wrapper.find('GetHelpLayout')).toHaveLength(1)
+  test('renders without crashing', () => {})
+
+  test('has the url of the button set to contact page', () => {
+    expect(wrapper.find('BottomButton').prop('url')).toBe(`${routes.getHelp.index}/${routes.getHelp.contact}`)
+  })
+
+  describe('when the content is passed dynamically', () => {
+    beforeEach(() => {
+      wrapper.setProps({ content })
     })
 
-    test('dynamic content is being set', () => {
-      const wrapper = mount(
-        <Error hasError content={content}>
-          <div className="test" />
-        </Error>
-      )
-
-      const getHelpLayout = wrapper.find('GetHelpLayout')
-      const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-
-      expect(getHelpLayout.prop('title')).toBe('test title')
-      expect(BottomBar.find('BottomButton').prop('children')).toBe('test button')
-      expect(BottomBar.find('BottomButton').prop('url')).toBe(
-        `${routes.getHelp.index}/${routes.getHelp.contact}`
-      )
-      expect(
-        getHelpLayout
-          .find('.bodyContent')
-          .containsAnyMatchingElements([<p>test error body message</p>])
-      ).toBe(true)
+    test('passes the title to GetHelpLayout component', () => {
+      expect(wrapper.find('GetHelpLayout').prop('title')).toBe(content.title)
     })
 
-    test('error component renders the children when no error', () => {
-      const wrapper = mount(
-        <Error hasError={false} content={content}>
-          <div className="test" />
-        </Error>
-      )
+    test('renders the errorBody', () => {
+      expect(wrapper.text()).toContain(content.errorBody)
+    })
 
-      expect(wrapper.contains(<div className="test" />)).toBe(true)
-      expect(wrapper.find('GetHelpLayout')).toHaveLength(0)
+    test('renders the button1 content as text of the button', () => {
+      expect(wrapper.find('BottomButton').text()).toBe(content.button1)
     })
   })
 })
