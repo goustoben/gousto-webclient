@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getOptimizelyInstance } from './optimizelySDK'
+import { getOptimizelyInstance, hasValidInstance } from './optimizelySDK'
 
 export class OptimizelyRollouts extends React.PureComponent {
   constructor(props) {
     super(props)
 
     this.state = {
-      optimizelyInstance: null,
-      isOptimizelyFeatureEnabled: false
+      loading: true,
+      isOptimizelyFeatureEnabled: false,
     }
   }
 
@@ -17,46 +17,61 @@ export class OptimizelyRollouts extends React.PureComponent {
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { authUserId } = this.props
-    if (authUserId !== nextProps.authUserId) {
+    const { authUserId, sessionId } = this.props
+    if (authUserId !== nextProps.authUserId || sessionId !== nextProps.sessionId) {
       await this.updateInstance()
     }
   }
 
   updateInstance = async () => {
-    const { featureName, authUserId, trackExperimentInSnowplow } = this.props
+    const { featureName, trackExperimentInSnowplow, authUserId, sessionId } = this.props
 
-    if (authUserId) {
+    // Only try to get optimizely flag
+    // if user is logged and we have a valid optimizely instance
+    const userId = authUserId || sessionId
+    if ((userId) && hasValidInstance()) {
       const optimizelyInstance = await getOptimizelyInstance()
-      const isOptimizelyFeatureEnabled = optimizelyInstance.isFeatureEnabled(featureName, authUserId)
+      const isOptimizelyFeatureEnabled = optimizelyInstance.isFeatureEnabled(featureName, userId)
 
       this.setState({
-        optimizelyInstance,
-        isOptimizelyFeatureEnabled
+        isOptimizelyFeatureEnabled,
       })
 
       const optimizelyConfig = optimizelyInstance.getOptimizelyConfig()
       trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)
     }
+
+    // After the first call we set the loading state to false
+    // If we change this behaviour to only do it if we have a auth user and valid instance
+    // It will be possible to render nothing at all, which is something we dont want
+    this.setState({
+      loading: false
+    })
   }
 
   render() {
-    const { optimizelyInstance, isOptimizelyFeatureEnabled } = this.state
-    const { authUserId, featureEnabled, children } = this.props
+    const { isOptimizelyFeatureEnabled, loading } = this.state
+    const { authUserId, featureEnabled, sessionId, children } = this.props
 
-    if (!authUserId && !featureEnabled) {
+    // If user is not logged in and the feature flag is disabled
+    // we should display the children component
+    if (!authUserId && !sessionId && !featureEnabled) {
       return children
     }
 
-    if (!optimizelyInstance || isOptimizelyFeatureEnabled !== featureEnabled) {
+    // If the component is still loading or if the feature flag is different from
+    // optimizely we should display nothing
+    if (loading || isOptimizelyFeatureEnabled !== featureEnabled) {
       return null
     }
 
+    // Component loaded and feature flag is enabled on both sides
     return children
   }
 }
 
 OptimizelyRollouts.defaultProps = {
+  sessionId: null,
   authUserId: null,
   featureEnabled: false,
   children: null
@@ -66,10 +81,11 @@ OptimizelyRollouts.propTypes = {
   featureName: PropTypes.string.isRequired,
   featureEnabled: PropTypes.bool,
   authUserId: PropTypes.string,
+  sessionId: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.element,
   ]),
-  trackExperimentInSnowplow: PropTypes.func.isRequired
+  trackExperimentInSnowplow: PropTypes.func.isRequired,
 }
 

@@ -13,6 +13,7 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getLoadingStateForOrder, getUserId } from 'selectors/user'
 import { menuRecipeDetailVisibilityChange, checkQueryParams } from '../actions/menuRecipeDetails'
+import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCurrentCollectionId } from '../selectors/collections'
@@ -20,11 +21,12 @@ import { getCurrentCollectionId } from '../selectors/collections'
 const showLoading = (state) => {
   const boxSummaryShow = state.boxSummaryShow.get('show')
   const { menuBrowseCTAShow } = state
-  const isLoading = state.pending.get(actionTypes.MENU_FETCH_DATA, false)
+  const isMenuLoading = state.pending.get(actionTypes.MENU_FETCH_DATA, false)
+  const isOptimizelyLoading = state.pending.get(actionTypes.OPTIMIZELY_ROLLOUT_LOADING, false)
   const overlayShow = boxSummaryShow || menuBrowseCTAShow
   const forceLoad = state.menu.get('forceLoad', false)
 
-  return isLoading && !overlayShow || forceLoad
+  return ((isMenuLoading || isOptimizelyLoading) && !overlayShow) || forceLoad
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -58,6 +60,7 @@ const mapDispatchToProps = {
   detailVisibilityChange: menuRecipeDetailVisibilityChange,
   basketOrderLoaded: actions.basketOrderLoaded,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
+  loadOptimizelySDK,
 }
 
 const MenuRecipesPageContainer = connect(mapStateToProps, mapDispatchToProps)(MenuRecipesPage)

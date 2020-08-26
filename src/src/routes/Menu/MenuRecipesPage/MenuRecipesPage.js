@@ -58,12 +58,14 @@ export class MenuRecipesPage extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { menuRecipeDetailShow, orderId } = this.props
+    const { menuRecipeDetailShow, orderId, loadOptimizelySDK } = this.props
     if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
       window.document.addEventListener('keyup', this.handleKeyup, false)
     } else if (!nextProps.menuRecipeDetailShow) {
       window.document.removeEventListener('keyup', this.handleKeyup, false)
     }
+
+    loadOptimizelySDK()
 
     // /menu-> /menu/:orderId
     const editingOrder = (nextProps.orderId || orderId) && nextProps.orderId !== orderId
@@ -195,8 +197,8 @@ MenuRecipesPage.propTypes = {
   showCommunicationPanel: PropTypes.bool,
   checkQueryParams: PropTypes.func.isRequired,
   userId: PropTypes.string,
-  shouldShowCapacityInfo: PropTypes.bool
-
+  shouldShowCapacityInfo: PropTypes.bool,
+  loadOptimizelySDK: PropTypes.func.isRequired,
 }
 
 MenuRecipesPage.defaultProps = {
@@ -211,5 +213,4 @@ MenuRecipesPage.defaultProps = {
   showCommunicationPanel: false,
   userId: '',
   shouldShowCapacityInfo: false
-
 }
