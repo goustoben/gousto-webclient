@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 
 import routes from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
+import pricingActions from 'actions/pricing'
 import * as trackingKeys from 'actions/trackingKeys'
 import { warning } from 'utils/logger'
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
@@ -12,7 +13,7 @@ import { userSubscribe } from 'actions/user'
 import { basketResetPersistent } from 'utils/basket'
 import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchReference } from 'apis/customers'
+import { fetchReference, fetchPromoCodeValidity } from 'apis/customers'
 import { createPreviewOrder } from 'apis/orders'
 import { authPayment, checkPayment } from 'apis/payments'
 
@@ -30,6 +31,7 @@ import checkoutActions, {
   checkoutTransactionalOrder,
   trackCheckoutButtonPressed,
 } from 'actions/checkout'
+import {basketPromoCodeAppliedChange, basketPromoCodeChange} from '../basket'
 
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
@@ -42,6 +44,7 @@ jest.mock('utils/deliveries')
 
 jest.mock('actions/login')
 jest.mock('actions/menu')
+jest.mock('actions/pricing')
 jest.mock('actions/user', () => ({
   userSubscribe: jest.fn(() => Promise.resolve({
     status: 'ok',
@@ -137,6 +140,12 @@ jest.mock('apis/customers', () => ({
     status: 'ok',
     data: {
       goustoRef: '105979923'
+    }
+  })),
+  fetchPromoCodeValidity: jest.fn((request) => Promise.resolve({
+    status: 'ok',
+    data: {
+      valid: request.promo_code === 'DTI-SB-P30M'
     }
   })),
 }))
@@ -249,6 +258,7 @@ const createState = (stateOverrides) => ({
     },
     stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
     slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
+    promoCode: 'DTI-SB-P30M',
     postcode: 'W6 0DH',
     prevPostcode: 'OX18 1EN',
     chosenAddress: {
@@ -364,6 +374,7 @@ const createPreviewOrderObj = (previewOrderOverrides) => ({
   day_slot_lead_time_id: '',
   delivery_tariff_id: '',
   address_id: '123456',
+  promo_code: 'DTI-SB-P30M',
   ...previewOrderOverrides
 })
 
@@ -662,6 +673,80 @@ describe('checkout actions', () => {
   describe('checkout3DSSignup', () => {
     beforeEach(() => {
       getState.mockReturnValue(createState())
+    })
+
+    describe('when promo code is not applied', () => {
+      beforeEach(() => {
+        const state = createState()
+        state.basket = state.basket.set('promoCode', false)
+        getState.mockReturnValue(state)
+      })
+
+      test('should not validate it', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(fetchPromoCodeValidity).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when valid promo code is applied', () => {
+      test('should validate it', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(fetchPromoCodeValidity).toHaveBeenCalled()
+      })
+
+      test('should continue signup process', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(authPayment).toHaveBeenCalled()
+      })
+    })
+
+    describe('when invalid promo code is applied', () => {
+      beforeEach(() => {
+        const state = createState()
+        state.basket = state.basket.set('promoCode', 'FF6-AX-KD')
+        getState.mockReturnValue(state)
+      })
+
+      test('should validate it', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(fetchPromoCodeValidity).toHaveBeenCalled()
+      })
+
+      test('should reset promo code', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(basketPromoCodeChange).toHaveBeenCalled()
+        expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
+      })
+
+      test('should show duplicated promo code error', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith(error(actionTypes.CHECKOUT_SIGNUP, '409-duplicate-details'))
+        expect(dispatch).toHaveBeenCalledWith(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+      })
+
+      test('should update pricing', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(pricingActions.pricingRequest).toHaveBeenCalled()
+      })
+
+      test('should discard pending signup', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      })
+
+      test('should prevent signup process', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(authPayment).not.toHaveBeenCalled()
+      })
     })
 
     describe('when gousto reference is not retrieved', () => {

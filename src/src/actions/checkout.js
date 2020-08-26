@@ -12,12 +12,12 @@ import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchIntervals, fetchReference } from 'apis/customers'
+import { fetchIntervals, fetchPromoCodeValidity, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment } from 'apis/payments'
 import { createPreviewOrder } from 'apis/orders'
 
 import { getChosenAddressId } from 'selectors/basket'
-import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { getAboutYouFormName, getDeliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
 import { getNDDFeatureValue, getIs3DSForSignUpEnabled } from 'selectors/features'
 import { getPaymentDetails } from 'selectors/payment'
 
@@ -294,6 +294,22 @@ export function checkout3DSSignup() {
     const state = getState()
 
     try {
+      const promoCodeValidityDetails = getPromoCodeValidationDetails(getState())
+      if (promoCodeValidityDetails.promo_code) {
+        const validationResult = await fetchPromoCodeValidity(promoCodeValidityDetails)
+
+        if (!validationResult.data.valid) {
+          dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails))
+          dispatch(basketPromoCodeChange(''))
+          dispatch(basketPromoCodeAppliedChange(false))
+          dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+          dispatch(pricingActions.pricingRequest())
+          dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+
+          return
+        }
+      }
+
       let goustoRef = state.checkout.get('goustoRef')
       if (!goustoRef) {
         const { data } = await fetchReference()

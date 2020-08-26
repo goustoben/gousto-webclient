@@ -155,6 +155,7 @@ module.exports = {
     intervals: '/intervals',
     newsletterSubscribers: '/newsletter-subscribers',
     reference: '/customers/reference',
+    promocode: '/customers/promocode',
   },
   deliveries: {
     days: '/days',
@@ -195,7 +196,7 @@ module.exports = {
   unbounce: {
     covid: 'https://cook.gousto.co.uk/coronavirus-3/',
   },
-  
+
   tastePreferences: {
     profile: '/preferences/profile'
   }

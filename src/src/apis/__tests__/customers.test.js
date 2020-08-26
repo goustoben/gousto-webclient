@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchIntervals, fetchReference } from '../customers'
+import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchIntervals, fetchReference, fetchPromoCodeValidity } from '../customers'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -24,6 +24,7 @@ jest.mock('config/routes', () => ({
     newsletterSubscribers: '/newsletterSubscribers',
     intervals: '/intervals',
     reference: '/reference',
+    promocode: '/promocode',
   }
 }))
 
@@ -124,6 +125,33 @@ describe('customers api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchReference()
+
+      expect(result).toEqual(mockFetchResult)
+    })
+  })
+
+  describe('fetchPromoCodeValidity', () => {
+    const params = {
+      promo_code: 'DTI-SB-P30M',
+      phone_number: '07503075906',
+      postcode: 'W3 7UP',
+      line1: 'FLAT 12, MORRIS HOUSE'
+    }
+
+    test('should fetch the correct url', async () => {
+      await fetchPromoCodeValidity(params)
+
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
+        null,
+        'endpoint-customersv1/promocode',
+        params,
+        'GET'
+      )
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await fetchPromoCodeValidity(params)
 
       expect(result).toEqual(mockFetchResult)
     })
