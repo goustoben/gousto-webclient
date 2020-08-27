@@ -339,7 +339,7 @@ describe('Checkout', () => {
       fetchData = jest.fn().mockReturnValue(Promise.resolve())
       Checkout.fetchData = fetchData
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} isCheckoutRedesignEnabled={false} />,
         { context },
       )
       wrapper.instance().componentDidMount()
@@ -351,6 +351,7 @@ describe('Checkout', () => {
         store: context.store,
         query: { query: true },
         params: { params: true },
+        isCheckoutRedesignEnabled: false
       })
     })
   })

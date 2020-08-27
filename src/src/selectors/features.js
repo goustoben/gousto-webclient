@@ -125,3 +125,7 @@ export const getIsTastePreferencesEnabled = ({ features }) => (
 export const getBoxPricesPageRedesign = ({ features }) => (
   features && features.getIn(['isBoxPricesPageRedesignEnabled', 'value'], false)
 )
+
+export const getCheckoutRedesign = ({ features }) => (
+  features && features.getIn(['isCheckoutRedesignEnabled', 'value'], false)
+)

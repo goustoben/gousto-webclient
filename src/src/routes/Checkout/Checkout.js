@@ -41,6 +41,8 @@ const mobileStepMapping = {
   boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' },
   yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
   payment: { component: CheckoutPayment, humanName: 'Payment' },
+  aboutyou: { component: MobileBoxDetails, humanName: 'About You' },
+  delivery: { component: MobileYourDetails, humanName: 'Delivery' },
 }
 
 const propTypes = {
@@ -59,6 +61,7 @@ const propTypes = {
   trackCheckoutButtonPressed: PropTypes.func,
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 const defaultProps = {
@@ -74,6 +77,7 @@ const defaultProps = {
   loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
+  isCheckoutRedesignEnabled: false
 }
 
 const contextTypes = {
@@ -83,8 +87,8 @@ const contextTypes = {
 }
 
 class Checkout extends PureComponent {
-  static fetchData = async ({ store, query, params, browser }) => {
-    const steps = browser === 'mobile' ? defaultMobile : defaultDesktop
+  static fetchData = async ({ store, query, params, browser, isCheckoutRedesignEnabled }) => {
+    const steps = browser === 'mobile' && !isCheckoutRedesignEnabled ? defaultMobile : defaultDesktop
 
     const firstStep = steps[0]
     const currentStep = params && params.stepName
@@ -150,9 +154,9 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutRedesignEnabled } = this.props
 
-    Checkout.fetchData({ store, query, params, browser }).then(() => {
+    Checkout.fetchData({ store, query, params, browser, isCheckoutRedesignEnabled }).then(() => {
       trackSignupStep(1)
     }).then(() => {
       this.setState({
@@ -267,13 +271,14 @@ class Checkout extends PureComponent {
   }
 
   renderMobileSteps = () => {
-    const { params: { stepName }} = this.props
+    const { params: { stepName }, isCheckoutRedesignEnabled} = this.props
+    const mobileSteps = isCheckoutRedesignEnabled ? defaultDesktop : defaultMobile
 
     return (
       <Div>
-        {this.renderProgressBar(mobileStepMapping, defaultMobile, stepName)}
-        {this.renderSteps(mobileStepMapping, defaultMobile, stepName)}
-        {this.renderStaticPayment(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderProgressBar(mobileStepMapping, mobileSteps, stepName)}
+        {this.renderSteps(mobileStepMapping, mobileSteps, stepName)}
+        {this.renderStaticPayment(mobileStepMapping, mobileSteps, stepName)}
       </Div>
     )
   }
@@ -300,21 +305,26 @@ class Checkout extends PureComponent {
     )
   }
 
-  renderProgressBar = (stepMapping, steps, currentStep) => (
-    <Div margin={{ bottom: 'MD' }}>
-      <ProgressBar
-        currentId={currentStep}
-        items={steps.reduce((accumulatedSteps, stepName) => {
-          accumulatedSteps.push({
-            id: stepName,
-            label: stepMapping[stepName].humanName,
-          })
+  renderProgressBar = (stepMapping, steps, currentStep) => {
+    const { isCheckoutRedesignEnabled } = this.props
 
-          return accumulatedSteps
-        }, [])}
-      />
-    </Div>
-  )
+    return (
+      <Div margin={{ bottom: 'MD' }}>
+        <ProgressBar
+          currentId={currentStep}
+          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
+          items={steps.reduce((accumulatedSteps, stepName) => {
+            accumulatedSteps.push({
+              id: stepName,
+              label: stepMapping[stepName].humanName,
+            })
+
+            return accumulatedSteps
+          }, [])}
+        />
+      </Div>
+    )
+  }
 
   render() {
     const { browser } = this.props
