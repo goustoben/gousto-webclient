@@ -63,7 +63,7 @@ describe('given Delivery is rendered', () => {
   })
 
   test('the page title is being rendered correctly', () => {
-    expect(wrapper.find('GetHelpLayout').prop('title')).toEqual('Get help with box issue?')
+    expect(wrapper.find('GetHelpLayout2').prop('headingText')).toEqual('Get help with box issue?')
   })
 
   test('the userOrder is fetched', () => {

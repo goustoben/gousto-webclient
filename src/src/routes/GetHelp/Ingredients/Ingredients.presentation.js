@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
-import { GetHelpLayout } from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 
 const propTypes = {

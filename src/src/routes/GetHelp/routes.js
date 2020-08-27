@@ -9,7 +9,7 @@ import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
-import { Delivery } from './Delivery'
+import { DeliveryContainer } from './Delivery'
 import { EligibilityCheck } from './EligibilityCheck'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
@@ -45,9 +45,12 @@ const getHelpRoutes = (store) => {
         onEnter={onEnterHandler}
       >
         <IndexRoute component={OrderIssueContainer} />
+        <Route
+          path={configRoutes.client.getHelp.delivery}
+          component={DeliveryContainer}
+        />
         {Confirmation}
         {Contact}
-        {Delivery}
         {EligibilityCheck}
         {Ingredients}
         {IngredientIssues}
@@ -64,4 +67,3 @@ const getHelpRoutes = (store) => {
 export {
   getHelpRoutes
 }
-

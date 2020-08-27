@@ -25,3 +25,5 @@ export const getDaysSinceLastCompensation = createSelector(
 )
 
 export const getRecipesForGetHelp = state => state.getHelp.get('recipes').toJS()
+
+export const getOrderId = state => state.getHelp.get('order').get('id')

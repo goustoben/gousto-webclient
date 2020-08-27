@@ -1,0 +1,22 @@
+:global #react-root {
+  height: 100%;
+}
+
+.wrapperWide {
+  margin: 0 auto;
+  padding: 1rem 0;
+  max-width: 750px;
+}
+
+.wrapperBack {
+  margin-bottom: 1.5rem;
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 560px;
+}
+
+.heading {
+  margin-bottom: 1rem;
+}

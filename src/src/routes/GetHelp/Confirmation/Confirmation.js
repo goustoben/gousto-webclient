@@ -1,9 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import { GetHelpLayout } from 'layouts/GetHelpLayout'
-
 import { client as routes } from 'config/routes'
+import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
 

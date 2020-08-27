@@ -129,6 +129,7 @@ const config = {
       ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', true),
       spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
       goustouicomponents: path.resolve(__dirname, '../libs/goustouicomponents/src/main'),
+      zest: path.resolve(__dirname, '../libs/goustouicomponents/dist'),
     },
     modules: [
       path.resolve(__dirname, '../src'),

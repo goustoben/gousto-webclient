@@ -1,12 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { zendesk } from 'config/routes'
+import { client, zendesk } from 'config/routes'
 
 import { Item, ItemExpandable } from 'goustouicomponents'
-import { ItemLink } from 'routes/GetHelp/components/ItemLink'
-import itemCSS from 'routes/GetHelp/components/Item/Item.css'
-import { Contact } from 'routes/GetHelp/Contact/Contact'
+import { ItemLink } from '../../components/ItemLink'
+import itemCSS from '../../components/Item/Item.css'
+import { Contact } from '../Contact'
 
 describe('<Contact />', () => {
   const content = {
@@ -35,6 +35,10 @@ describe('<Contact />', () => {
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
       expect(BottomBar.find('BottomButton')).toHaveLength(1)
+    })
+
+    test('GetHelpLayout has the ctaBackUrl prop set to MyGousto', () => {
+      expect(getHelpLayout.prop('ctaBackUrl')).toBe(client.myGousto)
     })
 
     test('header is rendering correctly', () => {
@@ -73,6 +77,18 @@ describe('<Contact />', () => {
         const linkTo = wrapper.find(ItemLink).find('a').prop('href')
 
         expect(linkTo).toBe(`${zendesk.emailForm}${urlQueryParam}`)
+      })
+    })
+
+    describe('when orderId is passed', () => {
+      const DUMMY_ORDER = '12345'
+
+      beforeEach(() => {
+        wrapper.setProps({ orderId: DUMMY_ORDER })
+      })
+
+      test('GetHelpLayout has the ctaBackUrl prop set to main SSR page', () => {
+        expect(wrapper.find('GetHelpLayout').prop('ctaBackUrl')).toBe(`${client.getHelp.index}?orderId=${DUMMY_ORDER}`)
       })
     })
   })

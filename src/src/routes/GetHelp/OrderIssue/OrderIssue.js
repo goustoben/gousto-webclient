@@ -3,7 +3,7 @@ import React from 'react'
 
 import { client as routes, zendesk as zendeskRoutes } from 'config/routes'
 import { addUserIdToUrl } from 'utils/url'
-import { GetHelpLayout } from 'layouts/GetHelpLayout'
+import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
 

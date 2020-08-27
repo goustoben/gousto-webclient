@@ -1,7 +1,8 @@
-import Immutable from 'immutable'
+import { fromJS, Map } from 'immutable'
 import {
   getRecipesForGetHelp,
   getDaysSinceLastCompensation,
+  getOrderId,
 } from '../getHelp'
 
 describe('getHelp', () => {
@@ -14,7 +15,7 @@ describe('getHelp', () => {
 
     beforeEach(() => {
       state = {
-        getHelp: Immutable.fromJS({
+        getHelp: fromJS({
           recipes: RECIPES
         })
       }
@@ -30,7 +31,7 @@ describe('getHelp', () => {
 
     beforeEach(() => {
       state = {
-        error: Immutable.Map(({
+        error: Map(({
           GET_HELP_VALIDATE_ORDER: {
             errors: {
               criteria: {
@@ -45,5 +46,25 @@ describe('getHelp', () => {
     test('days since last refund is returned when validation has failed', () => {
       expect(getDaysSinceLastCompensation(state)).toEqual(2)
     })
+  })
+})
+
+describe('the getOrderId selector', () => {
+  let state
+
+  const ORDER_ID = '12345'
+
+  beforeEach(() => {
+    state = {
+      getHelp: Map({
+        order: Map({
+          id: ORDER_ID,
+        }),
+      }),
+    }
+  })
+
+  test('returns the order ID', () => {
+    expect(getOrderId(state)).toEqual(ORDER_ID)
   })
 })

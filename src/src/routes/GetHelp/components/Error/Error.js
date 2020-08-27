@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GetHelpLayout } from 'layouts/GetHelpLayout'
 import { client as routes } from 'config/routes'
+import { GetHelpLayout } from '../../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../BottomFixedContentWrapper'
 import { BottomButton } from '../BottomButton'
 
@@ -11,8 +11,6 @@ const propTypes = {
     errorBody: PropTypes.string,
     title: PropTypes.string,
   }),
-  children: PropTypes.node.isRequired,
-  hasError: PropTypes.bool.isRequired,
 }
 
 const defaultProps = {
@@ -24,28 +22,22 @@ const defaultProps = {
   },
 }
 
-const Error = ({ hasError, content, children }) => {
-  if (hasError) {
-    return (
-      <GetHelpLayout
-        title={content.title}
+const Error = ({ content }) => (
+  <GetHelpLayout
+    title={content.title}
+  >
+    <p>{content.errorBody}</p>
+    <BottomFixedContentWrapper>
+      <BottomButton
+        color="secondary"
+        url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+        clientRouted={false}
       >
-        <p>{content.errorBody}</p>
-        <BottomFixedContentWrapper>
-          <BottomButton
-            color="secondary"
-            url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-            clientRouted={false}
-          >
-            {content.button1}
-          </BottomButton>
-        </BottomFixedContentWrapper>
-      </GetHelpLayout>
-    )
-  }
-
-  return children
-}
+        {content.button1}
+      </BottomButton>
+    </BottomFixedContentWrapper>
+  </GetHelpLayout>
+)
 
 Error.defaultProps = defaultProps
 Error.propTypes = propTypes

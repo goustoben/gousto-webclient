@@ -315,7 +315,6 @@ class Header extends React.PureComponent {
       isAuthenticated,
       serverError,
       title,
-      small,
       promoCodeUrl,
       isHelpPreLoginOpen,
       isLoginOpen,
@@ -347,7 +346,6 @@ class Header extends React.PureComponent {
           className={mobileMenuOpen ? css.overlayOpen : css.overlay}
           homeUrl={mobileMenuItems[0].url}
           title={title}
-          small={small}
         />
       )
     }
@@ -468,7 +466,6 @@ Header.propTypes = {
   routing: PropTypes.objectOf(PropTypes.object).isRequired,
   serverError: PropTypes.bool,
   simple: PropTypes.bool,
-  small: PropTypes.bool,
   title: PropTypes.string,
   trackNavigationClick: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
@@ -487,7 +484,6 @@ Header.defaultProps = {
   promoCodeUrl: '',
   serverError: false,
   simple: false,
-  small: false,
   title: '',
   trackNavigationClick: () => { },
   isHomePageRedesignEnabled: false,
