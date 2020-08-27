@@ -13,6 +13,7 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
   return (
     <span
       className={classnames(
+        css.recipeHolder,
         css[view],
         { [css.borderNone]: recipe.size > 0 },
         { [css.placeHolder]: recipe.size < 1 },
@@ -35,6 +36,10 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
           />
         )
         : 'Add recipe'}
+
+      {recipe.size > 0 && (
+        <div className={css.recipeSideLabel}>+1 side</div>
+      )}
     </span>
   )
 }

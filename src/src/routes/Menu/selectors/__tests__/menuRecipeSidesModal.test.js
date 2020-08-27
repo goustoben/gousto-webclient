@@ -1,28 +1,26 @@
 import Immutable from 'immutable'
-import {
-  getMenuRecipeSidesModalRecipeId,
-} from '../menuRecipeSidesModal'
+import { getMenuRecipeSidesModalRecipe } from '../menuRecipeSidesModal'
 
 describe('getMenuRecipeSidesModalRecipeId', () => {
-  describe('when no sidesModalRecipeId', () => {
+  describe('when no sidesModalRecipe', () => {
     const menu = Immutable.fromJS({
-      sidesModalRecipeId: null,
+      sidesModalRecipe: null,
     })
 
     test('should return null', () => {
-      const result = getMenuRecipeSidesModalRecipeId.resultFunc(menu)
+      const result = getMenuRecipeSidesModalRecipe.resultFunc(menu)
 
       expect(result).toEqual(null)
     })
   })
 
-  describe('when sidesModalRecipeId is set', () => {
+  describe('when sidesModalRecipe is set', () => {
     const menu = Immutable.fromJS({
-      sidesModalRecipeId: '123',
+      sidesModalRecipe: '123',
     })
 
     test('should return correct recipe ID', () => {
-      const result = getMenuRecipeSidesModalRecipeId.resultFunc(menu)
+      const result = getMenuRecipeSidesModalRecipe.resultFunc(menu)
 
       expect(result).toEqual('123')
     })

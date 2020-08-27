@@ -25,7 +25,10 @@ describe('RecipeSidesModalContainer', () => {
           [recipeId]: recipe
         }),
         menu: Immutable.fromJS({
-          sidesModalRecipeId: null,
+          sidesModalRecipe: {
+            recipeId: '123',
+          },
+          selectedRecipeSides: {}
         }),
       }
 
@@ -42,12 +45,11 @@ describe('RecipeSidesModalContainer', () => {
 
     test('should set shouldShow to false', () => {
       expect(wrapper.find('RecipeSidesModal').props()).toEqual({
-        addNoSide: null,
-        addSide: null,
-        clearSidesModalRecipeId: expect.any(Function),
+        clearSidesModalRecipe: expect.any(Function),
         recipeTitle: null,
         shouldShow: false,
         sidesModalRecipeId: null,
+        selectedRecipeSide: null
       })
     })
   })
@@ -58,8 +60,11 @@ describe('RecipeSidesModalContainer', () => {
         recipes: Immutable.fromJS({
           [recipeId]: recipe
         }),
-        menu: Immutable.fromJS({
-          sidesModalRecipeId: '123',
+        menu: Immutable.Map({
+          sidesModalRecipe: {
+            recipeId: '123'
+          },
+          selectedRecipeSides: {}
         }),
       }
 
@@ -74,14 +79,13 @@ describe('RecipeSidesModalContainer', () => {
       })
     })
 
-    test('should set shouldShow to false', () => {
+    test('should set shouldShow to true', () => {
       expect(wrapper.find('RecipeSidesModal').props()).toEqual({
-        addNoSide: null,
-        addSide: null,
-        clearSidesModalRecipeId: expect.any(Function),
+        clearSidesModalRecipe: expect.any(Function),
         recipeTitle: 'Chicken Curry',
         shouldShow: true,
         sidesModalRecipeId: '123',
+        selectedRecipeSide: null
       })
     })
   })

@@ -28,7 +28,6 @@
 
 .recipeImg {
 	max-height: holderHeight;
-	min-width: desktopWidth;
 }
 
 .imgMobile {
@@ -39,9 +38,10 @@
 .placeHolder {
 	composes: textCenter from 'styles/typography.css';
 	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
-	padding-top: SpacingMD;
+	padding: 0.6rem 0.5rem 1rem 0.6rem;
 	padding-bottom: SpacingLG;
 	font-size: 11px;
+	max-width: 60px;
 
 	@media ScreenXSMax {
 		margin-left: 0;
