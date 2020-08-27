@@ -32,7 +32,7 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surchargePerPortion, buttonText, hasSides } = this.props
+    const { numPortions, qty, surchargePerPortion, buttonText } = this.props
     const { tooltipVisible } = this.state
     const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected', 'sentenceCaseSegment')
 
@@ -82,7 +82,7 @@ class Buttons extends React.Component {
             hover={this.tooltipHover}
             disabledClick={this.disabledClick}
             size="small"
-            disabled={disabled || hasSides}
+            disabled={disabled}
             className={segmentSelectedClass}
           >
             <Control>+</Control>
@@ -134,19 +134,13 @@ class Buttons extends React.Component {
       menuRecipeDetailVisibilityChange,
       menuBrowseCTAVisibilityChange,
       basketPostcode,
-      hasSides,
-      setSidesModalRecipe,
-      isOnSidesModal,
-      isOnDetailScreen,
-      selectedRecipeSide,
+      recipeVariants,
+      setSidesModalRecipeId,
     } = this.props
-
     if (!disable) {
       if (stock !== null && Boolean(basketPostcode)) {
-        if (hasSides && !isOnSidesModal && !isOnDetailScreen) {
-          setSidesModalRecipe({ recipeId, view, position, score })
-        } else if (selectedRecipeSide) {
-          onAdd(selectedRecipeSide, view, { position, score }, undefined, recipeId)
+        if (recipeVariants && recipeVariants.type === 'sides') {
+          setSidesModalRecipeId(recipeId)
         } else {
           onAdd(recipeId, view, { position, score })
         }
@@ -160,8 +154,8 @@ class Buttons extends React.Component {
   }
 
   handleRemove = () => {
-    const { onRemove, recipeId, view, position, score, firstSideRecipeId ,hasSideAddedToBasket } = this.props
-    onRemove(hasSideAddedToBasket ? firstSideRecipeId : recipeId, view, position, score)
+    const { onRemove, recipeId, view, position, score } = this.props
+    onRemove(recipeId, view, position, score)
   }
 
   tooltipToggle = (visible) => {
@@ -236,7 +230,7 @@ Buttons.propTypes = {
   isOutOfStock: PropTypes.bool,
   disable: PropTypes.bool.isRequired,
   stock: PropTypes.number,
-  menuBrowseCTAVisibilityChange: PropTypes.func.isRequired,
+  menuBrowseCTAVisibilityChange: PropTypes.func,
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   surchargePerPortion: PropTypes.number,
   score: PropTypes.number,
@@ -247,13 +241,7 @@ Buttons.propTypes = {
     alternatives: PropTypes.arrayOf(PropTypes.shape),
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
-  setSidesModalRecipe: PropTypes.func.isRequired,
-  isOnSidesModal: PropTypes.bool,
-  isOnDetailScreen: PropTypes.bool,
-  selectedRecipeSide: PropTypes.string,
-  firstSideRecipeId: PropTypes.string,
-  hasSideAddedToBasket: PropTypes.bool.isRequired,
-  hasSides: PropTypes.bool.isRequired,
+  setSidesModalRecipeId: PropTypes.func.isRequired,
 }
 
 Buttons.defaultProps = {
@@ -261,11 +249,6 @@ Buttons.defaultProps = {
   basketPostcode: '',
   isOutOfStock: false,
   recipeVariants: null,
-  isOnSidesModal: false,
-  selectedRecipeSide: null,
-  firstSideRecipeId: null,
-  isOnDetailScreen: false,
-  surchargePerPortion: null
 }
 
 export default Buttons

@@ -5,7 +5,7 @@ import Button from '../Buttons'
 import css from './AddRecipe.css'
 import { DropdownArrowContainer } from './DropdownArrow'
 
-const AddRecipe = ({ id, originalId, view, position, isOutOfStock, buttonText, isOnDetailScreen, isOnSidesModal }) => {
+const AddRecipe = ({ id, originalId, view, position, isOutOfStock, buttonText, isOnDetailScreen }) => {
   if (isOutOfStock) {
     return null
   }
@@ -18,8 +18,6 @@ const AddRecipe = ({ id, originalId, view, position, isOutOfStock, buttonText, i
         view={view}
         isOutOfStock={isOutOfStock}
         buttonText={buttonText}
-        isOnDetailScreen={isOnDetailScreen}
-        isOnSidesModal={isOnSidesModal}
       />
       {!isOnDetailScreen && <DropdownArrowContainer recipeId={id} originalId={originalId} />}
     </div>
@@ -34,13 +32,11 @@ AddRecipe.propTypes = {
   position: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
   view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'chefPrepared', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
-  isOnDetailScreen: PropTypes.bool,
-  isOnSidesModal: PropTypes.bool,
+  isOnDetailScreen: PropTypes.bool
 }
 
 AddRecipe.defaultProps = {
   isOnDetailScreen: false,
-  isOnSidesModal: false,
   buttonText: 'Add recipe',
   isOutOfStock: false
 }

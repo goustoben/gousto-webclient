@@ -1,12 +1,12 @@
 import { actionTypes } from '../../../actions/actionTypes'
 
-export const setSidesModalRecipe = (data) => ({
-  type: actionTypes.MENU_SET_SIDES_MODAL_RECIPE,
+export const setSidesModalRecipeId = (recipeId) => ({
+  type: actionTypes.MENU_SET_SIDES_MODAL_RECIPE_ID,
   payload: {
-    data,
+    recipeId,
   }
 })
 
-export const clearSidesModalRecipe = () => ({
-  type: actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE,
+export const clearSidesModalRecipeId = () => ({
+  type: actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE_ID,
 })

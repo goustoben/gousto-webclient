@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
+import { Button } from 'goustouicomponents'
 import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList'
-import { RecipeSidesModalButtonsContainer } from './RecipeSidesModalButtonsContainer'
 import css from './RecipeSidesModal.css'
 
 export const RecipeSidesModal = ({
   recipeTitle,
   sidesModalRecipeId,
   shouldShow,
-  clearSidesModalRecipe,
+  clearSidesModalRecipeId,
+  addSide,
+  addNoSide,
 }) => (
   <ModalComponent visible={shouldShow} styleName={css.recipeSidesModal}>
     <ModalTitle className={css.recipeSidesModalTitleWrapper}>
@@ -19,7 +21,7 @@ export const RecipeSidesModal = ({
         {recipeTitle}
         ?
       </h1>
-      <button type="button" className={css.recipeSidesModalCloseX} onClick={clearSidesModalRecipe} />
+      <button type="button" className={css.recipeSidesModalCloseX} onClick={clearSidesModalRecipeId} />
     </ModalTitle>
     <ModalContent className={css.recipeSidesModalContent}>
       <div className={css.addASideLabel}>Add a side</div>
@@ -32,18 +34,22 @@ export const RecipeSidesModal = ({
       />
     </ModalContent>
     <ModalFooter className={css.recipeSidesModalFooter}>
-      <RecipeSidesModalButtonsContainer sidesModalRecipeId={sidesModalRecipeId} />
+      <Button className={css.recipeSidesModalNoSideButton} color="secondary" onClick={addNoSide}>I don&apos;t want a side</Button>
+      <Button className={css.recipeSidesModalAddSideButton} color="primary" onClick={addSide}>Add side</Button>
     </ModalFooter>
   </ModalComponent>
 )
 
 RecipeSidesModal.propTypes = {
   recipeTitle: PropTypes.string.isRequired,
-  sidesModalRecipeId: PropTypes.string,
+  sidesModalRecipeId: PropTypes.string.isRequired,
   shouldShow: PropTypes.bool.isRequired,
-  clearSidesModalRecipe: PropTypes.func.isRequired,
+  clearSidesModalRecipeId: PropTypes.func.isRequired,
+  addSide: PropTypes.func,
+  addNoSide: PropTypes.func,
 }
 
 RecipeSidesModal.defaultProps = {
-  sidesModalRecipeId: null,
+  addSide: null,
+  addNoSide: null,
 }

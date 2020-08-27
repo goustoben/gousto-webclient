@@ -9,7 +9,6 @@ describe('AddRecipeButton', () => {
     recipeId: '1234',
     basketRecipeAddAttempt: jest.fn(),
     basketRecipeRemove: jest.fn(),
-    setSidesModalRecipe: jest.fn(),
     isInBasket: false,
     isBasketLimitReached: false,
     buttonProps: {
@@ -98,44 +97,6 @@ describe('AddRecipeButton', () => {
 
       test('addRecipe should be removed', () => {
         expect(wrapper.find('.addButton').prop('disabled')).toBe(true)
-      })
-    })
-
-    describe('when alternative type is sides', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          recipeVariants: {
-            type: 'sides',
-          }
-        })
-      })
-
-      test('should call setSidesModalRecipe', () => {
-        wrapper.find('.addButton').simulate('click', {
-          stopPropagation: () => {}
-        })
-        expect(buttonsProps.setSidesModalRecipe).toHaveBeenCalledWith({ recipeId: '1234' })
-      })
-    })
-
-    describe('when has side added to basket', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          hasSideAddedToBasket: true,
-          firstSideRecipeId: '567',
-          buttonProps: {
-            buttonClassName: 'removeButton',
-            lineClassName: 'removeButtonLine',
-            buttonText: 'Remove recipe',
-          }
-        })
-      })
-
-      test('should call setSidesModalRecipe', () => {
-        wrapper.find('.removeButton').simulate('click', {
-          stopPropagation: () => {}
-        })
-        expect(buttonsProps.basketRecipeRemove).toHaveBeenCalledWith('567')
       })
     })
   })

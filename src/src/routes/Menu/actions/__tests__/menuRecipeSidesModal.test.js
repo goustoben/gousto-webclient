@@ -1,25 +1,25 @@
-import { setSidesModalRecipe, clearSidesModalRecipe } from '../menuRecipeSidesModal'
+import { setSidesModalRecipeId, clearSidesModalRecipeId } from '../menuRecipeSidesModal'
 import { actionTypes } from '../../../../actions/actionTypes'
 
 describe('setSidesModalRecipeId', () => {
-  test('should return a MENU_SET_SIDES_MODAL_RECIPE action with correct recipe ID', () => {
-    const result = setSidesModalRecipe('123')
+  test('should return a MENU_SET_SIDES_MODAL_RECIPE_ID action with correct recipe ID', () => {
+    const result = setSidesModalRecipeId('123')
 
     expect(result).toEqual({
-      type: actionTypes.MENU_SET_SIDES_MODAL_RECIPE,
+      type: actionTypes.MENU_SET_SIDES_MODAL_RECIPE_ID,
       payload: {
-        data: '123',
+        recipeId: '123',
       }
     })
   })
 })
 
 describe('clearSidesModalRecipeId', () => {
-  test('should return a MENU_CLEAR_SIDES_MODAL_RECIPE action', () => {
-    const result = clearSidesModalRecipe()
+  test('should return a MENU_CLEAR_SIDES_MODAL_RECIPE_ID action', () => {
+    const result = clearSidesModalRecipeId()
 
     expect(result).toEqual({
-      type: actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE,
+      type: actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE_ID,
     })
   })
 })

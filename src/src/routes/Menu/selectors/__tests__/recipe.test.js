@@ -433,10 +433,6 @@ describe('menu recipe selectors', () => {
           alternatives: Immutable.fromJS([{
             id: '1sds1231sds',
             coreRecipeId: '2'
-          }]),
-          variantsList: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
           }])
         })
       })
@@ -485,10 +481,6 @@ describe('menu recipe selectors', () => {
           alternatives: Immutable.fromJS([{
             id: '1sds1231sds',
             coreRecipeId: '2'
-          }]),
-          variantsList: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
           }])
         })
       })
@@ -518,8 +510,7 @@ describe('menu recipe selectors', () => {
           const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
           expect(result).toEqual({
             type: 'alternatives',
-            alternatives: Immutable.List(),
-            variantsList: Immutable.List()
+            alternatives: Immutable.List()
           })
         })
       })
@@ -566,10 +557,6 @@ describe('menu recipe selectors', () => {
         const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
         expect(result).toEqual({
           type: 'sides',
-          variantsList: Immutable.fromJS([{
-            id: '1sds1231sds',
-            coreRecipeId: '2'
-          }]),
           sides: Immutable.fromJS([{
             id: '1sds1231sds',
             coreRecipeId: '2'

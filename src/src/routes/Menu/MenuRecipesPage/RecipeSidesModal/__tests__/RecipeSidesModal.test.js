@@ -30,21 +30,61 @@ describe('RecipeSidesModal', () => {
   })
 
   describe('when click on close button', () => {
-    const clearSidesModalRecipe = jest.fn()
+    const clearSidesModalRecipeId = jest.fn()
     beforeEach(() => {
       props = {
         title: 'Add a side',
         recipeTitle: 'Chicken',
         sidesModalRecipeId: '123',
         shouldShow: true,
-        clearSidesModalRecipe,
+        clearSidesModalRecipeId,
       }
       wrapper = shallow(<RecipeSidesModal {...props} />)
     })
 
     test('should close modal from x', () => {
       wrapper.find('.recipeSidesModalCloseX').simulate('click')
-      expect(clearSidesModalRecipe).toHaveBeenCalled()
+      expect(clearSidesModalRecipeId).toHaveBeenCalled()
+    })
+  })
+
+  describe('when click on Add a side', () => {
+    const addSide = jest.fn()
+    beforeEach(() => {
+      props = {
+        title: 'Add a side',
+        recipeTitle: 'Chicken',
+        sidesModalRecipeId: '123',
+        shouldShow: true,
+        clearSidesModalRecipeId: jest.fn(),
+        addSide,
+      }
+      wrapper = shallow(<RecipeSidesModal {...props} />)
+    })
+
+    test('correct function is called', () => {
+      wrapper.find('.recipeSidesModalAddSideButton').simulate('click')
+      expect(addSide).toHaveBeenCalled()
+    })
+  })
+
+  describe('when click on I do not want a side', () => {
+    const addNoSide = jest.fn()
+    beforeEach(() => {
+      props = {
+        title: 'Add a side',
+        recipeTitle: 'Chicken',
+        sidesModalRecipeId: '123',
+        shouldShow: true,
+        clearSidesModalRecipeId: jest.fn(),
+        addNoSide,
+      }
+      wrapper = shallow(<RecipeSidesModal {...props} />)
+    })
+
+    test('correct function is called', () => {
+      wrapper.find('.recipeSidesModalNoSideButton').simulate('click')
+      expect(addNoSide).toHaveBeenCalled()
     })
   })
 })

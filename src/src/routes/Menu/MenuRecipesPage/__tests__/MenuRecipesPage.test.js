@@ -306,3 +306,4 @@ describe('componentWillUnmount', () => {
     expect(window.document.removeEventListener).toHaveBeenCalled()
   })
 })
+

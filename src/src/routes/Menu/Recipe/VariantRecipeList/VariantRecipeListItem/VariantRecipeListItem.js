@@ -12,10 +12,7 @@ const VariantRecipeListItem = ({
   isOnDetailScreen,
   isOnSidesModal,
   isOutOfStock,
-  surcharge,
-  selectedRecipeSide,
-  hasSides,
-  hasSideAddedToBasket,
+  surcharge
 }) => {
   const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
 
@@ -39,7 +36,6 @@ const VariantRecipeListItem = ({
       {isOutOfStock && <span className={css.soldOutText}>Sold out</span>}
     </div>
   )
-  const isSideChecked = recipeId === selectedRecipeSide || hasSideAddedToBasket
 
   return (
     <li
@@ -47,18 +43,18 @@ const VariantRecipeListItem = ({
         classnames(
           { [css.listItem]: !isOnDetailScreenOrSidesModal },
           { [css.listItemWithBorder]: isOnDetailScreenOrSidesModal },
-          { [css.listItemWithBlueBorder]: (isChecked || isSideChecked) && isOnDetailScreenOrSidesModal}
+          { [css.listItemWithBlueBorder]: isChecked && isOnDetailScreenOrSidesModal}
         )
       }
     >
-      {isOnSidesModal || hasSides ? (
+      {isOnSidesModal ? (
         <div className={css.inputSidesOuter}>
           <div className={css.inputSidesCheckOuter}>
             <InputCheck
               id={recipeId}
               name="variantList"
-              onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
-              isChecked={isSideChecked}
+              onClick={() => changeCheckedRecipe(recipeId, isOutOfStock)}
+              isChecked={isChecked}
             />
           </div>
           {getInputContent()}
@@ -86,15 +82,11 @@ VariantRecipeListItem.propTypes = {
   isOnDetailScreen: PropTypes.bool.isRequired,
   isOnSidesModal: PropTypes.bool.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
-  surcharge: PropTypes.number,
-  selectedRecipeSide: PropTypes.string,
-  hasSides: PropTypes.bool.isRequired,
-  hasSideAddedToBasket: PropTypes.bool.isRequired,
+  surcharge: PropTypes.number
 }
 
 VariantRecipeListItem.defaultProps = {
-  surcharge: null,
-  selectedRecipeSide: null,
+  surcharge: null
 }
 
 export { VariantRecipeListItem }

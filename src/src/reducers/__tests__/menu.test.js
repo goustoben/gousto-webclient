@@ -1,17 +1,11 @@
 import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
-import {
-  selectRecipeVariant,
-  clearSelectedRecipeVariants,
-  recipeVariantDropdownExpanded,
-  selectRecipeSide,
-  unselectRecipeSide,
-} from '../../actions/menu'
+import { selectRecipeVariant, clearSelectedRecipeVariants, recipeVariantDropdownExpanded } from '../../actions/menu'
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
-import { setSidesModalRecipe, clearSidesModalRecipe } from '../../routes/Menu/actions/menuRecipeSidesModal'
+import { setSidesModalRecipeId, clearSidesModalRecipeId } from '../../routes/Menu/actions/menuRecipeSidesModal'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -404,54 +398,25 @@ describe('menu reducer', () => {
 
   describe('menu sides modal', () => {
     describe('when setting the menu sides modal recipe ID', () => {
-      test('should correctly set sidesModalRecipe', () => {
+      test('should correctly set sidesModalRecipeId', () => {
         const initialState = Immutable.Map({
-          sidesModalRecipe: null,
+          sidesModalRecipeId: null,
         })
         const recipeId = '123'
-        const result = menu.menu(initialState, setSidesModalRecipe(recipeId))
+        const result = menu.menu(initialState, setSidesModalRecipeId(recipeId))
 
-        expect(result.get('sidesModalRecipe')).toEqual(recipeId)
+        expect(result.get('sidesModalRecipeId')).toEqual(recipeId)
       })
     })
 
     describe('when clearing the menu sides modal recipe ID', () => {
       test('should set sidesModalRecipeId to null', () => {
         const initialState = Immutable.Map({
-          sidesModalRecipe: '123',
+          sidesModalRecipeId: '123',
         })
-        const result = menu.menu(initialState, clearSidesModalRecipe())
+        const result = menu.menu(initialState, clearSidesModalRecipeId())
 
-        expect(result.get('sidesModalRecipe')).toEqual(null)
-      })
-    })
-  })
-
-  describe('menu recipe sides', () => {
-    describe('when selecting a recipe side', () => {
-      test('should correctly set selectedRecipeSides', () => {
-        const initialState = Immutable.Map({
-          selectedRecipeSides: {},
-        })
-        const recipeId = '123'
-        const sideRecipeId = '456'
-        const result = menu.menu(initialState, selectRecipeSide(recipeId, sideRecipeId))
-
-        expect(result.get('selectedRecipeSides')).toEqual({ [recipeId]: sideRecipeId })
-      })
-    })
-
-    describe('when unselecting a recipe side', () => {
-      test('should correctly remove the selected side', () => {
-        const recipeId = '123'
-        const initialState = Immutable.Map({
-          selectedRecipeSides: {
-            [recipeId]: '456'
-          },
-        })
-        const result = menu.menu(initialState, unselectRecipeSide(recipeId))
-
-        expect(result.get('selectedRecipeSides')).toEqual({ [recipeId]: null })
+        expect(result.get('sidesModalRecipeId')).toEqual(null)
       })
     })
   })
