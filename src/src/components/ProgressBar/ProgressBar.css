@@ -1,13 +1,23 @@
 @value SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value ScreenSMMin, ScreenMLMax from 'styles/screenSizes.css';
-@value Blackberry, Oyster, White from 'styles/colors.css';
+@value Blackberry, Oyster, White, HaricotLight, Haricot from 'styles/colors.css';
 @value RadiusSM from 'styles/borders.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+@value Medium, XSmall, FontFamilyAxiformaBook, FontWeightBold from 'design-language/typography.module.css';
 @value desktopHeight 40px;
 @value mobileHeight 30px;
 
 .list {
 	overflow: hidden;
 	padding-left: SpacingSM;
+}
+
+.checkoutRedesign {
+  font: FontWeightBold XSmall FontFamilyAxiformaBook;
+
+  @media BreakpointFromMedium {
+    font: FontWeightBold Medium FontFamilyAxiformaBook;
+  }
 }
 
 .content {
@@ -20,6 +30,14 @@
 
 	& .number {
 		margin-left: 0;
+
+    .checkoutRedesign & {
+      display: none;
+
+      @media BreakpointFromMedium {
+        display: inline-block;
+      }
+    }
 	}
 
 	@media ScreenSMMin {
@@ -31,6 +49,48 @@
 			margin-left: SpacingXXS;
 		}
 	}
+}
+
+.hiddenSMDown {
+  display: none;
+
+  &.checkoutRedesign {
+    display: inline;
+  }
+
+  @media BreakpointFromMedium {
+    display: inline;
+  }
+}
+
+.tick {
+  display: none;
+
+  .checkoutRedesign & {
+    display: inline-block;
+    color: Haricot;
+    padding-left: 0.75rem;
+
+    @media BreakpointFromMedium {
+      display: none;
+    }
+  }
+}
+
+.checkoutRedesign {
+  &.number {
+    visibility: hidden;
+
+    span {
+      visibility: visible;
+    }
+  }
+
+  @media BreakpointFromMedium {
+    &.number {
+      visibility: visible;
+    }
+  }
 }
 
 .listItem:first-child {
@@ -110,6 +170,11 @@
 		background-color: White;
 		color: Blackberry;
 		border-color: Blackberry;
+
+    .checkoutRedesign & {
+      background-color: Blackberry;
+      color: White;
+    }
 	}
 
 	& .arrow {
@@ -117,6 +182,10 @@
 
 		&:after {
 			 border-left-color: White;
+
+      .checkoutRedesign & {
+        border-left-color: Blackberry;
+      }
 		}
 	}
 }
@@ -127,13 +196,33 @@
 		color: White;
 		border-color: Blackberry;
 		border-right-color: White;
+
+    .checkoutRedesign & {
+      background-color: HaricotLight;
+      color: Blackberry;
+      border-right-color: Blackberry;
+    }
 	}
 
 	& .arrow {
 		border-left-color: White;
 
+    .checkoutRedesign & {
+      border-left-color: Blackberry;
+    }
+
 		&:after {
 			 border-left-color: Blackberry;
+
+      .checkoutRedesign & {
+        border-left-color: HaricotLight;
+      }
 		}
 	}
+
+  & .number {
+    .checkoutRedesign & {
+      color: Haricot;
+    }
+  }
 }
