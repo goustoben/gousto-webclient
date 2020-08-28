@@ -354,4 +354,19 @@ export const trackVariantListDisplay = (view) => ({
   }
 })
 
+export const selectRecipeSide = (recipeId, sideRecipeId) => ({
+  type: actionTypes.MENU_SELECT_RECIPE_SIDE,
+  payload: {
+    recipeId,
+    sideRecipeId,
+  }
+})
+
+export const unselectRecipeSide = (recipeId) => ({
+  type: actionTypes.MENU_UNSELECT_RECIPE_SIDE,
+  payload: {
+    recipeId,
+  }
+})
+
 export default menuActions

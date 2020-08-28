@@ -36,3 +36,19 @@ export const getSidesForRecipe = createSelector(
     return sides || null
   }
 )
+
+export const getSidesData = (state, props) => {
+  const recipeVariants = getVariantsForRecipe(state, props)
+  const hasSides = !!(recipeVariants && recipeVariants.type === 'sides')
+  const sides = hasSides ? recipeVariants.variantsList.toJS() : []
+  const firstSideRecipeId = sides[0] ? sides[0].coreRecipeId : null
+  const hasSideAddedToBasket = !!state.basket.getIn(['recipes', firstSideRecipeId], 0)
+
+  return {
+    recipeVariants,
+    hasSides,
+    sides,
+    firstSideRecipeId,
+    hasSideAddedToBasket,
+  }
+}

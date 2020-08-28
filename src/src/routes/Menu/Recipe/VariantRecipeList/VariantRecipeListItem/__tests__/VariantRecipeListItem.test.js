@@ -136,11 +136,12 @@ describe('VariantRecipeListItem', () => {
   })
 
   describe('when isOnSidesModal is true', () => {
+    let wrapper
     const recipeId = '1230'
     const isOutOfStock = true
 
     const changeCheckedRecipe = jest.fn()
-    const wrapper = mount(<VariantRecipeListItem
+    wrapper = mount(<VariantRecipeListItem
       recipeId={recipeId}
       recipeName="Chicken curry"
       changeCheckedRecipe={changeCheckedRecipe}
@@ -155,11 +156,83 @@ describe('VariantRecipeListItem', () => {
     })
 
     describe('when check input is clicked', () => {
-      const clickCheck = wrapper.find(InputCheck).first().prop('onClick')
+      const onChange = wrapper.find(InputCheck).first().prop('onChange')
 
       test('should call changeCheckedRecipe', () => {
-        clickCheck()
+        onChange()
         expect(changeCheckedRecipe).toHaveBeenCalled()
+      })
+    })
+
+    describe('When the sides recipe is not checked', () => {
+      beforeEach(() => {
+        wrapper = mount(<VariantRecipeListItem
+          recipeId={recipeId}
+          recipeName="Chicken curry"
+          changeCheckedRecipe={changeCheckedRecipe}
+          isChecked={false}
+          isOnDetailScreen={false}
+          isOutOfStock={isOutOfStock}
+          isOnSidesModal
+        />)
+      })
+      test('then it should render a checkbox in a grey box', () => {
+        expect(wrapper.find('.listItemWithBorder')).toHaveLength(1)
+      })
+    })
+
+    describe('When the recipe is checked', () => {
+      beforeEach(() => {
+        wrapper = mount(<VariantRecipeListItem
+          recipeId="1230"
+          recipeName="Chicken curry"
+          changeCheckedRecipe={() => { }}
+          isChecked
+          isOutOfStock={false}
+          isOnSidesModal
+          isOnDetailScreen={false}
+          hasSideAddedToBasket
+        />)
+      })
+      test('then it should render a checkbox in a highlighted blue box', () => {
+        expect(wrapper.find('.listItemWithBlueBorder')).toHaveLength(1)
+      })
+    })
+
+    describe('When the recipe is sold out', () => {
+      beforeEach(() => {
+        wrapper = mount(<VariantRecipeListItem
+          recipeId="1230"
+          recipeName="Chicken curry"
+          changeCheckedRecipe={() => { }}
+          isChecked={false}
+          isOutOfStock
+          isOnSidesModal
+          isOnDetailScreen={false}
+        />)
+      })
+      test('then it should render a sold out tag', () => {
+        expect(wrapper.find('.soldOutText')).toHaveLength(1)
+      })
+    })
+
+    describe('When the recipe has a surcharge', () => {
+      beforeEach(() => {
+        wrapper = mount(<VariantRecipeListItem
+          key="1230"
+          recipeId="1230"
+          recipeName="naan"
+          changeCheckedRecipe={() => {}}
+          isChecked={false}
+          isOnDetailScreen={false}
+          isOutOfStock={false}
+          surcharge={0.75}
+          isOnSidesModal
+        />)
+      })
+      test('then it should render surcharge info', () => {
+        expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
+        expect(wrapper.find('.perServingText')).toHaveLength(1)
       })
     })
   })

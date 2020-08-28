@@ -7,6 +7,7 @@ import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 const mapStateToProps = state => ({
   authUserId: getAuthUserId(state),
   sessionId: Cookies.get('gousto_session_id'),
+
 })
 
 const mapDispatchToProps = {

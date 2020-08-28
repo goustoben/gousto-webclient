@@ -3,9 +3,10 @@ import actions from 'actions'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { basketRecipeAdd, basketRecipeRemove } from '../../actions/basketRecipes'
-import { setSidesModalRecipeId } from '../../actions/menuRecipeSidesModal'
+import { setSidesModalRecipe } from '../../actions/menuRecipeSidesModal'
 import { getBasketPostcode } from '../../../../selectors/basket'
-import { getVariantsForRecipe } from '../../selectors/variants'
+import { getSidesData } from '../../selectors/variants'
+import { getRecipeSelectedSides } from '../../selectors/recipe'
 import Buttons from './Buttons'
 
 const mapStateToProps = (state, props) => {
@@ -13,17 +14,30 @@ const mapStateToProps = (state, props) => {
   const meals = state.recipes.getIn([props.recipeId, 'meals'])
   const overallSurcharge = getSurcharge(meals, numPortions)
   const surchargePerPortion = overallSurcharge ? getSurchargePerPortion(overallSurcharge, numPortions) : null
+  const selectedRecipeSide = getRecipeSelectedSides(state, props)
+
+  const {
+    recipeVariants,
+    hasSides,
+    firstSideRecipeId,
+    hasSideAddedToBasket,
+  } = getSidesData(state, props)
+  const recipeIdOrSideRecipeId = hasSideAddedToBasket ? firstSideRecipeId : props.recipeId
 
   return {
-    qty: state.basket.getIn(['recipes', props.recipeId], 0),
+    qty: state.basket.getIn(['recipes', recipeIdOrSideRecipeId], 0),
     numPortions,
     surchargePerPortion,
     limitReached: state.basket.get('limitReached'),
     disable: state.auth.get('isAdmin'),
     score: props.score,
     basketPostcode: getBasketPostcode(state),
-    stock: state.menuRecipeStock.getIn([props.recipeId, String(numPortions)], 0),
-    recipeVariants: getVariantsForRecipe(state, props)
+    stock: state.menuRecipeStock.getIn([recipeIdOrSideRecipeId, String(numPortions)], 0),
+    recipeVariants,
+    selectedRecipeSide,
+    hasSides,
+    hasSideAddedToBasket,
+    firstSideRecipeId,
   }
 }
 
@@ -32,7 +46,7 @@ const ButtonsContainer = connect(mapStateToProps, {
   onRemove: basketRecipeRemove,
   menuRecipeDetailVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
-  setSidesModalRecipeId,
+  setSidesModalRecipe,
 })(Buttons)
 
 export default ButtonsContainer

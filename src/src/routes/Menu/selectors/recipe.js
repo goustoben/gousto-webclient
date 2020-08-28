@@ -177,7 +177,7 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   const sides = recipeVariants.get('sides')
 
   if (sides && sides.size) {
-    return { type: 'sides', sides }
+    return { type: 'sides', sides, variantsList: sides }
   }
 
   const alternatives = recipeVariants.get('alternatives')
@@ -187,7 +187,7 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   }
 
   if (!collectionDietaryClaims) {
-    return { type: 'alternatives', alternatives }
+    return { type: 'alternatives', alternatives, variantsList: alternatives }
   }
 
   const alternativesDietaryClaims = alternatives.filter((variant) => {
@@ -200,5 +200,12 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
     return (collectionDietaryClaims.every(claim => variantRecipeDietaryAttributes.includes(claim)))
   })
 
-  return { type: 'alternatives', alternatives: alternativesDietaryClaims }
+  return { type: 'alternatives', alternatives: alternativesDietaryClaims, variantsList: alternativesDietaryClaims }
 }
+
+const getSelectedRecipeSidesFromMenu = (state) => state.menu.get('selectedRecipeSides')
+
+export const getRecipeSelectedSides = createSelector(
+  [getRecipeIdFromProps, getSelectedRecipeSidesFromMenu],
+  (recipeId, selectedRecipeSides) => selectedRecipeSides[recipeId] || null
+)

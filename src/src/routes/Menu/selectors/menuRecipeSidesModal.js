@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 
 const getMenuFromState = (state) => state.menu
 
-export const getMenuRecipeSidesModalRecipeId = createSelector(
+export const getMenuRecipeSidesModalRecipe = createSelector(
   [getMenuFromState],
-  (menu) => menu.get('sidesModalRecipeId')
+  (menu) => menu.get('sidesModalRecipe')
 )

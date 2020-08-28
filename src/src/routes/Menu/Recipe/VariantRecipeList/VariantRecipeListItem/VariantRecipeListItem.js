@@ -12,7 +12,10 @@ const VariantRecipeListItem = ({
   isOnDetailScreen,
   isOnSidesModal,
   isOutOfStock,
-  surcharge
+  surcharge,
+  selectedRecipeSide,
+  hasSides,
+  hasSideAddedToBasket,
 }) => {
   const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
 
@@ -28,7 +31,7 @@ const VariantRecipeListItem = ({
         >
           <span className={css.surchargeAmountText}>
             +£
-            {surcharge}
+            {surcharge.toFixed(2)}
           </span>
           <span className={css.perServingText}>per serving</span>
         </div>
@@ -36,6 +39,7 @@ const VariantRecipeListItem = ({
       {isOutOfStock && <span className={css.soldOutText}>Sold out</span>}
     </div>
   )
+  const isSideChecked = recipeId === selectedRecipeSide || hasSideAddedToBasket
 
   return (
     <li
@@ -43,18 +47,18 @@ const VariantRecipeListItem = ({
         classnames(
           { [css.listItem]: !isOnDetailScreenOrSidesModal },
           { [css.listItemWithBorder]: isOnDetailScreenOrSidesModal },
-          { [css.listItemWithBlueBorder]: isChecked && isOnDetailScreenOrSidesModal}
+          { [css.listItemWithBlueBorder]: (isChecked || isSideChecked) && isOnDetailScreenOrSidesModal}
         )
       }
     >
-      {isOnSidesModal ? (
+      {isOnSidesModal || hasSides ? (
         <div className={css.inputSidesOuter}>
           <div className={css.inputSidesCheckOuter}>
             <InputCheck
               id={recipeId}
               name="variantList"
-              onClick={() => changeCheckedRecipe(recipeId, isOutOfStock)}
-              isChecked={isChecked}
+              onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
+              isChecked={isSideChecked}
             />
           </div>
           {getInputContent()}
@@ -82,11 +86,15 @@ VariantRecipeListItem.propTypes = {
   isOnDetailScreen: PropTypes.bool.isRequired,
   isOnSidesModal: PropTypes.bool.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
-  surcharge: PropTypes.number
+  surcharge: PropTypes.number,
+  selectedRecipeSide: PropTypes.string,
+  hasSides: PropTypes.bool.isRequired,
+  hasSideAddedToBasket: PropTypes.bool.isRequired,
 }
 
 VariantRecipeListItem.defaultProps = {
-  surcharge: null
+  surcharge: null,
+  selectedRecipeSide: null,
 }
 
 export { VariantRecipeListItem }
