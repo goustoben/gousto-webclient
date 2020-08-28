@@ -46,26 +46,6 @@
   padding: 1rem;
   border-top: 1px solid Mackerel;
   margin-top: 1rem;
-  display: flex;
-  justify-content: space-between;
-  @media ScreenXSMax {
-    flex-wrap: wrap;
-  }
-}
-
-.recipeSidesModalNoSideButton {
-  width: 49%;
-  @media ScreenXSMax {
-    width: 100%;
-  }
-}
-
-.recipeSidesModalAddSideButton {
-  width: 49%;
-  @media ScreenXSMax {
-    width: 100%;
-    margin-top: 0.5rem;
-  }
 }
 
 .addASideLabel {

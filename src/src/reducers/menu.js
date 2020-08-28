@@ -16,7 +16,8 @@ export const menuInitialState = Immutable.Map({
   hasCalculatedTimeToUsable: false,
   hasVisitedNonMenuPage: false,
   menuPrefetched: true,
-  sidesModalRecipeId: null,
+  sidesModalRecipe: null,
+  selectedRecipeSides: {},
 })
 
 const menu = {
@@ -71,12 +72,28 @@ const menu = {
       return state.set('menuPrefetched', action.payload.menuPrefetched)
     }
 
-    case actionTypes.MENU_SET_SIDES_MODAL_RECIPE_ID: {
-      return state.set('sidesModalRecipeId', action.payload.recipeId)
+    case actionTypes.MENU_SET_SIDES_MODAL_RECIPE: {
+      return state.set('sidesModalRecipe', action.payload.data)
     }
 
-    case actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE_ID: {
-      return state.set('sidesModalRecipeId', null)
+    case actionTypes.MENU_CLEAR_SIDES_MODAL_RECIPE: {
+      return state.set('sidesModalRecipe', null)
+    }
+
+    case actionTypes.MENU_SELECT_RECIPE_SIDE: {
+      const newSelectedRecipeSides = { ...state.get('selectedRecipeSides') }
+
+      newSelectedRecipeSides[action.payload.recipeId] = action.payload.sideRecipeId
+
+      return state.set('selectedRecipeSides', newSelectedRecipeSides)
+    }
+
+    case actionTypes.MENU_UNSELECT_RECIPE_SIDE: {
+      const newSelectedRecipeSides = { ...state.get('selectedRecipeSides') }
+
+      newSelectedRecipeSides[action.payload.recipeId] = null
+
+      return state.set('selectedRecipeSides', newSelectedRecipeSides)
     }
 
     case '@@router/LOCATION_CHANGE': {
