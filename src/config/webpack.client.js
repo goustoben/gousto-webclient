@@ -1,89 +1,35 @@
-
 const webpack = require('webpack')
 const path = require('path')
-const ExtractPlugin = require('extract-text-webpack-plugin')
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
-
-const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const childProcess = require('child_process')
 const TerserPlugin = require('terser-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const { baseConfig } = require('./webpack/webpack.base')
+const logInfo = require('./webpack/logInfo')
 
-// POST CSS IMPORT
-const PostcssNested = require('postcss-nested')
-const PostcssPresetEnv = require('postcss-preset-env')
-const PostcssReporter = require('postcss-reporter')
-const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
-const ExitCodePlugin = require('./exitCode')
-const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
+logInfo({ mode: 'CLIENT' })
 
-const nodeConfig = require("node-config");
-
-const apiName = nodeConfig.get('api_name')
-const build = nodeConfig.get('build')
-const checkout_pk = nodeConfig.get('checkout_pk')
-const clientProtocol = nodeConfig.get('client_protocol')
-const cloudfrontUrl = nodeConfig.get('cloudfront_url')
-const domain = nodeConfig.get('domain')
-const envName = nodeConfig.get('environment_name')
-const runningEnv = nodeConfig.get('running_env')
-const endpoints = nodeConfig.get('endpoints')
-const recaptchaReferralPublicKey = nodeConfig.get('recaptcha_referral_public_key')
-
-const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
-const devMode = process.env.NODE_ENV !== 'production'
-
-const GIT_HASH = `${childProcess.execSync("git rev-parse --short HEAD | tr -d '\n'").toString()}`
-const debug = false
-
-// eslint-disable-next-line no-console
-console.log(`Printing relevant command line envs, NODE_APP_INSTANCE=${process.env.NODE_APP_INSTANCE}, NODE_CONFIG_ENV=${process.env.NODE_CONFIG_ENV}`)
-// eslint-disable-next-line no-console
-console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, POINTING TO API ENVIRONMENT: ${apiName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}, RUNNING ENVIRONMENT: "${runningEnv}"\n================`)
-
-const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
-const cssLoaders = [
-  { loader: `css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=${cssHashPattern}` },
-  {
-    loader: 'postcss-loader',
-    options: {
-      ident: 'postcss',
-      sourceMap: false,
-      parser: 'postcss-safe-parser',
-      plugins: [
-        PostcssNested(),
-        PostcssPresetEnv(),
-        PostcssFlexbugsFixed(),
-        PostcssReporter()
-      ]
-    }
-  },
-]
-
-const scssLoaders = [
-  { loader: `css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=${cssHashPattern}` },
-  { loader: 'postcss-loader',
-    options: {
-      ident: 'postcss',
-      sourceMap: false,
-      parser: 'postcss-safe-parser',
-      plugins: [
-        PostcssNested(),
-        PostcssPresetEnv(),
-        PostcssFlexbugsFixed(),
-        PostcssReporter()
-      ],
-    },
-  },
-  { loader: 'sass-loader' }
-]
+const { MEASURE } = process.env
+const {
+  API_NAME,
+  BUILD,
+  CHECKOUT_PK,
+  CLIENT_PROTOCOL,
+  DOMAIN,
+  ENV_NAME,
+  GIT_HASH,
+  IS_DEV_MODE,
+  IS_HMR_MODE,
+  IS_PROD_MODE,
+  PUBLIC_PATH,
+  RUNNING_ENV,
+  ENDPOINTS,
+  RECAPTCHA_REFERRAL_PUBLIC_KEY
+} = require('./webpack/config')
 
 const config = {
+  ...baseConfig,
   name: 'client',
-  mode: build,
-  context: path.resolve(__dirname, '..'),
   target: 'web',
   entry: {
     main: [
@@ -98,7 +44,7 @@ const config = {
   output: {
     path: path.resolve('./public'),
     filename: '[name].bundle.js',
-    publicPath
+    publicPath: PUBLIC_PATH,
   },
   optimization: {
     splitChunks: {
@@ -108,168 +54,45 @@ const config = {
           name: 'vendors',
           enforce: true,
           test: /[\\/]node_modules[\\/]/
-        }
-      }
-    }
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        options: {
-          cacheDirectory: true,
         },
-        include: [
-          path.resolve('./src'),
-          path.resolve('./libs/goustouicomponents/src')
-        ]
       },
-      {
-        test: /\.css$/,
-        use: devMode ? ['style-loader', ...cssLoaders] : ExtractPlugin.extract(cssLoaders)
-      },
-      {
-        test: /\.scss$/,
-        use: devMode ? ['style-loader', ...scssLoaders] : ExtractPlugin.extract(scssLoaders)
-      },
-      {
-        test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-      },
-      {
-        test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff2'
-      },
-      {
-        test: /\.(ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader'
-      },
-      /*  {
-        test: /\.(jpe?g|png|gif|svg)$/,
-        loader: 'image-webpack-loader',
-        // This will apply the loader before the other ones
-        enforce: 'pre',
-      }, */
-      {
-        test: /\.(jpe?g|png|gif)$/,
-        loader: 'url-loader',
-        options: {
-          // Images larger than 10 KB won’t be inlined
-          limit: 10 * 1024
-        }
-      },
-      {   test: /\.ico$/,
-        loader: 'file-loader'
-      },
-      {   test: /\.svg$/,
-        loaders: [
-          'svg-url-loader',
-          'image-webpack'
-        ],
-      },
-      {
-        test: /\.(graphql|gql)$/,
-        loader: 'graphql-tag/loader'
-      }
-    ]
-  },
-  plugins: [
-    new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
-    ExitCodePlugin,
-    new LodashModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      __DEV__: build === ('development' || 'hmr'),
-      __PROD__: build === 'production',
-      __HMR__: build === 'hmr',
-
-      __SERVER__: false,
-      __CLIENT__: true,
-      __TEST__: false,
-
-      __ENV__: JSON.stringify(envName),
-      __API_ENV__: JSON.stringify(apiName),
-      __RUNNING_ENV__: JSON.stringify(runningEnv),
-      __DOMAIN__: JSON.stringify(domain),
-      __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
-      __CHECKOUT_PK__: JSON.stringify(checkout_pk),
-      __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
-      'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
-      __GIT_HASH__: JSON.stringify(GIT_HASH),
-      __ENDPOINTS__: JSON.stringify(endpoints)
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
-  ],
-  resolve: {
-    alias: {
-      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', false),
-      ...UIComponentsAlias(path.resolve(__dirname, '../libs/goustouicomponents'), '', true),
-      styles: path.resolve('./src/styles'),
-      jsdom: path.resolve('./fallbacks/jsdom'),
-      goustouicomponents: path.resolve(__dirname, '../libs/goustouicomponents/src/main'),
-      zest: path.resolve(__dirname, '../libs/goustouicomponents/dist'),
     },
-    modules: [
-      path.resolve('./src'),
-      path.resolve('./src/components'),
-      path.resolve('./libs/goustouicomponents/src'),
-      path.resolve('./node_modules')
-    ],
-    extensions: ['.js', '.json', '.css', '.scss']
-  },
-  resolveLoader: {
-    moduleExtensions: ['-loader']
   },
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
-  stats: debug ? {
-    hash: true,
-    version: true,
-    timings: true,
-    assets: true,
-    chunks: true,
-    modules: true,
-    reasons: true,
-    children: true,
-    source: true,
-    errors: true,
-    errorDetails: true,
-    warnings: true,
-    publicPath: true
-  } : {
-    hash: false,
-    version: false,
-    timings: false,
-    assets: false,
-    chunks: false,
-    modules: false,
-    reasons: false,
-    children: false,
-    source: false,
-    errors: true,
-    errorDetails: true,
-    warnings: false,
-    publicPath: false
-  }
 }
 
-if (build === 'development') {
-  config.devtool = 'source-map'
-  config.plugins.push(
-    new SimpleProgressWebpackPlugin({ // Default options
-      format: 'compact'
-    }),
-    new webpack.HotModuleReplacementPlugin()
-  )
-} else if (build === 'production') {
-  config.devtool = false
+config.plugins.push(
+  new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
+  new webpack.DefinePlugin({
+    __DEV__: IS_DEV_MODE,
+    __PROD__: IS_PROD_MODE,
+    __HMR__: BUILD === 'hmr',
+
+    __SERVER__: false,
+    __CLIENT__: true,
+    __TEST__: false,
+
+    __ENV__: JSON.stringify(ENV_NAME),
+    __API_ENV__: JSON.stringify(API_NAME),
+    __RUNNING_ENV__: JSON.stringify(RUNNING_ENV),
+    __DOMAIN__: JSON.stringify(DOMAIN),
+    __CLIENT_PROTOCOL__: JSON.stringify(CLIENT_PROTOCOL),
+    __CHECKOUT_PK__: JSON.stringify(CHECKOUT_PK),
+    __RECAPTCHA_RAF_PUBK__: JSON.stringify(RECAPTCHA_REFERRAL_PUBLIC_KEY),
+    'process.env.NODE_ENV': JSON.stringify(BUILD === 'legacy' ? 'production' : BUILD),
+    __GIT_HASH__: JSON.stringify(GIT_HASH),
+    __ENDPOINTS__: JSON.stringify(ENDPOINTS)
+  }),
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
+)
+
+if (IS_PROD_MODE) {
   config.output.filename = '[name].bundle.[chunkhash].js'
   config.output.chunkFilename = '[name].bundle.[chunkhash].js'
 
   config.plugins.push(
-    new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new TerserPlugin({
       parallel: true,
@@ -307,7 +130,15 @@ if (build === 'development') {
       canPrint: true
     })
   )
-} else if (build === 'hmr') {
+}
+
+if (IS_DEV_MODE) {
+  config.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
+  )
+}
+
+if (IS_HMR_MODE) {
   config.output.publicPath = 'http://localhost:3001/'
 
   config.entry.unshift('webpack-dev-server/client?http://localhost:3001', 'webpack/hot/only-dev-server')
@@ -324,11 +155,10 @@ if (build === 'development') {
   )
 
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
-  config.devtool = 'source-map'
 }
 
 const smp = new SpeedMeasurePlugin({
-  disable: !process.env.MEASURE
+  disable: !MEASURE
 })
 
 module.exports = smp.wrap(config)
