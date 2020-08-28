@@ -89,7 +89,6 @@
 	composes: fixed from 'styles/position.css';
 	left: 0;
 	width: 100%;
-	overflow: hidden;
 	@media ScreenXSMax {
 		-webkit-filter: none;
 	}
