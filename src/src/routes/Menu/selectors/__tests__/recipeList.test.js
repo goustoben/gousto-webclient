@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
-import { getInStockRecipes, getRecipeListRecipes, getRecipeComparatorFactory, getFilterFn } from '../recipeList'
+import { getInStockRecipes, getRecipeListRecipes, getRecipeComparatorFactory, getFilterFn, getBasketRecipeWithSidesBaseId } from '../recipeList'
 
 jest.mock('utils/menu')
 
@@ -692,6 +692,80 @@ describe('RecipeList selectors', () => {
 
       const result = getInStockRecipes.resultFunc(recipes, stock, basketRecipes, numPortions)
       expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
+    })
+  })
+
+  describe('getBasketRecipeWithSidesBaseId', () => {
+    let basketRecipes
+
+    describe('When there is no currentMenuVariant', () => {
+      beforeEach(() => {
+        basketRecipes = Immutable.Map({
+          987: 1,
+          456: 1
+        })
+
+        currentMenuVariants = undefined
+      })
+
+      test('then it should return basketRecipes', () => {
+        const expected = Immutable.Map({
+          987: 1,
+          456: 1
+        })
+        expect(getBasketRecipeWithSidesBaseId.resultFunc(basketRecipes, currentMenuVariants)).toEqual(expected)
+      })
+    })
+
+    describe('When recipes with sides have been selected from the menu', () => {
+      beforeEach(() => {
+        basketRecipes = Immutable.Map({
+          987: 1,
+          456: 1
+        })
+        currentMenuVariants = Immutable.Map({
+          123: {
+            sides: [{
+              coreRecipeId: 987
+            }]
+          }
+        })
+      })
+
+      test('then it should return the base recipe id instead of the side recipe id', () => {
+        const expected = Immutable.Map({
+          123: 1,
+          456: 1
+        })
+        expect(getBasketRecipeWithSidesBaseId.resultFunc(basketRecipes, currentMenuVariants)).toEqual(expected)
+      })
+
+      describe('When a secondary recipe with a variant has been selected from the menu', () => {
+        beforeEach(() => {
+          basketRecipes = Immutable.Map({
+            987: 1,
+            456: 1
+          })
+          currentMenuVariants = Immutable.Map({
+            123: {
+              sides: [{
+                coreRecipeId: 987
+              }]
+            },
+            456: {
+              alternatives: []
+            }
+          })
+        })
+
+        test('then it should return the correct recipes', () => {
+          const expected = Immutable.Map({
+            123: 1,
+            456: 1
+          })
+          expect(getBasketRecipeWithSidesBaseId.resultFunc(basketRecipes, currentMenuVariants)).toEqual(expected)
+        })
+      })
     })
   })
 })

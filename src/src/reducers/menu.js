@@ -9,7 +9,7 @@ export const menuInitialState = Immutable.Map({
   accessToken: '',
   menuVariant: '',
   menuLimits: [],
-  menuVariants: {},
+  menuVariants: Immutable.fromJS({}),
   selectedRecipeVariants: {},
   currentExpandedRecipeVariantsDropdown: null,
   collectionHeaders: {},

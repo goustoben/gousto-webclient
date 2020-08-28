@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import Immutable from 'immutable'
 
 import { getStock } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
@@ -272,3 +273,40 @@ export const getRecipeListRecipes = createSelector(
   }
 )
 
+export const getBasketRecipeWithSidesBaseId = createSelector(
+  [getBasketRecipes, getCurrentMenuVariants],
+  (basketRecipes, currentMenuVariant) => {
+    if (!currentMenuVariant) {
+      return basketRecipes
+    }
+
+    // Get all recipes with sides and return an object which has mappings between recipe side id and the base recipe id
+    const baseRecipeSides = Object.entries(currentMenuVariant.toJS()).reduce((acc, [baseRecipeId, recipeData]) => {
+      const { sides = [] } = recipeData
+      const [firstSide] = sides
+
+      if (!firstSide) {
+        return acc
+      }
+
+      const { coreRecipeId } = firstSide
+
+      return {
+        ...acc,
+        [coreRecipeId]: baseRecipeId
+      }
+    }, {})
+
+    let basketRecipeWithSidesBaseId = Immutable.Map({})
+
+    basketRecipes.forEach((value, key) => {
+      if (baseRecipeSides[key]) {
+        basketRecipeWithSidesBaseId = basketRecipeWithSidesBaseId.set(baseRecipeSides[key], value)
+      } else {
+        basketRecipeWithSidesBaseId = basketRecipeWithSidesBaseId.set(key, value)
+      }
+    })
+
+    return basketRecipeWithSidesBaseId
+  }
+)
