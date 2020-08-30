@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { DetailContainer } from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
-import { getSurcharge, getDietaryTags } from 'utils/recipe'
+import { getSurcharge } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 import Modal from 'Modal'
+
+import { DetailContainer } from '../Recipe/Detail'
 
 const propTypes = {
   showOverlay: PropTypes.bool,
   menuRecipeDetailShow: PropTypes.string,
+  chosenSideRecipeId: PropTypes.string,
   position: PropTypes.number,
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -20,10 +22,11 @@ const propTypes = {
 const defaultProps = {
   showOverlay: false,
   menuRecipeDetailShow: '',
+  chosenSideRecipeId: null,
   position: null
 }
 
-const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, position, browserType, isOutOfStock }) => {
+const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, chosenSideRecipeId, recipesStore, numPortions, position, browserType, isOutOfStock }) => {
   const recipeId = menuRecipeDetailShow
   const detailRecipe = recipesStore.get(recipeId)
 
@@ -35,10 +38,6 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
     )
   }
 
-  const dietaryTagSlugs = getDietaryTags(detailRecipe)
-  const dairyFree = dietaryTagSlugs.some(slug => slug === 'dairy-free')
-  const glutenFree = dietaryTagSlugs.some(slug => slug === 'gluten-free')
-
   const surcharge = getSurcharge(detailRecipe.get('meals'), numPortions)
   const isFineDineIn = detailRecipe.get('isFineDineIn')
   const view = isFineDineIn ? 'fineDineInDetail' : 'detail'
@@ -49,33 +48,21 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   return (
     <Modal isOpen={showOverlay}>
       <DetailContainer
+        id={detailRecipe.get('id')}
+        chosenSideRecipeId={chosenSideRecipeId}
         view={view}
         media={media}
         title={detailRecipe.get('title', '')}
         count={detailRecipe.getIn(['rating', 'count'], 0)}
         average={detailRecipe.getIn(['rating', 'average'], 0)}
-        perPortion={detailRecipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))}
-        per100Grams={detailRecipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))}
-        ingredients={detailRecipe.get('ingredients', Immutable.List([]))}
-        allergens={detailRecipe.get('allergens', Immutable.List([]))}
-        id={detailRecipe.get('id')}
-        recipeId={recipeId}
         isOutOfStock={isOutOfStock}
-        useWithin={detailRecipe.get('shelfLifeDays')}
-        cookingTime={numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
         description={detailRecipe.get('description')}
         availability={detailRecipe.get('availability')}
         youWillNeed={detailRecipe.get('basics')}
-        cuisine={detailRecipe.get('cuisine')}
-        diet={detailRecipe.get('dietType')}
         equipment={detailRecipe.get('equipment')}
         surcharge={surcharge}
-        fiveADay={detailRecipe.get('fiveADay')}
-        glutenFree={glutenFree}
-        dairyFree={dairyFree}
         position={position}
         isChefPrepared={isChefPrepared}
-        numPortions={numPortions}
         isFineDineIn={isFineDineIn}
       />
     </Modal>

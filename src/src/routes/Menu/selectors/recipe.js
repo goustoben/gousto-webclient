@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getRecipes, getStock, getBasket } from 'selectors/root'
 import { formatRecipeTitle, getSurcharge, getSurchargePerPortion, getDietaryTags } from 'utils/recipe'
@@ -160,6 +161,58 @@ export const getRecipeDisclaimerProps = createSelector(
       disclaimer: claim.disclaimer,
       ...findTag(allTags, claim.slug)
     }
+  }
+)
+
+export const getRecipeIngredientsProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.get('ingredients', Immutable.List([]))
+  }
+)
+
+export const getRecipeAllergensProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.get('allergens', Immutable.List([]))
+  }
+)
+
+export const getRecipePerPortionProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))
+  }
+)
+
+export const getRecipePer100gProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))
   }
 )
 

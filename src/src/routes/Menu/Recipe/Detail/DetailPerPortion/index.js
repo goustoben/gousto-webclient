@@ -1,0 +1,1 @@
+export { DetailPerPortionContainer } from './DetailPerPortionContainer'

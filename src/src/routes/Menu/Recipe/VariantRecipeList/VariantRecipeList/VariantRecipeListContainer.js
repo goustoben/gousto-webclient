@@ -10,19 +10,13 @@ import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketReci
 import { getSidesData } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
 import { getCurrentCollectionId } from '../../../selectors/collections'
-import { getRecipeSelectedSides } from '../../../selectors/recipe'
 import { VariantRecipeList } from './VariantRecipeList'
 
 const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeById(state, ownProps.recipeId)
-  const selectedRecipeSide = getRecipeSelectedSides(state, ownProps)
-  const {
-    recipeVariants,
-    firstSideRecipeId,
-    hasSideAddedToBasket,
-  } = getSidesData(state, ownProps)
+
+  const { recipeVariants } = getSidesData(state, { recipeId: ownProps.originalId })
   const recipeVariantsArray = recipeVariants ? recipeVariants.variantsList.toJS() : []
-  const hasRecipeAddedToBasket = !!state.basket.getIn(['recipes', ownProps.recipeId], 0)
 
   let selectedRecipe = {}
 
@@ -38,10 +32,7 @@ const mapStateToProps = (state, ownProps) => {
     recipeVariants,
     recipeVariantsArray,
     selectedRecipe,
-    selectedRecipeSide,
-    hasRecipeAddedToBasket,
-    hasSideAddedToBasket,
-    firstSideRecipeId,
+    basketRecipes: state.basket.get('recipes')
   }
 }
 
