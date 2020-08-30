@@ -5,7 +5,7 @@ import css from './VariantRecipeList.css'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItem'
 
 const compareCoreRecipeIds = (a, b) => a.coreRecipeId - b.coreRecipeId
-const hasRecipeInBasket = (basket, recipeId) => basket.get(recipeId, 0) !== 0
+const hasRecipeInBasket = (basketRecipes, recipeId) => basketRecipes.get(recipeId, 0) !== 0
 
 class VariantRecipeList extends React.PureComponent {
   componentDidMount() {

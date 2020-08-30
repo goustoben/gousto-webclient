@@ -33,7 +33,7 @@ describe('VariantRecipeList', () => {
           selectRecipeVariant={() => { }}
           menuRecipeDetailVisibilityChange={() => { }}
           trackVariantListDisplay={() => { }}
-          selectRecipeSide={() => {}}
+          selectRecipeSide={() => { }}
         />)
       })
       test('then it should render the recipe list', () => {
@@ -87,7 +87,7 @@ describe('VariantRecipeList', () => {
             selectRecipeVariant={selectRecipeVariant}
             menuRecipeDetailVisibilityChange={() => { }}
             trackVariantListDisplay={trackVariantListDisplay}
-            selectRecipeSide={() => {}}
+            selectRecipeSide={() => { }}
           />)
           eventSpy = {
             stopPropagation: jest.fn(),
@@ -120,7 +120,7 @@ describe('VariantRecipeList', () => {
               selectRecipeVariant={() => { }}
               menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
               trackVariantListDisplay={trackVariantListDisplay}
-              selectRecipeSide={() => {}}
+              selectRecipeSide={() => { }}
             />)
           })
           test('should call menuRecipeDetailVisibilityChange', () => {
@@ -145,16 +145,23 @@ describe('VariantRecipeList', () => {
         const basketRecipeAdd = jest.fn()
         const basketRecipeRemove = jest.fn()
 
+        const basketRecipes = Immutable.Map()
+
         beforeEach(() => {
+          basketRecipeAdd.mockClear()
+          basketRecipeRemove.mockClear()
+
           recipeVariants = {
             type: 'sides',
             variantsList: Immutable.fromJS(recipeVariantsArray)
           }
           wrapper = shallow(<VariantRecipeList
+            originalId="9999"
+            selectedRecipe={{}}
+
+            basketRecipes={basketRecipes}
             recipeVariants={recipeVariants}
             recipeVariantsArray={recipeVariantsArray}
-            selectedRecipe={selectedRecipe}
-            originalId="9999"
             collectionId="1234abcd"
             isOnDetailScreen={false}
             selectRecipeVariant={selectRecipeVariant}
@@ -166,41 +173,90 @@ describe('VariantRecipeList', () => {
             unselectRecipeSide={unselectRecipeSide}
           />)
         })
-        test('should call selectRecipeVariant', () => {
-          const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
 
-          changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
-          expect(selectRecipeSide).toHaveBeenCalledWith('9999', '1230')
-        })
+        describe('when chosen side was already checked', () => {
+          beforeEach(() => {
+            wrapper.setProps({
+              selectedRecipe: {
+                coreRecipeId: recipeVariantsArray[0].coreRecipeId,
+                displayName: 'Variant One',
+              }
+            })
+          })
 
-        test('should call unselectRecipeSide', () => {
-          wrapper.setProps({ selectedRecipeSide: '567' })
-          const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+          test('should call unselectRecipeSide', () => {
+            const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
 
-          changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
-          expect(unselectRecipeSide).toHaveBeenCalledWith('9999')
-        })
+            changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
+            expect(unselectRecipeSide).toHaveBeenCalledWith('9999')
+          })
 
-        test('should call basketRecipeAdd', () => {
-          wrapper.setProps({ hasRecipeAddedToBasket: true, firstSideRecipeId: '8888' })
-          const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+          describe('if checked recipe is in basket', () => {
+            beforeEach(() => {
+              wrapper.setProps({ basketRecipes: basketRecipes.set('1230', 1) })
+            })
 
-          changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
-          expect(basketRecipeAdd).toHaveBeenCalledWith('8888')
-          expect(basketRecipeRemove).toHaveBeenCalledWith('9999')
-          expect(selectRecipeSide).toHaveBeenCalledWith('9999', '1230')
-        })
-
-        describe('when has side added to basket', () => {
-          describe('when changing checked recipe', () => {
-            test('should swap side with base recipe', () => {
-              wrapper.setProps({ hasSideAddedToBasket: true, firstSideRecipeId: '8888' })
+            test('should remove checked and add original to basket', () => {
               const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
 
               changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
-
-              expect(basketRecipeRemove).toHaveBeenCalledWith('8888')
+              expect(basketRecipeRemove).toHaveBeenCalledWith('1230')
               expect(basketRecipeAdd).toHaveBeenCalledWith('9999')
+            })
+          })
+
+          describe('if checked recipe is not in basket', () => {
+            beforeEach(() => {
+              wrapper.setProps({ basketRecipes: basketRecipes.set('1230', 0) })
+            })
+
+            test('should not change basket', () => {
+              const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+              changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
+              expect(basketRecipeRemove).not.toHaveBeenCalled()
+              expect(basketRecipeAdd).not.toHaveBeenCalled()
+            })
+          })
+        })
+
+        describe('when chosen side is not already checked', () => {
+          beforeEach(() => {
+            wrapper.setProps({ selectedRecipe: {} })
+          })
+
+          test('should call selectRecipeSide', () => {
+            const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+            changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
+            expect(selectRecipeSide).toHaveBeenCalledWith('9999', '1230')
+          })
+
+          describe('if original is in basket', () => {
+            beforeEach(() => {
+              wrapper.setProps({ basketRecipes: basketRecipes.set('9999', 1) })
+            })
+
+            test('should remove original and add checked to basket', () => {
+              const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+              changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
+              expect(basketRecipeRemove).toHaveBeenCalledWith('9999')
+              expect(basketRecipeAdd).toHaveBeenCalledWith('1230')
+            })
+          })
+
+          describe('if original is not in basket', () => {
+            beforeEach(() => {
+              wrapper.setProps({ basketRecipes: basketRecipes.set('9999', 0) })
+            })
+
+            test('should not change basket', () => {
+              const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
+
+              changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
+              expect(basketRecipeRemove).not.toHaveBeenCalled()
+              expect(basketRecipeAdd).not.toHaveBeenCalled()
             })
           })
         })
@@ -226,7 +282,7 @@ describe('VariantRecipeList', () => {
           selectRecipeVariant={() => { }}
           menuRecipeDetailVisibilityChange={() => { }}
           trackVariantListDisplay={() => { }}
-          selectRecipeSide={() => {}}
+          selectRecipeSide={() => { }}
         />)
       })
       test('then it should not render a recipe list', () => {
@@ -253,7 +309,7 @@ describe('VariantRecipeList', () => {
         selectRecipeVariant={() => { }}
         menuRecipeDetailVisibilityChange={() => { }}
         trackVariantListDisplay={() => { }}
-        selectRecipeSide={() => {}}
+        selectRecipeSide={() => { }}
       />)
     })
     test('then it should not render a recipe list', () => {
@@ -333,7 +389,7 @@ describe('VariantRecipeListContainer', () => {
         selectRecipeVariant={() => { }}
         menuRecipeDetailVisibilityChange={() => { }}
         trackVariantListDisplay={() => { }}
-        selectRecipeSide={() => {}}
+        selectRecipeSide={() => { }}
         isOnSidesModal
       />)
     })
