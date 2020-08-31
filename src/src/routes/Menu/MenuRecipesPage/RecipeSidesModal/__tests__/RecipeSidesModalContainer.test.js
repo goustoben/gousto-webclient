@@ -49,7 +49,6 @@ describe('RecipeSidesModalContainer', () => {
         recipeTitle: null,
         shouldShow: false,
         sidesModalRecipeId: null,
-        selectedRecipeSide: null
       })
     })
   })
@@ -85,7 +84,6 @@ describe('RecipeSidesModalContainer', () => {
         recipeTitle: 'Chicken Curry',
         shouldShow: true,
         sidesModalRecipeId: '123',
-        selectedRecipeSide: null
       })
     })
   })

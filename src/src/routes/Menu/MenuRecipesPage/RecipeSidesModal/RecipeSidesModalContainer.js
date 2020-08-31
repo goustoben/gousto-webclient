@@ -2,21 +2,18 @@ import { connect } from 'react-redux'
 import { getMenuRecipeSidesModalRecipe } from '../../selectors/menuRecipeSidesModal'
 import { RecipeSidesModal } from './RecipeSidesModal'
 import { clearSidesModalRecipe } from '../../actions/menuRecipeSidesModal'
-import { getRecipeTitle, getRecipeSelectedSides } from '../../selectors/recipe'
+import { getRecipeTitle } from '../../selectors/recipe'
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   const sidesModalRecipe = getMenuRecipeSidesModalRecipe(state)
   const sidesModalRecipeId = sidesModalRecipe ? sidesModalRecipe.recipeId : null
-  const propsWithRecipeId = { ...props, recipeId: sidesModalRecipeId }
-  const selectedRecipeSide = getRecipeSelectedSides(state, propsWithRecipeId)
-  const recipeTitle = getRecipeTitle(state, propsWithRecipeId)
+  const recipeTitle = getRecipeTitle(state, { recipeId: sidesModalRecipeId })
 
-  return ({
+  return {
     recipeTitle,
     sidesModalRecipeId,
     shouldShow: !!sidesModalRecipeId,
-    selectedRecipeSide,
-  })
+  }
 }
 
 const mapDispatchToProps = {

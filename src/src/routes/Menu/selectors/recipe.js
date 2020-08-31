@@ -256,7 +256,7 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   return { type: 'alternatives', alternatives: alternativesDietaryClaims, variantsList: alternativesDietaryClaims }
 }
 
-const getSelectedRecipeSidesFromMenu = (state) => state.menu.get('selectedRecipeSides')
+export const getSelectedRecipeSidesFromMenu = (state) => state.menu.get('selectedRecipeSides')
 
 export const getRecipeSelectedSides = createSelector(
   [getRecipeIdFromProps, getSelectedRecipeSidesFromMenu],

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
-import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList'
 import { RecipeSidesModalButtonsContainer } from './RecipeSidesModalButtonsContainer'
 import css from './RecipeSidesModal.css'
+import { RecipeSidesModalVariantRecipeListContainer } from './RecipeSidesModalVariantRecipeListContainer'
 
 export const RecipeSidesModal = ({
   recipeTitle,
@@ -24,12 +24,7 @@ export const RecipeSidesModal = ({
     <ModalContent className={css.recipeSidesModalContent}>
       <div className={css.addASideLabel}>Add a side</div>
 
-      <VariantRecipeListContainer
-        originalId={sidesModalRecipeId}
-        recipeId={sidesModalRecipeId}
-        variantsType="sides"
-        isOnSidesModal
-      />
+      <RecipeSidesModalVariantRecipeListContainer sidesModalRecipeId={sidesModalRecipeId} />
     </ModalContent>
     <ModalFooter className={css.recipeSidesModalFooter}>
       <RecipeSidesModalButtonsContainer sidesModalRecipeId={sidesModalRecipeId} />

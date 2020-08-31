@@ -3,7 +3,7 @@ import { createSelector } from 'reselect'
 import { getBrowserType } from 'selectors/browser'
 import { getRecipePosition } from 'selectors/collections'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
-import { getRecipeOutOfStock } from '../selectors/recipe'
+import { getRecipeOutOfStock, getSelectedRecipeSidesFromMenu } from '../selectors/recipe'
 import { DetailOverlay } from './DetailOverlay'
 import { getBasketRecipes } from '../../../selectors/basket'
 import { getCurrentMenuVariants } from '../selectors/variants'
@@ -39,12 +39,24 @@ const getSidesInBasketForBaseRecipe = createSelector(
   }
 )
 
+const getOverlayRecipeId = (state, ownProps) => ownProps.overlayRecipeId
+const getSelectedRecipeSide = createSelector(
+  [ getSelectedRecipeSidesFromMenu, getSidesInBasketForBaseRecipe, getOverlayRecipeId ],
+  (sidesFromMenu, basketRecipesForBase, overlayRecipeId) => {
+    const selectedSide = sidesFromMenu[overlayRecipeId]
+
+    if (selectedSide) {
+      return selectedSide
+    }
+
+    return basketRecipesForBase[overlayRecipeId] || null
+  }
+)
+
 const mapStateToProps = (state, ownProps) => {
   const recipeId = getMenuRecipeIdForDetails(state)
 
-  const basketRecipesForBase = getSidesInBasketForBaseRecipe(state)
-
-  const selectedRecipeSide = basketRecipesForBase[recipeId]
+  const selectedRecipeSide = getSelectedRecipeSide(state, { overlayRecipeId: recipeId })
 
   return {
     recipesStore: state.recipes,
@@ -53,7 +65,7 @@ const mapStateToProps = (state, ownProps) => {
     position: getRecipePosition(state, getMenuRecipeIdForDetails(state)),
     browserType: getBrowserType(state),
     menuRecipeDetailShow: recipeId,
-    chosenSideRecipeId: selectedRecipeSide || null,
+    chosenSideRecipeId: selectedRecipeSide,
     isOutOfStock: getRecipeOutOfStock(state, { recipeId: getMenuRecipeIdForDetails(state) }),
   }
 }
