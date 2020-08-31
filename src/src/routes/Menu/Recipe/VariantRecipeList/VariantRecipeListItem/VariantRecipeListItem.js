@@ -14,8 +14,11 @@ const VariantRecipeListItem = ({
   isOutOfStock,
   surcharge,
   hasSides,
+  numPortions
 }) => {
   const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
+
+  const surchargeText = hasSides ? 'per serving' : `${numPortions} servings`
 
   const getInputContent = () => (
     <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer, { [css.labelContainerSides]: isOnSidesModal })}>
@@ -31,7 +34,7 @@ const VariantRecipeListItem = ({
             +£
             {surcharge.toFixed(2)}
           </span>
-          <span className={css.perServingText}>per serving</span>
+          <span className={css.perServingText}>{surchargeText}</span>
         </div>
       ) : null}
       {isOutOfStock && <span className={css.soldOutText}>Sold out</span>}
@@ -85,6 +88,7 @@ VariantRecipeListItem.propTypes = {
   isOutOfStock: PropTypes.bool.isRequired,
   surcharge: PropTypes.number,
   hasSides: PropTypes.bool.isRequired,
+  numPortions: PropTypes.number.isRequired
 }
 
 VariantRecipeListItem.defaultProps = {

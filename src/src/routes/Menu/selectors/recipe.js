@@ -102,6 +102,15 @@ export const getRecipeSurcharge = createSelector(
   }
 )
 
+export const getRecipeSidesSurcharge = createSelector(
+  [getRecipeIdFromProps, getNumPortions, getRecipes],
+  (recipeId, numPortions, recipes) => {
+    const meals = recipes.getIn([recipeId, 'meals'])
+
+    return getSurcharge(meals, numPortions)
+  }
+)
+
 const getTagBySlugFromProps = (state, props) => props.slug
 export const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
 

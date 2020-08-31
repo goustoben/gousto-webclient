@@ -14,7 +14,7 @@ import {
   getRecipeIngredientsProps,
   getRecipeAllergensProps,
   getRecipePerPortionProps,
-  getRecipePer100gProps
+  getRecipePer100gProps, getRecipeSidesSurcharge
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -129,6 +129,62 @@ describe('menu recipe selectors', () => {
         }
         const result = getRecipeOutOfStock(state, props)
         expect(result).toEqual(false)
+      })
+    })
+  })
+
+  describe('getRecipeSidesSurcharge', () => {
+    const recipeId = '111'
+    let state
+
+    beforeEach(() => {
+      state = {
+        recipes: Immutable.fromJS({
+          [recipeId]: {
+            meals: [
+              {
+                numPortions: 2,
+                surcharge: { listPrice: 1.50 }
+              },
+              {
+                numPortions: 4,
+                surcharge: { listPrice: 3.00 }
+              }
+            ]
+          }
+        })
+      }
+    })
+
+    describe('when basket numPortions is 2', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          basket: Immutable.fromJS({
+            numPortions: 2
+          })
+        }
+      })
+
+      test('should return 2 portion surcharge', () => {
+        const result = getRecipeSidesSurcharge(state, { recipeId })
+        expect(result).toEqual(1.50)
+      })
+    })
+
+    describe('when basket numPortions is 4', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          basket: Immutable.fromJS({
+            numPortions: 4
+          })
+        }
+      })
+
+      test('should return 4 portion surcharge', () => {
+        const result = getRecipeSidesSurcharge(state, { recipeId })
+        expect(result).toEqual(3.00)
       })
     })
   })
@@ -289,7 +345,7 @@ describe('menu recipe selectors', () => {
             ingredients: [
               { name: 'Apple', label: 'apple' }
             ],
-            allergens: [ 'milk', 'wheat' ],
+            allergens: ['milk', 'wheat'],
             nutritionalInformation: {
               perPortion: {
                 energyKj: 100
