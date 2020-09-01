@@ -6,40 +6,41 @@ import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
-import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
-import { NutritionInfo } from 'routes/Menu/Recipe/Detail/Nutrition'
-import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
-import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
-import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
-import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
-import Carousel from 'routes/Menu/Recipe/Detail/Carousel'
+import Carousel from './Carousel'
 
-import { Allergens } from './Allergens/Allergens'
-import { IngredientsList } from './IngredientsList/IngredientsList'
 import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
 import { RecipeInfoBadgesContainer } from '../InfoBadge/RecipeInfoBadgesContainer'
+import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
+
+import { DetailIngredientsContainer } from './DetailIngredients'
+import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
+import { DetailPerPortionContainer } from './DetailPerPortion'
+import { DetailAttributeGridContainer } from './DetailAttributeGrid'
+
 import css from './Detail.css'
 
 export const Detail = (props) => {
   const {
-    menuRecipeDetailVisibilityChange,
+    id, chosenSideRecipeId,
+    closeRecipeDetails,
     media, title,
-    view, count, average, perPortion,
-    per100Grams, ingredients, allergens,
-    id, isOutOfStock, cookingTime,
-    useWithin, description, youWillNeed,
-    cuisine, diet, equipment,
-    position, surcharge, fiveADay, glutenFree,
-    dairyFree, isChefPrepared, numPortions, isFineDineIn
+    view, count, average,
+    isOutOfStock,
+    description, youWillNeed,
+    equipment,
+    position, surcharge,
+    isChefPrepared, isFineDineIn
   } = props
+
+  const recipeLegalDetailId = chosenSideRecipeId || id
 
   return (
     <div
       className={css.modalContainer}
       role="button"
       tabIndex={0}
-      onKeyPress={menuRecipeDetailVisibilityChange}
-      onClick={menuRecipeDetailVisibilityChange}
+      onKeyPress={closeRecipeDetails}
+      onClick={closeRecipeDetails}
       data-testing="menuRecipeDetailsClose"
     >
       <div role="button" tabIndex={0} className={css.container} onKeyPress={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
@@ -51,8 +52,8 @@ export const Detail = (props) => {
                 className={css.closeIcon}
                 role="button"
                 tabIndex={0}
-                onKeyPress={menuRecipeDetailVisibilityChange}
-                onClick={menuRecipeDetailVisibilityChange}
+                onKeyPress={closeRecipeDetails}
+                onClick={closeRecipeDetails}
                 data-testing="menuRecipeDetailsClose"
               />
             </div>
@@ -75,24 +76,11 @@ export const Detail = (props) => {
         </div>
         <div className={css.sectionPanel}>
           <div className={css.variantsContainer}>
-            <VariantRecipeListContainer originalId={id} recipeId={id} isOnDetailScreen />
+            <VariantRecipeListContainer originalId={id} recipeId={chosenSideRecipeId} isOnDetailScreen />
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
           <p className={css.infoBoxText}>{description}</p>
-          <AttributeGrid
-            maxNoAttributes={20}
-            showDetailedRecipe
-            numPortions={isChefPrepared ? numPortions : null }
-            cookingTime={isChefPrepared ? null : cookingTime }
-            useWithin={useWithin}
-            equipment={equipment}
-            diet={diet}
-            fiveADay={fiveADay}
-            cals={perPortion.get('energyKcal')}
-            cuisine={cuisine}
-            glutenFree={glutenFree}
-            dairyFree={dairyFree}
-          />
+          <DetailAttributeGridContainer recipeId={recipeLegalDetailId} isChefPrepared={isChefPrepared} />
           <RecipeDisclaimerContainer recipeId={id} />
           {equipment && !!equipment.size && (
           <p className={css.additionalInfo}>
@@ -113,28 +101,13 @@ export const Detail = (props) => {
           )}
         </div>
         <div className={css.row}>
-          {!!ingredients.size > 0 && (
-          <div className={css.sectionPanel}>
-            <Ingredients ingredients={ingredients} />
-          </div>
-          )}
+          <DetailIngredientsContainer recipeId={recipeLegalDetailId} />
         </div>
         <div className={css.row}>
-          {!!perPortion.size > 0 && (
-          <div className={css.sectionPanel}>
-            <NutritionInfo perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} />
-            <RecipeMicronutrientsContainer id={id} />
-            <NutritionDisclaimerText />
-          </div>
-          )}
+          <DetailPerPortionContainer recipeId={recipeLegalDetailId} />
         </div>
         <div className={css.row}>
-          {(!!allergens.size > 0 || !!ingredients.size > 0) && (
-          <div className={css.sectionPanel}>
-            <IngredientsList ingredients={ingredients} allergens={allergens} />
-            <Allergens allergens={allergens} />
-          </div>
-          )}
+          <DetailAllergenIngredientsContainer recipeId={recipeLegalDetailId} />
         </div>
 
         <div className={css.stickyContainer}>
@@ -154,32 +127,21 @@ export const Detail = (props) => {
 }
 
 Detail.propTypes = {
+  id: PropTypes.string.isRequired,
+  chosenSideRecipeId: PropTypes.string,
   media: PropTypes.instanceOf(Immutable.List).isRequired,
   title: PropTypes.string.isRequired,
   view: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
   average: PropTypes.number,
-  per100Grams: PropTypes.instanceOf(Immutable.Map).isRequired,
-  perPortion: PropTypes.instanceOf(Immutable.Map).isRequired,
-  ingredients: PropTypes.instanceOf(Immutable.List).isRequired,
-  allergens: PropTypes.instanceOf(Immutable.List).isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  useWithin: PropTypes.string.isRequired,
-  cookingTime: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   youWillNeed: PropTypes.instanceOf(Immutable.List).isRequired,
-  cuisine: PropTypes.string.isRequired,
-  diet: PropTypes.string.isRequired,
   equipment: PropTypes.instanceOf(Immutable.List).isRequired,
-  menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
-  fiveADay: PropTypes.number.isRequired,
+  closeRecipeDetails: PropTypes.func.isRequired,
   position: PropTypes.number,
   isChefPrepared: PropTypes.bool.isRequired,
-  numPortions: PropTypes.number.isRequired,
   isFineDineIn: PropTypes.bool,
-  glutenFree: PropTypes.bool.isRequired,
-  dairyFree: PropTypes.bool.isRequired,
   surcharge: PropTypes.number,
 }
 
@@ -187,5 +149,6 @@ Detail.defaultProps = {
   surcharge: 0,
   position: 0,
   average: 0,
-  isFineDineIn: false
+  isFineDineIn: false,
+  chosenSideRecipeId: null
 }

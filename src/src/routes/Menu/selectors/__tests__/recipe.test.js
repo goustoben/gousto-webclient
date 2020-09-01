@@ -11,6 +11,10 @@ import {
   getRecipeIsFineDineIn,
   getRecipeIsEverydayFavourites,
   getRecipeIsHealthKitchen,
+  getRecipeIngredientsProps,
+  getRecipeAllergensProps,
+  getRecipePerPortionProps,
+  getRecipePer100gProps, getRecipeSidesSurcharge
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -125,6 +129,62 @@ describe('menu recipe selectors', () => {
         }
         const result = getRecipeOutOfStock(state, props)
         expect(result).toEqual(false)
+      })
+    })
+  })
+
+  describe('getRecipeSidesSurcharge', () => {
+    const recipeId = '111'
+    let state
+
+    beforeEach(() => {
+      state = {
+        recipes: Immutable.fromJS({
+          [recipeId]: {
+            meals: [
+              {
+                numPortions: 2,
+                surcharge: { listPrice: 1.50 }
+              },
+              {
+                numPortions: 4,
+                surcharge: { listPrice: 3.00 }
+              }
+            ]
+          }
+        })
+      }
+    })
+
+    describe('when basket numPortions is 2', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          basket: Immutable.fromJS({
+            numPortions: 2
+          })
+        }
+      })
+
+      test('should return 2 portion surcharge', () => {
+        const result = getRecipeSidesSurcharge(state, { recipeId })
+        expect(result).toEqual(1.50)
+      })
+    })
+
+    describe('when basket numPortions is 4', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          basket: Immutable.fromJS({
+            numPortions: 4
+          })
+        }
+      })
+
+      test('should return 4 portion surcharge', () => {
+        const result = getRecipeSidesSurcharge(state, { recipeId })
+        expect(result).toEqual(3.00)
       })
     })
   })
@@ -268,7 +328,7 @@ describe('menu recipe selectors', () => {
     })
   })
 
-  describe('getRecipeDisclaimerProps', () => {
+  describe('recipe detail props selectors', () => {
     let state
     beforeEach(() => {
       state = {
@@ -281,6 +341,18 @@ describe('menu recipe selectors', () => {
                   slug: 'health-kitchen',
                 }
               ]
+            },
+            ingredients: [
+              { name: 'Apple', label: 'apple' }
+            ],
+            allergens: ['milk', 'wheat'],
+            nutritionalInformation: {
+              perPortion: {
+                energyKj: 100
+              },
+              per100g: {
+                energyKj: 50
+              }
             }
           },
           2: {
@@ -313,60 +385,202 @@ describe('menu recipe selectors', () => {
       }
     })
 
-    describe('when recipeId is not part of recipes', () => {
-      const props = {
-        recipeId: '3'
-      }
-
-      test('should return null', () => {
-        const result = getRecipeDisclaimerProps(state, props)
-        expect(result).toBe(null)
-      })
-    })
-
-    describe('when recipe has no health claims', () => {
-      const props = {
-        recipeId: '2'
-      }
-
-      test('should return null', () => {
-        const result = getRecipeDisclaimerProps(state, props)
-        expect(result).toBe(null)
-      })
-    })
-
-    describe('when recipe health slug is not part of brand data', () => {
-      const props = {
-        recipeId: '4'
-      }
-
-      test('should return only disclaimer', () => {
-        const result = getRecipeDisclaimerProps(state, props)
-        const expectedResult = {
-          disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+    describe('getRecipeIngredientsProps', () => {
+      describe('when recipeId is not part of recipes', () => {
+        const props = {
+          recipeId: '3'
         }
-        expect(result).toEqual(expectedResult)
+
+        test('should return null', () => {
+          const result = getRecipeIngredientsProps(state, props)
+          expect(result).toBe(null)
+        })
+      })
+
+      describe('when recipe has no ingredients', () => {
+        const props = {
+          recipeId: '2'
+        }
+
+        test('should return empty list', () => {
+          const result = getRecipeIngredientsProps(state, props)
+          expect(result).toBe(Immutable.List())
+        })
+      })
+
+      describe('when recipe has ingredients', () => {
+        const props = {
+          recipeId: '1'
+        }
+
+        test('should return ingredients', () => {
+          const result = getRecipeIngredientsProps(state, props)
+          expect(result).toBe(state.recipes.getIn(['1', 'ingredients']))
+        })
       })
     })
 
-    describe('when recipe has health claims', () => {
-      const props = {
-        recipeId: '1'
-      }
+    describe('getRecipeAllergensProps', () => {
+      describe('when recipeId is not part of recipes', () => {
+        const props = {
+          recipeId: '3'
+        }
 
-      test('should return disclaimer', () => {
-        const result = getRecipeDisclaimerProps(state, props)
-        const expectedResult = {
-          disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
-          icon: 'health-kitchen-heart',
-          slug: 'health-kitchen',
-          theme: {
-            backgroundColor: 'green',
-            iconColor: 'lightGreen',
-            name: 'light'
+        test('should return null', () => {
+          const result = getRecipeAllergensProps(state, props)
+          expect(result).toBe(null)
+        })
+      })
+
+      describe('when recipe has no allergens', () => {
+        const props = {
+          recipeId: '2'
+        }
+
+        test('should return empty list', () => {
+          const result = getRecipeAllergensProps(state, props)
+          expect(result).toBe(Immutable.List())
+        })
+      })
+
+      describe('when recipe has allergens', () => {
+        const props = {
+          recipeId: '1'
+        }
+
+        test('should return allergens', () => {
+          const result = getRecipeAllergensProps(state, props)
+          expect(result).toBe(state.recipes.getIn(['1', 'allergens']))
+        })
+      })
+    })
+
+    describe('getRecipePerPortionProps', () => {
+      describe('when recipeId is not part of recipes', () => {
+        const props = {
+          recipeId: '3'
+        }
+
+        test('should return null', () => {
+          const result = getRecipePerPortionProps(state, props)
+          expect(result).toBe(null)
+        })
+      })
+
+      describe('when recipe has no nutritional info', () => {
+        const props = {
+          recipeId: '2'
+        }
+
+        test('should return empty map', () => {
+          const result = getRecipePerPortionProps(state, props)
+          expect(result).toBe(Immutable.Map())
+        })
+      })
+
+      describe('when recipe has nutritional info', () => {
+        const props = {
+          recipeId: '1'
+        }
+
+        test('should return per portion', () => {
+          const result = getRecipePerPortionProps(state, props)
+          expect(result).toBe(state.recipes.getIn(['1', 'nutritionalInformation', 'perPortion']))
+        })
+      })
+    })
+
+    describe('getRecipePer100gProps', () => {
+      describe('when recipeId is not part of recipes', () => {
+        const props = {
+          recipeId: '3'
+        }
+
+        test('should return null', () => {
+          const result = getRecipePer100gProps(state, props)
+          expect(result).toBe(null)
+        })
+      })
+
+      describe('when recipe has no nutritional info', () => {
+        const props = {
+          recipeId: '2'
+        }
+
+        test('should return empty map', () => {
+          const result = getRecipePer100gProps(state, props)
+          expect(result).toBe(Immutable.Map())
+        })
+      })
+
+      describe('when recipe has nutritional info', () => {
+        const props = {
+          recipeId: '1'
+        }
+
+        test('should return per 100g', () => {
+          const result = getRecipePer100gProps(state, props)
+          expect(result).toBe(state.recipes.getIn(['1', 'nutritionalInformation', 'per100g']))
+        })
+      })
+    })
+
+    describe('getRecipeDisclaimerProps', () => {
+      describe('when recipeId is not part of recipes', () => {
+        const props = {
+          recipeId: '3'
+        }
+
+        test('should return null', () => {
+          const result = getRecipeDisclaimerProps(state, props)
+          expect(result).toBe(null)
+        })
+      })
+
+      describe('when recipe has no health claims', () => {
+        const props = {
+          recipeId: '2'
+        }
+
+        test('should return null', () => {
+          const result = getRecipeDisclaimerProps(state, props)
+          expect(result).toBe(null)
+        })
+      })
+
+      describe('when recipe health slug is not part of brand data', () => {
+        const props = {
+          recipeId: '4'
+        }
+
+        test('should return only disclaimer', () => {
+          const result = getRecipeDisclaimerProps(state, props)
+          const expectedResult = {
+            disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
           }
+          expect(result).toEqual(expectedResult)
+        })
+      })
+
+      describe('when recipe has health claims', () => {
+        const props = {
+          recipeId: '1'
         }
-        expect(result).toEqual(expectedResult)
+
+        test('should return disclaimer', () => {
+          const result = getRecipeDisclaimerProps(state, props)
+          const expectedResult = {
+            disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+            icon: 'health-kitchen-heart',
+            slug: 'health-kitchen',
+            theme: {
+              backgroundColor: 'green',
+              iconColor: 'lightGreen',
+              name: 'light'
+            }
+          }
+          expect(result).toEqual(expectedResult)
+        })
       })
     })
   })

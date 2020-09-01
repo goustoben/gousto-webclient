@@ -1,0 +1,1 @@
+export { DetailAllergenIngredientsContainer } from './DetailAllergenIngredientsContainer'

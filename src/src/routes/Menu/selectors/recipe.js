@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 import { getRecipes, getStock, getBasket } from 'selectors/root'
 import { formatRecipeTitle, getSurcharge, getSurchargePerPortion, getDietaryTags } from 'utils/recipe'
@@ -101,6 +102,15 @@ export const getRecipeSurcharge = createSelector(
   }
 )
 
+export const getRecipeSidesSurcharge = createSelector(
+  [getRecipeIdFromProps, getNumPortions, getRecipes],
+  (recipeId, numPortions, recipes) => {
+    const meals = recipes.getIn([recipeId, 'meals'])
+
+    return getSurcharge(meals, numPortions)
+  }
+)
+
 const getTagBySlugFromProps = (state, props) => props.slug
 export const getAllTags = ({ brand }) => (brand && brand.data && brand.data.tags ? brand.data.tags : [])
 
@@ -163,6 +173,58 @@ export const getRecipeDisclaimerProps = createSelector(
   }
 )
 
+export const getRecipeIngredientsProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.get('ingredients', Immutable.List([]))
+  }
+)
+
+export const getRecipeAllergensProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.get('allergens', Immutable.List([]))
+  }
+)
+
+export const getRecipePerPortionProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))
+  }
+)
+
+export const getRecipePer100gProps = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))
+  }
+)
+
 export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, menuRecipes, collectionDietaryClaims) => {
   if (!variants) {
     return null
@@ -203,7 +265,7 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   return { type: 'alternatives', alternatives: alternativesDietaryClaims, variantsList: alternativesDietaryClaims }
 }
 
-const getSelectedRecipeSidesFromMenu = (state) => state.menu.get('selectedRecipeSides')
+export const getSelectedRecipeSidesFromMenu = (state) => state.menu.get('selectedRecipeSides')
 
 export const getRecipeSelectedSides = createSelector(
   [getRecipeIdFromProps, getSelectedRecipeSidesFromMenu],

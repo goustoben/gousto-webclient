@@ -1,0 +1,1 @@
+export { DetailAttributeGridContainer } from './DetailAttributeGridContainer'

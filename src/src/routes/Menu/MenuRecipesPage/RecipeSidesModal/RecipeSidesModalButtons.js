@@ -9,6 +9,8 @@ export const RecipeSidesModalButtons = ({
   clearSidesModalRecipe,
   basketRecipeAdd,
   unselectRecipeSide,
+  trackAddSide,
+  trackNoSide,
 }) => {
   const { recipeId, view, position, score } = sidesModalRecipe
 
@@ -21,6 +23,7 @@ export const RecipeSidesModalButtons = ({
           basketRecipeAdd(recipeId, view, { position, score })
           unselectRecipeSide(recipeId)
           clearSidesModalRecipe()
+          trackNoSide(recipeId)
         }}
       >
         I don&apos;t want a side
@@ -31,6 +34,7 @@ export const RecipeSidesModalButtons = ({
         onClick={() => {
           basketRecipeAdd(selectedRecipeSide, view, { position, score }, undefined, recipeId)
           clearSidesModalRecipe()
+          trackAddSide(recipeId, selectedRecipeSide)
         }}
         disabled={!selectedRecipeSide}
       >
@@ -51,6 +55,8 @@ RecipeSidesModalButtons.propTypes = {
   clearSidesModalRecipe: PropTypes.func.isRequired,
   basketRecipeAdd: PropTypes.func.isRequired,
   unselectRecipeSide: PropTypes.func.isRequired,
+  trackAddSide: PropTypes.func.isRequired,
+  trackNoSide: PropTypes.func.isRequired,
 }
 
 RecipeSidesModalButtons.defaultProps = {

@@ -13,10 +13,12 @@ describe('RecipeSidesModalButtons', () => {
         position: 2,
         score: 3
       },
-      selectedRecipeSide: {},
+      selectedRecipeSide: '456',
       clearSidesModalRecipe: jest.fn(),
       basketRecipeAdd: jest.fn(),
       unselectRecipeSide: jest.fn(),
+      trackAddSide: jest.fn(),
+      trackNoSide: jest.fn(),
     }
     wrapper = shallow(<RecipeSidesModalButtons {...props} />)
   })
@@ -24,8 +26,9 @@ describe('RecipeSidesModalButtons', () => {
   describe('when click on Add a side', () => {
     test('correct function is called', () => {
       wrapper.find('.recipeSidesModalAddSideButton').simulate('click')
-      expect(props.basketRecipeAdd).toHaveBeenCalledWith({}, '', { position: 2, score: 3}, undefined, '123')
+      expect(props.basketRecipeAdd).toHaveBeenCalledWith('456', '', { position: 2, score: 3}, undefined, '123')
       expect(props.clearSidesModalRecipe).toHaveBeenCalled()
+      expect(props.trackAddSide).toHaveBeenCalledWith('123', '456')
     })
   })
 
@@ -35,6 +38,7 @@ describe('RecipeSidesModalButtons', () => {
       expect(props.basketRecipeAdd).toHaveBeenCalledWith('123', '', { position: 2, score: 3})
       expect(props.unselectRecipeSide).toHaveBeenCalledWith('123')
       expect(props.clearSidesModalRecipe).toHaveBeenCalled()
+      expect(props.trackNoSide).toHaveBeenCalledWith('123')
     })
   })
 })
