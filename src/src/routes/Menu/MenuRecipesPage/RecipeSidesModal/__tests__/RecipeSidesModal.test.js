@@ -13,6 +13,7 @@ describe('RecipeSidesModal', () => {
       shouldShow: true,
       clearSidesModalRecipeId: jest.fn(),
       unselectRecipeSide: jest.fn(),
+      trackCloseSide: jest.fn(),
     }
     wrapper = shallow(<RecipeSidesModal {...props} />)
   })
@@ -33,6 +34,7 @@ describe('RecipeSidesModal', () => {
   describe('when click on close button', () => {
     const clearSidesModalRecipe = jest.fn()
     const unselectRecipeSide = jest.fn()
+    const trackCloseSide = jest.fn()
     beforeEach(() => {
       props = {
         title: 'Add a side',
@@ -41,14 +43,16 @@ describe('RecipeSidesModal', () => {
         shouldShow: true,
         clearSidesModalRecipe,
         unselectRecipeSide,
+        trackCloseSide
       }
       wrapper = shallow(<RecipeSidesModal {...props} />)
     })
 
-    test('should call clearSidesModalRecipe and unselectRecipeSide', () => {
+    test('should call clearSidesModalRecipe, unselectRecipeSide and trackCloseSide', () => {
       wrapper.find('.recipeSidesModalCloseX').simulate('click')
       expect(clearSidesModalRecipe).toHaveBeenCalled()
       expect(unselectRecipeSide).toHaveBeenCalledWith('123')
+      expect(trackCloseSide).toHaveBeenCalledWith('123')
     })
   })
 })

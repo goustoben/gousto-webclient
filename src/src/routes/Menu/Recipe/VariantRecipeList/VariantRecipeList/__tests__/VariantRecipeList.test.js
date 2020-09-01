@@ -34,6 +34,8 @@ describe('VariantRecipeList', () => {
           menuRecipeDetailVisibilityChange={() => { }}
           trackVariantListDisplay={() => { }}
           selectRecipeSide={() => { }}
+          trackSelectSide={() => { }}
+          trackDeselectSide={() => { }}
         />)
       })
       test('then it should render the recipe list', () => {
@@ -58,6 +60,8 @@ describe('VariantRecipeList', () => {
             selectRecipeVariant={() => { }}
             menuRecipeDetailVisibilityChange={() => { }}
             trackVariantListDisplay={() => { }}
+            trackSelectSide={() => { }}
+            trackDeselectSide={() => { }}
           />)
         })
 
@@ -88,6 +92,8 @@ describe('VariantRecipeList', () => {
             menuRecipeDetailVisibilityChange={() => { }}
             trackVariantListDisplay={trackVariantListDisplay}
             selectRecipeSide={() => { }}
+            trackSelectSide={() => { }}
+            trackDeselectSide={() => { }}
           />)
           eventSpy = {
             stopPropagation: jest.fn(),
@@ -121,6 +127,8 @@ describe('VariantRecipeList', () => {
               menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
               trackVariantListDisplay={trackVariantListDisplay}
               selectRecipeSide={() => { }}
+              trackSelectSide={() => { }}
+              trackDeselectSide={() => { }}
             />)
           })
           test('should call menuRecipeDetailVisibilityChange', () => {
@@ -144,6 +152,8 @@ describe('VariantRecipeList', () => {
         const unselectRecipeSide = jest.fn()
         const basketRecipeAdd = jest.fn()
         const basketRecipeRemove = jest.fn()
+        const trackSelectSide = jest.fn()
+        const trackDeselectSide = jest.fn()
 
         const basketRecipes = Immutable.Map()
 
@@ -171,6 +181,8 @@ describe('VariantRecipeList', () => {
             basketRecipeAdd={basketRecipeAdd}
             basketRecipeRemove={basketRecipeRemove}
             unselectRecipeSide={unselectRecipeSide}
+            trackSelectSide={trackSelectSide}
+            trackDeselectSide={trackDeselectSide}
           />)
         })
 
@@ -283,6 +295,8 @@ describe('VariantRecipeList', () => {
           menuRecipeDetailVisibilityChange={() => { }}
           trackVariantListDisplay={() => { }}
           selectRecipeSide={() => { }}
+          trackSelectSide={() => { }}
+          trackDeselectSide={() => { }}
         />)
       })
       test('then it should not render a recipe list', () => {
@@ -310,6 +324,8 @@ describe('VariantRecipeList', () => {
         menuRecipeDetailVisibilityChange={() => { }}
         trackVariantListDisplay={() => { }}
         selectRecipeSide={() => { }}
+        trackSelectSide={() => { }}
+        trackDeselectSide={() => { }}
       />)
     })
     test('then it should not render a recipe list', () => {
@@ -390,6 +406,8 @@ describe('VariantRecipeListContainer', () => {
         menuRecipeDetailVisibilityChange={() => { }}
         trackVariantListDisplay={() => { }}
         selectRecipeSide={() => { }}
+        trackSelectSide={() => { }}
+        trackDeselectSide={() => { }}
         isOnSidesModal
       />)
     })

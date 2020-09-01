@@ -5,6 +5,7 @@ import {
   selectRecipeSide,
   unselectRecipeSide,
 } from 'actions/menu'
+import { trackDeselectSide, trackSelectSide } from '../../../actions/menuRecipeSidesTracking'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getSidesData } from '../../../selectors/variants'
@@ -42,6 +43,8 @@ const VariantRecipeListContainer = connect(
     selectRecipeVariant,
     menuRecipeDetailVisibilityChange,
     trackVariantListDisplay,
+    trackDeselectSide,
+    trackSelectSide,
     selectRecipeSide,
     unselectRecipeSide,
     basketRecipeAdd,

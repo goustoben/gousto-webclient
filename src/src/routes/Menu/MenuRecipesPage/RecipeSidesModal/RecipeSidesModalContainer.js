@@ -3,6 +3,7 @@ import { getMenuRecipeSidesModalRecipe } from '../../selectors/menuRecipeSidesMo
 import { RecipeSidesModal } from './RecipeSidesModal'
 import { clearSidesModalRecipe } from '../../actions/menuRecipeSidesModal'
 import { unselectRecipeSide } from '../../../../actions/menu'
+import { trackCloseSide } from '../../actions/menuRecipeSidesTracking'
 import { getRecipeTitle } from '../../selectors/recipe'
 
 const mapStateToProps = (state) => {
@@ -19,7 +20,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   clearSidesModalRecipe,
-  unselectRecipeSide
+  unselectRecipeSide,
+  trackCloseSide
 }
 
 export const RecipeSidesModalContainer = connect(mapStateToProps, mapDispatchToProps)(RecipeSidesModal)

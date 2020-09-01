@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
 import css from './RecipeSidesModalButtons.css'
-import { trackAddSide, trackNoSide } from '../../actions/menuRecipeSidesTracking'
 
 export const RecipeSidesModalButtons = ({
   sidesModalRecipe,
@@ -10,6 +9,8 @@ export const RecipeSidesModalButtons = ({
   clearSidesModalRecipe,
   basketRecipeAdd,
   unselectRecipeSide,
+  trackAddSide,
+  trackNoSide,
 }) => {
   const { recipeId, view, position, score } = sidesModalRecipe
 
@@ -54,6 +55,8 @@ RecipeSidesModalButtons.propTypes = {
   clearSidesModalRecipe: PropTypes.func.isRequired,
   basketRecipeAdd: PropTypes.func.isRequired,
   unselectRecipeSide: PropTypes.func.isRequired,
+  trackAddSide: PropTypes.func.isRequired,
+  trackNoSide: PropTypes.func.isRequired,
 }
 
 RecipeSidesModalButtons.defaultProps = {

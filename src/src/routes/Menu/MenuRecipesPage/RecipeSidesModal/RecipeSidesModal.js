@@ -4,14 +4,14 @@ import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComp
 import { RecipeSidesModalButtonsContainer } from './RecipeSidesModalButtonsContainer'
 import css from './RecipeSidesModal.css'
 import { RecipeSidesModalVariantRecipeListContainer } from './RecipeSidesModalVariantRecipeListContainer'
-import { trackCloseSide } from '../../actions/menuRecipeSidesTracking'
 
 export const RecipeSidesModal = ({
   recipeTitle,
   sidesModalRecipeId,
   shouldShow,
   clearSidesModalRecipe,
-  unselectRecipeSide
+  unselectRecipeSide,
+  trackCloseSide
 }) => {
   const onCloseClick = () => {
     unselectRecipeSide(sidesModalRecipeId)
@@ -48,6 +48,7 @@ RecipeSidesModal.propTypes = {
   shouldShow: PropTypes.bool.isRequired,
   clearSidesModalRecipe: PropTypes.func.isRequired,
   unselectRecipeSide: PropTypes.func.isRequired,
+  trackCloseSide: PropTypes.func.isRequired,
 }
 
 RecipeSidesModal.defaultProps = {

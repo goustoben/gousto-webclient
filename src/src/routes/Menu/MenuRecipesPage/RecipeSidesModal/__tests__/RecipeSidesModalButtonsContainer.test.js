@@ -45,6 +45,8 @@ describe('RecipeSidesModalButtonsContainer', () => {
       basketRecipeAdd: expect.any(Function),
       basketRecipeRemove: expect.any(Function),
       unselectRecipeSide: expect.any(Function),
+      trackAddSide: expect.any(Function),
+      trackNoSide: expect.any(Function),
       sidesModalRecipe: { recipeId },
       selectedRecipeSide: 'mockSelectedRecipeSides',
       sidesModalRecipeId: recipeId,

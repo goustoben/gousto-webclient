@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import css from './VariantRecipeList.css'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItem'
-import { trackDeselectSide, trackSelectSide } from '../../../actions/menuRecipeSidesTracking'
 
 const compareCoreRecipeIds = (a, b) => a.coreRecipeId - b.coreRecipeId
 const hasRecipeInBasket = (basketRecipes, recipeId) => basketRecipes.get(recipeId, 0) !== 0
@@ -33,6 +32,8 @@ class VariantRecipeList extends React.PureComponent {
       unselectRecipeSide,
       basketRecipeAdd,
       basketRecipeRemove,
+      trackSelectSide,
+      trackDeselectSide
     } = this.props
 
     const view = isOnDetailScreen ? 'details' : 'grid'
@@ -144,6 +145,8 @@ VariantRecipeList.propTypes = {
   selectRecipeVariant: PropTypes.func.isRequired,
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   trackVariantListDisplay: PropTypes.func.isRequired,
+  trackSelectSide: PropTypes.func.isRequired,
+  trackDeselectSide: PropTypes.func.isRequired,
   selectRecipeSide: PropTypes.func.isRequired,
   unselectRecipeSide: PropTypes.func.isRequired,
   basketRecipeAdd: PropTypes.func.isRequired,
