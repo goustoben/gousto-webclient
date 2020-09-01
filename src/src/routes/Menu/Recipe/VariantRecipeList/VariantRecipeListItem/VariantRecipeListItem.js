@@ -18,7 +18,7 @@ const VariantRecipeListItem = ({
 }) => {
   const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
 
-  const surchargeText = hasSides ? 'per serving' : `${numPortions} servings`
+  const surchargeText = hasSides ? `${numPortions} servings` : 'per serving'
 
   const getInputContent = () => (
     <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer, { [css.labelContainerSides]: isOnSidesModal })}>
