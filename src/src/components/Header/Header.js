@@ -6,7 +6,7 @@ import Svg from 'Svg'
 import Link from 'Link'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
-import Login from 'Login'
+import { Login } from 'Login'
 import SimpleHeader from 'Header/SimpleHeader'
 import { PromoModalWrapper as PromoModal } from 'PromoModal'
 import DuplicateOrderModal from 'DuplicateOrderModal'
@@ -326,7 +326,7 @@ class Header extends React.PureComponent {
       isHelpCentreActive,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
-    const { mobileMenuOpen, loginPending } = this.state
+    const { mobileMenuOpen } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
     const hideNav = fromWizard || joinPage || disabled || false
@@ -403,8 +403,7 @@ class Header extends React.PureComponent {
           </header>
           <Overlay
             open={Boolean(isLoginOpen || isHelpPreLoginOpen)}
-            className={css.mobileOverlay}
-            contentClassName={css.mobileModalContent}
+            contentClassName={css.modalOverlay}
             from="top"
           >
             <ModalPanel
@@ -418,9 +417,6 @@ class Header extends React.PureComponent {
                 title={isHelpPreLoginOpen
                   ? 'We can help you faster if you\'re logged in'
                   : 'Login' }
-                isAuthenticated={isAuthenticated}
-                isOpen={isLoginOpen || isHelpPreLoginOpen}
-                isPending={loginPending}
               />
               {isHelpPreLoginOpen
                 ? (

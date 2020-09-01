@@ -11,7 +11,7 @@ import classnames from 'classnames'
 import config from 'config'
 import { validateEmail } from 'utils/auth'
 import { getWindow } from 'utils/window'
-import css from './Login.css'
+import css from './LoginForm.css'
 
 const secretPingdomEmailLength = 31
 const secretPingdomEmailSuffix = '@gmail.com'
@@ -31,7 +31,7 @@ const isSecretPingdomEmail = (email) => (
   && quickStringHash(email) === secretPingdomEmailQuickHash
 )
 
-class Login extends React.PureComponent {
+class LoginForm extends React.PureComponent {
   constructor() {
     super()
     this.state = {
@@ -45,12 +45,6 @@ class Login extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps = (nextProps) => {
-    if (nextProps.statusText) {
-      this.setState({ showValidationError: true })
-    }
-  }
-
   componentWillMount() {
     const { rememberMeDefault } = this.props
 
@@ -60,6 +54,12 @@ class Login extends React.PureComponent {
   async componentDidMount() {
     const { changeRecaptcha } = this.props
     await changeRecaptcha()
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.statusText) {
+      this.setState({ showValidationError: true })
+    }
   }
 
   componentWillUnmount = () => {
@@ -189,7 +189,8 @@ class Login extends React.PureComponent {
             mask
           />
         </div>
-        <div className={css.row}>
+        <div>
+          <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
           <div className={css.rememberMe}>
             <CheckBox
               data-testing="loginCheckbox"
@@ -199,7 +200,6 @@ class Login extends React.PureComponent {
               checked={remember}
             />
           </div>
-          <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
         </div>
         {
           isRecaptchaEnabled
@@ -208,7 +208,7 @@ class Login extends React.PureComponent {
               <ReCAPTCHA
                 ref={el => { this.recaptchaElement = el }}
                 sitekey={RECAPTCHA_PUBLIC_KEY}
-                size='invisible'
+                size="invisible"
                 onChange={this.captchaChanges}
               />
             </div>
@@ -221,25 +221,24 @@ class Login extends React.PureComponent {
           pending={isAuthenticating}
           width="full"
         >
-          Login
+          Log in
         </Button>
       </Form>
     )
   }
 
   render() {
-    const { isAuthenticated, title } = this.props
+    const { isAuthenticated } = this.props
 
     return (
-      <div className={css.modalContent} data-testing="loginModal">
-        <h4 className={css.heading}>{title}</h4>
+      <div className={css.loginFormWrapper} data-testing="loginModal">
         {(isAuthenticated) ? this.renderConfirmMessage() : this.renderLoginForm()}
       </div>
     )
   }
 }
 
-Login.propTypes = {
+LoginForm.propTypes = {
   changeRecaptcha: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
@@ -250,18 +249,18 @@ Login.propTypes = {
   statusText: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
-  ]),
-  title: PropTypes.string,
+  ])
 }
 
-Login.defaultProps = {
+LoginForm.defaultProps = {
   changeRecaptcha: () => { },
   isAuthenticated: false,
   isAuthenticating: false,
   onInvalid: () => {},
   rememberMeDefault: false,
   statusText: '',
-  title: 'Login',
 }
 
-export default Login
+export {
+  LoginForm
+}

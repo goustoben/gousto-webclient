@@ -1,2 +1,1 @@
-import Login from './LoginContainer'
-export default Login
+export { LoginWrapperContainer as Login } from './LoginWrapperContainer'

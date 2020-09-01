@@ -2,13 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 
-import Login from '../Login'
+import { LoginForm } from '../LoginForm'
 
-describe('Login', () => {
+describe('LoginForm', () => {
   test('renders without crashing', () => {
     const div = document.createElement('div')
     ReactDOM.render(
-      <Login
+      <LoginForm
         isRecaptchaEnabled={false}
         onSubmit={jest.fn()}
       />,
@@ -21,27 +21,11 @@ describe('Login', () => {
 
     beforeEach(() => {
       wrapper = mount(
-        <Login
+        <LoginForm
           isRecaptchaEnabled={false}
           onSubmit={jest.fn()}
         />
       )
-    })
-
-    test('the "Login" title is rendered', () => {
-      expect(wrapper.find('.heading').text()).toBe('Login')
-    })
-
-    describe('when the title prop is passed', () => {
-      const TITLE = 'This is the title'
-
-      beforeEach(() => {
-        wrapper.setProps({ title: TITLE })
-      })
-
-      test('the title is rendered in the heading element', () => {
-        expect(wrapper.find('.heading').text()).toBe(TITLE)
-      })
     })
 
     describe('when the email and password are valid', () => {

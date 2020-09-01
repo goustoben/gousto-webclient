@@ -3,7 +3,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsRecaptchaEnabled } from 'selectors/auth'
 import { changeRecaptcha } from 'actions/auth'
-import Login from './Login'
+import { LoginForm } from './LoginForm'
 
 const mapStateToProps = (state) => {
   let err = state.error.get(actionTypes.USER_LOGIN)
@@ -20,8 +20,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {
+const LoginFormContainer = connect(mapStateToProps, {
   onSubmit: actions.loginUser,
   onInvalid: actions.cannotLogin,
   changeRecaptcha
-})(Login)
+})(LoginForm)
+
+export {
+  LoginFormContainer
+}
+

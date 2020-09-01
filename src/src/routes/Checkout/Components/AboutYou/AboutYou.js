@@ -5,7 +5,7 @@ import ReduxFormInput from 'Form/ReduxFormInput'
 import config from 'config/checkout'
 import { capitalizeFirstLetter } from 'utils/text'
 import { emailValidator } from 'utils/forms'
-import Login from 'Login'
+import { Login } from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import css from './AboutYou.css'
@@ -23,7 +23,6 @@ class AboutYou extends React.PureComponent {
       e.stopPropagation()
     }
     loginVisibilityChange(false)
-    this.setState({ loginPending: false })
   }
 
   handleLoginOpen = (e) => {
@@ -33,7 +32,7 @@ class AboutYou extends React.PureComponent {
   }
 
   render() {
-    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen, loginPending } = this.props
+    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen } = this.props
     const titles = config.titles.map(title => ({
       value: title,
       label: capitalizeFirstLetter(title),
@@ -163,11 +162,7 @@ class AboutYou extends React.PureComponent {
               containerClassName={css.modalContainer}
               disableOverlay
             >
-              <Login
-                isAuthenticated={isAuthenticated}
-                isOpen={isLoginOpen}
-                isPending={loginPending}
-              />
+              <Login />
             </ModalPanel>
           </Overlay>
         </div>
@@ -181,7 +176,6 @@ AboutYou.propTypes = {
   loginVisibilityChange: PropTypes.func,
   isLoginOpen: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
-  loginPending: PropTypes.bool,
   isMobile: PropTypes.bool,
   sectionName: PropTypes.string,
   clearErrors: PropTypes.func,
@@ -192,8 +186,7 @@ AboutYou.propTypes = {
 AboutYou.defaultProps = {
   clearErrors: () => { },
   loginVisibilityChange: () => { },
-  isloginOpen: false,
-  loginPending: false,
+  isLoginOpen: false,
   isAuthenticated: false,
   sectionName: 'aboutyou',
   receiveRef: () => { },
