@@ -36,7 +36,7 @@ describe('<Detail />', () => {
       stock={100}
       inBasket={false}
       description="Recipe description"
-      menuRecipeDetailVisibilityChange={() => {}}
+      closeRecipeDetails={() => {}}
     />
   )
 
@@ -46,12 +46,12 @@ describe('<Detail />', () => {
     wrapper = shallow(DETAIL)
   })
 
-  test('should render an overlay which calls the menuRecipeDetailVisibilityChange function prop on click', () => {
-    const menuRecipeDetailVisibilityChangeSpy = jest.fn()
-    wrapper.setProps({menuRecipeDetailVisibilityChange: menuRecipeDetailVisibilityChangeSpy })
+  test('should render an overlay which calls the closeRecipeDetails function prop on click', () => {
+    const closeRecipeDetails = jest.fn()
+    wrapper.setProps({ closeRecipeDetails })
     wrapper.find('.modalContainer').simulate('click')
 
-    expect(menuRecipeDetailVisibilityChangeSpy).toHaveBeenCalledTimes(1)
+    expect(closeRecipeDetails).toHaveBeenCalledTimes(1)
   })
 
   test('should contain one recipe disclaimer ', () => {

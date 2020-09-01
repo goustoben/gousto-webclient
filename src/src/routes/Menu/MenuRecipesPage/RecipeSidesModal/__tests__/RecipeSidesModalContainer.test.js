@@ -46,6 +46,7 @@ describe('RecipeSidesModalContainer', () => {
     test('should set shouldShow to false', () => {
       expect(wrapper.find('RecipeSidesModal').props()).toEqual({
         clearSidesModalRecipe: expect.any(Function),
+        unselectRecipeSide: expect.any(Function),
         recipeTitle: null,
         shouldShow: false,
         sidesModalRecipeId: null,
@@ -81,6 +82,7 @@ describe('RecipeSidesModalContainer', () => {
     test('should set shouldShow to true', () => {
       expect(wrapper.find('RecipeSidesModal').props()).toEqual({
         clearSidesModalRecipe: expect.any(Function),
+        unselectRecipeSide: expect.any(Function),
         recipeTitle: 'Chicken Curry',
         shouldShow: true,
         sidesModalRecipeId: '123',

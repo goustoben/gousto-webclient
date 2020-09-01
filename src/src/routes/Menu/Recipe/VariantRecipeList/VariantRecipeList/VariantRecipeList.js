@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import css from './VariantRecipeList.css'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItem'
+import { trackDeselectSide, trackSelectSide } from '../../../actions/menuRecipeSidesTracking'
 
 const compareCoreRecipeIds = (a, b) => a.coreRecipeId - b.coreRecipeId
 const hasRecipeInBasket = (basketRecipes, recipeId) => basketRecipes.get(recipeId, 0) !== 0
@@ -43,6 +44,7 @@ class VariantRecipeList extends React.PureComponent {
 
       if (sideWasUnchecked) {
         unselectRecipeSide(originalId)
+        trackDeselectSide(originalId, checkedRecipeId, isOnDetailScreen ? 'detail' : 'grid')
 
         if (hasRecipeInBasket(basketRecipes, checkedRecipeId)) {
           basketRecipeRemove(checkedRecipeId)
@@ -50,6 +52,7 @@ class VariantRecipeList extends React.PureComponent {
         }
       } else {
         selectRecipeSide(originalId, checkedRecipeId)
+        trackSelectSide(originalId, checkedRecipeId, isOnDetailScreen ? 'detail' : 'grid')
 
         if (hasRecipeInBasket(basketRecipes, originalId)) {
           basketRecipeRemove(originalId)

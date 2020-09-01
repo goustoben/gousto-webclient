@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { getMenuRecipeSidesModalRecipe } from '../../selectors/menuRecipeSidesModal'
 import { RecipeSidesModal } from './RecipeSidesModal'
 import { clearSidesModalRecipe } from '../../actions/menuRecipeSidesModal'
+import { unselectRecipeSide } from '../../../../actions/menu'
 import { getRecipeTitle } from '../../selectors/recipe'
 
 const mapStateToProps = (state) => {
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   clearSidesModalRecipe,
+  unselectRecipeSide
 }
 
 export const RecipeSidesModalContainer = connect(mapStateToProps, mapDispatchToProps)(RecipeSidesModal)

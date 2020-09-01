@@ -22,7 +22,7 @@ import css from './Detail.css'
 export const Detail = (props) => {
   const {
     id, chosenSideRecipeId,
-    menuRecipeDetailVisibilityChange,
+    closeRecipeDetails,
     media, title,
     view, count, average,
     isOutOfStock,
@@ -39,8 +39,8 @@ export const Detail = (props) => {
       className={css.modalContainer}
       role="button"
       tabIndex={0}
-      onKeyPress={menuRecipeDetailVisibilityChange}
-      onClick={menuRecipeDetailVisibilityChange}
+      onKeyPress={closeRecipeDetails}
+      onClick={closeRecipeDetails}
       data-testing="menuRecipeDetailsClose"
     >
       <div role="button" tabIndex={0} className={css.container} onKeyPress={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
@@ -52,8 +52,8 @@ export const Detail = (props) => {
                 className={css.closeIcon}
                 role="button"
                 tabIndex={0}
-                onKeyPress={menuRecipeDetailVisibilityChange}
-                onClick={menuRecipeDetailVisibilityChange}
+                onKeyPress={closeRecipeDetails}
+                onClick={closeRecipeDetails}
                 data-testing="menuRecipeDetailsClose"
               />
             </div>
@@ -138,7 +138,7 @@ Detail.propTypes = {
   description: PropTypes.string.isRequired,
   youWillNeed: PropTypes.instanceOf(Immutable.List).isRequired,
   equipment: PropTypes.instanceOf(Immutable.List).isRequired,
-  menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
+  closeRecipeDetails: PropTypes.func.isRequired,
   position: PropTypes.number,
   isChefPrepared: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool,

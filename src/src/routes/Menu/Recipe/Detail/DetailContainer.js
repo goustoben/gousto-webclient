@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { getCutoffs } from 'utils/deliveries'
 import moment from 'moment'
 
-import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { Detail } from './Detail'
+import { closeRecipeDetails } from '../../actions/closeRecipeDetails'
 
 function mapStateToProps(state) {
   let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const
@@ -22,7 +22,7 @@ function mapStateToProps(state) {
 }
 
 const DetailContainer = connect(mapStateToProps, {
-  menuRecipeDetailVisibilityChange: () => menuRecipeDetailVisibilityChange(),
+  closeRecipeDetails
 })(Detail)
 
 export { DetailContainer }
