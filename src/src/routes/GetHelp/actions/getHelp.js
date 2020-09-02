@@ -53,12 +53,13 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
   }
 )
 
-export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems }) => ({
+export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, deliverySlot }) => ({
   type: actionTypes.GET_HELP_STORE_ORDER,
   payload: {
     id,
     recipeIds,
     recipeDetailedItems,
+    deliverySlot,
   },
 })
 

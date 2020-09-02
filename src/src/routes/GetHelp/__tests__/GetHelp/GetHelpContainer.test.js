@@ -42,7 +42,14 @@ describe('<GetHelpContainer />', () => {
       )
 
       fetchOrder.mockResolvedValue({
-        data: { id: '788', recipeItems: [{ id: '1', recipeId: '3' }, { id: '2', recipeId: '4' }] }
+        data: {
+          id: '788',
+          recipeItems: [{ id: '1', recipeId: '3' }, { id: '2', recipeId: '4' }],
+          deliverySlot: {
+            deliveryEnd: '18:59:59',
+            deliveryStart: '08:00:00',
+          }
+        }
       })
 
       fetchRecipes.mockResolvedValue({

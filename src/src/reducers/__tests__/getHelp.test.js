@@ -1,6 +1,7 @@
-import { List, Map, OrderedMap } from 'immutable'
+import { List, Map, OrderedMap, fromJS } from 'immutable'
 import { storeGetHelpOrder } from 'routes/GetHelp/actions/getHelp'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
+import { actionTypes as webclientActionTypes } from 'actions/actionTypes'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 
 const MOCK_ORDERS = [
@@ -59,7 +60,11 @@ describe('getHelp reducer', () => {
         10: '456',
         20: '123',
         30: '456',
-      }
+      },
+      deliverySlot: {
+        deliveryEnd: '18:59:59',
+        deliveryStart: '08:00:00',
+      },
     }
 
     beforeEach(() => {
@@ -71,6 +76,7 @@ describe('getHelp reducer', () => {
         id: ORDER.id,
         recipeItems: List(ORDER.recipeIds),
         recipeDetailedItems: Map(ORDER.recipeDetailedItems),
+        deliverySlot: Map(ORDER.deliverySlot)
       }))
     })
   })
@@ -107,6 +113,28 @@ describe('getHelp reducer', () => {
         }),
       })
       expect(newState.get('orders')).toEqual(EXPECTED_REDUCED_ORDERS)
+    })
+  })
+
+  describe('given an action with type GET_HELP_LOAD_ORDERS_BY_ID is received', () => {
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: webclientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
+        order: MOCK_ORDERS[0]
+      })
+    })
+
+    test('the new state.order has the order of the action stored', () => {
+      const EXPECTED_REDUCED_ORDER = fromJS({
+        deliverySlot: {
+          deliveryStart: '08:00:00',
+          deliveryEnd: '19:00:00' ,
+        },
+        id: '',
+        recipeDetailedItems: { 4001: '123', 4002: '456' },
+        recipeItems: ['4001', '4002'],
+      })
+      expect(newState.get('order')).toEqual(EXPECTED_REDUCED_ORDER)
     })
   })
 })

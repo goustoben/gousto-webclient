@@ -58,6 +58,7 @@ class EligibilityCheck extends PureComponent {
         id: newestOrder.get('id'),
         recipeIds: newestOrder.get('recipeIds'),
         recipeDetailedItems: newestOrder.get('recipeDetailedItems'),
+        deliverySlot: newestOrder.get('deliverySlot'),
       })
       browserHistory.push(`${clientRoutes.getHelp.index}?orderId=${newestOrder.get('id')}`)
     } else {

@@ -9,6 +9,7 @@ const getHelpInitialState = fromJS({
     id: '',
     recipeItems: [],
     recipeDetailedItems: [],
+    deliverySlot: {},
   },
   orders: Map(),
   recipes: [],
@@ -36,12 +37,13 @@ const getHelp = (state, action) => {
 
   switch (action.type) {
   case actionTypes.GET_HELP_STORE_ORDER: {
-    const { id, recipeIds, recipeDetailedItems } = action.payload
+    const { id, recipeIds, recipeDetailedItems, deliverySlot } = action.payload
 
     return state.set('order', fromJS({
       id,
       recipeItems: recipeIds,
       recipeDetailedItems,
+      deliverySlot,
     }))
   }
   case webClientActionTypes.GET_HELP_STORE_ORDER_ID: {
@@ -107,6 +109,10 @@ const getHelp = (state, action) => {
       return state
         .setIn(['order', 'recipeItems'], fromJS(recipeItems))
         .setIn(['order', 'recipeDetailedItems'], fromJS(recipeDetailedItems))
+        .setIn(['order', 'deliverySlot'], fromJS({
+          deliveryEnd: order.deliverySlot.deliveryEnd,
+          deliveryStart: order.deliverySlot.deliveryStart,
+        }))
     }
 
     return state
