@@ -14,7 +14,7 @@ function getRules(isEnabled) {
         name: 'isLength',
         options: {
           min: 5,
-          ...(isEnabled && { errorEnding: 'to ensure we deliver to the right place'})
+          ...(isEnabled && { errorEnding: ' to ensure we deliver to the right place'})
         }
       },
       {

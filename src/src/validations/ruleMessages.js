@@ -7,7 +7,7 @@ export default {
     if (min === 1) {
       error = `${field} is required`
     } else if (min > 1) {
-      error = `${field} must be at least ${min} characters ${errorEnding || ''}`
+      error = `${field} must be at least ${min} characters${errorEnding || ''}`
     } else {
       error = `${field} must be under ${max} characters`
     }

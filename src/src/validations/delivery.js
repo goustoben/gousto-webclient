@@ -38,7 +38,7 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery', isCheckout
     typeof values.deliveryInstruction === 'string'
     && ['neighbour', 'other'].includes(values.deliveryInstruction.toLowerCase())
   ) {
-    const deliveryInstructionError = isCheckoutRedesignEnabled && { errorEnding: 'to ensure we deliver to the right place' }
+    const deliveryInstructionError = isCheckoutRedesignEnabled && { errorEnding: ' to ensure we deliver to the right place' }
     validationRules.deliveryInstructionsCustom = {
       rules: [
         { name: 'isLength', options: { min: 5, ...deliveryInstructionError } },
