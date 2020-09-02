@@ -2,6 +2,7 @@ import { push } from 'react-router-redux'
 import { actionTypes } from '../../../actions/actionTypes'
 import * as trackingKeys from '../../../actions/trackingKeys'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
+import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
 
 export const menuRecipeDetailVisibilityChange = (recipeId, isViewMoreDetailsClicked) =>
@@ -11,13 +12,16 @@ export const menuRecipeDetailVisibilityChange = (recipeId, isViewMoreDetailsClic
       return
     }
 
+    // If the recipe is a side, then get the base recipe id associated with it and display that instead.
+    const baseRecipeId = replaceSideRecipeIdWithBaseRecipeId(getState(), { recipeId })
+
     dispatch({
       type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
-      recipeId,
+      recipeId: baseRecipeId,
       trackingData: {
         actionType: trackingKeys.changeMenuRecipeDetailVisibility,
-        recipeId: recipeId || getMenuRecipeIdForDetails(getState()),
-        show: Boolean(recipeId),
+        recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
+        show: Boolean(baseRecipeId),
       },
     })
 

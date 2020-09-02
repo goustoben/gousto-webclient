@@ -3,6 +3,7 @@ import { push } from 'react-router-redux'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
+import * as recipeListSelectors from '../../selectors/recipeList'
 import { safeJestMock } from '../../../../_testing/mocks'
 jest.mock('react-router-redux', () => ({
   push: jest.fn()
@@ -20,6 +21,8 @@ describe('showDetailRecipe', () => {
   let dispatch
   describe('when boxSummaryShow is true', () => {
     beforeAll(() => {
+      safeJestMock(recipeListSelectors, 'replaceSideRecipeIdWithBaseRecipeId').mockImplementation((_, { recipeId }) => recipeId)
+
       dispatch = jest.fn()
       const stateWithTrueBoxSummaryShow = {
         ...state,
@@ -69,7 +72,7 @@ describe('menuRecipeDetailVisibilityChange', () => {
       },
       menuCollections: Immutable.fromJS({}),
       recipes: Immutable.Map({
-        123: {}
+        123: {},
       })
     })
   })
@@ -116,13 +119,50 @@ describe('menuRecipeDetailVisibilityChange', () => {
         },
         menuCollections: Immutable.fromJS({}),
         recipes: Immutable.Map({
-          346: {}
+          346: {},
         })
       })
     })
     test('should not dispatch', () => {
       menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('123', true)(dispatch, getState)
       expect(dispatch).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('When recipeId is a side', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        auth: Immutable.Map({
+          accessToken: 'an-access-token',
+          isAuthenticated: false
+        }),
+        features: Immutable.fromJS({}),
+        routing: {
+          locationBeforeTransitions: {
+            query: {}
+          }
+        },
+        menuCollections: Immutable.fromJS({}),
+        recipes: Immutable.Map({
+          789: {},
+        })
+      })
+
+      safeJestMock(recipeListSelectors, 'replaceSideRecipeIdWithBaseRecipeId').mockReturnValue('mock-base-recipe-id-789')
+    })
+
+    test('should replace recipeId with the base recipeId', () => {
+      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('789', true)(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+        recipeId: 'mock-base-recipe-id-789',
+        trackingData: {
+          actionType: trackingKeys.changeMenuRecipeDetailVisibility,
+          recipeId: 'mock-base-recipe-id-789',
+          show: true,
+        },
+      })
     })
   })
 })
