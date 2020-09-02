@@ -273,11 +273,11 @@ export const getRecipeListRecipes = createSelector(
   }
 )
 
-export const getBasketRecipeWithSidesBaseId = createSelector(
-  [getBasketRecipes, getCurrentMenuVariants],
-  (basketRecipes, currentMenuVariant) => {
+export const getBaseRecipeSides = createSelector(
+  [getCurrentMenuVariants],
+  (currentMenuVariant) => {
     if (!currentMenuVariant) {
-      return basketRecipes
+      return null
     }
 
     // Get all recipes with sides and return an object which has mappings between recipe side id and the base recipe id
@@ -297,16 +297,42 @@ export const getBasketRecipeWithSidesBaseId = createSelector(
       }
     }, {})
 
+    return Immutable.fromJS(baseRecipeSides)
+  }
+)
+
+export const getBasketRecipeWithSidesBaseId = createSelector(
+  [getBasketRecipes, getBaseRecipeSides],
+  (basketRecipes, baseRecipeSides) => {
+    if (!baseRecipeSides) {
+      return basketRecipes
+    }
+
     let basketRecipeWithSidesBaseId = Immutable.Map({})
 
     basketRecipes.forEach((value, key) => {
-      if (baseRecipeSides[key]) {
-        basketRecipeWithSidesBaseId = basketRecipeWithSidesBaseId.set(baseRecipeSides[key], value)
+      if (baseRecipeSides.get(key)) {
+        basketRecipeWithSidesBaseId = basketRecipeWithSidesBaseId.set(baseRecipeSides.get(key), value)
       } else {
         basketRecipeWithSidesBaseId = basketRecipeWithSidesBaseId.set(key, value)
       }
     })
 
     return basketRecipeWithSidesBaseId
+  }
+)
+
+const getRecipeIdFromProps = (state, props) => props.recipeId
+
+export const replaceSideRecipeIdWithBaseRecipeId = createSelector(
+  [getRecipeIdFromProps, getBaseRecipeSides],
+  (recipeId, baseRecipeSides) => {
+    if (!baseRecipeSides) {
+      return recipeId
+    }
+
+    const baseRecipeId = baseRecipeSides.get(recipeId) || recipeId
+
+    return baseRecipeId
   }
 )
