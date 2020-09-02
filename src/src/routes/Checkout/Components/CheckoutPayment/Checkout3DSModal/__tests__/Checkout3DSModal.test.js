@@ -13,6 +13,7 @@ describe('Checkout3DSModal', () => {
   const successURL = 'https://gousto.co.uk/payment_success'
   const failureURL = 'https://gousto.co.uk/payment_failure'
   const onChallengeDone = jest.fn()
+  const isCheckoutRedesignEnabled = false
 
   beforeEach(() => {
     wrapper = shallow(
@@ -20,6 +21,7 @@ describe('Checkout3DSModal', () => {
         isOpen
         challengeURL={challengeURL}
         onChallengeDone={onChallengeDone}
+        isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
       />
     )
     instance = wrapper.instance()
@@ -136,14 +138,14 @@ describe('Checkout3DSModal', () => {
   })
 
   describe('when success page is loaded within iframe', () => {
-    describe('and contains session id', () => {
+    describe('and contains session id and isCheckoutRedesignEnabled', () => {
       test('should trigger onChallengeDone() callback', () => {
         const sessionId = 'sid_ubfj2q76miwundwlk72vxt2i7q'
         const url = `${successURL}?cko-session-id=${sessionId}`
 
         instance.onFrameUrlChange(url)
 
-        expect(onChallengeDone).toHaveBeenCalledWith(sessionId)
+        expect(onChallengeDone).toHaveBeenCalledWith(sessionId, isCheckoutRedesignEnabled)
       })
     })
 
@@ -164,7 +166,7 @@ describe('Checkout3DSModal', () => {
 
         instance.onFrameUrlChange(url)
 
-        expect(onChallengeDone).toHaveBeenCalledWith(sessionId)
+        expect(onChallengeDone).toHaveBeenCalledWith(sessionId, isCheckoutRedesignEnabled)
       })
     })
 

@@ -20,7 +20,7 @@ export default (Component, rules, formName, messages = {}, opts = {}, asyncValid
       validationRules.forEach(rule => {
         let validationRule = rule
         if (typeof rule === 'function') {
-          validationRule = rule(data) // eslint-disable-line no-param-reassign
+          validationRule = rule(data, props.isCheckoutRedesignEnabled) // eslint-disable-line no-param-reassign
         }
         combinedRules = { ...combinedRules, ...validationRule }
       })

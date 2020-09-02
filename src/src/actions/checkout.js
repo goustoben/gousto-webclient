@@ -18,7 +18,7 @@ import { createPreviewOrder } from 'apis/orders'
 
 import { getChosenAddressId } from 'selectors/basket'
 import { getAboutYouFormName, getDeliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
-import { getNDDFeatureValue, getIs3DSForSignUpEnabled } from 'selectors/features'
+import { getNDDFeatureValue, getIs3DSForSignUpEnabled, getCheckoutRedesign } from 'selectors/features'
 import { getPaymentDetails } from 'selectors/payment'
 
 import { actionTypes } from './actionTypes'
@@ -248,16 +248,17 @@ export function checkoutSignup() {
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
 
     const is3DSEnabled = getIs3DSForSignUpEnabled(getState())
+    const isCheckoutRedesignEnabled = getCheckoutRedesign(getState())
 
     if (is3DSEnabled) {
       await dispatch(checkoutActions.checkout3DSSignup())
     } else {
-      await dispatch(checkoutActions.checkoutNon3DSSignup())
+      await dispatch(checkoutActions.checkoutNon3DSSignup(isCheckoutRedesignEnabled))
     }
   }
 }
 
-export function checkoutNon3DSSignup() {
+export function checkoutNon3DSSignup(isCheckoutRedesignEnabled) {
   return async (dispatch, getState) => {
     const { basket, auth } = getState()
     const orderId = basket.get('previewOrderId')
@@ -268,7 +269,7 @@ export function checkoutNon3DSSignup() {
 
     try {
       dispatch(checkoutActions.resetDuplicateCheck())
-      await dispatch(userSubscribe())
+      await dispatch(userSubscribe(false, null, isCheckoutRedesignEnabled))
       await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
@@ -352,7 +353,7 @@ export function checkout3DSSignup() {
   }
 }
 
-export const checkPaymentAuth = (sessionId) => (
+export const checkPaymentAuth = (sessionId, isCheckoutRedesignEnabled) => (
   async (dispatch, getState) => {
     dispatch({ type: actionTypes.PAYMENT_HIDE_MODAL })
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
@@ -367,7 +368,7 @@ export const checkPaymentAuth = (sessionId) => (
         const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
 
         dispatch(checkoutActions.resetDuplicateCheck())
-        await dispatch(userSubscribe(true, data.data.sourceId))
+        await dispatch(userSubscribe(true, data.data.sourceId, isCheckoutRedesignEnabled))
         await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
         dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
         dispatch({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })

@@ -19,7 +19,7 @@ const AboutYouSection = AboutYouContainer(aboutYouSectionName)
 const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
-export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick, trackUTMAndPromoCode }) => {
+export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick, trackUTMAndPromoCode, isCheckoutRedesignEnabled }) => {
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = () => {
     if (checkoutValid) {
@@ -33,10 +33,10 @@ export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues
   return (
     <div>
       <SectionContainer>
-        <AboutYouSection receiveRef={receiveRef} />
+        <AboutYouSection receiveRef={receiveRef} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
       </SectionContainer>
       <SectionContainer>
-        <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} browser={browser} />
+        <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} browser={browser} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
       </SectionContainer>
       {isAddressConfirmed && (
         <SectionContainer>
@@ -61,6 +61,7 @@ YourDetailsStep.propTypes = {
   checkoutValid: PropTypes.bool,
   browser: PropTypes.string,
   trackUTMAndPromoCode: PropTypes.func,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 YourDetailsStep.defaultProps = {
@@ -73,6 +74,7 @@ YourDetailsStep.defaultProps = {
   trackClick: () => { },
   checkoutValid: false,
   trackUTMAndPromoCode: () => { },
+  isCheckoutRedesignEnabled: false
 }
 
 const validationRules = [
