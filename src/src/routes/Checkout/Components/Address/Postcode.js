@@ -9,7 +9,10 @@ import { Button } from 'goustouicomponents'
 import addressCss from './Address.css'
 import postcodeCss from './Postcode.css'
 
-const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, onSelectedAddressChange, showDropdown, receiveRef, trackClick, isMobile }) => (
+let isFindAddressDisabled = true
+const disableFindAddressButton = (value) => { isFindAddressDisabled = value }
+
+const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, onSelectedAddressChange, showDropdown, receiveRef, trackClick, isMobile, isCheckoutRedesignEnabled }) => (
   <div>
     <div>
       <div className={addressCss.flex}>
@@ -24,16 +27,18 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
             withRef
             ref={receiveRef}
             data-testing="checkoutPostcode"
+            onChange={() => { disableFindAddressButton(false) }}
           />
         </div>
 
         <div className={postcodeCss.findAddressButton}>
           <Button
             width="auto"
-            onClick={() => { onPostcodeLookup(postcodeTemp) }}
+            onClick={() => { onPostcodeLookup(postcodeTemp); disableFindAddressButton(true) }}
             pending={postcodePending}
             color="secondary"
             data-testing="checkoutFindAddressButton"
+            disabled={isCheckoutRedesignEnabled && isFindAddressDisabled}
           >
             Find Address
           </Button>
@@ -81,6 +86,7 @@ Postcode.propTypes = {
   receiveRef: PropTypes.func,
   isMobile: PropTypes.bool,
   trackClick: PropTypes.func,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 Postcode.defaultProps = {
@@ -91,6 +97,7 @@ Postcode.defaultProps = {
   onSelectedAddressChange: () => { },
   showDropdown: false,
   receiveRef: () => { },
+  isCheckoutRedesignEnabled: false
 }
 
 export default Postcode

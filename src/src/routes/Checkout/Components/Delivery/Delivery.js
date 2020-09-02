@@ -23,6 +23,7 @@ class Delivery extends React.PureComponent {
     receiveRef: PropTypes.func,
     triggerSubmit: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
+    isCheckoutRedesignEnabled: PropTypes.bool
   }
 
   static defaultProps = {
@@ -32,15 +33,21 @@ class Delivery extends React.PureComponent {
     sectionName: 'delivery',
     change: () => {},
     receiveRef: () => {},
+    asyncValidate: () => {},
+    triggerSubmit: () => {},
+    scrollToFirstMatchingRef: () => {},
+    isCheckoutRedesignEnabled: false
   }
 
   componentDidMount() {
     // reset error msg
-    this.props.clearErrors()
+    const { clearErrors } = this.props
+    clearErrors()
   }
 
   componentWillReceiveProps(nextProps) {
-    if (globals.client && this.container && deliveryUtils.isAddressConfirmed(this.props.formValues) !== deliveryUtils.isAddressConfirmed(nextProps.formValues)) {
+    const { formValues } = this.props
+    if (globals.client && this.container && deliveryUtils.isAddressConfirmed(formValues) !== deliveryUtils.isAddressConfirmed(nextProps.formValues)) {
       scrollIntoView(this.container, {
         align: {
           topOffset: 30,
@@ -54,41 +61,53 @@ class Delivery extends React.PureComponent {
     change(formName, `${sectionName}.confirmed`, false)
   }
 
-  renderAddress = () => (
-    <div>
-      <DeliveryAddress
-        isDelivery
-        asyncValidate={this.props.asyncValidate}
-        formName={this.props.formName}
-        sectionName={this.props.sectionName}
-        formValues={this.props.formValues}
-        triggerSubmit={this.props.triggerSubmit}
-        receiveRef={this.props.receiveRef}
-        scrollToFirstMatchingRef={this.props.scrollToFirstMatchingRef}
-      />
-    </div>
-  )
+  renderAddress = () => {
+    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef, isCheckoutRedesignEnabled } = this.props
 
-  renderDetails = () => (
-    <div>
-      <DeliveryDetails
-        formValues={this.props.formValues[this.props.sectionName]}
-        formName={this.props.formName}
-        sectionName={this.props.sectionName}
-        onAddressEdit={this.handleAddressEdit}
-        triggerSubmit={this.props.triggerSubmit}
-        receiveRef={this.props.receiveRef}
-      />
-    </div>
-  )
+    return (
+      <div>
+        <DeliveryAddress
+          isDelivery
+          asyncValidate={asyncValidate}
+          formName={formName}
+          sectionName={sectionName}
+          formValues={formValues}
+          triggerSubmit={triggerSubmit}
+          receiveRef={receiveRef}
+          scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
+        />
+      </div>
+    )
+  }
+
+  renderDetails = () => {
+    const { formValues, sectionName, formName, triggerSubmit, receiveRef, isCheckoutRedesignEnabled } = this.props
+
+    return (
+      <div>
+        <DeliveryDetails
+          formValues={formValues[sectionName]}
+          formName={formName}
+          sectionName={sectionName}
+          onAddressEdit={this.handleAddressEdit}
+          triggerSubmit={triggerSubmit}
+          receiveRef={receiveRef}
+          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
+        />
+      </div>
+    )
+  }
 
   render() {
+    const { sectionName } = this.props
+
     return (
       <div ref={el => { this.container = el }}>
-        <Subscription sectionName={this.props.sectionName} />
+        <Subscription sectionName={sectionName} />
         <div className={css.deliveryContainer} data-testing="checkoutDeliverySection">
           <h3 className={css.header}>Delivery details</h3>
-          <FormSection name={this.props.sectionName}>
+          <FormSection name={sectionName}>
             {deliveryUtils.isAddressConfirmed(this.props.formValues) ? this.renderDetails() : this.renderAddress()}
           </FormSection>
         </div>

@@ -22,13 +22,13 @@ class DeliveryInstruction extends React.PureComponent {
     ['neighbour', 'other'].includes(chosenValue.toLowerCase())
 
   render() {
-    const { value, sectionName, receiveRef } = this.props
+    const { value, sectionName, receiveRef, isCheckoutRedesignEnabled } = this.props
     const showOtherInput = this.shouldShowOtherInput(value)
 
     return (
       <div className={css.deliveryFieldWrapper}>
         <div className={css.row}>
-          <div className={css.colMD}>
+          <div className={classnames(css.colMD, { [css.checkoutRedesign]: isCheckoutRedesignEnabled })}>
             <div className="deliveryDropdown" data-testing="checkoutDeliveryDetailsInstruction">
               <Field
                 name="deliveryInstruction"
@@ -40,6 +40,7 @@ class DeliveryInstruction extends React.PureComponent {
                 withRef
                 ref={receiveRef}
                 refId={`${sectionName}.deliveryInstruction`}
+                color="secondary"
               />
             </div>
           </div>
@@ -54,6 +55,7 @@ class DeliveryInstruction extends React.PureComponent {
                 required
                 color="gray"
                 label={configCheckout.leaveBoxDesc[value.toLowerCase()]}
+                subLabel={isCheckoutRedesignEnabled ? configCheckout.leaveBoxSubLabelDesc[value.toLowerCase()] : null}
                 mask
                 withRef
                 ref={receiveRef}
@@ -72,12 +74,14 @@ DeliveryInstruction.propTypes = {
   reset: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   sectionName: PropTypes.string,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 DeliveryInstruction.defaultProps = {
   value: '',
   receiveRef: () => {},
-  sectionName: 'delivery'
+  sectionName: 'delivery',
+  isCheckoutRedesignEnabled: false
 }
 
 export default DeliveryInstruction

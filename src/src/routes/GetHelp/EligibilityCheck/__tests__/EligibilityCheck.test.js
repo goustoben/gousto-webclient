@@ -48,15 +48,18 @@ describe('given the EligibilityCheck is rendered', () => {
   })
 
   describe('when customer is eligible', () => {
+    const RECIPE_IDS = ['10', '11', '12', '13']
+    const DELIVERY_SLOT = {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    }
+
     const eligibleOrder = Immutable.fromJS({
       100: {
         deliveryDate: moment().subtract(8, 'days').format(DELIVERY_DATE_FORMAT),
-        deliverySlot: {
-          deliveryEnd: '18:59:59',
-          deliveryStart: '08:00:00'
-        },
+        deliverySlot: DELIVERY_SLOT,
         id: '100',
-        recipeIds: ['10', '11', '12', '13'],
+        recipeIds: RECIPE_IDS,
       }
     })
 
@@ -83,7 +86,8 @@ describe('given the EligibilityCheck is rendered', () => {
     test('the storeGetHelpOrder is called correctly', () => {
       expect(storeGetHelpOrder).toHaveBeenCalledWith({
         id: '100',
-        recipeIds: Immutable.List(['10', '11', '12', '13'])
+        recipeIds: Immutable.List(RECIPE_IDS),
+        deliverySlot: Immutable.Map(DELIVERY_SLOT),
       })
     })
   })

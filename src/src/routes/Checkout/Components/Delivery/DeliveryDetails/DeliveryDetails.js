@@ -18,7 +18,7 @@ class DeliveryDetails extends React.PureComponent {
   }
 
   render() {
-    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName } = this.props
+    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName, isCheckoutRedesignEnabled } = this.props
 
     return (
       <div className={css.deliveryInfoContainer}>
@@ -40,6 +40,7 @@ class DeliveryDetails extends React.PureComponent {
           reset={this.reset}
           receiveRef={receiveRef}
           sectionName={sectionName}
+          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
         />
         <DeliveryEducationBanner />
         <DeliveryPhoneNumber
@@ -60,6 +61,7 @@ DeliveryDetails.propTypes = {
   formName: PropTypes.string.isRequired,
   untouch: PropTypes.func.isRequired,
   onAddressEdit: PropTypes.func.isRequired,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 DeliveryDetails.defaultProps = {
@@ -67,6 +69,7 @@ DeliveryDetails.defaultProps = {
   formValues: {},
   receiveRef: () => { },
   sectionName: 'delivery',
+  isCheckoutRedesignEnabled: false
 }
 
 export default DeliveryDetails

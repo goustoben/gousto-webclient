@@ -18,13 +18,13 @@ class Checkout3DSModal extends PureComponent {
   }
 
   onFrameUrlChange(url) {
-    const { onChallengeDone } = this.props
+    const { onChallengeDone, isCheckoutRedesignEnabled } = this.props
     const sessionIdName = 'cko-session-id'
     let sessionId
 
     if (url.indexOf(sessionIdName) >= 0) {
       sessionId = getUrlParams(url)[sessionIdName]
-      onChallengeDone(sessionId)
+      onChallengeDone(sessionId, isCheckoutRedesignEnabled)
     }
   }
 
@@ -58,10 +58,12 @@ Checkout3DSModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   challengeURL: PropTypes.string,
   onChallengeDone: PropTypes.func.isRequired,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 Checkout3DSModal.defaultProps = {
   challengeURL: '',
+  isCheckoutRedesignEnabled: false
 }
 
 export { Checkout3DSModal }

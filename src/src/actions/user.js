@@ -614,7 +614,7 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
   }
 }
 
-export function userSubscribe(sca3ds = false, sourceId = null) {
+export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesignEnabled = false) {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
@@ -646,7 +646,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
           promo_code: basket.get('promoCode', ''),
           password: aboutYou.get('password'),
           age_verified: Number(promoAgeVerified || false),
-          salutation_id: aboutYou.get('title'),
+          salutation_id: isCheckoutRedesignEnabled ? null : aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
           delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),

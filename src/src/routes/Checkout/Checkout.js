@@ -227,7 +227,7 @@ class Checkout extends PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, submitOrder, trackUTMAndPromoCode } = this.props
+    const { browser, submitOrder, trackUTMAndPromoCode, isCheckoutRedesignEnabled } = this.props
     const { checkoutScriptReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
@@ -240,7 +240,8 @@ class Checkout extends PureComponent {
       submitOrder,
       browser,
       checkoutScriptReady,
-      trackUTMAndPromoCode
+      trackUTMAndPromoCode,
+      isCheckoutRedesignEnabled
     }
 
     let element = <div />

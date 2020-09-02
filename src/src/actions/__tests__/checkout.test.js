@@ -844,9 +844,10 @@ describe('checkout actions', () => {
       })
 
       test('should subscribe user', async () => {
-        await checkPaymentAuth(successSessionId)(dispatch, getState)
+        const isCheckoutRedesignEnabled = false
+        await checkPaymentAuth(successSessionId, isCheckoutRedesignEnabled)(dispatch, getState)
 
-        expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza')
+        expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza', isCheckoutRedesignEnabled)
       })
 
       test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
