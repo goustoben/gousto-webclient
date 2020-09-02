@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 
 import config from 'config/routes'
 import { Div } from 'Page/Elements'
-import ProgressBar from 'ProgressBar'
+import ProgressBar from 'routes/Checkout/Components/ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'

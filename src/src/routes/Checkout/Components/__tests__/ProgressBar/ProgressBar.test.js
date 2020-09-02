@@ -1,10 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ProgressBar from 'ProgressBar'
 import css from 'ProgressBar/ProgressBar.css'
 import Icon from 'Icon'
 import { Div, Li, Span, Ul } from 'Page/Elements'
+import ProgressBar from '../../ProgressBar/ProgressBar'
 
 describe('ProgressBar', () => {
   let wrapper
