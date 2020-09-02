@@ -9,7 +9,6 @@ import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
-import ProgressBar from 'ProgressBar'
 import { getPreviewOrderErrorName } from 'utils/order'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
@@ -26,6 +25,7 @@ import MobileYourDetails from './Steps/Mobile/YourDetails'
 import MobileBoxDetails from './Steps/Mobile/BoxDetails'
 
 import { CheckoutPayment } from './Components/CheckoutPayment'
+import ProgressBar from './Components/ProgressBar'
 
 const defaultDesktop = ['aboutyou', 'delivery', 'payment']
 const defaultMobile = ['boxdetails', 'yourdetails', 'payment']
