@@ -495,7 +495,7 @@ describe('Header', () => {
     })
 
     test('renders the Login component with pre loging Help title', () => {
-      expect(wrapper.find('Connect(Login)').prop('title'))
+      expect(wrapper.find('Connect(LoginWrapper)').prop('title'))
         .toBe('We can help you faster if you\'re logged in')
     })
 

@@ -1,19 +1,12 @@
 @value Bluecheese, Blueberry from 'styles/colors.css';
 @value sizeMD from 'styles/typography.css';
 @value ScreenXSMax from 'styles/screenSizes.css';
+@value BreakpointFromLarge from 'design-language/breakpoints.css';
 
-.heading {
-	composes: textLeft textBold from 'styles/typography.css';
-	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
-	font-size: 24px;
-}
-
-.modalContent {
-	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-}
-
-.flex {
-	composes: flex row spaceBetween verticalCenter from 'styles/flex.css';
+.loginFormWrapper {
+	@media BreakpointFromLarge {
+		padding-bottom: 1rem;
+	}
 }
 
 .hide {
@@ -32,6 +25,12 @@
 .link {
 	composes: paragraphMD from 'styles/typography.css';
 	color: Bluecheese;
+	padding: 0.5rem 0 1rem 0;
+	display: block;
+
+	@media BreakpointFromLarge {
+		margin-bottom: 1.75rem;
+	}
 
 	&:hover, &:focus {
 		color: Blueberry;
@@ -55,11 +54,4 @@
 .input {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
 	font-size: sizeMD;
-}
-
-.row {
-	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
 }

@@ -1,0 +1,1 @@
+export { HeadingWithSeparator } from './HeadingWithSeparator'

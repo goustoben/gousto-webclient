@@ -7,7 +7,7 @@ import { shallow } from 'enzyme'
 import { AboutYou } from 'routes/Checkout/Components/AboutYou/AboutYou'
 import Overlay from 'Overlay'
 import ModalPanel from 'Modal/ModalPanel'
-import Login from 'Login'
+import { Login } from 'Login'
 
 describe('AboutYou', () => {
   let wrapper
@@ -43,54 +43,13 @@ describe('AboutYou', () => {
   })
 
   describe('props', () => {
-    describe('when isOpen is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isLoginOpen: true })
-      })
-
-      test('should be true for Login "isOpen" prop', () => {
-        expect(wrapper.find(Login).prop('isOpen')).toBeTruthy()
-      })
-    })
-
-    describe('when isOpen is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isLoginOpen: false })
-      })
-
-      test('should be false for Login "isOpen" prop', () => {
-        expect(wrapper.find(Login).prop('isOpen')).toBeFalsy()
-      })
-    })
-
-    describe('when isAuthenticated is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isAuthenticated: true })
-      })
-
-      test('should be false for Login "isAuthenticated" prop', () => {
-        expect(wrapper.find(Login).prop('isAuthenticated')).toBeTruthy()
-      })
-    })
-
-    describe('when isAuthenticated is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isAuthenticated: true })
-      })
-
-      test('should be false for Login "isAuthenticated" prop', () => {
-        expect(wrapper.find(Login).prop('isAuthenticated')).toBeTruthy()
-      })
-    })
-
     describe('when isOpen is true and Overlay is open', () => {
       beforeEach(() => {
         wrapper.setProps({ isLoginOpen: true })
       })
 
-      test('should be true for Login "isOpen" and Overlay "open" props', () => {
+      test('should be true for Overlay "open" props', () => {
         expect(wrapper.find(Overlay).prop('open')).toBeTruthy()
-        expect(wrapper.find(Login).prop('isOpen')).toBeTruthy()
       })
     })
 
@@ -99,9 +58,8 @@ describe('AboutYou', () => {
         wrapper.setProps({ isLoginOpen: false })
       })
 
-      test('should be true for Login "isOpen" and Overlay "open" props', () => {
+      test('should be true for Overlay "open" props', () => {
         expect(wrapper.find(Overlay).prop('open')).toBeFalsy()
-        expect(wrapper.find(Login).prop('isOpen')).toBeFalsy()
       })
     })
 
