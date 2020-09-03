@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import userActions from 'actions/user'
-import subscriptionActions from 'actions/subscriptionPause'
-import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
-
 import NavBar from './NavBar'
 import css from './Account.css'
 import Banner from './Banner'
@@ -18,6 +14,11 @@ class Account extends React.PureComponent {
     rateRecipeCount: PropTypes.number,
     cardExpiryDate: PropTypes.string,
     isAccountTabNameTest: PropTypes.bool,
+    userLoadData: PropTypes.func.isRequired,
+    userRecipeRatings: PropTypes.func.isRequired,
+    checkCardExpiry: PropTypes.func.isRequired,
+    subscriptionLoadData: PropTypes.func.isRequired,
+    loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -27,20 +28,21 @@ class Account extends React.PureComponent {
     isAccountTabNameTest: false,
   }
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   componentDidMount() {
-    const { store } = this.context
+    const {
+      loadMenuServiceDataIfDeepLinked,
+      checkCardExpiry,
+      subscriptionLoadData,
+      userLoadData,
+      userRecipeRatings
+    } = this.props
 
     Promise.all([
-      store.dispatch(userActions.userLoadData()),
-      store.dispatch(userActions.userRecipeRatings()),
-
-      store.dispatch(loadMenuServiceDataIfDeepLinked()),
-      store.dispatch(subscriptionActions.subscriptionLoadData()),
-    ]).then(() => store.dispatch(userActions.checkCardExpiry()))
+      userLoadData(),
+      userRecipeRatings(),
+      loadMenuServiceDataIfDeepLinked(),
+      subscriptionLoadData(),
+    ]).then(() => checkCardExpiry())
   }
 
   render() {
