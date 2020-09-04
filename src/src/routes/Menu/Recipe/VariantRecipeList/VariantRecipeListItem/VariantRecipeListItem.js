@@ -18,7 +18,7 @@ const VariantRecipeListItem = ({
   allergenInfo
 }) => {
   const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
-  const allergenText = allergenInfo.containsGlutenAndDairy === true ? 'Contains gluten & milk' : null
+  const allergenText = allergenInfo.containsGlutenOrDairy === true ? 'Contains gluten & milk' : null
   const surchargeText = hasSides ? `${numPortions} servings` : 'per serving'
 
   const getInputContent = () => (
@@ -95,7 +95,7 @@ VariantRecipeListItem.propTypes = {
   hasSides: PropTypes.bool.isRequired,
   numPortions: PropTypes.number.isRequired,
   allergenInfo: PropTypes.shape({
-    containsGlutenAndDairy: PropTypes.bool
+    containsGlutenOrDairy: PropTypes.bool
   }).isRequired
 }
 
