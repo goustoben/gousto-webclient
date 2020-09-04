@@ -14,15 +14,20 @@ const VariantRecipeListItem = ({
   isOutOfStock,
   surcharge,
   hasSides,
-  numPortions
+  numPortions,
+  allergenInfo
 }) => {
   const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
-
+  const allergenText = allergenInfo.containsGlutenOrDairy === true ? 'Contains gluten & milk' : null
   const surchargeText = hasSides ? `${numPortions} servings` : 'per serving'
 
   const getInputContent = () => (
     <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer, { [css.labelContainerSides]: isOnSidesModal })}>
-      <span>{recipeName}</span>
+      <span>
+        <span className={css.titleText}>{recipeName}</span>
+        <br />
+        <span className={css.allergenText}>{allergenText}</span>
+      </span>
       {surcharge && !isOutOfStock ? (
         <div className={
           classnames(css.extraInformation,
@@ -88,7 +93,10 @@ VariantRecipeListItem.propTypes = {
   isOutOfStock: PropTypes.bool.isRequired,
   surcharge: PropTypes.number,
   hasSides: PropTypes.bool.isRequired,
-  numPortions: PropTypes.number.isRequired
+  numPortions: PropTypes.number.isRequired,
+  allergenInfo: PropTypes.shape({
+    containsGlutenOrDairy: PropTypes.bool
+  }).isRequired
 }
 
 VariantRecipeListItem.defaultProps = {

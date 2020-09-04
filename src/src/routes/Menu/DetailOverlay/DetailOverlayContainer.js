@@ -22,7 +22,7 @@ const getSidesInBasketForBaseRecipe = createSelector(
 
     basketRecipes.forEach((quantity, recipeId) => {
       const baseVariant = flattenedVariants.find(
-        ([ baseId, variant ]) => variant.sides.some(s => s.coreRecipeId === recipeId)
+        ([ baseId, variant ]) => (variant.sides || []).some(s => s.coreRecipeId === recipeId)
       )
 
       if (baseVariant) {

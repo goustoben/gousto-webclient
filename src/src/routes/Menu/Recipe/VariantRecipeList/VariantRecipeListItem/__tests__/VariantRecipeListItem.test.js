@@ -13,6 +13,7 @@ describe('VariantRecipeListItem', () => {
         isChecked
         isOnDetailScreen
         isOutOfStock={false}
+        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render a radio button input in a highlighted blue box', () => {
         expect(wrapper.find('.listItemWithBlueBorder')).toHaveLength(1)
@@ -27,6 +28,7 @@ describe('VariantRecipeListItem', () => {
         isChecked={false}
         isOnDetailScreen
         isOutOfStock={false}
+        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render a radio button input in a grey box', () => {
         expect(wrapper.find('.listItemWithBorder')).toHaveLength(1)
@@ -41,9 +43,25 @@ describe('VariantRecipeListItem', () => {
         isChecked={false}
         isOnDetailScreen
         isOutOfStock
+        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render a sold out tag', () => {
         expect(wrapper.find('.soldOutText')).toHaveLength(1)
+      })
+    })
+
+    describe('When the recipe contains allergens', () => {
+      const wrapper = mount(<VariantRecipeListItem
+        recipeId="1230"
+        recipeName="Chicken curry"
+        changeCheckedRecipe={() => { }}
+        isChecked={false}
+        isOnDetailScreen
+        isOutOfStock
+        allergenInfo={{containsGlutenAndDairy: true}}
+      />)
+      test('then it should render allergen information', () => {
+        expect(wrapper.find('.allergenText')).toHaveLength(1)
       })
     })
 
@@ -57,6 +75,7 @@ describe('VariantRecipeListItem', () => {
         isOnDetailScreen
         isOutOfStock={false}
         surcharge={0.75}
+        allergenInfo={{containsGlutenAndDairy: true}}
       />)
       test('then it should render surcharge info', () => {
         expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
@@ -73,6 +92,7 @@ describe('VariantRecipeListItem', () => {
           isChecked
           isOnDetailScreen={false}
           isOutOfStock={false}
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
         test('then it should render a radio button input not in a box', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
@@ -87,6 +107,7 @@ describe('VariantRecipeListItem', () => {
           isChecked={false}
           isOnDetailScreen={false}
           isOutOfStock={false}
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
         test('then it should render a radio button input not in a box', () => {
           expect(wrapper.find('.listItem')).toHaveLength(1)
@@ -103,6 +124,7 @@ describe('VariantRecipeListItem', () => {
           isOnDetailScreen={false}
           surcharge={0.75}
           isOutOfStock={false}
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
         test('then it should render surcharge info', () => {
           expect(wrapper.find('.surchargeAmountText')).toHaveLength(1)
@@ -124,6 +146,7 @@ describe('VariantRecipeListItem', () => {
       isChecked={false}
       isOnDetailScreen={false}
       isOutOfStock={isOutOfStock}
+      allergenInfo={{containsGlutenAndDairy: true}}
     />)
 
     const changeRadio = wrapper.find(InputRadio).first().prop('onChange')
@@ -149,6 +172,7 @@ describe('VariantRecipeListItem', () => {
       isOnDetailScreen={false}
       isOutOfStock={isOutOfStock}
       isOnSidesModal
+      allergenInfo={{containsGlutenAndDairy: true}}
     />)
 
     test('should render InputCheck', () => {
@@ -174,6 +198,7 @@ describe('VariantRecipeListItem', () => {
           isOnDetailScreen={false}
           isOutOfStock={isOutOfStock}
           isOnSidesModal
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
       })
       test('then it should render a checkbox in a grey box', () => {
@@ -192,6 +217,7 @@ describe('VariantRecipeListItem', () => {
           isOnSidesModal
           isOnDetailScreen={false}
           hasSideAddedToBasket
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
       })
       test('then it should render a checkbox in a highlighted blue box', () => {
@@ -209,6 +235,7 @@ describe('VariantRecipeListItem', () => {
           isOutOfStock
           isOnSidesModal
           isOnDetailScreen={false}
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
       })
       test('then it should render a sold out tag', () => {
@@ -228,6 +255,7 @@ describe('VariantRecipeListItem', () => {
           isOutOfStock={false}
           surcharge={0.75}
           isOnSidesModal
+          allergenInfo={{containsGlutenAndDairy: true}}
         />)
       })
       test('then it should render surcharge info', () => {

@@ -2,7 +2,7 @@ import React from 'react'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { BottomFixedContent, CTA, Heading } from 'goustouicomponents'
-import { GetHelpLayout2 } from '../../layouts/GetHelpLayout2'
+import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import css from './BeforeDeliveryDay.css'
 
 const redirectToMyGousto = () => {
