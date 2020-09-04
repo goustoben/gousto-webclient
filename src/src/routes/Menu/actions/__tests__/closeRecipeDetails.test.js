@@ -123,7 +123,7 @@ describe('menu closeRecipeDetails action', () => {
         }
       })
 
-      test.only('should dispatch an unselectRecipeSide action', async () => {
+      test('should dispatch an unselectRecipeSide action', async () => {
         const thunk = closeRecipeDetails()
         await thunk(dispatch, getState)
 

@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
+import { createSelector } from 'reselect'
+import { getRecipes } from 'selectors/root'
+import { getDietaryTags } from 'utils/recipe'
 import { getNumPortions } from '../../../../../selectors/basket'
-import { getRecipeOutOfStock, getRecipeSidesSurcharge, getRecipeSurcharge } from '../../../selectors/recipe'
+import { getRecipeOutOfStock, getRecipeSidesSurcharge, getRecipeSurcharge, getRecipeIdFromProps } from '../../../selectors/recipe'
 import { VariantRecipeListItem } from './VariantRecipeListItem'
 
 const mapStateToProps = (state, ownProps) => {
@@ -10,10 +13,22 @@ const mapStateToProps = (state, ownProps) => {
       : getRecipeSurcharge(state, ownProps)
   )
 
+  const getRecipeAllergenInformation = createSelector(
+    [getRecipeIdFromProps, getRecipes],
+    (recipeId, recipes) => {
+      const recipe = recipes.get(recipeId)
+      const dietaryTags = getDietaryTags(recipe)
+      const hasGlutenOrDairyAllergens = !dietaryTags.some((slug => slug === 'dairy-free') || (slug => slug === 'gluten-free'))
+
+      return { containsGlutenOrDairy: hasGlutenOrDairyAllergens }
+    }
+  )
+
   return {
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
     numPortions: getNumPortions(state),
-    surcharge
+    surcharge,
+    allergenInfo: getRecipeAllergenInformation(state, ownProps)
   }
 }
 

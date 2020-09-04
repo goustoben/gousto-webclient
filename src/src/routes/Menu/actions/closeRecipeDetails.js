@@ -12,15 +12,15 @@ export const closeRecipeDetails = () => (
     dispatch(menuRecipeDetailVisibilityChange())
 
     const selectedSides = getSelectedRecipeSidesFromMenu(getState())
-    const selectedSide = selectedSides[detailRecipeId] || null
+    const selectedSideId = selectedSides[detailRecipeId] || null
 
-    if (!selectedSide) {
+    if (!selectedSideId) {
       return
     }
 
     const basketRecipes = getState().basket.get('recipes')
 
-    if (hasRecipeInBasket(basketRecipes, detailRecipeId)) {
+    if (hasRecipeInBasket(basketRecipes, selectedSideId)) {
       return
     }
 
