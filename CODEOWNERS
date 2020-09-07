@@ -8,6 +8,9 @@
 /images/        @Gousto/frontend-foundations
 /scripts/        @Gousto/frontend-foundations
 /setup/        @Gousto/frontend-foundations
+/.circleci/        @Gousto/frontend-foundations
+/.github/        @Gousto/frontend-foundations
+/.gitignore        @Gousto/frontend-foundations
 /src/.babelrc        @Gousto/frontend-foundations
 /src/.bowerrc        @Gousto/frontend-foundations
 /src/bower.json        @Gousto/frontend-foundations
@@ -15,10 +18,14 @@
 /src/.eslintrc        @Gousto/frontend-foundations
 /src/.gulprc.js        @Gousto/frontend-foundations
 /src/config/        @Gousto/frontend-foundations
+/src/scripts/        @Gousto/frontend-foundations
 /src/server/        @Gousto/frontend-foundations
 /src/__tests__/.babelrc        @Gousto/frontend-foundations
 /src/__tests__/.eslintrc        @Gousto/frontend-foundations
 /src/src/routes/index.js        @Gousto/frontend-foundations
+/src/src/_testing/        @Gousto/frontend-foundations
+/src/src/store.js        @Gousto/frontend-foundations
+/tests/regression/cypress.json        @Gousto/frontend-foundations
 
 /src/src/routes/Menu/       @Gousto/squad-radishes
 /src/src/config/collections.js       @Gousto/squad-radishes
