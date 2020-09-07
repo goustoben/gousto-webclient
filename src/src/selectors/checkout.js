@@ -9,10 +9,10 @@ export const hasCheckoutError = state => {
   return errors.filter(error => error).size > 0
 }
 
-export const getAboutYouFormName = state => {
+export const getAboutYouFormName = (state, isCheckoutRedesignEnabled) => {
   const { request } = state
 
-  return request.get('browser') === 'mobile' ? 'yourdetails' : 'aboutyou'
+  return request.get('browser') === 'mobile' && !isCheckoutRedesignEnabled ? 'yourdetails' : 'aboutyou'
 }
 
 export const getDeliveryFormName = state => {

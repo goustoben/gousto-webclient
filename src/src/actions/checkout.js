@@ -270,7 +270,7 @@ export function checkoutNon3DSSignup(isCheckoutRedesignEnabled) {
     try {
       dispatch(checkoutActions.resetDuplicateCheck())
       await dispatch(userSubscribe(false, null, isCheckoutRedesignEnabled))
-      await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
+      await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue, isCheckoutRedesignEnabled))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
@@ -369,7 +369,7 @@ export const checkPaymentAuth = (sessionId, isCheckoutRedesignEnabled) => (
 
         dispatch(checkoutActions.resetDuplicateCheck())
         await dispatch(userSubscribe(true, data.data.sourceId, isCheckoutRedesignEnabled))
-        await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
+        await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue, isCheckoutRedesignEnabled))
         dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
         dispatch({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       } else {
@@ -448,13 +448,13 @@ export const trackPurchase = () => (
   }
 )
 
-export function checkoutPostSignup(recaptchaValue) {
+export function checkoutPostSignup(recaptchaValue, isCheckoutRedesignEnabled) {
   return async (dispatch, getState) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
       const { form, pricing } = getState()
-      const aboutYouFormName = getAboutYouFormName(getState())
+      const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutRedesignEnabled)
       const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
       const aboutYou = aboutYouValues.get('aboutyou')
       const email = aboutYou.get('email')

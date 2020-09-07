@@ -18,7 +18,7 @@ export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, c
   const handleSubmit = () => {
     if (checkoutValid) {
       trackUTMAndPromoCode('clickNextDelivery')
-      userProspect()
+      userProspect(isCheckoutRedesignEnabled)
     }
     submit()
   }
