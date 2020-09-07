@@ -100,7 +100,7 @@ class CheckoutPayment extends React.Component {
     const {
       asyncValidate, browser, checkoutScriptReady, prerender, receiveRef,
       reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, isRecaptchaEnabled,
-      is3DSEnabled,
+      is3DSEnabled, isCheckoutRedesignEnabled
     } = this.props
     const { isSubmitCardEnabled } = this.state
 
@@ -153,7 +153,7 @@ class CheckoutPayment extends React.Component {
         {(prerender) ? null : (
           <div>
             <SubmitButton onClick={this.handleClick} />
-            {(browser === 'mobile') ? (
+            {(browser === 'mobile' && !isCheckoutRedesignEnabled) ? (
               <div>
                 <Summary />
                 <Section margin={{ top: 'LG' }}>
@@ -190,6 +190,7 @@ CheckoutPayment.propTypes = {
   isRecaptchaEnabled: PropTypes.bool,
   recaptchaValue: PropTypes.string,
   storeSignupRecaptchaToken: PropTypes.func,
+  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 CheckoutPayment.defaultProps = {
@@ -210,6 +211,7 @@ CheckoutPayment.defaultProps = {
   isRecaptchaEnabled: false,
   recaptchaValue: '',
   storeSignupRecaptchaToken: () => {},
+  isCheckoutRedesignEnabled: false
 }
 
 export { CheckoutPayment }

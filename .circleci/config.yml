@@ -340,6 +340,7 @@ workflows:
                 - develop
                 - env-radishes
                 - env-rockets
+                - env-beetroots
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -351,6 +352,7 @@ workflows:
               only:
                 - env-rockets
                 - env-radishes
+                - env-beetroots
                 - develop
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
@@ -363,6 +365,7 @@ workflows:
               only:
                 - env-rockets
                 - env-radishes
+                - env-beetroots
                 - develop
 
 

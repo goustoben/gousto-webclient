@@ -1226,4 +1226,84 @@ describe('user actions', () => {
       })
     })
   })
+
+  describe('userOpenCloseOrderCard', () => {
+    test('should dispatch userOpenCloseOrderCard with proper params', () => {
+      const orderId = '12345'
+      const isCollapsed = true
+      const dispatchSpy = jest.fn()
+
+      userActions.userOpenCloseOrderCard(orderId, isCollapsed)(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_ORDER_CARD_OPEN_CLOSE,
+        orderId,
+        isCollapsed
+      })
+    })
+  })
+
+  describe('userToggleEditDateSection', () => {
+    test('should dispatch userToggleEditDateSection with proper params', () => {
+      const orderId = '12345'
+      const editDeliveryMode = false
+      const dispatchSpy = jest.fn()
+
+      userActions.userToggleEditDateSection(orderId, editDeliveryMode)(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,
+        orderId,
+        editDeliveryMode
+      })
+    })
+  })
+
+  describe('checkCardExpiry', () => {
+    const dispatchSpy = jest.fn()
+    const getStateSpy = (newBillingModal, expiryDate) => () => ({
+      features: Immutable.Map({
+        newBillingModal: Immutable.Map({
+          value: newBillingModal
+        })
+      }),
+      user: Immutable.Map({
+        card: Immutable.Map({
+          expiryDate
+        })
+      })
+    })
+
+    describe('when newBillingModal is false', () => {
+      test('should should not dispatch checkCardExpiry', () => {
+        userActions.checkCardExpiry()(dispatchSpy, getStateSpy(false, '2019-05'))
+
+        expect(dispatchSpy).not.toBeCalled()
+      })
+    })
+
+    describe('when newBillingModal is true', () => {
+      describe('and expired is true', () => {
+        test('should dispatch checkCardExpiry with proper params', () => {
+          userActions.checkCardExpiry()(dispatchSpy, getStateSpy(true, '2020-05'))
+
+          expect(dispatchSpy).toHaveBeenCalledWith({
+            type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,
+            visibility: true
+          })
+        })
+      })
+
+      describe('and expired is false', () => {
+        test('should dispatch checkCardExpiry with proper params', () => {
+          userActions.checkCardExpiry()(dispatchSpy, getStateSpy(true, '2021-05'))
+
+          expect(dispatchSpy).toHaveBeenCalledWith({
+            type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,
+            visibility: false
+          })
+        })
+      })
+    })
+  })
 })

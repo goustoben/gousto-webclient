@@ -37,13 +37,15 @@ const desktopStepMapping = {
   payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
-const mobileStepMapping = {
-  boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' },
-  yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
-  payment: { component: CheckoutPayment, humanName: 'Payment' },
-  aboutyou: { component: MobileBoxDetails, humanName: 'About You' },
+const boxDetailsMobile = { component: MobileBoxDetails, humanName: 'Box Details' }
+const aboutYouForRedesign = { component: DesktopAboutYou, humanName: 'About You' }
+
+const mobileStepMapping = (isCheckoutRedesignEnabled) => ({
+  ...(isCheckoutRedesignEnabled ? { aboutyou: aboutYouForRedesign } : { boxdetails: boxDetailsMobile }),
+  ...(!isCheckoutRedesignEnabled && { yourdetails: { component: MobileYourDetails, humanName: 'Your Details' }}),
   delivery: { component: MobileYourDetails, humanName: 'Delivery' },
-}
+  payment: { component: CheckoutPayment, humanName: 'Payment' },
+})
 
 const propTypes = {
   params: PropTypes.shape({
@@ -253,7 +255,7 @@ class Checkout extends PureComponent {
     return element
   }
 
-  renderStaticPayment = (stepMapping, steps, currentStep) => {
+  renderStaticPayment = (stepMapping, steps, currentStep, isCheckoutRedesignEnabled) => {
     const { browser, submitOrder } = this.props
     const onPaymentStep = (currentStep === 'payment')
     const { checkoutScriptReady } = this.state
@@ -267,19 +269,33 @@ class Checkout extends PureComponent {
         isLastStep={this.isLastStep(steps, currentStep)}
         onStepChange={this.onStepChange(steps, currentStep)}
         nextStepName={this.getNextStepName(stepMapping, steps, currentStep)}
+        isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
       />
     )
   }
 
   renderMobileSteps = () => {
-    const { params: { stepName }, isCheckoutRedesignEnabled} = this.props
+    const { params: { stepName }, isCheckoutRedesignEnabled } = this.props
     const mobileSteps = isCheckoutRedesignEnabled ? defaultDesktop : defaultMobile
+    const isDeliveryStep = stepName === 'delivery'
+    const isYourDetailsStep = stepName === 'yourdetails'
+    const stepsMapping = mobileStepMapping(isCheckoutRedesignEnabled)
 
     return (
       <Div>
-        {this.renderProgressBar(mobileStepMapping, mobileSteps, stepName)}
-        {this.renderSteps(mobileStepMapping, mobileSteps, stepName)}
-        {this.renderStaticPayment(mobileStepMapping, mobileSteps, stepName)}
+        {this.renderProgressBar(stepsMapping, mobileSteps, stepName)}
+        {isCheckoutRedesignEnabled && !isDeliveryStep && (
+          <Div margin={{ bottom: 'MD' }}>
+            <Summary showPromocode />
+          </Div>
+        )}
+        {this.renderSteps(stepsMapping, mobileSteps, stepName)}
+        {this.renderStaticPayment(stepsMapping, mobileSteps, stepName, isCheckoutRedesignEnabled)}
+        {isCheckoutRedesignEnabled && !isDeliveryStep && !isYourDetailsStep && (
+          <Div margin={{ top: 'MD' }}>
+            <BoxDetails />
+          </Div>
+        )}
       </Div>
     )
   }

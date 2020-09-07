@@ -23,7 +23,7 @@ export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = () => {
     if (checkoutValid) {
-      userProspect()
+      userProspect(isCheckoutRedesignEnabled)
       trackUTMAndPromoCode('clickNextPayment')
       trackClick('NextCTA Clicked', { succeeded: true, missing_field: null })
     }
@@ -32,12 +32,21 @@ export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues
 
   return (
     <div>
+      {!isCheckoutRedesignEnabled && (
+        <SectionContainer>
+          <AboutYouSection receiveRef={receiveRef} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
+        </SectionContainer>
+      )}
+
       <SectionContainer>
-        <AboutYouSection receiveRef={receiveRef} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
+        <DeliverySection
+          receiveRef={receiveRef}
+          scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+          browser={browser}
+          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
+        />
       </SectionContainer>
-      <SectionContainer>
-        <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} browser={browser} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
-      </SectionContainer>
+
       {isAddressConfirmed && (
         <SectionContainer>
           <CheckoutButton

@@ -389,10 +389,10 @@ function userPromoApplyCode(promoCode) {
   }
 }
 
-function userProspect() {
+function userProspect(isCheckoutRedesignEnabled) {
   return async (dispatch, getState) => {
     const { basket, routing } = getState()
-    const aboutYouFormName = getAboutYouFormName(getState())
+    const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutRedesignEnabled)
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
       const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')
@@ -622,8 +622,8 @@ export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesig
     try {
       const { form, basket, promoAgeVerified } = getState()
       const state = getState()
-      const deliveryFormName = getDeliveryFormName(state)
-      const aboutYouFormName = getAboutYouFormName(state)
+      const deliveryFormName = getDeliveryFormName(state, isCheckoutRedesignEnabled)
+      const aboutYouFormName = getAboutYouFormName(state, isCheckoutRedesignEnabled)
 
       const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
