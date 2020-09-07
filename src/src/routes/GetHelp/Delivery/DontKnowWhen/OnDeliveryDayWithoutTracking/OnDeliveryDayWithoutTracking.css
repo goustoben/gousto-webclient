@@ -1,0 +1,17 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value Bluecheese, Oyster from 'styles/colors.css';
+
+.mainText {
+  padding-top: 0.5rem;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+
+  @media BreakpointFromMedium {
+    padding-bottom: 1.5rem;
+  }
+}
+
+.link {
+  border-bottom: 1px solid Oyster;
+  padding-bottom: 0.25rem;
+  composes: fontSemiBold from 'design-language/typography.module.css';
+}

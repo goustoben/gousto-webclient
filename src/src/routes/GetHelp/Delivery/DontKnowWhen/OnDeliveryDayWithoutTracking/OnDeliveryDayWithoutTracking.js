@@ -1,18 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
 import Link from 'components/Link'
 import { client } from 'config/routes'
 import humanTimeFormat from 'utils/timeFormat'
-import { BottomFixedContent, CTA, Heading } from 'goustouicomponents'
+import { Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
-import css from './OnDeliveryDayWithTracking.css'
+import css from './OnDeliveryDayWithoutTracking.css'
 
-const redirectTo = (link) => () => {
-  browserHistory.push(link)
-}
-
-const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
+const OnDeliveryDayWithoutTracking = ({ deliverySlot }) => {
   const { deliveryStart, deliveryEnd } = deliverySlot
   const humanFriendlyStart = humanTimeFormat(deliveryStart, 'hour')
   const humanFriendlyEnd = humanTimeFormat(deliveryEnd, 'hour')
@@ -32,10 +27,7 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
           .
         </p>
         <p>
-          The tracking link is available below but this can also be found on the day of delivery on the &quot;My Gousto&quot; page under your next box delivery.
-        </p>
-        <p>
-          If it still has not arrive by then, it may still arrive today, just slightly delayed.
+          If it still has not arrived by then, it may still arrive today, just slightly delayed.
         </p>
         <p>
           If you&apos;re still experiencing a problem with your delivery, please get in touch.
@@ -44,35 +36,15 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
           Get in touch
         </Link>
       </div>
-      <BottomFixedContent>
-        <div className={css.ctas}>
-          <div className={css.cta}>
-            <CTA
-              isFullWidth
-              size="small"
-              variant="secondary"
-              onClick={redirectTo(client.myGousto)}
-            >
-              View My Gousto
-            </CTA>
-          </div>
-          <div className={css.cta}>
-            <CTA isFullWidth size="small" onClick={redirectTo(trackMyBoxLink)}>
-              Track my box
-            </CTA>
-          </div>
-        </div>
-      </BottomFixedContent>
     </GetHelpLayout2>
   )
 }
 
-OnDeliveryDayWithTracking.propTypes = {
-  trackMyBoxLink: PropTypes.string.isRequired,
+OnDeliveryDayWithoutTracking.propTypes = {
   deliverySlot: PropTypes.shape({
     deliveryStart: PropTypes.string.isRequired,
     deliveryEnd: PropTypes.string.isRequired,
   }).isRequired
 }
 
-export { OnDeliveryDayWithTracking }
+export { OnDeliveryDayWithoutTracking }
