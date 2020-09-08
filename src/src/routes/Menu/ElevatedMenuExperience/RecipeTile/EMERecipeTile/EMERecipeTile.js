@@ -9,7 +9,17 @@ import { RecipeTilePurchaseInfoContainer } from '../RecipeTilePurchaseInfo'
 import { VariantHeaderContainer } from '../../../Recipe/VariantHeader'
 import css from './EMERecipeTile.css'
 
-const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title, brandTags, isFineDineIn, recipeVariants }) => {
+const EMERecipeTile = ({
+  recipe,
+  recipeId,
+  showDetailRecipe,
+  isOutOfStock,
+  title,
+  brandTags,
+  isFineDineIn,
+  recipeVariants,
+  isInCarousel,
+}) => {
   if (!recipe) {
     return null
   }
@@ -26,7 +36,7 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
     <div
       role="button"
       tabIndex={0}
-      className={classnames(css.recipeTileContainer, {
+      className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
         [css.recipeTileIsFineDineIn]: isFineDineIn
       })}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
@@ -34,11 +44,11 @@ const EMERecipeTile = ({ recipe, recipeId, showDetailRecipe, isOutOfStock, title
       onKeyPress={onClick}
     >
       <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} />
-      <TileImageContainer recipeId={recipeId} />
+      <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
       {brandTags && brandTags.topLeftTag && (
         <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
       )}
-      <div className={classnames(css.recipeTileInfo, {
+      <div className={classnames(isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo, {
         [css.recipeTileInfoShowVariantHeader]: showVariantHeader
       })}
       >
@@ -72,10 +82,12 @@ EMERecipeTile.propTypes = {
   }),
   isFineDineIn: PropTypes.bool.isRequired,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  isInCarousel: PropTypes.bool,
 }
 
 EMERecipeTile.defaultProps = {
   brandTags: null,
+  isInCarousel: false,
 }
 
 export { EMERecipeTile }

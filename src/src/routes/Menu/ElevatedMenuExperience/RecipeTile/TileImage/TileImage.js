@@ -7,11 +7,11 @@ import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
 
 import css from './TileImage.css'
 
-const TileImage = ({ media, title, maxMediaSize, isOutOfStock, lazy, onClick, recipeId }) => (
+const TileImage = ({ media, title, maxMediaSize, isOutOfStock, lazy, onClick, recipeId, isInCarousel }) => (
   <button
     onClick={onClick}
     type="button"
-    className={css.imageWrapper}
+    className={isInCarousel ? css.carouselImageWrapper : css.imageWrapper}
   >
     {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
     {(media.size > 0) && (
@@ -37,6 +37,7 @@ TileImage.propTypes = {
   lazy: PropTypes.bool,
   onClick: PropTypes.func,
   recipeId: PropTypes.string.isRequired,
+  isInCarousel: PropTypes.bool,
 }
 
 TileImage.defaultProps = {
@@ -45,6 +46,7 @@ TileImage.defaultProps = {
   isOutOfStock: false,
   maxMediaSize: null,
   lazy: true,
+  isInCarousel: false,
 }
 
 export { TileImage }
