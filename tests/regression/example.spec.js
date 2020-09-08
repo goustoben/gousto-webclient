@@ -18,8 +18,8 @@ describe("Examples", () => {
     }
 
     cy.get('form').within(($form) => {
-      cy.get('input[name="email"]').eq(1).type('email@gmail.com', {force: true})
-      cy.get('input[name="password"]').type('password', {force: true})
+      cy.get('[data-testing="inputLoginEmail"]').eq(1).type('email@gmail.com', {force: true})
+      cy.get('[data-testing="inputLoginPassword"]').type('password', {force: true})
       cy.contains('Go').click()
     })
     cy.get('[data-testing="loginErrMsg"]')
@@ -44,8 +44,8 @@ describe("Examples", () => {
     }
 
     cy.get('form').within(($form) => {
-      cy.get('input[name="email"]').type('email@gmail.com', {force: true})
-      cy.get('input[name="password"]').type('password', {force: true})
+      cy.get('[data-testing="inputLoginEmail"]').type('email@gmail.com', {force: true})
+      cy.get('[data-testing="inputLoginPassword"]').type('password', {force: true})
       cy.contains('Go').click()
     })
 

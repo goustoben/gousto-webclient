@@ -1,48 +1,48 @@
 @value sizeXXS from 'styles/typography.css';
+@value Black, Bluecheese, LightestAccessible, White from 'styles/colors.css';
 @value checkRadioSize, checkRadioColor, checkRadioBgColorUnchecked, checkRadioBorderColorUnchecked, checkRadioBgColorChecked, checkRadioBorderColorChecked, checkRadioBorderColorFocus from 'styles/forms.css';
+@value borderSize: 2px;
 
 .container {
 	composes: block from 'styles/display.css';
-}
-
-.indicator {
-	composes: c-indicator from 'sass-loader!styles/bootstrap.scss';
-	background-color: checkRadioBgColorUnchecked;
-	box-shadow: 0 0 0 1px checkRadioBorderColorUnchecked;
-	background-size: 60% 60%;
-	width: checkRadioSize;
-	height: checkRadioSize;
+	position: relative;
 }
 
 .label {
-	composes: c-input c-checkbox from 'sass-loader!styles/bootstrap.scss';
-	padding: 2px 0;
+	display: flex;
+	padding-left: 1rem;
+}
 
-	& .indicator {
-		border-radius: 5px;
-	}
+.input {
+	opacity: 0;
+}
 
-	& .text {
-		padding-left: calc(checkRadioSize + 10px);
-	}
+.indicator {
+	top: 0;
+	left: 0;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background: White;
+	border: borderSize solid LightestAccessible;
+	border-radius: borderSize;
+}
 
-	& > input {
-		&:focus ~ .indicator,
-		&:active ~ .indicator {
-			box-shadow: 0 0 0 1px checkRadioBorderColorUnchecked;
-		}
+.checked {
+	background: url('media/svgs/icon-checkmark.svg') center top no-repeat;
+	border-style: none;
+	width: 20px;
+	height: 20px;
+}
 
-		&:checked ~ .indicator,
-		&:checked::focus ~ .indicator,
-		&:checked:active ~ .indicator {
-			box-shadow: inset 0 0 0 1px checkRadioBorderColorChecked;
-			box-shadow: 0 0 0 1px checkRadioBorderColorChecked;
-		}
-	}
+.text {
+	composes: fontStyleBody from 'design-language/typography.css';
+	color: Black;
+}
 
-	&:hover > input ~ .indicator {
-		box-shadow: 0 0 0 1px checkRadioBorderColorFocus;
-	}
+.textChecked {
+	font-weight: bold;
+	color: Bluecheese;
 }
 
 .textSizeExtraSmall {
@@ -53,17 +53,9 @@
 	composes: paragraphMD from 'styles/typography.css';
 }
 
-.input {
-	composes: c-input from 'sass-loader!styles/bootstrap.scss';
-}
-
 .disclaimer {
-	& .label {
-		font-size: sizeXXS;
-	}
-
 	& .text {
-		display: inline-block;
-		vertical-align: middle;
+		font-size:0.75rem;
+		color: Black;
 	}
 }

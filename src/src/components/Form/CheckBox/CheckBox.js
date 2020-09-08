@@ -41,6 +41,18 @@ export class CheckBox extends React.PureComponent {
         [css[style]]: style,
       }
     )
+    const checkboxIndicatorClass = classNames(
+      css.indicator,
+      {
+        [css.checked]: checked,
+      }
+    )
+    const checkboxLabelTextClass = classNames(
+      css.text,
+      {
+        [css.textChecked]: checked,
+      }
+    )
 
     return (
       <span className={spanElementClasses}>
@@ -56,8 +68,8 @@ export class CheckBox extends React.PureComponent {
             name={name}
             data-testing={dataTesting}
           />
-          <span className={css.indicator} />
-          <span className={css.text}>{label}</span>
+          <span className={checkboxIndicatorClass} />
+          <span className={checkboxLabelTextClass}>{label}</span>
         </label>
       </span>
     )

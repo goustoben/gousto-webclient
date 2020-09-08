@@ -2,15 +2,10 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReCAPTCHA from 'components/Recaptcha'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
-import TextInput from 'Form/Input'
+import { CTA, InputField } from 'goustouicomponents'
 import CheckBox from 'Form/CheckBox'
-import Label from 'Form/Label'
-import { Button } from 'goustouicomponents'
 import Form from 'Form'
-import classnames from 'classnames'
 import config from 'config'
-import { validateEmail } from 'utils/auth'
-import { getWindow } from 'utils/window'
 import css from './LoginForm.css'
 
 const secretPingdomEmailLength = 31
@@ -83,27 +78,25 @@ class LoginForm extends React.PureComponent {
     }
 
     const { email, password, remember, emailValid, passwordValid, recaptchaValue } = this.state
-    const { onSubmit, onInvalid } = this.props
+    const { onSubmit } = this.props
 
     if (emailValid && passwordValid) {
       onSubmit({ email, password, rememberMe: remember, recaptchaToken: recaptchaValue })
-    } else {
-      onInvalid({ email, password })
     }
   }
 
-  emailChanges = (value) => {
+  emailChanges = ({ isValid, value }) => {
     this.setState({ email: value })
-    if (value.length > 0 && validateEmail(value)) {
+    if (isValid) {
       this.setState({ emailValid: true })
     } else {
       this.setState({ emailValid: false })
     }
   }
 
-  passwordChanges = (value) => {
+  passwordChanges = ({ isValid, value }) => {
     this.setState({ password: value })
-    if (value.length > 0) {
+    if (isValid) {
       this.setState({ passwordValid: true })
     } else {
       this.setState({ passwordValid: false })
@@ -121,11 +114,6 @@ class LoginForm extends React.PureComponent {
     this.setState({
       recaptchaValue: value
     }, callback)
-  }
-
-  disabledClick = () => {
-    this.setState({ showValidationError: true })
-    getWindow().setTimeout(() => { this.setState({ showValidationError: false }) }, 3000)
   }
 
   renderConfirmMessage = () => (
@@ -156,41 +144,36 @@ class LoginForm extends React.PureComponent {
 
   renderLoginForm = () => {
     const { isAuthenticating, isRecaptchaEnabled, statusText } = this.props
-    const { email, password, remember, showValidationError } = this.state
+    const { remember, showValidationError } = this.state
 
     return (
       <Form onSubmit={this.handleSubmit} method="post" data-testing="loginForm">
-        <div className={classnames({ [css.hide]: !showValidationError }, css.error)} data-testing="loginErrMsg">
-          {statusText}
-        </div>
-        <div>
-          <Label label="Email" />
-          <TextInput
-            name="email"
-            color="gray"
-            textAlign="left"
+        <div className={css.inputContainer}>
+          <InputField
+            id="email"
+            label="Email"
+            onUpdate={this.emailChanges}
+            placeholder="Your email"
+            required
             type="email"
-            required
-            onChange={this.emailChanges}
-            value={email}
-            className={css.input}
-            mask
-          />
-          <Label label="Password" />
-          <TextInput
-            color="gray"
-            textAlign="left"
-            type="password"
-            name="password"
-            required
-            onChange={this.passwordChanges}
-            value={password}
-            className={css.input}
-            mask
+            testingSelector="inputLoginEmail"
           />
         </div>
-        <div>
-          <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
+        <div className={css.inputContainer}>
+          <InputField
+            id="password"
+            label="Password"
+            onUpdate={this.passwordChanges}
+            placeholder="Your password"
+            required
+            type="password"
+            testingSelector="inputLoginPassword"
+          />
+        </div>
+        <div className={css.loginOptionsContainer}>
+          <div className={css.resetFormContainer}>
+            <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
+          </div>
           <div className={css.rememberMe}>
             <CheckBox
               data-testing="loginCheckbox"
@@ -201,6 +184,15 @@ class LoginForm extends React.PureComponent {
             />
           </div>
         </div>
+        {
+          showValidationError
+          && (
+            <div className={css.error} data-testing="loginErrMsg">
+              <span className={css.errorIcon} />
+              {statusText}
+            </div>
+          )
+        }
         {
           isRecaptchaEnabled
           && (
@@ -214,15 +206,14 @@ class LoginForm extends React.PureComponent {
             </div>
           )
         }
-        <Button
-          data-testing="loginFormSubmit"
-          disabledClick={this.disabledClick}
+        <CTA
+          testingSelector="loginFormSubmit"
           onClick={this.handleSubmit}
-          pending={isAuthenticating}
-          width="full"
+          isLoading={isAuthenticating}
+          isFullWidth
         >
           Log in
-        </Button>
+        </CTA>
       </Form>
     )
   }
@@ -231,7 +222,7 @@ class LoginForm extends React.PureComponent {
     const { isAuthenticated } = this.props
 
     return (
-      <div className={css.loginFormWrapper} data-testing="loginModal">
+      <div data-testing="loginModal">
         {(isAuthenticated) ? this.renderConfirmMessage() : this.renderLoginForm()}
       </div>
     )
@@ -244,7 +235,6 @@ LoginForm.propTypes = {
   isAuthenticating: PropTypes.bool,
   isRecaptchaEnabled: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onInvalid: PropTypes.func,
   rememberMeDefault: PropTypes.bool,
   statusText: PropTypes.oneOfType([
     PropTypes.string,
@@ -256,7 +246,6 @@ LoginForm.defaultProps = {
   changeRecaptcha: () => { },
   isAuthenticated: false,
   isAuthenticating: false,
-  onInvalid: () => {},
   rememberMeDefault: false,
   statusText: '',
 }

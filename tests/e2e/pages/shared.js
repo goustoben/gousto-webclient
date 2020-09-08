@@ -23,16 +23,12 @@ module.exports = {
           selector: '*[data-testing="loginModal"]',
         },
 
-        loginErrMsg: {
-          selector: '*[data-testing="loginErrMsg"]',
-        },
-
         loginEmail: {
-          selector: '*[data-testing="loginForm"] input[name="email"]'
+          selector: '*[data-testing="inputLoginEmail"]'
         },
 
         loginPassword: {
-          selector: '*[data-testing="loginForm"] input[name="password"]'
+          selector: '*[data-testing="inputLoginPassword"]'
         },
 
         loginCheckbox: {
@@ -252,13 +248,6 @@ module.exports = {
             this.waitForElementVisible('@logoutButton')
               .click('@logoutButton')
           }
-        },
-        checkLoginErrMsg: function (msg) {
-          this.waitForElementVisible('@loginErrMsg', 1000)
-            .assert.visible('@loginErrMsg')
-            .assert.containsText('@loginErrMsg', msg)
-
-          return this
         },
         loginModalClosed: function () {
           this.waitForElementNotPresent('@loginModal')

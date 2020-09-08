@@ -236,7 +236,7 @@ span:target .overlay {
 	margin: 0 auto !important;
 	box-shadow: none !important;
 	max-width: 650px !important;
-	border-radius: 2px !important;
+	border-radius: 0px !important;
 	padding: 1rem !important;
 	@media ScreenXSMax {
 		width: 98% !important;
