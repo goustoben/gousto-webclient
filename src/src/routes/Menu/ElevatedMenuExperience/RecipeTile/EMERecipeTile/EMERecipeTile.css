@@ -1,7 +1,6 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
 @value White, Blackberry from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
-
 .recipeTileContainer {
     width: 100%;
     display: flex;
@@ -17,12 +16,10 @@
         margin: 0 1rem 1rem 0;
         height: auto;
     }
-
     @media ScreenMDMin {
         width: 30%;
         height: auto;
     }
-
     @media ScreenLGMin {
         width: 24%;
     }
@@ -74,6 +71,7 @@
         font-size: sizeMD;
     }
 }
+
 .recipeTileIsFineDineIn {
     background: Blackberry;
     color: White;
@@ -86,10 +84,34 @@
 }
 
 .recipeTileContainer:hover {
-    box-shadow: 0 4px 14px 0 rgba(51,61,71,0.2);
+    box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2);
     cursor: pointer;
 }
 
 .recipeTileContainer:hover .recipeTitle {
     text-decoration: underline;
+}
+
+/* carousel */
+
+.carouselRecipeTileContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: White;
+    position: relative;
+    height: 200px;
+    width: 48%;
+    margin: 0 1rem 1rem 0;
+    height: auto;
+    width: 244px;
+}
+
+.carouselRecipeTileInfo {
+    margin: 1rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 140px;
 }

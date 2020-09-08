@@ -48,10 +48,14 @@ describe('<EMERecipeTileContainer />', () => {
     }
   }
 
-  const wrapper = shallow(
-    <EMERecipeTileContainer recipeId={recipeId} />,
-    wrapperOptions
-  )
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallow(
+      <EMERecipeTileContainer recipeId={recipeId} />,
+      wrapperOptions
+    )
+  })
 
   test('should pass down correct props', () => {
     expect(wrapper.prop('recipe')).toEqual(recipe)
@@ -59,5 +63,19 @@ describe('<EMERecipeTileContainer />', () => {
     expect(wrapper.prop('title')).toEqual('Chicken curry')
     expect(wrapper.prop('showDetailRecipe')).toEqual(expect.any(Function))
     expect(wrapper.prop('isFineDineIn')).toEqual(true)
+    expect(wrapper.prop('isInCarousel')).toEqual(false)
+  })
+
+  describe('when in carousel', () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <EMERecipeTileContainer recipeId={recipeId} isInCarousel />,
+        wrapperOptions
+      )
+    })
+
+    test('should pass down correct props', () => {
+      expect(wrapper.prop('isInCarousel')).toEqual(true)
+    })
   })
 })
