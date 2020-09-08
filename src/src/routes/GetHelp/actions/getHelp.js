@@ -1,5 +1,6 @@
 import logger from 'utils/logger'
 import * as userApi from 'apis/user'
+import { applyDeliveryCompensation } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -77,3 +78,28 @@ export const trackConfirmationCTA = () => ({
     actionType: trackingKeys.clickDoneRefundAccepted,
   }
 })
+
+export const applyDeliveryRefund = (
+  userId,
+  orderId,
+  complaintCategory,
+  refundValue
+) => async (dispatch, getState) => {
+  dispatch(webClientStatusActions.pending(actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION, true))
+  dispatch(webClientStatusActions.error(actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION, null))
+
+  try {
+    const accessToken = getState().auth.get('accessToken')
+    const deliveryRefundStatus = await applyDeliveryCompensation(accessToken, userId, orderId, complaintCategory, refundValue)
+
+    dispatch({
+      type: actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
+      payload: deliveryRefundStatus,
+    })
+  } catch (err) {
+    dispatch(webClientStatusActions.error(actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION, err.message))
+    logger.error(err)
+  } finally {
+    dispatch(webClientStatusActions.pending(actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION, false))
+  }
+}

@@ -1,4 +1,4 @@
-import fetch from 'utils/fetch'
+import fetch, { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
@@ -55,6 +55,27 @@ const shouldShowEntryPointTooltip = (accessToken, orderDeliveryDate) => (
   )
 )
 
+const applyDeliveryCompensation = (accessToken, userId, orderId, complaintCategory, refundValue ) => {
+  const url = `${endpoint('ssr', routes.version.ssr)}/delivery-refund`
+
+  return fetchRaw(
+    url,
+    {
+      user_id: userId,
+      order_id: orderId,
+      complaint_category: complaintCategory,
+      refund_value: refundValue,
+    },
+    {
+      accessToken,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }
+  )
+}
+
 export {
   fetchRefundAmount,
   setComplaint,
@@ -62,4 +83,5 @@ export {
   validateOrder,
   fetchOrderIssues,
   shouldShowEntryPointTooltip,
+  applyDeliveryCompensation,
 }
