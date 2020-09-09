@@ -39,6 +39,7 @@ import { getHelp } from './getHelp'
 import { logger } from './logger'
 import { menuService } from './menuService'
 import { brand } from './brand'
+import { experimentsReducer } from './experiments'
 
 const reducers = {
   ...abandonBasket,
@@ -82,6 +83,7 @@ const reducers = {
   ...pricing,
   payment,
   getHelp,
+  ...experimentsReducer,
 }
 
 export default reducers

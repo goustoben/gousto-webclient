@@ -18,6 +18,7 @@ export const menuInitialState = Immutable.Map({
   menuPrefetched: true,
   sidesModalRecipe: null,
   selectedRecipeSides: {},
+  isCategoriesModalVisible: false,
 })
 
 const menu = {
@@ -94,6 +95,14 @@ const menu = {
       newSelectedRecipeSides[action.payload.recipeId] = null
 
       return state.set('selectedRecipeSides', newSelectedRecipeSides)
+    }
+
+    case actionTypes.MENU_SHOW_CATEGORIES_MODAL: {
+      return state.set('isCategoriesModalVisible', true)
+    }
+
+    case actionTypes.MENU_HIDE_CATEGORIES_MODAL: {
+      return state.set('isCategoriesModalVisible', false)
     }
 
     case '@@router/LOCATION_CHANGE': {
