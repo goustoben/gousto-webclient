@@ -4,7 +4,7 @@ orbs:
   slack: circleci/slack@3.4.2
 
 gousto_build_image: &gousto_build_image
-- image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${ECR_AWS_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/base:latest
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${ECR_AWS_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/base:latest
       aws_auth:
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
