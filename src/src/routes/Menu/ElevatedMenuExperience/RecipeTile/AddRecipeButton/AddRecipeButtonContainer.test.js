@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 
 import { AddRecipeButtonContainer } from './AddRecipeButtonContainer'
 
-describe('<EMERecipeTileContainer />', () => {
+describe('<AddRecipeButtonContainer />', () => {
   const menuId = '321'
   const recipeId = '123'
 

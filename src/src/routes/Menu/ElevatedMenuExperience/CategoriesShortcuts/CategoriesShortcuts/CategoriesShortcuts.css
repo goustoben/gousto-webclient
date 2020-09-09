@@ -1,0 +1,45 @@
+@value White from 'styles/colors.css';
+@value axiformaFontStack, sizeSM, sizeMD, sizeXS, sizeLG from 'styles/typography.css';
+
+.shortcutsWrapper {
+    height: 112px;
+}
+
+.smallButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 0.25rem;
+}
+
+.smallShortcut {
+    background-color: White;
+    width: 47%;
+    margin: 0.5rem 0.25rem;
+    height: 4rem;
+    border: none;
+    font-size: sizeMD;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
+.allCategoriesText {
+    width: 100%;
+    text-align: center;
+    font-size: sizeLG;
+    font-weight: 600;
+    margin: 0.75rem;
+}
+
+.recipeCategoriesButton {
+	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.css';
+	composes: textCenter noDecor from 'styles/typography.css';
+	color: blue;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    border: none;
+    background: none;
+    margin: 0.5rem;
+}
