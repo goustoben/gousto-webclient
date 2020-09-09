@@ -47,7 +47,7 @@ For example, if you have just added PR #456, "Another cool feature", you would a
 - [ ] Another cool feature (#456) - @yourgithubusername
 ```
 
-You are now the owner of this production deploy, and responsible for merging it to develop. See _"Merging a Production Deployment"_ below.
+You are now the owner of this production deploy, and responsible for merging it to `master`. See _"Merging a Production Deployment"_ below.
 
 ### Merging a Production Deployment
 
