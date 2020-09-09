@@ -15,6 +15,7 @@ module.exports = {
     ssr: 'v1',
     ssrV2: 'v2',
     tastePreferences: 'v1',
+    userBucketing: 'v1',
   },
   address: {
     postcodeLookup: '/address/postcode-lookup',
@@ -199,5 +200,9 @@ module.exports = {
 
   tastePreferences: {
     profile: '/preferences/profile'
+  },
+
+  userBucketing: {
+    experiments: '/user/experiments'
   }
 }
