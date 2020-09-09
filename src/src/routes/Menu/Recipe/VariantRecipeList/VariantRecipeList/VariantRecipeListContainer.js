@@ -9,14 +9,19 @@ import { trackDeselectSide, trackSelectSide } from '../../../actions/menuRecipeS
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getSidesData } from '../../../selectors/variants'
+import { getBasketMenuId } from '../../../../../selectors/basket'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
 import { getCurrentCollectionId } from '../../../selectors/collections'
 import { VariantRecipeList } from './VariantRecipeList'
 
 const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeById(state, ownProps.recipeId)
-
-  const { recipeVariants } = getSidesData(state, { recipeId: ownProps.originalId })
+  const basketMenuId = getBasketMenuId(state)
+  let recipeIdProp = ownProps.recipeId
+  if (basketMenuId === '375') {
+    recipeIdProp = ownProps.originalId
+  }
+  const { recipeVariants } = getSidesData(state, { recipeId: recipeIdProp })
   const recipeVariantsArray = recipeVariants ? recipeVariants.variantsList.toJS() : []
 
   let selectedRecipe = {}

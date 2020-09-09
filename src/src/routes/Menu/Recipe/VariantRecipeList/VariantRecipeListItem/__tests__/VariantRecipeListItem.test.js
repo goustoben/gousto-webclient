@@ -50,8 +50,9 @@ describe('VariantRecipeListItem', () => {
       })
     })
 
-    describe('When the recipe contains allergens', () => {
+    describe('When the recipe contains allergens for side', () => {
       const wrapper = mount(<VariantRecipeListItem
+        hasSides
         recipeId="1230"
         recipeName="Chicken curry"
         changeCheckedRecipe={() => { }}

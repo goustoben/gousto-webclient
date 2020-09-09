@@ -24,9 +24,8 @@ const VariantRecipeListItem = ({
   const getInputContent = () => (
     <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer, { [css.labelContainerSides]: isOnSidesModal })}>
       <span>
-        <span className={css.titleText}>{recipeName}</span>
-        <br />
-        <span className={css.allergenText}>{allergenText}</span>
+        <span className={classnames(css.titleText, {[css.boldTitle]: hasSides})}>{recipeName}</span>
+        {hasSides && <div className={css.allergenText}>{allergenText}</div>}
       </span>
       {surcharge && !isOutOfStock ? (
         <div className={

@@ -29,7 +29,8 @@ export const Detail = (props) => {
     description, youWillNeed,
     equipment,
     position, surcharge,
-    isChefPrepared, isFineDineIn
+    isChefPrepared, isFineDineIn,
+    menuWithSides
   } = props
 
   const recipeLegalDetailId = chosenSideRecipeId || id
@@ -76,7 +77,7 @@ export const Detail = (props) => {
         </div>
         <div className={css.sectionPanel}>
           <div className={css.variantsContainer}>
-            <VariantRecipeListContainer originalId={id} recipeId={chosenSideRecipeId} isOnDetailScreen />
+            <VariantRecipeListContainer originalId={id} recipeId={menuWithSides ? chosenSideRecipeId : id} isOnDetailScreen />
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
           <p className={css.infoBoxText}>{description}</p>
@@ -143,6 +144,7 @@ Detail.propTypes = {
   isChefPrepared: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool,
   surcharge: PropTypes.number,
+  menuWithSides: PropTypes.bool
 }
 
 Detail.defaultProps = {
@@ -150,5 +152,6 @@ Detail.defaultProps = {
   position: 0,
   average: 0,
   isFineDineIn: false,
-  chosenSideRecipeId: null
+  chosenSideRecipeId: null,
+  menuWithSides: false
 }

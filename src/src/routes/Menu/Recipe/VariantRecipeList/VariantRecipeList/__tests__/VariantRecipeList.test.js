@@ -1,9 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
+import { safeJestMock } from '_testing/mocks'
 import { VariantRecipeList } from '../VariantRecipeList'
 import { VariantRecipeListContainer } from '../VariantRecipeListContainer'
 import { VariantRecipeListItemContainer } from '../../VariantRecipeListItem'
+import * as variantsActions from '../../../../selectors/variants'
 
 describe('VariantRecipeList', () => {
   describe('When there is an array of recipe variants', () => {
@@ -335,52 +337,93 @@ describe('VariantRecipeList', () => {
 })
 
 describe('VariantRecipeListContainer', () => {
-  test('should render VariantRecipeList', () => {
-    const wrapper = shallow(<VariantRecipeListContainer recipeId="123" />, {
-      context: {
-        store: {
-          dispatch: () => { },
-          getState: () => ({
-            recipes: Immutable.fromJS({
-              123: {
-                id: 123,
-                title: 'recipe-title'
-              }
-            }),
-            basket: Immutable.fromJS({
-              numPortion: 2
-            }),
-            routing: {
-              locationBeforeTransitions: {
-                query: {
-                  collection: 'all-recipes'
-                }
-              }
-            },
-            menuCollections: Immutable.fromJS([
-              {
-                id: '1234adb',
-                slug: 'all-recipes',
-                published: true,
-                recipesInCollection: ['2334']
-              }
-            ]),
-            menu: Immutable.Map({
-              menuVariants: Immutable.Map({
-                123: []
-              }),
-              selectedRecipeSides: {}
-            })
-          }),
-          subscribe: () => { }
+  const getSidesDataMock = safeJestMock(variantsActions, 'getSidesData')
+  let wrapper
+  const state = {
+    recipes: Immutable.fromJS({
+      123: {
+        id: 123,
+        title: 'recipe-title'
+      }
+    }),
+    basket: Immutable.fromJS({
+      numPortion: 2,
+      currentMenuId: '375'
+    }),
+    routing: {
+      locationBeforeTransitions: {
+        query: {
+          collection: 'all-recipes'
         }
       }
+    },
+    menuCollections: Immutable.fromJS([
+      {
+        id: '1234adb',
+        slug: 'all-recipes',
+        published: true,
+        recipesInCollection: ['2334']
+      }
+    ]),
+    menu: Immutable.Map({
+      menuVariants: Immutable.Map({
+        123: [],
+        234: []
+      }),
+      selectedRecipeSides: {}
     })
-    expect(wrapper.find('VariantRecipeList').exists()).toBe(true)
+  }
+
+  describe('when menu id is 375', () => {
+    beforeEach(() => {
+      getSidesDataMock.mockReturnValue([])
+      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" />, {
+        context: {
+          store: {
+            dispatch: () => { },
+            getState: () => state,
+            subscribe: () => { }
+          }
+        }
+      })
+    })
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+    test('should render VariantRecipeList', () => {
+      expect(wrapper.find('VariantRecipeList').exists()).toBe(true)
+    })
+    test('should call getSidesDataMock with originalId', () => {
+      expect(getSidesDataMock.mock.calls[0][1]).toEqual({recipeId: '234'})
+    })
+  })
+
+  describe('when menu id is not 375', () => {
+    beforeEach(() => {
+      getSidesDataMock.mockReturnValue([])
+      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" />, {
+        context: {
+          store: {
+            dispatch: () => { },
+            getState: () => ({
+              ...state,
+              basket: Immutable.fromJS({
+                numPortion: 2,
+                currentMenuId: '373'
+              }),
+            }),
+            subscribe: () => { }
+          }
+        }
+      })
+    })
+
+    test('should call getSidesDataMock with recipeId', () => {
+      expect(getSidesDataMock.mock.calls[0][1]).toEqual({recipeId: '123'})
+    })
   })
 
   describe('is in sides modal', () => {
-    let wrapper
     const recipeVariantsArray = [
       { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
       { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
