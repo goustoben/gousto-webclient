@@ -67,7 +67,7 @@ echo "Environment is currently: ${ENVIRONMENT}"
 if [[ "${ENVIRONMENT}" == "production" ]]; then
     S3_SRC="s3://s3-gousto-platform-prod/${ENVIRONMENT}/config/service/webclient.yml"
 else
-    S3_SRC="s3://s3-gousto-platform-beta/${ENVIRONMENT}/config/service/webclient.yml"
+    S3_SRC="s3://s3-gousto-platform-beta-eu-west-2/${ENVIRONMENT}/config/service/webclient.yml"
 fi
 
 echo "Going to download: $S3_SRC"
