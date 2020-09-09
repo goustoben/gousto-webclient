@@ -267,7 +267,6 @@ workflows:
           context: gousto-eu-west-2-beta-aws-app-circleci
           requires:
             - build-application
-            - publish-code-health
           filters:
             branches:
               only:
@@ -277,7 +276,6 @@ workflows:
           requires:
             - build-nginx-image
             - build-webclient-image
-            - publish-code-health
           filters:
             branches:
               only:
