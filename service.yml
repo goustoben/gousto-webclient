@@ -78,6 +78,21 @@ healthCheck:
   gracePeriod: 1080
 
 environments:
+  - name: stagingdr
+    instanceType: t2.small
+    minInstanceSize: 0
+    maxInstanceSize: 1
+    desiredInstanceSize: 0
+    ecsDesiredTaskCount: 1
+    ecsMaxTaskCount: 2
+    ecsMemory: 1024
+    ecsCpu: 512
+
+    deployment:
+      style: immutable
+      minInstancesInService: 0
+      maxBatchSize: 1
+
   - name: staging
     instanceType: t2.small
     minInstanceSize: 0
