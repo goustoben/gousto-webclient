@@ -74,7 +74,7 @@ echo "Going to download: $S3_SRC"
 
 S3_DEST="./secrets.yml"
 
-aws s3 cp ${S3_SRC} ${S3_DEST} --region eu-west-1
+aws s3 cp ${S3_SRC} ${S3_DEST} --region eu-west-2
 
 echo "Completed download"
 

@@ -1,6 +1,5 @@
 ---
 serviceName: webclient
-region: eu-west-1
 exposure: private
 dns: webclient
 owner: squad-radishes
@@ -67,7 +66,7 @@ ecs_log_filters:
           owner: squad-haricots
           level: critical
 
-scaling: 
+scaling:
   ecsCpuTargetTrackingScalingPolicyPercentage: 50
 
 healthCheck:

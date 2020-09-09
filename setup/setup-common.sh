@@ -24,7 +24,7 @@ fi
 export SETUP_FAILURE=false
 
 # webclient specific requirements
-CLOUDFRONT_URL=$(python /root/project/ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-1)
+CLOUDFRONT_URL=$(python /root/project/ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-2)
 
 echo "CLOUDFRONT_URL: $CLOUDFRONT_URL"
 
