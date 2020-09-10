@@ -1,12 +1,18 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'
-import { fetchRecipes } from 'apis/recipes'
+import { fetchRecipes, fetchRecipesFromMenu } from 'apis/recipes'
 import { getCutoffDateTime } from 'utils/deliveries'
 import recipeActions, { loadRecipes } from '../recipes'
+import { menuRecipeMapper } from '../../apis/transformers/recipes'
+
+jest.mock('../../apis/transformers/recipes', () => ({
+  menuRecipeMapper: jest.fn(),
+}))
 
 jest.mock('apis/recipes', () => ({
-  fetchRecipes: jest.fn()
+  fetchRecipes: jest.fn(),
+  fetchRecipesFromMenu: jest.fn(),
 }))
 
 jest.mock('utils/deliveries', () => ({
@@ -124,6 +130,68 @@ describe('recipes actions', () => {
           'filters[recipe_ids]': ['1', '2', '3', '4']
         })
       })
+    })
+  })
+
+  describe('recipesLoadFromMenuRecipesById', () => {
+    let fetchRecipesFromMenuMock
+
+    beforeEach(() => {
+      fetchRecipesFromMenu.mockReturnValue(Promise.resolve({ data: ['2', '4', '5', '6'] }))
+      menuRecipeMapper.mockImplementation((input) => input)
+
+      const state = {
+        auth: Immutable.fromJS({ accessToken: 'accessToken' }),
+        recipes: Immutable.fromJS({
+          1: { id: '1', title: 'Title 1' },
+          3: { id: '3', title: 'Title 2' },
+          7: { id: '7', title: 'Title 3' },
+        }),
+      }
+
+      getStateSpy.mockReturnValue(state)
+    })
+
+    it('should dispatch status "pending" true for RECIPES_RECEIVE action before fetching recipes', async () => {
+      await recipeActions.recipesLoadFromMenuRecipesById(['1', '2', '3', '4'])(dispatchSpy, getStateSpy)
+      expect(statusActions.pending.mock.calls[0][0]).toEqual(actionTypes.RECIPES_RECEIVE)
+      expect(statusActions.pending.mock.calls[0][1]).toEqual(true)
+    })
+
+    it('should dispatch status "pending" false for RECIPES_RECEIVE action after fetching recipes', async () => {
+      await recipeActions.recipesLoadFromMenuRecipesById(['1', '2', '3', '4'])(dispatchSpy, getStateSpy)
+      expect(statusActions.pending).toHaveBeenCalledTimes(2)
+      expect(statusActions.pending.mock.calls[1][0]).toEqual(actionTypes.RECIPES_RECEIVE)
+      expect(statusActions.pending.mock.calls[1][1]).toEqual(false)
+    })
+
+    it('should dispatch status "error" true for RECIPES_RECEIVE action if an error occurs while fetching recipes', async () => {
+      fetchRecipesFromMenuMock = fetchRecipesFromMenu.mockReturnValue(new Promise(() => { throw new Error('error!') }))
+
+      await recipeActions.recipesLoadFromMenuRecipesById(['1', '2', '3', '4'])(dispatchSpy, getStateSpy)
+      expect(statusActions.error).toHaveBeenCalledTimes(1)
+      expect(statusActions.error.mock.calls[0][0]).toEqual(actionTypes.RECIPES_RECEIVE)
+      expect(statusActions.error.mock.calls[0][1]).toEqual('error!')
+    })
+
+    it('should fetch recipes for each specified id if not already fetched ', async () => {
+      await recipeActions.recipesLoadFromMenuRecipesById(['1', '2', '3', '4', '5', '6', '7'])(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledTimes(3)
+      const dispatchSpyCalls = dispatchSpy.mock.calls[1]
+      expect(dispatchSpyCalls[0]).toEqual({
+        type: actionTypes.RECIPES_RECEIVE,
+        recipes: ['2', '4', '5', '6']
+      })
+
+      expect(fetchRecipesFromMenuMock).toHaveBeenCalledTimes(1)
+      const fetchRecipesMockCalls = fetchRecipesFromMenuMock.mock.calls[0]
+      expect(fetchRecipesMockCalls[0]).toEqual('accessToken')
+      expect(fetchRecipesMockCalls[1]).toEqual({ recipeIds: '1,2,3,4,5,6,7' })
+    })
+
+    it('should not fetch recipes if no new recipes are found in ids requested', async () => {
+      await recipeActions.recipesLoadFromMenuRecipesById(['1', '3', '7'])(dispatchSpy, getStateSpy)
+      expect(fetchRecipesFromMenuMock).not.toHaveBeenCalled()
     })
   })
 })

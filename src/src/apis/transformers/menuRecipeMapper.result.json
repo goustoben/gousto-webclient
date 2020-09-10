@@ -1,0 +1,84 @@
+[
+  {
+    "allergens": [
+      "soybeans",
+      "celery",
+      "sulphites",
+      "gluten",
+      "soya",
+      "milk",
+      "mustard"
+    ],
+    "basics": [
+      "Butter",
+      "Milk",
+      "Olive oil",
+      "Pepper",
+      "Salt"
+    ],
+    "boxType": "gourmet",
+    "chefPrepared": false,
+    "cookingTime": 55,
+    "cookingTimeFamily": null,
+    "coreRecipeId": "689",
+    "cuisine": "British",
+    "description": "This hearty pie takes inspiration from a British classic but replaces the traditional meat elements with veggie mince. To create a flavourful dish it has been jam-packed with tomatoey ingredients and is topped with extra cheesy mash. Served with a crunchy little gem salad, it's a dish for all the family to enjoy. ",
+    "dietType": "",
+    "equipment": [
+      "Oven-proof dish"
+    ],
+    "fiveADay": 0,
+    "health": null,
+    "id": "689",
+    "ingredients": {},
+    "isFeaturedRecipe": false,
+    "meals": [
+      {
+        "numPortions": 2,
+        "surcharge": null
+      },
+      {
+        "numPortions": 4,
+        "surcharge": null
+      }
+    ],
+    "media": {
+      "images": []
+    },
+    "nutritionalInformation": {
+      "per100g": {
+        "energyKj": 349,
+        "energyKcal": 82,
+        "fat": 2.135,
+        "fatSaturates": 0.957,
+        "carbs": 11.368,
+        "carbsSugars": 2.968,
+        "fibre": 2.045,
+        "protein": 4.641,
+        "salt": 0.561
+      },
+      "perPortion": {
+        "energyKj": 1939,
+        "energyKcal": 460,
+        "fat": 11.84,
+        "fatSaturates": 5.309,
+        "carbs": 63.036,
+        "carbsSugars": 16.462,
+        "fibre": 11.344,
+        "protein": 25.736,
+        "salt": 3.112
+      },
+      "micronutrients": null
+    },
+    "rating": {
+      "count": 0,
+      "average": 0
+    },
+    "shelfLifeDays": "",
+    "dietaryClaims": [],
+    "isFineDineIn": false,
+    "title": "Family Shepherdless Pie",
+    "promotions": [],
+    "foodBrand": null
+  }
+]
