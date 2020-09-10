@@ -3,3 +3,8 @@
     display: flex;
     flex-direction: row;
 }
+
+.dropperContainer {
+  composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+  display: flex;
+}

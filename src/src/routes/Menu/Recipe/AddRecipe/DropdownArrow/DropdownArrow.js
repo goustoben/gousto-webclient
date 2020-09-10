@@ -9,7 +9,8 @@ const DropdownArrow = ({ recipeId, originalId, recipeVariants, showDropdown, rec
     return null
   }
 
-  const onClick = () => {
+  const onClick = (e) => {
+    e.stopPropagation()
     const recipeToExpand = showDropdown ? null : recipeId
     recipeVariantDropdownExpanded(recipeToExpand)
   }

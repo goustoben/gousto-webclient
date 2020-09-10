@@ -29,4 +29,24 @@ describe('DropdownArrow', () => {
       })
     })
   })
+
+  describe('When the dropdown is clicked', () => {
+    const stopPropagation = jest.fn()
+
+    beforeAll(() => {
+      const wrapper = mount(<DropdownArrow
+        recipeVariants={[
+          { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
+          { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
+        ]}
+        recipeVariantDropdownExpanded={jest.fn()}
+      />)
+
+      wrapper.find('.arrowContainer').simulate('click', { stopPropagation })
+    })
+
+    test('should prevent event propagtion', () => {
+      expect(stopPropagation).toHaveBeenCalled()
+    })
+  })
 })
