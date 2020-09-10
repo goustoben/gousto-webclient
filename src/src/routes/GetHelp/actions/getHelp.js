@@ -90,11 +90,11 @@ export const applyDeliveryRefund = (
 
   try {
     const accessToken = getState().auth.get('accessToken')
-    const deliveryRefundStatus = await applyDeliveryCompensation(accessToken, userId, orderId, complaintCategory, refundValue)
+    await applyDeliveryCompensation(accessToken, userId, orderId, complaintCategory, refundValue)
 
     dispatch({
       type: actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
-      payload: deliveryRefundStatus,
+      payload: { isSuccessful: true },
     })
   } catch (err) {
     dispatch(webClientStatusActions.error(actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION, err.message))

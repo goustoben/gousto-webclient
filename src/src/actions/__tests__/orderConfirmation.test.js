@@ -7,7 +7,7 @@ import { redirect } from 'utils/window'
 import { fetchOrder } from 'apis/orders'
 
 import { basketOrderLoad } from 'actions/basket'
-import { recipesLoadRecipesById } from 'actions/recipes'
+import { recipesLoadFromMenuRecipesById } from 'actions/recipes'
 import { orderCheckPossibleDuplicate } from 'actions/order'
 import {
   productsLoadProducts,
@@ -33,7 +33,7 @@ jest.mock('react-router-redux', () => ({
 }))
 
 jest.mock('actions/recipes', () => ({
-  recipesLoadRecipesById: jest.fn(),
+  recipesLoadFromMenuRecipesById: jest.fn(),
 }))
 
 jest.mock('actions/products', () => ({
@@ -119,8 +119,8 @@ describe('orderConfirmation actions', () => {
               id: '1234',
               whenCutoff: '2019-04-12 19:00:00',
               recipeItems: [
-                { itemableId: '1' },
-                { itemableId: '2' },
+                { recipeUuid: 'uuid-1' },
+                { recipeUuid: 'uuid-2' },
               ],
             },
           })
@@ -130,7 +130,7 @@ describe('orderConfirmation actions', () => {
       test('should fetch the recipes for the given recipe ids in the order', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(recipesLoadRecipesById).toHaveBeenCalledWith(['1', '2'])
+        expect(recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
       })
     })
 

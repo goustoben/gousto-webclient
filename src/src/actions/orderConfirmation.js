@@ -32,9 +32,8 @@ export const orderDetails = (orderId) => (
       const { data: order } = await fetchOrder(accessToken, orderId)
       const { data: menus } = await fetchSimpleMenu(accessToken, userId)
       const immutableOrderDetails = Immutable.fromJS(order)
-      const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
-
-      dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
+      const orderRecipeIds = userUtils.getUserOrderRecipeUuIds(immutableOrderDetails)
+      dispatch(recipeActions.recipesLoadFromMenuRecipesById(orderRecipeIds))
       await dispatch(productsLoadProducts(order.whenCutoff, order.periodId, {reload: true}, menus))
 
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))

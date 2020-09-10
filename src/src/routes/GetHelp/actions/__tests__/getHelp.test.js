@@ -200,10 +200,10 @@ describe('applyDeliveryRefund', () => {
       })
     })
 
-    test('it dispatches the deliveryRefundStatus action correctly', () => {
+    test('it dispatches an action indicating success in the payload', () => {
       expect(dispatchMock).toHaveBeenCalledWith({
         type: actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
-        payload: DELIVERY_REFUND_STATUS
+        payload: { isSuccessful: true }
       })
     })
 
