@@ -50,8 +50,10 @@
 
 .titleText {
     color: Blackberry;
+}
+
+.boldTitle {
     font-weight: 800;
-    white-space: nowrap;
 }
 
 .surchargeText {
