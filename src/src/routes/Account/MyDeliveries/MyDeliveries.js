@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import actions from 'actions/user'
 import { Alert, Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
@@ -10,19 +9,19 @@ import OrdersList from './OrdersList'
 import accountCss from '../Account/Account.css'
 
 class MyDeliveries extends React.PureComponent {
-  static fetchOrdersAndAddresses = ({ store }) => {
-    store.dispatch(actions.userLoadNewOrders())
-    store.dispatch(actions.userLoadAddresses())
+  static fetchOrdersAndAddresses = ({ userLoadAddresses, userLoadNewOrders }) => {
+    userLoadNewOrders()
+    userLoadAddresses()
   }
 
   componentDidMount() {
-    const { store } = this.context
-    MyDeliveries.fetchOrdersAndAddresses({ store })
+    const { userLoadAddresses, userLoadNewOrders } = this.props
+    MyDeliveries.fetchOrdersAndAddresses({ userLoadAddresses, userLoadNewOrders })
   }
 
   retryFetch = () => {
-    const { store } = this.context
-    MyDeliveries.fetchOrdersAndAddresses({ store })
+    const { userLoadAddresses, userLoadNewOrders } = this.props
+    MyDeliveries.fetchOrdersAndAddresses({ userLoadAddresses, userLoadNewOrders })
   }
 
   static renderFetchError = (retryFetch) => (
@@ -80,6 +79,8 @@ MyDeliveries.propTypes = {
   didErrorFetchingPendingOrders: PropTypes.string,
   didErrorFetchingProjectedOrders: PropTypes.string,
   didErrorFetchingAddresses: PropTypes.string,
+  userLoadAddresses: PropTypes.func.isRequired,
+  userLoadNewOrders: PropTypes.func.isRequired,
 }
 
 MyDeliveries.defaultProps = {
@@ -87,10 +88,6 @@ MyDeliveries.defaultProps = {
   didErrorFetchingPendingOrders: null,
   didErrorFetchingProjectedOrders: null,
   didErrorFetchingAddresses: null,
-}
-
-MyDeliveries.contextTypes = {
-  store: PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
 }
 
 export default MyDeliveries

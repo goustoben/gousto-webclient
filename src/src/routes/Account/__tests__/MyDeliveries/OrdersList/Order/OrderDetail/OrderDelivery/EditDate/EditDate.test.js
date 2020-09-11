@@ -2,17 +2,12 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { Button } from 'goustouicomponents'
-import orderActions from 'actions/order'
 import { EditDate } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/EditDate.js'
 import DropdownInput from 'components/Form/Dropdown/DropdownInput'
 import { getDeliveryDaysAndSlotsOptions } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js'
 
 jest.mock('routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js', () => ({
   getDeliveryDaysAndSlotsOptions: jest.fn()
-}))
-
-jest.mock('actions/order', () => ({
-  orderUpdateDayAndSlot: jest.fn()
 }))
 
 describe('EditDate', () => {
@@ -46,8 +41,7 @@ describe('EditDate', () => {
   }
 
   let wrapper
-  let dispatchSpy
-  let getStateSpy
+  let orderUpdateDayAndSlotSpy
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -58,8 +52,7 @@ describe('EditDate', () => {
       }
     )
 
-    dispatchSpy = jest.fn()
-    getStateSpy = jest.fn()
+    orderUpdateDayAndSlotSpy = jest.fn()
 
     wrapper = shallow(<EditDate
       editDeliveryMode
@@ -71,7 +64,10 @@ describe('EditDate', () => {
       recipes={recipes}
       orders={orders}
       numPortions="2"
-    />, { context: { store: { dispatch: dispatchSpy, getState: getStateSpy } } })
+      userTrackDateSelected={() => {}}
+      userTrackSlotSelected={() => {}}
+      orderUpdateDayAndSlot={orderUpdateDayAndSlotSpy}
+    />)
   })
 
   describe('rendering', () => {
@@ -139,8 +135,7 @@ describe('EditDate', () => {
       expect(onSubmitFunctionStub).toHaveBeenCalledTimes(1)
     })
 
-    it('should dispatch orderUpdateDayAndSlot action when clicking the button if the deliverySlot changed', () => {
-      orderActions.orderUpdateDayAndSlot.mockReturnValueOnce('orderUpdateDayAndSlot result')
+    it('should call orderUpdateDayAndSlot action when clicking the button if the deliverySlot changed', () => {
       const slotsOptions = {
         100: [
           { uuid: 'jk06', value: '777' },
@@ -149,16 +144,15 @@ describe('EditDate', () => {
       }
       wrapper.setState({ selectedDeliveryDayId: '100', selectedDeliverySlotId: '777', slotsOptions, selectedDeliveryDate: '2017-07-01' })
       wrapper.find(Button).last().simulate('click')
-      expect(dispatchSpy).toHaveBeenCalledTimes(1)
-      expect(orderActions.orderUpdateDayAndSlot).toHaveBeenCalledTimes(1)
-      expect(orderActions.orderUpdateDayAndSlot).toHaveBeenCalledWith('ab23', '100', '777', 'jk06', '2017-07-01', deliveryDays)
-      expect(dispatchSpy).toHaveBeenCalledWith('orderUpdateDayAndSlot result')
+
+      expect(orderUpdateDayAndSlotSpy).toHaveBeenCalledTimes(1)
+      expect(orderUpdateDayAndSlotSpy).toHaveBeenCalledWith('ab23', '100', '777', 'jk06', '2017-07-01', deliveryDays)
     })
 
     it('should NOT dispatch orderUpdateDayAndSlot action when the deliverySlot remains unchanged', () => {
       wrapper.setState({ selectedDeliverySlotId: 'de03' })
       wrapper.find(Button).last().simulate('click')
-      expect(orderActions.orderUpdateDayAndSlot).not.toHaveBeenCalled()
+      expect(orderUpdateDayAndSlotSpy).not.toHaveBeenCalled()
     })
   })
 })

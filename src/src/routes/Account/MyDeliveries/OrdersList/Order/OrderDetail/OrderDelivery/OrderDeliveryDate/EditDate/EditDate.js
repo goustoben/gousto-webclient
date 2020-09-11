@@ -3,8 +3,6 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import { Button } from 'goustouicomponents'
-import userActions from 'actions/user'
-import orderActions from 'actions/order'
 import DropdownInput from 'Form/Dropdown'
 import util from './util'
 import css from './EditDate.css'
@@ -38,19 +36,23 @@ class EditDate extends React.PureComponent {
 
   onSubmitFunction() {
     const { selectedDeliverySlotId, selectedDeliveryDayId, slotsOptions, selectedDeliveryDate } = this.state
-    const { orderId, deliverySlotId, deliveryDays } = this.props
-    const { store } = this.context
+    const { orderId, deliverySlotId, deliveryDays, orderUpdateDayAndSlot } = this.props
 
     if (selectedDeliverySlotId !== deliverySlotId) {
       const { uuid } = slotsOptions[selectedDeliveryDayId].find(slot => slot.value === selectedDeliverySlotId)
 
-      store.dispatch(orderActions.orderUpdateDayAndSlot(orderId, selectedDeliveryDayId, selectedDeliverySlotId, uuid, selectedDeliveryDate, deliveryDays))
+      orderUpdateDayAndSlot(orderId, selectedDeliveryDayId, selectedDeliverySlotId, uuid, selectedDeliveryDate, deliveryDays)
     }
   }
 
   onDayChange(dayId, slotsOptions) {
-    const { store } = this.context
-    const { coreDeliveryDayId, deliverySlotId, clearUpdateDateErrorAndPending, orderId } = this.props
+    const {
+      clearUpdateDateErrorAndPending,
+      coreDeliveryDayId,
+      deliverySlotId,
+      orderId,
+      userTrackDateSelected,
+    } = this.props
     const { deliveryDaysOptions } = this.state
 
     let slotId
@@ -69,14 +71,13 @@ class EditDate extends React.PureComponent {
 
     this.setState({ selectedDeliveryDayId: dayId, selectedDeliverySlotId: slotId, selectedDeliveryDate })
     clearUpdateDateErrorAndPending()
-    store.dispatch(userActions.userTrackDateSelected(orderId, deliverySlotId, slotId))
+    userTrackDateSelected(orderId, deliverySlotId, slotId)
   }
 
   onSlotChange(slotId) {
-    const { store } = this.context
-    const { deliverySlotId, orderId } = this.props
+    const { deliverySlotId, orderId, userTrackSlotSelected } = this.props
     this.setState({ selectedDeliverySlotId: slotId })
-    store.dispatch(userActions.userTrackSlotSelected(orderId, deliverySlotId, slotId))
+    userTrackSlotSelected(orderId, deliverySlotId, slotId)
   }
 
   setDayAndSlotOptionsAndSelected = (deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders) => {
@@ -142,20 +143,19 @@ class EditDate extends React.PureComponent {
 }
 
 EditDate.propTypes = {
-  orderId: PropTypes.string,
-  deliveryDays: PropTypes.instanceOf(Immutable.Map),
-  recipesStock: PropTypes.instanceOf(Immutable.List),
+  clearUpdateDateErrorAndPending: PropTypes.func,
   coreDeliveryDayId: PropTypes.string.isRequired,
+  deliveryDays: PropTypes.instanceOf(Immutable.Map),
   deliverySlotId: PropTypes.string.isRequired,
   isPendingUpdateDayAndSlot: PropTypes.bool,
-  clearUpdateDateErrorAndPending: PropTypes.func,
-  recipes: PropTypes.instanceOf(Immutable.List),
+  orderId: PropTypes.string,
+  orderUpdateDayAndSlot: PropTypes.func.isRequired,
   orders: PropTypes.instanceOf(Immutable.Map),
-  portionsCount: PropTypes.string
-}
-
-EditDate.contextTypes = {
-  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  portionsCount: PropTypes.string,
+  recipes: PropTypes.instanceOf(Immutable.List),
+  recipesStock: PropTypes.instanceOf(Immutable.List),
+  userTrackDateSelected: PropTypes.func.isRequired,
+  userTrackSlotSelected: PropTypes.func.isRequired,
 }
 
 EditDate.defaultProps = {

@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
-import { orderGetDeliveryDays, clearUpdateDateErrorAndPending } from 'actions/order'
+import {
+  orderGetDeliveryDays,
+  clearUpdateDateErrorAndPending,
+  orderUpdateDayAndSlot,
+} from 'actions/order'
+import { userTrackDateSelected, userTrackSlotSelected } from 'actions/user'
 import { EditDate } from './EditDate'
 import { filterOutNDDOptionsWhenNoRecipes } from './util'
 
@@ -30,6 +35,9 @@ function mapStateToProps(state, ownProps) {
 }
 
 export const EditDateContainer = connect(mapStateToProps, {
-  orderGetDeliveryDays,
   clearUpdateDateErrorAndPending,
+  orderGetDeliveryDays,
+  orderUpdateDayAndSlot,
+  userTrackDateSelected,
+  userTrackSlotSelected,
 })(EditDate)

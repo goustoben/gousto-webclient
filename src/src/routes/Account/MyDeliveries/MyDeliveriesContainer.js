@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
+import actions from 'actions/user'
 import MyDeliveries from './MyDeliveries'
 
 const mapStateToProps = (state) => ({
@@ -10,6 +11,8 @@ const mapStateToProps = (state) => ({
 })
 
 const MyDeliveriesContainer = connect(mapStateToProps, {
+  userLoadAddresses: actions.userLoadAddresses,
+  userLoadNewOrders: actions.userLoadNewOrders,
 })(MyDeliveries)
 
 export default MyDeliveriesContainer
