@@ -21,7 +21,11 @@ const AddRecipe = ({ id, originalId, view, position, isOutOfStock, buttonText, i
         isOnDetailScreen={isOnDetailScreen}
         isOnSidesModal={isOnSidesModal}
       />
-      {!isOnDetailScreen && <DropdownArrowContainer recipeId={id} originalId={originalId} />}
+      {!isOnDetailScreen && (
+        <div className={css.dropperContainer}>
+          <DropdownArrowContainer recipeId={id} originalId={originalId} />
+        </div>
+      )}
     </div>
 
   )

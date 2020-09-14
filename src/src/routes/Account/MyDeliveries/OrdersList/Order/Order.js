@@ -3,7 +3,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 
-import actions from 'actions/user'
 import humanTimeFormat from 'utils/timeFormat'
 
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -23,25 +22,22 @@ import css from './Order.css'
 
 class Order extends React.PureComponent {
   componentDidMount() {
-    const { orderId } = this.props
-    const { store } = this.context
+    const { orderId, userOpenCloseOrderCard, userToggleEditDateSection } = this.props
 
-    store.dispatch(actions.userOpenCloseOrderCard(orderId, true))
-    store.dispatch(actions.userToggleEditDateSection(orderId, false))
+    userOpenCloseOrderCard(orderId, true)
+    userToggleEditDateSection(orderId, false)
   }
 
   open = () => {
-    const { orderId } = this.props
-    const { store } = this.context
+    const { orderId, userOpenCloseOrderCard } = this.props
 
-    store.dispatch(actions.userOpenCloseOrderCard(orderId, false))
+    userOpenCloseOrderCard(orderId, false)
   }
 
   close = () => {
-    const { orderId } = this.props
-    const { store } = this.context
+    const { orderId, userOpenCloseOrderCard } = this.props
 
-    store.dispatch(actions.userOpenCloseOrderCard(orderId, true))
+    userOpenCloseOrderCard(orderId, true)
   }
 
   render() {
@@ -193,6 +189,8 @@ Order.propTypes = {
   recipesPeriodStockFetchError: PropTypes.string,
   deliveryDay: PropTypes.string,
   portionsCount: PropTypes.string,
+  userOpenCloseOrderCard: PropTypes.func.isRequired,
+  userToggleEditDateSection: PropTypes.func.isRequired,
 }
 
 Order.defaultProps = {
@@ -224,10 +222,6 @@ Order.defaultProps = {
   recipesPeriodStockFetchError: null,
   deliveryDay: '',
   portionsCount: '2',
-}
-
-Order.contextTypes = {
-  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default Order

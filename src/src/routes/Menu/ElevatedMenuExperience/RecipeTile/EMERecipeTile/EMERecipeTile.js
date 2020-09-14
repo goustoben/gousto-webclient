@@ -32,41 +32,42 @@ const EMERecipeTile = ({
   const showVariantHeader = !(!recipeVariants || isOutOfStock)
 
   return (
-
     <div
       role="button"
       tabIndex={0}
-      className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
-        [css.recipeTileIsFineDineIn]: isFineDineIn
-      })}
+      className={css.recipeTile}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       onClick={onClick}
       onKeyPress={onClick}
     >
       <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} />
-      <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
-      {brandTags && brandTags.topLeftTag && (
-        <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
-      )}
-      <div className={classnames(isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo, {
-        [css.recipeTileInfoShowVariantHeader]: showVariantHeader
-      })}
+      <div
+        className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
+          [css.recipeTileIsFineDineIn]: isFineDineIn
+        })}
       >
-        <div>
-          {brandTags && brandTags.topRightTag && (
+        <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
+        {brandTags && brandTags.topLeftTag && (
+        <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
+        )}
+        <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
+          <div>
+            {brandTags && brandTags.topRightTag && (
             <RecipeTagTitle brandTag={brandTags.topRightTag} />
-          )}
-          <div
-            className={css.titleWrapper}
-          >
-            <h2 className={css.recipeTitle}>
-              {title}
-            </h2>
+            )}
+            <div
+              className={css.titleWrapper}
+            >
+              <h2 className={css.recipeTitle}>
+                {title}
+              </h2>
+            </div>
           </div>
+          <RecipeTilePurchaseInfoContainer recipeId={recipeId} />
         </div>
-        <RecipeTilePurchaseInfoContainer recipeId={recipeId} />
       </div>
     </div>
+
   )
 }
 

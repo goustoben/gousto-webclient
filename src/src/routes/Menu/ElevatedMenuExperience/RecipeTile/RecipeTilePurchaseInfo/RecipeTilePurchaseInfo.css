@@ -1,7 +1,17 @@
 @value sizeSM, sizeMD, sizeXS from 'styles/typography.css';
 @value Blackberry, White from 'styles/colors.css';
-@value ScreenXXSMax from 'styles/screenSizes.css';
+@value ScreenXXSMax, ScreenSMMin from 'styles/screenSizes.css';
 .purchaseInfoWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.surchageOnTop {
+  flex-direction: column;
+}
+
+.buttonsWrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -10,9 +20,17 @@
 .surchargeInfo {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   margin-right: 0.75rem;
   padding-top: 0.125rem;
   color: Blackberry;
+}
+
+.surchargeInfoRow {
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-bottom: 0.5rem;
+  margin-right: 0;
 }
 
 .surchargeInfoIsFineDineIn {
@@ -47,4 +65,8 @@
     font-size: 12px;
     /* We don't have defined 12px font size */
   }
+}
+
+.spaceLeft {
+  padding-left: 0.25rem;
 }

@@ -1,20 +1,17 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
 @value White, Blackberry from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
-.recipeTileContainer {
+.recipeTile {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    background-color: White;
-    position: relative;
-    height: 200px;
+    height: 220px;
     margin: 0 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+
     @media ScreenSMMin {
         width: 48%;
         height: auto;
-        flex-direction: column;
         margin: 0 1rem 1rem 0;
-        height: auto;
     }
     @media ScreenMDMin {
         width: 30%;
@@ -22,6 +19,19 @@
     }
     @media ScreenLGMin {
         width: 24%;
+    }
+}
+
+.recipeTileContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: White;
+    position: relative;
+   
+    @media ScreenSMMin {
+        flex-direction: column;
     }
 }
 
@@ -49,7 +59,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 30%;
+    height: 35%;
     @media ScreenXSMax {
         margin: 0.75rem;
         height: auto;
@@ -77,11 +87,6 @@
     color: White;
 }
 
-.recipeTileInfoShowVariantHeader {
-    @media ScreenXSMax {
-        padding-top: 1.5rem
-    }
-}
 
 .recipeTileContainer:hover {
     box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2);

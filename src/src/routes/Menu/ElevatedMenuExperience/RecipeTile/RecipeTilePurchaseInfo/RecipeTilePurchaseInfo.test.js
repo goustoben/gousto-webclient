@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
+import { DropdownArrowContainer } from '../../../Recipe/AddRecipe/DropdownArrow'
 
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper
@@ -76,6 +77,10 @@ describe('RecipeTilePurchaseInfo', () => {
     })
     test('should render AddRecipeButtonContainer', () => {
       expect(wrapper.find(AddRecipeButtonContainer)).toHaveLength(1)
+    })
+
+    test('should render a dropdown for variants', () => {
+      expect(wrapper.find(DropdownArrowContainer)).toHaveLength(1)
     })
   })
 

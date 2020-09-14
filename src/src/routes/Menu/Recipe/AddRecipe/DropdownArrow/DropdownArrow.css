@@ -1,6 +1,5 @@
 @value White, Bluecheese, Black from 'styles/colors.css';
 .arrowContainer {
-    composes: marginSMTop from 'sass-loader!styles/spacing.scss';
     background-color: Bluecheese;
     width: 2.5rem;
     text-align: center;

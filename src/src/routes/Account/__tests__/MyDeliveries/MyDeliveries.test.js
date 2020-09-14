@@ -2,21 +2,17 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import MyDeliveries from 'routes/Account/MyDeliveries/MyDeliveries'
-import userActions from 'actions/user'
 
-jest.mock('actions/user', () => ({
-  userLoadAddresses: jest.fn(),
-  userLoadNewOrders: jest.fn(),
-}))
+const userLoadAddressesMock = jest.fn()
+const userLoadNewOrdersMock = jest.fn()
 
 describe('MyDeliveries', () => {
-  const dispatchSpy = jest.fn()
-  const getStateSpy = jest.fn()
-  const context = { store: { dispatch: dispatchSpy, getState: getStateSpy } }
-
   describe('fetchOrdersAndAddresses', () => {
     beforeEach(() => {
-      shallow(<MyDeliveries />, { context })
+      shallow(<MyDeliveries
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
     })
 
     afterEach(() => {
@@ -24,11 +20,11 @@ describe('MyDeliveries', () => {
     })
 
     test('should call userFetchOrders', () => {
-      expect(userActions.userLoadNewOrders).toHaveBeenCalled()
+      expect(userLoadAddressesMock).toHaveBeenCalled()
     })
 
     test('should call userLoadAddresses', () => {
-      expect(userActions.userLoadAddresses).toHaveBeenCalled()
+      expect(userLoadNewOrdersMock).toHaveBeenCalled()
     })
   })
 
@@ -50,7 +46,9 @@ describe('MyDeliveries', () => {
         isFetchingAddresses={false}
         didErrorFetchingOrders={null}
         didErrorFetchingAddresses={null}
-      />,{ context })
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
     })
 
     test('should render a <div> with no props', () => {
@@ -69,29 +67,49 @@ describe('MyDeliveries', () => {
     })
 
     test('should render the Loading component instead of OrderList one when fetching orders is pending', () => {
-      wrapper = shallow(<MyDeliveries isFetchingOrders />,{ context })
+      wrapper = shallow(<MyDeliveries
+        isFetchingOrders
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(0)
       expect(wrapper.find('Loading').length).toEqual(1)
     })
 
     test('should NOT render the Loading component when fetching addresses is pending', () => {
-      wrapper = shallow(<MyDeliveries isFetchingAddresses />,{ context })
+      wrapper = shallow(<MyDeliveries
+        isFetchingAddresses
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(1)
       expect(wrapper.find('Loading').length).toEqual(0)
     })
 
     test('should render an error Alert and retry button when fetching orders fails', () => {
-      wrapper = shallow(<MyDeliveries didErrorFetchingPendingOrders="error" />,{ context })
+      wrapper = shallow(<MyDeliveries
+        didErrorFetchingPendingOrders="error"
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
       expectAlertAndRetryButton(wrapper)
     })
 
     test('should render an error Alert and retry button when fetching projected orders fails', () => {
-      wrapper = shallow(<MyDeliveries didErrorFetchingProjectedOrders="error" />,{ context })
+      wrapper = shallow(<MyDeliveries
+        didErrorFetchingProjectedOrders="error"
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
       expectAlertAndRetryButton(wrapper)
     })
 
     test('should render an error Alert and retry button when fetching addresses fails', () => {
-      wrapper = shallow(<MyDeliveries didErrorFetchingAddresses="error" />,{ context })
+      wrapper = shallow(<MyDeliveries
+        didErrorFetchingAddresses="error"
+        userLoadAddresses={userLoadAddressesMock}
+        userLoadNewOrders={userLoadNewOrdersMock}
+      />)
       expectAlertAndRetryButton(wrapper)
     })
   })
