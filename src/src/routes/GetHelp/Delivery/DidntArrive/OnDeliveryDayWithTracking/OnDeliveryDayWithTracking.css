@@ -1,13 +1,9 @@
-@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value Bluecheese, Oyster from 'styles/colors.css';
 
 .mainText {
   padding-top: 0.5rem;
   composes: fontStyleBody from 'design-language/typography.module.css';
-
-  @media BreakpointToMedium {
-    margin-bottom: 7rem;
-  }
 
   @media BreakpointFromMedium {
     padding-bottom: 1.5rem;
