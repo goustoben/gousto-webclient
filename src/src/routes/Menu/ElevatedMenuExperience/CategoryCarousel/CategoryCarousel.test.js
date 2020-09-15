@@ -7,7 +7,8 @@ import { CategoryCarousel } from './CategoryCarousel'
 
 describe('RecipeCategoriesCarousel', () => {
   const category = Immutable.fromJS({
-    title: 'Categories',
+    shortTitle: 'Category 1',
+    slug: 'category-1',
   })
   const recipe1 = {
     originalId: '1',
@@ -51,6 +52,18 @@ describe('RecipeCategoriesCarousel', () => {
       )
 
       expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(1)
+      expect(wrapper.find('.categoryTitle').text()).toEqual('Category 1')
+    })
+
+    test('then it should render View all link with 1 recipe', () => {
+      const wrapper = shallow(
+        <CategoryCarousel category={category} recipes={recipes1} />,
+      )
+      const viewAllPath = `/menu?collection=${category.get('slug')}`
+
+      expect(wrapper.find('.categoryViewAllLink').find('GoustoLink').children().first()
+        .text()).toEqual('View all (1)')
+      expect(wrapper.find('.categoryViewAllLink').prop('to')).toEqual(viewAllPath)
     })
   })
 
@@ -61,6 +74,15 @@ describe('RecipeCategoriesCarousel', () => {
       )
 
       expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(2)
+    })
+
+    test('then it should render View all link with 2 recipes', () => {
+      const wrapper = shallow(
+        <CategoryCarousel category={category} recipes={recipes2} />,
+      )
+
+      expect(wrapper.find('.categoryViewAllLink').find('GoustoLink').children().first()
+        .text()).toEqual('View all (2)')
     })
   })
 })
