@@ -1,13 +1,33 @@
+@value sizeMD from 'styles/typography.module.css';
+@value Black from 'styles/colors.module.css';
+
 .categoryCarousel {
   overflow: hidden;
-  height: 360px;
+  height: 400px;
+}
+
+.categoryDetails {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 0.5rem;
+}
+
+.categoryTitle {
+  color: Black;
+  font-size: sizeMD;
+  font-weight: bold;
+}
+
+.categoryViewAllLink {
+  margin-left: auto;
 }
 
 .categoryCarouselInner {
   overflow-y: hidden;
   overflow-x: auto;
   height: 380px;
-	-webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
 }
 
 .categoryCarouselRecipes {
