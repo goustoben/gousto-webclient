@@ -45,4 +45,18 @@ describe('RecipeDisclaimer', () => {
       expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
     })
   })
+
+  describe('when there is no theme', () => {
+    test('should not display the disclaimer', () => {
+      wrapper = shallow(
+        <RecipeDisclaimer
+          claim={{
+            ...claim,
+            theme: undefined
+          }}
+        />
+      )
+      expect(wrapper.find('.disclaimerWrapper').exists()).toBe(false)
+    })
+  })
 })

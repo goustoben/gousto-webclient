@@ -10,12 +10,10 @@ import { getMenuAccessToken, getMenuFetchVariant } from 'selectors/menu'
 import { getUserMenuVariant } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
-import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
-import { brandDataReceived } from 'actions/brand'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { basketRecipeAdd } from '../actions/basketRecipes'
-import { getBrandMenuHeaders } from '../actions/brandHeaders'
+import { getBrandMenuHeaders, getBrandInfo } from '../actions/brandData'
 import { fetchMenus, fetchMenusWithUserId } from './menuApi'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
@@ -247,13 +245,7 @@ export default function fetchData({ query, params }, force, background, userMenu
 
     dispatch(menuServiceDataReceived(menuResponse, accessToken, userMenuVariant))
 
-    try {
-      const brandResponse = await fetchBrandInfo(accessToken)
-      dispatch(brandDataReceived(brandResponse))
-    } catch (err) {
-      logger.notice({ message: `Brand Theme failed to load: ${err.message}`, errors: [err] })
-    }
-
+    dispatch(getBrandInfo())
     dispatch(getBrandMenuHeaders())
 
     try {

@@ -20,7 +20,7 @@ import { getUserMenuVariant } from 'selectors/features'
 import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
 import * as basketRecipesActions from '../../actions/basketRecipes'
 import { safeJestMock } from '../../../../_testing/mocks'
-import * as brandHeadersActions from '../../actions/brandHeaders'
+import * as brandHeadersActions from '../../actions/brandData'
 
 import fetchData from '../fetchData'
 
@@ -84,12 +84,14 @@ describe('menu fetchData', () => {
   actions.basketNumPortionChange = jest.fn()
   actions.userLoadOrders = jest.fn()
   actions.userLoadData = jest.fn()
+  const getBrandInfoMock = safeJestMock(brandHeadersActions, 'getBrandInfo')
 
   beforeEach(() => {
     getState = () => state
     dispatch = jest.fn().mockResolvedValue(undefined)
     state = { ...originalState }
     safeJestMock(brandHeadersActions, 'getBrandMenuHeaders').mockReturnValue('getBrandMenuHeaders')
+    getBrandInfoMock.mockReturnValue('getBrandInfo')
 
     dispatch.mockReset()
     dispatch.mockResolvedValue(undefined)
@@ -635,7 +637,7 @@ describe('menu fetchData', () => {
       await fetchData({ query, params: paramsWithOrderId })(dispatch, getState)
 
       expect(fetchMenus).toHaveBeenCalled()
-      expect(fetchBrandInfo).toHaveBeenCalled()
+      expect(getBrandInfoMock).toHaveBeenCalled()
     })
   })
 
@@ -659,7 +661,6 @@ describe('menu fetchData', () => {
         await fetchData({ query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)(dispatch, getState)
 
         expect(fetchMenusWithUserId).not.toHaveBeenCalled()
-        expect(fetchBrandInfo).toHaveBeenCalledWith('')
       })
     })
 
@@ -679,7 +680,6 @@ describe('menu fetchData', () => {
         await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
 
         expect(fetchMenusWithUserId).toHaveBeenCalledWith('test-token', query, 'test-id')
-        expect(fetchBrandInfo).toHaveBeenCalledWith('test-token')
       })
     })
 
@@ -704,40 +704,19 @@ describe('menu fetchData', () => {
     })
   })
 
-  describe('given fetchBrandInfo is called', () => {
-    describe('when the call fails', () => {
-      const err = { message: 'something broke!' }
-
-      beforeEach(() => {
-        fetchBrandInfo.mockImplementation(() => {
-          throw err
-        })
-      })
-
-      test('then the error is caught and notice is logged', async () => {
-        const orderId = '123'
-        const paramsWithOrderId = {
-          ...params,
-          orderId
-        }
-
-        await fetchData({ query, params: paramsWithOrderId })(dispatch, getState)
-
-        expect(fetchMenus).toHaveBeenCalled()
-        expect(fetchBrandInfo).toHaveBeenCalled()
-        expect(logger.notice).toHaveBeenCalledWith({
-          message: `Brand Theme failed to load: ${err.message}`,
-          errors: [err]
-        })
-      })
-    })
-  })
-
   describe('given brand headers is called', () => {
     test('should call dispatch with getBrandMenuHeaders', async () => {
       await fetchData({ query, params }, false, false)(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith('getBrandMenuHeaders')
+    })
+  })
+
+  describe('given brand info is called', () => {
+    test('should call dispatch with getBrandInfo', async () => {
+      await fetchData({ query, params }, false, false)(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith('getBrandInfo')
     })
   })
 })

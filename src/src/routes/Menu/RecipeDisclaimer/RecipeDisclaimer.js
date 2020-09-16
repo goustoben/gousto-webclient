@@ -4,7 +4,7 @@ import Svg from 'Svg'
 import css from './RecipeDisclaimer.css'
 
 const RecipeDisclaimer = ({ claim }) => {
-  if (!claim || !claim.disclaimer) {
+  if (!claim || !claim.disclaimer || !claim.theme) {
     return null
   }
 

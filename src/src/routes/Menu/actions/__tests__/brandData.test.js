@@ -1,8 +1,21 @@
 import Immutable from 'immutable'
 import logger from 'utils/logger'
-import { getBrandMenuHeaders } from '../brandHeaders'
+import { getBrandMenuHeaders, brandDataReceived } from '../brandData'
 import * as brandApi from '../../../../apis/brand'
 import { safeJestMock } from '../../../../_testing/mocks'
+
+describe('brandDataReceived', () => {
+  test('should return an action with the correct response', () => {
+    const testResponse = { testData: 'some brand' }
+
+    const result = brandDataReceived(testResponse)
+
+    expect(result).toEqual({
+      type: 'BRAND_DATA_RECEIVED',
+      response: { testData: 'some brand' },
+    })
+  })
+})
 
 describe('getBrandMenuHeaders', () => {
   describe('when brandHeaders returns data', () => {
