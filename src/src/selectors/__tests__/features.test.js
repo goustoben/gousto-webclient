@@ -33,7 +33,8 @@ import {
   getIs3DSForSignUpEnabled,
   getIsTastePreferencesEnabled,
   getBoxPricesPageRedesign,
-  getCheckoutRedesign
+  getCheckoutRedesign,
+  getPricingClarityRedesign
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -83,6 +84,7 @@ describe('when features are defined', () => {
     [getIsTastePreferencesEnabled, 'tastePreferences'],
     [getBoxPricesPageRedesign, 'isBoxPricesPageRedesignEnabled'],
     [getCheckoutRedesign, 'isCheckoutRedesignEnabled'],
+    [getPricingClarityRedesign, 'isPricingClarityEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

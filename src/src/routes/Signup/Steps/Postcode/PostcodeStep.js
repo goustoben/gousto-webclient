@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import TextInput from 'Form/Input'
 import {reminder} from 'config/freeDelivery'
+import config from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
@@ -17,14 +19,15 @@ class PostcodeStep extends React.PureComponent {
       changePostcode,
       deliveryDaysError,
       nextStepName,
+      isPricingClarityEnabled
     } = this.props
 
     return (
-      <span className={css.stepContainer} data-testing="signupPostcodeStep">
+      <div className={classNames(css.stepContainer, { [postcodeCss.pricingClarityRedesign]: isPricingClarityEnabled })} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
           <div className={css.header}>
-            <Heading type="h1" className={css.heading}>Where would you like your boxes delivered?</Heading>
-            <Image name="where-to-deliver" />
+            <Heading type="h1" className={css.heading}>{config.postCodeStep.title}</Heading>
+            {!isPricingClarityEnabled && <Image name="where-to-deliver" />}
           </div>
           <div className={css.body}>
             <div className={postcodeCss.inputContainer}>
@@ -68,7 +71,7 @@ class PostcodeStep extends React.PureComponent {
           </div>
         </div>
         <div className={css.footer}>
-          <div className={css.inputContainer}>
+          <div className={classNames(css.inputContainer, { [postcodeCss.pricingClarityInput]: isPricingClarityEnabled })}>
             <Button
               disabled={tempPostcode.length < 5}
               data-testing="signupPostcodeCTA"
@@ -80,7 +83,7 @@ class PostcodeStep extends React.PureComponent {
             />
           </div>
         </div>
-      </span>
+      </div>
     )
   }
 }
@@ -99,6 +102,7 @@ PostcodeStep.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  isPricingClarityEnabled: PropTypes.bool
 }
 
 PostcodeStep.defaultProps = {
@@ -107,7 +111,8 @@ PostcodeStep.defaultProps = {
   tempPostcode: '',
   changeTempPostcode: () => {},
   changePostcode: () => {},
-  nextStepName: ''
+  nextStepName: '',
+  isPricingClarityEnabled: false
 }
 
 export { PostcodeStep }

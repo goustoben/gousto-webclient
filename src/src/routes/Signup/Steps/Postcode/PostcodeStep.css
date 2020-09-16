@@ -1,6 +1,7 @@
 @value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 @value Radish, Haricot from 'styles/colors.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .smMinHidden {
 	display: inherit;
@@ -17,6 +18,24 @@
 	@media ScreenXSMax {
 		min-width: 291px;
 	}
+}
+
+.pricingClarityRedesign {
+  .inputContainer {
+    margin-bottom: 1rem;
+
+    @media BreakpointFromMedium {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .bodyText {
+    margin-bottom: 1.5rem;
+
+    @media BreakpointFromMedium {
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 .row {
