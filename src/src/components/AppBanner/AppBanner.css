@@ -1,11 +1,18 @@
-@value Apricot, DarkRadish, White from 'styles/colors.css';
+@value Apricot, Bluecheese, White, Blackberry, Mackerel from 'styles/colors.css';
 @value Screen3XSMin from 'styles/screenSizes.css';
+@value bannerOffset -80px;
 
 .appBannerWrapper {
+  margin-top: bannerOffset;
+  background: url('media/images/app-promo-banner-background.png') center top no-repeat;
   display: flex;
-  background-color: DarkRadish;
+  background-color: Bluecheese;
   color: White;
-  font-size: 12px;
+
+  animation: appBannerAnimation 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+
   @media Screen3XSMin {
     font-size: initial;
   }
@@ -16,7 +23,7 @@
   border: none;
   color: White;
   display: flex;
-  padding: 0 16px;
+  padding: 2rem 1rem;
 }
 
 .closeIcon {
@@ -49,24 +56,29 @@
   white-space: nowrap;
 }
 
-.stars {
-  color: Apricot;
-  margin-right: 5px;
-}
-.starFull {
-  composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
-}
-.starHalf {
-  composes: fa-basic-class fa-star-half-o from 'styles/vendor/font-awesome-module.css';
-}
-.starEmpty {
-  composes: fa-basic-class fa-star-o from 'styles/vendor/font-awesome-module.css';
+.ratings {
+  animation: ratingsAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2.5s;
+  opacity: 0;
+  color: Mackerel;
 }
 
 .appLink {
   align-items: center;
   display: flex;
   padding: 10px;
+  color: Blackberry;
+  background: White;
+  font-weight: 900;
+  margin: 1rem 0.75rem;
+  border: 0;
+  border-radius: 3px;
+  padding: 0.75rem 1rem;
+
+  animation: installCTAAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-delay: 2.9s;
 
   & > div > div:last-child {
     text-transform: none;
@@ -75,6 +87,66 @@
 
   &:focus, &:hover {
     text-decoration: none;
+  }
+}
+
+.star {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+  animation: starAnimation 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+  transform: scale(0);
+
+  &:nth-child(1) { animation-delay: 1.8s }
+  &:nth-child(2) { animation-delay: 1.9s }
+  &:nth-child(3) { animation-delay: 2s }
+  &:nth-child(4) { animation-delay: 2.1s }
+  &:nth-child(5) { animation-delay: 2.2s }
+}
+
+@keyframes ratingsAnimation { 
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes installCTAAnimation { 
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes starAnimation { 
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    opacity: 0.7;
+    transform: scale(1.4);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes appBannerAnimation { 
+  0% {
+    margin-top: bannerOffset;
+  }
+  100% {
+    margin-top: 0;
   }
 }
 
