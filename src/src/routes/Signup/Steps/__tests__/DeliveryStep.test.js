@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import DropdownInput from 'Form/Dropdown'
 import { unbounce as unbounceRoutes } from 'config/routes'
-import { DeliveryStep } from '../DeliveryStep'
+import { DeliveryStep } from '../Delivery/DeliveryStep'
 
 describe('Delivery Step', () => {
   let wrapper
@@ -67,6 +67,11 @@ describe('Delivery Step', () => {
       tempDate="2020-02-14"
       tempSlotId="1"
     />)
+  })
+
+  test('renders an image in the header', () => {
+    expect(wrapper.find('SignupImage')).toHaveLength(1)
+    expect(wrapper.find('SignupImage').prop('name')).toBe('delivery-day')
   })
 
   describe('Capacity Message', () => {
@@ -209,6 +214,17 @@ describe('Delivery Step', () => {
         }]
         expect(deliverySlotDropdown.prop('options')).toEqual(expectedOptions)
       })
+    })
+  })
+
+  describe('when the pricing clarity experiment is on', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isPricingClarityEnabled: true })
+    })
+
+    test('then it renders correctly', () => {
+      expect(wrapper.hasClass('pricingClarityRedesign')).toBeTruthy()
+      expect(wrapper.find('SignupImage')).toHaveLength(0)
     })
   })
 })

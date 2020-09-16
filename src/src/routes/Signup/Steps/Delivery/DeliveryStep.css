@@ -1,8 +1,50 @@
 @value ScreenXSMax, HeightSMMax, HeightMDMax from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingXS, SpacingSM, SpacingMD from 'sass-loader!styles/spacing.scss';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
 	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+}
+
+.pricingClarityRedesign {
+  .row {
+    margin-bottom: 0;
+
+    @media BreakpointFromMedium {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .left,
+  .right {
+    width: 100%;
+    padding: 0;
+
+    @media BreakpointFromMedium {
+      width: 50%;
+    }
+  }
+
+  .left {
+    padding-bottom: 0.5rem;
+
+    @media BreakpointFromMedium {
+      padding-bottom: 0;
+      padding-right: 5px;
+    }
+  }
+
+  .body {
+    margin-bottom: 0;
+
+    @media BreakpointFromMedium {
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 .row {

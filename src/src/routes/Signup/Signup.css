@@ -1,6 +1,7 @@
 @value White, Chia, DarkChilli from 'styles/colors.css';
 @value ScreenXXSMax, ScreenSMMax, ScreenXSMax, HeightSMMax, HeightMDMin, HeightMDMax, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
 @value SpacingLG, SpacingMD, SpacingXS, ScreenXXSMin, SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 @value minHeight 485px;
 @value maxWidth 750px;
@@ -17,6 +18,10 @@
 	@media ScreenXSMax {
 		padding-top: SpacingSM;
 	}
+}
+
+.signupWrapper {
+	width: 100%;
 }
 
 .stepsContainer {
@@ -57,10 +62,6 @@
 	width: 100%;
 	float: left;
 	justify-content: normal;
-
-	@media HeightSMMax {
-		min-height: 580px;
-	}
 
 	@media ScreenXSMax {
 		width: 380px;
@@ -149,6 +150,11 @@
 	overflow: hidden;
 }
 
+.animationContainer.autosize {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
 .animation {
 	composes: row from 'styles/flex.css';
 	height: 100%;
@@ -197,3 +203,61 @@
 	}
 }
 
+.priceClarityRedesign {
+  .fullWidth {
+    padding: 0 1rem;
+
+    @media BreakpointFromMedium {
+      padding: 0 2rem;
+    }
+  }
+
+  .stepsContainer {
+    max-width: maxWidth;
+    width: calc(100% - 32px);
+  }
+
+  .step {
+    /* The formula is 100% / (steps.length + 1): now it will work only for 3 steps.
+       Since it's enabled in the experiment only, it's not possible
+       to move the formula to the js file for the time being. */
+    width: 25%;
+  }
+
+  .stepContainer {
+    width: 100%;
+  }
+
+  .stepsContainer, .stepContainer, .step {
+    min-height: 0;
+  }
+
+  .pricingMinHeight {
+    min-height: 370px;
+  }
+
+  .stepIndicatorContainer {
+    padding: 0 1rem;
+
+    @media BreakpointFromMedium {
+      padding: 0 2rem;
+    }
+  }
+
+  .header {
+    min-height: 0;
+    padding: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .largerSpacing {
+    margin-bottom: 1.5rem;
+    @media BreakpointFromMedium {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .bodyText {
+    margin: 0;
+  }
+}

@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
+import classNames from 'classnames'
 import DropdownInput from 'Form/Dropdown'
 
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
@@ -9,6 +10,7 @@ import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset 
 import { redirect } from 'utils/window'
 import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
+import config from 'config/signup'
 import { Button } from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -68,6 +70,7 @@ const DeliveryStep = ({
   disabledSlots,
   userHasAvailableSlots,
   isTastePreferencesEnabled,
+  isPricingClarityEnabled
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -135,7 +138,7 @@ const DeliveryStep = ({
         <div className={signupCss.fullWidth}>
           <div className={signupCss.header}>
             <Image name="delivery-day" />
-            <h1 className={signupCss.heading}>Which delivery day would you like?</h1>
+            <h1 className={signupCss.heading}>{config.deliveryOptionsStep.title}</h1>
           </div>
           <div className={signupCss.body}>
             <div className={css.container}>
@@ -162,13 +165,13 @@ const DeliveryStep = ({
   }
 
   return (
-    <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
+    <span className={classNames(signupCss.stepContainer, { [css.pricingClarityRedesign]: isPricingClarityEnabled })} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
-        <div className={signupCss.header}>
-          <Heading type="h1" className={signupCss.heading}>Which delivery day would you like?</Heading>
-          <Image name="delivery-day" />
+        <div className={classNames(signupCss.header, signupCss.largerSpacing)}>
+          <Heading type="h1" className={signupCss.heading}>{config.deliveryOptionsStep.title}</Heading>
+          {!isPricingClarityEnabled && <Image name="delivery-day" />}
         </div>
-        <div className={signupCss.body}>
+        <div className={classNames(signupCss.body, css.body)}>
           <div className={css.container}>
             <div className={css.row}>
               <div className={css.left} data-testing="signupDeliveryDay">
@@ -199,7 +202,7 @@ const DeliveryStep = ({
         </div>
       </div>
       <div className={signupCss.footer}>
-        <div className={signupCss.inputContainer}>
+        <div className={classNames(signupCss.inputContainer, { [css.pricingClarityButton]: isPricingClarityEnabled })}>
           <Button
             data-testing="signupDeliveryCTA"
             disabled={!tempDate || !tempSlotId}
@@ -231,6 +234,7 @@ DeliveryStep.propTypes = {
   disabledSlots: PropTypes.arrayOf(PropTypes.string),
   userHasAvailableSlots: PropTypes.bool,
   isTastePreferencesEnabled: PropTypes.bool,
+  isPricingClarityEnabled: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -251,6 +255,7 @@ DeliveryStep.defaultProps = {
   disabledSlots: [],
   userHasAvailableSlots: true,
   isTastePreferencesEnabled: false,
+  isPricingClarityEnabled: false,
 }
 
 export { DeliveryStep }

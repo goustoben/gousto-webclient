@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 import Immutable from 'immutable'
+import classNames from 'classnames'
 import config from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
@@ -39,7 +40,10 @@ const propTypes = {
   }),
   currentStepName: PropTypes.string,
   changeStep: PropTypes.func.isRequired,
-  isTastePreferencesEnabled: PropTypes.bool
+  isTastePreferencesEnabled: PropTypes.bool,
+  isPricingClarityEnabled: PropTypes.bool,
+  orderDiscount: PropTypes.string,
+  menuLoadBoxPrices: PropTypes.func.isRequired
 }
 
 const defaultProps = {
@@ -56,7 +60,9 @@ const defaultProps = {
     stepName: '',
   },
   currentStepName: '',
-  isTastePreferencesEnabled: false
+  isTastePreferencesEnabled: false,
+  isPricingClarityEnabled: false,
+  orderDiscount: '',
 }
 
 const contextTypes = {
@@ -66,7 +72,7 @@ const contextTypes = {
 const postCodePath = '/signup/postcode'
 
 class Signup extends React.PureComponent {
-  static fetchData = async ({ store, params = {}, query = {}}) => {
+  static fetchData = async ({ store, params = {}, query = {}, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled }) => {
     let steps = Immutable.List(config.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
     const promoCode = query.promo_code
@@ -105,6 +111,10 @@ class Signup extends React.PureComponent {
       actions.signupSetStep(firstStep)
     )
 
+    if (isPricingClarityEnabled && firstStep.get('slug') === 'box-size' && !orderDiscount) {
+      menuLoadBoxPrices()
+    }
+
     // No Step specified and no query string specified
     if (!params.stepName && querySteps.length === 0) {
       return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
@@ -127,12 +137,12 @@ class Signup extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { location, params } = this.props
+    const { location, params, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
     const boxPricesExperimentParams = { stepName: 'postcode', pathname: postCodePath }
     const signupParams = location.pathname === routes.client.signup ? params : boxPricesExperimentParams
-    Signup.fetchData({ store, query, params: signupParams })
+    Signup.fetchData({ store, query, params: signupParams, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -169,7 +179,7 @@ class Signup extends React.PureComponent {
   }
 
   renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
-    const { goToStep, stepName } = this.props
+    const { goToStep, stepName, isPricingClarityEnabled } = this.props
     const Component = components[name]
 
     return (
@@ -180,6 +190,7 @@ class Signup extends React.PureComponent {
         stepNumber={currentStepNumber}
         isLastStep={isLastStep}
         active={stepName === name}
+        isPricingClarityEnabled={isPricingClarityEnabled}
       />
     )
   }
@@ -210,11 +221,22 @@ class Signup extends React.PureComponent {
   }
 
   render() {
+    const { isPricingClarityEnabled, stepName } = this.props
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
 
+    const currentStep = steps.find(step => step.get('slug') === stepName) || steps.get(0)
+    const currentStepName = currentStep.get('name')
+
+    const isBoxSizeStep = currentStepName === 'boxSize'
+    const isPostcodeStep = currentStepName === 'postcode'
+    const isDeliveryStep = currentStepName === 'delivery'
+
+    const pricingMinHeight = isPricingClarityEnabled && (isPostcodeStep || isDeliveryStep)
+    const autosizeAnimationContainer = isPricingClarityEnabled && isBoxSizeStep
+
     return (
-      <div className={css.signupContainer}>
+      <div className={classNames(css.signupContainer, { [css.priceClarityRedesign]: isPricingClarityEnabled })}>
         <Helmet
           style={[{
             cssText: `
@@ -224,8 +246,8 @@ class Signup extends React.PureComponent {
             `,
           }]}
         />
-        <div className={css.stepsContainer}>
-          <div className={css.animationContainer}>
+        <div className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}>
+          <div className={classNames(css.animationContainer, { [css.autosize]: autosizeAnimationContainer })}>
             <div className={css.stepIndicatorContainer}>
               <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
             </div>
