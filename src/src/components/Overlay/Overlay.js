@@ -9,6 +9,18 @@ import css from './Overlay.css'
 let __scrollFromTop // eslint-disable-line no-underscore-dangle
 let __bodyPrevStyle // eslint-disable-line no-underscore-dangle
 
+/*
+ * Warning - here be dragons
+ *
+ * This component does NOT update props correctly on its children. Please avoid using this.
+ *
+ * The example below will not work correctly:
+ *
+ * const Foo = ({ someValue }) => <Overlay><Bar someProp={someValue} /></Overlay>;
+ *
+ * <Bar /> will never re-render with an updated value for `someProp`.
+ *
+ */
 class Overlay extends React.PureComponent {
   static closeOverlayForEachNode(nodeOverride) {
     const reactRoot = document.getElementById('react-root')
@@ -45,7 +57,8 @@ class Overlay extends React.PureComponent {
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.props.open !== newProps.open) {
+    const { open } = this.props
+    if (open !== newProps.open) {
       if (newProps.open) {
         this.renderOverlay(newProps)
       } else {
@@ -92,11 +105,12 @@ class Overlay extends React.PureComponent {
   getWindowHeight = () => (window.innerHeight || document.body.clientHeight || document.documentElement.clientHeight)
 
   fadeOut = () => {
+    const { className, contentClassName } = this.props
     const overlay = (
-      <div className={classNames(this.props.className, css.overlayContainer)}>
+      <div className={classNames(className, css.overlayContainer)}>
         <div className={css.greyFadeOut}>&nbsp;</div>
         <div
-          className={classNames(this.props.contentClassName, css[`contentSlideOutFrom${this.props.from}`], css.overlayContent)}
+          className={classNames(contentClassName, css[`contentSlideOutFrom${this.props.from}`], css.overlayContent)}
         >
           {this.children}
         </div>
