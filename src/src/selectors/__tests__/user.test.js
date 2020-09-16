@@ -1,5 +1,11 @@
 import Immutable from 'immutable'
-import { getUserId, getUserRecentRecipesIds, getUsersOrdersDaySlotLeadTimeIds, getUserOpenOrders } from '../user'
+import {
+  getUserId,
+  getUserPhoneNumber,
+  getUserRecentRecipesIds,
+  getUsersOrdersDaySlotLeadTimeIds,
+  getUserOpenOrders
+} from '../user'
 
 describe('user selectors', () => {
   describe('getUserRecentRecipesIds', () => {
@@ -68,6 +74,18 @@ describe('user selectors', () => {
       }
 
       expect(getUserId(state)).toBe('123')
+    })
+  })
+
+  describe('when getUserPhoneNumber is called', () => {
+    test('returns user phone number from the store', () => {
+      const state = {
+        user: Immutable.fromJS({
+          phone: 'phone-number'
+        })
+      }
+
+      expect(getUserPhoneNumber(state)).toBe('phone-number')
     })
   })
 

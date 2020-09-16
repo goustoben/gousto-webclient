@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 
 export const getUserFirstName = state => state.user.get('nameFirst')
 export const getUserId = state => state.user.get('id', null)
+export const getUserPhoneNumber = state => state.user.get('phone')
 export const getReferralOffer = state => state.user.get('referralOffer')
 export const getReferralCode = state => state.user.getIn(['referralOffer', 'code'], '') || state.user.get('referral-code', '')
 export const getLoadingStateForOffer = state => state.pending.get('USER_LOAD_REFERRAL_OFFER', true)

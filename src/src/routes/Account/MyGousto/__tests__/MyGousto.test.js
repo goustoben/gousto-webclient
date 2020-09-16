@@ -17,7 +17,7 @@ describe('MyGousto', () => {
 
   beforeEach(() => {
     jest.useFakeTimers()
-    wrapper = shallow(<MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} />, {
+    wrapper = shallow(<MyGousto isMobileViewport={false} userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} />, {
       context: {
         store: {
           dispatch: jest.fn()
@@ -51,10 +51,14 @@ describe('MyGousto', () => {
       expect(wrapper.find('Connect(LimitedCapacityNotice)').exists()).toBe(false)
     })
 
+    test('the AppAwarenessBanner is not rendered', () => {
+      expect(wrapper.find('Connect(AppAwarenessBanner)').exists()).toBe(false)
+    })
+
     describe('when limitedCapacity flag is true', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} isCapacityLimited />, {
+          <MyGousto isMobileViewport={false} userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} isCapacityLimited />, {
             context: {
               store: {
                 dispatch: jest.fn()
@@ -66,6 +70,42 @@ describe('MyGousto', () => {
 
       test('the LimitedCapacityNotice is rendered', () => {
         expect(wrapper.find('Connect(LimitedCapacityNotice)').exists()).toBe(true)
+      })
+
+      test('the AppAwarenessBanner is not rendered', () => {
+        expect(wrapper.find('Connect(AppAwarenessBanner)').exists()).toBe(false)
+      })
+    })
+
+    describe('when user is on desktop viewport', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <MyGousto
+            userLoadOrders={userLoadOrdersSpy}
+            userGetReferralDetails={userGetReferralDetails}
+            isMobileViewport={false}
+          />, {
+            context: {
+              store: {
+                dispatch: jest.fn()
+              }
+            }
+          }
+        )
+      })
+
+      test('the AppAwarenessBanner is not rendered', () => {
+        expect(wrapper.find('Connect(AppAwarenessBanner)').exists()).toBe(false)
+      })
+
+      describe('and showAppAwareness flag is true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ showAppAwareness: true })
+        })
+
+        test('the AppAwarenessBanner is rendered', () => {
+          expect(wrapper.find('Connect(AppAwarenessBanner)').exists()).toBe(true)
+        })
       })
     })
   })
