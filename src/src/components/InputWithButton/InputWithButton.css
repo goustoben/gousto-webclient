@@ -1,0 +1,42 @@
+@value inputAndButtonHeight 3rem;
+
+.wrapper {
+  display: flex;
+  padding-top: 1rem;
+}
+
+.wrapper label {
+  display: none;
+}
+
+.wrapper p {
+  line-height: 1.5rem;
+}
+
+.wrapper input {
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  margin-bottom: 0;
+  height: inputAndButtonHeight;
+}
+
+.wrapper input:focus,
+.wrapper input:hover {
+  border-right: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.wrapper button,
+.wrapper button:focus {
+  border-left: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  height: inputAndButtonHeight;
+}
+
+.wrapper button span {
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+}

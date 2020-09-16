@@ -1,0 +1,27 @@
+@value BreakpointFromLarge from 'design-language/breakpoints.css';
+@value Blackberry from 'styles/colors.css';
+
+.wrapper {
+  display: none;
+
+  @media BreakpointFromLarge {
+    width: 48rem;
+    height: 13.75rem;
+    margin: 0 auto;
+    display: flex;
+    overflow: hidden;
+  }
+}
+
+.copy {
+  composes: fontStyleBody from 'design-language/typography.module.css';
+  color: Blackberry;
+}
+
+.imageGoustoApp {
+  width: 13.5rem;
+}
+
+.textContentWrapper {
+  padding: 1rem 0 0 4rem;
+}

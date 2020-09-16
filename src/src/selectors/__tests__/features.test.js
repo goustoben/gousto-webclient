@@ -34,6 +34,7 @@ import {
   getIsTastePreferencesEnabled,
   getBoxPricesPageRedesign,
   getCheckoutRedesign,
+  getIsAppAwarenessEnabled,
   getPricingClarityRedesign
 } from 'selectors/features'
 
@@ -84,6 +85,7 @@ describe('when features are defined', () => {
     [getIsTastePreferencesEnabled, 'tastePreferences'],
     [getBoxPricesPageRedesign, 'isBoxPricesPageRedesignEnabled'],
     [getCheckoutRedesign, 'isCheckoutRedesignEnabled'],
+    [getIsAppAwarenessEnabled, 'isAppAwarenessEnabled'],
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
   ]
 

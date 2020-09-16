@@ -66,6 +66,9 @@ const defaultFeatures = () => ({
   enable3DSForSignUp: {
     value: false
   },
+  isAppAwarenessEnabled: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

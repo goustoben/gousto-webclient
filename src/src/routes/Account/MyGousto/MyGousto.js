@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
 import { LimitedCapacityNotice } from './LimitedCapacityNotice'
+import { AppAwarenessBanner } from './AppAwarenessBanner'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 import { HeaderContainer } from './Header'
@@ -19,6 +20,8 @@ const propTypes = {
   referralDetails: PropTypes.instanceOf(Immutable.Map),
   redirect: PropTypes.func,
   isCapacityLimited: PropTypes.bool,
+  isMobileViewport: PropTypes.bool.isRequired,
+  showAppAwareness: PropTypes.bool,
 }
 
 const contextTypes = {
@@ -33,6 +36,7 @@ const defaultProps = {
   referralDetails: Immutable.Map(),
   redirect: () => {},
   isCapacityLimited: false,
+  showAppAwareness: false,
 }
 
 class MyGousto extends React.PureComponent {
@@ -49,14 +53,25 @@ class MyGousto extends React.PureComponent {
   }
 
   render() {
-    const { card, orders, nameFirst, referralDetails, redirect, isCapacityLimited } = this.props
+    const {
+      card,
+      orders,
+      nameFirst,
+      referralDetails,
+      redirect,
+      isCapacityLimited,
+      isMobileViewport,
+      showAppAwareness,
+    } = this.props
     const headerTitle = `Hello ${nameFirst},`
+    const showAppAwarenessBanner = !isMobileViewport && showAppAwareness
 
     return (
       <div>
         <div className={css.wrapper}>
           <div className={css.notificationContent}>
-            {isCapacityLimited && <LimitedCapacityNotice />}
+            {showAppAwarenessBanner && <AppAwarenessBanner />}
+            {(isCapacityLimited && !showAppAwarenessBanner) && <LimitedCapacityNotice />}
           </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />
