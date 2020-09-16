@@ -5,6 +5,7 @@ import {
   trackCookiePolicyVisible,
 } from 'actions/cookies'
 import { getIsPolicyAccepted } from 'selectors/cookies'
+import { getIsPromoAppBannerEnabled } from 'selectors/appBanner'
 import { CookieBanner } from './CookieBanner'
 
 const copy = {
@@ -17,6 +18,7 @@ const copy = {
 const mapStateToProps = (state) => ({
   copy,
   isCookiePolicyAccepted: getIsPolicyAccepted(state),
+  isPromoAppBannerEnabled: getIsPromoAppBannerEnabled({ state }),
 })
 
 const mapDispatchToProps = {

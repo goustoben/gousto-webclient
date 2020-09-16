@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { getUserExperiments } from '../userBucketing'
+import { getUserExperiments, updateUserExperiment } from '../userBucketing'
 
 jest.mock('utils/fetch')
 jest.mock('config/endpoint', () =>
@@ -13,10 +13,10 @@ describe('userBucketing', () => {
 
   describe('getUserExperiments', () => {
     beforeEach(() => {
-      fetch.mockResolvedValue({ data: { mock: 'experiments' } })
+      fetch.mockResolvedValue({ data: [{ mock: 'experiments' }] })
     })
 
-    test('calls fetch with the arguments', async () => {
+    test('calls fetch with the correct arguments', async () => {
       await getUserExperiments('session-id', 'user-id')
 
       const expectedAccessToken = null
@@ -35,7 +35,35 @@ describe('userBucketing', () => {
     test('returns correct response', async () => {
       const result = await getUserExperiments('session-id', 'user-id')
 
-      expect(result).toEqual({ data: { mock: 'experiments' } })
+      expect(result).toEqual({ data: [{ mock: 'experiments' }] })
+    })
+  })
+
+  describe('updateUserExperiment', () => {
+    beforeEach(() => {
+      fetch.mockResolvedValue({ data: { mock: 'mock-user-experiment' } })
+    })
+
+    test('calls fetch with the correct arguments', async () => {
+      await updateUserExperiment('mock-user-experiment', 'session-id', 'user-id')
+
+      const expectedAccessToken = null
+      const expectedUrl = 'endpoint-userbucketing/v1/user/experiments/mock-user-experiment'
+      const expectedReqParams = {}
+      const expectedMethod = 'POST'
+      const expectedCache = 'default'
+      const expectedHeaders = {
+        'x-gousto-device-id': 'session-id',
+        'x-gousto-user-id': 'user-id'
+      }
+
+      expect(fetch).toHaveBeenCalledWith(expectedAccessToken, expectedUrl, expectedReqParams, expectedMethod, expectedCache, expectedHeaders)
+    })
+
+    test('returns correct response', async () => {
+      const result = await getUserExperiments('mock-user-experiment', 'session-id', 'user-id')
+
+      expect(result).toEqual({ data: { mock: 'mock-user-experiment' } })
     })
   })
 })

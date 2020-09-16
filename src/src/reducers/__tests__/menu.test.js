@@ -8,7 +8,7 @@ import {
   selectRecipeSide,
   unselectRecipeSide
 } from '../../actions/menu'
-import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandHeaders'
+import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandData'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 import { setSidesModalRecipe, clearSidesModalRecipe } from '../../routes/Menu/actions/menuRecipeSidesModal'

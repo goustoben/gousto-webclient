@@ -1,27 +1,33 @@
 import Immutable from 'immutable'
 import { actionTypes } from '../actions/actionTypes'
 
-export const initialState = Immutable.fromJS({
-  experiments: Immutable.List(),
+export const initialState = () => Immutable.fromJS({
+  experiments: Immutable.Map(),
   fetchedExperiments: false,
 })
 
 export const experimentsReducer = {
-  experiments: (state = initialState, action) => {
+  experiments: (state = initialState(), action) => {
     switch (action.type) {
     case actionTypes.EXPERIMENTS_RECEIVED: {
+      const { experiments } = action.payload
+
       return state
-        .setIn(['experiments'], Immutable.List(action.payload.experiments))
+        .setIn(['experiments'], experiments.reduce((acc, experiment) => acc.set(experiment.name, Immutable.fromJS(experiment)), Immutable.Map()))
         .setIn(['fetchedExperiments'], true)
     }
 
     case actionTypes.EXPERIMENTS_APPEND: {
+      const { experiment } = action.payload
+
       return state
-        .updateIn(['experiments'], experiments => experiments.push(action.payload.experiment))
+        .setIn(['experiments', experiment.name], Immutable.fromJS(experiment))
     }
 
+    case actionTypes.USER_LOGGED_IN:
+    case actionTypes.USER_LOGGED_OUT:
     case actionTypes.EXPERIMENTS_REMOVE: {
-      return initialState
+      return initialState()
     }
 
     default:

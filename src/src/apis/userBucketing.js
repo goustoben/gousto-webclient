@@ -12,3 +12,14 @@ export function getUserExperiments(sessionId, userId) {
 
   return fetch(null, url, {}, 'GET', 'default', headers)
 }
+
+export function updateUserExperiment(experimentName, sessionId, userId) {
+  const headers = {
+    'x-gousto-device-id': sessionId,
+    'x-gousto-user-id': userId,
+  }
+
+  const url = `${endpoint('userbucketing', routes.version.userBucketing)}${routes.userBucketing.experiments}/${experimentName}`
+
+  return fetch(null, url, {}, 'POST', 'default', headers)
+}

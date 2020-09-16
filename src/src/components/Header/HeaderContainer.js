@@ -8,6 +8,7 @@ import {
   isAccountTabNameTest,
   getHomePageRedesign,
   getIsHelpCentreActive,
+  getIsAppAwarenessEnabled,
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { Header } from './Header'
@@ -26,6 +27,7 @@ const mapStateToProps = (state) => ({
   isAccountTabNameTest: isAccountTabNameTest(state),
   isHomePageRedesignEnabled: getHomePageRedesign(state),
   isHelpCentreActive: getIsHelpCentreActive(state),
+  isAppAwarenessEnabled: getIsAppAwarenessEnabled(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

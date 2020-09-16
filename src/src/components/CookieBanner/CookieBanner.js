@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import config from 'config/cookies'
 import Link from 'Link'
+import classnames from 'classnames'
 import css from './CookieBanner.css'
 
 const CookieBanner = ({
@@ -10,12 +11,16 @@ const CookieBanner = ({
   isCookiePolicyAccepted,
   trackCookiePolicyAccepted,
   trackCookiePolicyVisible,
+  isPromoAppBannerEnabled,
 }) => {
   if (!isCookiePolicyAccepted) {
     trackCookiePolicyVisible()
 
     return (
-      <div className={css.container} data-testing="cookiePolicyBanner">
+      <div
+        className={classnames(css.container, isPromoAppBannerEnabled && css.bottomPositioning)}
+        data-testing="cookiePolicyBanner"
+      >
         <div>
           <p className={css.description}>
             {copy.description}
@@ -55,10 +60,12 @@ CookieBanner.propTypes = {
   cookiePolicyAcceptanceChange: PropTypes.func.isRequired,
   trackCookiePolicyAccepted: PropTypes.func.isRequired,
   trackCookiePolicyVisible: PropTypes.func.isRequired,
+  isPromoAppBannerEnabled: PropTypes.bool,
 }
 
 CookieBanner.defaultProps = {
   isCookiePolicyAccepted: false,
+  isPromoAppBannerEnabled: false,
 }
 
 export { CookieBanner }

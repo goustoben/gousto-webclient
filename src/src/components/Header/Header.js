@@ -324,6 +324,7 @@ class Header extends React.PureComponent {
       routing,
       isHomePageRedesignEnabled,
       isHelpCentreActive,
+      isAppAwarenessEnabled,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen } = this.state
@@ -377,7 +378,7 @@ class Header extends React.PureComponent {
                     {this.renderAuthLink()}
                   </span>
                   {
-                    (isAuthenticated && pathName !== client.menu)
+                    (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled)
                     && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button>
                   }
                   <MobileMenu
@@ -466,6 +467,7 @@ Header.propTypes = {
   trackNavigationClick: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
   isHelpCentreActive: PropTypes.bool,
+  isAppAwarenessEnabled: PropTypes.bool,
 }
 
 Header.defaultProps = {
@@ -484,6 +486,7 @@ Header.defaultProps = {
   trackNavigationClick: () => { },
   isHomePageRedesignEnabled: false,
   isHelpCentreActive: false,
+  isAppAwarenessEnabled: false,
 }
 
 export { Header }

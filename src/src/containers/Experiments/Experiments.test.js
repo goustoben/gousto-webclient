@@ -1,0 +1,136 @@
+import React from 'react'
+import Immutable from 'immutable'
+import { shallow } from 'enzyme'
+import { Experiments } from './Experiments'
+
+describe('Experiments', () => {
+  let wrapper
+  let children
+  let experiment
+  let fetchOrAssignUserToExperiment
+
+  beforeEach(() => {
+    children = jest.fn(() => null)
+    fetchOrAssignUserToExperiment = jest.fn()
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('When component renders', () => {
+    describe('When there is no experiment', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Experiments
+            experimentName=""
+            isFetchingExperiments={false}
+            fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+          >
+            {children}
+          </Experiments>
+        )
+      })
+
+      test('renders null', () => {
+        expect(wrapper.getElement()).toEqual(null)
+      })
+    })
+
+    describe('When there is an experiment', () => {
+      beforeEach(() => {
+        experiment = Immutable.Map({
+          name: 'mock-experiment',
+          bucket: 'control',
+          withinExperiment: true
+        })
+
+        wrapper = shallow(
+          <Experiments
+            experimentName="mock-experiment"
+            experiment={experiment}
+            isFetchingExperiments={false}
+            fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+          >
+            {children}
+          </Experiments>
+        )
+      })
+
+      test('calls children() with the experiment as an argument', () => {
+        expect(children).toHaveBeenCalledWith(experiment)
+      })
+    })
+  })
+
+  describe('When the component mounts', () => {
+    describe('Given there is no experiment for a user and currently not fetching experiments', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Experiments
+            experimentName="mock-experiment"
+            isFetchingExperiments={false}
+            fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+          >
+            {children}
+          </Experiments>
+        )
+      })
+
+      test('assigns user to an experiment', () => {
+        expect(fetchOrAssignUserToExperiment).toHaveBeenCalledWith('mock-experiment')
+      })
+    })
+
+    describe('Given the component updates', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Experiments
+            experimentName="mock-experiment"
+            experiment={experiment}
+            isFetchingExperiments={false}
+            fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+          >
+            {children}
+          </Experiments>
+        )
+      })
+
+      describe('Given isFetchingExperiments is false and user is not assigned to the experiment', () => {
+        beforeEach(() => {
+          wrapper.setProps({
+            isFetchingExperiments: false,
+            experiment: null
+          })
+        })
+
+        test('assigns user to an experiment', () => {
+          expect(fetchOrAssignUserToExperiment).toHaveBeenCalledWith('mock-experiment')
+        })
+      })
+
+      describe('Given experiment and isFetching do no change', () => {
+        beforeEach(() => {
+          wrapper = shallow(
+            <Experiments
+              experimentName="mock-experiment"
+              experiment={experiment}
+              isFetchingExperiments={false}
+              fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+            >
+              {children}
+            </Experiments>
+          )
+        })
+
+        test('does not assign user to an experiment', () => {
+          fetchOrAssignUserToExperiment.mockClear()
+
+          wrapper.setProps()
+
+          expect(fetchOrAssignUserToExperiment).not.toHaveBeenCalled()
+        })
+      })
+    })
+  })
+})

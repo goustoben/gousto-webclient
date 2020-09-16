@@ -1,56 +1,70 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
 import Svg from 'Svg'
+import classnames from 'classnames'
 import { client } from 'config/routes'
+import { redirect } from 'utils/window'
+import typography from 'design-language/typography.css'
 import css from './AppBanner.css'
 
 const propTypes = {
-  name: PropTypes.string,
-  averageRating: PropTypes.number,
-  ratings: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  ratings: PropTypes.string.isRequired,
   showAppBanner: PropTypes.bool.isRequired,
   appBannerDismiss: PropTypes.func.isRequired,
+  trackingAppPromoCTAClick: PropTypes.func.isRequired,
+  trackingAppPromoBannerView: PropTypes.func.isRequired,
 }
 
-const showStar = (avg) => {
-  const stars = Array(5)
-  const avgRounded = Math.round(avg)
-  const noOfFullStars = Math.round(avg - 0.25)
-  const noOfHalfStars = (avg - noOfFullStars > 0.25 && avg - noOfFullStars < 0.75 && noOfFullStars < 5) ? 1 : 0
+class AppBanner extends Component {
+  componentDidMount() {
+    const { trackingAppPromoBannerView, name } = this.props
 
-  stars.fill(<span className={css.starFull} />, 0, noOfFullStars)
-  stars.fill(<span className={css.starHalf} key={avgRounded} />, noOfFullStars, noOfFullStars + noOfHalfStars)
-  stars.fill(<span className={css.starEmpty} />, noOfFullStars + noOfHalfStars, 5)
+    trackingAppPromoBannerView({ platform: name })
+  }
 
-  return stars
-}
+  handleCTAClick = () => {
+    const { trackingAppPromoCTAClick, name } = this.props
 
-const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismiss }) => (
-  showAppBanner
-    ? (
-      <div className={css.appBannerWrapper}>
-        <button data-testing="appBannerDismiss" type="button" className={css.closeButton} onClick={() => appBannerDismiss()}>
-          <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
-        </button>
-        <div className={css.appDetails}>
-          <Svg fileName="app-banner-app-icon" className={css.appIcon} />
-          <div className={css.platformSpecificDetails}>
-            <strong>{`Gousto for ${name}`}</strong>
-            <div className={css.rating}>
-              <span className={css.stars}>
-                {showStar(averageRating)}
-              </span>
-              <span>{`(${ratings})`}</span>
+    trackingAppPromoCTAClick({ platform: name })
+    redirect(client.appsRedirect)
+  }
+
+  render() {
+    const { name, ratings, showAppBanner, appBannerDismiss } = this.props
+
+    return showAppBanner
+      ? (
+        <div className={css.appBannerWrapper}>
+          <button data-testing="appBannerDismiss" type="button" className={css.closeButton} onClick={() => appBannerDismiss()}>
+            <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
+          </button>
+          <div className={css.appDetails}>
+            <Svg fileName="app-promo-logo" className={css.appIcon} />
+            <div className={css.platformSpecificDetails}>
+              <div className={typography.fontStyleBody}>{`Gousto for ${name}`}</div>
+              <div className={css.rating}>
+                <Svg className={css.star} fileName="app-promo-star" />
+                <Svg className={css.star} fileName="app-promo-star" />
+                <Svg className={css.star} fileName="app-promo-star" />
+                <Svg className={css.star} fileName="app-promo-star" />
+                <Svg className={css.star} fileName="app-promo-star" />
+                <span className={classnames(css.ratings, typography.fontStyleBody)}>{`(${ratings})`}</span>
+              </div>
             </div>
           </div>
+          <button
+            type="button"
+            data-testing="appBannerCTA"
+            className={classnames(css.appLink, typography.fontSemiBold)}
+            onClick={this.handleCTAClick}
+          >
+            Install
+          </button>
         </div>
-        <a data-testing="appBannerCTA" className={css.appLink} href={client.appsRedirect}>
-          <Button noDecoration>Get app</Button>
-        </a>
-      </div>
-    ) : null
-)
+      ) : null
+  }
+}
 
 AppBanner.propTypes = propTypes
 

@@ -130,6 +130,10 @@ export const getCheckoutRedesign = ({ features }) => (
   features && features.getIn(['isCheckoutRedesignEnabled', 'value'], false)
 )
 
+export const getIsAppAwarenessEnabled = ({ features }) => (
+  features && features.getIn(['isAppAwarenessEnabled', 'value'], false)
+)
+
 export const getPricingClarityRedesign = ({ features }) => (
   features && features.getIn(['isPricingClarityEnabled', 'value'], false)
 )
