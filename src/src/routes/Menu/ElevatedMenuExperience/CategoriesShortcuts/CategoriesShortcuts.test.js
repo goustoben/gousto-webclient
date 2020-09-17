@@ -10,11 +10,6 @@ describe('CategoriesShortcuts', () => {
     showCategoriesModal: jest.fn()
   }
 
-  test('renders without crashing', () => {
-    const div = document.createElement('div')
-    ReactDOM.render(<CategoriesShortcuts {...props} />, div)
-  })
-
   describe('the appearance', () => {
     beforeEach(() => {
       wrapper = shallow(<CategoriesShortcuts {...props} />)

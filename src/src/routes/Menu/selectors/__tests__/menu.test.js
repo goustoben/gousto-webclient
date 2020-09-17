@@ -79,7 +79,7 @@ describe('activeMenuForDate', () => {
         }
       }]
     }
-    const result = activeMenuForDate(testData, '2019-04-03T12:00:00+01:000')
+    const result = activeMenuForDate(testData, '2019-04-03T12:00:00+01:00')
     expect(result).toEqual({
       id: '296',
       type: 'menus',

@@ -1,0 +1,1 @@
+export { CategoriesModalContainer } from './CategoriesModalContainer'

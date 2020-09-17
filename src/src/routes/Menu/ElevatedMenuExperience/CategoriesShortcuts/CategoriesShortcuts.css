@@ -1,4 +1,4 @@
-@value White from 'styles/colors.css';
+@value White, Bluecheese from 'styles/colors.css';
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS, sizeLG from 'styles/typography.css';
 
 .shortcutsWrapper {
@@ -14,13 +14,20 @@
 
 .smallShortcut {
     background-color: White;
-    width: 47%;
+    width: 46%;
     margin: 0.5rem 0.25rem;
-    height: 4rem;
     border: none;
-    font-size: sizeMD;
+    font-size: sizeSM;
     font-weight: 600;
     border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    padding: 0;
+}
+
+.title {
+    align-self: center;
 }
 
 .allCategoriesText {
@@ -35,11 +42,11 @@
 	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
 	composes: inlineBlock from 'styles/display.css';
 	composes: textCenter noDecor from 'styles/typography.css';
-	color: blue;
+	color: Bluecheese;
     width: 100%;
     display: inline-block;
     text-align: center;
     border: none;
     background: none;
-    margin: 0.5rem;
+    box-sizing: border-box;
 }
