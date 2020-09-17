@@ -16,6 +16,7 @@ module.exports = {
     ssrV2: 'v2',
     tastePreferences: 'v1',
     userBucketing: 'v1',
+    clientMetrics: 'v1',
   },
   address: {
     postcodeLookup: '/address/postcode-lookup',

@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
+import logger from 'utils/logger'
 import { menuCalculateTimeToUsable } from '../menuCalculateTimeToUsable'
 import * as browserTimings from '../utils/browserTimings'
 import { actionTypes } from '../../../../actions/actionTypes'
 import { menuTimeToUsable } from '../../../../actions/trackingKeys'
+import * as clientMetrics from '../../apis/clientMetrics'
 
 describe('given menuCalculateTimeToUsable action is called', () => {
   let state
@@ -11,6 +13,8 @@ describe('given menuCalculateTimeToUsable action is called', () => {
   const getState = () => state
   const timeSinceRequest = safeJestMock(browserTimings, 'getTimeSinceRequestStart')
   const timeToFirstByte = safeJestMock(browserTimings, 'getTimeToFirstByte')
+  const mockSendClienMetric = safeJestMock(clientMetrics, 'sendClientMetric')
+  const mockLogger = safeJestMock(logger, 'warning')
 
   timeSinceRequest.mockReturnValue(123)
   timeToFirstByte.mockReturnValue(456)
@@ -53,6 +57,31 @@ describe('given menuCalculateTimeToUsable action is called', () => {
             }
           }
         ])
+      })
+      describe('when it calls sendClientMetrics', () => {
+        test('then passes metric to sendClientMetric', async () => {
+          await menuCalculateTimeToUsable()(dispatch, getState)
+          expect(mockSendClienMetric).toHaveBeenCalledWith({name: 'menu-load-complete',
+            detail: {
+              timeToUsable: 123
+            }})
+        })
+
+        describe('when sendClientMetrics errors', () => {
+          beforeEach(async () => {
+            mockSendClienMetric.mockRejectedValue(new Error('mock error'))
+            await menuCalculateTimeToUsable()(dispatch, getState)
+          })
+
+          test('then it calls the logger',() => {
+            expect(mockLogger).toHaveBeenCalledWith({
+              message: 'Fail to send menu load complete metric to client metrics',
+              extra: {
+                timeToUsable: 123
+              }
+            })
+          })
+        })
       })
     })
 
