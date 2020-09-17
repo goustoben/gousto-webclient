@@ -7,18 +7,16 @@
     margin: 0 0.5rem 0.5rem 0.5rem;
     display: flex;
     flex-direction: column;
-
     @media ScreenSMMin {
-        width: 48%;
-        height: auto;
         margin: 0 1rem 1rem 0;
+        width: calc(50% - 1rem);
+        height: auto;
     }
     @media ScreenMDMin {
-        width: 30%;
-        height: auto;
+        width: calc(33.33% - 1rem);
     }
     @media ScreenLGMin {
-        width: 24%;
+        width: calc(25% - 1rem);
     }
 }
 
@@ -29,7 +27,6 @@
     flex-direction: row;
     background-color: White;
     position: relative;
-   
     @media ScreenSMMin {
         flex-direction: column;
     }
@@ -86,7 +83,6 @@
     background: Blackberry;
     color: White;
 }
-
 
 .recipeTileContainer:hover {
     box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2);
