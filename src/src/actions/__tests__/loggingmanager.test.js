@@ -168,7 +168,8 @@ describe('trackUserAddRemoveRecipe', () => {
           authUserId: 'mock-user-id',
           data: {
             device: 'mobile',
-            recipes: ['recipeTest1', 'recipeTest2'],
+            recipe1: 'recipeTest1',
+            recipe2: 'recipeTest2',
             dayId: 'day-id-1',
             slotId: 'slot-id-1',
             addressId: 'chosen-address-id-1',

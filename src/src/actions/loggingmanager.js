@@ -57,7 +57,14 @@ const trackUserAddRemoveRecipe = () => (
     const { authUserId, device } = getDefaultParams(state)
 
     if (authUserId && basket.get('date') && boxSummaryDeliveryDays.get(basket.get('date'))) {
-      const recipes = basket.get('recipes').keySeq().toArray()
+      const recipes = basket.get('recipes')
+        .keySeq()
+        .toArray()
+        .reduce((acc, recipe, index) => ({
+          ...acc,
+          [`recipe${index + 1}`]: recipe,
+        }), {})
+
       const foundDaySlot = boxSummaryDeliveryDays
         .get(basket.get('date'))
         .get('daySlots')
@@ -69,7 +76,7 @@ const trackUserAddRemoveRecipe = () => (
           authUserId,
           data: {
             device,
-            recipes,
+            ...recipes,
             dayId: foundDaySlot.get('dayId'),
             slotId: basket.get('slotId'),
             addressId: basket.getIn(['chosenAddress', 'id']),
