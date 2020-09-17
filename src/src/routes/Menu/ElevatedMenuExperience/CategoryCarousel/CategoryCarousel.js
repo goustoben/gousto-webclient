@@ -9,7 +9,7 @@ const CategoryCarousel = ({ category, recipes }) => {
   if (!recipes.size) return null
 
   const viewAllPath = `/menu?collection=${category.get('slug')}`
-  const viewAllLabel = `View all (${recipes.size})`
+  const viewAllLabel = `View (${recipes.size})`
 
   return (
     <div className={css.categoryCarousel}>

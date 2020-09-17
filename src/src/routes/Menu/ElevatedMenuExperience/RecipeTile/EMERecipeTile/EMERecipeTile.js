@@ -30,6 +30,8 @@ const EMERecipeTile = ({
   }
 
   const showVariantHeader = !(!recipeVariants || isOutOfStock)
+  const hasTopLeftTag = brandTags && brandTags.topLeftTag
+  const hasTopRightTag = brandTags && brandTags.topRightTag
 
   return (
     <div
@@ -47,12 +49,12 @@ const EMERecipeTile = ({
         })}
       >
         <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
-        {brandTags && brandTags.topLeftTag && (
+        {hasTopLeftTag && (
         <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
         )}
         <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
           <div>
-            {brandTags && brandTags.topRightTag && (
+            {hasTopRightTag && (
             <RecipeTagTitle brandTag={brandTags.topRightTag} />
             )}
             <div
