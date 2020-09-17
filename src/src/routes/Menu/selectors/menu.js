@@ -25,7 +25,7 @@ export const activeMenuForDate = (menuServiceData, date) => {
   }
 
   return menuServiceData.data.find((menu) =>
-    date <= menu.attributes.ends_at // ends_at is the last cutoff date for the menu
+    moment(date) <= moment(menu.attributes.ends_at)
   )
 }
 

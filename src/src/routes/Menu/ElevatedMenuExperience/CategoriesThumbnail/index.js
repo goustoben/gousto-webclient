@@ -1,0 +1,2 @@
+export { CategoriesThumbnailContainer } from './CategoriesThumbnailContainer'
+

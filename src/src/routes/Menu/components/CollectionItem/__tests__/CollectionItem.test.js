@@ -38,11 +38,5 @@ describe('<CollectionItem />', () => {
       expect(wrapper.find('.count')).toHaveLength(1)
       expect(wrapper.find('.count').first().text()).toContain('10')
     })
-
-    test('should not display count prop', () => {
-      wrapper = shallow(<CollectionItem count={10} showCount={false} />)
-
-      expect(wrapper.find('.count')).toHaveLength(0)
-    })
   })
 })

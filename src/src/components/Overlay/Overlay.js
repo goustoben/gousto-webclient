@@ -105,12 +105,12 @@ class Overlay extends React.PureComponent {
   getWindowHeight = () => (window.innerHeight || document.body.clientHeight || document.documentElement.clientHeight)
 
   fadeOut = () => {
-    const { className, contentClassName } = this.props
+    const { className, contentClassName, from } = this.props
     const overlay = (
       <div className={classNames(className, css.overlayContainer)}>
         <div className={css.greyFadeOut}>&nbsp;</div>
         <div
-          className={classNames(contentClassName, css[`contentSlideOutFrom${this.props.from}`], css.overlayContent)}
+          className={classNames(contentClassName, css[`contentSlideOutFrom${from}`], css.overlayContent)}
         >
           {this.children}
         </div>
@@ -150,11 +150,12 @@ class Overlay extends React.PureComponent {
       this.node.className = '__goustoOverlayContainer__'
       document.body.setAttribute('data-gousto-overlay-open', 'true')
       document.body.appendChild(this.node)
+      const { from } = this.props
       const overlay = (
         <div className={classNames(props.className, css.overlayContainer)}>
           <div className={css.grey}>&nbsp;</div>
           <div
-            className={classNames(props.contentClassName, css[`contentFrom${this.props.from}`], css.overlayContent)}
+            className={classNames(props.contentClassName, css[`contentFrom${from}`], css.overlayContent)}
           >
             {props.children ? props.children : <span />}
           </div>
