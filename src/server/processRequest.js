@@ -51,13 +51,13 @@ const fetchAllData = (renderProps, store, headers, path, sessionId) => {
         fetchData = component.WrappedComponent.fetchData
       }
 
-      // if (fetchData) {
-      //   queries.push(
-      //     new Promise((resolve) => {
-      //       resolve(fetchData({ params, query: location.query, store }))
-      //     })
-      //   )
-      // }
+      if (fetchData) {
+        queries.push(
+          new Promise((resolve) => {
+            resolve(fetchData({ params, query: location.query, store }))
+          })
+        )
+      }
     }
   })
 
