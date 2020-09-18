@@ -1,15 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Alert, Button } from 'goustouicomponents'
-import actions from 'actions/order'
 import Content from 'containers/Content'
 import css from './OrderRestoreButton.css'
 
 class OrderRestoreButton extends React.PureComponent {
   handleRestoreBox = () => {
-    const { store } = this.context
-    const { orderId, userId, deliveryDayId } = this.props
-    store.dispatch(actions.projectedOrderRestore(orderId, userId, deliveryDayId))
+    const { orderId, userId, deliveryDayId, projectedOrderRestore } = this.props
+    projectedOrderRestore(orderId, userId, deliveryDayId)
   }
 
   render() {
@@ -40,6 +38,7 @@ OrderRestoreButton.propTypes = {
   orderId: PropTypes.string,
   deliveryDayId: PropTypes.string,
   osrOrderId: PropTypes.string,
+  projectedOrderRestore: PropTypes.func.isRequired,
   projectedOrderRestoreError: PropTypes.string,
   pending: PropTypes.bool,
 }
@@ -51,10 +50,6 @@ OrderRestoreButton.defaultProps = {
   osrOrderId: '',
   projectedOrderRestoreError: null,
   pending: false
-}
-
-OrderRestoreButton.contextTypes = {
-  store: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 }
 
 export default OrderRestoreButton
