@@ -101,7 +101,6 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	vertical-align: middle;
-	outline-style: none;
 }
 :global .Select-input > input {
 	width: 100%;

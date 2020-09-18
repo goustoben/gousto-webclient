@@ -2,7 +2,7 @@ import React from 'react'
 
 import { getKnownVariant } from 'routes/Home/HomeContainer'
 
-jest.mock('routes/Home/Home', () => () => <div />)
+jest.mock('routes/Home/Home', () => <div />)
 
 jest.mock('config/home', () => ({
   defaultVariant: 'default',

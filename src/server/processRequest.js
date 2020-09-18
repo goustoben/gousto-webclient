@@ -100,7 +100,7 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
         logger.notice({ message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime) })
       }
       startTime = new Date()
-      const helmetHead = __SERVER__ ? Helmet.rewind : Helmet.peek
+      const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
       if (__CLIENT__) {
         logger.notice({ message: 'renderHTML/template', elapsedTime: (new Date() - startTime) })

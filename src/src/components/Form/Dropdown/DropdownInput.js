@@ -117,7 +117,8 @@ export class DropdownInput extends React.Component {
       clearable: false,
       searchable: false,
       placeholder: '',
-      onMenuOpen: () => {
+      onOpen: () => {
+        setTimeout(() => document.getElementsByClassName('Select-option')[0].parentNode.scrollTop = 0, 0)
         onOpen()
       }
     }
@@ -127,29 +128,20 @@ export class DropdownInput extends React.Component {
       'onChange',
       'className',
       'value',
+      'required',
       'color',
       'defaultValue',
       'subLabelClassName',
       'error',
-      'onMenuOpen',
-      'onMenuClose',
-      'onBlur'
+      'onOpen',
+      'onClose'
     ]
 
     return restrictProps(this.props, ourProps, defaultProps)
   }
 
-  getValue = () => {
-    const { options, value } = this.props
-    if (!value) {
-      return options[0]
-    }
-
-    return options ? options.find(option => option.value === value) : ''
-  }
-
   renderSelect = (options) => {
-    const { error, uppercase, additionalProps, dataTesting, color, onOpen, onClose } = this.props
+    const { error, uppercase, additionalProps, value, required, dataTesting, color, onOpen, onClose } = this.props
 
     const className = classNames(css.select, css.dropdown, {
       [css.primary]: !error && color == 'primary',
@@ -165,11 +157,11 @@ export class DropdownInput extends React.Component {
           className={className}
           options={this.mapToSelect(options)}
           onChange={this.handleChange}
-          onMenuOpen={onOpen}
-          onMenuClose={onClose}
-          value={this.getValue()}
+          onOpen={onOpen}
+          onClose={onClose}
+          value={JSON.stringify(value)}
+          required={required}
           {...this.getSelectProps()}
-          menuShouldScrollIntoView
           data-testing={dataTesting}
         />
       </div>
