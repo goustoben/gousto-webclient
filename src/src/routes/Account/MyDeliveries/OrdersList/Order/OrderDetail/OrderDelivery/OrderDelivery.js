@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import recipesActions from 'actions/recipes'
-import orderActions from 'actions/order'
-import userActions from 'actions/user'
 import Loading from 'Loading'
 import { OrderDeliveryAddress } from './OrderDeliveryAddress'
 import { OrderDeliveryDate } from './OrderDeliveryDate'
@@ -15,25 +12,22 @@ class OrderDelivery extends React.PureComponent {
       availableFrom,
       availableTo,
       shippingAddressId,
+      orderGetDeliveryDays,
       orderId,
       orderState,
+      recipesLoadStockByDate,
     } = this.props
-    const { store } = this.context
 
     const isOrderPending = orderState === 'menu open' || orderState === 'recipes chosen'
 
     if (isOrderPending) {
-      store.dispatch(
-        orderActions.orderGetDeliveryDays(
-          availableFrom,
-          availableTo,
-          shippingAddressId,
-          orderId
-        )
-      ),
-      store.dispatch(
-        recipesActions.recipesLoadStockByDate(availableFrom, availableTo)
+      orderGetDeliveryDays(
+        availableFrom,
+        availableTo,
+        shippingAddressId,
+        orderId
       )
+      recipesLoadStockByDate(availableFrom, availableTo)
     }
   }
 
@@ -41,19 +35,15 @@ class OrderDelivery extends React.PureComponent {
     const {
       orderId,
       editDeliveryMode,
-      clearUpdateDateErrorAndPending
+      clearUpdateDateErrorAndPending,
+      userTrackToggleEditDateSection,
+      userToggleEditDateSection,
     } = this.props
 
-    const { store } = this.context
-
     if (!editDeliveryMode) {
-      store.dispatch(
-        userActions.userTrackToggleEditDateSection(orderId)
-      )
+      userTrackToggleEditDateSection(orderId)
     }
-    store.dispatch(
-      userActions.userToggleEditDateSection(orderId, !editDeliveryMode)
-    )
+    userToggleEditDateSection(orderId, !editDeliveryMode)
     clearUpdateDateErrorAndPending()
   }
 
@@ -135,10 +125,10 @@ OrderDelivery.propTypes = {
   hasUpdateDeliveryDayError: PropTypes.bool,
   clearUpdateDateErrorAndPending: PropTypes.func,
   addressLoading: PropTypes.bool,
-}
-
-OrderDelivery.contextTypes = {
-  store: PropTypes.object.isRequired // eslint-disable-line react/forbid-prop-types
+  orderGetDeliveryDays: PropTypes.func.isRequired,
+  recipesLoadStockByDate: PropTypes.func.isRequired,
+  userTrackToggleEditDateSection: PropTypes.func.isRequired,
+  userToggleEditDateSection: PropTypes.func.isRequired,
 }
 
 OrderDelivery.defaultProps = {

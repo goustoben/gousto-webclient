@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
+import { projectedOrderRestore } from 'actions/order'
 import OrderRestoreButton from './OrderRestoreButton'
 
 function mapStateToProps(state, ownProps) {
@@ -12,6 +13,8 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-const OrderRestoreButtonContainer = connect(mapStateToProps, {})(OrderRestoreButton)
+const OrderRestoreButtonContainer = connect(mapStateToProps, {
+  projectedOrderRestore,
+})(OrderRestoreButton)
 
 export default OrderRestoreButtonContainer

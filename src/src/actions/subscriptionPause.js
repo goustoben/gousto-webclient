@@ -717,4 +717,22 @@ function subscriptionPauseStart() {
   }
 }
 
+export const fetchData = () => async (dispatch, getState) => {
+  const { subscriptionPause, user } = getState()
+  const reasons = subscriptionPause.get('reasons')
+
+  dispatch(subscriptionTrackPauseAttempt(subscriptionPause.get('metaData')))
+
+  if (subscriptionPause.get('startScreen').size > 0) {
+    dispatch(subscriptionPauseLoadStartScreen())
+  } else if (reasons.size > 0) {
+    dispatch(subscriptionPauseLoadReasons(reasons))
+    dispatch(subscriptionTrackCategoriesViewed())
+  }
+
+  if (user.get('orders').size < 1) {
+    dispatch(userActions.userLoadOrders())
+  }
+}
+
 export default subPauseActions

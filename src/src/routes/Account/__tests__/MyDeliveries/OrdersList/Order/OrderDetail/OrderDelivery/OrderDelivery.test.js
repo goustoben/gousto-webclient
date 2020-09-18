@@ -2,26 +2,14 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import OrderDelivery from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDelivery'
-import recipesActions from 'actions/recipes'
-import orderActions from 'actions/order'
 import { OrderDeliveryAddress } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryAddress'
-import actions from 'actions/user'
-
-jest.mock('actions/user', () => ({
-  userTrackToggleEditDateSection: jest.fn(),
-  userToggleEditDateSection: jest.fn()
-}))
-
-jest.mock('actions/order', () => ({
-  orderGetDeliveryDays: jest.fn()
-}))
-
-jest.mock('actions/recipes', () => ({
-  recipesLoadStockByDate: jest.fn()
-}))
 
 describe('OrderDelivery',() => {
   let wrapper
+  const userTrackToggleEditDateSection = jest.fn()
+  const userToggleEditDateSection = jest.fn()
+  const orderGetDeliveryDays = jest.fn()
+  const recipesLoadStockByDate = jest.fn()
   const addressObjectMock = Immutable.Map({
     line1: 'Flat 10',
     line2: 'Morris House',
@@ -30,15 +18,6 @@ describe('OrderDelivery',() => {
     postcode: 'W3 7UP',
     name: 'work',
   })
-  const context = {
-    store: {
-      getState: () => ({
-        orderPricing: Immutable.Map({}),
-      }),
-      subscribe: () => {},
-      dispatch: () => {},
-    },
-  }
   const clearUpdateDateErrorAndPendingSpy = jest.fn()
 
   beforeEach(() => {
@@ -51,7 +30,11 @@ describe('OrderDelivery',() => {
       orderState="menu open"
       orderId={8}
       clearUpdateDateErrorAndPending={clearUpdateDateErrorAndPendingSpy}
-    />,{context})
+      orderGetDeliveryDays={orderGetDeliveryDays}
+      recipesLoadStockByDate={recipesLoadStockByDate}
+      userTrackToggleEditDateSection={userTrackToggleEditDateSection}
+      userToggleEditDateSection={userToggleEditDateSection}
+    />)
   })
 
   afterEach(() => {
@@ -65,26 +48,38 @@ describe('OrderDelivery',() => {
     test('should dispatch fetches for getting delivery days and stock if the order state is "menu open"',() => {
       wrapper = shallow(<OrderDelivery
         orderState="menu open"
-      />,{context})
-      expect(orderActions.orderGetDeliveryDays).toHaveBeenCalled()
-      expect(recipesActions.recipesLoadStockByDate).toHaveBeenCalled()
+        orderGetDeliveryDays={orderGetDeliveryDays}
+        recipesLoadStockByDate={recipesLoadStockByDate}
+        userTrackToggleEditDateSection={userTrackToggleEditDateSection}
+        userToggleEditDateSection={userToggleEditDateSection}
+      />)
+      expect(orderGetDeliveryDays).toHaveBeenCalled()
+      expect(recipesLoadStockByDate).toHaveBeenCalled()
     })
 
     test('should dispatch fetches for getting delivery days and stock if the order state is "recipes chosen"',() => {
       wrapper = shallow(<OrderDelivery
         orderState="recipes chosen"
-      />,{context})
-      expect(orderActions.orderGetDeliveryDays).toHaveBeenCalled()
-      expect(recipesActions.recipesLoadStockByDate).toHaveBeenCalled()
+        orderGetDeliveryDays={orderGetDeliveryDays}
+        recipesLoadStockByDate={recipesLoadStockByDate}
+        userTrackToggleEditDateSection={userTrackToggleEditDateSection}
+        userToggleEditDateSection={userToggleEditDateSection}
+      />)
+      expect(orderGetDeliveryDays).toHaveBeenCalled()
+      expect(recipesLoadStockByDate).toHaveBeenCalled()
     })
 
     test('should NOT dispatch fetches for getting delivery days and stock if the order is NOT pending',() => {
       wrapper = shallow(<OrderDelivery
         orderState="scheduled"
-      />,{context})
+        orderGetDeliveryDays={orderGetDeliveryDays}
+        recipesLoadStockByDate={recipesLoadStockByDate}
+        userTrackToggleEditDateSection={userTrackToggleEditDateSection}
+        userToggleEditDateSection={userToggleEditDateSection}
+      />)
 
-      expect(orderActions.orderGetDeliveryDays).not.toHaveBeenCalled()
-      expect(recipesActions.recipesLoadStockByDate).not.toHaveBeenCalled()
+      expect(orderGetDeliveryDays).not.toHaveBeenCalled()
+      expect(recipesLoadStockByDate).not.toHaveBeenCalled()
     })
   })
 
@@ -100,7 +95,11 @@ describe('OrderDelivery',() => {
     test('should render a loading spinner if addressLoading = true', () => {
       wrapper = shallow(<OrderDelivery
         addressLoading
-      />,{context})
+        orderGetDeliveryDays={orderGetDeliveryDays}
+        recipesLoadStockByDate={recipesLoadStockByDate}
+        userTrackToggleEditDateSection={userTrackToggleEditDateSection}
+        userToggleEditDateSection={userToggleEditDateSection}
+      />)
 
       expect(wrapper.find('Loading').length).toEqual(1)
       expect(wrapper.find('OrderDeliveryDate').length).toEqual(0)
@@ -119,7 +118,7 @@ describe('OrderDelivery',() => {
       test('should dispatch userTrackToggleEditDateSection if editDeliveryMode is false', () => {
         wrapper.instance().onClickFunction()
 
-        expect(actions.userTrackToggleEditDateSection).toHaveBeenCalled()
+        expect(userTrackToggleEditDateSection).toHaveBeenCalled()
       })
 
       test('should NOT dispatch userTrackToggleEditDateSection if editDeliveryMode is true', () => {
@@ -132,16 +131,20 @@ describe('OrderDelivery',() => {
           orderState="scheduled"
           orderId={8}
           clearUpdateDateErrorAndPending={clearUpdateDateErrorAndPendingSpy}
-        />,{context})
+          orderGetDeliveryDays={orderGetDeliveryDays}
+          recipesLoadStockByDate={recipesLoadStockByDate}
+          userTrackToggleEditDateSection={userTrackToggleEditDateSection}
+          userToggleEditDateSection={userToggleEditDateSection}
+        />)
         wrapper.instance().onClickFunction()
 
-        expect(actions.userTrackToggleEditDateSection).not.toHaveBeenCalled()
+        expect(userTrackToggleEditDateSection).not.toHaveBeenCalled()
       })
 
       test('should dispatch userToggleEditDateSection with orderId and !editDeliveryMode', () => {
         wrapper.instance().onClickFunction()
 
-        expect(actions.userToggleEditDateSection).toHaveBeenCalledWith(8, true)
+        expect(userToggleEditDateSection).toHaveBeenCalledWith(8, true)
       })
 
       test('should dispatch clearUpdateDateErrorAndPending', () => {

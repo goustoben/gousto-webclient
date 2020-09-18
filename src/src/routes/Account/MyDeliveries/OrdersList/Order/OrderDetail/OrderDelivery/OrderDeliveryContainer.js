@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { clearUpdateDateErrorAndPending } from 'actions/order'
+import { clearUpdateDateErrorAndPending, orderGetDeliveryDays } from 'actions/order'
+import recipesActions from 'actions/recipes'
+import userActions from 'actions/user'
 import OrderDelivery from './OrderDelivery'
 
 function mapStateToProps(state, ownProps) {
@@ -19,7 +21,11 @@ function mapStateToProps(state, ownProps) {
 }
 
 const OrderDeliveryContainer = connect(mapStateToProps, {
-  clearUpdateDateErrorAndPending
+  clearUpdateDateErrorAndPending,
+  orderGetDeliveryDays,
+  recipesLoadStockByDate: recipesActions.recipesLoadStockByDate,
+  userTrackToggleEditDateSection: userActions.userTrackToggleEditDateSection,
+  userToggleEditDateSection: userActions.userToggleEditDateSection
 })(OrderDelivery)
 
 export default OrderDeliveryContainer

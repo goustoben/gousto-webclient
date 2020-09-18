@@ -1,54 +1,47 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
-import actions from 'actions/subscriptionPause'
-import userActions from 'actions/user'
 import Screen from './Screen'
 
+const propTypes = {
+  dataLoaded: PropTypes.bool,
+  showModal: PropTypes.bool,
+  fetchData: PropTypes.func.isRequired,
+  subscriptionPauseFetchReasons: PropTypes.func.isRequired,
+}
+
+const defaultProps = {
+  dataLoaded: false,
+  showModal: false,
+}
+
 class SubscriptionPause extends React.Component {
-  static propTypes = {
-    dataLoaded: PropTypes.bool,
-    showModal: PropTypes.bool,
-  }
+  componentDidMount() {
+    const { subscriptionPauseFetchReasons } = this.props
 
-  static defaultProps = {
-    showModal: false,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
-  static fetchData = async ({ store }) => {
-    await store.dispatch(actions.subscriptionPauseFetchReasons())
-
-    const state = store.getState().subscriptionPause
-    const reasons = state.get('reasons')
-    const metaData = state.get('metaData')
-    store.dispatch(actions.subscriptionTrackPauseAttempt(metaData))
-
-    if (state.get('startScreen').size > 0) {
-      store.dispatch(actions.subscriptionPauseLoadStartScreen())
-    } else if (reasons.size) {
-      store.dispatch(actions.subscriptionPauseLoadReasons(reasons))
-      store.dispatch(actions.subscriptionTrackCategoriesViewed())
-    }
-
-    if (store.getState().user.get('orders').size < 1) {
-      store.dispatch(userActions.userLoadOrders())
-    }
+    subscriptionPauseFetchReasons()
   }
 
   componentDidUpdate() {
-    if (this.props.showModal && !this.props.dataLoaded) {
-      const {store} = this.context
-      SubscriptionPause.fetchData({ store })
+    const {
+      showModal,
+      dataLoaded,
+      fetchData,
+    } = this.props
+
+    if (showModal && dataLoaded && fetchData) {
+      fetchData()
     }
   }
 
   render() {
-    return (<Overlay from="top" open={this.props.showModal}><Screen /></Overlay>)
+    const { showModal } = this.props
+
+    return (<Overlay from="top" open={showModal}><Screen /></Overlay>)
   }
 }
+
+SubscriptionPause.propTypes = propTypes
+SubscriptionPause.defaultProps = defaultProps
 
 export default SubscriptionPause
