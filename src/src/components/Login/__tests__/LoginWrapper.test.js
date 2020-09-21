@@ -21,6 +21,9 @@ describe('<LoginWrapper />', () => {
       loginVisibility: fromJS({
         helpPreLogin: false,
       }),
+      request: fromJS({
+        browser: 'desktop',
+      }),
       pending: fromJS({}),
     }),
     dispatch: () => {},

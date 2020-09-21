@@ -11,6 +11,7 @@ import {
   getIsAppAwarenessEnabled,
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
+import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
 import { Header } from './Header'
 
 const mapStateToProps = (state) => ({
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => ({
   isAccountTabNameTest: isAccountTabNameTest(state),
   isHomePageRedesignEnabled: getHomePageRedesign(state),
   isHelpCentreActive: getIsHelpCentreActive(state),
+  showAppAwareness: getIsAppAwarenessLoginEnabled(state),
   isAppAwarenessEnabled: getIsAppAwarenessEnabled(state),
 })
 

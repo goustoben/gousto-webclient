@@ -1,1 +1,1 @@
-export { LoginDesktop } from './LoginDesktop'
+export { LoginDesktopContainer as LoginDesktop } from './LoginDesktopContainer'

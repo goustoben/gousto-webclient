@@ -15,15 +15,18 @@ const propTypes = {
 
 const LoginWrapper = ({ isMobileViewport, title }) => (
   <div>
-    <HeadingWithSeparator>
-      {title}
-    </HeadingWithSeparator>
     {isMobileViewport ? (
       <LoginMobile>
+        <HeadingWithSeparator>
+          {title}
+        </HeadingWithSeparator>
         <LoginForm />
       </LoginMobile>
     ) : (
       <LoginDesktop>
+        <HeadingWithSeparator>
+          {title}
+        </HeadingWithSeparator>
         <LoginForm />
       </LoginDesktop>
     )}

@@ -2,6 +2,8 @@
 @value sizeMD from 'styles/typography.css';
 @value ScreenXSMax from 'styles/screenSizes.css';
 @value BreakpointFromLarge, BreakpointFromMedium from 'design-language/breakpoints.css';
+@value HeadingHeightSM: 62px;
+@value HeadingHeightLG: 80px;
 
 .hide {
 	composes: none from 'styles/display.css';
@@ -95,4 +97,36 @@
 	composes: icon;
 	composes: fa-exclamation-circle from 'styles/vendor/font-awesome-module.module.css';
 	color: Radish;
+}
+
+.appAwarenessLoginForm {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.appAwarenessLoginForm .loginOptionsContainer {
+	display: block;
+}
+
+.appAwarenessLoginForm .appAwarenessBottomContainer {
+	margin-top: auto;
+}
+
+.appAwarenessLoginForm .resetFormContainer {
+	text-align: left;
+	width: 100%;
+}
+
+.appAwarenessLoginForm .rememberMe {
+	width: 100%;
+}
+
+.appAwarenessLoginModal {
+	height: calc(100% - HeadingHeightSM);
+	padding: 0 0.5rem;
+
+	@media BreakpointFromLarge {
+		height: calc(100% - HeadingHeightLG);
+	}
 }
