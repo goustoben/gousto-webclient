@@ -10,7 +10,7 @@ import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted, isHomePageRedesignEnabled }) => (
+const Hero = ({ ctaUri, ctaText, dataTesting, variant, isHomePageRedesignEnabled }) => (
   <div
     className={classnames(css[`container--${variant}`], { [css.homepageRedesign]: isHomePageRedesignEnabled })}
     data-testing={dataTesting}
@@ -31,10 +31,8 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted
       <div className={css.cta}>
         <CTAHomepageContainer
           width={240}
-          onClick={() => {
-            redirect(ctaUri)
-            trackGetStarted('hero')
-          }}
+          ctaUri={ctaUri}
+          sectionForTracking="hero"
           dataTesting="homepageHeroCTA"
         >
           {ctaText}
@@ -46,12 +44,10 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant, trackGetStarted
 )
 
 Hero.propTypes = {
-  redirect: PropTypes.func,
   ctaUri: PropTypes.string,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   dataTesting: PropTypes.string,
   variant: PropTypes.string,
-  trackGetStarted: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
 }
 
@@ -59,7 +55,6 @@ Hero.defaultProps = {
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
   variant: 'default',
-  trackGetStarted: () => {},
   isHomePageRedesignEnabled: false,
 }
 

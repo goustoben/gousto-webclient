@@ -10,7 +10,7 @@ import { CTAHomepageContainer } from '../CTA'
 
 const { subheading, subheadingRedesign } = home.inYourBox
 
-const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHomePageRedesignEnabled }) => (
+const InYourBox = ({ inverse, ctaText, ctaUri, isHomePageRedesignEnabled }) => (
   <div className={classNames(css.container, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
     <div className={inverse ? css.inverseContent : css.content}>
       <ModuleHeaderContainer>It starts with a box</ModuleHeaderContainer>
@@ -45,10 +45,8 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHome
       </ul>
       <CTAHomepageContainer
         width={240}
-        onClick={() => {
-          redirect(ctaUri)
-          trackGetStarted('boxdescription')
-        }}
+        ctaUri={ctaUri}
+        sectionForTracking="boxdescription"
         buttonContainer={false}
       >
         {ctaText}
@@ -58,11 +56,9 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri, trackGetStarted, isHome
 )
 
 InYourBox.propTypes = {
-  redirect: PropTypes.func,
   inverse: PropTypes.bool,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ctaUri: PropTypes.string,
-  trackGetStarted: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool
 }
 
@@ -70,8 +66,6 @@ InYourBox.defaultProps = {
   ctaText: home.CTA.main,
   ctaUri: config.client.signup,
   inverse: false,
-  redirect: () => {},
-  trackGetStarted: () => {},
   isHomePageRedesignEnabled: false
 }
 

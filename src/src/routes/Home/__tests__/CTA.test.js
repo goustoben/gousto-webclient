@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { CTA } from 'routes/Home/CTA'
 import { shallow, mount } from 'enzyme'
@@ -7,14 +5,21 @@ import { Button, Segment } from 'goustouicomponents'
 
 describe('CTA', () => {
   let wrapper
-  let onClickSpy
+  let homeGetStarted
   let width
+  const ctaUri = '/ctaTest'
+  const sectionForTracking = 'testSection'
 
   beforeEach(() => {
-    onClickSpy = sinon.spy()
+    homeGetStarted = jest.fn()
     width = 100
     wrapper = shallow(
-      <CTA onClick={onClickSpy} width={width}>
+      <CTA
+        homeGetStarted={homeGetStarted}
+        ctaUri={ctaUri}
+        sectionForTracking={sectionForTracking}
+        width={width}
+      >
         click here
       </CTA>,
     )
@@ -34,14 +39,16 @@ describe('CTA', () => {
     ).not.toEqual(-1)
   })
 
-  test('should map the onClick prop through to the Segment', () => {
-    expect(wrapper.find(Segment).prop('onClick')).toEqual(onClickSpy)
+  test('should call homeGetStarted when the Segment is clicked', () => {
+    wrapper.find(Segment).simulate('click')
+
+    expect(homeGetStarted).toHaveBeenCalledWith(ctaUri, sectionForTracking)
   })
 
   describe('default props', () => {
     beforeEach(() => {
       wrapper = mount(
-        <CTA onClick={onClickSpy} width={width}>
+        <CTA homeGetStarted={homeGetStarted} width={width} ctaUri={ctaUri}>
           click here
         </CTA>,
       )

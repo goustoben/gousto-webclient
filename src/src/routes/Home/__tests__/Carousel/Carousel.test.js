@@ -21,21 +21,18 @@ describe('Carousel', () => {
   })
 
   describe('CTA', () => {
-    const redirect = jest.fn()
-    const trackGetStarted = jest.fn()
+    const ctaUri = '/carousel'
 
     beforeEach(() => {
       wrapper.setProps({
-        redirect,
-        trackGetStarted,
-        ctaUri: '/carousel'
+        ctaUri
       })
     })
 
-    test('should dispatch redirect, and trackGetStarted actions with properly', () => {
-      wrapper.find(CTAHomepageContainer).simulate('click')
-      expect(redirect).toHaveBeenCalledWith('/carousel')
-      expect(trackGetStarted).toHaveBeenCalledWith('recipecarousel')
+    test('should pass ctaUri and the section correctly', () => {
+      const cta = wrapper.find(CTAHomepageContainer)
+      expect(cta.prop('sectionForTracking')).toBe('recipecarousel')
+      expect(cta.prop('ctaUri')).toBe(ctaUri)
     })
   })
 

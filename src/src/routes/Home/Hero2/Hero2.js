@@ -6,7 +6,7 @@ import Content from 'containers/Content'
 import { CTAHomepageContainer } from '../CTA'
 import css from './Hero2.css'
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
+const Hero = ({ ctaUri, ctaText, dataTesting }) => (
   <div className={css.container} data-testing={dataTesting}>
     <div className={css.textContainer}>
       <h1 className={css.header}>
@@ -15,13 +15,20 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
       <h2 className={css.subHeader}>
         <Content contentKeys="propositionSupportingHeadline"><span>{home.hero.subheader}</span></Content>
       </h2>
-      <CTAHomepageContainer width={240} onClick={() => redirect(ctaUri)} align="left" responsive dataTesting="homepageHeroCTA">{ctaText}</CTAHomepageContainer>
+      <CTAHomepageContainer
+        width={240}
+        ctaUri={ctaUri}
+        align="left"
+        responsive
+        dataTesting="homepageHeroCTA"
+      >
+        {ctaText}
+      </CTAHomepageContainer>
     </div>
   </div>
 )
 
 Hero.propTypes = {
-  redirect: PropTypes.func,
   ctaUri: PropTypes.string,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   dataTesting: PropTypes.string,
