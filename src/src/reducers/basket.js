@@ -46,6 +46,7 @@ const initialState = () => Immutable.fromJS({
   promoCodeApplied: false,
   promoCodeUrl: '',
   recipes: {},
+  hasAddedFirstRecipe: false,
   slotId: '',
   unsaved: false,
   previewOrderId: '',
@@ -192,8 +193,15 @@ const basket = {
     case actionTypes.BASKET_RECIPE_ADD: {
       const { recipeId } = action
       const currentQty = state.getIn(['recipes', recipeId], 0)
+      const hasAddedFirstRecipe = state.get('hasAddedFirstRecipe')
 
-      return state.setIn(['recipes', recipeId], currentQty + 1)
+      let newState = state.setIn(['recipes', recipeId], currentQty + 1)
+
+      if (!hasAddedFirstRecipe) {
+        newState = newState.setIn(['hasAddedFirstRecipe'], true)
+      }
+
+      return newState
     }
 
     case actionTypes.BASKET_LIMIT_REACHED: {

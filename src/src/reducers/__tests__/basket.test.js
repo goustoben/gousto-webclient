@@ -37,6 +37,7 @@ describe('basket reducer', () => {
       promoCodeApplied: false,
       promoCodeUrl: '',
       recipes: {},
+      hasAddedFirstRecipe: false,
       slotId: '',
       unsaved: false,
       previewOrderId: '',
@@ -335,7 +336,8 @@ describe('basket reducer', () => {
       const expected = Immutable.Map({
         recipes: Immutable.Map({
           123: 1
-        })
+        }),
+        hasAddedFirstRecipe: true,
       })
 
       const result = basket(initialState, action)
@@ -354,11 +356,40 @@ describe('basket reducer', () => {
       })
       const expected = Immutable.Map({
         recipes: Immutable.Map({ 123: 3 }),
+        hasAddedFirstRecipe: true,
       })
 
       const result = basket(initialState, action)
 
       expect(Immutable.is(result, expected)).toBeTruthy()
+    })
+
+    describe('when a recipe is added', () => {
+      let result
+      let action
+
+      beforeEach(() => {
+        initialState = Immutable.Map({
+          recipes: Immutable.Map(),
+          hasAddedFirstRecipe: false
+        })
+
+        action = {
+          type: actionTypes.BASKET_RECIPE_ADD,
+          recipeId: '123',
+        }
+
+        result = basket(initialState, action)
+      })
+
+      test('then it should register that the first recipe has been added', () => {
+        expect(result.get('hasAddedFirstRecipe')).toBeTruthy()
+      })
+
+      test('when additional recipes are added hasAddedFirstRecipe should remain true', () => {
+        result = basket(result, { ...action, recipeId: '321' })
+        expect(result.get('hasAddedFirstRecipe')).toBeTruthy()
+      })
     })
   })
 
