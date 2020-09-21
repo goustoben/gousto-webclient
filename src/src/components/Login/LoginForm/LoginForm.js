@@ -6,6 +6,7 @@ import { CTA, InputField } from 'goustouicomponents'
 import CheckBox from 'Form/CheckBox'
 import Form from 'Form'
 import config from 'config'
+import classNames from 'classnames'
 import css from './LoginForm.css'
 
 const secretPingdomEmailLength = 31
@@ -143,11 +144,11 @@ class LoginForm extends React.PureComponent {
   }
 
   renderLoginForm = () => {
-    const { isAuthenticating, isRecaptchaEnabled, statusText } = this.props
+    const { isAuthenticating, isRecaptchaEnabled, statusText, showAppAwareness } = this.props
     const { remember, showValidationError } = this.state
 
     return (
-      <Form onSubmit={this.handleSubmit} method="post" data-testing="loginForm">
+      <Form onSubmit={this.handleSubmit} method="post" data-testing="loginForm" className={classNames({ [css.appAwarenessLoginForm]: showAppAwareness })}>
         <div className={css.inputContainer}>
           <InputField
             id="email"
@@ -170,59 +171,61 @@ class LoginForm extends React.PureComponent {
             testingSelector="inputLoginPassword"
           />
         </div>
-        <div className={css.loginOptionsContainer}>
-          <div className={css.resetFormContainer}>
-            <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
-          </div>
-          <div className={css.rememberMe}>
-            <CheckBox
-              data-testing="loginCheckbox"
-              label="Remember me"
-              textSize="Medium"
-              onChange={this.checkboxChanges}
-              checked={remember}
-            />
-          </div>
-        </div>
-        {
-          showValidationError
-          && (
-            <div className={css.error} data-testing="loginErrMsg">
-              <span className={css.errorIcon} />
-              {statusText}
+        <div className={css.appAwarenessBottomContainer}>
+          <div className={css.loginOptionsContainer}>
+            <div className={css.resetFormContainer}>
+              <a href={config.routes.client.resetForm} className={css.link}>Forgot your password?</a>
             </div>
-          )
-        }
-        {
-          isRecaptchaEnabled
-          && (
-            <div>
-              <ReCAPTCHA
-                ref={el => { this.recaptchaElement = el }}
-                sitekey={RECAPTCHA_PUBLIC_KEY}
-                size="invisible"
-                onChange={this.captchaChanges}
+            <div className={css.rememberMe}>
+              <CheckBox
+                data-testing="loginCheckbox"
+                label="Remember me"
+                textSize="Medium"
+                onChange={this.checkboxChanges}
+                checked={remember}
               />
             </div>
-          )
-        }
-        <CTA
-          testingSelector="loginFormSubmit"
-          onClick={this.handleSubmit}
-          isLoading={isAuthenticating}
-          isFullWidth
-        >
-          Log in
-        </CTA>
+          </div>
+          {
+            showValidationError
+            && (
+              <div className={css.error} data-testing="loginErrMsg">
+                <span className={css.errorIcon} />
+                {statusText}
+              </div>
+            )
+          }
+          {
+            isRecaptchaEnabled
+            && (
+              <div>
+                <ReCAPTCHA
+                  ref={el => { this.recaptchaElement = el }}
+                  sitekey={RECAPTCHA_PUBLIC_KEY}
+                  size="invisible"
+                  onChange={this.captchaChanges}
+                />
+              </div>
+            )
+          }
+          <CTA
+            testingSelector="loginFormSubmit"
+            onClick={this.handleSubmit}
+            isLoading={isAuthenticating}
+            isFullWidth
+          >
+            Log in
+          </CTA>
+        </div>
       </Form>
     )
   }
 
   render() {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, showAppAwareness } = this.props
 
     return (
-      <div data-testing="loginModal">
+      <div data-testing="loginModal" className={classNames({ [css.appAwarenessLoginModal]: showAppAwareness })}>
         {(isAuthenticated) ? this.renderConfirmMessage() : this.renderLoginForm()}
       </div>
     )
@@ -234,6 +237,7 @@ LoginForm.propTypes = {
   isAuthenticated: PropTypes.bool,
   isAuthenticating: PropTypes.bool,
   isRecaptchaEnabled: PropTypes.bool.isRequired,
+  showAppAwareness: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   rememberMeDefault: PropTypes.bool,
   statusText: PropTypes.oneOfType([
@@ -247,6 +251,7 @@ LoginForm.defaultProps = {
   isAuthenticated: false,
   isAuthenticating: false,
   rememberMeDefault: false,
+  showAppAwareness: false,
   statusText: '',
 }
 

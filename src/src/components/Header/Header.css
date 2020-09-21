@@ -243,6 +243,13 @@ span:target .overlay {
 	}
 }
 
+.appAwarenessModal {
+	min-width: 750px !important;
+	padding: 0 !important;
+	border: none;
+	background-clip: unset;
+}
+
 .mobileTitle {
 	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 	composes: headerXXL textCenter from 'styles/typography.css';

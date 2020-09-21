@@ -324,6 +324,7 @@ class Header extends React.PureComponent {
       routing,
       isHomePageRedesignEnabled,
       isHelpCentreActive,
+      showAppAwareness,
       isAppAwarenessEnabled,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
@@ -409,7 +410,7 @@ class Header extends React.PureComponent {
           >
             <ModalPanel
               closePortal={this.onClose}
-              className={css.modal}
+              className={classNames(css.modal, { [css.appAwarenessModal]: showAppAwareness })}
               containerClassName={css.modalContainer}
               disableOverlay
               isNarrow
@@ -467,6 +468,7 @@ Header.propTypes = {
   trackNavigationClick: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
   isHelpCentreActive: PropTypes.bool,
+  showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
 }
 
@@ -486,6 +488,7 @@ Header.defaultProps = {
   trackNavigationClick: () => { },
   isHomePageRedesignEnabled: false,
   isHelpCentreActive: false,
+  showAppAwareness: false,
   isAppAwarenessEnabled: false,
 }
 
