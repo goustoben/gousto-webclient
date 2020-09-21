@@ -27,6 +27,7 @@ import { collectionsLoadCollectionBySlug } from './collections'
 import cookbook from './cookbook'
 import deliveries from './deliveries'
 import * as welcome from './welcome'
+import { homeActions } from './home'
 
 const actions = {
   ...auth,
@@ -57,7 +58,8 @@ const actions = {
   ...tracking,
   ...user,
   ...deliveries,
-  ...welcome
+  ...welcome,
+  ...homeActions
 }
 
 export default actions

@@ -5,12 +5,15 @@ import { CTAHomepageContainer } from '../CTAHomepageContainer'
 
 describe('CTAHomepageContainer', () => {
   let wrapper
+  const ctaText = <span>Get started</span>
+  const ctaUri = '/ctaTest'
+
   const initialState = {
     features: Immutable.Map({
       isHomePageRedesignEnabled: Immutable.fromJS({
         value: false
-      }),
-    }),
+      })
+    })
   }
   const store = {
     getState: jest.fn(() => initialState),
@@ -19,7 +22,11 @@ describe('CTAHomepageContainer', () => {
   }
 
   beforeEach(() => {
-    wrapper = shallow(<CTAHomepageContainer store={store} />)
+    wrapper = shallow(
+      <CTAHomepageContainer store={store} ctaUri={ctaUri}>
+        {ctaText}
+      </CTAHomepageContainer>
+    )
   })
 
   describe('Given initialState to CTAHomepageContainer component', () => {
@@ -29,7 +36,7 @@ describe('CTAHomepageContainer', () => {
           withContainer: true,
           align: 'center',
           responsive: false,
-          isHomePageRedesignEnabled: false,
+          isHomePageRedesignEnabled: false
         }
         const renderedHTML = wrapper.dive()
         expect(renderedHTML.exists('.buttonContainer.homepageRedesign')).toBeFalsy()
@@ -39,24 +46,28 @@ describe('CTAHomepageContainer', () => {
   })
 
   describe('Given CTA state updates', () => {
-    describe('When its rendered', () => {
+    describe('When it is rendered', () => {
       beforeEach(() => {
         store.getState.mockReturnValue({
           ...initialState,
           features: Immutable.Map({
             isHomePageRedesignEnabled: Immutable.fromJS({
               value: true
-            }),
-          }),
+            })
+          })
         })
-        wrapper = shallow(<CTAHomepageContainer store={store} />)
+        wrapper = shallow(
+          <CTAHomepageContainer store={store} ctaUri={ctaUri}>
+            {ctaText}
+          </CTAHomepageContainer>
+        )
         wrapper.setProps({ responsive: true })
       })
 
       test('Then should be rendered with updates', () => {
         const expected = {
           responsive: true,
-          isHomePageRedesignEnabled: true,
+          isHomePageRedesignEnabled: true
         }
         const renderedHTML = wrapper.dive()
         expect(renderedHTML.exists('.buttonContainer.homepageRedesign.fontStyleBodyL')).toBeTruthy()

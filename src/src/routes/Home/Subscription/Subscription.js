@@ -14,11 +14,7 @@ const Subscription = ({ steps, header, description, isHomePageRedesignEnabled, i
 Subscription.propTypes = {
   header: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  steps: PropTypes.arrayOf(PropTypes.shape({
-    path: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  })),
+  steps: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
   isBoxPricesPageRedesignEnabled: PropTypes.bool,
 }

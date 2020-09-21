@@ -25,9 +25,11 @@ const steps = jest.fn().mockReturnValue([
 
 describe('HowItWorks', () => {
   let wrapper
+  const header = <div>header</div>
+  const description = <div>description</div>
 
   beforeEach(() => {
-    wrapper = shallow(<HowItWorks />)
+    wrapper = shallow(<HowItWorks header={header} description={description} />)
   })
 
   describe('rendering', () => {
@@ -41,16 +43,16 @@ describe('HowItWorks', () => {
   })
 
   test('should have default steps from config', () => {
-    wrapper = shallow(<HowItWorks steps={steps} />)
+    wrapper = shallow(<HowItWorks steps={steps} header={header} description={description} />)
 
     expect(wrapper.find(Guide).prop('steps')).toHaveLength(3)
   })
 
   test('should request steps by variant', () => {
-    wrapper = shallow(<HowItWorks steps={steps} />)
+    wrapper = shallow(<HowItWorks steps={steps} header={header} description={description} />)
     expect(steps).toHaveBeenCalledWith('default', false)
 
-    wrapper = shallow(<HowItWorks steps={steps} variant="rebrand" />)
+    wrapper = shallow(<HowItWorks steps={steps} variant="rebrand" header={header} description={description} />)
     expect(steps).toHaveBeenCalledWith('rebrand', false)
   })
 

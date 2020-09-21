@@ -9,7 +9,7 @@ import TestimonialCarousel from './TestimonialCarousel'
 import css from './Testimonials.css'
 import { CTAHomepageContainer } from '../CTA'
 
-const Testimonials = ({ redirect, showLink, ctaText, ctaUri, trackGetStarted, isHomePageRedesignEnabled }) => (
+const Testimonials = ({ showLink, ctaText, ctaUri, isHomePageRedesignEnabled }) => (
   <div className={classNames(css.testimonials, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
     <ModuleHeaderContainer>Over 1 million meals delivered</ModuleHeaderContainer>
     <h3 className={classNames(css.subHeader, { [typography.fontStyleBody]: isHomePageRedesignEnabled })}>And the reviews are pouring in:</h3>
@@ -17,10 +17,8 @@ const Testimonials = ({ redirect, showLink, ctaText, ctaUri, trackGetStarted, is
 
     <CTAHomepageContainer
       width={240}
-      onClick={() => {
-        redirect(ctaUri)
-        trackGetStarted('trustpilot')
-      }}
+      ctaUri={ctaUri}
+      sectionForTracking="trustpilot"
     >
       {ctaText}
     </CTAHomepageContainer>
@@ -28,11 +26,9 @@ const Testimonials = ({ redirect, showLink, ctaText, ctaUri, trackGetStarted, is
 )
 
 Testimonials.propTypes = {
-  redirect: PropTypes.func,
   showLink: PropTypes.bool,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   ctaUri: PropTypes.string,
-  trackGetStarted: PropTypes.func,
   isHomePageRedesignEnabled: PropTypes.bool,
 }
 
@@ -40,7 +36,6 @@ Testimonials.defaultProps = {
   showLink: true,
   ctaText: home.CTA.main,
   ctaUri: config.client.signup,
-  trackGetStarted: () => {},
   isHomePageRedesignEnabled: false
 }
 

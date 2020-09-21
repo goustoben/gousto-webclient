@@ -35,7 +35,8 @@ import {
   getBoxPricesPageRedesign,
   getCheckoutRedesign,
   getIsAppAwarenessEnabled,
-  getPricingClarityRedesign
+  getPricingClarityRedesign,
+  getIsPromoCodeOnGetStartedEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -87,6 +88,7 @@ describe('when features are defined', () => {
     [getCheckoutRedesign, 'isCheckoutRedesignEnabled'],
     [getIsAppAwarenessEnabled, 'isAppAwarenessEnabled'],
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
+    [getIsPromoCodeOnGetStartedEnabled, 'promoCodeOnGetStarted'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

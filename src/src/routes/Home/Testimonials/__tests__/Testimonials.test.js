@@ -6,32 +6,21 @@ import { CTAHomepageContainer } from 'routes/Home/CTA'
 
 describe('Testimonials', () => {
   let wrapper
-  const props = {
-    redirect: jest.fn(),
-    trackGetStarted: jest.fn(),
-  }
+  const ctaUri = '/signup'
 
   beforeEach(() => {
-    wrapper = shallow(<Testimonials {...props} />)
+    wrapper = shallow(<Testimonials ctaUri={ctaUri} />)
   })
 
   describe('when Testimonials renders', () => {
     test('should render CTAHomepage button', () => {
       expect(wrapper.find(CTAHomepageContainer).exists()).toBeTruthy()
     })
-  })
 
-  describe('when CTAHomepage has been clicked', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        ctaUri: '/signup'
-      })
-    })
-
-    test('should dispatch redirect, and trackGetStarted actions with properly', () => {
-      wrapper.find(CTAHomepageContainer).simulate('click')
-      expect(props.redirect).toHaveBeenCalledWith('/signup')
-      expect(props.trackGetStarted).toHaveBeenCalledWith('trustpilot')
+    test('should pass ctaUri and the section correctly', () => {
+      const cta = wrapper.find(CTAHomepageContainer)
+      expect(cta.prop('sectionForTracking')).toBe('trustpilot')
+      expect(cta.prop('ctaUri')).toBe(ctaUri)
     })
   })
 })

@@ -137,3 +137,7 @@ export const getIsAppAwarenessEnabled = ({ features }) => (
 export const getPricingClarityRedesign = ({ features }) => (
   features && features.getIn(['isPricingClarityEnabled', 'value'], false)
 )
+
+export const getIsPromoCodeOnGetStartedEnabled = ({ features }) => (
+  features && features.getIn(['promoCodeOnGetStarted', 'value'], false)
+)

@@ -1,6 +1,7 @@
 
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { limitReached } from 'utils/basket'
+import logger from 'utils/logger'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
 import status from '.../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
@@ -15,6 +16,20 @@ import { clearBasketNotValidError } from './menuCheckoutClick'
 import { menuRecipeDetailVisibilityChange } from './menuRecipeDetails'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { isOutOfStock } from '../selectors/recipe'
+import { sendClientMetric } from '../apis/clientMetrics'
+
+export const sendClientMetrics = async () => {
+  try {
+    await sendClientMetric({
+      name: 'menu-first-recipe-add',
+      detail: {}
+    })
+  } catch (e) {
+    logger.warning({
+      message: 'Fail to send menu first recipe add metric to client metrics'
+    })
+  }
+}
 
 export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
   (dispatch, getState) => {
@@ -31,6 +46,10 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) 
     const collection = getCurrentCollectionId(state)
     if (recipeInfo) {
       Object.assign(recipeInfo, { collection })
+    }
+
+    if (!basket.get('hasAddedFirstRecipe')) {
+      sendClientMetrics()
     }
 
     dispatch({

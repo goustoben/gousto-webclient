@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import * as basketUtils from 'utils/basket'
 import * as basketSelectors from 'selectors/basket'
 import * as loggingmanagerActions from 'actions/loggingmanager'
+import logger from 'utils/logger'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import * as basketActions from '../basketRecipes'
@@ -11,6 +12,7 @@ import pricingActions from '../../../../actions/pricing'
 import * as menuActions from '../../../../actions/menu'
 import * as menuSelectors from '../../selectors/menu'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
+import * as clientMetrics from '../../apis/clientMetrics'
 
 jest.mock('actions/loggingmanager')
 
@@ -107,10 +109,113 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   })
 })
 
+describe('sendClientMetrics', () => {
+  let mockLogger
+
+  beforeEach(() => {
+    safeJestMock(clientMetrics, 'sendClientMetric').mockRejectedValue(new Error('mock error'))
+    mockLogger = safeJestMock(logger, 'warning')
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  test('should make the call to the logger', async () => {
+    await basketActions.sendClientMetrics()
+
+    expect(mockLogger).toHaveBeenCalled()
+  })
+})
+
 describe('validBasketRecipeAdd', () => {
   let getStateSpy
   const dispatch = jest.fn()
   let limitReachSpy
+
+  describe('when the basket is empty and the first recipe is added', () => {
+    let mockSendClientMetrics
+
+    beforeEach(() => {
+      limitReachSpy = safeJestMock(basketUtils, 'limitReached')
+      mockSendClientMetrics = safeJestMock(clientMetrics, 'sendClientMetric')
+      getStateSpy = jest.fn().mockReturnValue({
+        tracking: Immutable.fromJS({}),
+        basket: Immutable.Map({
+          recipes: Immutable.Map(),
+          numPortions: 2,
+          hasAddedFirstRecipe: false
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: { 2: 30, 4: 10 },
+          234: { 2: 0, 4: 10 },
+        }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo',
+            recipesInCollection: ['123', '234']
+          }
+        })
+      })
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('should make the menu-first-recipe-add metrics call', () => {
+      basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+
+      expect(mockSendClientMetrics).toHaveBeenCalledWith({
+        name: 'menu-first-recipe-add',
+        detail: {}
+      })
+    })
+  })
+
+  describe('when the first recipe has been added and additional recipes are added', () => {
+    let mockSendClientMetrics
+
+    beforeEach(() => {
+      limitReachSpy = safeJestMock(basketUtils, 'limitReached')
+      mockSendClientMetrics = safeJestMock(clientMetrics, 'sendClientMetric')
+      getStateSpy = jest.fn().mockReturnValue({
+        tracking: Immutable.fromJS({}),
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['123', 1]]),
+          numPortions: 2,
+          hasAddedFirstRecipe: true
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: { 2: 30, 4: 10 },
+          234: { 2: 0, 4: 10 },
+        }),
+        menuCollections: Immutable.fromJS({
+          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
+            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            published: true,
+            default: true,
+            slug: 'foo',
+            recipesInCollection: ['123', '234']
+          }
+        })
+      })
+
+      basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('should not make a metrics call', () => {
+      expect(mockSendClientMetrics).not.toHaveBeenCalled()
+    })
+  })
+
   describe('given a non-full basket with recipes for 2 portions', () => {
     const pricingRequestAction = Symbol('Pricing request')
 

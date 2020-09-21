@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getHomePageRedesign } from 'selectors/features'
+import { homeGetStarted } from 'actions/home'
 import { CTA } from './CTA'
 
 function mapStateToProps(state) {
@@ -8,6 +9,10 @@ function mapStateToProps(state) {
   }
 }
 
-const CTAHomepageContainer = connect(mapStateToProps)(CTA)
+const mapDispatchToProps = {
+  homeGetStarted
+}
+
+const CTAHomepageContainer = connect(mapStateToProps, mapDispatchToProps)(CTA)
 
 export { CTAHomepageContainer }

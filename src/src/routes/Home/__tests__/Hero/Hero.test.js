@@ -29,14 +29,11 @@ describe('Hero', () => {
   })
 
   describe('CTA', () => {
-    const redirect = jest.fn()
-    const trackGetStarted = jest.fn()
+    const ctaUri = '/hero'
 
     beforeEach(() => {
       wrapper.setProps({
-        redirect,
-        trackGetStarted,
-        ctaUri: '/hero'
+        ctaUri
       })
     })
 
@@ -44,10 +41,10 @@ describe('Hero', () => {
       expect(wrapper.find(CTAHomepageContainer)).toHaveLength(1)
     })
 
-    test('should dispatch redirect, and trackGetStarted actions with properly', () => {
-      wrapper.find(CTAHomepageContainer).simulate('click')
-      expect(redirect).toHaveBeenCalledWith('/hero')
-      expect(trackGetStarted).toHaveBeenCalledWith('hero')
+    test('should pass ctaUri and the section correctly', () => {
+      const cta = wrapper.find(CTAHomepageContainer)
+      expect(cta.prop('sectionForTracking')).toBe('hero')
+      expect(cta.prop('ctaUri')).toBe(ctaUri)
     })
   })
 
