@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import moment from 'moment'
+import { actionTypes } from 'actions/actionTypes'
 import { getRecipes, getMenuRecipeIds } from 'selectors/root'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
@@ -106,3 +107,18 @@ export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketR
 
   return limitsReached.filter(item => item !== null)
 }
+
+export const isMenuLoading = createSelector(
+  [
+    state => state.boxSummaryShow.get('show'),
+    state => state.menuBrowseCTAShow,
+    state => state.pending.get(actionTypes.MENU_FETCH_DATA, false),
+    state => state.pending.get(actionTypes.OPTIMIZELY_ROLLOUT_LOADING, false),
+    state => state.menu.get('forceLoad', false)
+  ],
+  (boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad) => {
+    const overlayShow = boxSummaryShow || menuBrowseCTAShow
+
+    return ((menuLoading || isOptimizelyLoading) && !overlayShow) || forceLoad
+  }
+)

@@ -34,7 +34,7 @@ const CategoryCarousel = ({ category, recipes }) => {
 
 CategoryCarousel.propTypes = {
   category: PropTypes.instanceOf(Immutable.Map).isRequired,
-  recipes: PropTypes.instanceOf(Immutable.List()).isRequired
+  recipes: PropTypes.instanceOf(Immutable.List).isRequired
 }
 
 export { CategoryCarousel }

@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes, getActiveMenuIdForOrderDate } from '../menu'
+import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes, getActiveMenuIdForOrderDate, isMenuLoading } from '../menu'
 
 describe('getCurrentMenuRecipes', () => {
   test('should return only recipes in the current menu', () => {
@@ -615,3 +615,19 @@ describe('validateRecipeAgainstRule', () => {
   })
 })
 
+describe('isMenuLoading', () => {
+  describe.each`
+    boxSummaryShow | menuBrowseCTAShow | menuLoading | isOptimizelyLoading | forceLoad | expected | description
+    ${false}       | ${false}          | ${true}     | ${false}            | ${false}  | ${true}  | ${'menu is loading and overlay is not shown'}
+    ${false}       | ${false}          | ${false}    | ${true}             | ${false}  | ${true}  | ${'optimizely is loading and overlay is not shown'}
+    ${true}        | ${false}          | ${true}     | ${false}            | ${false}  | ${false} | ${'overlay is shown'}
+    ${false}       | ${true}           | ${false}    | ${true}             | ${false}  | ${false} | ${'overlay is shown'}
+    ${false}       | ${false}          | ${false}    | ${false}            | ${true}   | ${true}  | ${'force load is true'}
+    ${false}       | ${false}          | ${false}    | ${false}            | ${false}  | ${false} | ${'menu is not loading'}
+
+  `('Given $description', ({ boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad, expected }) => {
+  it(`returns ${expected}`, () => {
+    expect(isMenuLoading.resultFunc(boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad)).toBe(expected)
+  })
+})
+})

@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 
 import { getStock } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
+import { getMenuCollectionIdBySlug } from 'selectors/collections'
 import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
 import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getCurrentCollectionDietaryClaims, getMenuCollections , getRecipesInCollection } from './collections'
@@ -335,4 +336,20 @@ export const replaceSideRecipeIdWithBaseRecipeId = createSelector(
 
     return baseRecipeId
   }
+)
+
+const getCollectionSlugsFromProps = (_, props) => (props && props.collectionSlugs ? props.collectionSlugs : [])
+
+export const getRecipesByCollectionSlugs = createSelector(
+  [getCollectionSlugsFromProps, getMenuCollections, (state) => state],
+  (collectionSlugs, menuCollections, state) => (
+    collectionSlugs.map((collectionSlug) => {
+      const collectionId = getMenuCollectionIdBySlug(menuCollections, collectionSlug)
+
+      return {
+        recipeList: exports.getRecipeListRecipes(state, { collectionId }),
+        collection: menuCollections.get(collectionId)
+      }
+    })
+  )
 )
