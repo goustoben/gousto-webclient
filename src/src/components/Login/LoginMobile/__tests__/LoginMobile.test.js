@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { LoginMobile } from '../LoginMobile'
 
 describe('<LoginMobile />', () => {
@@ -7,7 +7,11 @@ describe('<LoginMobile />', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <LoginMobile showAppAwareness={false}>
+      <LoginMobile
+        showAppAwareness={false}
+        trackAppStoreLoginButton={() => {}}
+        trackPlayStoreLoginButton={() => {}}
+      >
         <div data-testing="child" />
       </LoginMobile>
     )
@@ -26,12 +30,24 @@ describe('<LoginMobile />', () => {
   })
 
   describe('when showAppAwareness feature is turned on', () => {
+    const trackAppStoreLoginButton = jest.fn()
+    const trackPlayStoreLoginButton = jest.fn()
+
     beforeEach(() => {
-      wrapper = shallow(
-        <LoginMobile showAppAwareness>
+      wrapper = mount(
+        <LoginMobile
+          showAppAwareness
+          trackAppStoreLoginButton={trackAppStoreLoginButton}
+          trackPlayStoreLoginButton={trackPlayStoreLoginButton}
+        >
           <div />
         </LoginMobile>
       )
+    })
+
+    afterEach(() => {
+      trackPlayStoreLoginButton.mockClear()
+      trackAppStoreLoginButton.mockClear()
     })
 
     test('<AppStoreLinks /> is rendered', () => {
@@ -42,10 +58,35 @@ describe('<LoginMobile />', () => {
       expect(wrapper.find('HeadingWithSeparator').length).toBe(1)
     })
 
+    describe('and when clicking on play store', () => {
+      beforeEach(() => {
+        wrapper.find('AppStoreLinks').find('a').at(0).simulate('click')
+      })
+
+      test('trackPlayStoreLoginButton is called', () => {
+        expect(trackPlayStoreLoginButton).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('and when clicking on app store', () => {
+      beforeEach(() => {
+        wrapper.find('AppStoreLinks').find('a').at(1).simulate('click')
+      })
+
+      test('trackAppStoreLoginButton is called', () => {
+        expect(trackAppStoreLoginButton).toHaveBeenCalledTimes(1)
+      })
+    })
+
     describe('and when login is opened through help', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <LoginMobile showAppAwareness isHelpPreLoginOpen>
+          <LoginMobile
+            showAppAwareness
+            isHelpPreLoginOpen
+            trackAppStoreLoginButton={() => {}}
+            trackPlayStoreLoginButton={() => {}}
+          >
             <div />
           </LoginMobile>
         )

@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import {
   getUserId,
   getUserPhoneNumber,
+  getUserPhoneWithoutLeadingZero,
   getUserRecentRecipesIds,
   getUsersOrdersDaySlotLeadTimeIds,
   getUserOpenOrders
@@ -86,6 +87,28 @@ describe('user selectors', () => {
       }
 
       expect(getUserPhoneNumber(state)).toBe('phone-number')
+    })
+  })
+
+  describe('when getUserPhoneWithoutLeadingZero is called', () => {
+    test('returns user phone number from the store without the leading zero', () => {
+      const state = {
+        user: Immutable.fromJS({
+          phone: '0phone-number'
+        })
+      }
+
+      expect(getUserPhoneWithoutLeadingZero(state)).toBe('phone-number')
+    })
+
+    test('returns user phone number from the store', () => {
+      const state = {
+        user: Immutable.fromJS({
+          phone: 'correct-phone-number'
+        })
+      }
+
+      expect(getUserPhoneWithoutLeadingZero(state)).toBe('correct-phone-number')
     })
   })
 

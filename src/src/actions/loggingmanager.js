@@ -1,9 +1,14 @@
 import { logEventToServer } from 'apis/loggingManager'
+import statusActions from 'actions/status'
+import { actionTypes } from 'actions/actionTypes'
 
-const EVENT_NAMES = {
+export const EVENT_NAMES = {
   basketUpdated: 'basket-updated',
   rafPageVisited: 'rafPage-visited',
   userLoggedIn: 'user-loggedin',
+  sendGoustoAppLinkAppStoreSMS: 'send-gousto-app-link-app-store-sms',
+  sendGoustoAppLinkPlayStoreSMS: 'send-gousto-app-link-play-store-sms',
+  sendGoustoAppLinkNotSpecifiedStoreSMS: 'send-gousto-app-link-not-specified-store-sms',
 }
 
 const getDefaultParams = (state) => {
@@ -92,7 +97,64 @@ const trackUserAddRemoveRecipe = () => (
   }
 )
 
+const sendGoustoAppLinkSMS = ({ goustoAppEventName, userPhoneNumber }) => (
+  async (dispatch, getState) => {
+    const { authUserId, device } = getDefaultParams(getState())
+    const loggingManagerEvent = {
+      goustoAppEventName,
+      authUserId,
+      data: {
+        device,
+        userPhoneNumber,
+      },
+    }
+
+    dispatch(statusActions.pending(actionTypes.LOGGING_MANAGER_EVENT_PENDING, true))
+    dispatch(statusActions.error(actionTypes.LOGGING_MANAGER_EVENT_ERROR, false))
+    dispatch({
+      type: actionTypes.LOGGING_MANAGER_EVENT_SENT,
+      response: { key: 'goustoAppLinkSMS', value: false },
+    })
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'click_send_text_app_install',
+      }
+    })
+
+    try {
+      await logEventToServer(loggingManagerEvent)
+
+      dispatch({
+        type: actionTypes.LOGGING_MANAGER_EVENT_SENT,
+        response: { key: 'goustoAppLinkSMS', value: true }
+      })
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'click_send_text_app_install_sent',
+        }
+      })
+    } catch (error) {
+      const errorMessage = (typeof error === 'object' && error.message)
+        ? error.message
+        : 'An error occurred, please try again'
+
+      dispatch(statusActions.error(actionTypes.LOGGING_MANAGER_EVENT_ERROR, errorMessage))
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'click_send_text_app_install_error',
+        }
+      })
+    } finally {
+      dispatch(statusActions.pending(actionTypes.LOGGING_MANAGER_EVENT_PENDING, false))
+    }
+  }
+)
+
 export {
+  sendGoustoAppLinkSMS,
   trackUserFreeFoodPageView,
   trackUserLogin,
   trackUserAddRemoveRecipe,

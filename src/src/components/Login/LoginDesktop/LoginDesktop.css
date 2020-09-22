@@ -51,3 +51,19 @@
     transform: translate(-50%);
     width: 100%;
 }
+
+.inputFieldWrapper {
+    position: relative;
+  }
+
+  .iconSuccess {
+    background: url('media/svgs/icon-thin-check.svg') center top no-repeat;
+    border-style: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    position: absolute;
+    z-index: 1;
+    right: 1rem;
+    top: 1rem;
+  }
+

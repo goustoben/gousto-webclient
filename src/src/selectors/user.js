@@ -33,6 +33,17 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   return Array.from(recipeIds)
 }
 
+export const getUserPhoneWithoutLeadingZero = createSelector(
+  getUserPhoneNumber,
+  (phoneNumber) => {
+    if (phoneNumber && phoneNumber.substring(0, 1) === '0') {
+      return phoneNumber.substring(1)
+    }
+
+    return phoneNumber
+  }
+)
+
 export const getUsersOrdersDaySlotLeadTimeIds = createSelector(
   getUserOrders,
   orders => orders.map(order => order.get('daySlotLeadTimeId')).toArray()

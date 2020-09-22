@@ -13,10 +13,27 @@ const propTypes = {
   children: PropTypes.node.isRequired,
   isHelpPreLoginOpen: PropTypes.bool,
   showAppAwareness: PropTypes.bool,
+  trackAppStoreLoginButton: PropTypes.func.isRequired,
+  trackPlayStoreLoginButton: PropTypes.func.isRequired,
 }
 
-const LoginMobile = ({ children, isHelpPreLoginOpen, showAppAwareness }) => {
+const LoginMobile = ({
+  children,
+  isHelpPreLoginOpen,
+  showAppAwareness,
+  trackAppStoreLoginButton,
+  trackPlayStoreLoginButton }) => {
   const { appStoreId, playStoreId } = config.apps
+
+  const handleClick = (source) => {
+    if (source === 'playStore') {
+      trackPlayStoreLoginButton()
+    }
+
+    if (source === 'appStore') {
+      trackAppStoreLoginButton()
+    }
+  }
 
   return (
     <div>
@@ -26,7 +43,11 @@ const LoginMobile = ({ children, isHelpPreLoginOpen, showAppAwareness }) => {
           <HeadingWithSeparator position="top">
             Download the App
           </HeadingWithSeparator>
-          <AppStoreLinks appStoreId={appStoreId} playStoreId={playStoreId} />
+          <AppStoreLinks
+            appStoreId={appStoreId}
+            playStoreId={playStoreId}
+            onClick={handleClick}
+          />
         </div>
       )}
     </div>

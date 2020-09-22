@@ -21,10 +21,18 @@ describe('<LoginWrapper />', () => {
       loginVisibility: fromJS({
         helpPreLogin: false,
       }),
+      loggingManager: fromJS({
+        eventSent: {
+          goustoAppLinkSMS: false
+        },
+      }),
       request: fromJS({
         browser: 'desktop',
       }),
       pending: fromJS({}),
+      user: fromJS({
+        phone: ''
+      }),
     }),
     dispatch: () => {},
     subscribe: () => {},
