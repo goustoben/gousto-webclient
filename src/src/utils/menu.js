@@ -1,11 +1,3 @@
-import config from 'config/menu'
-
-export const isRecipeInStock = (recipe, stock, numPortions) => {
-  const recipeStock = stock.getIn([recipe.get('id'), String(numPortions)])
-
-  return recipeStock > config.stockThreshold || recipeStock === null
-}
-
 export const isRecipeInBasket = (recipe, basketRecipes) => basketRecipes.has(recipe.get('id'))
 
 export const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
