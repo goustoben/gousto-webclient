@@ -32,18 +32,13 @@ describe('clientMetrics', () => {
 
   describe('sendClientMetric', () => {
     test('should fetch the correct url', async () => {
-      const reqData = {
-        name: 'menu-load-complete',
-        detail: {
-          timeToUsable: 123
-        }
-      }
       const expectedReqData = {
         client: 'webclient',
         time: (new Date()).toISOString(),
         name: 'menu-load-complete',
         detail: {
-          timeToUsable: 123
+          timeToUsable: 123,
+          _userId: null
         },
       }
 
@@ -51,9 +46,39 @@ describe('clientMetrics', () => {
         'Content-Type': 'application/json',
       }
 
-      await sendClientMetric(reqData)
+      await sendClientMetric('menu-load-complete', { timeToUsable: 123 })
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(null, 'endpoint-clientmetrics/v1/event', expectedReqData, 'POST', 'default', headers)
+    })
+
+    describe('when userId is not provided', () => {
+      const userId = ''
+
+      test('should add null userId to detail', async () => {
+        const expectedReqData = expect.objectContaining({
+          detail: expect.objectContaining({
+            _userId: null
+          })
+        })
+
+        await sendClientMetric('menu-load-complete', { timeToUsable: 123 }, userId)
+        expect(fetch).toHaveBeenCalledWith(null, expect.any(String), expectedReqData, expect.any(String), expect.any(String), expect.any(Object))
+      })
+    })
+
+    describe('when userId is provided', () => {
+      const userId = 'aaaa-bbbb'
+
+      test('should add to detail', async () => {
+        const expectedReqData = expect.objectContaining({
+          detail: expect.objectContaining({
+            _userId: userId
+          })
+        })
+
+        await sendClientMetric('menu-load-complete', { timeToUsable: 123 }, userId)
+        expect(fetch).toHaveBeenCalledWith(null, expect.any(String), expectedReqData, expect.any(String), expect.any(String), expect.any(Object))
+      })
     })
   })
 })
