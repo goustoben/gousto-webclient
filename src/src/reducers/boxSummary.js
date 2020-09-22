@@ -2,10 +2,10 @@ import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 
 const boxSummary = {
-  boxSummaryShow: (state = Immutable.fromJS({ show: false, view: '' }), action) => {
+  boxSummaryShow: (state = Immutable.fromJS({ show: false, view: '', dismissed: false }), action) => {
     switch (action.type) {
     case actionTypes.BOXSUMMARY_VISIBILITY_CHANGE:
-      return Immutable.fromJS({ show: action.show, view: action.view })
+      return Immutable.fromJS({ show: action.show, view: action.view, dismissed: !action.show })
     default:
       return state
     }

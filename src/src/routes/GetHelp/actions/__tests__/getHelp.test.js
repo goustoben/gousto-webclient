@@ -1,10 +1,11 @@
 import Immutable from 'immutable'
+import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { fetchUserOrders } from 'apis/user'
 import * as getHelpApi from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
+import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
-import { actionTypes } from '../actionTypes'
 import {
   getUserOrders,
   trackConfirmationCTA,
@@ -161,18 +162,14 @@ describe('trackConfirmationCTA', () => {
 })
 
 describe('applyDeliveryRefund', () => {
-  let dispatchMock
-  let getState
-  const DELIVERY_REFUND_STATUS = 'ok'
-
-  beforeEach(() => {
-    dispatchMock = jest.fn()
-    getState = jest.fn().mockReturnValue({
-      auth: Immutable.fromJS({
-        accessToken: 'acc-token',
-      }),
-    })
+  const dispatchMock = jest.fn()
+  const getState = jest.fn().mockReturnValue({
+    auth: Immutable.fromJS({
+      accessToken: 'acc-token',
+    }),
   })
+  browserHistory.push = jest.fn()
+  const DELIVERY_REFUND_STATUS = 'ok'
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -200,11 +197,10 @@ describe('applyDeliveryRefund', () => {
       })
     })
 
-    test('it dispatches an action indicating success in the payload', () => {
-      expect(dispatchMock).toHaveBeenCalledWith({
-        type: actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
-        payload: { isSuccessful: true }
-      })
+    test('it redirects to the GetHelp - Confirmation page', () => {
+      const { index, confirmation } = clientRoutes.getHelp
+
+      expect(browserHistory.push).toHaveBeenCalledWith(`${index}/${confirmation}`)
     })
 
     test('it dispatches a pending action to false', () => {
@@ -236,6 +232,10 @@ describe('applyDeliveryRefund', () => {
         key: webClientActionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
         value: DELIVERY_COMPENSATION_ERRORS.message,
       })
+    })
+
+    test('it does not redirect', () => {
+      expect(browserHistory.push).not.toHaveBeenCalled()
     })
 
     test('it logs the error', () => {

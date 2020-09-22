@@ -1,4 +1,6 @@
+import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
+import { client as clientRoutes } from 'config/routes'
 import * as userApi from 'apis/user'
 import { applyDeliveryCompensation } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
@@ -90,12 +92,9 @@ export const applyDeliveryRefund = (
 
   try {
     const accessToken = getState().auth.get('accessToken')
+    const { index, confirmation } = clientRoutes.getHelp
     await applyDeliveryCompensation(accessToken, userId, orderId, complaintCategory, refundValue)
-
-    dispatch({
-      type: actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
-      payload: { isSuccessful: true },
-    })
+    browserHistory.push(`${index}/${confirmation}`)
   } catch (err) {
     dispatch(webClientStatusActions.error(actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION, err.message))
     logger.error(err)

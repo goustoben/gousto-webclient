@@ -1,4 +1,5 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value ScreenXXSMaxDEPRECATED from 'styles/screenSizes.css';
 @value Bluecheese, Oyster from 'styles/colors.css';
 
 .mainText {
@@ -15,6 +16,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: -0.5rem;
+
+  @media ScreenXXSMaxDEPRECATED {
+    flex-direction: column-reverse;
+  }
 }
 
 .cta {

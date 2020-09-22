@@ -9,6 +9,7 @@ export const EVENT_NAMES = {
   sendGoustoAppLinkAppStoreSMS: 'send-gousto-app-link-app-store-sms',
   sendGoustoAppLinkPlayStoreSMS: 'send-gousto-app-link-play-store-sms',
   sendGoustoAppLinkNotSpecifiedStoreSMS: 'send-gousto-app-link-not-specified-store-sms',
+  rafLinkShared: 'rafLink-shared',
 }
 
 const getDefaultParams = (state) => {
@@ -153,9 +154,28 @@ const sendGoustoAppLinkSMS = ({ goustoAppEventName, userPhoneNumber }) => (
   }
 )
 
+const trackUserFreeFoodLinkShare = ({ target }) => (
+  async (dispatch, getState) => {
+    const { authUserId, device } = getDefaultParams(getState())
+    const eventName = EVENT_NAMES.rafLinkShared
+
+    const loggingManagerEvent = {
+      eventName,
+      authUserId,
+      data: {
+        device,
+        target,
+      },
+    }
+
+    logEventToServer(loggingManagerEvent)
+  }
+)
+
 export {
   sendGoustoAppLinkSMS,
   trackUserFreeFoodPageView,
   trackUserLogin,
   trackUserAddRemoveRecipe,
+  trackUserFreeFoodLinkShare,
 }

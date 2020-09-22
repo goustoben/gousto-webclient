@@ -46,3 +46,5 @@ export const getBoxSummaryTextProps = (state, tempDate, tempSlotId, tempOrderId,
 
   return ({ deliveryLocationText, slotId, buttonText, showWarning })
 }
+
+export const getBoxSummaryDismissed = state => state.boxSummaryShow.get('dismissed')
