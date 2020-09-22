@@ -7,7 +7,7 @@ import { UserRAFLink } from 'components/UserRAFLink'
 import ReferAFriend from 'components/ReferAFriend'
 import { LinkRow } from './LinkRow'
 import css from './SocialShareSheet.css'
-import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferralLink } from '../socialReferralHelper'
+import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferralLink, SOCIAL_TYPES } from '../socialReferralHelper'
 
 class SocialShareSheet extends React.PureComponent {
   state = { isEmailFormOpen: false }
@@ -19,18 +19,30 @@ class SocialShareSheet extends React.PureComponent {
     trackingReferFriend: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
     rafOffer: PropTypes.shape({}),
+    trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
   }
 
   toggleEmailModal = () => {
-    const { trackingReferFriendSocialSharing } = this.props
+    const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props
     const { isEmailFormOpen } = this.state
-    !isEmailFormOpen && trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Email')
+    if (!isEmailFormOpen) {
+      trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.email)
+      trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.email })
+    }
 
     this.setState((prevState) => ({ isEmailFormOpen: !prevState.isEmailFormOpen }))
   }
 
   render() {
-    const { onClose, referralCode, trackingReferFriendSocialSharing, trackingReferFriend, userFirstName, rafOffer } = this.props
+    const {
+      onClose,
+      referralCode,
+      trackingReferFriendSocialSharing,
+      trackingReferFriend,
+      userFirstName,
+      rafOffer,
+      trackUserFreeFoodLinkShare,
+    } = this.props
     const { isEmailFormOpen } = this.state
 
     return (
@@ -56,9 +68,9 @@ class SocialShareSheet extends React.PureComponent {
           </div>
         </div>
 
-        <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName="icon-text-message-colour" rowName="Text Message" />
-        <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }} svgName="icon-whatsapp-colour" rowName="Whatsapp" />
-        <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }} svgName="icon-facebook-colour" rowName="Facebook" />
+        <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare) }} svgName="icon-text-message-colour" rowName={SOCIAL_TYPES.text} />
+        <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare) }} svgName="icon-whatsapp-colour" rowName={SOCIAL_TYPES.whatsapp} />
+        <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare) }} svgName="icon-facebook-colour" rowName={SOCIAL_TYPES.facebook} />
 
         <UserRAFLink
           classContainer={css.row}

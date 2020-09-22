@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import { actionTypes } from 'actions/actionTypes'
 import Overlay from 'components/Overlay'
 import { ReferAFriendModal } from 'components/ReferAFriendModal'
-import { getFacebookReferralLink, getMessengerReferralLink } from '../socialReferralHelper'
+import { getFacebookReferralLink, getMessengerReferralLink, SOCIAL_TYPES } from '../socialReferralHelper'
 import { SocialButton } from '../SocialButton'
 
 import css from './SocialShareButtons.css'
@@ -16,6 +16,7 @@ const propTypes = {
   offerCredit: PropTypes.string.isRequired,
   elementType: PropTypes.string,
   trackingReferFriendSocialSharing: PropTypes.func.isRequired,
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -25,8 +26,9 @@ class SocialShareButtons extends PureComponent {
   state = { isEmailModalOpen: false }
 
   openEmailModal = () => {
-    const { trackingReferFriendSocialSharing } = this.props
-    trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Email')
+    const { trackingReferFriendSocialSharing, trackUserFreeFoodLinkShare } = this.props
+    trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', SOCIAL_TYPES.email)
+    trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.email })
     this.setState({ isEmailModalOpen: true })
   }
 
@@ -34,8 +36,42 @@ class SocialShareButtons extends PureComponent {
     this.setState({ isEmailModalOpen: false })
   }
 
+  handleGetMessengerReferralLink = () => {
+    const {
+      referralCode,
+      userFirstName,
+      trackingReferFriendSocialSharing,
+      device,
+      trackUserFreeFoodLinkShare,
+    } = this.props
+
+    getMessengerReferralLink(
+      referralCode,
+      userFirstName,
+      trackingReferFriendSocialSharing,
+      device,
+      trackUserFreeFoodLinkShare,
+    )
+  }
+
+  handleGetFacebookReferralLink = () => {
+    const {
+      referralCode,
+      userFirstName,
+      trackingReferFriendSocialSharing,
+      trackUserFreeFoodLinkShare,
+    } = this.props
+
+    getFacebookReferralLink(
+      referralCode,
+      userFirstName,
+      trackingReferFriendSocialSharing,
+      trackUserFreeFoodLinkShare,
+    )
+  }
+
   render() {
-    const { referralCode, userFirstName, trackingReferFriendSocialSharing, device, offerCredit, elementType } = this.props
+    const { offerCredit, elementType } = this.props
     const { isEmailModalOpen } = this.state
     const socialShareButtonsClasses = classnames(
       css.mobileHide,
@@ -47,9 +83,25 @@ class SocialShareButtons extends PureComponent {
 
     return (
       <section className={socialShareButtonsClasses}>
-        <SocialButton text="Email" type="email" elementType={elementType} onClick={this.openEmailModal} />
-        <SocialButton text="Messenger" type="facebook-messenger" elementType={elementType} onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, device)} />
-        <SocialButton text="Facebook" type="facebook" elementType={elementType} onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
+        <SocialButton
+          data-testing="freeFoodEmailCTA"
+          text={SOCIAL_TYPES.email}
+          type="email"
+          elementType={elementType}
+          onClick={this.openEmailModal}
+        />
+        <SocialButton
+          text={SOCIAL_TYPES.messenger}
+          type="facebook-messenger"
+          elementType={elementType}
+          onClick={this.handleGetMessengerReferralLink}
+        />
+        <SocialButton
+          text={SOCIAL_TYPES.facebook}
+          type="facebook"
+          elementType={elementType}
+          onClick={this.handleGetFacebookReferralLink}
+        />
         <Overlay open={isEmailModalOpen} from="top">
           <ReferAFriendModal
             onClose={this.closeEmailModal}
@@ -64,4 +116,4 @@ class SocialShareButtons extends PureComponent {
 SocialShareButtons.propTypes = propTypes
 SocialShareButtons.defaultProps = defaultProps
 
-export { SocialShareButtons }
+export { SocialShareButtons, SOCIAL_TYPES }

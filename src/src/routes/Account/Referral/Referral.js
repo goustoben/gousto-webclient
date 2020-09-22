@@ -24,6 +24,7 @@ const propTypes = {
   isLoading: PropTypes.bool,
   device: PropTypes.string,
   trackUserFreeFoodPageView: PropTypes.func,
+  trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -58,7 +59,8 @@ class Referral extends Component {
       trackingReferFriend,
       trackingReferFriendSocialSharing,
       isLoading,
-      device
+      device,
+      trackUserFreeFoodLinkShare,
     } = this.props
     const offerTitle = rafOffer.get('title')
     const offerCredit = rafOffer.get('creditFormatted')
@@ -85,7 +87,13 @@ class Referral extends Component {
             </div>
             {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer} />}
             <div className={expiry ? css.rafCounterPresent : css.rafRow}>
-              <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
+              <UserRAFLink
+                classContainer={css.rafLink}
+                classLinkContainer={css.linkContainer}
+                referralCode={referralCode}
+                trackingReferFriend={trackingReferFriend}
+                trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+              >
                 <div id="referral-code-box">
                   <span className={`${css.displayedLink}`}>{displayLink}</span>
                 </div>
@@ -97,6 +105,7 @@ class Referral extends Component {
                 offerCredit={offerCredit}
                 elementType="page"
                 trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
+                trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
               />
               <div className={css.mobileShow}>
                 <SocialShareSheetCTA referralCode={referralCode} trackingReferFriend={trackingReferFriend} isFixed />

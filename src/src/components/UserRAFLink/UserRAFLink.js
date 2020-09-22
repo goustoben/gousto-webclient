@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
-import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
+import { getReferralLink, SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import css from './UserRAFLink.css'
 
 class UserRAFLink extends React.PureComponent {
@@ -16,6 +16,7 @@ class UserRAFLink extends React.PureComponent {
     children: PropTypes.node.isRequired,
     trackingReferFriend: PropTypes.func,
     isModal: PropTypes.bool.isRequired,
+    trackUserFreeFoodLinkShare: PropTypes.func.isRequired,
   }
 
   static fetchData = async ({ store }) => Promise.all([
@@ -27,7 +28,10 @@ class UserRAFLink extends React.PureComponent {
   }
 
   onCopy(trackingReferFriend) {
+    const { trackUserFreeFoodLinkShare } = this.props
     trackingReferFriend(actionTypes.REFER_FRIEND_LINK_COPIED, 'ReferFriendLink Copied')
+    trackUserFreeFoodLinkShare({ target: SOCIAL_TYPES.link })
+
     clearTimeout(this.timeout)
     this.setState({ copiedMessageVisible: true })
     this.timeout = setTimeout(() => {

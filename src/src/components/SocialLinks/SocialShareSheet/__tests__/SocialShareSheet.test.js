@@ -1,8 +1,20 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import ReferAFriend from 'components/ReferAFriend'
+import { trackUserFreeFoodLinkShare } from 'actions/loggingmanager'
+import { trackingReferFriendSocialSharing } from 'actions/user'
+import { actionTypes } from 'actions/actionTypes'
 import { SocialShareSheet } from '../SocialShareSheet'
 import { LinkRow } from '../LinkRow'
+import { SOCIAL_TYPES } from '../../socialReferralHelper'
+
+jest.mock('actions/loggingmanager', () => ({
+  trackUserFreeFoodLinkShare: jest.fn(),
+}))
+
+jest.mock('actions/user', () => ({
+  trackingReferFriendSocialSharing: jest.fn(),
+}))
 
 describe('SocialShareSheet', () => {
   describe('rendering', () => {
@@ -11,7 +23,15 @@ describe('SocialShareSheet', () => {
     const referralCode = ''
     const rafOffer = {}
     beforeEach(() => {
-      wrapper = shallow(<SocialShareSheet onClose={mockOnClose} referralCode={referralCode} rafOffer={rafOffer} />)
+      wrapper = shallow(
+        <SocialShareSheet
+          onClose={mockOnClose}
+          referralCode={referralCode}
+          rafOffer={rafOffer}
+          trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
+          trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
+        />
+      )
     })
 
     test('should render a Modal Panel with onClose prop', () => {
@@ -42,6 +62,19 @@ describe('SocialShareSheet', () => {
 
     test('should render three LinkRow components', () => {
       expect(wrapper.find(LinkRow).length).toEqual(3)
+    })
+
+    test('should call tracking events when email form is opened', () => {
+      wrapper
+        .find('.emailHeader')
+        .simulate('click', { preventDefault: e => e })
+
+      expect(trackUserFreeFoodLinkShare).toHaveBeenCalledWith({ target: SOCIAL_TYPES.email })
+      expect(trackingReferFriendSocialSharing).toHaveBeenCalledWith(
+        actionTypes.REFER_FRIEND_LINK_SHARE,
+        'ReferFriendLink Share',
+        SOCIAL_TYPES.email,
+      )
     })
   })
 })
