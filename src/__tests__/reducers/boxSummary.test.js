@@ -6,7 +6,7 @@ describe('boxSummary reducer', () => {
   describe('boxSummaryShow', () => {
     test('should handle initial state', () => {
       const result = boxSummaryReducer.boxSummaryShow(undefined, {})
-      const expectedResult = Immutable.fromJS({ show: false, view: '' })
+      const expectedResult = Immutable.fromJS({ show: false, view: '', dismissed: false })
       expect(Immutable.is(result, expectedResult)).toEqual(true)
     })
 
@@ -21,7 +21,7 @@ describe('boxSummary reducer', () => {
     })
 
     test('should handle BOXSUMMARY_VISIBILITY_CHANGE action types', () => {
-      const state = Immutable.fromJS({ show: false, view: '' })
+      const state = Immutable.fromJS({ show: false, view: '', dismissed: false })
       const result = boxSummaryReducer.boxSummaryShow(state, {
         type: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
         show: true,
@@ -29,7 +29,7 @@ describe('boxSummary reducer', () => {
       })
 
       expect(
-        Immutable.is(result, Immutable.fromJS({ show: true, view: 'desktop' })),
+        Immutable.is(result, Immutable.fromJS({ show: true, view: 'desktop', dismissed: false })),
       ).toEqual(true)
     })
   })

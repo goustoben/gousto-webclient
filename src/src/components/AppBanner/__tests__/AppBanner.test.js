@@ -32,9 +32,7 @@ describe('App Banner', () => {
         platform: 'iOS'
       })
     })
-    test('displays correct number of stars', () => {
-      expect(wrapper.find('.star').length).toEqual(5)
-    })
+
     test('should call appBannerDismiss callback when close button is clicked', () => {
       wrapper.find('.closeButton').simulate('click')
       expect(mockAppBannerDismiss).toHaveBeenCalled()

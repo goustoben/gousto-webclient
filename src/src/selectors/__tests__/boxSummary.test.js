@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getBoxSummaryTextProps } from '../boxSummary'
+import { getBoxSummaryTextProps, getBoxSummaryDismissed } from '../boxSummary'
 
 describe('getBoxSummaryTextProps', () => {
   let state; let tempOrderId; let tempDate; let
@@ -198,5 +198,27 @@ describe('getBoxSummaryTextProps', () => {
         })
       })
     })
+  })
+})
+
+describe('getBoxSummaryDismissed', () => {
+  test('returns true when the box summary modal has been dismissed', () => {
+    const state = {
+      boxSummaryShow: Immutable.fromJS({
+        dismissed: true
+      })
+    }
+
+    expect(getBoxSummaryDismissed(state)).toEqual(true)
+  })
+
+  test('returns false when the box summary modal has not been dismissed', () => {
+    const state = {
+      boxSummaryShow: Immutable.fromJS({
+        dismissed: false
+      })
+    }
+
+    expect(getBoxSummaryDismissed(state)).toEqual(false)
   })
 })

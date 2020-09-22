@@ -1,0 +1,9 @@
+.phoneImgContainer {
+    overflow: hidden;
+    padding: 0 45px;
+    grid-area: phoneImg;
+}
+
+.phoneImg {
+    width: 100%;
+}

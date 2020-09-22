@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { CoronaVirusBanner } from 'CoronaVirusBanner'
 
 import menuConfig from 'config/menu'
+import { AppModalContainer } from 'components/AppModal'
 import { CollectionsNavContainer } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { JustForYouTutorial } from '../JustForYouTutorial'
@@ -73,7 +74,7 @@ export class MenuRecipesPage extends PureComponent {
       const { store } = this.context
       const query = nextProps.query || {}
       const params = nextProps.params || {}
-      store.dispatch(fetchData({query, params }, true))
+      store.dispatch(fetchData({ query, params }, true))
     }
   }
 
@@ -118,20 +119,21 @@ export class MenuRecipesPage extends PureComponent {
       <div>
         {isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div>}
         {showCommunicationPanel && (
-        <div className={css.communicationPanelContainer}>
-          <div className={css.communicationPanel}>
-            <CommunicationPanel
-              showIcon={communicationPanel.showIcon}
-              level={communicationPanel.level}
-              title={communicationPanel.title}
-              body={communicationPanel.body}
-            />
+          <div className={css.communicationPanelContainer}>
+            <div className={css.communicationPanel}>
+              <CommunicationPanel
+                showIcon={communicationPanel.showIcon}
+                level={communicationPanel.level}
+                title={communicationPanel.title}
+                body={communicationPanel.body}
+              />
+            </div>
           </div>
-        </div>
         )}
         <SubHeader orderId={orderId} />
         <BannerTastePreferencesContainer />
         <JustForYouTutorial />
+        <AppModalContainer key="app-modal" />
         {!showLoading && <CollectionsNavContainer />}
         {stateRecipeCount && <RecipeGrid />}
         <BasketValidationErrorModalContainer />
