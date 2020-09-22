@@ -1,0 +1,1 @@
+export { DietaryRequirementsPageContainer } from './DietaryRequirementsPageContainer'

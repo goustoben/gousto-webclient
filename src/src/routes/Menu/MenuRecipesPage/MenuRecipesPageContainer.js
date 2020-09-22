@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { changeCollectionById } from 'actions/filters'
 import actions from 'actions'
-import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import {
   getIsSignupReductionEnabled,
@@ -17,17 +16,7 @@ import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCurrentCollectionId } from '../selectors/collections'
-
-const showLoading = (state) => {
-  const boxSummaryShow = state.boxSummaryShow.get('show')
-  const { menuBrowseCTAShow } = state
-  const isMenuLoading = state.pending.get(actionTypes.MENU_FETCH_DATA, false)
-  const isOptimizelyLoading = state.pending.get(actionTypes.OPTIMIZELY_ROLLOUT_LOADING, false)
-  const overlayShow = boxSummaryShow || menuBrowseCTAShow
-  const forceLoad = state.menu.get('forceLoad', false)
-
-  return ((isMenuLoading || isOptimizelyLoading) && !overlayShow) || forceLoad
-}
+import { isMenuLoading } from '../selectors/menu'
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -42,7 +31,7 @@ const mapStateToProps = (state, ownProps) => {
     stateRecipeCount: getRecipes(state).size,
     menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     menuCurrentCollectionId: collectionId,
-    showLoading: showLoading(state),
+    showLoading: isMenuLoading(state),
     orderId: params.orderId,
     storeOrderId: state.basket.get('orderId'),
     numPortions: state.basket.get('numPortions'),
