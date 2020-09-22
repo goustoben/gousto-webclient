@@ -1,6 +1,8 @@
 import Immutable from 'immutable'
 import { logEventToServer } from 'apis/loggingManager'
 import {
+  EVENT_NAMES,
+  sendGoustoAppLinkSMS,
   trackUserAddRemoveRecipe,
   trackUserFreeFoodPageView,
   trackUserLogin,
@@ -297,6 +299,86 @@ describe('trackUserAddRemoveRecipe', () => {
 
       test('logEventToServer is not called', () => {
         expect(logEventToServer).toHaveBeenCalledTimes(0)
+      })
+    })
+  })
+})
+
+describe('sendGoustoAppLinkSMS', () => {
+  let getState
+  let state
+  const dispatch = jest.fn()
+
+  beforeEach(async () => {
+    state = {
+      request: Immutable.fromJS({
+        browser: 'mobile',
+      }),
+      auth: Immutable.fromJS({
+        id: 'mock-user-id',
+      })
+    }
+
+    getState = jest.fn().mockReturnValue(state)
+
+    await sendGoustoAppLinkSMS({
+      goustoAppEventName: EVENT_NAMES.sendGoustoAppLinkAppStoreSMS,
+      userPhoneNumber: 'test-phone-number',
+    })(dispatch, getState)
+  })
+
+  afterEach(() => {
+    dispatch.mockReset()
+  })
+
+  test('logEventToServer is called passing the (app) store name', () => {
+    expect(logEventToServer).toHaveBeenCalledWith({
+      goustoAppEventName: 'send-gousto-app-link-app-store-sms',
+      authUserId: 'mock-user-id',
+      data: {
+        device: 'mobile',
+        userPhoneNumber: 'test-phone-number',
+      },
+    })
+  })
+
+  test('TRACKING is dispatched with sent key', () => {
+    const dispatchCalls = dispatch.mock.calls
+
+    expect(dispatchCalls[dispatchCalls.length - 2][0]).toEqual({
+      trackingData: {
+        actionType: 'click_send_text_app_install_sent'
+      },
+      type: 'TRACKING',
+    })
+  })
+
+  describe('when an error occurs', () => {
+    beforeEach(async () => {
+      logEventToServer.mockRejectedValue({ message: 'test-error' })
+
+      await sendGoustoAppLinkSMS({
+        goustoAppEventName: EVENT_NAMES.sendGoustoAppLinkAppStoreSMS,
+        userPhoneNumber: 'test-phone-number',
+      })(dispatch, getState)
+    })
+
+    test('LOGGING_MANAGER_EVENT_ERROR is dispatched', () => {
+      const dispatchCalls = dispatch.mock.calls
+
+      expect(dispatchCalls[dispatchCalls.length - 3][0]).toEqual({
+        key: 'LOGGING_MANAGER_EVENT_ERROR', type: 'ERROR', value: 'test-error'
+      })
+    })
+
+    test('TRACKING is dispatched with error key', () => {
+      const dispatchCalls = dispatch.mock.calls
+
+      expect(dispatchCalls[dispatchCalls.length - 2][0]).toEqual({
+        trackingData: {
+          actionType: 'click_send_text_app_install_error'
+        },
+        type: 'TRACKING',
       })
     })
   })

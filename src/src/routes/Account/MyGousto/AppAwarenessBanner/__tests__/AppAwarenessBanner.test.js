@@ -4,31 +4,68 @@ import { AppAwarenessBanner } from '../AppAwarenessBanner'
 
 describe('<AppAwarenessBanner />', () => {
   let wrapper
-  const sendText = jest.fn()
+  const sendGoustoAppLinkSMS = jest.fn()
 
   beforeEach(() => {
     wrapper = mount(
-      <AppAwarenessBanner sendText={sendText} userPhoneNumber="" />
+      <AppAwarenessBanner
+        goustoAppEventName="send-gousto-app-link-app-store-sms"
+        sendGoustoAppLinkSMS={sendGoustoAppLinkSMS}
+        eventErrorMessage=""
+        showEventPending={false}
+        showEventSent={false}
+        initialUserPhoneNumber="1234567890"
+      />
     )
   })
 
-  describe('when the phone number is set', () => {
+  afterEach(() => {
+    sendGoustoAppLinkSMS.mockClear()
+  })
+
+  test('the phone number is passed to the input correctly', () => {
+    expect(wrapper.find('InputField').prop('value')).toBe('1234567890')
+  })
+
+  describe('when clicking on Send Text', () => {
     beforeEach(() => {
-      wrapper.setProps({ userPhoneNumber: '0123456789' })
+      wrapper.find('CTA').simulate('click')
     })
 
-    test('the phone number is passed to the input correctly', () => {
-      expect(wrapper.find('InputField').prop('value')).toBe('0123456789')
+    test('sendGoustoAppLinkSMS is called passing goustoAppEventName and userPhoneNumber', () => {
+      expect(sendGoustoAppLinkSMS).toHaveBeenCalledWith({
+        goustoAppEventName: 'send-gousto-app-link-app-store-sms',
+        userPhoneNumber: '1234567890'
+      })
+    })
+  })
+
+  describe('when entering a valid phone number and submitting', () => {
+    beforeEach(() => {
+      wrapper.find('InputField').find('input').simulate('change', { target: { value: '7456640000', type: 'tel' } })
+      wrapper.find('InputField').find('input').simulate('blur', { target: { type: 'tel' } })
+
+      wrapper.find('CTA').simulate('click')
     })
 
-    describe('and when clicking on Send Text', () => {
-      beforeEach(() => {
-        wrapper.find('CTA').simulate('click')
+    test('sendGoustoAppLinkSMS is called passing goustoAppEventName and userPhoneNumber', () => {
+      expect(sendGoustoAppLinkSMS).toHaveBeenCalledWith({
+        goustoAppEventName: 'send-gousto-app-link-app-store-sms',
+        userPhoneNumber: '7456640000'
       })
+    })
+  })
 
-      test('sendText is called', () => {
-        expect(sendText).toHaveBeenCalledTimes(1)
-      })
+  describe('when entering an invalid phone number and submitting', () => {
+    beforeEach(() => {
+      wrapper.find('InputField').find('input').simulate('change', { target: { value: '123467', type: 'tel' } })
+      wrapper.find('InputField').find('input').simulate('blur', { target: { type: 'tel' } })
+
+      wrapper.find('CTA').simulate('click')
+    })
+
+    test('sendGoustoAppLinkSMS is not called', () => {
+      expect(sendGoustoAppLinkSMS).toHaveBeenCalledTimes(0)
     })
   })
 })

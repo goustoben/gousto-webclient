@@ -40,6 +40,7 @@ import { logger } from './logger'
 import { menuService } from './menuService'
 import { brand } from './brand'
 import { experimentsReducer } from './experiments'
+import { loggingManager } from './loggingmanager'
 
 const reducers = {
   ...abandonBasket,
@@ -60,6 +61,7 @@ const reducers = {
   ...jobs,
   ...login,
   logger,
+  loggingManager,
   ...menu,
   menuService,
   ...newsletter,

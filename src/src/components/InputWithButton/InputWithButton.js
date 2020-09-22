@@ -4,11 +4,19 @@ import css from './InputWithButton.css'
 
 const propTypes = {
   children: PropTypes.node.isRequired,
+  eventErrorMessage: PropTypes.string.isRequired,
+  showSuccessMessage: PropTypes.bool.isRequired,
 }
 
-const InputWithButton = ({ children }) => (
-  <div className={css.wrapper}>
-    {children}
+const InputWithButton = ({ children, eventErrorMessage, showSuccessMessage }) => (
+  <div>
+    <div className={css.inputWithButtonWrapper}>
+      {children}
+    </div>
+    <p className={css.eventStatus}>
+      {eventErrorMessage.length > 0 && eventErrorMessage}
+      {showSuccessMessage && 'Your message will arrive shortly'}
+    </p>
   </div>
 )
 
