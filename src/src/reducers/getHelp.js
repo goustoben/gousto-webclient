@@ -167,11 +167,6 @@ const getHelp = (state, action) => {
 
     return state.set('orders', actionReducedOrders)
   }
-  case actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION: {
-    const { isSuccessful } = action.payload
-
-    return state.set('isDeliveryCompensationApplied', isSuccessful)
-  }
   default:
     return state
   }

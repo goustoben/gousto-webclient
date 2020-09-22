@@ -137,17 +137,4 @@ describe('getHelp reducer', () => {
       expect(newState.get('order')).toEqual(EXPECTED_REDUCED_ORDER)
     })
   })
-
-  describe.each([true, false])('given an action with type GET_HELP_APPLY_DELIVERY_COMPENSATION is received with payload %s', (payloadValue) => {
-    beforeEach(() => {
-      newState = getHelp(getHelpInitialState, {
-        type: webclientActionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
-        payload: { isSuccessful: payloadValue},
-      })
-    })
-
-    test(`the isDeliveryCompensationApplied is set in the store to ${payloadValue}`, () => {
-      expect(newState.get('isDeliveryCompensationApplied')).toEqual(payloadValue)
-    })
-  })
 })
