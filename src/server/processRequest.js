@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet'
 import { setMenuPrefetched } from 'routes/Menu/actions/menuPrefetch'
 import { extractScriptOptions, DISABLED_SCRIPTS } from './routes/scripts'
 import { isServerSideFetchEligible } from './utils/renderType'
@@ -20,7 +21,6 @@ const basketActions = require('actions/basket').default
 const processFeaturesQuery = require('utils/processFeaturesQuery').default
 const { newAssetPath } = require('utils/media')
 const { authorise } = require('utils/clientAuthorise')
-const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
 const { loggerSetUuid } = require('actions/logger')
@@ -100,7 +100,7 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
         logger.notice({ message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime) })
       }
       startTime = new Date()
-      const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
+      const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
       if (__CLIENT__) {
         logger.notice({ message: 'renderHTML/template', elapsedTime: (new Date() - startTime) })

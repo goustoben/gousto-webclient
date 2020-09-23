@@ -18,7 +18,7 @@ const globals = require('config/globals')
 const MainLayout = require('layouts/MainLayout').default
 const ErrorPage = require('components/ErrorPage').default
 const Page = require('containers/Page').default
-const Helmet = require('react-helmet')
+const { Helmet } = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
@@ -99,7 +99,7 @@ app.use(async (ctx, next) => {
         </Page>
       </Provider>
     )
-    const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
+    const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
     ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.req.headers['user-agent'], scripts, helmetHead)
   }
 })

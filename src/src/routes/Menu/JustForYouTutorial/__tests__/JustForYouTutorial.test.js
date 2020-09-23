@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { JustForYouTutorial } from '../JustForYouTutorial'
-import { JustForYouTutorial as JustForYouTutorialComponent } from '..'
+import { JustForYouTutorialContainer } from '../JustForYouTutorialContainer'
 
 describe('JustForYouTutorial Component', () => {
   const incrementTutorialViewed = jest.fn()
@@ -80,7 +80,7 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-      <JustForYouTutorialComponent />, {
+      <JustForYouTutorialContainer />, {
         context: {
           store: {
             getState,
@@ -89,7 +89,8 @@ describe('Check browser to show JFY', () => {
         }
       }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+
+    expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(false)
   })
 
   it('should not render JFY if browser IE', () => {
@@ -111,7 +112,7 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-      <JustForYouTutorialComponent />, {
+      <JustForYouTutorialContainer />, {
         context: {
           store: {
             getState,
@@ -120,7 +121,7 @@ describe('Check browser to show JFY', () => {
         }
       }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+    expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(false)
   })
 
   it('should not render JFY if browser Chrome but justforyou not present', () => {
@@ -142,7 +143,7 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-      <JustForYouTutorialComponent />, {
+      <JustForYouTutorialContainer />, {
         context: {
           store: {
             getState,
@@ -151,7 +152,7 @@ describe('Check browser to show JFY', () => {
         }
       }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+    expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(false)
   })
 
   it('should render JFY if browser Chrome', () => {
@@ -173,7 +174,7 @@ describe('Check browser to show JFY', () => {
       )})
 
     wrapper = shallow(
-      <JustForYouTutorialComponent />, {
+      <JustForYouTutorialContainer />, {
         context: {
           store: {
             getState,
@@ -182,6 +183,6 @@ describe('Check browser to show JFY', () => {
         }
       }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(true)
+    expect(wrapper.find('JustForYouTutorial').prop('showTutorial')).toBe(true)
   })
 })
