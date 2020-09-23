@@ -110,7 +110,7 @@ describe('menu utils', () => {
       })
     })
 
-    describe('when menu does not have limits', () => {
+    describe('when menu does not have limits data', () => {
       beforeEach(() => {
         menuData = [
           {
@@ -154,6 +154,70 @@ describe('menu utils', () => {
                 data: []
               },
               limits: {
+                data: []
+              },
+              collections: {
+                data: []
+              }
+            }
+          }
+        ]
+      })
+      test('should return empty array for limits for menu', () => {
+        const result = getMenuLimits(menuData)
+        expect(result).toEqual({
+          123: {
+            limits: [],
+            startsAt: '2020-04-14T12:00:00+01:00',
+            endsAt: '2020-04-21T11:59:59+01:00'
+          },
+          345: {
+            limits: [],
+            startsAt: '2020-04-14T12:00:00+01:00',
+            endsAt: '2020-04-21T11:59:59+01:00'
+          },
+        })
+      })
+    })
+
+    describe('when menu does not have limits in relationship', () => {
+      beforeEach(() => {
+        menuData = [
+          {
+            id: '123',
+            type: 'menu',
+            attributes: {
+              starts_at: '2020-04-14T12:00:00+01:00',
+              ends_at: '2020-04-21T11:59:59+01:00',
+              is_default: true,
+              core_menu_id: '336'
+            },
+            relationships: {
+              recipes: {
+                data: []
+              },
+              recipe_options: {
+                data: []
+              },
+              collections: {
+                data: []
+              }
+            }
+          },
+          {
+            id: '345',
+            type: 'menu',
+            attributes: {
+              starts_at: '2020-04-14T12:00:00+01:00',
+              ends_at: '2020-04-21T11:59:59+01:00',
+              is_default: true,
+              core_menu_id: '336'
+            },
+            relationships: {
+              recipes: {
+                data: []
+              },
+              recipe_options: {
                 data: []
               },
               collections: {
