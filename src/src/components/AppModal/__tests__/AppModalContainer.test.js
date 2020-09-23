@@ -27,7 +27,7 @@ const mockState = {
     isAuthenticated: true
   }),
   features: Immutable.fromJS({
-    isAppAwarenessEnabled: {
+    isMobileMenuModalAppAwarenessEnabled: {
       value: true
     }
   })

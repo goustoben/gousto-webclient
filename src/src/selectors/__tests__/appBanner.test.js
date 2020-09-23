@@ -97,7 +97,7 @@ describe('appBanner selectors', () => {
           },
         },
         features: Immutable.fromJS({
-          isAppAwarenessEnabled: { value: true },
+          isMobileTopBannerAppAwarenessEnabled: { value: true },
         }),
         appBanner: Immutable.fromJS({
           isDismissed: false,

@@ -130,8 +130,20 @@ export const getCheckoutRedesign = ({ features }) => (
   features && features.getIn(['isCheckoutRedesignEnabled', 'value'], false)
 )
 
-export const getIsAppAwarenessEnabled = ({ features }) => (
-  features && features.getIn(['isAppAwarenessEnabled', 'value'], false)
+export const getIsLoginModalAppAwarenessEnabled = ({ features }) => (
+  features && features.getIn(['isLoginModalAppAwarenessEnabled', 'value'], false)
+)
+
+export const getIsMobileTopBannerAppAwarenessEnabled = ({ features }) => (
+  features && features.getIn(['isMobileTopBannerAppAwarenessEnabled', 'value'], false)
+)
+
+export const getIsMobileMenuModalAppAwarenessEnabled = ({ features }) => (
+  features && features.getIn(['isMobileMenuModalAppAwarenessEnabled', 'value'], false)
+)
+
+export const getIsMyGoustoBannerAppAwarenessEnabled = ({ features }) => (
+  features && features.getIn(['isMyGoustoBannerAppAwarenessEnabled', 'value'], false)
 )
 
 export const getPricingClarityRedesign = ({ features }) => (

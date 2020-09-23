@@ -18,7 +18,7 @@ describe('appAwareness selector', () => {
         helpPreLogin: false,
       }),
       features: fromJS({
-        isAppAwarenessEnabled: {
+        isLoginModalAppAwarenessEnabled: {
           value: true,
         },
       }),
@@ -73,7 +73,7 @@ describe('appAwareness selector', () => {
       const state = {
         ...mockState,
         features: fromJS({
-          isAppAwarenessEnabled: {
+          isLoginModalAppAwarenessEnabled: {
             value: false,
           },
         }),

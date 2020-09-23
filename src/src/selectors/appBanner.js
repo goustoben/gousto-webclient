@@ -1,5 +1,5 @@
 import { getIsAuthenticated } from 'selectors/auth'
-import { getIsAppAwarenessEnabled } from 'selectors/features'
+import { getIsMobileTopBannerAppAwarenessEnabled } from 'selectors/features'
 
 const getIsDismissed = state => state.appBanner.get('isDismissed')
 
@@ -21,7 +21,7 @@ const getIsPromoAppBannerEnabled = ({ state }) => {
   const path = state.routing.locationBeforeTransitions.pathname
   const isValidPath = path === '/' || path === '/my-gousto'
 
-  const showAppBanner = getIsAppAwarenessEnabled(state)
+  const showAppBanner = getIsMobileTopBannerAppAwarenessEnabled(state)
     && getIsAuthenticated(state)
     && !getIsDismissed(state)
     && name
