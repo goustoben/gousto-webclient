@@ -8,7 +8,7 @@ import {
   isAccountTabNameTest,
   getHomePageRedesign,
   getIsHelpCentreActive,
-  getIsAppAwarenessEnabled,
+  getIsMobileTopBannerAppAwarenessEnabled,
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   isHomePageRedesignEnabled: getHomePageRedesign(state),
   isHelpCentreActive: getIsHelpCentreActive(state),
   showAppAwareness: getIsAppAwarenessLoginEnabled(state),
-  isAppAwarenessEnabled: getIsAppAwarenessEnabled(state),
+  isAppAwarenessEnabled: getIsMobileTopBannerAppAwarenessEnabled(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

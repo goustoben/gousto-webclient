@@ -5,7 +5,7 @@ import { getBoxSummaryDismissed } from 'selectors/boxSummary'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getPlatformDetails } from 'selectors/appBanner'
 import { shouldShowBoxSummary } from 'selectors/basket'
-import { getIsAppAwarenessEnabled } from 'selectors/features'
+import { getIsMobileMenuModalAppAwarenessEnabled } from 'selectors/features'
 
 import { trackAppModalView, trackClickAppModalInstall } from 'actions/appModal'
 
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
     boxSummaryDismissed: getBoxSummaryDismissed(state),
     isBoxSummaryVisible: shouldShowBoxSummary(state),
     isAuthenticated: getIsAuthenticated(state),
-    isAppAwarenessEnabled: getIsAppAwarenessEnabled(state),
+    isAppAwarenessEnabled: getIsMobileMenuModalAppAwarenessEnabled(state),
     name,
     ratings,
   }

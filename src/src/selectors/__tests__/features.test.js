@@ -34,9 +34,12 @@ import {
   getIsTastePreferencesEnabled,
   getBoxPricesPageRedesign,
   getCheckoutRedesign,
-  getIsAppAwarenessEnabled,
   getPricingClarityRedesign,
-  getIsPromoCodeOnGetStartedEnabled
+  getIsPromoCodeOnGetStartedEnabled,
+  getIsLoginModalAppAwarenessEnabled,
+  getIsMobileTopBannerAppAwarenessEnabled,
+  getIsMobileMenuModalAppAwarenessEnabled,
+  getIsMyGoustoBannerAppAwarenessEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -86,7 +89,10 @@ describe('when features are defined', () => {
     [getIsTastePreferencesEnabled, 'tastePreferences'],
     [getBoxPricesPageRedesign, 'isBoxPricesPageRedesignEnabled'],
     [getCheckoutRedesign, 'isCheckoutRedesignEnabled'],
-    [getIsAppAwarenessEnabled, 'isAppAwarenessEnabled'],
+    [getIsLoginModalAppAwarenessEnabled, 'isLoginModalAppAwarenessEnabled'],
+    [getIsMobileTopBannerAppAwarenessEnabled, 'isMobileTopBannerAppAwarenessEnabled'],
+    [getIsMobileMenuModalAppAwarenessEnabled, 'isMobileMenuModalAppAwarenessEnabled'],
+    [getIsMyGoustoBannerAppAwarenessEnabled, 'isMyGoustoBannerAppAwarenessEnabled'],
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
     [getIsPromoCodeOnGetStartedEnabled, 'promoCodeOnGetStarted'],
   ]

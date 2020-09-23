@@ -3,7 +3,7 @@ import actions from 'actions'
 import { userGetReferralDetails } from 'actions/user'
 import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
-import { getIsAppAwarenessEnabled, getLimitedCapacity } from 'selectors/features'
+import { getIsMyGoustoBannerAppAwarenessEnabled, getLimitedCapacity } from 'selectors/features'
 import { MyGousto } from './MyGousto'
 
 function mapStateToProps(state) {
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
     referralDetails: state.user.get('referralDetails'),
     isCapacityLimited: getLimitedCapacity(state),
     isMobileViewport: getBrowserType(state) === 'mobile',
-    showAppAwareness: getIsAppAwarenessEnabled(state),
+    showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),
   }
 }
 

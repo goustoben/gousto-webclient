@@ -69,6 +69,18 @@ const defaultFeatures = () => ({
   isAppAwarenessEnabled: {
     value: false
   },
+  isLoginModalAppAwarenessEnabled: {
+    value: false
+  },
+  isMobileTopBannerAppAwarenessEnabled: {
+    value: false
+  },
+  isMobileMenuModalAppAwarenessEnabled: {
+    value: false
+  },
+  isMyGoustoBannerAppAwarenessEnabled: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())
