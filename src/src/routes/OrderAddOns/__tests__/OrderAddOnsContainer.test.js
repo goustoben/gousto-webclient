@@ -12,7 +12,6 @@ import featuresReducer, { initialState as featuresDefaultState } from 'reducers/
 import status from 'reducers/status'
 import { fetchOrder } from 'apis/orders'
 import { fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
-import { Provider } from 'react-redux'
 import { OrderAddOnsContainer } from '../OrderAddOnsContainer'
 import { fetchSimpleMenu } from '../../Menu/fetchData/menuApi'
 
@@ -20,10 +19,6 @@ jest.mock('apis/products')
 jest.mock('apis/orders')
 jest.mock('../../Menu/fetchData/menuApi', () => ({
   fetchSimpleMenu: jest.fn()
-}))
-
-jest.mock('../../OrderConfirmation/components/ProductList', () => ({
-  ProductList: () => <div />
 }))
 
 describe('<OrderAddOnsContainer />', () => {
@@ -76,15 +71,10 @@ describe('<OrderAddOnsContainer />', () => {
     query: { order_action: ORDER_ACTION},
   }
   const wrapper = mount(
-    <Provider store={store}>
-      <OrderAddOnsContainer
-        location={location}
-      />
-    </Provider>, {
-      context: {
-        store
-      },
-    }
+    <OrderAddOnsContainer
+      location={location}
+      store={store}
+    />
   )
 
   describe('when products are loaded', () => {
