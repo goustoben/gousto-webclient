@@ -75,10 +75,9 @@ const loadOrderAuthenticated = (orderId) => async (dispatch, getState) => {
       }
     }
 
-    await Promise.all([
-      dispatch(actions.menuLoadMenu()),
-      dispatch(actions.menuLoadStock(true))
-    ])
+    await dispatch(actions.menuLoadMenu())
+    dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
+    dispatch(actions.menuLoadStock(true))
   } catch (e) {
     logger.error({ message: `Debug fetchData: ${e}`, errors: [e] })
     if (__SERVER__) {
@@ -138,7 +137,7 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
   }
 
   if (query.num_portions) {
-    await dispatch(actions.basketNumPortionChange(query.num_portions))
+    dispatch(actions.basketNumPortionChange(query.num_portions))
   }
 
   let cutoffDateTime
@@ -147,10 +146,11 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
   }
 
   await dispatch(actions.menuLoadMenu(cutoffDateTime, background))
-  await dispatch(actions.menuLoadStock(true))
+  dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
+  dispatch(actions.menuLoadStock(true))
 
   if (query.postcode && !getState().basket.get('postcode')) {
-    await dispatch(actions.basketPostcodeChangePure(query.postcode))
+    dispatch(actions.basketPostcodeChangePure(query.postcode))
   }
 
   if (isAdmin) {
@@ -262,8 +262,6 @@ export default function fetchData({ query, params }, force, background, userMenu
       selectCollectionFromQuery(query)(dispatch, getState)
 
       await addRecipesFromQuery(query)(dispatch, getState)
-
-      await dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
 
       const timeTaken = Math.round(now() - startTime)
       dispatch(menuLoadComplete(timeTaken, true))

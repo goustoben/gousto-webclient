@@ -81,6 +81,10 @@ export const getRecipeIdInBasket = createSelector(
 )
 
 export const isOutOfStock = (recipeId, numPortions, recipesStock) => {
+  if (recipesStock.size === 0) {
+    return false
+  }
+
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
 
   return (stock <= menuConfig.stockThreshold)

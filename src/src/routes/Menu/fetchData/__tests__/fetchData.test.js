@@ -277,7 +277,7 @@ describe('menu fetchData', () => {
 
             await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
 
-            expect(dispatch.mock.calls[7]).toEqual([menuLoadStockResult])
+            expect(dispatch.mock.calls[8]).toEqual([menuLoadStockResult])
           })
         })
       })
@@ -469,7 +469,7 @@ describe('menu fetchData', () => {
           test('should dispatch basketPostcodeChangePure', async () => {
             await fetchData({ query: queryWithPostcode, params }, false, false)(dispatch, getState)
 
-            expect(dispatch.mock.calls[9]).toEqual([{
+            expect(dispatch.mock.calls[10]).toEqual([{
               type: actionTypes.BASKET_POSTCODE_CHANGE,
               postcode: 'W2 3LX'
             }])
@@ -551,11 +551,11 @@ describe('menu fetchData', () => {
         test('should dispatch basketRecipeAdd for in stock recipes', async () => {
           await fetchData({ query: queryWithRecipes, params }, false, false)(dispatch, getState)
 
-          expect(dispatch.mock.calls[11]).toEqual([{
+          expect(dispatch.mock.calls[12]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '123'
           }])
-          expect(dispatch.mock.calls[12]).toEqual([{
+          expect(dispatch.mock.calls[13]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '789'
           }])

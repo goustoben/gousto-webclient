@@ -10,10 +10,11 @@ import * as clientMetrics from '../../apis/clientMetrics'
 describe('given menuCalculateTimeToUsable action is called', () => {
   let state
   const dispatch = jest.fn()
+  const authId = 'test-auth-id'
   const getState = () => state
   const timeSinceRequest = safeJestMock(browserTimings, 'getTimeSinceRequestStart')
   const timeToFirstByte = safeJestMock(browserTimings, 'getTimeToFirstByte')
-  const mockSendClienMetric = safeJestMock(clientMetrics, 'sendClientMetric')
+  const mockSendClientMetric = safeJestMock(clientMetrics, 'sendClientMetric')
   const mockLogger = safeJestMock(logger, 'warning')
 
   timeSinceRequest.mockReturnValue(123)
@@ -21,6 +22,9 @@ describe('given menuCalculateTimeToUsable action is called', () => {
 
   beforeEach(() => {
     state = {
+      auth: Immutable.Map({
+        id: authId
+      }),
       menu: Immutable.fromJS({
         hasCalculatedTimeToUsable: false,
         hasVisitedNonMenuPage: false,
@@ -61,15 +65,12 @@ describe('given menuCalculateTimeToUsable action is called', () => {
       describe('when it calls sendClientMetrics', () => {
         test('then passes metric to sendClientMetric', async () => {
           await menuCalculateTimeToUsable()(dispatch, getState)
-          expect(mockSendClienMetric).toHaveBeenCalledWith({name: 'menu-load-complete',
-            detail: {
-              timeToUsable: 123
-            }})
+          expect(mockSendClientMetric).toHaveBeenCalledWith('menu-load-complete', { timeToUsable: 123 }, authId)
         })
 
         describe('when sendClientMetrics errors', () => {
           beforeEach(async () => {
-            mockSendClienMetric.mockRejectedValue(new Error('mock error'))
+            mockSendClientMetric.mockRejectedValue(new Error('mock error'))
             await menuCalculateTimeToUsable()(dispatch, getState)
           })
 

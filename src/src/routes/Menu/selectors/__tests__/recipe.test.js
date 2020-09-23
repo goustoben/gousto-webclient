@@ -14,7 +14,8 @@ import {
   getRecipeIngredientsProps,
   getRecipeAllergensProps,
   getRecipePerPortionProps,
-  getRecipePer100gProps, getRecipeSidesSurcharge
+  getRecipePer100gProps, getRecipeSidesSurcharge,
+  getSelectedRecipeSidesFromMenu
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -120,6 +121,21 @@ describe('menu recipe selectors', () => {
           [recipeId]: { [numPortions]: -1000, 4: -1000 },
           222: { 2: 1000, 4: 1000 },
         })
+        const state = {
+          menuRecipeStock,
+          basket: Immutable.fromJS({
+            numPortions,
+            recipes: { [recipeId]: 1 }
+          }),
+        }
+        const result = getRecipeOutOfStock(state, props)
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('when no stock is provided', () => {
+      test('should return false', () => {
+        const menuRecipeStock = Immutable.fromJS({})
         const state = {
           menuRecipeStock,
           basket: Immutable.fromJS({
@@ -737,6 +753,27 @@ describe('menu recipe selectors', () => {
           })
         })
       })
+
+      describe('when variant has no claims', () => {
+        beforeEach(() => {
+          menuRecipes = Immutable.fromJS({
+            1: {
+              dietaryClaims: [],
+            },
+            2: {
+              dietaryClaims: [],
+            }
+          })
+        })
+        test('should return recipe variants that have same claims', () => {
+          const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
+          expect(result).toEqual({
+            type: 'alternatives',
+            alternatives: Immutable.List(),
+            variantsList: Immutable.List([])
+          })
+        })
+      })
     })
 
     describe('when variant is sides', () => {
@@ -979,6 +1016,18 @@ describe('menu recipe selectors', () => {
           expect(result).toEqual(true)
         })
       })
+    })
+  })
+
+  describe('getSelectedRecipeSidesFromMenu', () => {
+    test('should return selectedRecipeSides from state.menu', () => {
+      const state = {
+        menu: Immutable.fromJS({
+          selectedRecipeSides: []
+        })
+      }
+      const result = getSelectedRecipeSidesFromMenu(state)
+      expect(result).toEqual(Immutable.List([]))
     })
   })
 })

@@ -1,23 +1,9 @@
 import Immutable from 'immutable'
 
-import { isRecipeInStock, isRecipeInBasket, getMenuLimits } from 'utils/menu'
+import { isRecipeInBasket, getMenuLimits } from 'utils/menu'
 import { getMenuVariants, switchSelectedVariants } from '../menu'
 
 describe('menu utils', () => {
-  describe('isRecipeInStock', () => {
-    const recipe = Immutable.Map({
-      id: '10',
-    })
-
-    test('-browse mode, if recipe is in stock, return true', () => {
-      expect(isRecipeInStock(recipe, Immutable.fromJS({
-        10: {
-          2: null,
-        },
-      }), 2)).toEqual(true)
-    })
-  })
-
   describe('isRecipeInBasket', () => {
     const recipe = Immutable.Map({
       id: '10',
@@ -196,6 +182,19 @@ describe('menu utils', () => {
   })
 
   describe('getMenuVariants', () => {
+    describe('When there are no recipe_options data', () => {
+      const menu = [
+        {
+          id: '1111',
+          relationships: {
+            recipe_options: {}
+          }
+        },
+      ]
+      test('should return empty object', () => {
+        expect(getMenuVariants(menu)).toEqual({})
+      })
+    })
     describe('When there are no permutations', () => {
       const menu = [
         {

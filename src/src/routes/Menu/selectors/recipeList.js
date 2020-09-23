@@ -4,17 +4,17 @@ import Immutable from 'immutable'
 import { getStock } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { getMenuCollectionIdBySlug } from 'selectors/collections'
-import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
+import { isRecipeInBasket } from 'utils/menu'
 import { getRecipeId } from 'utils/recipe'
 import { getRecommendationsCollection, getCollectionId, getCurrentCollectionId, getCurrentCollectionDietaryClaims, getMenuCollections , getRecipesInCollection } from './collections'
 import { getCurrentMenuRecipes } from './menu'
-import { getVariantsForRecipeForCurrentCollection } from './recipe'
+import { getVariantsForRecipeForCurrentCollection, isOutOfStock } from './recipe'
 import { getSelectedRecipeVariants, getCurrentMenuVariants } from './variants'
 
 export const getInStockRecipes = createSelector(
   [getCurrentMenuRecipes, getStock, getBasketRecipes, getNumPortions],
   (recipes, stock, basketRecipes, numPortions) => (
-    recipes.filter(recipe => isRecipeInStock(recipe, stock, numPortions) || isRecipeInBasket(recipe, basketRecipes))
+    recipes.filter(recipe => !isOutOfStock(recipe.get('id'), numPortions, stock) || isRecipeInBasket(recipe, basketRecipes))
   )
 )
 

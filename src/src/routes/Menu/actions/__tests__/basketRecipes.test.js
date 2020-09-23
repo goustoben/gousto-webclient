@@ -27,6 +27,9 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
     limitReachSpy.mockReturnValue(false)
     pricingRequestSpy = safeJestMock(pricingActions, 'pricingRequest')
     getStateSpy = jest.fn().mockReturnValueOnce({
+      auth: Immutable.Map({
+        id: ''
+      }),
       tracking: Immutable.fromJS({}),
       basket: Immutable.Map({
         recipes: Immutable.Map([['123', 1]]),
@@ -131,6 +134,7 @@ describe('sendClientMetrics', () => {
 describe('validBasketRecipeAdd', () => {
   let getStateSpy
   const dispatch = jest.fn()
+  const authId = 'test-auth-id'
   let limitReachSpy
 
   describe('when the basket is empty and the first recipe is added', () => {
@@ -140,6 +144,9 @@ describe('validBasketRecipeAdd', () => {
       limitReachSpy = safeJestMock(basketUtils, 'limitReached')
       mockSendClientMetrics = safeJestMock(clientMetrics, 'sendClientMetric')
       getStateSpy = jest.fn().mockReturnValue({
+        auth: Immutable.Map({
+          id: authId
+        }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map(),
@@ -169,10 +176,7 @@ describe('validBasketRecipeAdd', () => {
     test('should make the menu-first-recipe-add metrics call', () => {
       basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
 
-      expect(mockSendClientMetrics).toHaveBeenCalledWith({
-        name: 'menu-first-recipe-add',
-        detail: {}
-      })
+      expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', {}, authId)
     })
   })
 
@@ -183,6 +187,9 @@ describe('validBasketRecipeAdd', () => {
       limitReachSpy = safeJestMock(basketUtils, 'limitReached')
       mockSendClientMetrics = safeJestMock(clientMetrics, 'sendClientMetric')
       getStateSpy = jest.fn().mockReturnValue({
+        auth: Immutable.Map({
+          id: authId
+        }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
@@ -223,6 +230,9 @@ describe('validBasketRecipeAdd', () => {
       limitReachSpy = safeJestMock(basketUtils, 'limitReached')
       limitReachSpy.mockReturnValue(false)
       getStateSpy = jest.fn().mockReturnValue({
+        auth: Immutable.Map({
+          id: authId
+        }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
@@ -322,6 +332,9 @@ describe('validBasketRecipeAdd', () => {
     })
     beforeEach(() => {
       getStateSpy = jest.fn().mockReturnValue({
+        auth: Immutable.Map({
+          id: authId
+        }),
         tracking: Immutable.fromJS({}),
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1], ['234', 1]]),
@@ -422,6 +435,9 @@ describe('validBasketRecipeAdd', () => {
   describe('given a full basket', () => {
     beforeEach(() => {
       getStateSpy = jest.fn().mockReturnValue({
+        auth: Immutable.Map({
+          id: authId
+        }),
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1], ['234', 2], ['345', 1]]),
           numPortions: 2,

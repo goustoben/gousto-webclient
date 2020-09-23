@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
-import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
+import { isRecipeInBasket } from 'utils/menu'
 import * as collectionSelectors from 'selectors/collections'
 import * as recipeListSelectors from '../recipeList'
 
@@ -679,21 +679,34 @@ describe('RecipeList selectors', () => {
   })
 
   describe('getInStockRecipes', () => {
-    const recipes = [Immutable.fromJS({ desc: 'recipe1Desc' })]
-    const stock = []
+    const recipes = [
+      Immutable.fromJS({
+        id: 'recipe1',
+        desc: 'recipe1Desc'
+      })
+    ]
+    const stock = Immutable.fromJS({
+      recipe1: {
+        2: 100,
+        4: 100
+      }
+    })
     const basketRecipes = []
-    const numPortions = []
+    const numPortions = 2
     test('should return recipes when isRecipeInBasket is true', () => {
       isRecipeInBasket.mockImplementationOnce(() => true)
       const result = recipeListSelectors.getInStockRecipes.resultFunc(recipes, stock, basketRecipes, numPortions)
-      expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
+      expect(result).toEqual([Immutable.fromJS({
+        id: 'recipe1',
+        desc: 'recipe1Desc'
+      })])
     })
 
-    test('should return recipes when isRecipeInStock is true', () => {
-      isRecipeInStock.mockImplementationOnce(() => true)
-
+    test('should return recipes when isOutOfStock is true', () => {
       const result = recipeListSelectors.getInStockRecipes.resultFunc(recipes, stock, basketRecipes, numPortions)
-      expect(result).toEqual([Immutable.fromJS({ desc: 'recipe1Desc' })])
+      expect(result).toEqual([Immutable.fromJS({ id: 'recipe1',
+        desc: 'recipe1Desc'
+      })])
     })
   })
 
