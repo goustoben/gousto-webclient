@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Navbar } from './Navbar'
-import { CategoryCarousel } from '../CategoryCarousel'
+import { CategoryCarouselContainer } from '../CategoryCarousel'
 import { DetailOverlayContainer } from '../../DetailOverlay'
 import Loading from '../../Loading'
 
@@ -16,8 +16,8 @@ export const DietaryRequirementsPage = (props) => {
   return (
     <div>
       <Navbar title="Dietary requirements" />
-      {recipesForCollections.map(({ recipeList, collection }) => (
-        recipeList && collection ? <CategoryCarousel key={collection.get('id')} recipes={recipeList.recipes} category={collection} /> : null
+      {recipesForCollections.map(({ collection }) => (
+        collection ? <CategoryCarouselContainer key={collection.get('id')} category={collection} /> : null
       ))}
       <DetailOverlayContainer showOverlay />
     </div>

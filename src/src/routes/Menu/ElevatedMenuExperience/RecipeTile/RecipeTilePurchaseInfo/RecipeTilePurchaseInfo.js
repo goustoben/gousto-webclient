@@ -5,7 +5,7 @@ import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './RecipeTilePurchaseInfo.css'
 import { DropdownArrowContainer } from '../../../Recipe/AddRecipe/DropdownArrow'
 
-export const RecipeTilePurchaseInfo = ({surcharge, isOutOfStock, recipeId, isFineDineIn, recipeVariants}) => {
+export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFineDineIn, recipeVariants, isInCarousel }) => {
   if (isOutOfStock) {
     return null
   }
@@ -35,7 +35,7 @@ export const RecipeTilePurchaseInfo = ({surcharge, isOutOfStock, recipeId, isFin
       ) : null}
       <div className={css.buttonsWrapper}>
         <AddRecipeButtonContainer recipeId={recipeId} />
-        <DropdownArrowContainer recipeId={recipeId} originalId={recipeId} />
+        <DropdownArrowContainer recipeId={recipeId} originalId={recipeId} isInCarousel={isInCarousel} />
       </div>
     </div>
   )
@@ -46,10 +46,12 @@ RecipeTilePurchaseInfo.propTypes = {
   isOutOfStock: PropTypes.bool.isRequired,
   recipeId: PropTypes.string.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
-  recipeVariants: PropTypes.arrayOf(PropTypes.shape)
+  recipeVariants: PropTypes.arrayOf(PropTypes.shape),
+  isInCarousel: PropTypes.bool,
 }
 
 RecipeTilePurchaseInfo.defaultProps = {
   surcharge: 0,
-  recipeVariants: null
+  recipeVariants: null,
+  isInCarousel: false,
 }

@@ -7,27 +7,47 @@ import { SoldOutOverlay } from '../../../Recipe/SoldOutOverlay'
 
 import css from './TileImage.css'
 
-const TileImage = ({ media, title, maxMediaSize, isOutOfStock, lazy, onClick, recipeId, isInCarousel }) => (
-  <button
-    onClick={onClick}
-    type="button"
-    className={isInCarousel ? css.carouselImageWrapper : css.imageWrapper}
-  >
-    {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
-    {(media.size > 0) && (
-    <div>
-      <GoustoImage
-        media={media}
-        title={title}
-        maxMediaSize={maxMediaSize}
-        className={css.imageStyle}
-        lazy={lazy}
-      />
-      <CookingTimeIconContainer recipeId={recipeId} />
-    </div>
-    ) }
-  </button>
-)
+const TileImage = ({
+  media,
+  title,
+  maxMediaSize,
+  isOutOfStock,
+  lazy,
+  onClick,
+  recipeId,
+  showVariantHeader,
+  isInCarousel,
+}) => {
+  let tileImageClass = css.imageWrapper
+
+  if (isInCarousel && showVariantHeader) {
+    tileImageClass = css.carouselVariantHeaderImageWrapper
+  } else if (isInCarousel) {
+    tileImageClass = css.carouselImageWrapper
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      type="button"
+      className={tileImageClass}
+    >
+      {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
+      {(media.size > 0) && (
+      <div>
+        <GoustoImage
+          media={media}
+          title={title}
+          maxMediaSize={maxMediaSize}
+          className={css.imageStyle}
+          lazy={lazy}
+        />
+        <CookingTimeIconContainer recipeId={recipeId} />
+      </div>
+      ) }
+    </button>
+  )
+}
 
 TileImage.propTypes = {
   media: PropTypes.instanceOf(Immutable.List).isRequired,
@@ -38,6 +58,7 @@ TileImage.propTypes = {
   onClick: PropTypes.func,
   recipeId: PropTypes.string.isRequired,
   isInCarousel: PropTypes.bool,
+  showVariantHeader: PropTypes.bool,
 }
 
 TileImage.defaultProps = {
@@ -47,6 +68,7 @@ TileImage.defaultProps = {
   maxMediaSize: null,
   lazy: true,
   isInCarousel: false,
+  showVariantHeader: false,
 }
 
 export { TileImage }
