@@ -4,7 +4,7 @@ import React from 'react'
 import { DietaryRequirementsPage } from './DietaryRequirementsPage'
 import { Navbar } from './Navbar'
 import { DetailOverlayContainer } from '../../DetailOverlay'
-import { CategoryCarousel } from '../CategoryCarousel'
+import { CategoryCarouselContainer } from '../CategoryCarousel'
 import Loading from '../../Loading'
 
 describe('DietaryRequirementsPage', () => {
@@ -40,8 +40,8 @@ describe('DietaryRequirementsPage', () => {
       expect(wrapper.find(DetailOverlayContainer)).toHaveLength(1)
     })
 
-    test('does not render <CategoryCarousel /> when recipe collections is an empty array', () => {
-      expect(wrapper.find(CategoryCarousel)).toHaveLength(0)
+    test('does not render <CategoryCarouselContainer /> when recipe collections is an empty array', () => {
+      expect(wrapper.find(CategoryCarouselContainer)).toHaveLength(0)
     })
 
     describe('When recipe collections are loading', () => {
@@ -51,8 +51,8 @@ describe('DietaryRequirementsPage', () => {
         })
       })
 
-      test('does not render <CategoryCarousel /> when recipe collections is an empty array', () => {
-        expect(wrapper.find(CategoryCarousel)).toHaveLength(0)
+      test('does not render <CategoryCarouselContainer /> when recipe collections is an empty array', () => {
+        expect(wrapper.find(CategoryCarouselContainer)).toHaveLength(0)
       })
     })
 
@@ -68,8 +68,8 @@ describe('DietaryRequirementsPage', () => {
         })
       })
 
-      test('renders <CategoryCarousel />', () => {
-        expect(wrapper.find(CategoryCarousel)).toHaveLength(1)
+      test('renders <CategoryCarouselContainer />', () => {
+        expect(wrapper.find(CategoryCarouselContainer)).toHaveLength(1)
       })
     })
   })

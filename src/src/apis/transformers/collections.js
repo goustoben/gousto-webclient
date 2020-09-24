@@ -3,8 +3,18 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
     return undefined
   }
 
+  const featuredCategories = menu.relationships.featured_categories && menu.relationships.featured_categories.data
+    ? menu.relationships.featured_categories.data
+    : []
+  const featuredCategoriesObject = featuredCategories.reduce((acc, featuredCategory, index) => {
+    acc[featuredCategory.id] = { ...featuredCategory, index }
+
+    return acc
+  }, {})
+
   const formattedData = menu.relationships.collections.data.map((collectionItem) => {
     const normalisedAttributes = normalisedData.collection[collectionItem.id].attributes
+    const featuredCategory = featuredCategoriesObject[collectionItem.id]
 
     const collection = {
       colour: normalisedAttributes.colour || '',
@@ -15,7 +25,9 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
       shortTitle: normalisedAttributes.short_title || '',
       slug: normalisedAttributes.slug || '',
       requirements: normalisedAttributes.requirements || {},
-      recipesInCollection: collectionItem.relationships.recipes.data.map(recipe => recipe.core_recipe_id)
+      recipesInCollection: collectionItem.relationships.recipes.data.map(recipe => recipe.core_recipe_id),
+      isFeaturedCategory: !!featuredCategory,
+      featuredCategoryOrder: featuredCategory ? featuredCategory.index : 0,
     }
 
     if (normalisedAttributes.slug === 'recommendations') {

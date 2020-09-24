@@ -48,7 +48,7 @@ const EMERecipeTile = ({
           [css.recipeTileIsFineDineIn]: isFineDineIn
         })}
       >
-        <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
+        <TileImageContainer recipeId={recipeId} showVariantHeader={showVariantHeader} isInCarousel={isInCarousel} />
         {hasTopLeftTag && (
         <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
         )}
@@ -65,7 +65,7 @@ const EMERecipeTile = ({
               </h2>
             </div>
           </div>
-          <RecipeTilePurchaseInfoContainer recipeId={recipeId} />
+          <RecipeTilePurchaseInfoContainer recipeId={recipeId} isInCarousel={isInCarousel} />
         </div>
       </div>
     </div>
