@@ -57,7 +57,7 @@ Cypress.Commands.add('setupMenu', ({ platform }) => {
   if (platform === 'WEB') {
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
-    cy.get('[data-testing="menuBrowseCTAButton"]').click()
+    cy.get('[data-testing="menuBrowseCTAButton"]').last().click()
   } else {
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
@@ -79,7 +79,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
-    cy.get('[data-testing="menuBrowseCTAButton"]').click()
+    cy.get('[data-testing="menuBrowseCTAButton"]').last().click()
   } else {
     // Go to /menu
     cy.get('[data-testing="burgerMenu"]').click()
