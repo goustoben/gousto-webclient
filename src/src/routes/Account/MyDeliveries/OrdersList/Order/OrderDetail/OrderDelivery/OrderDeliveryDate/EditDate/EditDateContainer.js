@@ -5,7 +5,7 @@ import {
   clearUpdateDateErrorAndPending,
   orderUpdateDayAndSlot,
 } from 'actions/order'
-import { userTrackDateSelected, userTrackSlotSelected } from 'actions/user'
+import userActions from 'actions/user'
 import { EditDate } from './EditDate'
 import { filterOutNDDOptionsWhenNoRecipes } from './util'
 
@@ -38,6 +38,6 @@ export const EditDateContainer = connect(mapStateToProps, {
   clearUpdateDateErrorAndPending,
   orderGetDeliveryDays,
   orderUpdateDayAndSlot,
-  userTrackDateSelected,
-  userTrackSlotSelected,
+  userTrackDateSelected: userActions.userTrackDateSelected,
+  userTrackSlotSelected: userActions.userTrackSlotSelected,
 })(EditDate)
