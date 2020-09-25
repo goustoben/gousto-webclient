@@ -3,7 +3,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import reducers from 'reducers'
 import { reducer as reduxFormReducer } from 'redux-form'
-import logger from 'redux-logger'
+import { createLogger } from 'redux-logger'
 import trackingMiddleware from 'middlewares/tracking/middleware'
 import persistenceMiddleware from 'middlewares/persist/middleware'
 import facebookPixel from 'middlewares/tracking/facebook'
@@ -50,7 +50,7 @@ class GoustoStore {
 
         return newState
       }
-      middleware.push(logger({ stateTransformer }))
+      middleware.push(createLogger({ stateTransformer }))
     }
 
     if (cookies && globals.client) {

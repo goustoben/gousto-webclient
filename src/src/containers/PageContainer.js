@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
+import { trackUserAttributes } from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsSignupReductionEnabled } from 'selectors/features'
 import routes from 'config/routes'
@@ -27,4 +28,6 @@ export default connect((state) => ({
   isSignupReductionEnabled: isRedirectEnabled(state)
 }), {
   loginVisibilityChange: actions.loginVisibilityChange,
+  trackUserAttributes,
+  userLoadData: actions.userLoadData,
 })(Page)
