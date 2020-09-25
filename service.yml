@@ -69,6 +69,7 @@ ecs_log_filters:
 
 scaling: 
   ecsCpuTargetTrackingScalingPolicyPercentage: 50
+  ecsMemoryTargetTrackingScalingPolicyPercentage: 20
 
 healthCheck:
   target : 'HTTP:80/ping'
