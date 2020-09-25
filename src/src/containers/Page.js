@@ -3,8 +3,6 @@ import React from 'react'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import config from 'config'
-import actions from 'actions'
-import { trackUserAttributes } from 'actions/tracking'
 import { getWindow, redirect } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
 import css from './Page.css'
@@ -21,10 +19,8 @@ class Page extends React.PureComponent {
     loginVisibilityChange: PropTypes.func.isRequired,
     contentFetchPending: PropTypes.bool.isRequired,
     isSignupReductionEnabled: PropTypes.bool,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
+    trackUserAttributes: PropTypes.func.isRequired,
+    userLoadData: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -33,17 +29,8 @@ class Page extends React.PureComponent {
 
   static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus/'
 
-  static fetchData = ({ store }) => {
-    const state = store.getState()
-    if (state.auth.get('isAuthenticated') && !state.user.get('email') && !state.auth.get('isAdmin')) {
-      return store.dispatch(actions.userLoadData())
-    }
-
-    return new Promise(resolve => { resolve() })
-  }
-
   componentDidMount() {
-    const { isSignupReductionEnabled, disabled, isAuthenticated, email, loginVisibilityChange, goustoReference } = this.props
+    const { isSignupReductionEnabled, disabled, isAuthenticated, email, loginVisibilityChange, goustoReference, trackUserAttributes } = this.props
     const { location } = getWindow()
 
     if (isSignupReductionEnabled) {
@@ -57,8 +44,7 @@ class Page extends React.PureComponent {
     if (location && location.hash && location.hash.includes('login') && !isAuthenticated) {
       loginVisibilityChange(true)
     }
-
-    this.context.store.dispatch(trackUserAttributes())
+    trackUserAttributes()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,7 +54,7 @@ class Page extends React.PureComponent {
 
     if (!nextProps.disabled && nextProps.isAuthenticated) {
       if (!nextProps.email) {
-        Page.fetchData({ store: this.context.store })
+        this.fetchData()
       } else {
         this.updateDataLayer(nextProps.email, nextProps.goustoReference)
       }
@@ -80,6 +66,16 @@ class Page extends React.PureComponent {
     if (dataLayer && Array.isArray(dataLayer)) {
       dataLayer.push({ email, goustoReference })
     }
+  }
+
+  fetchData = () => {
+    const { isAuthenticated, email, disabled, userLoadData } = this.props
+
+    if (isAuthenticated && !email && !disabled) {
+      return userLoadData()
+    }
+
+    return new Promise(resolve => { resolve() })
   }
 
   render() {
