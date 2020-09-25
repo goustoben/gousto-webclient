@@ -529,43 +529,6 @@ describe('menu fetchData', () => {
         })
       })
 
-      describe('needs to add recipes from query', () => {
-        const queryWithRecipes = {
-          ...query,
-          recipes: '[123,456,789]'
-        }
-
-        beforeEach(() => {
-          state.auth = state.auth.set('isAuthenticated', true)
-          state.auth = state.auth.set('isAdmin', false)
-
-          state.basket = state.basket.set('numPortions', 4)
-          state.menuRecipeStock = state.menuRecipeStock.setIn(['123', '4'], 2)
-          state.menuRecipeStock = state.menuRecipeStock.setIn(['456', '4'], 0)
-          state.menuRecipeStock = state.menuRecipeStock.setIn(['789', '4'], 1)
-
-          // just make it return an object with the recipe id to make for easier assertions
-          basketRecipeAddSpy.mockImplementation(recipeId => ({ isMockBasketRecipeAdd: true, recipeId }))
-        })
-
-        test('should dispatch basketRecipeAdd for in stock recipes', async () => {
-          await fetchData({ query: queryWithRecipes, params }, false, false)(dispatch, getState)
-
-          expect(dispatch.mock.calls[12]).toEqual([{
-            isMockBasketRecipeAdd: true,
-            recipeId: '123'
-          }])
-          expect(dispatch.mock.calls[13]).toEqual([{
-            isMockBasketRecipeAdd: true,
-            recipeId: '789'
-          }])
-          expect(dispatch).not.toHaveBeenCalledWith({
-            isMockBasketRecipeAdd: true,
-            recipeId: '456'
-          })
-        })
-      })
-
       describe('collections feature is enabled', () => {
         const collectionName = 'foo'
         const queryWithCollection = {

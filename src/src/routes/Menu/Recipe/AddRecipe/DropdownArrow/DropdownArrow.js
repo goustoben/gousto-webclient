@@ -5,7 +5,7 @@ import css from './DropdownArrow.css'
 import { VariantRecipeListContainer } from '../../VariantRecipeList/VariantRecipeList'
 
 const DropdownArrow = ({ recipeId, originalId, recipeVariants, showDropdown, recipeVariantDropdownExpanded, isInCarousel }) => {
-  if (!recipeVariants || recipeVariants.length === 0) {
+  if (!recipeVariants || recipeVariants.size === 0) {
     return null
   }
 

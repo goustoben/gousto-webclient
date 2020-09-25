@@ -2,6 +2,7 @@
 @value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value sizeLG, sizeXS from 'styles/typography.css';
 @value ScreenSMMin from 'styles/screenSizes.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 @value barMobileHeight 90px;
 /* for .mobileOverlay */
@@ -19,6 +20,9 @@
 	background-color: Blackberry;
 	width: 100%;
 	height: barMobileHeight;
+	@media BreakpointFromMedium {
+		display: none;
+	}
 }
 
 .mobileText {

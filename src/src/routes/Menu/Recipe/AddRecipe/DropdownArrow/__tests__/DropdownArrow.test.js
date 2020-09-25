@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { mount, shallow } from 'enzyme'
 import { DropdownArrow } from '../DropdownArrow'
 
@@ -13,7 +14,7 @@ describe('DropdownArrow', () => {
   describe('When there is an array of recipe variants', () => {
     describe('When the array is empty', () => {
       test('then it should not render a dropdown selection', () => {
-        const wrapper = mount(<DropdownArrow recipeVariants={[]} />)
+        const wrapper = mount(<DropdownArrow recipeVariants={Immutable.List()} />)
         expect(wrapper.find('.arrowContainer')).toHaveLength(0)
       })
     })

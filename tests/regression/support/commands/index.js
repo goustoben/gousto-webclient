@@ -45,6 +45,7 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
   cy.route('GET', 'deliveries/v1.0/days**', 'fixture:deliveries/deliveryDays.json').as('getDeliveryDays')
   cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
+  cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
   cy.route('/menu/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
   cy.visit('/')
   cy.clock(DATE, ['Date'])
@@ -57,7 +58,7 @@ Cypress.Commands.add('setupMenu', ({ platform }) => {
   if (platform === 'WEB') {
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
-    cy.get('[data-testing="menuBrowseCTAButton"]').click()
+    cy.get('[data-testing="menuBrowseCTAButton"]').last().click()
   } else {
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
@@ -79,7 +80,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
-    cy.get('[data-testing="menuBrowseCTAButton"]').click()
+    cy.get('[data-testing="menuBrowseCTAButton"]').last().click()
   } else {
     // Go to /menu
     cy.get('[data-testing="burgerMenu"]').click()
@@ -100,6 +101,11 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   cy.get('[data-testing="menuRecipeAdd"]').eq(1).click()
 
   // Go to /checkout
-  cy.get('[data-testing="boxSummaryButton"]').click()
+  if (platform === 'WEB') {
+    cy.get('[data-testing="boxSummaryButton"]').last().click()
+  } else {
+    cy.get('[data-testing="boxSummaryButton"]').first().click()
+  }
+  
   cy.wait(['@getIntervals', '@getStock', '@getPrices', '@previewOrder'])
 })
