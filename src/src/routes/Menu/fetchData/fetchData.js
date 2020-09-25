@@ -54,37 +54,29 @@ const handleQueryError = (error) => async (dispatch) => {
 }
 
 const loadOrderAuthenticated = (orderId) => async (dispatch, getState) => {
-  try {
-    const { auth, user } = getState()
+  const { auth, user } = getState()
 
-    if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
-      await dispatch(actions.userLoadData())
-    }
-    const prevBasketRecipes = getState().basket.get('recipes')
+  if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
+    await dispatch(actions.userLoadData())
+  }
+  const prevBasketRecipes = getState().basket.get('recipes')
 
-    await dispatch(actions.menuLoadOrderDetails(orderId))
+  await dispatch(actions.menuLoadOrderDetails(orderId))
 
-    const noOfOrderRecipes = getState().basket.get('recipes').size
+  const noOfOrderRecipes = getState().basket.get('recipes').size
 
-    if (noOfOrderRecipes === 0) {
-      // eslint-disable-next-line no-restricted-syntax, no-unused-vars
-      for (const [recipeId, qty] of prevBasketRecipes) {
-        for (let i = 0; i < qty; i++) {
-          dispatch(basketRecipeAdd(recipeId))
-        }
+  if (noOfOrderRecipes === 0) {
+    // eslint-disable-next-line no-restricted-syntax, no-unused-vars
+    for (const [recipeId, qty] of prevBasketRecipes) {
+      for (let i = 0; i < qty; i++) {
+        dispatch(basketRecipeAdd(recipeId))
       }
     }
-
-    await dispatch(actions.menuLoadMenu())
-    dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
-    dispatch(actions.menuLoadStock(true))
-  } catch (e) {
-    logger.error({ message: `Debug fetchData: ${e}`, errors: [e] })
-    if (__SERVER__) {
-      logger.error({ message: `Failed to fetch order: ${orderId}.`, errors: [e] })
-      await dispatch(actions.redirect('/menu', true))
-    }
   }
+
+  await dispatch(actions.menuLoadMenu())
+  dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
+  dispatch(actions.menuLoadStock(true))
 }
 
 const loadOrder = (orderId) => async (dispatch, getState) => {
@@ -159,29 +151,6 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
       dispatch(actions.temp('cutoffDateTime', cutoffDateTime))
     ])
   }
-}
-
-const addRecipesFromQuery = (query) => async (dispatch, getState) => {
-  const isAuthenticated = getIsAuthenticated(getState())
-  const isAdmin = getIsAdmin(getState())
-
-  if (isAuthenticated === false || isAdmin === true) {
-    return
-  }
-
-  if (!query.recipes || getState().basket.get('recipes').size) {
-    return
-  }
-
-  const numPortions = getState().basket.get('numPortions').toString()
-  const inStockRecipes = getState().menuRecipeStock.filter(el => el.get(numPortions) > 0).keySeq().toArray()
-
-  const recipeIds = query.recipes.slice(1, -1).split(',')
-  const newRecipes = recipeIds.filter(el => inStockRecipes.indexOf(el) > -1).slice(0, 4)
-
-  newRecipes.forEach(newRecipe => {
-    dispatch(basketRecipeAdd(newRecipe))
-  })
 }
 
 const selectCollectionFromQuery = (query) => (dispatch, getState) => {
@@ -260,8 +229,6 @@ export default function fetchData({ query, params }, force, background, userMenu
       }
 
       selectCollectionFromQuery(query)(dispatch, getState)
-
-      await addRecipesFromQuery(query)(dispatch, getState)
 
       const timeTaken = Math.round(now() - startTime)
       dispatch(menuLoadComplete(timeTaken, true))
