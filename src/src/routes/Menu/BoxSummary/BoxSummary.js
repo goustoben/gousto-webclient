@@ -168,7 +168,6 @@ class BoxSummary extends React.PureComponent {
     return (
       <div className={css.boxSummary} data-testing="boxSummary">
         <BoxSummaryBanner
-          isMobile={isMobile}
           numRecipes={numRecipes}
           expandWarning={!menuFetchPending && numRecipes !== basketSum(recipes)}
           onExpandClick={this.toggle}

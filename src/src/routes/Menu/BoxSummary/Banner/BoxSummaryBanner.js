@@ -6,7 +6,6 @@ import { BoxSummaryDesktopBanner } from './Desktop/BoxSummaryDesktopBanner'
 import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
 
 const BoxSummaryBanner = ({
-  isMobile,
   date,
   deliveryDays,
   slotId,
@@ -19,24 +18,19 @@ const BoxSummaryBanner = ({
   recipes,
   errorText,
   openDetails,
-}) => {
-  if (isMobile) {
-    return (
-      <BoxSummaryMobileBanner
-        date={date}
-        deliveryDays={deliveryDays}
-        slotId={slotId}
-        showBrowseCTA={showBrowseCTA}
-        maxRecipesNum={maxRecipesNum}
-        menuRecipesStore={menuRecipesStore}
-        recipes={recipes}
-        errorText={errorText}
-        openDetails={openDetails}
-      />
-    )
-  }
-
-  return (
+}) => (
+  <section>
+    <BoxSummaryMobileBanner
+      date={date}
+      deliveryDays={deliveryDays}
+      slotId={slotId}
+      showBrowseCTA={showBrowseCTA}
+      maxRecipesNum={maxRecipesNum}
+      menuRecipesStore={menuRecipesStore}
+      recipes={recipes}
+      errorText={errorText}
+      openDetails={openDetails}
+    />
     <BoxSummaryDesktopBanner
       numRecipes={numRecipes}
       expandWarning={expandWarning}
@@ -48,11 +42,10 @@ const BoxSummaryBanner = ({
       errorText={errorText}
       openDetails={openDetails}
     />
-  )
-}
+  </section>
+)
 
 BoxSummaryBanner.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
   date: PropTypes.string,
   deliveryDays: PropTypes.instanceOf(Immutable.Map),
   slotId: PropTypes.string,
