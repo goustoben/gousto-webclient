@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import * as basketUtils from 'utils/basket'
 import * as basketSelectors from 'selectors/basket'
 import * as loggingmanagerActions from 'actions/loggingmanager'
-import logger from 'utils/logger'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as trackingKeys from '../../../../actions/trackingKeys'
 import * as basketActions from '../basketRecipes'
@@ -112,25 +111,6 @@ describe('validBasketRecipeAdd when added at least 2 recipe', () => {
   })
 })
 
-describe('sendClientMetrics', () => {
-  let mockLogger
-
-  beforeEach(() => {
-    safeJestMock(clientMetrics, 'sendClientMetric').mockRejectedValue(new Error('mock error'))
-    mockLogger = safeJestMock(logger, 'warning')
-  })
-
-  afterEach(() => {
-    jest.resetAllMocks()
-  })
-
-  test('should make the call to the logger', async () => {
-    await basketActions.sendClientMetrics()
-
-    expect(mockLogger).toHaveBeenCalled()
-  })
-})
-
 describe('validBasketRecipeAdd', () => {
   let getStateSpy
   const dispatch = jest.fn()
@@ -173,10 +153,10 @@ describe('validBasketRecipeAdd', () => {
       jest.resetAllMocks()
     })
 
-    test('should make the menu-first-recipe-add metrics call', () => {
+    test('then it should call sendClientMetric with the correct info', () => {
       basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
 
-      expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', {}, authId)
+      expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', 1, 'Count')
     })
   })
 

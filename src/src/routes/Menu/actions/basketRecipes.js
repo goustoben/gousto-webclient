@@ -1,7 +1,6 @@
 
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { limitReached } from 'utils/basket'
-import logger from 'utils/logger'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
 import status from '.../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
@@ -11,7 +10,6 @@ import pricingActions from '../../../actions/pricing'
 import * as trackingKeys from '../../../actions/trackingKeys'
 import { getUTMAndPromoCode } from '../../../selectors/tracking'
 import { getBasketNotValidError } from '../../../selectors/status'
-import { getAuthUserId } from '../../../selectors/auth'
 import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/menu'
 import { clearBasketNotValidError } from './menuCheckoutClick'
 import { menuRecipeDetailVisibilityChange } from './menuRecipeDetails'
@@ -19,20 +17,9 @@ import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { isOutOfStock } from '../selectors/recipe'
 import { sendClientMetric } from '../apis/clientMetrics'
 
-export const sendClientMetrics = async (userId) => {
-  try {
-    await sendClientMetric('menu-first-recipe-add', {}, userId)
-  } catch (e) {
-    logger.warning({
-      message: 'Fail to send menu first recipe add metric to client metrics'
-    })
-  }
-}
-
 export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
   (dispatch, getState) => {
     const state = getState()
-    const authUserId = getAuthUserId(state)
     const { basket, menuRecipeStock, menuRecipes } = state
     const numPortions = basket.get('numPortions')
 
@@ -48,7 +35,7 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) 
     }
 
     if (!basket.get('hasAddedFirstRecipe')) {
-      sendClientMetrics(authUserId)
+      sendClientMetric('menu-first-recipe-add', 1, 'Count')
     }
 
     dispatch({

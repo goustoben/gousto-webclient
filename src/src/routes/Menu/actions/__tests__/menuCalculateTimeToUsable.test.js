@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { safeJestMock } from '_testing/mocks'
-import logger from 'utils/logger'
 import { menuCalculateTimeToUsable } from '../menuCalculateTimeToUsable'
 import * as browserTimings from '../utils/browserTimings'
 import { actionTypes } from '../../../../actions/actionTypes'
@@ -15,7 +14,6 @@ describe('given menuCalculateTimeToUsable action is called', () => {
   const timeSinceRequest = safeJestMock(browserTimings, 'getTimeSinceRequestStart')
   const timeToFirstByte = safeJestMock(browserTimings, 'getTimeToFirstByte')
   const mockSendClientMetric = safeJestMock(clientMetrics, 'sendClientMetric')
-  const mockLogger = safeJestMock(logger, 'warning')
 
   timeSinceRequest.mockReturnValue(123)
   timeToFirstByte.mockReturnValue(456)
@@ -62,27 +60,10 @@ describe('given menuCalculateTimeToUsable action is called', () => {
           }
         ])
       })
-      describe('when it calls sendClientMetrics', () => {
-        test('then passes metric to sendClientMetric', async () => {
-          await menuCalculateTimeToUsable()(dispatch, getState)
-          expect(mockSendClientMetric).toHaveBeenCalledWith('menu-load-complete', { timeToUsable: 123 }, authId)
-        })
 
-        describe('when sendClientMetrics errors', () => {
-          beforeEach(async () => {
-            mockSendClientMetric.mockRejectedValue(new Error('mock error'))
-            await menuCalculateTimeToUsable()(dispatch, getState)
-          })
-
-          test('then it calls the logger',() => {
-            expect(mockLogger).toHaveBeenCalledWith({
-              message: 'Fail to send menu load complete metric to client metrics',
-              extra: {
-                timeToUsable: 123
-              }
-            })
-          })
-        })
+      test('then it should call sendClientMetric with the correct info', () => {
+        menuCalculateTimeToUsable()(dispatch, getState)
+        expect(mockSendClientMetric).toHaveBeenCalledWith('menu-load-complete', 1, 'Count')
       })
     })
 

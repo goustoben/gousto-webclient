@@ -1,13 +1,11 @@
+import { safeJestMock } from '_testing/mocks'
 import fetch from 'utils/fetch'
+import logger from 'utils/logger'
 import MockDate from 'mockdate'
 import { sendClientMetric } from './clientMetrics'
 
 jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
-    const getData = async () => ({ data: [1, 2, 3] })
-
-    return getData()
-  })
+  jest.fn().mockResolvedValue({ data: [1, 2, 3] })
 )
 
 jest.mock('config/endpoint', () =>
@@ -21,63 +19,55 @@ jest.mock('config/routes', () => ({
 }))
 
 describe('clientMetrics', () => {
+  const mockLoggerWarning = safeJestMock(logger, 'warning')
+
   beforeEach(() => {
     const timestamp = 974851200000
     MockDate.set(timestamp)
     fetch.mockClear()
+    mockLoggerWarning.mockClear()
   })
+
   afterEach(() => {
     MockDate.reset()
   })
 
   describe('sendClientMetric', () => {
-    test('should fetch the correct url', async () => {
+    test('should POST the correct data to the correct endpoint', async () => {
       const expectedReqData = {
-        client: 'webclient',
-        time: (new Date()).toISOString(),
+        client: 'web',
         name: 'menu-load-complete',
-        detail: {
-          timeToUsable: 123,
-          _userId: null
-        },
+        value: 1.0,
+        unit: 'Count'
       }
 
       const headers = {
         'Content-Type': 'application/json',
       }
 
-      await sendClientMetric('menu-load-complete', { timeToUsable: 123 })
+      await sendClientMetric('menu-load-complete', 1.0, 'Count')
+
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-clientmetrics/v1/event', expectedReqData, 'POST', 'default', headers)
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
     })
 
-    describe('when userId is not provided', () => {
-      const userId = ''
-
-      test('should add null userId to detail', async () => {
-        const expectedReqData = expect.objectContaining({
-          detail: expect.objectContaining({
-            _userId: null
-          })
-        })
-
-        await sendClientMetric('menu-load-complete', { timeToUsable: 123 }, userId)
-        expect(fetch).toHaveBeenCalledWith(null, expect.any(String), expectedReqData, expect.any(String), expect.any(String), expect.any(Object))
+    describe('when fetch errors', () => {
+      beforeEach(() => {
+        fetch.mockRejectedValue(new Error('mock error'))
       })
-    })
 
-    describe('when userId is provided', () => {
-      const userId = 'aaaa-bbbb'
+      test('should call logger.warning', async () => {
+        await sendClientMetric('menu-load-complete', 1.0, 'Count')
 
-      test('should add to detail', async () => {
-        const expectedReqData = expect.objectContaining({
-          detail: expect.objectContaining({
-            _userId: userId
-          })
+        expect(mockLoggerWarning).toHaveBeenCalledWith({
+          message: 'Failed to send client metric',
+          extra: {
+            name: 'menu-load-complete',
+            value: 1.0,
+            unit: 'Count'
+          },
+          error: new Error('mock error')
         })
-
-        await sendClientMetric('menu-load-complete', { timeToUsable: 123 }, userId)
-        expect(fetch).toHaveBeenCalledWith(null, expect.any(String), expectedReqData, expect.any(String), expect.any(String), expect.any(Object))
       })
     })
   })
