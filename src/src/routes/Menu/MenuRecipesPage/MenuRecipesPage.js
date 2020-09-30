@@ -8,13 +8,14 @@ import { AppModalContainer } from 'components/AppModal'
 import { CollectionsNavContainer } from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import { JustForYouTutorial } from '../JustForYouTutorial'
-import SubHeader from '../SubHeader'
+import { SubHeaderContainer } from '../SubHeader'
 import Loading from '../Loading'
 import fetchData from '../fetchData'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { RecipeSidesModalContainer } from './RecipeSidesModal'
+import { MenuDateRangeContainer } from '../components/MenuDateRange'
 
 import css from './MenuRecipesPage.css'
 
@@ -23,8 +24,6 @@ const contextTypes = {
 }
 
 export class MenuRecipesPage extends PureComponent {
-  static contextTypes = contextTypes
-
   async componentDidMount() {
     const { store } = this.context
 
@@ -109,7 +108,6 @@ export class MenuRecipesPage extends PureComponent {
     const {
       showLoading,
       stateRecipeCount,
-      orderId,
       isSignupReductionEnabled,
       showCommunicationPanel
     } = this.props
@@ -130,7 +128,8 @@ export class MenuRecipesPage extends PureComponent {
             </div>
           </div>
         )}
-        <SubHeader orderId={orderId} />
+        <SubHeaderContainer />
+        <MenuDateRangeContainer variant="mobile" />
         <BannerTastePreferencesContainer />
         <JustForYouTutorial />
         <AppModalContainer key="app-modal" />
@@ -216,3 +215,5 @@ MenuRecipesPage.defaultProps = {
   userId: '',
   shouldShowCapacityInfo: false
 }
+
+MenuRecipesPage.contextTypes = contextTypes

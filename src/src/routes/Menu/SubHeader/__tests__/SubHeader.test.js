@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import SubHeader from 'routes/Menu/SubHeader/SubHeader'
+import { SubHeader } from 'routes/Menu/SubHeader/SubHeader'
 import InfoToggle from 'routes/Menu/SubHeader/InfoToggle'
 import config from 'config/menu'
 
@@ -22,19 +22,10 @@ describe('SubHeader', () => {
     test('should 2 InfoToggles', () => {
       expect(wrapper.find(InfoToggle)).toHaveLength(2)
     })
-  })
 
-  describe('with the orderRecipesNo prop set to 0', () => {
-    test('the h1 should say choose recipes', () => {
-      const wrapper = shallow(<SubHeader orderRecipesNo={0} />)
-      expect(wrapper.find('h1').text()).toBe('Choose Recipes')
-    })
-  })
-
-  describe('with the orderRecipesNo prop set to > 0', () => {
-    test('the h1 should say edit recipes', () => {
-      const wrapper = shallow(<SubHeader orderRecipesNo={1} />)
-      expect(wrapper.find('h1').text()).toBe('Edit Recipes')
+    test('should render a date range for this week\'s menu', () => {
+      expect(wrapper.find('Connect(MenuDateRange)')).toHaveLength(1)
+      expect(wrapper.find('Connect(MenuDateRange)').prop('variant')).toBe('desktop')
     })
   })
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import SubHeader from 'routes/Menu/SubHeader'
+import { SubHeaderContainer } from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { CollectionsNavContainer } from '../../CollectionsNav'
@@ -33,7 +33,7 @@ describe('initial render', () => {
         loadOptimizelySDK: jest.fn(),
       }
       checkQueryParamsSpy = jest.fn()
-      SubHeader.mockReturnValue(<div />)
+      SubHeaderContainer.mockReturnValue(<div />)
 
       wrapper = shallow(
         <MenuRecipes
@@ -46,9 +46,15 @@ describe('initial render', () => {
         />,
       )
     })
-    test('should render 1 SubHeader', () => {
-      expect(wrapper.find(SubHeader).length).toBe(1)
+    test('should render 1 SubHeaderContainer', () => {
+      expect(wrapper.find(SubHeaderContainer).length).toBe(1)
     })
+
+    test('should render a mobile-only MenuDateRange', () => {
+      expect(wrapper.find('Connect(MenuDateRange)')).toHaveLength(1)
+      expect(wrapper.find('Connect(MenuDateRange)').prop('variant')).toBe('mobile')
+    })
+
     test('should show a collections nav', () => {
       expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
     })

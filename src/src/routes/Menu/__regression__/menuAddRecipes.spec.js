@@ -1,3 +1,5 @@
+import { withPlatformTags, MOBILE, WEB } from '../../../utils/regression/tags'
+
 const PAGE_URL = 'menu'
 
 const getRecipes = (win) => (
@@ -25,6 +27,24 @@ describe('Given I am a logged out user', () => {
     after(() => {
       cy.clock().then((clock) => {
         clock.restore()
+      })
+    })
+
+    describe('And I look for the menu date range on the page', () => {
+      withPlatformTags(WEB).it('Then it should be visible for desktop', () => {
+        cy.get('[data-testing="menuDateRange-desktop"]')
+          .should('have.text', 'Menu for May 02 - May 08')
+
+        cy.get('[data-testing="menuDateRange-mobile"]')
+          .should('not.be.visible')
+      })
+
+      withPlatformTags(MOBILE).it('Then it should be visible for mobile', () => {
+        cy.get('[data-testing="menuDateRange-mobile"]')
+          .should('have.text', 'Menu for May 02 - May 08')
+
+        cy.get('[data-testing="menuDateRange-desktop"]')
+          .should('not.be.visible')
       })
     })
 

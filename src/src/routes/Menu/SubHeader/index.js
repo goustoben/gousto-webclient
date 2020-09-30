@@ -1,1 +1,1 @@
-export default from './SubHeaderContainer'
+export { SubHeaderContainer } from './SubHeaderContainer'

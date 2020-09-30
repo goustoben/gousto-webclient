@@ -5,19 +5,18 @@ import moment from 'moment'
 import config from 'config/menu'
 import { H3 } from 'Page/Header'
 import InfoToggle from './InfoToggle'
+import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './SubHeader.css'
 
-class SubHeader extends React.PureComponent {
+export class SubHeader extends React.PureComponent {
   static propTypes = {
     fromJoin: PropTypes.bool,
-    orderRecipesNo: PropTypes.number,
     isAuthenticated: PropTypes.bool,
   }
 
   static defaultProps = {
     isAuthenticated: false,
     fromJoin: false,
-    orderRecipesNo: 0
   }
 
   deliveryInfo = (mobile) => (
@@ -65,7 +64,7 @@ class SubHeader extends React.PureComponent {
   }
 
   render() {
-    const { fromJoin, orderRecipesNo } = this.props
+    const { fromJoin } = this.props
 
     return (
       <div
@@ -76,9 +75,7 @@ class SubHeader extends React.PureComponent {
       >
         <div className={css.subHeaderContent}>
           <div className={css.filter}>
-            <h1 className={css.menuTitle}>
-              {orderRecipesNo > 0 ? 'Edit Recipes' : 'Choose Recipes'}
-            </h1>
+            <MenuDateRangeContainer variant="desktop" />
             <div>
               {this.notificationBanner()}
             </div>
@@ -97,5 +94,3 @@ class SubHeader extends React.PureComponent {
     )
   }
 }
-
-export default SubHeader
