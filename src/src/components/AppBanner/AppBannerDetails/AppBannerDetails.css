@@ -29,6 +29,10 @@
   animation-delay: 2.5s;
   opacity: 0;
   color: Mackerel;
+
+  @media (max-width: 350px) {
+    display: none
+  }
 }
 
 .star {

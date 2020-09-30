@@ -122,6 +122,10 @@
 	width: 100%;
 }
 
+.appAwarenessLoginModal .confirmMsg {
+	padding: 1.5rem;
+}
+
 .appAwarenessLoginModal {
 	height: calc(100% - HeadingHeightSM);
 	padding: 0 0.5rem;
