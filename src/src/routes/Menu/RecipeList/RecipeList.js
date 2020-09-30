@@ -1,11 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-
-import { ThreeColumnRecipeList } from './ThreeColumnRecipeList'
-import { SingleColumnRecipeList } from './SingleColumnRecipeList'
-import { EMERecipeList } from '../ElevatedMenuExperience/EMERecipeList'
-import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
+import { EMERecipeTileContainer } from '../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
+import css from './RecipeList.css'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -33,39 +30,13 @@ class RecipeList extends React.PureComponent {
   render() {
     const {
       recipes,
-      browserType,
-      thematicName,
-      isCurrentCollectionRecommendation,
-      deliveryDate,
     } = this.props
 
     return (
-      <div>
-        <OptimizelyRolloutsContainer featureName="recipe_tile_foundations" featureEnabled>
-          <EMERecipeList recipes={recipes} />
-        </OptimizelyRolloutsContainer>
-
-        <OptimizelyRolloutsContainer featureName="recipe_tile_foundations" featureEnabled={false}>
-          {
-            browserType === 'mobile'
-              ? (
-                <SingleColumnRecipeList
-                  recipes={recipes}
-                  thematicName={thematicName}
-                  isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
-                  deliveryDate={deliveryDate}
-                />
-              )
-              : (
-                <ThreeColumnRecipeList
-                  recipes={recipes}
-                  thematicName={thematicName}
-                  isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
-                  deliveryDate={deliveryDate}
-                />
-              )
-          }
-        </OptimizelyRolloutsContainer>
+      <div className={css.emeRecipeList}>
+        {recipes.map((value) =>
+          <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} />
+        )}
       </div>
     )
   }
@@ -73,19 +44,13 @@ class RecipeList extends React.PureComponent {
 
 RecipeList.propTypes = {
   originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
-  isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]).isRequired,
-  thematicName: PropTypes.string,
-  deliveryDate: PropTypes.string,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-  browserType: PropTypes.string.isRequired,
   currentCollectionId: PropTypes.string.isRequired,
   trackRecipeOrderDisplayed: PropTypes.func.isRequired,
 }
 
 RecipeList.defaultProps = {
   originalOrderRecipeIds: Immutable.List([]),
-  deliveryDate: null,
-  thematicName: ''
 }
 
 export { RecipeList }
