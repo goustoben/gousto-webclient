@@ -35,6 +35,15 @@ describe('LoginForm', () => {
         REMEMBER: false,
       }
 
+      const EXPECTED_CALL = {
+        email: STATE_CONFIG.EMAIL,
+        password: STATE_CONFIG.PASSWORD,
+        recaptchaToken: null,
+        rememberMe: STATE_CONFIG.REMEMBER,
+      }
+
+      const onSubmitSpy = jest.fn()
+
       beforeEach(() => {
         wrapper.setState({
           email: STATE_CONFIG.EMAIL,
@@ -44,29 +53,39 @@ describe('LoginForm', () => {
           recaptchaToken: null,
           remember: STATE_CONFIG.REMEMBER
         })
+
+        onSubmitSpy.mockClear()
       })
 
       describe('and the submit button is clicked', () => {
-        const onSubmitSpy = jest.fn()
-        const event = new Event('click') // eslint-disable-line no-undef
-        const EXPECTED_CALL = {
-          email: STATE_CONFIG.EMAIL,
-          password: STATE_CONFIG.PASSWORD,
-          recaptchaToken: null,
-          rememberMe: STATE_CONFIG.REMEMBER,
-        }
+        const event = new global.Event('click')
 
         beforeEach(() => {
           wrapper.setProps({ onSubmit: onSubmitSpy })
           wrapper.instance().handleSubmit(event)
         })
 
-        afterEach(() => {
-          onSubmitSpy.mockClear()
+        test('calls the onSubmit with the required parameters', () => {
+          expect(onSubmitSpy).toHaveBeenCalledWith(EXPECTED_CALL)
+        })
+      })
+
+      describe('and the user hits the ENTER key', () => {
+        const event = new global.KeyboardEvent('keydown', {
+          key: 'Enter',
+        })
+
+        beforeEach(() => {
+          wrapper.setProps({ onSubmit: onSubmitSpy })
+          wrapper.update()
         })
 
         test('calls the onSubmit with the required parameters', () => {
-          expect(onSubmitSpy).toHaveBeenCalledWith({ ...EXPECTED_CALL })
+          const form = wrapper.find('form')
+
+          form.simulate('submit', event)
+
+          expect(onSubmitSpy).toHaveBeenCalledWith(EXPECTED_CALL)
         })
       })
     })

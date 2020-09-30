@@ -148,7 +148,13 @@ class LoginForm extends React.PureComponent {
     const { remember, showValidationError } = this.state
 
     return (
-      <Form onSubmit={this.handleSubmit} method="post" data-testing="loginForm" className={classNames({ [css.appAwarenessLoginForm]: showAppAwareness })}>
+      <Form
+        onSubmit={this.handleSubmit}
+        method="post"
+        data-testing="loginForm"
+        className={classNames({ [css.appAwarenessLoginForm]: showAppAwareness })}
+        noValidate
+      >
         <div className={css.inputContainer}>
           <InputField
             id="email"
