@@ -14,7 +14,7 @@ describe('CategoriesThumbnailContainer', () => {
             collections: {
               data: [{
                 id: 222,
-                attributes: {
+                meta: {
                   thumbnail: 'imageUrl'
                 }
               }]
