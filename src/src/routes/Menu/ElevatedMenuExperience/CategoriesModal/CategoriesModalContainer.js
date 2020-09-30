@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { collectionFilterChange } from 'actions/filters'
-import { hideCategoriesModal } from '../../actions/menuCategoriesModal'
+import { hideCategoriesModal, categoryButtonClicked } from '../../actions/menuCategoriesModal'
 import { getDisplayedCollections } from '../../selectors/collections'
 import { CategoriesModal } from './CategoriesModal'
 
@@ -13,6 +13,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   hideCategoriesModal,
+  categoryButtonClicked,
   collectionFilterChange,
 }
 

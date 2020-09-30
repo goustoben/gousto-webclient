@@ -5,7 +5,7 @@ import Link from 'Link'
 import css from './CategoryCarousel.css'
 import { EMERecipeTileContainer } from '../RecipeTile/EMERecipeTile'
 
-const CategoryCarousel = ({ category, recipes }) => {
+const CategoryCarousel = ({ category, recipes, categoryButtonClicked }) => {
   if (!recipes.size) return null
 
   const viewAllPath = `/menu?collection=${category.get('slug')}`
@@ -15,7 +15,7 @@ const CategoryCarousel = ({ category, recipes }) => {
     <div className={css.categoryCarousel}>
       <div className={css.categoryDetails}>
         <div className={css.categoryTitle}>{category.get('shortTitle')}</div>
-        <Link className={css.categoryViewAllLink} to={viewAllPath} clientRouted>
+        <Link className={css.categoryViewAllLink} to={viewAllPath} clientRouted onClick={categoryButtonClicked}>
           {viewAllLabel}
         </Link>
       </div>
@@ -34,7 +34,8 @@ const CategoryCarousel = ({ category, recipes }) => {
 
 CategoryCarousel.propTypes = {
   category: PropTypes.instanceOf(Immutable.Map).isRequired,
-  recipes: PropTypes.instanceOf(Immutable.List).isRequired
+  recipes: PropTypes.instanceOf(Immutable.List).isRequired,
+  categoryButtonClicked: PropTypes.func.isRequired
 }
 
 export { CategoryCarousel }

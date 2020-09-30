@@ -14,3 +14,10 @@ export const hideCategoriesModal = () => ({
     actionType: trackingKeys.clickBackToMenu,
   },
 })
+
+export const categoryButtonClicked = () => ({
+  type: actionTypes.MENU_CATEGORY_BUTTON_CLICKED,
+  trackingData: {
+    actionType: trackingKeys.viewRecipeCollection
+  }
+})

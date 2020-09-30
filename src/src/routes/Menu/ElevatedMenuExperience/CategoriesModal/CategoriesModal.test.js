@@ -9,6 +9,7 @@ describe('CategoriesModal', () => {
   const props = {
     showCategoriesModal: jest.fn(),
     hideCategoriesModal: jest.fn(),
+    categoryButtonClicked: jest.fn(),
     menuCollections: Immutable.fromJS({
       123: {
         published: true,
@@ -78,6 +79,7 @@ describe('CategoriesModal', () => {
           })
           expect(props.hideCategoriesModal).toHaveBeenCalled()
           expect(props.collectionFilterChange).toHaveBeenCalled()
+          expect(props.categoryButtonClicked).toHaveBeenCalled()
         })
       })
 
@@ -86,6 +88,7 @@ describe('CategoriesModal', () => {
           wrapper.find('.categoriesTitleWrapper').first().simulate('keypress', {key: 'enter'})
           expect(props.hideCategoriesModal).toHaveBeenCalled()
           expect(props.collectionFilterChange).toHaveBeenCalled()
+          expect(props.categoryButtonClicked).toHaveBeenCalled()
         })
       })
     })
