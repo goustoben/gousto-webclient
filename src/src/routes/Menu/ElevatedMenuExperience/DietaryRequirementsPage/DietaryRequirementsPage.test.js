@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import React from 'react'
 import { DietaryRequirementsPage } from './DietaryRequirementsPage'
-import { Navbar } from './Navbar'
+import { CategoriesHeaderContainer } from '../CategoriesHeader'
 import { DetailOverlayContainer } from '../../DetailOverlay'
 import { CategoryCarouselContainer } from '../CategoryCarousel'
 import Loading from '../../Loading'
@@ -33,7 +33,7 @@ describe('DietaryRequirementsPage', () => {
     })
 
     test('renders <Navbar />', () => {
-      expect(wrapper.find(Navbar).prop('title')).toEqual('Dietary requirements')
+      expect(wrapper.find(CategoriesHeaderContainer).prop('categoryTitle')).toEqual('Dietary requirements')
     })
 
     test('renders <DetailOverlayContainer />', () => {
