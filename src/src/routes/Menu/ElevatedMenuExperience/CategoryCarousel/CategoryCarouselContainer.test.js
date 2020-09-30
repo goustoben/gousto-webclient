@@ -69,6 +69,7 @@ describe('CategoryCarouselContainer', () => {
     expect(wrapper.find('CategoryCarousel').props()).toEqual({
       category,
       recipes: [],
+      categoryButtonClicked: expect.any(Function),
     })
   })
 })

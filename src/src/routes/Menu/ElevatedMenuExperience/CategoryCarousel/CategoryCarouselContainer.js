@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getRecipeListRecipes } from '../../selectors/recipeList'
+import { categoryButtonClicked } from '../../actions/menuCategoriesModal'
 import { CategoryCarousel } from './CategoryCarousel'
 
 function mapStateToProps(state, props) {
@@ -10,7 +11,9 @@ function mapStateToProps(state, props) {
   }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  categoryButtonClicked
+}
 
 const CategoryCarouselContainer = connect(mapStateToProps, mapDispatchToProps)(CategoryCarousel)
 

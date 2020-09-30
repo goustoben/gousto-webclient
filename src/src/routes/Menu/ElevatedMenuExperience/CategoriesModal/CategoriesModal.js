@@ -10,6 +10,7 @@ export const CategoriesModal = ({
   hideCategoriesModal,
   menuCollections,
   collectionFilterChange,
+  categoryButtonClicked
 
 }) => {
   const onCloseClick = () => {
@@ -40,11 +41,13 @@ export const CategoriesModal = ({
                   () => {
                     onCloseClick()
                     collectionFilterChange(collectionId)
+                    categoryButtonClicked()
                   }
                 }
                 onKeyPress={() => {
                   onCloseClick()
                   collectionFilterChange(collectionId)
+                  categoryButtonClicked()
                 }}
               >
                 <CategoriesThumbnailContainer collectionId={collectionId} />
@@ -72,12 +75,14 @@ export const CategoriesModal = ({
 }
 
 CategoriesModal.propTypes = {
-  showCategoriesModal: PropTypes.bool.isRequired,
+  showCategoriesModal: PropTypes.func.isRequired,
   hideCategoriesModal: PropTypes.func.isRequired,
-  menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
+  menuCollections: PropTypes.instanceOf(Immutable.Map).isRequired,
   collectionFilterChange: PropTypes.func,
+  categoryButtonClicked: PropTypes.func
 }
 
 CategoriesModal.defaultProps = {
   collectionFilterChange: () => {},
+  categoryButtonClicked: () => {},
 }

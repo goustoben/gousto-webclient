@@ -3,10 +3,12 @@ import { shallow } from 'enzyme'
 import { safeJestMock } from '_testing/mocks'
 import * as filterActions from 'actions/filters'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
+import * as menuViewAllButtonActions from '../../actions/menuViewAllButton'
 import { ViewAllRecipesButtonContainer } from './ViewAllRecipesButtonContainer'
 import { ViewAllRecipesButton } from './ViewAllRecipesButton'
 
 const mockedCollectionFilterChange = safeJestMock(filterActions, 'collectionFilterChange')
+const mockedViewAllFooterButtonClicked = safeJestMock(menuViewAllButtonActions, 'viewAllFooterButtonClicked')
 
 describe('ViewAllRecipesButtonContainer', () => {
   let wrapper
@@ -14,6 +16,8 @@ describe('ViewAllRecipesButtonContainer', () => {
 
   beforeEach(() => {
     mockedCollectionFilterChange.mockReturnValue('mocked-collection-filter-change')
+    mockedViewAllFooterButtonClicked.mockReturnValue('mocked-view-all-footer-button-clicked')
+
     dispatch = jest.fn()
 
     wrapper = shallow(
@@ -43,6 +47,13 @@ describe('ViewAllRecipesButtonContainer', () => {
 
       expect(mockedCollectionFilterChange).toHaveBeenCalledWith(ALL_RECIPES_COLLECTION_ID)
       expect(dispatch).toHaveBeenCalledWith('mocked-collection-filter-change')
+    })
+
+    test('dispatches an action to track button click', () => {
+      wrapper.prop('onClick')()
+
+      expect(mockedViewAllFooterButtonClicked).toHaveBeenCalled()
+      expect(dispatch).toHaveBeenCalledWith('mocked-view-all-footer-button-clicked')
     })
   })
 })

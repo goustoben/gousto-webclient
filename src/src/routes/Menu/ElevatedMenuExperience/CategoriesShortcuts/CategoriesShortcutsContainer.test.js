@@ -21,6 +21,8 @@ describe('CategoriesShortcutsContainer', () => {
     expect(wrapper.find('CategoriesShortcuts').props()).toEqual({
       collectionFilterChange: expect.any(Function),
       showCategoriesModal: expect.any(Function),
+      categoryShortcutClicked: expect.any(Function),
+      push: expect.any(Function)
     })
   })
 })

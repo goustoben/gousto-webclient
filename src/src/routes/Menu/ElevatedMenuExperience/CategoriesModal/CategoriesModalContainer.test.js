@@ -53,6 +53,7 @@ describe('CategoriesModalContainer', () => {
       hideCategoriesModal: expect.any(Function),
       collectionFilterChange: expect.any(Function),
       showCategoriesModal: true,
+      categoryButtonClicked: expect.any(Function),
       menuCollections: Immutable.fromJS({
         123: {
           published: true,
