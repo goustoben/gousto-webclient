@@ -14,7 +14,7 @@ import {
   isNewTransformer
 } from './recipes/recipeHelpers'
 
-function recipeTransformer({ normalisedAttributes, brandData, individualRecipeId, finalIngredients, isFeaturedRecipe, activeMenu }) {
+function recipeTransformer({ normalisedAttributes, brandData, individualRecipeId, finalIngredients, isFeaturedRecipe, activeMenu, recipeMeta }) {
   return {
     allergens: allergensTransformer(normalisedAttributes.allergens),
     basics: basicsTransformer(normalisedAttributes.basics),
@@ -82,6 +82,7 @@ function recipeTransformer({ normalisedAttributes, brandData, individualRecipeId
     promotions: promotionsTransformer(normalisedAttributes),
     isNew: activeMenu && isNewTransformer(activeMenu.relationships.debut_recipes, individualRecipeId),
     foodBrand: normalisedAttributes.food_brand,
+    tagline: (recipeMeta || {}).tagline,
   }
 }
 
@@ -89,9 +90,15 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
   if (!activeMenu || !activeMenu.relationships) {
     return undefined
   }
-  const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.core_recipe_id.toString() )
 
-  const formattedData = activeMenuRecipesIds.map((individualRecipeId, index) => {
+  const activeMenuRecipesMeta = activeMenu.relationships.recipes.data.reduce((acc, recipe) => {
+    const id = recipe.core_recipe_id.toString()
+    acc[id] = recipe.meta
+
+    return acc
+  }, {})
+
+  return Object.entries(activeMenuRecipesMeta).map(([individualRecipeId, recipeMeta], index) => {
     const currentRecipe = menuServiceData.recipe[individualRecipeId]
     const normalisedAttributes = currentRecipe && currentRecipe.attributes
     const normalisedRelationships = currentRecipe && currentRecipe.relationships
@@ -102,10 +109,8 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
     // use the first recipe as the featured one (base on recommendations)
     const isFeaturedRecipe = index === 0
 
-    return recipeTransformer({ normalisedAttributes, brandData, finalIngredients, activeMenu, individualRecipeId, isFeaturedRecipe })
+    return recipeTransformer({ normalisedAttributes, brandData, finalIngredients, activeMenu, individualRecipeId, isFeaturedRecipe, recipeMeta })
   })
-
-  return formattedData
 }
 
 /**
@@ -122,6 +127,7 @@ function menuRecipeMapper(recipes) {
     activeMenu: undefined,
     finalIngredients: {},
     brandData: {},
+    recipeMeta: {}
   }))
 }
 

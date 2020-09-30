@@ -7,12 +7,35 @@ import { EMERecipeTileContainer } from './EMERecipeTileContainer'
 
 describe('<EMERecipeTileContainer />', () => {
   const recipeId = '123'
+  const fineDineInTag = {
+    slug: 'fine-dine-in-eme',
+    text: 'Fine Dine In',
+    type: 'general',
+    themes: [{
+      name: 'light',
+      color: '#01A92B',
+      borderColor: '#01A92B'
+    }]
+  }
+  const expectedTagline = {
+    slug: 'fine-dine-in-eme',
+    text: 'Fine Dine In',
+    type: 'general',
+    theme: {
+      name: 'light',
+      color: '#01A92B',
+      borderColor: '#01A92B'
+    },
+    themes: undefined,
+  }
 
   const recipe = Immutable.fromJS({
     id: recipeId,
     title: 'Chicken curry',
     isNew: true,
     isFineDineIn: true,
+    tagline: 'fine-dine-in-eme',
+    promotions: Immutable.List([])
   })
 
   const state = {
@@ -36,6 +59,13 @@ describe('<EMERecipeTileContainer />', () => {
         }
       }
     }),
+    brand: {
+      data: {
+        tags: [
+          fineDineInTag
+        ]
+      }
+    }
   }
 
   const wrapperOptions = {
@@ -63,6 +93,7 @@ describe('<EMERecipeTileContainer />', () => {
     expect(wrapper.prop('title')).toEqual('Chicken curry')
     expect(wrapper.prop('showDetailRecipe')).toEqual(expect.any(Function))
     expect(wrapper.prop('isFineDineIn')).toEqual(true)
+    expect(wrapper.prop('brandTagline')).toEqual(expectedTagline)
     expect(wrapper.prop('isInCarousel')).toEqual(false)
   })
 

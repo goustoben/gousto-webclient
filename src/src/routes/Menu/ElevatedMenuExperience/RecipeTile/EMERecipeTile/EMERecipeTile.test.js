@@ -37,13 +37,13 @@ describe('EMERecipeTile', () => {
           themes: undefined,
           theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
         },
-        topRightTag: {
-          type: 'general',
-          slug: 'joe-wicks-eme',
-          text: 'Joe Wicks',
-          themes: undefined,
-          theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
-        }
+      },
+      brandTagline: {
+        type: 'general',
+        slug: 'joe-wicks-eme',
+        text: 'Joe Wicks',
+        themes: undefined,
+        theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
       }
     }
   })
