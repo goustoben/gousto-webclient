@@ -5,6 +5,10 @@
     box-sizing: content-box;
 }
 
+.item > label {
+  margin-bottom: 0;
+}
+
 .listItem {
     composes: item;
     position: relative;

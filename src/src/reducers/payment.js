@@ -1,9 +1,11 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
+import { PaymentMethod } from 'config/signup'
 
 export const initialState = () => Immutable.Map({
   challengeUrl: null,
   isModalVisible: false,
+  currentPaymentMethod: PaymentMethod.Unchosen
 })
 
 export const payment = (state = initialState(), action) => {
@@ -16,6 +18,9 @@ export const payment = (state = initialState(), action) => {
     return state
       .set('isModalVisible', false)
       .set('challengeUrl', null)
+  case actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD:
+    return state
+      .set('currentPaymentMethod', action.paymentMethod)
   default:
     return state
   }

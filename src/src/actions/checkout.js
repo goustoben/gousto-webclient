@@ -606,4 +606,9 @@ export function trackPromocodeChange(promocode, added) {
   })
 }
 
+export const setCurrentPaymentMethod = (paymentMethod) => ({
+  type: actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD,
+  paymentMethod
+})
+
 export default checkoutActions

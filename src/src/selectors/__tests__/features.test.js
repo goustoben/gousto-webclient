@@ -41,6 +41,7 @@ import {
   getIsMobileMenuModalAppAwarenessEnabled,
   getIsMyGoustoBannerAppAwarenessEnabled,
   getisNewSSRDeliveriesEnabled,
+  getIsPayWithPaypalEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -97,6 +98,7 @@ describe('when features are defined', () => {
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
     [getIsPromoCodeOnGetStartedEnabled, 'promoCodeOnGetStarted'],
     [getisNewSSRDeliveriesEnabled, 'isNewSSRDeliveriesEnabled'],
+    [getIsPayWithPaypalEnabled, 'payWithPaypal'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

@@ -157,3 +157,7 @@ export const getIsPromoCodeOnGetStartedEnabled = ({ features }) => (
 export const getisNewSSRDeliveriesEnabled = ({ features }) => (
   features && features.getIn(['isNewSSRDeliveriesEnabled', 'value'], false)
 )
+
+export const getIsPayWithPaypalEnabled = ({ features }) => (
+  features && features.getIn(['payWithPaypal', 'value'], false)
+)

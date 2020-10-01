@@ -1,4 +1,10 @@
-module.exports = {
+export const PaymentMethod = {
+  Unchosen: 'Unchosen',
+  Card: 'Card',
+  Paypal: 'Paypal'
+}
+
+export const signupConfig = {
   defaultSteps: ['boxSize', 'postcode', 'delivery'],
   steps: [
     { name: 'welcome', slug: 'welcome' },

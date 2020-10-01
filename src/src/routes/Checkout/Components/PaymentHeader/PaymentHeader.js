@@ -3,7 +3,7 @@ import React from 'react'
 import css from './PaymentHeader.css'
 
 export const PaymentHeader = () => (
-  <div>
+  <div className={css.paymentHeader}>
     <div className={css.headerContainer}>
       <h3 className={css.header}>
         Payment details

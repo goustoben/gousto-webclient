@@ -1,13 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { PaymentMethod } from 'config/signup'
 import SubmitButton from 'routes/Checkout/Components/SubmitButton'
 import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
-import { CheckoutName } from '../CheckoutName'
-import { CheckoutFrame } from '../CheckoutFrame'
-import { CheckoutAddress } from '../CheckoutAddress'
 import { Checkout3DSModal } from '../Checkout3DSModal'
 import { CheckoutPayment } from '../CheckoutPayment'
+import { CheckoutCardDetails } from '../CheckoutCardDetails'
+import { CheckoutPaypalDetails } from '../CheckoutPaypalDetails'
+import { PaymentMethodSelector } from '../PaymentMethodSelector'
 import BoxDetails from '../../BoxDetails'
 import Summary from '../../Summary'
 
@@ -19,6 +20,7 @@ describe('CheckoutPayment', () => {
   const trackingOrderPlaceAttemptSucceeded = jest.fn()
   const touch = jest.fn()
   const submit = jest.fn()
+  const setCurrentPaymentMethod = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
@@ -28,6 +30,8 @@ describe('CheckoutPayment', () => {
         trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
         touch={touch}
         submit={submit}
+        currentPaymentMethod={PaymentMethod.Unchosen}
+        setCurrentPaymentMethod={setCurrentPaymentMethod}
       />
     )
   })
@@ -45,14 +49,9 @@ describe('CheckoutPayment', () => {
       wrapper.setProps({ prerender: true })
     })
 
-    test('should not render Payment Form Sections', () => {
-      expect(wrapper.find(CheckoutAddress)).toHaveLength(0)
-      expect(wrapper.find(CheckoutName)).toHaveLength(0)
-      expect(wrapper.find(SubmitButton)).toHaveLength(0)
-    })
-
-    test('should render a CheckoutFrame', () => {
-      expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
+    test('should render CheckoutCardDetails', () => {
+      expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
+      expect(wrapper.find(CheckoutCardDetails).prop('prerender')).toBe(true)
     })
 
     test('should render the component as hidden', () => {
@@ -65,16 +64,9 @@ describe('CheckoutPayment', () => {
       expect(wrapper.find(PaymentHeader)).toHaveLength(1)
     })
 
-    test('should render a CheckoutFrame', () => {
-      expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
-    })
-
-    test('should render a CheckoutName', () => {
-      expect(wrapper.find(CheckoutName)).toHaveLength(1)
-    })
-
-    test('should render a CheckoutAddress', () => {
-      expect(wrapper.find(CheckoutAddress)).toHaveLength(1)
+    test('should render CheckoutCardDetails', () => {
+      expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
+      expect(wrapper.find(CheckoutCardDetails).prop('prerender')).toBe(false)
     })
 
     test('should render a SubmitButton', () => {
@@ -173,11 +165,19 @@ describe('CheckoutPayment', () => {
 
   describe('cardTokenReady', () => {
     test('should call props.submit', () => {
-      const cardTokenReady = wrapper.find(CheckoutFrame).prop('cardTokenReady')
+      const cardTokenReady = wrapper.find(CheckoutCardDetails).prop('cardTokenReady')
 
       cardTokenReady()
 
       expect(submit).toHaveBeenCalled()
+    })
+  })
+
+  describe('when CheckoutCardDetails asks to disable card submission', () => {
+    test('then it should disable submission', () => {
+      wrapper.find(CheckoutCardDetails).prop('disableCardSubmission')()
+
+      expect(wrapper.state('isSubmitCardEnabled')).toBe(false)
     })
   })
 
@@ -208,6 +208,58 @@ describe('CheckoutPayment', () => {
 
     test('should not render 3DS modal', () => {
       expect(wrapper.find(Checkout3DSModal).exists()).toBe(false)
+    })
+  })
+
+  describe('when isPayWithPaypalEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isPayWithPaypalEnabled: true })
+    })
+
+    test('then it should render selector instead of the usual header, and details for both payment methods', () => {
+      expect(wrapper.find(PaymentHeader)).toHaveLength(0)
+
+      expect(wrapper.find(PaymentMethodSelector)).toHaveLength(1)
+
+      expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
+      expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeTruthy()
+
+      expect(wrapper.find(CheckoutPaypalDetails)).toHaveLength(1)
+      expect(wrapper.find(CheckoutPaypalDetails).prop('hide')).toBeTruthy()
+    })
+
+    describe('and when Card method is selected', () => {
+      beforeEach(() => {
+        wrapper.setProps({ currentPaymentMethod: PaymentMethod.Card })
+      })
+
+      test('then it should show the Card details and hide Paypal details', () => {
+        expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeFalsy()
+        expect(wrapper.find(CheckoutPaypalDetails).prop('hide')).toBeTruthy()
+      })
+    })
+
+    describe('and when Paypal method is selected', () => {
+      beforeEach(() => {
+        wrapper.setProps({ currentPaymentMethod: PaymentMethod.Paypal })
+      })
+
+      test('then it should hide the Card details and show Paypal details', () => {
+        expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeTruthy()
+        expect(wrapper.find(CheckoutPaypalDetails).prop('hide')).toBeFalsy()
+      })
+    })
+
+    describe('and when PaymentMethodSelector reports a new selected method', () => {
+      test('to Card: then it should be set as current', () => {
+        wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.Card)
+        expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.Card)
+      })
+
+      test('to PayPal: then it should be set as current', () => {
+        wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.Paypal)
+        expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.Paypal)
+      })
     })
   })
 })

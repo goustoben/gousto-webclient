@@ -13,3 +13,5 @@ export const getPaymentDetails = state => {
 export const getChallengeUrl = state => state.payment.get('challengeUrl')
 
 export const isModalOpen = state => state.payment.get('isModalVisible')
+
+export const getCurrentPaymentMethod = state => state.payment.get('currentPaymentMethod')

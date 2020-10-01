@@ -7,16 +7,16 @@ import ReduxFormInput from 'Form/ReduxFormInput'
 import css from './CheckoutName.css'
 
 const propTypes = {
-  sectionName: PropTypes.string,
-  receiveRef: PropTypes.func,
+  sectionName: PropTypes.string.isRequired,
+  receiveRef: PropTypes.func.isRequired,
 }
 
 const CheckoutName = ({ sectionName, receiveRef }) => (
   <FormSection name={sectionName}>
-    <div className={css.wrapper}>
-      <p className={css.cardDetails}>
-        Card details
-      </p>
+    <div
+      className={css.wrapper}
+    >
+      <p className={css.cardDetails}>Card details</p>
       <Field
         name="cardName"
         component={ReduxFormInput}
@@ -35,6 +35,4 @@ const CheckoutName = ({ sectionName, receiveRef }) => (
 
 CheckoutName.propTypes = propTypes
 
-export {
-  CheckoutName,
-}
+export { CheckoutName }
