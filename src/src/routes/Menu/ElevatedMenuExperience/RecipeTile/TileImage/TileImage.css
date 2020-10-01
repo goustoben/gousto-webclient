@@ -33,8 +33,6 @@
 
 /* carousel */
 .carouselImageWrapper {
-    height: 100%;
-    width: 62%;
     border: none;
     background: none;
     position: relative;
@@ -45,8 +43,6 @@
 }
 
 .carouselVariantHeaderImageWrapper {
-    height: 100%;
-    width: 62%;
     border: none;
     background: none;
     position: relative;

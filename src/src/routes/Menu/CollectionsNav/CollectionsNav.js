@@ -302,12 +302,12 @@ class CollectionsNav extends React.PureComponent {
       rightArrowClassName = css.arrowRightFixedTransition
     }
 
-    const { isAtStart, isAtEnd } = this.state
+    const { isAtStart, isAtEnd, showArrows } = this.state
 
     return (
       <div>
         <div className={className} id="collectionNavBar">
-          {this.state.showArrows && !isAtStart ? <div className={leftArrowClassName} onClick={this.prevCollection} /> : null}
+          {showArrows && !isAtStart ? <div className={leftArrowClassName} onClick={this.prevCollection} /> : null}
           <div className={css.nav} ref={ref => { this.eles.parent = ref }}>
             <div className={css.navBar}>
               {menuCollections
@@ -335,7 +335,7 @@ class CollectionsNav extends React.PureComponent {
                 .toArray()}
             </div>
           </div>
-          {this.state.showArrows && !isAtEnd ? <div className={rightArrowClassName} onClick={this.nextCollection} /> : null}
+          {showArrows && !isAtEnd ? <div className={rightArrowClassName} onClick={this.nextCollection} /> : null}
         </div>
       </div>
     )
