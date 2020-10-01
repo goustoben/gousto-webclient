@@ -1,6 +1,7 @@
 import React from 'react'
 import thunk from 'redux-thunk'
 import moment from 'moment'
+import MockDate from 'mockdate'
 import { Map } from 'immutable'
 import { mount } from 'enzyme'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
@@ -19,6 +20,8 @@ describe('given DeliveryContainer is rendered', () => {
   let wrapper
 
   beforeAll(() => {
+    MockDate.set('2020-09-25')
+
     const store = createStore(
       combineReducers({
         ...authReducer,
@@ -66,6 +69,10 @@ describe('given DeliveryContainer is rendered', () => {
     wrapper = mount(
       <DeliveryContainer store={store} />
     )
+  })
+
+  afterAll(() => {
+    MockDate.reset()
   })
 
   test('nextOrderTracking is being set correctly', async () => {
