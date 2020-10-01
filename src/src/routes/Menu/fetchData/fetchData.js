@@ -17,6 +17,7 @@ import { getBrandMenuHeaders, getBrandInfo } from '../actions/brandData'
 import { fetchMenus, fetchMenusWithUserId } from './menuApi'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
+import { sendClientMetric } from '../apis/clientMetrics'
 
 const requiresMenuRecipesClear = (state, orderId) => (
   orderId
@@ -77,6 +78,7 @@ const loadOrderAuthenticated = (orderId) => async (dispatch, getState) => {
   await dispatch(actions.menuLoadMenu())
   dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
   dispatch(actions.menuLoadStock(true))
+  sendClientMetric('menu-edit-initiated', 1, 'Count')
 }
 
 const loadOrder = (orderId) => async (dispatch, getState) => {

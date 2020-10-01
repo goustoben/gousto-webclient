@@ -10,6 +10,8 @@ const getHelpInitialState = fromJS({
     recipeItems: [],
     recipeDetailedItems: [],
     deliverySlot: {},
+    deliveryDate: null,
+    trackingUrl: '',
   },
   orders: Map(),
   recipes: [],
@@ -113,6 +115,7 @@ const getHelp = (state, action) => {
           deliveryEnd: order.deliverySlot.deliveryEnd,
           deliveryStart: order.deliverySlot.deliveryStart,
         }))
+        .setIn(['order', 'deliveryDate'], fromJS(order.deliveryDate))
     }
 
     return state
@@ -166,6 +169,9 @@ const getHelp = (state, action) => {
     const actionReducedOrders = action.orders.reduce(reduceOrders, OrderedMap({}))
 
     return state.set('orders', actionReducedOrders)
+  }
+  case actionTypes.GET_HELP_LOAD_TRACKING_URL: {
+    return state.setIn(['order', 'trackingUrl'], action.payload.trackingUrl)
   }
   default:
     return state

@@ -53,6 +53,7 @@ module.exports = {
       confirmation: 'confirmation',
       contact: 'contact',
       delivery: 'delivery',
+      dontKnowWhen: 'dont-know-when',
       eligibilityCheck: 'eligibility-check',
       index: '/get-help',
       ingredientIssues: 'ingredient-issues',

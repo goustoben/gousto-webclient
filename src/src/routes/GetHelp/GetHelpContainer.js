@@ -38,6 +38,7 @@ const skipErrorByRoute = ({ pathname }) => ([
   `${routes.getHelp.index}/${routes.getHelp.delivery}`,
   `${routes.getHelp.index}/${routes.getHelp.eligibilityCheck}`,
   `${routes.getHelp.index}/${routes.getHelp.eligibilityCheck}/${routes.getHelp.ingredientIssues}`,
+  `${routes.getHelp.index}/${routes.getHelp.delivery}/${routes.getHelp.dontKnowWhen}`,
 ].includes(pathname))
 
 const mapStateToProps = (state, ownProps) => {

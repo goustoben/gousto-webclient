@@ -21,6 +21,7 @@ import { fetchMenus, fetchMenusWithUserId } from '../menuApi'
 import * as basketRecipesActions from '../../actions/basketRecipes'
 import { safeJestMock } from '../../../../_testing/mocks'
 import * as brandHeadersActions from '../../actions/brandData'
+import * as clientMetrics from '../../apis/clientMetrics'
 
 import fetchData from '../fetchData'
 
@@ -85,6 +86,7 @@ describe('menu fetchData', () => {
   actions.userLoadOrders = jest.fn()
   actions.userLoadData = jest.fn()
   const getBrandInfoMock = safeJestMock(brandHeadersActions, 'getBrandInfo')
+  const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
 
   beforeEach(() => {
     getState = () => state
@@ -113,6 +115,7 @@ describe('menu fetchData', () => {
     fetchMenus.mockReset()
     fetchBrandInfo.mockReset()
     preselectOrderIdForDeliveryDate.mockReset()
+    sendClientMetricMock.mockReset()
   })
 
   describe('is pending', () => {
@@ -278,6 +281,12 @@ describe('menu fetchData', () => {
             await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
 
             expect(dispatch.mock.calls[8]).toEqual([menuLoadStockResult])
+          })
+
+          test('should call sendClientMetric with correct details', async () => {
+            await fetchData({ query, params: paramsWithOrderId }, false, false)(dispatch, getState)
+
+            expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-initiated', 1, 'Count')
           })
         })
       })

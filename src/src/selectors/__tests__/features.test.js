@@ -40,6 +40,7 @@ import {
   getIsMobileTopBannerAppAwarenessEnabled,
   getIsMobileMenuModalAppAwarenessEnabled,
   getIsMyGoustoBannerAppAwarenessEnabled,
+  getisNewSSRDeliveriesEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -95,6 +96,7 @@ describe('when features are defined', () => {
     [getIsMyGoustoBannerAppAwarenessEnabled, 'isMyGoustoBannerAppAwarenessEnabled'],
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
     [getIsPromoCodeOnGetStartedEnabled, 'promoCodeOnGetStarted'],
+    [getisNewSSRDeliveriesEnabled, 'isNewSSRDeliveriesEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

@@ -10,6 +10,7 @@ import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
 import { DeliveryContainer } from './Delivery'
+import { DontKnowWhen } from './Delivery/DontKnowWhen'
 import { EligibilityCheck } from './EligibilityCheck'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
@@ -22,11 +23,11 @@ const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = '/'
     const isEligibilityCheckUrl = () => {
-      const { location } = routes
-      const { getHelp } = configRoutes.client
-      const eligibilityCheckUrl = `${getHelp.index}/${getHelp.eligibilityCheck}`
+      const { pathname } = routes.location
+      const { index, eligibilityCheck } = configRoutes.client.getHelp
+      const eligibilityCheckUrl = `${index}/${eligibilityCheck}`
 
-      return location.pathname.replace('/', '') === eligibilityCheckUrl.replace('/', '')
+      return pathname.replace('/', '') === eligibilityCheckUrl.replace('/', '')
     }
 
     if (routes && routes.location && isEligibilityCheckUrl()) {
@@ -37,17 +38,24 @@ const getHelpRoutes = (store) => {
     return checkValidSession(store, redirectTo)(routes, replace, next)
   }
 
+  const { index, delivery, dontKnowWhen } = configRoutes.client.getHelp
+  const { login } = configRoutes.client
+
   return (
     <Route component={WizardLayout}>
       <Route
-        path={configRoutes.client.getHelp.index}
+        path={index}
         component={GetHelpContainer}
         onEnter={onEnterHandler}
       >
         <IndexRoute component={OrderIssueContainer} />
         <Route
-          path={configRoutes.client.getHelp.delivery}
+          path={delivery}
           component={DeliveryContainer}
+        />
+        <Route
+          path={`${delivery}/${dontKnowWhen}`}
+          component={DontKnowWhen}
         />
         {Confirmation}
         {Contact}
@@ -58,7 +66,7 @@ const getHelpRoutes = (store) => {
         {EligibilityCheckIngredientIssues}
         {RecipeCards}
         {Refund}
-        <Redirect to={configRoutes.client.login} />
+        <Redirect to={login} />
       </Route>
     </Route>
   )

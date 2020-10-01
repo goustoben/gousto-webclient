@@ -30,8 +30,8 @@ describe('loggingmanager selector', () => {
         expected = getGoustoAppEventName()
       })
 
-      test('send-gousto-app-link-play-store-sms is returned', () => {
-        expect(expected).toBe('send-gousto-app-link-play-store-sms')
+      test('sendsmsapplink-playstore is returned', () => {
+        expect(expected).toBe('sendsmsapplink-playstore')
       })
     })
 
@@ -43,8 +43,8 @@ describe('loggingmanager selector', () => {
         expected = getGoustoAppEventName()
       })
 
-      test('send-gousto-app-link-app-store-sms is returned', () => {
-        expect(expected).toBe('send-gousto-app-link-app-store-sms')
+      test('sendsmsapplink-appstore is returned', () => {
+        expect(expected).toBe('sendsmsapplink-appstore')
       })
     })
 
@@ -56,8 +56,8 @@ describe('loggingmanager selector', () => {
         expected = getGoustoAppEventName()
       })
 
-      test('send-gousto-app-link-not-specified-store-sms is returned', () => {
-        expect(expected).toBe('send-gousto-app-link-not-specified-store-sms')
+      test('sendsmsapplink-notspecified is returned', () => {
+        expect(expected).toBe('sendsmsapplink-notspecified')
       })
     })
   })

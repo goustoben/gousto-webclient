@@ -334,7 +334,7 @@ describe('sendGoustoAppLinkSMS', () => {
 
   test('logEventToServer is called passing the (app) store name', () => {
     expect(logEventToServer).toHaveBeenCalledWith({
-      goustoAppEventName: 'send-gousto-app-link-app-store-sms',
+      eventName: 'sendsmsapplink-appstore',
       authUserId: 'mock-user-id',
       data: {
         device: 'mobile',

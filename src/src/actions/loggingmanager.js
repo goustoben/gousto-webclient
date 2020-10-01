@@ -6,9 +6,9 @@ export const EVENT_NAMES = {
   basketUpdated: 'basket-updated',
   rafPageVisited: 'rafPage-visited',
   userLoggedIn: 'user-loggedin',
-  sendGoustoAppLinkAppStoreSMS: 'send-gousto-app-link-app-store-sms',
-  sendGoustoAppLinkPlayStoreSMS: 'send-gousto-app-link-play-store-sms',
-  sendGoustoAppLinkNotSpecifiedStoreSMS: 'send-gousto-app-link-not-specified-store-sms',
+  sendGoustoAppLinkAppStoreSMS: 'sendsmsapplink-appstore',
+  sendGoustoAppLinkPlayStoreSMS: 'sendsmsapplink-playstore',
+  sendGoustoAppLinkNotSpecifiedStoreSMS: 'sendsmsapplink-notspecified',
   rafLinkShared: 'rafLink-shared',
 }
 
@@ -98,11 +98,11 @@ const trackUserAddRemoveRecipe = () => (
   }
 )
 
-const sendGoustoAppLinkSMS = ({ goustoAppEventName, userPhoneNumber }) => (
+const sendGoustoAppLinkSMS = ({ goustoAppEventName: eventName, userPhoneNumber }) => (
   async (dispatch, getState) => {
     const { authUserId, device } = getDefaultParams(getState())
     const loggingManagerEvent = {
-      goustoAppEventName,
+      eventName,
       authUserId,
       data: {
         device,

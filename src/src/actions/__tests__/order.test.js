@@ -31,6 +31,9 @@ import {
   orderAddressChange,
 } from 'actions/order'
 
+import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
+import { safeJestMock } from '../../_testing/mocks'
+
 jest.mock('apis/user')
 jest.mock('apis/orders')
 jest.mock('utils/basket')
@@ -66,6 +69,8 @@ jest.mock('apis/deliveries', () => ({
 deliveriesUtils.getSlot = jest.fn()
 deliveriesUtils.getAvailableDeliveryDays = jest.fn()
 deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
+
+const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
 
 const { pending, error } = actionStatus
 
@@ -106,6 +111,8 @@ describe('order actions', () => {
       id: 'deliveries-uuid',
       daySlotLeadTimeId: 'day-slot-lead-time-uuid'
     }))
+
+    sendClientMetricMock.mockReset()
   })
 
   afterEach(() => {
@@ -259,6 +266,16 @@ describe('order actions', () => {
         '5678',
         'something',
       )
+    })
+
+    test('should call sendClientMetric with correct details', async () => {
+      orderAction = 'something'
+      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
+      ))
+      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+      expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-complete', 1, 'Count')
     })
 
     describe('when customer choseAddress', () => {
