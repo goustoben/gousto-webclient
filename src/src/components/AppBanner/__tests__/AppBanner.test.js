@@ -9,23 +9,32 @@ describe('App Banner', () => {
   const mockAppBannerDismiss = jest.fn()
   const mockTrackingAppPromoCTAClick = jest.fn()
   const mockTrackingAppPromoBannerView = jest.fn()
-  let wrapper
-
-  beforeEach(() => {
-    wrapper = shallow(
+  const shallowWrapper = ({ showAppBanner }) => (
+    shallow(
       <AppBanner
         name="iOS"
         averageRating={3.6}
         ratings="33.6K"
-        showAppBanner
+        showAppBanner={showAppBanner}
         appBannerDismiss={mockAppBannerDismiss}
         trackingAppPromoCTAClick={mockTrackingAppPromoCTAClick}
         trackingAppPromoBannerView={mockTrackingAppPromoBannerView}
       />
     )
+  )
+
+  afterEach(() => {
+    mockTrackingAppPromoCTAClick.mockReset()
+    mockTrackingAppPromoBannerView.mockReset()
   })
 
   describe('when showAppBanner is true', () => {
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = shallowWrapper({ showAppBanner: true })
+    })
+
     test('shows the banner and tracking is called', () => {
       expect(wrapper.find('.appBannerWrapper').length).toEqual(1)
       expect(mockTrackingAppPromoBannerView).toHaveBeenCalledWith({
@@ -54,12 +63,18 @@ describe('App Banner', () => {
   })
 
   describe('when showAppBanner is false', () => {
+    let wrapper
+
     beforeEach(() => {
-      wrapper.setProps({ showAppBanner: false })
+      wrapper = shallowWrapper({ showAppBanner: false })
     })
 
     test('then the banner should not be shown', () => {
       expect(wrapper.find('.appBannerWrapper').length).toEqual(0)
+    })
+
+    test('and trackingAppPromoBannerView is not called', () => {
+      expect(mockTrackingAppPromoBannerView).not.toHaveBeenCalled()
     })
   })
 })
