@@ -30,6 +30,7 @@ import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
 import { orderAddOnRedirect } from './orderAddOn'
 import { actionTypes } from './actionTypes'
+import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 
 export const trackOrder = (orderAction, order) => (
   (dispatch, getState) => {
@@ -103,6 +104,8 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
           orderAction,
           savedOrder,
         ))
+
+        sendClientMetric('menu-edit-complete', 1, 'Count')
 
         const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
         if (isAddOnsFeatureFlagOn) {
