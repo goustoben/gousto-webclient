@@ -19,9 +19,12 @@ const propTypes = {
 
 class AppBanner extends Component {
   componentDidMount() {
-    const { trackingAppPromoBannerView, name } = this.props
+    const { showAppBanner } = this.props
 
-    trackingAppPromoBannerView({ platform: name })
+    if (showAppBanner) {
+      const { trackingAppPromoBannerView, name } = this.props
+      trackingAppPromoBannerView({ platform: name })
+    }
   }
 
   handleCTAClick = () => {
