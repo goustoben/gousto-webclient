@@ -153,3 +153,7 @@ export const getPricingClarityRedesign = ({ features }) => (
 export const getIsPromoCodeOnGetStartedEnabled = ({ features }) => (
   features && features.getIn(['promoCodeOnGetStarted', 'value'], false)
 )
+
+export const getisNewSSRDeliveriesEnabled = ({ features }) => (
+  features && features.getIn(['isNewSSRDeliveriesEnabled', 'value'], false)
+)

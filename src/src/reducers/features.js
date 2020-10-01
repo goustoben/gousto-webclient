@@ -81,6 +81,9 @@ const defaultFeatures = () => ({
   isMyGoustoBannerAppAwarenessEnabled: {
     value: false
   },
+  isNewSSRDeliveriesEnabled: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())
