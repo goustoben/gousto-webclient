@@ -10,7 +10,7 @@ const statusActions = {
 function pending(key, value) {
   return {
     type: actionTypes.PENDING,
-    key: actionTypes[key],
+    key,
     value,
   }
 }
@@ -18,7 +18,7 @@ function pending(key, value) {
 function error(key, value) {
   return {
     type: actionTypes.ERROR,
-    key: actionTypes[key],
+    key,
     value,
   }
 }

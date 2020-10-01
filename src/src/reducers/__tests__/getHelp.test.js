@@ -133,8 +133,28 @@ describe('getHelp reducer', () => {
         id: '',
         recipeDetailedItems: { 4001: '123', 4002: '456' },
         recipeItems: ['4001', '4002'],
+        deliveryDate: '2019-09-07 00:00:00',
+        trackingUrl: '',
       })
       expect(newState.get('order')).toEqual(EXPECTED_REDUCED_ORDER)
+    })
+  })
+
+  describe('given an action with type GET_HELP_LOAD_TRACKING_URL is received', () => {
+    const TRACKING_URL = 'https://nice-courier.com/order/12345'
+
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_LOAD_TRACKING_URL,
+        payload: {
+          trackingUrl: TRACKING_URL,
+        }
+      })
+    })
+
+    test('the tracking url in the action payload is stored in the new state.order.trackingUrl', () => {
+      expect(newState.getIn(['order', 'trackingUrl']))
+        .toEqual(TRACKING_URL)
     })
   })
 })
