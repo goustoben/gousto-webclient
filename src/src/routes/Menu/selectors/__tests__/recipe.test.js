@@ -9,13 +9,11 @@ import {
   getRecipeDisclaimerProps,
   getVariantsForRecipeForCurrentCollection,
   getRecipeIsFineDineIn,
-  getRecipeIsEverydayFavourites,
-  getRecipeIsHealthKitchen,
   getRecipeIngredientsProps,
   getRecipeAllergensProps,
   getRecipePerPortionProps,
   getRecipePer100gProps, getRecipeSidesSurcharge,
-  getSelectedRecipeSidesFromMenu
+  getSelectedRecipeSidesFromMenu, getTaglineByRecipeId
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -871,154 +869,6 @@ describe('menu recipe selectors', () => {
     })
   })
 
-  describe('getRecipeIsEverydayFavourites', () => {
-    describe('when no food brand', () => {
-      const allRecipes = Immutable.fromJS({
-        123: {
-          title: 'foo',
-          boxType: 'bar',
-          dietType: 'quz',
-          isFineDineIn: true,
-        }
-      })
-
-      describe('when recipe id is null', () => {
-        const recipeId = null
-
-        test('should return false', () => {
-          const result = getRecipeIsEverydayFavourites.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-
-      describe('when recipe id is not a recipe', () => {
-        const recipeId = '567'
-
-        test('should return null', () => {
-          const result = getRecipeIsEverydayFavourites.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-
-      describe('when recipe id is valid and no food brand', () => {
-        const recipeId = '123'
-
-        test('should return false', () => {
-          const result = getRecipeIsEverydayFavourites.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-    })
-
-    describe('when food brand', () => {
-      let allRecipes = Immutable.fromJS({
-        123: {}
-      })
-      const recipeId = '123'
-
-      describe('when food brand is not Everyday Favourites', () => {
-        beforeEach(() => {
-          allRecipes = allRecipes.setIn([recipeId, 'foodBrand'], Immutable.fromJS({ name: 'Something Else', slug: 'something-else' }))
-        })
-
-        test('should return false', () => {
-          const result = getRecipeIsEverydayFavourites.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-
-      describe('when food brand is Everyday Favourites', () => {
-        beforeEach(() => {
-          allRecipes = allRecipes.setIn([recipeId, 'foodBrand'], Immutable.fromJS({ name: 'Everyday Favourites', slug: 'everyday-favourites' }))
-        })
-
-        test('should return true', () => {
-          const result = getRecipeIsEverydayFavourites.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(true)
-        })
-      })
-    })
-  })
-
-  describe('getRecipeIsHealthKitchen', () => {
-    describe('when no food brand', () => {
-      const allRecipes = Immutable.fromJS({
-        123: {
-          title: 'foo',
-          boxType: 'bar',
-          dietType: 'quz',
-          isFineDineIn: true,
-        }
-      })
-
-      describe('when recipe id is null', () => {
-        const recipeId = null
-
-        test('should return false', () => {
-          const result = getRecipeIsHealthKitchen.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-
-      describe('when recipe id is not a recipe', () => {
-        const recipeId = '567'
-
-        test('should return null', () => {
-          const result = getRecipeIsHealthKitchen.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-
-      describe('when recipe id is valid and no food brand', () => {
-        const recipeId = '123'
-
-        test('should return false', () => {
-          const result = getRecipeIsHealthKitchen.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-    })
-
-    describe('when food brand', () => {
-      let allRecipes = Immutable.fromJS({
-        123: {}
-      })
-      const recipeId = '123'
-
-      describe('when food brand is not Health Kitchen', () => {
-        beforeEach(() => {
-          allRecipes = allRecipes.setIn([recipeId, 'foodBrand'], Immutable.fromJS({ name: 'Something Else', slug: 'something-else' }))
-        })
-
-        test('should return false', () => {
-          const result = getRecipeIsHealthKitchen.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(false)
-        })
-      })
-
-      describe('when food brand is Health Kitchen', () => {
-        beforeEach(() => {
-          allRecipes = allRecipes.setIn([recipeId, 'foodBrand'], Immutable.fromJS({ name: 'Health Kitchen', slug: 'health-kitchen' }))
-        })
-
-        test('should return true', () => {
-          const result = getRecipeIsHealthKitchen.resultFunc(allRecipes, recipeId)
-
-          expect(result).toEqual(true)
-        })
-      })
-    })
-  })
-
   describe('getSelectedRecipeSidesFromMenu', () => {
     test('should return selectedRecipeSides from state.menu', () => {
       const state = {
@@ -1028,6 +878,38 @@ describe('menu recipe selectors', () => {
       }
       const result = getSelectedRecipeSidesFromMenu(state)
       expect(result).toEqual(Immutable.List([]))
+    })
+  })
+
+  describe('getTaglineByRecipeId', () => {
+    describe('when recipe is not found', () => {
+      it('should return null', () => {
+        const props = {
+          recipeId: '3'
+        }
+        const state = {
+          recipes: Immutable.fromJS({})
+        }
+
+        expect(getTaglineByRecipeId(state, props)).toBe(null)
+      })
+    })
+
+    describe('when recipe is found and has a tagline', () => {
+      it('it should return the tagline', () => {
+        const props = {
+          recipeId: '3'
+        }
+        const state = {
+          recipes: Immutable.fromJS({
+            3: {
+              tagline: 'test-tagline'
+            }
+          })
+        }
+
+        expect(getTaglineByRecipeId(state, props)).toBe('test-tagline')
+      })
     })
   })
 })

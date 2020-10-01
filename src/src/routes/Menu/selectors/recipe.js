@@ -24,44 +24,6 @@ export const getRecipeTitle = createSelector(
   }
 )
 
-export const getRecipeIsEverydayFavourites = createSelector(
-  [getRecipes, getRecipeIdFromProps],
-  (allRecipes, recipeId) => {
-    const recipe = allRecipes.get(recipeId)
-
-    if (!recipe) {
-      return false
-    }
-
-    const foodBrand = recipe.get('foodBrand')
-
-    if (!foodBrand) {
-      return false
-    }
-
-    return foodBrand.get('slug') === 'everyday-favourites'
-  }
-)
-
-export const getRecipeIsHealthKitchen = createSelector(
-  [getRecipes, getRecipeIdFromProps],
-  (allRecipes, recipeId) => {
-    const recipe = allRecipes.get(recipeId)
-
-    if (!recipe) {
-      return false
-    }
-
-    const foodBrand = recipe.get('foodBrand')
-
-    if (!foodBrand) {
-      return false
-    }
-
-    return foodBrand.get('slug') === 'health-kitchen'
-  }
-)
-
 export const getRecipeIsFineDineIn = createSelector(
   [getRecipes, getRecipeIdFromProps],
   (allRecipes, recipeId) => {
@@ -274,4 +236,17 @@ export const getSelectedRecipeSidesFromMenu = (state) => state.menu.get('selecte
 export const getRecipeSelectedSides = createSelector(
   [getRecipeIdFromProps, getSelectedRecipeSidesFromMenu],
   (recipeId, selectedRecipeSides) => selectedRecipeSides[recipeId] || null
+)
+
+export const getTaglineByRecipeId = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    return recipe.get('tagline')
+  }
 )

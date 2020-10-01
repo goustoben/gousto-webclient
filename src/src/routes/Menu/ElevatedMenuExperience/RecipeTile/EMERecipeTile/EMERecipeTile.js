@@ -19,6 +19,7 @@ const EMERecipeTile = ({
   isFineDineIn,
   recipeVariants,
   isInCarousel,
+  brandTagline,
 }) => {
   if (!recipe) {
     return null
@@ -31,7 +32,7 @@ const EMERecipeTile = ({
 
   const showVariantHeader = !(!recipeVariants || isOutOfStock)
   const hasTopLeftTag = brandTags && brandTags.topLeftTag
-  const hasTopRightTag = brandTags && brandTags.topRightTag
+  const hasTopRightTag = Boolean(brandTagline)
 
   return (
     <div
@@ -55,7 +56,7 @@ const EMERecipeTile = ({
         <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
           <div>
             {hasTopRightTag && (
-            <RecipeTagTitle brandTag={brandTags.topRightTag} />
+            <RecipeTagTitle brandTag={brandTagline} />
             )}
             <div
               className={css.titleWrapper}
@@ -83,6 +84,11 @@ EMERecipeTile.propTypes = {
     topLeftTag: PropTypes.object,
     topRightTag: PropTypes.object,
   }),
+  brandTagline: PropTypes.shape({
+    slug: PropTypes.string,
+    text: PropTypes.string,
+    theme: PropTypes.object,
+  }),
   isFineDineIn: PropTypes.bool.isRequired,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isInCarousel: PropTypes.bool,
@@ -90,6 +96,7 @@ EMERecipeTile.propTypes = {
 
 EMERecipeTile.defaultProps = {
   brandTags: null,
+  brandTagline: null,
   isInCarousel: false,
 }
 

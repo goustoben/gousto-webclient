@@ -161,7 +161,8 @@
       "switch-colon-spacing": 1,
       "symbol-description": 1,
       "vars-on-top": 1,
-      "quotes": 1
+      "quotes": 1,
+      "react/jsx-fragments" : ["off", "element"]
   },
   "env" : {
     "jasmine": true
