@@ -1,6 +1,5 @@
-@value White, Bluecheese from 'styles/colors.css';
+@value White, Bluecheese, Coconut from 'styles/colors.css';
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS, sizeLG from 'styles/typography.css';
-
 .shortcutsWrapper {
     height: 112px;
 }
@@ -39,14 +38,22 @@
 }
 
 .recipeCategoriesButton {
-	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	composes: inlineBlock from 'styles/display.css';
-	composes: textCenter noDecor from 'styles/typography.css';
-	color: Bluecheese;
+    composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+    composes: inlineBlock from 'styles/display.css';
+    composes: textCenter noDecor from 'styles/typography.css';
+    color: Bluecheese;
     width: 100%;
     display: inline-block;
     text-align: center;
     border: none;
     background: none;
     box-sizing: border-box;
+    background: Coconut;
+    padding: 1rem 0;
+}
+
+.recipeCategoriesButtonFixed {
+    position: fixed;
+    top: 0;
+    z-index: 50;
 }
