@@ -153,10 +153,24 @@ describe('validBasketRecipeAdd', () => {
       jest.resetAllMocks()
     })
 
-    test('then it should call sendClientMetric with the correct info', () => {
-      basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' })(dispatch, getStateSpy)
+    describe('when there is an orderId', () => {
+      const orderId = '12345'
 
-      expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', 1, 'Count')
+      test('then it should not call', () => {
+        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
+
+        expect(mockSendClientMetrics).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when there is no orderId', () => {
+      const orderId = undefined
+
+      test('then it should call sendClientMetric with the correct info', () => {
+        basketActions.validBasketRecipeAdd('123', 'boxsummary', { position: '57' }, undefined, orderId)(dispatch, getStateSpy)
+
+        expect(mockSendClientMetrics).toHaveBeenCalledWith('menu-first-recipe-add', 1, 'Count')
+      })
     })
   })
 

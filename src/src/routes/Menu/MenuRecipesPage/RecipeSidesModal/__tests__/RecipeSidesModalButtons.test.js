@@ -26,7 +26,7 @@ describe('RecipeSidesModalButtons', () => {
   describe('when click on Add a side', () => {
     test('correct function is called', () => {
       wrapper.find('.recipeSidesModalAddSideButton').simulate('click')
-      expect(props.basketRecipeAdd).toHaveBeenCalledWith('456', '', { position: 2, score: 3}, undefined, '123')
+      expect(props.basketRecipeAdd).toHaveBeenCalledWith('456', '', { position: 2, score: 3})
       expect(props.clearSidesModalRecipe).toHaveBeenCalled()
       expect(props.trackAddSide).toHaveBeenCalledWith('123', '456')
     })
