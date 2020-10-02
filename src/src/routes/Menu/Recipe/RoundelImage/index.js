@@ -1,1 +1,0 @@
-export { RoundelImageContainer } from './RoundelImageContainer'
