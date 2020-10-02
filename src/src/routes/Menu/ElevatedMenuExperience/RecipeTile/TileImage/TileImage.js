@@ -34,7 +34,7 @@ const TileImage = ({
     >
       {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />) }
       {(media.size > 0) && (
-      <div>
+      <div className={css.recipeImageAndCookingTimeWrapper}>
         <GoustoImage
           media={media}
           title={title}

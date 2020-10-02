@@ -1,12 +1,14 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS from 'styles/typography.css';
 @value White, Blackberry from 'styles/colors.css';
 @value ScreenLGMin, ScreenXSMax, ScreenMDMin, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenXXSMax from 'styles/screenSizes.css';
+
 .recipeTile {
     width: 100%;
     height: 220px;
-    margin: 0 0.5rem 0.5rem 0.5rem;
+    margin: 0 0.75rem 0.75rem 0.75rem;
     display: flex;
     flex-direction: column;
+    
     @media ScreenSMMin {
         margin: 0 1rem 1rem 0;
         width: calc(50% - 1rem);
