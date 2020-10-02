@@ -17,7 +17,7 @@ import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { isOutOfStock } from '../selectors/recipe'
 import { sendClientMetric } from '../apis/clientMetrics'
 
-export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
+export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (
   (dispatch, getState) => {
     const state = getState()
     const { basket, menuRecipeStock, menuRecipes } = state
@@ -34,7 +34,7 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) 
       Object.assign(recipeInfo, { collection })
     }
 
-    if (!basket.get('hasAddedFirstRecipe')) {
+    if (!orderId && !basket.get('hasAddedFirstRecipe')) {
       sendClientMetric('menu-first-recipe-add', 1, 'Count')
     }
 
@@ -103,7 +103,7 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) 
   }
 )
 
-export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
+export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (
   (dispatch, getState) => {
     const menuLimitsForBasket = getMenuLimitsForBasket(getState())
     const basketRecipes = getBasketRecipes(getState())
@@ -125,7 +125,7 @@ export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum) => (
       return
     }
 
-    dispatch(exports.validBasketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum))
+    dispatch(exports.validBasketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum, orderId))
     dispatch(trackUserAddRemoveRecipe())
   }
 )

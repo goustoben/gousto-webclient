@@ -286,9 +286,9 @@ describe('basket actions', () => {
     test('should call basketRecipeAdd for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', () => {
       basketOrderItemsLoad('123')(dispatch, getStateSpy)
       expect(basketRecipeAddSpy).toHaveBeenCalledTimes(3)
-      expect(basketRecipeAddSpy.mock.calls[0]).toEqual(['r1', null, '123'])
-      expect(basketRecipeAddSpy.mock.calls[1]).toEqual(['r2', null, '123'])
-      expect(basketRecipeAddSpy.mock.calls[2]).toEqual(['r2', null, '123'])
+      expect(basketRecipeAddSpy.mock.calls[0]).toEqual(['r1', null, undefined, undefined, '123'])
+      expect(basketRecipeAddSpy.mock.calls[1]).toEqual(['r2', null, undefined, undefined, '123'])
+      expect(basketRecipeAddSpy.mock.calls[2]).toEqual(['r2', null, undefined, undefined, '123'])
     })
 
     test('should call basketGiftAdd for each gift product in the given order if order is not already loaded', () => {

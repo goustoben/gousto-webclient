@@ -32,7 +32,7 @@ export const RecipeSidesModalButtons = ({
         className={css.recipeSidesModalAddSideButton}
         color="primary"
         onClick={() => {
-          basketRecipeAdd(selectedRecipeSide, view, { position, score }, undefined, recipeId)
+          basketRecipeAdd(selectedRecipeSide, view, { position, score })
           clearSidesModalRecipe()
           trackAddSide(recipeId, selectedRecipeSide)
         }}

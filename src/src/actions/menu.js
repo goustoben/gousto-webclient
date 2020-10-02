@@ -211,7 +211,12 @@ export function menuLoadOrderDetails(orderId) {
       }))
 
       for (let i = 1; i <= qty; i++) {
-        dispatch(basketRecipeAdd(recipe.recipeId))
+        // fall back to the defaults for these 3 params
+        const view = undefined
+        const recipeInfo = undefined
+        const maxRecipesNum = undefined
+
+        dispatch(basketRecipeAdd(recipe.recipeId, view, recipeInfo, maxRecipesNum, orderId))
       }
     })
 

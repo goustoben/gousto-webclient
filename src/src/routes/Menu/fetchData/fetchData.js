@@ -70,7 +70,12 @@ const loadOrderAuthenticated = (orderId) => async (dispatch, getState) => {
     // eslint-disable-next-line no-restricted-syntax, no-unused-vars
     for (const [recipeId, qty] of prevBasketRecipes) {
       for (let i = 0; i < qty; i++) {
-        dispatch(basketRecipeAdd(recipeId))
+        // fall back to the defaults for these 3 params
+        const view = undefined
+        const recipeInfo = undefined
+        const maxRecipesNum = undefined
+
+        dispatch(basketRecipeAdd(recipeId, view, recipeInfo, maxRecipesNum, orderId))
       }
     }
   }

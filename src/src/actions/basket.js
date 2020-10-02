@@ -163,7 +163,11 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
           const adjustedQty = Math.round(qty / parseInt(userOrder.getIn(['box', 'numPortions']), 10))
 
           for (let i = 0; i < adjustedQty; i++) {
-            dispatch(basketRecipeAdd(itemableId, view, orderId))
+            // fall back to the defaults for these 2 params
+            const recipeInfo = undefined
+            const maxRecipesNum = undefined
+
+            dispatch(basketRecipeAdd(itemableId, view, recipeInfo, maxRecipesNum, orderId))
           }
           break
         }
