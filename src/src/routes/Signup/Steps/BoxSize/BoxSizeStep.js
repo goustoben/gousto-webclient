@@ -3,7 +3,7 @@ import React from 'react'
 
 import classNames from 'classnames'
 import Immutable from 'immutable'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
 import { BoxSizeBox } from '../../Components/BoxSizeBox/BoxSizeBox'
@@ -57,9 +57,9 @@ const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next, isPrici
     <div className={signupCss.stepContainer} data-testing="signupBoxSizeStep">
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
-          <Heading type="h1" className={signupCss.heading}>{config.boxSizeStep.title}</Heading>
+          <Heading type="h1" className={signupCss.heading}>{signupConfig.boxSizeStep.title}</Heading>
           <p className={classNames(signupCss.bodyText, { [css.subTitlePriceClarity]: isPricingClarityEnabled })}>
-            {isPricingClarityEnabled ? config.boxSizeStep.subtitle : config.boxSizeStep.pricingClaritySubtitle}
+            {isPricingClarityEnabled ? signupConfig.boxSizeStep.subtitle : signupConfig.boxSizeStep.pricingClaritySubtitle}
           </p>
           {!isPricingClarityEnabled && <Image name="how-many-people" />}
         </div>

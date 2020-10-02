@@ -10,7 +10,7 @@ import * as prospectApi from 'apis/prospect'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { isChoosePlanEnabled, getNDDFeatureValue } from 'selectors/features'
@@ -653,18 +653,18 @@ export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesig
         },
         payment_method: {
           is_default: 1,
-          type: config.payment_types.card,
+          type: signupConfig.payment_types.card,
           name: 'My Card',
           card: getPaymentDetails(state)
         },
         addresses: {
           shipping_address: {
-            type: config.address_types.shipping,
+            type: signupConfig.address_types.shipping,
             delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
             ...deliveryAddress
           },
           billing_address: {
-            type: config.address_types.billing,
+            type: signupConfig.address_types.billing,
             ...billingAddress
           }
         },
@@ -683,7 +683,7 @@ export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesig
 
       if (
         isChoosePlanEnabled(state)
-        && basket.get('subscriptionOption') === config.subscriptionOptions.transactional
+        && basket.get('subscriptionOption') === signupConfig.subscriptionOptions.transactional
       ) {
         reqData.subscription.paused = 1
       }

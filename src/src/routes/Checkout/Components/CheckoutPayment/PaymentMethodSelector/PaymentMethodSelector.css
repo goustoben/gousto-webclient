@@ -1,0 +1,23 @@
+@value FieldWidth 18rem;
+
+.header {
+  margin-bottom: 0.5rem;
+}
+
+.list {
+  width: FieldWidth;
+  max-width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.visaMastercardIcon {
+  height: 16px;
+  width: 84px;
+}
+
+.paypalIcon {
+  height: 24px;
+  width: 99px;
+}

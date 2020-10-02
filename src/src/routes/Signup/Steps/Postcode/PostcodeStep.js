@@ -3,7 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import TextInput from 'Form/Input'
 import {reminder} from 'config/freeDelivery'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
@@ -26,7 +26,7 @@ class PostcodeStep extends React.PureComponent {
       <div className={classNames(css.stepContainer, { [postcodeCss.pricingClarityRedesign]: isPricingClarityEnabled })} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
           <div className={css.header}>
-            <Heading type="h1" className={css.heading}>{config.postCodeStep.title}</Heading>
+            <Heading type="h1" className={css.heading}>{signupConfig.postCodeStep.title}</Heading>
             {!isPricingClarityEnabled && <Image name="where-to-deliver" />}
           </div>
           <div className={css.body}>

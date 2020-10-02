@@ -1,0 +1,1 @@
+export { CheckoutPaypalDetails } from './CheckoutPaypalDetails'

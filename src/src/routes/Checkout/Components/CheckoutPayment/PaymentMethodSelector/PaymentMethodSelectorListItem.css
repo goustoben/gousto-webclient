@@ -1,0 +1,34 @@
+@value White, Oyster, Mackerel, Bluecheese from 'styles/colors.css';
+
+.listItem {
+  border: 1px solid Mackerel;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  background-color: White;
+  width: 100%;
+  composes: fontStyleBody from 'design-language/typography.css';
+
+  &:hover {
+    border-color: Oyster;
+  }
+}
+
+/* Override global margin-bottom on labels: we need margin on a li, not on a
+   label inside it. */
+.listItem > label {
+  margin-bottom: 0;
+}
+
+.isActive {
+  border: 2px solid Bluecheese;
+
+  &:hover {
+    border-color: Bluecheese;
+  }
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

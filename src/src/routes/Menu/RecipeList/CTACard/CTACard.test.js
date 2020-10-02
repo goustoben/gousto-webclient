@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import moment from 'moment'
 
-import { CTACard } from '../CTACard'
+import { CTACard } from './CTACard'
 import { CTAToAllRecipesContainer } from '../../Recipe/CTAToAllRecipes/CTAToAllRecipesContainer'
 import { CTAThematic } from '../../Recipe/CTAThematic'
 

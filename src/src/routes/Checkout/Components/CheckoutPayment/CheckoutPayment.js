@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
+import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
 import { Section } from 'Page/Elements'
 
@@ -9,16 +11,16 @@ import BoxDetails from '../BoxDetails'
 import { PaymentHeader } from '../PaymentHeader'
 import Summary from '../Summary'
 import SubmitButton from '../SubmitButton'
-import { CheckoutName } from './CheckoutName'
-import { CheckoutFrame } from './CheckoutFrame'
-import { CheckoutAddress } from './CheckoutAddress'
 import { Checkout3DSModal } from './Checkout3DSModal'
+import { PaymentMethodSelector } from './PaymentMethodSelector'
+import { CheckoutCardDetails } from './CheckoutCardDetails'
+import { CheckoutPaypalDetails } from './CheckoutPaypalDetails'
 
 import css from './CheckoutPayment.css'
 
 class CheckoutPayment extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       isSubmitCardEnabled: false,
@@ -37,13 +39,13 @@ class CheckoutPayment extends React.Component {
 
   enableCardSubmission = () => {
     this.setState({
-      isSubmitCardEnabled: true,
+      isSubmitCardEnabled: true
     })
   }
 
   disableCardSubmission = () => {
     this.setState({
-      isSubmitCardEnabled: false,
+      isSubmitCardEnabled: false
     })
   }
 
@@ -65,7 +67,11 @@ class CheckoutPayment extends React.Component {
   }
 
   processSignup = () => {
-    const { trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed, trackingOrderPlaceAttemptSucceeded } = this.props
+    const {
+      trackingOrderPlaceAttempt,
+      trackingOrderPlaceAttemptFailed,
+      trackingOrderPlaceAttemptSucceeded
+    } = this.props
 
     trackingOrderPlaceAttempt()
 
@@ -96,64 +102,85 @@ class CheckoutPayment extends React.Component {
     }
   }
 
+  setRecaptchaElement = (el) => {
+    this.recaptchaElement = el
+  }
+
   render() {
     const {
-      asyncValidate, browser, checkoutScriptReady, prerender, receiveRef,
-      reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, isRecaptchaEnabled,
-      is3DSEnabled, isCheckoutRedesignEnabled
+      asyncValidate,
+      browser,
+      checkoutScriptReady,
+      prerender,
+      receiveRef,
+      reloadCheckoutScript,
+      scrollToFirstMatchingRef,
+      sectionName,
+      isRecaptchaEnabled,
+      is3DSEnabled,
+      isCheckoutRedesignEnabled,
+      isPayWithPaypalEnabled,
+      currentPaymentMethod,
+      setCurrentPaymentMethod
     } = this.props
+
     const { isSubmitCardEnabled } = this.state
 
     return (
-      <div className={(prerender) ? css.hide : ''}>
-        <div className={css.container} data-testing="checkoutPaymentSection">
-          <PaymentHeader />
-          {prerender ? null : (
-            <CheckoutName
-              receiveRef={receiveRef}
-              sectionName={sectionName}
+      <div className={prerender ? css.hide : ''}>
+        <div
+          className={classNames(css.container, {
+            [css.payWithPaypalAutosizeContainer]: isPayWithPaypalEnabled
+          })}
+          data-testing="checkoutPaymentSection"
+        >
+          {isPayWithPaypalEnabled ? (
+            <PaymentMethodSelector
+              currentPaymentMethod={currentPaymentMethod}
+              onPaymentMethodChanged={setCurrentPaymentMethod}
             />
+          ) : (
+            <PaymentHeader />
           )}
-          <div className={css.frame}>
-            <CheckoutFrame
-              checkoutScriptReady={checkoutScriptReady}
-              isSubmitCardEnabled={isSubmitCardEnabled}
-              reloadCheckoutScript={reloadCheckoutScript}
-              cardTokenReady={this.cardTokenReady}
-              disableCardSubmission={this.disableCardSubmission}
-            />
-          </div>
+          <CheckoutCardDetails
+            hide={isPayWithPaypalEnabled ? currentPaymentMethod !== PaymentMethod.Card : false}
+            prerender={prerender}
+            receiveRef={receiveRef}
+            sectionName={sectionName}
+            checkoutScriptReady={checkoutScriptReady}
+            reloadCheckoutScript={reloadCheckoutScript}
+            asyncValidate={asyncValidate}
+            scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+            isSubmitCardEnabled={isSubmitCardEnabled}
+            cardTokenReady={this.cardTokenReady}
+            disableCardSubmission={this.disableCardSubmission}
+          />
+          {isPayWithPaypalEnabled ? (
+            <CheckoutPaypalDetails hide={currentPaymentMethod !== PaymentMethod.Paypal} />
+          ) : null}
           <div className={css.row}>
-            {prerender ? null : (
-              <div className={css.addressContainer}>
-                <CheckoutAddress
-                  sectionName={sectionName}
-                  asyncValidate={asyncValidate}
-                  receiveRef={receiveRef}
-                  scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+            {!prerender && isRecaptchaEnabled && (
+              <div className={css.recaptchaContainer}>
+                <ReCAPTCHA
+                  ref={this.setRecaptchaElement}
+                  sitekey={RECAPTCHA_PUBLIC_KEY}
+                  onChange={this.handleRecaptchaChange}
+                  size="invisible"
                 />
               </div>
             )}
-            {
-              !prerender
-              && isRecaptchaEnabled
-              && (
-                <div className={css.recaptchaContainer}>
-                  <ReCAPTCHA
-                    ref={el => { this.recaptchaElement = el }}
-                    sitekey={RECAPTCHA_PUBLIC_KEY}
-                    onChange={this.handleRecaptchaChange}
-                    size="invisible"
-                  />
-                </div>
-              )
-            }
           </div>
         </div>
-        {(prerender) ? null : (
-          <div>
+        {prerender ? null : (
+          <div
+            className={classNames({
+              [css.hide]: isPayWithPaypalEnabled
+                ? currentPaymentMethod !== PaymentMethod.Card
+                : false
+            })}
+          >
             <SubmitButton onClick={this.handleClick} />
-            {(browser === 'mobile' && !isCheckoutRedesignEnabled) ? (
+            {browser === 'mobile' && !isCheckoutRedesignEnabled ? (
               <div>
                 <Summary />
                 <Section margin={{ top: 'LG' }}>
@@ -190,7 +217,10 @@ CheckoutPayment.propTypes = {
   isRecaptchaEnabled: PropTypes.bool,
   recaptchaValue: PropTypes.string,
   storeSignupRecaptchaToken: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
+  isCheckoutRedesignEnabled: PropTypes.bool,
+  isPayWithPaypalEnabled: PropTypes.bool,
+  currentPaymentMethod: PropTypes.string.isRequired,
+  setCurrentPaymentMethod: PropTypes.func.isRequired
 }
 
 CheckoutPayment.defaultProps = {
@@ -211,7 +241,8 @@ CheckoutPayment.defaultProps = {
   isRecaptchaEnabled: false,
   recaptchaValue: '',
   storeSignupRecaptchaToken: () => {},
-  isCheckoutRedesignEnabled: false
+  isCheckoutRedesignEnabled: false,
+  isPayWithPaypalEnabled: false
 }
 
 export { CheckoutPayment }

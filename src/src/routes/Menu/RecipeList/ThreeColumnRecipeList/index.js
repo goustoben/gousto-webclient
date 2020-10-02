@@ -1,1 +1,0 @@
-export { ThreeColumnRecipeList } from './ThreeColumnRecipeList'

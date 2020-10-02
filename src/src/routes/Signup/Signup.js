@@ -3,7 +3,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import Immutable from 'immutable'
 import classNames from 'classnames'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
 import { stepByName, stepBySlug, getPromocodeQueryParam } from 'utils/signup'
@@ -73,7 +73,7 @@ const postCodePath = '/signup/postcode'
 
 class Signup extends React.PureComponent {
   static fetchData = async ({ store, params = {}, query = {}, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled }) => {
-    let steps = Immutable.List(config.defaultSteps)
+    let steps = Immutable.List(signupConfig.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
     const promoCode = query.promo_code
     const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
@@ -172,7 +172,7 @@ class Signup extends React.PureComponent {
       .map(stepName => stepByName(stepName))
 
     if (signupSteps.size === 0) {
-      return Immutable.fromJS(config.defaultSteps.map(stepByName))
+      return Immutable.fromJS(signupConfig.defaultSteps.map(stepByName))
     }
 
     return signupSteps

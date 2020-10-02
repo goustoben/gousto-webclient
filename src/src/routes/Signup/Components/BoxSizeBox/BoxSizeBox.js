@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import classNames from 'classnames'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { Button, Loader } from 'goustouicomponents'
 import Image from 'Image'
 import Immutable from 'immutable'
@@ -10,7 +10,7 @@ import { DiscountAppliedNotice } from '../DiscountAppliedNotice/DiscountAppliedN
 import css from './BoxSizeBox.css'
 
 const BoxSizeBox = ({ numPortionChange, numPortionChangeTracking, next, numPersons, boxPrices }) => {
-  const boxType = config.boxSizeStep.boxSize[numPersons]
+  const boxType = signupConfig.boxSizeStep.boxSize[numPersons]
   const isPromoCodeApplied = boxPrices && boxPrices.get('promoCodeValid')
   const recipeTotal = boxPrices && boxPrices.get('recipeTotal')
   const total = isPromoCodeApplied ? boxPrices.get('recipeTotalDiscounted') : recipeTotal
@@ -67,7 +67,7 @@ const BoxSizeBox = ({ numPortionChange, numPortionChangeTracking, next, numPerso
           data-testing={`signupBoxSize${numPersons}Portions`}
           onClick={clickPortionButton}
         >
-          {config.boxSizeStep.cta}
+          {signupConfig.boxSizeStep.cta}
         </Button>
       </div>
     </div>

@@ -10,7 +10,7 @@ import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset 
 import { redirect } from 'utils/window'
 import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { Button } from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -138,7 +138,7 @@ const DeliveryStep = ({
         <div className={signupCss.fullWidth}>
           <div className={signupCss.header}>
             <Image name="delivery-day" />
-            <h1 className={signupCss.heading}>{config.deliveryOptionsStep.title}</h1>
+            <h1 className={signupCss.heading}>{signupConfig.deliveryOptionsStep.title}</h1>
           </div>
           <div className={signupCss.body}>
             <div className={css.container}>
@@ -168,7 +168,7 @@ const DeliveryStep = ({
     <span className={classNames(signupCss.stepContainer, { [css.pricingClarityRedesign]: isPricingClarityEnabled })} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
         <div className={classNames(signupCss.header, signupCss.largerSpacing)}>
-          <Heading type="h1" className={signupCss.heading}>{config.deliveryOptionsStep.title}</Heading>
+          <Heading type="h1" className={signupCss.heading}>{signupConfig.deliveryOptionsStep.title}</Heading>
           {!isPricingClarityEnabled && <Image name="delivery-day" />}
         </div>
         <div className={classNames(signupCss.body, css.body)}>

@@ -1,7 +1,11 @@
 @value ScreenXXSMin from 'styles/screenSizes.css';
 
+.paymentHeader {
+	margin-bottom: 25px;
+}
+
 .headerContainer {
-	display:flex;
+	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
@@ -20,8 +24,7 @@
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
 }
 
-.boldInfo{
+.boldInfo {
 	composes: textSM from 'styles/typography.css';
 	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
 }
-

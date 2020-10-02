@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { BoxSizeBox } from '../BoxSizeBox/BoxSizeBox'
 
 describe('given we are rendering BoxSizeBox', () => {
@@ -27,7 +27,7 @@ describe('given we are rendering BoxSizeBox', () => {
     test('then it renders a loader instead of prices', () => {
       expect(wrapper.find('.title').text()).toMatch(new RegExp(`${numPersons}\\s+people`))
       expect(wrapper.find('.subtitle').text()).toBe(
-        config.boxSizeStep.boxSize[numPersons].description
+        signupConfig.boxSizeStep.boxSize[numPersons].description
       )
 
       expect(wrapper.find('Loader')).toHaveLength(1)
@@ -52,7 +52,7 @@ describe('given we are rendering BoxSizeBox', () => {
     test('then it renders correctly', () => {
       expect(wrapper.find('.title').text()).toMatch(new RegExp(`${numPersons}\\s+people`))
       expect(wrapper.find('.subtitle').text()).toBe(
-        config.boxSizeStep.boxSize[numPersons].description
+        signupConfig.boxSizeStep.boxSize[numPersons].description
       )
 
       expect(wrapper.find('Loader')).toHaveLength(0)
@@ -84,7 +84,7 @@ describe('given we are rendering BoxSizeBox', () => {
 
     test('then it renders prices after and before discount', () => {
       expect(wrapper.find('.title').text()).toMatch(/2\s+people/)
-      expect(wrapper.find('.subtitle').text()).toBe(config.boxSizeStep.boxSize[2].description)
+      expect(wrapper.find('.subtitle').text()).toBe(signupConfig.boxSizeStep.boxSize[2].description)
       expect(wrapper.find('.price').text()).toBe('£17.50')
       expect(wrapper.find('.redPrice').text()).toBe('£24.99')
       expect(wrapper.find('DiscountAppliedNotice')).toHaveLength(1)

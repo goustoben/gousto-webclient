@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import config from 'config/routes'
+import { PaymentMethod } from 'config/signup'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'routes/Checkout/Components/ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
@@ -75,6 +76,9 @@ describe('Checkout', () => {
       }),
       params: { stepName: 'aboutyou' },
       pending: Immutable.Map({}),
+      payment: Immutable.Map({
+        currentPaymentMethod: PaymentMethod.Unchosen
+      }),
       stepsOrder: Immutable.List(['boxdetails', 'summary', 'aboutyou', 'payment', 'delivery']),
       recipes: Immutable.Map({}),
       request: Immutable.Map({

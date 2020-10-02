@@ -1,12 +1,12 @@
 import { Map } from 'immutable'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 
 /**
  * Get step object by name
  * @param stepName
  */
 export function stepByName(stepName) {
-  return Map(config.steps.find(step => step.name === stepName) || {})
+  return Map(signupConfig.steps.find(step => step.name === stepName) || {})
 }
 
 /**
@@ -14,7 +14,7 @@ export function stepByName(stepName) {
  * @param stepSlug
  */
 export function stepBySlug(stepSlug) {
-  return Map(config.steps.find(step => step.slug === stepSlug) || {})
+  return Map(signupConfig.steps.find(step => step.slug === stepSlug) || {})
 }
 
 /**

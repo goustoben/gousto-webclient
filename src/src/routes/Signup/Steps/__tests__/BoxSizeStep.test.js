@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import config from 'config/signup'
+import { signupConfig } from 'config/signup'
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
 
 describe('given the user is at the Box Size Step', () => {
@@ -21,7 +21,7 @@ describe('given the user is at the Box Size Step', () => {
   })
 
   test('then the component renders correctly', () => {
-    expect(wrapper.find('Heading').childAt(0).text()).toBe(config.boxSizeStep.title)
+    expect(wrapper.find('Heading').childAt(0).text()).toBe(signupConfig.boxSizeStep.title)
 
     expect(wrapper.find('SignupImage')).toHaveLength(1)
 
@@ -66,7 +66,7 @@ describe('given the user is at the Box Size Step', () => {
     })
 
     test('then alternate representation of box sizes is rendered', () => {
-      expect(wrapper.find('Heading').childAt(0).text()).toBe(config.boxSizeStep.title)
+      expect(wrapper.find('Heading').childAt(0).text()).toBe(signupConfig.boxSizeStep.title)
 
       expect(wrapper.find('SignupImage')).toHaveLength(0)
 
