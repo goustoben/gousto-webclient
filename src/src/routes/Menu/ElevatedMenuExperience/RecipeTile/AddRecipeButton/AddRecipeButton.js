@@ -17,13 +17,19 @@ export const AddRecipeButton = ({
   const hasSideAddedToBasketOrIsInBasket = hasSideAddedToBasket || isInBasket
   const disabled = isBasketLimitReached && !hasSideAddedToBasketOrIsInBasket
   const buttonAction = (e) => {
-    e.stopPropagation()
     if (hasSideAddedToBasketOrIsInBasket) {
       basketRecipeRemove(hasSideAddedToBasket ? firstSideRecipeId : recipeId)
     } else if (recipeVariants && recipeVariants.type === 'sides') {
       setSidesModalRecipe({ recipeId })
     } else {
       basketRecipeAddAttempt(recipeId)
+    }
+    e.stopPropagation()
+  }
+  const buttonKeyPressAction = (e) => {
+    e.stopPropagation()
+    if (e.keyCode === 13) {
+      buttonAction(e)
     }
   }
 
@@ -33,9 +39,11 @@ export const AddRecipeButton = ({
       type="button"
       disabled={disabled}
       onClick={buttonAction}
+      onKeyPress={buttonKeyPressAction}
       data-testing={
         disabled ? 'menuRecipeAddDisabled' : 'menuRecipeAdd'
       }
+      aria-label={buttonProps.buttonText}
     >
       <span className={css.buttonText}>
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">

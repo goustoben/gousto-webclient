@@ -61,12 +61,34 @@ describe('AddRecipeButton', () => {
     beforeEach(() => {
       wrapper = shallow(<AddRecipeButton {...buttonsProps} />)
     })
-    describe('when recipe not in basket', () => {
+    describe('when recipe is not in the basket', () => {
       test('should call basketRecipeAddAttempt', () => {
         wrapper.find('.addButton').simulate('click', {
           stopPropagation: () => {}
         })
         expect(buttonsProps.basketRecipeAddAttempt).toHaveBeenCalledWith('1234')
+      })
+
+      describe('when enter key is pressed', () => {
+        test('should not call basketRecipeAddAttempt', () => {
+          buttonsProps.basketRecipeAddAttempt.mockClear()
+          wrapper.find('.addButton').simulate('keyPress', {
+            stopPropagation: () => {},
+            keyCode: 13
+          })
+          expect(buttonsProps.basketRecipeAddAttempt).toHaveBeenCalledWith('1234')
+        })
+      })
+
+      describe('when other key beside enter is pressed', () => {
+        test('should not call basketRecipeAddAttempt', () => {
+          buttonsProps.basketRecipeAddAttempt.mockClear()
+          wrapper.find('.addButton').simulate('keyPress', {
+            stopPropagation: () => {},
+            keyCode: 20
+          })
+          expect(buttonsProps.basketRecipeAddAttempt).not.toHaveBeenCalled()
+        })
       })
     })
 
