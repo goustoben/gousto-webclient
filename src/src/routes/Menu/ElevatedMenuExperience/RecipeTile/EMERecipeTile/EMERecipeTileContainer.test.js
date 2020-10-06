@@ -29,12 +29,35 @@ describe('<EMERecipeTileContainer />', () => {
     themes: undefined,
   }
 
+  const availabilityTag = {
+    slug: 'new-eme',
+    text: 'new',
+    type: 'general',
+    themes: [{
+      name: 'light',
+      color: '#01A92B',
+      borderColor: '#01A92B'
+    }]
+  }
+  const expectedAvailability = {
+    slug: 'new-eme',
+    text: 'new',
+    type: 'general',
+    theme: {
+      name: 'light',
+      color: '#01A92B',
+      borderColor: '#01A92B'
+    },
+    themes: undefined,
+  }
+
   const recipe = Immutable.fromJS({
     id: recipeId,
     title: 'Chicken curry',
     isNew: true,
     isFineDineIn: true,
     tagline: 'fine-dine-in-eme',
+    availability: 'new-eme',
     promotions: Immutable.List([])
   })
 
@@ -62,7 +85,8 @@ describe('<EMERecipeTileContainer />', () => {
     brand: {
       data: {
         tags: [
-          fineDineInTag
+          fineDineInTag,
+          availabilityTag
         ]
       }
     }
@@ -94,6 +118,7 @@ describe('<EMERecipeTileContainer />', () => {
     expect(wrapper.prop('showDetailRecipe')).toEqual(expect.any(Function))
     expect(wrapper.prop('isFineDineIn')).toEqual(true)
     expect(wrapper.prop('brandTagline')).toEqual(expectedTagline)
+    expect(wrapper.prop('brandAvailability')).toEqual(expectedAvailability)
     expect(wrapper.prop('isInCarousel')).toEqual(false)
   })
 

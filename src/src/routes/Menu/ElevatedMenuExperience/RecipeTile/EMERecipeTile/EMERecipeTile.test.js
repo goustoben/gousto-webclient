@@ -29,14 +29,12 @@ describe('EMERecipeTile', () => {
       isOutOfStock: false,
       isFineDineIn: false,
       surcharge: 0,
-      brandTags: {
-        topLeftTag: {
-          type: 'general',
-          slug: 'new-eme',
-          text: 'New',
-          themes: undefined,
-          theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
-        },
+      brandAvailability: {
+        type: 'general',
+        slug: 'new-eme',
+        text: 'New',
+        themes: undefined,
+        theme: { name: 'light', color: '#01A92B', borderColor: '#01A92B' },
       },
       brandTagline: {
         type: 'general',

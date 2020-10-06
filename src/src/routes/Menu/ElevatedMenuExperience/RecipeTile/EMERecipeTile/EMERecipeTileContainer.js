@@ -5,7 +5,7 @@ import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../.
 import { getVariantsForRecipe } from '../../../selectors/variants'
 import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
 import { EMERecipeTile } from './EMERecipeTile'
-import { getElevatedMenuExperienceRecipeTags, getBrandTagline } from '../../../selectors/elevatedMenuExperienceRecipeTags'
+import { getBrandAvailability, getBrandTagline } from '../../../selectors/recipeTags'
 
 const getIdForRecipeTile = (state, props) => props.recipeId
 
@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
     recipe,
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
     title: getRecipeTitle(state, ownProps),
-    brandTags: getElevatedMenuExperienceRecipeTags(state, ownProps),
+    brandAvailability: getBrandAvailability(state, ownProps),
     brandTagline: getBrandTagline(state, ownProps),
     isFineDineIn: getRecipeIsFineDineIn(state, ownProps),
     recipeVariants: getVariantsForRecipe(state, ownProps)

@@ -13,7 +13,7 @@ import {
   getRecipeAllergensProps,
   getRecipePerPortionProps,
   getRecipePer100gProps, getRecipeSidesSurcharge,
-  getSelectedRecipeSidesFromMenu, getTaglineByRecipeId
+  getSelectedRecipeSidesFromMenu, getTaglineByRecipeId, getBrandAvailabilityByRecipeId
 } from '../recipe'
 
 jest.mock('config/menu', () => ({
@@ -909,6 +909,74 @@ describe('menu recipe selectors', () => {
         }
 
         expect(getTaglineByRecipeId(state, props)).toBe('test-tagline')
+      })
+    })
+  })
+
+  describe('getBrandAvailabilityByRecipeId', () => {
+    describe('when recipe is not found', () => {
+      it('should return null', () => {
+        const props = {
+          recipeId: '3'
+        }
+        const state = {
+          recipes: Immutable.fromJS({})
+        }
+
+        expect(getBrandAvailabilityByRecipeId(state, props)).toBe(null)
+      })
+    })
+
+    describe('when recipe is found and has an availability tag', () => {
+      it('it should return the tagline', () => {
+        const props = {
+          recipeId: '3'
+        }
+        const state = {
+          recipes: Immutable.fromJS({
+            3: {
+              availability: 'test-availability'
+            }
+          })
+        }
+
+        expect(getBrandAvailabilityByRecipeId(state, props)).toBe('test-availability')
+      })
+    })
+
+    describe('when recipe is found and is new', () => {
+      it('it should return new-eme', () => {
+        const props = {
+          recipeId: '3'
+        }
+        const state = {
+          recipes: Immutable.fromJS({
+            3: {
+              availability: undefined,
+              isNew: true
+            }
+          })
+        }
+
+        expect(getBrandAvailabilityByRecipeId(state, props)).toBe('new-eme')
+      })
+    })
+
+    describe('when recipe is found, is new and has availiblity tag', () => {
+      it('it should return availibility tag', () => {
+        const props = {
+          recipeId: '3'
+        }
+        const state = {
+          recipes: Immutable.fromJS({
+            3: {
+              availability: 'hello-there',
+              isNew: true
+            }
+          })
+        }
+
+        expect(getBrandAvailabilityByRecipeId(state, props)).toBe('hello-there')
       })
     })
   })
