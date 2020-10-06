@@ -7,20 +7,24 @@ const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, when
   <div data-testing="orderConfirmationHeader">
     <p className={css.paragraph}>
       Delivery date:
-      {deliveryDate}
       {' '}
+      {deliveryDate}
+      {', '}
       between
       {' '}
       {deliveryStart}
       {' '}
-      -
+      and
+      {' '}
       {deliveryEnd}
     </p>
     <p className={classnames(css.paragraph, css.bold)}>
       You can edit your choices until
+      {' '}
       {whenCutoffTime}
       {' '}
       on
+      {' '}
       {whenCutoffDate}
     </p>
   </div>

@@ -3,6 +3,7 @@ import basketActions from 'actions/basket'
 import productActions from 'actions/products'
 import OrderSummary from 'OrderSummary'
 import { actionTypes } from 'actions/actionTypes'
+import { getOrderRecipes } from '../../selectors/orderDetails'
 
 function mapStateToProps(state) {
   return {
@@ -15,7 +16,7 @@ function mapStateToProps(state) {
     numRecipes: parseFloat(state.basket.getIn(['orderDetails', 'box', 'numRecipes'])),
     productItems: state.basket.get('products'),
     products: state.products,
-    recipeItems: state.basket.get('recipes'),
+    recipeItems: getOrderRecipes(state),
     recipes: state.recipes,
     shippingAddress: state.basket.getIn(['orderDetails', 'shippingAddress']),
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),

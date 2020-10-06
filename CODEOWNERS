@@ -89,6 +89,7 @@
 /src/src/utils/__tests__/recipe.test.js                 @Gousto/squad-radishes
 /src/src/containers/OptimizelyRollouts/                 @Gousto/squad-radishes
 /src/src/containers/Experiments/                        @Gousto/squad-radishes
+/src/src/routes/OrderConfirmation/                      @Gousto/squad-radishes
 
 
 /src/__tests__/actions/getHelp.test.js                              @Gousto/squad-haricots
@@ -113,7 +114,6 @@
 /src/src/routes/ResetPassword/                                      @Gousto/squad-haricots
 /src/src/routes/Jobs/                                               @Gousto/squad-haricots
 /src/src/routes/GetHelp/                                            @Gousto/squad-haricots
-/src/src/routes/OrderConfirmation/                                  @Gousto/squad-haricots
 /src/src/selectors/__tests__/getHelp.test.js                        @Gousto/squad-haricots
 /src/src/selectors/__tests__/jobs.test.js                           @Gousto/squad-haricots
 /src/src/selectors/getHelp.js                                       @Gousto/squad-haricots
