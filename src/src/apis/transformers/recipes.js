@@ -82,7 +82,8 @@ function recipeTransformer({ normalisedAttributes, brandData, individualRecipeId
     promotions: promotionsTransformer(normalisedAttributes),
     isNew: activeMenu && isNewTransformer(activeMenu.relationships.debut_recipes, individualRecipeId),
     foodBrand: normalisedAttributes.food_brand,
-    tagline: (recipeMeta || {}).tagline,
+    tagline: recipeMeta.tagline,
+    availability: recipeMeta.availability,
   }
 }
 
@@ -93,7 +94,7 @@ const recipesTransformer = (activeMenu, menuServiceData, brandData = {}) => {
 
   const activeMenuRecipesMeta = activeMenu.relationships.recipes.data.reduce((acc, recipe) => {
     const id = recipe.core_recipe_id.toString()
-    acc[id] = recipe.meta
+    acc[id] = recipe.meta || {}
 
     return acc
   }, {})

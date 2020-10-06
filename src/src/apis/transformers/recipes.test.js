@@ -883,7 +883,7 @@ describe('transformers/recipes tests', () => {
     })
 
     describe('when recipe has meta', () => {
-      test('should add tagline to the recipe', () => {
+      test('should add tagline and availability to the recipe', () => {
         const menuServiceResponse = {
           meta: {},
           data: [
@@ -927,7 +927,8 @@ describe('transformers/recipes tests', () => {
                       id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5',
                       core_recipe_id: '2106',
                       meta: {
-                        tagline: 'joe-wicks-tagline'
+                        tagline: 'joe-wicks-tagline',
+                        availability: 'new-eme'
                       }
                     }
                   ]
@@ -1563,7 +1564,8 @@ describe('transformers/recipes tests', () => {
             health: null,
             promotions: ['some-promotion-name', 'another-cool-promotion'],
             isNew: false,
-            tagline: 'joe-wicks-tagline'
+            tagline: 'joe-wicks-tagline',
+            availability: 'new-eme'
           }
         ]
 

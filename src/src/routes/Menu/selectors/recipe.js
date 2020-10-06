@@ -250,3 +250,24 @@ export const getTaglineByRecipeId = createSelector(
     return recipe.get('tagline')
   }
 )
+
+export const getBrandAvailabilityByRecipeId = createSelector(
+  [getRecipes, getRecipeIdFromProps],
+  (recipes, recipeId) => {
+    const recipe = recipes.get(recipeId)
+
+    if (!recipe) {
+      return null
+    }
+
+    const availability = recipe.get('availability')
+
+    // Return new-eme when recipe has isNew to true and
+    // when we do not have any availability in meta
+    if (!availability && recipe.get('isNew')) {
+      return 'new-eme'
+    }
+
+    return availability
+  }
+)

@@ -15,11 +15,11 @@ const EMERecipeTile = ({
   showDetailRecipe,
   isOutOfStock,
   title,
-  brandTags,
   isFineDineIn,
   recipeVariants,
   isInCarousel,
   brandTagline,
+  brandAvailability,
 }) => {
   if (!recipe) {
     return null
@@ -31,7 +31,7 @@ const EMERecipeTile = ({
   }
 
   const showVariantHeader = !(!recipeVariants || isOutOfStock)
-  const hasTopLeftTag = brandTags && brandTags.topLeftTag
+  const hasTopLeftTag = Boolean(brandAvailability)
   const hasTopRightTag = Boolean(brandTagline)
 
   return (
@@ -51,7 +51,7 @@ const EMERecipeTile = ({
       >
         <TileImageContainer recipeId={recipeId} showVariantHeader={showVariantHeader} isInCarousel={isInCarousel} />
         {hasTopLeftTag && (
-        <RecipeTag brandTag={brandTags.topLeftTag} showVariantHeader={showVariantHeader} />
+        <RecipeTag brandTag={brandAvailability} showVariantHeader={showVariantHeader} />
         )}
         <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
           <div>
@@ -80,11 +80,12 @@ EMERecipeTile.propTypes = {
   showDetailRecipe: PropTypes.func.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
-  brandTags: PropTypes.shape({
-    topLeftTag: PropTypes.object,
-    topRightTag: PropTypes.object,
-  }),
   brandTagline: PropTypes.shape({
+    slug: PropTypes.string,
+    text: PropTypes.string,
+    theme: PropTypes.object,
+  }),
+  brandAvailability: PropTypes.shape({
     slug: PropTypes.string,
     text: PropTypes.string,
     theme: PropTypes.object,
@@ -95,8 +96,8 @@ EMERecipeTile.propTypes = {
 }
 
 EMERecipeTile.defaultProps = {
-  brandTags: null,
   brandTagline: null,
+  brandAvailability: null,
   isInCarousel: false,
 }
 
