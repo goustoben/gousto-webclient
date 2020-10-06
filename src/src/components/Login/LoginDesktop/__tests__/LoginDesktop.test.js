@@ -55,6 +55,7 @@ describe('<LoginDesktop />', () => {
 
       test('sendGoustoAppLinkSMS is called passing goustoAppEventName and userPhoneNumber', () => {
         expect(sendGoustoAppLinkSMS).toHaveBeenCalledWith({
+          isAnonymousUser: true,
           goustoAppEventName: 'send-gousto-app-link-app-store-sms',
           userPhoneNumber: '1234567890'
         })
@@ -71,6 +72,7 @@ describe('<LoginDesktop />', () => {
 
       test('sendGoustoAppLinkSMS is called passing goustoAppEventName and userPhoneNumber', () => {
         expect(sendGoustoAppLinkSMS).toHaveBeenCalledWith({
+          isAnonymousUser: true,
           goustoAppEventName: 'send-gousto-app-link-app-store-sms',
           userPhoneNumber: '7456640000'
         })

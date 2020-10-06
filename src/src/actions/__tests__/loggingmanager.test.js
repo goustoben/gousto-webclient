@@ -310,7 +310,7 @@ describe('sendGoustoAppLinkSMS', () => {
   let state
   const dispatch = jest.fn()
 
-  beforeEach(async () => {
+  const callSendGoustoAppLinkSMS = ({ isAnonymousUser }) => {
     state = {
       request: Immutable.fromJS({
         browser: 'mobile',
@@ -322,35 +322,61 @@ describe('sendGoustoAppLinkSMS', () => {
 
     getState = jest.fn().mockReturnValue(state)
 
-    await sendGoustoAppLinkSMS({
+    return sendGoustoAppLinkSMS({
+      isAnonymousUser,
       goustoAppEventName: EVENT_NAMES.sendGoustoAppLinkAppStoreSMS,
       userPhoneNumber: 'test-phone-number',
     })(dispatch, getState)
-  })
+  }
 
   afterEach(() => {
     dispatch.mockReset()
+    logEventToServer.mockReset()
   })
 
-  test('logEventToServer is called passing the (app) store name', () => {
-    expect(logEventToServer).toHaveBeenCalledWith({
-      eventName: 'sendsmsapplink-appstore',
-      authUserId: 'mock-user-id',
-      data: {
-        device: 'mobile',
-        userPhoneNumber: 'test-phone-number',
-      },
+  describe('and isAnonymousUser is false', () => {
+    beforeEach(async () => {
+      await callSendGoustoAppLinkSMS({ isAnonymousUser: false })
+    })
+
+    test('logEventToServer is called with authUserId', () => {
+      expect(logEventToServer).toHaveBeenCalledWith({
+        eventName: 'sendsmsapplink-appstore',
+        authUserId: 'mock-user-id',
+        isAnonymousUser: false,
+        data: {
+          device: 'mobile',
+          userPhoneNumber: 'test-phone-number',
+        },
+      })
+    })
+
+    test('TRACKING is dispatched with sent key', () => {
+      const dispatchCalls = dispatch.mock.calls
+
+      expect(dispatchCalls[dispatchCalls.length - 2][0]).toEqual({
+        trackingData: {
+          actionType: 'click_send_text_app_install_sent'
+        },
+        type: 'TRACKING',
+      })
     })
   })
 
-  test('TRACKING is dispatched with sent key', () => {
-    const dispatchCalls = dispatch.mock.calls
+  describe('and isAnonymousUser is true', () => {
+    beforeEach(async () => {
+      await callSendGoustoAppLinkSMS({ isAnonymousUser: true })
+    })
 
-    expect(dispatchCalls[dispatchCalls.length - 2][0]).toEqual({
-      trackingData: {
-        actionType: 'click_send_text_app_install_sent'
-      },
-      type: 'TRACKING',
+    test('logEventToServer is called without authUserId', () => {
+      expect(logEventToServer).toHaveBeenCalledWith({
+        eventName: 'sendsmsapplink-appstore',
+        isAnonymousUser: true,
+        data: {
+          device: 'mobile',
+          userPhoneNumber: 'test-phone-number',
+        },
+      })
     })
   })
 
@@ -359,6 +385,7 @@ describe('sendGoustoAppLinkSMS', () => {
       logEventToServer.mockRejectedValue({ message: 'test-error' })
 
       await sendGoustoAppLinkSMS({
+        isAnonymousUser: false,
         goustoAppEventName: EVENT_NAMES.sendGoustoAppLinkAppStoreSMS,
         userPhoneNumber: 'test-phone-number',
       })(dispatch, getState)

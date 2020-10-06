@@ -34,6 +34,7 @@ describe('<AppAwarenessBanner />', () => {
 
     test('sendGoustoAppLinkSMS is called passing goustoAppEventName and userPhoneNumber', () => {
       expect(sendGoustoAppLinkSMS).toHaveBeenCalledWith({
+        isAnonymousUser: false,
         goustoAppEventName: 'send-gousto-app-link-app-store-sms',
         userPhoneNumber: '1234567890'
       })
@@ -50,6 +51,7 @@ describe('<AppAwarenessBanner />', () => {
 
     test('sendGoustoAppLinkSMS is called passing goustoAppEventName and userPhoneNumber', () => {
       expect(sendGoustoAppLinkSMS).toHaveBeenCalledWith({
+        isAnonymousUser: false,
         goustoAppEventName: 'send-gousto-app-link-app-store-sms',
         userPhoneNumber: '7456640000'
       })

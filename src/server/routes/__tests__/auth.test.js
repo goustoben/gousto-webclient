@@ -36,6 +36,42 @@ describe('auth', () => {
   })
 
   describe('logEventWithClientAuth', () => {
+    describe('when logEventWithClientAuth is called with isAnonymousUser flat as true', () => {
+      const ctx = {
+        response: {},
+        request: {
+          body: {
+            eventName: 'mock-event-name',
+            isAnonymousUser: true,
+            data: {},
+          },
+        },
+      }
+
+      beforeEach(async () => {
+        getCookieValue
+          .mockReturnValueOnce('2020-08-06T13:00:00.000Z')
+          .mockReturnValueOnce('mock-access-token')
+
+        await logEventWithClientAuth(ctx)
+      })
+
+      test('then triggerLoggingManagerEvent should be called with the correct params', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledWith(
+          {
+            accessToken: 'mock-access-token',
+            body: {
+              name: 'mock-event-name',
+              isAnonymousUser: true,
+              occurredAt: '2020-08-06T11:00:00.000Z',
+              id: uuidV4(),
+              data: {},
+            },
+          },
+        )
+      })
+    })
+
     describe('when logEventWithClientAuth is called with a non-existant cookie', () => {
       const ctx = { response: {}, request: { body: {} }, cookies: {} }
 

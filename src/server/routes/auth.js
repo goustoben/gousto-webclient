@@ -166,7 +166,7 @@ export async function validate(ctx) {
 */
 const logEventWithClientAuth = async (ctx) => {
   try {
-    const { body: { eventName, authUserId, data } } = ctx.request
+    const { body: { eventName, authUserId, isAnonymousUser, data } } = ctx.request
     const { authClientId, authClientSecret } = env
     const expiresAt = getCookieValue(ctx, 'client_oauth_expiry', 'expires_at')
     const currentDateISOString = new Date().toISOString()
@@ -176,6 +176,7 @@ const logEventWithClientAuth = async (ctx) => {
       id: uuidv4(),
       name: eventName,
       authUserId,
+      isAnonymousUser,
       occurredAt: currentDateISOString,
       data
     }
