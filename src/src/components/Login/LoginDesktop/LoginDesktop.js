@@ -48,6 +48,7 @@ class LoginDesktop extends Component {
 
     if (isPhoneNumberValid) {
       sendGoustoAppLinkSMS({
+        isAnonymousUser: true,
         goustoAppEventName,
         userPhoneNumber
       })

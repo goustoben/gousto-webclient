@@ -45,6 +45,7 @@ class AppAwarenessBanner extends Component {
 
     if (isPhoneNumberValid) {
       sendGoustoAppLinkSMS({
+        isAnonymousUser: false,
         goustoAppEventName,
         userPhoneNumber
       })

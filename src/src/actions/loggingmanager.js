@@ -98,12 +98,13 @@ const trackUserAddRemoveRecipe = () => (
   }
 )
 
-const sendGoustoAppLinkSMS = ({ goustoAppEventName: eventName, userPhoneNumber }) => (
+const sendGoustoAppLinkSMS = ({ isAnonymousUser, goustoAppEventName: eventName, userPhoneNumber }) => (
   async (dispatch, getState) => {
     const { authUserId, device } = getDefaultParams(getState())
     const loggingManagerEvent = {
       eventName,
-      authUserId,
+      ...(!isAnonymousUser && { authUserId }),
+      isAnonymousUser,
       data: {
         device,
         userPhoneNumber,
