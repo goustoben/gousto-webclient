@@ -8,8 +8,12 @@ import { BottomFixedContent, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import css from './OnDeliveryDayWithTracking.css'
 
-const redirectTo = (link) => () => {
+const redirectToInternal = (link) => () => {
   browserHistory.push(link)
+}
+
+const redirectToExternal = (link) => () => {
+  window.location.assign(link)
 }
 
 const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
@@ -51,13 +55,17 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
               isFullWidth
               size="small"
               variant="secondary"
-              onClick={redirectTo(client.myGousto)}
+              onClick={redirectToInternal(client.myGousto)}
             >
               View My Gousto
             </CTA>
           </div>
           <div className={css.cta}>
-            <CTA isFullWidth size="small" onClick={redirectTo(trackMyBoxLink)}>
+            <CTA
+              isFullWidth
+              size="small"
+              onClick={redirectToExternal(trackMyBoxLink)}
+            >
               Track my box
             </CTA>
           </div>

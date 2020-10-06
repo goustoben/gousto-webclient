@@ -88,13 +88,23 @@ describe('OnDeliveryDayWithTracking', () => {
   })
 
   describe('when the primary CTA is clicked', () => {
+    const originalAssign = window.location.assign
+
+    beforeAll(() => {
+      window.location.assign = jest.fn()
+    })
+
     beforeEach(() => {
       const primaryCTA = wrapper.find('BottomFixedContent').find('CTA').at(1)
       primaryCTA.simulate('click')
     })
 
+    afterAll(() => {
+      window.location.assign = originalAssign
+    })
+
     test('redirects to the tracking link passed as a prop', () => {
-      expect(browserHistory.push).toHaveBeenCalledWith(TRACK_MY_BOX_LINK)
+      expect(window.location.assign).toHaveBeenCalledWith(TRACK_MY_BOX_LINK)
     })
   })
 })

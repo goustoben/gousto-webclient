@@ -16,7 +16,7 @@ const propTypes = {
 const defaultProps = {
   content: {
     button1: 'Contact Us',
-    errorBody: `There was a problem in getting your default.
+    errorBody: `There was a problem getting your data.
     Please contact us below, or try again later.`,
     title: 'Get help with your box',
   },
