@@ -53,7 +53,11 @@ module.exports = {
       confirmation: 'confirmation',
       contact: 'contact',
       delivery: 'delivery',
-      dontKnowWhen: 'dont-know-when',
+      deliveryDidntArriveValidation: ({ orderId, userId }) => (
+        `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive/validation`
+      ),
+      dontKnowWhenRegex: '\\/get-help\\/user\\/\.+\\/order\\/\.+\\/delivery\\/dont-know-when',
+      dontKnowWhenTemplate: '/get-help/user/:userId/order/:orderId/delivery/dont-know-when',
       eligibilityCheck: 'eligibility-check',
       index: '/get-help',
       ingredientIssues: 'ingredient-issues',

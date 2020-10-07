@@ -1,1 +1,1 @@
-export { DontKnowWhen } from './DontKnowWhen'
+export { DontKnowWhenContainer as DontKnowWhen } from './DontKnowWhenContainer'

@@ -602,7 +602,7 @@ describe('menu recipe selectors', () => {
   describe('getVariantsForRecipeForCurrentCollection', () => {
     const recipeId = '1'
     let variants
-    let menuRecipes = Immutable.Map()
+    let menuRecipes = Immutable.List()
     let collectionDietaryClaims = null
     describe('when no variants', () => {
       beforeEach(() => {
@@ -687,8 +687,9 @@ describe('menu recipe selectors', () => {
             }]
           }
         })
-        menuRecipes = Immutable.fromJS({
-          1: {
+        menuRecipes = Immutable.fromJS([
+          {
+            id: '1',
             dietaryClaims: [
               {
                 name: 'Gluten free',
@@ -696,7 +697,8 @@ describe('menu recipe selectors', () => {
               }
             ],
           },
-          2: {
+          {
+            id: '2',
             dietaryClaims: [
               {
                 name: 'Gluten free',
@@ -704,7 +706,7 @@ describe('menu recipe selectors', () => {
               }
             ],
           }
-        })
+        ])
       })
       test('should return recipe variants that have same claims', () => {
         const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
@@ -723,8 +725,9 @@ describe('menu recipe selectors', () => {
 
       describe('when variant has different claim', () => {
         beforeEach(() => {
-          menuRecipes = Immutable.fromJS({
-            1: {
+          menuRecipes = Immutable.fromJS([
+            {
+              id: '1',
               dietaryClaims: [
                 {
                   name: 'Gluten free',
@@ -732,7 +735,8 @@ describe('menu recipe selectors', () => {
                 }
               ],
             },
-            2: {
+            {
+              id: '2',
               dietaryClaims: [
                 {
                   name: 'Vegetarian',
@@ -740,7 +744,7 @@ describe('menu recipe selectors', () => {
                 }
               ],
             }
-          })
+          ])
         })
         test('should return recipe variants that have same claims', () => {
           const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
@@ -754,14 +758,16 @@ describe('menu recipe selectors', () => {
 
       describe('when variant has no claims', () => {
         beforeEach(() => {
-          menuRecipes = Immutable.fromJS({
-            1: {
+          menuRecipes = Immutable.fromJS([
+            {
+              id: '1',
               dietaryClaims: [],
             },
-            2: {
+            {
+              id: '2',
               dietaryClaims: [],
             }
-          })
+          ])
         })
         test('should return recipe variants that have same claims', () => {
           const result = getVariantsForRecipeForCurrentCollection(variants, recipeId, menuRecipes, collectionDietaryClaims)
@@ -791,8 +797,9 @@ describe('menu recipe selectors', () => {
             }]
           }
         })
-        menuRecipes = Immutable.fromJS({
-          1: {
+        menuRecipes = Immutable.fromJS([
+          {
+            id: '1',
             dietaryClaims: [
               {
                 name: 'Gluten free',
@@ -800,7 +807,8 @@ describe('menu recipe selectors', () => {
               }
             ],
           },
-          2: {
+          {
+            id: '2',
             dietaryClaims: [
               {
                 name: 'Gluten free',
@@ -808,7 +816,7 @@ describe('menu recipe selectors', () => {
               }
             ],
           }
-        })
+        ])
       })
 
       test('should return recipe variants as sides', () => {

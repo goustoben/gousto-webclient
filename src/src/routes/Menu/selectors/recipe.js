@@ -219,7 +219,9 @@ export const getVariantsForRecipeForCurrentCollection = (variants, recipeId, men
   }
 
   const alternativesDietaryClaims = alternatives.filter((variant) => {
-    const variantRecipeDietaryAttributes = getDietaryTags(menuRecipes.get(variant.get('coreRecipeId')))
+    const variantRecipeDietaryAttributes = getDietaryTags(menuRecipes.find(
+      recipe => recipe.get('id') === variant.get('coreRecipeId')
+    ))
 
     if (!variantRecipeDietaryAttributes || !variantRecipeDietaryAttributes.size) {
       return false

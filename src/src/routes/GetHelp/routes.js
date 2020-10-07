@@ -38,7 +38,7 @@ const getHelpRoutes = (store) => {
     return checkValidSession(store, redirectTo)(routes, replace, next)
   }
 
-  const { index, delivery, dontKnowWhen } = configRoutes.client.getHelp
+  const { index, delivery, dontKnowWhenTemplate } = configRoutes.client.getHelp
   const { login } = configRoutes.client
 
   return (
@@ -54,7 +54,7 @@ const getHelpRoutes = (store) => {
           component={DeliveryContainer}
         />
         <Route
-          path={`${delivery}/${dontKnowWhen}`}
+          path={dontKnowWhenTemplate}
           component={DontKnowWhen}
         />
         {Confirmation}

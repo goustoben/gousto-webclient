@@ -58,7 +58,7 @@ describe('<GetHelpContainer />', () => {
 
       mount(
         <GetHelpContainer
-          location={{ query: { orderId: '788' } }}
+          location={{ query: { orderId: '788' }, pathname: 'get-help' }}
           store={store}
         >
           <div>Required Child</div>

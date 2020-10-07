@@ -32,14 +32,31 @@ const getPending = ({ pending }) => {
   return pendingRequest
 }
 
-const skipErrorByRoute = ({ pathname }) => ([
-  `${routes.getHelp.index}/${routes.getHelp.contact}`,
-  `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
-  `${routes.getHelp.index}/${routes.getHelp.delivery}`,
-  `${routes.getHelp.index}/${routes.getHelp.eligibilityCheck}`,
-  `${routes.getHelp.index}/${routes.getHelp.eligibilityCheck}/${routes.getHelp.ingredientIssues}`,
-  `${routes.getHelp.index}/${routes.getHelp.delivery}/${routes.getHelp.dontKnowWhen}`,
-].includes(pathname))
+const skipErrorByRoute = ({ pathname }) => {
+  const {
+    confirmation,
+    contact,
+    delivery,
+    dontKnowWhenRegex,
+    eligibilityCheck,
+    index,
+    ingredientIssues,
+  } = routes.getHelp
+
+  const isPathnameInExceptionList = [
+    `${index}/${contact}`,
+    `${index}/${confirmation}`,
+    `${index}/${delivery}`,
+    `${index}/${eligibilityCheck}`,
+    `${index}/${eligibilityCheck}/${ingredientIssues}`,
+  ].includes(pathname)
+
+  const isPathnameInRegexExceptionList = [
+    dontKnowWhenRegex,
+  ].some((routeRegex) => pathname.match(routeRegex))
+
+  return isPathnameInExceptionList || isPathnameInRegexExceptionList
+}
 
 const mapStateToProps = (state, ownProps) => {
   const { location } = ownProps
