@@ -19,6 +19,7 @@ export const menuInitialState = Immutable.Map({
   sidesModalRecipe: null,
   selectedRecipeSides: {},
   isCategoriesModalVisible: false,
+  menuLoadingErrorMessage: '',
 })
 
 const menu = {
@@ -39,6 +40,7 @@ const menu = {
       const menuVariants = getMenuVariants(action.response.data)
 
       return state
+        .set('menuLoadingErrorMessage', '')
         .set('menuLimits', menuLimits)
         .set('menuVariants', Immutable.fromJS(menuVariants))
     }
@@ -117,6 +119,10 @@ const menu = {
       }
 
       return state
+    }
+
+    case actionTypes.MENU_LOADING_ERROR: {
+      return state.set('menuLoadingErrorMessage', action.message)
     }
 
     default:

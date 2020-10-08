@@ -38,7 +38,8 @@ const mapStateToProps = (state, ownProps) => {
     isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
     showCommunicationPanel: getIsCommunicationPanelEnabled(state) && !!getIsAuthenticated(state),
     userId: getUserId(state),
-    shouldShowCapacityInfo: !userHasAvailableSlots(state) && getBoxSummaryDeliveryDays(state).size > 0 && (!getLoadingStateForOrder(state) || !getIsAuthenticated(state))
+    shouldShowCapacityInfo: !userHasAvailableSlots(state) && getBoxSummaryDeliveryDays(state).size > 0 && (!getLoadingStateForOrder(state) || !getIsAuthenticated(state)),
+    menuLoadingErrorMessage: state.menu.get('menuLoadingErrorMessage'),
   })
 }
 

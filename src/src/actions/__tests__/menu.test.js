@@ -13,7 +13,7 @@ jest.mock('apis/recipes', () => ({
 }))
 
 jest.mock('utils/basket', () => ({
-  limitReached: mockLimitReached
+  limitReached: mockLimitReached,
 }))
 
 jest.mock('utils/deliveries', () => ({

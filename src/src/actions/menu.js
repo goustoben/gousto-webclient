@@ -9,6 +9,9 @@ import logger from 'utils/logger'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import menuConfig from 'config/menu'
+import Cookies from 'utils/GoustoCookies'
+import { set, unset, get } from 'utils/cookieHelper2'
+import { boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
 import statusActions from './status'
 import { redirect } from './redirect'
 import {productsLoadProductsById, productsLoadStock, productsLoadCategories} from './products'
@@ -30,6 +33,7 @@ import tempActions from './temp'
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
 
+/* eslint-disable no-use-before-define */
 const menuActions = {
   menuLoadMenu,
   menuLoadBoxPrices,
@@ -42,6 +46,38 @@ const menuActions = {
   menuBrowseCTAVisibilityChange,
   menuReceiveMenuPending,
   menuReceiveBoxPrices,
+}
+
+function handleReloadMenuError({ dispatch }) {
+  unset(Cookies, 'reload_invalid_delivery_date')
+  dispatch(menuLoadingError('Cannot load menu, try changing delivery date below.'))
+}
+
+function reloadPageWhenInvalidDeliveryDate({ dispatch, getState }) {
+  // if we already reloaded dont reload and remove cookie
+  if (get(Cookies, 'reload_invalid_delivery_date') === '1') {
+    handleReloadMenuError({ dispatch })
+
+    return
+  }
+
+  try {
+    const firstAvailableDate = Object.keys(getState().boxSummaryDeliveryDays.toJS()).sort().shift()
+    const slotId = getState().boxSummaryDeliveryDays.getIn([firstAvailableDate, 'slots']).toJS().shift().id
+
+    set(Cookies, 'reload_invalid_delivery_date', '1', 1)
+    dispatch(boxSummaryDeliverySlotChosen({ date: firstAvailableDate, slotId }))
+  } catch (err) {
+    logger.error({ message: err.message, extra: { error: err } })
+    handleReloadMenuError({ dispatch })
+  }
+}
+
+export function menuLoadingError(message) {
+  return {
+    type: actionTypes.MENU_LOADING_ERROR,
+    message,
+  }
 }
 
 export function menuReceiveBoxPrices(prices, tariffId) {
@@ -137,16 +173,21 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
       })
+      unset(Cookies, 'reload_invalid_delivery_date')
     } else {
       dispatch(menuActions.menuReceiveMenuPending(false))
-      if (__SERVER__) {
-        if (!isFacebookUserAgent(state.request.get('userAgent'))) {
-          const error = new Error('Slot is not found in menuLoadMenu')
-          logger.error(error)
-        }
-
-        dispatch(redirect('/menu', true))
+      if (!__SERVER__ || !isFacebookUserAgent(state.request.get('userAgent'))) {
+        const error = new Error('Slot is not found in menuLoadMenu')
+        logger.error({ message: error.message, extra: { error } })
       }
+
+      if (__SERVER__) {
+        dispatch(redirect('/menu', true))
+
+        return
+      }
+
+      reloadPageWhenInvalidDeliveryDate({ dispatch, getState })
     }
   }
 }
