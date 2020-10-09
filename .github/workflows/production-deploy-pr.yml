@@ -52,4 +52,4 @@ jobs:
 
       - name: Echo if production deploy exists
         if: ${{ steps.pull_requests_json.outputs.number }}
-        run: echo "Production deploy \#${{ steps.pull_requests_json.outputs.number }} already exists"
+        run: echo "Production deploy ${{ steps.pull_requests_json.outputs.number }} already exists"
