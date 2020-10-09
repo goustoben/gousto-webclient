@@ -35,5 +35,4 @@ jobs:
           number: "repository.pullRequests.nodes[0]"
 
       - name: Echo number if exists
-        if: ${{ steps.pull_requests_json.outputs.nodes }}
         run: "echo 'PR number found: ${{ steps.pull_requests_json.outputs.number }}'"
