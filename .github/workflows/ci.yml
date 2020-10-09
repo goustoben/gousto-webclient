@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    if: github.event.pull_request.draft == false
+    if: true == false
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
