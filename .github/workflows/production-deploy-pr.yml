@@ -13,12 +13,10 @@ jobs:
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            query find_prod_pr {
-              repository(name: ${{ github.event.repository.name }}, owner: ${{ github.event.repository.owner.name }}) {
-                pullRequests(baseRefName: "develop", labels: ["test-label"], states: ["OPEN"], first: 1) {
-                  nodes {
-                    number
-                  }
+            repository(name: "gousto-webclient", owner: "Gousto") {
+              pullRequests(baseRefName: "develop", labels: ["test-label"], states: [OPEN], first: 1) {
+                nodes {
+                  number
                 }
               }
             }
