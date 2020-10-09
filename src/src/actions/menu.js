@@ -173,7 +173,9 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
       })
-      unset(Cookies, 'reload_invalid_delivery_date')
+      if (!__SERVER__) {
+        unset(Cookies, 'reload_invalid_delivery_date')
+      }
     } else {
       dispatch(menuActions.menuReceiveMenuPending(false))
       if (!__SERVER__ || !isFacebookUserAgent(state.request.get('userAgent'))) {

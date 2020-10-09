@@ -72,7 +72,7 @@ export function get(cookies, key, withVersionPrefix = true) {
   let newCookieValue
   const prefixedKey = withVersionPrefix ? getKey(key) : key
 
-  if (cookies && cookies.get) {
+  if (cookies && typeof cookies.get === 'function') {
     try {
       if (key === 'oauth_token' || key === 'oauth_refresh') {
         let keyWithDeletedValue
@@ -111,7 +111,7 @@ export function get(cookies, key, withVersionPrefix = true) {
 export function set(cookies, key, val, days, withVersionPrefix = true, httpOnly = false, overwrite = false, path = '/', sameSite = 'Lax') {
   const prefixedKey = withVersionPrefix ? getKey(key) : key
 
-  if (cookies) {
+  if (cookies && typeof cookies.set === 'function') {
     if (days) {
       const expires = moment().add(days * 24, 'hours')
       cookies.set(prefixedKey, encode(val), { expires: expires.toDate(), httpOnly, overwrite, path, sameSite })
@@ -126,7 +126,7 @@ export function set(cookies, key, val, days, withVersionPrefix = true, httpOnly 
 export function unset(cookies, key, withVersionPrefix = true, path = '/') {
   const prefixedKey = withVersionPrefix ? getKey(key) : key
 
-  if (cookies) {
+  if (cookies && typeof cookies.set === 'function') {
     cookies.set(prefixedKey, null, { expires: new Date('1970-01-01'), httpOnly: false, path })
     if (__ENV__ === 'production') {
       cookies.set(prefixedKey, null, { expires: new Date('1970-01-01'), httpOnly: false, domain: '.gousto.co.uk', path })
