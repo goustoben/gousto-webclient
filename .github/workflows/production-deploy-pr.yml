@@ -15,7 +15,7 @@ jobs:
           query: |
             query release($owner:String!,$repo:String!) {
               repository(owner:$owner,name:$repo) {
-                pullRequests(baseRefName: "develop", labels: ["test-label"], states: [OPEN], first: 1) {
+                pullRequests(baseRefName: "develop", labels: ["test-label-"], states: [OPEN], first: 1) {
                   nodes {
                     number
                   }
@@ -28,4 +28,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Echo results
-        run: "echo 'PR number found: ${{ steps.get_production_pr_number.outputs.data }}'"
+        run: "echo 'PR number found: ${{ steps.get_production_pr_number.outputs.data.repository.pullRequests.nodes }}'"
