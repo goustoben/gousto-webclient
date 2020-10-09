@@ -30,7 +30,17 @@ describe('Test MenuRecipesPageContainer', () => {
       recipes: Immutable.fromJS([]),
       user: Immutable.fromJS({}),
       auth: Immutable.fromJS({}),
-      boxSummaryDeliveryDays: Immutable.fromJS([])
+      boxSummaryDeliveryDays: Immutable.fromJS([]),
+      request: Immutable.fromJS({
+        browser: 'mobile',
+      }),
+      routing: {
+        locationBeforeTransitions: {
+          query: {
+            collection: 'foo'
+          }
+        }
+      }
     }
     getState = () => (state)
     dispatch = jest.fn()

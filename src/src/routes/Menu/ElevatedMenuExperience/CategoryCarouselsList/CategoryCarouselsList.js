@@ -6,10 +6,11 @@ import css from './CategoryCarouselsList.css'
 
 const CategoryCarouselsList = ({ categories }) => {
   if (!categories.size) return null
+  const categoriesList = categories.toArray()
 
   return (
     <div className={css.categoryCarouselsList}>
-      {categories.map((category) => (
+      {categoriesList.map((category) => (
         <CategoryCarouselContainer key={category.get('id')} category={category} />
       ))}
     </div>
@@ -18,5 +19,4 @@ const CategoryCarouselsList = ({ categories }) => {
 CategoryCarouselsList.propTypes = {
   categories: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
 }
-
 export { CategoryCarouselsList }

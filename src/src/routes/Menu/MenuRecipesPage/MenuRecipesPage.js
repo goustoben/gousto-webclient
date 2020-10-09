@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { CommunicationPanel } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import { CoronaVirusBanner } from 'CoronaVirusBanner'
-
 import menuConfig from 'config/menu'
 import { AppModalContainer } from 'components/AppModal'
 import { CollectionsNavContainer } from '../CollectionsNav'
@@ -16,17 +15,17 @@ import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { RecipeSidesModalContainer } from './RecipeSidesModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
-
+import { CategoriesShortcutsContainer } from '../ElevatedMenuExperience/CategoriesShortcuts'
 import css from './MenuRecipesPage.css'
+import { CategoriesModalContainer } from '../ElevatedMenuExperience/CategoriesModal'
+import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
 }
-
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {
     const { store } = this.context
-
     const {
       orderId,
       params,
@@ -37,23 +36,18 @@ export class MenuRecipesPage extends PureComponent {
       numPortions,
       checkQueryParams
     } = this.props
-
     // if server rendered
     if (orderId && orderId === storeOrderId) {
       basketOrderLoaded(orderId)
     }
-
     const forceDataLoad = (storeOrderId && storeOrderId !== orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
-
     if (forceDataLoad) {
       await store.dispatch(fetchData({ query, params }, forceDataLoad))
     }
-
     if (orderId) {
       portionSizeSelectedTracking(numPortions, orderId)
     }
-
     checkQueryParams()
   }
 
@@ -64,16 +58,14 @@ export class MenuRecipesPage extends PureComponent {
     } else if (!nextProps.menuRecipeDetailShow) {
       window.document.removeEventListener('keyup', this.handleKeyup, false)
     }
-
     loadOptimizelySDK()
-
     // /menu-> /menu/:orderId
     const editingOrder = (nextProps.orderId || orderId) && nextProps.orderId !== orderId
     if (editingOrder) {
       const { store } = this.context
       const query = nextProps.query || {}
       const params = nextProps.params || {}
-      store.dispatch(fetchData({ query, params }, true))
+      store.dispatch(fetchData({query, params }, true))
     }
   }
 
@@ -84,10 +76,9 @@ export class MenuRecipesPage extends PureComponent {
       menuCurrentCollectionId,
       selectCurrentCollection
     } = this.props
-    if (prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
+    if (prevProps.menuCurrentCollectionId && prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
       selectCurrentCollection(menuCurrentCollectionId)
     }
-
     if (!isLoading && prevProps.isLoading !== isLoading) {
       shouldJfyTutorialBeVisible()
     }
@@ -111,10 +102,19 @@ export class MenuRecipesPage extends PureComponent {
       isSignupReductionEnabled,
       showCommunicationPanel,
       menuLoadingErrorMessage,
+      browserType,
+      query
     } = this.props
     const { communicationPanel } = menuConfig
 
     const showError = !!menuLoadingErrorMessage && !stateRecipeCount
+
+    let experimentContent = null
+    if (browserType !== 'mobile') {
+      experimentContent = <CollectionsNavContainer />
+    } else if (!query.collection) {
+      experimentContent = <CategoriesShortcutsContainer />
+    }
 
     return (
       <div>
@@ -133,11 +133,16 @@ export class MenuRecipesPage extends PureComponent {
         ) : null}
         <SubHeaderContainer />
         <MenuDateRangeContainer variant="mobile" />
+        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
+          {experimentContent}
+        </OptimizelyRolloutsContainer>
+        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
+          {!showLoading && <CollectionsNavContainer />}
+        </OptimizelyRolloutsContainer>
         <BannerTastePreferencesContainer />
         <JustForYouTutorial />
         <AppModalContainer key="app-modal" />
-        {!showLoading ? <CollectionsNavContainer /> : null}
-        {stateRecipeCount ? <RecipeGrid /> : null}
+        {stateRecipeCount ? <RecipeGrid browserType={browserType} query={query} /> : null}
         {showError ? (
           <h2 className={css.menuLoadingErrorMessage}>
             {menuLoadingErrorMessage}
@@ -145,6 +150,7 @@ export class MenuRecipesPage extends PureComponent {
         ) : null}
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
+        <CategoriesModalContainer />
       </div>
     )
   }
@@ -154,7 +160,6 @@ export class MenuRecipesPage extends PureComponent {
       userId,
       shouldShowCapacityInfo
     } = this.props
-
     if (shouldShowCapacityInfo) {
       return <CapacityInfo userId={userId} />
     }
@@ -182,7 +187,6 @@ export class MenuRecipesPage extends PureComponent {
     )
   }
 }
-
 MenuRecipesPage.propTypes = {
   showTastePreferencesLoading: PropTypes.bool.isRequired,
   showLoading: PropTypes.bool.isRequired,
@@ -199,7 +203,8 @@ MenuRecipesPage.propTypes = {
   storeOrderId: PropTypes.string,
   numPortions: PropTypes.number,
   query: PropTypes.shape({
-    reload: PropTypes.bool
+    reload: PropTypes.bool,
+    collection: PropTypes.string
   }),
   params: PropTypes.shape({}),
   isSignupReductionEnabled: PropTypes.bool,
@@ -209,8 +214,8 @@ MenuRecipesPage.propTypes = {
   shouldShowCapacityInfo: PropTypes.bool,
   loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
+  browserType: PropTypes.string.isRequired
 }
-
 MenuRecipesPage.defaultProps = {
   menuRecipeDetailShow: '',
   orderId: null,
@@ -225,5 +230,4 @@ MenuRecipesPage.defaultProps = {
   shouldShowCapacityInfo: false,
   menuLoadingErrorMessage: '',
 }
-
 MenuRecipesPage.contextTypes = contextTypes

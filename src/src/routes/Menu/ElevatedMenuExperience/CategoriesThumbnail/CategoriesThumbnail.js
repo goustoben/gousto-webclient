@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import css from './CategoriesThumbnail.css'
 
 export const CategoriesThumbnail = ({ thumbnail }) => (
-  <div>
+  <div className={css.thumbnailContainer}>
     <img src={thumbnail} alt="recipe-from-category" className={css.thumbnail} />
   </div>
 )

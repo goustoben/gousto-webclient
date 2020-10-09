@@ -2,6 +2,7 @@
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS, sizeLG from 'styles/typography.css';
 .shortcutsWrapper {
     height: 112px;
+    margin-bottom: -3rem;
 }
 
 .smallButtons {
@@ -13,7 +14,7 @@
 
 .smallShortcut {
     background-color: White;
-    width: 46%;
+    width: 47%;
     margin: 0.5rem 0.25rem;
     border: none;
     font-size: sizeSM;
