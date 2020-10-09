@@ -13,13 +13,20 @@ jobs:
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            repository(name: "gousto-webclient", owner: "Gousto") {
-              pullRequests(baseRefName: "develop", labels: ["test-label"], states: [OPEN], first: 1) {
-                nodes {
-                  number
+            query release($owner:String!,$repo:String!) {
+              repository(owner:$owner,name:$repo) {
+                releases(first:1) {
+                  nodes {
+                    name
+                    createdAt
+                    tagName
+                    description
+                  }
                 }
               }
             }
+          owner: ${{ github.event.repository.owner.name }}
+          repo: ${{ github.event.repository.name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
