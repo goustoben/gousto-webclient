@@ -32,7 +32,7 @@ jobs:
         uses: gr2m/get-json-paths-action@v1.x
         with:
           json: ${{ steps.get_production_pr_number.outputs.data }}
-          number: "repository.pullRequests.nodes[0]"
+          number: "repository.pullRequests.nodes[0].number"
 
       - name: Echo number if exists
         run: "echo 'PR number found: ${{ steps.pull_requests_json.outputs.number }}'"
