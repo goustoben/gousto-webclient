@@ -7,7 +7,6 @@
   @media ScreenXXSMin {
     padding: 1rem 0 0;
   }
-  
 }
 
 .communicationPanel {
@@ -32,4 +31,10 @@
 
 .cvBanner {
   padding: 13px 0 18px;
+}
+
+.menuLoadingErrorMessage {
+  margin: 2em auto;
+  color: red;
+  text-align: center;
 }

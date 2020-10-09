@@ -109,14 +109,17 @@ export class MenuRecipesPage extends PureComponent {
       showLoading,
       stateRecipeCount,
       isSignupReductionEnabled,
-      showCommunicationPanel
+      showCommunicationPanel,
+      menuLoadingErrorMessage,
     } = this.props
     const { communicationPanel } = menuConfig
 
+    const showError = !!menuLoadingErrorMessage && !stateRecipeCount
+
     return (
       <div>
-        {isSignupReductionEnabled && <div className={css.cvBanner}><CoronaVirusBanner /></div>}
-        {showCommunicationPanel && (
+        {isSignupReductionEnabled ? <div className={css.cvBanner}><CoronaVirusBanner /></div> : null}
+        {showCommunicationPanel ? (
           <div className={css.communicationPanelContainer}>
             <div className={css.communicationPanel}>
               <CommunicationPanel
@@ -127,14 +130,19 @@ export class MenuRecipesPage extends PureComponent {
               />
             </div>
           </div>
-        )}
+        ) : null}
         <SubHeaderContainer />
         <MenuDateRangeContainer variant="mobile" />
         <BannerTastePreferencesContainer />
         <JustForYouTutorial />
         <AppModalContainer key="app-modal" />
-        {!showLoading && <CollectionsNavContainer />}
-        {stateRecipeCount && <RecipeGrid />}
+        {!showLoading ? <CollectionsNavContainer /> : null}
+        {stateRecipeCount ? <RecipeGrid /> : null}
+        {showError ? (
+          <h2 className={css.menuLoadingErrorMessage}>
+            {menuLoadingErrorMessage}
+          </h2>
+        ) : null}
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
       </div>
@@ -200,6 +208,7 @@ MenuRecipesPage.propTypes = {
   userId: PropTypes.string,
   shouldShowCapacityInfo: PropTypes.bool,
   loadOptimizelySDK: PropTypes.func.isRequired,
+  menuLoadingErrorMessage: PropTypes.string,
 }
 
 MenuRecipesPage.defaultProps = {
@@ -213,7 +222,8 @@ MenuRecipesPage.defaultProps = {
   isSignupReductionEnabled: false,
   showCommunicationPanel: false,
   userId: '',
-  shouldShowCapacityInfo: false
+  shouldShowCapacityInfo: false,
+  menuLoadingErrorMessage: '',
 }
 
 MenuRecipesPage.contextTypes = contextTypes

@@ -6,7 +6,7 @@ import {
   clearSelectedRecipeVariants,
   recipeVariantDropdownExpanded,
   selectRecipeSide,
-  unselectRecipeSide
+  unselectRecipeSide, menuLoadingError
 } from '../../actions/menu'
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandData'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
@@ -331,6 +331,19 @@ describe('menu reducer', () => {
             expect(result.get('hasVisitedNonMenuPage')).toBeTruthy()
           })
         })
+      })
+    })
+
+    describe('menuLoadingError action', () => {
+      let result
+
+      beforeEach(() => {
+        result = menuInitialState
+      })
+
+      it('should set menuLoadingErrorMessage to the argument of action', () => {
+        result = menu.menu(result, menuLoadingError('cannot load menu'))
+        expect(result.get('menuLoadingErrorMessage')).toBe('cannot load menu')
       })
     })
   })
