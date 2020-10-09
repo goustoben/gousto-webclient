@@ -8,6 +8,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Get open pull requests
         id: get_production_pr_number
         uses: octokit/graphql-action@v2.x
@@ -40,6 +41,7 @@ jobs:
         if: ${{ !steps.pull_requests_json.outputs.number }}
         uses: peter-evans/create-pull-request@v3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           base: "fake-master"
           title: "Production Deploy" # Maybe tag with status - full/open
           body: "- [ ] ${{ steps.pull_requests_json.outputs.title }}
