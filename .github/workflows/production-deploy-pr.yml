@@ -43,8 +43,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: "fake-master"
           title: "Production Deploy" # Maybe tag with status - full/open
-          body: >-
-            - [ ] ${{ steps.pull_requests_json.outputs.title }}
+          body: "- [ ] ${{ steps.pull_requests_json.outputs.title }}
             (#${{ steps.pull_requests_json.outputs.number }})
             @${{ steps.pull_requests_json.outputs.author }}"
           labels: |
