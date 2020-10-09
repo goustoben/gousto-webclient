@@ -27,5 +27,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Echo results
-        run: "echo 'PR number found: ${{ steps.get_production_pr_number.outputs.data.repository.pullRequests.nodes }}'"
+      - name: Parse response to JSON
+        id: pull_requests_json
+        uses: gr2m/get-json-paths-action@v1.x
+        with:
+          json: ${{ steps.get_production_pr_number.outputs.data }}
+
+      - name: Echo JSON results
+        run: "echo 'PR number found: ${{ steps.pull_requests_json.outputs.repository.pullRequests.nodes }}'"
