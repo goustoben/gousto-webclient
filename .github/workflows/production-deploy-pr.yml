@@ -40,7 +40,6 @@ jobs:
         if: ${{ !steps.pull_requests_json.outputs.number }}
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           base: "fake-master"
           title: "Production Deploy" # Maybe tag with status - full/open
           body: "- [ ] ${{ steps.pull_requests_json.outputs.title }}
