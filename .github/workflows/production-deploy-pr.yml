@@ -17,7 +17,7 @@ jobs:
               repository(owner:$owner,name:$repo) {
                 pullRequests(baseRefName: "develop", labels: ["test-label"], first: 1) {
                   nodes {
-                    title
+                    number
                   }
                 }
               }
