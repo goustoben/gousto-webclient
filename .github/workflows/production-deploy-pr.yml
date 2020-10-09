@@ -15,7 +15,7 @@ jobs:
           query: |
             query release($owner:String!,$repo:String!) {
               repository(owner:$owner,name:$repo) {
-                pullRequests(baseRefName: "develop", labels: ["test-label-"], states: [OPEN], first: 1) {
+                pullRequests(baseRefName: "develop", labels: ["production-deploy"], states: [OPEN], first: 1) {
                   nodes {
                     number
                   }
@@ -33,6 +33,23 @@ jobs:
         with:
           json: ${{ steps.get_production_pr_number.outputs.data }}
           number: "repository.pullRequests.nodes[0].number"
+          title: "repository.pullRequest.nodes[0].title"
+          author: "repository.pullRequest.nodes[0].author.login"
 
-      - name: Echo number if exists
-        run: "echo 'PR number found: ${{ steps.pull_requests_json.outputs.number }}'"
+      - name: Create Production PR if one doesn't exist
+        if: ${{ !steps.pull_requests_json.outputs.number }}
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: "fake-master"
+          title: "Production Deploy" # Maybe tag with status - full/open
+          body: >-
+            - [ ] ${{ steps.pull_requests_json.outputs.title }}
+            (#${{ steps.pull_requests_json.outputs.number }})
+            @${{ steps.pull_requests_json.outputs.author }}"
+          labels: |
+            "production-deploy"
+
+      - name: Echo if production deploy exists
+        if: ${{ steps.pull_requests_json.outputs.number }}
+        run: echo "Production deploy \#${{ steps.pull_requests_json.outputs.number }} already exists"
