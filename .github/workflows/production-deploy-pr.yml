@@ -34,4 +34,4 @@ jobs:
           json: ${{ steps.get_production_pr_number.outputs.data }}
 
       - name: Echo JSON results
-        run: "echo 'PR number found: ${{ steps.pull_requests_json.outputs.repository.pullRequests.nodes }}'"
+        run: "echo 'PR number found: ${{ steps.pull_requests_json.outputs }}'"
