@@ -1,0 +1,35 @@
+name: Create or update Production Deploy PR
+
+on:
+  # Change to push to develop - get this as an input
+  push
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get open pull requests
+        id: get_production_pr_number
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            query find_prod_pr($repo: String!, $owner: String!, $prBase: String!, $labels: [String!], $states: [PullRequestState!], $first: Int!) {
+              repository(name: $repo, owner: $owner) {
+                pullRequests(baseRefName: $prBase, labels: $labels, states: $states, first: $first) {
+                  nodes {
+                    number
+                  }
+                }
+              }
+            }
+          repo: ${{ github.event.repository.name }}
+          owner: ${{ github.event.repository.owner.name }}
+          prBase: "develop"
+          labels: "test-label"
+          states: "OPEN"
+          first: 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Echo results
+        run: "echo 'PR number found: ${{ steps.get_production_pr_number.outputs.data }}'"
