@@ -4,20 +4,12 @@ import Immutable from 'immutable'
 import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
 import { CollectionHeaderWrapperContainer } from '../MenuRecipesPage/CollectionHeader'
+import { CategoriesHeaderContainer } from '../ElevatedMenuExperience/CategoriesHeader'
+import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 import css from '../Menu.css'
 
 class RecipeGrid extends PureComponent {
-  static propTypes = {
-    recipes: PropTypes.instanceOf(Immutable.List),
-    originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
-  }
-
-  static defaultProps = {
-    recipes: null,
-    originalOrderRecipeIds: null,
-  }
-
   state = {
     shouldShowOverlay: false,
   }
@@ -27,7 +19,7 @@ class RecipeGrid extends PureComponent {
   }
 
   render() {
-    const { recipes, originalOrderRecipeIds } = this.props
+    const { recipes, originalOrderRecipeIds, browserType, query } = this.props
     const { shouldShowOverlay } = this.state
 
     return (
@@ -35,10 +27,13 @@ class RecipeGrid extends PureComponent {
         className={css.menuContainer}
         data-testing="menuRecipesList"
       >
+        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
+          {browserType === 'mobile' && query.collection && <CategoriesHeaderContainer />}
+        </OptimizelyRolloutsContainer>
         <CollectionHeaderWrapperContainer />
         {
           recipes === null
-            ? <RecipeListContainer />
+            ? <RecipeListContainer query={query} />
             : <FilteredRecipeListContainer recipes={recipes} originalOrderRecipeIds={originalOrderRecipeIds} />
         }
         <DetailOverlayContainer
@@ -47,6 +42,21 @@ class RecipeGrid extends PureComponent {
       </div>
     )
   }
+}
+
+RecipeGrid.propTypes = {
+  recipes: PropTypes.instanceOf(Immutable.List),
+  originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
+  browserType: PropTypes.string.isRequired,
+  query: PropTypes.shape({
+    collection: PropTypes.string,
+  }),
+}
+
+RecipeGrid.defaultProps = {
+  recipes: null,
+  originalOrderRecipeIds: null,
+  query: {}
 }
 
 export { RecipeGrid }

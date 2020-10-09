@@ -5,6 +5,7 @@ import { CategoriesHeaderContainer } from '../CategoriesHeader'
 import { CategoryCarouselContainer } from '../CategoryCarousel'
 import { DetailOverlayContainer } from '../../DetailOverlay'
 import Loading from '../../Loading'
+import css from './DietaryRequirements.css'
 
 export const DietaryRequirementsPage = (props) => {
   const { recipesForCollections, isMenuLoading } = props
@@ -14,7 +15,7 @@ export const DietaryRequirementsPage = (props) => {
   }
 
   return (
-    <div>
+    <div className={css.dietaryContainer}>
       <CategoriesHeaderContainer categoryTitle="Dietary requirements" />
       {recipesForCollections.map(({ collection }) => (
         collection ? <CategoryCarouselContainer key={collection.get('id')} category={collection} /> : null

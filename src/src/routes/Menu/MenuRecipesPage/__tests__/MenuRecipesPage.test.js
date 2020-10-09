@@ -4,9 +4,11 @@ import { SubHeaderContainer } from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { CollectionsNavContainer } from '../../CollectionsNav'
-import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
+import { MenuRecipesPage as MenuRecipes, MenuRecipesPage } from '../MenuRecipesPage'
 import { CapacityInfo } from '../../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
+import { OptimizelyRolloutsContainer } from '../../../../containers/OptimizelyRollouts'
+import { CategoriesShortcutsContainer } from '../../ElevatedMenuExperience/CategoriesShortcuts'
 
 jest.mock('routes/Menu/SubHeader')
 jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
@@ -31,6 +33,7 @@ describe('initial render', () => {
         userId: '1234',
         isAuthenticated: true,
         loadOptimizelySDK: jest.fn(),
+
       }
       checkQueryParamsSpy = jest.fn()
       SubHeaderContainer.mockReturnValue(<div />)
@@ -43,6 +46,7 @@ describe('initial render', () => {
           showLoading={false}
           checkQueryParams={checkQueryParamsSpy}
           shouldShowCapacityInfo={false}
+          browserType="desktop"
         />,
       )
     })
@@ -56,7 +60,7 @@ describe('initial render', () => {
     })
 
     test('should show a collections nav', () => {
-      expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
+      expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
     })
 
     test('should render these through the RecipGrid component', () => {
@@ -168,7 +172,7 @@ describe('with the collections feature enabled', () => {
         checkQueryParams={() => {}}
       />,
     )
-    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
   })
 })
 
@@ -203,7 +207,7 @@ describe('with the force collections feature enabled', () => {
       />,
     )
 
-    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
   })
   test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
     wrapper = shallow(
@@ -217,7 +221,7 @@ describe('with the force collections feature enabled', () => {
       />,
     )
 
-    expect(wrapper.find(CollectionsNavContainer).length).toBe(1)
+    expect(wrapper.find(CollectionsNavContainer).exists()).toBe(true)
   })
 })
 
@@ -310,5 +314,30 @@ describe('componentWillUnmount', () => {
   test('should call removeEventListener', () => {
     wrapper.unmount()
     expect(window.document.removeEventListener).toHaveBeenCalled()
+  })
+})
+
+describe('when the optimizely rollouts featureEnabled is true', () => {
+  let wrapper
+  beforeEach(() => {
+    const context = {
+      store: {
+        dispatch: jest.fn(),
+      },
+    }
+    context.store.dispatch.mockClear()
+    const query = {
+      collection: null
+    }
+
+    wrapper = shallow(
+      <MenuRecipesPage browserType="mobile" query={query} />,
+      { context }
+    )
+  })
+
+  test('should render OptimizelyRolloutsContainer with featureEnabled true for EMERecipeList', () => {
+    expect(wrapper.find(OptimizelyRolloutsContainer).first().prop('featureEnabled')).toBe(true)
+    expect(wrapper.find(OptimizelyRolloutsContainer).first().find(CategoriesShortcutsContainer)).toHaveLength(1)
   })
 })

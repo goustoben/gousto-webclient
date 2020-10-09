@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { EMERecipeTileContainer } from '../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
 import css from './RecipeList.css'
+import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
+import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
+import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -30,13 +33,36 @@ class RecipeList extends React.PureComponent {
   render() {
     const {
       recipes,
+      browserType,
+      query
     } = this.props
 
     return (
-      <div className={css.emeRecipeList}>
-        {recipes.map((value) =>
-          <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} />
-        )}
+      <div>
+        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
+          {browserType === 'mobile' && !query.collection
+            ? (
+              <div>
+                <CategoryCarouselsListContainer />
+                <ViewAllRecipesButtonContainer />
+              </div>
+            )
+            : (
+              <div className={css.emeRecipeList}>
+                {recipes.map((value) =>
+                  <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} />
+                )}
+              </div>
+            )}
+        </OptimizelyRolloutsContainer>
+        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
+          <div className={css.emeRecipeList}>
+            {recipes.map((value) =>
+              <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} />
+            )}
+          </div>
+        </OptimizelyRolloutsContainer>
+
       </div>
     )
   }
@@ -47,10 +73,15 @@ RecipeList.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   currentCollectionId: PropTypes.string.isRequired,
   trackRecipeOrderDisplayed: PropTypes.func.isRequired,
+  browserType: PropTypes.string.isRequired,
+  query: PropTypes.shape({
+    collection: PropTypes.string
+  }),
 }
 
 RecipeList.defaultProps = {
   originalOrderRecipeIds: Immutable.List([]),
+  query: {}
 }
 
 export { RecipeList }

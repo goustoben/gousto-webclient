@@ -5,7 +5,7 @@ import css from './ViewAllRecipesButton.css'
 
 export const ViewAllRecipesButton = ({ onClick }) => (
   <div className={css.wrapper}>
-    <CTA isFullWidth onClick={onClick}>
+    <CTA isFullWidth onClick={onClick} size="small">
       View all recipes
     </CTA>
   </div>

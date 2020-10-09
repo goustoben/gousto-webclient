@@ -72,7 +72,7 @@ export function get(cookies, key, withVersionPrefix = true) {
   let newCookieValue
   const prefixedKey = withVersionPrefix ? getKey(key) : key
 
-  if (cookies) {
+  if (cookies && cookies.get) {
     try {
       if (key === 'oauth_token' || key === 'oauth_refresh') {
         let keyWithDeletedValue
