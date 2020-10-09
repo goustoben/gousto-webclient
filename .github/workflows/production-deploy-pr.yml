@@ -1,8 +1,9 @@
 name: Create or update Production Deploy PR
 
 on:
-  # Change to push to develop - get this as an input
-  push
+  push:
+    branches:
+      - "fake-develop"
 
 jobs:
   main:
@@ -16,7 +17,7 @@ jobs:
           query: |
             query release($owner:String!,$repo:String!) {
               repository(owner:$owner,name:$repo) {
-                pullRequests(baseRefName: "develop", labels: ["production-deploy"], states: [OPEN], first: 1) {
+                pullRequests(baseRefName: "fake-master", labels: ["production-deploy"], states: [OPEN], first: 1) {
                   nodes {
                     number
                   }
@@ -43,12 +44,14 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           base: "fake-master"
-          title: "Production Deploy" # Maybe tag with status - full/open
+          branch: "fake-develop"
+          title: "Production Deploy"
           body: "- [ ] ${{ steps.pull_requests_json.outputs.title }}
             (#${{ steps.pull_requests_json.outputs.number }})
             @${{ steps.pull_requests_json.outputs.author }}"
           labels: |
             "production-deploy"
+            "accepting features"
 
       - name: Echo if production deploy exists
         if: ${{ steps.pull_requests_json.outputs.number }}
