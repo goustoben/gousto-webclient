@@ -24,9 +24,9 @@ jobs:
             }
           repo: ${{ github.event.repository.name }}
           owner: ${{ github.event.repository.owner.name }}
-          prBase: "develop"
-          labels: "test-label"
-          states: "OPEN"
+          prBase: develop
+          labels: test-label
+          states: OPEN
           first: 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
