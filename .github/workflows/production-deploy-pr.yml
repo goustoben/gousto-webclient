@@ -13,9 +13,9 @@ jobs:
         uses: octokit/graphql-action@v2.x
         with:
           query: |
-            query find_prod_pr($repo: String!, $owner: String!, $prbase: String!, $labels: [String!], $states: [PullRequestState!], $first: Int!) {
+            query find_prod_pr($repo: String!, $owner: String!) {
               repository(name: $repo, owner: $owner) {
-                pullRequests(baseRefName: $prbase, labels: $labels, states: $states, first: $first) {
+                pullRequests(baseRefName: "develop", labels: ["test-label"], states: ["OPEN"], first: 1) {
                   nodes {
                     number
                   }
@@ -24,10 +24,6 @@ jobs:
             }
           repo: ${{ github.event.repository.name }}
           owner: ${{ github.event.repository.owner.name }}
-          prbase: "develop"
-          labels: "test-label"
-          states: "OPEN"
-          first: 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
