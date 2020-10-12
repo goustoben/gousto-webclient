@@ -131,8 +131,14 @@ const menu = {
   },
   menuRecipeDetails: (state = Immutable.Map({}), action) => {
     switch (action.type) {
-    case actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE:
+    case actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE: {
+      if (action.categoryId) {
+        return state.set('recipeId', action.recipeId)
+          .set('categoryId', action.categoryId)
+      }
+
       return state.set('recipeId', action.recipeId)
+    }
 
     default:
       return state

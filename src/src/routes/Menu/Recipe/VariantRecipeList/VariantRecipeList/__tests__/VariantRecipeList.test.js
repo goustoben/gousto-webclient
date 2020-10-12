@@ -374,31 +374,7 @@ describe('VariantRecipeListContainer', () => {
     })
   }
 
-  describe('when menu id is 375', () => {
-    beforeEach(() => {
-      getSidesDataMock.mockReturnValue([])
-      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" />, {
-        context: {
-          store: {
-            dispatch: () => { },
-            getState: () => state,
-            subscribe: () => { }
-          }
-        }
-      })
-    })
-    afterEach(() => {
-      jest.clearAllMocks()
-    })
-    test('should render VariantRecipeList', () => {
-      expect(wrapper.find('VariantRecipeList').exists()).toBe(true)
-    })
-    test('should call getSidesDataMock with originalId', () => {
-      expect(getSidesDataMock.mock.calls[0][1]).toEqual({recipeId: '234'})
-    })
-  })
-
-  describe('when menu id is not 375', () => {
+  describe('when getting variants', () => {
     beforeEach(() => {
       getSidesDataMock.mockReturnValue([])
       wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" />, {
@@ -411,6 +387,7 @@ describe('VariantRecipeListContainer', () => {
                 numPortion: 2,
                 currentMenuId: '373'
               }),
+              menuRecipeDetails: Immutable.Map({})
             }),
             subscribe: () => { }
           }
@@ -419,7 +396,34 @@ describe('VariantRecipeListContainer', () => {
     })
 
     test('should call getSidesDataMock with recipeId', () => {
-      expect(getSidesDataMock.mock.calls[0][1]).toEqual({recipeId: '123'})
+      expect(getSidesDataMock.mock.calls[0][1]).toEqual({recipeId: '123', categoryId: null})
+    })
+  })
+
+  describe('when has category id in props', () => {
+    beforeEach(() => {
+      getSidesDataMock.mockReset()
+      getSidesDataMock.mockReturnValue([])
+      wrapper = shallow(<VariantRecipeListContainer recipeId="123" originalId="234" categoryId="category-1" />, {
+        context: {
+          store: {
+            dispatch: () => { },
+            getState: () => ({
+              ...state,
+              basket: Immutable.fromJS({
+                numPortion: 2,
+                currentMenuId: '373'
+              }),
+              menuRecipeDetails: Immutable.Map({})
+            }),
+            subscribe: () => { }
+          }
+        }
+      })
+    })
+
+    test('should call getSidesDataMock with recipeId', () => {
+      expect(getSidesDataMock.mock.calls[0][1]).toEqual({recipeId: '123', categoryId: 'category-1'})
     })
   })
 

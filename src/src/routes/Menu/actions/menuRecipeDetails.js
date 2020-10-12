@@ -5,7 +5,7 @@ import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
 
-export const menuRecipeDetailVisibilityChange = (recipeId, isViewMoreDetailsClicked) =>
+export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) =>
   (dispatch, getState) => {
     const { recipes } = getState()
     if (recipeId && !recipes.get(recipeId, null)) {
@@ -18,29 +18,21 @@ export const menuRecipeDetailVisibilityChange = (recipeId, isViewMoreDetailsClic
     dispatch({
       type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
       recipeId: baseRecipeId,
+      categoryId,
       trackingData: {
         actionType: trackingKeys.changeMenuRecipeDetailVisibility,
         recipeId: baseRecipeId || getMenuRecipeIdForDetails(getState()),
         show: Boolean(baseRecipeId),
       },
     })
-
-    if (isViewMoreDetailsClicked) {
-      dispatch({
-        type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
-        trackingData: {
-          actionType: 'View Details clicked',
-        }
-      })
-    }
   }
 
-export const showDetailRecipe = (recipeId, isViewMoreDetailsClicked) =>
+export const showDetailRecipe = (recipeId, categoryIds) =>
   (dispatch, getState) => {
     const { boxSummaryShow } = getState()
 
     if (!boxSummaryShow.get('show')) {
-      menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClicked)(dispatch, getState)
+      menuRecipeDetailVisibilityChange(recipeId, categoryIds)(dispatch, getState)
     }
   }
 

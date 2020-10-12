@@ -112,7 +112,11 @@ export const getDefaultCollection = state => {
   return null
 }
 
-export const getCurrentCollectionId = (state) => {
+export const getCurrentCollectionId = (state, props) => {
+  if (props && props.categoryId) {// eslint-disable-line
+    return props.categoryId
+  }
+
   const slug = getCollectionSlugFromQuery(state)
 
   if (slug) {

@@ -1,5 +1,10 @@
 import Immutable from 'immutable'
-import { activeMenuForDate, getMenuLimitsForBasket, validateRecipeAgainstRule, getCurrentMenuRecipes, getActiveMenuIdForOrderDate, isMenuLoading } from '../menu'
+import {
+  activeMenuForDate, getMenuLimitsForBasket,
+  validateRecipeAgainstRule, getCurrentMenuRecipes,
+  getActiveMenuIdForOrderDate, isMenuLoading,
+  getCategoryIdForVariants
+} from '../menu'
 
 describe('getCurrentMenuRecipes', () => {
   test('should return only recipes in the current menu', () => {
@@ -630,4 +635,28 @@ describe('isMenuLoading', () => {
     expect(isMenuLoading.resultFunc(boxSummaryShow, menuBrowseCTAShow, menuLoading, isOptimizelyLoading, forceLoad)).toBe(expected)
   })
 })
+})
+
+describe('getCategoryIdForVariants', () => {
+  let state
+  beforeEach(() => {
+    state = {
+      menuRecipeDetails: Immutable.fromJS({
+        categoryId: 'category-for-detail-screen'
+      })
+    }
+  })
+  describe('when isOnDetailScreen is true', () => {
+    test('should return categoryId from menuRecipeDetails', () => {
+      const result = getCategoryIdForVariants(state, { isOnDetailScreen: true })
+      expect(result).toEqual('category-for-detail-screen')
+    })
+  })
+
+  describe('when isOnDetailScreen is false', () => {
+    test('should return categoryId from props', () => {
+      const result = getCategoryIdForVariants(state, { isOnDetailScreen: false, categoryId: 'category-from-props' })
+      expect(result).toEqual('category-from-props')
+    })
+  })
 })

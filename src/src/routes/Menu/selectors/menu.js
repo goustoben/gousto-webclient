@@ -4,6 +4,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { getRecipes, getMenuRecipeIds } from 'selectors/root'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
+import { getMenuCategoryIdForDetails } from './menuRecipeDetails'
 
 export const getCurrentMenuRecipes = createSelector(
   [getRecipes, getMenuRecipeIds],
@@ -120,5 +121,18 @@ export const isMenuLoading = createSelector(
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
 
     return ((menuLoading || isOptimizelyLoading) && !overlayShow) || forceLoad
+  }
+)
+
+export const getCategoryIdForVariants = createSelector(
+  getMenuCategoryIdForDetails,
+  (_, props) => props.categoryId,
+  (_, props) => props.isOnDetailScreen,
+  (categoryIdFromDetailsScreen, categoryIdFromProps, isOnDetailScreen) => {
+    if (isOnDetailScreen) {
+      return categoryIdFromDetailsScreen
+    }
+
+    return categoryIdFromProps || null
   }
 )

@@ -37,7 +37,7 @@ describe('showDetailRecipe', () => {
       }
       const getStateForTest = () => stateWithTrueBoxSummaryShow
 
-      menuRecipeDetailsActions.showDetailRecipe('1234', false)(dispatch, getStateForTest)
+      menuRecipeDetailsActions.showDetailRecipe('1234')(dispatch, getStateForTest)
     })
 
     test('should call menuRecipeDetailVisibilityChange', () => {
@@ -82,28 +82,6 @@ describe('menuRecipeDetailVisibilityChange', () => {
     getState.mockClear()
   })
 
-  test('should dispatch TRACKING_VIEW_RECIPE_DETAILS action if second param is true', () => {
-    menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('123', true)(dispatch, getState)
-
-    expect(dispatch).toHaveBeenCalledWith({
-      type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
-      trackingData: {
-        actionType: 'View Details clicked',
-      }
-    })
-  })
-
-  test('should not dispatch TRACKING_VIEW_RECIPE_DETAILS action if second param is false', () => {
-    menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('123', false)(dispatch, getState)
-
-    expect(dispatch).not.toHaveBeenCalledWith({
-      type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
-      trackingData: {
-        actionType: 'View Details clicked',
-      }
-    })
-  })
-
   describe('when recipeId is not in the store recipes', () => {
     beforeEach(() => {
       getState.mockReturnValue({
@@ -124,7 +102,7 @@ describe('menuRecipeDetailVisibilityChange', () => {
       })
     })
     test('should not dispatch', () => {
-      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('123', true)(dispatch, getState)
+      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('123')(dispatch, getState)
       expect(dispatch).not.toHaveBeenCalled()
     })
   })
@@ -152,7 +130,7 @@ describe('menuRecipeDetailVisibilityChange', () => {
     })
 
     test('should replace recipeId with the base recipeId', () => {
-      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('789', true)(dispatch, getState)
+      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('789')(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,

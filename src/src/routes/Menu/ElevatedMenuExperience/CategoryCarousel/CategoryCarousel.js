@@ -10,6 +10,7 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked }) => {
 
   const viewAllPath = `/menu?collection=${category.get('slug')}`
   const viewAllLabel = `View (${recipes.size})`
+  const categoryId = category.get('id')
 
   return (
     <div className={css.categoryCarousel}>
@@ -23,7 +24,7 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked }) => {
         <div className={css.categoryCarouselRecipes}>
           {recipes.map((value) => (
             <div key={value.recipe.get('id')} className={css.categoryCarouselRecipeOuter}>
-              <EMERecipeTileContainer recipeId={value.recipe.get('id')} isInCarousel />
+              <EMERecipeTileContainer recipeId={value.recipe.get('id')} categoryId={categoryId} originalId={value.originalId} isInCarousel />
             </div>
           ))}
         </div>

@@ -50,7 +50,7 @@ class RecipeList extends React.PureComponent {
             : (
               <div className={css.emeRecipeList}>
                 {recipes.map((value) =>
-                  <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} />
+                  <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
                 )}
               </div>
             )}
@@ -58,7 +58,7 @@ class RecipeList extends React.PureComponent {
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
           <div className={css.emeRecipeList}>
             {recipes.map((value) =>
-              <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} />
+              <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
             )}
           </div>
         </OptimizelyRolloutsContainer>

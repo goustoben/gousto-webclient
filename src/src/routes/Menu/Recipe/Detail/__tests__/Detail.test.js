@@ -153,75 +153,37 @@ describe('<Detail />', () => {
 
 describe('DetailContainer', () => {
   let wrapper
-  describe('when menu is 375', () => {
-    beforeEach(() => {
-      wrapper = shallow(
-        <DetailContainer
-          isOutOfStock={false}
-          media={Immutable.fromJS([{urls: [{width: 10}]}])}
-          equipment={Immutable.List(['spoon, mixer'])}
-          id="123"
-          title="title"
-          view="detail"
-          youWillNeed={Immutable.List(['spoon', 'fork'])}
-          isChefPrepared={false}
-          count={0}
-          average={0}
-          stock={100}
-          inBasket={false}
-          description="Recipe description"
-        />, {
-          context: {
-            store: {
-              dispatch: () => {},
-              subscribe: () => {},
-              getState: () => ({
-                basket: Immutable.fromJS({
-                  currentMenuId: '375'
-                })
+  beforeEach(() => {
+    wrapper = shallow(
+      <DetailContainer
+        isOutOfStock={false}
+        media={Immutable.fromJS([{urls: [{width: 10}]}])}
+        equipment={Immutable.List(['spoon, mixer'])}
+        id="123"
+        title="title"
+        view="detail"
+        youWillNeed={Immutable.List(['spoon', 'fork'])}
+        isChefPrepared={false}
+        count={0}
+        average={0}
+        stock={100}
+        inBasket={false}
+        description="Recipe description"
+      />, {
+        context: {
+          store: {
+            dispatch: () => {},
+            subscribe: () => {},
+            getState: () => ({
+              basket: Immutable.fromJS({
+                currentMenuId: '377'
               })
-            }
+            })
           }
-        })
-    })
-    test('should send menuWithSides as true', () => {
-      expect(wrapper.find('Detail').prop('menuWithSides')).toBe(true)
-    })
+        }
+      })
   })
-
-  describe('when menu is different than 375', () => {
-    beforeEach(() => {
-      wrapper = shallow(
-        <DetailContainer
-          isOutOfStock={false}
-          media={Immutable.fromJS([{urls: [{width: 10}]}])}
-          equipment={Immutable.List(['spoon, mixer'])}
-          id="123"
-          title="title"
-          view="detail"
-          youWillNeed={Immutable.List(['spoon', 'fork'])}
-          isChefPrepared={false}
-          count={0}
-          average={0}
-          stock={100}
-          inBasket={false}
-          description="Recipe description"
-        />, {
-          context: {
-            store: {
-              dispatch: () => {},
-              subscribe: () => {},
-              getState: () => ({
-                basket: Immutable.fromJS({
-                  currentMenuId: '377'
-                })
-              })
-            }
-          }
-        })
-    })
-    test('should send menuWithSides as false', () => {
-      expect(wrapper.find('Detail').prop('menuWithSides')).toBe(false)
-    })
+  test('should send menuWithSides as false', () => {
+    expect(wrapper.find('Detail').prop('menuWithSides')).toBe(false)
   })
 })
