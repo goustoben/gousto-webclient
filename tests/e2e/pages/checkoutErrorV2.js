@@ -17,7 +17,10 @@ module.exports = {
         },
         cardInfoMissing: {
           selector: '*[data-testing="valid-card-details-not-provided"]',
-        }
+        },
+        promoCodeError: {
+          selector: '*[data-testing="user-promo-invalid"]',
+        },
       },
 
       sections: {
@@ -272,6 +275,10 @@ module.exports = {
           this.waitForElementVisible('@cardInfoMissing')
             .expect.element('@cardInfoMissing').to.be.present.before(1000);
           this.section.payment.setCardExpiryDateEmpty(browser)
+          return this
+        },
+        checkIfPromoCodeErrorVisible: function () {
+          this.waitForElementVisible('@promoCodeError');
           return this
         },
         goToNextStep,

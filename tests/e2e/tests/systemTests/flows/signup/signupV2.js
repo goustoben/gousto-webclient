@@ -2,6 +2,8 @@ module.exports = {
   'Sign-up with checkout.com from /': function (browser) {
     const home = browser.page.home()
     const menu = browser.page.menu()
+    const shared = browser.page.shared()
+    const promoModal = shared.section.body
     const signup = browser.page.signup()
     const checkout = browser.page.checkoutV2()
     const welcome = browser.page.welcome()
@@ -26,6 +28,10 @@ module.exports = {
       .pause(3000)
       .perform(function (done) {
         home.section.hero.goToSignUp()
+        done()
+      })
+      .perform(function (done) {
+        promoModal.submitPromo()
         done()
       })
       .perform(function (done) {
@@ -87,7 +93,6 @@ module.exports = {
         checkout.section.checkoutContainer.goToNextStep()
         done()
       })
-
     }
     browser
       .perform(function (done) {
@@ -105,6 +110,13 @@ module.exports = {
       })
       .perform(function (done) {
         checkout.section.checkoutContainer.goToNextStep()
+        done()
+      })
+      .perform(function (done) {
+        if (checkout.section.checkoutContainer.checkIfPromoCodeErrorVisible()) {
+          checkout.section.checkoutContainer.goToNextStep()
+          done()
+        }
         done()
       })
       .perform(function (done) {

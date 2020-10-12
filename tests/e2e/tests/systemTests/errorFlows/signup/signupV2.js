@@ -2,6 +2,8 @@ module.exports = {
   'Sign-up error for card name with checkout.com from /': function (browser) {
     const home = browser.page.home()
     const menu = browser.page.menu()
+    const shared = browser.page.shared()
+    const promoModal = shared.section.body
     const signup = browser.page.signup()
     const checkout = browser.page.checkoutErrorV2()
     const welcome = browser.page.welcome()
@@ -24,6 +26,10 @@ module.exports = {
       })
       .perform(function (done) {
         home.section.hero.goToSignUp()
+        done()
+      })
+      .perform(function (done) {
+        promoModal.submitPromo()
         done()
       })
       .perform(function (done) {
@@ -85,7 +91,6 @@ module.exports = {
         checkout.section.checkoutContainer.goToNextStep()
         done()
       })
-
     }
     browser
       .perform(function (done) {
@@ -140,6 +145,13 @@ module.exports = {
       .perform(function (done) {
         browser.pause(1000)
         checkout.section.checkoutContainer.goToNextStep()
+        done()
+      })
+      .perform(function (done) {
+        if (checkout.section.checkoutContainer.checkIfPromoCodeErrorVisible()) {
+          checkout.section.checkoutContainer.goToNextStep()
+          done()
+        }
         done()
       })
       .perform(function (done) {

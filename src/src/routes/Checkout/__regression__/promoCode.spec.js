@@ -1,11 +1,13 @@
 import { withPlatformTags, WEB, MOBILE } from '../../../utils/regression/tags'
+import { ACTIVE_PROMO_CODE } from '../../../config/promoCode'
 
-describe("Promo Code", () => {
+describe('Promo Code', () => {
   afterEach(() => {
     cy.clock().then((clock) => {
       clock.restore()
     })
   })
+
   describe('when the url contains a promoCode parameter', () => {
     describe('and the user is logged out ', () => {
       beforeEach(() => {
@@ -14,7 +16,7 @@ describe("Promo Code", () => {
         cy.route('GET', /promocode\/RET-REACTFEB19EMOB/, '@promoCodeDetails').as('promoCodeDetails')
       })
 
-      it("should display the promo modal ", () => {
+      it('should display the promo modal', () => {
         cy.visit('/?promo_code=RET-REACTFEB19EMOB')
         cy.wait(['@promoCodeDetails'])
         cy.get('[data-testing="promoModal"]').contains('You\'ve got 20% off all boxes for a month.').should('exist')
@@ -124,6 +126,26 @@ describe("Promo Code", () => {
         cy.proceedToCheckout({ platform: 'MOBILE' })
 
         checkPricesOnCheckout()
+      })
+    })
+  })
+
+  describe('when a user clicks get started cta', () => {
+    beforeEach(() => {
+      cy.checkoutLoggedOut({ withDiscount: false })
+      cy.fixture('promoCode/promoCodeDetails').as('promoCodeDetails')
+      cy.route('GET', `/promocode/${ACTIVE_PROMO_CODE}`, '@promoCodeDetails').as('promoCodeDetails')
+    })
+
+    describe('and promo code is not applied', () => {
+      beforeEach(() => {
+        cy.get('[data-testing="homepageHeroCTA"]').click()
+        cy.wait(['@promoCodeDetails'])
+      })
+
+      it('then it should be redirected to box-size page and promo modal is hired', () => {
+        cy.get('[data-testing="promoModal"]').should('be.visible')
+        cy.get('[data-testing="promoModal"]').contains('Hooray!').should('exist')
       })
     })
   })

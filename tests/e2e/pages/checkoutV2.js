@@ -14,7 +14,10 @@ module.exports = {
       elements: {
         CTA: {
           selector: '*[data-testing="checkoutCTA"]',
-        }
+        },
+        promoCodeError: {
+          selector: '*[data-testing="user-promo-invalid"]',
+        },
       },
 
       sections: {
@@ -180,6 +183,10 @@ module.exports = {
           browser.pause(1000)
           this.section.payment.setCardSecurityCode(browser)
 
+          return this
+        },
+        checkIfPromoCodeErrorVisible: function () {
+          this.waitForElementVisible('@promoCodeError')
           return this
         },
         goToNextStep,
