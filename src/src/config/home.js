@@ -1,6 +1,7 @@
 import React from 'react'
 import Icon from 'components/Icon'
 import Content from 'containers/Content'
+import { ACTIVE_PROMO_CODE, DEFAULT_PROMO_CODE } from './promoCode'
 
 module.exports = {
   hero: {
@@ -80,8 +81,8 @@ module.exports = {
   promo: {
     // loggedIn|loggedOut|any
     applyIf: 'loggedOut',
-    code: 'DTI-SB-5030',
-    mayCode: 'DTI-SB-P30M',
+    code: DEFAULT_PROMO_CODE,
+    mayCode: ACTIVE_PROMO_CODE,
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
       mayText: 'Get cooking with 30% off any box in your first month',

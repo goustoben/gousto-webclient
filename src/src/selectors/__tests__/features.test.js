@@ -35,7 +35,6 @@ import {
   getBoxPricesPageRedesign,
   getCheckoutRedesign,
   getPricingClarityRedesign,
-  getIsPromoCodeOnGetStartedEnabled,
   getIsLoginModalAppAwarenessEnabled,
   getIsMobileTopBannerAppAwarenessEnabled,
   getIsMobileMenuModalAppAwarenessEnabled,
@@ -96,7 +95,6 @@ describe('when features are defined', () => {
     [getIsMobileMenuModalAppAwarenessEnabled, 'isMobileMenuModalAppAwarenessEnabled'],
     [getIsMyGoustoBannerAppAwarenessEnabled, 'isMyGoustoBannerAppAwarenessEnabled'],
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
-    [getIsPromoCodeOnGetStartedEnabled, 'promoCodeOnGetStarted'],
     [getisNewSSRDeliveriesEnabled, 'isNewSSRDeliveriesEnabled'],
     [getIsPayWithPaypalEnabled, 'payWithPaypal'],
   ]

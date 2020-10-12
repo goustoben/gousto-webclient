@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import { homeActions } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
@@ -32,52 +31,44 @@ describe('home actions', () => {
   describe('Given homeGetStarted is dispatched', () => {
     const { homeGetStarted } = homeActions
 
-    describe('When promoCodeOnGetStarted is not enabled', () => {
+    describe('When promo code is not applied', () => {
       beforeEach(() => {
-        getState.mockReturnValue({
-          features: Immutable.fromJS({
-            promoCodeOnGetStarted: {
-              value: false
-            }
-          })
+        getPromoBannerState.mockReturnValue({
+          hide: false,
+          canApplyPromo: true
         })
       })
 
-      test('If sectionForTracking is not supplied, then just redirect', async () => {
-        await homeGetStarted(CTA_URI)(dispatchSpy, getState)
+      describe('And sectionForTracking is not supplied', () => {
+        test('Then redirect to the next step', async () => {
+          await homeGetStarted(CTA_URI)(dispatchSpy, getState)
 
-        expect(redirect).toHaveBeenCalledWith(CTA_URI)
-        expect(trackGetStarted).not.toHaveBeenCalled()
+          expect(redirect).toHaveBeenCalledWith(CTA_URI)
+          expect(trackGetStarted).not.toHaveBeenCalled()
+        })
       })
 
-      test('If sectionForTracking is supplied, then redirect and send tracking event', async () => {
-        const sectionForTracking = 'testSection'
+      describe('And sectionForTracking is supplied', () => {
+        test('Then redirect and send tracking event', async () => {
+          const sectionForTracking = 'testSection'
 
-        await homeGetStarted(CTA_URI, sectionForTracking)(dispatchSpy, getState)
+          await homeGetStarted(CTA_URI, sectionForTracking)(dispatchSpy, getState)
 
-        expect(redirect).toHaveBeenCalledWith(CTA_URI)
-        expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
+          expect(redirect).toHaveBeenCalledWith(CTA_URI)
+          expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
+        })
       })
     })
 
-    describe('When promoCodeOnGetStarted is enabled', () => {
+    describe('When promo code is applied', () => {
       const promoCode = 'DTI-test-home-actions'
 
-      beforeEach(() => {
-        getState.mockReturnValue({
-          features: Immutable.fromJS({
-            promoCodeOnGetStarted: {
-              value: true
-            }
-          })
-        })
-      })
-
-      describe('When promo banner is hidden', () => {
+      describe('And promo banner is hidden', () => {
         beforeEach(() => {
+          jest.clearAllMocks()
           getPromoBannerState.mockReturnValue({
             hide: true,
-            canApplyPromo: true,
+            canApplyPromo: false,
             promoCode
           })
         })

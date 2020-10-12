@@ -1,7 +1,6 @@
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
 import promoActions from 'actions/promos'
-import { getIsPromoCodeOnGetStartedEnabled } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
 import logger from 'utils/logger'
 
@@ -29,10 +28,7 @@ const attemptToGetStartedWithPromoCode = async (dispatch, state, ctaUri, section
     return false
   }
 
-  dispatch(redirect(ctaUri))
-  if (sectionForTracking) {
-    dispatch(trackGetStarted(sectionForTracking))
-  }
+  getStartedBaseline(dispatch, ctaUri, sectionForTracking)
   dispatch(promoToggleModalVisibility(true))
 
   return true
@@ -42,13 +38,9 @@ export const homeGetStarted = (ctaUri, sectionForTracking) => (
   async (dispatch, getState) => {
     const state = getState()
 
-    if (getIsPromoCodeOnGetStartedEnabled(state)) {
-      const success = await attemptToGetStartedWithPromoCode(dispatch, state, ctaUri, sectionForTracking)
+    const success = await attemptToGetStartedWithPromoCode(dispatch, state, ctaUri, sectionForTracking)
 
-      if (!success) {
-        getStartedBaseline(dispatch, ctaUri, sectionForTracking)
-      }
-    } else {
+    if (!success) {
       getStartedBaseline(dispatch, ctaUri, sectionForTracking)
     }
   }
