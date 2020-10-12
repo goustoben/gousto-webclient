@@ -382,7 +382,36 @@ describe('menu reducer', () => {
           recipeId
         })
         expect(result).toEqual(Immutable.Map({
-          recipeId
+          recipeId,
+        }))
+      })
+      describe('when categoryId is defined in state and action does not have categoryId', () => {
+        test('should set menuRecipeDetails', () => {
+          const recipeId = '123'
+          const result = menu.menuRecipeDetails(Immutable.Map({ categoryId: 'category'}), {
+            type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+            recipeId
+          })
+          expect(result).toEqual(Immutable.Map({
+            recipeId,
+            categoryId: 'category'
+          }))
+        })
+      })
+    })
+
+    describe('when action type MENU_RECIPE_DETAIL_VISIBILITY_CHANGE with categoryId', () => {
+      test('should set menuRecipeDetails recipeId and categoryId', () => {
+        const recipeId = '123'
+        const categoryId = 'category1'
+        const result = menu.menuRecipeDetails(Immutable.Map({}), {
+          type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+          recipeId,
+          categoryId
+        })
+        expect(result).toEqual(Immutable.Map({
+          recipeId,
+          categoryId
         }))
       })
     })
