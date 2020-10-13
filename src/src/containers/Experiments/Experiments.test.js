@@ -26,9 +26,7 @@ describe('Experiments', () => {
             experimentName=""
             isFetchingExperiments={false}
             fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
-          >
-            {children}
-          </Experiments>
+          />
         )
       })
 
@@ -57,8 +55,10 @@ describe('Experiments', () => {
         )
       })
 
-      test('calls children() with the experiment as an argument', () => {
-        expect(children).toHaveBeenCalledWith(experiment)
+      describe('When children is passed as a prop', () => {
+        test('calls children() with the experiment as an argument', () => {
+          expect(children).toHaveBeenCalledWith(experiment)
+        })
       })
     })
   })
@@ -71,9 +71,7 @@ describe('Experiments', () => {
             experimentName="mock-experiment"
             isFetchingExperiments={false}
             fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
-          >
-            {children}
-          </Experiments>
+          />
         )
       })
 
@@ -90,9 +88,7 @@ describe('Experiments', () => {
             experiment={experiment}
             isFetchingExperiments={false}
             fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
-          >
-            {children}
-          </Experiments>
+          />
         )
       })
 
@@ -117,9 +113,7 @@ describe('Experiments', () => {
               experiment={experiment}
               isFetchingExperiments={false}
               fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
-            >
-              {children}
-            </Experiments>
+            />
           )
         })
 

@@ -4,22 +4,30 @@ import React from 'react'
 import css from './DropdownArrow.css'
 import { VariantRecipeListContainer } from '../../VariantRecipeList/VariantRecipeList'
 
-const DropdownArrow = ({ recipeId, originalId, recipeVariants, showDropdown, recipeVariantDropdownExpanded, isInCarousel, categoryId }) => {
+const DropdownArrow = ({
+  recipeId,
+  originalId,
+  recipeVariants,
+  showDropdown,
+  recipeVariantDropdownExpanded,
+  isInCarousel,
+  categoryId,
+  browserType,
+}) => {
   if (!recipeVariants || recipeVariants.size === 0) {
     return null
   }
 
   const onClick = (e) => {
     e.stopPropagation()
-    const recipeToExpand = showDropdown ? null : recipeId
-    recipeVariantDropdownExpanded(recipeToExpand)
+    const recipeData = showDropdown ? null : { recipeId, originalId, categoryId }
+    recipeVariantDropdownExpanded(recipeData)
   }
 
   return (
     <button className={css.arrowContainer} type="button" onClick={onClick}>
-      <div className="test" />
       <span className={showDropdown ? css.arrowUp : css.arrowDown} />
-      {showDropdown
+      {showDropdown && browserType !== 'mobile'
         && (
           <div className={isInCarousel ? css.carouselDropdownListContainer : css.dropdownListContainer}>
             <VariantRecipeListContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
@@ -36,7 +44,8 @@ DropdownArrow.propTypes = {
   showDropdown: PropTypes.bool.isRequired,
   recipeVariantDropdownExpanded: PropTypes.func.isRequired,
   isInCarousel: PropTypes.bool,
-  categoryId: PropTypes.string
+  categoryId: PropTypes.string,
+  browserType: PropTypes.string.isRequired,
 }
 
 DropdownArrow.defaultProps = {

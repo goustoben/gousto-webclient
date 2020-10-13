@@ -5,6 +5,7 @@ import { actionTypes } from './actionTypes'
 import { getAuthUserId } from '../selectors/auth'
 import { shouldFetchExperiments, shouldAssignUserToExperiment } from '../selectors/experiments'
 import statusActions from './status'
+import { experimentBucketedUser } from './trackingKeys'
 
 const { pending } = statusActions
 
@@ -46,6 +47,18 @@ export function removeUserExperiments() {
   }
 }
 
+export function trackBucketedUser({ experimentName, withinExperiment, bucket }) {
+  return {
+    type: actionTypes.EXPERIMENTS_TRACK_USER_BUCKETING,
+    trackingData: {
+      actionType: experimentBucketedUser,
+      experimentName,
+      withinExperiment,
+      bucket
+    }
+  }
+}
+
 export function fetchUserExperiments() {
   return async (dispatch, getState) => {
     const currentState = getState()
@@ -81,6 +94,7 @@ export function assignUserToExperiment(experimentName) {
     try {
       dispatch(pending(actionTypes.EXPERIMENTS_ASSIGNING_USER, true))
       const { data } = await updateUserExperiment(experimentName, sessionId, userId)
+      dispatch(trackBucketedUser({ experimentName, withinExperiment: data.withinExperiment, bucket: data.bucket }))
       dispatch(appendUserExperiment(data))
     } catch (error) {
       logger.error({ message: 'Failed to assign user to an experiment', extra: { error } })

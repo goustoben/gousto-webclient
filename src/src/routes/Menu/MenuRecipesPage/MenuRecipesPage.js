@@ -14,11 +14,13 @@ import { BasketValidationErrorModalContainer } from './BasketValidationErrorModa
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { RecipeSidesModalContainer } from './RecipeSidesModal'
+import { VariantRecipeListModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import { CategoriesShortcutsContainer } from '../ElevatedMenuExperience/CategoriesShortcuts'
 import css from './MenuRecipesPage.css'
 import { CategoriesModalContainer } from '../ElevatedMenuExperience/CategoriesModal'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
+import { ExperimentsContainer } from '../../../containers/Experiments'
 
 const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
@@ -151,6 +153,12 @@ export class MenuRecipesPage extends PureComponent {
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
         <CategoriesModalContainer />
+        <VariantRecipeListModalContainer />
+
+        <ExperimentsContainer experimentName="bucketing-experiment-one" />
+        <ExperimentsContainer experimentName="bucketing-experiment-two" />
+        <ExperimentsContainer experimentName="bucketing-experiment-three" />
+        <ExperimentsContainer experimentName="bucketing-experiment-four" />
       </div>
     )
   }
