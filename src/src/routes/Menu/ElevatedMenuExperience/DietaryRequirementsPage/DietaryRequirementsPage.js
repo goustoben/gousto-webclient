@@ -4,6 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { CategoriesHeaderContainer } from '../CategoriesHeader'
 import { CategoryCarouselContainer } from '../CategoryCarousel'
 import { DetailOverlayContainer } from '../../DetailOverlay'
+import { VariantRecipeListModalContainer } from '../VariantRecipeListModal'
 import Loading from '../../Loading'
 import css from './DietaryRequirements.css'
 
@@ -21,6 +22,7 @@ export const DietaryRequirementsPage = (props) => {
         collection ? <CategoryCarouselContainer key={collection.get('id')} category={collection} /> : null
       ))}
       <DetailOverlayContainer showOverlay />
+      <VariantRecipeListModalContainer />
     </div>
   )
 }

@@ -1,0 +1,57 @@
+@value headingFontStackBold, sizeLG, sizeMD, sizeXS from 'styles/typography.css';
+@value Bluecheese, White, Mackerel from 'styles/colors.css';
+@value ScreenXXSMax, ScreenXXSMin, ScreenXSMax from 'styles/screenSizes.css';
+.variantRecipeListModal {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  width: 100%;
+  border-radius: 0;
+  margin: 0;
+	@media (max-width: 420px) {
+		transform: translate(-50%, 0);
+	}
+}
+
+.variantRecipeListModalTitleWrapper {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  position: relative;
+  padding: 1.25rem 1rem 0.5rem;
+}
+
+.variantRecipeListModalTitle {
+  font-family: headingFontStackBold;
+  font-size: sizeLG;
+  text-align: left;
+  padding-right: 2rem;
+}
+
+.variantRecipeListModalCloseX {
+  composes: closeIcon from 'styles/icons.css';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  padding: 0;
+  background: none;
+}
+
+.variantRecipeListModalContent {
+  text-align: left;
+  margin: 0;
+  padding: 0.25rem 1rem 2rem;
+}
+
+.variantRecipeListModalFooter {
+  margin: 0;
+  padding: 1rem;
+  border-top: 1px solid Mackerel;
+  margin-top: 1rem;
+}
+
+.addASideLabel {
+  font-weight: 600;
+  font-size: sizeXS;
+}

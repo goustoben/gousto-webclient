@@ -59,7 +59,7 @@ const menu = {
     }
 
     case actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED: {
-      return state.set('currentExpandedRecipeVariantsDropdown', action.payload.recipeId)
+      return state.set('currentExpandedRecipeVariantsDropdown', action.payload.recipeData)
     }
 
     case actionTypes.MENU_COLLECTIONS_HEADERS_RECEIVED: {

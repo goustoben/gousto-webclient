@@ -14,6 +14,7 @@ import { BasketValidationErrorModalContainer } from './BasketValidationErrorModa
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { RecipeSidesModalContainer } from './RecipeSidesModal'
+import { VariantRecipeListModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import { CategoriesShortcutsContainer } from '../ElevatedMenuExperience/CategoriesShortcuts'
 import css from './MenuRecipesPage.css'
@@ -151,6 +152,7 @@ export class MenuRecipesPage extends PureComponent {
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
         <CategoriesModalContainer />
+        <VariantRecipeListModalContainer />
       </div>
     )
   }
