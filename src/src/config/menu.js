@@ -11,7 +11,7 @@ module.exports = {
     meta: [
       {
         name: 'description',
-        content: "Explore this week's new Gousto menu. Receive delicious recipes and pre-portioned, fresh ingredients to your door. Choose from up to 40 recipes now!",
+        content: 'Explore this week\'s menu and learn how to cook restaurant grade recipes. Browse through over 50 recipes each week and order your food box today!',
       },
       {
         name: 'keywords',
