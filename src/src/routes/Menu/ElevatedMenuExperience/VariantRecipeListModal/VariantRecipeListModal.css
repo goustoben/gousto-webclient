@@ -55,3 +55,7 @@
   font-weight: 600;
   font-size: sizeXS;
 }
+
+.variantRecipeListOverlayContent {
+  min-height: auto;
+}

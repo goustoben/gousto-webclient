@@ -150,10 +150,18 @@ class Overlay extends React.PureComponent {
       this.node.className = '__goustoOverlayContainer__'
       document.body.setAttribute('data-gousto-overlay-open', 'true')
       document.body.appendChild(this.node)
-      const { from } = this.props
+      const { from, onBackgroundClick } = this.props
       const overlay = (
         <div className={classNames(props.className, css.overlayContainer)}>
-          <div className={css.grey}>&nbsp;</div>
+          <div
+            className={css.grey}
+            onClick={onBackgroundClick}
+            onKeyPress={onBackgroundClick}
+            role="button"
+            tabIndex={0}
+          >
+            &nbsp;
+          </div>
           <div
             className={classNames(props.contentClassName, css[`contentFrom${from}`], css.overlayContent)}
           >
@@ -178,7 +186,8 @@ Overlay.propTypes = {
   contentClassName: PropTypes.string,
   from: PropTypes.string,
   resetScroll: PropTypes.bool,//eslint-disable-line
-  rootId: PropTypes.string //eslint-disable-line
+  rootId: PropTypes.string, //eslint-disable-line
+  onBackgroundClick: PropTypes.func,
 }
 
 Overlay.defaultProps = {
@@ -186,7 +195,8 @@ Overlay.defaultProps = {
   from: 'right',
   resetScroll: false,
   contentClassName: '',
-  className: ''
+  className: '',
+  onBackgroundClick: null,
 }
 
 export default Overlay
