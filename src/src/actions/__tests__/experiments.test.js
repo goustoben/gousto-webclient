@@ -4,6 +4,7 @@ import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
 import * as apis from 'apis/userBucketing'
 import { actionTypes } from '../actionTypes'
+import { experimentBucketedUser } from '../trackingKeys'
 import * as actions from '../experiments'
 
 const mockedCookieGet = safeJestMock(Cookies, 'get')
@@ -90,6 +91,26 @@ describe('experiments Actions', () => {
             bucket: 'control',
             withinExperiment: false,
           }
+        }
+      })
+    })
+  })
+
+  describe('trackBucketedUser', () => {
+    test('returns correct structure', () => {
+      const result = actions.trackBucketedUser({
+        experimentName: 'mock-experiment-name',
+        withinExperiment: true,
+        bucket: 'control'
+      })
+
+      expect(result).toEqual({
+        type: actionTypes.EXPERIMENTS_TRACK_USER_BUCKETING,
+        trackingData: {
+          actionType: experimentBucketedUser,
+          experimentName: 'mock-experiment-name',
+          withinExperiment: true,
+          bucket: 'control'
         }
       })
     })
@@ -273,11 +294,26 @@ describe('experiments Actions', () => {
           expect(mockedUpdateUserExperiment).toHaveBeenCalledWith('mock-experiment', 'mock-session-id', 'mock-user-id')
         })
 
-        test('should append the returned user experiment to state', async () => {
+        test('should call trackBucketedUser', async () => {
           const thunk = actions.assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
           expect(dispatch).toHaveBeenNthCalledWith(2, {
+            type: actionTypes.EXPERIMENTS_TRACK_USER_BUCKETING,
+            trackingData: {
+              actionType: experimentBucketedUser,
+              experimentName: 'mock-experiment',
+              bucket: 'control',
+              withinExperiment: true
+            }
+          })
+        })
+
+        test('should append the returned user experiment to state', async () => {
+          const thunk = actions.assignUserToExperiment('mock-experiment')
+          await thunk(dispatch, getState)
+
+          expect(dispatch).toHaveBeenNthCalledWith(3, {
             type: actionTypes.EXPERIMENTS_APPEND,
             payload: {
               experiment: {
@@ -293,7 +329,7 @@ describe('experiments Actions', () => {
           const thunk = actions.assignUserToExperiment('mock-experiment')
           await thunk(dispatch, getState)
 
-          expect(dispatch).toHaveBeenNthCalledWith(3, {
+          expect(dispatch).toHaveBeenNthCalledWith(4, {
             key: actionTypes.EXPERIMENTS_ASSIGNING_USER,
             type: actionTypes.PENDING,
             value: false
