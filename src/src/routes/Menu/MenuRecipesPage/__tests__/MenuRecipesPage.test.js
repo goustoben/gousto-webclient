@@ -9,6 +9,7 @@ import { CapacityInfo } from '../../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
 import { OptimizelyRolloutsContainer } from '../../../../containers/OptimizelyRollouts'
 import { CategoriesShortcutsContainer } from '../../ElevatedMenuExperience/CategoriesShortcuts'
+import { ExperimentsContainer } from '../../../../containers/Experiments'
 
 jest.mock('routes/Menu/SubHeader')
 jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
@@ -47,7 +48,7 @@ describe('initial render', () => {
           checkQueryParams={checkQueryParamsSpy}
           shouldShowCapacityInfo={false}
           browserType="desktop"
-        />,
+        />
       )
     })
     test('should render 1 SubHeaderContainer', () => {
@@ -93,6 +94,21 @@ describe('initial render', () => {
 
       test('should render CommunicationPanel', () => {
         expect(wrapper.find('CommunicationPanel')).toHaveLength(1)
+      })
+    })
+
+    describe('Given the bucketing A/A test', () => {
+      it('should render 4 experiments containers', () => {
+        expect(wrapper.find(ExperimentsContainer)).toHaveLength(4)
+      })
+
+      it.each([
+        ['bucketing-experiment-one', 0],
+        ['bucketing-experiment-two', 1],
+        ['bucketing-experiment-three', 2],
+        ['bucketing-experiment-four', 3],
+      ])('renders experiment container with experiment name %s', (experimentName, index) => {
+        expect(wrapper.find(ExperimentsContainer).at(index).prop('experimentName')).toBe(experimentName)
       })
     })
   })

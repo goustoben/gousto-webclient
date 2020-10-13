@@ -32,11 +32,12 @@ export class Experiments extends React.PureComponent {
 
 Experiments.defaultProps = {
   experiment: null,
+  children: () => null
 }
 
 Experiments.propTypes = {
   isFetchingExperiments: PropTypes.bool.isRequired,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.func,
   experimentName: PropTypes.string.isRequired,
   fetchOrAssignUserToExperiment: PropTypes.func.isRequired,
   experiment: ImmutablePropTypes.contains({
