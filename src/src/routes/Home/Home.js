@@ -100,7 +100,7 @@ class Home extends React.Component {
           meta={[
             {
               name: 'description',
-              content: 'Our award-winning food boxes make home cooking simple and tasty. We deliver fresh ingredients and delicious recipes 7 days a week. Get started now!',
+              content: 'Change the way you eat with our easy to follow recipes. We deliver fresh boxes of ingredients and delicious recipes 7 days a week. Get started now!',
             },
             {
               name: 'keywords',

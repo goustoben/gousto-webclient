@@ -30,7 +30,7 @@ class BoxPrices extends React.PureComponent {
           meta={[
             {
               name: 'description',
-              content: "Food delivery is simple with Gousto's popular recipe kits. Find the prices for our 2-person box or our family box here. Order your first box now!",
+              content: 'Find prices on our 2 person or family size food boxes. Get free delivery on any day you like & subscribe for convenient fresh food. Order your first box now!',
             },
             {
               name: 'keywords',
