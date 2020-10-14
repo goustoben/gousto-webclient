@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import css from './VariantHeader.css'
 
-const VariantHeader = ({ recipeVariants, isOutOfStock }) => {
+const VariantHeader = ({ recipeVariants, isOutOfStock, isInCarousel }) => {
   if (!recipeVariants || isOutOfStock) {
     return null
   }
@@ -16,7 +17,11 @@ const VariantHeader = ({ recipeVariants, isOutOfStock }) => {
 
   if (recipeVariants.type === 'sides') {
     return (
-      <div className={css.variantHeaderSides}>
+      <div className={ classnames(
+        { [css.variantHeaderSides]: !isInCarousel },
+        { [css.variantHeaderSidesCarousel]: isInCarousel },
+      )}
+      >
         <div className={css.variantHeaderText}>
           Add a side
         </div>
@@ -26,7 +31,11 @@ const VariantHeader = ({ recipeVariants, isOutOfStock }) => {
 
   return (
 
-    <div className={css.variantHeader}>
+    <div className={ classnames(
+      { [css.variantHeader]: !isInCarousel },
+      { [css.variantHeaderCarousel]: isInCarousel },
+    )}
+    >
       <div className={css.variantHeaderText}>
         {recipeVariants.alternatives.size + 1}
         {' '}
@@ -44,10 +53,12 @@ VariantHeader.propTypes = {
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
   isOutOfStock: PropTypes.bool,
+  isInCarousel: PropTypes.bool
 }
 
 VariantHeader.defaultProps = {
   recipeVariants: null,
-  isOutOfStock: false
+  isOutOfStock: false,
+  isInCarousel: false
 }
 export { VariantHeader }

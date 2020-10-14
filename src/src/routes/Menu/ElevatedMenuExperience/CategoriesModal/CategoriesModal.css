@@ -71,8 +71,6 @@
     width: 100%;
     margin-bottom: 0.5rem;
     border-radius: 3px;
-    display: flex;
-    flex-direction: row;
 }
 
 .recipeCount {

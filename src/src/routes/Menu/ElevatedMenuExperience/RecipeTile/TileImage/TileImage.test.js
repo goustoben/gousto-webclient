@@ -114,40 +114,5 @@ describe('<TileImage />', () => {
       expect(wrapper.find('.carouselImageWrapper').length).toEqual(1)
     })
   })
-
-  describe('when in carousel with variant header', () => {
-    test('should find carouselImageWrapper', () => {
-      const showDetailRecipe = jest.fn()
-      const index = 3
-      const recipe = Immutable.fromJS({
-        id: '1234',
-        title: 'Bobs Brilliant Beef Burger',
-        url: 'example.com/food',
-        media: Immutable.fromJS([
-          {
-            src: 'radish.small.jpg',
-            width: 100,
-          },
-          {
-            src: 'radish.medium.jpg',
-            width: 150,
-          },
-          {
-            src: 'radish.large.jpg',
-            width: 200,
-          },
-          {
-            src: 'radish.extraLarge.jpg',
-            width: 250,
-          },
-        ]),
-        cookingTime: 30,
-        cookingTimeFamily: 30
-      })
-      wrapper = shallow(<TileImage isInCarousel showVariantHeader recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
-
-      expect(wrapper.find('.carouselVariantHeaderImageWrapper').length).toEqual(1)
-    })
-  })
 })
 
