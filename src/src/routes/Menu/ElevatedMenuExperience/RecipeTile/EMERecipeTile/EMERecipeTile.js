@@ -45,7 +45,7 @@ const EMERecipeTile = ({
       onClick={onClick}
       onKeyPress={onClick}
     >
-      <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} categoryId={categoryId} isInCarousel={isInCarousel} />
+      <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} categoryId={categoryId} />
       <div
         className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
           [css.recipeTileIsFineDineIn]: isFineDineIn
@@ -53,12 +53,12 @@ const EMERecipeTile = ({
       >
         <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
         {hasTopLeftTag && (
-        <RecipeTag brandTag={brandAvailability} showVariantHeader={showVariantHeader} />
+        <RecipeTag brandTag={brandAvailability} />
         )}
         <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
-          <div>
+          <div className={showVariantHeader && !isInCarousel && css.variantHeaderTileTitle}>
             {hasTopRightTag && (
-            <RecipeTagTitle brandTag={brandTagline} />
+            <RecipeTagTitle brandTag={brandTagline} showVariantHeader={showVariantHeader} />
             )}
             <div
               className={css.titleWrapper}

@@ -6,16 +6,6 @@
     font-weight: bold;
     box-sizing: content-box;
     background: Bluecheese;
-    width: 100%;
-    z-index: 100;
-}
-
-.variantHeaderCarousel {
-    padding: 0.25rem 0;
-    color: White;
-    font-weight: bold;
-    box-sizing: content-box;
-    background: Bluecheese;
     position: absolute;
     width: 100%;
     z-index: 100;

@@ -115,3 +115,10 @@
     justify-content: space-between;
     height: 140px;
 }
+
+.variantHeaderTileTitle {
+    padding-top: 30px;
+    @media ScreenSMMin {
+        padding-top: 0;
+    }
+}
