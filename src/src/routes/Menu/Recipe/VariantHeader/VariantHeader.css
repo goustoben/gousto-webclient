@@ -6,7 +6,9 @@
     font-weight: bold;
     box-sizing: content-box;
     background: Bluecheese;
+    position: absolute;
     width: 100%;
+    z-index: 100;
 }
 
 .variantHeaderSides {
@@ -16,6 +18,18 @@
     box-sizing: content-box;
     background: NewGrey;
     width: 100%;
+    z-index: 100;
+}
+
+.variantHeaderSidesCarousel {
+    padding: 0.25rem 0;
+    color: White;
+    font-weight: bold;
+    box-sizing: content-box;
+    background: NewGrey;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
 }
 
 .variantHeaderText {

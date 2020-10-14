@@ -15,14 +15,11 @@ const TileImage = ({
   lazy,
   onClick,
   recipeId,
-  showVariantHeader,
   isInCarousel,
 }) => {
   let tileImageClass = css.imageWrapper
 
-  if (isInCarousel && showVariantHeader) {
-    tileImageClass = css.carouselVariantHeaderImageWrapper
-  } else if (isInCarousel) {
+  if (isInCarousel) {
     tileImageClass = css.carouselImageWrapper
   }
 
@@ -58,7 +55,6 @@ TileImage.propTypes = {
   onClick: PropTypes.func,
   recipeId: PropTypes.string.isRequired,
   isInCarousel: PropTypes.bool,
-  showVariantHeader: PropTypes.bool,
 }
 
 TileImage.defaultProps = {
@@ -68,7 +64,6 @@ TileImage.defaultProps = {
   maxMediaSize: null,
   lazy: true,
   isInCarousel: false,
-  showVariantHeader: false,
 }
 
 export { TileImage }

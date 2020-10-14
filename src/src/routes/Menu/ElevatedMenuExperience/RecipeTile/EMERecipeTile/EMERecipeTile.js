@@ -51,14 +51,14 @@ const EMERecipeTile = ({
           [css.recipeTileIsFineDineIn]: isFineDineIn
         })}
       >
-        <TileImageContainer recipeId={recipeId} showVariantHeader={showVariantHeader} isInCarousel={isInCarousel} />
+        <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
         {hasTopLeftTag && (
-        <RecipeTag brandTag={brandAvailability} showVariantHeader={showVariantHeader} />
+        <RecipeTag brandTag={brandAvailability} />
         )}
         <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
-          <div>
+          <div className={showVariantHeader && !isInCarousel && css.variantHeaderTileTitle}>
             {hasTopRightTag && (
-            <RecipeTagTitle brandTag={brandTagline} />
+            <RecipeTagTitle brandTag={brandTagline} showVariantHeader={showVariantHeader} />
             )}
             <div
               className={css.titleWrapper}
