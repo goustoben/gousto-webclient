@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { loadOrderById } from 'actions/getHelp'
 import { loadTrackingUrl } from '../../../actions/getHelp'
-import { DontKnowWhenContainer } from '../DontKnowWhenContainer'
+import { DidntArriveContainer } from '../DidntArriveContainer'
 import {
   getAccessToken,
   getIsLoadOrderError,
@@ -49,7 +49,7 @@ const EMPTY_STORE = createStore(
 )
 let wrapper
 
-describe('Given DontKnowWhenContainer mounts', () => {
+describe('Given DidntArriveContainer mounts', () => {
   beforeAll(() => {
     getAccessToken.mockReturnValue(ACCESS_TOKEN)
     getOrderDeliveryDate.mockReturnValue(DELIVERY_DATE)
@@ -57,15 +57,15 @@ describe('Given DontKnowWhenContainer mounts', () => {
     getTrackingUrl.mockReturnValue(TRACKING_URL)
 
     wrapper = mount(
-      <DontKnowWhenContainer
+      <DidntArriveContainer
         params={PARAMS}
         store={EMPTY_STORE}
       />
     )
   })
 
-  test('the container connects with the DontKnowWhen component', () => {
-    expect(wrapper.find('DontKnowWhen')).toHaveLength(1)
+  test('the container connects with the DidntArrive component', () => {
+    expect(wrapper.find('DidntArrive')).toHaveLength(1)
   })
 
   test.each([
@@ -75,7 +75,7 @@ describe('Given DontKnowWhenContainer mounts', () => {
     ['getTrackingUrl', 'trackingUrl', TRACKING_URL],
   ])('the container connects the result of the selector %s to the %s prop of the component',
     (_selectorName, prop, expectedValue) => {
-      expect(wrapper.find('DontKnowWhen').prop(prop))
+      expect(wrapper.find('DidntArrive').prop(prop))
         .toEqual(expectedValue)
     }
   )
@@ -96,7 +96,7 @@ describe.each([
   describe('When DeliveryCompensationContainer mounts', () => {
     beforeEach(() => {
       wrapper = mount(
-        <DontKnowWhenContainer
+        <DidntArriveContainer
           params={PARAMS}
           store={EMPTY_STORE}
         />
@@ -105,7 +105,7 @@ describe.each([
 
     test(`the container passes ${propName} to the Component as ${returnValue}`, () => {
       expect(
-        wrapper.find('DontKnowWhen').prop(propName)
+        wrapper.find('DidntArrive').prop(propName)
       ).toBe(returnValue)
     })
   })
@@ -118,7 +118,7 @@ describe.each([
   beforeAll(() => {
     selector.mockReturnValueOnce('')
     wrapper = mount(
-      <DontKnowWhenContainer
+      <DidntArriveContainer
         params={PARAMS}
         store={EMPTY_STORE}
       />

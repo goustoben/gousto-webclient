@@ -3,50 +3,46 @@ import { browserHistory } from 'react-router'
 import { mount } from 'enzyme'
 import { safeJestMock } from '_testing/mocks'
 import * as timeUtils from '../../../utils/time'
-import { DontKnowWhen } from '../DontKnowWhen'
+import { DidntArrive } from '..'
 
 safeJestMock(timeUtils, 'compareTodayToDeliveryDate')
+browserHistory.push = jest.fn()
 
-describe('DontKnowWhen', () => {
-  const ACCESS_TOKEN = 'asdf123asdf'
-  const DELIVERY_DATE = '2020-10-08 01:02:03'
-  const DELIVERY_SLOT = {
-    deliveryStart: '2020-10-08 08:00:00',
-    deliveryEnd: '2020-10-08 18:00:00',
-  }
-  const ORDER_ID = '8888'
-  const USER_ID = '4444'
-  const TRACKING_URL = 'https://wonder-courier.com/order/4444'
-  const loadOrderByIdMock = jest.fn()
-  const loadTrackingUrlMock = jest.fn()
-  const PROPS = {
-    accessToken: ACCESS_TOKEN,
-    deliveryDate: DELIVERY_DATE,
-    deliverySlot: DELIVERY_SLOT,
-    isLoadOrderError: false,
-    isOrderLoading: false,
-    isTrackingUrlLoading: false,
-    loadOrderById: loadOrderByIdMock,
-    loadTrackingUrl: loadTrackingUrlMock,
-    params: { orderId: ORDER_ID, userId: USER_ID },
-    trackingUrl: TRACKING_URL,
-  }
-  browserHistory.push = jest.fn()
-  let wrapper
+const ACCESS_TOKEN = 'asdf123asdf'
+const DELIVERY_DATE = '2020-10-08 01:02:03'
+const DELIVERY_SLOT = {
+  deliveryStart: '2020-10-08 08:00:00',
+  deliveryEnd: '2020-10-08 18:00:00',
+}
+const ORDER_ID = '8888'
+const USER_ID = '4444'
+const TRACKING_URL = 'https://wonder-courier.com/order/4444'
+const loadOrderByIdMock = jest.fn()
+const loadTrackingUrlMock = jest.fn()
+const PROPS = {
+  accessToken: ACCESS_TOKEN,
+  deliveryDate: DELIVERY_DATE,
+  deliverySlot: DELIVERY_SLOT,
+  isLoadOrderError: false,
+  isOrderLoading: false,
+  isTrackingUrlLoading: false,
+  loadOrderById: loadOrderByIdMock,
+  loadTrackingUrl: loadTrackingUrlMock,
+  params: { orderId: ORDER_ID, userId: USER_ID },
+  trackingUrl: TRACKING_URL,
+}
+let wrapper
 
+describe('DidntArrive', () => {
   beforeEach(() => {
-    wrapper = mount(<DontKnowWhen {...PROPS} />)
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
+    mount(<DidntArrive {...PROPS} />)
   })
 
   test('renders without crashing', () => {})
 
   describe('When the component mounts and the deliveryDate is not available', () => {
     beforeEach(() => {
-      mount(<DontKnowWhen {...PROPS} deliveryDate="" />)
+      mount(<DidntArrive {...PROPS} deliveryDate="" />)
     })
 
     test('fetches the order which Id is passed as a URL param', () => {
@@ -59,7 +55,7 @@ describe('DontKnowWhen', () => {
 
   describe('When the component mounts and the trackingUrl is not available', () => {
     beforeEach(() => {
-      mount(<DontKnowWhen {...PROPS} trackingUrl="" />)
+      mount(<DidntArrive {...PROPS} trackingUrl="" />)
     })
 
     test('fetches the trackingUrl of the order which Id is passed as a URL param', () => {
@@ -71,7 +67,7 @@ describe('DontKnowWhen', () => {
     describe('and today is before the delivery day', () => {
       beforeEach(() => {
         timeUtils.compareTodayToDeliveryDate.mockReturnValue('before')
-        wrapper = mount(<DontKnowWhen {...PROPS} />)
+        wrapper = mount(<DidntArrive {...PROPS} />)
       })
 
       test('renders <BeforeDeliveryDay>', () => {
@@ -89,7 +85,7 @@ describe('DontKnowWhen', () => {
     describe('and today is the delivery day', () => {
       beforeEach(() => {
         timeUtils.compareTodayToDeliveryDate.mockReturnValue('on')
-        wrapper = mount(<DontKnowWhen {...PROPS} />)
+        wrapper = mount(<DidntArrive {...PROPS} />)
       })
 
       describe('and the trackingUrl is available', () => {
@@ -135,10 +131,10 @@ describe('DontKnowWhen', () => {
     describe('and today is after the delivery day', () => {
       beforeEach(() => {
         timeUtils.compareTodayToDeliveryDate.mockReturnValue('after')
-        wrapper = mount(<DontKnowWhen {...PROPS} />)
+        wrapper = mount(<DidntArrive {...PROPS} />)
       })
 
-      test('redirects to the /didnt-arrive validation flow, embedding the correct userId and orderId in the URL', () => {
+      test('redirects to the /didnt-arrive/validation, embedding the correct userId and orderId in the URL', () => {
         expect(browserHistory.push).toHaveBeenCalledWith(
           `/get-help/user/${USER_ID}/order/${ORDER_ID}/delivery/didnt-arrive/validation`
         )

@@ -18,6 +18,7 @@ import { IngredientReasons } from './IngredientReasons'
 import { IngredientIssues as EligibilityCheckIngredientIssues } from './EligibilityCheck/IngredientIssues'
 import { RecipeCards } from './RecipeCards'
 import { Refund } from './Refund'
+import { DidntArrive } from './Delivery/DidntArrive'
 
 const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
@@ -38,7 +39,12 @@ const getHelpRoutes = (store) => {
     return checkValidSession(store, redirectTo)(routes, replace, next)
   }
 
-  const { index, delivery, dontKnowWhenTemplate } = configRoutes.client.getHelp
+  const {
+    index,
+    delivery,
+    didntArriveTemplate,
+    dontKnowWhenTemplate
+  } = configRoutes.client.getHelp
   const { login } = configRoutes.client
 
   return (
@@ -56,6 +62,10 @@ const getHelpRoutes = (store) => {
         <Route
           path={dontKnowWhenTemplate}
           component={DontKnowWhen}
+        />
+        <Route
+          path={didntArriveTemplate}
+          component={DidntArrive}
         />
         {Confirmation}
         {Contact}
