@@ -399,6 +399,7 @@ describe('collectionTransformer', () => {
       recipesInCollection: ['2106'],
       isFeaturedCategory: false,
       featuredCategoryOrder: 0,
+      carouselConfig: null
     },
     {
       colour: '#6ACBB8',
@@ -412,6 +413,7 @@ describe('collectionTransformer', () => {
       recipesInCollection: [],
       isFeaturedCategory: false,
       featuredCategoryOrder: 0,
+      carouselConfig: null
     }]
 
     const result = collectionsTransformer(menuServiceResponse.data[0], menuServiceResponse)
@@ -426,7 +428,7 @@ describe('collectionTransformer', () => {
   })
 
   describe('when menu has featured categories', () => {
-    test('should return undefined', () => {
+    test('should return feature category options', () => {
       const expectedFormat = [{
         colour: '#D8A958',
         description: "All the week's chicken recipes",
@@ -473,6 +475,118 @@ describe('collectionTransformer', () => {
       }
       const result = collectionsTransformer(menu, menuServiceResponse)
       expect(result).toEqual(expectedFormat)
+    })
+
+    describe('when feature categories does not have metadata', () => {
+      test('should return categoryDetails as undefined', () => {
+        const expectedFormat = [{
+          colour: '#D8A958',
+          description: "All the week's chicken recipes",
+          id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
+          order: 400,
+          published: true,
+          shortTitle: 'Chicken',
+          slug: 'chicken',
+          requirements: {},
+          recipesInCollection: ['2106'],
+          isFeaturedCategory: true,
+          featuredCategoryOrder: 0,
+          categoryDetails: undefined
+        },
+        {
+          colour: '#6ACBB8',
+          description: 'Easy, speedy recipes for busy days',
+          id: 'bc5fc11e-afbf-11e8-9691-0645394f11eae',
+          order: 200,
+          published: true,
+          shortTitle: '10-Minute Meals',
+          slug: '10-minute-meals',
+          requirements: {},
+          recipesInCollection: [],
+          isFeaturedCategory: true,
+          featuredCategoryOrder: 1,
+          categoryDetails: undefined
+        }]
+        const menu = {
+          ...menuServiceResponse.data[0],
+          relationships: {
+            ...menuServiceResponse.data[0].relationships,
+            featured_categories: {
+              data: [
+                {
+                  id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
+                  type: 'collection'
+                },
+                {
+                  id: 'bc5fc11e-afbf-11e8-9691-0645394f11eae',
+                  type: 'collection'
+                },
+              ]
+            },
+          }
+        }
+        const result = collectionsTransformer(menu, menuServiceResponse)
+        expect(result).toEqual(expectedFormat)
+      })
+    })
+
+    describe('when feature categories has metadata', () => {
+      test('should return categoryDetails', () => {
+        const meta = {
+          title: 'Chicken',
+          description: "All the week's chicken recipes",
+          styleSlug: 'default'
+        }
+
+        const expectedFormat = [{
+          colour: '#D8A958',
+          description: "All the week's chicken recipes",
+          id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
+          order: 400,
+          published: true,
+          shortTitle: 'Chicken',
+          slug: 'chicken',
+          requirements: {},
+          recipesInCollection: ['2106'],
+          isFeaturedCategory: true,
+          featuredCategoryOrder: 0,
+          carouselConfig: meta
+        }]
+        const menu = {
+          ...menuServiceResponse.data[0],
+          relationships: {
+            ...menuServiceResponse.data[0].relationships,
+            collections: {
+              data: [
+                {
+                  id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
+                  type: 'collection',
+                  relationships: {
+                    recipes: {
+                      data: [
+                        {
+                          type: 'recipes',
+                          id: '3a1f873f-8a62-4ca8-a842-32ca52bee9d5',
+                          core_recipe_id: '2106'
+                        },
+                      ]
+                    }
+                  }
+                }, ]},
+            featured_categories: {
+              data: [
+                {
+                  id: 'a4f1eb8e-2eda-11e9-81ec-06399ef4685e',
+                  type: 'collection',
+                  meta
+                },
+              ]
+            },
+          }
+        }
+        const result = collectionsTransformer(menu, menuServiceResponse)
+        expect(result).toEqual(expectedFormat)
+      })
     })
   })
 })

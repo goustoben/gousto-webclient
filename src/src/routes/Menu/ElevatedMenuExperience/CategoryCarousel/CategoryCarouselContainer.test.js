@@ -70,6 +70,11 @@ describe('CategoryCarouselContainer', () => {
       category,
       recipes: [],
       categoryButtonClicked: expect.any(Function),
+      carouselConfig: {
+        styleSlug: 'default',
+        title: 'Category',
+        theme: {}
+      },
     })
   })
 })

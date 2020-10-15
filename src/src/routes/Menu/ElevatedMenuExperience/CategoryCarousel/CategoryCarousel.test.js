@@ -10,6 +10,19 @@ describe('RecipeCategoriesCarousel', () => {
     shortTitle: 'Category 1',
     slug: 'category-1',
   })
+
+  const carouselConfig = {
+    title: 'Category 1',
+    styleSlug: 'category-1',
+    theme: {
+      color: '#333D47',
+      backgroundColor: '#F4F7FA',
+      linkColor: '#615CFF',
+      titleColor: '#333D47',
+      fdiStyling: true
+    }
+  }
+
   const recipe1 = {
     originalId: '1',
     recipe: Immutable.Map({
@@ -38,7 +51,7 @@ describe('RecipeCategoriesCarousel', () => {
   describe('when there are no recipes in category', () => {
     test('then it should render nothing', () => {
       const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={[]} />,
+        <CategoryCarousel category={category} recipes={[]} carouselConfig={carouselConfig} />,
       )
 
       expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(0)
@@ -48,7 +61,7 @@ describe('RecipeCategoriesCarousel', () => {
   describe('when there is one recipe in category', () => {
     test('then it should render one EMERecipeTileContainer', () => {
       const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes1} />,
+        <CategoryCarousel category={category} recipes={recipes1} carouselConfig={carouselConfig} />,
       )
 
       expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(1)
@@ -57,7 +70,7 @@ describe('RecipeCategoriesCarousel', () => {
 
     test('then it should render View link with 1 recipe', () => {
       const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes1} />,
+        <CategoryCarousel category={category} recipes={recipes1} carouselConfig={carouselConfig} />,
       )
       const viewAllPath = `/menu?collection=${category.get('slug')}`
 
@@ -70,7 +83,7 @@ describe('RecipeCategoriesCarousel', () => {
   describe('when there are multiple recipes', () => {
     test('then it should render multiple EMERecipeTileContainer', () => {
       const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes2} />,
+        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />,
       )
 
       expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(2)
@@ -78,7 +91,7 @@ describe('RecipeCategoriesCarousel', () => {
 
     test('then it should render View link with 2 recipes', () => {
       const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes2} />,
+        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />,
       )
 
       expect(wrapper.find('.categoryViewAllLink').find('GoustoLink').children().first()

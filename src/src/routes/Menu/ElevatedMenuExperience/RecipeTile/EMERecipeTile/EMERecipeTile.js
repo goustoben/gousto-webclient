@@ -21,7 +21,8 @@ const EMERecipeTile = ({
   isInCarousel,
   brandTagline,
   brandAvailability,
-  categoryId
+  categoryId,
+  fdiStyling
 }) => {
   if (!recipe) {
     return null
@@ -40,7 +41,7 @@ const EMERecipeTile = ({
     <div
       role="button"
       tabIndex={0}
-      className={css.recipeTile}
+      className={classnames(isInCarousel ? css.carouselRecipeTile : css.recipeTile)}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       onClick={onClick}
       onKeyPress={onClick}
@@ -48,7 +49,7 @@ const EMERecipeTile = ({
       <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} categoryId={categoryId} />
       <div
         className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
-          [css.recipeTileIsFineDineIn]: isFineDineIn
+          [css.recipeTileIsFineDineIn]: isFineDineIn && fdiStyling
         })}
       >
         <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
@@ -96,6 +97,7 @@ EMERecipeTile.propTypes = {
   recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isInCarousel: PropTypes.bool,
   categoryId: PropTypes.string,
+  fdiStyling: PropTypes.bool
 }
 
 EMERecipeTile.defaultProps = {
@@ -103,7 +105,8 @@ EMERecipeTile.defaultProps = {
   brandTagline: null,
   brandAvailability: null,
   isInCarousel: false,
-  categoryId: null
+  categoryId: null,
+  fdiStyling: true
 }
 
 export { EMERecipeTile }

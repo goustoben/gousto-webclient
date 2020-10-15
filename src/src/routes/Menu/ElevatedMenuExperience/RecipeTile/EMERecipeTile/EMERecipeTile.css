@@ -28,6 +28,7 @@
     display: flex;
     flex-direction: row;
     background-color: White;
+    color:  Blackberry;
     position: relative;
     @media ScreenSMMin {
         flex-direction: column;
@@ -81,11 +82,6 @@
     }
 }
 
-.recipeTileIsFineDineIn {
-    background: Blackberry;
-    color: White;
-}
-
 .recipeTileContainer:hover {
     box-shadow: 0 4px 14px 0 rgba(51, 61, 71, 0.2);
     cursor: pointer;
@@ -97,12 +93,18 @@
 
 /* carousel */
 
+.carouselRecipeTile {
+    width: 100%;
+    position: relative;
+    flex-direction: column;
+}
+
 .carouselRecipeTileContainer {
     display: flex;
     flex-direction: column;
     background-color: White;
+    color:  Blackberry;
     position: relative;
-    margin: 0 0.75rem 1rem 0;
     height: 350px;
     width: 230px;
 }
@@ -121,4 +123,9 @@
     @media ScreenSMMin {
         padding-top: 0;
     }
+}
+
+.recipeTileIsFineDineIn {
+    background: Blackberry;
+    color: White;
 }
