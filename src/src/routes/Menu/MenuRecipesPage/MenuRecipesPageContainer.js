@@ -12,12 +12,13 @@ import { getIsAuthenticated } from 'selectors/auth'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getLoadingStateForOrder, getUserId } from 'selectors/user'
 import { getBrowserType } from 'selectors/browser'
-import { menuRecipeDetailVisibilityChange, checkQueryParams } from '../actions/menuRecipeDetails'
+import { checkQueryParams } from '../actions/menuRecipeDetails'
 import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCurrentCollectionId } from '../selectors/collections'
 import { isMenuLoading } from '../selectors/menu'
+import fetchData from '../fetchData'
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -30,7 +31,6 @@ const mapStateToProps = (state, ownProps) => {
   return ({
     showTastePreferencesLoading: getIsTastePreferencesEnabled(state),
     stateRecipeCount: getRecipes(state).size,
-    menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     menuCurrentCollectionId: collectionId,
     showLoading: isMenuLoading(state),
     orderId: params.orderId,
@@ -50,10 +50,10 @@ const mapDispatchToProps = {
   checkQueryParams,
   shouldJfyTutorialBeVisible,
   selectCurrentCollection: changeCollectionById,
-  detailVisibilityChange: menuRecipeDetailVisibilityChange,
   basketOrderLoaded: actions.basketOrderLoaded,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   loadOptimizelySDK,
+  fetchMenuData: fetchData,
 }
 
 const MenuRecipesPageContainer = connect(mapStateToProps, mapDispatchToProps)(MenuRecipesPage)

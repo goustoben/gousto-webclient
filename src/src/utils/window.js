@@ -1,3 +1,7 @@
+export function isWindowDefined() {
+  return typeof window === 'object'
+}
+
 export function redirect(path) {
   window.location.assign(path)
 }
@@ -29,6 +33,7 @@ export function windowOpen(url) {
   window.open(url, '_blank', 'noopener noreferrer')
 }
 
+// eslint-disable-next-line import/no-default-export
 export default {
   getWindow,
   documentLocation,

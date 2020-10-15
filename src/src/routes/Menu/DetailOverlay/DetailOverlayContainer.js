@@ -7,6 +7,7 @@ import { getRecipeOutOfStock, getSelectedRecipeSidesFromMenu } from '../selector
 import { DetailOverlay } from './DetailOverlay'
 import { getBasketRecipes } from '../../../selectors/basket'
 import { getCurrentMenuVariants } from '../selectors/variants'
+import { menuRecipeDetailVisibilityChange } from '../actions/menuRecipeDetails'
 
 // this is very similar to getBasketRecipesWithSidesBaseId
 const getSidesInBasketForBaseRecipe = createSelector(
@@ -70,6 +71,10 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const DetailOverlayContainer = connect(mapStateToProps, {})(DetailOverlay)
+const mapDispatchToProps = {
+  onCloseOverlay: menuRecipeDetailVisibilityChange,
+}
+
+const DetailOverlayContainer = connect(mapStateToProps, mapDispatchToProps)(DetailOverlay)
 
 export { DetailOverlayContainer }

@@ -5,7 +5,7 @@ import Link from 'Link'
 import css from './CategoryCarousel.css'
 import { EMERecipeTileContainer } from '../RecipeTile/EMERecipeTile'
 
-const CategoryCarousel = ({ category, recipes, categoryButtonClicked }) => {
+const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselConfig }) => {
   if (!recipes.size) return null
 
   const viewAllPath = `/menu?collection=${category.get('slug')}`
@@ -13,18 +13,34 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked }) => {
   const categoryId = category.get('id')
 
   return (
-    <div className={css.categoryCarousel}>
+    <div className={css.categoryCarousel} style={{backgroundColor: carouselConfig.theme.backgroundColor, color: carouselConfig.theme.color}}>
       <div className={css.categoryDetails}>
-        <div className={css.categoryTitle}>{category.get('shortTitle')}</div>
-        <Link className={css.categoryViewAllLink} to={viewAllPath} clientRouted onClick={categoryButtonClicked}>
+        <div className={css.categoryTitle} style={{color: carouselConfig.theme.titleColor}}>{carouselConfig.title}</div>
+        <Link
+          className={css.categoryViewAllLink}
+          to={viewAllPath}
+          clientRouted
+          onClick={categoryButtonClicked}
+          style={{
+            color: carouselConfig.theme.linkColor
+          }}
+        >
           {viewAllLabel}
         </Link>
       </div>
+      {
+        carouselConfig.description
+           && (
+           <p className={css.categoryDescription}>
+             {carouselConfig.description}
+           </p>
+           )
+      }
       <div className={css.categoryCarouselInner}>
         <div className={css.categoryCarouselRecipes}>
           {recipes.map((value) => (
             <div key={value.recipe.get('id')} className={css.categoryCarouselRecipeOuter}>
-              <EMERecipeTileContainer recipeId={value.recipe.get('id')} categoryId={categoryId} originalId={value.originalId} isInCarousel />
+              <EMERecipeTileContainer recipeId={value.recipe.get('id')} categoryId={categoryId} originalId={value.originalId} isInCarousel fdiStyling={carouselConfig.theme.fdiStyling} />
             </div>
           ))}
         </div>
@@ -36,7 +52,22 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked }) => {
 CategoryCarousel.propTypes = {
   category: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-  categoryButtonClicked: PropTypes.func.isRequired
+  categoryButtonClicked: PropTypes.func.isRequired,
+  carouselConfig: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    theme: PropTypes.shape({
+      color: PropTypes.string,
+      backgroundColor: PropTypes.string,
+      linkColor: PropTypes.string,
+      titleColor: PropTypes.string,
+      fdiStyling: PropTypes.bool
+    })
+  })
+}
+
+CategoryCarousel.defaultProps = {
+  carouselConfig: {}
 }
 
 export { CategoryCarousel }

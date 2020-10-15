@@ -9,7 +9,6 @@ import { RecipeGrid } from '../RecipeGrid'
 import { JustForYouTutorial } from '../JustForYouTutorial'
 import { SubHeaderContainer } from '../SubHeader'
 import Loading from '../Loading'
-import fetchData from '../fetchData'
 import { BasketValidationErrorModalContainer } from './BasketValidationErrorModal'
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
@@ -27,7 +26,6 @@ const contextTypes = {
 }
 export class MenuRecipesPage extends PureComponent {
   async componentDidMount() {
-    const { store } = this.context
     const {
       orderId,
       params,
@@ -36,7 +34,8 @@ export class MenuRecipesPage extends PureComponent {
       query,
       portionSizeSelectedTracking,
       numPortions,
-      checkQueryParams
+      checkQueryParams,
+      fetchMenuData,
     } = this.props
     // if server rendered
     if (orderId && orderId === storeOrderId) {
@@ -45,7 +44,7 @@ export class MenuRecipesPage extends PureComponent {
     const forceDataLoad = (storeOrderId && storeOrderId !== orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
     if (forceDataLoad) {
-      await store.dispatch(fetchData({ query, params }, forceDataLoad))
+      await fetchMenuData({ query, params }, forceDataLoad)
     }
     if (orderId) {
       portionSizeSelectedTracking(numPortions, orderId)
@@ -53,30 +52,17 @@ export class MenuRecipesPage extends PureComponent {
     checkQueryParams()
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { menuRecipeDetailShow, orderId, loadOptimizelySDK } = this.props
-    if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
-      window.document.addEventListener('keyup', this.handleKeyup, false)
-    } else if (!nextProps.menuRecipeDetailShow) {
-      window.document.removeEventListener('keyup', this.handleKeyup, false)
-    }
-    loadOptimizelySDK()
-    // /menu-> /menu/:orderId
-    const editingOrder = (nextProps.orderId || orderId) && nextProps.orderId !== orderId
-    if (editingOrder) {
-      const { store } = this.context
-      const query = nextProps.query || {}
-      const params = nextProps.params || {}
-      store.dispatch(fetchData({query, params }, true))
-    }
-  }
-
   componentDidUpdate(prevProps) {
     const {
       shouldJfyTutorialBeVisible,
       isLoading,
       menuCurrentCollectionId,
-      selectCurrentCollection
+      selectCurrentCollection,
+      loadOptimizelySDK,
+      orderId,
+      query,
+      params,
+      fetchMenuData,
     } = this.props
     if (prevProps.menuCurrentCollectionId && prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
       selectCurrentCollection(menuCurrentCollectionId)
@@ -84,16 +70,13 @@ export class MenuRecipesPage extends PureComponent {
     if (!isLoading && prevProps.isLoading !== isLoading) {
       shouldJfyTutorialBeVisible()
     }
-  }
 
-  componentWillUnmount() {
-    window.document.removeEventListener('keyup', this.handleKeyup, false)
-  }
+    loadOptimizelySDK()
 
-  handleKeyup = (e) => {
-    const { detailVisibilityChange } = this.props
-    if (e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
-      detailVisibilityChange()
+    // /menu-> /menu/:orderId
+    const editingOrder = (prevProps.orderId || orderId) && prevProps.orderId !== orderId
+    if (editingOrder) {
+      fetchMenuData({ query, params }, true)
     }
   }
 
@@ -201,11 +184,9 @@ MenuRecipesPage.propTypes = {
   stateRecipeCount: PropTypes.number.isRequired,
   menuCurrentCollectionId: PropTypes.string.isRequired,
   selectCurrentCollection: PropTypes.func.isRequired,
-  detailVisibilityChange: PropTypes.func.isRequired,
   shouldJfyTutorialBeVisible: PropTypes.func.isRequired,
   basketOrderLoaded: PropTypes.func.isRequired,
   portionSizeSelectedTracking: PropTypes.func.isRequired,
-  menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
   isLoading: PropTypes.bool,
   storeOrderId: PropTypes.string,
@@ -222,10 +203,10 @@ MenuRecipesPage.propTypes = {
   shouldShowCapacityInfo: PropTypes.bool,
   loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
-  browserType: PropTypes.string.isRequired
+  browserType: PropTypes.string.isRequired,
+  fetchMenuData: PropTypes.func.isRequired,
 }
 MenuRecipesPage.defaultProps = {
-  menuRecipeDetailShow: '',
   orderId: null,
   isLoading: false,
   storeOrderId: '',
