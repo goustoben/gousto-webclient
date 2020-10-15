@@ -37,6 +37,7 @@ const skipErrorByRoute = ({ pathname }) => {
     confirmation,
     contact,
     delivery,
+    didntArriveRegex,
     dontKnowWhenRegex,
     eligibilityCheck,
     index,
@@ -53,6 +54,7 @@ const skipErrorByRoute = ({ pathname }) => {
 
   const isPathnameInRegexExceptionList = [
     dontKnowWhenRegex,
+    didntArriveRegex,
   ].some((routeRegex) => pathname.match(routeRegex))
 
   return isPathnameInExceptionList || isPathnameInRegexExceptionList

@@ -9,7 +9,7 @@ import { BeforeDeliveryDay } from './BeforeDeliveryDay'
 import { OnDeliveryDayWithTracking } from './OnDeliveryDayWithTracking'
 import { OnDeliveryDayWithoutTracking } from './OnDeliveryDayWithoutTracking'
 
-class DontKnowWhen extends PureComponent {
+class DidntArrive extends PureComponent {
   componentDidMount() {
     const {
       accessToken,
@@ -77,7 +77,7 @@ class DontKnowWhen extends PureComponent {
   }
 }
 
-DontKnowWhen.propTypes = {
+DidntArrive.propTypes = {
   accessToken: PropTypes.string.isRequired,
   deliveryDate: PropTypes.string.isRequired,
   deliverySlot: PropTypes.shape({
@@ -97,5 +97,5 @@ DontKnowWhen.propTypes = {
 }
 
 export {
-  DontKnowWhen
+  DidntArrive
 }

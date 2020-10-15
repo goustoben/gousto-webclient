@@ -56,6 +56,8 @@ module.exports = {
       deliveryDidntArriveValidation: ({ orderId, userId }) => (
         `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive/validation`
       ),
+      didntArriveRegex: '\\/get-help\\/user\\/\.+\\/order\\/\.+\\/delivery\\/didnt-arrive',
+      didntArriveTemplate: '/get-help/user/:userId/order/:orderId/delivery/didnt-arrive',
       dontKnowWhenRegex: '\\/get-help\\/user\\/\.+\\/order\\/\.+\\/delivery\\/dont-know-when',
       dontKnowWhenTemplate: '/get-help/user/:userId/order/:orderId/delivery/dont-know-when',
       eligibilityCheck: 'eligibility-check',

@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { loadOrderById } from 'actions/getHelp'
-import { DontKnowWhen } from './DontKnowWhen'
 import { loadTrackingUrl } from '../../actions/getHelp'
+import { DidntArrive } from './DidntArrive'
+
 import {
   getAccessToken,
   getIsLoadOrderError,
@@ -22,9 +23,9 @@ const mapStateToProps = (state) => ({
   trackingUrl: getTrackingUrl(state),
 })
 
-const DontKnowWhenContainer = connect(mapStateToProps, {
+const DidntArriveContainer = connect(mapStateToProps, {
   loadOrderById,
   loadTrackingUrl,
-})(DontKnowWhen)
+})(DidntArrive)
 
-export { DontKnowWhenContainer }
+export { DidntArriveContainer }
