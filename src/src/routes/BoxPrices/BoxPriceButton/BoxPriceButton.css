@@ -1,0 +1,7 @@
+.segment {
+  padding: 0;
+
+  span {
+    padding: 0.625rem;
+  }
+}

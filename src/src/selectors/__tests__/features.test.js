@@ -40,7 +40,8 @@ import {
   getIsMobileMenuModalAppAwarenessEnabled,
   getIsMyGoustoBannerAppAwarenessEnabled,
   getisNewSSRDeliveriesEnabled,
-  getIsPayWithPaypalEnabled
+  getIsPayWithPaypalEnabled,
+  getIsBoxPricesUserJourneyEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -97,6 +98,7 @@ describe('when features are defined', () => {
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
     [getisNewSSRDeliveriesEnabled, 'isNewSSRDeliveriesEnabled'],
     [getIsPayWithPaypalEnabled, 'payWithPaypal'],
+    [getIsBoxPricesUserJourneyEnabled, 'boxPricesUserJourney'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

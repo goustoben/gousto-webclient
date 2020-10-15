@@ -11,7 +11,8 @@ import {
   trackUTMAndPromoCode,
   trackNewUser,
   trackNewOrder,
-  trackingOrderCheckout
+  trackingOrderCheckout,
+  trackClickBuildMyBox
 } from 'actions/tracking'
 import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
@@ -898,6 +899,34 @@ describe('tracking actions', () => {
             revenue: '22.00'
           }
         }
+      })
+    })
+  })
+
+  describe('trackClickBuildMyBox', () => {
+    beforeEach(() => {
+      const state = {
+        basket: Immutable.fromJS({
+          promoCode: 'promo1'
+        }),
+        tracking: Immutable.fromJS({
+          utmSource: {}
+        })
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    describe('when called', () => {
+      test('then should dispatch a proper tracking event', () => {
+        trackClickBuildMyBox('2 people', 'menu')(dispatch, getState)
+
+        const { type, trackingData } = dispatch.mock.calls[0][0]
+        expect(type).toEqual('click_build_my_box')
+        expect(trackingData.actionType).toEqual('click_build_my_box')
+        expect(trackingData.promoCode).toEqual('promo1')
+        expect(trackingData.destination).toEqual('menu')
+        expect(trackingData.boxSize).toEqual('2 people')
       })
     })
   })
