@@ -289,50 +289,6 @@ describe('selectCurrentCollection', () => {
   })
 })
 
-describe('componentWillUnmount', () => {
-  const { addEventListener, removeEventListener } = window
-  const next = jest.fn()
-  let wrapper
-  let requiredProps
-
-  beforeEach(() => {
-    window.document.addEventListener = jest.fn()
-    window.document.removeEventListener = jest.fn()
-    requiredProps = {
-      stateRecipeCount: 30,
-      menuCurrentCollectionId: '234',
-      selectCurrentCollection: jest.fn(),
-      detailVisibilityChange: jest.fn(),
-      shouldJfyTutorialBeVisible: jest.fn(),
-      basketOrderLoaded: jest.fn(),
-      portionSizeSelectedTracking: jest.fn(),
-      userId: '1234',
-      isAuthenticated: true,
-      loadOptimizelySDK: jest.fn(),
-    }
-
-    wrapper = shallow(
-      <MenuRecipes
-        {...requiredProps}
-        fadeCss="fadeOut"
-        orderId=""
-        showLoading={false}
-        checkQueryParams={() => {}}
-      />,
-    )
-  })
-
-  afterEach(() => {
-    next.mockClear()
-    window.document.addEventListener = addEventListener
-    window.document.removeEventListener = removeEventListener
-  })
-  test('should call removeEventListener', () => {
-    wrapper.unmount()
-    expect(window.document.removeEventListener).toHaveBeenCalled()
-  })
-})
-
 describe('when the optimizely rollouts featureEnabled is true', () => {
   let wrapper
   beforeEach(() => {

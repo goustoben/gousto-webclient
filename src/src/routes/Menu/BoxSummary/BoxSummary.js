@@ -9,6 +9,7 @@ import Overlay from 'Overlay'
 import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
+import { EscapeKeyPressed } from '../../../utils/DOMEvents'
 
 class BoxSummary extends React.PureComponent {
   // eslint-disable-next-line react/static-property-placement
@@ -96,7 +97,7 @@ class BoxSummary extends React.PureComponent {
 
   handleClick = (e) => {
     const { showDetails } = this.props
-    if (showDetails && e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
+    if (showDetails && EscapeKeyPressed(e)) {
       this.close()
     }
   }
