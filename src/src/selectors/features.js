@@ -157,3 +157,7 @@ export const getisNewSSRDeliveriesEnabled = ({ features }) => (
 export const getIsPayWithPaypalEnabled = ({ features }) => (
   features && features.getIn(['payWithPaypal', 'value'], false)
 )
+
+export const getIsBoxPricesUserJourneyEnabled = ({ features }) => (
+  features && features.getIn(['boxPricesUserJourney', 'value'], false)
+)

@@ -4,32 +4,51 @@ import withError from 'utils/withError'
 import classNames from 'classnames'
 import BoxPrice from '../BoxPrice'
 import { BoxType } from '../BoxType/BoxType'
+import { groupBy } from './boxPricesListUtils'
 import css from './BoxPriceList.css'
 
-const groupBy = (collection, key) => collection.reduce((accumulator, currentValue) => {
-  (accumulator[currentValue[key]] = accumulator[currentValue[key]] || []).push(currentValue)
-
-  return accumulator
-}, {})
-
-const BoxPricesList = ({ boxPrices, type, isBoxPricesPageRedesignEnabled, basketNumPortionChange, goToStep }) => {
+const BoxPricesList = ({
+  boxPrices,
+  type,
+  isBoxPricesPageRedesignEnabled,
+  isBoxPricesUserJourneyEnabled,
+  basketNumPortionChange,
+  goToStep,
+  boxPricesBoxSizeSelected
+}) => {
   const boxTypes = boxPrices[type]
   const groupByNumPerson = groupBy(boxTypes, 'num_persons')
 
   return (
-    <div className={classNames(css.boxPriceList, {[css.boxPriceRedesign]: isBoxPricesPageRedesignEnabled})}>
+    <div
+      className={classNames(css.boxPriceList, {
+        [css.boxPriceRedesign]: isBoxPricesPageRedesignEnabled
+      })}
+    >
       {Object.keys(groupByNumPerson)
-        .filter(numPersons => numPersons !== '8')
-        .map((numPersons) => {
-          const boxProps = {
-            key: `box-type-${numPersons}`,
-            numPersons: parseInt(numPersons, 10),
-            boxInfo: groupByNumPerson[numPersons],
-            goToStep,
-            basketNumPortionChange
-          }
+        .filter((numPersons) => numPersons !== '8')
+        .map((numPersonsStr) => {
+          const key = `box-type-${numPersonsStr}`
+          const numPersons = parseInt(numPersonsStr, 10)
+          const boxInfo = groupByNumPerson[numPersonsStr]
 
-          return isBoxPricesPageRedesignEnabled ? <BoxType {...boxProps} /> : <BoxPrice {...boxProps} />
+          return isBoxPricesPageRedesignEnabled ? (
+            <BoxType
+              key={key}
+              numPersons={numPersons}
+              boxInfo={boxInfo}
+              basketNumPortionChange={basketNumPortionChange}
+              goToStep={goToStep}
+            />
+          ) : (
+            <BoxPrice
+              key={key}
+              numPersons={numPersons}
+              boxInfo={boxInfo}
+              isBoxPricesUserJourneyEnabled={isBoxPricesUserJourneyEnabled}
+              boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+            />
+          )
         })}
     </div>
   )
@@ -39,16 +58,20 @@ BoxPricesList.propTypes = {
   boxPrices: PropTypes.oneOfType([PropTypes.object]),
   type: PropTypes.oneOf(['gourmet', 'vegetarian']),
   isBoxPricesPageRedesignEnabled: PropTypes.bool,
+  isBoxPricesUserJourneyEnabled: PropTypes.bool,
   goToStep: PropTypes.func,
-  basketNumPortionChange: PropTypes.func
+  basketNumPortionChange: PropTypes.func,
+  boxPricesBoxSizeSelected: PropTypes.func
 }
 
 BoxPricesList.defaultProps = {
   boxPrices: null,
   type: 'gourmet',
   isBoxPricesPageRedesignEnabled: false,
+  isBoxPricesUserJourneyEnabled: false,
   goToStep: () => {},
-  basketNumPortionChange: () => {}
+  basketNumPortionChange: () => {},
+  boxPricesBoxSizeSelected: () => {}
 }
 
 export default withError(BoxPricesList)

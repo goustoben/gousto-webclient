@@ -46,7 +46,7 @@ module.exports = {
   content: [
     {
       title: 'You\'re in control',
-      text: 'Choose from 40 recipes a week: meat, fish and vegetarian. That’s more than other recipe boxes. Choose the recipes you want, the day of the week you want them delivered, and how many servings',
+      text: 'Choose from 50 recipes a week: meat, fish and vegetarian. That’s more than other recipe boxes. Choose the recipes you want, the day of the week you want them delivered, and how many servings',
     },
     {
       title: 'Won\'t be home for delivery?',

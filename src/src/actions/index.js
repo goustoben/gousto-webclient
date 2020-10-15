@@ -28,6 +28,7 @@ import cookbook from './cookbook'
 import deliveries from './deliveries'
 import * as welcome from './welcome'
 import { homeActions } from './home'
+import { boxPricesActions } from './boxPrices'
 
 const actions = {
   ...auth,
@@ -59,7 +60,8 @@ const actions = {
   ...user,
   ...deliveries,
   ...welcome,
-  ...homeActions
+  ...homeActions,
+  ...boxPricesActions
 }
 
 export default actions
