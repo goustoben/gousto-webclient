@@ -62,7 +62,7 @@ const VariantRecipeListItem = ({
               id={recipeId}
               name="variantList"
               onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
-              isChecked={isChecked}
+              defaultValue={isChecked}
             />
           </div>
           {getInputContent()}

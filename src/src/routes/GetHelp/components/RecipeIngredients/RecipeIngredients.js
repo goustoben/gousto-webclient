@@ -14,7 +14,7 @@ const RecipeIngredients = ({ onChange, recipe, selectedIngredients }) => (
           <InputCheck
             id={ingredientFullId}
             label={ingredient.label}
-            isChecked={isChecked}
+            defaultValue={isChecked}
             onChange={onChange}
           />
         </div>
