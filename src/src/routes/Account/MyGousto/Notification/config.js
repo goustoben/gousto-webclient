@@ -29,8 +29,8 @@ const notificationConfig = ({
     title: 'Get £30 credit',
     url: 'my-referrals',
     linkTrackingType: 'refer_friend',
-    startDate: '2019-11-22',
-    endDate: '2019-11-24',
+    startDate: '2020-10-16',
+    endDate: '2020-10-18',
   },
   sustainabilityPledge: {
     message: 'And this is just the beginning. Find out more.',
