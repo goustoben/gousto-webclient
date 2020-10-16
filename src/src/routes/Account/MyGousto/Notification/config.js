@@ -24,13 +24,13 @@ const notificationConfig = ({
     url: 'menu',
   },
   referAFriend: {
-    message: 'for every friend you refer this weekend. Invite friends now.',
+    message: 'For every friend you refer this weekend. Invite friends now.',
     type: 'info',
-    title: 'Get £30 credit',
+    title: '<3 Get £30 credit',
     url: 'my-referrals',
     linkTrackingType: 'refer_friend',
-    startDate: '2019-11-22',
-    endDate: '2019-11-24',
+    startDate: '2020-10-16',
+    endDate: '2020-10-18',
   },
   sustainabilityPledge: {
     message: 'And this is just the beginning. Find out more.',
