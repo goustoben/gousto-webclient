@@ -24,9 +24,9 @@ const notificationConfig = ({
     url: 'menu',
   },
   referAFriend: {
-    message: 'For every friend you refer this weekend. Invite friends now.',
+    message: 'for every friend you refer this weekend. Invite friends now.',
     type: 'info',
-    title: '<3 Get £30 credit',
+    title: 'Get £30 credit',
     url: 'my-referrals',
     linkTrackingType: 'refer_friend',
     startDate: '2020-10-16',
