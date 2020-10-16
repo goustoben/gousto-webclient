@@ -26,7 +26,7 @@ export const fillIngredientIssueDescriptions = (descriptions) => {
 
 export const selectIngredients = (ingredientIndexes) => {
   ingredientIndexes.forEach((index) => {
-    cy.get('[data-testing="getHelpIngredientInputCheck"] input').eq(index).check()
+    cy.get('[data-testing="input-check"]').eq(index).click()
   })
 }
 
