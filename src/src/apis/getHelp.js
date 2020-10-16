@@ -55,16 +55,35 @@ const shouldShowEntryPointTooltip = (accessToken, orderDeliveryDate) => (
   )
 )
 
-const applyDeliveryCompensation = (accessToken, userId, orderId, complaintCategory, refundValue ) => {
-  const url = `${endpoint('ssr', routes.version.ssr)}/delivery-refund`
+const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCategoryId, refundValue ) => {
+  const url = `${endpoint('ssrdeliveries', routes.version.ssrdeliveries)}/ssrdeliveries/refund`
 
   return fetchRaw(
     url,
     {
-      user_id: userId,
+      customer_id: customerId,
       order_id: orderId,
-      complaint_category: complaintCategory,
+      category_id: complaintCategoryId,
       refund_value: refundValue,
+    },
+    {
+      accessToken,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    }
+  )
+}
+
+const validateDelivery = (accessToken, customerId, orderId) => {
+  const url = `${endpoint('ssrdeliveries', routes.version.ssrdeliveries)}/ssrdeliveries/validate`
+
+  return fetchRaw(
+    url,
+    {
+      customer_id: customerId,
+      order_id: orderId,
     },
     {
       accessToken,
@@ -84,4 +103,5 @@ export {
   fetchOrderIssues,
   shouldShowEntryPointTooltip,
   applyDeliveryCompensation,
+  validateDelivery,
 }

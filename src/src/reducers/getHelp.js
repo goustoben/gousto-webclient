@@ -12,6 +12,8 @@ const getHelpInitialState = fromJS({
     deliverySlot: {},
     deliveryDate: null,
     trackingUrl: '',
+    hasPassedDeliveryValidation: false,
+    deliveryCompensationAmount: null,
   },
   orders: Map(),
   recipes: [],
@@ -172,6 +174,10 @@ const getHelp = (state, action) => {
   }
   case actionTypes.GET_HELP_LOAD_TRACKING_URL: {
     return state.setIn(['order', 'trackingUrl'], action.payload.trackingUrl)
+  }
+  case actionTypes.GET_HELP_VALIDATE_DELIVERY: {
+    return state.setIn(['order', 'deliveryCompensationAmount'], action.payload.compensation)
+      .setIn(['order', 'hasPassedDeliveryValidation'], action.payload.isValid)
   }
   default:
     return state

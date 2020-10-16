@@ -135,6 +135,8 @@ describe('getHelp reducer', () => {
         recipeItems: ['4001', '4002'],
         deliveryDate: '2019-09-07 00:00:00',
         trackingUrl: '',
+        hasPassedDeliveryValidation: false,
+        deliveryCompensationAmount: null,
       })
       expect(newState.get('order')).toEqual(EXPECTED_REDUCED_ORDER)
     })
@@ -155,6 +157,30 @@ describe('getHelp reducer', () => {
     test('the tracking url in the action payload is stored in the new state.order.trackingUrl', () => {
       expect(newState.getIn(['order', 'trackingUrl']))
         .toEqual(TRACKING_URL)
+    })
+  })
+
+  describe('given an action with type GET_HELP_VALIDATE_DELIVERY is received', () => {
+    const COMPENSATION_AMOUNT = 25
+
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_VALIDATE_DELIVERY,
+        payload: {
+          compensation: COMPENSATION_AMOUNT,
+          isValid: true,
+        }
+      })
+    })
+
+    test('the status of delivery validation check in the action payload is stored in the new state.order.hasPassedDeliveryValidation', () => {
+      expect(newState.getIn(['order', 'hasPassedDeliveryValidation']))
+        .toEqual(true)
+    })
+
+    test('the delivery compensation amount is stored in the new state.order.deliveryCompensationAmount', () => {
+      expect(newState.getIn(['order', 'deliveryCompensationAmount']))
+        .toEqual(COMPENSATION_AMOUNT)
     })
   })
 })

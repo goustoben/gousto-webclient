@@ -1,12 +1,16 @@
 import fetch, { fetchRaw } from 'utils/fetch'
-import { shouldShowEntryPointTooltip, applyDeliveryCompensation } from '../getHelp'
+import {
+  applyDeliveryCompensation,
+  shouldShowEntryPointTooltip,
+  validateDelivery,
+} from '../getHelp'
 
 const ACCESS_TOKEN = 'shhh-is-a-secret'
 const MOCK_RESPONSE = { data: [1, 2, 3] }
 const ORDER_DELIVERY_DATE = '2019-07-27 00:00:00'
 const USER_ID = '12345'
 const ORDER_ID = '6789'
-const COMPLAINT_CATEGORY = '13578'
+const COMPLAINT_CATEGORY_ID = '13578'
 const REFUND_VALUE = 38
 
 jest.mock('utils/fetch')
@@ -21,6 +25,7 @@ jest.mock('config/endpoint', () =>
 jest.mock('config/routes', () => ({
   version: {
     ssr: 'vX',
+    ssrdeliveries: 'vY',
   },
 }))
 
@@ -51,16 +56,44 @@ describe('getHelp API', () => {
 
   describe('Given applyDeliveryCompensation function is called with the correct payload', () => {
     beforeEach(async () => {
-      response = await applyDeliveryCompensation(ACCESS_TOKEN, USER_ID, ORDER_ID, COMPLAINT_CATEGORY, REFUND_VALUE)
+      response = await applyDeliveryCompensation(ACCESS_TOKEN, USER_ID, ORDER_ID, COMPLAINT_CATEGORY_ID, REFUND_VALUE)
     })
 
     test('the fetch function is called with the right parameters', () => {
       expect(fetchRaw).toHaveBeenCalledTimes(1)
       expect(fetchRaw).toHaveBeenCalledWith(
-        'endpoint-ssr/vX/delivery-refund',
-        { user_id: USER_ID, order_id: ORDER_ID, complaint_category: COMPLAINT_CATEGORY,refund_value: REFUND_VALUE},
+        'endpoint-ssrdeliveries/vY/ssrdeliveries/refund',
+        { customer_id: USER_ID, order_id: ORDER_ID, category_id: COMPLAINT_CATEGORY_ID, refund_value: REFUND_VALUE },
         { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
       )
+    })
+  })
+
+  describe('Given validateDelivery function is called with the correct payload', () => {
+    const MOCK_FETCH_RESULT = {
+      status: 'ok',
+      data: {
+        compensation: 48.3,
+        percentage: 10,
+      }
+    }
+    fetchRaw.mockResolvedValue(MOCK_FETCH_RESULT)
+
+    beforeEach(async () => {
+      response = await validateDelivery(ACCESS_TOKEN, USER_ID, ORDER_ID)
+    })
+
+    test('the fetch function is called with the right parameters', () => {
+      expect(fetchRaw).toHaveBeenCalledTimes(1)
+      expect(fetchRaw).toHaveBeenCalledWith(
+        'endpoint-ssrdeliveries/vY/ssrdeliveries/validate',
+        { customer_id: USER_ID, order_id: ORDER_ID},
+        { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
+      )
+    })
+
+    test('it returns the response received without modifying it', () => {
+      expect(response).toEqual(MOCK_FETCH_RESULT)
     })
   })
 })
