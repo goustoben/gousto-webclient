@@ -10,6 +10,7 @@ import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
 import { DeliveryContainer } from './Delivery'
+import { DeliveryValidationContainer } from './Delivery/DeliveryValidation'
 import { DontKnowWhen } from './Delivery/DontKnowWhen'
 import { EligibilityCheck } from './EligibilityCheck'
 import { Ingredients } from './Ingredients'
@@ -43,7 +44,8 @@ const getHelpRoutes = (store) => {
     index,
     delivery,
     didntArriveTemplate,
-    dontKnowWhenTemplate
+    dontKnowWhenTemplate,
+    deliveryDidntArriveValidationTemplate,
   } = configRoutes.client.getHelp
   const { login } = configRoutes.client
 
@@ -58,6 +60,10 @@ const getHelpRoutes = (store) => {
         <Route
           path={delivery}
           component={DeliveryContainer}
+        />
+        <Route
+          path={deliveryDidntArriveValidationTemplate}
+          component={DeliveryValidationContainer}
         />
         <Route
           path={dontKnowWhenTemplate}

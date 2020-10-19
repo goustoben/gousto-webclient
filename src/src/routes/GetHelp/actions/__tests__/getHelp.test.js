@@ -17,6 +17,7 @@ import {
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
   trackRejectRefund,
+  validateDeliveryAction
 } from '../getHelp'
 
 jest.mock('utils/logger', () => ({
@@ -26,6 +27,7 @@ jest.mock('apis/user')
 jest.mock('apis/deliveries')
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
+const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
 safeJestMock(logger, 'error')
 
 const DELIVERY_COMPENSATION_ERRORS = {
@@ -270,6 +272,56 @@ describe('GetHelp action generators and thunks', () => {
           errorMessage: `Failed to loadTrackingUrl for orderId: ${ORDER_ID}`
         })
       )
+    })
+  })
+  describe('When the validateDeliveryAction action is called and the API call succeeds', () => {
+    const CUSTOMER_ID = '135'
+    const ORDER_ID = '456'
+    const COMPENSATION_AMOUNT = 25
+    const VALIDATION_RESPONSE = {
+      data: { compensation: COMPENSATION_AMOUNT }
+    }
+
+    beforeEach(() => {
+      validateDelivery.mockResolvedValueOnce(VALIDATION_RESPONSE)
+      validateDeliveryAction(CUSTOMER_ID, ORDER_ID)(dispatch, getState)
+    })
+
+    test('the delivery validation fetched by validateDelivery is dispatched with the right action type', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'GET_HELP_VALIDATE_DELIVERY',
+        payload: { compensation: COMPENSATION_AMOUNT, isValid: true }
+      })
+    })
+
+    test('asyncAndDispatch is called with the right parameters', () => {
+      expect(asyncAndDispatchSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dispatch,
+          actionType: 'GET_HELP_VALIDATE_DELIVERY',
+          errorMessage: `Delivery validation errored for customerId: ${CUSTOMER_ID}, orderId: ${ORDER_ID}`
+        })
+      )
+    })
+  })
+
+  describe('When the validateDeliveryAction action is called and the API call errors', () => {
+    const CUSTOMER_ID = '135'
+    const ORDER_ID = '456'
+
+    beforeEach(() => {
+      validateDelivery.mockRejectedValueOnce({
+        status: 'error',
+        message: 'error validate api',
+      })
+      validateDeliveryAction(CUSTOMER_ID, ORDER_ID)(dispatch, getState)
+    })
+
+    test('dispatches with the right action type, setting compensation to null and indicating that validation did not pass', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'GET_HELP_VALIDATE_DELIVERY',
+        payload: { compensation: null, isValid: false }
+      })
     })
   })
 })

@@ -45,8 +45,8 @@ describe('the RecipeWithIngredients componennt', () => {
 
     test('only selected ingredients are showed as checked', () => {
       const ingredient = wrapper.find('InputCheck')
-      expect(ingredient.at(0).prop('isChecked')).toBe(true)
-      expect(ingredient.at(1).prop('isChecked')).toBe(false)
+      expect(ingredient.at(0).prop('defaultValue')).toBe(true)
+      expect(ingredient.at(1).prop('defaultValue')).toBe(false)
     })
   })
 

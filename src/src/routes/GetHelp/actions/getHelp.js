@@ -3,7 +3,7 @@ import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as userApi from 'apis/user'
-import { applyDeliveryCompensation } from 'apis/getHelp'
+import { applyDeliveryCompensation, validateDelivery } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -118,5 +118,30 @@ export const loadTrackingUrl = (orderId) => async (dispatch, getState) => {
     actionType: actionTypes.GET_HELP_LOAD_TRACKING_URL,
     getPayload,
     errorMessage: `Failed to loadTrackingUrl for orderId: ${orderId}`,
+  })
+}
+
+export const validateDeliveryAction = (customerId, orderId) => async (dispatch, getState) => {
+  const getPayload = async () => {
+    const accessToken = getState().auth.get('accessToken')
+    const response = await validateDelivery(accessToken, customerId, orderId)
+    const { compensation } = response.data
+
+    return { compensation, isValid: true }
+  }
+
+  const handleError = () => {
+    dispatch({
+      type: actionTypes.GET_HELP_VALIDATE_DELIVERY,
+      payload: { compensation: null, isValid: false }
+    })
+  }
+
+  await asyncAndDispatch({
+    dispatch,
+    actionType: actionTypes.GET_HELP_VALIDATE_DELIVERY,
+    getPayload,
+    handleError,
+    errorMessage: `Delivery validation errored for customerId: ${customerId}, orderId: ${orderId}`,
   })
 }
