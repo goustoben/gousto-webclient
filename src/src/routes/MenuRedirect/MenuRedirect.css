@@ -1,0 +1,90 @@
+@value White, Bluecheese, Oyster from 'styles/colors.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value ScreenSMMin, ScreenXSMax from 'styles/screenSizes.css';
+@value FontWeightBold from 'design-language/typography.module.css';
+
+.container {
+  background: White;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0;
+
+  @media ScreenSMMin {
+    padding: 0 2rem;
+    flex-wrap: nowrap;
+  }
+}
+
+.desktopImage {
+  @media ScreenXSMax {
+    display: none;
+  }
+
+  @media ScreenSMMin {
+    width: 100%;
+  }
+
+  @media BreakpointFromLarge {
+    width: auto;
+  }
+}
+
+.mobileImage {
+  display: block;
+  width: 100%;
+
+  > img {
+    width: 100%;
+  }
+
+  @media ScreenSMMin {
+    display: none;
+  }
+}
+
+.hungrySection {
+  margin-left: 0;
+  height: inherit;
+  max-width: 100%;
+  padding: 2.5rem 1rem;
+
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  @media ScreenSMMin {
+    padding: 0;
+    margin-left: 1.5rem;
+    max-width: 460px;
+  }
+
+  @media BreakpointFromLarge {
+    margin-left: 7.75rem;
+  }
+}
+
+.subTitle {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  margin-bottom: 1.5rem;
+}
+
+.startButton {
+  margin-bottom: 2rem;
+}
+
+.haveAnAccount {
+  composes: FontStyleBody from 'design-language/typography.module.css';
+  font-weight: FontWeightBold;
+}
+
+.loginButton {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  cursor: pointer;
+}

@@ -384,6 +384,15 @@ export const trackClickBuildMyBox = (boxSize, destination) => (dispatch, getStat
   })
 }
 
+export const trackLoginClickOnHungryPage = (type) => (dispatch) => {
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type
+    }
+  })
+}
+
 export default {
   trackFirstPurchase,
   setAffiliateSource,
@@ -391,4 +400,5 @@ export default {
   trackGetStarted,
   setUTMSource,
   trackUTMAndPromoCode,
+  trackLoginClickOnHungryPage,
 }
