@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import Link from 'Link'
 import css from './CategoryCarousel.css'
 import { EMERecipeTileContainer } from '../RecipeTile/EMERecipeTile'
+import { CategoryScrollTrackerContainer } from '../CategoryScrollTracker'
 
 const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselConfig }) => {
   if (!recipes.size) return null
@@ -36,7 +37,13 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselCo
            </p>
            )
       }
-      <div className={css.categoryCarouselInner}>
+
+      <CategoryScrollTrackerContainer
+        className={css.categoryCarouselInner}
+        categoryId={categoryId}
+        scrollDirection="horizontal"
+        actionType="scroll_collections"
+      >
         <div className={css.categoryCarouselRecipes}>
           {recipes.map((value) => (
             <div key={value.recipe.get('id')} className={css.categoryCarouselRecipeOuter}>
@@ -44,7 +51,7 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselCo
             </div>
           ))}
         </div>
-      </div>
+      </CategoryScrollTrackerContainer>
     </div>
   )
 }
