@@ -12,7 +12,8 @@ import {
   trackNewUser,
   trackNewOrder,
   trackingOrderCheckout,
-  trackClickBuildMyBox
+  trackClickBuildMyBox,
+  trackLoginClickOnHungryPage
 } from 'actions/tracking'
 import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
@@ -928,6 +929,22 @@ describe('tracking actions', () => {
         expect(trackingData.destination).toEqual('menu')
         expect(trackingData.boxSize).toEqual('2 people')
       })
+    })
+  })
+
+  describe('trackLoginClickOnHungryPage', () => {
+    const clickLogin = 'click_login'
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue({})
+    })
+
+    test('should dispatch trackLoginClickOnHungryPage with proper type', () => {
+      trackLoginClickOnHungryPage(clickLogin)(dispatch, getState)
+      const { type, trackingData } = dispatch.mock.calls[0][0]
+      expect(type).toEqual(clickLogin)
+      expect(trackingData.actionType).toEqual(clickLogin)
     })
   })
 })
