@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import actions, { fetchData } from 'actions/subscriptionPause'
+import userActions from 'actions/user'
 import SubscriptionPause from './SubscriptionPause'
 
 const mapStateToProps = state => {
@@ -15,6 +16,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchData,
   subscriptionPauseFetchReasons: actions.subscriptionPauseFetchReasons,
+  userLoadNewOrders: userActions.userLoadNewOrders,
 }
 
 const SubscriptionContainer = connect(

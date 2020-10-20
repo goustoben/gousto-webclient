@@ -12,6 +12,7 @@ import routesConfig from 'config/routes'
 import Immutable from 'immutable'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
+import * as trackingKeys from 'actions/trackingKeys'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 
@@ -56,6 +57,7 @@ const subPauseActions = {
   subscriptionPauseEnd,
   subscriptionPauseStart,
   subscriptionPauseTrack,
+  subscriptionPauseTrackRecover,
   subscriptionPauseOSRTrack,
   subscriptionPauseVisibilityChange,
   subscriptionPauseLoadStartScreen,
@@ -147,6 +149,15 @@ function subscriptionPauseOSRTrack(key, data = {}) {
   return {
     type: key,
     ...data,
+  }
+}
+
+function subscriptionPauseTrackRecover() {
+  return {
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.recoverSubscription
+    }
   }
 }
 
@@ -648,12 +659,8 @@ function subscriptionPauseEnd() {
         const reasonId = chosenReasonIds.last()
         reasonSlug = state.get('activeReasons').getIn([reasonId, 'slug'])
       }
-      dispatch(subPauseActions.subscriptionPauseOSRTrack(actionTypes.PS_SUBSCRIPTION_KEPT_ACTIVE, {
-        categorySlug,
-        reasonSlug,
-        modalType: getModalType(getState),
-        seRecoveryType: 'close_modal',
-      }))
+
+      dispatch(subPauseActions.subscriptionPauseTrackRecover())
     }
   }
 }

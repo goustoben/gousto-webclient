@@ -14,7 +14,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { getOrderDetails } from 'utils/basket'
 import * as deliveriesUtils from 'utils/deliveries'
 import { trackAffiliatePurchase } from 'actions/tracking'
-import { saveUserOrder, updateUserOrder } from 'apis/user'
+import { saveUserOrder, updateUserOrder, skipDelivery } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { orderAddOnRedirect } from 'actions/orderAddOn'
 
@@ -29,10 +29,13 @@ import {
   orderUpdateDayAndSlot,
   clearUpdateDateErrorAndPending,
   orderAddressChange,
+  cancelMultipleBoxes
 } from 'actions/order'
 
 import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
 import { safeJestMock } from '../../_testing/mocks'
+
+import { flushPromises } from '../../_testing/utils'
 
 jest.mock('apis/user')
 jest.mock('apis/orders')
@@ -104,6 +107,13 @@ describe('order actions', () => {
         date: '2019-10-11',
         slotId: '4'
       }),
+      onScreenRecovery: Immutable.Map({
+        valueProposition: 'mock-value-proposition',
+        offer: 'mock-offer'
+      }),
+      user: Immutable.Map({
+        newOrders: [Immutable.fromJS({ id: '123', orderState: 'scheduled' })]
+      })
     })
 
     deliveriesUtils.getSlot.mockReturnValue(Immutable.fromJS({
@@ -1109,6 +1119,128 @@ describe('order actions', () => {
       clearUpdateDateErrorAndPending()(dispatch)
 
       expect(pending).toHaveBeenCalledWith('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT', null)
+    })
+  })
+
+  describe('cancelMultipleBoxes', () => {
+    const orderCancelErrorAction = {
+      type: 'ERROR',
+      key: 'ORDER_CANCEL',
+      value: null
+    }
+
+    const orderCancelPendingStartAction = {
+      type: 'PENDING',
+      key: 'ORDER_CANCEL',
+      value: true
+    }
+
+    const orderCancelPendingEndAction = {
+      type: 'PENDING',
+      key: 'ORDER_CANCEL',
+      value: false
+    }
+
+    beforeEach(() => {
+      actionStatus.error.mockImplementation(
+        jest.requireActual('actions/status').default.error
+      )
+      actionStatus.pending.mockImplementation(
+        jest.requireActual('actions/status').default.pending
+      )
+
+      cancelOrder.mockResolvedValueOnce(null)
+      skipDelivery.mockResolvedValueOnce(null)
+    })
+
+    afterAll(() => {
+      actionStatus.error.mockReset()
+      actionStatus.pending.mockReset()
+    })
+
+    test('should invoke expected actions if order is not projected', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [{
+          id: 'mock-id',
+          isProjected: false,
+          deliveryDayId: 'mock-delivery-day-id'
+        }]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(dispatch).toHaveBeenNthCalledWith(1, orderCancelErrorAction)
+      expect(dispatch).toHaveBeenNthCalledWith(2, orderCancelPendingStartAction)
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
+        type: 'ORDER_CANCEL',
+        orderId: 'mock-id',
+        trackingData: {
+          actionType: 'Order Cancelled',
+          cms_variation: 'mock-id',
+          delivery_day_id: 'mock-delivery-day-id',
+          order_id: 'mock-id',
+          order_state: 'pending',
+          recovery_reasons: ['mock-value-proposition', 'mock-offer']
+        }
+      })
+      expect(dispatch).toHaveBeenNthCalledWith(4, orderCancelPendingEndAction)
+    })
+
+    test('should make api request to cancel order if not projected', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [{
+          id: 'mock-id',
+          isProjected: false,
+          deliveryDayId: 'mock-delivery-day-id'
+        }]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(cancelOrder).toHaveBeenCalledTimes(1)
+    })
+
+    test('should invoke expected actions if order is projected', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [{
+          id: 'mock-id',
+          isProjected: true,
+          deliveryDayId: 'mock-delivery-day-id'
+        }]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(dispatch).toHaveBeenNthCalledWith(1, { ...orderCancelErrorAction, key: 'PROJECTED_ORDER_CANCEL' })
+      expect(dispatch).toHaveBeenNthCalledWith(2, { ...orderCancelPendingStartAction, key: 'PROJECTED_ORDER_CANCEL' })
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
+        type: 'PROJECTED_ORDER_CANCEL',
+        orderId: 'mock-id',
+        trackingData: {
+          actionType: 'Order Skipped',
+          delivery_day_id: 'mock-delivery-day-id',
+          order_state: 'projected',
+          cms_variation: 'mock-id',
+          recovery_reasons: [
+            'mock-value-proposition',
+            'mock-offer'
+          ]
+        }
+      })
+    })
+
+    test('should make api request to skip delivery if projected', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [{
+          id: 'mock-id',
+          isProjected: true,
+          deliveryDayId: 'mock-delivery-day-id'
+        }]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(skipDelivery).toHaveBeenCalledTimes(1)
     })
   })
 })

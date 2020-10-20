@@ -119,21 +119,12 @@ class AppModal extends Component {
         isOpen={shouldRender}
         name="app-promo"
         description="modal promoting app"
-        hideCloseIcon
+        handleClose={this.handleClose}
+        variant="fullScreen"
       >
+        <ModalHeader>Never miss a menu</ModalHeader>
         <div className={css.container}>
-          <div className={css.closeIconContainer}>
-            {/* eslint-disable-next-line */}
-            <span
-              data-testing="modal-close-button"
-              role="button"
-              tabIndex="0"
-              onClick={this.handleClose}
-              className={css.closeIcon}
-            />
-          </div>
           <div className={css.bodyContainer}>
-            <ModalHeader className={css.modalHeader}>Never miss a menu</ModalHeader>
             <p className={css.bodyText}>
               View our ever changing weekly menu of 50+ recipes right from your pocket
             </p>

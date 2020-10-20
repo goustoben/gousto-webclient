@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
-import Screen from './Screen'
+import { ModalContentContainer } from './ModalContent'
 
 const propTypes = {
   dataLoaded: PropTypes.bool,
   showModal: PropTypes.bool,
   fetchData: PropTypes.func.isRequired,
   subscriptionPauseFetchReasons: PropTypes.func.isRequired,
+  userLoadNewOrders: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -17,9 +18,28 @@ const defaultProps = {
 
 class SubscriptionPause extends React.Component {
   componentDidMount() {
-    const { subscriptionPauseFetchReasons } = this.props
+    const {
+      subscriptionPauseFetchReasons,
+      userLoadNewOrders
+    } = this.props
 
     subscriptionPauseFetchReasons()
+    userLoadNewOrders()
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {
+      showModal,
+      dataLoaded,
+    } = this.props
+
+    const {
+      showModal: nextShowModal,
+      dataLoaded: nextDataLoaded,
+    } = nextProps
+
+    return showModal !== nextShowModal
+      || dataLoaded !== nextDataLoaded
   }
 
   componentDidUpdate() {
@@ -37,7 +57,7 @@ class SubscriptionPause extends React.Component {
   render() {
     const { showModal } = this.props
 
-    return (<Overlay from="top" open={showModal}><Screen /></Overlay>)
+    return (<Overlay from="top" open={showModal}><ModalContentContainer /></Overlay>)
   }
 }
 

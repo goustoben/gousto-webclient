@@ -1,0 +1,69 @@
+@value BreakpointToLarge, BreakpointFromMedium from 'design-language/breakpoints.css';
+@value White from 'styles/colors.css';
+
+.headerWrapper {
+  h2 {
+    @media BreakpointToLarge {
+      padding: 1.5rem;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  padding: 2.5rem;
+  background: white;
+
+  padding: 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 2.5rem;
+    min-width: 480px; /* Ensure buttons grow properly */
+  }
+}
+
+.noSkippedBoxesText {
+  margin: 0;
+}
+
+.skippedBoxesText {
+  margin-bottom: 0;
+}
+
+.tileContainer {
+  padding: 2rem 0 3rem;
+}
+
+.ctaContainer {
+  display: flex;
+  flex-direction: column;
+
+  @media BreakpointFromMedium {
+    flex-direction: row;
+  }
+}
+
+.skipBoxesCTA {
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 0 0.5rem;
+    order: 1;
+  }
+}
+
+.continueToPauseCTA {
+  @media BreakpointFromMedium {
+    margin: 0 0.5rem 0 0;
+    order: 0;
+  }
+}
+
+.skipBoxesCTA,
+.continueToPauseCTA {
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    width: 50%;
+  }
+}

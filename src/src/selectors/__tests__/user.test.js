@@ -5,10 +5,93 @@ import {
   getUserPhoneWithoutLeadingZero,
   getUserRecentRecipesIds,
   getUsersOrdersDaySlotLeadTimeIds,
-  getUserOpenOrders
+  getUserOpenOrders,
+  getUserNewOrdersForMultiSkip
 } from '../user'
 
 describe('user selectors', () => {
+  describe('getUserNewOrdersForMultiSkip', () => {
+    const state = {
+      user: Immutable.fromJS({
+        newOrders: {
+          1234: {
+            isProjected: false,
+            orderState: 'cancelled',
+            cancellable: false,
+            humanDeliveryDay: 'Saturday, 13th June 2020',
+            coreDeliveryDayId: '0000',
+          },
+          5678: {
+            isProjected: true,
+            orderState: 'scheduled',
+            cancellable: true,
+            humanDeliveryDay: 'Saturday, 20th June 2020',
+            deliveryDayId: '1111',
+          },
+          8910: {
+            isProjected: true,
+            orderState: 'cancelled',
+            cancellable: true,
+            humanDeliveryDay: 'Saturday, 27th June 2020',
+            deliveryDayId: '2222',
+          },
+          1112: {
+            isProjected: true,
+            orderState: 'dispatched',
+            cancellable: true,
+            humanDeliveryDay: 'Saturday, 27th June 2020',
+            deliveryDayId: '2222',
+          },
+          1314: {
+            isProjected: true,
+            orderState: 'confirmed',
+            cancellable: true,
+            humanDeliveryDay: 'Saturday, 27th June 2020',
+            deliveryDayId: '2222',
+          }
+        }
+      })
+    }
+
+    const expectedSelectedOrders = [
+      {
+        id: '1234',
+        canSkip: false,
+        isProjected: false,
+        deliveryDate: 'Saturday, 13th June 2020',
+        deliveryDayId: '0000'
+      },
+      {
+        id: '5678',
+        canSkip: true,
+        isProjected: true,
+        deliveryDate: 'Saturday, 20th June 2020',
+        deliveryDayId: '1111'
+      },
+      {
+        id: '8910',
+        canSkip: false,
+        isProjected: true,
+        deliveryDate: 'Saturday, 27th June 2020',
+        deliveryDayId: '2222'
+      },
+    ]
+
+    let selectedOrders
+
+    beforeEach(() => {
+      selectedOrders = getUserNewOrdersForMultiSkip(state)
+    })
+
+    test('should return all new orders', () => {
+      expect(selectedOrders).toHaveLength(3)
+    })
+
+    test('should return orders in the expected structure', () => {
+      expect(selectedOrders).toEqual(expectedSelectedOrders)
+    })
+  })
+
   describe('getUserRecentRecipesIds', () => {
     const state = {
       user: Immutable.fromJS({

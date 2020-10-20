@@ -56,6 +56,34 @@ export const getUserOpenOrders = createSelector(
   ))
 )
 
+export const getUserNewOrdersForMultiSkip = createSelector(
+  getUserNewOrders,
+  newOrders => newOrders
+    .keySeq()
+    .toArray()
+    .reduce((orders, id) => {
+      const order = newOrders.get(id)
+
+      if (['dispatched', 'confirmed'].includes(order.get('orderState'))) {
+        return orders
+      }
+
+      const canSkip = order.get('cancellable') && order.get('orderState') !== 'cancelled'
+      const isProjected = order.get('isProjected')
+
+      return [
+        ...orders,
+        {
+          id,
+          canSkip,
+          isProjected,
+          deliveryDate: order.get('humanDeliveryDay'),
+          deliveryDayId: order.get(isProjected ? 'deliveryDayId' : 'coreDeliveryDayId')
+        }
+      ]
+    }, [])
+)
+
 export default {
   getUserFirstName,
   getUserId,
