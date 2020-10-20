@@ -6,6 +6,7 @@ import css from './RecipeList.css'
 import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
 import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
+import { CategoryScrollTrackerContainer } from '../ElevatedMenuExperience/CategoryScrollTracker'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -63,6 +64,9 @@ class RecipeList extends React.PureComponent {
           </div>
         </OptimizelyRolloutsContainer>
 
+        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
+          {browserType !== 'mobile' && <CategoryScrollTrackerContainer actionType="scroll_recipes" />}
+        </OptimizelyRolloutsContainer>
       </div>
     )
   }

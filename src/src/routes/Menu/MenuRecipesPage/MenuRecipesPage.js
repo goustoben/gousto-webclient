@@ -88,7 +88,7 @@ export class MenuRecipesPage extends PureComponent {
       showCommunicationPanel,
       menuLoadingErrorMessage,
       browserType,
-      query
+      query,
     } = this.props
     const { communicationPanel } = menuConfig
 
