@@ -1,4 +1,4 @@
-describe("MenuCollectionHeaders", () => {
+describe('MenuCollectionHeaders', () => {
   afterEach(() => {
     cy.clock().then((clock) => {
       clock.restore()
@@ -13,7 +13,8 @@ describe("MenuCollectionHeaders", () => {
       cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
       cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
       cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
-      cy.route('/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
+      cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
+      cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
       const DATE = new Date(2020, 4, 1).getTime()
       cy.clock(DATE, ['Date'])
       cy.visit('/menu')
