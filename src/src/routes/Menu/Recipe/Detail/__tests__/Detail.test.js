@@ -177,8 +177,13 @@ describe('DetailContainer', () => {
             getState: () => ({
               basket: Immutable.fromJS({
                 currentMenuId: '377'
+              }),
+              recipes: Immutable.fromJS({
+                123: {
+                  id: '123',
+                }
               })
-            })
+            }),
           }
         }
       })

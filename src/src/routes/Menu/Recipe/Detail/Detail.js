@@ -9,8 +9,8 @@ import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 import Carousel from './Carousel'
 
 import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
-import { RecipeInfoBadgesContainer } from '../InfoBadge/RecipeInfoBadgesContainer'
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
+import { RecipeTag } from '../../ElevatedMenuExperience/RecipeTile/RecipeTag'
 
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
@@ -30,7 +30,8 @@ export const Detail = (props) => {
     equipment,
     position, surcharge,
     isChefPrepared, isFineDineIn,
-    menuWithSides
+    menuWithSides,
+    brandAvailability
   } = props
 
   const recipeLegalDetailId = chosenSideRecipeId || id
@@ -63,7 +64,7 @@ export const Detail = (props) => {
             <div className={css.titleHidden}>
               <Title title={title} view={view} detail />
             </div>
-            <RecipeInfoBadgesContainer recipeId={id} />
+            <RecipeTag brandTag={brandAvailability} isOnDetailScreen />
             <RecipeRating count={count} average={average} />
           </div>
         </div>
@@ -144,7 +145,12 @@ Detail.propTypes = {
   isChefPrepared: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool,
   surcharge: PropTypes.number,
-  menuWithSides: PropTypes.bool
+  menuWithSides: PropTypes.bool,
+  brandAvailability: PropTypes.shape({
+    slug: PropTypes.string,
+    text: PropTypes.string,
+    theme: PropTypes.object,
+  }),
 }
 
 Detail.defaultProps = {
@@ -153,5 +159,6 @@ Detail.defaultProps = {
   average: 0,
   isFineDineIn: false,
   chosenSideRecipeId: null,
-  menuWithSides: false
+  menuWithSides: false,
+  brandAvailability: {},
 }

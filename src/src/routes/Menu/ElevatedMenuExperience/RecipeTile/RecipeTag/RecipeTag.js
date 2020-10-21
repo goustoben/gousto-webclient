@@ -5,7 +5,7 @@ import css from './RecipeTag.css'
 
 const getTagStyle = (theme) => ({ ...theme, border: theme.borderColor ? '1px solid' : 'none' })
 
-const RecipeTag = ({ type, brandTag, showVariantHeader }) => {
+const RecipeTag = ({ type, brandTag, showVariantHeader, isOnDetailScreen }) => {
   if (!brandTag) {
     return null
   }
@@ -13,7 +13,8 @@ const RecipeTag = ({ type, brandTag, showVariantHeader }) => {
   const { theme, text } = brandTag
 
   return React.createElement(type, { className: classnames(css.recipeTag, {
-    [css.recipeTagShowVariantHeader]: showVariantHeader
+    [css.recipeTagShowVariantHeader]: showVariantHeader,
+    [css.recipeTagDetailScreen]: isOnDetailScreen,
   }),
   style: getTagStyle(theme) }, text)
 }
@@ -24,13 +25,15 @@ RecipeTag.propTypes = {
     text: PropTypes.string,
     theme: PropTypes.object,
   }),
-  showVariantHeader: PropTypes.bool
+  showVariantHeader: PropTypes.bool,
+  isOnDetailScreen: PropTypes.bool,
 }
 
 RecipeTag.defaultProps = {
   type: 'span',
   brandTag: null,
-  showVariantHeader: false
+  showVariantHeader: false,
+  isOnDetailScreen: false
 }
 
 export { RecipeTag }

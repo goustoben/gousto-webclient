@@ -66,7 +66,7 @@ export function decode(val) {
   return ret
 }
 
-export function get(cookies, key, withVersionPrefix = true) {
+export function get(cookies, key, withVersionPrefix = true, shouldDecode = true) {
   let result
   let oldCookieValue
   let newCookieValue
@@ -88,13 +88,21 @@ export function get(cookies, key, withVersionPrefix = true) {
           return null
         }
       }
-      oldCookieValue = decode(cookies.get(key))
-      newCookieValue = decode(cookies.get(prefixedKey))
+      // shouldDecode is set to false in Optimisely Rollouts as the session id is a string and can't be decoded. Will be deleted after EME2 experiment
+
+      if (shouldDecode) {
+        oldCookieValue = decode(cookies.get(key))
+        newCookieValue = decode(cookies.get(prefixedKey))
+      } else {
+        oldCookieValue = cookies.get(key)
+        newCookieValue = cookies.get(prefixedKey)
+      }
+      // Need to check shouldDecode here as Optimizelyrollouts is being used in multiple components and deletes the session id cookie every time
       if (oldCookieValue && !newCookieValue) {
         updateCookie(cookies, key, oldCookieValue)
         result = oldCookieValue
       } else {
-        if (oldCookieValue) {
+        if (oldCookieValue && shouldDecode) {
           deleteWithPath(cookies, key)
         }
         result = newCookieValue

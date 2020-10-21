@@ -5,11 +5,17 @@ import { OptimizelyRollouts } from './OptimizelyRollouts'
 import { getAuthUserId } from '../../selectors/auth'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
 
-const mapStateToProps = state => ({
-  authUserId: getAuthUserId(state),
-  sessionId: get(Cookies, 'gousto_session_id'),
+const withVersionPrefixAsFalse = false
 
-})
+const mapStateToProps = state => {
+  const sessionId = get(Cookies, 'gousto_session_id', withVersionPrefixAsFalse, false )
+
+  return {
+    authUserId: getAuthUserId(state),
+    sessionId
+
+  }
+}
 
 const mapDispatchToProps = {
   trackExperimentInSnowplow,
