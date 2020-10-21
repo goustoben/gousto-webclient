@@ -217,6 +217,34 @@
         "recipe_options": {
           "data": []
         },
+        "featured_categories": {
+          "data": [
+            {
+              "id": "6067fb3e-afbe-11e8-8ee6-0645394f11ea",
+              "type": "collection",
+              "meta": {
+                "title": "Healthy Choices",
+                "styleSlug": "default"
+              }
+            },
+            {
+              "id": "5c117c20-8b05-11e6-8538-065f01f5b2df",
+              "type": "collection",
+              "meta": {
+                "title": "Vegetarian",
+                "styleSlug": "default"
+              }
+            },
+            {
+              "id": "e55383da-336d-11e9-b24d-06399ef4685e",
+              "type": "collection",
+              "meta": {
+                "title": "Everyday Favourites",
+                "styleSlug": "default"
+              }
+            }
+          ]
+        },
         "limits": {
           "data": [
             {
@@ -1082,6 +1110,34 @@
         },
         "recipe_options": {
           "data": []
+        },
+        "featured_categories": {
+          "data": [
+            {
+              "id": "6067fb3e-afbe-11e8-8ee6-0645394f11ea",
+              "type": "collection",
+              "meta": {
+                "title": "Healthy Choices",
+                "styleSlug": "default"
+              }
+            },
+            {
+              "id": "5c117c20-8b05-11e6-8538-065f01f5b2df",
+              "type": "collection",
+              "meta": {
+                "title": "Vegetarian",
+                "styleSlug": "default"
+              }
+            },
+            {
+              "id": "e55383da-336d-11e9-b24d-06399ef4685e",
+              "type": "collection",
+              "meta": {
+                "title": "Everyday Favourites",
+                "styleSlug": "default"
+              }
+            }
+          ]
         },
         "limits": {
           "data": [
