@@ -16,7 +16,7 @@ import { checkQueryParams } from '../actions/menuRecipeDetails'
 import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
-import { getCurrentCollectionId } from '../selectors/collections'
+import { getCurrentCollectionIdByExperimentStatus } from '../selectors/collections'
 import { isMenuLoading } from '../selectors/menu'
 import fetchData from '../fetchData'
 
@@ -26,7 +26,10 @@ const mapStateToProps = (state, ownProps) => {
     location: { query }
   } = ownProps
 
-  const collectionId = getCurrentCollectionId(state)
+  const collectionId = getCurrentCollectionIdByExperimentStatus(state, {
+    featureName: 'categories_browsing_experiment',
+    userId: getUserId(state)
+  })
 
   return ({
     showTastePreferencesLoading: getIsTastePreferencesEnabled(state),

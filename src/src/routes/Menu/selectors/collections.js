@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getCollectionIdWithName } from 'utils/collections'
+import * as optimizelySDK from 'containers/OptimizelyRollouts/optimizelySDK'
 import menuConfig from 'config/menu'
 import { isOutOfStock } from './recipe'
 
@@ -201,3 +202,18 @@ export const getCurrentCollectionDietaryClaims = createSelector(
   [getMenuCollections, getCurrentCollectionId],
   (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'requirements', 'dietary_claims'], null)
 )
+
+export const getCurrentCollectionIdByExperimentStatus = (state, { featureName, userId }) => {
+  if (!optimizelySDK.hasValidInstance()) {
+    return getCurrentCollectionId(state)
+  }
+
+  const optimizelyInstance = optimizelySDK.instance.optimizelyRolloutsInstance
+  const inExperiment = optimizelyInstance.isFeatureEnabled(featureName, userId)
+
+  if (inExperiment) {
+    return null
+  }
+
+  return getCurrentCollectionId(state)
+}
