@@ -11,7 +11,6 @@ const ORDER_DELIVERY_DATE = '2019-07-27 00:00:00'
 const USER_ID = '12345'
 const ORDER_ID = '6789'
 const COMPLAINT_CATEGORY_ID = '13578'
-const REFUND_VALUE = 38
 
 jest.mock('utils/fetch')
 fetch.mockResolvedValue(MOCK_RESPONSE)
@@ -56,14 +55,14 @@ describe('getHelp API', () => {
 
   describe('Given applyDeliveryCompensation function is called with the correct payload', () => {
     beforeEach(async () => {
-      response = await applyDeliveryCompensation(ACCESS_TOKEN, USER_ID, ORDER_ID, COMPLAINT_CATEGORY_ID, REFUND_VALUE)
+      response = await applyDeliveryCompensation(ACCESS_TOKEN, USER_ID, ORDER_ID, COMPLAINT_CATEGORY_ID)
     })
 
     test('the fetch function is called with the right parameters', () => {
       expect(fetchRaw).toHaveBeenCalledTimes(1)
       expect(fetchRaw).toHaveBeenCalledWith(
         'endpoint-ssrdeliveries/vY/ssrdeliveries/refund',
-        { customer_id: USER_ID, order_id: ORDER_ID, category_id: COMPLAINT_CATEGORY_ID, refund_value: REFUND_VALUE },
+        { customer_id: USER_ID, order_id: ORDER_ID, category_id: COMPLAINT_CATEGORY_ID },
         { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
       )
     })

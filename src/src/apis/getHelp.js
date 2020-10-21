@@ -55,7 +55,7 @@ const shouldShowEntryPointTooltip = (accessToken, orderDeliveryDate) => (
   )
 )
 
-const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCategoryId, refundValue ) => {
+const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCategoryId ) => {
   const url = `${endpoint('ssrdeliveries', routes.version.ssrdeliveries)}/ssrdeliveries/refund`
 
   return fetchRaw(
@@ -64,7 +64,6 @@ const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCa
       customer_id: customerId,
       order_id: orderId,
       category_id: complaintCategoryId,
-      refund_value: refundValue,
     },
     {
       accessToken,

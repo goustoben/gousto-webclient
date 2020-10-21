@@ -84,7 +84,6 @@ class DeliveryCompensation extends PureComponent {
                         userId,
                         orderId,
                         deliveryComplaintCategoryId,
-                        compensationAmount,
                       )
                     }}
                   >

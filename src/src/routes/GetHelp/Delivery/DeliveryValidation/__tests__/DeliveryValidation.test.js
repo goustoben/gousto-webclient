@@ -56,8 +56,10 @@ describe('<DeliveryValidation />', () => {
           hasPassedDeliveryValidation: true,
         })
       })
-      test('renders <DeliveryCompensation> passing the compensationAmount as a prop', () => {
+      test('renders <DeliveryCompensation> passing the compensationAmount, userId, orderId as props', () => {
         expect(wrapper.find('DeliveryCompensation').prop('compensationAmount')).toBe(COMPENSATION_AMOUNT)
+        expect(wrapper.find('DeliveryCompensation').prop('userId')).toBe(USER_ID)
+        expect(wrapper.find('DeliveryCompensation').prop('orderId')).toBe(ORDER_ID)
       })
     })
     describe('and the validation failed', () => {

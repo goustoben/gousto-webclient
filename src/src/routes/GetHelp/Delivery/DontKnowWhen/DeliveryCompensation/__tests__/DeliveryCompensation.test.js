@@ -99,7 +99,6 @@ describe('DeliveryCompensation', () => {
           USER_ID,
           ORDER_ID,
           DELIVERY_COMPLAINT_CATEGORY_ID,
-          COMPENSATION_AMOUNT,
         )
       })
     })
