@@ -15,7 +15,7 @@ describe('CategoriesHeader', () => {
 
     test('renders back button', () => {
       expect(wrapper.find('CTABack').prop('label')).toBe('Back')
-      expect(wrapper.find('CTABack').prop('url')).toBe('/menu')
+      expect(wrapper.find('CTABack').prop('url')).toBe(null)
     })
 
     test('renders one category title', () => {
@@ -24,6 +24,16 @@ describe('CategoriesHeader', () => {
 
     test('renders one category title', () => {
       expect(wrapper.find('.title').text()).toEqual('Vegetarian')
+    })
+
+    describe('when no categoryTitle', () => {
+      beforeEach(() => {
+        wrapper = shallow(<CategoriesHeader />)
+      })
+
+      test('should return null', () => {
+        expect(wrapper.type()).toEqual(null)
+      })
     })
   })
 })
