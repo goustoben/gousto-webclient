@@ -585,6 +585,7 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
           ],
         }
       })
+
       dispatch(userActions.userOpenCloseOrderCard(orderId, true))
       showAllCancelledModalIfNecessary()
     } catch (err) {
@@ -601,6 +602,13 @@ export const clearUpdateDateErrorAndPending = () => (
     dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
   }
 )
+
+export const cancelMultipleBoxes = ({ selectedOrders }) => (dispatch, getState) => {
+  selectedOrders.forEach(({ id, deliveryDayId, isProjected }) => {
+    const cancelActionCreator = isProjected ? projectedOrderCancel : orderCancel
+    cancelActionCreator(id, deliveryDayId, id)(dispatch, getState)
+  })
+}
 
 export default {
   orderCancel,

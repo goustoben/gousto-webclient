@@ -16,6 +16,7 @@ const AppContainer = ({ history, routes, store }) => (
     <ApolloProvider client={apolloClient(store)}>
       <Router
         history={history}
+        // eslint-disable-next-line
         render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
         onUpdate={(() => {
           trackPageChange(store)

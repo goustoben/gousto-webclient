@@ -3,13 +3,13 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 import ModalPanel from 'Modal/ModalPanel'
-import css from 'routes/Account/Subscription/SubscriptionPause/Screen/Screen.css'
-import Screen from 'routes/Account/Subscription/SubscriptionPause/Screen/Screen'
+import css from 'routes/Account/Subscription/SubscriptionPause/SubscriptionPauseScreen/SubscriptionPauseScreen.css'
+import SubscriptionPauseScreen from 'routes/Account/Subscription/SubscriptionPause/SubscriptionPauseScreen/SubscriptionPauseScreen'
 import ReasonsScreen from 'routes/Account/Subscription/SubscriptionPause/ReasonsScreen'
 import GenericScreen from 'routes/Account/Subscription/SubscriptionPause/GenericScreen'
 import PendingOrderReminder from 'routes/Account/Subscription/SubscriptionPause/PendingOrderReminder'
 
-describe('Screen', () => {
+describe('SubscriptionPauseScreen', () => {
   afterEach(done => {
     done()
   })
@@ -17,35 +17,35 @@ describe('Screen', () => {
     let wrapper
 
     test('should render a <ModalPanel>', () => {
-      wrapper = shallow(<Screen />)
+      wrapper = shallow(<SubscriptionPauseScreen />)
       expect(wrapper.type()).toBe(ModalPanel)
     })
 
     test('should pass onGoBack to <ModalPanel> if provided and enableBack is true and pending is false', () => {
       const onGoBack = sinon.spy()
       wrapper = shallow(
-        <Screen enableBack onGoBack={onGoBack} pending={false} />,
+        <SubscriptionPauseScreen enableBack onGoBack={onGoBack} pending={false} />,
       )
       expect(wrapper.prop('onGoBack')).toBe(onGoBack)
     })
 
     test('should NOT pass onGoBack to <ModalPanel> if pending is true', () => {
       const onGoBack = sinon.spy()
-      wrapper = shallow(<Screen enableBack onGoBack={onGoBack} pending />)
+      wrapper = shallow(<SubscriptionPauseScreen enableBack onGoBack={onGoBack} pending />)
       expect(wrapper.prop('onGoBack')).toBe(null)
     })
 
     test('should NOT pass onGoBack to <ModalPanel> if enabledBack if false', () => {
       const onGoBack = sinon.spy()
       wrapper = shallow(
-        <Screen enableBack={false} onGoBack={onGoBack} pending={false} />,
+        <SubscriptionPauseScreen enableBack={false} onGoBack={onGoBack} pending={false} />,
       )
       expect(wrapper.prop('onGoBack')).toBe(null)
     })
 
     test('should render a <ReasonsScreen> for type "reasonGrid" & spread screenData as props', () => {
       wrapper = shallow(
-        <Screen type="reasonGrid" screenData={{ a: 2, b: 3 }} />,
+        <SubscriptionPauseScreen type="reasonGrid" screenData={{ a: 2, b: 3 }} />,
       )
       const reasonsScreen = wrapper.find(ReasonsScreen)
 
@@ -56,7 +56,7 @@ describe('Screen', () => {
 
     test('should render a <ReasonsScreen> for type "reasonList" & spread screenData as props', () => {
       wrapper = shallow(
-        <Screen type="reasonList" screenData={{ a: 4, b: 5 }} />,
+        <SubscriptionPauseScreen type="reasonList" screenData={{ a: 4, b: 5 }} />,
       )
       const reasonsScreen = wrapper.find(ReasonsScreen)
 
@@ -67,7 +67,7 @@ describe('Screen', () => {
 
     test('should render a <GenericScreen> for any other type & spread screenData as props', () => {
       wrapper = shallow(
-        <Screen type="somethingElse" screenData={{ a: 6, b: 7 }} />,
+        <SubscriptionPauseScreen type="somethingElse" screenData={{ a: 6, b: 7 }} />,
       )
       const genericScreen = wrapper.find(GenericScreen)
 
@@ -77,7 +77,7 @@ describe('Screen', () => {
     })
     test('should render a <PendingOrderReminder> for any "pausedPendingBoxes" type & spread screenData as props', () => {
       wrapper = shallow(
-        <Screen type="pausedPendingBoxes" screenData={{ a: 6, b: 7 }} />,
+        <SubscriptionPauseScreen type="pausedPendingBoxes" screenData={{ a: 6, b: 7 }} />,
       )
       const genericScreen = wrapper.find(PendingOrderReminder)
 
@@ -89,7 +89,7 @@ describe('Screen', () => {
       const testTitle = 'testTitle'
       const testPreTitle = 'preTitle'
       wrapper = shallow(
-        <Screen screenData={{ title: testTitle, preTitle: testPreTitle }} />,
+        <SubscriptionPauseScreen screenData={{ title: testTitle, preTitle: testPreTitle }} />,
       )
       const preTitleSpan = `.${css.preTitle.split(' ').join('.')}`
       expect(wrapper.find('h1').length).toEqual(1)
@@ -98,7 +98,7 @@ describe('Screen', () => {
       expect(wrapper.find(preTitleSpan).text()).toEqual(testPreTitle)
     })
     test('should not render a title & pretitle if not provided', () => {
-      wrapper = shallow(<Screen screenData={{}} />)
+      wrapper = shallow(<SubscriptionPauseScreen screenData={{}} />)
       const preTitleSpan = `.${css.preTitle.split(' ').join('.')}`
       expect(wrapper.find('h1').length).toEqual(0)
       expect(wrapper.find(preTitleSpan).length).toEqual(0)

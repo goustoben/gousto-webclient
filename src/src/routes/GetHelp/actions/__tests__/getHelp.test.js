@@ -161,14 +161,13 @@ describe('GetHelp action generators and thunks', () => {
     const USER_ID = '123'
     const ORDER_ID = '456'
     const COMPLAINT_CATEGORY = '789'
-    const REFUND_VALUE = '135'
     const DELIVERY_REFUND_STATUS = 'ok'
     browserHistory.push = jest.fn()
 
     describe('Given the action is called and response is received', () => {
       beforeEach(async () => {
         applyDeliveryCompensation.mockResolvedValueOnce(DELIVERY_REFUND_STATUS)
-        await applyDeliveryRefund(USER_ID, ORDER_ID, COMPLAINT_CATEGORY, REFUND_VALUE)(dispatch, getState)
+        await applyDeliveryRefund(USER_ID, ORDER_ID, COMPLAINT_CATEGORY)(dispatch, getState)
       })
 
       test('it dispatches a pending action to true', () => {
@@ -205,7 +204,7 @@ describe('GetHelp action generators and thunks', () => {
     describe('Given the action is called and an api call throws an error', () => {
       beforeEach(async () => {
         applyDeliveryCompensation.mockRejectedValueOnce(DELIVERY_COMPENSATION_ERRORS)
-        await applyDeliveryRefund(USER_ID, ORDER_ID, COMPLAINT_CATEGORY, REFUND_VALUE)(dispatch, getState)
+        await applyDeliveryRefund(USER_ID, ORDER_ID, COMPLAINT_CATEGORY)(dispatch, getState)
       })
 
       test('it dispatches a pending action to true', () => {
@@ -231,7 +230,7 @@ describe('GetHelp action generators and thunks', () => {
       test('it logs the error', () => {
         expect(logger.error).toHaveBeenCalledWith({
           errors: [DELIVERY_COMPENSATION_ERRORS],
-          message: `Failed to applyDeliveryRefund of £${REFUND_VALUE} for userId: ${USER_ID}, orderId: ${ORDER_ID}`
+          message: `Failed to applyDeliveryRefund for userId: ${USER_ID}, orderId: ${ORDER_ID}`
         })
       })
 

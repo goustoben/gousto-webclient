@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import Loading from 'Loading'
-import css from './Screen.css'
+import css from './SubscriptionPauseScreen.css'
 import ReasonsScreen from '../ReasonsScreen'
 import GenericScreen from '../GenericScreen'
 import PendingOrderReminder from '../PendingOrderReminder'
@@ -61,7 +61,7 @@ SubscriptionPauseScreen.propTypes = {
 }
 
 SubscriptionPauseScreen.defaultProps = {
-  closeModal: () => {},
+  closeModal: () => { },
   enableBack: false,
   pending: false,
   screenData: {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions/subscriptionPause'
 import getPauseScreen from 'utils/getPauseScreen'
-import Screen from './Screen'
+import SubscriptionPauseScreen from './SubscriptionPauseScreen'
 
 const mapStateToProps = state => {
   const screenData = state.subscriptionPause.get('staticScreenId') || state.subscriptionPause.get('activeReasons').size > 0 ? getPauseScreen(state.subscriptionPause).toJS() : undefined
@@ -17,9 +17,9 @@ const mapStateToProps = state => {
   })
 }
 
-const ScreenContainer = connect(mapStateToProps, {
+const SubscriptionPauseScreenContainer = connect(mapStateToProps, {
   closeModal: actions.subscriptionPauseEnd,
   onGoBack: actions.subscriptionPauseGoBack,
-})(Screen)
+})(SubscriptionPauseScreen)
 
-export default ScreenContainer
+export default SubscriptionPauseScreenContainer

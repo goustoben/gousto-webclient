@@ -34,6 +34,7 @@ class DeliveryValidation extends PureComponent {
     const {
       compensationAmount,
       hasPassedDeliveryValidation,
+      params: { userId, orderId },
     } = this.props
 
     const { isValidationCheckDone } = this.state
@@ -43,7 +44,13 @@ class DeliveryValidation extends PureComponent {
     }
 
     if (hasPassedDeliveryValidation) {
-      return <DeliveryCompensation compensationAmount={compensationAmount} />
+      return (
+        <DeliveryCompensation
+          userId={userId}
+          orderId={orderId}
+          compensationAmount={compensationAmount}
+        />
+      )
     }
 
     return <DeliveryPreContact />

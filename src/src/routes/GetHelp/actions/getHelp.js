@@ -87,12 +87,11 @@ export const applyDeliveryRefund = (
   userId,
   orderId,
   complaintCategory,
-  refundValue
 ) => async (dispatch, getState) => {
   const getPayload = async () => {
     const accessToken = getState().auth.get('accessToken')
     const { index, confirmation } = clientRoutes.getHelp
-    await applyDeliveryCompensation(accessToken, userId, orderId, complaintCategory, refundValue)
+    await applyDeliveryCompensation(accessToken, userId, orderId, complaintCategory)
     browserHistory.push(`${index}/${confirmation}`)
   }
 
@@ -100,7 +99,7 @@ export const applyDeliveryRefund = (
     dispatch,
     actionType: actionTypes.GET_HELP_APPLY_DELIVERY_COMPENSATION,
     getPayload,
-    errorMessage: `Failed to applyDeliveryRefund of £${refundValue} for userId: ${userId}, orderId: ${orderId}`,
+    errorMessage: `Failed to applyDeliveryRefund for userId: ${userId}, orderId: ${orderId}`,
   })
 }
 

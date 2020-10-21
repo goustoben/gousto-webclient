@@ -41,7 +41,8 @@ import {
   getIsMyGoustoBannerAppAwarenessEnabled,
   getisNewSSRDeliveriesEnabled,
   getIsPayWithPaypalEnabled,
-  getIsBoxPricesUserJourneyEnabled
+  getIsBoxPricesUserJourneyEnabled,
+  getIsMultiSkipEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -69,7 +70,7 @@ describe('when features are defined', () => {
     [getLogoutUserDisabledSlots, 'logoutUserDisabledSlots', [
       [''], ['2020-01-20_08-19,2020-02-21_08-12']]
     ],
-    [ getNDDFeatureValue, 'ndd', ['something']],
+    [getNDDFeatureValue, 'ndd', ['something']],
     [getPromoBannerCode, 'promoBannerCode', [[''], ['DTI-MG-7070']]],
     [getPromoBannerEnabled, 'promoBanner'],
     [getPromoBannerText, 'promoBannerText', [
@@ -99,6 +100,7 @@ describe('when features are defined', () => {
     [getisNewSSRDeliveriesEnabled, 'isNewSSRDeliveriesEnabled'],
     [getIsPayWithPaypalEnabled, 'payWithPaypal'],
     [getIsBoxPricesUserJourneyEnabled, 'boxPricesUserJourney'],
+    [getIsMultiSkipEnabled, 'isMultiSkipEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
