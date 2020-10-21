@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { client } from 'config/routes'
 import { LoadingWrapper } from '../../LoadingWrapper'
 import { DeliveryCompensation } from '../DontKnowWhen/DeliveryCompensation'
 import { DeliveryPreContact } from '../DidntArrive/DeliveryPreContact'
@@ -36,6 +37,7 @@ class DeliveryValidation extends PureComponent {
       hasPassedDeliveryValidation,
       params: { userId, orderId },
     } = this.props
+    const backUrl = client.getHelp.delivery({ orderId, userId })
 
     const { isValidationCheckDone } = this.state
 
@@ -46,14 +48,15 @@ class DeliveryValidation extends PureComponent {
     if (hasPassedDeliveryValidation) {
       return (
         <DeliveryCompensation
-          userId={userId}
-          orderId={orderId}
+          backUrl={backUrl}
           compensationAmount={compensationAmount}
+          orderId={orderId}
+          userId={userId}
         />
       )
     }
 
-    return <DeliveryPreContact />
+    return <DeliveryPreContact backUrl={backUrl} />
   }
 }
 

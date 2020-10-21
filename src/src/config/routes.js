@@ -53,16 +53,10 @@ module.exports = {
     getHelp: {
       confirmation: 'confirmation',
       contact: 'contact',
-      delivery: 'delivery',
-      deliveryDidntArriveValidation: ({ orderId, userId }) => (
-        `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive/validation`
-      ),
-      didntArriveRegex: '\\/get-help\\/user\\/\.+\\/order\\/\.+\\/delivery\\/didnt-arrive',
-      didntArriveTemplate: '/get-help/user/:userId/order/:orderId/delivery/didnt-arrive',
-      deliveryDidntArriveValidationRegex: '\\/get-help\\/user\\/\.+\\/order\\/\.+\\/delivery\\/didnt-arrive\\/validation',
-      deliveryDidntArriveValidationTemplate: '/get-help/user/:userId/order/:orderId/delivery/didnt-arrive/validation',
-      dontKnowWhenRegex: '\\/get-help\\/user\\/\.+\\/order\\/\.+\\/delivery\\/dont-know-when',
-      dontKnowWhenTemplate: '/get-help/user/:userId/order/:orderId/delivery/dont-know-when',
+      delivery: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/delivery`,
+      deliveryDidntArrive: ({ orderId, userId }) => `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive`,
+      deliveryDidntArriveValidation: ({ orderId, userId }) => `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive/validation`,
+      deliveryDontKnowWhen: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/delivery/dont-know-when`,
       eligibilityCheck: 'eligibility-check',
       index: '/get-help',
       ingredientIssues: 'ingredient-issues',

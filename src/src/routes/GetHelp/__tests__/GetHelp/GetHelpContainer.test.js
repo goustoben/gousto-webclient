@@ -60,6 +60,7 @@ describe('<GetHelpContainer />', () => {
         <GetHelpContainer
           location={{ query: { orderId: '788' }, pathname: 'get-help' }}
           store={store}
+          params={{ userId: '123', orderId: '456' }}
         >
           <div>Required Child</div>
         </GetHelpContainer>

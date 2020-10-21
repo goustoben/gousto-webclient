@@ -13,13 +13,19 @@ describe('<OrderIssue />', () => {
     otherItem: 'test otherItem',
   }
 
+  const PROPS = {
+    content,
+    orderId: '123',
+    userId: '456',
+  }
+
   let wrapper
   let getHelpLayout
 
   describe('rendering', () => {
     beforeEach(() => {
       wrapper = mount(
-        <OrderIssue content={content} />
+        <OrderIssue {...PROPS} />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
     })
@@ -52,20 +58,8 @@ describe('<OrderIssue />', () => {
       expect(itemLinks).toHaveLength(4)
       expect(itemLinks.at(0).prop('to')).toBe('/get-help/ingredients')
       expect(itemLinks.at(1).prop('to')).toBe('/get-help/recipe-cards')
-      expect(itemLinks.at(2).prop('to')).toBe('/get-help/delivery')
-      expect(itemLinks.at(3).prop('to')).toBe('https://gousto.zendesk.com/hc/en-gb')
-    })
-
-    describe('when userId prop is passed', () => {
-      const USER_ID = '1234'
-      beforeEach(() => {
-        wrapper.setProps({ userId: USER_ID })
-      })
-
-      test('the link to zendesk has the user id appended at the end', () => {
-        expect(wrapper.find('ItemLink').at(3).prop('to'))
-          .toBe(`https://gousto.zendesk.com/hc/en-gb/?user_id=${USER_ID}`)
-      })
+      expect(itemLinks.at(2).prop('to')).toBe(`/get-help/user/${PROPS.userId}/order/${PROPS.orderId}/delivery`)
+      expect(itemLinks.at(3).prop('to')).toBe(`https://gousto.zendesk.com/hc/en-gb/?user_id=${PROPS.userId}`)
     })
 
     test('the Others option is not client route', () => {

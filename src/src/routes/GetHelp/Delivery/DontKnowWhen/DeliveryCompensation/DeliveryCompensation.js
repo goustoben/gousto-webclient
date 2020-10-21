@@ -26,6 +26,7 @@ class DeliveryCompensation extends PureComponent {
   render() {
     const {
       applyDeliveryRefund,
+      backUrl,
       compensationAmount,
       isApplyCompensationError,
       isApplyCompensationPending,
@@ -35,7 +36,7 @@ class DeliveryCompensation extends PureComponent {
     const { index, contact } = client.getHelp
 
     return (
-      <GetHelpLayout2 headingText="Get help with your box">
+      <GetHelpLayout2 backUrl={backUrl} headingText="Get help with your box">
         <Heading size="fontStyleM" type="h2">
           We&apos;re sorry to hear your box didn&apos;t arrive
         </Heading>
@@ -100,6 +101,7 @@ class DeliveryCompensation extends PureComponent {
 
 DeliveryCompensation.propTypes = {
   applyDeliveryRefund: PropTypes.func.isRequired,
+  backUrl: PropTypes.string.isRequired,
   compensationAmount: PropTypes.number.isRequired,
   isApplyCompensationError: PropTypes.bool.isRequired,
   isApplyCompensationPending: PropTypes.bool.isRequired,

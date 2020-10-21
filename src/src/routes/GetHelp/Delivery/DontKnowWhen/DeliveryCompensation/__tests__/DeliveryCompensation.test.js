@@ -6,6 +6,7 @@ import { DeliveryCompensation } from '../DeliveryCompensation'
 
 describe('DeliveryCompensation', () => {
   const COMPENSATION_AMOUNT = 3.6
+  const BACK_URL = 'get-help/userId/123/orderId/111/delivery'
   const USER_ID = '1234'
   const ORDER_ID = '5678'
   const ERROR_MESSAGE_REGEX = /.*credit.*Customer Care/
@@ -18,6 +19,7 @@ describe('DeliveryCompensation', () => {
     wrapper = shallow(
       <DeliveryCompensation
         applyDeliveryRefund={applyDeliveryRefundMock}
+        backUrl={BACK_URL}
         compensationAmount={COMPENSATION_AMOUNT}
         isApplyCompensationError={false}
         isApplyCompensationPending={false}
@@ -39,8 +41,8 @@ describe('DeliveryCompensation', () => {
       wrapper.setProps({ isApplyCompensationError: false })
     })
 
-    test('renders GetHelpLayout2', () => {
-      expect(wrapper.find('GetHelpLayout2').exists()).toBe(true)
+    test('renders GetHelpLayout2 passing the backUrl prop', () => {
+      expect(wrapper.find('GetHelpLayout2').prop('backUrl')).toBe(BACK_URL)
     })
 
     test('renders a Heading', () => {

@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 import { mount } from 'enzyme'
 import { safeJestMock } from '_testing/mocks'
 import * as timeUtils from '../../../utils/time'
-import { DidntArrive } from '..'
+import { DidntArrive } from '../DidntArrive'
 
 safeJestMock(timeUtils, 'compareTodayToDeliveryDate')
 browserHistory.push = jest.fn()

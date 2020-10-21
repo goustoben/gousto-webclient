@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import userActions, { userLoadOrderTrackingInfo } from 'actions/user'
 import { getUserOrders } from 'selectors/user'
+import { getisNewSSRDeliveriesEnabled } from 'selectors/features'
 import {
   trackDeliveryOther,
   trackDeliveryStatus,
@@ -10,6 +11,7 @@ import { Delivery } from './Delivery'
 
 function mapStateToProps(state) {
   return {
+    isNewSSRDeliveriesEnabled: getisNewSSRDeliveriesEnabled(state),
     nextOrderTracking: state.user.get('nextOrderTracking'),
     orders: getUserOrders(state),
   }

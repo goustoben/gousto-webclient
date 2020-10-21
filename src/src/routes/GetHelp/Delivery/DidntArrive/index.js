@@ -1,1 +1,1 @@
-export { DidntArrive } from './DidntArrive'
+export { DidntArriveContainer } from './DidntArriveContainer'

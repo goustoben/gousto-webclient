@@ -56,10 +56,12 @@ describe('<DeliveryValidation />', () => {
           hasPassedDeliveryValidation: true,
         })
       })
-      test('renders <DeliveryCompensation> passing the compensationAmount, userId, orderId as props', () => {
+      test('renders <DeliveryCompensation> passing the compensationAmount, userId, orderId, backUrl as props', () => {
         expect(wrapper.find('DeliveryCompensation').prop('compensationAmount')).toBe(COMPENSATION_AMOUNT)
         expect(wrapper.find('DeliveryCompensation').prop('userId')).toBe(USER_ID)
         expect(wrapper.find('DeliveryCompensation').prop('orderId')).toBe(ORDER_ID)
+        expect(wrapper.find('DeliveryCompensation').prop('backUrl'))
+          .toBe(`/get-help/user/${USER_ID}/order/${ORDER_ID}/delivery`)
       })
     })
     describe('and the validation failed', () => {
@@ -69,8 +71,9 @@ describe('<DeliveryValidation />', () => {
           hasPassedDeliveryValidation: false,
         })
       })
-      test('renders <DeliveryPreContact>', () => {
-        expect(wrapper.find('DeliveryPreContact').exists()).toBe(true)
+      test('renders <DeliveryPreContact> passing the backUrl', () => {
+        expect(wrapper.find('DeliveryPreContact').prop('backUrl'))
+          .toBe(`/get-help/user/${USER_ID}/order/${ORDER_ID}/delivery`)
       })
     })
   })

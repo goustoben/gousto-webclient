@@ -5,6 +5,7 @@ import { GetHelpLayout2 } from '..'
 describe('GetHelpLayout2', () => {
   let wrapper
   const HEADING_TEXT = 'This is a heading'
+  const URL = 'https://twitter.com'
   const CHILDREN = [
     <p key="key1">I got your distress call</p>,
     <p key="key2">And came here as soon as I wanted to</p>,
@@ -24,6 +25,16 @@ describe('GetHelpLayout2', () => {
 
   test('renders a CTABack', () => {
     expect(wrapper.find('CTABack').exists()).toBe(true)
+  })
+
+  describe('When a url is passed as a parameter', () => {
+    beforeEach(() => {
+      wrapper.setProps({ url: URL })
+    })
+
+    test('passes the url to CTABack', () => {
+      expect(wrapper.find('CTABack').prop('url')).toBe(URL)
+    })
   })
 
   describe('the heading rendered', () => {
