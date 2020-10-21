@@ -52,7 +52,7 @@ const compareHealth = (status, path, benchmarkCodeHealth, newCodeHealth) => {
 
   const details = {
     path: sanitisedPath,
-    failures: getFailureMessages(benchmark, newHealth)
+    failures: getFailureMessages(benchmark, newHealth, sanitisedPath)
   }
 
   if (details.failures.length === 0) {
