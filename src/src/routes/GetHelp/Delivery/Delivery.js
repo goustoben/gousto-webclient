@@ -1,20 +1,22 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { browserHistory } from 'react-router'
-import { windowOpen } from 'utils/window'
 import { client } from 'config/routes'
-import { CTA, ItemExpandable } from 'goustouicomponents'
 import { findNewestOrder, isOrderBeingDeliveredToday } from 'utils/order'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
-import css from './Delivery.css'
+import { DeliverySimple } from './DeliverySimple'
 
 const propTypes = {
+  isNewSSRDeliveriesEnabled: PropTypes.bool.isRequired,
   loadOrderTrackingInfo: PropTypes.func.isRequired,
-  nextOrderTracking: PropTypes.string,
   orders: PropTypes.instanceOf(Immutable.Map),
+  nextOrderTracking: PropTypes.string,
+  params: PropTypes.shape({
+    orderId: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
+  }).isRequired,
   trackDeliveryOther: PropTypes.func.isRequired,
   trackDeliveryStatus: PropTypes.func.isRequired,
   trackNextBoxTrackingClick: PropTypes.func.isRequired,
@@ -44,51 +46,48 @@ class Delivery extends PureComponent {
     }
   }
 
-  getContent = ({ nextOrderTracking }) => (
-    (!nextOrderTracking)
-      ? {
-        ctaLabel: 'View My Gousto',
-        deliveryDescription: 'The tracking link is available on your day of delivery and this can be found on the "My Gousto" page under your next box delivery.',
-      }
-      : {
-        ctaLabel: 'Track my box',
-        deliveryDescription: 'The tracking link is now available, this can usually be found on the "My Gousto" page under your next box delivery.'
-      }
-  )
-
-  trackMyBoxClick = () => {
-    const { nextOrderTracking, orders, trackNextBoxTrackingClick } = this.props
-
-    if (nextOrderTracking) {
-      const foundUpcomingOrder = findNewestOrder(orders, true)
-
-      trackNextBoxTrackingClick(foundUpcomingOrder.get('id'))
-      windowOpen(nextOrderTracking)
-    } else {
-      browserHistory.push(client.myGousto)
-    }
-  }
-
   render() {
-    const { trackDeliveryStatus, trackDeliveryOther } = this.props
-    const { ctaLabel, deliveryDescription } = this.getContent(this.props)
+    const {
+      isNewSSRDeliveriesEnabled,
+      loadOrderTrackingInfo,
+      nextOrderTracking,
+      orders,
+      params,
+      trackDeliveryOther,
+      trackDeliveryStatus,
+      trackNextBoxTrackingClick,
+      userLoadOrders,
+    } = this.props
+
+    if (!isNewSSRDeliveriesEnabled) {
+      return (
+        <DeliverySimple
+          loadOrderTrackingInfo={loadOrderTrackingInfo}
+          nextOrderTracking={nextOrderTracking}
+          orders={orders}
+          trackDeliveryOther={trackDeliveryOther}
+          trackDeliveryStatus={trackDeliveryStatus}
+          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
+          userLoadOrders={userLoadOrders}
+        />
+      )
+    }
 
     return (
       <GetHelpLayout2 headingText="Get help with box issue?">
         <List>
-          <ItemExpandable
-            label="Day of delivery tracking"
-            trackClick={trackDeliveryStatus}
-          >
-            <div className={css.deliveryStatusContent}>
-              <p>{deliveryDescription}</p>
-              <CTA size="small" onClick={this.trackMyBoxClick} variant="primary">
-                {ctaLabel}
-              </CTA>
-            </div>
-          </ItemExpandable>
           <ItemLink
-            label="Other"
+            label="I don't know when my box will arrive"
+            to={client.getHelp.deliveryDontKnowWhen(params)}
+            clientRouted
+          />
+          <ItemLink
+            label="My box did not arrive"
+            to={client.getHelp.deliveryDidntArrive(params)}
+            clientRouted
+          />
+          <ItemLink
+            label="I had another issue"
             trackClick={trackDeliveryOther}
             to={`${client.getHelp.index}/${client.getHelp.contact}`}
             clientRouted

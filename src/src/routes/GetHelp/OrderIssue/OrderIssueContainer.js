@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 
 import { selectOrderIssue } from 'actions/getHelp'
 import { getUserId } from 'selectors/user'
+import { getOrderId } from 'selectors/getHelp'
 
 import { OrderIssue } from './OrderIssue'
 
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => ({
     otherItem: state.content.get('get-help_orderissues_pagecontent_otheritem')
     || 'Other',
   },
+  orderId: getOrderId(state),
   userId: getUserId(state),
 })
 

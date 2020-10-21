@@ -1,5 +1,6 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
+import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { BottomFixedContent, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
@@ -9,8 +10,8 @@ const redirectToContactPage = () => {
   browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
 }
 
-const DeliveryPreContact = () => (
-  <GetHelpLayout2 headingText="Get help with your box">
+const DeliveryPreContact = ({ backUrl }) => (
+  <GetHelpLayout2 backUrl={backUrl} headingText="Get help with your box">
     <Heading size="fontStyleM" type="h2">
       We&apos;re sorry to hear your box did not arrive
     </Heading>
@@ -25,5 +26,9 @@ const DeliveryPreContact = () => (
     </BottomFixedContent>
   </GetHelpLayout2>
 )
+
+DeliveryPreContact.propTypes = {
+  backUrl: PropTypes.string.isRequired
+}
 
 export { DeliveryPreContact }

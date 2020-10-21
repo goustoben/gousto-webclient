@@ -35,9 +35,15 @@ const getLintWarningFailureMessage = (benchmark, compare) => {
   return `[lint warnings] ${compare.warningCount} warnings (max ${threshold})`
 }
 
-const getCoverageFailureMessage = (benchmark, compare) => {
+const getCoverageFailureMessage = (benchmark, compare, filePath) => {
   // file has no test coverage, skip
   if (compare.coveragePercent === null) {
+    return null
+  }
+
+  // it doesn't make sense to unit-test the regression tests and their
+  // utilities
+  if (filePath.includes('__regression__')) {
     return null
   }
 
@@ -57,11 +63,11 @@ const getCoverageFailureMessage = (benchmark, compare) => {
   return `[test coverage] ${compare.coveragePercent.toFixed(2)}% covered (min ${threshold.toFixed(2)}%)`
 }
 
-const getFailureMessages = (benchmark, compare) => {
+const getFailureMessages = (benchmark, compare, filePath) => {
   return [
     getLintErrorFailureMessage(benchmark, compare),
     getLintWarningFailureMessage(benchmark, compare),
-    getCoverageFailureMessage(benchmark, compare)
+    getCoverageFailureMessage(benchmark, compare, filePath)
   ].filter(failure => failure !== null)
 }
 

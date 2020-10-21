@@ -7,6 +7,7 @@ import {
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
+import { getUserId } from 'selectors/user'
 import { GetHelp } from './GetHelp'
 
 const getContent = ({ content }) => ({
@@ -32,14 +33,14 @@ const getPending = ({ pending }) => {
   return pendingRequest
 }
 
-const skipErrorByRoute = ({ pathname }) => {
+const skipErrorByRoute = ({ pathname, userId, orderId }) => {
   const {
     confirmation,
     contact,
     delivery,
-    didntArriveRegex,
-    deliveryDidntArriveValidationRegex,
-    dontKnowWhenRegex,
+    deliveryDidntArrive,
+    deliveryDidntArriveValidation,
+    deliveryDontKnowWhen,
     eligibilityCheck,
     index,
     ingredientIssues,
@@ -48,22 +49,21 @@ const skipErrorByRoute = ({ pathname }) => {
   const isPathnameInExceptionList = [
     `${index}/${contact}`,
     `${index}/${confirmation}`,
-    `${index}/${delivery}`,
+    delivery({ userId, orderId }),
+    deliveryDidntArrive({ userId, orderId }),
+    deliveryDidntArriveValidation({ userId, orderId }),
+    deliveryDontKnowWhen({ userId, orderId }),
     `${index}/${eligibilityCheck}`,
     `${index}/${eligibilityCheck}/${ingredientIssues}`,
   ].includes(pathname)
 
-  const isPathnameInRegexExceptionList = [
-    dontKnowWhenRegex,
-    didntArriveRegex,
-    deliveryDidntArriveValidationRegex,
-  ].some((routeRegex) => pathname.match(routeRegex))
-
-  return isPathnameInExceptionList || isPathnameInRegexExceptionList
+  return isPathnameInExceptionList
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { location } = ownProps
+  const { location, params } = ownProps
+
+  const userId = getUserId(state)
 
   const order = state.getHelp.get('order').toJS()
 
@@ -71,11 +71,11 @@ const mapStateToProps = (state, ownProps) => {
 
   const pending = getPending(state)
 
-  const skipErrorPage = skipErrorByRoute(location)
-
   const orderId = (location && location.query && location.query.orderId)
     ? location.query.orderId
-    : (order.id || '')
+    : (order.id || params.orderId || '')
+
+  const skipErrorPage = skipErrorByRoute({ pathname: location.pathname, userId, orderId })
 
   const didRequestError = (skipErrorPage)
     ? false
@@ -93,7 +93,7 @@ const mapStateToProps = (state, ownProps) => {
     location: ownProps.location,
     content: getContent(state),
     user: {
-      id: state.user.get('id'),
+      id: userId,
       accessToken: state.auth.get('accessToken'),
     },
   }

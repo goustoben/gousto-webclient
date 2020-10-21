@@ -19,6 +19,7 @@ const OrderIssue = ({
     otherItem,
   },
   selectOrderIssue,
+  orderId,
   userId,
 }) => (
   <GetHelpLayout title={title} body={body}>
@@ -40,7 +41,7 @@ const OrderIssue = ({
       <ItemLink
         label={deliveryItem}
         trackClick={trackClick(selectOrderIssue, 'delivery')}
-        to={`${routes.getHelp.index}/${routes.getHelp.delivery}`}
+        to={routes.getHelp.delivery({userId, orderId})}
         clientRouted
       />
       <ItemLink
@@ -62,6 +63,7 @@ OrderIssue.propTypes = {
     deliveryItem: PropTypes.string.isRequired,
     otherItem: PropTypes.string.isRequired,
   }).isRequired,
+  orderId: PropTypes.string.isRequired,
   selectOrderIssue: PropTypes.func,
   userId: PropTypes.string.isRequired,
 }

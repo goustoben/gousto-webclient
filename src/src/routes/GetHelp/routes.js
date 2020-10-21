@@ -19,7 +19,7 @@ import { IngredientReasons } from './IngredientReasons'
 import { IngredientIssues as EligibilityCheckIngredientIssues } from './EligibilityCheck/IngredientIssues'
 import { RecipeCards } from './RecipeCards'
 import { Refund } from './Refund'
-import { DidntArrive } from './Delivery/DidntArrive'
+import { DidntArriveContainer } from './Delivery/DidntArrive'
 
 const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
@@ -43,9 +43,9 @@ const getHelpRoutes = (store) => {
   const {
     index,
     delivery,
-    didntArriveTemplate,
-    dontKnowWhenTemplate,
-    deliveryDidntArriveValidationTemplate,
+    deliveryDidntArrive,
+    deliveryDidntArriveValidation,
+    deliveryDontKnowWhen
   } = configRoutes.client.getHelp
   const { login } = configRoutes.client
 
@@ -58,20 +58,20 @@ const getHelpRoutes = (store) => {
       >
         <IndexRoute component={OrderIssueContainer} />
         <Route
-          path={delivery}
+          path={delivery({userId: ':userId', orderId: ':orderId'})}
           component={DeliveryContainer}
         />
         <Route
-          path={deliveryDidntArriveValidationTemplate}
+          path={deliveryDidntArriveValidation({userId: ':userId', orderId: ':orderId'})}
           component={DeliveryValidationContainer}
         />
         <Route
-          path={dontKnowWhenTemplate}
+          path={deliveryDontKnowWhen({userId: ':userId', orderId: ':orderId'})}
           component={DontKnowWhen}
         />
         <Route
-          path={didntArriveTemplate}
-          component={DidntArrive}
+          path={deliveryDidntArrive({userId: ':userId', orderId: ':orderId'})}
+          component={DidntArriveContainer}
         />
         {Confirmation}
         {Contact}

@@ -5,18 +5,19 @@ import { client } from 'config/routes'
 import { DeliveryPreContact } from '..'
 
 describe('DeliveryPreContact', () => {
+  const BACK_URL = 'get-help/userId/123/orderId/111/delivery'
   let wrapper
 
   beforeEach(() => {
     wrapper = shallow(
-      <DeliveryPreContact />
+      <DeliveryPreContact backUrl={BACK_URL} />
     )
   })
 
   test('renders without crashing', () => {})
 
-  test('renders GetHelpLayout2', () => {
-    expect(wrapper.find('GetHelpLayout2').exists()).toBe(true)
+  test('renders GetHelpLayout2 passing the backUrl prop', () => {
+    expect(wrapper.find('GetHelpLayout2').prop('backUrl')).toBe(BACK_URL)
   })
 
   test('renders Heading', () => {

@@ -10,7 +10,7 @@ const CategoriesHeader = ({ categoryTitle }) => {
   return (
     <div className={css.titleWrapper}>
       <div className={css.buttonWrapper}>
-        <CTABack label="Back" url="/menu" />
+        <CTABack label="Back" />
       </div>
       <span className={css.title}>{categoryTitle}</span>
     </div>
