@@ -7,12 +7,12 @@ import css from './GetHelpLayout2.css'
 const GetHelpLayout2 = ({
   children,
   headingText,
-  url,
+  backUrl,
 }) => (
   <LayoutPageWrapper>
     <div className={css.wrapperWide}>
       <div className={css.wrapperBack}>
-        <CTABack url={url} />
+        <CTABack url={backUrl} />
       </div>
       <div className={css.wrapper}>
         <div className={css.heading}>
@@ -29,13 +29,13 @@ const GetHelpLayout2 = ({
 )
 
 GetHelpLayout2.propTypes = {
+  backUrl: PropTypes.string,
   children: PropTypes.node.isRequired,
   headingText: PropTypes.node.isRequired,
-  url: PropTypes.string,
 }
 
 GetHelpLayout2.defaultProps = {
-  url: null,
+  backUrl: null,
 }
 
 export { GetHelpLayout2 }
