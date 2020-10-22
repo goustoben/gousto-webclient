@@ -27,9 +27,9 @@ describe('GetHelpLayout2', () => {
     expect(wrapper.find('CTABack').exists()).toBe(true)
   })
 
-  describe('When a url is passed as a parameter', () => {
+  describe('When a back url is passed', () => {
     beforeEach(() => {
-      wrapper.setProps({ url: URL })
+      wrapper.setProps({ backUrl: URL })
     })
 
     test('passes the url to CTABack', () => {
