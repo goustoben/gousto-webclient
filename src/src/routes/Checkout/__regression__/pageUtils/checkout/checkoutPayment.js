@@ -2,6 +2,8 @@ import {
   goToCheckout,
   clearAndFillCheckoutForm
 } from './checkoutAboutYou'
+import { getFormState, getStore } from './checkoutGeneralUtils'
+import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 
 const selectAddress = () => {
   if (Cypress.env().platform === 'mobile') {
@@ -10,7 +12,7 @@ const selectAddress = () => {
       .click()
       .get('select')
       .eq(1)
-      .select("FLAT 10, MORRIS HOUSE, SWAINSON ROAD")
+      .select('FLAT 10, MORRIS HOUSE, SWAINSON ROAD')
     cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
   } else {
     cy.get('[data-testing="checkoutCTA"]').click()
@@ -41,10 +43,6 @@ export const goToPayment = () => {
   selectAddress()
   phoneNoStep()
 }
-
-const getFormState = (win) => (
-  win.__store__.getState().form
-)
 
 const getIframeDocument = (element) => (
   cy
@@ -81,3 +79,5 @@ export const clearAndFillNumberIframe = ({number}) => {
   getIframeBody(0).find('#checkout-frames-card-number').click().clear({force: true})
     .type(number, {force: true})
 }
+
+export const cyGetIsRecaptchaEnabled = (win) => getIsRecaptchaEnabled(getStore(win).getState())

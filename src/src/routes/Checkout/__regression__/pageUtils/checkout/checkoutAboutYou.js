@@ -1,7 +1,6 @@
+import { getFormState } from './checkoutGeneralUtils'
+
 const PLATFORM = Cypress.env().platform.toString().toUpperCase()
-const getFormState = (win) => (
-  win.__store__.getState().form
-)
 
 const getCheckoutAddressDropdown = () => (
   cy.get('[data-testing="checkoutAddressDropdown"]')

@@ -1,8 +1,6 @@
-const DATE = new Date(2020, 4, 1).getTime()
+import { getStore } from './checkoutGeneralUtils'
 
-const getStore = (win) => (
-  win.__store__
-)
+const DATE = new Date(2020, 4, 1).getTime()
 
 export const setMocks = () => {
   cy.server()
@@ -31,6 +29,6 @@ export const addRecipeDispatch = () => {
   cy.window()
     .then(getStore).invoke('dispatch', {
       type: 'BASKET_RECIPE_ADD',
-      recipeId: "2413"
+      recipeId: '2413'
     })
 }
