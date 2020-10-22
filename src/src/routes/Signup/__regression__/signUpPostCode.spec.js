@@ -10,7 +10,8 @@ describe('Given I land on postcode slide of the wizard', () => {
 
   before(() => {
     cy.server()
-    cy.route('/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
+    cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
+    cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
     cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
     cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
     cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')

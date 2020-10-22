@@ -1,0 +1,25 @@
+{
+  "status": "ok",
+  "data": [
+    {
+      "name": "bucketing-experiment-four",
+      "bucket": "control",
+      "withinExperiment": true
+    },
+    {
+      "name": "bucketing-experiment-one",
+      "bucket": "variant",
+      "withinExperiment": true
+    },
+    {
+      "name": "bucketing-experiment-three",
+      "bucket": "variant",
+      "withinExperiment": true
+    },
+    {
+      "name": "bucketing-experiment-two",
+      "bucket": "control",
+      "withinExperiment": true
+    }
+  ]
+}

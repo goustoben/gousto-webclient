@@ -19,6 +19,7 @@ describe("Given I'm a logged out user", () => {
     before(() => {
       cy.server()
       cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
+      cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
       cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
       cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
