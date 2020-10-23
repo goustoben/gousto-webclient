@@ -203,6 +203,11 @@ export const getCurrentCollectionDietaryClaims = createSelector(
   (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'requirements', 'dietary_claims'], null)
 )
 
+export const getCurrentCollectionThumbnail = createSelector(
+  [getMenuCollections, getCurrentCollectionId],
+  (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'thumbnail'], null)
+)
+
 export const getCurrentCollectionIdByExperimentStatus = (state, { featureName, userId }) => {
   if (!optimizelySDK.hasValidInstance()) {
     return getCurrentCollectionId(state)
