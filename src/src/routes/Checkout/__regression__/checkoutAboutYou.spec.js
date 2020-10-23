@@ -11,8 +11,8 @@ const NAME_ERROR = {
   firstName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters.",
   lastName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
 }
-const EMAIL_ERROR = { email: "Please provide a valid email address" }
-const PASSWORD_ERROR = { password: "password must be at least 8 characters" }
+const EMAIL_ERROR = { email: 'Please provide a valid email address' }
+const PASSWORD_ERROR = { password: 'password must be at least 8 characters' }
 
 describe("Given I'm a logged out user", () => {
   describe('When I land on the first step of checkout ', () => {

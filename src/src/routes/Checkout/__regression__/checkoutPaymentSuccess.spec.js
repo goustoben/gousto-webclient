@@ -3,11 +3,12 @@ import {
   getHouseNo,
   getPaymentSyncErrors,
   fillAllIframe,
-  clearAndFillNumberIframe
+  clearAndFillNumberIframe,
+  cyGetIsRecaptchaEnabled
 } from './pageUtils/checkout/checkoutPayment'
 
 const CARDNAME_ERROR = { cardName: 'Card name is required' }
-const ADDRESS = "FLAT 10, MORRIS HOUSE, SWAINSON ROAD, LONDON, MIDDLESEX, W3 7UP"
+const ADDRESS = 'FLAT 10, MORRIS HOUSE, SWAINSON ROAD, LONDON, MIDDLESEX, W3 7UP'
 const HOUSENO = 'FLAT 10, MORRIS HOUSE'
 
 describe("Given I'm a logged out user who has passed the first steps of checkout correctly", () => {
@@ -30,7 +31,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
   })
 
   describe('When I land on the payment step of checkout ', () => {
-    it("Then my address has persisted from the previous step", () => {
+    it('Then my address has persisted from the previous step', () => {
       cy.get('[data-testing="checkoutBillingAddress"]')
         .should('contain', ADDRESS)
       cy.window().then(getHouseNo).should('equal', HOUSENO)
@@ -38,15 +39,26 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
 
     describe('And I have not filled in my card name', () => {
       describe('And I click the CTA', () => {
-        it("Then the button will be disabled", () => {
-          cy.get('[data-testing="checkoutCTA"]')
-            .click()
-          cy.url().should('include', 'check-out/payment')
-        })
+        it('Then I should stay on the page and receive the correct error message', () => {
+          cy.window().then(cyGetIsRecaptchaEnabled).then(isRecaptchaEnabled => {
+            // Wait until recaptcha is loaded because submitting the form
+            // relies on recaptcha.execute().  In normal operation, recaptcha
+            // (a third-party script) loads faster than the user is able to
+            // press the Submit button; but this test presses more quickly, so
+            // the wait is needed.
+            if (isRecaptchaEnabled) {
+              cy.get('.grecaptcha-badge')
+            }
 
-        it("Then I will receive the correct error message", () => {
-          cy.window().then(getPaymentSyncErrors).should('deep.equal', CARDNAME_ERROR)
-          cy.get('[data-testing="checkoutCardNameInputError"]').should('be.visible')
+            cy.get('[data-testing="checkoutCTA"]')
+              .click()
+
+            cy.url().should('include', 'check-out/payment')
+
+            cy.window().then(getPaymentSyncErrors).should('deep.equal', CARDNAME_ERROR)
+
+            cy.get('[data-testing="checkoutCardNameInputError"] p', { timeout: 12000 }).should('be.visible')
+          })
         })
       })
     })
@@ -61,7 +73,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
             cy.get('[data-testing="checkoutCTA"]')
               .click()
           })
-          it("Then the button will be disabled and I will see the right error", () => {
+          it('Then the button will be disabled and I will see the right error', () => {
             cy.url().should('include', 'check-out/payment')
             cy.get('[data-testing="valid-card-details-not-provided"]').should('be.visible')
           })
@@ -82,7 +94,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
               .click()
           })
 
-          it("Then the button will be disabled and I will see the right error", () => {
+          it('Then the button will be disabled and I will see the right error', () => {
             cy.url().should('include', 'check-out/payment')
             cy.get('[data-testing="checkoutFrameCardNoError"]').should('be.visible')
           })
@@ -96,7 +108,7 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
             .click()
         })
 
-        it("Then no input errors are shown", () => {
+        it('Then no input errors are shown', () => {
           cy.get('[data-testing="checkoutFrameCardNoError"]').should('not.be.visible')
           cy.get('[data-testing="checkoutFrameExpiryError"]').should('not.be.visible')
           cy.get('[data-testing="checkoutFrameCVVError"]').should('not.be.visible')

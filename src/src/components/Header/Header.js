@@ -21,6 +21,7 @@ import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import { deepCloneObject } from 'utils/deepClone'
+import { getLinkURL } from 'utils/header'
 import { MobileMenu } from './MobileMenu'
 import { defaultMenuItems, experimentalMenuItems } from './menuItemsHelper'
 import css from './Header.css'
@@ -247,6 +248,8 @@ class Header extends React.PureComponent {
       isAuthenticated,
       trackNavigationClick,
       isHelpCentreActive,
+      postCode,
+      isMenuRedirectPageEnabled,
     } = this.props
 
     if (hideNav) {
@@ -284,12 +287,13 @@ class Header extends React.PureComponent {
       }
 
       const isHelpLink = menuItem.name === 'Help'
+      const url = getLinkURL({ isHelpCentreActive, menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
 
       return (
         <Link
           key={menuItem.name}
           data-optimizely={isHelpLink ? 'desktop-header-help-link' : null}
-          to={isHelpLink && isHelpCentreActive ? client.helpCentre : menuItem.url}
+          to={url}
           className={css.linkDesktop}
           clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
           tracking={() => trackNavigationClick(menuItem.tracking)}
@@ -470,6 +474,8 @@ Header.propTypes = {
   isHelpCentreActive: PropTypes.bool,
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
+  isMenuRedirectPageEnabled: PropTypes.bool,
+  postCode: PropTypes.string,
 }
 
 Header.defaultProps = {
@@ -490,6 +496,8 @@ Header.defaultProps = {
   isHelpCentreActive: false,
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
+  isMenuRedirectPageEnabled: false,
+  postCode: ''
 }
 
 export { Header }

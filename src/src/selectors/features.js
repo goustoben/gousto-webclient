@@ -165,3 +165,7 @@ export const getIsBoxPricesUserJourneyEnabled = ({ features }) => (
 export const getIsMultiSkipEnabled = ({ features }) => (
   features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )
+
+export const getIsMenuRedirectPageEnabled = ({ features }) => (
+  features && features.getIn(['isMenuRedirectPageEnabled', 'value'], false)
+)

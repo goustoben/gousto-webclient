@@ -200,13 +200,14 @@
         "react/display-name": 0,
         "react/jsx-props-no-spreading": 0
       }
-    } ,{
+    }, {
       "files": [
-        "**/__regression__/**.js"
+        "**/__regression__/**/*.js"
       ],
       "globals": {
-        "cy": false,
-        "before": false
+        "Cypress": "readonly",
+        "cy": "readonly",
+        "before": "readonly"
       }
     }
   ]

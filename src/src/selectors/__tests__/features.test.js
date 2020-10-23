@@ -42,7 +42,8 @@ import {
   getisNewSSRDeliveriesEnabled,
   getIsPayWithPaypalEnabled,
   getIsBoxPricesUserJourneyEnabled,
-  getIsMultiSkipEnabled
+  getIsMultiSkipEnabled,
+  getIsMenuRedirectPageEnabled
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -101,6 +102,7 @@ describe('when features are defined', () => {
     [getIsPayWithPaypalEnabled, 'payWithPaypal'],
     [getIsBoxPricesUserJourneyEnabled, 'boxPricesUserJourney'],
     [getIsMultiSkipEnabled, 'isMultiSkipEnabled'],
+    [getIsMenuRedirectPageEnabled, 'isMenuRedirectPageEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
