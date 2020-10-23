@@ -1,15 +1,25 @@
 @value headingFontStackBold, sizeMD from 'styles/typography.css';
-@value ScreenXXSMin from 'styles/screenSizes.css';
+@value ScreenXXSMin, ScreenXSMax from 'styles/screenSizes.css';
 @value White from 'styles/colors.css';
+.waveLinkHeaderContanier {
+  composes: pageContainer from 'styles/layout.css';
+  padding-top: 3rem;
+  margin-bottom: -3rem;
+  
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
 
 .waveLinkHeader {
   height: 8rem;
   position: relative;
   width: 95%;
-  margin-bottom: 1rem;
   overflow: hidden;
   margin: 0.5rem auto;
   border-radius: 3px;
+
   @media ScreenXXSMin {
     width: 100%;
     height: 7rem;

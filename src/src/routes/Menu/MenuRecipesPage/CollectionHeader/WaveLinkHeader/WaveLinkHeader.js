@@ -8,21 +8,24 @@ const WaveLinkHeader = ({ headerAttributes, onClick }) => {
 
   return (
     <div
-      className={css.waveLinkHeader}
-      onClick={onClick}
-      onKeyPress={onClick}
-      role="button"
-      tabIndex={0}
-      style={{
-        backgroundColor: `${backgroundColor}`
-      }}
-      data-testing="waveLinkHeader"
+      className={css.waveLinkHeaderContanier}
     >
-      <div className={css.arrowRightWrapper}>
-        <span className={css.arrowRight} />
-      </div>
-      <div style={{color: `${color}`}} className={css.waveLinkInfo}>
-        {headerImage[0]
+      <div
+        className={css.waveLinkHeader}
+        onClick={onClick}
+        onKeyPress={onClick}
+        role="button"
+        tabIndex={0}
+        data-testing="waveLinkHeader"
+        style={{
+          backgroundColor: `${backgroundColor}`
+        }}
+      >
+        <div className={css.arrowRightWrapper}>
+          <span className={css.arrowRight} />
+        </div>
+        <div style={{color: `${color}`}} className={css.waveLinkInfo}>
+          {headerImage[0]
           && (
           <img
             className={css.waveLinkTitleImage}
@@ -34,11 +37,12 @@ const WaveLinkHeader = ({ headerAttributes, onClick }) => {
             }}
           />
           )}
-        <p className={css.waveLinkDescription}>
-          {description}
-        </p>
+          <p className={css.waveLinkDescription}>
+            {description}
+          </p>
+        </div>
+        <Waves fillColor={waveColor} />
       </div>
-      <Waves fillColor={waveColor} />
     </div>
   )
 }

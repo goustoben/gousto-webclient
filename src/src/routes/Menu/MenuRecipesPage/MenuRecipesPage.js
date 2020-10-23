@@ -20,6 +20,7 @@ import css from './MenuRecipesPage.css'
 import { CategoriesModalContainer } from '../ElevatedMenuExperience/CategoriesModal'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 import { ExperimentsContainer } from '../../../containers/Experiments'
+import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 
 const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
@@ -118,21 +119,24 @@ export class MenuRecipesPage extends PureComponent {
         ) : null}
         <SubHeaderContainer />
         <MenuDateRangeContainer variant="mobile" />
+        <BannerTastePreferencesContainer />
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
           {experimentContent}
+          {browserType !== 'mobile' && <CollectionHeaderWrapperContainer /> }
         </OptimizelyRolloutsContainer>
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
           {!showLoading && <CollectionsNavContainer />}
+          <CollectionHeaderWrapperContainer />
         </OptimizelyRolloutsContainer>
-        <BannerTastePreferencesContainer />
-        <JustForYouTutorial />
-        <AppModalContainer key="app-modal" />
+
         {stateRecipeCount ? <RecipeGrid browserType={browserType} query={query} /> : null}
         {showError ? (
           <h2 className={css.menuLoadingErrorMessage}>
             {menuLoadingErrorMessage}
           </h2>
         ) : null}
+        <JustForYouTutorial />
+        <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
         <CategoriesModalContainer />
