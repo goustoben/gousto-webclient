@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { client } from 'config/routes'
 import { onEnter } from 'utils/accessibility'
+import { getLinkURL } from 'utils/header'
 import Link from 'Link'
 import css from '../MobileMenu.css'
 
@@ -28,6 +28,8 @@ class BurgerMobileMenu extends React.PureComponent {
       promoCodeUrl,
       trackNavigationClick,
       isHelpCentreActive,
+      isMenuRedirectPageEnabled,
+      postCode,
     } = this.props
 
     return menuItems.map(menuItem => {
@@ -84,10 +86,11 @@ class BurgerMobileMenu extends React.PureComponent {
       }
 
       const isHelpLink = menuItem.name === 'Help'
+      const url = getLinkURL({ isHelpCentreActive, menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
 
       return (
         <Link
-          to={isHelpLink && isHelpCentreActive ? client.helpCentre : menuItem.url}
+          to={url}
           data-optimizely={isHelpLink ? 'mobile-header-help-link' : null}
           className={css.menuItem}
           key={menuItem.name}
@@ -136,13 +139,17 @@ BurgerMobileMenu.propTypes = {
   onLogoutClick: PropTypes.func.isRequired,
   promoCodeUrl: PropTypes.string,
   show: PropTypes.bool.isRequired,
-  trackNavigationClick: PropTypes.func,
+  trackNavigationClick: PropTypes.func.isRequired,
   isHelpCentreActive: PropTypes.bool,
+  isMenuRedirectPageEnabled: PropTypes.bool,
+  postCode: PropTypes.string,
 }
 
 BurgerMobileMenu.defaultProps = {
   isAuthenticated: false,
   isHelpCentreActive: false,
+  postCode: '',
+  isMenuRedirectPageEnabled: false,
 }
 
 export { BurgerMobileMenu }

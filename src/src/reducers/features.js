@@ -84,6 +84,9 @@ const defaultFeatures = () => ({
   isNewSSRDeliveriesEnabled: {
     value: false
   },
+  isMenuRedirectPageEnabled: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

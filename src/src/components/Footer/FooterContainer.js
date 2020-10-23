@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { trackNavigationClick } from 'actions/tracking'
-import { getHomePageRedesign, getIsHelpCentreActive } from 'selectors/features'
+import { getHomePageRedesign, getIsHelpCentreActive, getIsMenuRedirectPageEnabled } from 'selectors/features'
 import Footer from './Footer'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -11,6 +11,8 @@ const mapStateToProps = (state, ownProps) => ({
   type: ownProps.type,
   isHomePageRedesignEnabled: getHomePageRedesign(state),
   isHelpCentreActive: getIsHelpCentreActive(state),
+  isMenuRedirectPageEnabled: getIsMenuRedirectPageEnabled(state),
+  postCode: state.basket.get('postcode'),
 })
 
 export default connect(mapStateToProps, {

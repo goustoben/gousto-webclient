@@ -66,6 +66,8 @@ const Footer = ({
   isHomePageRedesignEnabled,
   isHelpCentreActive,
   trackNavigationClick,
+  isMenuRedirectPageEnabled,
+  postCode,
 }) => {
   const renderTermsLink = () => (
     <li className={css.menuItem}>
@@ -102,13 +104,25 @@ const Footer = ({
     </ul>
   )
 
+  const isRedirectToNewMenu = !isAuthenticated && !postCode && isMenuRedirectPageEnabled
+  const trackWeeklyRecipesClick = () => trackNavigationClick(trackingKeys.clickRecipeNavigationFooter)
   const renderFullList = () => (
     <ul className={css.menuList}>
       <li className={classNames(css.mobileHide, css.menuItem)}>
         <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
       </li>
       <li className={classNames(css.mobileHide, css.menuItem)}>
-        <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
+        <span data-test="week-recipes" onClick={trackWeeklyRecipesClick} role="button" tabIndex={0}>
+          <Link
+            to={isRedirectToNewMenu ? clientRoutes.menu2 : clientRoutes.menu}
+            data-selid="footer-this-weeks-recipes"
+            title="This Week's Recipes"
+            clientRouted
+            secondary
+          >
+            This Week&apos;s Recipes
+          </Link>
+        </span>
       </li>
       <li className={css.menuItem}>
         {renderHelpLink(isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive, trackNavigationClick)}
@@ -253,6 +267,8 @@ Footer.propTypes = {
   isHomePageRedesignEnabled: PropTypes.bool,
   isHelpCentreActive: PropTypes.bool,
   trackNavigationClick: PropTypes.func.isRequired,
+  isMenuRedirectPageEnabled: PropTypes.bool,
+  postCode: PropTypes.string,
 }
 
 Footer.defaultProps = {
@@ -262,6 +278,8 @@ Footer.defaultProps = {
   type: 'medium',
   isHomePageRedesignEnabled: false,
   isHelpCentreActive: false,
+  isMenuRedirectPageEnabled: false,
+  postCode: '',
 }
 
 export default Footer

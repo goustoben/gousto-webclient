@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import { client as clientRoutes } from 'config/routes'
 
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import * as trackingKeys from 'actions/trackingKeys'
@@ -238,6 +239,84 @@ describe('<Footer />', () => {
         test('Then Footer should be rendered with homepageRedesign class attribute', () => {
           expect(wrapper.hasClass('homepageRedesign')).toBeTruthy()
         })
+      })
+    })
+  })
+
+  describe('isMenuRedirectPageEnabled', () => {
+    const wrapper = shallow(
+      <Footer
+        trackNavigationClick={trackNavigationClick}
+        helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
+      />
+    )
+    const recipesSelector = '[data-selid="footer-this-weeks-recipes"]'
+    const weekRecipes = wrapper.find(recipesSelector)
+    const menuRoute = clientRoutes.menu
+
+    describe('when isMenuRedirectPageEnabled is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isMenuRedirectPageEnabled: false })
+      })
+
+      test('then "This weeks menu" link should be equal to "/menu"', () => {
+        expect(weekRecipes.prop('to')).toBe(menuRoute)
+      })
+    })
+
+    describe('when isMenuRedirectPageEnabled is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isMenuRedirectPageEnabled: true })
+      })
+
+      describe('and postCode is not defined', () => {
+        test('then "This weeks menu" link should be equal to "/menu2"', () => {
+          expect(wrapper.find(recipesSelector).prop('to')).toBe(clientRoutes.menu2)
+        })
+      })
+
+      describe('and postCode is defined', () => {
+        beforeEach(() => {
+          wrapper.setProps({ postCode: 'W3 7UP' })
+        })
+
+        test('then "This weeks menu" link should be equal to "/menu"', () => {
+          expect(weekRecipes.prop('to')).toBe(menuRoute)
+        })
+      })
+
+      describe('and a user is authenticated', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isAuthenticated: true })
+        })
+
+        test('then "This weeks menu" link should be equal to "/menu"', () => {
+          expect(weekRecipes.prop('to')).toBe(menuRoute)
+        })
+      })
+    })
+  })
+
+  describe('when weeks recipes link is rendered', () => {
+    const wrapper = shallow(<Footer trackNavigationClick={trackNavigationClick} />)
+
+    test('then it should be client routed', () => {
+      const recipesSelector = '[data-selid="footer-this-weeks-recipes"]'
+      const weekRecipes = wrapper.find(recipesSelector)
+      expect(weekRecipes.prop('clientRouted')).toBeTruthy()
+    })
+
+    test('then trackWeeklyRecipesClick should not be called by default', () => {
+      expect(trackNavigationClick).not.toBeCalled()
+    })
+
+    describe('and a user clicks on it', () => {
+      beforeEach(() => {
+        wrapper.find('[data-test="week-recipes"]').simulate('click')
+      })
+
+      test('then trackNavigationClick should be called with proper prop', () => {
+        expect(trackNavigationClick).toHaveBeenCalledWith(trackingKeys.clickRecipeNavigationFooter)
       })
     })
   })
