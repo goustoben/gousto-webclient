@@ -1,11 +1,18 @@
 @value headingFontStackBold, sizeMD, sizeXS from 'styles/typography.css';
-@value ScreenXXSMin, ScreenXXSMax from 'styles/screenSizes.css';
+@value ScreenXXSMin, ScreenXXSMax, ScreenXSMax from 'styles/screenSizes.css';
 
 .gradientInfoHeader {
   height: 10rem;
   position: relative;
   width: 100%;
-  padding-bottom: 1rem;
+  composes: pageContainer from 'styles/layout.css';
+  padding-top: 3rem;
+  margin-bottom: -2rem;
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 
 .gradientImageBackground {

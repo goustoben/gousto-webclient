@@ -75,4 +75,19 @@ describe('CollectionHeaderWrapper', () => {
       expect(wrapper.find(SimpleLinkHeaderContainer)).toHaveLength(1)
     })
   })
+
+  describe('when collectionsHeaders is recipe-link-header', () => {
+    beforeEach(() => {
+      collectionsHeaders = {
+        id: 'header-id',
+        type: 'recipe-link-header',
+        attributes: {}
+      }
+      wrapper = shallow(<CollectionHeaderWrapper collectionsHeaders={collectionsHeaders} />)
+    })
+
+    test('should return SimpleLinkHeaderContainer', () => {
+      expect(wrapper.find('RecipeLinkHeader')).toHaveLength(1)
+    })
+  })
 })

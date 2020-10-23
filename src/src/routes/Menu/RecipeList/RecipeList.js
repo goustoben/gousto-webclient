@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { EMERecipeTileContainer } from '../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
-import css from './RecipeList.css'
-import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
-import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 import { CategoryScrollTrackerContainer } from '../ElevatedMenuExperience/CategoryScrollTracker'
+import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
+import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
+import css from './RecipeList.css'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -41,20 +41,23 @@ class RecipeList extends React.PureComponent {
     return (
       <div>
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
-          {browserType === 'mobile' && !query.collection
-            ? (
-              <div>
-                <CategoryCarouselsListContainer />
-                <ViewAllRecipesButtonContainer />
-              </div>
-            )
-            : (
-              <div className={css.emeRecipeList}>
-                {recipes.map((value) =>
-                  <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
-                )}
-              </div>
-            )}
+          <Fragment>
+            {browserType === 'mobile' && !query.collection
+              ? (
+                <div>
+                  <CategoryCarouselsListContainer />
+                  <ViewAllRecipesButtonContainer />
+                </div>
+              )
+              : (
+                <div className={css.emeRecipeList}>
+                  {recipes.map((value) =>
+                    <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
+                  )}
+                </div>
+              )}
+            {browserType !== 'mobile' && <CategoryScrollTrackerContainer actionType="scroll_recipes" />}
+          </Fragment>
         </OptimizelyRolloutsContainer>
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
           <div className={css.emeRecipeList}>
@@ -62,10 +65,6 @@ class RecipeList extends React.PureComponent {
               <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
             )}
           </div>
-        </OptimizelyRolloutsContainer>
-
-        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
-          {browserType !== 'mobile' && <CategoryScrollTrackerContainer actionType="scroll_recipes" />}
         </OptimizelyRolloutsContainer>
       </div>
     )

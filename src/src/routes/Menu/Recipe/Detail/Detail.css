@@ -45,9 +45,12 @@
 .titleHidden {
   visibility: hidden;
   padding: 0.5rem;
+  margin-right: 2rem;
 }
 .closeIcon {
   padding-top: 0;
+  margin-left: 0.5rem;
+  height: 30px;
   composes: closeIcon from 'styles/icons.css';
 }
 

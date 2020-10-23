@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
-import { CollectionHeaderWrapperContainer } from '../MenuRecipesPage/CollectionHeader'
 import { CategoriesHeaderContainer } from '../ElevatedMenuExperience/CategoriesHeader'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 import css from '../Menu.css'
 
 class RecipeGrid extends PureComponent {
-  state = {
-    shouldShowOverlay: false,
+  constructor() {
+    super()
+    this.state = {
+      shouldShowOverlay: false,
+    }
   }
 
   componentDidMount() {
@@ -30,7 +32,6 @@ class RecipeGrid extends PureComponent {
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
           {browserType === 'mobile' && query.collection && <CategoriesHeaderContainer />}
         </OptimizelyRolloutsContainer>
-        <CollectionHeaderWrapperContainer />
         {
           recipes === null
             ? <RecipeListContainer query={query} />
