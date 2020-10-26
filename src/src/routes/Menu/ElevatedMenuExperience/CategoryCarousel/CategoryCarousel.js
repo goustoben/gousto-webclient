@@ -21,7 +21,10 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselCo
           className={css.categoryViewAllLink}
           to={viewAllPath}
           clientRouted
-          onClick={categoryButtonClicked}
+          onClick={() => {
+            categoryButtonClicked()
+            window.scroll(0, 0)
+          }}
           style={{
             color: carouselConfig.theme.linkColor
           }}

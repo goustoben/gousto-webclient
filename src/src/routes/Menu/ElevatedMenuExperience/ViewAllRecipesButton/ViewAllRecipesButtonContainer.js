@@ -8,6 +8,7 @@ const mapDispatchToProps = (dispatch) => ({
   onClick: () => {
     dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
     dispatch(viewAllFooterButtonClicked())
+    window.scrollTo(0, 0)
   }
 })
 
