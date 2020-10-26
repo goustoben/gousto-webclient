@@ -12,7 +12,6 @@ describe('OptimizelyRollouts', () => {
   beforeEach(() => {
     mockedGetOptimizelyInstance.mockResolvedValue({
       isFeatureEnabled: () => false,
-      getOptimizelyConfig: jest.fn()
     })
     mockedHasValidInstance.mockResolvedValue(true)
 
@@ -63,9 +62,6 @@ describe('OptimizelyRollouts', () => {
         beforeEach(async () => {
           mockedGetOptimizelyInstance.mockResolvedValue({
             isFeatureEnabled: () => true,
-            getOptimizelyConfig: () => ({
-              mock: 'optimizely-config'
-            })
           })
 
           wrapper = await shallow(
@@ -81,7 +77,6 @@ describe('OptimizelyRollouts', () => {
 
         test('tracks experiment in snowplow', () => {
           expect(mockedTrackExperimentInSnowplow).toHaveBeenCalledWith(
-            { mock: 'optimizely-config' },
             'mock-feature',
             true
           )
@@ -115,10 +110,7 @@ describe('OptimizelyRollouts', () => {
         const mockedTrackExperimentInSnowplow = jest.fn()
         beforeEach(async () => {
           mockedGetOptimizelyInstance.mockResolvedValue({
-            isFeatureEnabled: () => true,
-            getOptimizelyConfig: () => ({
-              mock: 'optimizely-config'
-            })
+            isFeatureEnabled: () => true
           })
 
           wrapper = await shallow(
@@ -134,7 +126,6 @@ describe('OptimizelyRollouts', () => {
 
         test('tracks experiment in snowplow', () => {
           expect(mockedTrackExperimentInSnowplow).toHaveBeenCalledWith(
-            { mock: 'optimizely-config' },
             'mock-feature',
             true
           )
