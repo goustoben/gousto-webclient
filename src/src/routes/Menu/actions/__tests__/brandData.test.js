@@ -1,8 +1,11 @@
 import Immutable from 'immutable'
 import logger from 'utils/logger'
-import { getBrandMenuHeaders, brandDataReceived } from '../brandData'
+import Cookies from 'utils/GoustoCookies'
+import { getBrandMenuHeaders, getBrandInfo, brandDataReceived } from '../brandData'
 import * as brandApi from '../../../../apis/brand'
 import { safeJestMock } from '../../../../_testing/mocks'
+
+const mockedCookieGet = safeJestMock(Cookies, 'get')
 
 describe('brandDataReceived', () => {
   test('should return an action with the correct response', () => {
@@ -47,9 +50,12 @@ describe('getBrandMenuHeaders', () => {
       dispatch = jest.fn()
       state = {
         auth: Immutable.Map({
-          accessToken: 'access-token'
+          accessToken: 'access-token',
+          id: 'user-id',
         })
       }
+
+      mockedCookieGet.mockReturnValue('mock-session-id')
 
       safeJestMock(brandApi, 'fetchBrandMenuHeaders').mockResolvedValue({
         data: {
@@ -61,7 +67,7 @@ describe('getBrandMenuHeaders', () => {
 
     test('should call fetchBrandMenuHeaders with access token', async () => {
       await getBrandMenuHeaders()(dispatch, getState)
-      expect(brandApi.fetchBrandMenuHeaders).toHaveBeenCalledWith('access-token')
+      expect(brandApi.fetchBrandMenuHeaders).toHaveBeenCalledWith('access-token', 'mock-session-id', 'user-id')
     })
 
     test('should dispatch MENU_COLLECTIONS_HEADERS_RECEIVED', async () => {
@@ -96,6 +102,34 @@ describe('getBrandMenuHeaders', () => {
     test('should dispatch logger error with message', async () => {
       await getBrandMenuHeaders()(dispatch, getState)
       expect(loggerErrorSpy).toHaveBeenCalledWith({ message: 'Fetch Menu Headers failed'})
+    })
+  })
+})
+describe('getBrandInfo', () => {
+  describe('when calling getBrandInfo', () => {
+    let dispatch
+    let state
+    const getState = () => state
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+      state = {
+        auth: Immutable.Map({
+          accessToken: 'access-token',
+          id: 'user-id',
+        })
+      }
+
+      mockedCookieGet.mockReturnValue('mock-session-id')
+      safeJestMock(brandApi, 'fetchBrandInfo').mockResolvedValue({
+        data: {
+        }
+      })
+    })
+
+    test('should call fetchBrandInfo with access token, sessionId and userId', async () => {
+      await getBrandInfo()(dispatch, getState)
+      expect(brandApi.fetchBrandInfo).toHaveBeenCalledWith('access-token', 'mock-session-id', 'user-id')
     })
   })
 })

@@ -28,9 +28,9 @@ describe('brand api', () => {
     test('should fetch the correct url', async () => {
       const expectedReqData = {}
 
-      await fetchBrandInfo('access-token')
+      await fetchBrandInfo('access-token', 'session-id', 'user-id')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/theme', expectedReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/theme', expectedReqData, 'GET', 'default', { 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'user-id' })
     })
   })
 
@@ -38,9 +38,9 @@ describe('brand api', () => {
     test('should fetch the correct url', async () => {
       const expectedReqData = {}
 
-      await fetchBrandMenuHeaders('access-token')
+      await fetchBrandMenuHeaders('access-token', 'session-id', 'user-id')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/menu-headers', expectedReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/menu-headers', expectedReqData, 'GET', 'default', { 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'user-id' })
     })
   })
 })
