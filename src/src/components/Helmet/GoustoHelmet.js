@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import templateConfig from 'config/template'
 import globals from 'config/globals'
+import client from 'config/routes'
 import CanonicalLink from './CanonicalLink'
 import Facebook from './Facebook'
 import OpenGraph from './OpenGraph'
@@ -9,9 +10,10 @@ import SiteVerification from './SiteVerification'
 import Twitter from './Twitter'
 
 export const generateHref = url => {
-  const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-webclient.`}${globals.domain}`
+  const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-frontend.`}${globals.domain}`
+  const resultURL = url === client.menu2 ? client.menu : url
 
-  return `${globals.protocol}://${hostname}${url || '/'}`
+  return `${globals.protocol}://${hostname}${resultURL || '/'}`
 }
 
 const propTypes = {
