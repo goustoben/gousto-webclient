@@ -51,7 +51,7 @@ describe('CategoryCarouselContainer', () => {
     })
   })
 
-  describe.only('without categoryId prop', () => {
+  describe('without categoryId prop', () => {
     test('should pass down correct props', () => {
       const categoryId = '123'
       const state = {

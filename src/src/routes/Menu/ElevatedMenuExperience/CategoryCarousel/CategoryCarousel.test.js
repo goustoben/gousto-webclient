@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-
+import Link from 'Link'
 import { RecipeTileContainer } from '../../components/RecipeTile'
 import { CategoryCarousel } from './CategoryCarousel'
 
@@ -20,7 +20,8 @@ describe('CategoryCarousel', () => {
       linkColor: '#615CFF',
       titleColor: '#333D47',
       fdiStyling: true
-    }
+    },
+    description: 'Tasty'
   }
 
   const recipe1 = {
@@ -47,6 +48,7 @@ describe('CategoryCarousel', () => {
   }
   const recipes1 = Immutable.List([recipe1])
   const recipes2 = Immutable.List([recipe1, recipe2])
+  const categoryButtonClicked = jest.fn()
 
   describe('when there are no recipes in category', () => {
     test('then it should render nothing', () => {
@@ -96,6 +98,28 @@ describe('CategoryCarousel', () => {
 
       expect(wrapper.find('.categoryViewAllLink').find('GoustoLink').children().first()
         .text()).toEqual('View (2)')
+    })
+
+    describe('when the view button is clicked', () => {
+      const wrapper = shallow(
+        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} categoryButtonClicked={categoryButtonClicked} />,
+      )
+      const scrollSpy = jest.spyOn(window, 'scroll').mockImplementation(() => {})
+      test('then the onClick actions are triggered', () => {
+        wrapper.find(Link).simulate('click')
+        expect(categoryButtonClicked).toHaveBeenCalledTimes(1)
+        expect(scrollSpy).toHaveBeenCalledTimes(1)
+      })
+    })
+  })
+
+  describe('when there is a category description', () => {
+    test('then it should render a descriptionn under the title', () => {
+      const wrapper = shallow(
+        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />,
+      )
+
+      expect(wrapper.find('.categoryDescription')).toHaveLength(1)
     })
   })
 })
