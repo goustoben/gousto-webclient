@@ -2,14 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
-import { TileImageContainer } from '../TileImage'
+import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
-import { RecipeTagTitle } from '../RecipeTagTitle'
-import { RecipeTilePurchaseInfoContainer } from '../RecipeTilePurchaseInfo'
-import { VariantHeaderContainer } from '../../../Recipe/VariantHeader'
-import css from './EMERecipeTile.css'
+import { RecipeTagTitle } from './RecipeTagTitle'
+import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
+import { VariantHeaderContainer } from '../../Recipe/VariantHeader'
+import css from './RecipeTile.css'
 
-const EMERecipeTile = ({
+const RecipeTile = ({
   recipe,
   recipeId,
   originalId,
@@ -76,7 +76,7 @@ const EMERecipeTile = ({
   )
 }
 
-EMERecipeTile.propTypes = {
+RecipeTile.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string,
@@ -100,7 +100,7 @@ EMERecipeTile.propTypes = {
   fdiStyling: PropTypes.bool
 }
 
-EMERecipeTile.defaultProps = {
+RecipeTile.defaultProps = {
   originalId: null,
   brandTagline: null,
   brandAvailability: null,
@@ -109,4 +109,4 @@ EMERecipeTile.defaultProps = {
   fdiStyling: true
 }
 
-export { EMERecipeTile }
+export { RecipeTile }

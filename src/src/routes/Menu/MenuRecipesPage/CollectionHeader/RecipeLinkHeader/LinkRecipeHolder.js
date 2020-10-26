@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { EMERecipeTileContainer } from '../../../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
+import { RecipeTileContainer } from '../../../components/RecipeTile'
 import css from './RecipeLinkHeader.css'
 
 export const LinkRecipeHolder = ({ matches, images, fdiStyling, recipes, title }) => {
@@ -16,7 +16,7 @@ export const LinkRecipeHolder = ({ matches, images, fdiStyling, recipes, title }
         </div>
         {
           recipesToRender.map(recipeId => (
-            <EMERecipeTileContainer key={recipeId} recipeId={recipeId} originalId={recipeId} fdiStyling={fdiStyling} />
+            <RecipeTileContainer key={recipeId} recipeId={recipeId} originalId={recipeId} fdiStyling={fdiStyling} />
           ))
         }
       </div>

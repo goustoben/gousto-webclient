@@ -3,9 +3,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { EMERecipeTileContainer } from './EMERecipeTileContainer'
+import { RecipeTileContainer } from './RecipeTileContainer'
 
-describe('<EMERecipeTileContainer />', () => {
+describe('<RecipeTileContainer />', () => {
   const recipeId = '123'
   const fineDineInTag = {
     slug: 'fine-dine-in-eme',
@@ -106,7 +106,7 @@ describe('<EMERecipeTileContainer />', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <EMERecipeTileContainer recipeId={recipeId} />,
+      <RecipeTileContainer recipeId={recipeId} />,
       wrapperOptions
     )
   })
@@ -125,7 +125,7 @@ describe('<EMERecipeTileContainer />', () => {
   describe('when in carousel', () => {
     beforeEach(() => {
       wrapper = shallow(
-        <EMERecipeTileContainer recipeId={recipeId} isInCarousel />,
+        <RecipeTileContainer recipeId={recipeId} isInCarousel />,
         wrapperOptions
       )
     })

@@ -10,7 +10,7 @@ import Carousel from './Carousel'
 
 import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
 import { RecipeDisclaimerContainer } from '../../RecipeDisclaimer'
-import { RecipeTag } from '../../ElevatedMenuExperience/RecipeTile/RecipeTag'
+import { RecipeTag } from '../../components/RecipeTag'
 
 import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'

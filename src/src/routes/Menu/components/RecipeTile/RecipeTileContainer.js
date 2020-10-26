@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
-import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../../../selectors/recipe'
-import { getVariantsForRecipe } from '../../../selectors/variants'
-import { showDetailRecipe } from '../../../actions/menuRecipeDetails'
-import { EMERecipeTile } from './EMERecipeTile'
-import { getBrandAvailability, getBrandTagline } from '../../../selectors/recipeTags'
+import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../../selectors/recipe'
+import { getVariantsForRecipe } from '../../selectors/variants'
+import { showDetailRecipe } from '../../actions/menuRecipeDetails'
+import { RecipeTile } from './RecipeTile'
+import { getBrandAvailability, getBrandTagline } from '../../selectors/recipeTags'
 
 const getIdForRecipeTile = (state, props) => props.recipeId
 
@@ -28,6 +28,6 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const EMERecipeTileContainer = connect(mapStateToProps, { showDetailRecipe })(EMERecipeTile)
+const RecipeTileContainer = connect(mapStateToProps, { showDetailRecipe })(RecipeTile)
 
-export { EMERecipeTileContainer }
+export { RecipeTileContainer }

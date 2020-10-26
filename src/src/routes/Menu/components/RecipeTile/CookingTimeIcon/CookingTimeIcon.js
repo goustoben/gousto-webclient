@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import css from './CookingTimeIcon.css'
-import { getPercentageFromCookingTime } from '../../utils/recipeUtils'
+import { getPercentageFromCookingTime } from './utils/getPercentageFromCookingTime'
 
 const CookingTimeIcon = ({ cookingTime }) => {
   if (!cookingTime) {
