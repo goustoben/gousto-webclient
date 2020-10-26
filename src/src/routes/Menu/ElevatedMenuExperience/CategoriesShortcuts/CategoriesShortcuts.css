@@ -1,7 +1,7 @@
 @value White, Bluecheese, Coconut from 'styles/colors.css';
 @value axiformaFontStack, sizeSM, sizeMD, sizeXS, sizeLG from 'styles/typography.css';
 .shortcutsWrapper {
-    height: 112px;
+    height: 124px;
     margin-bottom: -3rem;
 }
 
