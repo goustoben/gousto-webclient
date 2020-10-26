@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { CookingTimeIcon } from './CookingTimeIcon'
 
-describe('EMERecipeTile', () => {
+describe('CookingTimeIcon', () => {
   describe('when given null cookingTime', () => {
     test('should return null', () => {
       const wrapper = shallow(<CookingTimeIcon cookingTime={null} />)

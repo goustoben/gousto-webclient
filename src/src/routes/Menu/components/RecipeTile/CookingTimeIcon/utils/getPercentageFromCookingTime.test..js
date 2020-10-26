@@ -1,6 +1,6 @@
-import { getPercentageFromCookingTime } from './recipeUtils'
+import { getPercentageFromCookingTime } from './getPercentageFromCookingTime'
 
-describe('Cooking time percentage', () => {
+describe('getPercentageFromCookingTime', () => {
   describe('when given 0 cookingTime', () => {
     test('should return 0', () => {
       const percentage = getPercentageFromCookingTime(0)

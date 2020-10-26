@@ -1,5 +1,5 @@
-import optimizelyRollouts from 'config/head/optimizelyRollouts'
 import optimizelySdk from '@optimizely/optimizely-sdk'
+import optimizelyRollouts from '../../config/head/optimizelyRollouts'
 
 class OptimizelySDK {
   optimizelyRolloutsInstance = null
@@ -12,7 +12,7 @@ class OptimizelySDK {
     if (!this.hasInstance()) {
       this.loading = true
       this.optimizelyRolloutsInstance = optimizelySdk.createInstance({
-        sdkKey: optimizelyRollouts[__ENV__], //eslint-disable-line
+        sdkKey: optimizelyRollouts[__ENV__] || optimizelyRollouts.staging, //eslint-disable-line
       })
       try {
         const {success} = await this.optimizelyRolloutsInstance.onReady({timeout: 5000})

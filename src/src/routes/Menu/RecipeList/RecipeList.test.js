@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { RecipeList } from './RecipeList'
-import { EMERecipeTileContainer } from '../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
+import { RecipeTileContainer } from '../components/RecipeTile'
 import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
 import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
@@ -130,7 +130,7 @@ describe('RecipeList', () => {
           browserType="desktop"
         />,
       )
-      expect(wrapper.find(EMERecipeTileContainer).exists()).toBe(false)
+      expect(wrapper.find(RecipeTileContainer).exists()).toBe(false)
     })
   })
 
@@ -178,9 +178,9 @@ describe('RecipeList', () => {
           <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} currentCollectionId="123" browserType="desktop" />,
         )
       })
-      test('then it should render one EMERecipeTileContainer', () => {
+      test('then it should render one RecipeTileContainer', () => {
         expect(wrapper.find(OptimizelyRolloutsContainer).at(1).prop('featureEnabled')).toBe(false)
-        expect(wrapper.find(OptimizelyRolloutsContainer).first().find(EMERecipeTileContainer)).toHaveLength(1)
+        expect(wrapper.find(OptimizelyRolloutsContainer).first().find(RecipeTileContainer)).toHaveLength(1)
       })
     })
 
@@ -213,9 +213,9 @@ describe('RecipeList', () => {
           <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} currentCollectionId="123" browserType="desktop" />,
         )
       })
-      test('then it should render multiple EMERecipeTileContainer', () => {
+      test('then it should render multiple RecipeTileContainer', () => {
         expect(wrapper.find(OptimizelyRolloutsContainer).at(1).prop('featureEnabled')).toBe(false)
-        expect(wrapper.find(OptimizelyRolloutsContainer).first().find(EMERecipeTileContainer)).toHaveLength(2)
+        expect(wrapper.find(OptimizelyRolloutsContainer).first().find(RecipeTileContainer)).toHaveLength(2)
       })
     })
   })

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Link from 'Link'
 import css from './CategoryCarousel.css'
-import { EMERecipeTileContainer } from '../RecipeTile/EMERecipeTile'
+import { RecipeTileContainer } from '../../components/RecipeTile'
 import { CategoryScrollTrackerContainer } from '../CategoryScrollTracker'
 
 const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselConfig }) => {
@@ -47,7 +47,7 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselCo
         <div className={css.categoryCarouselRecipes}>
           {recipes.map((value) => (
             <div key={value.recipe.get('id')} className={css.categoryCarouselRecipeOuter}>
-              <EMERecipeTileContainer recipeId={value.recipe.get('id')} categoryId={categoryId} originalId={value.originalId} isInCarousel fdiStyling={carouselConfig.theme.fdiStyling} />
+              <RecipeTileContainer recipeId={value.recipe.get('id')} categoryId={categoryId} originalId={value.originalId} isInCarousel fdiStyling={carouselConfig.theme.fdiStyling} />
             </div>
           ))}
         </div>

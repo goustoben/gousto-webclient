@@ -1,3 +1,5 @@
+import { withPlatformTags, WEB } from '../../../utils/regression/tags'
+
 describe('MenuCollectionHeaders', () => {
   afterEach(() => {
     cy.clock().then((clock) => {
@@ -6,7 +8,7 @@ describe('MenuCollectionHeaders', () => {
   })
 
   describe('click on waveLinkHeader', () => {
-    it('should change collection', () => {
+    withPlatformTags(WEB).it('should change collection', () => {
       cy.server()
       cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')

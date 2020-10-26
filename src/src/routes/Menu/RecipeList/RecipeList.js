@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { EMERecipeTileContainer } from '../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
+import { RecipeTileContainer } from '../components/RecipeTile'
 import { CategoryScrollTrackerContainer } from '../ElevatedMenuExperience/CategoryScrollTracker'
 import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
 import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
@@ -52,7 +52,7 @@ class RecipeList extends React.PureComponent {
               : (
                 <div className={css.emeRecipeList}>
                   {recipes.map((value) =>
-                    <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
+                    <RecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
                   )}
                 </div>
               )}
@@ -62,7 +62,7 @@ class RecipeList extends React.PureComponent {
         <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
           <div className={css.emeRecipeList}>
             {recipes.map((value) =>
-              <EMERecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
+              <RecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
             )}
           </div>
         </OptimizelyRolloutsContainer>

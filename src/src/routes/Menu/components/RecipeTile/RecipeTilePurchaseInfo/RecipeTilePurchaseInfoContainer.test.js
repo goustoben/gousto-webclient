@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfoContainer'
 
-describe('<EMERecipeTileContainer />', () => {
+describe('<RecipeTilePurchaseInfoContainer />', () => {
   const recipeId = '123'
 
   const recipe = Immutable.fromJS({

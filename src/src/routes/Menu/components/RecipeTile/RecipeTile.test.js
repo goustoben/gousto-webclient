@@ -2,13 +2,13 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { EMERecipeTile } from './EMERecipeTile'
-import { TileImageContainer } from '../TileImage'
+import { RecipeTile } from './RecipeTile'
+import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
-import { RecipeTagTitle } from '../RecipeTagTitle'
-import { RecipeTilePurchaseInfoContainer } from '../RecipeTilePurchaseInfo'
+import { RecipeTagTitle } from './RecipeTagTitle'
+import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
 
-describe('EMERecipeTile', () => {
+describe('RecipeTile', () => {
   let wrapper
   let defaultProps
   beforeEach(() => {
@@ -47,7 +47,7 @@ describe('EMERecipeTile', () => {
   })
   describe('when given null recipe', () => {
     test('should return null', () => {
-      wrapper = shallow(<EMERecipeTile
+      wrapper = shallow(<RecipeTile
         {...defaultProps}
         recipe={null}
       />)
@@ -58,7 +58,7 @@ describe('EMERecipeTile', () => {
 
   describe('when given undefined recipe', () => {
     test('should return null', () => {
-      wrapper = shallow(<EMERecipeTile
+      wrapper = shallow(<RecipeTile
         {...defaultProps}
         recipe={undefined}
       />)
@@ -70,7 +70,7 @@ describe('EMERecipeTile', () => {
   describe('when given a recipe', () => {
     global.innerWidth = 1200
     beforeEach(() => {
-      wrapper = shallow(<EMERecipeTile
+      wrapper = shallow(<RecipeTile
         {...defaultProps}
       />)
     })
@@ -102,7 +102,7 @@ describe('EMERecipeTile', () => {
 
     describe('when a recipe is not in stock', () => {
       beforeEach(() => {
-        wrapper = shallow(<EMERecipeTile
+        wrapper = shallow(<RecipeTile
           {...defaultProps}
           isOutOfStock
         />)
@@ -130,7 +130,7 @@ describe('EMERecipeTile', () => {
 
     describe('when isFineDineIn is true', () => {
       beforeEach(() => {
-        wrapper = shallow(<EMERecipeTile
+        wrapper = shallow(<RecipeTile
           {...defaultProps}
           isFineDineIn
         />)
@@ -143,7 +143,7 @@ describe('EMERecipeTile', () => {
 
     describe('when isFineDineIn is false', () => {
       beforeEach(() => {
-        wrapper = shallow(<EMERecipeTile {...defaultProps} />)
+        wrapper = shallow(<RecipeTile {...defaultProps} />)
       })
 
       test('should have class of recipeTileIsFineDineIn', () => {
@@ -154,7 +154,7 @@ describe('EMERecipeTile', () => {
 
   describe('when in carousel', () => {
     beforeEach(() => {
-      wrapper = shallow(<EMERecipeTile
+      wrapper = shallow(<RecipeTile
         {...defaultProps}
         isInCarousel
       />)

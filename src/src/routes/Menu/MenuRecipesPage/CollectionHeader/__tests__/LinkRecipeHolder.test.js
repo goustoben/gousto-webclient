@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { LinkRecipeHolder } from '../RecipeLinkHeader'
-import { EMERecipeTileContainer } from '../../../ElevatedMenuExperience/RecipeTile/EMERecipeTile'
+import { RecipeTileContainer } from '../../../components/RecipeTile'
 
 describe('LinkRecipeHolder', () => {
   let wrapper
@@ -30,7 +30,7 @@ describe('LinkRecipeHolder', () => {
     })
 
     test('should render only one recipe', () => {
-      expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(1)
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(1)
     })
   })
 
@@ -53,7 +53,7 @@ describe('LinkRecipeHolder', () => {
     })
 
     test('should render 2 recipes', () => {
-      expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(2)
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(2)
     })
   })
 
@@ -76,7 +76,7 @@ describe('LinkRecipeHolder', () => {
     })
 
     test('should render 2 recipes', () => {
-      expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(2)
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(2)
     })
   })
 })

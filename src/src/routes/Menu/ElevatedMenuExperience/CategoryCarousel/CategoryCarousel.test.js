@@ -2,10 +2,10 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { EMERecipeTileContainer } from '../RecipeTile/EMERecipeTile'
+import { RecipeTileContainer } from '../../components/RecipeTile'
 import { CategoryCarousel } from './CategoryCarousel'
 
-describe('RecipeCategoriesCarousel', () => {
+describe('CategoryCarousel', () => {
   const category = Immutable.fromJS({
     shortTitle: 'Category 1',
     slug: 'category-1',
@@ -54,17 +54,17 @@ describe('RecipeCategoriesCarousel', () => {
         <CategoryCarousel category={category} recipes={[]} carouselConfig={carouselConfig} />,
       )
 
-      expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(0)
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(0)
     })
   })
 
   describe('when there is one recipe in category', () => {
-    test('then it should render one EMERecipeTileContainer', () => {
+    test('then it should render one RecipeTileContainer', () => {
       const wrapper = shallow(
         <CategoryCarousel category={category} recipes={recipes1} carouselConfig={carouselConfig} />,
       )
 
-      expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(1)
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(1)
       expect(wrapper.find('.categoryTitle').text()).toEqual('Category 1')
     })
 
@@ -81,12 +81,12 @@ describe('RecipeCategoriesCarousel', () => {
   })
 
   describe('when there are multiple recipes', () => {
-    test('then it should render multiple EMERecipeTileContainer', () => {
+    test('then it should render multiple RecipeTileContainer', () => {
       const wrapper = shallow(
         <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />,
       )
 
-      expect(wrapper.find(EMERecipeTileContainer)).toHaveLength(2)
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(2)
     })
 
     test('then it should render View link with 2 recipes', () => {

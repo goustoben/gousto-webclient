@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { RecipeTagTitle } from './RecipeTagTitle'
 
-describe('EMERecipeTile', () => {
+describe('RecipeTagTitle', () => {
   let brandTag
   describe('when given null brandTag', () => {
     test('should return null', () => {
