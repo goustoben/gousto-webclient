@@ -389,10 +389,10 @@ function userPromoApplyCode(promoCode) {
   }
 }
 
-function userProspect(isCheckoutRedesignEnabled) {
+function userProspect() {
   return async (dispatch, getState) => {
     const { basket, routing } = getState()
-    const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutRedesignEnabled)
+    const aboutYouFormName = getAboutYouFormName(getState())
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
       const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')
@@ -614,7 +614,7 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
   }
 }
 
-export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesignEnabled = false) {
+export function userSubscribe(sca3ds = false, sourceId = null) {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
@@ -622,8 +622,8 @@ export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesig
     try {
       const { form, basket, promoAgeVerified } = getState()
       const state = getState()
-      const deliveryFormName = getDeliveryFormName(state, isCheckoutRedesignEnabled)
-      const aboutYouFormName = getAboutYouFormName(state, isCheckoutRedesignEnabled)
+      const deliveryFormName = getDeliveryFormName(state)
+      const aboutYouFormName = getAboutYouFormName(state)
 
       const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
@@ -646,7 +646,7 @@ export function userSubscribe(sca3ds = false, sourceId = null, isCheckoutRedesig
           promo_code: basket.get('promoCode', ''),
           password: aboutYou.get('password'),
           age_verified: Number(promoAgeVerified || false),
-          salutation_id: isCheckoutRedesignEnabled ? null : aboutYou.get('title'),
+          salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
           delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),

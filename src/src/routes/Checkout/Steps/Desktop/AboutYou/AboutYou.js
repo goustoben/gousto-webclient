@@ -14,18 +14,18 @@ const sectionName = 'aboutyou'
 
 const AboutYouSection = AboutYouContainer(sectionName)
 
-export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid, trackUTMAndPromoCode, isCheckoutRedesignEnabled }) => {
+export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid, trackUTMAndPromoCode }) => {
   const handleSubmit = () => {
     if (checkoutValid) {
       trackUTMAndPromoCode('clickNextDelivery')
-      userProspect(isCheckoutRedesignEnabled)
+      userProspect()
     }
     submit()
   }
 
   return (
     <div>
-      <AboutYouSection receiveRef={receiveRef} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
+      <AboutYouSection receiveRef={receiveRef} />
       <CheckoutButton
         onClick={handleSubmit}
         stepName={`Next: ${nextStepName}`}
@@ -42,7 +42,6 @@ AboutYouStep.propTypes = {
   nextStepName: PropTypes.string,
   checkoutValid: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 AboutYouStep.defaultProps = {
@@ -51,7 +50,6 @@ AboutYouStep.defaultProps = {
   checkoutValid: false,
   nextStepName: '',
   trackUTMAndPromoCode: () => {},
-  isCheckoutRedesignEnabled: false
 }
 
 const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports

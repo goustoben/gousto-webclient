@@ -33,7 +33,6 @@ const propTypes = {
   isNDDExperiment: PropTypes.bool,
   isMobile: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 const defaultProps = {
@@ -61,7 +60,6 @@ const defaultProps = {
   deliveryTariffId: '',
   deliveryDate: '',
   menuCutoffUntil: '',
-  isCheckoutRedesignEnabled: false
 }
 
 class Address extends React.PureComponent {
@@ -310,7 +308,7 @@ class Address extends React.PureComponent {
   }
 
   render() {
-    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef, isCheckoutRedesignEnabled } = this.props
+    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef } = this.props
     const addresses = this.getFormValue('addresses') || []
     const postcodeTemp = this.getFormValue('postcodeTemp')
     const addressId = this.getFormValue('addressId')
@@ -332,7 +330,6 @@ class Address extends React.PureComponent {
           receiveRef={receiveRef}
           trackClick={trackCheckoutButtonPressed}
           isMobile={isMobile}
-          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
         />
 
         {showDropdown && addresses.length > 1 && !isAddressSelected && <p><span data-testing="addressNotFound" onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}

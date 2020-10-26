@@ -2,12 +2,12 @@ import regExp from './regularExpressions'
 
 export default {
   isEmail: 'Please provide a valid email address',
-  isLength: (field, { min, max, errorEnding }) => {
+  isLength: (field, { min, max }) => {
     let error = ''
     if (min === 1) {
       error = `${field} is required`
     } else if (min > 1) {
-      error = `${field} must be at least ${min} characters${errorEnding || ''}`
+      error = `${field} must be at least ${min} characters`
     } else {
       error = `${field} must be under ${max} characters`
     }

@@ -17,7 +17,7 @@ const rules = {
  * @param formValues
  * @returns {{}}
  */
-const deliveryExtraRules = (formValues, formSectionName = 'delivery', isCheckoutRedesignEnabled = false) => {
+const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
   const validationRules = {}
   if (!formValues || !formValues[formSectionName]) return validationRules
   const values = formValues[formSectionName]
@@ -38,13 +38,12 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery', isCheckout
     typeof values.deliveryInstruction === 'string'
     && ['neighbour', 'other'].includes(values.deliveryInstruction.toLowerCase())
   ) {
-    const deliveryInstructionError = isCheckoutRedesignEnabled && { errorEnding: ' to ensure we deliver to the right place' }
     validationRules.deliveryInstructionsCustom = {
       rules: [
-        { name: 'isLength', options: { min: 5, ...deliveryInstructionError } },
+        { name: 'isLength', options: { min: 5 } },
         { name: 'isLength', options: { max: 50 } },
       ],
-      field: isCheckoutRedesignEnabled ? 'details' : 'delivery instruction',
+      field: 'delivery instruction',
     }
   }
 
@@ -57,10 +56,10 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery', isCheckout
  * @param formSectionName
  * @returns {{}}
  */
-export default formSectionName => (formValues, isCheckoutRedesignFlagEnabled) => {
+export default formSectionName => (formValues) => {
   const combinedRulesWithPrefix = addPrefix(formSectionName, {
     ...rules,
-    ...deliveryExtraRules(formValues, formSectionName, isCheckoutRedesignFlagEnabled),
+    ...deliveryExtraRules(formValues, formSectionName),
   })
   const addressRulesWithPrefix = addressRules(formSectionName)(formValues)
 

@@ -96,9 +96,6 @@ module.exports = {
     neighbour: 'Additional information, door number, etc:',
     other: 'More details about where to leave your box?',
   },
-  leaveBoxSubLabelDesc: {
-    other: 'Details must be at least 5 characters'
-  },
   tooltip: {
     leaveBox: 'You don\'t have to be in to accept your deliveries, just tell us the safest place to leave your boxes. Please choose somewhere dry and easily accessible - we can\'t leave boxes in cupboards, in wheelie bins, through windows, or over fences.',
     addressType: 'This makes it easier for our courier to deliver your To aid delivery, please suggest a safe, dry and easily accessible place. Our couriers are unable to leave boxes in cupboards, wheelie bins, through windows, or over fences.',

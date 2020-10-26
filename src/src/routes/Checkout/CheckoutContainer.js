@@ -32,4 +32,6 @@ const CheckoutContainer = connect(mapStateToProps, {
   trackUTMAndPromoCode,
 })(Checkout)
 
-export default CheckoutContainer
+export {
+  CheckoutContainer
+}

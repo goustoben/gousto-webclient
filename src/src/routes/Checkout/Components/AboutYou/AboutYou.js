@@ -3,7 +3,6 @@ import React from 'react'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import config from 'config/checkout'
-import classNames from 'classnames'
 import { capitalizeFirstLetter } from 'utils/text'
 import { emailValidator } from 'utils/forms'
 import { Login } from 'Login'
@@ -33,7 +32,7 @@ class AboutYou extends React.PureComponent {
   }
 
   render() {
-    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen, isCheckoutRedesignEnabled } = this.props
+    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen } = this.props
     const titles = config.titles.map(title => ({
       value: title,
       label: capitalizeFirstLetter(title),
@@ -61,7 +60,7 @@ class AboutYou extends React.PureComponent {
               </p>
             </div>
           </div>
-          <div className={classNames(css.row, { [css.hideTitleForCheckoutRedesign]: isCheckoutRedesignEnabled })}>
+          <div className={css.row}>
             <div className={css.colSM}>
               <Field
                 name="title"
@@ -182,7 +181,6 @@ AboutYou.propTypes = {
   clearErrors: PropTypes.func,
   receiveRef: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 AboutYou.defaultProps = {
@@ -194,7 +192,6 @@ AboutYou.defaultProps = {
   receiveRef: () => { },
   trackCheckoutButtonPressed: () => { },
   isMobile: false,
-  isCheckoutRedesignEnabled: false
 }
 
 export { AboutYou }

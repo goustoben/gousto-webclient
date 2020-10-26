@@ -3,7 +3,7 @@ import { Route } from 'react-router'
 import CheckoutLayout from 'layouts/CheckoutLayout'
 import config from 'config/routes'
 import { checkGuest } from 'utils/routes'
-import CheckoutContainer from './CheckoutContainer'
+import { CheckoutContainer } from './CheckoutContainer'
 
 const path = `${config.client['check-out']}(/:stepName)`
 

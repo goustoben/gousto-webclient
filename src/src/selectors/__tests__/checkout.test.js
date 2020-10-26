@@ -104,64 +104,30 @@ describe('checkout selectors', () => {
   describe('getAboutYouFormName', () => {
     let aboutYouFormNameOutput
     let state
-    let isCheckoutRedesignEnabled
 
-    describe('when isCheckoutRedesign is true', () => {
-      const expected = 'aboutyou'
+    describe('when browser is mobile', () => {
+      const expected = 'yourdetails'
+
       beforeEach(() => {
-        isCheckoutRedesignEnabled = true
+        state = setDefaultState('mobile')
+        aboutYouFormNameOutput = getAboutYouFormName(state)
       })
 
-      describe('and browser is mobile', () => {
-        beforeEach(() => {
-          state = setDefaultState('mobile')
-          aboutYouFormNameOutput = getAboutYouFormName(state, isCheckoutRedesignEnabled)
-        })
-
-        test('then should return "aboutyou"', () => {
-          expect(aboutYouFormNameOutput).toBe(expected)
-        })
-      })
-
-      describe('and browser is not mobile', () => {
-        beforeEach(() => {
-          state = setDefaultState('web')
-          aboutYouFormNameOutput = getAboutYouFormName(state, isCheckoutRedesignEnabled)
-        })
-
-        test('then should return "aboutyou"', () => {
-          expect(aboutYouFormNameOutput).toBe(expected)
-        })
+      test('then should return "yourdetails"', () => {
+        expect(aboutYouFormNameOutput).toBe(expected)
       })
     })
 
-    describe('when isCheckoutRedesign is false', () => {
+    describe('and browser is not mobile', () => {
+      const expected = 'aboutyou'
+
       beforeEach(() => {
-        isCheckoutRedesignEnabled = false
+        state = setDefaultState('web')
+        aboutYouFormNameOutput = getAboutYouFormName(state)
       })
 
-      describe('and browser is mobile', () => {
-        beforeEach(() => {
-          state = setDefaultState('mobile')
-          aboutYouFormNameOutput = getAboutYouFormName(state, isCheckoutRedesignEnabled)
-        })
-
-        test('then should return "yourdetails"', () => {
-          const expected = 'yourdetails'
-          expect(aboutYouFormNameOutput).toBe(expected)
-        })
-      })
-
-      describe('and browser is not mobile', () => {
-        beforeEach(() => {
-          state = setDefaultState('web')
-          aboutYouFormNameOutput = getAboutYouFormName(state, isCheckoutRedesignEnabled)
-        })
-
-        test('then should return "aboutyou"', () => {
-          const expected = 'aboutyou'
-          expect(aboutYouFormNameOutput).toBe(expected)
-        })
+      test('then should return "aboutyou"', () => {
+        expect(aboutYouFormNameOutput).toBe(expected)
       })
     })
   })

@@ -28,7 +28,8 @@ const transformMenuCollections = (menu, normalisedData, meta) => {
       recipesInCollection: collectionItem.relationships.recipes.data.map(recipe => recipe.core_recipe_id),
       isFeaturedCategory: !!featuredCategory,
       featuredCategoryOrder: featuredCategory ? featuredCategory.index : 0,
-      carouselConfig: featuredCategory ? featuredCategory.meta : null
+      carouselConfig: featuredCategory ? featuredCategory.meta : null,
+      thumbnail: collectionItem.meta && collectionItem.meta.thumbnail
     }
 
     if (normalisedAttributes.slug === 'recommendations') {
