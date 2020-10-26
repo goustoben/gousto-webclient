@@ -23,7 +23,6 @@ class Delivery extends React.PureComponent {
     receiveRef: PropTypes.func,
     triggerSubmit: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
-    isCheckoutRedesignEnabled: PropTypes.bool
   }
 
   static defaultProps = {
@@ -36,7 +35,6 @@ class Delivery extends React.PureComponent {
     asyncValidate: () => {},
     triggerSubmit: () => {},
     scrollToFirstMatchingRef: () => {},
-    isCheckoutRedesignEnabled: false
   }
 
   componentDidMount() {
@@ -62,7 +60,7 @@ class Delivery extends React.PureComponent {
   }
 
   renderAddress = () => {
-    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef, isCheckoutRedesignEnabled } = this.props
+    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef } = this.props
 
     return (
       <div>
@@ -75,14 +73,13 @@ class Delivery extends React.PureComponent {
           triggerSubmit={triggerSubmit}
           receiveRef={receiveRef}
           scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
         />
       </div>
     )
   }
 
   renderDetails = () => {
-    const { formValues, sectionName, formName, triggerSubmit, receiveRef, isCheckoutRedesignEnabled } = this.props
+    const { formValues, sectionName, formName, triggerSubmit, receiveRef } = this.props
 
     return (
       <div>
@@ -93,7 +90,6 @@ class Delivery extends React.PureComponent {
           onAddressEdit={this.handleAddressEdit}
           triggerSubmit={triggerSubmit}
           receiveRef={receiveRef}
-          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
         />
       </div>
     )

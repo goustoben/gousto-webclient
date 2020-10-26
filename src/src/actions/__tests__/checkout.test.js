@@ -23,6 +23,7 @@ import checkoutActions, {
   checkout3DSSignup,
   checkPaymentAuth,
   fireCheckoutError,
+  fireCheckoutPendingEvent,
   checkoutPostSignup,
   checkoutClearErrors,
   trackPromocodeChange,
@@ -30,6 +31,7 @@ import checkoutActions, {
   checkoutCreatePreviewOrder,
   checkoutTransactionalOrder,
   trackCheckoutButtonPressed,
+  setCurrentPaymentMethod,
 } from 'actions/checkout'
 import {basketPromoCodeAppliedChange, basketPromoCodeChange} from '../basket'
 
@@ -592,6 +594,18 @@ describe('checkout actions', () => {
     })
   })
 
+  describe('fireCheckoutPendingEvent', () => {
+    test('should dispatch pending with proper parameters', async () => {
+      getState.mockReturnValue(createState())
+      const pendingName = 'pending name'
+      const checkoutValue = true
+
+      await fireCheckoutPendingEvent(pendingName)(dispatch, getState)
+
+      expect(pending).toHaveBeenCalledWith(pendingName, checkoutValue)
+    })
+  })
+
   describe('checkoutSignup', () => {
     let checkout3DSSignupOrig
     let checkoutNon3DSSignupOrig
@@ -844,10 +858,9 @@ describe('checkout actions', () => {
       })
 
       test('should subscribe user', async () => {
-        const isCheckoutRedesignEnabled = false
-        await checkPaymentAuth(successSessionId, isCheckoutRedesignEnabled)(dispatch, getState)
+        await checkPaymentAuth(successSessionId)(dispatch, getState)
 
-        expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza', isCheckoutRedesignEnabled)
+        expect(userSubscribe).toHaveBeenCalledWith(true, 'src_qvgsjghtdjjuhdznipp5najdza')
       })
 
       test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
@@ -1201,6 +1214,18 @@ describe('checkout actions', () => {
             )
           })
         })
+      })
+    })
+  })
+
+  describe('setCurrentPaymentMethod', () => {
+    test('should call setCurrentPaymentMethod with proper parameters', () => {
+      const paymentMethod = 'payment method'
+      const result = setCurrentPaymentMethod(paymentMethod)
+
+      expect(result).toEqual({
+        type: actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD,
+        paymentMethod
       })
     })
   })

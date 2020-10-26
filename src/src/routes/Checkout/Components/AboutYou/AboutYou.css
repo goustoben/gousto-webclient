@@ -9,10 +9,6 @@
 
 .row {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
-
-  &.hideTitleForCheckoutRedesign {
-     display: none;
-   }
 }
 
 .col {

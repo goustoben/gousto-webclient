@@ -6,12 +6,12 @@ import Icon from 'Icon'
 
 import css from './ProgressBar.css'
 
-const ProgressBar = ({ currentId, items, isCheckoutRedesignEnabled }) => {
+const ProgressBar = ({ currentId, items }) => {
   const activeIndex = items && items.findIndex(item => item.id === currentId)
 
   return items ? (
     <Ul
-      className={classNames(css.list, { [css.checkoutRedesign]: isCheckoutRedesignEnabled })}
+      className={css.list}
       d-flex
       flex-nowrap
     >
@@ -41,7 +41,7 @@ const ProgressBar = ({ currentId, items, isCheckoutRedesignEnabled }) => {
             w-100
           >
             <Span
-              className={classNames(css.number, css.text, { [css.checkoutRedesign]: isCheckoutRedesignEnabled })}
+              className={classNames(css.number, css.text)}
               padding={{
                 left: 'XXS',
                 right: 'XXS',
@@ -51,15 +51,9 @@ const ProgressBar = ({ currentId, items, isCheckoutRedesignEnabled }) => {
                 ? <Icon name="fa-check" />
                 : (index + 1)}
             </Span>
-            {isCheckoutRedesignEnabled
-              ? (
-                <Span className={classNames(css.checkoutRedesign, css.tick)}>
-                  {index < activeIndex && <Icon name="fa-check" />}
-                </Span>
-              )
-              : null}
             <Span
-              className={classNames(css.text, css.hiddenSMDown, { [css.checkoutRedesign]: isCheckoutRedesignEnabled })}
+              className={css.text}
+              hidden-sm-down
               padding={{
                 left: 'XXS',
                 right: 'XXS',
@@ -90,11 +84,6 @@ ProgressBar.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  isCheckoutRedesignEnabled: PropTypes.bool
-}
-
-ProgressBar.defaultProps = {
-  isCheckoutRedesignEnabled: false
 }
 
 export default ProgressBar

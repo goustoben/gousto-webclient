@@ -28,7 +28,9 @@ import { CheckoutPayment } from './Components/CheckoutPayment'
 import ProgressBar from './Components/ProgressBar'
 
 const defaultDesktop = ['aboutyou', 'delivery', 'payment']
-const defaultMobile = ['boxdetails', 'yourdetails', 'payment']
+const defaultMobile = (isCheckoutRedesignEnabled) => (
+  [!isCheckoutRedesignEnabled && 'boxdetails', 'yourdetails', 'payment']
+).filter(item => item)
 
 const desktopStepMapping = {
   boxdetails: { component: DesktopBoxDetails, humanName: 'Box Details' },
@@ -37,13 +39,9 @@ const desktopStepMapping = {
   payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
-const boxDetailsMobile = { component: MobileBoxDetails, humanName: 'Box Details' }
-const aboutYouForRedesign = { component: DesktopAboutYou, humanName: 'About You' }
-
 const mobileStepMapping = (isCheckoutRedesignEnabled) => ({
-  ...(isCheckoutRedesignEnabled ? { aboutyou: aboutYouForRedesign } : { boxdetails: boxDetailsMobile }),
-  ...(!isCheckoutRedesignEnabled && { yourdetails: { component: MobileYourDetails, humanName: 'Your Details' }}),
-  delivery: { component: MobileYourDetails, humanName: 'Delivery' },
+  ...(!isCheckoutRedesignEnabled && { boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' }}),
+  yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
   payment: { component: CheckoutPayment, humanName: 'Payment' },
 })
 
@@ -63,7 +61,7 @@ const propTypes = {
   trackCheckoutButtonPressed: PropTypes.func,
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
+  isCheckoutRedesignEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -79,7 +77,7 @@ const defaultProps = {
   loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
-  isCheckoutRedesignEnabled: false
+  isCheckoutRedesignEnabled: false,
 }
 
 const contextTypes = {
@@ -90,7 +88,7 @@ const contextTypes = {
 
 class Checkout extends PureComponent {
   static fetchData = async ({ store, query, params, browser, isCheckoutRedesignEnabled }) => {
-    const steps = browser === 'mobile' && !isCheckoutRedesignEnabled ? defaultMobile : defaultDesktop
+    const steps = browser === 'mobile' ? defaultMobile(isCheckoutRedesignEnabled) : defaultDesktop
 
     const firstStep = steps[0]
     const currentStep = params && params.stepName
@@ -229,7 +227,7 @@ class Checkout extends PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, submitOrder, trackUTMAndPromoCode, isCheckoutRedesignEnabled } = this.props
+    const { browser, submitOrder, trackUTMAndPromoCode } = this.props
     const { checkoutScriptReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
@@ -243,7 +241,6 @@ class Checkout extends PureComponent {
       browser,
       checkoutScriptReady,
       trackUTMAndPromoCode,
-      isCheckoutRedesignEnabled
     }
 
     let element = <div />
@@ -255,7 +252,7 @@ class Checkout extends PureComponent {
     return element
   }
 
-  renderStaticPayment = (stepMapping, steps, currentStep, isCheckoutRedesignEnabled) => {
+  renderStaticPayment = (stepMapping, steps, currentStep) => {
     const { browser, submitOrder } = this.props
     const onPaymentStep = (currentStep === 'payment')
     const { checkoutScriptReady } = this.state
@@ -269,33 +266,20 @@ class Checkout extends PureComponent {
         isLastStep={this.isLastStep(steps, currentStep)}
         onStepChange={this.onStepChange(steps, currentStep)}
         nextStepName={this.getNextStepName(stepMapping, steps, currentStep)}
-        isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
       />
     )
   }
 
   renderMobileSteps = () => {
     const { params: { stepName }, isCheckoutRedesignEnabled } = this.props
-    const mobileSteps = isCheckoutRedesignEnabled ? defaultDesktop : defaultMobile
-    const isDeliveryStep = stepName === 'delivery'
-    const isYourDetailsStep = stepName === 'yourdetails'
-    const stepsMapping = mobileStepMapping(isCheckoutRedesignEnabled)
+    const stepMapping = mobileStepMapping(isCheckoutRedesignEnabled)
+    const mobileSteps = defaultMobile(isCheckoutRedesignEnabled)
 
     return (
       <Div>
-        {this.renderProgressBar(stepsMapping, mobileSteps, stepName)}
-        {isCheckoutRedesignEnabled && !isDeliveryStep && (
-          <Div margin={{ bottom: 'MD' }}>
-            <Summary showPromocode />
-          </Div>
-        )}
-        {this.renderSteps(stepsMapping, mobileSteps, stepName)}
-        {this.renderStaticPayment(stepsMapping, mobileSteps, stepName, isCheckoutRedesignEnabled)}
-        {isCheckoutRedesignEnabled && !isDeliveryStep && !isYourDetailsStep && (
-          <Div margin={{ top: 'MD' }}>
-            <BoxDetails />
-          </Div>
-        )}
+        {this.renderProgressBar(stepMapping, mobileSteps, stepName)}
+        {this.renderSteps(stepMapping, mobileSteps, stepName)}
+        {this.renderStaticPayment(stepMapping, mobileSteps, stepName)}
       </Div>
     )
   }
@@ -322,26 +306,21 @@ class Checkout extends PureComponent {
     )
   }
 
-  renderProgressBar = (stepMapping, steps, currentStep) => {
-    const { isCheckoutRedesignEnabled } = this.props
+  renderProgressBar = (stepMapping, steps, currentStep) => (
+    <Div margin={{ bottom: 'MD' }}>
+      <ProgressBar
+        currentId={currentStep}
+        items={steps.reduce((accumulatedSteps, stepName) => {
+          accumulatedSteps.push({
+            id: stepName,
+            label: stepMapping[stepName].humanName,
+          })
 
-    return (
-      <Div margin={{ bottom: 'MD' }}>
-        <ProgressBar
-          currentId={currentStep}
-          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
-          items={steps.reduce((accumulatedSteps, stepName) => {
-            accumulatedSteps.push({
-              id: stepName,
-              label: stepMapping[stepName].humanName,
-            })
-
-            return accumulatedSteps
-          }, [])}
-        />
-      </Div>
-    )
-  }
+          return accumulatedSteps
+        }, [])}
+      />
+    </Div>
+  )
 
   render() {
     const { browser } = this.props

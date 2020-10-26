@@ -6,18 +6,37 @@ import Postcode from 'routes/Checkout/Components/Address/Postcode'
 
 describe('Postcode', () => {
   let wrapper
+  const onPostcodeLookup = jest.fn()
+  const postcodeTemp = 'W3 7UP'
 
   beforeEach(() => {
-    wrapper = shallow(<Postcode />)
+    wrapper = shallow(<Postcode
+      onPostcodeLookup={onPostcodeLookup}
+      postcodeTemp={postcodeTemp}
+    />)
   })
 
-  describe('rendering', () => {
-    test('should render 1 <Field> component by default', () => {
-      expect(wrapper.find(Field).length).toEqual(1)
+  describe('When Postcode component is mounted', () => {
+    test('Then should render input for postcode', () => {
+      expect(wrapper.find(Field)).toHaveLength(1)
+    })
+
+    test('Then should render Find Address CTA', () => {
+      expect(wrapper.find('[data-testing="checkoutFindAddressButton"]')).toBeDefined()
     })
   })
 
-  describe('sensitive data masking', function() {
+  describe('when find address button is clicked', () => {
+    beforeEach(() => {
+      wrapper.find('[data-testing="checkoutFindAddressButton"]').simulate('click')
+    })
+
+    test('then onPostcodeLookup should be called with proper parameter', () => {
+      expect(onPostcodeLookup).toHaveBeenCalledWith(postcodeTemp)
+    })
+  })
+
+  describe('sensitive data masking', () => {
     test('all <Field /> component(s) should have prop "mask"', () => {
       wrapper = shallow(
         <Postcode

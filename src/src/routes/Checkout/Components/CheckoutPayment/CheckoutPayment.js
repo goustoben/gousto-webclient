@@ -118,7 +118,6 @@ class CheckoutPayment extends React.Component {
       sectionName,
       isRecaptchaEnabled,
       is3DSEnabled,
-      isCheckoutRedesignEnabled,
       isPayWithPaypalEnabled,
       currentPaymentMethod,
       setCurrentPaymentMethod
@@ -180,7 +179,7 @@ class CheckoutPayment extends React.Component {
             })}
           >
             <SubmitButton onClick={this.handleClick} />
-            {browser === 'mobile' && !isCheckoutRedesignEnabled ? (
+            {browser === 'mobile' ? (
               <div>
                 <Summary />
                 <Section margin={{ top: 'LG' }}>
@@ -217,7 +216,6 @@ CheckoutPayment.propTypes = {
   isRecaptchaEnabled: PropTypes.bool,
   recaptchaValue: PropTypes.string,
   storeSignupRecaptchaToken: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool,
   isPayWithPaypalEnabled: PropTypes.bool,
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func.isRequired
@@ -241,7 +239,6 @@ CheckoutPayment.defaultProps = {
   isRecaptchaEnabled: false,
   recaptchaValue: '',
   storeSignupRecaptchaToken: () => {},
-  isCheckoutRedesignEnabled: false,
   isPayWithPaypalEnabled: false
 }
 

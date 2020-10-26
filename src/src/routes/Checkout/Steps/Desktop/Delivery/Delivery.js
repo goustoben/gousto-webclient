@@ -12,7 +12,7 @@ const sectionName = 'delivery'
 
 const DeliverySection = DeliveryContainer(sectionName)
 
-export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef, trackUTMAndPromoCode, isCheckoutRedesignEnabled }) => {
+export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef, trackUTMAndPromoCode }) => {
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   const handleClick = () => {
@@ -25,7 +25,6 @@ export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scr
       <DeliverySection
         receiveRef={receiveRef}
         scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-        isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
       />
       {isAddressConfirmed && (
         <CheckoutButton
@@ -44,7 +43,6 @@ DeliveryStep.propTypes = {
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 DeliveryStep.defaultProps = {
@@ -53,7 +51,6 @@ DeliveryStep.defaultProps = {
   formValues: {},
   receiveRef: () => { },
   scrollToFirstMatchingRef: () => { },
-  isCheckoutRedesignEnabled: false,
 }
 
 const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), sectionName, validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports

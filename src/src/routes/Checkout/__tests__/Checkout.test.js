@@ -336,6 +336,42 @@ describe('Checkout', () => {
         true,
       )
     })
+
+    describe('when isCheckoutRedesignEnabled is enabled', () => {
+      describe('and browser is mobile', () => {
+        beforeEach(async () => {
+          await Checkout.fetchData({
+            store: context.store,
+            query: {},
+            params: { stepName: '' },
+            isCheckoutRedesignEnabled: true,
+            browser: 'mobile',
+          })
+        })
+
+        test('then should redirect to the first "yourdetails" step', () => {
+          expect(replace).toHaveBeenCalledWith('/check-out/yourdetails')
+        })
+      })
+    })
+
+    describe('when isCheckoutRedesignEnabled is disabled', () => {
+      describe('and browser is mobile', () => {
+        beforeEach(async () => {
+          await Checkout.fetchData({
+            store: context.store,
+            query: {},
+            params: { stepName: '' },
+            isCheckoutRedesignEnabled: false,
+            browser: 'mobile',
+          })
+        })
+
+        test('then should redirect to the first "boxdetails" step', () => {
+          expect(replace).toHaveBeenCalledWith('/check-out/boxdetails')
+        })
+      })
+    })
   })
 
   describe('componentDidMount', () => {

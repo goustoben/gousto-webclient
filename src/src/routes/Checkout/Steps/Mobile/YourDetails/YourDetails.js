@@ -19,11 +19,11 @@ const AboutYouSection = AboutYouContainer(aboutYouSectionName)
 const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
-export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick, trackUTMAndPromoCode, isCheckoutRedesignEnabled }) => {
+export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick, trackUTMAndPromoCode }) => {
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = () => {
     if (checkoutValid) {
-      userProspect(isCheckoutRedesignEnabled)
+      userProspect()
       trackUTMAndPromoCode('clickNextPayment')
       trackClick('NextCTA Clicked', { succeeded: true, missing_field: null })
     }
@@ -32,18 +32,14 @@ export const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues
 
   return (
     <div>
-      {!isCheckoutRedesignEnabled && (
-        <SectionContainer>
-          <AboutYouSection receiveRef={receiveRef} isCheckoutRedesignEnabled={isCheckoutRedesignEnabled} />
-        </SectionContainer>
-      )}
-
+      <SectionContainer>
+        <AboutYouSection receiveRef={receiveRef} />
+      </SectionContainer>
       <SectionContainer>
         <DeliverySection
           receiveRef={receiveRef}
           scrollToFirstMatchingRef={scrollToFirstMatchingRef}
           browser={browser}
-          isCheckoutRedesignEnabled={isCheckoutRedesignEnabled}
         />
       </SectionContainer>
 
@@ -70,7 +66,6 @@ YourDetailsStep.propTypes = {
   checkoutValid: PropTypes.bool,
   browser: PropTypes.string,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool
 }
 
 YourDetailsStep.defaultProps = {
@@ -83,7 +78,6 @@ YourDetailsStep.defaultProps = {
   trackClick: () => { },
   checkoutValid: false,
   trackUTMAndPromoCode: () => { },
-  isCheckoutRedesignEnabled: false
 }
 
 const validationRules = [

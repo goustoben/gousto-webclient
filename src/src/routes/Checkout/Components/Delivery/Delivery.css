@@ -1,6 +1,6 @@
 @value SpacingLG, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value ScreenMDMin, ScreenSMMax from 'styles/screenSizes.css';
-@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White, BlueberryLight, BluecheeseLighter from 'styles/colors.css';
+@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White, BlueberryLight from 'styles/colors.css';
 @value avenirBookFontStack from 'styles/typography.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
@@ -19,13 +19,6 @@
 
 .colMD {
 	composes: col-md-8 col-xs-10 from 'sass-loader!styles/bootstrap.scss';
-
-  &.checkoutRedesign {
-    :global .Select-menu-outer,
-    :global .Select-menu-outer .Select-menu {
-      max-height: max-content !important;
-    }
-  }
 }
 
 .colLG {
