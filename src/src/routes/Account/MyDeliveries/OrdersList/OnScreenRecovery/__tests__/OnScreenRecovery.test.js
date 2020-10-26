@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import renderer from 'react-test-renderer'
 
 import { OnScreenRecovery } from '../OnScreenRecovery'
 
@@ -16,106 +15,62 @@ describe('Order Skip Recovery Modal', () => {
   })
 
   describe('Initial Render', () => {
-    const valueProposition = {
-      title: 'value proposition title',
-      message: 'value proposition message',
-    }
-
     beforeAll(() => {
       wrapper = shallow(
         <OnScreenRecovery
           title="modal title"
-          orderType="pending"
           onKeep={keepOrder}
           onConfirm={cancelPendingOrder}
-          featureFlag
-          valueProposition={valueProposition}
           keepCopy="keep"
           confirmCopy="confirm"
         />
       )
-    })
-
-    test('should render snapshot', () => {
-      const tree = renderer.create(
-        <OnScreenRecovery
-          title="modal title"
-          orderType="pending"
-          onKeep={keepOrder}
-          onConfirm={cancelPendingOrder}
-          featureFlag
-          valueProposition={valueProposition}
-          keepCopy="keep"
-          confirmCopy="confirm"
-        />
-      ).toJSON()
-
-      expect(tree).toMatchSnapshot()
-    })
-
-    test('should display modal title', () => {
-      const modalTitle = wrapper.find('Title')
-
-      expect(modalTitle.length).toBe(1)
-    })
-
-    test('should pass correct props to title', () => {
-      const modalTitle = wrapper.find('Title')
-
-      expect(modalTitle.props().title).toBe('modal title')
-    })
-
-    test('should display modal value proposition', () => {
-      const modalValueProposition = wrapper.find('ValueProposition')
-
-      expect(modalValueProposition.length).toBe(1)
-    })
-
-    test('should pass correct props to value proposition', () => {
-      const modalValueProposition = wrapper.find('ValueProposition')
-
-      expect(modalValueProposition.props().valueProposition).toEqual(valueProposition)
-    })
-
-    test('should display modal footer', () => {
-      const footer = wrapper.find('Footer')
-
-      expect(footer.length).toBe(1)
-    })
-
-    test('should pass correct props to footer', () => {
-      const footer = wrapper.find('Footer')
-
-      expect(footer.props().keepCopy).toBe('keep')
-      expect(footer.props().confirmCopy).toEqual('confirm')
-      expect(typeof footer.props().onKeep).toBe('function')
-      expect(typeof footer.props().onConfirm).toBe('function')
     })
   })
 
   describe('Alternative Render', () => {
-    test('should call getRecoveryContent', () => {
-      const getRecoveryContent = jest.fn()
-      wrapper = shallow(
-        <OnScreenRecovery
-          orderId="14245"
-          triggered={false}
-          orderDate="2018-09-24T13:27:09.487Z"
-          deliveryDayId="23001"
-          orderType="pending"
-          getRecoveryContent={getRecoveryContent}
-        />
-      )
+    const getRecoveryContent = jest.fn()
 
-      const prevProps = wrapper.props()
+    describe('when triggered is set from false to true', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <OnScreenRecovery
+            triggered={false}
+            getRecoveryContent={getRecoveryContent}
+          />
+        )
 
-      wrapper.setProps({
-        triggered: true,
+        wrapper.setProps({
+          triggered: true,
+        })
+
+        wrapper.update()
       })
 
-      wrapper.instance().componentDidUpdate(prevProps)
+      test('should call getRecoveryContent', () => {
+        expect(getRecoveryContent).toHaveBeenCalled()
+      })
+    })
 
-      expect(getRecoveryContent).toHaveBeenCalled()
+    describe('when triggered is set from true to false', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <OnScreenRecovery
+            triggered
+            getRecoveryContent={getRecoveryContent}
+          />
+        )
+
+        wrapper.setProps({
+          triggered: false,
+        })
+
+        wrapper.update()
+      })
+
+      test('should NOT call getRecoveryContent', () => {
+        expect(getRecoveryContent).not.toHaveBeenCalled()
+      })
     })
   })
 })

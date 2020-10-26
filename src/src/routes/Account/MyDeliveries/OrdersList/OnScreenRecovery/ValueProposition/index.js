@@ -1,1 +1,0 @@
-export { ValueProposition } from './ValueProposition'
