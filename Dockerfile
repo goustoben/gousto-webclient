@@ -1,12 +1,8 @@
 FROM ubuntu:18.04
-ENV NSOLID_VERSION 3.x
 ARG SSH_PRIVATE_KEY
 
 RUN apt-get update -y &&\
     apt-get install -y net-tools git wget xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
-RUN wget http://nsolid-deb.nodesource.com/nsolid_setup_$NSOLID_VERSION \
-    && bash nsolid_setup_$NSOLID_VERSION
-RUN apt-get install -y nsolid-dubnium nsolid-console
 
 # Copy SSH key for git private repos
 # This will be replaced with SSH agent forwarding on prod/later

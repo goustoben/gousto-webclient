@@ -28,7 +28,7 @@ describe('cookie actions', () => {
       cookieHelper.set = jest.fn()
       cookiePolicyAcceptanceChange('isAcceptedValue')(dispatch)
       expect(cookieHelper.set).toHaveBeenCalled()
-      expect(cookieHelper.set.mock.calls[0][1]).toEqual('cookie_policy')
+      expect(cookieHelper.set.mock.calls[0][1]).toEqual('cookie_policy_v2')
       expect(cookieHelper.set.mock.calls[0][2]).toEqual({ isAccepted: 'isAcceptedValue' })
     })
 
