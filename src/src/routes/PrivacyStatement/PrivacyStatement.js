@@ -183,40 +183,35 @@ const PrivacyStatement = () => (
 
     <section className={css.mainSection}>
       <Heading type="h1" size="fontStyle2XL" isCenter>Cookies Policy</Heading>
-      <p>Effective Date: 26/05/2015 (Version 1.0)</p>
+      <p>Effective Date: 26/10/2020 (Version 2.0)</p>
       <ol className={css.orderedList}>
         <li className={css.itemList}>
           <Heading type="h2" size="fontStyleM">What about cookies?</Heading>
           <ol className={css.orderedList}>
-            <li className={css.itemList}>We and/or third parties use cookies and other tracking technologies on our website. A cookie is an identifier (a small file of letters and numbers) that is sent to your computer. Our website’s functionality will be limited if you configure your browser to reject cookies.</li>
             <li className={css.itemList}>
-              Cookies are widely used to make websites work, or work more efficiently, as well as to provide information to the website owner or others. Session cookies are temporary cookies that remain in the cookie file of your browser only until your browser is closed. They allow websites to link your actions during a browser session. Persistent cookies stay in the cookie file of your browser for longer (though how long will depend on the lifetime of the specific cookie). For further information on cookies, including how to use your browser to block them and how to delete cookies already stored on your device, visit:&nbsp;
-              <a href="http://www.allaboutcookies.org" target="_blank" rel="noopener noreferrer">www.allaboutcookies.org</a>
-              .
+              Our website uses cookies to distinguish you from other users of our website. This helps us to provide you with a good experience when you browse our website and also allows us to improve our website. A cookie is a small text file that is downloaded onto ‘terminal equipment’ (eg a computer or smartphone) when the user accesses a website. It allows the website to recognise that user’s device and store some information about the user’s preferences or past actions.
             </li>
             <li className={css.itemList}>
-              Cookies are used on this website for the following purposes:
+              You can consent to, or block the use of, specific Cookies by activating the relevant settings in your browser or in the case of third party cookies - by contacting the third parties directly. We don&apos;t have access to the cookies which third parties place on the website; other than allowing them to be served. If you would like more information about these practices and to know your choices about not having this information used by certain of these companies, please visit www.youronlinechoices.com and www.networkadvertising.org/choices. In order to use some parts of our site, you will need to consent to Cookies. If you choose to withhold consent, or subsequently block cookies, some aspects of our site may not work properly and you may not be able to access all or part of the site.
+            </li>
+            <li className={css.itemList}>
+              Generally, there are the following categories of cookies:
               <ol className={css.orderedList}>
-                <li className={css.itemList}>Session cookies: We use session cookies to enable the website to keep track of your movement from page to page and store your selections so you do not get asked repeatedly for the same information. These cookies allow you to proceed through many pages of the website quickly and easily without having to authenticate or reprocess each new area you visit. For example, the session cookie remembers your shopping cart selection so will have the items you selected when you are ready to check out.</li>
                 <li className={css.itemList}>
-                  Google Analytics (&quot;GA&quot;) cookies: Google sets persistent cookies (up to two years) to recognize and count the number of website visitors as well as providing other information about the visit such as duration, route through the website and what sites the visitor came from. This information helps us to improve the way our website works, for example by making sure users find what they need easily. Click&nbsp;
-                  <a href="https://www.google.co.uk/policies/technologies/types/" target="_blank" rel="noopener noreferrer">here</a>
+                  Strictly Necessary cookies: these cookies are essential for the operation of the website. They often improve the usability of the website for you by allowing you to proceed through many pages of the website quickly and easily without having to authenticate or reprocess each new area you visit. For example, the session cookie remembers your shopping cart selection so will have the items you selected when you are ready to check out.
+                </li>
+                <li className={css.itemList}>
+                  Performance and analytics cookies: these cookies analyse how you use the site and to monitor performance so that we can provide a high quality experience to you and quickly identify issues that may arise. We also use cookies to understand, improve, develop and research products, features and services, to collect usage, viewing, logs, and technical information about you (such as event data), and to create logs and record when you access our site from different devices, such as your work computer or your mobile device.This information helps us to improve the way our website works, for example by making sure users find what they need easily. We predominantly use Google Analytics (“GA”) cookies to conduct analytics. Click&nbsp;
+                  <a href="https://policies.google.com/technologies/types?gl=uk" target="_blank" rel="noopener noreferrer">here</a>
                   &nbsp;for more information about GA cookies. Click&nbsp;
                   <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">here</a>
                   &nbsp;to opt out of GA cookies.
                 </li>
                 <li className={css.itemList}>
-                  Google advertising cookies (AdSense, Doubleclick): Google uses persistent advertising cookies (up to two years) in connection with Google advertising on our website to serve ads to you based on your visits to this and other websites and for various other purposes. Click&nbsp;
-                  <a href="http://www.google.com/policies/privacy/ads/" target="_blank" rel="noopener noreferrer">here</a>
-                  &nbsp;for more information and to opt out of Google’s advertising cookies.
+                  Targeting cookies: these cookies are used to serve users with content and adverts, and to collect information about your browsing habits and usage of the website to make adverts more relevant to you based on your visits to this and other websites. We may use remarketing technologies to enable third parties to display relevant and personalised ads to users through their networks. They are also used to limit the number of times users see an advert as well as help measure the effectiveness of an advertising campaign.
                 </li>
                 <li className={css.itemList}>
-                  Microsoft Bing Ads cookies: Microsoft sets persistent cookies (up to two years) for conversion tracking purposes, i.e. to record details of transactions by users who visit our site after clicking on an advertisement of ours on another site. Click&nbsp;
-                  <a href="http://advertise.bingads.microsoft.com/en-uk/privacy-policy" target="_blank" rel="noopener noreferrer">here</a>
-                  &nbsp;for more information.
-                </li>
-                <li className={css.itemList}>
-                  Social media cookies: We may use various social media and other third party features on our website including&nbsp;
+                  Social media cookies: We may use various social media and other third party features on our website including the&nbsp;
                   <a href="https://www.facebook.com/help/186325668085084/" target="_blank" rel="noopener noreferrer">like</a>
                   &nbsp;button from&nbsp;
                   <a href="http://www.facebook.com/help/cookies" target="_blank" rel="noopener noreferrer">Facebook</a>
@@ -234,34 +229,13 @@ const PrivacyStatement = () => (
                   <a href="https://www.google.co.uk/policies/technologies/types/" target="_blank" rel="noopener noreferrer">YouTube</a>
                   , These features may involve the relevant companies using cookies or linking your visit with cookies previously placed by them on your computer in order for them to collect information relating to your visit to our website or your interaction with their services or otherwise. Click the links shown above for further information about the specific features and those companies’ cookie / privacy practices generally as well as to opt out where this is possible.
                 </li>
-                <li className={css.itemList}>
-                  Olark cookies: Olark, our provider of live chat software, places session and persistent cookies (up to two years) on our site to enable the software to function properly as well as to remember you and your message history between visits. Click&nbsp;
-                  <a href="https://www.olark.com/help/cookies" target="_blank" rel="noopener noreferrer">here</a>
-                  &nbsp;for more information.
-                </li>
-                <li className={css.itemList}>
-                  Addthis cookies: Our website includes third party persistent cookies (up to 2 years) set by a third party Addthis in connection with the Addthis button designed to enable sharing via social media (Facebook, Twitter etc). AddThis requires us to tell you the following: &quot;We allow third-party companies, including AddThis, to collect certain anonymous information when you visit our website. These companies may use non-personally identifiable information during your visits to this and other websites in order to provide advertisements about goods and services likely to be of greater interest to you. These companies typically use a cookie or a third party web beacon to collect this information. To learn more about this behavioral advertising practice, you can visit&nbsp;
-                  <a href="http://www.networkadvertising.org" target="_blank" rel="noopener noreferrer">www.networkadvertising.org</a>
-                  .&quot; Click&nbsp;
-                  <a href="http://www.addthis.com/privacy#.T9beWfF5HhU" target="_blank" rel="noopener noreferrer">here</a>
-                  &nbsp;for more information about AddThis privacy practices. Click
-                  <a href="http://www.addthis.com/privacy/opt-out" target="_blank" rel="noopener noreferrer">here</a>
-                  &nbsp;to prevent AddThis from collecting any information about you for online behavioural advertising.
-                </li>
-                <li className={css.itemList}>
-                  Third party advertising cookies: As do many other sites, we use third party advertisers and/or internet advertising companies working for them to fill ad space on our website including Appnexus (see&nbsp;
-                  <a href="http://www.appnexus.com/cookie-policy" target="_blank" rel="noopener noreferrer">here</a>
-                  ) and AdRoll (see&nbsp;
-                  <a href="http://www.adroll.com/about/privacy" target="_blank" rel="noopener noreferrer">here</a>
-                  ). These third parties may use persistent cookies and other similar technologies (known as action tags, single pixel gifs and web beacons) to assess information about your visits to this and other sites. This is so they can track the effectiveness of their campaigns (including whether these advertisements are clicked on or viewed by users and later purchases by such users), avoid showing you the same advertisement repeatedly and display advertisements on this and other sites tailored to your preferences. We do not have any access to or control over these third party technologies. If you would like more information about these practices and to know your choices about not having this information used by certain of these companies, please visit&nbsp;
-                  <a href="http://www.youronlinechoices.com" target="_blank" rel="noopener noreferrer">www.youronlinechoices.com</a>
-                  &nbsp;and&nbsp;
-                  <a href="http://www.networkadvertising.org/choices" target="_blank" rel="noopener noreferrer">www.networkadvertising.org/choices</a>
-                  . Please contact the third parties directly for more information about their privacy practices.
-                </li>
               </ol>
             </li>
-            <li className={css.itemList}>By continuing to use our website, we assume that you consent to use of the cookies outlined above.</li>
+            <li className={css.itemList}>
+              We hope our use of cookies is clear and please be aware you can set your browser to reject cookies or you can delete them yourself if you wish. For further information on cookies, including how to use your browser to block them and how to delete cookies already stored on your device, visit:&nbsp;
+              <a href="www.allaboutcookies.org" target="_blank" rel="noopener noreferrer">www.allaboutcookies.org</a>
+              .
+            </li>
           </ol>
         </li>
       </ol>

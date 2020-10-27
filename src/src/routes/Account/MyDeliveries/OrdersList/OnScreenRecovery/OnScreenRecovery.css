@@ -51,7 +51,7 @@
 
 .subHeader {
 	composes: fontStyleSubHead from 'design-language/typography.css';
-	margin: 2rem 0 0 1rem;
+	margin-left: 1rem;
 }
 
 .discountDetails {
@@ -60,8 +60,7 @@
 	background-color: HaricotLight;
 	border-radius: borderRadius;
 	margin: 2rem 0 0;
-	display: grid;
-	grid-template-columns: 65px 1fr;
+	display: flex;
 
 	.discountIconContainer {
 		background-color: Haricot;
@@ -83,6 +82,10 @@
 
 	button:first-child {
 		margin-bottom: 1rem;
+	}
+
+	@media BreakpointToMedium {
+		padding: 1rem 1.5rem 1.5rem 1.5rem;
 	}
 }
 
