@@ -37,8 +37,7 @@ export class OptimizelyRollouts extends React.PureComponent {
         isOptimizelyFeatureEnabled,
       })
 
-      const optimizelyConfig = optimizelyInstance.getOptimizelyConfig()
-      trackExperimentInSnowplow(optimizelyConfig, featureName, isOptimizelyFeatureEnabled)
+      trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled)
     }
 
     // After the first call we set the loading state to false

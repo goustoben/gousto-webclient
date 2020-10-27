@@ -1,18 +1,88 @@
-@value Basa from 'styles/colors.css';
+@value HaricotLight, Haricot from 'styles/colors.css';
+@value BreakpointToMedium from 'design-language/breakpoints.css';
 
-.modalComponent {
-	@media (max-width: 420px) {
-		width: 320px;
+@value borderRadius 3px;
+
+.container {
+	width: 560px;
+	text-align: left;
+	height: 100%;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto auto 1fr auto;
+	grid-template-areas:
+		"backgroundHeader"
+		"header"
+		"discount"
+		"fixedToBottom";
+
+	@media BreakpointToMedium {
+		width: auto;
 	}
 }
 
-.container {
-	padding: 0 20px 20px;
+.backgroundHeader {
+	grid-area: backgroundHeader;
+	background-image: url('media/images/pause-osr-modal-bg.png');
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat; 
+	height: 200px;
 }
 
-.rule {
-	border: none;
-	height: 2px;
-	margin: 20px 0;
-	background-color: Basa;
+.header {
+	grid-area: header;
+	padding-left: 1rem;
 }
+
+.closeIcon {
+	background: url('media/svgs/icon-X.svg') center center no-repeat;
+	background-color: white;
+	padding: 1.5rem;
+	width: 20px;
+	height: 20px;
+	display: block;
+	cursor: pointer;
+}
+
+.bodyContainer {
+	padding: 0 2rem 2rem 2rem;
+}
+
+.subHeader {
+	composes: fontStyleSubHead from 'design-language/typography.css';
+	margin: 2rem 0 0 1rem;
+}
+
+.discountDetails {
+	grid-area: discount;
+	padding: 1rem;
+	background-color: HaricotLight;
+	border-radius: borderRadius;
+	margin: 2rem 0 0;
+	display: grid;
+	grid-template-columns: 65px 1fr;
+
+	.discountIconContainer {
+		background-color: Haricot;
+		border-radius: borderRadius;
+		padding: 1.5rem;
+		height: 65px;
+
+		.discountIcon {
+			width: 35px;
+			height: 35px;
+		}
+	}
+}
+
+.ctaContainer {
+	text-align: center;
+	padding: 1rem 2rem 2rem 2rem;
+	grid-area: fixedToBottom;
+
+	button:first-child {
+		margin-bottom: 1rem;
+	}
+}
+

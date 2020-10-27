@@ -1,21 +1,14 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
-import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
-
+import Overlay from 'Overlay'
+import { Modal, CTA, ModalHeader } from 'goustouicomponents'
+import Svg from 'Svg'
 import css from './OnScreenRecovery.css'
-
-import { Title } from './Title'
-import { Offer } from './Offer'
-import { ValueProposition } from './ValueProposition'
-import { Header } from './Header'
-import { Footer } from './Footer'
-import { ORDER_TYPE, SUBSCRIPTION_TYPE } from './config'
 
 const propTypes = {
   visible: PropTypes.bool,
-  title: PropTypes.string,
   offer: PropTypes.shape({
+    message: PropTypes.string,
     formatted_value: PropTypes.string,
     raw_message: PropTypes.shape({
       text: PropTypes.string,
@@ -25,40 +18,26 @@ const propTypes = {
       }),
     }),
   }),
-  valueProposition: PropTypes.shape({
-    message: PropTypes.string,
-    title: PropTypes.string,
-  }),
-  callToActions: PropTypes.shape({
-    confirm: PropTypes.string,
-    keep: PropTypes.string,
-  }),
+  onConfirm: PropTypes.func.isRequired,
+  onKeep: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  keepCopy: PropTypes.string,
+  confirmCopy: PropTypes.string,
   triggered: PropTypes.bool,
   getRecoveryContent: PropTypes.func,
-  onConfirm: PropTypes.func.isRequired,
-  confirmCopy: PropTypes.string,
-  onKeep: PropTypes.func.isRequired,
-  keepCopy: PropTypes.string,
-  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE, ''])
+  modalVisibilityChange: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
-  visible: undefined,
-  title: '',
-  offer: undefined,
-  valueProposition: {
+  visible: false,
+  offer: {
     message: '',
-    title: '',
   },
-  callToActions: {
-    confirm: '',
-    keep: '',
-  },
+  title: '',
+  keepCopy: '',
+  confirmCopy: '',
   triggered: false,
   getRecoveryContent: () => null,
-  confirmCopy: '',
-  keepCopy: '',
-  type: ''
 }
 
 class OnScreenRecovery extends React.PureComponent {
@@ -70,24 +49,45 @@ class OnScreenRecovery extends React.PureComponent {
     }
   }
 
+  handleModalClose = () => {
+    const { modalVisibilityChange } = this.props
+    modalVisibilityChange({ modalVisibility: false })
+  }
+
   render() {
-    const { visible, title, offer, valueProposition, onKeep, keepCopy, onConfirm, confirmCopy, type } = this.props
+    const { visible, onKeep, onConfirm, offer, title, keepCopy, confirmCopy } = this.props
 
     return (
-      <ModalComponent styleName={css.modalComponent} visible={visible}>
-        <Header offer={offer} type={type} />
-        <div className={css.container}>
-          <ModalTitle>
-            <Title title={title} />
-          </ModalTitle>
-          <ModalContent>
-            <Offer offer={offer} type={type} />
-            {(offer && valueProposition) ? <hr className={css.rule} /> : null}
-            <ValueProposition valueProposition={valueProposition} />
-          </ModalContent>
-          <Footer onKeep={onKeep} keepCopy={keepCopy} onConfirm={onConfirm} confirmCopy={confirmCopy} />
-        </div>
-      </ModalComponent>
+      <Overlay open={visible}>
+        <Modal
+          variant="floating"
+          isOpen={visible}
+          name="pause-discount"
+          description="modal attempting to prevent sub pause"
+          handleClose={this.handleModalClose}
+        >
+          <div className={css.backgroundHeader} />
+          <div className={css.header}>
+            <ModalHeader align="left">{title}</ModalHeader>
+          </div>
+          <div className={css.container}>
+            <div className={css.bodyContainer}>
+              <div className={css.discountDetails}>
+                <div className={css.discountIconContainer}>
+                  <Svg fileName="pause-osr-modal-icon" className={css.discountIcon} />
+                </div>
+                <h4 className={css.subHeader}>{offer && offer.message}</h4>
+              </div>
+            </div>
+            <div className={css.fixedToBottom}>
+              <div className={css.ctaContainer}>
+                <CTA data-testing="keep-subscription-link" onClick={onKeep} isFullWidth>{keepCopy}</CTA>
+                <CTA data-testing="continue-to-pause-link" onClick={onConfirm} variant="secondary" isFullWidth>{confirmCopy}</CTA>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      </Overlay>
     )
   }
 }
