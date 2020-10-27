@@ -71,14 +71,18 @@ class OnScreenRecovery extends React.PureComponent {
             <ModalHeader align="left">{title}</ModalHeader>
           </div>
           <div className={css.container}>
-            <div className={css.bodyContainer}>
-              <div className={css.discountDetails}>
-                <div className={css.discountIconContainer}>
-                  <Svg fileName="pause-osr-modal-icon" className={css.discountIcon} />
+            {
+              offer && (
+                <div className={css.bodyContainer}>
+                  <div className={css.discountDetails}>
+                    <div className={css.discountIconContainer}>
+                      <Svg fileName="pause-osr-modal-icon" className={css.discountIcon} />
+                    </div>
+                    <h4 className={css.subHeader}>{offer.message}</h4>
+                  </div>
                 </div>
-                <h4 className={css.subHeader}>{offer && offer.message}</h4>
-              </div>
-            </div>
+              )
+            }
             <div className={css.fixedToBottom}>
               <div className={css.ctaContainer}>
                 <CTA data-testing="keep-subscription-link" onClick={onKeep} isFullWidth>{keepCopy}</CTA>
