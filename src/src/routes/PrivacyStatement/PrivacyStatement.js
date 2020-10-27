@@ -119,6 +119,8 @@ const PrivacyStatement = () => (
             <li className={css.itemList}>We may allow access to your personal data by third parties who supply us with a service. Examples include e-commerce platform providers, couriers (to enable delivery of goods), website hosts, content delivery networks and businesses which assist us in undertaking communications, monitoring, testing or improving our website</li>
             <li className={css.itemList}>We may share your payment information (including your email address) with SagePay, checkout.com and First Data (our payment gateway and providers) in order to process the payments of your orders and any potential refund.</li>
             <li className={css.itemList}>Your personal data may be supplied by our payment partners to relevant third parties including credit reference and fraud prevention agencies, who may keep a record of that information.</li>
+            <li className={css.itemList}>If you choose to opt-in to receive third party communications from selected partners, your personal data will be shared to relevant third parties to allow you to receive tailored communications about products that may be of interest to you.</li>
+            <li className={css.itemList}>We share the data with our partner Epsilon Abacus (registered as Epsilon International UK Ltd), a company that manages the Abacus Alliance on behalf of UK retailers. The participating retailers are active in the clothing, collectables, food & wine, gardening, gadgets & entertainment, health & beauty, household goods, and home interiors categories. They share information on what their customers buy. Epsilon Abacus analyses this pooled information to help the retailers understand consumers’ wider buying patterns. From this information, retailers can tailor their communications, sending people suitable offers that should be of interest to them, based on what they like to buy.</li>
             <li className={css.itemList}>We may disclose your contact details to Trustpilot to enable it to email you inviting you to leave a review on our site.</li>
             <li className={css.itemList}>We may disclose personal data so far as reasonably necessary if we have reason to believe that it breaches our terms and conditions, or that such steps are necessary to protect us or others, or that a criminal act has been committed, or if there has been a complaint about content posted by you, or if we are required to do so by law or appropriate authority.</li>
           </ol>
@@ -150,15 +152,18 @@ const PrivacyStatement = () => (
               <strong>Access your information:</strong>
               You have the right to request personal data that we hold about you, subject to us reserving the right to withhold such data to the extent permitted by law. Contact our Customer Care team for this request:&nbsp;
               <a href="https://gousto.zendesk.com/hc/en-gb/requests/new" target="_blank" rel="noopener noreferrer">click here</a>
+              .
             </li>
             <li className={css.itemList}>
               <strong>Delete your information:</strong>
               You have the right to request to delete all the personal data that we hold about you. Contact our Customer Care team for this request:&nbsp;
               <a href="https://gousto.zendesk.com/hc/en-gb/requests/new" target="_blank" rel="noopener noreferrer">click here</a>
+              .
             </li>
             <li className={css.itemList}>
               If you wish to contact us about anything to do with your data and Gousto, please contact us:&nbsp;
               <a href="https://gousto.zendesk.com/hc/en-gb/requests/new" target="_blank" rel="noopener noreferrer">click here</a>
+              .
             </li>
             <li className={css.itemList}>
               For information about your rights under UK data protection laws, see the website of the&nbsp;
