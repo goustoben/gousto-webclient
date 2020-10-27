@@ -77,7 +77,7 @@ const processCookies = (cookies, store) => {
   const collection = getCookieStoreValue(cookies, 'basket_collection')
   const promoAgeVerified = getCookieStoreValue(cookies, 'promoAgeVerified')
   const tracking = getCookieStoreValue(cookies, 'tracking')
-  const cookiePolicy = get(cookies, 'cookie_policy')
+  const cookiePolicy = get(cookies, 'cookie_policy_v2')
   const appBannerDismissed = get(cookies, 'app_banner_dismissed')
 
   let features = getCookieStoreValue(cookies, 'features')

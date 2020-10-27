@@ -6,7 +6,7 @@ import config from 'config/cookies'
 function cookiePolicyAcceptanceChange(isAccepted) {
   return dispatch => {
     if (__CLIENT__) {
-      set(Cookies, 'cookie_policy', { isAccepted }, config.cookiePolicyAcceptanceExpireTime)
+      set(Cookies, 'cookie_policy_v2', { isAccepted }, config.cookiePolicyAcceptanceExpireTime)
     }
 
     dispatch({
