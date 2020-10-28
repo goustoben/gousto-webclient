@@ -1,0 +1,24 @@
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.css';
+@value White from 'styles/colors.css';
+
+.headerWrapper {
+  h2 {
+    padding: 1.5rem;
+
+    @media BreakpointFromMedium {
+      padding: 2.5rem;
+    }
+  }
+}
+
+.container {
+  width: 100%;
+  background: White;
+
+  padding: 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 2.5rem;
+    min-width: 480px; /* Ensure buttons grow properly */
+  }
+}

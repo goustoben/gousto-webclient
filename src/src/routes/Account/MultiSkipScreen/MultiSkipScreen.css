@@ -1,26 +1,4 @@
-@value BreakpointToLarge, BreakpointFromMedium from 'design-language/breakpoints.css';
-@value White from 'styles/colors.css';
-
-.headerWrapper {
-  h2 {
-    @media BreakpointToLarge {
-      padding: 1.5rem;
-    }
-  }
-}
-
-.container {
-  width: 100%;
-  padding: 2.5rem;
-  background: white;
-
-  padding: 1.5rem;
-
-  @media BreakpointFromMedium {
-    padding: 2.5rem;
-    min-width: 480px; /* Ensure buttons grow properly */
-  }
-}
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .noSkippedBoxesText {
   margin: 0;

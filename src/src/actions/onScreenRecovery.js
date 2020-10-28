@@ -31,7 +31,7 @@ export const modalVisibilityChange = ({
       callToActions: data.callToActions,
       valueProposition: data.valueProposition,
       trackingData: {
-        actionType: actionType,
+        actionType,
         order_id: orderId,
         delivery_day_id: deliveryDayId,
         order_state: status,
@@ -125,7 +125,7 @@ export const cancelPendingOrder = (variation = 'default') => (
         dispatch(redirect('/my-deliveries'))
       }
 
-      if (parseInt(number) <= 4) {
+      if (parseInt(number, 10) <= 4) {
         hj('trigger', `skipped-box-${number}`)
       }
 
@@ -172,12 +172,10 @@ export const getSkipRecoveryContent = () => (
           modalType,
           data,
         }))
+      } else if (status === 'pending') {
+        await cancelPendingOrder(orderId, deliveryDayId)(dispatch, getState)
       } else {
-        if (status === 'pending') {
-          await cancelPendingOrder(orderId, deliveryDayId)(dispatch, getState)
-        } else {
-          await cancelProjectedOrder(deliveryDayId)(dispatch, getState)
-        }
+        await cancelProjectedOrder(deliveryDayId)(dispatch, getState)
       }
     } catch (err) {
       dispatch(modalVisibilityChange({

@@ -24,6 +24,7 @@ import {
 } from 'selectors/features'
 import { getChosenAddressId } from 'selectors/basket'
 import { orderTrackingActions } from 'config/order'
+import { osrOrdersSkipped } from 'actions/trackingKeys'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -31,6 +32,7 @@ import { orderConfirmationRedirect } from './orderConfirmation'
 import { orderAddOnRedirect } from './orderAddOn'
 import { actionTypes } from './actionTypes'
 import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
+import { anyUnset } from '../utils/object'
 
 export const trackOrder = (orderAction, order) => (
   (dispatch, getState) => {
@@ -603,11 +605,78 @@ export const clearUpdateDateErrorAndPending = () => (
   }
 )
 
-export const cancelMultipleBoxes = ({ selectedOrders }) => (dispatch, getState) => {
-  selectedOrders.forEach(({ id, deliveryDayId, isProjected }) => {
-    const cancelActionCreator = isProjected ? projectedOrderCancel : orderCancel
-    cancelActionCreator(id, deliveryDayId, id)(dispatch, getState)
+export const trackCancelMultipleBoxes = (orderIds = []) => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: osrOrdersSkipped,
+    orders_skipped: orderIds
+  }
+})
+
+export const cancelMultipleBoxes = ({ selectedOrders }) => async (dispatch, getState) => {
+  const malformedOrders = selectedOrders.find(({ id, isProjected, deliveryDayId }) => anyUnset(id, isProjected, deliveryDayId))
+
+  if (malformedOrders || !selectedOrders.length) {
+    dispatch({
+      type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR
+    })
+
+    return
+  }
+
+  dispatch({
+    type: actionTypes.CANCEL_MULTIPLE_BOXES_START,
   })
+
+  const cancelledOrders = []
+  const accessToken = getState().auth.get('accessToken')
+  const valueProposition = getState().onScreenRecovery.get('valueProposition')
+  const offer = getState().onScreenRecovery.get('offer')
+
+  try {
+    const cancellations = selectedOrders.map((order) => {
+      const request = order.isProjected
+        ? userApi.skipDelivery(accessToken, order.deliveryDayId)
+        : cancelOrder(accessToken, order.id)
+
+      return request.then(() => cancelledOrders.push(order))
+    })
+
+    await Promise.all(cancellations)
+
+    dispatch({
+      type: actionTypes.CANCEL_MULTIPLE_BOXES_SUCCESS,
+      count: cancellations.length
+    })
+  } catch (err) {
+    dispatch({
+      type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR,
+    })
+  } finally {
+    cancelledOrders.forEach(({ isProjected, id, deliveryDayId }) => {
+      dispatch({
+        type: isProjected
+          ? actionTypes.PROJECTED_ORDER_CANCEL
+          : actionTypes.ORDER_CANCEL,
+        orderId: id,
+        trackingData: {
+          actionType: `Order ${isProjected ? 'Skipped' : 'Cancelled'}`,
+          delivery_day_id: deliveryDayId,
+          order_state: isProjected ? 'projected' : 'pending',
+          cms_variation: id,
+          recovery_reasons: [
+            valueProposition,
+            offer,
+          ],
+        }
+      })
+    })
+
+    if (cancelledOrders.length) {
+      const cancelledIds = cancelledOrders.map(({ id }) => id)
+      dispatch(trackCancelMultipleBoxes(cancelledIds))
+    }
+  }
 }
 
 export default {

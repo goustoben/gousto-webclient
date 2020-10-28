@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
+import moment from 'moment'
 
 export const getUserFirstName = state => state.user.get('nameFirst')
 export const getUserId = state => state.user.get('id', null)
@@ -56,6 +57,20 @@ export const getUserOpenOrders = createSelector(
   ))
 )
 
+export const getUserSortedNewOrders = createSelector(
+  getUserNewOrders,
+  newOrders => newOrders
+    .keySeq()
+    .toArray()
+    .sort((orderId1, orderId2) => {
+      const orderDate1 = newOrders.get(orderId1).get('deliveryDay')
+      const orderDate2 = newOrders.get(orderId2).get('deliveryDay')
+
+      return moment(orderDate1) - moment(orderDate2)
+    })
+    .map(orderId => newOrders.get(orderId))
+)
+
 export const getUserNewOrdersForMultiSkip = createSelector(
   getUserNewOrders,
   newOrders => newOrders
@@ -69,7 +84,7 @@ export const getUserNewOrdersForMultiSkip = createSelector(
       }
 
       const canSkip = order.get('cancellable') && order.get('orderState') !== 'cancelled'
-      const isProjected = order.get('isProjected')
+      const isProjected = order.get('isProjected') || false
 
       return [
         ...orders,
@@ -83,6 +98,33 @@ export const getUserNewOrdersForMultiSkip = createSelector(
       ]
     }, [])
 )
+
+export const getMultiSkipState = ({ user }) => user.get('multiSkip')
+
+export const getNextDelivery = createSelector(
+  getUserSortedNewOrders,
+  orders => orders.find(order => order.get('orderState') !== 'cancelled') || null
+)
+
+export const getNextDeliveryDate = createSelector(
+  getNextDelivery,
+  nextDelivery => (nextDelivery
+    ? nextDelivery.get('humanDeliveryDay')
+    : null)
+)
+
+export const createMultiSkipSelector = (key) => createSelector(
+  getMultiSkipState,
+  multiSkip => multiSkip.get(key)
+)
+
+export const getSkippedBoxesCount = createMultiSkipSelector('lastSkippedCount')
+
+export const getIsMultiSkipPending = createMultiSkipSelector('isPending')
+
+export const getIsMultiSkipError = createMultiSkipSelector('isError')
+
+export const getIsMultiSkipSuccess = createMultiSkipSelector('isSuccess')
 
 export default {
   getUserFirstName,

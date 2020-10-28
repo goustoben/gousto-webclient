@@ -17,7 +17,11 @@ jest.mock('selectors/user', () => ({
     canSkip: true,
     deliveryDate: '23 September 2020',
     deliveryDayId: '456'
-  }]
+  }],
+  getNextDeliveryDate: () => null,
+  getIsMultiSkipSuccess: () => false,
+  getIsMultiSkipError: () => false,
+  getSkippedBoxesCount: () => null
 }))
 
 const mockDispatch = jest.fn()

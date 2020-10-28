@@ -62,7 +62,7 @@ class Overlay extends React.PureComponent {
       if (newProps.open) {
         this.renderOverlay(newProps)
       } else {
-        this.fadeOut()
+        setTimeout(this.fadeOut, 0)
       }
     }
   }
@@ -96,7 +96,7 @@ class Overlay extends React.PureComponent {
   }
 
   getDocumentHeight = () => {
-    const {body} = document
+    const { body } = document
     const html = document.documentElement
 
     return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
