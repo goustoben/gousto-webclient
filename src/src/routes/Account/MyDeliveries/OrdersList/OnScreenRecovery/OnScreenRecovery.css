@@ -51,7 +51,7 @@
 
 .subHeader {
 	composes: fontStyleSubHead from 'design-language/typography.css';
-	margin-left: 1rem;
+	margin: 0 0 0 1rem;
 }
 
 .discountDetails {
