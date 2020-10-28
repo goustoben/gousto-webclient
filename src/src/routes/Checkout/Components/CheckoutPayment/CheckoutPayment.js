@@ -10,11 +10,11 @@ import { Section } from 'Page/Elements'
 import BoxDetails from '../BoxDetails'
 import { PaymentHeader } from '../PaymentHeader'
 import Summary from '../Summary'
-import SubmitButton from '../SubmitButton'
+import { SubmitButton } from '../SubmitButton'
 import { Checkout3DSModal } from './Checkout3DSModal'
 import { PaymentMethodSelector } from './PaymentMethodSelector'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
-import { CheckoutPaypalDetails } from './CheckoutPaypalDetails'
+import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
 
 import css from './CheckoutPayment.css'
 
@@ -70,17 +70,25 @@ class CheckoutPayment extends React.Component {
     const {
       trackingOrderPlaceAttempt,
       trackingOrderPlaceAttemptFailed,
-      trackingOrderPlaceAttemptSucceeded
+      trackingOrderPlaceAttemptSucceeded,
+      currentPaymentMethod,
+      submitOrder,
     } = this.props
 
     trackingOrderPlaceAttempt()
 
-    if (this.isFormValid()) {
-      trackingOrderPlaceAttemptSucceeded()
-      this.enableCardSubmission()
+    if (currentPaymentMethod === PaymentMethod.Card) {
+      if (this.isFormValid()) {
+        trackingOrderPlaceAttemptSucceeded()
+        this.enableCardSubmission()
+      } else {
+        trackingOrderPlaceAttemptFailed()
+        this.applyValidationErrors()
+      }
     } else {
-      trackingOrderPlaceAttemptFailed()
-      this.applyValidationErrors()
+      // nothing to validate for PayPal
+      trackingOrderPlaceAttemptSucceeded()
+      submitOrder()
     }
   }
 
@@ -110,7 +118,9 @@ class CheckoutPayment extends React.Component {
     const {
       asyncValidate,
       browser,
+      canSubmit,
       checkoutScriptReady,
+      paypalScriptsReady,
       prerender,
       receiveRef,
       reloadCheckoutScript,
@@ -118,9 +128,10 @@ class CheckoutPayment extends React.Component {
       sectionName,
       isRecaptchaEnabled,
       is3DSEnabled,
-      isPayWithPaypalEnabled,
+      isPayWithPayPalEnabled,
+      isPayPalReady,
       currentPaymentMethod,
-      setCurrentPaymentMethod
+      setCurrentPaymentMethod,
     } = this.props
 
     const { isSubmitCardEnabled } = this.state
@@ -129,20 +140,21 @@ class CheckoutPayment extends React.Component {
       <div className={prerender ? css.hide : ''}>
         <div
           className={classNames(css.container, {
-            [css.payWithPaypalAutosizeContainer]: isPayWithPaypalEnabled
+            [css.payWithPayPalAutosizeContainer]: isPayWithPayPalEnabled
           })}
           data-testing="checkoutPaymentSection"
         >
-          {isPayWithPaypalEnabled ? (
+          {isPayWithPayPalEnabled ? (
             <PaymentMethodSelector
               currentPaymentMethod={currentPaymentMethod}
               onPaymentMethodChanged={setCurrentPaymentMethod}
+              showSelector={!isPayPalReady}
             />
           ) : (
             <PaymentHeader />
           )}
           <CheckoutCardDetails
-            hide={isPayWithPaypalEnabled ? currentPaymentMethod !== PaymentMethod.Card : false}
+            hide={currentPaymentMethod !== PaymentMethod.Card}
             prerender={prerender}
             receiveRef={receiveRef}
             sectionName={sectionName}
@@ -154,8 +166,11 @@ class CheckoutPayment extends React.Component {
             cardTokenReady={this.cardTokenReady}
             disableCardSubmission={this.disableCardSubmission}
           />
-          {isPayWithPaypalEnabled ? (
-            <CheckoutPaypalDetails hide={currentPaymentMethod !== PaymentMethod.Paypal} />
+          {isPayWithPayPalEnabled ? (
+            <CheckoutPayPalDetails
+              hide={currentPaymentMethod !== PaymentMethod.PayPal}
+              paypalScriptsReady={paypalScriptsReady}
+            />
           ) : null}
           <div className={css.row}>
             {!prerender && isRecaptchaEnabled && (
@@ -170,15 +185,9 @@ class CheckoutPayment extends React.Component {
             )}
           </div>
         </div>
-        {prerender ? null : (
-          <div
-            className={classNames({
-              [css.hide]: isPayWithPaypalEnabled
-                ? currentPaymentMethod !== PaymentMethod.Card
-                : false
-            })}
-          >
-            <SubmitButton onClick={this.handleClick} />
+        {!prerender && (
+          <div>
+            {canSubmit && <SubmitButton onClick={this.handleClick} />}
             {browser === 'mobile' ? (
               <div>
                 <Summary />
@@ -210,15 +219,19 @@ CheckoutPayment.propTypes = {
   browser: PropTypes.string,
   // we allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only
   prerender: PropTypes.bool,
+  canSubmit: PropTypes.bool,
   checkoutScriptReady: PropTypes.bool,
   reloadCheckoutScript: PropTypes.func,
+  paypalScriptsReady: PropTypes.bool,
   is3DSEnabled: PropTypes.bool,
+  isPayPalReady: PropTypes.bool,
   isRecaptchaEnabled: PropTypes.bool,
   recaptchaValue: PropTypes.string,
+  submitOrder: PropTypes.func,
   storeSignupRecaptchaToken: PropTypes.func,
-  isPayWithPaypalEnabled: PropTypes.bool,
+  isPayWithPayPalEnabled: PropTypes.bool,
   currentPaymentMethod: PropTypes.string.isRequired,
-  setCurrentPaymentMethod: PropTypes.func.isRequired
+  setCurrentPaymentMethod: PropTypes.func,
 }
 
 CheckoutPayment.defaultProps = {
@@ -233,13 +246,18 @@ CheckoutPayment.defaultProps = {
   sectionName: 'payment',
   browser: 'mobile',
   prerender: false,
+  canSubmit: true,
   checkoutScriptReady: false,
   reloadCheckoutScript: () => {},
+  paypalScriptsReady: false,
   is3DSEnabled: false,
+  isPayPalReady: false,
   isRecaptchaEnabled: false,
   recaptchaValue: '',
+  submitOrder: () => {},
   storeSignupRecaptchaToken: () => {},
-  isPayWithPaypalEnabled: false
+  setCurrentPaymentMethod: () => {},
+  isPayWithPayPalEnabled: false,
 }
 
 export { CheckoutPayment }

@@ -7,7 +7,7 @@ import { featuresSet } from 'actions/features'
 import promoActions from 'actions/promos'
 import authActions from 'actions/auth'
 import { cookiePolicyAcceptanceChange } from 'actions/cookies'
-import trackingActions from 'actions/tracking'
+import { setAffiliateSource } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import logger from 'utils/logger'
@@ -124,7 +124,7 @@ const processCookies = (cookies, store) => {
   }
 
   if (affiliateSource) {
-    store.dispatch(trackingActions.setAffiliateSource(affiliateSource))
+    store.dispatch(setAffiliateSource(affiliateSource))
   }
 
   if (promoCodeUrl) {

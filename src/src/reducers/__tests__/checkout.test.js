@@ -1,5 +1,5 @@
-import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
+import { actionTypes } from 'actions/actionTypes'
 import checkoutReducer from 'reducers/checkout'
 
 describe('checkout reducer', () => {
@@ -48,6 +48,25 @@ describe('checkout reducer', () => {
             }),
           ),
         ).toBe(true)
+      })
+    })
+
+    describe('PAYMENT_SET_PAYMENT_METHOD action type', () => {
+      test('should reset errors', () => {
+        const action = {
+          type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
+        }
+        const state = Immutable.fromJS({
+          errors: {
+            'generic-error': 'Generic error',
+            'paypal-error': 'Payment failed',
+          }
+        })
+
+        const result = checkoutReducer.checkout(state, action)
+        const errors = result.get('errors').toJS()
+
+        expect(errors).toEqual({})
       })
     })
   })

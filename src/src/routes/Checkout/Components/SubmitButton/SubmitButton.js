@@ -1,16 +1,18 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
-import React from 'react'
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import CheckoutButton from '../CheckoutButton'
 import ErrorMessage from '../ErrorMessage'
-import TermsAndConditions from '../TermsAndConditions'
+import { TermsAndConditions } from '../TermsAndConditions'
+
 import css from './SubmitButton.css'
 
 class SubmitButton extends React.PureComponent {
   handleClick = () => {
-    const { onClick, trackUTMAndPromoCode } = this.props
-    trackUTMAndPromoCode('clickSubmitOrder')
+    const { onClick, trackSubmitOrderEvent } = this.props
+
+    trackSubmitOrderEvent()
     onClick()
   }
 
@@ -31,11 +33,11 @@ class SubmitButton extends React.PureComponent {
 
 SubmitButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  trackUTMAndPromoCode: PropTypes.func,
+  trackSubmitOrderEvent: PropTypes.func,
 }
 
 SubmitButton.defaultProps = {
-  trackUTMAndPromoCode: () => {},
+  trackSubmitOrderEvent: () => {},
 }
 
 export { SubmitButton }

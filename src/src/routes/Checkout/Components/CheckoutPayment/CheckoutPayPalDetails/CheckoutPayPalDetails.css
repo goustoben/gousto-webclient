@@ -1,0 +1,60 @@
+@value SpacingMD from 'sass-loader!styles/spacing.scss';
+@value sizeXL from 'sass-loader!styles/typography.css';
+@value Bluecheese, Blueberry, Haricot from 'styles/colors.css';
+
+.hide {
+  display: none;
+}
+
+.transparent {
+  opacity: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+.padlockIcon {
+  composes: padlockIcon from 'styles/icons.css';
+  padding: 0;
+  margin-right: 0.25rem;
+}
+
+.checkmarkIcon {
+  composes: checkmarkIcon from 'styles/icons.css';
+  padding: 0;
+  margin-right: 0.25rem;
+}
+
+.text {
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin-bottom: SpacingMD;
+}
+
+.paypalAlternativeText {
+  composes: fontStyleS from 'design-language/typography.css';
+}
+
+.paypalContainer {
+  width: 18rem;
+  max-width: 100%;
+}
+
+.paypalIcon {
+  height: 24px;
+  width: 99px;
+  vertical-align: top;
+  margin-top: -2px;
+}
+
+.resetPaymentMethod {
+    color: Bluecheese;
+    border-bottom: 1px solid transparent;
+    transition: all 200ms ease;
+    transition-property: color, border;
+
+    &:active,
+    &:hover,
+    &:focus {
+      color: Blueberry;
+      border-color: Blueberry;
+    }
+}

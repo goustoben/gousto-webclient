@@ -9,8 +9,8 @@
 	background-color: BluecheeseLight;
 }
 
-.payWithPaypalAutosizeContainer {
-	min-height: unset;
+.payWithPayPalAutosizeContainer {
+	min-height: inherit;
 }
 
 .loading {

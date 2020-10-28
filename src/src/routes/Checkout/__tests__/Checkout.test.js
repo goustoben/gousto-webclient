@@ -8,6 +8,7 @@ import { Div } from 'Page/Elements'
 import ProgressBar from 'routes/Checkout/Components/ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
+import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
 import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
@@ -35,6 +36,12 @@ jest.mock('routes/Checkout/loadCheckoutScript', () => ({
   loadCheckoutScript: jest.fn()
 }))
 
+jest.mock('routes/Checkout/loadPayPalScripts', () => ({
+  loadPayPalScripts: jest.fn((callback) => {
+    callback()
+  }),
+}))
+
 jest.mock('../../Menu/fetchData/menuService')
 
 describe('Checkout', () => {
@@ -46,6 +53,7 @@ describe('Checkout', () => {
   let subscribe
   let onCheckoutSpy
   let fetchData
+  let fetchPayPalClientToken
 
   beforeEach(() => {
     store = {
@@ -77,7 +85,7 @@ describe('Checkout', () => {
       params: { stepName: 'aboutyou' },
       pending: Immutable.Map({}),
       payment: Immutable.Map({
-        currentPaymentMethod: PaymentMethod.Unchosen
+        currentPaymentMethod: PaymentMethod.Card
       }),
       stepsOrder: Immutable.List(['boxdetails', 'summary', 'aboutyou', 'payment', 'delivery']),
       recipes: Immutable.Map({}),
@@ -93,6 +101,7 @@ describe('Checkout', () => {
     getState = jest.fn().mockReturnValue(store)
     subscribe = jest.fn().mockReturnValue(Promise.resolve())
     dispatch = jest.fn().mockReturnValue(Promise.resolve())
+    fetchPayPalClientToken = jest.fn()
 
     context = {
       store: {
@@ -127,6 +136,8 @@ describe('Checkout', () => {
     boxSummaryDeliveryDaysLoad.mockClear()
     checkoutCreatePreviewOrder.mockClear()
     loadMenuServiceDataIfDeepLinked.mockClear()
+    loadPayPalScripts.mockClear()
+    fetchPayPalClientToken.mockClear()
   })
 
   describe('rendering', () => {
@@ -379,19 +390,58 @@ describe('Checkout', () => {
       fetchData = jest.fn().mockReturnValue(Promise.resolve())
       Checkout.fetchData = fetchData
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} isCheckoutRedesignEnabled={false} />,
+        <Checkout
+          query={{ query: true }}
+          params={{ params: true }}
+          trackSignupStep={jest.fn()}
+          isCheckoutRedesignEnabled={false}
+          isPayWithPayPalEnabled={false}
+          fetchPayPalClientToken={fetchPayPalClientToken}
+        />,
         { context },
       )
-      wrapper.instance().componentDidMount()
     })
 
     test('should call fetchData', () => {
+      wrapper.instance().componentDidMount()
+
       expect(fetchData).toHaveBeenCalled()
       expect(fetchData).toHaveBeenCalledWith({
+        browser: 'desktop',
         store: context.store,
         query: { query: true },
         params: { params: true },
         isCheckoutRedesignEnabled: false
+      })
+    })
+
+    describe('when PayPal is disabled', () => {
+      test('should not load PayPal data', () => {
+        wrapper.instance().componentDidMount()
+
+        expect(loadPayPalScripts).not.toHaveBeenCalled()
+        expect(fetchPayPalClientToken).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when PayPal is enabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isPayWithPayPalEnabled: true
+        })
+      })
+
+      test('should load PayPal data', () => {
+        wrapper.instance().componentDidMount()
+
+        expect(loadPayPalScripts).toHaveBeenCalled()
+        expect(fetchPayPalClientToken).toHaveBeenCalled()
+      })
+
+      test('should update state', () => {
+        wrapper.instance().componentDidMount()
+
+        expect(wrapper.state().paypalScriptsReady).toBe(true)
       })
     })
   })
@@ -414,6 +464,46 @@ describe('Checkout', () => {
     test('should call loadPrices if tariffId has changed', async () => {
       await wrapper.instance().componentWillReceiveProps({ tariffId: 2 })
       expect(loadPrices).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('componentDidUpdate', () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <Checkout
+          query={{ query: true }}
+          params={{ params: true }}
+          trackSignupStep={jest.fn()}
+          fetchPayPalClientToken={fetchPayPalClientToken}
+        />,
+        { context }
+      )
+    })
+
+    test('should load PayPal data', async () => {
+      await wrapper.setProps({
+        isPayWithPayPalEnabled: true
+      })
+
+      expect(loadPayPalScripts).toHaveBeenCalled()
+      expect(fetchPayPalClientToken).toHaveBeenCalled()
+    })
+  })
+
+  describe('when component unmounted', () => {
+    let clearPayPalClientToken
+
+    beforeEach(() => {
+      clearPayPalClientToken = jest.fn()
+      wrapper.setProps({
+        clearPayPalClientToken
+      })
+    })
+
+    test('should clear PayPal token', async () => {
+      await wrapper.unmount()
+
+      expect(clearPayPalClientToken).toHaveBeenCalled()
     })
   })
 

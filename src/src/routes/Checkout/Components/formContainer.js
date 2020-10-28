@@ -3,7 +3,7 @@ import validate from 'Form/validate'
 import { scrollToRefsWrapper } from 'components/ScrollToRefs/ScrollToRefs'
 import dottify from 'utils/dottify'
 
-export default (Component, rules, formName, messages = {}, opts = {}, asyncValidate = async () => {}, asyncBlurFields = []) => (
+export const formContainer = (Component, rules, formName, messages = {}, opts = {}, asyncValidate = async () => {}, asyncBlurFields = []) => (
   scrollToRefsWrapper(reduxForm({
     form: formName,
     destroyOnUnmount: false,
@@ -20,7 +20,7 @@ export default (Component, rules, formName, messages = {}, opts = {}, asyncValid
       validationRules.forEach(rule => {
         let validationRule = rule
         if (typeof rule === 'function') {
-          validationRule = rule(data) // eslint-disable-line no-param-reassign
+          validationRule = rule(data)
         }
         combinedRules = { ...combinedRules, ...validationRule }
       })
@@ -36,13 +36,10 @@ export default (Component, rules, formName, messages = {}, opts = {}, asyncValid
         props.onStepChange()
         response = Promise.resolve()
       } else {
-        response = new Promise(async (resolve, reject) => {
-          try {
-            await props.submitOrder()
-            resolve()
-          } catch (e) {
-            reject()
-          }
+        response = new Promise((resolve, reject) => {
+          props.submitOrder()
+            .then(() => resolve())
+            .catch(() => reject())
         })
       }
 

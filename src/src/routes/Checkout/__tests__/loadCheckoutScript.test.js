@@ -1,34 +1,28 @@
 import { JSDOM } from 'jsdom'
-
 import { CDN_CHECKOUT_COM, loadCheckoutScript } from '../loadCheckoutScript'
 
-const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
-const { window } = jsdom
-global.window = window
-
 describe('loadCheckoutScript', () => {
-  const callback = jest.fn()
+  let callback = null
+  let document = null
 
-  afterEach(() => {
-    callback.mockClear()
+  beforeEach(() => {
+    callback = jest.fn()
+    const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
+    document = jsdom.window.document
   })
 
   describe('when document is undefined', () => {
     test('should not call callback', () => {
-      loadCheckoutScript(callback)
+      loadCheckoutScript(callback, undefined)
 
       expect(callback).not.toHaveBeenCalled()
     })
   })
 
   describe('when document is defined', () => {
-    beforeEach(() => {
-      global.document = window.document
-    })
-
     describe('when script does not exist', () => {
       test('should create a new script element and append it to body', () => {
-        loadCheckoutScript(callback)
+        loadCheckoutScript(callback, document)
 
         expect(document.getElementById('checkout-com-frames').getAttribute('src')).toEqual(
           CDN_CHECKOUT_COM
@@ -36,7 +30,7 @@ describe('loadCheckoutScript', () => {
       })
 
       test('should invoke callback once script has loaded', () => {
-        loadCheckoutScript(callback)
+        loadCheckoutScript(callback, document)
         document.getElementById('checkout-com-frames').onload()
 
         expect(callback).toHaveBeenCalled()
@@ -52,13 +46,13 @@ describe('loadCheckoutScript', () => {
       })
 
       test('should create a new script element and append it to body', () => {
-        loadCheckoutScript(callback)
+        loadCheckoutScript(callback, document)
 
-        expect(document.querySelectorAll(`[id="checkout-com-frames"][src="${CDN_CHECKOUT_COM}"]`)).toHaveLength(1)
+        expect(document.querySelectorAll('#checkout-com-frames')).toHaveLength(1)
       })
 
       test('and should invoke callback once script has loaded', () => {
-        loadCheckoutScript(callback)
+        loadCheckoutScript(callback, document)
         document.getElementById('checkout-com-frames').onload()
 
         expect(callback).toHaveBeenCalled()

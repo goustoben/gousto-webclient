@@ -4,7 +4,7 @@ import React from 'react'
 import userRules from 'validations/user'
 import userAsyncValidation from 'validations/userAsync'
 import { addPrefix } from 'validations/util'
-import formContainer from '../../../Components/formContainer'
+import { formContainer } from '../../../Components/formContainer'
 
 import CheckoutButton from '../../../Components/CheckoutButton'
 

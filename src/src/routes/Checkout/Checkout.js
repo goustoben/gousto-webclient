@@ -10,10 +10,11 @@ import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import { getPreviewOrderErrorName } from 'utils/order'
+import { hasPropUpdated } from 'utils/react'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
-import css from './Checkout.css'
 import { loadCheckoutScript } from './loadCheckoutScript'
+import { loadPayPalScripts } from './loadPayPalScripts'
 
 import DesktopAboutYou from './Steps/Desktop/AboutYou'
 import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
@@ -26,6 +27,8 @@ import MobileBoxDetails from './Steps/Mobile/BoxDetails'
 
 import { CheckoutPayment } from './Components/CheckoutPayment'
 import ProgressBar from './Components/ProgressBar'
+
+import css from './Checkout.css'
 
 const defaultDesktop = ['aboutyou', 'delivery', 'payment']
 const defaultMobile = (isCheckoutRedesignEnabled) => (
@@ -62,10 +65,14 @@ const propTypes = {
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
   isCheckoutRedesignEnabled: PropTypes.bool,
+  isPayWithPayPalEnabled: PropTypes.bool,
+  fetchPayPalClientToken: PropTypes.func,
+  clearPayPalClientToken: PropTypes.func,
 }
 
 const defaultProps = {
   params: {},
+  browser: 'desktop',
   redirect: () => { },
   changeRecaptcha: () => {},
   submitOrder: () => {},
@@ -78,6 +85,9 @@ const defaultProps = {
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
   isCheckoutRedesignEnabled: false,
+  isPayWithPayPalEnabled: false,
+  fetchPayPalClientToken: () => {},
+  clearPayPalClientToken: () => {},
 }
 
 const contextTypes = {
@@ -147,6 +157,7 @@ class Checkout extends PureComponent {
     this.state = {
       isCreatingPreviewOrder: true,
       checkoutScriptReady: false,
+      paypalScriptsReady: false,
     }
   }
 
@@ -154,7 +165,7 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutRedesignEnabled } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutRedesignEnabled, isPayWithPayPalEnabled } = this.props
 
     Checkout.fetchData({ store, query, params, browser, isCheckoutRedesignEnabled }).then(() => {
       trackSignupStep(1)
@@ -168,6 +179,9 @@ class Checkout extends PureComponent {
         checkoutScriptReady: true,
       })
     })
+    if (isPayWithPayPalEnabled) {
+      this.loadPayPal()
+    }
 
     changeRecaptcha()
   }
@@ -178,6 +192,20 @@ class Checkout extends PureComponent {
     if (tariffId !== nextProps.tariffId) {
       loadPrices()
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isPayWithPayPalEnabled } = this.props
+
+    if (hasPropUpdated(isPayWithPayPalEnabled, prevProps.isPayWithPayPalEnabled)) {
+      this.loadPayPal()
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearPayPalClientToken } = this.props
+
+    clearPayPalClientToken()
   }
 
   reloadCheckoutScript = () => {
@@ -226,9 +254,20 @@ class Checkout extends PureComponent {
     trackCheckoutButtonPressed(type, property)
   }
 
+  loadPayPal() {
+    const { fetchPayPalClientToken } = this.props
+
+    loadPayPalScripts(() => {
+      this.setState({
+        paypalScriptsReady: true,
+      })
+    })
+    fetchPayPalClientToken()
+  }
+
   renderSteps = (stepMapping, steps, currentStep) => {
     const { browser, submitOrder, trackUTMAndPromoCode } = this.props
-    const { checkoutScriptReady } = this.state
+    const { checkoutScriptReady, paypalScriptsReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
     const props = {
@@ -240,6 +279,7 @@ class Checkout extends PureComponent {
       submitOrder,
       browser,
       checkoutScriptReady,
+      paypalScriptsReady,
       trackUTMAndPromoCode,
     }
 
@@ -255,13 +295,14 @@ class Checkout extends PureComponent {
   renderStaticPayment = (stepMapping, steps, currentStep) => {
     const { browser, submitOrder } = this.props
     const onPaymentStep = (currentStep === 'payment')
-    const { checkoutScriptReady } = this.state
+    const { checkoutScriptReady, paypalScriptsReady } = this.state
 
     return (
       <CheckoutPayment
         browser={browser}
         submitOrder={submitOrder}
         checkoutScriptReady={checkoutScriptReady}
+        paypalScriptsReady={paypalScriptsReady}
         prerender={!onPaymentStep}
         isLastStep={this.isLastStep(steps, currentStep)}
         onStepChange={this.onStepChange(steps, currentStep)}
@@ -327,7 +368,7 @@ class Checkout extends PureComponent {
     const renderSteps = browser === 'mobile' ? this.renderMobileSteps : this.renderDesktopSteps
 
     return (
-      <Div className={css.checkoutContainer} data-testing="checkoutContainer">
+      <Div data-testing="checkoutContainer">
         <Div className={css.checkoutContent}>
           {renderSteps()}
         </Div>

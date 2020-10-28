@@ -1,32 +1,38 @@
 import Immutable from 'immutable'
+import moment from 'moment'
 
 import {
   trackFirstPurchase,
   setAffiliateSource,
-  trackRecipeOrderDisplayed,
   trackAffiliatePurchase,
+  trackRecipeOrderDisplayed,
   trackUserAttributes,
-  trackGetStarted,
   setUTMSource,
+  trackGetStarted,
+  trackSubmitOrderEvent,
   trackUTMAndPromoCode,
   trackNewUser,
   trackNewOrder,
+  trackSubscriptionCreated,
   trackingOrderCheckout,
   trackClickBuildMyBox,
-  trackLoginClickOnHungryPage
+  trackLoginClickOnHungryPage,
 } from 'actions/tracking'
-import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
-import { clickGetStarted, createOrder, createUser, placeOrder } from 'actions/trackingKeys'
-import { warning } from 'utils/logger'
-import moment from 'moment'
+import {
+  clickGetStarted,
+  createOrder,
+  createUser,
+  placeOrder,
+  clickSubmitOrder,
+  subscriptionCreated,
+} from 'actions/trackingKeys'
+import globals from 'config/globals'
+import { PaymentMethod } from 'config/signup'
+import logger from 'utils/logger'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
-}))
-
-jest.mock('apis/loggingManager', () => ({
-  triggerLoggingManagerEvent: jest.fn(),
 }))
 
 describe('tracking actions', () => {
@@ -96,19 +102,19 @@ describe('tracking actions', () => {
     })
 
     test('should log warning when no user is found', () => {
-      warning.mockClear()
+      logger.warning.mockClear()
 
       trackFirstPurchase('order-a')(dispatch, () => ({
         user: Immutable.fromJS({ orders: [] }),
         tracking: Immutable.fromJS({}),
       }))
 
-      expect(warning.mock.calls[0][0]).toBe(
+      expect(logger.warning.mock.calls[0][0]).toBe(
         'Missing user data for first purchase tracking: no user found in store',
       )
     })
     test('should log warning when specified order is not found', () => {
-      warning.mockClear()
+      logger.warning.mockClear()
 
       trackFirstPurchase('order-a')(dispatch, () => ({
         user: Immutable.fromJS({
@@ -118,7 +124,7 @@ describe('tracking actions', () => {
         tracking: Immutable.fromJS({}),
       }))
 
-      expect(warning.mock.calls[0][0]).toBe(
+      expect(logger.warning.mock.calls[0][0]).toBe(
         'Missing order data for first purchase tracking: no user order "order-a" found in store',
       )
     })
@@ -482,6 +488,44 @@ describe('tracking actions', () => {
     })
   })
 
+  describe('trackSubmitOrderEvent', () => {
+    beforeEach(() => {
+      const state = {
+        basket: Immutable.fromJS({
+          promoCode: 'promo1'
+        }),
+        tracking: Immutable.Map({
+          utmSource: {
+            referral: '123',
+          }
+        }),
+        payment: Immutable.fromJS({
+          paymentMethod: PaymentMethod.Card,
+        }),
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    describe('when fired', () => {
+      test('then should has correct event data', () => {
+        const expected = {
+          type: clickSubmitOrder,
+          trackingData: {
+            actionType: clickSubmitOrder,
+            referral: '123',
+            promoCode: 'promo1',
+            paymentMethod: PaymentMethod.Card,
+          }
+        }
+
+        trackSubmitOrderEvent()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith(expected)
+      })
+    })
+  })
+
   describe('trackUTMAndPromoCode', () => {
     beforeEach(() => {
       const state = {
@@ -546,7 +590,10 @@ describe('tracking actions', () => {
             }),
             tracking: Immutable.fromJS({
               utmSource: undefined
-            })
+            }),
+            payment: Immutable.fromJS({
+              paymentMethod: PaymentMethod.Card,
+            }),
           }
 
           dispatch = jest.fn()
@@ -564,7 +611,8 @@ describe('tracking actions', () => {
               trackingData: {
                 actionType: createUser,
                 promoCode: 'abc123',
-                status: 'failed'
+                status: 'failed',
+                paymentMethod: PaymentMethod.Card,
               }
             }
 
@@ -585,7 +633,10 @@ describe('tracking actions', () => {
               }),
               tracking: Immutable.fromJS({
                 utmSource: undefined
-              })
+              }),
+              payment: Immutable.fromJS({
+                paymentMethod: PaymentMethod.Card,
+              }),
             }
 
             dispatch = jest.fn()
@@ -600,7 +651,8 @@ describe('tracking actions', () => {
                 actionType: createUser,
                 promoCode: 'abc123',
                 status: 'success',
-                userId
+                userId,
+                paymentMethod: PaymentMethod.Card,
               }
             }
             expect(dispatch).toHaveBeenCalledWith(expected)
@@ -621,7 +673,10 @@ describe('tracking actions', () => {
               }),
               tracking: Immutable.fromJS({
                 utmSource: undefined
-              })
+              }),
+              payment: Immutable.fromJS({
+                paymentMethod: PaymentMethod.Card,
+              }),
             }
 
             dispatch = jest.fn()
@@ -629,6 +684,7 @@ describe('tracking actions', () => {
           })
 
           test('Then data should be tracked with failed status', () => {
+            const userId = null
             const orderId = '765'
             const expected = {
               type: createOrder,
@@ -636,13 +692,64 @@ describe('tracking actions', () => {
                 actionType: createOrder,
                 promoCode: 'abc123',
                 status: 'failed',
-                orderId
+                orderId,
+                userId,
+                paymentMethod: PaymentMethod.Card,
               }
             }
 
-            trackNewOrder(orderId)(dispatch, getState)
+            trackNewOrder(orderId, userId)(dispatch, getState)
             expect(dispatch).toHaveBeenCalledWith(expected)
           })
+        })
+      })
+    })
+
+    describe('trackSubscriptionCreated', () => {
+      beforeEach(() => {
+        const state = {
+          basket: Immutable.fromJS({
+            promoCode: 'promo1'
+          }),
+          tracking: Immutable.Map({
+            utmSource: {
+              referral: '123',
+            }
+          }),
+          payment: Immutable.fromJS({
+            paymentMethod: PaymentMethod.Card,
+          }),
+          pricing: Immutable.fromJS({
+            prices: {
+              promoCode: 'promo2',
+            }
+          })
+        }
+        dispatch = jest.fn()
+        getState = jest.fn().mockReturnValue(state)
+      })
+
+      describe('when fired', () => {
+        test('then should has correct event data', () => {
+          const orderId = 'order_123'
+          const userId = 'user_234'
+          const subscriptionId = 'subscription_345'
+          const expected = {
+            type: subscriptionCreated,
+            trackingData: {
+              actionType: subscriptionCreated,
+              referral: '123',
+              promoCode: 'promo2',
+              paymentMethod: PaymentMethod.Card,
+              userId,
+              orderId,
+              subscriptionId,
+            }
+          }
+
+          trackSubscriptionCreated(orderId, userId, subscriptionId)(dispatch, getState)
+
+          expect(dispatch).toHaveBeenCalledWith(expected)
         })
       })
     })
@@ -657,7 +764,10 @@ describe('tracking actions', () => {
               }),
               tracking: Immutable.fromJS({
                 utmSource: undefined
-              })
+              }),
+              payment: Immutable.fromJS({
+                paymentMethod: PaymentMethod.Card,
+              }),
             }
 
             dispatch = jest.fn()
@@ -674,7 +784,8 @@ describe('tracking actions', () => {
                 promoCode: 'abc123',
                 status: 'success',
                 orderId,
-                userId
+                userId,
+                paymentMethod: PaymentMethod.Card,
               }
             }
 

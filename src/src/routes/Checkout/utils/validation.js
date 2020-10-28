@@ -27,13 +27,3 @@ export function validateDigits(digits) {
 
   return result
 }
-
-export function validateCardNameType(cardName) {
-  let result = true
-  const cardNameString = cardName ? String(cardName) : ''
-  if (!/^[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]*$/.test(cardNameString)) {
-    result = false
-  }
-
-  return result
-}

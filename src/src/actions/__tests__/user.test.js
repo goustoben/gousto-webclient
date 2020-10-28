@@ -5,8 +5,8 @@ import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import prospectAPI from 'apis/prospect'
 
-import { deliveryTariffTypes } from 'utils/deliveries'
-
+import { actionTypes } from 'actions/actionTypes'
+import { placeOrder } from 'actions/trackingKeys'
 import userActions, {
   userReferAFriend,
   userSubscribe,
@@ -18,9 +18,17 @@ import userActions, {
   userLoadOrderTrackingInfo,
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
-import { actionTypes } from 'actions/actionTypes'
-import * as trackingKeys from 'actions/trackingKeys'
+import {
+  trackFirstPurchase,
+  trackNewUser,
+  trackNewOrder,
+  trackSubscriptionCreated,
+} from 'actions/tracking'
+
+import { PaymentMethod, signupConfig } from 'config/signup'
+
 import logger from 'utils/logger'
+import { deliveryTariffTypes } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 
 jest.mock('apis/user', () => ({
@@ -51,6 +59,13 @@ jest.mock('apis/deliveries')
 
 jest.mock('actions/recipes', () => ({
   recipesLoadRecipesById: jest.fn()
+}))
+
+jest.mock('actions/tracking', () => ({
+  trackFirstPurchase: jest.fn(() => ({ action: 'track_first_purchase' })),
+  trackNewUser: jest.fn(() => ({ action: 'track_new_user' })),
+  trackNewOrder: jest.fn(() => ({ action: 'track_new_order' })),
+  trackSubscriptionCreated: jest.fn(() => ({ action: 'track_subscription_created' })),
 }))
 
 jest.mock('apis/prospect', () => ({
@@ -168,7 +183,9 @@ describe('user actions', () => {
 
   describe('userSubscribe action', () => {
     let state
+
     beforeEach(() => {
+      customerSignup.mockClear()
       state = {
         basket: Immutable.fromJS({}),
         checkout: Immutable.fromJS({
@@ -182,6 +199,11 @@ describe('user actions', () => {
         }),
         tracking: Immutable.fromJS({
           asource: null
+        }),
+        payment: Immutable.fromJS({
+          paymentMethod: PaymentMethod.Card,
+          paypalNonce: 'vbfv_ss8',
+          paypalDeviceData: 'test-device-data',
         }),
         request: Immutable.fromJS({
           browser: 'desktop'
@@ -275,18 +297,10 @@ describe('user actions', () => {
         )
       })
 
-      test('Then should dispatch CHECKOUT_SUBSCRIPTION_CREATED with proper data', async () => {
+      test('Then should dispatch trackSubscriptionCreated action', async () => {
         await userSubscribe()(dispatch, getState)
-        expect(dispatch).toHaveBeenNthCalledWith(9, {
-          type: actionTypes.CHECKOUT_SUBSCRIPTION_CREATED,
-          trackingData: {
-            actionType: trackingKeys.subscriptionCreated,
-            promoCode: false,
-            userId: 111,
-            orderId: 333,
-            subscriptionId: 222
-          }
-        })
+
+        expect(trackSubscriptionCreated).toHaveBeenCalledWith(333, 111, 222)
       })
     })
 
@@ -301,9 +315,6 @@ describe('user actions', () => {
           features: Immutable.fromJS({
             ndd: {
               value: deliveryTariffTypes.NON_NDD,
-            },
-            checkoutPayment: {
-              value: true,
             },
           })
         }
@@ -347,12 +358,23 @@ describe('user actions', () => {
       })
     })
 
-    describe('checkoutPaymentFeature is enabled', () => {
+    describe('enablePayPal feature is enabled and PayPal payment method is selected', () => {
+      const sca3ds = true
+      const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
+
       beforeEach(() => {
         state = {
           ...state,
+          payment: Immutable.fromJS({
+            paymentMethod: PaymentMethod.PayPal,
+            paypalNonce: 'vbfv_ss8',
+            paypalDeviceData: 'test-device-data',
+          }),
           features: Immutable.fromJS({
-            checkoutPayment: {
+            ndd: {
+              value: deliveryTariffTypes.NON_NDD,
+            },
+            enablePayPal: {
               value: true,
             },
           })
@@ -360,55 +382,30 @@ describe('user actions', () => {
         getState.mockReturnValue(state)
       })
 
-      test('should call customerSignup', async () => {
-        await userSubscribe()(dispatch, getState)
-        expect(customerSignup).toHaveBeenCalled()
+      test('should not add "3ds=true" param to the user signup request', async () => {
+        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
+
+        expect(customerSignup.mock.calls[0][1]['3ds']).not.toBeDefined()
       })
 
-      describe('Signing up in/out of NDD experiment', () => {
-        let customerObject = {}
-        const setNddExperiment = (value) => {
-          state = {
-            ...state,
-            features: Immutable.fromJS({
-              ndd: {
-                value,
-              }
-            })
+      test('should have PayPal payment method', async () => {
+        const expected = expect.objectContaining({
+          payment_method: {
+            is_default: 1,
+            type: signupConfig.payment_types.paypal,
+            name: 'My PayPal',
+            paypal: {
+              payment_provider: 'paypal',
+              active: 1,
+              token: 'vbfv_ss8',
+              device_data: 'test-device-data',
+            }
           }
-
-          getState.mockReturnValue(state)
-
-          customerObject = {
-            age_verified: 0,
-            delivery_tariff_id: value,
-            email: 'test_email@test.com',
-            marketing_do_allow_email: 0,
-            marketing_do_allow_thirdparty: 0,
-            name_first: 'Barack',
-            promo_code: '',
-            name_last: 'Obama',
-            password: undefined,
-            phone_number: '',
-            salutation_id: undefined,
-            tariff_id: '',
-          }
-        }
-
-        describe('when not in NDD experiment', () => {
-          test('should call customerSignup with the correct delivery_tariff_id', async () => {
-            setNddExperiment(deliveryTariffTypes.NON_NDD)
-
-            await userSubscribe()(dispatch, getState)
-
-            expect(customerSignup).toHaveBeenCalledWith(
-              null,
-              expect.objectContaining({
-                customer: customerObject,
-              }),
-            )
-          })
         })
+
+        await userSubscribe(sca3ds, sessionId)(dispatch, getState)
+
+        expect(customerSignup).toHaveBeenCalledWith(null, expected)
       })
     })
 
@@ -434,29 +431,48 @@ describe('user actions', () => {
         })
 
         describe('When userSubscribe got dispatched', () => {
-          beforeEach(async () => {
+          test('Then new customer should be tracked', async () => {
             await userSubscribe()(dispatch, getState)
-          })
 
-          test('Then new customer should be tracked', () => {
-            const [userSubscribeError, userSubscribePending, trackNewUser, checkoutOrderPlaced, trackFirstPurchase, trackNewOrderAction] = dispatch.mock.calls
-            expect(userSubscribeError[0]).toMatchObject({
+            expect(dispatch).toHaveBeenNthCalledWith(1, {
               type: actionTypes.ERROR,
               key: actionTypes.USER_SUBSCRIBE,
               value: null
             })
-            expect(userSubscribePending[0]).toMatchObject({
+
+            expect(dispatch).toHaveBeenNthCalledWith(2, {
               type: actionTypes.PENDING,
               key: actionTypes.USER_SUBSCRIBE,
               value: true
             })
-            expect(trackNewUser.pop().key).toEqual(trackingKeys.createUser)
-            expect(checkoutOrderPlaced[0]).toMatchObject({
-              type: actionTypes.CHECKOUT_ORDER_PLACED,
-              trackingData: {}
+
+            expect(trackNewUser).toHaveBeenCalledWith('22')
+            expect(dispatch).toHaveBeenNthCalledWith(3, {
+              action: 'track_new_user'
             })
-            expect(trackFirstPurchase[0]).toEqual(expect.any(Function))
-            expect(trackNewOrderAction.pop().key).toEqual(trackingKeys.createOrder)
+
+            expect(dispatch).toHaveBeenNthCalledWith(4, {
+              type: actionTypes.CHECKOUT_ORDER_PLACED,
+              trackingData: {
+                actionType: placeOrder,
+                order_id: 333,
+                order_total: '24.55',
+                promo_code: false,
+                signup: true,
+                subscription_active: true,
+                interval_id: 1
+              }
+            })
+
+            expect(trackFirstPurchase).toHaveBeenCalledWith('12345', state.pricing.get('prices'))
+            expect(dispatch).toHaveBeenNthCalledWith(5, {
+              action: 'track_first_purchase'
+            })
+
+            expect(trackNewOrder).toHaveBeenCalledWith('12345', '22')
+            expect(dispatch).toHaveBeenNthCalledWith(6, {
+              action: 'track_new_order'
+            })
           })
         })
       })
@@ -583,13 +599,17 @@ describe('user actions', () => {
           }
         }
       })
+
       describe('single word names', () => {
         beforeEach(() => {
           getState.mockReturnValue(trimState)
         })
+
         test('should trim whitespace from before and after the user name', async () => {
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
+
           await userActions.userSubscribe()(dispatch, getState)
+
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
       })
@@ -639,9 +659,14 @@ describe('user actions', () => {
         beforeEach(() => {
           getState.mockReturnValue(secondTrimState)
         })
+
         test('should allow a name to have a space in the middle', async () => {
+          expectedParam.customer.name_first = 'Barack Chad'
+          expectedParam.customer.marketing_do_allow_email = 1
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
+
           await userActions.userSubscribe()(dispatch, getState)
+
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
       })

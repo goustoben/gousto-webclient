@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import delivery from 'validations/delivery'
-import formContainer from '../../../Components/formContainer'
+import { formContainer } from '../../../Components/formContainer'
 
 import CheckoutButton from '../../../Components/CheckoutButton'
 
