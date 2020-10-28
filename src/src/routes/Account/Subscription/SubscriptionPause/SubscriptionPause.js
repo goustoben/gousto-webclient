@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
-import { ModalContentContainer } from './ModalContent'
+import { SubscriptionPauseScreenContainer } from './SubscriptionPauseScreen'
 
 const propTypes = {
   dataLoaded: PropTypes.bool,
@@ -57,7 +57,7 @@ class SubscriptionPause extends React.Component {
   render() {
     const { showModal } = this.props
 
-    return (<Overlay from="top" open={showModal}><ModalContentContainer /></Overlay>)
+    return (<Overlay from="top" open={showModal}><SubscriptionPauseScreenContainer /></Overlay>)
   }
 }
 

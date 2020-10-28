@@ -17,6 +17,7 @@ import { trackAffiliatePurchase } from 'actions/tracking'
 import { saveUserOrder, updateUserOrder, skipDelivery } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { orderAddOnRedirect } from 'actions/orderAddOn'
+import { osrOrdersSkipped } from 'actions/trackingKeys'
 
 import {
   trackOrder,
@@ -29,7 +30,8 @@ import {
   orderUpdateDayAndSlot,
   clearUpdateDateErrorAndPending,
   orderAddressChange,
-  cancelMultipleBoxes
+  cancelMultipleBoxes,
+  trackCancelMultipleBoxes
 } from 'actions/order'
 
 import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
@@ -1122,125 +1124,295 @@ describe('order actions', () => {
     })
   })
 
+  describe('trackCancelMultipleBoxes', () => {
+    test('returns the expected tracking action, given ids are passed', () => {
+      expect(trackCancelMultipleBoxes([1, 2, 3])).toEqual({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: osrOrdersSkipped,
+          orders_skipped: [1, 2, 3]
+        }
+      })
+    })
+
+    test('returns the expected tracking action, given ids are not passed', () => {
+      expect(trackCancelMultipleBoxes()).toEqual({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: osrOrdersSkipped,
+          orders_skipped: []
+        }
+      })
+    })
+  })
+
   describe('cancelMultipleBoxes', () => {
-    const orderCancelErrorAction = {
-      type: 'ERROR',
-      key: 'ORDER_CANCEL',
-      value: null
+    const queryDispatch = type => {
+      const passedEvents = dispatch.mock.calls.map(([arg1]) => arg1)
+
+      return type
+        ? passedEvents.filter(param => param.type === type)
+        : passedEvents
     }
 
-    const orderCancelPendingStartAction = {
-      type: 'PENDING',
-      key: 'ORDER_CANCEL',
-      value: true
+    const mockSelectedOrder = {
+      id: 'mock-id',
+      isProjected: false,
+      deliveryDayId: 'mock-delivery-day-id'
     }
 
-    const orderCancelPendingEndAction = {
-      type: 'PENDING',
-      key: 'ORDER_CANCEL',
-      value: false
+    const mockProjectedSelectedOrder = {
+      id: 'mock-id-2',
+      isProjected: true,
+      deliveryDayId: 'mock-delivery-day-id-2'
     }
 
     beforeEach(() => {
-      actionStatus.error.mockImplementation(
-        jest.requireActual('actions/status').default.error
-      )
-      actionStatus.pending.mockImplementation(
-        jest.requireActual('actions/status').default.pending
-      )
-
-      cancelOrder.mockResolvedValueOnce(null)
-      skipDelivery.mockResolvedValueOnce(null)
+      cancelOrder.mockResolvedValue(null)
+      skipDelivery.mockResolvedValue(null)
     })
 
-    afterAll(() => {
-      actionStatus.error.mockReset()
-      actionStatus.pending.mockReset()
+    afterEach(() => {
+      jest.resetAllMocks()
     })
 
-    test('should invoke expected actions if order is not projected', async () => {
+    test('takes a list of selected orders', async () => {
+      cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
+
+      await flushPromises()
+    })
+
+    test('dispatches the expected multiskip start action', async () => {
+      cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
+
+      await flushPromises()
+
+      const [firstEvent] = queryDispatch(actionTypes.CANCEL_MULTIPLE_BOXES_START)
+      expect(firstEvent).toEqual({
+        type: actionTypes.CANCEL_MULTIPLE_BOXES_START,
+      })
+    })
+
+    test.each([
+      { ...mockSelectedOrder, id: null },
+      { ...mockSelectedOrder, isProjected: null },
+      { ...mockSelectedOrder, deliveryDayId: null }
+    ])('if malformed orders passed, dispatches a multiskip error action', async (malformedSelectedOrder) => {
+      expect.assertions(2)
+
       cancelMultipleBoxes({
-        selectedOrders: [{
-          id: 'mock-id',
-          isProjected: false,
-          deliveryDayId: 'mock-delivery-day-id'
-        }]
+        selectedOrders: [malformedSelectedOrder]
       })(dispatch, getState)
 
       await flushPromises()
 
-      expect(dispatch).toHaveBeenNthCalledWith(1, orderCancelErrorAction)
-      expect(dispatch).toHaveBeenNthCalledWith(2, orderCancelPendingStartAction)
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
-        type: 'ORDER_CANCEL',
+      const [errorAction] = queryDispatch(actionTypes.CANCEL_MULTIPLE_BOXES_ERROR)
+
+      expect(errorAction).toEqual({
+        type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR,
+      })
+
+      expect(dispatch.mock.calls).toHaveLength(1)
+    })
+
+    test('if no orders are passed, dispatches a multiskip error action', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: []
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR,
+      })
+
+      expect(dispatch.mock.calls).toHaveLength(1)
+    })
+
+    test('for each projected selected orders, calls the disable delivery day endpoint', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [
+          { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-1' },
+          { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-2' }
+        ]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(skipDelivery).toHaveBeenCalledTimes(2)
+      expect(skipDelivery).toHaveBeenNthCalledWith(1,
+        'access-token',
+        'delivery-day-1'
+      )
+      expect(skipDelivery).toHaveBeenNthCalledWith(2,
+        'access-token',
+        'delivery-day-2'
+      )
+    })
+
+    test('for any pending selected orders, calls the cancel order endpoint', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [
+          { ...mockSelectedOrder, id: 'order-id-1' },
+          { ...mockSelectedOrder, id: 'order-id-2' }
+        ]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      expect(cancelOrder).toHaveBeenCalledTimes(2)
+      expect(cancelOrder).toHaveBeenNthCalledWith(1,
+        'access-token',
+        'order-id-1'
+      )
+      expect(cancelOrder).toHaveBeenNthCalledWith(2,
+        'access-token',
+        'order-id-2'
+      )
+    })
+
+    test('for each box successfully cancelled, dispatches a cancellation event', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [
+          mockSelectedOrder,
+          mockProjectedSelectedOrder
+        ]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      const [orderCancel] = queryDispatch(actionTypes.ORDER_CANCEL)
+      const [projectedOrderCancel] = queryDispatch(actionTypes.PROJECTED_ORDER_CANCEL)
+
+      expect(orderCancel).toEqual({
+        type: actionTypes.ORDER_CANCEL,
         orderId: 'mock-id',
         trackingData: {
           actionType: 'Order Cancelled',
-          cms_variation: 'mock-id',
           delivery_day_id: 'mock-delivery-day-id',
-          order_id: 'mock-id',
           order_state: 'pending',
-          recovery_reasons: ['mock-value-proposition', 'mock-offer']
-        }
-      })
-      expect(dispatch).toHaveBeenNthCalledWith(4, orderCancelPendingEndAction)
-    })
-
-    test('should make api request to cancel order if not projected', async () => {
-      cancelMultipleBoxes({
-        selectedOrders: [{
-          id: 'mock-id',
-          isProjected: false,
-          deliveryDayId: 'mock-delivery-day-id'
-        }]
-      })(dispatch, getState)
-
-      await flushPromises()
-
-      expect(cancelOrder).toHaveBeenCalledTimes(1)
-    })
-
-    test('should invoke expected actions if order is projected', async () => {
-      cancelMultipleBoxes({
-        selectedOrders: [{
-          id: 'mock-id',
-          isProjected: true,
-          deliveryDayId: 'mock-delivery-day-id'
-        }]
-      })(dispatch, getState)
-
-      await flushPromises()
-
-      expect(dispatch).toHaveBeenNthCalledWith(1, { ...orderCancelErrorAction, key: 'PROJECTED_ORDER_CANCEL' })
-      expect(dispatch).toHaveBeenNthCalledWith(2, { ...orderCancelPendingStartAction, key: 'PROJECTED_ORDER_CANCEL' })
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
-        type: 'PROJECTED_ORDER_CANCEL',
-        orderId: 'mock-id',
-        trackingData: {
-          actionType: 'Order Skipped',
-          delivery_day_id: 'mock-delivery-day-id',
-          order_state: 'projected',
           cms_variation: 'mock-id',
           recovery_reasons: [
             'mock-value-proposition',
-            'mock-offer'
-          ]
+            'mock-offer',
+          ],
+        }
+      })
+      expect(projectedOrderCancel).toEqual({
+        type: actionTypes.PROJECTED_ORDER_CANCEL,
+        orderId: 'mock-id-2',
+        trackingData: {
+          actionType: 'Order Skipped',
+          delivery_day_id: 'mock-delivery-day-id-2',
+          order_state: 'projected',
+          cms_variation: 'mock-id-2',
+          recovery_reasons: [
+            'mock-value-proposition',
+            'mock-offer',
+          ],
         }
       })
     })
 
-    test('should make api request to skip delivery if projected', async () => {
+    describe('when some cancellations fail', () => {
+      beforeEach(() => {
+        // First should succeed, second should fail
+        cancelOrder.mockResolvedValueOnce(null)
+        skipDelivery.mockRejectedValueOnce(null)
+
+        cancelMultipleBoxes({
+          selectedOrders: [
+            mockSelectedOrder,
+            mockProjectedSelectedOrder
+          ]
+        })(dispatch, getState)
+      })
+
+      test('only dispatches cancellation action for successes', async () => {
+        const cancellationActions = queryDispatch(actionTypes.ORDER_CANCEL)
+
+        expect(cancellationActions.length).toEqual(1)
+        expect(cancellationActions[0]).toEqual({
+          type: actionTypes.ORDER_CANCEL,
+          orderId: 'mock-id',
+          trackingData: {
+            actionType: 'Order Cancelled',
+            delivery_day_id: 'mock-delivery-day-id',
+            order_state: 'pending',
+            cms_variation: 'mock-id',
+            recovery_reasons: [
+              'mock-value-proposition',
+              'mock-offer',
+            ],
+          }
+        })
+      })
+
+      test('still dispatches tracking action for successes', async () => {
+        const [trackingEvent] = queryDispatch(actionTypes.TRACKING)
+        expect(trackingEvent).toEqual({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: osrOrdersSkipped,
+            orders_skipped: ['mock-id']
+          }
+        })
+      })
+    })
+
+    test('if boxes are successfully cancelled, dispatches a success action with count', async () => {
       cancelMultipleBoxes({
-        selectedOrders: [{
-          id: 'mock-id',
-          isProjected: true,
-          deliveryDayId: 'mock-delivery-day-id'
-        }]
+        selectedOrders: [
+          mockSelectedOrder,
+          mockProjectedSelectedOrder
+        ]
       })(dispatch, getState)
 
       await flushPromises()
 
-      expect(skipDelivery).toHaveBeenCalledTimes(1)
+      const [successAction] = queryDispatch(actionTypes.CANCEL_MULTIPLE_BOXES_SUCCESS)
+
+      expect(successAction).toEqual({
+        type: actionTypes.CANCEL_MULTIPLE_BOXES_SUCCESS,
+        count: 2
+      })
+    })
+
+    test('if boxes are successfully cancelled, dispatches the expected tracking action', async () => {
+      cancelMultipleBoxes({
+        selectedOrders: [
+          mockSelectedOrder,
+          mockProjectedSelectedOrder
+        ]
+      })(dispatch, getState)
+
+      await flushPromises()
+
+      const [trackingAction] = queryDispatch(actionTypes.TRACKING)
+
+      expect(trackingAction).toEqual({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: osrOrdersSkipped,
+          orders_skipped: [
+            'mock-id',
+            'mock-id-2'
+          ],
+        }
+      })
+    })
+
+    test('if any box fails to cancel, dispatches a multiskip error action', async () => {
+      cancelOrder.mockRejectedValueOnce()
+
+      cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
+
+      await flushPromises()
+
+      const [firstEvent] = queryDispatch(actionTypes.CANCEL_MULTIPLE_BOXES_ERROR)
+      expect(firstEvent).toEqual({
+        type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR,
+      })
     })
   })
 })

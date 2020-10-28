@@ -16,6 +16,12 @@ export const defaultState = Immutable.fromJS({
     pendingOrdersDates: {},
   },
   unsubscribedFromEmail: false,
+  multiSkip: {
+    isError: false,
+    isPending: false,
+    isSuccess: false,
+    lastSkippedCount: null
+  }
 })
 
 const user = {
@@ -219,6 +225,39 @@ const user = {
 
     case actionTypes.MYDELIVERIES_ORDERS: {
       return state.set('newOrders', action.orders)
+    }
+
+    case actionTypes.CANCEL_MULTIPLE_BOXES_ERROR: {
+      return state
+        .setIn(['multiSkip', 'isPending'], false)
+        .setIn(['multiSkip', 'isError'], true)
+    }
+
+    case actionTypes.CANCEL_MULTIPLE_BOXES_START: {
+      return state
+        .setIn(['multiSkip', 'isPending'], true)
+        .setIn(['multiSkip', 'isError'], false)
+        .setIn(['multiSkip', 'isSuccess'], false)
+        .setIn(['multiSkip', 'lastSkippedCount'], null)
+    }
+
+    case actionTypes.CANCEL_MULTIPLE_BOXES_END: {
+      if (!state.getIn(['multiSkip', 'isPending'])) {
+        return state
+          .setIn(['multiSkip', 'isPending'], false)
+          .setIn(['multiSkip', 'isError'], false)
+          .setIn(['multiSkip', 'isSuccess'], false)
+          .setIn(['multiSkip', 'lastSkippedCount'], null)
+      }
+
+      return state
+    }
+
+    case actionTypes.CANCEL_MULTIPLE_BOXES_SUCCESS: {
+      return state
+        .setIn(['multiSkip', 'isSuccess'], true)
+        .setIn(['multiSkip', 'isPending'], false)
+        .setIn(['multiSkip', 'lastSkippedCount'], action.count)
     }
 
     default:

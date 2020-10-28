@@ -2,6 +2,7 @@ import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import actions from 'actions/subscriptionPause'
 import { cancelMultipleBoxes } from 'actions/order'
+import { modalVisibilityChange } from 'actions/onScreenRecovery'
 
 export const multiSkipTrackContinueToPause = () => (dispatch) => {
   dispatch({
@@ -13,8 +14,11 @@ export const multiSkipTrackContinueToPause = () => (dispatch) => {
 }
 
 export const multiSkipCloseModal = () => (dispatch) => {
-  dispatch(actions.subscriptionPauseVisibilityChange(false))
+  modalVisibilityChange({ modalVisibility: false })(dispatch)
   dispatch(actions.subscriptionPauseTrackRecover())
+  dispatch({
+    type: actionTypes.CANCEL_MULTIPLE_BOXES_END
+  })
 }
 
 export const skipMultipleBoxes = (selectedOrders) => (dispatch, getState) => {

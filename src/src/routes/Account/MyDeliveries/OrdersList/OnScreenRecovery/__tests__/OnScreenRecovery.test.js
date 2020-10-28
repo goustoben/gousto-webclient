@@ -7,70 +7,35 @@ jest.mock('components/Overlay', () => 'Overlay')
 
 describe('Order Skip Recovery Modal', () => {
   let wrapper
-  const keepOrder = jest.fn()
-  const cancelPendingOrder = jest.fn()
 
   afterEach(() => {
     jest.resetAllMocks()
   })
 
-  describe('Initial Render', () => {
-    beforeAll(() => {
+  describe('Alternative Render', () => {
+    test('should call getRecoveryContent', () => {
+      const getRecoveryContent = jest.fn()
       wrapper = shallow(
         <OnScreenRecovery
-          title="modal title"
-          onKeep={keepOrder}
-          onConfirm={cancelPendingOrder}
-          keepCopy="keep"
-          confirmCopy="confirm"
+          orderId="14245"
+          triggered={false}
+          orderDate="2018-09-24T13:27:09.487Z"
+          deliveryDayId="23001"
+          orderType="pending"
+          getRecoveryContent={getRecoveryContent}
+          isMultiSkipEnabled
         />
       )
-    })
-  })
 
-  describe('Alternative Render', () => {
-    const getRecoveryContent = jest.fn()
+      const prevProps = wrapper.props()
 
-    describe('when triggered is set from false to true', () => {
-      beforeEach(() => {
-        wrapper = shallow(
-          <OnScreenRecovery
-            triggered={false}
-            getRecoveryContent={getRecoveryContent}
-          />
-        )
-
-        wrapper.setProps({
-          triggered: true,
-        })
-
-        wrapper.update()
+      wrapper.setProps({
+        triggered: true,
       })
 
-      test('should call getRecoveryContent', () => {
-        expect(getRecoveryContent).toHaveBeenCalled()
-      })
-    })
+      wrapper.instance().componentDidUpdate(prevProps)
 
-    describe('when triggered is set from true to false', () => {
-      beforeEach(() => {
-        wrapper = shallow(
-          <OnScreenRecovery
-            triggered
-            getRecoveryContent={getRecoveryContent}
-          />
-        )
-
-        wrapper.setProps({
-          triggered: false,
-        })
-
-        wrapper.update()
-      })
-
-      test('should NOT call getRecoveryContent', () => {
-        expect(getRecoveryContent).not.toHaveBeenCalled()
-      })
+      expect(getRecoveryContent).toHaveBeenCalled()
     })
   })
 })
