@@ -6,7 +6,7 @@ import { addPrefix } from 'validations/util'
 
 import delivery from 'validations/delivery'
 
-import formContainer from '../../../Components/formContainer'
+import { formContainer } from '../../../Components/formContainer'
 import CheckoutButton from '../../../Components/CheckoutButton'
 import SectionContainer from '../SectionContainer'
 

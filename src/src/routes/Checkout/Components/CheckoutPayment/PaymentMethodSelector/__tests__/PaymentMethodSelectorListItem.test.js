@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import { PaymentMethod } from 'config/signup'
 import { PaymentMethodSelectorListItem } from '../PaymentMethodSelectorListItem'
 
-describe('given PaymentMethodSelectorListItem is rendered', () => {
+describe('PaymentMethodSelectorListItem', () => {
   let wrapper
   let onPaymentMethodChanged
 
@@ -13,7 +13,7 @@ describe('given PaymentMethodSelectorListItem is rendered', () => {
     wrapper = shallow(
       <PaymentMethodSelectorListItem
         paymentMethod={PaymentMethod.Card}
-        currentPaymentMethod={PaymentMethod.Unchosen}
+        currentPaymentMethod={PaymentMethod.PayPal}
         onPaymentMethodChanged={onPaymentMethodChanged}
       >
         content
@@ -21,28 +21,30 @@ describe('given PaymentMethodSelectorListItem is rendered', () => {
     )
   })
 
-  test('it renders correctly', () => {
-    expect(wrapper.hasClass('isActive')).toBeFalsy()
-    expect(wrapper.find('InputRadio')).toHaveLength(1)
+  describe('when is rendered', () => {
+    test('it renders correctly', () => {
+      expect(wrapper.hasClass('isActive')).toBeFalsy()
+      expect(wrapper.find('InputRadio')).toHaveLength(1)
 
-    expect(wrapper.find('InputRadio .content')).toHaveLength(1)
-    expect(wrapper.find('InputRadio .content').text()).toBe('content')
-  })
-
-  describe('when it represents the current payment method', () => {
-    beforeEach(() => {
-      wrapper.setProps({ currentPaymentMethod: PaymentMethod.Card })
+      expect(wrapper.find('InputRadio .content')).toHaveLength(1)
+      expect(wrapper.find('InputRadio .content').text()).toBe('content')
     })
 
-    test('then it should be active', () => {
-      expect(wrapper.hasClass('isActive')).toBeTruthy()
-    })
-  })
+    describe('when it represents the current payment method', () => {
+      beforeEach(() => {
+        wrapper.setProps({ currentPaymentMethod: PaymentMethod.Card })
+      })
 
-  describe('when clicked', () => {
-    test('it should invoke the callback', () => {
-      wrapper.find('InputRadio').simulate('change')
-      expect(onPaymentMethodChanged).toHaveBeenCalledWith(PaymentMethod.Card)
+      test('then it should be active', () => {
+        expect(wrapper.hasClass('isActive')).toBeTruthy()
+      })
+    })
+
+    describe('when clicked', () => {
+      test('it should invoke the callback', () => {
+        wrapper.find('InputRadio').simulate('change')
+        expect(onPaymentMethodChanged).toHaveBeenCalledWith(PaymentMethod.Card)
+      })
     })
   })
 })

@@ -14,4 +14,14 @@ function checkPayment(sessionId) {
   return fetch(null, `${PAYMENTS_API}/payments/${sessionId}`, null, 'GET', undefined, HEADERS)
 }
 
-export { authPayment, checkPayment }
+function fetchPayPalToken() {
+  const params = { provider: 'paypal' }
+
+  return fetch(null, `${PAYMENTS_API}/token`, params, 'GET', undefined, HEADERS)
+}
+
+export {
+  authPayment,
+  checkPayment,
+  fetchPayPalToken,
+}

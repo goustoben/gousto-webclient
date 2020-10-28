@@ -1,0 +1,1421 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckoutPayPalDetails should render correctly 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    firePayPalError={[Function]}
+    hide={false}
+    isPayPalSetupDone={false}
+    paypalScriptsReady={false}
+    resetPaymentMethod={[Function]}
+    setPayPalDeviceData={[Function]}
+    setPayPalNonce={[Function]}
+    token={null}
+    trackEvent={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className=""
+        >
+          <p
+            className="text"
+          >
+            <span
+              className="padlockIcon"
+            />
+            You will be prompted by PayPal for payment details to securely setup your subscription.
+          </p>
+          <p
+            className="text"
+          >
+            PayPal is loading...
+          </p>
+          <div
+            className="paypalContainer transparent"
+            id="paypal-container"
+          />
+        </div>,
+        false,
+      ],
+      "className": "",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>,
+            <p
+              className="text"
+            >
+              PayPal is loading...
+            </p>,
+            <div
+              className="paypalContainer transparent"
+              id="paypal-container"
+            />,
+          ],
+          "className": "",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span
+                  className="padlockIcon"
+                />,
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "padlockIcon",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "span",
+              },
+              "You will be prompted by PayPal for payment details to securely setup your subscription.",
+            ],
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "PayPal is loading...",
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": "PayPal is loading...",
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "className": "paypalContainer transparent",
+              "id": "paypal-container",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className=""
+          >
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>
+            <p
+              className="text"
+            >
+              PayPal is loading...
+            </p>
+            <div
+              className="paypalContainer transparent"
+              id="paypal-container"
+            />
+          </div>,
+          false,
+        ],
+        "className": "",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <p
+                className="text"
+              >
+                <span
+                  className="padlockIcon"
+                />
+                You will be prompted by PayPal for payment details to securely setup your subscription.
+              </p>,
+              <p
+                className="text"
+              >
+                PayPal is loading...
+              </p>,
+              <div
+                className="paypalContainer transparent"
+                id="paypal-container"
+              />,
+            ],
+            "className": "",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <span
+                    className="padlockIcon"
+                  />,
+                  "You will be prompted by PayPal for payment details to securely setup your subscription.",
+                ],
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "padlockIcon",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "span",
+                },
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "PayPal is loading...",
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": "PayPal is loading...",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "className": "paypalContainer transparent",
+                "id": "paypal-container",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+  Symbol(enzyme.__childContext__): null,
+}
+`;
+
+exports[`CheckoutPayPalDetails when PayPal initialized should render correctly 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    firePayPalError={[Function]}
+    hide={false}
+    isPayPalSetupDone={false}
+    paypalScriptsReady={false}
+    resetPaymentMethod={[Function]}
+    setPayPalDeviceData={[Function]}
+    setPayPalNonce={[Function]}
+    token={null}
+    trackEvent={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className=""
+        >
+          <p
+            className="text"
+          >
+            <span
+              className="padlockIcon"
+            />
+            You will be prompted by PayPal for payment details to securely setup your subscription.
+          </p>
+          <div
+            className="paypalContainer"
+            id="paypal-container"
+          />
+        </div>,
+        false,
+      ],
+      "className": "",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>,
+            false,
+            <div
+              className="paypalContainer"
+              id="paypal-container"
+            />,
+          ],
+          "className": "",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span
+                  className="padlockIcon"
+                />,
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "padlockIcon",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "span",
+              },
+              "You will be prompted by PayPal for payment details to securely setup your subscription.",
+            ],
+            "type": "p",
+          },
+          false,
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "className": "paypalContainer",
+              "id": "paypal-container",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className=""
+          >
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>
+            <div
+              className="paypalContainer"
+              id="paypal-container"
+            />
+          </div>,
+          false,
+        ],
+        "className": "",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <p
+                className="text"
+              >
+                <span
+                  className="padlockIcon"
+                />
+                You will be prompted by PayPal for payment details to securely setup your subscription.
+              </p>,
+              false,
+              <div
+                className="paypalContainer"
+                id="paypal-container"
+              />,
+            ],
+            "className": "",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <span
+                    className="padlockIcon"
+                  />,
+                  "You will be prompted by PayPal for payment details to securely setup your subscription.",
+                ],
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "padlockIcon",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "span",
+                },
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "type": "p",
+            },
+            false,
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "className": "paypalContainer",
+                "id": "paypal-container",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+  Symbol(enzyme.__childContext__): null,
+}
+`;
+
+exports[`CheckoutPayPalDetails when PayPal setup is done should render correctly 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    firePayPalError={[Function]}
+    hide={false}
+    isPayPalSetupDone={true}
+    paypalScriptsReady={false}
+    resetPaymentMethod={[MockFunction]}
+    setPayPalDeviceData={[Function]}
+    setPayPalNonce={[Function]}
+    token={null}
+    trackEvent={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="hide"
+        >
+          <p
+            className="text"
+          >
+            <span
+              className="padlockIcon"
+            />
+            You will be prompted by PayPal for payment details to securely setup your subscription.
+          </p>
+          <p
+            className="text"
+          >
+            PayPal is loading...
+          </p>
+          <div
+            className="paypalContainer transparent"
+            id="paypal-container"
+          />
+        </div>,
+        <div
+          className="text"
+        >
+          <span
+            className="checkmarkIcon"
+          />
+          Great, you’re all set to pay with 
+          <Svg
+            className="paypalIcon"
+            fileName="paypal"
+          />
+          <br />
+          <span
+            className="paypalAlternativeText"
+          >
+            or 
+            <span
+              className="resetPaymentMethod"
+              onClick={[MockFunction]}
+              onKeyDown={[Function]}
+              role="button"
+              tabIndex="0"
+            >
+              Change payment method
+            </span>
+          </span>
+        </div>,
+      ],
+      "className": "",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>,
+            <p
+              className="text"
+            >
+              PayPal is loading...
+            </p>,
+            <div
+              className="paypalContainer transparent"
+              id="paypal-container"
+            />,
+          ],
+          "className": "hide",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span
+                  className="padlockIcon"
+                />,
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "padlockIcon",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "span",
+              },
+              "You will be prompted by PayPal for payment details to securely setup your subscription.",
+            ],
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "PayPal is loading...",
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": "PayPal is loading...",
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "className": "paypalContainer transparent",
+              "id": "paypal-container",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <span
+              className="checkmarkIcon"
+            />,
+            "Great, you’re all set to pay with ",
+            <Svg
+              className="paypalIcon"
+              fileName="paypal"
+            />,
+            <br />,
+            <span
+              className="paypalAlternativeText"
+            >
+              or 
+              <span
+                className="resetPaymentMethod"
+                onClick={[MockFunction]}
+                onKeyDown={[Function]}
+                role="button"
+                tabIndex="0"
+              >
+                Change payment method
+              </span>
+            </span>,
+          ],
+          "className": "text",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "className": "checkmarkIcon",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "span",
+          },
+          "Great, you’re all set to pay with ",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "function",
+            "props": Object {
+              "className": "paypalIcon",
+              "fileName": "paypal",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {},
+            "ref": null,
+            "rendered": null,
+            "type": "br",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                "or ",
+                <span
+                  className="resetPaymentMethod"
+                  onClick={[MockFunction]}
+                  onKeyDown={[Function]}
+                  role="button"
+                  tabIndex="0"
+                >
+                  Change payment method
+                </span>,
+              ],
+              "className": "paypalAlternativeText",
+            },
+            "ref": null,
+            "rendered": Array [
+              "or ",
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": "Change payment method",
+                  "className": "resetPaymentMethod",
+                  "onClick": [MockFunction],
+                  "onKeyDown": [Function],
+                  "role": "button",
+                  "tabIndex": "0",
+                },
+                "ref": null,
+                "rendered": "Change payment method",
+                "type": "span",
+              },
+            ],
+            "type": "span",
+          },
+        ],
+        "type": "div",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="hide"
+          >
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>
+            <p
+              className="text"
+            >
+              PayPal is loading...
+            </p>
+            <div
+              className="paypalContainer transparent"
+              id="paypal-container"
+            />
+          </div>,
+          <div
+            className="text"
+          >
+            <span
+              className="checkmarkIcon"
+            />
+            Great, you’re all set to pay with 
+            <Svg
+              className="paypalIcon"
+              fileName="paypal"
+            />
+            <br />
+            <span
+              className="paypalAlternativeText"
+            >
+              or 
+              <span
+                className="resetPaymentMethod"
+                onClick={[MockFunction]}
+                onKeyDown={[Function]}
+                role="button"
+                tabIndex="0"
+              >
+                Change payment method
+              </span>
+            </span>
+          </div>,
+        ],
+        "className": "",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <p
+                className="text"
+              >
+                <span
+                  className="padlockIcon"
+                />
+                You will be prompted by PayPal for payment details to securely setup your subscription.
+              </p>,
+              <p
+                className="text"
+              >
+                PayPal is loading...
+              </p>,
+              <div
+                className="paypalContainer transparent"
+                id="paypal-container"
+              />,
+            ],
+            "className": "hide",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <span
+                    className="padlockIcon"
+                  />,
+                  "You will be prompted by PayPal for payment details to securely setup your subscription.",
+                ],
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "padlockIcon",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "span",
+                },
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "PayPal is loading...",
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": "PayPal is loading...",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "className": "paypalContainer transparent",
+                "id": "paypal-container",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <span
+                className="checkmarkIcon"
+              />,
+              "Great, you’re all set to pay with ",
+              <Svg
+                className="paypalIcon"
+                fileName="paypal"
+              />,
+              <br />,
+              <span
+                className="paypalAlternativeText"
+              >
+                or 
+                <span
+                  className="resetPaymentMethod"
+                  onClick={[MockFunction]}
+                  onKeyDown={[Function]}
+                  role="button"
+                  tabIndex="0"
+                >
+                  Change payment method
+                </span>
+              </span>,
+            ],
+            "className": "text",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "className": "checkmarkIcon",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "span",
+            },
+            "Great, you’re all set to pay with ",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "function",
+              "props": Object {
+                "className": "paypalIcon",
+                "fileName": "paypal",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {},
+              "ref": null,
+              "rendered": null,
+              "type": "br",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  "or ",
+                  <span
+                    className="resetPaymentMethod"
+                    onClick={[MockFunction]}
+                    onKeyDown={[Function]}
+                    role="button"
+                    tabIndex="0"
+                  >
+                    Change payment method
+                  </span>,
+                ],
+                "className": "paypalAlternativeText",
+              },
+              "ref": null,
+              "rendered": Array [
+                "or ",
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Change payment method",
+                    "className": "resetPaymentMethod",
+                    "onClick": [MockFunction],
+                    "onKeyDown": [Function],
+                    "role": "button",
+                    "tabIndex": "0",
+                  },
+                  "ref": null,
+                  "rendered": "Change payment method",
+                  "type": "span",
+                },
+              ],
+              "type": "span",
+            },
+          ],
+          "type": "div",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+  Symbol(enzyme.__childContext__): null,
+}
+`;
+
+exports[`CheckoutPayPalDetails when hide is true should render correctly 1`] = `
+ShallowWrapper {
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    firePayPalError={[Function]}
+    hide={true}
+    isPayPalSetupDone={false}
+    paypalScriptsReady={false}
+    resetPaymentMethod={[Function]}
+    setPayPalDeviceData={[Function]}
+    setPayPalNonce={[Function]}
+    token={null}
+    trackEvent={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "checkPropTypes": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateError": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className=""
+        >
+          <p
+            className="text"
+          >
+            <span
+              className="padlockIcon"
+            />
+            You will be prompted by PayPal for payment details to securely setup your subscription.
+          </p>
+          <p
+            className="text"
+          >
+            PayPal is loading...
+          </p>
+          <div
+            className="paypalContainer transparent"
+            id="paypal-container"
+          />
+        </div>,
+        false,
+      ],
+      "className": "hide",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>,
+            <p
+              className="text"
+            >
+              PayPal is loading...
+            </p>,
+            <div
+              className="paypalContainer transparent"
+              id="paypal-container"
+            />,
+          ],
+          "className": "",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <span
+                  className="padlockIcon"
+                />,
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "className": "padlockIcon",
+                },
+                "ref": null,
+                "rendered": null,
+                "type": "span",
+              },
+              "You will be prompted by PayPal for payment details to securely setup your subscription.",
+            ],
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "PayPal is loading...",
+              "className": "text",
+            },
+            "ref": null,
+            "rendered": "PayPal is loading...",
+            "type": "p",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "className": "paypalContainer transparent",
+              "id": "paypal-container",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+      false,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className=""
+          >
+            <p
+              className="text"
+            >
+              <span
+                className="padlockIcon"
+              />
+              You will be prompted by PayPal for payment details to securely setup your subscription.
+            </p>
+            <p
+              className="text"
+            >
+              PayPal is loading...
+            </p>
+            <div
+              className="paypalContainer transparent"
+              id="paypal-container"
+            />
+          </div>,
+          false,
+        ],
+        "className": "hide",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <p
+                className="text"
+              >
+                <span
+                  className="padlockIcon"
+                />
+                You will be prompted by PayPal for payment details to securely setup your subscription.
+              </p>,
+              <p
+                className="text"
+              >
+                PayPal is loading...
+              </p>,
+              <div
+                className="paypalContainer transparent"
+                id="paypal-container"
+              />,
+            ],
+            "className": "",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <span
+                    className="padlockIcon"
+                  />,
+                  "You will be prompted by PayPal for payment details to securely setup your subscription.",
+                ],
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "className": "padlockIcon",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": "span",
+                },
+                "You will be prompted by PayPal for payment details to securely setup your subscription.",
+              ],
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "PayPal is loading...",
+                "className": "text",
+              },
+              "ref": null,
+              "rendered": "PayPal is loading...",
+              "type": "p",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "className": "paypalContainer transparent",
+                "id": "paypal-container",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        false,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
+        "lifecycles": Object {
+          "componentDidUpdate": Object {
+            "onSetState": true,
+          },
+          "getChildContext": Object {
+            "calledByRenderer": false,
+          },
+          "getDerivedStateFromError": true,
+          "getDerivedStateFromProps": Object {
+            "hasShouldComponentUpdateBug": false,
+          },
+          "getSnapshotBeforeUpdate": true,
+          "setState": Object {
+            "skipsComponentDidUpdateOnNullish": true,
+          },
+        },
+      },
+    },
+  },
+  Symbol(enzyme.__childContext__): null,
+}
+`;

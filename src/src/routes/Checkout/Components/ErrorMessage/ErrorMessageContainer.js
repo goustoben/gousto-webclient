@@ -42,6 +42,10 @@ function mapStateToProps(state, ownProps) {
         }
       } else if (errors.get(actionTypes.CARD_TOKENIZATION_FAILED)) {
         errorType = 'card-tokenization-failed'
+      } else if (errors.get(actionTypes.PAYPAL_TOKEN_FETCH_FAILED)) {
+        errorType = 'paypal-token-fetch-failed'
+      } else if (errors.get(actionTypes.PAYPAL_ERROR)) {
+        errorType = 'paypal-error'
       } else if (errors.get(actionTypes.NETWORK_FAILURE)) {
         errorType = 'network-failure'
       } else if (errors.get(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)) {

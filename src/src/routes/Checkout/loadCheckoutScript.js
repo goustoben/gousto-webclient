@@ -1,6 +1,6 @@
 export const CDN_CHECKOUT_COM = 'https://cdn.checkout.com/js/framesv2.min.js'
 
-export const loadCheckoutScript = (callback) => {
+export const loadCheckoutScript = (callback, document = window.document) => {
   if (document && callback) {
     const existingScript = document.getElementById('checkout-com-frames')
 

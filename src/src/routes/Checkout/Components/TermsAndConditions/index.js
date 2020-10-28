@@ -4,7 +4,7 @@ import config from 'config/checkout'
 import Link from 'Link'
 import css from './TermsAndConditions.css'
 
-const TermsAndConditions = () => (
+export const TermsAndConditions = () => (
   <div className={css.centeredSmallTextWithTopMargin}>
     <span>{config.terms}</span>
 &nbsp;
@@ -13,5 +13,3 @@ const TermsAndConditions = () => (
     </Link>
   </div>
 )
-
-export default TermsAndConditions

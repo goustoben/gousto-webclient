@@ -2,6 +2,7 @@ import fetch from 'utils/fetch'
 import {
   authPayment,
   checkPayment,
+  fetchPayPalToken,
 } from '../payments'
 
 const mockPaymentAuthResponse = {
@@ -28,20 +29,34 @@ const mockPaymentAuthResponse = {
 }
 const mockPaymentCheckResponse = {
   data: {
-    data:
-      {
-        id: 'pay_c574pto6na4urgn4yv2v4435bq',
-        amount: 3499,
-        approved: true,
-        status: 'Authorized',
-        sourceId: 'src_hu7vs255rzwebo2nnccyugkiv4'
-      }
+    status: 'ok',
+    data: {
+      id: 'pay_c574pto6na4urgn4yv2v4435bq',
+      amount: 3499,
+      approved: true,
+      status: 'Authorized',
+      sourceId: 'src_hu7vs255rzwebo2nnccyugkiv4'
+    }
+  }
+}
+const mockPayPalTokenResponse = {
+  data: {
+    status: 'ok',
+    data: {
+      clientToken: 'dashdasdfaskdfajs'
+    }
   }
 }
 
 jest.mock('utils/fetch', () => (
   jest.fn().mockImplementation( (token, url) => {
-    const getData = async () => (url.indexOf('payment-auth') >= 0 ? mockPaymentAuthResponse : mockPaymentCheckResponse)
+    const getData = async () => {
+      if (url.indexOf('/token') >= 0) {
+        return mockPayPalTokenResponse
+      } else {
+        return url.indexOf('payment-auth') >= 0 ? mockPaymentAuthResponse : mockPaymentCheckResponse
+      }
+    }
 
     return getData()
   })
@@ -54,6 +69,10 @@ jest.mock('config/endpoint', () =>
 describe('Payments API', () => {
   const expectedHeaders = { 'Content-Type': 'application/json'}
 
+  afterEach(() => {
+    fetch.mockClear()
+  })
+
   describe('authPayment', () => {
     const request = {
       order_id: 12345,
@@ -63,10 +82,6 @@ describe('Payments API', () => {
       success_url: 'https://goust.co.uk/payments/success',
       failure_url: 'https://goust.co.uk/payments/failure',
     }
-
-    afterEach(() => {
-      fetch.mockClear()
-    })
 
     test('should send payment auth request', async () => {
       await authPayment(request)
@@ -96,6 +111,24 @@ describe('Payments API', () => {
       const result = await checkPayment(sessionId)
 
       expect(result).toEqual(mockPaymentCheckResponse)
+    })
+  })
+
+  describe('fetchPayPalToken', () => {
+    test('should fetch PayPal client token', async () => {
+      const expectedUrl = '/payments/v1/payments/token'
+      const expectedQueryParams = { provider: 'paypal' }
+
+      await fetchPayPalToken()
+
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, expectedUrl, expectedQueryParams, 'GET', undefined, expectedHeaders)
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await fetchPayPalToken()
+
+      expect(result).toEqual(mockPayPalTokenResponse)
     })
   })
 })

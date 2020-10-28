@@ -40,10 +40,10 @@ import {
   getIsMobileMenuModalAppAwarenessEnabled,
   getIsMyGoustoBannerAppAwarenessEnabled,
   getisNewSSRDeliveriesEnabled,
-  getIsPayWithPaypalEnabled,
+  getIsPayWithPayPalEnabled,
   getIsBoxPricesUserJourneyEnabled,
   getIsMultiSkipEnabled,
-  getIsMenuRedirectPageEnabled
+  getIsMenuRedirectPageEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -99,7 +99,7 @@ describe('when features are defined', () => {
     [getIsMyGoustoBannerAppAwarenessEnabled, 'isMyGoustoBannerAppAwarenessEnabled'],
     [getPricingClarityRedesign, 'isPricingClarityEnabled'],
     [getisNewSSRDeliveriesEnabled, 'isNewSSRDeliveriesEnabled'],
-    [getIsPayWithPaypalEnabled, 'payWithPaypal'],
+    [getIsPayWithPayPalEnabled, 'enablePayPal'],
     [getIsBoxPricesUserJourneyEnabled, 'boxPricesUserJourney'],
     [getIsMultiSkipEnabled, 'isMultiSkipEnabled'],
     [getIsMenuRedirectPageEnabled, 'isMenuRedirectPageEnabled'],

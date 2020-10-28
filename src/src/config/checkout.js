@@ -146,6 +146,8 @@ module.exports = {
     'user-exists': 'An account with that e-mail address already exists',
     'user-promo-invalid': 'This discount code is only available for new customers. It looks like you or someone in your household already has a Gousto account.',
     'card-tokenization-failed': 'Sorry, we don’t accept that type of card. Please try another one.',
+    'paypal-token-fetch-failed': 'Please try an alternative payment method. If you\'re experiencing difficulties, please contact PayPal',
+    'paypal-error': 'Please try an alternative payment method. If you\'re experiencing difficulties, please contact PayPal',
     'network-failure': 'Please check your network connection and try again.',
     'valid-card-details-not-provided': 'Your Card Number, Expiry Date and Security Number are required',
     'user-phone-number-invalid': 'Oh dear, it looks like there was a problem with the phone number you gave us. Please go back a step and try again.',

@@ -1,21 +1,26 @@
 import Immutable from 'immutable'
 
-import routes from 'config/routes'
-import { actionTypes } from 'actions/actionTypes'
-import pricingActions from 'actions/pricing'
-import * as trackingKeys from 'actions/trackingKeys'
-import { warning } from 'utils/logger'
-import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
-import { redirect } from 'actions/redirect'
-import { pending, error } from 'actions/status'
-import { orderAssignToUser } from 'actions/order'
-import { userSubscribe } from 'actions/user'
-import { basketResetPersistent } from 'utils/basket'
-import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchReference, fetchPromoCodeValidity } from 'apis/customers'
 import { createPreviewOrder } from 'apis/orders'
-import { authPayment, checkPayment } from 'apis/payments'
+import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
+
+import { actionTypes } from 'actions/actionTypes'
+import pricingActions from 'actions/pricing'
+import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
+import { redirect } from 'actions/redirect'
+import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
+import * as trackingKeys from 'actions/trackingKeys'
+import { pending, error } from 'actions/status'
+import { orderAssignToUser } from 'actions/order'
+import { userSubscribe } from 'actions/user'
+
+import routes from 'config/routes'
+import { PaymentMethod } from 'config/signup'
+
+import { warning } from 'utils/logger'
+import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
+import { basketResetPersistent } from 'utils/basket'
 
 import checkoutActions, {
   trackPurchase,
@@ -31,9 +36,13 @@ import checkoutActions, {
   checkoutCreatePreviewOrder,
   checkoutTransactionalOrder,
   trackCheckoutButtonPressed,
+  fetchPayPalClientToken,
+  clearPayPalClientToken,
   setCurrentPaymentMethod,
+  setPayPalDeviceData,
+  setPayPalNonce,
+  firePayPalError,
 } from 'actions/checkout'
-import {basketPromoCodeAppliedChange, basketPromoCodeChange} from '../basket'
 
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
@@ -123,15 +132,15 @@ jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
 }))
 jest.mock('actions/status', () => ({
-  error: jest.fn(),
-  pending: jest.fn(),
+  error: jest.fn(() => ({ type: 'error_action' })),
+  pending: jest.fn(() => ({ type: 'pending_action' })),
 }))
 jest.mock('actions/order', () => ({
   orderAssignToUser: jest.fn(),
 }))
 jest.mock('actions/tracking', () => ({
-  trackAffiliatePurchase: jest.fn(),
-  trackUTMAndPromoCode: jest.fn()
+  trackAffiliatePurchase: jest.fn(() => ({ type: 'trackAffiliatePurchase' })),
+  trackUTMAndPromoCode: jest.fn(() => ({ type: 'trackUTMAndPromoCode' }))
 }))
 
 jest.mock('apis/addressLookup', () => ({
@@ -243,6 +252,11 @@ jest.mock('apis/payments', () => ({
         }
     }
   })),
+  fetchPayPalToken: jest.fn(() => Promise.resolve({
+    data: {
+      clientToken: 'fake-client-token'
+    }
+  }))
 }))
 
 const createState = (stateOverrides) => ({
@@ -344,6 +358,10 @@ const createState = (stateOverrides) => ({
       },
     },
   }),
+  payment: Immutable.fromJS({
+    paymentNonce: 'sdfgs8sdfg',
+    paymentMethod: PaymentMethod.Card
+  }),
   request: Immutable.fromJS({
     browser: 'desktop',
   }),
@@ -360,7 +378,10 @@ const createState = (stateOverrides) => ({
     },
     enable3DSForSignUp: {
       value: false
-    }
+    },
+    enablePayPal: {
+      value: false
+    },
   }),
   ...stateOverrides,
 })
@@ -649,6 +670,30 @@ describe('checkout actions', () => {
 
         expect(checkoutActions.checkout3DSSignup).toHaveBeenCalled()
       })
+
+      describe('when PayPal payment method selected', () => {
+        beforeEach(() => {
+          getState.mockReturnValue(createState({
+            features: Immutable.fromJS({
+              enable3DSForSignUp: {
+                value: true
+              },
+              enablePayPal: {
+                value: true
+              }
+            }),
+            payment: Immutable.fromJS({
+              paymentMethod: PaymentMethod.PayPal,
+            })
+          }))
+        })
+
+        test('should init non 3DS signup flow', async () => {
+          await checkoutActions.checkoutSignup()(dispatch, getState)
+
+          expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
+        })
+      })
     })
 
     describe('when 3DS disabled', () => {
@@ -659,6 +704,36 @@ describe('checkout actions', () => {
       })
 
       test('should init non-3DS signup flow', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
+      })
+    })
+
+    describe('when PayPal enabled and PayPal payment method selected', () => {
+      beforeEach(() => {
+        getState.mockReturnValue(createState({
+          features: Immutable.fromJS({
+            enable3DSForSignUp: {
+              value: true
+            },
+            enablePayPal: {
+              value: true
+            }
+          }),
+          payment: Immutable.fromJS({
+            paymentMethod: PaymentMethod.PayPal,
+          })
+        }))
+      })
+
+      test('should send "Submit" tracking event', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
+      })
+
+      test('should init non 3DS signup flow', async () => {
         await checkoutActions.checkoutSignup()(dispatch, getState)
 
         expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
@@ -1218,14 +1293,103 @@ describe('checkout actions', () => {
     })
   })
 
-  describe('setCurrentPaymentMethod', () => {
-    test('should call setCurrentPaymentMethod with proper parameters', () => {
-      const paymentMethod = 'payment method'
-      const result = setCurrentPaymentMethod(paymentMethod)
+  describe('given fetchPayPalClientToken action', () => {
+    describe('when successfully fetched client token', () => {
+      test('should dispatch PAYMENT_SET_PAYPAL_CLIENT_TOKEN', async () => {
+        await fetchPayPalClientToken()(dispatch)
 
-      expect(result).toEqual({
-        type: actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD,
-        paymentMethod
+        expect(fetchPayPalToken).toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
+          token: 'fake-client-token'
+        })
+      })
+    })
+  })
+
+  describe('given clearPayPalClientToken action', () => {
+    describe('when called', () => {
+      test('should dispatch PAYMENT_SET_PAYPAL_CLIENT_TOKEN with empty token', () => {
+        clearPayPalClientToken()(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
+          token: null
+        })
+      })
+    })
+  })
+
+  describe('given setCurrentPaymentMethod action', () => {
+    describe('when called', () => {
+      test('should dispatch PAYMENT_SET_PAYMENT_METHOD', () => {
+        setCurrentPaymentMethod(PaymentMethod.Card)(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
+          paymentMethod: PaymentMethod.Card
+        })
+      })
+    })
+
+    describe('when payment method is Card', () => {
+      test('should dispatch trackUTMAndPromoCode with select_card_payment type', () => {
+        setCurrentPaymentMethod(PaymentMethod.Card)(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'trackUTMAndPromoCode' })
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.selectCardPayment)
+      })
+    })
+
+    describe('when payment method is PayPal', () => {
+      test('should dispatch trackUTMAndPromoCode with select_paypal type', () => {
+        setCurrentPaymentMethod(PaymentMethod.PayPal)(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'trackUTMAndPromoCode' })
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.selectPayPalPayment)
+      })
+    })
+  })
+
+  describe('given setPayPalDeviceData action', () => {
+    describe('when called', () => {
+      test('should dispatch PAYMENT_SET_PAYPAL_DEVICE_DATA', () => {
+        const deviceData = JSON.stringify({ correlationId: 'dfasdfa'})
+
+        setPayPalDeviceData(deviceData)(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.PAYMENT_SET_PAYPAL_DEVICE_DATA,
+          deviceData
+        })
+      })
+    })
+  })
+
+  describe('given setPayPalNonce action', () => {
+    describe('when called', () => {
+      test('should dispatch PAYMENT_SET_PAYPAL_NONCE', () => {
+        const nonce = 'fake-nonce'
+
+        setPayPalNonce(nonce)(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
+          nonce
+        })
+      })
+    })
+  })
+
+  describe('given firePayPalError action', () => {
+    describe('when called', () => {
+      test('should dispatch PAYPAL_ERROR', () => {
+        const err = new Error('PayPal error')
+
+        firePayPalError(err)(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
+        expect(error).toHaveBeenCalledWith(actionTypes.PAYPAL_ERROR, true)
       })
     })
   })

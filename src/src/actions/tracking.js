@@ -1,12 +1,13 @@
 // global AWIN
-import { getUserOrderById } from 'utils/user'
-import logger from 'utils/logger'
-import globals from 'config/globals'
-import * as trackingKeys from 'actions/trackingKeys'
-import { actionTypes } from 'actions/actionTypes'
 import moment from 'moment'
-import { getUTM } from '../utils/utm'
-import { getUTMAndPromoCode } from '../selectors/tracking'
+import { actionTypes } from 'actions/actionTypes'
+import * as trackingKeys from 'actions/trackingKeys'
+import globals from 'config/globals'
+import logger from 'utils/logger'
+import { getUserOrderById } from 'utils/user'
+import { getUTM } from 'utils/utm'
+import { getCurrentPaymentMethod } from 'selectors/payment'
+import { getUTMAndPromoCode } from 'selectors/tracking'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -180,6 +181,23 @@ export const trackGetStarted = (section) => (dispatch, getState) => {
   })
 }
 
+export const trackSubmitOrderEvent = () => (dispatch, getState) => {
+  const state = getState()
+  const { promoCode, UTM } = getUTMAndPromoCode(state)
+  const paymentMethod = getCurrentPaymentMethod(state)
+  const type = trackingKeys.clickSubmitOrder
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      ...UTM,
+      promoCode,
+      paymentMethod,
+    }
+  })
+}
+
 export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) => {
   const { promoCode, UTM } = getUTMAndPromoCode(getState())
   const type = trackingKeys[keyType] || keyType
@@ -190,7 +208,7 @@ export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) =
       actionType: type,
       ...(section && { section }),
       ...UTM,
-      promoCode
+      promoCode,
     }
   })
 }
@@ -198,7 +216,10 @@ export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) =
 const getNewRecordStatus = (record) => (record ? 'success' : 'failed')
 
 export const trackNewUser = (userId) => (dispatch, getState) => {
-  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const state = getState()
+  const { UTM, promoCode } = getUTMAndPromoCode(state)
+  const paymentMethod = getCurrentPaymentMethod(state)
+  const status = getNewRecordStatus(userId)
   const type = trackingKeys.createUser
 
   dispatch({
@@ -207,14 +228,18 @@ export const trackNewUser = (userId) => (dispatch, getState) => {
       actionType: type,
       promoCode,
       ...UTM,
+      paymentMethod,
       userId,
-      status: getNewRecordStatus(userId)
+      status,
     }
   })
 }
 
 export const trackNewOrder = (orderId, userId) => (dispatch, getState) => {
-  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const state = getState()
+  const { UTM, promoCode } = getUTMAndPromoCode(state)
+  const paymentMethod = getCurrentPaymentMethod(state)
+  const status = getNewRecordStatus(userId)
   const type = trackingKeys.createOrder
 
   dispatch({
@@ -223,9 +248,31 @@ export const trackNewOrder = (orderId, userId) => (dispatch, getState) => {
       actionType: type,
       promoCode,
       ...UTM,
+      paymentMethod,
       orderId,
       userId,
-      status: getNewRecordStatus(userId)
+      status,
+    }
+  })
+}
+
+export const trackSubscriptionCreated = (orderId, userId, subscriptionId) => (dispatch, getState) => {
+  const state = getState()
+  const { UTM } = getUTMAndPromoCode(state)
+  const promoCode = state.pricing.get('prices').get('promoCode')
+  const paymentMethod = getCurrentPaymentMethod(state)
+  const type = trackingKeys.subscriptionCreated
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      promoCode,
+      ...UTM,
+      paymentMethod,
+      userId,
+      orderId,
+      subscriptionId,
     }
   })
 }
@@ -391,14 +438,4 @@ export const trackLoginClickOnHungryPage = (type) => (dispatch) => {
       actionType: type
     }
   })
-}
-
-export default {
-  trackFirstPurchase,
-  setAffiliateSource,
-  trackRecipeOrderDisplayed,
-  trackGetStarted,
-  setUTMSource,
-  trackUTMAndPromoCode,
-  trackLoginClickOnHungryPage,
 }

@@ -3,6 +3,7 @@ import { getFormSyncErrors } from 'redux-form'
 
 import routes from 'config/routes'
 import gaID from 'config/head/gaTracking'
+import { PaymentMethod } from 'config/signup'
 
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
@@ -13,13 +14,13 @@ import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchIntervals, fetchPromoCodeValidity, fetchReference } from 'apis/customers'
-import { authPayment, checkPayment } from 'apis/payments'
+import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
 import { createPreviewOrder } from 'apis/orders'
 
 import { getChosenAddressId } from 'selectors/basket'
 import { getAboutYouFormName, getDeliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
 import { getNDDFeatureValue, getIs3DSForSignUpEnabled } from 'selectors/features'
-import { getPaymentDetails } from 'selectors/payment'
+import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
 
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
@@ -54,7 +55,7 @@ const checkoutActions = {
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
-  trackPromocodeChange
+  trackPromocodeChange,
 }
 
 const errorCodes = {
@@ -245,11 +246,13 @@ export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => d
 
 export function checkoutSignup() {
   return async (dispatch, getState) => {
+    const state = getState()
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
 
-    const is3DSEnabled = getIs3DSForSignUpEnabled(getState())
+    const is3DSEnabled = getIs3DSForSignUpEnabled(state)
+    const isCardPayment = getCurrentPaymentMethod(state) === PaymentMethod.Card
 
-    if (is3DSEnabled) {
+    if (is3DSEnabled && isCardPayment) {
       await dispatch(checkoutActions.checkout3DSSignup())
     } else {
       await dispatch(checkoutActions.checkoutNon3DSSignup())
@@ -294,7 +297,7 @@ export function checkout3DSSignup() {
     const state = getState()
 
     try {
-      const promoCodeValidityDetails = getPromoCodeValidationDetails(getState())
+      const promoCodeValidityDetails = getPromoCodeValidationDetails(state)
       if (promoCodeValidityDetails.promo_code) {
         const validationResult = await fetchPromoCodeValidity(promoCodeValidityDetails)
 
@@ -323,7 +326,7 @@ export function checkout3DSSignup() {
 
       const { basket } = state
       const orderId = basket.get('previewOrderId')
-      const { card_token: cardToken } = getPaymentDetails(state)
+      const cardToken = getCardToken(state)
       const prices = state.pricing.get('prices')
       const amountInPence = prices.get('total', 0) * 100
       const { success, failure } = routes.client.payment
@@ -605,9 +608,68 @@ export function trackPromocodeChange(promocode, added) {
   })
 }
 
-export const setCurrentPaymentMethod = (paymentMethod) => ({
-  type: actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD,
-  paymentMethod
-})
+export function fetchPayPalClientToken() {
+  return async (dispatch) => {
+    try {
+      const { data } = await fetchPayPalToken()
+
+      dispatch({
+        type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
+        token: data.clientToken
+      })
+    } catch (err) {
+      logger.error({ message: `${actionTypes.PAYPAL_TOKEN_FETCH_FAILED} - ${err.message}`, errors: [err] })
+      dispatch(error(actionTypes.PAYPAL_TOKEN_FETCH_FAILED, true))
+    }
+  }
+}
+
+export function clearPayPalClientToken() {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
+      token: null
+    })
+  }
+}
+
+export function setCurrentPaymentMethod(paymentMethod) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
+      paymentMethod
+    })
+
+    const trackingKey = paymentMethod === PaymentMethod.Card
+      ? trackingKeys.selectCardPayment
+      : trackingKeys.selectPayPalPayment
+    dispatch(trackUTMAndPromoCode(trackingKey))
+  }
+}
+
+export function setPayPalDeviceData(deviceData) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.PAYMENT_SET_PAYPAL_DEVICE_DATA,
+      deviceData
+    })
+  }
+}
+
+export function setPayPalNonce(nonce) {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
+      nonce
+    })
+  }
+}
+
+export function firePayPalError(err) {
+  return (dispatch) => {
+    logger.error({ message: `${actionTypes.PAYPAL_ERROR} - ${err.message}`, errors: [err] })
+    dispatch(error(actionTypes.PAYPAL_ERROR, true))
+  }
+}
 
 export default checkoutActions

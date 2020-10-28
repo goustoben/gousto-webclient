@@ -1,7 +1,6 @@
 export const PaymentMethod = {
-  Unchosen: 'Unchosen',
   Card: 'Card',
-  Paypal: 'Paypal'
+  PayPal: 'PayPal'
 }
 
 export const signupConfig = {
@@ -18,6 +17,7 @@ export const signupConfig = {
   ],
   payment_types: {
     card: 'card',
+    paypal: 'paypal',
   },
   address_types: {
     billing: 'billing',

@@ -17,6 +17,30 @@ describe('Payment state', () => {
 
       expect(result.get('challengeUrl')).toBeFalsy()
     })
+
+    test('payment method should be Card', () => {
+      const result = initialState()
+
+      expect(result.get('paymentMethod')).toBe(PaymentMethod.Card)
+    })
+
+    test('PayPal client token should not be defined', () => {
+      const result = initialState()
+
+      expect(result.get('paypalClientToken')).toBeFalsy()
+    })
+
+    test('PayPal nonce should not be defined', () => {
+      const result = initialState()
+
+      expect(result.get('paypalNonce')).toBeFalsy()
+    })
+
+    test('PayPal device data should not be defined', () => {
+      const result = initialState()
+
+      expect(result.get('paypalDeviceData')).toBeFalsy()
+    })
   })
 
   describe('when action type is PAYMENT_SHOW_MODAL', () => {
@@ -63,27 +87,89 @@ describe('Payment state', () => {
     })
   })
 
-  describe('when action type is PAYMENT_SET_CURRENT_PAYMENT_METHOD', () => {
+  describe('when action type is PAYMENT_SET_PAYMENT_METHOD', () => {
     let state
+    let result
+    const deviceData = JSON.stringify({ correlationId: 'dfasdfs' })
 
     beforeEach(() => {
       state = initialState()
+        .set('paypalNonce', 'kdbfksjfjsbfjgbksdfjh')
+        .set('paypalDeviceData', deviceData)
+
+      result = payment(state, {
+        type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
+        paymentMethod: PaymentMethod.PayPal
+      })
     })
 
-    test('and Card is chosen: then it should set currentPaymentMethod to card', () => {
-      const result = payment(state, {
-        type: actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD,
-        paymentMethod: PaymentMethod.Card
-      })
-      expect(result.get('currentPaymentMethod')).toBe(PaymentMethod.Card)
+    test('should update paymentMethod', () => {
+      expect(result.get('paymentMethod')).toBe(PaymentMethod.PayPal)
     })
 
-    test('and Paypal is chosen: then it should set currentPaymentMethod to Paypal', () => {
-      const result = payment(state, {
-        type: actionTypes.PAYMENT_SET_CURRENT_PAYMENT_METHOD,
-        paymentMethod: PaymentMethod.Paypal
+    test('should reset PayPal nonce', () => {
+      expect(result.get('paypalNonce')).toBeFalsy()
+    })
+
+    test('should not reset PayPal device data', () => {
+      expect(result.get('paypalDeviceData')).toBe(deviceData)
+    })
+  })
+
+  describe('when action type is PAYMENT_SET_PAYPAL_CLIENT_TOKEN', () => {
+    let state
+    let result
+    const token = 'ewrtwerdsdssdf'
+
+    beforeEach(() => {
+      state = initialState()
+
+      result = payment(state, {
+        type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
+        token
       })
-      expect(result.get('currentPaymentMethod')).toBe(PaymentMethod.Paypal)
+    })
+
+    test('should update PayPal client token', () => {
+      expect(result.get('paypalClientToken')).toBe(token)
+    })
+  })
+
+  describe('when action type is PAYMENT_SET_PAYPAL_NONCE', () => {
+    let state
+    let result
+    const nonce = 'kdbfksjfjsbfjgbksdfjh'
+
+    beforeEach(() => {
+      state = initialState()
+
+      result = payment(state, {
+        type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
+        nonce
+      })
+    })
+
+    test('should update PayPal client token', () => {
+      expect(result.get('paypalNonce')).toBe(nonce)
+    })
+  })
+
+  describe('when action type is PAYMENT_SET_PAYPAL_DEVICE_DATA', () => {
+    let state
+    let result
+    const deviceData = JSON.stringify({ correlationId: 'dfasdfs' })
+
+    beforeEach(() => {
+      state = initialState()
+
+      result = payment(state, {
+        type: actionTypes.PAYMENT_SET_PAYPAL_DEVICE_DATA,
+        deviceData
+      })
+    })
+
+    test('should update PayPal client token', () => {
+      expect(result.get('paypalDeviceData')).toBe(deviceData)
     })
   })
 })

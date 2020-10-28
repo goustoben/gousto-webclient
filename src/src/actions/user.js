@@ -1,31 +1,40 @@
 import moment from 'moment'
 import Immutable from 'immutable'
 
-import logger from 'utils/logger'
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
-import { getDeliveryTariffId } from 'utils/deliveries'
+import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { cancelOrder, fetchOrder } from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
-import { fetchDeliveryConsignment } from 'apis/deliveries'
+
+import { PaymentMethod, signupConfig } from 'config/signup'
+
+import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { isChoosePlanEnabled, getNDDFeatureValue, getIsPayWithPayPalEnabled } from 'selectors/features'
+import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
+import { getUserRecentRecipesIds } from 'selectors/user'
+
+import logger from 'utils/logger'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
-import { signupConfig } from 'config/signup'
-import { getPaymentDetails } from 'selectors/payment'
-import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isChoosePlanEnabled, getNDDFeatureValue } from 'selectors/features'
-import { getUserRecentRecipesIds } from 'selectors/user'
-import * as trackingKeys from 'actions/trackingKeys'
+import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
-import { getUTMAndPromoCode } from 'selectors/tracking'
-import statusActions from './status'
+
+import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
-import { actionTypes } from './actionTypes'
-import { trackFirstPurchase, trackUserAttributes, trackNewUser, trackNewOrder } from './tracking'
+import statusActions from './status'
 // eslint-disable-next-line import/no-cycle
 import { subscriptionLoadData } from './subscription'
+import { placeOrder } from './trackingKeys'
+import {
+  trackFirstPurchase,
+  trackUserAttributes,
+  trackNewUser,
+  trackNewOrder,
+  trackSubscriptionCreated,
+} from './tracking'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -618,10 +627,10 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
-    const prices = getState().pricing.get('prices')
+    const state = getState()
+    const prices = state.pricing.get('prices')
     try {
-      const { form, basket, promoAgeVerified } = getState()
-      const state = getState()
+      const { form, basket, promoAgeVerified } = state
       const deliveryFormName = getDeliveryFormName(state)
       const aboutYouFormName = getAboutYouFormName(state)
 
@@ -629,10 +638,33 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
       const payment = Immutable.fromJS(form.payment.values).get('payment')
 
+      const isPayPalEnabled = getIsPayWithPayPalEnabled(state)
+      const isCard = !isPayPalEnabled || getCurrentPaymentMethod(state) === PaymentMethod.Card
+
       const deliveryAddress = getAddress(delivery)
-      const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
+      const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
       const intervalId = delivery.get('interval_id', 1)
+
+      let paymentMethod
+      if (isCard) {
+        paymentMethod = {
+          is_default: 1,
+          type: signupConfig.payment_types.card,
+          name: 'My Card',
+          card: getPaymentDetails(state)
+        }
+        if (sca3ds) {
+          paymentMethod.card.card_token = sourceId
+        }
+      } else {
+        paymentMethod = {
+          is_default: 1,
+          type: signupConfig.payment_types.paypal,
+          name: 'My PayPal',
+          paypal: getPayPalPaymentDetails(state)
+        }
+      }
 
       const reqData = {
         order_id: basket.get('previewOrderId'),
@@ -651,12 +683,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
           delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
         },
-        payment_method: {
-          is_default: 1,
-          type: signupConfig.payment_types.card,
-          name: 'My Card',
-          card: getPaymentDetails(state)
-        },
+        payment_method: paymentMethod,
         addresses: {
           shipping_address: {
             type: signupConfig.address_types.shipping,
@@ -675,9 +702,8 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         },
       }
 
-      if (sca3ds) {
+      if (isCard && sca3ds) {
         reqData['3ds'] = true
-        reqData.payment_method.card.card_token = sourceId
         reqData.customer.gousto_ref = state.checkout.get('goustoRef')
       }
 
@@ -700,12 +726,12 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         })
         user = user.set('goustoReference', user.get('goustoReference').toString())
 
-        dispatch(trackNewUser(customerId), { key: trackingKeys.createUser })
+        dispatch(trackNewUser(customerId))
 
         dispatch({
           type: actionTypes.CHECKOUT_ORDER_PLACED,
           trackingData: {
-            actionType: trackingKeys.placeOrder,
+            actionType: placeOrder,
             order_id: orderId,
             order_total: prices.get('total'),
             promo_code: prices.get('promoCode'),
@@ -716,24 +742,13 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         })
 
         dispatch(trackFirstPurchase(orderId, prices))
-        dispatch(trackNewOrder(orderId, customerId), { key: trackingKeys.createOrder })
+        dispatch(trackNewOrder(orderId, customerId))
         dispatch(basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
 
         const { id: subscriptionId } = subscription
 
-        const { UTM } = getUTMAndPromoCode(getState())
-        dispatch({
-          type: actionTypes.CHECKOUT_SUBSCRIPTION_CREATED,
-          trackingData: {
-            actionType: trackingKeys.subscriptionCreated,
-            ...UTM,
-            promoCode: prices.get('promoCode'),
-            userId: customerId,
-            orderId,
-            subscriptionId
-          }
-        })
+        dispatch(trackSubscriptionCreated(orderId, customerId, subscriptionId))
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
       }

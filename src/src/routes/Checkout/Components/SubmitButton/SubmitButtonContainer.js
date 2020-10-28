@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { trackUTMAndPromoCode } from 'actions/tracking'
+import { trackSubmitOrderEvent } from 'actions/tracking'
 import { SubmitButton } from './SubmitButton'
 
 function mapStateToProps(state, ownProps) {
@@ -13,7 +13,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  trackUTMAndPromoCode
+  trackSubmitOrderEvent
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmitButton)
+export const SubmitButtonContainer = connect(mapStateToProps, mapDispatchToProps)(SubmitButton)

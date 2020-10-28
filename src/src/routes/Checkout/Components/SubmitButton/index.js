@@ -1,1 +1,1 @@
-export default from './SubmitButtonContainer'
+export { SubmitButtonContainer as SubmitButton } from './SubmitButtonContainer'

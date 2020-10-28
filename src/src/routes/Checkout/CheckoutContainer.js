@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
+
 import actions from 'actions'
-import { trackCheckoutButtonPressed } from 'actions/checkout'
-import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { changeRecaptcha } from 'actions/auth'
+import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { fetchPayPalClientToken, trackCheckoutButtonPressed, clearPayPalClientToken } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { getCheckoutRedesign } from 'selectors/features'
+import { getCheckoutRedesign, getIsPayWithPayPalEnabled } from 'selectors/features'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -16,10 +17,11 @@ function mapStateToProps(state, ownProps) {
     browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
     isCheckoutRedesignEnabled: getCheckoutRedesign(state),
+    isPayWithPayPalEnabled: getIsPayWithPayPalEnabled(state),
   }
 }
 
-const CheckoutContainer = connect(mapStateToProps, {
+export const CheckoutContainer = connect(mapStateToProps, {
   menuLoadDays: actions.menuLoadDays,
   redirect: actions.redirect,
   submitOrder: actions.checkoutSignup,
@@ -30,8 +32,6 @@ const CheckoutContainer = connect(mapStateToProps, {
   trackCheckoutButtonPressed,
   changeRecaptcha,
   trackUTMAndPromoCode,
+  fetchPayPalClientToken,
+  clearPayPalClientToken,
 })(Checkout)
-
-export {
-  CheckoutContainer
-}

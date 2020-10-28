@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import TermsAndConditions from 'routes/Checkout/Components/TermsAndConditions'
+import { TermsAndConditions } from 'routes/Checkout/Components/TermsAndConditions'
 import Link from 'Link'
 
 describe('TermsAndConditions', () => {

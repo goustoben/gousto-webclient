@@ -7,6 +7,8 @@ const errorsToCapture = [
   actionTypes.CHECKOUT_SIGNUP_LOGIN,
   actionTypes.ORDER_SAVE,
   actionTypes.CARD_TOKENIZATION_FAILED,
+  actionTypes.PAYPAL_TOKEN_FETCH_FAILED,
+  actionTypes.PAYPAL_ERROR,
   actionTypes.NETWORK_FAILURE,
   actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED,
 ]
@@ -76,6 +78,11 @@ const checkout = {
       const { goustoRef } = action
 
       return state.set('goustoRef', goustoRef)
+    }
+
+    case actionTypes.PAYMENT_SET_PAYMENT_METHOD: {
+      return state
+        .set('errors', initialState().get('errors'))
     }
 
     case actionTypes.ERROR: {

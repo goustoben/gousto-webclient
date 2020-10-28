@@ -1,7 +1,7 @@
 import logger from 'utils/logger'
 import basketActions from 'actions/basket'
 import promosActions from 'actions/promos'
-import trackingActions from 'actions/tracking'
+import { setAffiliateSource } from 'actions/tracking'
 import { getIsAuthenticated } from 'selectors/auth'
 
 async function processQuery(query, store, { hashTag = '', }) {
@@ -35,7 +35,7 @@ async function processQuery(query, store, { hashTag = '', }) {
   }
 
   if (query.asource) {
-    store.dispatch(trackingActions.setAffiliateSource(query.asource))
+    store.dispatch(setAffiliateSource(query.asource))
   }
 }
 
