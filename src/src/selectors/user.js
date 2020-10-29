@@ -106,6 +106,11 @@ export const getNextDelivery = createSelector(
   orders => orders.find(order => order.get('orderState') !== 'cancelled') || null
 )
 
+export const getHasBoxesToSkip = createSelector(
+  getUserNewOrdersForMultiSkip,
+  newOrders => newOrders.some(({ canSkip }) => canSkip)
+)
+
 export const getNextDeliveryDate = createSelector(
   getNextDelivery,
   nextDelivery => (nextDelivery

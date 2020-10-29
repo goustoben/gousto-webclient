@@ -6,8 +6,9 @@ import { OnScreenRecoveryViewContainer } from '../OnScreenRecoveryView'
 
 export const OnScreenRecoverySteps = ({
   isMultiSkipEnabled,
+  hasBoxesToSkip
 }) => {
-  const [isMultiSkipStep, setIsMultiSkipStep] = useState(isMultiSkipEnabled)
+  const [isMultiSkipStep, setIsMultiSkipStep] = useState(isMultiSkipEnabled && hasBoxesToSkip)
 
   return isMultiSkipStep
     ? <MultiSkipScreenContainer handleContinueToPause={() => setIsMultiSkipStep(false)} />
@@ -16,4 +17,5 @@ export const OnScreenRecoverySteps = ({
 
 OnScreenRecoverySteps.propTypes = {
   isMultiSkipEnabled: PropTypes.bool.isRequired,
+  hasBoxesToSkip: PropTypes.bool.isRequired
 }

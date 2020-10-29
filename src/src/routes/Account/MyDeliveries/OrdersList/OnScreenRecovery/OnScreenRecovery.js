@@ -10,7 +10,8 @@ const propTypes = {
   visible: PropTypes.bool,
   triggered: PropTypes.bool,
   getRecoveryContent: PropTypes.func,
-  isMultiSkipEnabled: PropTypes.bool.isRequired
+  isMultiSkipEnabled: PropTypes.bool.isRequired,
+  hasBoxesToSkip: PropTypes.bool.isRequired
 }
 
 const defaultProps = {
@@ -21,7 +22,10 @@ const defaultProps = {
 
 export class OnScreenRecovery extends React.Component {
   componentDidUpdate(prevProps) {
-    const { triggered, getRecoveryContent } = this.props
+    const {
+      triggered,
+      getRecoveryContent,
+    } = this.props
 
     if (triggered && (prevProps.triggered !== triggered)) {
       getRecoveryContent()
@@ -31,14 +35,18 @@ export class OnScreenRecovery extends React.Component {
   render() {
     const {
       visible,
-      isMultiSkipEnabled
+      isMultiSkipEnabled,
+      hasBoxesToSkip
     } = this.props
 
     return (
       <ModalComponent styleName={css.modalComponent} visible={visible}>
         {/* Recovery steps as its own stateful component */}
         {/* As <Overlay/> cannot re-render its top-level children */}
-        <OnScreenRecoverySteps isMultiSkipEnabled={isMultiSkipEnabled} />
+        <OnScreenRecoverySteps
+          hasBoxesToSkip={hasBoxesToSkip}
+          isMultiSkipEnabled={isMultiSkipEnabled}
+        />
       </ModalComponent>
     )
   }

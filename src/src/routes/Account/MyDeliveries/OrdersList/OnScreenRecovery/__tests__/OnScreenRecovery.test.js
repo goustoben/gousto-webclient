@@ -24,6 +24,7 @@ describe('Order Skip Recovery Modal', () => {
           orderType="pending"
           getRecoveryContent={getRecoveryContent}
           isMultiSkipEnabled
+          hasBoxesToSkip
         />
       )
 
