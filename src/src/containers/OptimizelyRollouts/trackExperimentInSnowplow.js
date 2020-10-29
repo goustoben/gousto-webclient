@@ -7,6 +7,12 @@ const experimentsConfig = {
     variationName: 'Variation',
     defaultName: 'Control',
   },
+  christmas_merchandising_experiment_2020: {
+    id: 'christmas_merchandising_experiment_2020',
+    name: 'christmas_merchandising_experiment_2020',
+    variationName: 'Variation',
+    defaultName: 'Control',
+  },
   testFeature: {
     id: 'TestFeature',
     name: 'Test Feature',

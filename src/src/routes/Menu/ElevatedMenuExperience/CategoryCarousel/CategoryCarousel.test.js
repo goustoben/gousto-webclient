@@ -122,4 +122,29 @@ describe('CategoryCarousel', () => {
       expect(wrapper.find('.categoryDescription')).toHaveLength(1)
     })
   })
+
+  describe('when carousel config has an image url', () => {
+    test('should render categoryCarouselImageContainer', () => {
+      const carouselConfigWithImage = {
+        ...carouselConfig,
+        imageUrl: 'https://test.com/category-image/460.jpg'
+      }
+
+      const wrapper = shallow(
+        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfigWithImage} />
+      )
+
+      expect(wrapper.find('.categoryCarouselImageContainer').exists()).toBe(true)
+    })
+  })
+
+  describe('when carousel config does not have an image url', () => {
+    test('should not render categoryCarouselImageContainer', () => {
+      const wrapper = shallow(
+        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />
+      )
+
+      expect(wrapper.find('.categoryCarouselImageContainer').exists()).toBe(false)
+    })
+  })
 })

@@ -82,6 +82,7 @@ describe('get brand carousels', () => {
     }]
   }
   ]
+
   describe('when the data contains carousels', () => {
     beforeEach(() => {
       state = {
@@ -127,7 +128,7 @@ describe('getCarouselConfigForCategory', () => {
       linkColor: '#615CFF',
       titleColor: '#333D47',
       fdiStyling: true
-    }]
+    }],
   },
   {
     type: 'carousel_theme',
@@ -140,7 +141,7 @@ describe('getCarouselConfigForCategory', () => {
       titleColor: '#FFDE31',
       linkColor: '#D9DDFF',
       fdiStyling: false
-    }]
+    }],
   }]
 
   beforeEach(() => {
@@ -181,6 +182,7 @@ describe('getCarouselConfigForCategory', () => {
         title: 'Chicken'})
     })
   })
+
   describe('when carousel details is undefined', () => {
     beforeEach(() => {
       props = {
@@ -203,6 +205,7 @@ describe('getCarouselConfigForCategory', () => {
         title: 'Chicken'})
     })
   })
+
   describe('when brand data is undefined', () => {
     beforeEach(() => {
       props = {
@@ -223,6 +226,122 @@ describe('getCarouselConfigForCategory', () => {
         title: 'Chicken',
         theme: {}
       })
+    })
+  })
+
+  describe('when carousel images have an image with a width of 460', () => {
+    beforeEach(() => {
+      props = {
+        category: Immutable.fromJS({
+          shortTitle: 'Chicken',
+          carouselConfig: {
+            styleSlug: 'default',
+            title: 'Chicken',
+            description: 'All our chicken recipes',
+            images: [
+              {
+                altText: 'Gousto x Marmite. Two ',
+                type: 'single-carousel',
+                crops: [
+                  {
+                    width: 230,
+                    url: 'https://test.com/category-image/230.jpg'
+                  },
+                  {
+                    width: 460,
+                    url: 'https://test.com/category-image/460.jpg'
+                  }
+                ]
+              }
+            ]
+          }
+        })
+      }
+    })
+    test('should return an image url for the carousel', () => {
+      expect(getCarouselConfigForCategory(state, props)).toEqual({
+        description: 'All our chicken recipes',
+        styleSlug: 'default',
+        theme: {
+          backgroundColor: '#F4F7FA',
+          color: '#333D47',
+          fdiStyling: true,
+          linkColor: '#615CFF',
+          name: 'light',
+          titleColor: '#333D47'
+        },
+        imageUrl: 'https://test.com/category-image/460.jpg',
+        title: 'Chicken'})
+    })
+  })
+
+  describe('when carousel images do not have an image with a width of 460', () => {
+    beforeEach(() => {
+      props = {
+        category: Immutable.fromJS({
+          shortTitle: 'Chicken',
+          carouselConfig: {
+            styleSlug: 'default',
+            title: 'Chicken',
+            description: 'All our chicken recipes',
+            images: [
+              {
+                altText: 'Gousto x Marmite. Two ',
+                type: 'single-carousel',
+                crops: [
+                  {
+                    width: 230,
+                    url: 'https://test.com/category-image/230.jpg'
+                  }
+                ]
+              }
+            ]
+          }
+        })
+      }
+    })
+    test('should not return an image url for the carousel', () => {
+      expect(getCarouselConfigForCategory(state, props)).toEqual({
+        description: 'All our chicken recipes',
+        styleSlug: 'default',
+        theme: {
+          backgroundColor: '#F4F7FA',
+          color: '#333D47',
+          fdiStyling: true,
+          linkColor: '#615CFF',
+          name: 'light',
+          titleColor: '#333D47'
+        },
+        title: 'Chicken'})
+    })
+  })
+
+  describe('when carousel details does not contain any images', () => {
+    beforeEach(() => {
+      props = {
+        category: Immutable.fromJS({
+          shortTitle: 'Chicken',
+          carouselConfig: {
+            styleSlug: 'default',
+            title: 'Chicken',
+            description: 'All our chicken recipes',
+          }
+        })
+      }
+    })
+    test('should return carousel details without any images', () => {
+      expect(getCarouselConfigForCategory(state, props)).toEqual({
+        description: 'All our chicken recipes',
+        styleSlug: 'default',
+        theme: {
+          backgroundColor: '#F4F7FA',
+          color: '#333D47',
+          fdiStyling: true,
+          linkColor: '#615CFF',
+          name: 'light',
+          titleColor: '#333D47'
+        },
+        title: 'Chicken'})
     })
   })
 })

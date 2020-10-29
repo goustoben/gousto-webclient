@@ -21,6 +21,18 @@ export const getBrandCarousels = ({ brand }) => (brand && brand.data && brand.da
 
 export const getCarouselConfigFromProps = (_, { category }) => category && category.get('carouselConfig')
 
+const getCarouselImage = (images) => {
+  if (!images) {
+    return undefined
+  }
+  const firstItemIndex = 0
+  const crops = images.getIn([firstItemIndex, 'crops'], [])
+
+  const image = crops.find((crop) => (crop.get('width') === 460) )
+
+  return image ? image.get('url') : undefined
+}
+
 export const getCarouselConfigForCategory = createSelector(
   getBrandCarousels,
   getCarouselConfigFromProps,
@@ -36,7 +48,8 @@ export const getCarouselConfigForCategory = createSelector(
         styleSlug: carouselConfig.get('styleSlug'),
         title: carouselConfig.get('title'),
         description: carouselConfig.get('description'),
-        theme: {}
+        theme: {},
+        imageUrl: getCarouselImage(carouselConfig.get('images'))
       }
     }
     const foundCarouselStyle = brandCarousels.find(carousel => carousel.slug === carouselStyleDetails.styleSlug)
