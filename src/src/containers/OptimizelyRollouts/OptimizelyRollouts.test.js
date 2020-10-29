@@ -78,7 +78,9 @@ describe('OptimizelyRollouts', () => {
         test('tracks experiment in snowplow', () => {
           expect(mockedTrackExperimentInSnowplow).toHaveBeenCalledWith(
             'mock-feature',
-            true
+            true,
+            'mock-auth-id',
+            null
           )
         })
       })
@@ -127,7 +129,9 @@ describe('OptimizelyRollouts', () => {
         test('tracks experiment in snowplow', () => {
           expect(mockedTrackExperimentInSnowplow).toHaveBeenCalledWith(
             'mock-feature',
-            true
+            true,
+            null,
+            'mock-session-id'
           )
         })
       })

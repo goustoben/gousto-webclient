@@ -5,6 +5,7 @@ import Link from 'Link'
 import css from './CategoryCarousel.css'
 import { RecipeTileContainer } from '../../components/RecipeTile'
 import { CategoryScrollTrackerContainer } from '../CategoryScrollTracker'
+import { OptimizelyRolloutsContainer } from '../../../../containers/OptimizelyRollouts'
 
 const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselConfig }) => {
   if (!recipes.size) return null
@@ -48,6 +49,14 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselCo
         actionType="scroll_collections"
       >
         <div className={css.categoryCarouselRecipes}>
+          <OptimizelyRolloutsContainer featureName="christmas_merchandising_experiment_2020" featureEnabled>
+            { carouselConfig.imageUrl
+            && (
+            <div className={css.categoryCarouselImageContainer}>
+              <img className={css.categoryCarouselImage} src={carouselConfig.imageUrl} alt={carouselConfig.title} />
+            </div>
+            )}
+          </OptimizelyRolloutsContainer>
           {recipes.map((value) => (
             <div key={value.recipe.get('id')} className={css.categoryCarouselRecipeOuter}>
               <RecipeTileContainer recipeId={value.recipe.get('id')} categoryId={categoryId} originalId={value.originalId} isInCarousel fdiStyling={carouselConfig.theme.fdiStyling} />
@@ -66,6 +75,7 @@ CategoryCarousel.propTypes = {
   carouselConfig: PropTypes.shape({
     title: PropTypes.string,
     description: PropTypes.string,
+    imageUrl: PropTypes.string,
     theme: PropTypes.shape({
       color: PropTypes.string,
       backgroundColor: PropTypes.string,
