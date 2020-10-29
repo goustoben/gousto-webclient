@@ -2,8 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
-import config from 'config/checkout'
-import { capitalizeFirstLetter } from 'utils/text'
 import { emailValidator } from 'utils/forms'
 import { Login } from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
@@ -33,10 +31,6 @@ class AboutYou extends React.PureComponent {
 
   render() {
     const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen } = this.props
-    const titles = config.titles.map(title => ({
-      value: title,
-      label: capitalizeFirstLetter(title),
-    }))
 
     return (
       <FormSection name={sectionName}>
@@ -58,20 +52,6 @@ class AboutYou extends React.PureComponent {
                   <span className={css.arrowRight} />
                 </span>
               </p>
-            </div>
-          </div>
-          <div className={css.row}>
-            <div className={css.colSM}>
-              <Field
-                name="title"
-                component={ReduxFormInput}
-                options={titles}
-                inputType="DropDown"
-                label="Title"
-                withRef
-                ref={receiveRef}
-                refId={`${sectionName}.title`}
-              />
             </div>
           </div>
           <div className={css.row}>

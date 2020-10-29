@@ -25,8 +25,8 @@ describe('AboutYou', () => {
       expect(wrapper.type()).toEqual(FormSection)
     })
 
-    test('should render 7 Fields', () => {
-      expect(wrapper.find(Field).length).toEqual(6)
+    test('should render 5 Fields', () => {
+      expect(wrapper.find(Field).length).toEqual(5)
     })
 
     test('should render 1 Overlay', () => {
@@ -92,6 +92,7 @@ describe('AboutYou', () => {
 
   describe('when Log in here button clicked', () => {
     const trackCheckoutButtonPressed = jest.fn()
+    const loginVisibilityChange = jest.fn()
 
     describe('and isMobile false', () => {
       beforeEach(() => {
@@ -122,6 +123,36 @@ describe('AboutYou', () => {
         expect(trackCheckoutButtonPressed).not.toBeCalled()
         wrapper.find('.link').simulate('click')
         expect(trackCheckoutButtonPressed).toHaveBeenCalledWith('LogInCTA Clicked')
+      })
+    })
+
+    describe('and isAuthenticated is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: true,
+          loginVisibilityChange
+        })
+      })
+
+      test('then should not call loginVisibilityChange', () => {
+        expect(loginVisibilityChange).not.toBeCalled()
+        wrapper.find('.link').simulate('click')
+        expect(loginVisibilityChange).not.toBeCalled()
+      })
+    })
+
+    describe('and isAuthenticated is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: false,
+          loginVisibilityChange
+        })
+      })
+
+      test('then should call loginVisibilityChange', () => {
+        expect(loginVisibilityChange).not.toBeCalled()
+        wrapper.find('.link').simulate('click', { stopPropagation: jest.fn() })
+        expect(loginVisibilityChange).toHaveBeenCalledWith(true)
       })
     })
   })
