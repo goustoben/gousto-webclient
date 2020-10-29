@@ -159,7 +159,6 @@ module.exports = {
               promo_code: '',
               password: pwd,
               age_verified: 0,
-              salutation_id: 'mrs',
             },
             payment_method: {
               is_default: 1,

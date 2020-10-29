@@ -11,7 +11,7 @@ const selectAddress = () => {
     cy.get('[data-testing="checkoutAddressDropdown"]')
       .click()
       .get('select')
-      .eq(1)
+      .eq(0)
       .select('FLAT 10, MORRIS HOUSE, SWAINSON ROAD')
     cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
   } else {

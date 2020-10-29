@@ -678,7 +678,6 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
           promo_code: basket.get('promoCode', ''),
           password: aboutYou.get('password'),
           age_verified: Number(promoAgeVerified || false),
-          salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
           delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),

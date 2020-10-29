@@ -554,7 +554,6 @@ describe('user actions', () => {
             promo_code: '',
             password: undefined,
             age_verified: 0,
-            salutation_id: undefined,
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
             delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',

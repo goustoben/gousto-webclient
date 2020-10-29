@@ -69,13 +69,6 @@ module.exports = {
     checkout: 'Checkout securely',
     submit: 'Submit order',
   },
-  titles: [
-    'miss',
-    'mr',
-    'mrs',
-    'ms',
-    'dr',
-  ],
   maxNameLen: 255,
   promoValidationTime: 500,
   leaveBoxOptions: [
