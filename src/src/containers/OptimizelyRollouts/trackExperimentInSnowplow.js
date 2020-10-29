@@ -14,7 +14,7 @@ const experimentsConfig = {
     defaultName: 'Control',
   }
 }
-export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled) => (dispatch) => {
+export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId) => (dispatch) => {
   const experimentData = experimentsConfig[featureName]
   if (experimentData) {
     dispatch({
@@ -24,6 +24,8 @@ export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnable
         experiment_id: experimentData.id,
         experiment_name: experimentData.name,
         variation_name: isOptimizelyFeatureEnabled ? experimentData.variationName : experimentData.defaultName,
+        user_logged_in: Boolean(authUserId),
+        session_id: sessionId
       }
     })
   }

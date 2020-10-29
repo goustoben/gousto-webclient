@@ -10,7 +10,9 @@ describe('trackExperimentInSnowplow', () => {
     describe('when optimizelyExperiment is enabled', () => {
       beforeEach(() => {
         const isOptimizelyFeatureEnabled = true
-        trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled)(dispatch)
+        const authUserId = 'auth-id'
+        const sessionId = ''
+        trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, authUserId, sessionId)(dispatch)
       })
       test('should call snowplow with experiment data', () => {
         expect(dispatch).toHaveBeenCalledWith({
@@ -20,15 +22,19 @@ describe('trackExperimentInSnowplow', () => {
             experiment_id: 'TestFeature',
             experiment_name: 'Test Feature',
             variation_name: 'Variation',
+            user_logged_in: true,
+            session_id: ''
           }
         })
       })
     })
 
-    describe('when optimizelyExperiment is enabled', () => {
+    describe('when optimizelyExperiment is disabled', () => {
       beforeEach(() => {
         const isOptimizelyFeatureEnabled = false
-        trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled)(dispatch)
+        const authUserId = ''
+        const sessionId = 'session-id'
+        trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, authUserId, sessionId)(dispatch)
       })
       test('should call snowplow with experiment data', () => {
         expect(dispatch).toHaveBeenCalledWith({
@@ -38,6 +44,8 @@ describe('trackExperimentInSnowplow', () => {
             experiment_id: 'TestFeature',
             experiment_name: 'Test Feature',
             variation_name: 'Control',
+            user_logged_in: false,
+            session_id: 'session-id'
           }
         })
       })
@@ -48,7 +56,7 @@ describe('trackExperimentInSnowplow', () => {
     beforeEach(() => {
       featureName = 'testFeatureWithNoData'
       const isOptimizelyFeatureEnabled = false
-      trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled)(dispatch)
+      trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, '', '')(dispatch)
     })
     test('should not call dispatch', () => {
       expect(dispatch).not.toHaveBeenCalled()
