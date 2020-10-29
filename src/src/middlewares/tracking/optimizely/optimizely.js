@@ -1,15 +1,15 @@
-
 import windowUtils from 'utils/window'
 
 const sendTrackingData = ({ type, eventName, tags = {}, attributes = {} }) => {
-  let revenueInPennies
-  let tagsObject = {}
+  let revenueInPence
 
-  if (tags && parseInt(tags.revenue)) {
-    revenueInPennies = tags.revenue * 100
+  if (tags && parseFloat(tags.revenue)) {
+    revenueInPence = Math.round(tags.revenue * 100)
   }
 
-  revenueInPennies ? tagsObject = { ...tags, revenue: revenueInPennies } : { ...tags }
+  const tagsObject = revenueInPence
+    ? { ...tags, revenue: revenueInPence }
+    : { ...tags }
 
   const trackingData = {
     type,

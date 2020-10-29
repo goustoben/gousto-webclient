@@ -328,7 +328,7 @@ export function checkout3DSSignup() {
       const orderId = basket.get('previewOrderId')
       const cardToken = getCardToken(state)
       const prices = state.pricing.get('prices')
-      const amountInPence = prices.get('total', 0) * 100
+      const amountInPence = Math.round(prices.get('total', 0) * 100)
       const { success, failure } = routes.client.payment
 
       const reqData = {

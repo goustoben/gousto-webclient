@@ -15,7 +15,8 @@ import {
   getIsMultiSkipPending,
   getIsMultiSkipSuccess,
   getIsMultiSkipError,
-  createMultiSkipSelector
+  createMultiSkipSelector,
+  getHasBoxesToSkip
 } from '../user'
 
 describe('user selectors', () => {
@@ -99,6 +100,17 @@ describe('user selectors', () => {
           isSuccess: false,
           lastSkippedCount: 3
         }))
+      })
+    })
+
+    describe('getHasBoxesToSkip', () => {
+      test('should return true if user has skippable boxes', () => {
+        expect(getHasBoxesToSkip(state)).toEqual(true)
+      })
+
+      test('should return false if user has no skippable boxes', () => {
+        createUserState({ newOrders: [newOrders['1']] })
+        expect(getHasBoxesToSkip(state)).toEqual(false)
       })
     })
 

@@ -19,7 +19,8 @@ jest.mock('../../OnScreenRecoveryView', () => ({
 }))
 
 const defaultProps = {
-  isMultiSkipEnabled: true
+  isMultiSkipEnabled: true,
+  hasBoxesToSkip: true
 }
 
 const shallowWithProps = (props) => {
@@ -32,21 +33,35 @@ describe('OnScreenRecoverySteps', () => {
       shallowWithProps()
     })
 
-    test('Then MultiSkipScreen is rendered', () => {
-      expect(
-        shallowWrapper.find('MultiSkipScreenContainer').exists()
-      ).toEqual(true)
+    describe('And there are boxes to skip', () => {
+      test('Then MultiSkipScreen is rendered', () => {
+        expect(
+          shallowWrapper.find('MultiSkipScreenContainer').exists()
+        ).toEqual(true)
+      })
+
+      describe('When I click continue to pause', () => {
+        beforeEach(() => {
+          act(() => {
+            shallowWrapper
+              .find('MultiSkipScreenContainer')
+              .dive()
+              .find('button')
+              .simulate('click')
+          })
+        })
+
+        test('Then OnScreenRecoveryView is rendered', () => {
+          expect(
+            shallowWrapper.find('OnScreenRecoveryViewContainer').exists()
+          ).toEqual(true)
+        })
+      })
     })
 
-    describe('When I click continue to pause', () => {
+    describe('And there are no boxes to skip', () => {
       beforeEach(() => {
-        act(() => {
-          shallowWrapper
-            .find('MultiSkipScreenContainer')
-            .dive()
-            .find('button')
-            .simulate('click')
-        })
+        shallowWithProps({ hasBoxesToSkip: false })
       })
 
       test('Then OnScreenRecoveryView is rendered', () => {
@@ -58,14 +73,34 @@ describe('OnScreenRecoverySteps', () => {
   })
 
   describe('Given multiSkip is NOT enabled', () => {
-    beforeEach(() => {
-      shallowWithProps({ isMultiSkipEnabled: false })
+    describe('And there are boxes to skip', () => {
+      beforeEach(() => {
+        shallowWithProps({
+          isMultiSkipEnabled: false,
+          hasBoxesToSkip: true
+        })
+      })
+
+      test('Then OnScreenRecoveryView is rendered', () => {
+        expect(
+          shallowWrapper.find('OnScreenRecoveryViewContainer').exists()
+        ).toEqual(true)
+      })
     })
 
-    test('Then OnScreenRecoveryView is rendered', () => {
-      expect(
-        shallowWrapper.find('OnScreenRecoveryViewContainer').exists()
-      ).toEqual(true)
+    describe('And there are no boxes to skip', () => {
+      beforeEach(() => {
+        shallowWithProps({
+          isMultiSkipEnabled: false,
+          hasBoxesToSkip: false
+        })
+      })
+
+      test('Then OnScreenRecoveryView is rendered', () => {
+        expect(
+          shallowWrapper.find('OnScreenRecoveryViewContainer').exists()
+        ).toEqual(true)
+      })
     })
   })
 })

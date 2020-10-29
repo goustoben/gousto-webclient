@@ -171,7 +171,7 @@ jest.mock('apis/payments', () => ({
       cardToken: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
       reference: 'pay_4b55m3huev2e3pfyu5mixqecwq',
       status: 'challenge-pending',
-      value: 3499,
+      value: 3448,
       message: 'Requested redirect link for 3ds authorisation',
       responsePayload: {
         transactionId: 'pay_4b55m3huev2e3pfyu5mixqecwq',
@@ -189,7 +189,7 @@ jest.mock('apis/payments', () => ({
       data: sessionId === 'success_session_id'
         ? {
           id: 'pay_556fkurbopnu3ckcpk7h4a5wfi',
-          amount: 3499,
+          amount: 3448,
           approved: true,
           status: 'Authorized',
           sourceId: 'src_qvgsjghtdjjuhdznipp5najdza',
@@ -223,7 +223,7 @@ jest.mock('apis/payments', () => ({
         }
         : {
           id: 'pay_4b55m3huev2e3pfyu5mixqecwq',
-          amount: 3499,
+          amount: 3448,
           approved: false,
           status: 'Declined',
           sourceId: '',
@@ -343,16 +343,16 @@ const createState = (stateOverrides) => ({
       4: {
         gourmet: {
           promoCodeValid: false,
-          grossTotal: '34.99',
-          total: '34.99',
+          grossTotal: '34.48',
+          total: '34.48',
           vatCharged: '0.00',
           recipeDiscount: '0.00',
           deliveryTotal: '0.00',
           pricePerPortionDiscounted: '5.83',
           pricePerPortion: '5.83',
           productTotal: '0.00',
-          recipeTotalDiscounted: '34.99',
-          recipeTotal: '34.99',
+          recipeTotalDiscounted: '34.48',
+          recipeTotal: '34.48',
           promoCode: false,
         },
       },
@@ -369,7 +369,7 @@ const createState = (stateOverrides) => ({
     prices: {
       grossTotal: 28.00,
       deliveryTotal: 2.99,
-      total: '34.99',
+      total: '34.48',
     }
   }),
   features: Immutable.fromJS({
@@ -884,7 +884,7 @@ describe('checkout actions', () => {
       const expected = {
         order_id: '100004',
         card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
-        amount: 3499,
+        amount: 3448,
         gousto_ref: '105979923',
         '3ds': true,
         success_url: `http://localhost${routes.client.payment.success}`,
