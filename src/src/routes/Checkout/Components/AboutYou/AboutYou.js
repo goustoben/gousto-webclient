@@ -132,8 +132,7 @@ class AboutYou extends React.PureComponent {
           </div>
           <Overlay
             open={isLoginOpen}
-            className={css.mobileOverlay}
-            contentClassName={css.mobileModalContent}
+            contentClassName={css.modalOverlay}
             from="top"
           >
             <ModalPanel
@@ -141,6 +140,7 @@ class AboutYou extends React.PureComponent {
               className={css.modal}
               containerClassName={css.modalContainer}
               disableOverlay
+              isNarrow
             >
               <Login />
             </ModalPanel>
