@@ -42,7 +42,6 @@ const menuActions = {
   menuClearStock,
   menuLoadStock,
   menuLoadDays,
-  menuAddEmptyStock,
   menuBrowseCTAVisibilityChange,
   menuReceiveMenuPending,
   menuReceiveBoxPrices,
@@ -328,18 +327,6 @@ export function menuLoadStock(clearStock = true) {
       for (let x = 0; x < amount; x++) {
         dispatch(menuChangeRecipeStock({ [recipeId]: { [numPortions]: -1 } }))
       }
-    })
-  }
-}
-
-export function menuAddEmptyStock() {
-  return (dispatch, getState) => {
-    const recipesIds = getState().menuRecipes
-    const stocks = recipesIds.reduce((stock, recipeId) => ({ ...stock, [recipeId]: { 2: null, 4: null } }), {})
-
-    dispatch({
-      type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-      stock: stocks,
     })
   }
 }
