@@ -256,6 +256,56 @@ workflows:
           requires:
             - install-test-dependencies
             - build-application
+  e2e-manual:
+    jobs:
+      - setup-src:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - e2e-manual
+      - setup-platform:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - e2e-manual
+      - build-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - e2e-manual
+      - install-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - e2e-manual
+      - test-e2e-selenium:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+            - build-application
+          filters:
+            branches:
+              only:
+                - e2e-manual
+      - test-e2e-selenium-mobile:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+            - build-application
+          filters:
+            branches:
+              only:
+                - e2e-manual
   development-environment:
     jobs:
       - setup-src:
