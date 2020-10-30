@@ -57,7 +57,7 @@ describe('menu actions', () => {
       }
     })
   }
-  let getState = () => state
+  const getState = () => state
 
   beforeEach(() => {
     mockFetchRecipeStock.mockResolvedValue({ data: {
@@ -285,31 +285,6 @@ describe('menu actions', () => {
         type: actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE,
         show: true,
       })
-    })
-  })
-
-  describe('menuAddEmptyStock', () => {
-    beforeEach(() => {
-      getState = () => ({
-        menuRecipes: ['123', '234']
-      })
-    })
-    test('should return a MENU_RECIPE_STOCK_CHANGE action', () => {
-      menuActions.menuAddEmptyStock(true)(dispatch, getState)
-
-      expect(dispatch.mock.calls[0]).toEqual([{
-        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-        stock: {
-          123: {
-            2: null,
-            4: null
-          },
-          234: {
-            2: null,
-            4: null
-          }
-        },
-      }])
     })
   })
 

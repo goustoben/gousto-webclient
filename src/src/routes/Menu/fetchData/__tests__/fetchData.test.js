@@ -526,7 +526,7 @@ describe('menu fetchData', () => {
             getState = () => state
           })
 
-          test('should setCuttoff to ', async () => {
+          test('should setCuttoff to 2020-02-12', async () => {
             const menuLoadMenuResult = Symbol('fake action creator result')
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
@@ -534,6 +534,43 @@ describe('menu fetchData', () => {
             await fetchData({ query, params: {} }, false, false)(dispatch, getState)
 
             expect(actions.menuLoadMenu).toHaveBeenCalledWith('2020-02-12', false)
+          })
+        })
+
+        describe('when preview menu', () => {
+          beforeEach(() => {
+            const newState = {
+              ...state,
+              auth: Immutable.fromJS({
+                isAdmin: false
+              }),
+              menuService: {
+                data: [{
+                  attributes: {
+                    ends_at: '2020-10-13'
+                  }
+                }]
+              }
+            }
+            getState = () => newState
+          })
+
+          afterEach(() => {
+            dispatch = jest.fn().mockResolvedValue(undefined)
+            getState = () => state
+          })
+
+          test('should setCuttoff to 2020-10-12', async () => {
+            const menuLoadMenuResult = Symbol('fake action creator result')
+
+            actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
+
+            await fetchData({ query: {
+              'preview[auth_user_id]': 'user-id-preview',
+            },
+            params: {}
+            }, false, false)(dispatch, getState)
+            expect(actions.menuLoadMenu).toHaveBeenCalledWith('2020-10-12', false)
           })
         })
       })

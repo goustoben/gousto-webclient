@@ -15,6 +15,7 @@ import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { basketRecipeAdd } from '../actions/basketRecipes'
 import { getBrandMenuHeaders, getBrandInfo } from '../actions/brandData'
 import { fetchMenus, fetchMenusWithUserId } from './menuApi'
+import { getPreviewMenuDateForCutoff } from '../selectors/menuService'
 
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 import { sendClientMetric } from '../apis/clientMetrics'
@@ -140,8 +141,14 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
   }
 
   let cutoffDateTime
+
   if (isAdmin) {
     cutoffDateTime = query.cutoffDate || getState().basket.get('date') || cutoffDateTimeNow()
+  }
+
+  const isAdminQuery = !!(query && query['preview[auth_user_id]'])
+  if (isAdminQuery) {
+    cutoffDateTime = getPreviewMenuDateForCutoff(getState())
   }
 
   await dispatch(actions.menuLoadMenu(cutoffDateTime, background))
@@ -150,13 +157,6 @@ const loadWithoutOrder = (query, background) => async (dispatch, getState) => {
 
   if (query.postcode && !getState().basket.get('postcode')) {
     dispatch(actions.basketPostcodeChangePure(query.postcode))
-  }
-
-  if (isAdmin) {
-    await Promise.all([
-      dispatch(actions.menuAddEmptyStock()),
-      dispatch(actions.temp('cutoffDateTime', cutoffDateTime))
-    ])
   }
 }
 
