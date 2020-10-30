@@ -13,7 +13,10 @@ export const PaymentMethodSelectorListItem = ({
   const isActive = paymentMethod === currentPaymentMethod
 
   return (
-    <li className={classNames(css.listItem, { [css.isActive]: isActive })}>
+    <li
+      data-testing={`paymentMethod_${paymentMethod}`}
+      className={classNames(css.listItem, { [css.isActive]: isActive })}
+    >
       <InputRadio
         value={paymentMethod}
         name="paymentMethod"
