@@ -56,8 +56,7 @@ module.exports = {
       })
       .perform(done => {
         browser.pause(1000)
-        orderConfirmation.section.orderConfirmationContainer.checkIfOrderConfirmationPageVisible(browser)
-        done()
+        orderConfirmation.section.orderConfirmationContainer.asyncCheckIfOrderConfirmationPageVisible(browser, done)
       })
       .end()
   },

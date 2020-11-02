@@ -1,17 +1,19 @@
 module.exports = {
-  'Sign-up with checkout.com from /': function (browser) {
+  // Don't treat this file as a test module because it's a part of several
+  // flows.
+  '@disabled': true,
+
+  performSignUpFlowUpToPaymentStep: function (browser, url) {
     const home = browser.page.home()
     const menu = browser.page.menu()
     const shared = browser.page.shared()
     const promoModal = shared.section.body
     const signup = browser.page.signup()
     const checkout = browser.page.checkoutV2()
-    const welcome = browser.page.welcome()
-    const myDeliveries = browser.page.myDeliveries()
     const cookiePolicy = browser.page.cookiePolicy()
 
     browser
-      .url(home.api.launchUrl)
+      .url(url || home.api.launchUrl)
       .perform(function (done) {
         cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerVisible()
         done()
@@ -104,26 +106,5 @@ module.exports = {
         browser.pause(1000)
         done()
       })
-      .perform(function (done) {
-        checkout.section.checkoutContainer.submitPaymentSection(browser)
-        done()
-      })
-      .perform(function (done) {
-        checkout.section.checkoutContainer.goToNextStep()
-        done()
-      })
-      .perform(function (done) {
-        if (checkout.section.checkoutContainer.checkIfPromoCodeErrorVisible()) {
-          checkout.section.checkoutContainer.goToNextStep()
-          done()
-        }
-        done()
-      })
-      .perform(function (done) {
-        welcome.section.welcomeContainer.checkIfWelcomePageVisible()
-        done()
-      })
-      .end()
-  },
-  tags: ['sign-up-v2', 'menu', 'checkout', 'my-deliveries'],
-};
+  }
+}
