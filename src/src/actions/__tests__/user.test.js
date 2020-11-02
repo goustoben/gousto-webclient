@@ -244,7 +244,8 @@ describe('user actions', () => {
               }
             }
           }
-        }
+        },
+        features: Immutable.fromJS({})
       }
       getState.mockReturnValue(state)
 
@@ -667,6 +668,38 @@ describe('user actions', () => {
           await userActions.userSubscribe()(dispatch, getState)
 
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
+        })
+      })
+    })
+
+    describe('signup AB test variant forwarding', () => {
+      const getSignupPayload = () => customerSignup.mock.calls[0][1]
+
+      describe('When no signup feature flags active', () => {
+        test('Signup payload has no ab_variant', async () => {
+          await userSubscribe()(dispatch, getState)
+
+          const payload = getSignupPayload()
+          expect(payload.ab_variant).toBeUndefined()
+        })
+      })
+
+      describe('When first month discount expiry offset enabled', () => {
+        beforeEach(() => {
+          state = {
+            ...state,
+            features: Immutable.fromJS({
+              isFirstMonthPromoOffset: { value: true },
+            })
+          }
+          getState.mockReturnValue(state)
+        })
+
+        test('Signup payload has ab_variant of promo_offset', async () => {
+          await userSubscribe()(dispatch, getState)
+
+          const payload = getSignupPayload()
+          expect(payload.ab_variant).toBe('promo_offset')
         })
       })
     })

@@ -169,3 +169,7 @@ export const getIsMultiSkipEnabled = ({ features }) => (
 export const getIsMenuRedirectPageEnabled = ({ features }) => (
   features && features.getIn(['isMenuRedirectPageEnabled', 'value'], false)
 )
+
+export const getIsFirstMonthPromoOffset = ({ features }) => (
+  features && features.getIn(['isFirstMonthPromoOffset', 'value'], false)
+)

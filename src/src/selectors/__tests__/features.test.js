@@ -44,6 +44,7 @@ import {
   getIsBoxPricesUserJourneyEnabled,
   getIsMultiSkipEnabled,
   getIsMenuRedirectPageEnabled,
+  getIsFirstMonthPromoOffset,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -103,6 +104,7 @@ describe('when features are defined', () => {
     [getIsBoxPricesUserJourneyEnabled, 'boxPricesUserJourney'],
     [getIsMultiSkipEnabled, 'isMultiSkipEnabled'],
     [getIsMenuRedirectPageEnabled, 'isMenuRedirectPageEnabled'],
+    [getIsFirstMonthPromoOffset, 'isFirstMonthPromoOffset'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
