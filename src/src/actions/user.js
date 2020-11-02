@@ -10,7 +10,7 @@ import * as prospectApi from 'apis/prospect'
 import { PaymentMethod, signupConfig } from 'config/signup'
 
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isChoosePlanEnabled, getNDDFeatureValue, getIsPayWithPayPalEnabled } from 'selectors/features'
+import { isChoosePlanEnabled, getNDDFeatureValue, getIsPayWithPayPalEnabled, getIsFirstMonthPromoOffset } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
 import { getUserRecentRecipesIds } from 'selectors/user'
 
@@ -667,6 +667,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       }
 
       const reqData = {
+        ab_variant: getIsFirstMonthPromoOffset(state) ? 'promo_offset' : undefined,
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
         customer: {
