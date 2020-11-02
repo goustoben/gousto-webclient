@@ -276,7 +276,7 @@ module.exports = {
               .openBurgerMenu()
               .burgerMenuNavigateLogin()
           } else {
-            this.waitForElementVisible('@loginButton', 15000)
+            this.waitForElementVisible('@loginButton')
               .click('@loginButton')
           }
           this.expect.element('@loginCheckbox').to.be.selected
@@ -311,12 +311,12 @@ module.exports = {
       },
       commands: [{
         openBurgerMenu: function () {
-          this.waitForElementVisible('@burgerMenu', 15000)
+          this.waitForElementVisible('@burgerMenu')
             .click('@burgerMenu')
           return this
         },
         burgerMenuNavigateLogin: function () {
-          this.waitForElementVisible('@burgerMenuLogin', 15000)
+          this.waitForElementVisible('@burgerMenuLogin')
             .click('@burgerMenuLogin')
           return this
         },
@@ -336,9 +336,9 @@ module.exports = {
             const shared = this.api.page.shared()
 
             shared.section.body.loginModalClosed()
-            this.waitForElementVisible('@linkMenuAccount', 15000)
+            this.waitForElementVisible('@linkMenuAccount')
           } else {
-            this.waitForElementVisible('@myGoustoButtonLink', 15000)
+            this.waitForElementVisible('@myGoustoButtonLink')
             this.expect.element('@myGoustoButtonLink').to.be.visible.before()
           }
 
@@ -350,9 +350,9 @@ module.exports = {
 
             shared.section.body.loginModalClosed()
             this.openBurgerMenu()
-              .waitForElementVisible('@burgerMenuLogin', 15000)
+              .waitForElementVisible('@burgerMenuLogin')
           } else {
-            return this.waitForElementPresent('@loginButton', 15000)
+            return this.waitForElementPresent('@loginButton')
               .assert.elementPresent('@loginButton')
           }
         }
