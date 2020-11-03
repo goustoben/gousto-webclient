@@ -19,6 +19,6 @@
 
   @media BreakpointFromMedium {
     padding: 2.5rem;
-    min-width: 480px; /* Ensure buttons grow properly */
+    width: 500px;
   }
 }

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Modal, CTA, ModalHeader } from 'goustouicomponents'
+import { Modal, CTA } from 'goustouicomponents'
 import Svg from 'Svg'
 import css from './OnScreenRecoveryView.css'
 
@@ -61,29 +61,43 @@ export class OnScreenRecoveryView extends React.Component {
         description="modal attempting to prevent sub pause"
         handleClose={this.handleModalClose}
       >
-        <div className={css.backgroundHeader} />
-        <div className={css.header}>
-          <ModalHeader align="left">{title}</ModalHeader>
-        </div>
         <div className={css.container}>
-          {
-            offer && (
-              <div className={css.bodyContainer}>
+          <div className={css.backgroundHeader} />
+          <div className={css.bodyContainer}>
+            <h2 className={css.header}>{title}</h2>
+            {
+              offer && (
                 <div className={css.discountDetails}>
                   <div className={css.discountIconContainer}>
                     <Svg fileName="pause-osr-modal-icon" className={css.discountIcon} />
                   </div>
                   <h4 className={css.subHeader}>{offer.message}</h4>
                 </div>
-              </div>
-            )
-          }
-          <div className={css.fixedToBottom}>
+              )
+            }
             <div className={css.ctaContainer}>
-              <CTA data-testing="keep-subscription-link" onClick={onKeep} isFullWidth>{keepCopy}</CTA>
-              <CTA data-testing="continue-to-pause-link" onClick={onConfirm} variant="secondary" isFullWidth>{confirmCopy}</CTA>
+              <div className={css.keepCta}>
+                <CTA
+                  size="small"
+                  data-testing="keep-subscription-link"
+                  onClick={onKeep}
+                  isFullWidth
+                >
+                  {keepCopy}
+                </CTA>
+              </div>
+              <CTA
+                size="small"
+                data-testing="continue-to-pause-link"
+                onClick={onConfirm}
+                variant="secondary"
+                isFullWidth
+              >
+                {confirmCopy}
+              </CTA>
             </div>
           </div>
+
         </div>
       </Modal>
     )
