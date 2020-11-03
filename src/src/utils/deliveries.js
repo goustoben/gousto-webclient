@@ -9,7 +9,9 @@ import { formatAndValidateDisabledSlots } from './deliverySlotHelper'
 export const deliveryTariffTypes = {
   NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af',
   FREE_NDD: '823b18ef-5ca0-4a15-8f0f-4a363b319e29',
-  PAID_NDD: '435191b6-0fa0-422b-a5c0-0dc1dc65d888'
+  PAID_NDD: '435191b6-0fa0-422b-a5c0-0dc1dc65d888',
+  PAACK_EXPERIMENT: 'a5376771-d3ec-430c-8920-db71679ed070',
+  PAACK_CONTROL: '307ec196-7d5f-4240-bf01-4495fec54e47',
 }
 
 export function getSlot(deliveryDays, date, slotId) {
