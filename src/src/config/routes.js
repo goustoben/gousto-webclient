@@ -45,7 +45,7 @@ module.exports = {
     choosePlan: '/choose-subscription-plan',
     cookbook: '/cookbook',
 
-    mySubscription2: '/mysubscription',
+    mySubscription2: '/subscription-settings',
     myDetails2: '/mydetails',
     myReferral2: '/myreferrals',
     rateRecipes2: '/rate-recipes',
