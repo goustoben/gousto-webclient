@@ -1,5 +1,4 @@
-@value SpacingMD from 'sass-loader!styles/spacing.scss';
-@value sizeXL from 'sass-loader!styles/typography.css';
+@value SpacingMD from 'styles/spacing.css';
 @value Bluecheese, Blueberry, Haricot from 'styles/colors.css';
 
 .hide {
