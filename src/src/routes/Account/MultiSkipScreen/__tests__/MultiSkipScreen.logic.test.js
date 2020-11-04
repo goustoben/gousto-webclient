@@ -34,12 +34,14 @@ const mockNewOrders = [
 const mockHandleSkipBoxes = jest.fn()
 const mockHandleContinueToPause = jest.fn()
 const mockTrackContinueToPause = jest.fn()
+const mockTrackViewMultiSkip = jest.fn()
 
 const defaultProps = {
   newOrders: mockNewOrders,
   handleSkipBoxes: mockHandleSkipBoxes,
   handleContinueToPause: mockHandleContinueToPause,
   trackContinueToPause: mockTrackContinueToPause,
+  trackViewMultiSkip: mockTrackViewMultiSkip,
   closeModal: () => { },
   alreadySkippedBoxesCount: 1,
   nextDeliveryDate: null,
@@ -78,15 +80,21 @@ const getCTA = (ctaName) => mountWrapper
 
 describe('MultiSkipScreenLogic', () => {
   beforeEach(() => {
-    shallowWithProps()
-    mountWithProps()
-
     jest.resetAllMocks()
+
+    act(() => {
+      shallowWithProps()
+      mountWithProps()
+    })
   })
 
   describe('Given skipping multiple boxes has not yet happened', () => {
     test('Then MultiSkipScreen is rendered', () => {
       expect(shallowWrapper.find('MultiSkipScreen').exists()).toEqual(true)
+    })
+
+    test('Then trackViewMultiSkip is invoked', () => {
+      expect(mockTrackViewMultiSkip).toHaveBeenCalled()
     })
   })
 

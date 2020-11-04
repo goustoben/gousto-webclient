@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { MultiSkipScreen } from './MultiSkipScreen'
 import { MultiSkipResultScreen } from './MultiSkipResultScreen'
@@ -14,9 +14,12 @@ export const MultiSkipScreenLogic = ({
   isMultiSkipSuccess,
   isMultiSkipError,
   multiSkippedBoxesCount,
+  trackViewMultiSkip
 }) => {
   const [selectedOrderIds, setSelectedOrderIds] = useState([])
   const [isSkipBoxesClicked, setSkipBoxesClicked] = useState(false)
+
+  useEffect(trackViewMultiSkip, [trackViewMultiSkip])
 
   const toggleSkipBox = (id, shouldSkip) => {
     setSelectedOrderIds(shouldSkip
@@ -78,7 +81,8 @@ MultiSkipScreenLogic.propTypes = {
   nextDeliveryDate: PropTypes.string,
   isMultiSkipSuccess: PropTypes.bool.isRequired,
   isMultiSkipError: PropTypes.bool.isRequired,
-  multiSkippedBoxesCount: PropTypes.number
+  multiSkippedBoxesCount: PropTypes.number,
+  trackViewMultiSkip: PropTypes.func.isRequired
 }
 
 MultiSkipScreenLogic.defaultProps = {

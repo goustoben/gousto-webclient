@@ -4,7 +4,8 @@ import { actionTypes } from 'actions/actionTypes'
 import {
   multiSkipTrackContinueToPause,
   multiSkipCloseModal,
-  skipMultipleBoxes
+  skipMultipleBoxes,
+  trackViewMultiSkip
 } from '../multiSkip'
 
 const mockDispatch = jest.fn()
@@ -33,6 +34,19 @@ describe('Given I am interacting with the multi skip modal', () => {
         type: actionTypes.TRACKING,
         trackingData: {
           actionType: 'continue_to_pause'
+        }
+      })
+    })
+  })
+
+  describe('And trackViewMultiSkip is invoked', () => {
+    test('Then the expected action is dispatched', () => {
+      trackViewMultiSkip()(mockDispatch)
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'view_multiskip_boxes_screen'
         }
       })
     })
@@ -94,13 +108,6 @@ describe('Given I am interacting with the multi skip modal', () => {
       ]
 
       skipMultipleBoxes({ selectedOrders: mockSelectedOrders })(mockDispatch, mockGetState)
-
-      expect(mockDispatch).toHaveBeenCalledWith({
-        type: actionTypes.TRACKING,
-        trackingData: {
-          actionType: 'recover_subscription'
-        }
-      })
 
       expect(cancelMultipleSpy).toHaveBeenCalledWith({
         selectedOrders: [

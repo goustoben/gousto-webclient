@@ -1,1 +1,1 @@
-export default from './ErrorMessageContainer'
+export { ErrorMessageContainer as ErrorMessage } from './ErrorMessageContainer'

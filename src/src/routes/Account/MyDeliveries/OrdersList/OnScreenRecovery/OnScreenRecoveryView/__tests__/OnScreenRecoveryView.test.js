@@ -15,6 +15,7 @@ describe('Order Skip Recovery Modal', () => {
 
   describe('Alternative Render', () => {
     const getRecoveryContent = jest.fn()
+    const mockTrackViewDiscountReminder = jest.fn()
 
     beforeEach(() => {
       wrapper = shallow(
@@ -25,8 +26,17 @@ describe('Order Skip Recovery Modal', () => {
           onKeep={() => { }}
           onClick={() => { }}
           modalVisibilityChange={() => { }}
+          trackViewDiscountReminder={mockTrackViewDiscountReminder}
         />
       )
+    })
+
+    test('getRecoveryContent is not called on first render', () => {
+      expect(getRecoveryContent).not.toHaveBeenCalled()
+    })
+
+    test('trackViewDiscountRmeinder is called', () => {
+      expect(mockTrackViewDiscountReminder).toHaveBeenCalled()
     })
 
     describe('when triggered is set from false to true', () => {
@@ -53,6 +63,7 @@ describe('Order Skip Recovery Modal', () => {
             onKeep={() => { }}
             onClick={() => { }}
             modalVisibilityChange={mockModalVisibilityChange}
+            trackViewDiscountReminder={() => { }}
           />)
 
           mountWrapper.setProps({
@@ -67,7 +78,7 @@ describe('Order Skip Recovery Modal', () => {
         })
 
         test('then modalVisibilityChange is invoked as expected', () => {
-          expect(mockModalVisibilityChange).toHaveBeenCalledWith({ modalVisibility: false })
+          expect(mockModalVisibilityChange).toHaveBeenCalledWith({ modalVisibility: false, modalType: 'subscription' })
         })
       })
     })
@@ -82,6 +93,7 @@ describe('Order Skip Recovery Modal', () => {
             onKeep={() => { }}
             onClick={() => { }}
             modalVisibilityChange={() => { }}
+            trackViewDiscountReminder={() => { }}
           />
         )
 

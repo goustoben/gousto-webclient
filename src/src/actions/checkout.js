@@ -624,6 +624,14 @@ export function fetchPayPalClientToken() {
   }
 }
 
+export function clearPayPalErrors() {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_PAYPAL_ERRORS_CLEAR
+    })
+  }
+}
+
 export function clearPayPalClientToken() {
   return (dispatch) => {
     dispatch({

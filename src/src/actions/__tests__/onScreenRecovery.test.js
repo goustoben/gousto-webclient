@@ -22,6 +22,8 @@ import {
   onConfirm,
   getRecoveryContent,
   orderCancelStart,
+  generateModalTrackingData,
+  trackViewDiscountReminder,
 } from 'actions/onScreenRecovery'
 
 jest.mock('actions/order', () => ({
@@ -56,6 +58,132 @@ describe('onScreenRecovery', () => {
 
   afterEach(() => {
     jest.resetAllMocks()
+  })
+
+  describe('generateModalTrackingData', () => {
+    let mockParams
+
+    const defaultParams = {
+      modalVisibility: true,
+      status: 'pending',
+      modalType: 'not-subscription',
+      orderId: 'mock-order-id',
+      deliveryDayId: 'mock-delivery-day-id',
+      data: {
+        valueProposition: 'mock-value-proposition',
+        offer: 'mock-offer',
+        variation: 'mock-variation'
+      }
+    }
+
+    const generateMockParams = (params) => {
+      mockParams = {
+        ...defaultParams,
+        ...params
+      }
+    }
+
+    describe('given modalType is subscription', () => {
+      beforeEach(() => {
+        generateMockParams({
+          modalType: 'subscription'
+        })
+      })
+
+      describe('and modalVisibility is false', () => {
+        beforeEach(() => {
+          generateMockParams({
+            modalVisibility: false,
+            modalType: 'subscription'
+          })
+        })
+
+        test('returns the expected action', () => {
+          expect(generateModalTrackingData(mockParams)).toEqual({
+            actionType: 'recover_subscription'
+          })
+        })
+      })
+
+      describe('and modalVisibility is true', () => {
+        test('returns null', () => {
+          expect(generateModalTrackingData(mockParams)).toEqual(null)
+        })
+      })
+    })
+
+    describe('and modalType is not subscription', () => {
+      describe('and variation is not passed', () => {
+        beforeEach(() => {
+          generateMockParams({
+            modalType: 'not-subscription',
+            data: {
+              ...defaultParams.data,
+              variation: null,
+            }
+          })
+        })
+
+        test('then the variation is defaulted', () => {
+          expect(generateModalTrackingData(mockParams).cms_variation).toEqual('default')
+        })
+      })
+
+      describe('and order status is pending', () => {
+        beforeEach(() => {
+          generateMockParams()
+        })
+
+        test('should return the expected action', () => {
+          expect(generateModalTrackingData(mockParams)).toEqual({
+            actionType: 'Order Cancel',
+            order_id: 'mock-order-id',
+            delivery_day_id: 'mock-delivery-day-id',
+            order_state: 'pending',
+            cms_variation: 'mock-variation',
+            recovery_reasons: [
+              'mock-value-proposition',
+              'mock-offer'
+            ]
+          })
+        })
+      })
+
+      describe('and order status is not pending', () => {
+        beforeEach(() => {
+          generateMockParams({ status: 'not-pending' })
+        })
+
+        test('should return the expected action if status is not pending', () => {
+          expect(generateModalTrackingData(mockParams)).toEqual({
+            actionType: 'Order Skip',
+            order_id: 'mock-order-id',
+            delivery_day_id: 'mock-delivery-day-id',
+            order_state: 'not-pending',
+            cms_variation: 'mock-variation',
+            recovery_reasons: [
+              'mock-value-proposition',
+              'mock-offer'
+            ]
+          })
+        })
+      })
+    })
+  })
+
+  describe('tracking actions', () => {
+    describe('trackViewDiscountReminder', () => {
+      test('returns the expected action', () => {
+        trackViewDiscountReminder()(dispatchSpy)
+
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: 'view_pause_discount_reminder_offer_screen'
+          }
+        })
+      })
+    })
   })
 
   describe('modalVisibilityChange', () => {
@@ -344,7 +472,7 @@ describe('onScreenRecovery', () => {
           expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
             type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
             trackingData: expect.objectContaining({
-              actionType: 'Subscription Paused',
+              actionType: 'pause_subscription_complete',
               osrDiscount: 'OSR-PROMO-CODE',
             })
           }))
@@ -574,7 +702,7 @@ describe('onScreenRecovery', () => {
         expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
           type: 'TRACKING',
           trackingData: expect.objectContaining({
-            actionType: 'Subscription Pause',
+            actionType: 'pause_subscription_attempt',
             orderCount: 11,
             hasPendingPromo: null,
             hasPendingPromoWithSubCondition: null,
@@ -612,7 +740,7 @@ describe('onScreenRecovery', () => {
         expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
           type: 'TRACKING',
           trackingData: expect.objectContaining({
-            actionType: 'Subscription Pause',
+            actionType: 'pause_subscription_attempt',
             orderCount: 0,
             hasPendingPromo: null,
             hasPendingPromoWithSubCondition: null,
@@ -663,7 +791,7 @@ describe('onScreenRecovery', () => {
         expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
           type: 'TRACKING',
           trackingData: expect.objectContaining({
-            actionType: 'Subscription Pause',
+            actionType: 'pause_subscription_attempt',
             orderCount: 0,
             hasPendingPromo: '1%',
             hasPendingPromoWithSubCondition: true,
@@ -703,7 +831,7 @@ describe('onScreenRecovery', () => {
         expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
           type: 'TRACKING',
           trackingData: expect.objectContaining({
-            actionType: 'Subscription Pause',
+            actionType: 'pause_subscription_attempt',
             osrDiscount: 'OSR-PROMO-CODE',
           })
         }))
@@ -812,7 +940,7 @@ describe('onScreenRecovery', () => {
           type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
           modalVisibility: false,
           trackingData: expect.objectContaining({
-            actionType: 'Subscription KeptActive',
+            actionType: 'recover_subscription',
           })
         }))
       })
@@ -837,7 +965,7 @@ describe('onScreenRecovery', () => {
             type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
             modalVisibility: false,
             trackingData: expect.objectContaining({
-              actionType: 'Subscription KeptActive',
+              actionType: 'recover_subscription',
               osrDiscount: 'OSR-PROMO-CODE',
             })
           }))

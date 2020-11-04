@@ -10,6 +10,7 @@ import { CheckoutCardDetails } from '../CheckoutCardDetails'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
 import BoxDetails from '../../BoxDetails'
+import { ErrorMessage } from '../../ErrorMessage'
 import Summary from '../../Summary'
 
 describe('CheckoutPayment', () => {
@@ -60,6 +61,10 @@ describe('CheckoutPayment', () => {
     test('should render the component as hidden', () => {
       expect(wrapper.find('div').first().hasClass('hide')).toBe(true)
     })
+
+    test('should not render an <ErrorMessage>', () => {
+      expect(wrapper.find(ErrorMessage).exists()).toBeFalsy()
+    })
   })
 
   describe('rendering', () => {
@@ -70,6 +75,10 @@ describe('CheckoutPayment', () => {
     test('should render CheckoutCardDetails', () => {
       expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
       expect(wrapper.find(CheckoutCardDetails).prop('prerender')).toBe(false)
+    })
+
+    test('should render an <ErrorMessage>', () => {
+      expect(wrapper.find(ErrorMessage).exists()).toBeTruthy()
     })
 
     test('should render a SubmitButton', () => {

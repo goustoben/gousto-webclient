@@ -7,7 +7,8 @@ import { MultiSkipScreenContainer } from '../MultiSkipScreenContainer'
 jest.mock('routes/Account/actions/multiSkip', () => ({
   multiSkipCloseModal: () => 'mock-close',
   multiSkipTrackContinueToPause: () => 'mock-track-continue-to-pause',
-  skipMultipleBoxes: () => 'mock-multi-skip-boxes'
+  skipMultipleBoxes: () => 'mock-multi-skip-boxes',
+  trackViewMultiSkip: () => 'mock-track-view-multi-skip'
 }))
 
 jest.mock('selectors/user', () => ({
@@ -47,6 +48,10 @@ describe('Given I render the MultiSkipScreenContainer', () => {
   test('Then the MultiSkipScreen displays the expected tiles', () => {
     expect(wrapper.find('[data-testing="input-check"] label').text()).toEqual('23 September 2020')
     expect(wrapper.find('[data-testing="input-check-input"]').prop('disabled')).toEqual(false)
+  })
+
+  test('Then the expected tracking action is dispatched', () => {
+    expect(mockDispatch).toHaveBeenCalledWith('mock-track-view-multi-skip')
   })
 
   describe('When I exit the modal', () => {

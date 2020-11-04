@@ -13,6 +13,15 @@ export const multiSkipTrackContinueToPause = () => (dispatch) => {
   })
 }
 
+export const trackViewMultiSkip = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: trackingKeys.viewMultiSkipBoxesScreen
+    }
+  })
+}
+
 export const multiSkipCloseModal = () => (dispatch) => {
   modalVisibilityChange({ modalVisibility: false })(dispatch)
   dispatch(actions.subscriptionPauseTrackRecover())
@@ -22,6 +31,5 @@ export const multiSkipCloseModal = () => (dispatch) => {
 }
 
 export const skipMultipleBoxes = (selectedOrders) => (dispatch, getState) => {
-  dispatch(actions.subscriptionPauseTrackRecover())
   cancelMultipleBoxes(selectedOrders)(dispatch, getState)
 }

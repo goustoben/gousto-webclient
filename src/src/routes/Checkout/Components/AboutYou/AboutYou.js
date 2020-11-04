@@ -6,8 +6,8 @@ import { emailValidator } from 'utils/forms'
 import { Login } from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
+import { ErrorMessage } from '../ErrorMessage'
 import css from './AboutYou.css'
-import ErrorMessage from '../ErrorMessage'
 
 class AboutYou extends React.PureComponent {
   componentDidMount() {

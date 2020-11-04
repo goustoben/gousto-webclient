@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import config from 'config/checkout'
 import { Alert } from 'goustouicomponents'
+import config from 'config/checkout'
 import css from './ErrorMessage.css'
 
-const ErrorMessage = ({ errorType, goBack }) => (
+export const ErrorMessage = ({ errorType, goBack }) => (
   errorType ? (
     <div data-testing={`${errorType}`} className={css.container}>
       <Alert type="danger">
@@ -35,5 +35,3 @@ ErrorMessage.defaultProps = {
   errorType: null,
   goBack: () => {},
 }
-
-export default ErrorMessage

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { isAddressConfirmed } from 'routes/Checkout/utils/delivery'
 import CheckoutButton from '../../CheckoutButton'
-import ErrorMessage from '../../ErrorMessage'
+import { ErrorMessage } from '../../ErrorMessage'
 
 class SubmitButton extends React.PureComponent {
   static propTypes = {
