@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import {
   multiSkipCloseModal,
   multiSkipTrackContinueToPause,
-  skipMultipleBoxes
+  skipMultipleBoxes,
+  trackViewMultiSkip
 } from 'routes/Account/actions/multiSkip'
 import {
   getUserNewOrdersForMultiSkip,
@@ -32,6 +33,7 @@ const mapDispatchToProps = {
   handleSkipBoxes: skipMultipleBoxes,
   closeModal: multiSkipCloseModal,
   trackContinueToPause: multiSkipTrackContinueToPause,
+  trackViewMultiSkip
 }
 
 export const MultiSkipScreenContainer = connect(mapStateToProps, mapDispatchToProps)(MultiSkipScreenLogic)

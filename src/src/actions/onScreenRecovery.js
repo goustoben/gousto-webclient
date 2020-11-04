@@ -1,5 +1,6 @@
 import logger from 'utils/logger'
 import moment from 'moment'
+import seActions from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
 import { actionTypes } from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
@@ -7,6 +8,42 @@ import subPauseActions from './subscriptionPause'
 import userActions from './user'
 import statusActions from './status'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
+
+export const generateModalTrackingData = ({
+  modalVisibility,
+  status,
+  modalType,
+  orderId,
+  deliveryDayId,
+  data,
+}) => {
+  if (modalType === 'subscription') {
+    return modalVisibility
+      ? null
+      : { actionType: seActions.SUBSCRIPTION_KEPT_ACTIVE}
+  }
+
+  const actionType = (status === 'pending') ? 'Order Cancel' : 'Order Skip'
+
+  return {
+    actionType,
+    order_id: orderId,
+    delivery_day_id: deliveryDayId,
+    order_state: status,
+    cms_variation: data.variation || 'default',
+    recovery_reasons: [
+      data.valueProposition,
+      data.offer,
+    ],
+  }
+}
+
+export const trackViewDiscountReminder = () => (dispatch) => dispatch({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: seActions.VIEW_PAUSE_DISCOUNT_REMINDER_OFFER_SCREEN
+  }
+})
 
 export const modalVisibilityChange = ({
   orderId,
@@ -17,7 +54,14 @@ export const modalVisibilityChange = ({
   modalVisibility = true,
 }) => (
   (dispatch) => {
-    const actionType = (status === 'pending') ? 'Order Cancel' : 'Order Skip'
+    const trackingData = generateModalTrackingData({
+      modalVisibility,
+      status,
+      modalType,
+      orderId,
+      deliveryDayId,
+      data,
+    })
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
@@ -30,17 +74,7 @@ export const modalVisibilityChange = ({
       orderType: status,
       callToActions: data.callToActions,
       valueProposition: data.valueProposition,
-      trackingData: {
-        actionType,
-        order_id: orderId,
-        delivery_day_id: deliveryDayId,
-        order_state: status,
-        cms_variation: data.variation || 'default',
-        recovery_reasons: [
-          data.valueProposition,
-          data.offer,
-        ],
-      },
+      trackingData,
     })
   }
 )
@@ -101,7 +135,7 @@ export const keepSubscription = () => (
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
       trackingData: {
-        actionType: 'Subscription KeptActive',
+        actionType: seActions.SUBSCRIPTION_KEPT_ACTIVE,
         customerId: userId,
         osrDiscount: promoCode,
       },
@@ -114,7 +148,7 @@ export const cancelPendingOrder = (variation = 'default') => (
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
     const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
-    const number = getState().user.getIn(['newOrders',orderId, 'number'], '')
+    const number = getState().user.getIn(['newOrders', orderId, 'number'], '')
 
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
@@ -201,6 +235,7 @@ export const getPauseRecoveryContent = (enableOffer = false) => (
     dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, null))
     try {
       const { data } = await fetchSubscriptionPauseContent(accessToken, enableOffer)
+
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           data,
@@ -223,7 +258,7 @@ export const getPauseRecoveryContent = (enableOffer = false) => (
         dispatch({
           type: actionTypes.TRACKING,
           trackingData: {
-            actionType: 'Subscription Pause',
+            actionType: seActions.SUBSCRIPTION_PAUSE_ATTEMPT,
             orderCount,
             hasPendingPromo,
             hasPendingPromoWithSubCondition,
@@ -280,7 +315,7 @@ export const pauseSubscription = () => (
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
       trackingData: {
-        actionType: 'Subscription Paused',
+        actionType: seActions.SUBSCRIPTION_PAUSED,
         customerId: userId,
         osrDiscount: promoCode,
       },

@@ -4,7 +4,8 @@ import {
   onKeep,
   onConfirm,
   getRecoveryContent,
-  modalVisibilityChange
+  modalVisibilityChange,
+  trackViewDiscountReminder
 } from 'actions/onScreenRecovery'
 import { OnScreenRecoveryView } from './OnScreenRecoveryView'
 
@@ -22,6 +23,7 @@ const mapDispatchToProps = {
   onConfirm,
   modalVisibilityChange,
   getRecoveryContent,
+  trackViewDiscountReminder
 }
 
 export const OnScreenRecoveryViewContainer = connect(

@@ -24,6 +24,7 @@ const propTypes = {
   triggered: PropTypes.bool,
   getRecoveryContent: PropTypes.func.isRequired,
   modalVisibilityChange: PropTypes.func.isRequired,
+  trackViewDiscountReminder: PropTypes.func.isRequired
 }
 
 const defaultProps = {
@@ -37,6 +38,11 @@ const defaultProps = {
 }
 
 export class OnScreenRecoveryView extends React.Component {
+  componentDidMount() {
+    const { trackViewDiscountReminder } = this.props
+    trackViewDiscountReminder()
+  }
+
   componentDidUpdate(prevProps) {
     const { triggered, getRecoveryContent } = this.props
 
@@ -47,7 +53,7 @@ export class OnScreenRecoveryView extends React.Component {
 
   handleModalClose = () => {
     const { modalVisibilityChange } = this.props
-    modalVisibilityChange({ modalVisibility: false })
+    modalVisibilityChange({ modalVisibility: false, modalType: 'subscription' })
   }
 
   render() {
@@ -107,4 +113,3 @@ export class OnScreenRecoveryView extends React.Component {
 OnScreenRecoveryView.propTypes = propTypes
 
 OnScreenRecoveryView.defaultProps = defaultProps
-
