@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import ErrorMessage from 'routes/Checkout/Components/ErrorMessage/ErrorMessage'
 import config from 'config/checkout'
+import { ErrorMessage } from 'routes/Checkout/Components/ErrorMessage/ErrorMessage'
 
 describe('ErrorMessage', () => {
   const ERROR_MESSAGES = config.errorMessage

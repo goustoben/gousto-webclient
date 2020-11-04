@@ -11,6 +11,7 @@ import BoxDetails from '../BoxDetails'
 import { PaymentHeader } from '../PaymentHeader'
 import Summary from '../Summary'
 import { SubmitButton } from '../SubmitButton'
+import { ErrorMessage } from '../ErrorMessage'
 import { Checkout3DSModal } from './Checkout3DSModal'
 import { PaymentMethodSelector } from './PaymentMethodSelector'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
@@ -166,12 +167,12 @@ class CheckoutPayment extends React.Component {
             cardTokenReady={this.cardTokenReady}
             disableCardSubmission={this.disableCardSubmission}
           />
-          {isPayWithPayPalEnabled ? (
+          {isPayWithPayPalEnabled && (
             <CheckoutPayPalDetails
               hide={currentPaymentMethod !== PaymentMethod.PayPal}
               paypalScriptsReady={paypalScriptsReady}
             />
-          ) : null}
+          )}
           <div className={css.row}>
             {!prerender && isRecaptchaEnabled && (
               <div className={css.recaptchaContainer}>
@@ -187,15 +188,16 @@ class CheckoutPayment extends React.Component {
         </div>
         {!prerender && (
           <div>
+            <ErrorMessage showPayPalErrors={currentPaymentMethod === PaymentMethod.PayPal} />
             {canSubmit && <SubmitButton onClick={this.handleClick} />}
-            {browser === 'mobile' ? (
+            {browser === 'mobile' && (
               <div>
                 <Summary />
                 <Section margin={{ top: 'LG' }}>
                   <BoxDetails />
                 </Section>
               </div>
-            ) : null}
+            )}
           </div>
         )}
         {is3DSEnabled && <Checkout3DSModal />}

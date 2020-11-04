@@ -37,6 +37,7 @@ import checkoutActions, {
   checkoutTransactionalOrder,
   trackCheckoutButtonPressed,
   fetchPayPalClientToken,
+  clearPayPalErrors,
   clearPayPalClientToken,
   setCurrentPaymentMethod,
   setPayPalDeviceData,
@@ -1302,6 +1303,18 @@ describe('checkout actions', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN,
           token: 'fake-client-token'
+        })
+      })
+    })
+  })
+
+  describe('given clearPayPalErrors action', () => {
+    describe('when called', () => {
+      test('should dispatch CHECKOUT_PAYPAL_ERRORS_CLEAR', () => {
+        clearPayPalErrors()(dispatch)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.CHECKOUT_PAYPAL_ERRORS_CLEAR,
         })
       })
     })

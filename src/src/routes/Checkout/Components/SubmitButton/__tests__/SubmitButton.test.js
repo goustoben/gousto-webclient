@@ -4,7 +4,6 @@ import { shallow } from 'enzyme'
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { SubmitButton } from '../SubmitButton'
 import CheckoutButton from '../../CheckoutButton'
-import ErrorMessage from '../../ErrorMessage'
 import { TermsAndConditions } from '../../TermsAndConditions'
 
 describe('SubmitButton', () => {
@@ -25,10 +24,6 @@ describe('SubmitButton', () => {
   describe('when SubmitButton renders', () => {
     test('should return div', () => {
       expect(wrapper.type()).toBe('div')
-    })
-
-    test('should have an <ErrorMessage>', () => {
-      expect(wrapper.find(ErrorMessage).exists()).toBeTruthy()
     })
 
     test('should have a <CheckoutButton>', () => {

@@ -4,7 +4,9 @@ exports[`CheckoutPayPalDetails should render correctly 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    clearPayPalErrors={[Function]}
     firePayPalError={[Function]}
+    hasErrors={false}
     hide={false}
     isPayPalSetupDone={false}
     paypalScriptsReady={false}
@@ -301,7 +303,9 @@ exports[`CheckoutPayPalDetails when PayPal initialized should render correctly 1
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    clearPayPalErrors={[Function]}
     firePayPalError={[Function]}
+    hasErrors={false}
     hide={false}
     isPayPalSetupDone={false}
     paypalScriptsReady={false}
@@ -558,7 +562,9 @@ exports[`CheckoutPayPalDetails when PayPal setup is done should render correctly
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    clearPayPalErrors={[Function]}
     firePayPalError={[Function]}
+    hasErrors={false}
     hide={false}
     isPayPalSetupDone={true}
     paypalScriptsReady={false}
@@ -1127,7 +1133,9 @@ exports[`CheckoutPayPalDetails when hide is true should render correctly 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <CheckoutPayPalDetails
+    clearPayPalErrors={[Function]}
     firePayPalError={[Function]}
+    hasErrors={false}
     hide={true}
     isPayPalSetupDone={false}
     paypalScriptsReady={false}

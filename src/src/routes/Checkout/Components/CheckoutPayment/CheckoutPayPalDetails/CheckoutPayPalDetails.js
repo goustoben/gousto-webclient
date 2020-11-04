@@ -122,8 +122,9 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   async initPayPal() {
-    const { firePayPalError } = this.props
+    const { firePayPalError, clearPayPalErrors } = this.props
 
+    clearPayPalErrors()
     this.setState({
       isPayPalInitialized: false
     })
@@ -134,6 +135,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
       await this.createPayPalCheckout()
       await this.loadPayPalSDK()
       await this.renderPayPalButton()
+
       this.setState({
         isPayPalInitialized: true
       })
@@ -143,7 +145,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   render() {
-    const { hide, isPayPalSetupDone, resetPaymentMethod } = this.props
+    const { hide, isPayPalSetupDone, hasErrors, resetPaymentMethod } = this.props
     const { isPayPalInitialized } = this.state
 
     return (
@@ -153,7 +155,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
             <span className={css.padlockIcon} />
             You will be prompted by PayPal for payment details to securely setup your subscription.
           </p>
-          {!isPayPalInitialized && <p className={css.text}>PayPal is loading...</p>}
+          {!hasErrors && !isPayPalInitialized && <p className={css.text}>PayPal is loading...</p>}
           <div id="paypal-container" className={classNames(css.paypalContainer, {[css.transparent]: !isPayPalInitialized})} />
         </div>
 
@@ -188,7 +190,9 @@ CheckoutPayPalDetails.propTypes = {
   resetPaymentMethod: PropTypes.func,
   trackEvent: PropTypes.func,
   firePayPalError: PropTypes.func,
+  clearPayPalErrors: PropTypes.func,
   paypalScriptsReady: PropTypes.bool,
+  hasErrors: PropTypes.bool,
   hide: PropTypes.bool,
   isPayPalSetupDone: PropTypes.bool,
   token: PropTypes.string,
@@ -200,7 +204,9 @@ CheckoutPayPalDetails.defaultProps = {
   resetPaymentMethod: () => {},
   trackEvent: () => {},
   firePayPalError: () => {},
+  clearPayPalErrors: () => {},
   paypalScriptsReady: false,
+  hasErrors: false,
   hide: false,
   isPayPalSetupDone: false,
   token: null,

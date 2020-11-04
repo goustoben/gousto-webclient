@@ -1,5 +1,10 @@
-import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
+import { actionTypes } from 'actions/actionTypes'
+
+const paypalErrors = [
+  actionTypes.PAYPAL_TOKEN_FETCH_FAILED,
+  actionTypes.PAYPAL_ERROR,
+]
 
 const errorsToCapture = [
   actionTypes.USER_SUBSCRIBE,
@@ -7,10 +12,9 @@ const errorsToCapture = [
   actionTypes.CHECKOUT_SIGNUP_LOGIN,
   actionTypes.ORDER_SAVE,
   actionTypes.CARD_TOKENIZATION_FAILED,
-  actionTypes.PAYPAL_TOKEN_FETCH_FAILED,
-  actionTypes.PAYPAL_ERROR,
   actionTypes.NETWORK_FAILURE,
   actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED,
+  ...paypalErrors,
 ]
 
 const initialState = () => Immutable.fromJS({
@@ -41,6 +45,7 @@ const initialState = () => Immutable.fromJS({
   intervals: [],
   goustoRef: null,
   errors: {},
+  paypalErrors: {},
 })
 
 const checkout = {
@@ -51,7 +56,13 @@ const checkout = {
 
     switch (action.type) {
     case actionTypes.CHECKOUT_ERRORS_CLEAR: {
-      return state.set('errors', initialState().get('errors'))
+      return state
+        .set('errors', initialState().get('errors'))
+    }
+
+    case actionTypes.CHECKOUT_PAYPAL_ERRORS_CLEAR: {
+      return state
+        .set('paypalErrors', initialState().get('paypalErrors'))
     }
 
     case actionTypes.CHECKOUT_ADDRESSES_RECEIVE: {
@@ -85,6 +96,11 @@ const checkout = {
         .set('errors', initialState().get('errors'))
     }
 
+    case actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN: {
+      return state
+        .deleteIn(['paypalErrors', actionTypes.PAYPAL_TOKEN_FETCH_FAILED])
+    }
+
     case actionTypes.ERROR: {
       if (action.hasOwnProperty('key') && action.hasOwnProperty('value')) {
         if (errorsToCapture.indexOf(action.key) !== -1) {
@@ -94,7 +110,11 @@ const checkout = {
             value = value.message
           }
 
-          return state.setIn(['errors', action.key], value)
+          const errors = paypalErrors.indexOf(action.key) !== -1
+            ? 'paypalErrors'
+            : 'errors'
+
+          return state.setIn([errors, action.key], value)
         }
       }
 
