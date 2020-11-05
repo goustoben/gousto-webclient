@@ -10,4 +10,8 @@ describe('Subscription', () => {
   test('should render Subscription continer', () => {
     expect(wrapper.find('.subscriptionPage')).toHaveLength(1)
   })
+
+  test('should render subscriptionPageContent', () => {
+    expect(wrapper.find('.subscriptionPageContent')).toHaveLength(1)
+  })
 })
