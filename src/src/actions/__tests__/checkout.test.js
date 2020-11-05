@@ -186,72 +186,71 @@ jest.mock('apis/payments', () => ({
     }
   })),
   checkPayment: jest.fn((sessionId) => Promise.resolve({
-    data: {
-      data: sessionId === 'success_session_id'
-        ? {
-          id: 'pay_556fkurbopnu3ckcpk7h4a5wfi',
-          amount: 3448,
-          approved: true,
-          status: 'Authorized',
-          sourceId: 'src_qvgsjghtdjjuhdznipp5najdza',
-          source: {
-            id: 'src_qvgsjghtdjjuhdznipp5najdza',
-            type: 'card',
-            billingAddress: {
-              addressLine1: 'FLAT 15, MORRIS HOUSE',
-              addressLine2: 'SWAINSON ROAD',
-              city: 'LONDON',
-              zip: 'W3 7UP'
-            },
-            expiryMonth: 10,
-            expiryYear: 2020,
-            name: 'test test',
-            scheme: 'Visa',
-            last4: '4242',
-            fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
-            bin: '424242',
-            cardType: 'Credit',
-            cardCategory: 'Consumer',
-            issuer: 'JPMORGAN CHASE BANK NA',
-            issuerCountry: 'US',
-            productId: 'A',
-            productType: 'Visa Traditional',
-            avsCheck: 'S',
-            cvvCheck: 'Y',
-            payouts: true,
-            fastFunds: 'd'
-          }
+    status: 'ok',
+    data: sessionId === 'success_session_id'
+      ? {
+        id: 'pay_556fkurbopnu3ckcpk7h4a5wfi',
+        amount: 3448,
+        approved: true,
+        status: 'Authorized',
+        sourceId: 'src_qvgsjghtdjjuhdznipp5najdza',
+        source: {
+          id: 'src_qvgsjghtdjjuhdznipp5najdza',
+          type: 'card',
+          billingAddress: {
+            addressLine1: 'FLAT 15, MORRIS HOUSE',
+            addressLine2: 'SWAINSON ROAD',
+            city: 'LONDON',
+            zip: 'W3 7UP'
+          },
+          expiryMonth: 10,
+          expiryYear: 2020,
+          name: 'test test',
+          scheme: 'Visa',
+          last4: '4242',
+          fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
+          bin: '424242',
+          cardType: 'Credit',
+          cardCategory: 'Consumer',
+          issuer: 'JPMORGAN CHASE BANK NA',
+          issuerCountry: 'US',
+          productId: 'A',
+          productType: 'Visa Traditional',
+          avsCheck: 'S',
+          cvvCheck: 'Y',
+          payouts: true,
+          fastFunds: 'd'
         }
-        : {
-          id: 'pay_4b55m3huev2e3pfyu5mixqecwq',
-          amount: 3448,
-          approved: false,
-          status: 'Declined',
-          sourceId: '',
-          source: {
-            type: 'card',
-            billingAddress: {
-              addressLine1: 'FLAT 15, MORRIS HOUSE',
-              addressLine2: 'SWAINSON ROAD',
-              city: 'LONDON',
-              zip: 'W3 7UP'
-            },
-            expiryMonth: 10,
-            expiryYear: 2020,
-            name: 'test test',
-            scheme: 'Visa',
-            last4: '4242',
-            fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
-            bin: '424242',
-            cardType: 'Credit',
-            cardCategory: 'Consumer',
-            issuer: 'JPMORGAN CHASE BANK NA',
-            issuerCountry: 'US',
-            productId: 'A',
-            productType: 'Visa Traditional'
-          }
+      }
+      : {
+        id: 'pay_4b55m3huev2e3pfyu5mixqecwq',
+        amount: 3448,
+        approved: false,
+        status: 'Declined',
+        sourceId: '',
+        source: {
+          type: 'card',
+          billingAddress: {
+            addressLine1: 'FLAT 15, MORRIS HOUSE',
+            addressLine2: 'SWAINSON ROAD',
+            city: 'LONDON',
+            zip: 'W3 7UP'
+          },
+          expiryMonth: 10,
+          expiryYear: 2020,
+          name: 'test test',
+          scheme: 'Visa',
+          last4: '4242',
+          fingerprint: '6ADEB6E4F3630B445463D74D2CF2ADAE3F63EEF505345895407053C020A5B931',
+          bin: '424242',
+          cardType: 'Credit',
+          cardCategory: 'Consumer',
+          issuer: 'JPMORGAN CHASE BANK NA',
+          issuerCountry: 'US',
+          productId: 'A',
+          productType: 'Visa Traditional'
         }
-    }
+      }
   })),
   fetchPayPalToken: jest.fn(() => Promise.resolve({
     data: {

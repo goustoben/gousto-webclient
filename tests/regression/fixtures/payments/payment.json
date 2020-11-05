@@ -1,6 +1,6 @@
 {
-    "data":
-    {
+    "status": "ok",
+    "data": {
         "id": "pay_c574pto6na4urgn4yv2v4435bq",
         "amount": 3499,
         "approved": true,
