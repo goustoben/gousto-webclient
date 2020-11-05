@@ -1,11 +1,44 @@
-.subscriptionPage {
-	composes: marginXXXXLBottom marginXXXXLLeftRight marginXXLTop from 'sass-loader!styles/spacing.scss';
+@value 5XLarge, 3XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.css';
+@value BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
+@value ColumnGap 1rem;
 
-	@media ScreenXSMax {
-		margin: 10px;
-	}
+.subscriptionPage {
+  font-family: FontFamilyAxiformaBook;
+  margin: 0;
+
+  @media BreakpointFromMedium {
+    margin: 0 0.75rem;
+  }
+
+  @media BreakpointFromXLarge {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 
-.heading {
-	composes: headerXXL from 'styles/typography.css';
+.subscriptionPageTitle {
+  padding: 1.125rem 0.75rem 0.75rem;
+  margin: 0;
+  font: FontWeightBold 3XLarge FontFamilyAxiformaBook;
+
+  @media BreakpointFromMedium {
+    font: FontWeightBold 5XLarge FontFamilyAxiformaBook;
+    padding: 2rem 0 1rem;
+  }
+}
+
+.subscriptionPageContent {
+  width: 100%;
+  display: flex;
+  margin: 0;
+  flex-direction: column;
+
+  @media BreakpointFromMedium {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+
+.subscriptionPageColumn {
+  width: calc(50% - ColumnGap);
 }

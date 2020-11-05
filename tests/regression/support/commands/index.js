@@ -16,6 +16,7 @@ Cypress.Commands.add('login', () => {
   cy.route('POST', /identify/, '@identify').as('identifyRequest')
   cy.fixture('auth/refresh').as('refresh')
   cy.route('POST', /refresh/, '@refresh')
+  cy.route('POST', /log-event/, {})
 
   const token = { access_token: '8tebopinE7WiWTgDDGl92NhMYXLMCD9AUHfEsWcH' }
   const expiry = { expires_at: '2030-01-31T22:15:01.593Z' }
