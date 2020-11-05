@@ -362,7 +362,7 @@ export const checkPaymentAuth = (sessionId) => (
 
     try {
       const { data } = await checkPayment(sessionId)
-      if (data && data.data && data.data.approved) {
+      if (data && data.approved) {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
 
         const { basket, auth } = getState()
@@ -370,7 +370,7 @@ export const checkPaymentAuth = (sessionId) => (
         const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
 
         dispatch(checkoutActions.resetDuplicateCheck())
-        await dispatch(userSubscribe(true, data.data.sourceId))
+        await dispatch(userSubscribe(true, data.sourceId))
         await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
         dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
         dispatch({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })

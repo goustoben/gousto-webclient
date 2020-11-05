@@ -6,45 +6,39 @@ import {
 } from '../payments'
 
 const mockPaymentAuthResponse = {
+  status: 'ok',
   data: {
-    status: 'ok',
-    data: {
-      id: '1bdec6e2-0287-4c40-9862-0051615a701b',
-      cardToken: 'tok_r6ypmsowikzutmdbmjevwo55ym',
-      reference: 'pay_c574pto6na4urgn4yv2v4435bq',
-      status: 'challenge-pending',
-      value: 3499,
+    id: '1bdec6e2-0287-4c40-9862-0051615a701b',
+    cardToken: 'tok_r6ypmsowikzutmdbmjevwo55ym',
+    reference: 'pay_c574pto6na4urgn4yv2v4435bq',
+    status: 'challenge-pending',
+    value: 3499,
+    message: 'Requested redirect link for 3ds authorisation',
+    responsePayload: {
+      transactionId: 'pay_c574pto6na4urgn4yv2v4435bq',
+      reference: '1bdec6e2-0287-4c40-9862-0051615a701b',
+      redirectLink: 'https://3ds2-sandbox.ckotech.co/interceptor/3ds_m2hx5mjrgtiupbyng3oxugwbz4',
       message: 'Requested redirect link for 3ds authorisation',
-      responsePayload: {
-        transactionId: 'pay_c574pto6na4urgn4yv2v4435bq',
-        reference: '1bdec6e2-0287-4c40-9862-0051615a701b',
-        redirectLink: 'https://3ds2-sandbox.ckotech.co/interceptor/3ds_m2hx5mjrgtiupbyng3oxugwbz4',
-        message: 'Requested redirect link for 3ds authorisation',
-        paymentStatus: 'challenge-pending',
-      },
-      createdAt: '2020-07-15 09:17:15.974891+00:00',
-      updatedAt: '2020-07-15 09:17:19.217302+00:00',
-    }
+      paymentStatus: 'challenge-pending',
+    },
+    createdAt: '2020-07-15 09:17:15.974891+00:00',
+    updatedAt: '2020-07-15 09:17:19.217302+00:00',
   }
 }
 const mockPaymentCheckResponse = {
+  status: 'ok',
   data: {
-    status: 'ok',
-    data: {
-      id: 'pay_c574pto6na4urgn4yv2v4435bq',
-      amount: 3499,
-      approved: true,
-      status: 'Authorized',
-      sourceId: 'src_hu7vs255rzwebo2nnccyugkiv4'
-    }
+    id: 'pay_c574pto6na4urgn4yv2v4435bq',
+    amount: 3499,
+    approved: true,
+    status: 'Authorized',
+    sourceId: 'src_hu7vs255rzwebo2nnccyugkiv4'
   }
 }
 const mockPayPalTokenResponse = {
+  status: 'ok',
   data: {
-    status: 'ok',
-    data: {
-      clientToken: 'dashdasdfaskdfajs'
-    }
+    clientToken: 'dashdasdfaskdfajs'
   }
 }
 
