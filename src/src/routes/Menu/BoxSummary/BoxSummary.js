@@ -57,6 +57,8 @@ class BoxSummary extends React.PureComponent {
   componentDidMount() {
     const { hasUnavailableRecipes, orderSaveError, boxDetailsVisibilityChange, shouldShowBoxSummary } = this.props
 
+    window.document.addEventListener('click', this.handleClick, false)
+
     if ((hasUnavailableRecipes && orderSaveError === 'no-stock') || shouldShowBoxSummary) {
       boxDetailsVisibilityChange(true)
     }
@@ -76,21 +78,15 @@ class BoxSummary extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { showDetails } = this.props
-
-    if (nextProps.showDetails && !showDetails) {
-      window.document.addEventListener('click', this.handleClick, false)
-    } else if (!nextProps.showDetails) {
-      window.document.removeEventListener('click', this.handleClick, false)
-    }
-  }
-
   componentWillUnmount() {
     const { boxDetailsVisibilityChange } = this.props
+
+    window.document.removeEventListener('click', this.handleClick, false)
+
     if (this.hideTooltipDelay) {
       clearTimeout(this.hideTooltipDelay)
     }
+
     boxDetailsVisibilityChange(false)
     Overlay.forceCloseAll()
   }
