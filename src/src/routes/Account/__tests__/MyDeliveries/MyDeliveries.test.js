@@ -12,6 +12,8 @@ describe('MyDeliveries', () => {
       shallow(<MyDeliveries
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
     })
 
@@ -25,6 +27,23 @@ describe('MyDeliveries', () => {
 
     test('should call userLoadAddresses', () => {
       expect(userLoadNewOrdersMock).toHaveBeenCalled()
+    })
+
+    describe('when user id is undefined', () => {
+      const userLoadData = jest.fn()
+
+      beforeEach(() => {
+        shallow(<MyDeliveries
+          userLoadAddresses={userLoadAddressesMock}
+          userLoadNewOrders={userLoadNewOrdersMock}
+          userId=""
+          userLoadData={userLoadData}
+        />)
+      })
+
+      test('should call userLoadData', () => {
+        expect(userLoadData).toHaveBeenCalled()
+      })
     })
   })
 
@@ -48,6 +67,8 @@ describe('MyDeliveries', () => {
         didErrorFetchingAddresses={null}
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
     })
 
@@ -71,6 +92,8 @@ describe('MyDeliveries', () => {
         isFetchingOrders
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(0)
       expect(wrapper.find('Loading').length).toEqual(1)
@@ -81,6 +104,8 @@ describe('MyDeliveries', () => {
         isFetchingAddresses
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(1)
       expect(wrapper.find('Loading').length).toEqual(0)
@@ -91,6 +116,8 @@ describe('MyDeliveries', () => {
         didErrorFetchingPendingOrders="error"
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
       expectAlertAndRetryButton(wrapper)
     })
@@ -100,6 +127,8 @@ describe('MyDeliveries', () => {
         didErrorFetchingProjectedOrders="error"
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
       expectAlertAndRetryButton(wrapper)
     })
@@ -109,6 +138,8 @@ describe('MyDeliveries', () => {
         didErrorFetchingAddresses="error"
         userLoadAddresses={userLoadAddressesMock}
         userLoadNewOrders={userLoadNewOrdersMock}
+        userId="user-test-id"
+        userLoadData={() => {}}
       />)
       expectAlertAndRetryButton(wrapper)
     })
