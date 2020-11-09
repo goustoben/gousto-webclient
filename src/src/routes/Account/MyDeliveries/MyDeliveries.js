@@ -4,24 +4,33 @@ import { Alert, Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
 import Loading from 'Loading'
-import css from './MyDeliveries.css'
+import logger from 'utils/logger'
 import OrdersList from './OrdersList'
+import css from './MyDeliveries.css'
 import accountCss from '../Account/Account.css'
 
 class MyDeliveries extends React.PureComponent {
-  static fetchOrdersAndAddresses = ({ userLoadAddresses, userLoadNewOrders }) => {
-    userLoadNewOrders()
-    userLoadAddresses()
+  componentDidMount() {
+    this.fetchOrdersAndAddresses()
   }
 
-  componentDidMount() {
-    const { userLoadAddresses, userLoadNewOrders } = this.props
-    MyDeliveries.fetchOrdersAndAddresses({ userLoadAddresses, userLoadNewOrders })
+  fetchOrdersAndAddresses = async () => {
+    const { userId, userLoadAddresses, userLoadData, userLoadNewOrders } = this.props
+
+    try {
+      if (!userId) {
+        await userLoadData()
+      }
+
+      userLoadNewOrders()
+      userLoadAddresses()
+    } catch (error) {
+      logger.error(error)
+    }
   }
 
   retryFetch = () => {
-    const { userLoadAddresses, userLoadNewOrders } = this.props
-    MyDeliveries.fetchOrdersAndAddresses({ userLoadAddresses, userLoadNewOrders })
+    this.fetchOrdersAndAddresses()
   }
 
   static renderFetchError = (retryFetch) => (
@@ -80,7 +89,9 @@ MyDeliveries.propTypes = {
   didErrorFetchingProjectedOrders: PropTypes.string,
   didErrorFetchingAddresses: PropTypes.string,
   userLoadAddresses: PropTypes.func.isRequired,
+  userLoadData: PropTypes.func.isRequired,
   userLoadNewOrders: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 }
 
 MyDeliveries.defaultProps = {
