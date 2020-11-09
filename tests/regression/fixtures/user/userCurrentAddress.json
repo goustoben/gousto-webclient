@@ -5,7 +5,7 @@
           {
               "id": "34005976",
               "deleted": false,
-              "user_id": "17247344",
+              "customer_id": "17247344",
               "name": "My Address",
               "companyname": "Gousto",
               "line1": "Gousto Shepherds Building",
@@ -23,7 +23,7 @@
           {
               "id": "34005998",
               "deleted": false,
-              "user_id": "17247344",
+              "customer_id": "17247344",
               "name": "My Address",
               "companyname": "Gousto",
               "line1": "Gousto Shepherds Building",
