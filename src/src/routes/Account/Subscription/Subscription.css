@@ -1,6 +1,6 @@
 @value 5XLarge, 3XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.css';
 @value BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
-@value ColumnGap 1rem;
+@value ColumnGap 0.75rem;
 
 .subscriptionPage {
   font-family: FontFamilyAxiformaBook;
@@ -40,5 +40,8 @@
 }
 
 .subscriptionPageColumn {
-  width: calc(50% - ColumnGap);
+  width: 100%;
+  @media BreakpointFromMedium {
+    width: calc(50% - ColumnGap);
+  }
 }
