@@ -5,8 +5,8 @@ import { ACTIVE_PROMO_CODE, DEFAULT_PROMO_CODE } from './promoCode'
 
 module.exports = {
   hero: {
-    header: (redesignEnabled) => redesignEnabled ? 'Reinvent dinnertime with our recipe box' : 'A recipe box full of flavour',
-    subheader: (redesignEnabled) => redesignEnabled ? 'Precise ingredients and foolproof recipes, direct to your door' : 'Precise ingredients, delicious recipes and a dollop of adventure.',
+    header: 'A recipe box full of flavour',
+    subheader: 'Precise ingredients, delicious recipes and a dollop of adventure.',
   },
   testimonials: [
     {

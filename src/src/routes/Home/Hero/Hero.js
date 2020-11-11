@@ -1,32 +1,28 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classnames from 'classnames'
 import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
-import typography from 'design-language/typography.css'
 import { CTAHomepageContainer } from '../CTA'
 import css from './Hero.css'
 
 // ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
 
-const Hero = ({ ctaUri, ctaText, dataTesting, variant, isHomePageRedesignEnabled }) => (
+const Hero = ({ ctaUri, ctaText, dataTesting, variant }) => (
   <div
-    className={classnames(css[`container--${variant}`], { [css.homepageRedesign]: isHomePageRedesignEnabled })}
+    className={css[`container--${variant}`]}
     data-testing={dataTesting}
   >
-    <div
-      className={
-        classnames(css[`textContainer--${variant}`])
-      }
-    >
-      <h1 className={classnames(css.header, { [typography.fontStyle4XL]: isHomePageRedesignEnabled })}>
+    <div className={css[`textContainer--${variant}`]}>
+      <h1 className={css.header}>
         <Content contentKeys="propositionMainHeadlineDefault">
-          <span>{home.hero.header(isHomePageRedesignEnabled)}</span>
+          <span>{home.hero.header}</span>
         </Content>
       </h1>
-      <h2 className={classnames(css.subHeader, { [typography.fontStyleM]: isHomePageRedesignEnabled })}>
-        <Content contentKeys="propositionSupportingHeadlineDefault"><span>{home.hero.subheader(isHomePageRedesignEnabled)}</span></Content>
+      <h2 className={css.subHeader}>
+        <Content contentKeys="propositionSupportingHeadlineDefault">
+          <span>{home.hero.subheader}</span>
+        </Content>
       </h2>
       <div className={css.cta}>
         <CTAHomepageContainer
@@ -38,6 +34,13 @@ const Hero = ({ ctaUri, ctaText, dataTesting, variant, isHomePageRedesignEnabled
           {ctaText}
         </CTAHomepageContainer>
       </div>
+      <div className={css.noLockIn}>
+        <div className={css.lockInIcon} />
+        <div className={css.lockSign}>
+          <span className={css.lockInBold}>No lock in. </span>
+          Pause or cancel anytime
+        </div>
+      </div>
     </div>
     <div className={css.spacer} />
   </div>
@@ -48,14 +51,12 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   dataTesting: PropTypes.string,
   variant: PropTypes.string,
-  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
   variant: 'default',
-  isHomePageRedesignEnabled: false,
 }
 
 export default Hero
