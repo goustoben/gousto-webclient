@@ -1,20 +1,6 @@
 @value 5XLarge, 3XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.css';
-@value BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
-@value ColumnGap 0.75rem;
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
-.subscriptionPage {
-  font-family: FontFamilyAxiformaBook;
-  margin: 0;
-
-  @media BreakpointFromMedium {
-    margin: 0 0.75rem;
-  }
-
-  @media BreakpointFromXLarge {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-}
 
 .subscriptionPageTitle {
   padding: 1.125rem 0.75rem 0.75rem;
@@ -27,21 +13,3 @@
   }
 }
 
-.subscriptionPageContent {
-  width: 100%;
-  display: flex;
-  margin: 0;
-  flex-direction: column;
-
-  @media BreakpointFromMedium {
-    justify-content: space-between;
-    flex-direction: row;
-  }
-}
-
-.subscriptionPageColumn {
-  width: 100%;
-  @media BreakpointFromMedium {
-    width: calc(50% - ColumnGap);
-  }
-}
