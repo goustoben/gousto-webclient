@@ -1,0 +1,40 @@
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.calendar {
+  composes: icon;
+  background-image: url('./svgs/calendar.svg');
+}
+
+.dietaryPreference {
+  composes: icon;
+  background-image: url('./svgs/dietaryPreference.svg');
+}
+
+.frequency {
+  composes: icon;
+  background-image: url('./svgs/frequency.svg');
+}
+
+.home {
+  composes: icon;
+  background-image: url('./svgs/home.svg');
+}
+
+.mealPerBox {
+  composes: icon;
+  background-image: url('./svgs/mealPerBox.svg');
+}
+
+.profile {
+  composes: icon;
+  background-image: url('./svgs/profile.svg');
+}
+
+.servings {
+  composes: icon;
+  background-image: url('./svgs/servings.svg');
+}
