@@ -5,7 +5,7 @@
   composes: pageContainer from 'styles/layout.css';
   padding-top: 3rem;
   margin-bottom: -3rem;
-  
+
 	@media ScreenXSMax {
 		padding-left: 0;
 		padding-right: 0;
@@ -68,7 +68,6 @@
   position: absolute;
   top: 3.5rem;
   composes: fa-basic-class fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
-  color: White;
   cursor: pointer;
 
   @media ScreenXXSMin {
