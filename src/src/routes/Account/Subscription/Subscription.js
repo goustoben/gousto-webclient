@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { LayoutPageWrapper, Grid, Column } from 'goustouicomponents'
 
 import css from './Subscription.css'
 
@@ -21,13 +22,22 @@ const Subscription = ({
   }, [subscriptionLoadData, userLoadData, menuLoadBoxPrices])
 
   return (
-    <div className={css.subscriptionPage} data-testing="subscriptionSettingsPage">
-      <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
-      <section className={css.subscriptionPageContent}>
-        <div className={css.subscriptionPageColumn}>First column cards placeholder</div>
-        <div className={css.subscriptionPageColumn}>Second column placeholder</div>
-      </section>
-    </div>
+    <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
+      <Grid>
+        <Column smallScreen={12} mediumScreen={12}>
+          <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
+        </Column>
+      </Grid>
+
+      <Grid>
+        <Column smallScreen={12} mediumScreen={6} largeScreen={6}>
+          <div>First column cards placeholder</div>
+        </Column>
+        <Column smallScreen={12} mediumScreen={6} largeScreen={6}>
+          <div>First column cards placeholder</div>
+        </Column>
+      </Grid>
+    </LayoutPageWrapper>
   )
 }
 
