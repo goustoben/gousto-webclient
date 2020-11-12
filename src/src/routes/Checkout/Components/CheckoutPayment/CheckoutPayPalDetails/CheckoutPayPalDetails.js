@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import Svg from 'components/Svg'
 
-import { clickContinuePayPal, clickCancelPayPal } from 'actions/trackingKeys'
+import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { onEnter } from 'utils/accessibility'
 
 import css from './CheckoutPayPalDetails.css'
@@ -109,6 +109,8 @@ class CheckoutPayPalDetails extends React.PureComponent {
           return this.createPayment()
         },
         onApprove: (data) => {
+          trackEvent(clickConfirmPayPal)
+
           this.fetchPayPalNonce(data)
         },
         onCancel: () => {
