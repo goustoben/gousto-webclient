@@ -71,17 +71,13 @@ class Menu extends React.PureComponent {
     menuCalculateTimeToUsable()
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { menuLoadBoxPrices, tariffId } = this.props
+  componentDidUpdate(prevProps) {
+    const { menuLoadBoxPrices, tariffId, params, query, isAuthenticated, fetchData, disabled, menuLoadingBoxPrices } = this.props
+    const isAdminQuery = !!(query && query['preview[auth_user_id]'])
 
-    if (!nextProps.disabled && !nextProps.menuLoadingBoxPrices && tariffId !== nextProps.tariffId) {
+    if (!disabled && !menuLoadingBoxPrices && prevProps.tariffId !== tariffId) {
       menuLoadBoxPrices()
     }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { params, query, isAuthenticated, fetchData } = this.props
-    const isAdminQuery = !!(query && query['preview[auth_user_id]'])
     if (!isAdminQuery && prevProps.isAuthenticated !== isAuthenticated) {
       fetchData({ query, params }, false)
     }

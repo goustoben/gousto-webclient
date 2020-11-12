@@ -310,7 +310,7 @@ describe('Menu', () => {
     })
   })
 
-  describe('componentWillReceiveProps', () => {
+  describe('componentDidUpdate', () => {
     beforeEach(() => {
       mountOptions = {
         context: {
