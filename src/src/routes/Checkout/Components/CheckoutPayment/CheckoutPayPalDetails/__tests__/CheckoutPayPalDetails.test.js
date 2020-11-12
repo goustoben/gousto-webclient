@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { clickContinuePayPal, clickCancelPayPal } from 'actions/trackingKeys'
+import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 import css from '../CheckoutPayPalDetails.css'
 
@@ -290,6 +290,12 @@ describe('CheckoutPayPalDetails', () => {
         const approveData = {
           name: 'test-approve-data'
         }
+
+        test('should trigger clickConfirmPayPal event', () => {
+          buttonConfig.onApprove(approveData)
+
+          expect(trackEvent).toHaveBeenCalledWith(clickConfirmPayPal)
+        })
 
         test('should call fetchPayPalNonce', () => {
           const fetchPayPalNonce = jest.fn()
