@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
   boxDetails: getBoxDetails(state),
   deliveryDetails: getDeliveryDetails(state),
   currentDeliverySlot: getCurrentDeliverySlot(state),
+  isSubscriptionActive: true
 })
 
 const SubscriptionContainer = connect(mapStateToProps, {

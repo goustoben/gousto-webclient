@@ -13,6 +13,7 @@ const defaultProps = {
   menuLoadBoxPrices: mockMenuLoadBoxPrices,
   userLoadData: mockUserLoadData,
   subscriptionLoadData: mockSubscriptionLoadData,
+  isSubscriptionActive: true
 }
 
 const mountWithProps = (props = {}) => {
@@ -42,6 +43,46 @@ describe('Subscription', () => {
       expect(mockMenuLoadBoxPrices).toHaveBeenCalled()
       expect(mockUserLoadData).toHaveBeenCalled()
       expect(mockSubscriptionLoadData).toHaveBeenCalled()
+    })
+  })
+
+  describe('Given isSubscriptionActive true', () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+
+      act(() => {
+        mountWithProps({
+          isSubscriptionActive: true
+        })
+      })
+    })
+
+    test('Then renders ActiveSubscription', () => {
+      expect(mountWrapper.find('ActiveSubscription').exists()).toBeTruthy()
+    })
+
+    test('Then does not render PausedSubscription', () => {
+      expect(mountWrapper.find('PausedSubscription').exists()).toBeFalsy()
+    })
+  })
+
+  describe('Given isSubscriptionActive false', () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+
+      act(() => {
+        mountWithProps({
+          isSubscriptionActive: false
+        })
+      })
+    })
+
+    test('Then renders PausedSubscription', () => {
+      expect(mountWrapper.find('PausedSubscription').exists()).toBeTruthy()
+    })
+
+    test('Then does not render ActiveSubscription', () => {
+      expect(mountWrapper.find('ActiveSubscription').exists()).toBeFalsy()
     })
   })
 })
