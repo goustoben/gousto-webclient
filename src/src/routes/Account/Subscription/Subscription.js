@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { LayoutPageWrapper, Grid, Column } from 'goustouicomponents'
+import { ActiveSubscription } from './ActiveSubscription'
+import { PausedSubscription } from './PausedSubscription'
 
 import css from './Subscription.css'
 
@@ -8,12 +10,14 @@ const propTypes = {
   subscriptionLoadData: PropTypes.func.isRequired,
   userLoadData: PropTypes.func.isRequired,
   menuLoadBoxPrices: PropTypes.func.isRequired,
+  isSubscriptionActive: PropTypes.bool.isRequired
 }
 
 const Subscription = ({
   subscriptionLoadData,
   userLoadData,
   menuLoadBoxPrices,
+  isSubscriptionActive
 }) => {
   useEffect(() => {
     subscriptionLoadData()
@@ -28,15 +32,7 @@ const Subscription = ({
           <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
         </Column>
       </Grid>
-
-      <Grid>
-        <Column smallScreen={12} mediumScreen={6} largeScreen={6}>
-          <div>First column cards placeholder</div>
-        </Column>
-        <Column smallScreen={12} mediumScreen={6} largeScreen={6}>
-          <div>First column cards placeholder</div>
-        </Column>
-      </Grid>
+      {isSubscriptionActive ? <ActiveSubscription /> : <PausedSubscription />}
     </LayoutPageWrapper>
   )
 }
