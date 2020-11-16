@@ -1,23 +1,9 @@
 @value Bluecheese, White from 'styles/colors.css';
-@value BreakpointFromLarge, BreakpointToMedium from 'design-language/breakpoints.css';
 
 .container {
   composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
   text-align: center;
   background: Bluecheese;
-
-  &.homepageRedesign {
-    @media BreakpointFromLarge {
-      p {
-        margin-right: 2rem
-      }
-    }
-    @media BreakpointToMedium {
-      .button {
-        width: 311px;
-      }
-    }
-  }
 }
 
 .hide {

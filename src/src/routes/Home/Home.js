@@ -20,13 +20,11 @@ class Home extends React.Component {
     variant: PropTypes.string,
     redirectLoggedInUser: PropTypes.func,
     isSignupReductionEnabled: PropTypes.bool,
-    isHomePageRedesignEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
     variant: 'default',
     isSignupReductionEnabled: false,
-    isHomePageRedesignEnabled: false,
   }
 
   componentDidMount() {
@@ -73,17 +71,17 @@ class Home extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, variant, isSignupReductionEnabled, isHomePageRedesignEnabled } = this.props
+    const { isAuthenticated, variant, isSignupReductionEnabled } = this.props
     const modules = this.getModules()
     let ctaUri
     let ctaText
 
     if (isAuthenticated) {
       ctaUri = routes.client.menu
-      ctaText = isHomePageRedesignEnabled ? home.CTA.loggedIn.mainRedesign : home.CTA.loggedIn.main
+      ctaText = home.CTA.loggedIn.main
     } else {
       ctaUri = routes.client.signup
-      ctaText = isHomePageRedesignEnabled ? home.CTA.mainRedesign : home.CTA.main
+      ctaText = home.CTA.main
     }
 
     const link = [
@@ -119,7 +117,6 @@ class Home extends React.Component {
         <PromoBanner />
         <HomeSections
           isSignupReductionEnabled={isSignupReductionEnabled}
-          isHomePageRedesignEnabled={isHomePageRedesignEnabled}
           modules={modules}
           testimonials={{
             ctaUri,
@@ -138,20 +135,9 @@ class Home extends React.Component {
           whatsInYourBox={{
             ctaUri,
             ctaText,
-            isHomePageRedesignEnabled,
           }}
           howItWorks={{
             variant,
-            isHomePageRedesignEnabled,
-          }}
-          testedAndLovedBy={{
-            isHomePageRedesignEnabled,
-          }}
-          subscription={{
-            isHomePageRedesignEnabled,
-          }}
-          emailForm={{
-            isHomePageRedesignEnabled,
           }}
         />
       </span>
