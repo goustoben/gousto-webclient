@@ -2,10 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import { Button } from 'goustouicomponents'
-import typography from 'design-language/typography.css'
 import css from './Banner.css'
 
-const Banner = ({ hide, onClick, text, linkText, isHomePageRedesignEnabled }) => (
+const Banner = ({ hide, onClick, text, linkText }) => (
   <div
     role="button"
     tabIndex="0"
@@ -13,17 +12,14 @@ const Banner = ({ hide, onClick, text, linkText, isHomePageRedesignEnabled }) =>
     className={classnames(
       css.container,
       css.link,
-      {
-        [css.hide]: hide,
-        [css.homepageRedesign]: isHomePageRedesignEnabled
-      },
+      { [css.hide]: hide },
     )}
   >
-    <p className={classnames(css.text, { [typography.fontStyleM]: isHomePageRedesignEnabled })}>
+    <p className={css.text}>
       {text}
 &nbsp;
     </p>
-    <Button className={classnames({ [typography.fontStyleSubHead]: isHomePageRedesignEnabled, [css.button]: isHomePageRedesignEnabled })} color="tertiary">{linkText}</Button>
+    <Button color="tertiary">{linkText}</Button>
   </div>
 )
 
@@ -32,11 +28,6 @@ Banner.propTypes = {
   onClick: PropTypes.func,
   text: PropTypes.string,
   linkText: PropTypes.string,
-  isHomePageRedesignEnabled: PropTypes.bool,
-}
-
-Banner.defaultProps = {
-  isHomePageRedesignEnabled: false
 }
 
 export default Banner

@@ -1,10 +1,48 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-
-import Banner from 'Banner'
 import logger from 'utils/logger'
+import Banner from 'Banner'
+import { clickClaimDiscountBar } from 'actions/trackingKeys'
+import { DiscountBar } from '../DiscountBar/DiscountBar'
 
-export class PromoBanner extends React.Component {
+export class PromoBanner extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSticky: false
+    }
+    this.stickyBarRef = React.createRef()
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll)
+  }
+
+  onScroll = () => {
+    const { isHomePageRedesignEnabled } = this.props
+
+    if (isHomePageRedesignEnabled) {
+      const header = this.stickyBarRef.current
+      let isSticky = false
+
+      if (window.pageYOffset > header.offsetTop) {
+        isSticky = true
+      }
+
+      this.setState({ isSticky })
+    }
+  }
+
+  applyDiscount = () => {
+    const { promoCode, trackUTMAndPromoCode } = this.props
+    this.applyPromoCode(promoCode)
+    trackUTMAndPromoCode(clickClaimDiscountBar)
+  }
+
   async applyPromoCode(promoCode) {
     const { promoChange, promoToggleModalVisibility, redirect, canApplyPromo } = this.props || {}
 
@@ -24,18 +62,27 @@ export class PromoBanner extends React.Component {
   }
 
   render() {
-    const { promoCode, hide, text, linkText, trackUTMAndPromoCode, isHomePageRedesignEnabled } = this.props
+    const { hide, text, linkText, isHomePageRedesignEnabled } = this.props
+    const { isSticky } = this.state
+
+    if (isHomePageRedesignEnabled) {
+      return (
+        <div ref={this.stickyBarRef}>
+          <DiscountBar
+            applyDiscount={this.applyDiscount}
+            isHidden={hide}
+            isSticky={isSticky}
+          />
+        </div>
+      )
+    }
 
     return (
       <Banner
         hide={hide}
         text={text}
         linkText={linkText}
-        onClick={() => {
-          this.applyPromoCode(promoCode)
-          trackUTMAndPromoCode('clickClaimDiscountBar')
-        }}
-        isHomePageRedesignEnabled={isHomePageRedesignEnabled}
+        onClick={this.applyDiscount}
       />
     )
   }
