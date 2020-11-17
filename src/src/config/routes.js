@@ -18,6 +18,7 @@ module.exports = {
     tastePreferences: 'v1',
     userBucketing: 'v1',
     clientMetrics: 'v1',
+    workable: 'v1',
   },
   address: {
     postcodeLookup: '/address/postcode-lookup',

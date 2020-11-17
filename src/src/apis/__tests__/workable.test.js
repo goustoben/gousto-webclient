@@ -11,12 +11,12 @@ jest.mock('utils/fetch', () =>
 )
 
 jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
+  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
 )
 
 jest.mock('config/routes', () => ({
   version: {
-    content: 'v2',
+    workable: 'v2',
   }
 }))
 
@@ -29,7 +29,7 @@ describe('workable api', () => {
     test('should fetch the correct url', async () => {
       await fetchJobs()
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-contentv2/jobs', null, 'GET')
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-workable/v2/workable/jobs', null, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
