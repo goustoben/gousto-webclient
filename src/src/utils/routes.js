@@ -46,7 +46,7 @@ export function checkValidSession(store, redirectUrl, target) {
       const refreshToken = getRefreshToken(state)
       const expiresAt = getExpiresAt(state)
 
-      if (!accessToken && !refreshToken) {
+      if (!accessToken && (!expiresAt || !refreshToken)) {
         replace(addTargetToRedirect({target, location, redirectUrl}))
       }
 
