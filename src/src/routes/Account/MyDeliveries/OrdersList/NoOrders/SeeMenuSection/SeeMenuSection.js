@@ -6,7 +6,7 @@ import css from './SeeMenuSection.css'
 import OrderRecipe from '../../../../AccountComponents/OrderRecipe'
 
 const SeeMenuSection = ({ recipes, boxType }) => {
-  let slicedRecipes = recipes
+  let slicedRecipes = recipes.toArray()
   if (boxType === 'vegetarian') {
     slicedRecipes = recipes.filter(recipe => recipe.get('dietType') === 'vegetarian')
   }
