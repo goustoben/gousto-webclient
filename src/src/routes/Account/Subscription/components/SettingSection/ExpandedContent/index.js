@@ -1,0 +1,1 @@
+export { ExpandedContent } from './ExpandedContent'
