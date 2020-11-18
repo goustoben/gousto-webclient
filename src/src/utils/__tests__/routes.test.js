@@ -56,12 +56,6 @@ describe('routes', () => {
         checkValidSession(store)({location}, replace, next)
       })
 
-      describe('and expire date is empty', () => {
-        test('then replace should be called', () => {
-          expect(replace).toHaveBeenCalled()
-        })
-      })
-
       describe('and access token exists', () => {
         describe('and the token is valid', () => {
           beforeEach(() => {
