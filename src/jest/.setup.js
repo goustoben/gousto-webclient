@@ -2,6 +2,8 @@
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('enzyme-adapter-react-16');
 
+require('jest-fetch-mock').enableMocks()
+
 window.matchMedia =
   window.matchMedia ||
   function() {
