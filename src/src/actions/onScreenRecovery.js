@@ -1,5 +1,4 @@
 import logger from 'utils/logger'
-import moment from 'moment'
 import seActions from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
 import { actionTypes } from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
@@ -148,7 +147,6 @@ export const cancelPendingOrder = (variation = 'default') => (
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
     const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
-    const number = getState().user.getIn(['newOrders', orderId, 'number'], '')
 
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
@@ -157,10 +155,6 @@ export const cancelPendingOrder = (variation = 'default') => (
     } finally {
       if (forceRefresh) {
         dispatch(redirect('/my-deliveries'))
-      }
-
-      if (parseInt(number, 10) <= 4) {
-        hj('trigger', `skipped-box-${number}`)
       }
 
       modalVisibilityChange({ modalVisibility: false })(dispatch)
@@ -288,25 +282,11 @@ export const cancelOrder = () => (
   }
 )
 
-export const generateHotjarMessage = ({ subscriptionLength, currentBoxNumber }) => {
-  if (subscriptionLength.days === 1) {
-    return 'paused-day-1'
-  } else if (currentBoxNumber === 0) {
-    return 'paused-before-box-1'
-  } else if (currentBoxNumber < 2 && subscriptionLength.weeks < 4) {
-    return 'paused-before-box-2-weeks-4'
-  } else if (currentBoxNumber < 4 && subscriptionLength.weeks < 8) {
-    return 'paused-before-box-4-weeks-8'
-  }
-
-  return null
-}
-
 export const pauseSubscription = () => (
   async (dispatch, getState) => {
     await dispatch(subPauseActions.subscriptionDeactivate())
 
-    const { user, subscription, onScreenRecovery } = getState()
+    const { user, onScreenRecovery } = getState()
     const userId = user.get('id')
     const offer = onScreenRecovery.get('offer')
     const promoCode = offer ? offer.promoCode : null
@@ -320,18 +300,6 @@ export const pauseSubscription = () => (
         osrDiscount: promoCode,
       },
     })
-
-    const currentBoxNumber = subscription.get('subscription').get('currentBoxNumber')
-    const createdAt = user.get('subscription').get('createdAt')
-    const subscriptionLength = {
-      days: moment().diff(moment(createdAt), 'day') + 1,
-      weeks: moment().diff(moment(createdAt), 'week') + 1,
-    }
-
-    const hotjarMessage = generateHotjarMessage({ subscriptionLength, currentBoxNumber })
-    if (hotjarMessage) {
-      hj('trigger', hotjarMessage)
-    }
 
     dispatch(redirect('/my-subscription'))
   }

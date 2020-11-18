@@ -109,6 +109,7 @@
     "validator": "10.4.0"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^3.4.2",
     "babel-core": "6.26.3",
     "babel-eslint": "8.2.6",
     "babel-jest": "23.6.0",
@@ -149,6 +150,7 @@
     "image-webpack-loader": "4.6.0",
     "inject-loader": "4.0.1",
     "jest": "23.6.0",
+    "jest-fetch-mock": "^3.0.3",
     "jest-transform-graphql": "2.1.0",
     "jsdom": "11.3.0",
     "lodash-webpack-plugin": "0.11.5",

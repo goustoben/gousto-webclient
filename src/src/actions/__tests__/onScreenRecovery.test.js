@@ -358,26 +358,6 @@ describe('onScreenRecovery', () => {
         expect(redirect).not.toHaveBeenCalled()
       })
     })
-
-    describe('when box number is 4 or less', () => {
-      test('hotjar is fired with correct trigger', async () => {
-        global.hj = jest.fn()
-
-        for (let i = 1; i <= 4; i++) {
-          state.user = Immutable.fromJS({
-            newOrders: {
-              64521: {
-                number: i.toString()
-              }
-            }
-          })
-          getStateSpy.mockReturnValue(state)
-
-          await cancelPendingOrder()(dispatchSpy, getStateSpy)
-          expect(hj).toHaveBeenCalledWith('trigger', `skipped-box-${i}`)
-        }
-      })
-    })
   })
 
   describe('cancelProjectedOrder', () => {
@@ -448,7 +428,6 @@ describe('onScreenRecovery', () => {
 
     describe('given an in-life user with an OSR promo code and multiple orders', () => {
       beforeEach(() => {
-        global.hj = jest.fn()
         getStateSpy.mockReturnValue(initialState())
       })
 
@@ -480,54 +459,6 @@ describe('onScreenRecovery', () => {
 
         test('then the user should be redirected to my-subscription', async () => {
           expect(redirect).toHaveBeenCalledWith('/my-subscription')
-        })
-
-        test('then hotjar should NOT be called if user has been active', async () => {
-          expect(hj).not.toHaveBeenCalled()
-        })
-      })
-    })
-
-    describe('given a user has been signed up for less than 8 weeks and has minimal orders', () => {
-      beforeEach(() => {
-        global.hj = jest.fn()
-        getStateSpy.mockReturnValue(initialState())
-      })
-
-      describe('when a user pauses their subscription', () => {
-        test('then hotjar should be called if user has paused on first day', async () => {
-          getStateSpy.mockReturnValue(initialState(moment()))
-
-          await pauseSubscription()(dispatchSpy, getStateSpy)
-          expect(hj).toHaveBeenCalledWith('trigger', 'paused-day-1')
-        })
-
-        test('then hotjar should be called if user has paused with no boxes ordered', async () => {
-          getStateSpy.mockReturnValue(initialState(null, 0))
-
-          await pauseSubscription()(dispatchSpy, getStateSpy)
-          expect(hj).toHaveBeenCalledWith('trigger', 'paused-before-box-1')
-        })
-
-        test('then hotjar should be called if user has paused with less than 2 boxes ordered in less than 4 weeks', async () => {
-          getStateSpy.mockReturnValue(initialState(moment().subtract(1, 'week'), 1))
-
-          await pauseSubscription()(dispatchSpy, getStateSpy)
-          expect(hj).toHaveBeenCalledWith('trigger', 'paused-before-box-2-weeks-4')
-        })
-
-        test('then hotjar should be called if user has paused with less than 4 boxes ordered in less than 8 weeks', async () => {
-          getStateSpy.mockReturnValue(initialState(moment().subtract(6, 'week'), 3))
-
-          await pauseSubscription()(dispatchSpy, getStateSpy)
-          expect(hj).toHaveBeenCalledWith('trigger', 'paused-before-box-4-weeks-8')
-        })
-
-        test('then hotjar should NOT be called if user has paused with 5 boxes ordered in less than 8 weeks', async () => {
-          getStateSpy.mockReturnValue(initialState(moment().subtract(6, 'week'), 5))
-
-          await pauseSubscription()(dispatchSpy, getStateSpy)
-          expect(hj).not.toHaveBeenCalled()
         })
       })
     })
