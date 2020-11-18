@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { Grid, Column } from 'goustouicomponents'
 import { Section } from '../components/Section'
+import { SettingSection } from '../components/SettingSection'
 import { yourSubscriptionDetailsSection, chefSelectsSettingsSection, totalPriceSection, skipABoxSection, pauseSubscriptionSection } from '../subscriptionsSectionsContent'
 
 const ActiveSubscription = () => (
@@ -17,7 +18,21 @@ const ActiveSubscription = () => (
           subTitle={yourSubscriptionDetailsSection.subTitle}
           testingSelector={yourSubscriptionDetailsSection.testingSelector}
         >
-          <div />
+          <SettingSection
+            icon="calendar"
+            title="Delivery day and time"
+            instruction="Choose day and time"
+            ctaText="Save day and time"
+            renderCurrentValue={<p>Some ting</p>}
+            onSubmit={() => console.log('Submit')}
+            onExpand={() => console.log('On Expand')}
+            isMobile
+          >
+            <div>Some stuff in here</div>
+            <div>Some stuff in here</div>
+            <div>Some stuff in here</div>
+            <div>Some stuff in here</div>
+          </SettingSection>
         </Section>
         <Section
           title={chefSelectsSettingsSection.title}
