@@ -670,6 +670,9 @@ export function setPayPalNonce(nonce) {
       type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
       nonce
     })
+
+    dispatch(checkoutActions.trackingOrderPlaceAttemptSucceeded())
+    dispatch(checkoutActions.checkoutSignup())
   }
 }
 

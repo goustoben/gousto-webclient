@@ -1380,15 +1380,42 @@ describe('checkout actions', () => {
 
   describe('given setPayPalNonce action', () => {
     describe('when called', () => {
-      test('should dispatch PAYMENT_SET_PAYPAL_NONCE', () => {
-        const nonce = 'fake-nonce'
+      let checkoutSignupOrig
+      let trackingOrderPlaceAttemptSucceededOrig
+      const nonce = 'fake-nonce'
 
+      beforeEach(() => {
+        checkoutSignupOrig = checkoutActions.checkoutSignup
+        trackingOrderPlaceAttemptSucceededOrig = checkoutActions.trackingOrderPlaceAttemptSucceeded
+
+        checkoutActions.checkoutSignup = jest.fn()
+        checkoutActions.trackingOrderPlaceAttemptSucceeded = jest.fn()
+      })
+
+      afterEach(() => {
+        checkoutActions.checkoutSignup = checkoutSignupOrig
+        checkoutActions.trackingOrderPlaceAttemptSucceeded = trackingOrderPlaceAttemptSucceededOrig
+      })
+
+      test('should dispatch PAYMENT_SET_PAYPAL_NONCE', () => {
         setPayPalNonce(nonce)(dispatch)
 
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.PAYMENT_SET_PAYPAL_NONCE,
           nonce
         })
+      })
+
+      test('should dispatch trackingOrderPlaceAttemptSucceeded action', () => {
+        setPayPalNonce(nonce)(dispatch)
+
+        expect(checkoutActions.trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
+      })
+
+      test('should dispatch checkoutSignup action', () => {
+        setPayPalNonce(nonce)(dispatch)
+
+        expect(checkoutActions.checkoutSignup).toHaveBeenCalled()
       })
     })
   })

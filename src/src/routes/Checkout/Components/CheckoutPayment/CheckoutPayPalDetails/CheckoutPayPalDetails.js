@@ -147,7 +147,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   render() {
-    const { hide, isPayPalSetupDone, hasErrors, resetPaymentMethod } = this.props
+    const { hide, isPayPalSetupDone, hasErrors, resetPaymentMethod, isSubmitting } = this.props
     const { isPayPalInitialized } = this.state
 
     return (
@@ -167,18 +167,20 @@ class CheckoutPayPalDetails extends React.PureComponent {
             Great, you’re all set to pay with&nbsp;
             <Svg className={css.paypalIcon} fileName="paypal" />
             <br />
-            <span className={css.paypalAlternativeText}>
-              or&nbsp;
-              <span
-                role="button"
-                tabIndex="0"
-                className={css.resetPaymentMethod}
-                onClick={resetPaymentMethod}
-                onKeyDown={onEnter(resetPaymentMethod)}
-              >
-                Change payment method
+            {isSubmitting || (
+              <span className={css.paypalAlternativeText}>
+                or&nbsp;
+                <span
+                  role="button"
+                  tabIndex="0"
+                  className={css.resetPaymentMethod}
+                  onClick={resetPaymentMethod}
+                  onKeyDown={onEnter(resetPaymentMethod)}
+                >
+                  Change payment method
+                </span>
               </span>
-            </span>
+            )}
           </div>
         )}
       </div>
@@ -197,6 +199,7 @@ CheckoutPayPalDetails.propTypes = {
   hasErrors: PropTypes.bool,
   hide: PropTypes.bool,
   isPayPalSetupDone: PropTypes.bool,
+  isSubmitting: PropTypes.bool,
   token: PropTypes.string,
 }
 
@@ -211,6 +214,7 @@ CheckoutPayPalDetails.defaultProps = {
   hasErrors: false,
   hide: false,
   isPayPalSetupDone: false,
+  isSubmitting: false,
   token: null,
 }
 
