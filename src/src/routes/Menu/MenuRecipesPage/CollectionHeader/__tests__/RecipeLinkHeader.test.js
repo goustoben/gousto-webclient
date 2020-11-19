@@ -1,11 +1,37 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { RecipeLinkHeader} from '../RecipeLinkHeader'
 
+const initialState = {
+  basket: Immutable.fromJS({
+    numPortions: 0
+  }),
+  menuCollections: Immutable.fromJS([]),
+  recipes: Immutable.fromJS([]),
+  menuRecipeStock: Immutable.fromJS([]),
+  menu: Immutable.fromJS({
+    menuVariants: Immutable.fromJS([])
+  }),
+  auth: Immutable.fromJS({
+    id: 'user-id'
+  }),
+  routing: { locationBeforeTransitions: { pathname: '/menu' } },
+}
+
 describe('RecipeLinkHeader', () => {
+  let store
   let wrapper
   let headerAttributes
   global.innerWidth = 1500
+
+  beforeEach(() => {
+    const mockStore = configureStore([thunk])
+    store = mockStore(initialState)
+  })
 
   describe('when headerImage is defined', () => {
     beforeEach(() => {
@@ -28,7 +54,10 @@ describe('RecipeLinkHeader', () => {
         fdiStyling: false
       }
 
-      wrapper = mount(<RecipeLinkHeader headerAttributes={headerAttributes} />)
+      wrapper = mount(
+        <Provider store={store}>
+          <RecipeLinkHeader headerAttributes={headerAttributes} />
+        </Provider>)
     })
 
     test('should render title', () => {

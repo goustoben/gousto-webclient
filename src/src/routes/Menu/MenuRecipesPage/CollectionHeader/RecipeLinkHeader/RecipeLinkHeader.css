@@ -28,6 +28,7 @@
 }
 
 .recipeLinkHeaderViewAllLink {
+  cursor: pointer;
   margin-left: auto;
   font-family: FontFamilyAxiformaBook;
   font-weight: FontWeightBold;

@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import Link from 'Link'
 import css from './CategoryCarousel.css'
 import { RecipeTileContainer } from '../../components/RecipeTile'
 import { CategoryScrollTrackerContainer } from '../CategoryScrollTracker'
 import { OptimizelyRolloutsContainer } from '../../../../containers/OptimizelyRollouts'
+import { CollectionLinkChangeContainer } from '../../components/CollectionLinkChange'
 
 const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselConfig }) => {
   if (!recipes.size) return null
 
-  const viewAllPath = `/menu?collection=${category.get('slug')}`
   const viewAllLabel = `View (${recipes.size})`
   const categoryId = category.get('id')
 
@@ -18,20 +17,16 @@ const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselCo
     <div className={css.categoryCarousel} style={{backgroundColor: carouselConfig.theme.backgroundColor, color: carouselConfig.theme.color}}>
       <div className={css.categoryDetails}>
         <div className={css.categoryTitle} style={{color: carouselConfig.theme.titleColor}}>{carouselConfig.title}</div>
-        <Link
+        <CollectionLinkChangeContainer
           className={css.categoryViewAllLink}
-          to={viewAllPath}
-          clientRouted
+          color={carouselConfig.theme.linkColor}
+          label={viewAllLabel}
+          collectionId={categoryId}
           onClick={() => {
             categoryButtonClicked()
             window.scroll(0, 0)
           }}
-          style={{
-            color: carouselConfig.theme.linkColor
-          }}
-        >
-          {viewAllLabel}
-        </Link>
+        />
       </div>
       {
         carouselConfig.description

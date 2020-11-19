@@ -1,14 +1,36 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
+import configureStore from 'redux-mock-store'
 import Immutable from 'immutable'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import Link from 'Link'
 import { RecipeTileContainer } from '../../components/RecipeTile'
 import { CategoryCarousel } from './CategoryCarousel'
 
+const initialState = {
+  basket: Immutable.fromJS({
+    numPortions: 0
+  }),
+  menuCollections: Immutable.fromJS([]),
+  recipes: Immutable.fromJS([]),
+  menuRecipeStock: Immutable.fromJS([]),
+  menu: Immutable.fromJS({
+    menuVariants: Immutable.fromJS([])
+  }),
+  auth: Immutable.fromJS({
+    id: 'user-id'
+  }),
+  routing: { locationBeforeTransitions: { pathname: '/menu' } },
+}
+
 describe('CategoryCarousel', () => {
+  let store
+
   const category = Immutable.fromJS({
     shortTitle: 'Category 1',
     slug: 'category-1',
+    id: 'category-id',
   })
 
   const carouselConfig = {
@@ -50,6 +72,11 @@ describe('CategoryCarousel', () => {
   const recipes2 = Immutable.List([recipe1, recipe2])
   const categoryButtonClicked = jest.fn()
 
+  beforeEach(() => {
+    const mockStore = configureStore()
+    store = mockStore(initialState)
+  })
+
   describe('when there are no recipes in category', () => {
     test('then it should render nothing', () => {
       const wrapper = shallow(
@@ -71,14 +98,14 @@ describe('CategoryCarousel', () => {
     })
 
     test('then it should render View link with 1 recipe', () => {
-      const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes1} carouselConfig={carouselConfig} />,
+      const wrapper = mount(
+        <Provider store={store}>
+          <CategoryCarousel category={category} recipes={recipes1} carouselConfig={carouselConfig} />
+        </Provider>,
       )
-      const viewAllPath = `/menu?collection=${category.get('slug')}`
 
       expect(wrapper.find('.categoryViewAllLink').find('GoustoLink').children().first()
         .text()).toEqual('View (1)')
-      expect(wrapper.find('.categoryViewAllLink').prop('to')).toEqual(viewAllPath)
     })
   })
 
@@ -92,8 +119,10 @@ describe('CategoryCarousel', () => {
     })
 
     test('then it should render View link with 2 recipes', () => {
-      const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />,
+      const wrapper = mount(
+        <Provider store={store}>
+          <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} />
+        </Provider>,
       )
 
       expect(wrapper.find('.categoryViewAllLink').find('GoustoLink').children().first()
@@ -101,8 +130,12 @@ describe('CategoryCarousel', () => {
     })
 
     describe('when the view button is clicked', () => {
-      const wrapper = shallow(
-        <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} categoryButtonClicked={categoryButtonClicked} />,
+      const mockStore = configureStore([thunk])
+      store = mockStore(initialState)
+      const wrapper = mount(
+        <Provider store={store}>
+          <CategoryCarousel category={category} recipes={recipes2} carouselConfig={carouselConfig} categoryButtonClicked={categoryButtonClicked} />
+        </Provider>,
       )
       const scrollSpy = jest.spyOn(window, 'scroll').mockImplementation(() => {})
       test('then the onClick actions are triggered', () => {

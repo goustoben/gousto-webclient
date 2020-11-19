@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Media from 'react-media'
-import Link from 'Link'
 import { LinkRecipeHolder } from './LinkRecipeHolder'
 import css from './RecipeLinkHeader.css'
+import { CollectionLinkChangeContainer } from '../../../components/CollectionLinkChange'
 
 export const RecipeLinkHeader = ({ headerAttributes }) => {
   const { title, description, backgroundColor, color, titleColor, descriptionColor, images, fdiStyling, recipes, link, linkColor} = headerAttributes
-  const viewAllPath = `/menu?collection=${link.collectionSlug}`
   const viewAllLabel = 'View'
 
   return (
@@ -26,16 +25,12 @@ export const RecipeLinkHeader = ({ headerAttributes }) => {
         >
           {title}
         </h2>
-        <Link
+        <CollectionLinkChangeContainer
           className={css.recipeLinkHeaderViewAllLink}
-          to={viewAllPath}
-          clientRouted
-          style={{
-            color: linkColor
-          }}
-        >
-          {viewAllLabel}
-        </Link>
+          collectionId={link.collectionId}
+          color={linkColor}
+          label={viewAllLabel}
+        />
       </div>
       <p className={css.recipeLinkHeaderDescription} style={{ color: descriptionColor }}>
         {description}
