@@ -59,6 +59,18 @@ describe('CheckoutPayPalDetails', () => {
       expect(wrapper).toMatchSnapshot()
     })
 
+    describe('when the form is submitting', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isSubmitting: true,
+        })
+      })
+
+      test('should hide "Change payment method" button', () => {
+        expect(wrapper.find(`.${css.paypalAlternativeText}`).exists()).toBe(false)
+      })
+    })
+
     describe('when user clicks on "Change payment method" link', () => {
       test('should trigger payment method reset', () => {
         wrapper.find(`.${css.resetPaymentMethod}`).simulate('click')

@@ -9,6 +9,7 @@ ShallowWrapper {
     hasErrors={false}
     hide={false}
     isPayPalSetupDone={false}
+    isSubmitting={false}
     paypalScriptsReady={false}
     resetPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}
@@ -308,6 +309,7 @@ ShallowWrapper {
     hasErrors={false}
     hide={false}
     isPayPalSetupDone={false}
+    isSubmitting={false}
     paypalScriptsReady={false}
     resetPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}
@@ -567,6 +569,7 @@ ShallowWrapper {
     hasErrors={false}
     hide={false}
     isPayPalSetupDone={true}
+    isSubmitting={false}
     paypalScriptsReady={false}
     resetPaymentMethod={[MockFunction]}
     setPayPalDeviceData={[Function]}
@@ -1138,6 +1141,7 @@ ShallowWrapper {
     hasErrors={false}
     hide={true}
     isPayPalSetupDone={false}
+    isSubmitting={false}
     paypalScriptsReady={false}
     resetPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}

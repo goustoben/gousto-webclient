@@ -29,10 +29,6 @@ module.exports = {
         done()
       })
       .perform(function (done) {
-        checkout.section.checkoutContainer.goToNextStep()
-        done()
-      })
-      .perform(function (done) {
         checkout.section.checkoutContainer.asyncSkipPromoCodeErrorIfPresent(browser, done)
       })
       .perform(function (done) {
