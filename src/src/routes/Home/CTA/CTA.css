@@ -1,6 +1,6 @@
 @value sizeLG, sizeXL from 'styles/typography.css';
 @value ScreenXXSMax, ScreenMDMax, HeightMDMax from 'styles/screenSizes.css';
-@value BreakpointToMedium from 'design-language/breakpoints.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .buttonSimple {
 	text-align: center;
@@ -34,10 +34,6 @@
 	max-height: none;
 	min-height: 45px;
 	padding-top: 2px;
-
-  .homepageRedesign & {
-    padding-top: 0.3rem;
-  }
 }
 
 .left {}
@@ -61,8 +57,11 @@
 	}
 }
 
-.homepageRedesign {
-  @media BreakpointToMedium {
-    width: 311px;
+.redesignCTAContainer {
+  margin-bottom: 0.5rem;
+
+  @media BreakpointFromMedium {
+    max-width: 13rem;
+    margin-bottom: 1rem;
   }
 }

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import config from 'config/home'
 import classnames from 'classnames'
 import Hero from './Hero'
-import Hero2 from './Hero2'
+import { Hero2 } from './Hero2'
 import { Carousel } from './Carousel'
 import Testimonials from './Testimonials'
 import { HowItWorks } from './HowItWorks'
@@ -47,7 +47,7 @@ const defaultProps = {
 
 class HomeSections extends Component {
   modules = {
-    hero: props => (this.props.alternativeDesktopHero ? <Hero2 {...props} /> : <Hero {...props} />),
+    hero: props => (props.isHomePageRedesignEnabled ? <Hero2 {...props} /> : <Hero {...props} />),
     recipes: props => <Carousel {...props} />,
     testimonials: props => <Testimonials {...props} />,
     howItWorks: props => <HowItWorks {...props} />,
@@ -59,12 +59,11 @@ class HomeSections extends Component {
 
   renderModule(name, order) {
     let module = null
-    const { isHomePageRedesignEnabled } = this.props
 
     if (this.modules[name]) {
       if (name.includes('hero')) {
         const componentProps = this.props[name] || {}
-        module = <section key={order} className={classnames(css.heroSection, { [css.heroSectionRedesign]: isHomePageRedesignEnabled })} data-module-name={name}>{this.modules[name](componentProps)}</section>
+        module = <section key={order} className={css.heroSection} data-module-name={name}>{this.modules[name](componentProps)}</section>
       } else {
         const inverse = order % 2 === 0
         const moduleConfig = config[name] || {}
@@ -80,7 +79,6 @@ class HomeSections extends Component {
                     [css.inverseSection]: inverse,
                     [css.section]: !inverse,
                     [css.inverseSectionSignupOverride]: name === 'howItWorks',
-                    [css.homepageRedesign]: isHomePageRedesignEnabled,
                   }
                 )
               }
@@ -97,9 +95,11 @@ class HomeSections extends Component {
   }
 
   render() {
+    const { modules } = this.props
+
     return (
       <span>
-        {this.props.modules.map((name, order) => this.renderModule(name, order))}
+        {modules.map((name, order) => this.renderModule(name, order))}
       </span>
     )
   }

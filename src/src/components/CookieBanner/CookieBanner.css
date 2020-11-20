@@ -1,5 +1,6 @@
 @value Blackberry, White from 'styles/colors.css';
 @value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value BreakpointToMedium from 'design-language/breakpoints.css';
 
 .container {
 	display: flex;
@@ -47,6 +48,12 @@
 	text-align: center;
 	padding: 5px 0;
 	font-size: 14px;
+}
+
+.homepageRedesign {
+  @media BreakpointToMedium {
+    min-width: 3.75rem;
+  }
 }
 
 .button:hover {

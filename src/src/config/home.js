@@ -35,7 +35,7 @@ module.exports = {
     steps: (redesignEnabled) => [{
       path: redesignEnabled ? 'icon-choose-redesign' : 'icon-choose',
       title: redesignEnabled ? '' : 'Click Click',
-      description: 'Discover 40+ tasty recipes each week including new cuisines, family favourites, and ten minute meals.',
+      description: 'Discover 50+ tasty recipes each week including new cuisines, family favourites, and ten minute meals.',
     }, {
       path: redesignEnabled ? 'icon-delivery-redesign' : 'icon-delivery',
       title: redesignEnabled ? '' : 'Ding-dong',
@@ -70,9 +70,11 @@ module.exports = {
   },
   CTA: {
     main: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
+    mainRedesign: <span>Get started</span>,
     join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     loggedIn: {
       main: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
+      mainRedesign: <span>Get started</span>,
       join: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     },
   },

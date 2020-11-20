@@ -1,222 +1,137 @@
-@value ScreenXXSMin, ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenMLMax, ScreenMDMax, ScreenLGMin, ScreenLGMax, ScreenXLMin, HeightMDMax from 'styles/screenSizes.css';
-@value sizeSM, sizeXL, sizeXXL, sizeXXL2 from 'styles/typography.css';
-@value Chia from 'styles/colors.css';
+@value BreakpointFromMedium, BreakpointToMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value White from 'styles/colors.css';
 
 .container {
+  padding: 0.75rem 0.75rem 0;
 	width: 100%;
-	position: relative;
-	background: url('routes/Home/Hero2/hero-2-box.jpg') no-repeat top center;
-	background-size: cover;
-	height: 215px;
+  max-width: 75rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column-reverse;
 
-/**
-544 - 767
- */
-	@media ScreenXXSMin and ScreenXSMax {
-		height: 303px;
-	}
+  @media BreakpointFromMedium {
+    flex-direction: row;
+    padding: 1rem 2rem;
+  }
 
-/**
-768 - 859
- */
-	@media ScreenSMMin and (max-width: 859px) {
-		height: 315px;
-	}
+  @media BreakpointFromLarge {
+    padding: 2.5rem 2rem;
+  }
+}
 
-/**
-860 - 991
- */
-	@media (min-width: 860px) and ScreenSMMax {
-		height: 355px;
-	}
+.heroImage {
+  width: 100%;
+  height: 60vw;
+  min-height: 14rem;
+  max-height: 24.75rem;
+  margin-bottom: 1rem;
+  background: url('routes/Home/Hero2/mobile-hero.png') center left / cover no-repeat;
 
-/**
-992 - 1024
- */
-	@media ScreenMDMin and ScreenMLMax {
-		height: 405px;
-	}
+  @media BreakpointFromMedium {
+    max-width: 24.75rem;
+    width: 100%;
+    min-height: 17rem;
+    max-height: 27rem;
+    background: url('routes/Home/Hero2/tablet-choice.jpg') center top / contain no-repeat;
+  }
 
-/**
-1025 - 1199
- */
-	@media ScreenMLMin and (max-width: 1199px){
-		height: 430px;
-	}
-
-/**
-1200 - 1280
- */
-	@media (min-width: 1200px) and (max-width: 1280px) {
-		height: 475px;
-	}
-
-/**
-1281 - 1366
- */
-	@media (min-width: 1281px) and (max-width: 1366px) {
-		height: 500px;
-	}
-
-/**
-1367 - 1599
- */
-	@media (min-width: 1367px) and ScreenLGMax {
-		height: 580px;
-	}
-
-/**
-1600 - 1899
- */
-	@media ScreenXLMin  and (max-width: 1899px){
-		height: 633px;
-	}
-
-/**
-1900
- */
-	@media (min-width: 1900px) {
-		height: 740px;
-	}
+  @media BreakpointFromLarge {
+    min-height: 22.5rem;
+    max-height: 28.75rem;
+    width: 100%;
+    max-width: 29rem;
+    margin-bottom: 1.5rem;
+    background: url('routes/Home/Hero2/desktop-choice.jpg') center top / contain no-repeat;
+  }
 }
 
 .textContainer {
-	position: absolute;
-	top: 44px;
-	right: 5%;
-	width: 40%;
-	max-width: 595px;
+  width: 100%;
+  position: relative;
+  text-align: center;
 
-/**
-544 - 767
- */
-	@media ScreenXXSMin and ScreenXSMax {
-		top: 61px;
-		width: 45%;
-		right: 10px;
-	}
+  @media BreakpointFromMedium {
+    margin-right: 1.5rem;
+    text-align: left;
+    max-width: 32rem;
+  }
 
-/**
-768
- */
-	@media ScreenSMMin {
-		right: 15px;
-		width: 45%;
-		max-width: 395px;
-	}
-
-/**
-768 - 859
- */
-	@media ScreenSMMin and (max-width: 859px) {
-		top: 65px;
-	}
-
-/**
-860 - 991
- */
-	@media (min-width: 860px) and ScreenSMMax {
-		top: 73px;
-	}
-
-/**
-992 - 1024
- */
-	@media ScreenMDMin and ScreenMLMax {
-		top: 83px;
-	}
-
-/**
-1025
- */
-	@media ScreenMLMin {
-		max-width: 440px;
-	}
-
-/**
-1025 - 1199
- */
-	@media ScreenMLMin and (max-width: 1199px){
-		top: 90px;
-	}
-
-/**
-1200 - 1280
- */
-	@media (min-width: 1200px) and (max-width: 1280px) {
-		top: 103px;
-	}
-
-/**
-1281
- */
-	@media (min-width: 1281px) {
-		right: 10%;
-	}
-
-/**
-1281 - 1366
- */
-	@media (min-width: 1281px) and (max-width: 1366px) {
-		top: 110px;
-	}
-
-/**
-1367 - 1599
- */
-	@media (min-width: 1367px) and ScreenLGMax {
-		top: 122px;
-	}
-
-/**
-1600 - 1899
- */
-	@media ScreenXLMin  and (max-width: 1899px){
-		top: 136px;
-	}
-
-/**
-1900
- */
-	@media (min-width: 1900px) {
-		top: 160px;
-		right: 15%;
-	}
+  @media BreakpointFromLarge {
+    max-width: 41.5rem;
+    min-width: 32rem;
+  }
 }
 
-.headerBase {
-	color: Chia;
+.title {
+  margin-bottom: 0.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1rem;
+    max-width: 22.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 32rem;
+  }
 }
 
-.header {
-	composes: headerBase;
-	composes: headerXXL from 'styles/typography.css';
-	line-height: 1.2em;
-
-/**
-860
- */
-	@media (min-width: 860px) {
-		font-size: sizeXXL;
-	}
-
-/**
-992
- */
-	@media ScreenMDMin {
-		font-size: sizeXXL2;
-	}
+.subTitle {
+  margin-bottom: 1rem;
 }
 
-.subHeader {
-	composes: headerBase;
-	composes: textBold from 'styles/typography.css';
-	font-size: sizeSM;
-	margin-top: -5px;
+.processImage {
+  @media BreakpointFromMedium {
+    position: absolute;
+    height: 8rem;
+    width: 200%;
+    background: url('routes/Home/Hero2/desktop-process.jpg') left top / contain no-repeat;
+  }
 
-	/*544-767*/
-	@media ScreenXXSMin {
-		font-size: sizeXL;
-		margin-top: 0;
-	}
+  @media BreakpointFromLarge {
+    width: 120%;
+    height: 10rem;
+  }
+}
+
+.stickyContainer {
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.isHidden {
+  display: none;
+}
+
+.mobileStickyInitial {
+  display: none;
+
+  @media BreakpointToMedium {
+    display: block;
+    padding: 0.75rem;
+    background: White;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 5;
+    margin: 0 -0.75rem;
+    transform: translateY(31.25rem);
+    box-shadow: 0 -0.25rem 3rem rgba(0, 0, 0, 0.2);
+  }
+}
+
+.mobileStickyRemoval {
+  @media BreakpointToMedium {
+    transform-origin: bottom;
+    transform: translateY(31.25rem);
+    transition: transform 0.3s ease;
+  }
+}
+
+.mobileSticky {
+  @media BreakpointToMedium {
+    transform: translateY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+  }
 }
