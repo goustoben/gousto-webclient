@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import { Button, Segment } from 'goustouicomponents'
-import typography from 'design-language/typography.css'
+import { Button, Segment, CTA as CTAButton } from 'goustouicomponents'
 import css from './CTA.css'
 
 const CTA = ({
@@ -20,14 +19,26 @@ const CTA = ({
     homeGetStarted(ctaUri, sectionForTracking)
   }
 
+  if (isHomePageRedesignEnabled) {
+    return (
+      <div className={css.redesignCTAContainer}>
+        <CTAButton
+          testingSelector={dataTesting}
+          onClick={handleClick}
+          isFullWidth
+        >
+          {children}
+        </CTAButton>
+      </div>
+    )
+  }
+
   return (
     <div
       className={classNames(css[align], {
         [css.buttonContainer]: withContainer,
         [css.buttonSimple]: !withContainer,
-        [css.buttonResponsive]: responsive,
-        [typography.fontStyleBodyL]: isHomePageRedesignEnabled,
-        [css.homepageRedesign]: isHomePageRedesignEnabled
+        [css.buttonResponsive]: responsive
       })}
     >
       <Button width="full" data-testing={dataTesting}>

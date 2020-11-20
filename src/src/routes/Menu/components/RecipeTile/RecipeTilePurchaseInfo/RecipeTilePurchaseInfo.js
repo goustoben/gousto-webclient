@@ -5,7 +5,7 @@ import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './RecipeTilePurchaseInfo.css'
 import { DropdownArrowContainer } from '../../../Recipe/AddRecipe/DropdownArrow'
 
-export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFineDineIn, recipeVariants, isInCarousel, categoryId, originalId }) => {
+export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFineDineIn, recipeVariants, isInCarousel, categoryId, originalId, fdiStyling }) => {
   if (isOutOfStock) {
     return null
   }
@@ -18,7 +18,7 @@ export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFi
         <div className={
           classnames(
             css.surchargeInfo,
-            { [css.surchargeInfoIsFineDineIn]: isFineDineIn,
+            { [css.surchargeInfoIsFineDineIn]: isFineDineIn && fdiStyling,
               [css.surchargeInfoRow]: surchageOnTop}
           )
         }
@@ -50,6 +50,7 @@ RecipeTilePurchaseInfo.propTypes = {
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
   isInCarousel: PropTypes.bool,
   categoryId: PropTypes.string,
+  fdiStyling: PropTypes.bool
 }
 
 RecipeTilePurchaseInfo.defaultProps = {
@@ -57,5 +58,6 @@ RecipeTilePurchaseInfo.defaultProps = {
   surcharge: 0,
   recipeVariants: null,
   isInCarousel: false,
-  categoryId: null
+  categoryId: null,
+  fdiStyling: false
 }

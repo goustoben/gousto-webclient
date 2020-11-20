@@ -20,11 +20,13 @@ class Home extends React.Component {
     variant: PropTypes.string,
     redirectLoggedInUser: PropTypes.func,
     isSignupReductionEnabled: PropTypes.bool,
+    isHomePageRedesignEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
     variant: 'default',
     isSignupReductionEnabled: false,
+    isHomePageRedesignEnabled: false,
   }
 
   componentDidMount() {
@@ -71,17 +73,17 @@ class Home extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, variant, isSignupReductionEnabled } = this.props
+    const { isAuthenticated, variant, isSignupReductionEnabled, isHomePageRedesignEnabled } = this.props
     const modules = this.getModules()
     let ctaUri
     let ctaText
 
     if (isAuthenticated) {
       ctaUri = routes.client.menu
-      ctaText = home.CTA.loggedIn.main
+      ctaText = isHomePageRedesignEnabled ? home.CTA.loggedIn.mainRedesign : home.CTA.loggedIn.main
     } else {
       ctaUri = routes.client.signup
-      ctaText = home.CTA.main
+      ctaText = isHomePageRedesignEnabled ? home.CTA.mainRedesign : home.CTA.main
     }
 
     const link = [
@@ -117,6 +119,7 @@ class Home extends React.Component {
         <PromoBanner />
         <HomeSections
           isSignupReductionEnabled={isSignupReductionEnabled}
+          isHomePageRedesignEnabled={isHomePageRedesignEnabled}
           modules={modules}
           testimonials={{
             ctaUri,
@@ -127,6 +130,7 @@ class Home extends React.Component {
             ctaText,
             dataTesting: 'hero',
             variant,
+            isHomePageRedesignEnabled,
           }}
           recipes={{
             ctaUri,

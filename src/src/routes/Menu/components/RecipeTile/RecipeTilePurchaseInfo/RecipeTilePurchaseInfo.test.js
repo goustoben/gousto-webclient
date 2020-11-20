@@ -84,7 +84,7 @@ describe('RecipeTilePurchaseInfo', () => {
     })
   })
 
-  describe('when isFineDineIn is true', () => {
+  describe('when isFineDineIn is true and fdiStyling is false', () => {
     beforeEach(() => {
       wrapper = shallow(<RecipeTilePurchaseInfo
         {...defaultProps}
@@ -93,12 +93,26 @@ describe('RecipeTilePurchaseInfo', () => {
       />)
     })
 
-    test('should have class of surchargeInfoIsFineDineIn', () => {
-      expect(wrapper.find('.surchargeInfoIsFineDineIn').length).toEqual(1)
+    test('should have class of surchargeInfo', () => {
+      expect(wrapper.find('.surchargeInfo').length).toEqual(1)
     })
   })
 
-  describe('when isFineDineIn is false', () => {
+  describe('when isFineDineIn is false and fdiStyling is true', () => {
+    beforeEach(() => {
+      wrapper = shallow(<RecipeTilePurchaseInfo
+        {...defaultProps}
+        surcharge={0.75}
+        fdiStyling
+      />)
+    })
+
+    test('should have class of surchargeInfo', () => {
+      expect(wrapper.find('.surchargeInfo').length).toEqual(1)
+    })
+  })
+
+  describe('when isFineDineIn and fdiStyling are false', () => {
     beforeEach(() => {
       wrapper = shallow(<RecipeTilePurchaseInfo
         {...defaultProps}
@@ -106,8 +120,23 @@ describe('RecipeTilePurchaseInfo', () => {
       />)
     })
 
+    test('should have class of surchargeInfo', () => {
+      expect(wrapper.find('.surchargeInfo').length).toEqual(1 )
+    })
+  })
+
+  describe('when isFineDineIn and fdiStyling are true', () => {
+    beforeEach(() => {
+      wrapper = shallow(<RecipeTilePurchaseInfo
+        {...defaultProps}
+        surcharge={0.75}
+        isFineDineIn
+        fdiStyling
+      />)
+    })
+
     test('should have class of surchargeInfoIsFineDineIn', () => {
-      expect(wrapper.find('.surchargeInfoIsFineDineIn').length).toEqual(0)
+      expect(wrapper.find('.surchargeInfo').length).toEqual(1)
     })
   })
 })

@@ -6,6 +6,7 @@ import {
 } from 'actions/cookies'
 import { getIsPolicyAccepted } from 'selectors/cookies'
 import { getIsPromoAppBannerEnabled } from 'selectors/appBanner'
+import { getHomePageRedesign } from 'selectors/features'
 import { CookieBanner } from './CookieBanner'
 
 const copy = {
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => ({
   copy,
   isCookiePolicyAccepted: getIsPolicyAccepted(state),
   isPromoAppBannerEnabled: getIsPromoAppBannerEnabled({ state }),
+  isHomePageRedesignEnabled: getHomePageRedesign(state),
 })
 
 const mapDispatchToProps = {

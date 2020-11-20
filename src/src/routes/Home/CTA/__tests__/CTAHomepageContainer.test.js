@@ -38,8 +38,6 @@ describe('CTAHomepageContainer', () => {
           responsive: false,
           isHomePageRedesignEnabled: false
         }
-        const renderedHTML = wrapper.dive()
-        expect(renderedHTML.exists('.buttonContainer.homepageRedesign')).toBeFalsy()
         expect(wrapper.props()).toEqual(expect.objectContaining(expected))
       })
     })
@@ -70,7 +68,7 @@ describe('CTAHomepageContainer', () => {
           isHomePageRedesignEnabled: true
         }
         const renderedHTML = wrapper.dive()
-        expect(renderedHTML.exists('.buttonContainer.homepageRedesign.fontStyleBodyL')).toBeTruthy()
+        expect(renderedHTML.exists('.redesignCTAContainer')).toBeTruthy()
         expect(wrapper.props()).toEqual(expect.objectContaining(expected))
       })
     })
