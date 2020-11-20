@@ -14,14 +14,6 @@
 - name: Install gulp
   command: npm i -g gulp
 
-- name: Install bower
-  command: npm i -g bower
-
-- name: Install Bower dependencies
-  command: bower install --allow-root
-  args:
-    chdir: "{{ directory }}"
-
 - name: npm cache clean
   command: npm cache clean
   args:
