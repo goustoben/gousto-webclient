@@ -69,7 +69,7 @@ const RecipeTile = ({
               </h2>
             </div>
           </div>
-          <RecipeTilePurchaseInfoContainer recipeId={recipeId} originalId={originalId} isInCarousel={isInCarousel} categoryId={categoryId} />
+          <RecipeTilePurchaseInfoContainer recipeId={recipeId} originalId={originalId} isInCarousel={isInCarousel} categoryId={categoryId} fdiStyling={fdiStyling} />
         </div>
       </div>
     </div>
