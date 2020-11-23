@@ -2,13 +2,12 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Carousel from 'Carousel'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 import config from 'config/home'
 import Testimonial from './Testimonial'
 import css from './TestimonialCarousel.css'
 
-const TestimonialCarousel = ({ testimonials = config.testimonials, showLink, isHomePageRedesignEnabled }) => (
-  <div className={classnames(css.container, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
+const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) => (
+  <div className={css.container}>
     <Carousel
       adaptiveHeight={false}
       speed={400}
@@ -33,7 +32,6 @@ const TestimonialCarousel = ({ testimonials = config.testimonials, showLink, isH
               <Testimonial
                 testimonial={Immutable.Map(testimonial)}
                 showLink={showLink}
-                isHomePageRedesignEnabled={isHomePageRedesignEnabled}
               />
             </div>
           </div>
@@ -45,12 +43,10 @@ const TestimonialCarousel = ({ testimonials = config.testimonials, showLink, isH
 TestimonialCarousel.propTypes = {
   testimonials: PropTypes.array,
   showLink: PropTypes.bool,
-  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 TestimonialCarousel.defaultProps = {
   showLink: true,
-  isHomePageRedesignEnabled: true,
 }
 
 export default TestimonialCarousel

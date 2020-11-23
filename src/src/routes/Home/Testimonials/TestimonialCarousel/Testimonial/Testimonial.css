@@ -1,4 +1,4 @@
-@value White, Blackberry, LightestAccessible from 'styles/colors.css';
+@value White, Blackberry from 'styles/colors.css';
 @value ScreenXXSMax, ScreenSMMin, ScreenMDMin, ScreenLGMin, HeightSMMax from 'styles/screenSizes.css';
 @value SpacingMD, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value sizeXS, sizeSM, sizeMD, sizeLG from 'styles/typography.css';
@@ -44,11 +44,6 @@
 	@media (width <= 350px) {
 		height: 460px;
 	}
-
-  &.homepageRedesign {
-     padding: 1.5rem;
-     height: auto;
-  }
 }
 
 .starIcons, .stars {
@@ -66,18 +61,10 @@
 	@media ScreenLGMin {
 		font-size: sizeMD;
 	}
-
-  .homepageRedesign & {
-    color: LightestAccessible;
-  }
 }
 
 .title {
 	composes: textLG textBold from 'styles/typography.css';
-
-  .homepageRedesign & {
-    color: LightestAccessible;
-  }
 
 	@media ScreenXXSMax {
 		font-size: sizeSM;
@@ -91,11 +78,6 @@
 	@media ScreenLGMin {
 		font-size: sizeLG;
 	}
-
-  .homepageRedesign & {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-  }
 }
 
 .link {
@@ -136,20 +118,6 @@
 	@media ScreenXXSMax and HeightSMMax {
 		margin-bottom: SpacingXS;
 	}
-}
-
-.homepageRedesign {
-  .author {
-    margin-bottom: 8px;
-
-    @media BreakpointToMedium {
-      margin-bottom: 18px;
-    }
-  }
-
-  .stars {
-    margin-bottom: 16px;
-  }
 }
 
 .title {

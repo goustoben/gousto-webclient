@@ -1,6 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
 
 import home from 'config/home'
@@ -44,6 +44,8 @@ describe('Home', () => {
       unsubscribe: jest.fn(),
       dispatch,
     }
+
+    wrapper = mount(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
   })
 
   afterEach(() => {
@@ -64,7 +66,6 @@ describe('Home', () => {
   describe('componentWillUnmount', () => {
     test('should not call menu fetch data if unmounted within 2.5 seconds', () => {
       jest.useFakeTimers()
-      wrapper = mount(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
       expect(menuFetchData).not.toHaveBeenCalled()
       wrapper.unmount()
       jest.advanceTimersByTime(3500)
@@ -74,45 +75,79 @@ describe('Home', () => {
   })
 
   describe('rendered Home sections', () => {
-    test('should display default HomeSections component with emailForm when logged-out', () => {
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated={false} />, { context: { store } })
-      expect(wrapper.find(HomeSections)).toHaveLength(1)
-      expect(wrapper.find(HomeSections).prop('modules')).toEqual([
-        'hero',
-        'howItWorks',
-        'subscription',
-        'recipes',
-        'whatsInYourBox',
-        'emailForm',
-        'testimonials',
-        'testedAndLovedBy',
-      ])
-    })
-    test('should display default HomeSections component without emailForm when logged-in', () => {
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated />, { context: { store } })
-      expect(wrapper.find(HomeSections)).toHaveLength(1)
-      expect(wrapper.find(HomeSections).prop('modules')).toEqual([
-        'hero',
-        'howItWorks',
-        'subscription',
-        'recipes',
-        'whatsInYourBox',
-        'testimonials',
-        'testedAndLovedBy',
-      ])
+    describe('when user is not authenticated', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: false
+        })
+      })
+
+      test('should display default HomeSections component with emailForm when logged-out', () => {
+        expect(wrapper.find(HomeSections)).toHaveLength(1)
+        expect(wrapper.find(HomeSections).prop('modules')).toEqual([
+          'hero',
+          'howItWorks',
+          'subscription',
+          'recipes',
+          'whatsInYourBox',
+          'emailForm',
+          'testimonials',
+          'testedAndLovedBy',
+        ])
+      })
     })
 
-    test('should display HomeSections in requested order', () => {
-      wrapper = shallow(<Home
-        redirectLoggedInUser={jest.fn()}
-        moduleOrder="testimonials,recipes"
-      />, { context: { store } })
+    describe('when user is authenticated', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: true
+        })
+      })
 
-      expect(wrapper.find(HomeSections)).toHaveLength(1)
-      expect(wrapper.find(HomeSections).prop('modules')).toEqual([
-        'testimonials',
-        'recipes',
-      ])
+      test('should display default HomeSections component without emailForm when logged-in', () => {
+        expect(wrapper.find(HomeSections)).toHaveLength(1)
+        expect(wrapper.find(HomeSections).prop('modules')).toEqual([
+          'hero',
+          'howItWorks',
+          'subscription',
+          'recipes',
+          'whatsInYourBox',
+          'testimonials',
+          'testedAndLovedBy',
+        ])
+      })
+    })
+
+    describe('when isHomePageRedesignEnabled is enabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isHomePageRedesignEnabled: true
+        })
+      })
+
+      test('should display default HomeSections component without emailForm when logged-in', () => {
+        expect(wrapper.find(HomeSections)).toHaveLength(1)
+        expect(wrapper.find(HomeSections).prop('modules')).toEqual([
+          'hero',
+          'trustPilot',
+        ])
+      })
+    })
+
+    describe('when component renders', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          moduleOrder: 'testimonials,recipes'
+        })
+      })
+
+      test('should display HomeSections in requested order', () => {
+        expect(wrapper.find(HomeSections)).toHaveLength(1)
+        expect(wrapper.find(HomeSections).prop('modules')).toEqual([
+          'testimonials',
+          'recipes',
+        ])
+      })
     })
   })
 
@@ -122,7 +157,6 @@ describe('Home', () => {
     const expectedCtaText = home.CTA.main
 
     beforeEach(() => {
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
       homeSectionsWrapper = wrapper.find(HomeSections)
     })
 
@@ -165,7 +199,9 @@ describe('Home', () => {
     const expectedCtaText = home.CTA.loggedIn.main
 
     beforeEach(() => {
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated />, { context: { store } })
+      wrapper.setProps({
+        isAuthenticated: true
+      })
       homeSectionsWrapper = wrapper.find(HomeSections)
     })
 
@@ -204,9 +240,13 @@ describe('Home', () => {
 
   describe('helmet', () => {
     describe('when given a variant', () => {
-      test('should put a canonical tag in the url', () => {
-        wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} variant="alt" />, { context: { store } })
+      beforeEach(() => {
+        wrapper.setProps({
+          variant: 'alt'
+        })
+      })
 
+      test('should put a canonical tag in the url', () => {
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([{
           href: 'https://www.gousto.local/',
           rel: 'canonical',
@@ -216,8 +256,6 @@ describe('Home', () => {
 
     describe('when not given a variant', () => {
       test('should not put a canonical tag in the url', () => {
-        wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
-
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([])
       })
     })
