@@ -1,0 +1,1 @@
+export { TrustPilot } from './TrustPilot'

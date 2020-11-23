@@ -63,12 +63,13 @@ class Hero2 extends Component {
       ? css.stickyContainer
       : classNames(css.mobileStickyInitial, css.mobileStickyRemoval, {
         [css.mobileSticky]: isSticky,
+        [css.hideShadow]: maxHeight && !isHeroCTA && isSticky
       })
 
     return (
       <div
         className={className}
-        style={maxHeight && !isHeroCTA ? { top: `${maxHeight}px`, bottom: 'auto' } : {}}
+        style={maxHeight && !isHeroCTA ? { top: `${maxHeight}px` } : {}}
         ref={this.stickyCTARef}
       >
         <CTAHomepageContainer

@@ -56,12 +56,18 @@ class Home extends React.Component {
   }
 
   defaultModules() {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, isHomePageRedesignEnabled } = this.props
     if (isAuthenticated) {
       return [
         'hero', 'howItWorks', 'subscription', 'recipes',
         'whatsInYourBox', 'testimonials',
         'testedAndLovedBy',
+      ]
+    }
+
+    if (isHomePageRedesignEnabled) {
+      return [
+        'hero', 'trustPilot',
       ]
     }
 

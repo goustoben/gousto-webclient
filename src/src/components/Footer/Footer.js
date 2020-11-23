@@ -4,6 +4,7 @@ import moment from 'moment'
 import config from 'config'
 import * as trackingKeys from 'actions/trackingKeys'
 import { client as clientRoutes } from 'config/routes'
+import { trustPilotReviews } from 'config/home'
 import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { AppStoreLinks } from 'components/AppStoreLinks'
@@ -209,7 +210,9 @@ const Footer = ({
         <div className={css.greatValue}>
           <h3 className={css.greatValueTitle}>9 / 10</h3>
           <Svg fileName="icon-5-stars-trustpilot" className={css.icon5Stars} />
-          <div className={css.greatValueDescription}>Based on 2500+ reviews</div>
+          <div className={css.greatValueDescription}>
+            {`Based on ${trustPilotReviews}+ reviews`}
+          </div>
         </div>
         <div className={css.trustpilotContainer}>
           <Svg fileName="icon-trustpilot-logo-darkbg" className={css.iconTrustpilot} />

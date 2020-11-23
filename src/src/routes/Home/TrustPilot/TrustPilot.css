@@ -1,0 +1,119 @@
+@value Coconut, Pomegranate from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
+.trustPilotContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: Coconut;
+  margin: 2.25rem 0 2.5rem;
+  position: relative;
+  height: 100%;
+  max-height: 18.5rem;
+  min-height: 15rem;
+
+  @media BreakpointFromMedium {
+    min-height: 9rem;
+    margin: 0 0 2.5rem;
+  }
+}
+
+.textContainer {
+  text-align: center;
+  padding: 5rem 0;
+
+  @media BreakpointFromMedium {
+    padding: 0;
+  }
+}
+
+.leftSeedsArea,
+.rightSeedsArea {
+  position: absolute;
+  height: 4rem;
+  width: 100%;
+  background-position: bottom left;
+
+  @media BreakpointFromMedium {
+    min-height: 9rem;
+    width: 7.75rem;
+  }
+}
+
+.leftSeedsArea {
+  top: 0;
+  transform: rotate(180deg);
+  background: url('routes/Home/TrustPilot/seeds-mobile.png') bottom left repeat-x;
+
+  @media BreakpointFromMedium {
+    left: 0;
+    transform: rotate(180deg);
+    background: url('routes/Home/TrustPilot/seeds-desktop.png') top center / contain no-repeat;
+  }
+}
+
+.rightSeedsArea {
+  bottom: 0;
+  background: url('routes/Home/TrustPilot/seeds-mobile.png') bottom left repeat-x;
+
+  @media BreakpointFromMedium {
+    right: 0;
+    transform: rotate(0deg);
+    background: url('routes/Home/TrustPilot/seeds-desktop.png') right center / contain no-repeat;
+  }
+}
+
+.deliveredMeals {
+  composes: fontStyleM from 'design-language/typography.css';
+  margin: 0 0 1rem;
+  padding: 0 2.25rem;
+}
+
+.goustoRedColor {
+  color: Pomegranate;
+  composes: fontBold from 'design-language/typography.css';
+}
+
+.reviewContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  @media BreakpointFromMedium {
+    flex-direction: row;
+  }
+}
+
+.starsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reviewStar {
+  width: 1.25rem;
+  height: 1.5rem;
+  background: url('routes/Home/TrustPilot/star.png') left center / cover no-repeat;
+}
+
+.reviews {
+  composes: fontStyleBodyL from 'design-language/typography.css';
+  margin: 0;
+
+  @media BreakpointFromMedium {
+    margin-left: 0.75rem;
+  }
+}
+
+.trustPilot {
+  margin: 0 0.25rem;
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
+.trustPilotStars {
+  width: 6.75rem;
+  height: 1.25rem;
+  background: url('routes/Home/TrustPilot/trustpilot-four-and-half-stars.png') left center / cover no-repeat;
+}

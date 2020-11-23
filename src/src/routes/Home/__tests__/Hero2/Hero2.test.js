@@ -72,7 +72,6 @@ describe('Hero2', () => {
     test('then sticky container should have inline styles', () => {
       expect(wrapper.find(CTAHomepageContainer).at(1).parent().prop('style')).toEqual({
         top: '500px',
-        bottom: 'auto'
       })
     })
   })

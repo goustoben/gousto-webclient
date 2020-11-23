@@ -101,5 +101,6 @@ module.exports = {
   inYourBox: {
     subheading: 'A Gousto recipe box is packed with everything you need to reinvent dinnertimes.',
     subheadingRedesign: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.'
-  }
+  },
+  trustPilotReviews: '13,700'
 }

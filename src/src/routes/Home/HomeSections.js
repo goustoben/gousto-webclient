@@ -11,6 +11,7 @@ import { Subscription } from './Subscription'
 import { InYourBox } from './InYourBox'
 import TestedLoved from './TestedLoved'
 import { EmailForm } from './EmailForm'
+import { TrustPilot } from './TrustPilot'
 import css from './Home.css'
 
 const propTypes = {
@@ -55,20 +56,22 @@ class HomeSections extends Component {
     whatsInYourBox: props => <InYourBox {...props} />,
     testedAndLovedBy: props => <TestedLoved {...props} />,
     emailForm: props => <EmailForm {...props} />,
+    trustPilot: props => <TrustPilot {...props} />,
   }
 
   renderModule(name, order) {
     let module = null
+    const { [name]: sectionProps } = this.props
 
     if (this.modules[name]) {
       if (name.includes('hero')) {
-        const componentProps = this.props[name] || {}
+        const componentProps = sectionProps || {}
         module = <section key={order} className={css.heroSection} data-module-name={name}>{this.modules[name](componentProps)}</section>
       } else {
         const inverse = order % 2 === 0
         const moduleConfig = config[name] || {}
         moduleConfig.inverse = inverse
-        const componentProps = Object.assign(moduleConfig, this.props[name] || {})
+        const componentProps = Object.assign(moduleConfig, sectionProps || {})
         module = (
           <div key={order} className={classnames(css.sectionContainer, css[`${name}-container`])}>
             <section
@@ -94,12 +97,34 @@ class HomeSections extends Component {
     return module
   }
 
+  renderRedesignModule = (name, order) => {
+    if (!this.modules[name]) {
+      return null
+    }
+
+    const moduleConfig = config[name] || {}
+    const { [name]: sectionProps } = this.props
+    const componentProps = Object.assign(moduleConfig, sectionProps || {})
+
+    return (
+      <section
+        key={order}
+        className={css[name]}
+        data-module-name={name}
+      >
+        {this.modules[name](componentProps)}
+      </section>
+    )
+  }
+
   render() {
-    const { modules } = this.props
+    const { modules, isHomePageRedesignEnabled } = this.props
 
     return (
       <span>
-        {modules.map((name, order) => this.renderModule(name, order))}
+        {modules.map((name, order) => (
+          isHomePageRedesignEnabled ? this.renderRedesignModule(name, order) : this.renderModule(name, order))
+        )}
       </span>
     )
   }
