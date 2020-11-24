@@ -67,7 +67,7 @@ class Home extends React.Component {
 
     if (isHomePageRedesignEnabled) {
       return [
-        'hero', 'trustPilot', 'whyChooseGousto',
+        'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks'
       ]
     }
 

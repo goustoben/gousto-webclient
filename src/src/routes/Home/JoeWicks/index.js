@@ -1,0 +1,1 @@
+export { JoeWicks } from './JoeWicks'
