@@ -56,7 +56,7 @@ describe('HomeSections', () => {
     beforeEach(() => {
       wrapper.setProps({
         isHomePageRedesignEnabled: true,
-        modules: ['hero','trustPilot', 'whyChooseGousto']
+        modules: ['hero','trustPilot', 'whyChooseGousto', 'joeWicks']
       })
     })
 
@@ -65,11 +65,12 @@ describe('HomeSections', () => {
       expect(wrapper.find('Hero')).toHaveLength(0)
     })
 
-    test('then should render 3 specified modules', () => {
-      expect(wrapper.find('section')).toHaveLength(3)
+    test('then should render 4 specified modules', () => {
+      expect(wrapper.find('section')).toHaveLength(4)
       expect(wrapper.find('Hero2')).toBeDefined()
       expect(wrapper.find('TrustPilot')).toBeDefined()
       expect(wrapper.find('WhyChooseGousto')).toBeDefined()
+      expect(wrapper.find('JoeWicks')).toBeDefined()
     })
 
     describe('and there is no such module to render', () => {

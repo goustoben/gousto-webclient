@@ -104,7 +104,6 @@ module.exports = {
   defaultVariant: 'default',
   inYourBox: {
     subheading: 'A Gousto recipe box is packed with everything you need to reinvent dinnertimes.',
-    subheadingRedesign: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.'
   },
   trustPilotReviews: '13,700',
   whyGousto: {
@@ -138,4 +137,5 @@ module.exports = {
       }
     ]
   },
+  joeWicks: '“I love knowing that when I get home each week my Gousto box is waiting for me, with four banging recipes and all the ingredients I need. It’s removed one stress and made life so much easier. There’s no going back for me!”'
 }

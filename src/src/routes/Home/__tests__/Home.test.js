@@ -131,6 +131,7 @@ describe('Home', () => {
           'hero',
           'trustPilot',
           'whyChooseGousto',
+          'joeWicks',
         ])
       })
     })

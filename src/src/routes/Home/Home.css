@@ -1,6 +1,5 @@
 @value Coconut, InYourBoxBg, White from 'styles/colors.css';
 @value ScreenXSMax, ScreenSMMax, ScreenSMMin, ScreenXXSMax from 'styles/screenSizes.css';
-@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
 
 .section {
 	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
@@ -9,11 +8,6 @@
 .inverseSection {
 	composes: section;
 	background-color: Coconut;
-  &.homepageRedesign {
-    &.testimonials-section {
-      background-color:White;
-    }
-  }
 }
 
 .inverseSectionSignupOverride {
@@ -22,17 +16,6 @@
 	@media ScreenSMMin {
 		padding-top: 80px;
 	}
-
-  &.homepageRedesign {
-    @media BreakpointFromMedium {
-      padding-top: 5rem;
-    }
-
-    @media BreakpointToMedium {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-    }
-  }
 }
 
 .sectionContainer {
@@ -43,28 +26,11 @@
 	display: inline;
 }
 
-.heroSectionRedesign {
-  @media BreakpointToMedium {
-    min-height: 689px;
-    display: block;
-  }
-}
-
 .whatsInYourBox-section {
 	padding: 0px 0px 20px 0px;
 	background: url('routes/Home/InYourBox/unboxing-x1200.jpg') no-repeat InYourBoxBg;
 	background-position: 100% bottom;
 	background-size: auto 100%;
-
-  &.homepageRedesign {
-    background: url('routes/Home/InYourBox/unboxing-redesign-mobile.jpg') center top / contain no-repeat;
-
-    @media BreakpointFromMedium {
-      max-height: 622px;
-      background: url('routes/Home/InYourBox/unboxing-redesign.jpg') center center / cover no-repeat;
-      padding-top: 0;
-    }
-  }
 
 	@media (width <= 1215px) {
 		background-position: calc(100% + 150px) bottom;
@@ -87,10 +53,8 @@
 }
 
 .recipes-section, .subscription-section {
-  &:not(.homepageRedesign) {
-    @media ScreenXSMax {
-      padding-bottom: 90px;
-    }
+  @media ScreenXSMax {
+    padding-bottom: 90px;
   }
 }
 
