@@ -67,7 +67,7 @@ class Home extends React.Component {
 
     if (isHomePageRedesignEnabled) {
       return [
-        'hero', 'trustPilot',
+        'hero', 'trustPilot', 'whyChooseGousto',
       ]
     }
 
@@ -148,6 +148,10 @@ class Home extends React.Component {
           }}
           howItWorks={{
             variant,
+          }}
+          whyChooseGousto={{
+            ctaUri,
+            ctaText,
           }}
         />
       </span>

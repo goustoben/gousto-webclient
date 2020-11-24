@@ -12,6 +12,7 @@ import { InYourBox } from './InYourBox'
 import TestedLoved from './TestedLoved'
 import { EmailForm } from './EmailForm'
 import { TrustPilot } from './TrustPilot'
+import { WhyChooseGousto } from './WhyChooseGousto'
 import css from './Home.css'
 
 const propTypes = {
@@ -56,7 +57,8 @@ class HomeSections extends Component {
     whatsInYourBox: props => <InYourBox {...props} />,
     testedAndLovedBy: props => <TestedLoved {...props} />,
     emailForm: props => <EmailForm {...props} />,
-    trustPilot: props => <TrustPilot {...props} />,
+    trustPilot: () => <TrustPilot />,
+    whyChooseGousto: props => <WhyChooseGousto {...props} />,
   }
 
   renderModule(name, order) {
