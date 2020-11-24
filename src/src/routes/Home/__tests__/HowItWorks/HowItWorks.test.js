@@ -42,41 +42,34 @@ describe('HowItWorks', () => {
     })
   })
 
-  test('should have default steps from config', () => {
-    wrapper = shallow(<HowItWorks steps={steps} header={header} description={description} />)
-
-    expect(wrapper.find(Guide).prop('steps')).toHaveLength(3)
+  describe('when steps props is not passed by default', () => {
+    test('should have default steps from config', () => {
+      expect(wrapper.find(Guide).prop('steps')).toHaveLength(3)
+    })
   })
 
-  test('should request steps by variant', () => {
-    wrapper = shallow(<HowItWorks steps={steps} header={header} description={description} />)
-    expect(steps).toHaveBeenCalledWith('default', false)
-
-    wrapper = shallow(<HowItWorks steps={steps} variant="rebrand" header={header} description={description} />)
-    expect(steps).toHaveBeenCalledWith('rebrand', false)
-  })
-
-  describe('homepageRedesign', () => {
-    describe('Given home page redesign is disabled', () => {
-      describe('When isHomePageRedesignEnabled set to false/default', () => {
-        beforeEach(() => {
-          wrapper.setProps({ isHomePageRedesignEnabled: false })
-        })
-        test('Then HowItWorks should be rendered without homepageRedesign class attribute', () => {
-          expect(wrapper.hasClass('homepageRedesign')).toBeFalsy()
-        })
+  describe('when variant props is not passed', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        steps,
       })
     })
 
-    describe('Given home page redesign is enabled', () => {
-      describe('When isHomePageRedesignEnabled set to true', () => {
-        beforeEach(() => {
-          wrapper.setProps({ isHomePageRedesignEnabled: true })
-        })
-        test('Then HowItWorks should be rendered with homepageRedesign class attribute', () => {
-          expect(wrapper.hasClass('homepageRedesign')).toBeTruthy()
-        })
+    test('then should call steps with proper parameter', () => {
+      expect(steps).toHaveBeenCalledWith('default')
+    })
+  })
+
+  describe('when variant prop is passed', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        steps,
+        variant: 'rebrand',
       })
+    })
+
+    test('then should call steps with proper parameter', () => {
+      expect(steps).toHaveBeenCalledWith('rebrand')
     })
   })
 })

@@ -1,23 +1,10 @@
 @value ScreenLGMin, ScreenXSMax, ScreenMDMax from 'styles/screenSizes.css';
 @value Blackberry, White from 'styles/colors.css';
-@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
 	padding-top: 125px;
 	padding-bottom: 125px;
 	background: Blackberry;
-
-  &.homepageRedesign {
-     padding: 3rem 0;
-
-    @media BreakpointFromMedium {
-      padding: 5rem 0;
-    }
-
-    h2 {
-      margin-bottom: 2.19rem;
-    }
-  }
 }
 
 .title {
@@ -46,13 +33,6 @@
 		display: table;
 		clear: both;
 	}
-
-  .homepageRedesign & {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }
 
 .logo {
@@ -99,8 +79,4 @@
 	@media ScreenLGMin {
 		display: none;
 	}
-
-  .homepageRedesign & {
-    display: none;
-  }
 }

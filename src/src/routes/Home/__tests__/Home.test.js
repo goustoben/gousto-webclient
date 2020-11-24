@@ -130,6 +130,7 @@ describe('Home', () => {
         expect(wrapper.find(HomeSections).prop('modules')).toEqual([
           'hero',
           'trustPilot',
+          'whyChooseGousto',
         ])
       })
     })

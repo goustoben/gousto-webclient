@@ -1,7 +1,6 @@
 @value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
 @value White from 'styles/colors.css';
 
-.homepageRedesign,
 .boxPricesRedesign {
   > div > div {
     &:first-of-type {

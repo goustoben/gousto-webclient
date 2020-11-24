@@ -3,6 +3,10 @@ import Icon from 'components/Icon'
 import Content from 'containers/Content'
 import { ACTIVE_PROMO_CODE, DEFAULT_PROMO_CODE } from './promoCode'
 
+import VarietyImg from 'routes/Home/WhyChooseGousto/variety.png'
+import QualityImg from 'routes/Home/WhyChooseGousto/quality.png'
+import SimplicityImg from 'routes/Home/WhyChooseGousto/simplicity.png'
+
 module.exports = {
   hero: {
     header: 'A recipe box full of flavour',
@@ -102,5 +106,36 @@ module.exports = {
     subheading: 'A Gousto recipe box is packed with everything you need to reinvent dinnertimes.',
     subheadingRedesign: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.'
   },
-  trustPilotReviews: '13,700'
+  trustPilotReviews: '13,700',
+  whyGousto: {
+    steps: [
+      {
+        title: 'Variety',
+        img: VarietyImg,
+        list: [
+          'Over 50 tasty recipes each week',
+          'Family favourites to 10 min meals',
+          'Range of cuisines and flavours to suit different dietary needs',
+        ]
+      },
+      {
+        title: 'Quality',
+        img: QualityImg,
+        list: [
+          'Fresh ingredients',
+          '100% British meat',
+          'Quality produce from trusted suppliers',
+        ]
+      },
+      {
+        title: 'Simplicity',
+        img: SimplicityImg,
+        list: [
+          'Easy to follow recipe cards',
+          'Precise ingredients (no food waste)',
+          'Delivered to your door any day you like',
+        ]
+      }
+    ]
+  },
 }

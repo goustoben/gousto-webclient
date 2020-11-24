@@ -33,7 +33,7 @@
     width: 100%;
     min-height: 17rem;
     max-height: 27rem;
-    background: url('routes/Home/Hero2/tablet-choice.jpg') center top / contain no-repeat;
+    background: url('routes/Home/Hero2/tablet-choice.jpg') right top / contain no-repeat;
   }
 
   @media BreakpointFromLarge {
@@ -89,7 +89,6 @@
   }
 
   @media BreakpointFromLarge {
-    position: absolute;
     width: 120%;
     height: 10rem;
     margin-bottom: 0;
