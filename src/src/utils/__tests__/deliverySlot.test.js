@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { toTimeRange, isAfterCutoff, getDateOffset, createNextDayDeliveryDays, formatDeliveryTime } from 'utils/deliverySlot'
+import { parseTimeRange } from '../deliverySlot'
 
 describe('utils/deliverySlot', () => {
   describe('toTimeRange', () => {
@@ -10,6 +11,12 @@ describe('utils/deliverySlot', () => {
       })
 
       expect(toTimeRange(deliverySlot)).toEqual('10am - 5pm')
+    })
+  })
+
+  describe('parseTimeRange', () => {
+    test('given a start and end time, should parse time range', () => {
+      expect(parseTimeRange('10:00:00', '16:59:59')).toEqual('10am - 5pm')
     })
   })
 

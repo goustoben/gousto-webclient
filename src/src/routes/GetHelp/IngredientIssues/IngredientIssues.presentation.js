@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Dropdown } from 'goustouicomponents'
+import { Button, LegacyDropdown } from 'goustouicomponents'
 import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 
@@ -55,7 +55,7 @@ const renderIngredientsIssues = (ingredients, issues, subIssues, changeHandler) 
       <div key={ingredientAndRecipeId}>
         <p className={css.ingredientLabel}>{ingredientLabel}</p>
         {optionSelected && (
-          <Dropdown
+          <LegacyDropdown
             id={ingredientAndRecipeId}
             options={issues}
             groupedOptions={subIssues}

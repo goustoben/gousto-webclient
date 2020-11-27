@@ -1,39 +1,48 @@
-import React, { useEffect } from 'react'
+import React, { useReducer, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { LayoutPageWrapper, Grid, Column } from 'goustouicomponents'
+
+import {
+  SubscriptionContext,
+} from './context'
+import { SubscriptionReducer } from './context/reducers'
 import { ActiveSubscription } from './ActiveSubscription'
 import { PausedSubscription } from './PausedSubscription'
 
 import css from './Subscription.css'
+import { useSubscriptionData } from './hooks/useSubscriptionData'
 
 const propTypes = {
-  subscriptionLoadData: PropTypes.func.isRequired,
-  userLoadData: PropTypes.func.isRequired,
-  menuLoadBoxPrices: PropTypes.func.isRequired,
-  isSubscriptionActive: PropTypes.bool.isRequired
+  accessToken: PropTypes.string.isRequired,
+  isMobile: PropTypes.bool.isRequired,
+  postcode: PropTypes.string.isRequired
 }
 
 const Subscription = ({
-  subscriptionLoadData,
-  userLoadData,
-  menuLoadBoxPrices,
-  isSubscriptionActive
+  accessToken,
+  isMobile,
+  postcode
 }) => {
-  useEffect(() => {
-    subscriptionLoadData()
-    userLoadData()
-    menuLoadBoxPrices()
-  }, [subscriptionLoadData, userLoadData, menuLoadBoxPrices])
+  const [state, dispatch] = useReducer(SubscriptionReducer, {})
+  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
+
+  useSubscriptionData(accessToken, postcode, dispatch)
 
   return (
-    <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
-      <Grid>
-        <Column smallScreen={12} mediumScreen={12}>
-          <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
-        </Column>
-      </Grid>
-      {isSubscriptionActive ? <ActiveSubscription /> : <PausedSubscription />}
-    </LayoutPageWrapper>
+    <SubscriptionContext.Provider value={contextValue}>
+      <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
+        <Grid>
+          <Column smallScreen={12} mediumScreen={12}>
+            <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
+          </Column>
+        </Grid>
+        {/* 📝 MH TODO 📝: Validate whether this is legit or whether we need to check */}
+        {/* TODO - loading state */}
+        {accessToken
+          ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} />
+          : <PausedSubscription />}
+      </LayoutPageWrapper>
+    </SubscriptionContext.Provider>
   )
 }
 

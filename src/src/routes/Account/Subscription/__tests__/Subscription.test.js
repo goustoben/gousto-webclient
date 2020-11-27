@@ -1,59 +1,48 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import { act } from 'react-dom/test-utils'
+import * as useSubscriptionDataHook from '../hooks/useSubscriptionData'
 import { Subscription } from '../Subscription'
+jest.mock('../ActiveSubscription', () => ({
+  ActiveSubscription: () => <div />
+}))
 
 let mountWrapper
 
-const mockSubscriptionLoadData = jest.fn()
-const mockUserLoadData = jest.fn()
-const mockMenuLoadBoxPrices = jest.fn()
-
 const defaultProps = {
-  menuLoadBoxPrices: mockMenuLoadBoxPrices,
-  userLoadData: mockUserLoadData,
-  subscriptionLoadData: mockSubscriptionLoadData,
-  isSubscriptionActive: true
+  accessToken: 'auth-token',
+  isMobile: false,
+  postcode: 'W14'
 }
 
 const mountWithProps = (props = {}) => {
-  mountWrapper = mount(
-    <Subscription
-      {...defaultProps}
-      {...props}
-    />
-  )
+  act(() => {
+    mountWrapper = shallow(
+      <Subscription
+        {...defaultProps}
+        {...props}
+      />
+    )
+  })
 }
 
 describe('Subscription', () => {
+  const useSubscriptionDataSpy = jest.spyOn(useSubscriptionDataHook, 'useSubscriptionData')
   beforeEach(() => {
     jest.resetAllMocks()
-
-    act(() => {
-      mountWithProps()
-    })
+    mountWithProps()
   })
 
   describe('Given Subscription has mounted', () => {
-    test('Then Subscription is rendered correctly', () => {
-      expect(mountWrapper.find('Subscription').exists()).toEqual(true)
-    })
-
-    test('Then the correct actions are invoked', () => {
-      expect(mockMenuLoadBoxPrices).toHaveBeenCalled()
-      expect(mockUserLoadData).toHaveBeenCalled()
-      expect(mockSubscriptionLoadData).toHaveBeenCalled()
+    test('Then useSubscriptionData was called', () => {
+      expect(useSubscriptionDataSpy).toHaveBeenCalled()
     })
   })
 
   describe('Given isSubscriptionActive true', () => {
     beforeEach(() => {
-      jest.resetAllMocks()
-
-      act(() => {
-        mountWithProps({
-          isSubscriptionActive: true
-        })
+      mountWithProps({
+        accessToken: 'auth-token'
       })
     })
 
@@ -68,12 +57,8 @@ describe('Subscription', () => {
 
   describe('Given isSubscriptionActive false', () => {
     beforeEach(() => {
-      jest.resetAllMocks()
-
-      act(() => {
-        mountWithProps({
-          isSubscriptionActive: false
-        })
+      mountWithProps({
+        accessToken: ''
       })
     })
 

@@ -13,6 +13,8 @@ const formatTime = (time) => (roundTime(time).format('ha'))
 
 export const toTimeRange = deliverySlot => `${formatTime(deliverySlot.get('deliveryStart'))} - ${formatTime(deliverySlot.get('deliveryEnd'))}`
 
+export const parseTimeRange = (deliveryStart, deliveryEnd) => `${formatTime(deliveryStart)} - ${formatTime(deliveryEnd)}`
+
 export const isAfterCutoff = () => moment().hours() >= 12
 
 export const getDateOffset = date => {

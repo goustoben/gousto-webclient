@@ -20,11 +20,15 @@ export const SettingSection = ({
   onSubmit,
   renderCurrentValue,
   title,
-  instruction
+  instruction,
+  testingSelector,
+  isCtaDisabled
 }) => (
   <ExpandableSection
+    allowOverflow
     disableAnimation
     onExpand={onEditClick}
+    className={testingSelector}
     renderToggle={({ isExpanded, handleClick }) => (
       <SettingSectionToggle
         isExpanded={isExpanded}
@@ -33,6 +37,7 @@ export const SettingSection = ({
         handleClick={handleClick}
         isMobile={isMobile}
         renderCurrentValue={renderCurrentValue}
+        testingSelector={testingSelector}
       />
     )}
     contentClassName={css.expandedContent}
@@ -53,8 +58,10 @@ export const SettingSection = ({
           {children}
           <div className={css.ctaContainer}>
             <CTA
+              isDisabled={isCtaDisabled}
               isFullWidth
               onClick={handleCollapseAndSubmit}
+              testingSelector={`${testingSelector}-save-cta`}
             >
               {ctaText}
             </CTA>
@@ -74,9 +81,13 @@ SettingSection.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onEditClick: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
-  instruction: PropTypes.string.isRequired
+  instruction: PropTypes.string.isRequired,
+  testingSelector: PropTypes.string,
+  isCtaDisabled: PropTypes.bool
 }
 
 SettingSection.defaultProps = {
-  isMobile: false
+  isMobile: false,
+  testingSelector: '',
+  isCtaDisabled: false
 }

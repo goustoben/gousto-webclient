@@ -1,25 +1,18 @@
 import { connect } from 'react-redux'
-import { subscriptionLoadData } from 'actions/subscription'
-import userActions from 'actions/user'
-import { menuLoadBoxPrices } from 'actions/menu'
 import { getAccessToken } from 'selectors/auth'
-import { getBoxDetails, getDeliveryDetails, getUserDetails, getCurrentDeliverySlot } from './selectors/subscription'
+import { getBasketPostcode } from 'selectors/basket'
+import { getBrowserType } from 'selectors/browser'
+import { isMobile } from 'utils/view'
 
 import { Subscription } from './Subscription'
 
 const mapStateToProps = (state) => ({
-  userDetails: getUserDetails(state),
-  boxDetails: getBoxDetails(state),
-  deliveryDetails: getDeliveryDetails(state),
-  currentDeliverySlot: getCurrentDeliverySlot(state),
-  isSubscriptionActive: true,
   accessToken: getAccessToken(state),
+  postcode: getBasketPostcode(state),
+  isMobile: isMobile(getBrowserType(state))
 })
 
 const SubscriptionContainer = connect(mapStateToProps, {
-  subscriptionLoadData,
-  userLoadData: userActions.userLoadData,
-  menuLoadBoxPrices,
 })(Subscription)
 
 export { SubscriptionContainer }

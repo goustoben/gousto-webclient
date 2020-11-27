@@ -21,8 +21,39 @@ export function formatErrorsWithCode(errors) {
   return errorObj
 }
 
-export function snakeToCamelCase(text) {
+export function responseTextSnakeToCamelCase(text) {
   return text.replace(/"\w+?":/g, key => key.replace(/_\w/g, match => match[1].toUpperCase()))
+}
+
+const snakeToCamelCase = (str) => str.replace(
+  /([_][a-zA-Z\d])/g,
+  (group) => group.toUpperCase()
+    .replace('_', '')
+)
+
+export const parseObjectKeysToCamelCase = (obj) => {
+  if (typeof obj !== 'object') return obj
+
+  return Object.keys(obj).reduce((camelCaseObject, currentKey) => {
+    const currentValue = obj[currentKey]
+    let parsedValue
+
+    switch (true) {
+    case Array.isArray(currentValue):
+      parsedValue = currentValue.map(parseObjectKeysToCamelCase)
+      break
+    case typeof currentValue === 'object':
+      parsedValue = { ...parseObjectKeysToCamelCase(currentValue) }
+      break
+    default:
+      parsedValue = currentValue
+    }
+
+    return {
+      ...camelCaseObject,
+      [snakeToCamelCase(currentKey)]: parsedValue
+    }
+  }, {})
 }
 
 export function JSONParse(text, returnRawData) { // eslint-disable-line new-cap
@@ -30,7 +61,7 @@ export function JSONParse(text, returnRawData) { // eslint-disable-line new-cap
     if (returnRawData) {
       return JSON.parse(text)
     }
-    const camelCaseText = snakeToCamelCase(text)
+    const camelCaseText = responseTextSnakeToCamelCase(text)
 
     return JSON.parse(camelCaseText)
   } catch (e) {
@@ -85,7 +116,7 @@ export function processJSON([response, status]) {
     } else if (typeof response === 'object') {
       reject(response, meta)
     } else {
-      reject('Response is malformed')
+      return reject('Response is malformed')
     }
   })
 }

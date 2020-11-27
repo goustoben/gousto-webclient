@@ -1,10 +1,18 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 import { Grid, Column } from 'goustouicomponents'
 import { Section } from '../components/Section'
-import { SettingSection } from '../components/SettingSection'
-import { yourSubscriptionDetailsSection, chefSelectsSettingsSection, totalPriceSection, skipABoxSection, pauseSubscriptionSection } from '../subscriptionsSectionsContent'
+import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryDayAndTime'
 
-const ActiveSubscription = () => (
+import {
+  yourSubscriptionDetailsSection,
+  chefSelectsSettingsSection,
+  totalPriceSection,
+  skipABoxSection,
+  pauseSubscriptionSection
+} from '../subscriptionsSectionsContent'
+
+const ActiveSubscription = ({ accessToken, isMobile }) => (
   <Fragment>
     <Grid>
       <Column
@@ -18,21 +26,10 @@ const ActiveSubscription = () => (
           subTitle={yourSubscriptionDetailsSection.subTitle}
           testingSelector={yourSubscriptionDetailsSection.testingSelector}
         >
-          <SettingSection
-            icon="calendar"
-            title="Delivery day and time"
-            instruction="Choose day and time"
-            ctaText="Save day and time"
-            renderCurrentValue={<p>Some ting</p>}
-            onSubmit={() => console.log('Submit')}
-            onExpand={() => console.log('On Expand')}
-            isMobile
-          >
-            <div>Some stuff in here</div>
-            <div>Some stuff in here</div>
-            <div>Some stuff in here</div>
-            <div>Some stuff in here</div>
-          </SettingSection>
+          <DeliveryDayAndTime
+            accessToken={accessToken}
+            isMobile={isMobile}
+          />
         </Section>
         <Section
           title={chefSelectsSettingsSection.title}
@@ -90,5 +87,10 @@ const ActiveSubscription = () => (
   </Fragment>
 
 )
+
+ActiveSubscription.propTypes = {
+  accessToken: PropTypes.string.isRequired,
+  isMobile: PropTypes.bool.isRequired
+}
 
 export { ActiveSubscription }

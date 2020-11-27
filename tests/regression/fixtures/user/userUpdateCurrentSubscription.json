@@ -1,0 +1,38 @@
+{
+    "status": "ok",
+    "result": {
+        "data": {
+            "id": 17192184,
+            "interval": 1,
+            "frequency": "Weekly",
+            "next_delivery_date": "2020-12-14T00:00:00+00:00",
+            "box": {
+                "id": 2,
+                "num_portions": 4,
+                "num_recipes": 3,
+                "box_type": "vegetarian",
+                "price": 29.99,
+                "sku": "SKU-GMT-3-2"
+            },
+            "slot": {
+                "id": 8,
+                "default_day": 1,
+                "number": 3,
+                "cutoff_day": 5,
+                "cutoff_time": "11:59:59",
+                "delivery_start": "08:00:00",
+                "delivery_end": "19:00:00",
+                "human_delivery_day_time": "Monday 08:00 - 19:00",
+                "premium": false,
+                "default": true,
+                "delivery_price": "0.00",
+                "deprecated": false
+            },
+            "state": {
+                "description": "Active"
+            },
+            "state_reason": ""
+        },
+        "meta": []
+    }
+}
