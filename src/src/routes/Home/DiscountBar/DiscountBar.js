@@ -18,7 +18,7 @@ const DiscountBar = ({ isHidden, isSticky, applyDiscount }) => (
       }
     )}
   >
-    <p className={css.discountText}>Get 30% off all boxes for 1 month</p>
+    <p className={css.discountText}>Get 20% off all boxes for 1 month</p>
     <div className={css.arrowRightIcon} />
   </div>
 )

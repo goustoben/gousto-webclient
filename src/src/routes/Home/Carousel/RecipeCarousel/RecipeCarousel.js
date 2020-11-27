@@ -7,7 +7,7 @@ import { SimpleRecipe } from '../SimpleRecipe'
 import css from './RecipeCarousel.css'
 import { orderRecipes } from './orderRecipes'
 
-const RecipeCarousel = ({ homeCarouselRecipes }) => (
+const RecipeCarousel = ({ homeCarouselRecipes, isHomePageRedesignEnabled }) => (
   <div className={`homepageSlider ${css.container}`}>
     <Carousel
       dots={false}
@@ -43,6 +43,8 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
                   averageRating={recipe.getIn(['rating', 'average'])}
                   ratingCount={recipe.getIn(['rating', 'count'])}
                   maxMediaSize={400}
+                  cookingTime={recipe.get('cookingTime')}
+                  isHomePageRedesignEnabled={isHomePageRedesignEnabled}
                 />
               </div>
             </div>
@@ -54,6 +56,11 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
 
 RecipeCarousel.propTypes = {
   homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
+  isHomePageRedesignEnabled: PropTypes.bool,
+}
+
+RecipeCarousel.defaultProps = {
+  isHomePageRedesignEnabled: false,
 }
 
 export { RecipeCarousel }
