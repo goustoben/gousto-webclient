@@ -11,7 +11,8 @@ const mockProps = {
   title: 'mock title',
   handleClick: mockHandleClick,
   isMobile: false,
-  renderCurrentValue: <div data-testing="mock-current-val" />
+  renderCurrentValue: <div data-testing="mock-current-val" />,
+  testingSelector: 'mock'
 }
 
 let wrapper
@@ -36,7 +37,7 @@ describe('Given SettingSectionToggle is rendered', () => {
   describe('When I click the button', () => {
     beforeEach(() => {
       wrapper
-        .find('[data-testing="header-cta"]')
+        .find('[data-testing="mock-cta"]')
         .simulate('click')
     })
 
@@ -53,7 +54,7 @@ describe('Given SettingSectionToggle is rendered', () => {
 
       test('Then the expected button text is rendered', () => {
         expect(
-          wrapper.find('[data-testing="header-cta"]').text()
+          wrapper.find('[data-testing="mock-cta"]').text()
         ).toEqual('Edit')
       })
 
@@ -71,7 +72,7 @@ describe('Given SettingSectionToggle is rendered', () => {
 
       test('Then the expected button text is rendered', () => {
         expect(
-          wrapper.find('[data-testing="header-cta"]').text()
+          wrapper.find('[data-testing="mock-cta"]').text()
         ).toEqual('Cancel')
       })
 

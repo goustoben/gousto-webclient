@@ -13,6 +13,8 @@ const mockProps = {
   ctaText: 'Mock CTA text',
   onSubmit: mockOnSubmit,
   onEditClick: mockOnEditClick,
+  instructions: 'Instructions',
+  testingSelector: 'day-time-settings'
 }
 
 let wrapper
@@ -41,7 +43,7 @@ describe('Given SettingSection is rendered', () => {
 
     describe('When I click the EDIT button in the header', () => {
       beforeEach(() => {
-        wrapper.find('[data-testing="header-cta"]').simulate('click')
+        wrapper.find(`[data-testing="${mockProps.testingSelector}-cta"]`).simulate('click')
       })
 
       test('Then current value is still visible', () => {
@@ -56,9 +58,23 @@ describe('Given SettingSection is rendered', () => {
     })
   })
 
+  describe('And isCtaDisabled is false', () => {
+    beforeEach(() => {
+      mountWithProps({ isCtaDisabled: true })
+    })
+
+    test('Then the CTA is disabled', () => {
+      expect(
+        wrapper
+          .find('[data-testing="day-time-settings-save-cta"]')
+          .prop('disabled')
+      ).toEqual(true)
+    })
+  })
+
   describe('When I click the EDIT button in the header', () => {
     beforeEach(() => {
-      wrapper.find('[data-testing="header-cta"]').simulate('click')
+      wrapper.find(`[data-testing="${mockProps.testingSelector}-cta"]`).simulate('click')
     })
 
     test('Then the current value is no longer visible', () => {

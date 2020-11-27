@@ -15,6 +15,7 @@ export const ExpandedContent = ({
   isMobile
     ? (
       <Modal
+        withOverlay
         name={title}
         description={`${title} Modal`}
         isOpen={isExpanded}

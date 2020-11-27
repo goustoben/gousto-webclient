@@ -11,7 +11,8 @@ export const SettingSectionToggle = ({
   title,
   handleClick,
   isMobile,
-  renderCurrentValue
+  renderCurrentValue,
+  testingSelector
 }) => {
   const shouldRenderCurrentValue = (!isMobile && !isExpanded) || (isMobile)
 
@@ -19,20 +20,23 @@ export const SettingSectionToggle = ({
     <Fragment>
       <div className={css.header}>
         <Icon name={icon} />
-        <p className={css.headerTitle}>{title}</p>
+        <p data-testing={`${testingSelector}-title`} className={css.headerTitle}>{title}</p>
         <button
           className={css.headerCta}
           type="button"
           onClick={handleClick}
           tabIndex="0"
-          data-testing="header-cta"
+          data-testing={`${testingSelector}-cta`}
         >
           {isExpanded ? 'Cancel' : 'Edit'}
         </button>
       </div>
 
       {shouldRenderCurrentValue && (
-        <div className={css.currentValue}>
+        <div
+          data-testing={`${testingSelector}-current-value`}
+          className={css.currentValue}
+        >
           {renderCurrentValue}
         </div>
       )}
@@ -47,9 +51,11 @@ SettingSectionToggle.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isMobile: PropTypes.bool,
   renderCurrentValue: PropTypes.node.isRequired,
+  testingSelector: PropTypes.string
 }
 
 SettingSectionToggle.defaultProps = {
   isExpanded: false,
-  isMobile: false
+  isMobile: false,
+  testingSelector: ''
 }

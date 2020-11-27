@@ -7,10 +7,16 @@ export const useFetch = ({
   options,
   parameters,
   accessToken,
+  trigger = {
+    shouldRequest: true,
+    setShouldRequest: () => { }
+  }
 }) => {
   const [fetchResponse, setFetchResponse] = useState()
   const [isFetchLoading, setFetchLoading] = useState(false)
   const [fetchError, setFetchError] = useState(false)
+
+  const { shouldRequest, setShouldRequest } = trigger
 
   useEffect(() => {
     const authorizedHeader = (needsAuthorization && accessToken) ? { Authorization: `Bearer ${accessToken}` } : {}
@@ -46,13 +52,16 @@ export const useFetch = ({
         } catch (error) {
           setFetchError(error)
         } finally {
+          setShouldRequest(false)
           setFetchLoading(false)
         }
       }
 
-      fetchData()
+      if (shouldRequest) {
+        fetchData()
+      }
     }
-  }, [url]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [url, shouldRequest]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { isFetchLoading, fetchResponse, fetchError }
+  return [isFetchLoading, fetchResponse, fetchError]
 }

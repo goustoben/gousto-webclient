@@ -7,6 +7,7 @@
     "test:debug:web": "cypress open --env platform=web",
     "test:debug:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress open --env platform=mobile",
     "test:web": "cypress run --env platform=web",
+    "test:web:single": "cypress run --spec",
     "test:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run --env platform=mobile",
     "test:staging:web": "cypress run --env platform=web",
     "test:staging:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run --env platform=mobile"

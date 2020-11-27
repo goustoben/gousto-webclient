@@ -1,0 +1,6 @@
+@value Black from 'styles/colors.css';
+
+.currentSetting {
+  color: Black;
+  margin-bottom: 0;
+}
