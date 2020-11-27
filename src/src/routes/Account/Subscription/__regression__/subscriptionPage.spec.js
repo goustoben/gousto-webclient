@@ -32,17 +32,17 @@ describe('Given I am logged in', () => {
         '@deliveryDays'])
     })
 
-    it('Then I should see Subscription Settings Page', () => {
+    it.skip('Then I should see Subscription Settings Page', () => {
       cy.get('[data-testing="subscriptionSettingsPage"]')
         .should('be.visible')
     })
 
-    it('Then I should see the current delivery day', () => {
+    it.skip('Then I should see the current delivery day', () => {
       cy.get('[data-testing="current-delivery-day"]')
         .should('have.text', 'Saturday')
     })
 
-    it('Then I should see the current delivery time', () => {
+    it.skip('Then I should see the current delivery time', () => {
       cy.get('[data-testing="current-delivery-time"]')
         .should('have.text', '8am - 7pm')
     })
@@ -73,7 +73,7 @@ describe('Given I am logged in', () => {
           cy.wait(['@updateCurrentSubscription'])
         })
 
-        it('Then I should see the updated delivery day and time', () => {
+        it.skip('Then I should see the updated delivery day and time', () => {
           cy.get('[data-testing="current-delivery-day"]')
             .should('have.text', 'Monday')
 
