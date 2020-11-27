@@ -57,7 +57,7 @@ class Hero2 extends Component {
   }
 
   renderGetStarted = (isHeroCTA) => {
-    const { ctaUri, ctaText } = this.props
+    const { ctaUri, ctaText, isAuthenticated } = this.props
     const { isSticky, maxHeight } = this.state
     const className = isHeroCTA
       ? css.stickyContainer
@@ -76,9 +76,9 @@ class Hero2 extends Component {
           ctaUri={ctaUri}
           responsive
           sectionForTracking={isHeroCTA ? 'hero' : 'stickyCTA'}
-          dataTesting="homepageHeroCTA"
+          dataTesting={isHeroCTA ? 'homepageHeroCTA' : 'stickyCTA'}
         >
-          {isSticky && !isHeroCTA ? 'Get started with 30% off' : ctaText}
+          {isSticky && !isHeroCTA && !isAuthenticated ? 'Get started with 20% off' : ctaText}
         </CTAHomepageContainer>
         <NoLockIn />
       </div>
@@ -111,12 +111,14 @@ Hero2.propTypes = {
   ctaUri: PropTypes.string,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   dataTesting: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
 }
 
 Hero2.defaultProps = {
   ctaUri: config.client.menu,
   ctaText: home.CTA.main,
   dataTesting: '',
+  isAuthenticated: false,
 }
 
 export {

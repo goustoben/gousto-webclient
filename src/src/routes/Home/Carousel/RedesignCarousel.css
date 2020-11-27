@@ -1,14 +1,12 @@
-@value NewGrey from 'styles/colors.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value NewGrey from 'styles/colors.css';
 
-.whyGoustoContainer {
-  max-width: 75rem;
+.carouselContainer {
+  padding: 2.5rem 0.75rem 0;
   text-align: center;
-  margin: 0 auto;
-  padding: 3rem 0.75rem;
 
   @media BreakpointFromMedium {
-    padding: 2.5rem 2rem 1.5rem;
+    padding: 2.5rem 2rem 0;
   }
 }
 
@@ -20,26 +18,16 @@
   }
 }
 
-.priceSubTitle {
-  margin: 0 auto 2.5rem;
-  width: 100%;
-  max-width: 31.5rem;
-
-  @media BreakpointFromMedium {
-    max-width: 36.5rem;
-    margin-bottom: 2rem;
-  }
+.carouselSubTitle {
+  margin: 0 auto 2rem;
+  max-width: 46rem;
 }
 
 .subTitle {
+  margin: 0;
   color: NewGrey;
   composes: fontStyleBodyL from 'design-language/typography.css';
 }
-
-.pricePerServing {
-  composes: fontBold from 'design-language/typography.css';
-}
-
 
 .CTAContainer {
   display: none;
@@ -47,6 +35,6 @@
   @media BreakpointFromMedium {
     display: block;
     max-width: 17.5rem;
-    margin: 0 auto;
+    margin: 0 auto 2.5rem;
   }
 }

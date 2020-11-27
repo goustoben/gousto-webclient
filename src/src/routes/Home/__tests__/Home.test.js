@@ -132,6 +132,7 @@ describe('Home', () => {
           'trustPilot',
           'whyChooseGousto',
           'joeWicks',
+          'recipes',
         ])
       })
     })

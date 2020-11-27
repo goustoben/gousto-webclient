@@ -78,7 +78,7 @@ module.exports = {
     join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     loggedIn: {
       main: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
-      mainRedesign: <span>Get started</span>,
+      mainRedesign: <span>See Menu</span>,
       join: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     },
   },
@@ -89,7 +89,7 @@ module.exports = {
     mayCode: ACTIVE_PROMO_CODE,
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-      mayText: 'Get cooking with 30% off any box in your first month',
+      mayText: 'Get cooking with 20% off all boxes in your first month',
       linkText: 'Claim discount',
     },
   },
@@ -113,17 +113,17 @@ module.exports = {
         img: VarietyImg,
         list: [
           'Over 50 tasty recipes each week',
-          'Family favourites to 10 min meals',
-          'Range of cuisines and flavours to suit different dietary needs',
+          'From family classics and 10 min meals to global cuisines and health ranges',
+          'Tasty plant based and gluten free options',
         ]
       },
       {
         title: 'Quality',
         img: QualityImg,
         list: [
-          'Fresh ingredients',
+          'Fresh quality ingredients from trusted suppliers',
           '100% British meat',
-          'Quality produce from trusted suppliers',
+          'Tried and tested recipes',
         ]
       },
       {
@@ -131,7 +131,7 @@ module.exports = {
         img: SimplicityImg,
         list: [
           'Easy to follow recipe cards',
-          'Precise ingredients (no food waste)',
+          'Precise ingredients with zero food waste',
           'Delivered to your door any day you like',
         ]
       }

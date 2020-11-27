@@ -47,4 +47,17 @@ describe('Carousel', () => {
       expect(wrapper.find(RecipeCarousel)).toHaveLength(1)
     })
   })
+
+  describe('when isHomePageRedesignEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isHomePageRedesignEnabled: true
+      })
+    })
+
+    test('then should render proper elements', () => {
+      expect(wrapper.find('.scrollCarouselContainer')).toBeDefined()
+      expect(wrapper.find('Heading')).toHaveLength(1)
+    })
+  })
 })

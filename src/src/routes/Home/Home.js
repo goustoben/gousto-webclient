@@ -57,7 +57,7 @@ class Home extends React.Component {
 
   defaultModules() {
     const { isAuthenticated, isHomePageRedesignEnabled } = this.props
-    if (isAuthenticated) {
+    if (isAuthenticated && !isHomePageRedesignEnabled) {
       return [
         'hero', 'howItWorks', 'subscription', 'recipes',
         'whatsInYourBox', 'testimonials',
@@ -67,7 +67,7 @@ class Home extends React.Component {
 
     if (isHomePageRedesignEnabled) {
       return [
-        'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks'
+        'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes'
       ]
     }
 
@@ -137,6 +137,7 @@ class Home extends React.Component {
             dataTesting: 'hero',
             variant,
             isHomePageRedesignEnabled,
+            isAuthenticated,
           }}
           recipes={{
             ctaUri,
