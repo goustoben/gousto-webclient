@@ -46,10 +46,12 @@ class Order extends React.PureComponent {
       humanDeliveryDay, originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
       orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount, isProjected,
       cancellable, deliveryDay, shippingAddressId, addresses, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
+      phase,
     } = this.props
+    const isOrderInteractive = orderState !== 'cancelled' && phase !== 'pre_menu'
 
     let onClickFunction = () => { }
-    if (orderState !== 'cancelled') {
+    if (isOrderInteractive) {
       onClickFunction = collapsed ? this.open : this.close
     }
     const humanDeliveryTimeStart = humanTimeFormat(orderDeliveryTimeStart, 'hour')
@@ -58,7 +60,11 @@ class Order extends React.PureComponent {
     return (
       <div className={css.orderWrap} id={`order-${orderId}`} data-testing={isProjected ? 'projectedDelivery' : 'pendingOrder'}>
         <div className={css.order}>
-          <span onClick={onClickFunction} data-testing={orderState === 'recipes chosen' ? 'recipesChosenCard' : ''} className={classNames(css.orderRow, { [css.link]: orderState !== 'cancelled' })}>
+          <span
+            onClick={onClickFunction}
+            data-testing={orderState === 'recipes chosen' ? 'recipesChosenCard' : ''}
+            className={classNames(css.orderRow, { [css.link]: isOrderInteractive })}
+          >
             <div>
               <OrderCollage
                 recipes={recipes}
@@ -108,7 +114,7 @@ class Order extends React.PureComponent {
                 </div>
               </div>
 
-              {orderState !== 'cancelled' ? (
+              {isOrderInteractive ? (
                 <div className={css.orderColRight}>
                   <OrderPricing
                     pricing={priceBreakdown}
@@ -191,6 +197,7 @@ Order.propTypes = {
   portionsCount: PropTypes.string,
   userOpenCloseOrderCard: PropTypes.func.isRequired,
   userToggleEditDateSection: PropTypes.func.isRequired,
+  phase: PropTypes.string,
 }
 
 Order.defaultProps = {
@@ -222,6 +229,7 @@ Order.defaultProps = {
   recipesPeriodStockFetchError: null,
   deliveryDay: '',
   portionsCount: '2',
+  phase: '',
 }
 
 export default Order
