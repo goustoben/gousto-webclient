@@ -18,6 +18,8 @@ import {
 import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 
+import { trackSubscriptionSettingsChange } from '../../../../tracking'
+
 import css from './DeliveryDayAndTime.css'
 
 const renderCurrentValue = ({ day, timeRange }) => (
@@ -54,7 +56,9 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
   const [selectedCoreId, setSelectedCoreId] = useState(null)
   const [shouldSubmit, setShouldSubmit] = useState(false)
 
-  useUpdateSubscription({
+  const settingName = 'delivery_date'
+
+  const [, isUpdateSuccess, isUpdateError] = useUpdateSubscription({
     accessToken,
     trigger: {
       shouldRequest: shouldSubmit,
@@ -64,6 +68,21 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       delivery_slot_id: selectedCoreId
     }
   })
+
+  if (isUpdateSuccess) {
+    trackSubscriptionSettingsChange({ settingName, action: 'update_success'})()
+  }
+
+  if (isUpdateError) {
+    trackSubscriptionSettingsChange({ settingName, action: 'update_error'})()
+  }
+
+  const trackSubscriptionDeliveryDayEdit = () => trackSubscriptionSettingsChange({ settingName, action: 'edit'})()
+
+  const onSubmit = () => {
+    trackSubscriptionSettingsChange({ settingName, action: 'update'})()
+    setShouldSubmit(true)
+  }
 
   const { day, timeRange, coreSlotId } = selectedCoreId
     ? slots.find(({ coreSlotId: slotCoreSlotId }) => slotCoreSlotId === selectedCoreId)
@@ -88,8 +107,8 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       ctaText="Save day and time"
       isCtaDisabled={isCtaDisabled}
       renderCurrentValue={renderCurrentValue({ day, timeRange })}
-      onSubmit={() => setShouldSubmit(true)}
-      onEditClick={() => { }}
+      onSubmit={onSubmit}
+      onEditClick={trackSubscriptionDeliveryDayEdit}
       isMobile={isMobile}
       testingSelector="delivery-day-and-time"
     >

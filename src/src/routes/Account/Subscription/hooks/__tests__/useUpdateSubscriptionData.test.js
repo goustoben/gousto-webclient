@@ -95,7 +95,8 @@ describe('useUpdateSubscription', () => {
         () => useUpdateSubscription({
           accessToken,
           data,
-          trigger }),
+          trigger
+        }),
         fetchWrapper,
       )
 
@@ -123,13 +124,15 @@ describe('useUpdateSubscription', () => {
 
   describe('when response is available', () => {
     test('should dispatch SUBSCRIPTION_UPDATE_DATA_RECEIVED', async () => {
-      renderHook(
+      const { result } = renderHook(
         () => useUpdateSubscription({
           accessToken,
           data,
-          trigger }),
+          trigger
+        }),
         fetchWrapper,
       )
+      const [, isSuccess, isError] = result.current
 
       const dispatchedData = {
         type: actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED,
@@ -137,8 +140,9 @@ describe('useUpdateSubscription', () => {
           subscription: response.result.data
         }
       }
-
       expect(mockDispatch).toHaveBeenCalledWith(dispatchedData)
+      expect(isSuccess).toBeTruthy()
+      expect(isError).toBeFalsy()
     })
   })
 
@@ -147,18 +151,22 @@ describe('useUpdateSubscription', () => {
       error = true
       mockFetchData = [isLoading, response, error]
       useFetch.mockReturnValue(mockFetchData)
-    })
 
-    test('should not dispatch', async () => {
-      renderHook(
-        () => useUpdateSubscription({
-          accessToken,
-          data,
-          trigger }),
-        fetchWrapper,
-      )
+      test('should not dispatch', async () => {
+        const { result } = renderHook(
+          () => useUpdateSubscription({
+            accessToken,
+            data,
+            trigger
+          }),
+          fetchWrapper,
+        )
+        const [, isSuccess, isError] = result.current
 
-      expect(mockDispatch).not.toHaveBeenCalled()
+        expect(mockDispatch).not.toHaveBeenCalled()
+        expect(isSuccess).toBeFalsy()
+        expect(isError).toBeTruthy()
+      })
     })
   })
 
@@ -177,7 +185,7 @@ describe('useUpdateSubscription', () => {
         () => useUpdateSubscription({
           accessToken,
           data: newData,
-          trigger }),
+          trigger, }),
         fetchWrapper,
       )
       const payload = {
