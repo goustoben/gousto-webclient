@@ -158,10 +158,6 @@ export const getIsPayWithPayPalEnabled = ({ features }) => (
   features && features.getIn(['enablePayPal', 'value'], false)
 )
 
-export const getIsBoxPricesUserJourneyEnabled = ({ features }) => (
-  features && features.getIn(['boxPricesUserJourney', 'value'], false)
-)
-
 export const getIsMultiSkipEnabled = ({ features }) => (
   features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )

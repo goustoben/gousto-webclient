@@ -210,17 +210,11 @@ exports[`BoxPrice Will snap BoxPrice 1`] = `
         role="button"
         tabIndex="0"
       >
-        <a
-          className="base noDecor"
-          href="menu?num_portions=2"
-          to="menu?num_portions=2"
+        <span
+          className="uppercase"
         >
-          <span
-            className="uppercase"
-          >
-            Build My Box
-          </span>
-        </a>
+          Build My Box
+        </span>
       </div>
     </div>
   </div>

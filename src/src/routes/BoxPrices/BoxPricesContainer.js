@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
-import { getBoxPricesPageRedesign, getIsBoxPricesUserJourneyEnabled } from 'selectors/features'
+import { getBoxPricesPageRedesign } from 'selectors/features'
 import actions from 'actions'
 import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
 import boxPricesQuery from './boxprices.gql'
@@ -9,7 +9,6 @@ import { BoxPrices } from './BoxPrices'
 const mapStateToProps = (state) => ({
   tariffId: state.basket.get('tariffId', null),
   isBoxPricesPageRedesignEnabled: getBoxPricesPageRedesign(state),
-  isBoxPricesUserJourneyEnabled: getIsBoxPricesUserJourneyEnabled(state)
 })
 
 const mapDispatchToProps = {

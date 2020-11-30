@@ -213,17 +213,11 @@ exports[`BoxPriceList Will snap BoxPriceList 1`] = `
           role="button"
           tabIndex="0"
         >
-          <a
-            className="base noDecor"
-            href="menu?num_portions=2"
-            to="menu?num_portions=2"
+          <span
+            className="uppercase"
           >
-            <span
-              className="uppercase"
-            >
-              Build My Box
-            </span>
-          </a>
+            Build My Box
+          </span>
         </div>
       </div>
     </div>
@@ -437,17 +431,11 @@ exports[`BoxPriceList Will snap BoxPriceList 1`] = `
           role="button"
           tabIndex="0"
         >
-          <a
-            className="base noDecor"
-            href="menu?num_portions=4"
-            to="menu?num_portions=4"
+          <span
+            className="uppercase"
           >
-            <span
-              className="uppercase"
-            >
-              Build My Box
-            </span>
-          </a>
+            Build My Box
+          </span>
         </div>
       </div>
     </div>

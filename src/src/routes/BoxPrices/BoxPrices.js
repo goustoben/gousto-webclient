@@ -20,7 +20,6 @@ class BoxPrices extends React.PureComponent {
       data,
       basketNumPortionChange,
       goToStep,
-      isBoxPricesUserJourneyEnabled,
       boxPricesBoxSizeSelected
     } = this.props
     const { boxPrices, loading, error } = data
@@ -70,7 +69,6 @@ class BoxPrices extends React.PureComponent {
               basketNumPortionChange={basketNumPortionChange}
               goToStep={goToStep}
               isBoxPricesPageRedesignEnabled={isBoxPricesPageRedesignEnabled}
-              isBoxPricesUserJourneyEnabled={isBoxPricesUserJourneyEnabled}
               boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
             />
           )}
@@ -97,7 +95,6 @@ BoxPrices.propTypes = {
     boxPrices: PropTypes.object
   }).isRequired,
   isBoxPricesPageRedesignEnabled: PropTypes.bool,
-  isBoxPricesUserJourneyEnabled: PropTypes.bool,
   basketNumPortionChange: PropTypes.func,
   goToStep: PropTypes.func,
   boxPricesBoxSizeSelected: PropTypes.func
@@ -105,7 +102,6 @@ BoxPrices.propTypes = {
 
 BoxPrices.defaultProps = {
   isBoxPricesPageRedesignEnabled: false,
-  isBoxPricesUserJourneyEnabled: false,
   basketNumPortionChange: () => {},
   goToStep: () => {},
   boxPricesBoxSizeSelected: () => {}

@@ -11,7 +11,6 @@ const BoxPricesList = ({
   boxPrices,
   type,
   isBoxPricesPageRedesignEnabled,
-  isBoxPricesUserJourneyEnabled,
   basketNumPortionChange,
   goToStep,
   boxPricesBoxSizeSelected
@@ -45,7 +44,6 @@ const BoxPricesList = ({
               key={key}
               numPersons={numPersons}
               boxInfo={boxInfo}
-              isBoxPricesUserJourneyEnabled={isBoxPricesUserJourneyEnabled}
               boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
             />
           )
@@ -58,7 +56,6 @@ BoxPricesList.propTypes = {
   boxPrices: PropTypes.oneOfType([PropTypes.object]),
   type: PropTypes.oneOf(['gourmet', 'vegetarian']),
   isBoxPricesPageRedesignEnabled: PropTypes.bool,
-  isBoxPricesUserJourneyEnabled: PropTypes.bool,
   goToStep: PropTypes.func,
   basketNumPortionChange: PropTypes.func,
   boxPricesBoxSizeSelected: PropTypes.func
@@ -68,7 +65,6 @@ BoxPricesList.defaultProps = {
   boxPrices: null,
   type: 'gourmet',
   isBoxPricesPageRedesignEnabled: false,
-  isBoxPricesUserJourneyEnabled: false,
   goToStep: () => {},
   basketNumPortionChange: () => {},
   boxPricesBoxSizeSelected: () => {}
