@@ -67,6 +67,7 @@ describe('utils', () => {
         test('then set should be called with the correct params', () => {
           expect(set.mock.calls).toEqual([
             [{}, 'oauth_token', { access_token: 'mock-access-token' }, 0.4166666666666667, true, true, true],
+            [{}, 'oauth_recipe_feedback_token', { access_token: 'mock-access-token' }, 0.4166666666666667, true, false, true, '/recipe-feedback'],
             [{}, 'oauth_help_centre_token', { access_token: 'mock-access-token' }, 0.4166666666666667, true, false, true, '/help-centre'],
             [{}, 'oauth_expiry', { expires_at: 'mock-expires-response' }, 0.4166666666666667],
             [{}, 'oauth_refresh', { refresh_token: 'mock-refresh-token' }, 90, true, true, true],
@@ -83,6 +84,7 @@ describe('utils', () => {
         test('then set should be called with the correct params', () => {
           expect(set.mock.calls).toEqual([
             [{}, 'oauth_token', { access_token: 'mock-access-token' }, null, true, true, true],
+            [{}, 'oauth_recipe_feedback_token', { access_token: 'mock-access-token' }, null, true, false, true, '/recipe-feedback'],
             [{}, 'oauth_help_centre_token', { access_token: 'mock-access-token' }, null, true, false, true, '/help-centre'],
             [{}, 'oauth_expiry', { expires_at: 'mock-expires-response' }, null],
             [{}, 'oauth_refresh', { refresh_token: 'mock-refresh-token' }, null, true, true, true],
