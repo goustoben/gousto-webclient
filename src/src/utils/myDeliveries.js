@@ -102,6 +102,7 @@ export const transformPendingOrders = (orders) => {
         deliverySlotStart: deliverySlot.get('deliveryStart'),
         deliverySlotEnd: deliverySlot.get('deliveryEnd'),
         cancellable,
+        phase,
         priceBreakdown: Immutable.Map({
           grossRecipesPrice: parseFloat(prices.get('recipeTotal')),
           grossExtrasPrice: parseFloat(prices.get('productTotal')),

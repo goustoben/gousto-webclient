@@ -313,6 +313,7 @@ describe('myDeliveries utils', () => {
           deliverySlotId: '6',
           deliverySlotStart: '08:00:00',
           deliverySlotEnd: '19:00:00',
+          phase: 'open',
           cancellable: true,
           priceBreakdown: Immutable.Map({
             grossRecipesPrice: parseFloat('47.75'),
