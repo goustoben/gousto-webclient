@@ -1,19 +1,17 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PureComponent } from 'react'
 
 import Image from 'Image'
-import LinkButton from 'LinkButton'
 import config from 'config/boxprices'
 import BoxInfo from '../BoxInfo'
 import { BoxPriceButton } from '../BoxPriceButton/BoxPriceButton'
 import css from './BoxPrice.css'
 
-class BoxType extends React.PureComponent {
+class BoxType extends PureComponent {
   render() {
     const {
       boxInfo,
       numPersons,
-      isBoxPricesUserJourneyEnabled,
       boxPricesBoxSizeSelected
     } = this.props
     const boxType = config.boxTypes[numPersons]
@@ -44,18 +42,12 @@ class BoxType extends React.PureComponent {
           <p>
             Delivery is <strong className={css.uppercase}>Free</strong>
           </p>
-          {isBoxPricesUserJourneyEnabled ? (
-            <BoxPriceButton
-              numPersons={numPersons}
-              boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-            >
-              <span className={css.uppercase}>{config.cta}</span>
-            </BoxPriceButton>
-          ) : (
-            <LinkButton to={`menu?num_portions=${numPersons}`}>
-              <span className={css.uppercase}>{config.cta}</span>
-            </LinkButton>
-          )}
+          <BoxPriceButton
+            numPersons={numPersons}
+            boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+          >
+            <span className={css.uppercase}>{config.cta}</span>
+          </BoxPriceButton>
         </div>
       </div>
     )
@@ -65,12 +57,10 @@ class BoxType extends React.PureComponent {
 BoxType.propTypes = {
   boxInfo: PropTypes.array.isRequired,
   numPersons: PropTypes.number.isRequired,
-  isBoxPricesUserJourneyEnabled: PropTypes.bool,
   boxPricesBoxSizeSelected: PropTypes.func
 }
 
 BoxType.defaultProps = {
-  isBoxPricesUserJourneyEnabled: false,
   boxPricesBoxSizeSelected: () => {}
 }
 
