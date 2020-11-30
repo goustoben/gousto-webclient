@@ -69,4 +69,6 @@ export const useUpdateSubscription = ({
       })
     }
   }, [dispatch, response, error, isLoading])
+
+  return [isLoading, (!!response && !error), error]
 }

@@ -11,7 +11,14 @@ import {
   getCurrentDeliverySlot,
   getDeliverySlots
 } from '../../../../../context/selectors/deliveries'
-import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription.js'
+import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
+import * as trackingSubscription from '../../../../../tracking'
+
+jest.mock('../../../../../tracking')
+
+jest.mock('../../../../../context/selectors/subscription')
+jest.mock('../../../../../context/selectors/deliveries')
+jest.mock('../../../../../hooks/useUpdateSubscription')
 
 const mockCurrentDeliverySlot = {
   coreSlotId: '1',
@@ -42,10 +49,6 @@ const mountWithProps = (props) => {
   wrapper.update()
 }
 
-jest.mock('../../../../../context/selectors/subscription')
-jest.mock('../../../../../context/selectors/deliveries')
-jest.mock('../../../../../hooks/useUpdateSubscription.js')
-
 const clickEdit = () => {
   act(() => {
     wrapper
@@ -61,8 +64,10 @@ const getOptionByProp = (propName, value) => wrapper.findWhere(
 )
 
 describe('DeliveryDayAndTime', () => {
+  const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
   beforeEach(() => {
     jest.resetAllMocks()
+    trackSubscriptionSettingsChangeSpy.mockReturnValue(() => {})
   })
 
   describe('Given data is not loaded', () => {
@@ -71,6 +76,7 @@ describe('DeliveryDayAndTime', () => {
       getIsSubscriptionLoaded.mockReturnValue(false)
       getCurrentDeliverySlot.mockReturnValue({})
       getDeliverySlots.mockReturnValue([])
+      useUpdateSubscription.mockReturnValue([])
 
       mountWithProps()
     })
@@ -100,6 +106,7 @@ describe('DeliveryDayAndTime', () => {
       getIsSubscriptionLoaded.mockReturnValue(true)
       getCurrentDeliverySlot.mockReturnValue(mockCurrentDeliverySlot)
       getDeliverySlots.mockReturnValue(mockSlots)
+      useUpdateSubscription.mockReturnValue([false, true, false])
 
       mountWithProps()
     })
@@ -133,6 +140,12 @@ describe('DeliveryDayAndTime', () => {
             .find('[data-testing="delivery-day-and-time-toggle"]')
             .text()
         ).toEqual(`${mockCurrentDeliverySlot.day} ${mockCurrentDeliverySlot.timeRange}`)
+      })
+
+      test('Then the trackSubscriptionSettingsChange is called', () => {
+        expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+          action: 'update_success', settingName: 'delivery_date'
+        })
       })
 
       describe('When I expand the dropdown', () => {
@@ -182,25 +195,65 @@ describe('DeliveryDayAndTime', () => {
           })
 
           describe('And I click "Save day and Time"', () => {
-            beforeEach(() => {
-              act(() => {
-                wrapper
-                  .find('[data-testing="delivery-day-and-time-save-cta"]')
-                  .simulate('click')
+            describe('And the update is successful', () => {
+              beforeEach(() => {
+                useUpdateSubscription.mockReturnValue([ false, true, false])
+                act(() => {
+                  wrapper
+                    .find('[data-testing="delivery-day-and-time-save-cta"]')
+                    .simulate('click')
+                })
+
+                wrapper.update()
               })
 
-              wrapper.update()
+              test('Then useUpdateSubscription should be invoked', () => {
+                const mockCalls = useUpdateSubscription.mock.calls
+                const [lastMockArgs] = mockCalls[mockCalls.length - 1]
+
+                expect(lastMockArgs.data).toEqual({
+                  delivery_slot_id: '2'
+                })
+
+                expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
+              })
+
+              test('Then the trackSubscriptionSettingsChange is called with delivery_date_update', () => {
+                expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+                  action: 'update', settingName: 'delivery_date'
+                })
+              })
+
+              describe('And the update is a success', () => {
+                beforeEach(() => {
+                  useUpdateSubscription.mockReturnValue([ false, true, false])
+                })
+
+                test('Then the trackSubscriptionSettingsChange is called with delivery_date_update_success', () => {
+                  expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+                    action: 'update_success', settingName: 'delivery_date'
+                  })
+                })
+              })
             })
 
-            test('Then useUpdateSubscription should be invoked', () => {
-              const mockCalls = useUpdateSubscription.mock.calls
-              const [lastMockArgs] = mockCalls[mockCalls.length - 1]
+            describe('And the update is returning error', () => {
+              beforeEach(() => {
+                useUpdateSubscription.mockReturnValue([ false, false, true])
+                act(() => {
+                  wrapper
+                    .find('[data-testing="delivery-day-and-time-save-cta"]')
+                    .simulate('click')
+                })
 
-              expect(lastMockArgs.data).toEqual({
-                delivery_slot_id: '2'
+                wrapper.update()
               })
 
-              expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
+              test('Then the trackSubscriptionSettingsChange is called with delivery_date_update_error', () => {
+                expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+                  action: 'update_error', settingName: 'delivery_date'
+                })
+              })
             })
           })
         })
