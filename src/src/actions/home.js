@@ -4,14 +4,7 @@ import promoActions from 'actions/promos'
 import { getPromoBannerState } from 'utils/home'
 import logger from 'utils/logger'
 
-const getStartedBaseline = (dispatch, ctaUri, sectionForTracking) => {
-  dispatch(redirect(ctaUri))
-  if (sectionForTracking) {
-    dispatch(trackGetStarted(sectionForTracking))
-  }
-}
-
-const attemptToGetStartedWithPromoCode = async (dispatch, state, ctaUri, sectionForTracking) => {
+export const applyPromoCodeAndRedirect = async (dispatch, state, ctaUri) => {
   const { hide, promoCode, canApplyPromo } = getPromoBannerState(state)
 
   if (hide || !canApplyPromo) {
@@ -28,7 +21,7 @@ const attemptToGetStartedWithPromoCode = async (dispatch, state, ctaUri, section
     return false
   }
 
-  getStartedBaseline(dispatch, ctaUri, sectionForTracking)
+  dispatch(redirect(ctaUri))
   dispatch(promoToggleModalVisibility(true))
 
   return true
@@ -37,15 +30,19 @@ const attemptToGetStartedWithPromoCode = async (dispatch, state, ctaUri, section
 export const homeGetStarted = (ctaUri, sectionForTracking) => (
   async (dispatch, getState) => {
     const state = getState()
-
-    const success = await attemptToGetStartedWithPromoCode(dispatch, state, ctaUri, sectionForTracking)
+    const success = await applyPromoCodeAndRedirect(dispatch, state, ctaUri)
 
     if (!success) {
-      getStartedBaseline(dispatch, ctaUri, sectionForTracking)
+      dispatch(redirect(ctaUri))
+    }
+
+    if (sectionForTracking) {
+      dispatch(trackGetStarted(sectionForTracking))
     }
   }
 )
 
 export const homeActions = {
-  homeGetStarted
+  homeGetStarted,
+  applyPromoCodeAndRedirect,
 }
