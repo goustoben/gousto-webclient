@@ -6,6 +6,10 @@ jest.mock('../sections/YourSubscriptionDetails/DeliveryDayAndTime', () => ({
   DeliveryDayAndTime: () => <div />
 }))
 
+jest.mock('../sections/YourSubscriptionDetails/Frequency', () => ({
+  Frequency: () => <div />
+}))
+
 const sections = ['your-subscription-details', 'chef-selects-settings', 'total-price', 'skip-a-box', 'pause-subscription']
 
 describe('ActiveSubscription', () => {

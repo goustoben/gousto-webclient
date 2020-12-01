@@ -50,7 +50,7 @@ export const reduceSubscriptionUpdateData = (state, data) => {
     const reducedSubscriptionState = reduceSubscriptionData(state, {
       subscription: { delivery_slot_id: `${subscription.slot.id}` }
     })
-    const reducedDeliveriesState = reduceUpdatedDeliveriesData(reducedSubscriptionState, subscription.slot)
+    const reducedDeliveriesState = reduceUpdatedDeliveriesData(reducedSubscriptionState, subscription)
     const reducedBoxState = reduceBoxData(reducedDeliveriesState, subscription)
 
     return {

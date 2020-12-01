@@ -22,13 +22,14 @@ export const SettingSection = ({
   title,
   instruction,
   testingSelector,
+  extraClass,
   isCtaDisabled
 }) => (
   <ExpandableSection
     allowOverflow
     disableAnimation
     onExpand={onEditClick}
-    className={testingSelector}
+    className={extraClass}
     renderToggle={({ isExpanded, handleClick }) => (
       <SettingSectionToggle
         isExpanded={isExpanded}
@@ -83,11 +84,13 @@ SettingSection.propTypes = {
   isMobile: PropTypes.bool,
   instruction: PropTypes.string.isRequired,
   testingSelector: PropTypes.string,
-  isCtaDisabled: PropTypes.bool
+  isCtaDisabled: PropTypes.bool,
+  extraClass: PropTypes.string
 }
 
 SettingSection.defaultProps = {
   isMobile: false,
   testingSelector: '',
-  isCtaDisabled: false
+  isCtaDisabled: false,
+  extraClass: ''
 }

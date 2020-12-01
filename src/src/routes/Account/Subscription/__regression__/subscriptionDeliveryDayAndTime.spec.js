@@ -5,38 +5,7 @@ describe('Given I am logged in', () => {
 
   describe('And I am on the /subscription-settings page', () => {
     beforeEach(() => {
-      cy.server()
-      cy.fixture('user/userCurrent').as('userCurrent')
-      cy.route('GET', /user\/current/, '@userCurrent')
-
-      cy.fixture('user/userCurrentSubscription').as('userCurrentSubscription')
-      cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('currentSubscription')
-
-      cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
-      cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('currentOrders')
-
-      cy.fixture('user/userAddresses').as('userAdresses')
-      cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')
-
-      cy.route('GET', /boxPrices|prices/, 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
-
-      cy.route('GET', /^(?=.*\bdeliveries\/v1.0\/days\b).*$/, 'fixture:deliveries/deliveryDays.json').as('deliveryDays')
-
-      cy.fixture('user/userCurrentProjectedDeliveries').as('userCurrentProjectedDeliveries')
-      cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
-
-      cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
-      cy.route('GET', /user\/current\/address/, '@userCurrentAddress')
-
-      cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('currentSubscription')
-      cy.fixture('orderSkipRecovery').as('orderSkipRecovery')
-      cy.fixture('user/userCurrentSubscriptionDelivery').as('userCurrentSubscriptionDelivery')
-
-      cy.visit('/subscription-settings')
-      cy.wait([
-        '@currentSubscription',
-        '@deliveryDays'
-      ])
+      cy.visitSubscriptionSettingsPage()
     })
 
     it('Then I should see Subscription Settings Page', () => {
