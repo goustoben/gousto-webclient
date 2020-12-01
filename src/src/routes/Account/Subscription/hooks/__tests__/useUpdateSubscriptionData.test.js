@@ -120,6 +120,31 @@ describe('useUpdateSubscription', () => {
 
       expect(useFetch).toHaveBeenCalledWith(useFetchArgs)
     })
+
+    describe('And request has not yet completed', () => {
+      beforeEach(() => {
+        useFetch.mockReturnValue([true, undefined, undefined])
+      })
+
+      test('Then the expected array is returned', () => {
+        expect.assertions(3)
+
+        const { result } = renderHook(
+          () => useUpdateSubscription({
+            accessToken,
+            data,
+            trigger
+          }),
+          fetchWrapper,
+        )
+
+        const [updateLoading, updateResponse, updateError] = result.current
+
+        expect(updateLoading).toBeTruthy()
+        expect(updateResponse).toEqual(undefined)
+        expect(updateError).toEqual(undefined)
+      })
+    })
   })
 
   describe('when response is available', () => {
@@ -132,7 +157,7 @@ describe('useUpdateSubscription', () => {
         }),
         fetchWrapper,
       )
-      const [, isSuccess, isError] = result.current
+      const [, updateResponse, isError] = result.current
 
       const dispatchedData = {
         type: actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED,
@@ -141,7 +166,7 @@ describe('useUpdateSubscription', () => {
         }
       }
       expect(mockDispatch).toHaveBeenCalledWith(dispatchedData)
-      expect(isSuccess).toBeTruthy()
+      expect(updateResponse).toEqual(response)
       expect(isError).toBeFalsy()
     })
   })
@@ -185,7 +210,8 @@ describe('useUpdateSubscription', () => {
         () => useUpdateSubscription({
           accessToken,
           data: newData,
-          trigger, }),
+          trigger,
+        }),
         fetchWrapper,
       )
       const payload = {

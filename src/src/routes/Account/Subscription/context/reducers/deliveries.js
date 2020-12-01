@@ -2,6 +2,16 @@ import { parseTimeRange } from 'utils/deliverySlot'
 import { parseObjectKeysToCamelCase } from 'utils/jsonHelper'
 import { dayNumberMap } from '../../enum/day'
 
+const reduceUpdateFrequency = (state, subscription) => {
+  if (!subscription.interval) {
+    return state.deliveries.frequency
+  }
+
+  return {
+    currentValue: subscription.interval.toString(10)
+  }
+}
+
 export const reduceCurrentDeliverySlot = (state, reducedSlots) => {
   if (!state.subscription || !reducedSlots) {
     return state
@@ -67,15 +77,17 @@ export const reduceDeliveriesData = (state, data) => {
   }
 }
 
-export const reduceUpdatedDeliveriesData = (state) => {
+export const reduceUpdatedDeliveriesData = (state, subscription) => {
   const { slots } = state.deliveries
   const currentDeliverySlot = reduceCurrentDeliverySlot(state, slots)
+  const frequency = reduceUpdateFrequency(state, subscription)
 
   return {
     ...state,
     deliveries: {
       ...state.deliveries,
       currentDeliverySlot,
+      frequency,
       requestState: {
         isLoaded: true,
         isLoading: false

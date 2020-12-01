@@ -9,10 +9,9 @@ import {
 
 let result
 
-const mockState = {
+const mockSubscriptionData = {
   subscription: {
-    deliverySlotId: 'mock-delivery-slot-id',
-    interval: 1
+    interval: '1'
   }
 }
 
@@ -29,6 +28,18 @@ const mockSlots = [
     default_day: 2
   },
 ]
+
+const mockState = {
+  deliveries: {
+    slots: mockSlots,
+    frequency: {
+      currentValue: '1'
+    }
+  },
+  subscription: {
+    deliverySlotId: 'mock-delivery-slot-id',
+  }
+}
 
 const mockReducedSlots = [
   {
@@ -55,7 +66,7 @@ const mockDeliveryDays = [
 
 const mockData = {
   deliveries: mockDeliveryDays,
-  subscription: mockState
+  subscription: mockSubscriptionData
 }
 
 describe('deliveries reducers', () => {
@@ -128,12 +139,12 @@ describe('deliveries reducers', () => {
 
     describe('Given subscription data is passed as expected', () => {
       beforeEach(() => {
-        result = reduceDeliveryFrequency(mockState)
+        result = reduceDeliveryFrequency(mockSubscriptionData)
       })
 
       test('Then delivery frequency is reduced as expected', () => {
         expect(result).toEqual({
-          currentValue: 1
+          currentValue: '1'
         })
       })
     })
@@ -181,7 +192,7 @@ describe('deliveries reducers', () => {
             slots: mockReducedSlots,
             currentDeliverySlot: mockReducedSlots[0],
             frequency: {
-              currentValue: 1
+              currentValue: '1'
             },
             requestState: {
               isLoaded: true,
@@ -198,26 +209,69 @@ describe('deliveries reducers', () => {
       beforeEach(() => {
         result = reduceUpdatedDeliveriesData({
           deliveries: {
-            slots: mockReducedSlots
+            slots: mockReducedSlots,
+            frequency: {
+              currentValue: '1'
+            }
           },
           subscription: {
             deliverySlotId: 'mock-delivery-slot-id-2'
           }
-        })
+        }, {})
       })
 
-      test('Then deliveries are updated as expected', () => {
+      test('Then currentDeliverySlot is updated as expected', () => {
         expect(result).toEqual({
           deliveries: {
             slots: mockReducedSlots,
             currentDeliverySlot: mockReducedSlots[1],
+            frequency: {
+              currentValue: '1',
+            },
             requestState: {
               isLoaded: true,
               isLoading: false
             }
           },
           subscription: {
+            deliverySlotId: 'mock-delivery-slot-id-2',
+          },
+        })
+      })
+    })
+
+    describe('Given updated interval is passed', () => {
+      beforeEach(() => {
+        result = reduceUpdatedDeliveriesData({
+          deliveries: {
+            slots: mockReducedSlots,
+            frequency: {
+              currentValue: '1'
+            }
+          },
+          subscription: {
             deliverySlotId: 'mock-delivery-slot-id-2'
+          }
+        }, {
+          interval: 2
+        })
+      })
+
+      test('Then frequency is updated as expected', () => {
+        expect(result).toEqual({
+          deliveries: {
+            slots: mockReducedSlots,
+            currentDeliverySlot: mockReducedSlots[1],
+            frequency: {
+              currentValue: '2',
+            },
+            requestState: {
+              isLoaded: true,
+              isLoading: false
+            }
+          },
+          subscription: {
+            deliverySlotId: 'mock-delivery-slot-id-2',
           },
         })
       })

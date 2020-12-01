@@ -21,6 +21,7 @@ import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 import css from './DeliveryDayAndTime.css'
+import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 
 const renderCurrentValue = ({ day, timeRange }) => (
   <Fragment>
@@ -58,7 +59,7 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
 
   const settingName = 'delivery_date'
 
-  const [, isUpdateSuccess, isUpdateError] = useUpdateSubscription({
+  const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
     trigger: {
       shouldRequest: shouldSubmit,
@@ -69,18 +70,18 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
     }
   })
 
-  if (isUpdateSuccess) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_success'})()
+  if (updateError) {
+    trackSubscriptionSettingsChange({ settingName, action: 'update_error' })()
   }
 
-  if (isUpdateError) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_error'})()
+  if (updateResponse) {
+    trackSubscriptionSettingsChange({ settingName, action: 'update_success' })()
   }
 
-  const trackSubscriptionDeliveryDayEdit = () => trackSubscriptionSettingsChange({ settingName, action: 'edit'})()
+  useSubscriptionToast(updateResponse, updateError)
 
   const onSubmit = () => {
-    trackSubscriptionSettingsChange({ settingName, action: 'update'})()
+    trackSubscriptionSettingsChange({ settingName, action: 'update' })()
     setShouldSubmit(true)
   }
 
@@ -108,7 +109,7 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       isCtaDisabled={isCtaDisabled}
       renderCurrentValue={renderCurrentValue({ day, timeRange })}
       onSubmit={onSubmit}
-      onEditClick={trackSubscriptionDeliveryDayEdit}
+      onEditClick={trackSubscriptionSettingsChange({ settingName, action: 'edit' })}
       isMobile={isMobile}
       testingSelector="delivery-day-and-time"
     >

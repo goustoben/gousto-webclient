@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Grid, Column } from 'goustouicomponents'
 import { Section } from '../components/Section'
 import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryDayAndTime'
+import { Frequency } from './sections/YourSubscriptionDetails/Frequency'
 
 import {
   yourSubscriptionDetailsSection,
@@ -27,6 +28,10 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
           testingSelector={yourSubscriptionDetailsSection.testingSelector}
         >
           <DeliveryDayAndTime
+            accessToken={accessToken}
+            isMobile={isMobile}
+          />
+          <Frequency
             accessToken={accessToken}
             isMobile={isMobile}
           />

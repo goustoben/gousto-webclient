@@ -1,0 +1,216 @@
+import React from 'react'
+import { mount } from 'enzyme'
+import { act } from 'react-dom/test-utils'
+import { frequencyMapping } from '../../../../../enum/frequency'
+
+import { SubscriptionContext } from '../../../../../context/index'
+import { Frequency } from '../Frequency'
+
+import { getIsSubscriptionLoaded } from '../../../../../context/selectors/subscription'
+import {
+  getDeliveryFrequency
+} from '../../../../../context/selectors/deliveries'
+import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
+import * as trackingSubscription from '../../../../../tracking'
+
+jest.mock('../../../../../tracking')
+
+jest.mock('../../../../../context/selectors/subscription')
+jest.mock('../../../../../context/selectors/deliveries')
+jest.mock('../../../../../hooks/useUpdateSubscription')
+
+let wrapper
+
+const getOptionByProp = (propName, value) => wrapper.findWhere(
+  el => el.prop(propName) === value
+)
+
+const mountWithProps = (props) => {
+  wrapper = mount(
+    <Frequency accessToken="foo" isMobile={false} {...props} />,
+    {
+      wrappingComponent: SubscriptionContext.Provider,
+      wrappingComponentProps: { value: { state: {}, dispatch: 'MOCK_DISPATCH' } }
+    }
+  )
+
+  wrapper.update()
+}
+
+const clickEdit = () => {
+  act(() => {
+    wrapper
+      .find('[data-testing="box-frequency-cta"]')
+      .simulate('click')
+  })
+
+  wrapper.update()
+}
+
+describe('Frequency', () => {
+  const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
+  beforeEach(() => {
+    jest.resetAllMocks()
+    trackSubscriptionSettingsChangeSpy.mockReturnValue(() => {})
+  })
+
+  describe('Given data is not loaded', () => {
+    beforeEach(() => {
+      getIsSubscriptionLoaded.mockReturnValue(false)
+      getDeliveryFrequency.mockReturnValue('1')
+      useUpdateSubscription.mockReturnValue([])
+
+      mountWithProps()
+    })
+
+    describe('And I click "edit"', () => {
+      beforeEach(() => {
+        clickEdit()
+      })
+
+      test('Then the RadioGroup is not rendered', () => {
+        expect(wrapper.find('RadioGroup').exists()).toBeFalsy()
+      })
+    })
+  })
+
+  describe('Given data is loaded', () => {
+    beforeEach(() => {
+      getIsSubscriptionLoaded.mockReturnValue(true)
+      getDeliveryFrequency.mockReturnValue('1')
+      useUpdateSubscription.mockReturnValue([false, true, false])
+
+      mountWithProps()
+    })
+
+    test('Then I should see the frequecny', () => {
+      expect(
+        wrapper
+          .find('[data-testing="current-frequency"]')
+          .text()
+      ).toEqual('Weekly')
+    })
+
+    describe('And I click "edit"', () => {
+      beforeEach(() => {
+        act(() => {
+          clickEdit()
+        })
+      })
+
+      test('Then the RadioGroup is rendered as expected', () => {
+        expect(wrapper.find('RadioGroup').exists()).toBeTruthy()
+      })
+
+      test('Then the trackSubscriptionSettingsChange is called', () => {
+        expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+          action: 'edit', settingName: 'box_frequency'
+        })
+      })
+
+      test('Then the CTA should be disabled by default', () => {
+        expect(
+          wrapper
+            .find('[data-testing="box-frequency-save-cta"]')
+            .prop('disabled')
+        ).toBeTruthy()
+      })
+
+      test('Then the expected options are rendered', () => {
+        expect.assertions(Object.keys(frequencyMapping).length)
+
+        const renderedOptions = wrapper.find('InputRadio[name="box_frequency"]')
+
+        renderedOptions.forEach((option) => {
+          const expectedText = frequencyMapping[option.prop('value')]
+
+          expect(option.text()).toEqual(expectedText)
+        })
+      })
+
+      test('Then I can see the current selected option', () => {
+        expect(
+          getOptionByProp('isChecked', true).text()
+        ).toEqual('Weekly')
+      })
+
+      describe('And I select an option', () => {
+        beforeEach(() => {
+          act(() => {
+            const selectedElement = getOptionByProp('isChecked', false).at(0)
+            selectedElement.simulate('change', {
+              target: {
+                value: selectedElement.prop('value')
+              }
+            })
+          })
+
+          wrapper.update()
+        })
+
+        describe('And I click "Save frequeny"', () => {
+          describe('And the update is successful', () => {
+            beforeEach(() => {
+              useUpdateSubscription.mockReturnValue([ false, true, false])
+              act(() => {
+                wrapper
+                  .find('[data-testing="box-frequency-save-cta"]')
+                  .simulate('click')
+              })
+
+              wrapper.update()
+            })
+
+            test('Then useUpdateSubscription should be invoked', () => {
+              const mockCalls = useUpdateSubscription.mock.calls
+              const [lastMockArgs] = mockCalls[mockCalls.length - 1]
+
+              expect(lastMockArgs.data).toEqual({
+                interval: '2'
+              })
+
+              expect(lastMockArgs.trigger.shouldRequest).toBeTruthy()
+            })
+
+            test('Then the trackSubscriptionSettingsChange is called with box_frequency_update', () => {
+              expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+                action: 'update', settingName: 'box_frequency'
+              })
+            })
+
+            describe('And the update is a success', () => {
+              beforeEach(() => {
+                useUpdateSubscription.mockReturnValue([ false, true, false])
+              })
+
+              test('Then the trackSubscriptionSettingsChange is called with box_frequency_update_success', () => {
+                expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+                  action: 'update_success', settingName: 'box_frequency'
+                })
+              })
+            })
+          })
+
+          describe('And the update is returning error', () => {
+            beforeEach(() => {
+              useUpdateSubscription.mockReturnValue([ false, false, true])
+              act(() => {
+                wrapper
+                  .find('[data-testing="box-frequency-save-cta"]')
+                  .simulate('click')
+              })
+
+              wrapper.update()
+            })
+
+            test('Then the trackSubscriptionSettingsChange is called with box_frequency_update_error', () => {
+              expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
+                action: 'update_error', settingName: 'box_frequency'
+              })
+            })
+          })
+        })
+      })
+    })
+  })
+})
