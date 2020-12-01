@@ -13,9 +13,10 @@ import {
 } from '../../../../../context/selectors/deliveries'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
+import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
+import { ToastProvider } from '../../../../../components/Toast'
 
 jest.mock('../../../../../tracking')
-
 jest.mock('../../../../../context/selectors/subscription')
 jest.mock('../../../../../context/selectors/deliveries')
 jest.mock('../../../../../hooks/useUpdateSubscription')
@@ -37,12 +38,20 @@ const mockSlots = [
 
 let wrapper
 
+// eslint-disable-next-line
+const ContextProviders = ({ children }) => (
+  <SubscriptionContext.Provider value={{ state: {}, dispatch: 'MOCK_DISPATCH' }}>
+    <ToastProvider>
+      {children}
+    </ToastProvider>
+  </SubscriptionContext.Provider>
+)
+
 const mountWithProps = (props) => {
   wrapper = mount(
     <DeliveryDayAndTime accessToken="foo" isMobile={false} {...props} />,
     {
-      wrappingComponent: SubscriptionContext.Provider,
-      wrappingComponentProps: { value: { state: {}, dispatch: 'MOCK_DISPATCH' } }
+      wrappingComponent: ContextProviders,
     }
   )
 
@@ -65,9 +74,11 @@ const getOptionByProp = (propName, value) => wrapper.findWhere(
 
 describe('DeliveryDayAndTime', () => {
   const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
+  const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
+
   beforeEach(() => {
     jest.resetAllMocks()
-    trackSubscriptionSettingsChangeSpy.mockReturnValue(() => {})
+    trackSubscriptionSettingsChangeSpy.mockReturnValue(() => { })
   })
 
   describe('Given data is not loaded', () => {
@@ -106,7 +117,7 @@ describe('DeliveryDayAndTime', () => {
       getIsSubscriptionLoaded.mockReturnValue(true)
       getCurrentDeliverySlot.mockReturnValue(mockCurrentDeliverySlot)
       getDeliverySlots.mockReturnValue(mockSlots)
-      useUpdateSubscription.mockReturnValue([false, true, false])
+      useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
 
       mountWithProps()
     })
@@ -197,7 +208,7 @@ describe('DeliveryDayAndTime', () => {
           describe('And I click "Save day and Time"', () => {
             describe('And the update is successful', () => {
               beforeEach(() => {
-                useUpdateSubscription.mockReturnValue([ false, true, false])
+                useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
                 act(() => {
                   wrapper
                     .find('[data-testing="delivery-day-and-time-save-cta"]')
@@ -226,7 +237,7 @@ describe('DeliveryDayAndTime', () => {
 
               describe('And the update is a success', () => {
                 beforeEach(() => {
-                  useUpdateSubscription.mockReturnValue([ false, true, false])
+                  useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
                 })
 
                 test('Then the trackSubscriptionSettingsChange is called with delivery_date_update_success', () => {
@@ -234,12 +245,16 @@ describe('DeliveryDayAndTime', () => {
                     action: 'update_success', settingName: 'delivery_date'
                   })
                 })
+
+                test('Then useSubscriptionToast is invoked', () => {
+                  expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
+                })
               })
             })
 
             describe('And the update is returning error', () => {
               beforeEach(() => {
-                useUpdateSubscription.mockReturnValue([ false, false, true])
+                useUpdateSubscription.mockReturnValue([false, undefined, true])
                 act(() => {
                   wrapper
                     .find('[data-testing="delivery-day-and-time-save-cta"]')

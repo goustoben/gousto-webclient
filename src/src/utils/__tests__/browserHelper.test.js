@@ -1,4 +1,7 @@
-import browserHelper from '../browserHelper'
+import { JSDOM } from 'jsdom'
+import browserHelper, { canUseDom } from '../browserHelper'
+
+let windowSpy
 
 describe('Browser Helper', () => {
   describe('isChrome()', () => {
@@ -28,6 +31,63 @@ describe('Browser Helper', () => {
       navigator.__defineGetter__('userAgent', () => firefoxUserAgent)
 
       expect(browserHelper.isChrome()).toBe(false)
+    })
+  })
+
+  describe('canUseDom', () => {
+    beforeEach(() => {
+      windowSpy = jest.spyOn(global, 'window', 'get')
+    })
+
+    afterEach(() => {
+      windowSpy.mockRestore()
+    })
+
+    describe('Given window is undefined', () => {
+      beforeEach(() => {
+        windowSpy.mockReturnValue(undefined)
+      })
+
+      test('Then canUseDom returns false', () => {
+        expect(canUseDom()).toBeFalsy()
+      })
+    })
+
+    describe('Given document is undefined', () => {
+      beforeEach(() => {
+        windowSpy.mockImplementation(() => ({
+          document: undefined,
+        }))
+      })
+
+      test('Then canUseDom returns false', () => {
+        expect(canUseDom()).toBeFalsy()
+      })
+    })
+
+    describe('Given createElement is undefined', () => {
+      beforeEach(() => {
+        windowSpy.mockImplementation(() => ({
+          document: {
+            createElement: undefined,
+          },
+        }))
+      })
+
+      test('Then canUseDom returns false', () => {
+        expect(canUseDom()).toBeFalsy()
+      })
+    })
+
+    describe('Given browser criteria are met', () => {
+      beforeEach(() => {
+        const { window } = new JSDOM()
+        windowSpy.mockImplementation(() => window)
+      })
+
+      test('Then canUseDom returns true', () => {
+        expect(canUseDom()).toBeTruthy()
+      })
     })
   })
 })

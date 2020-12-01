@@ -8,6 +8,7 @@ import {
 import { SubscriptionReducer } from './context/reducers'
 import { ActiveSubscription } from './ActiveSubscription'
 import { PausedSubscription } from './PausedSubscription'
+import { ToastProvider } from './components/Toast'
 
 import css from './Subscription.css'
 import { useSubscriptionData } from './hooks/useSubscriptionData'
@@ -30,18 +31,21 @@ const Subscription = ({
 
   return (
     <SubscriptionContext.Provider value={contextValue}>
-      <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
-        <Grid>
-          <Column smallScreen={12} mediumScreen={12}>
-            <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
-          </Column>
-        </Grid>
-        {/* 📝 MH TODO 📝: Validate whether this is legit or whether we need to check */}
-        {/* TODO - loading state */}
-        {accessToken
-          ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} />
-          : <PausedSubscription />}
-      </LayoutPageWrapper>
+      <ToastProvider>
+        <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
+          <Grid>
+            <Column smallScreen={12} mediumScreen={12}>
+              <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
+            </Column>
+          </Grid>
+          {/* 📝 MH TODO 📝: Validate whether this is legit or whether we need to check */}
+          {/* TODO - loading state */}
+          {accessToken
+            ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} />
+            : <PausedSubscription />}
+        </LayoutPageWrapper>
+
+      </ToastProvider>
     </SubscriptionContext.Provider>
   )
 }
