@@ -12,6 +12,7 @@ import {
   getDeliverySlots
 } from '../../../../../context/selectors/deliveries'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
+import * as trackingHooks from '../../../../../hooks/useTrackSubscriptionUpdate'
 import * as trackingSubscription from '../../../../../tracking'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
 import { ToastProvider } from '../../../../../components/Toast'
@@ -20,6 +21,10 @@ jest.mock('../../../../../tracking')
 jest.mock('../../../../../context/selectors/subscription')
 jest.mock('../../../../../context/selectors/deliveries')
 jest.mock('../../../../../hooks/useUpdateSubscription')
+
+const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
+const useTrackSubscriptionUpdateSpy = jest.spyOn(trackingHooks, 'useTrackSubscriptionUpdate')
+const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 
 const mockCurrentDeliverySlot = {
   coreSlotId: '1',
@@ -73,9 +78,6 @@ const getOptionByProp = (propName, value) => wrapper.findWhere(
 )
 
 describe('DeliveryDayAndTime', () => {
-  const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
-  const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
-
   beforeEach(() => {
     jest.resetAllMocks()
     trackSubscriptionSettingsChangeSpy.mockReturnValue(() => { })
@@ -92,21 +94,43 @@ describe('DeliveryDayAndTime', () => {
       mountWithProps()
     })
 
-    describe('And I click "edit"', () => {
+    describe('And I browse on a mobile device', () => {
       beforeEach(() => {
-        clickEdit()
+        mountWithProps({ isMobile: true })
       })
 
-      test('Then I should see the expanded text', () => {
-        expect(
-          wrapper
-            .find('[data-testing="expanded-text"]')
-            .exists()
-        ).toBeTruthy()
-      })
+      describe('And I click "edit"', () => {
+        beforeEach(() => {
+          clickEdit()
+        })
 
-      test('Then the dropdown is not rendered', () => {
-        expect(wrapper.find('Dropdown').exists()).toBeFalsy()
+        test('Then I should see the expanded text', () => {
+          expect(
+            wrapper
+              .find('[data-testing="expanded-text"]')
+              .exists()
+          ).toBeTruthy()
+        })
+      })
+    })
+
+    describe('And I don\'t browse on a mobile device', () => {
+      describe('And I click "edit"', () => {
+        beforeEach(() => {
+          clickEdit()
+        })
+
+        test('Then I should not see the expanded text', () => {
+          expect(
+            wrapper
+              .find('[data-testing="expanded-text"]')
+              .exists()
+          ).toBeFalsy()
+        })
+
+        test('Then the dropdown is not rendered', () => {
+          expect(wrapper.find('Dropdown').exists()).toBeFalsy()
+        })
       })
     })
   })
@@ -155,7 +179,7 @@ describe('DeliveryDayAndTime', () => {
 
       test('Then the trackSubscriptionSettingsChange is called', () => {
         expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-          action: 'update_success', settingName: 'delivery_date'
+          action: 'edit', settingName: 'delivery_date'
         })
       })
 
@@ -218,7 +242,7 @@ describe('DeliveryDayAndTime', () => {
                 wrapper.update()
               })
 
-              test('Then useUpdateSubscription should be invoked', () => {
+              test('Then useUpdateSub should be invoked', () => {
                 const mockCalls = useUpdateSubscription.mock.calls
                 const [lastMockArgs] = mockCalls[mockCalls.length - 1]
 
@@ -240,9 +264,12 @@ describe('DeliveryDayAndTime', () => {
                   useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
                 })
 
-                test('Then the trackSubscriptionSettingsChange is called with delivery_date_update_success', () => {
-                  expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-                    action: 'update_success', settingName: 'delivery_date'
+                test('Then the useTrackSubscriptionUpdate is invoked as expected', () => {
+                  expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
+                    settingName: 'delivery_date',
+                    settingValue: '2',
+                    isUpdateSuccess: true,
+                    isUpdateError: false,
                   })
                 })
 
@@ -264,10 +291,17 @@ describe('DeliveryDayAndTime', () => {
                 wrapper.update()
               })
 
-              test('Then the trackSubscriptionSettingsChange is called with delivery_date_update_error', () => {
-                expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-                  action: 'update_error', settingName: 'delivery_date'
+              test('Then the useTrackSubscriptionUpdate is invoked as expected', () => {
+                expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
+                  settingName: 'delivery_date',
+                  settingValue: '2',
+                  isUpdateSuccess: true,
+                  isUpdateError: false,
                 })
+              })
+
+              test('Then useSubscriptionToast is invoked', () => {
+                expect(useSubscriptionToastSpy).toHaveBeenCalledWith(undefined, true)
               })
             })
           })

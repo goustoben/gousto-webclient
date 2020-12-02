@@ -9,9 +9,9 @@
   background-image: url('./svgs/calendar.svg');
 }
 
-.dietaryPreference {
+.leaf {
   composes: icon;
-  background-image: url('./svgs/dietaryPreference.svg');
+  background-image: url('./svgs/leaf.svg');
 }
 
 .frequency {

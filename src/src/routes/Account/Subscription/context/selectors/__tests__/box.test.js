@@ -1,4 +1,9 @@
-import { getNumPortions, getNumRecipes, getDietaryPreference } from '../box'
+import {
+  getNumPortions,
+  getNumRecipes,
+  getDietaryPreference,
+  getIsBoxLoaded
+} from '../box'
 
 describe('box selectors', () => {
   let contextState
@@ -9,9 +14,23 @@ describe('box selectors', () => {
         numRecipes: 2,
         dietaryPreference: {
           currentValue: 'gourmet'
+        },
+        requestState: {
+          isLoaded: true,
+          isLoading: false
         }
       }
     }
+  })
+
+  describe('getIsBoxLoaded', () => {
+    test('should return false if there is no box data', () => {
+      expect(getIsBoxLoaded({})).toEqual(false)
+    })
+
+    test('should return true if there is box data and is loaded', () => {
+      expect(getIsBoxLoaded(contextState)).toEqual(true)
+    })
   })
 
   describe('getNumPortions', () => {

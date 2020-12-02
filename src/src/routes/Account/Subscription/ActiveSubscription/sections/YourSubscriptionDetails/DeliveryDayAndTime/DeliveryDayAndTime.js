@@ -19,6 +19,7 @@ import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
+import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 
 import css from './DeliveryDayAndTime.css'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
@@ -70,15 +71,14 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
     }
   })
 
-  if (updateError) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_error' })()
-  }
-
-  if (updateResponse) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_success' })()
-  }
-
   useSubscriptionToast(updateResponse, updateError)
+
+  useTrackSubscriptionUpdate({
+    isUpdateSuccess: !!updateResponse,
+    isUpdateError: !!updateError,
+    settingName,
+    settingValue: selectedCoreId
+  })
 
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()
@@ -113,9 +113,11 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       isMobile={isMobile}
       testingSelector="delivery-day-and-time"
     >
-      <p data-testing="expanded-text">
-        Please select what day you would like to recieve your box on and when.
-      </p>
+      { isMobile && (
+        <p data-testing="expanded-text">
+          Please select what day you would like to recieve your box on and when.
+        </p>
+      )}
 
       { isLoaded && (
         <Dropdown
