@@ -15,8 +15,6 @@ import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
-import css from './Frequency.css'
-
 export const Frequency = ({ accessToken, isMobile }) => {
   const context = useContext(SubscriptionContext)
   const { state } = context
@@ -41,15 +39,15 @@ export const Frequency = ({ accessToken, isMobile }) => {
   })
 
   if (isUpdateSuccess) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_success'})()
+    trackSubscriptionSettingsChange({ settingName, action: 'update_success' })()
   }
 
   if (isUpdateError) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_error'})()
+    trackSubscriptionSettingsChange({ settingName, action: 'update_error' })()
   }
 
   const onSubmit = () => {
-    trackSubscriptionSettingsChange({ settingName, action: 'update'})()
+    trackSubscriptionSettingsChange({ settingName, action: 'update' })()
     setShouldSubmit(true)
   }
 
@@ -70,19 +68,18 @@ export const Frequency = ({ accessToken, isMobile }) => {
         </p>
       )}
       onSubmit={onSubmit}
-      onEditClick={trackSubscriptionSettingsChange({ settingName, action: 'edit'})}
+      onEditClick={trackSubscriptionSettingsChange({ settingName, action: 'edit' })}
       isMobile={isMobile}
       testingSelector="box-frequency"
-      extraClass={css.frequencySection}
     >
       {isMobile && (
-      <p data-testing="box-frequency-instruction-text">
-        Please select the how often you’d like to recieve your box.
-      </p>
+        <p data-testing="box-frequency-instruction-text">
+          Please select the how often you’d like to recieve your box.
+        </p>
       )}
       { isSubscriptionLoaded && (
         <RadioGroup
-          onChange={({target: { value }}) => setSelectedInterval(value)}
+          onChange={({ target: { value } }) => setSelectedInterval(value)}
           testingSelector="box-frequency-radio-group"
           name={settingName}
         >

@@ -3,14 +3,26 @@ import moment from 'moment'
 
 import { useSubscriptionData } from '../useSubscriptionData'
 import { useFetch } from '../../../../../hooks/useFetch'
+import * as getCurrentUserPostcode from '../../context/selectors/currentUser'
 
 jest.mock('config/endpoint', () => () => 'localhost')
 jest.mock('../../../../../hooks/useFetch')
 jest.mock('moment')
 
 const mockAccessToken = 'mock-access-token'
-const mockPostcode = 'W14'
+const mockTrigger = {
+  shouldRequest: false,
+  setShouldRequest: () => {},
+}
+const mockState = {
+  currentUser: {
+    shippingAddress: {
+      postcode: 'W1A',
+    }
+  }
+}
 const mockDispatch = jest.fn()
+const getCurrentUserPostcodeSpy = jest.spyOn(getCurrentUserPostcode, 'getCurrentUserPostcode')
 
 describe('Given useSubscriptionData is invoked', () => {
   beforeEach(() => {
@@ -26,7 +38,7 @@ describe('Given useSubscriptionData is invoked', () => {
       })
     }))
 
-    renderHook(() => useSubscriptionData(mockAccessToken, mockPostcode, mockDispatch))
+    renderHook(() => useSubscriptionData(mockAccessToken, mockDispatch, mockTrigger, mockState))
   })
 
   test('Then useFetch makes the expected requests', () => {
@@ -42,11 +54,16 @@ describe('Given useSubscriptionData is invoked', () => {
         direction: 'asc',
         'filters[cutoff_datetime_from]': 'start of day',
         'filters[cutoff_datetime_until]': '7 days later',
-        postcode: 'W14',
+        postcode: 'W1A',
         sort: 'date'
       },
-      url: 'localhost/days'
+      url: 'localhost/days',
+      trigger: mockTrigger,
     })
+  })
+
+  test('Then getCurrentUserPostcode is called', () => {
+    expect(getCurrentUserPostcodeSpy).toHaveBeenCalled()
   })
 
   test('Then dispatch is not yet invoked', () => {
@@ -61,7 +78,7 @@ describe('Given useSubscriptionData is invoked', () => {
       useFetch.mockReturnValueOnce([false, mockSubscriptionRepsonse, false])
       useFetch.mockReturnValueOnce([false, mockDeliveriesResponse, false])
 
-      renderHook(() => useSubscriptionData(mockAccessToken, mockPostcode, mockDispatch))
+      renderHook(() => useSubscriptionData(mockAccessToken, mockDispatch, mockTrigger, mockState))
     })
 
     test('Then the expected action is dispatched', () => {
@@ -80,7 +97,7 @@ describe('Given useSubscriptionData is invoked', () => {
     beforeEach(() => {
       useFetch.mockReturnValue([false, undefined, true])
 
-      renderHook(() => useSubscriptionData(mockAccessToken, mockPostcode, mockDispatch))
+      renderHook(() => useSubscriptionData(mockAccessToken, mockDispatch, mockTrigger, mockState))
     })
 
     test('Then dispath is not invoked', () => {

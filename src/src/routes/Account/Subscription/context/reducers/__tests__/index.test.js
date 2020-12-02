@@ -6,13 +6,16 @@ import {
 
 import {
   reduceSubscriptionPageData,
-  reduceSubscriptionUpdateData
+  reduceSubscriptionUpdateData,
 } from '../subscription'
+
+import { reduceCurrentUserData } from '../currentUser'
 
 import { reduceLoadingState } from '../loading'
 
 jest.mock('../subscription')
 jest.mock('../loading')
+jest.mock('../currentUser')
 
 const mockState = 'INITIAL STATE'
 const mockData = 'MOCK DATA'
@@ -45,6 +48,19 @@ describe('SubscriptionReducer', () => {
 
     test('Then reduceSubscriptionPageData is invoked as expected', () => {
       expect(reduceSubscriptionUpdateData).toHaveBeenCalledWith(mockState, mockData)
+    })
+  })
+
+  describe('Given current user update data action is received', () => {
+    beforeEach(() => {
+      SubscriptionReducer(mockState, {
+        type: actionTypes.CURRENT_USER_DATA_RECEIVED,
+        data: mockData
+      })
+    })
+
+    test('Then reduceSubscriptionPageData is invoked as expected', () => {
+      expect(reduceCurrentUserData).toHaveBeenCalledWith(mockState, mockData)
     })
   })
 

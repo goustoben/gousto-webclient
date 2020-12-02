@@ -15,7 +15,7 @@ import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 
-import { DIETARY_PREFERENCES_MAP } from '../../../../enum/dietaryPreferences'
+import { DIETARY_PREFERENCES_MAP } from '../../../../enum/box'
 
 export const DietaryPreference = ({ accessToken, isMobile }) => {
   const context = useContext(SubscriptionContext)

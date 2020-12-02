@@ -3,11 +3,14 @@ import {
   reduceSubscriptionUpdateData
 } from './subscription'
 
+import { reduceCurrentUserData } from './currentUser'
+
 import { reduceLoadingState } from './loading'
 
 export const ENTITIES = {
   DELIVERIES: 'deliveries',
-  SUBSCRIPRION: 'subscription'
+  SUBSCRIPTION: 'subscription',
+  CURRENT_USER: 'currentUser',
 }
 
 export const actionTypes = {
@@ -15,6 +18,7 @@ export const actionTypes = {
   SUBSCRIPTION_UPDATE_DATA_RECEIVED: 'SUBSCRIPTION_UPDATE_DATA_RECEIVED',
   USER_SUBSCRIPTION_DATA_LOADING: 'USER_SUBSCRIPTION_DATA_LOADING',
   DELIVERIES_DATA_LOADING: 'DELIVERIES_DATA_LOADING',
+  CURRENT_USER_DATA_RECEIVED: 'CURRENT_USER_DATA_RECEIVED',
 }
 
 export const SubscriptionReducer = (state, action) => {
@@ -32,10 +36,12 @@ export const SubscriptionReducer = (state, action) => {
     return reduceLoadingState(
       state,
       type === actionTypes.USER_SUBSCRIPTION_DATA_LOADING
-        ? ENTITIES.SUBSCRIPRION
+        ? ENTITIES.SUBSCRIPTION
         : ENTITIES.DELIVERIES
     )
 
+  case actionTypes.CURRENT_USER_DATA_RECEIVED:
+    return reduceCurrentUserData(state, data)
   default:
     return state
   }

@@ -42,7 +42,7 @@ export const parseObjectKeysToCamelCase = (obj) => {
     case Array.isArray(currentValue):
       parsedValue = currentValue.map(parseObjectKeysToCamelCase)
       break
-    case typeof currentValue === 'object':
+    case typeof currentValue === 'object' && currentValue !== null:
       parsedValue = { ...parseObjectKeysToCamelCase(currentValue) }
       break
     default:

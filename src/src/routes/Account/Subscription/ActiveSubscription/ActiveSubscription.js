@@ -4,6 +4,7 @@ import { Grid, Column } from 'goustouicomponents'
 import { Section } from '../components/Section'
 import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryDayAndTime'
 import { Frequency } from './sections/YourSubscriptionDetails/Frequency'
+import { BoxSize } from './sections/YourSubscriptionDetails/BoxSize'
 
 import {
   yourSubscriptionDetailsSection,
@@ -29,6 +30,10 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
           testingSelector={yourSubscriptionDetailsSection.testingSelector}
         >
           <DeliveryDayAndTime
+            accessToken={accessToken}
+            isMobile={isMobile}
+          />
+          <BoxSize
             accessToken={accessToken}
             isMobile={isMobile}
           />
