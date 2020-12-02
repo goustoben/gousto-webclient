@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Grid, Column } from 'goustouicomponents'
 import { Section } from '../components/Section'
+import { Divider } from '../components/Divider'
 import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryDayAndTime'
 import { Frequency } from './sections/YourSubscriptionDetails/Frequency'
 import { BoxSize } from './sections/YourSubscriptionDetails/BoxSize'
@@ -68,6 +69,15 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
         </Section>
       </Column>
     </Grid>
+
+    <Grid>
+      <Column
+        smallScreen={12}
+      >
+        <Divider hidden={['sm']} />
+      </Column>
+    </Grid>
+
     <Grid>
       <Column
         smallScreen={12}
