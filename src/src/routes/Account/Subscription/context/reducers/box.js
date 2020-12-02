@@ -14,6 +14,10 @@ export const reduceBoxData = (state, data) => {
       ...box,
       dietaryPreference: {
         currentValue: camelCaseBox.boxType
+      },
+      requestState: {
+        isLoaded: true,
+        isLoading: false
       }
     }
   }

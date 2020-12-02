@@ -12,6 +12,7 @@ import {
   skipABoxSection,
   pauseSubscriptionSection
 } from '../subscriptionsSectionsContent'
+import { DietaryPreference } from './sections/ChefSelectsSettings/DietaryPreference'
 
 const ActiveSubscription = ({ accessToken, isMobile }) => (
   <Fragment>
@@ -41,7 +42,10 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
           subTitle={chefSelectsSettingsSection.subTitle}
           testingSelector={chefSelectsSettingsSection.testingSelector}
         >
-          <div />
+          <DietaryPreference
+            accessToken={accessToken}
+            isMobile={isMobile}
+          />
         </Section>
       </Column>
       <Column

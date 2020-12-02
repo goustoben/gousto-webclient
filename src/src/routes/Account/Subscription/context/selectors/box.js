@@ -16,3 +16,8 @@ export const getDietaryPreference = createSelector(
   getBox,
   ({ dietaryPreference }) => (dietaryPreference || {}).currentValue
 )
+
+export const getIsBoxLoaded = createSelector(
+  getBox,
+  ({ requestState }) => Boolean((requestState || {}).isLoaded)
+)

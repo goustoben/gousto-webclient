@@ -50,7 +50,11 @@ describe('box reducers', () => {
             box: {
               dietaryPreference: { currentValue: 'gourmet' },
               numPortions: '2',
-              numRecipes: '3'
+              numRecipes: '3',
+              requestState: {
+                isLoaded: true,
+                isLoading: false
+              }
             },
           })
         })
