@@ -72,13 +72,13 @@ export const BoxSize = ({ accessToken, isMobile }) => {
       isMobile={isMobile}
       testingSelector="box-size"
     >
-      { isMobile && (
+      { isMobile ? (
         <p data-testing="expanded-text">
           Please select your box size.
         </p>
-      )}
+      ) : null}
 
-      { isLoaded && (
+      { isLoaded ? (
         <RadioGroup
           name="box-size-radios"
           testingSelector="box-size-radios"
@@ -99,7 +99,7 @@ export const BoxSize = ({ accessToken, isMobile }) => {
             </InputRadio>
           ))}
         </RadioGroup>
-      )}
+      ) : null}
     </SettingSection>
   )
 }

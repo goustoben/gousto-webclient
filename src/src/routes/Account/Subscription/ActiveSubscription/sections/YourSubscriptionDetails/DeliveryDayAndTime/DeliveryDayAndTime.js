@@ -113,13 +113,13 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
       isMobile={isMobile}
       testingSelector="delivery-day-and-time"
     >
-      { isMobile && (
+      { isMobile ? (
         <p data-testing="expanded-text">
           Please select what day you would like to recieve your box on and when.
         </p>
-      )}
+      ) : null}
 
-      { isLoaded && (
+      { isLoaded ? (
         <Dropdown
           options={options}
           value={{ text: `${day} ${timeRange}`, value: coreSlotId }}
@@ -129,7 +129,7 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
           placeholder="Choose day"
           testingSelector="delivery-day-and-time"
         />
-      )}
+      ) : null}
     </SettingSection>
   )
 }

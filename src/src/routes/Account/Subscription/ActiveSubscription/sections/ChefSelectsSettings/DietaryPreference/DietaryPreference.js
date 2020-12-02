@@ -75,36 +75,40 @@ export const DietaryPreference = ({ accessToken, isMobile }) => {
       isMobile={isMobile}
       testingSelector="dietary-preference"
     >
-      {isMobile && (
-        <p data-testing="expanded-text">
-          Please select your dietary preference.
-        </p>
-      )}
+      {
+        isMobile ? (
+          <p data-testing="expanded-text">
+            Please select your dietary preference.
+          </p>
+        ) : null
+      }
 
-      { isLoaded && (
-        <RadioGroup
-          name="dietary-preference-radios"
-          testingSelector="dietary-preference-radios"
-          onChange={({ target: { value } }) => setSelectedDietaryPreference(value)}
-        >
-          {Object.keys(DIETARY_PREFERENCES_MAP).map(dietaryPreferenceValue => {
-            const text = DIETARY_PREFERENCES_MAP[dietaryPreferenceValue]
+      {
+        isLoaded ? (
+          <RadioGroup
+            name="dietary-preference-radios"
+            testingSelector="dietary-preference-radios"
+            onChange={({ target: { value } }) => setSelectedDietaryPreference(value)}
+          >
+            {Object.keys(DIETARY_PREFERENCES_MAP).map(dietaryPreference => {
+              const text = DIETARY_PREFERENCES_MAP[dietaryPreference]
 
-            return (
-              <InputRadio
-                id={`${dietaryPreferenceValue}-radio`}
-                key={dietaryPreferenceValue}
-                name={`${dietaryPreferenceValue}-radio`}
-                value={dietaryPreferenceValue}
-                variant="tile"
-                isChecked={dietaryPreferenceValue === currentDietaryPreference}
-              >
-                {text}
-              </InputRadio>
-            )
-          })}
-        </RadioGroup>
-      )}
+              return (
+                <InputRadio
+                  id={`${dietaryPreference}-radio`}
+                  key={dietaryPreference}
+                  name={`${dietaryPreference}-radio`}
+                  value={dietaryPreference}
+                  variant="tile"
+                  isChecked={dietaryPreference === currentDietaryPreference}
+                >
+                  {text}
+                </InputRadio>
+              )
+            })}
+          </RadioGroup>
+        ) : null
+      }
     </SettingSection>
   )
 }
