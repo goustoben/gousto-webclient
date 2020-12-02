@@ -10,6 +10,10 @@ jest.mock('../sections/YourSubscriptionDetails/Frequency', () => ({
   Frequency: () => <div />
 }))
 
+jest.mock('../sections/YourSubscriptionDetails/BoxSize', () => ({
+  BoxSize: () => <div />
+}))
+
 jest.mock('../sections/ChefSelectsSettings/DietaryPreference', () => ({
   DietaryPreference: () => <div />
 }))
