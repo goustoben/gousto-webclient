@@ -13,7 +13,9 @@ import {
 import { getDeliveryFrequency } from '../../../../context/selectors/deliveries'
 import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
+import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
+import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 
 export const Frequency = ({ accessToken, isMobile }) => {
   const context = useContext(SubscriptionContext)
@@ -27,7 +29,7 @@ export const Frequency = ({ accessToken, isMobile }) => {
 
   const currentDeliveryFrequency = getDeliveryFrequency(state)
 
-  const [, isUpdateSuccess, isUpdateError] = useUpdateSubscription({
+  const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
     trigger: {
       shouldRequest: shouldSubmit,
@@ -38,13 +40,16 @@ export const Frequency = ({ accessToken, isMobile }) => {
     }
   })
 
-  if (isUpdateSuccess) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_success' })()
-  }
+  useSubscriptionToast(updateResponse, updateError)
 
-  if (isUpdateError) {
-    trackSubscriptionSettingsChange({ settingName, action: 'update_error' })()
-  }
+  useTrackSubscriptionUpdate({
+    isUpdateSuccess: !!updateResponse,
+    isUpdateError: !!updateError,
+    settingName,
+    settingValue: selectedInterval
+  })
+
+  const onChange = ({ target: { value } }) => setSelectedInterval(value)
 
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()
@@ -72,14 +77,15 @@ export const Frequency = ({ accessToken, isMobile }) => {
       isMobile={isMobile}
       testingSelector="box-frequency"
     >
-      {isMobile && (
+      {isMobile ? (
         <p data-testing="box-frequency-instruction-text">
           Please select the how often you’d like to recieve your box.
         </p>
-      )}
-      { isSubscriptionLoaded && (
+      ) : null}
+
+      { isSubscriptionLoaded ? (
         <RadioGroup
-          onChange={({ target: { value } }) => setSelectedInterval(value)}
+          onChange={onChange}
           testingSelector="box-frequency-radio-group"
           name={settingName}
         >
@@ -104,7 +110,7 @@ export const Frequency = ({ accessToken, isMobile }) => {
             })
           }
         </RadioGroup>
-      )}
+      ) : null}
     </SettingSection>
   )
 }

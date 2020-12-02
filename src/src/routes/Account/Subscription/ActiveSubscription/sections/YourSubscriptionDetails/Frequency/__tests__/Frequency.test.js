@@ -12,9 +12,10 @@ import {
 } from '../../../../../context/selectors/deliveries'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
+import * as trackingHooks from '../../../../../hooks/useTrackSubscriptionUpdate'
+import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
 
 jest.mock('../../../../../tracking')
-
 jest.mock('../../../../../context/selectors/subscription')
 jest.mock('../../../../../context/selectors/deliveries')
 jest.mock('../../../../../hooks/useUpdateSubscription')
@@ -49,9 +50,13 @@ const clickEdit = () => {
 
 describe('Frequency', () => {
   const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
+  const useTrackSubscriptionUpdateSpy = jest.spyOn(trackingHooks, 'useTrackSubscriptionUpdate')
+  const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
+
   beforeEach(() => {
     jest.resetAllMocks()
-    trackSubscriptionSettingsChangeSpy.mockReturnValue(() => {})
+    trackSubscriptionSettingsChangeSpy.mockReturnValue(() => { })
+    useUpdateSubscription.mockReturnValue([undefined, undefined, undefined])
   })
 
   describe('Given data is not loaded', () => {
@@ -78,7 +83,6 @@ describe('Frequency', () => {
     beforeEach(() => {
       getIsSubscriptionLoaded.mockReturnValue(true)
       getDeliveryFrequency.mockReturnValue('1')
-      useUpdateSubscription.mockReturnValue([false, true, false])
 
       mountWithProps()
     })
@@ -148,10 +152,11 @@ describe('Frequency', () => {
           wrapper.update()
         })
 
-        describe('And I click "Save frequeny"', () => {
+        describe('And I click "Save frequency"', () => {
           describe('And the update is successful', () => {
             beforeEach(() => {
-              useUpdateSubscription.mockReturnValue([ false, true, false])
+              useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
+
               act(() => {
                 wrapper
                   .find('[data-testing="box-frequency-save-cta"]')
@@ -179,21 +184,25 @@ describe('Frequency', () => {
             })
 
             describe('And the update is a success', () => {
-              beforeEach(() => {
-                useUpdateSubscription.mockReturnValue([ false, true, false])
+              test('Then the useTrackSubscriptionUpdate is called as expected', () => {
+                expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
+                  isUpdateSuccess: true,
+                  isUpdateError: false,
+                  settingName: 'box_frequency',
+                  settingValue: '2'
+                })
               })
 
-              test('Then the trackSubscriptionSettingsChange is called with box_frequency_update_success', () => {
-                expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-                  action: 'update_success', settingName: 'box_frequency'
-                })
+              test('Then useSubscriptionToast is invoked', () => {
+                expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
               })
             })
           })
 
           describe('And the update is returning error', () => {
             beforeEach(() => {
-              useUpdateSubscription.mockReturnValue([ false, false, true])
+              useUpdateSubscription.mockReturnValue([false, false, true])
+
               act(() => {
                 wrapper
                   .find('[data-testing="box-frequency-save-cta"]')
@@ -203,10 +212,17 @@ describe('Frequency', () => {
               wrapper.update()
             })
 
-            test('Then the trackSubscriptionSettingsChange is called with box_frequency_update_error', () => {
-              expect(trackSubscriptionSettingsChangeSpy).toHaveBeenCalledWith({
-                action: 'update_error', settingName: 'box_frequency'
+            test('Then the useTrackSubscriptionUpdate is called with box_frequency_update_error', () => {
+              expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
+                isUpdateSuccess: false,
+                isUpdateError: true,
+                settingName: 'box_frequency',
+                settingValue: '2'
               })
+            })
+
+            test('Then useSubscriptionToast is invoked', () => {
+              expect(useSubscriptionToastSpy).toHaveBeenCalledWith(false, true)
             })
           })
         })
