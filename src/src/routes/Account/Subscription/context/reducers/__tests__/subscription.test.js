@@ -13,16 +13,14 @@ const reduceBoxDataSpy = jest.spyOn(boxReducers, 'reduceBoxData')
 
 let result
 
-const mockState = {
-  initial: 'state'
-}
+const mockState = {}
 
 const mockReducedState = {
   box: 'data',
   delivery: 'data',
-  initial: 'state',
   subscription: {
     deliverySlotId: 'mock-delivery-slot-id',
+    status: 'active',
     requestState: { isLoaded: true, isLoading: false }
   }
 }
@@ -30,13 +28,15 @@ const mockReducedState = {
 const mockData = {
   subscription: {
     subscription: {
-      delivery_slot_id: 'mock-delivery-slot-id'
+      delivery_slot_id: 'mock-delivery-slot-id',
+      state: 'active'
     }
   }
 }
 
 const reducedSubscription = {
   deliverySlotId: 'mock-delivery-slot-id',
+  status: 'active',
   requestState: {
     isLoaded: true,
     isLoading: false
@@ -106,6 +106,9 @@ describe('subscription reducers', () => {
           subscription: {
             slot: {
               id: 1
+            },
+            state: {
+              description: 'Active'
             }
           }
         })
@@ -116,7 +119,31 @@ describe('subscription reducers', () => {
           ...mockReducedState,
           subscription: {
             ...mockReducedState.subscription,
-            deliverySlotId: '1'
+            deliverySlotId: '1',
+            status: 'active'
+          }
+        })
+      })
+    })
+
+    describe('Given expected state and data with missing properties are passed', () => {
+      beforeEach(() => {
+        result = reduceSubscriptionUpdateData(mockReducedState, {
+          subscription: {
+            slot: {
+              id: 1
+            }
+          }
+        })
+      })
+
+      test('Then state is reduced as expected with default values', () => {
+        expect(result).toEqual({
+          ...mockReducedState,
+          subscription: {
+            ...mockReducedState.subscription,
+            deliverySlotId: '1',
+            status: ''
           }
         })
       })

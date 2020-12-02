@@ -6,6 +6,7 @@ import {
   SubscriptionContext,
 } from './context'
 import { SubscriptionReducer } from './context/reducers'
+import { getIsSubscriptionActive } from './context/selectors/subscription'
 import { ActiveSubscription } from './ActiveSubscription'
 import { PausedSubscription } from './PausedSubscription'
 import { ToastProvider } from './components/Toast'
@@ -26,6 +27,7 @@ const Subscription = ({
   const [shouldRequestDeliveryDays, setShouldRequestDeliveryDays] = useState(false)
   const [state, dispatch] = useReducer(SubscriptionReducer, {})
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
+  const isSubscriptionActive = getIsSubscriptionActive(state)
 
   useCurrentUserData(accessToken, dispatch)
 
@@ -48,9 +50,8 @@ const Subscription = ({
               <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
             </Column>
           </Grid>
-          {/* 📝 MH TODO 📝: Validate whether this is legit or whether we need to check */}
           {/* TODO - loading state */}
-          {accessToken
+          {isSubscriptionActive
             ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} />
             : <PausedSubscription />}
         </LayoutPageWrapper>

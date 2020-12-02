@@ -10,12 +10,13 @@ export const reduceSubscriptionData = (state, data) => {
     return state
   }
 
-  const { delivery_slot_id: deliverySlotId } = data.subscription
+  const { delivery_slot_id: deliverySlotId, state: subscriptionStatus } = data.subscription
 
   return {
     ...state,
     subscription: {
       deliverySlotId,
+      status: subscriptionStatus,
       requestState: {
         isLoaded: true,
         isLoading: false
@@ -46,9 +47,21 @@ export const reduceSubscriptionPageData = (state, data) => {
 export const reduceSubscriptionUpdateData = (state, data) => {
   try {
     const { subscription } = data
+    const defaultSubscription = {
+      slot: {},
+      state: { description: ''}
+    }
+    const subscriptionWithDefaults = {
+      ...defaultSubscription,
+      ...subscription
+    }
+    const { slot: { id } , state: { description } } = subscriptionWithDefaults
 
     const reducedSubscriptionState = reduceSubscriptionData(state, {
-      subscription: { delivery_slot_id: `${subscription.slot.id}` }
+      subscription: {
+        delivery_slot_id: `${id}`,
+        state: description.toLowerCase()
+      }
     })
     const reducedDeliveriesState = reduceUpdatedDeliveriesData(reducedSubscriptionState, subscription)
     const reducedBoxState = reduceBoxData(reducedDeliveriesState, subscription)
