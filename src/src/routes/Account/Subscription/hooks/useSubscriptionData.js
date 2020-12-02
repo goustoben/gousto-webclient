@@ -1,28 +1,23 @@
 import {
   useEffect,
+  useMemo,
 } from 'react'
 import moment from 'moment'
 
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
+
 import { useFetch } from '../../../../hooks/useFetch'
 import {
 } from '../context'
-
+import { getCurrentUserPostcode } from '../context/selectors/currentUser'
 import { actionTypes } from '../context/reducers'
 
-export const useSubscriptionData = (accessToken, postcode, dispatch) => {
+export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
+  const postcode = getCurrentUserPostcode(state)
   const subscriptionUrl = `${endpoint('core')}${routes.core.currentSubscription}`
-
-  const [, subscriptionResponse, subscriptionError
-  ] = useFetch({
-    url: subscriptionUrl,
-    needsAuthorization: true,
-    accessToken
-  })
-
   const deliveriesUrl = `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.days}`
-  const deliveryParams = {
+  const deliveryParams = useMemo(() => ({
     'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
     'filters[cutoff_datetime_until]': moment()
       .startOf('day')
@@ -31,13 +26,27 @@ export const useSubscriptionData = (accessToken, postcode, dispatch) => {
     postcode,
     sort: 'date',
     direction: 'asc'
-  }
+  }), [postcode])
+
+  const [, subscriptionResponse, subscriptionError
+  ] = useFetch({
+    url: subscriptionUrl,
+    needsAuthorization: true,
+    accessToken
+  })
+
+  useEffect(() => {
+    if (postcode) {
+      trigger.setShouldRequest(true)
+    }
+  }, [postcode, trigger])
 
   const [, deliveriesResponse, deliveriesError
   ] = useFetch({
     url: deliveriesUrl,
     parameters: deliveryParams,
-    accessToken
+    accessToken,
+    trigger,
   })
 
   useEffect(() => {

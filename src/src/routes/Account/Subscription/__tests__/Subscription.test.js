@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import * as useSubscriptionDataHook from '../hooks/useSubscriptionData'
 import { Subscription } from '../Subscription'
+
 jest.mock('../ActiveSubscription', () => ({
   ActiveSubscription: () => <div />
 }))
@@ -28,6 +29,7 @@ const mountWithProps = (props = {}) => {
 
 describe('Subscription', () => {
   const useSubscriptionDataSpy = jest.spyOn(useSubscriptionDataHook, 'useSubscriptionData')
+
   beforeEach(() => {
     jest.resetAllMocks()
     mountWithProps()
