@@ -5,7 +5,7 @@ describe('Given I am logged in', () => {
 
   describe('And I am on the /subscription-settings page', () => {
     beforeEach(() => {
-      cy.visitSubscriptionSettingsPage()
+      cy.visitSubscriptionSettingsPage({ isSubscriptionActive: true })
     })
 
     it('Then I should see the current box size', () => {

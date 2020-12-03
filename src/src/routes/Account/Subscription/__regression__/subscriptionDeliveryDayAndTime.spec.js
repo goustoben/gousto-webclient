@@ -5,12 +5,7 @@ describe('Given I am logged in', () => {
 
   describe('And I am on the /subscription-settings page', () => {
     beforeEach(() => {
-      cy.visitSubscriptionSettingsPage()
-    })
-
-    it('Then I should see Subscription Settings Page', () => {
-      cy.get('[data-testing="subscriptionSettingsPage"]')
-        .should('be.visible')
+      cy.visitSubscriptionSettingsPage({ isSubscriptionActive: true })
     })
 
     it('Then I should see the current delivery day', () => {

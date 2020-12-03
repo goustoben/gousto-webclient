@@ -2,8 +2,10 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import * as useSubscriptionDataHook from '../hooks/useSubscriptionData'
+import { getIsSubscriptionActive } from '../context/selectors/subscription'
 import { Subscription } from '../Subscription'
 
+jest.mock('../context/selectors/subscription')
 jest.mock('../ActiveSubscription', () => ({
   ActiveSubscription: () => <div />
 }))
@@ -43,9 +45,8 @@ describe('Subscription', () => {
 
   describe('Given isSubscriptionActive true', () => {
     beforeEach(() => {
-      mountWithProps({
-        accessToken: 'auth-token'
-      })
+      getIsSubscriptionActive.mockReturnValue(true)
+      mountWithProps()
     })
 
     test('Then renders ActiveSubscription', () => {
@@ -59,9 +60,7 @@ describe('Subscription', () => {
 
   describe('Given isSubscriptionActive false', () => {
     beforeEach(() => {
-      mountWithProps({
-        accessToken: ''
-      })
+      mountWithProps()
     })
 
     test('Then renders PausedSubscription', () => {

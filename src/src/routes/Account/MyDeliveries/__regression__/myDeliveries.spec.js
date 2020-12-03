@@ -10,7 +10,7 @@ describe('My Deliveries', () => {
     cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
     cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
     cy.route('GET', /user\/current\/address/, '@userCurrentAddress').as('currentAddress')
-    cy.fixture('user/userCurrentSubscription').as('userCurrentSubscription')
+    cy.fixture('user/userCurrentActiveSubscription').as('userCurrentSubscription')
     cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('currentSubscription')
     cy.fixture('user/userAddresses').as('userAdresses')
     cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')

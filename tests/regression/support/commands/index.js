@@ -112,13 +112,16 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   cy.wait(['@getIntervals', '@getStock', '@getPrices', '@previewOrder'])
 })
 
-Cypress.Commands.add('visitSubscriptionSettingsPage', () => {
+Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive }) => {
       cy.server()
       cy.fixture('user/userCurrent').as('userCurrent')
       cy.route('GET', /user\/current/, '@userCurrent')
 
-      cy.fixture('user/userCurrentSubscription').as('userCurrentSubscription')
-      cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('currentSubscription')
+      if(isSubscriptionActive) {
+        cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as('currentActiveSubscription')
+      } else {
+        cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentPausedSubscription.json').as('currentPausedSubscription')
+      }
 
       cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
       cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('currentOrders')
@@ -136,13 +139,12 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', () => {
       cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
       cy.route('GET', /user\/current\/address/, '@userCurrentAddress')
 
-      cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('currentSubscription')
-      cy.fixture('orderSkipRecovery').as('orderSkipRecovery')
-      cy.fixture('user/userCurrentSubscriptionDelivery').as('userCurrentSubscriptionDelivery')
-
       cy.visit('/subscription-settings')
-      cy.wait([
-        '@currentSubscription',
-        '@deliveryDays'
-      ])
+
+      if(isSubscriptionActive) {
+        cy.wait('@currentActiveSubscription')
+      } else {
+        cy.wait('@currentPausedSubscription')
+      }
+      cy.wait('@deliveryDays')
 })

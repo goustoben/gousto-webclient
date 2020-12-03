@@ -1,4 +1,4 @@
-import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload } from '../subscription'
+import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload, getIsSubscriptionActive } from '../subscription'
 
 describe('subscription selectors', () => {
   let contextState
@@ -41,6 +41,25 @@ describe('subscription selectors', () => {
       }
       expect(getSubscriptionUpdatePayload.resultFunc(numPortions, numRecipes, dietaryPreference, currentDeliverySlot, deliveryFrequency))
         .toEqual(expectedResult)
+    })
+  })
+
+  describe('getIsSubscriptionActive', () => {
+    test('should return false', () => {
+      expect(getIsSubscriptionActive(contextState)).toBe(false)
+    })
+
+    describe('When subscription is active', () => {
+      beforeEach(() => {
+        contextState = {
+          subscription: {
+            status: 'active'
+          }
+        }
+      })
+      test('should return true', () => {
+        expect(getIsSubscriptionActive(contextState)).toBe(true)
+      })
     })
   })
 })

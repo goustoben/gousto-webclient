@@ -2,7 +2,7 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value XLarge, 3XLarge, FontWeightBold, FontFamilyAxiformaBook, FontBodySize from 'design-language/typography.css';
 
-.sectionWrapper { 
+.sectionWrapper {
   width: 100%;
   height: auto;
   background-color: White;
@@ -11,10 +11,14 @@
   margin-bottom: 0.5rem;
   font-family: FontFamilyAxiformaBook;
   border: 1px solid Basa;
-  
+
   @media BreakpointFromMedium {
     padding: 1.5rem;
     margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 

@@ -15,6 +15,11 @@ export const getIsSubscriptionLoaded = createSelector(
   (subscription) => Boolean(Object.keys(subscription).length)
 )
 
+export const getIsSubscriptionActive = createSelector(
+  getSubscription,
+  (subscription) => (subscription.status === 'active')
+)
+
 export const getSubscriptionUpdatePayload = createSelector(
   [getNumPortions, getNumRecipes, getDietaryPreference, getCurrentDeliverySlot, getDeliveryFrequency],
   (numPortions, numRecipes, dietaryPreference, currentDeliverySlot, deliveryFrequency) => ({
