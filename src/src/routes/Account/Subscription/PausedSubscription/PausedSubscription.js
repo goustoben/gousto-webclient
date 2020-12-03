@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Column } from 'goustouicomponents'
 import { Section } from '../components/Section'
 import { resubscribeSection, orderABoxSection } from '../subscriptionsSectionsContent'
+import { OrderABox } from './sections/OrderABox'
 
 const PausedSubscription = () => (
   <Grid>
@@ -30,7 +31,7 @@ const PausedSubscription = () => (
         subTitle={orderABoxSection.subTitle}
         testingSelector={orderABoxSection.testingSelector}
       >
-        <div />
+        <OrderABox />
       </Section>
     </Column>
   </Grid>

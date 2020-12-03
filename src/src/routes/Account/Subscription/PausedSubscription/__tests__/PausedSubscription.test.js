@@ -3,6 +3,10 @@ import { mount } from 'enzyme'
 import { PausedSubscription } from '../PausedSubscription'
 const sections = ['resubscribe', 'order-a-box']
 
+jest.mock('../sections/OrderABox', () => ({
+  OrderABox: () => <div />
+}))
+
 describe('PausedSubscription', () => {
   let wrapper
   beforeEach(() => {
