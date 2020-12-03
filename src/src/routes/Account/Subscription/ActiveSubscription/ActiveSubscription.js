@@ -6,6 +6,7 @@ import { Divider } from '../components/Divider'
 import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryDayAndTime'
 import { Frequency } from './sections/YourSubscriptionDetails/Frequency'
 import { BoxSize } from './sections/YourSubscriptionDetails/BoxSize'
+import { SkipABox } from './sections/SkipABox'
 
 import {
   yourSubscriptionDetailsSection,
@@ -90,7 +91,7 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
           subTitle={skipABoxSection.subTitle}
           testingSelector={skipABoxSection.testingSelector}
         >
-          <div />
+          <SkipABox />
         </Section>
       </Column>
       <Column
