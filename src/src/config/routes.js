@@ -147,6 +147,7 @@ module.exports = {
     currentSubscription: '/user/current/subscription',
     user: '/user',
     deactivateSub: '/user/current/subscription/deactivate',
+    activateSub: '/user/current/subscription/activate',
     cancelPending: '/user/current/cancel-pending-orders',
     applyPromo: '/user/current/applyPromotionCode',
   },

@@ -49,13 +49,13 @@ export const reduceSubscriptionUpdateData = (state, data) => {
     const { subscription } = data
     const defaultSubscription = {
       slot: {},
-      state: { description: ''}
+      state: { description: '' }
     }
     const subscriptionWithDefaults = {
       ...defaultSubscription,
       ...subscription
     }
-    const { slot: { id } , state: { description } } = subscriptionWithDefaults
+    const { slot: { id }, state: { description } } = subscriptionWithDefaults
 
     const reducedSubscriptionState = reduceSubscriptionData(state, {
       subscription: {
@@ -74,6 +74,26 @@ export const reduceSubscriptionUpdateData = (state, data) => {
     }
   } catch (error) {
     logger.error(`Error reducing subscription updated page data: ${error}`)
+
+    return state
+  }
+}
+
+export const reduceSubscriptionStatusUpdate = (state, data) => {
+  try {
+    const { state: subscriptionStatus } = data
+
+    const reducedSubscriptionState = {
+      ...state.subscription,
+      status: subscriptionStatus
+    }
+
+    return {
+      ...state,
+      subscription: reducedSubscriptionState
+    }
+  } catch (error) {
+    logger.error(`Error reducing subscription activate data: ${error}`)
 
     return state
   }

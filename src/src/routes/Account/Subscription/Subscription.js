@@ -53,7 +53,7 @@ const Subscription = ({
           {/* TODO - loading state */}
           {isSubscriptionActive
             ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} />
-            : <PausedSubscription />}
+            : <PausedSubscription accessToken={accessToken} />}
         </LayoutPageWrapper>
 
       </ToastProvider>

@@ -1,7 +1,8 @@
 import {
   reduceSubscriptionData,
   reduceSubscriptionPageData,
-  reduceSubscriptionUpdateData
+  reduceSubscriptionUpdateData,
+  reduceSubscriptionStatusUpdate
 } from '../subscription'
 
 import * as deliveryReducers from '../deliveries'
@@ -160,6 +161,38 @@ describe('subscription reducers', () => {
             }
           }
         })
+      })
+
+      test('Then the initial state is returned', () => {
+        expect(result).toEqual(mockReducedState)
+      })
+    })
+  })
+
+  describe('reduceSubscriptionStatusUpdate', () => {
+    describe('Given expected data and state are passed', () => {
+      beforeEach(() => {
+        result = reduceSubscriptionStatusUpdate(mockReducedState, {
+          state: 'inactive'
+        })
+      })
+
+      test('Then the state is reduced as expected', () => {
+        expect(result).toEqual({
+          box: 'data',
+          delivery: 'data',
+          subscription: {
+            deliverySlotId: 'mock-delivery-slot-id',
+            status: 'inactive',
+            requestState: { isLoaded: true, isLoading: false }
+          }
+        })
+      })
+    })
+
+    describe('Given there is an error', () => {
+      beforeEach(() => {
+        result = reduceSubscriptionStatusUpdate(mockReducedState, null)
       })
 
       test('Then the initial state is returned', () => {

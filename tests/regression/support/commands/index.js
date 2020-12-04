@@ -139,9 +139,11 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive })
       cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
       cy.route('GET', /user\/current\/address/, '@userCurrentAddress')
 
+      cy.route('PUT', /user\/current\/subscription\/activate/, 'fixture:user/userCurrentActivateSubscription.json').as('currentActivateSubscription')
+
       cy.visit('/subscription-settings')
 
-      if(isSubscriptionActive) {
+      if (isSubscriptionActive) {
         cy.wait('@currentActiveSubscription')
       } else {
         cy.wait('@currentPausedSubscription')

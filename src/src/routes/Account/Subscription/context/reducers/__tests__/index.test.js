@@ -7,6 +7,7 @@ import {
 import {
   reduceSubscriptionPageData,
   reduceSubscriptionUpdateData,
+  reduceSubscriptionStatusUpdate
 } from '../subscription'
 
 import { reduceCurrentUserData } from '../currentUser'
@@ -61,6 +62,19 @@ describe('SubscriptionReducer', () => {
 
     test('Then reduceSubscriptionPageData is invoked as expected', () => {
       expect(reduceCurrentUserData).toHaveBeenCalledWith(mockState, mockData)
+    })
+  })
+
+  describe('Given subscription status update action is received', () => {
+    beforeEach(() => {
+      SubscriptionReducer(mockState, {
+        type: actionTypes.SUBSCRIPTION_STATUS_UPDATE_RECEIVED,
+        data: { state: 'inactive' }
+      })
+    })
+
+    test('Then reduceSubscriptionPageData is invoked as expected', () => {
+      expect(reduceSubscriptionStatusUpdate).toHaveBeenCalledWith(mockState, { state: 'inactive' })
     })
   })
 
