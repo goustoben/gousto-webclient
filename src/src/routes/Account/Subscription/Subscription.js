@@ -14,6 +14,7 @@ import { ToastProvider } from './components/Toast'
 
 import { useSubscriptionData } from './hooks/useSubscriptionData'
 import { useCurrentUserData } from './hooks/useCurrentUserData'
+import { useBoxPricesData } from './hooks/useBoxPricesData'
 
 const propTypes = {
   accessToken: PropTypes.string.isRequired,
@@ -30,7 +31,7 @@ const Subscription = ({
   const isSubscriptionActive = getIsSubscriptionActive(state)
 
   useCurrentUserData(accessToken, dispatch)
-
+  useBoxPricesData(accessToken, dispatch)
   useSubscriptionData(
     accessToken,
     dispatch,

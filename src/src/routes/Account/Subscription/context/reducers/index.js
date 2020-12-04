@@ -5,6 +5,7 @@ import {
 } from './subscription'
 
 import { reduceCurrentUserData } from './currentUser'
+import { reduceBoxPricesData } from './box'
 
 import { reduceLoadingState } from './loading'
 
@@ -21,6 +22,7 @@ export const actionTypes = {
   USER_SUBSCRIPTION_DATA_LOADING: 'USER_SUBSCRIPTION_DATA_LOADING',
   DELIVERIES_DATA_LOADING: 'DELIVERIES_DATA_LOADING',
   CURRENT_USER_DATA_RECEIVED: 'CURRENT_USER_DATA_RECEIVED',
+  BOX_PRICES_DATA_RECEIVED: 'BOX_PRICES_DATA_RECEIVED',
 }
 
 export const SubscriptionReducer = (state, action) => {
@@ -47,6 +49,8 @@ export const SubscriptionReducer = (state, action) => {
 
   case actionTypes.CURRENT_USER_DATA_RECEIVED:
     return reduceCurrentUserData(state, data)
+  case actionTypes.BOX_PRICES_DATA_RECEIVED:
+    return reduceBoxPricesData(state, data)
   default:
     return state
   }
