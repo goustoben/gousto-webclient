@@ -175,11 +175,15 @@ describe('signup actions', () => {
         getState.mockReturnValue({
           signup: Immutable.fromJS({
             wizard: {
-              steps: [['delivery', 'welcome', 'finish']],
+              steps: ['delivery', 'welcome', 'finish'],
               isLastStep: true,
             },
           }),
         })
+        stepByName.mockReturnValue(Immutable.Map({
+          name: 'finish',
+          slug: 'finish',
+        }))
 
         signupNextStep('finish')(dispatch, getState)
 

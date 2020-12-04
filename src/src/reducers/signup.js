@@ -4,7 +4,7 @@ import { actionTypes } from 'actions/actionTypes'
 const initialState = Immutable.fromJS({
   wizard: {
     steps: Immutable.List(),
-    currentStepName: false,
+    currentStepName: '',
     currentStepNumber: 0,
     isLastStep: false,
   },

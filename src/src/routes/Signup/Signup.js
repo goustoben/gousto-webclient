@@ -15,6 +15,7 @@ import css from './Signup.css'
 import { BoxSizeStep } from './Steps/BoxSize'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
+import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 
 const components = {
   boxSize: BoxSizeStep,
@@ -43,7 +44,13 @@ const propTypes = {
   isTastePreferencesEnabled: PropTypes.bool,
   isPricingClarityEnabled: PropTypes.bool,
   orderDiscount: PropTypes.string,
-  menuLoadBoxPrices: PropTypes.func.isRequired
+  menuLoadBoxPrices: PropTypes.func.isRequired,
+  isDiscountAppliedBarEnabled: PropTypes.bool,
+  promoModalVisible: PropTypes.bool.isRequired,
+  promoBannerState: PropTypes.shape({
+    hide: PropTypes.bool,
+  }).isRequired,
+  trackDiscountVisibility: PropTypes.func,
 }
 
 const defaultProps = {
@@ -63,6 +70,8 @@ const defaultProps = {
   isTastePreferencesEnabled: false,
   isPricingClarityEnabled: false,
   orderDiscount: '',
+  isDiscountAppliedBarEnabled: false,
+  trackDiscountVisibility: () => {},
 }
 
 const contextTypes = {
@@ -221,7 +230,14 @@ class Signup extends React.PureComponent {
   }
 
   render() {
-    const { isPricingClarityEnabled, stepName } = this.props
+    const {
+      isPricingClarityEnabled,
+      stepName,
+      isDiscountAppliedBarEnabled,
+      promoModalVisible,
+      promoBannerState,
+      trackDiscountVisibility,
+    } = this.props
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
 
@@ -234,9 +250,17 @@ class Signup extends React.PureComponent {
 
     const pricingMinHeight = isPricingClarityEnabled && (isPostcodeStep || isDeliveryStep)
     const autosizeAnimationContainer = isPricingClarityEnabled && isBoxSizeStep
+    const isDiscountApplied = isDiscountAppliedBarEnabled && (!promoModalVisible && promoBannerState && promoBannerState.hide)
 
     return (
-      <div className={classNames(css.signupContainer, { [css.priceClarityRedesign]: isPricingClarityEnabled })}>
+      <div className={classNames(
+        css.signupContainer,
+        {
+          [css.priceClarityRedesign]: isPricingClarityEnabled,
+          [css.discountApplied]: isDiscountApplied,
+        }
+      )}
+      >
         <Helmet
           style={[{
             cssText: `
@@ -246,6 +270,14 @@ class Signup extends React.PureComponent {
             `,
           }]}
         />
+        {isDiscountAppliedBarEnabled && (
+          <DiscountAppliedBar
+            promoModalVisible={promoModalVisible}
+            isPromoBarHidden={promoBannerState.hide}
+            trackDiscountVisibility={trackDiscountVisibility}
+            wizardStep={currentStepName}
+          />
+        )}
         <div className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}>
           <div className={classNames(css.animationContainer, { [css.autosize]: autosizeAnimationContainer })}>
             <div className={css.stepIndicatorContainer}>

@@ -45,6 +45,7 @@ import {
   getIsMenuRedirectPageEnabled,
   getIsFirstMonthPromoOffset,
   getIsDiscountBoxPricesEnabled,
+  getIsDiscountAppliedBarEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -105,6 +106,7 @@ describe('when features are defined', () => {
     [getIsMenuRedirectPageEnabled, 'isMenuRedirectPageEnabled'],
     [getIsFirstMonthPromoOffset, 'isFirstMonthPromoOffset'],
     [getIsDiscountBoxPricesEnabled, 'isDiscountBoxPricesEnabled'],
+    [getIsDiscountAppliedBarEnabled, 'isDiscountAppliedBarEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

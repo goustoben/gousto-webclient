@@ -439,3 +439,18 @@ export const trackLoginClickOnHungryPage = (type) => (dispatch) => {
     }
   })
 }
+
+export const trackDiscountVisibilityBannerAppearance = (wizardStep) => (dispatch, getState) => {
+  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const type = trackingKeys.discountVisibilityBannerDisplayed
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      ...UTM,
+      promoCode,
+      step: wizardStep
+    }
+  })
+}
