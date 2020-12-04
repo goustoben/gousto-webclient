@@ -1,0 +1,13 @@
+{
+    "status": "ok",
+    "result": {
+        "data": {
+            "state": "active",
+            "reason": null,
+            "updated_at": "2020-12-03 16:22:07",
+            "payment_failed_at": null,
+            "current_box_number": "17"
+        },
+        "meta": []
+    }
+}

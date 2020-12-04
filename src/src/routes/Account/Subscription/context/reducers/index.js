@@ -1,6 +1,7 @@
 import {
   reduceSubscriptionPageData,
-  reduceSubscriptionUpdateData
+  reduceSubscriptionUpdateData,
+  reduceSubscriptionStatusUpdate
 } from './subscription'
 
 import { reduceCurrentUserData } from './currentUser'
@@ -16,6 +17,7 @@ export const ENTITIES = {
 export const actionTypes = {
   SUBSCRIPTION_DATA_RECEIVED: 'SUBSCRIPTION_DATA_RECEIVED',
   SUBSCRIPTION_UPDATE_DATA_RECEIVED: 'SUBSCRIPTION_UPDATE_DATA_RECEIVED',
+  SUBSCRIPTION_STATUS_UPDATE_RECEIVED: 'SUBSCRIPTION_STATUS_UPDATE_RECEIVED',
   USER_SUBSCRIPTION_DATA_LOADING: 'USER_SUBSCRIPTION_DATA_LOADING',
   DELIVERIES_DATA_LOADING: 'DELIVERIES_DATA_LOADING',
   CURRENT_USER_DATA_RECEIVED: 'CURRENT_USER_DATA_RECEIVED',
@@ -30,6 +32,9 @@ export const SubscriptionReducer = (state, action) => {
 
   case actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED:
     return reduceSubscriptionUpdateData(state, data)
+
+  case actionTypes.SUBSCRIPTION_STATUS_UPDATE_RECEIVED:
+    return reduceSubscriptionStatusUpdate(state, data)
 
   case actionTypes.USER_SUBSCRIPTION_DATA_LOADING:
   case actionTypes.DELIVERIES_DATA_LOADING:
