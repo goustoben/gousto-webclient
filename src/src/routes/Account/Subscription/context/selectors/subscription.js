@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 
 import {
   getNumPortions,
-  getNumRecipes,
-  getDietaryPreference
+  getDietaryPreference,
+  getMealsPerBox
 } from './box'
 
 import { getCurrentDeliverySlot, getDeliveryFrequency } from './deliveries'
@@ -21,10 +21,10 @@ export const getIsSubscriptionActive = createSelector(
 )
 
 export const getSubscriptionUpdatePayload = createSelector(
-  [getNumPortions, getNumRecipes, getDietaryPreference, getCurrentDeliverySlot, getDeliveryFrequency],
-  (numPortions, numRecipes, dietaryPreference, currentDeliverySlot, deliveryFrequency) => ({
+  [getNumPortions, getMealsPerBox, getDietaryPreference, getCurrentDeliverySlot, getDeliveryFrequency],
+  (numPortions, mealsPerBox, dietaryPreference, currentDeliverySlot, deliveryFrequency) => ({
     num_portions: numPortions,
-    num_recipes: numRecipes,
+    num_recipes: mealsPerBox,
     box_type: dietaryPreference,
     delivery_slot_id: currentDeliverySlot.coreSlotId,
     interval: deliveryFrequency

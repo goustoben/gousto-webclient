@@ -1,8 +1,10 @@
 import {
   getNumPortions,
-  getNumRecipes,
   getDietaryPreference,
-  getIsBoxLoaded
+  getIsBoxLoaded,
+  getMealsPerBox,
+  getBoxPricesNumPortion,
+  getIsBoxPricesLoaded,
 } from '../box'
 
 describe('box selectors', () => {
@@ -15,11 +17,27 @@ describe('box selectors', () => {
         dietaryPreference: {
           currentValue: 'gourmet'
         },
+        mealsPerBox: {
+          currentValue: '2'
+        },
         requestState: {
           isLoaded: true,
           isLoading: false
         }
-      }
+      },
+      boxPrices: {
+        2: {
+          2: {
+            gourmet: {
+              pricePerPortionDiscounted: '3.99'
+            }
+          }
+        },
+        requestState: {
+          isLoaded: true,
+          isLoading: false
+        }
+      },
     }
   })
 
@@ -33,15 +51,19 @@ describe('box selectors', () => {
     })
   })
 
-  describe('getNumPortions', () => {
-    test('should return numPortions', () => {
-      expect(getNumPortions(contextState)).toEqual(2)
+  describe('getIsBoxPricesLoaded', () => {
+    test('should return false if there is no box data', () => {
+      expect(getIsBoxPricesLoaded({})).toEqual(false)
+    })
+
+    test('should return true if there is box prices data and is loaded', () => {
+      expect(getIsBoxPricesLoaded(contextState)).toEqual(true)
     })
   })
 
-  describe('getNumRecipes', () => {
-    test('should return numRecipes', () => {
-      expect(getNumRecipes(contextState)).toEqual(2)
+  describe('getNumPortions', () => {
+    test('should return numPortions', () => {
+      expect(getNumPortions(contextState)).toEqual(2)
     })
   })
 
@@ -50,12 +72,42 @@ describe('box selectors', () => {
       expect(getDietaryPreference(contextState)).toEqual('gourmet')
     })
 
-    describe('When diateryPreferences is not defined', () => {
+    describe('When dietaryPreferences is not defined', () => {
       beforeEach(() => {
         contextState.dietaryPreference = undefined
       })
-      test('should return undefined', () => {
+      test('should reselect from box_type', () => {
         expect(getDietaryPreference(contextState)).toEqual('gourmet')
+      })
+    })
+  })
+
+  describe('getMealsPerBox', () => {
+    test('should return mealsPerBox currentValue', () => {
+      expect(getMealsPerBox(contextState)).toEqual('2')
+    })
+
+    describe('When mealsPerBox is not defined', () => {
+      beforeEach(() => {
+        contextState.mealsPerBox = undefined
+      })
+      test('should reselect from num_recipes', () => {
+        expect(getMealsPerBox(contextState)).toEqual('2')
+      })
+    })
+  })
+
+  describe('getBoxPricesNumPortion', () => {
+    test('should return mealsPerBox currentValue', () => {
+      expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99' }}})
+    })
+
+    describe('When getBoxPricesNumPortion is not defined', () => {
+      beforeEach(() => {
+        contextState.getBoxPricesNumPortion = undefined
+      })
+      test('should reselect from box prices', () => {
+        expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99' }}})
       })
     })
   })
@@ -71,15 +123,21 @@ describe('box selectors', () => {
       })
     })
 
-    describe('getNumRecipes', () => {
-      test('should return undefined', () => {
-        expect(getNumRecipes(contextState)).toBe(undefined)
-      })
-    })
-
     describe('getDietaryPreference', () => {
       test('should return undefined', () => {
         expect(getDietaryPreference(contextState)).toBe(undefined)
+      })
+    })
+
+    describe('getMealsPerBox', () => {
+      test('should return undefined', () => {
+        expect(getMealsPerBox(contextState)).toBe(undefined)
+      })
+    })
+
+    describe('getBoxPricesNumPortion', () => {
+      test('should return undefined', () => {
+        expect(getBoxPricesNumPortion(contextState)).toBe(undefined)
       })
     })
   })

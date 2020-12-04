@@ -129,7 +129,7 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive })
       cy.fixture('user/userAddresses').as('userAdresses')
       cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')
 
-      cy.route('GET', /boxPrices|prices/, 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
+      cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as('getPrices')
 
       cy.route('GET', /^(?=.*\bdeliveries\/v1.0\/days\b).*$/, 'fixture:deliveries/deliveryDays.json').as('deliveryDays')
 
