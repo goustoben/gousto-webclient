@@ -1,0 +1,49 @@
+@value HaricotLight, Haricot from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
+.container {
+  background: HaricotLight;
+  display: flex;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 1rem 2.25rem 1rem 0.75rem;
+  position: relative;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid Haricot;
+
+  @media BreakpointFromMedium {
+    padding: 1rem 0;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.isHidden {
+  opacity: 0;
+  padding: 0;
+  height: 0;
+  min-height: 0;
+}
+
+.successIcon {
+  background: url('media/svgs/icon-success.svg') no-repeat;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.discountText {
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
+.discountApplied {
+  composes: fontBold from 'design-language/typography.css';
+}
+
+.closeIcon {
+  background: url('media/svgs/icon-close.svg') no-repeat;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  position: absolute;
+  right: 0.75rem;
+  cursor: pointer;
+}

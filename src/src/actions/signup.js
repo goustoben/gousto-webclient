@@ -76,7 +76,9 @@ export function signupNextStep(stepName) {
     if (step) {
       const signupState = getState().signup
       const isCurrentlyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
-      if (isCurrentlyTheLastStep) {
+      const lastWizardStep = signupState.getIn(['wizard', 'steps']).last()
+      const slug = step.get('slug')
+      if (isCurrentlyTheLastStep && (step.get('name') === lastWizardStep || !slug)) {
         dispatch(signupTracking())
 
         return dispatch(redirectAction.redirect(routes.client.menu))
@@ -84,9 +86,9 @@ export function signupNextStep(stepName) {
 
       try {
         const { search } = getState().routing.locationBeforeTransitions
-        dispatch(push(`${client.signup}/${step.get('slug')}${search}`))
+        dispatch(push(`${client.signup}/${slug}${search}`))
       } catch (e) {
-        dispatch(push(`${client.signup}/${step.get('slug')}`))
+        dispatch(push(`${client.signup}/${slug}`))
       }
 
       dispatch(signupSetStep(step))

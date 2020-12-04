@@ -261,3 +261,7 @@
     margin: 0;
   }
 }
+
+.discountApplied {
+  padding-top: 0;
+}

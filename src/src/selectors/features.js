@@ -173,3 +173,7 @@ export const getIsFirstMonthPromoOffset = ({ features }) => (
 export const getIsDiscountBoxPricesEnabled = ({ features }) => (
   features && features.getIn(['isDiscountBoxPricesEnabled', 'value'], false)
 )
+
+export const getIsDiscountAppliedBarEnabled = ({ features }) => (
+  features && features.getIn(['isDiscountAppliedBarEnabled', 'value'], false)
+)

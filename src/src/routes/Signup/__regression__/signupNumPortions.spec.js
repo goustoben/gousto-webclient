@@ -8,6 +8,8 @@ describe('Given I am a logged out user', () => {
   describe('When I land on the num portions code slide of the wizard', () => {
     before(() => {
       cy.server()
+      cy.clearCookies()
+      cy.clearLocalStorage()
       cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
       cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')

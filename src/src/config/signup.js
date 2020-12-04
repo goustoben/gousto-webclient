@@ -49,5 +49,6 @@ export const signupConfig = {
   },
   deliveryOptionsStep: {
     title: 'Which delivery day would you like?'
-  }
+  },
+  discountAppliedText: 'View this when you reach the checkout.',
 }
