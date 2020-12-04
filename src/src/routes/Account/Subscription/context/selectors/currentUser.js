@@ -1,8 +1,18 @@
 import { createSelector } from 'reselect'
 
-const getCurrentUser = ({ currentUser }) => (currentUser || {shippingAddress: ''})
+const getCurrentUser = ({ currentUser }) => (currentUser || {})
 
 export const getCurrentUserPostcode = createSelector(
   getCurrentUser,
-  (currentUser) => currentUser.shippingAddress.postcode
+  ({ shippingAddress }) => (shippingAddress || {}).postcode
+)
+
+export const getFirstName = createSelector(
+  getCurrentUser,
+  ({ nameFirst }) => nameFirst
+)
+
+export const getIsCurrentUserLoaded = createSelector(
+  getCurrentUser,
+  (currentUser) => Boolean(Object.keys(currentUser).length)
 )

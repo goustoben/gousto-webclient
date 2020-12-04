@@ -9,9 +9,9 @@ import { SubscriptionReducer } from './context/reducers'
 import { getIsSubscriptionActive } from './context/selectors/subscription'
 import { ActiveSubscription } from './ActiveSubscription'
 import { PausedSubscription } from './PausedSubscription'
+import { SubscriptionTitle } from './components/SubscriptionTitle'
 import { ToastProvider } from './components/Toast'
 
-import css from './Subscription.css'
 import { useSubscriptionData } from './hooks/useSubscriptionData'
 import { useCurrentUserData } from './hooks/useCurrentUserData'
 
@@ -47,7 +47,7 @@ const Subscription = ({
         <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
           <Grid>
             <Column smallScreen={12} mediumScreen={12}>
-              <h2 className={css.subscriptionPageTitle}>Subscription settings</h2>
+              <SubscriptionTitle />
             </Column>
           </Grid>
           {/* TODO - loading state */}

@@ -55,7 +55,7 @@ export const BoxSize = ({ accessToken, isMobile }) => {
 
   return (
     <SettingSection
-      icon="leaf"
+      icon="servings"
       title="Box size"
       instruction="Choose box size"
       ctaText="Save box size"

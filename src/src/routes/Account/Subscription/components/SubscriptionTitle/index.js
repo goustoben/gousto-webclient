@@ -1,0 +1,1 @@
+export { SubscriptionTitle } from './SubscriptionTitle'
