@@ -91,7 +91,7 @@ export const BoxSize = ({ accessToken, isMobile }) => {
               name={`box-size-${boxSize}-radio`}
               value={boxSize}
               variant="tile"
-              isChecked={boxSize === currentBoxSize}
+              isChecked={boxSize === (selectedBoxSize || currentBoxSize)}
             >
               {boxSize}
               {' '}
