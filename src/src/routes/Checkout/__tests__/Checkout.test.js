@@ -347,42 +347,6 @@ describe('Checkout', () => {
         true,
       )
     })
-
-    describe('when isCheckoutRedesignEnabled is enabled', () => {
-      describe('and browser is mobile', () => {
-        beforeEach(async () => {
-          await Checkout.fetchData({
-            store: context.store,
-            query: {},
-            params: { stepName: '' },
-            isCheckoutRedesignEnabled: true,
-            browser: 'mobile',
-          })
-        })
-
-        test('then should redirect to the first "yourdetails" step', () => {
-          expect(replace).toHaveBeenCalledWith('/check-out/yourdetails')
-        })
-      })
-    })
-
-    describe('when isCheckoutRedesignEnabled is disabled', () => {
-      describe('and browser is mobile', () => {
-        beforeEach(async () => {
-          await Checkout.fetchData({
-            store: context.store,
-            query: {},
-            params: { stepName: '' },
-            isCheckoutRedesignEnabled: false,
-            browser: 'mobile',
-          })
-        })
-
-        test('then should redirect to the first "boxdetails" step', () => {
-          expect(replace).toHaveBeenCalledWith('/check-out/boxdetails')
-        })
-      })
-    })
   })
 
   describe('componentDidMount', () => {
@@ -394,7 +358,6 @@ describe('Checkout', () => {
           query={{ query: true }}
           params={{ params: true }}
           trackSignupStep={jest.fn()}
-          isCheckoutRedesignEnabled={false}
           isPayWithPayPalEnabled={false}
           fetchPayPalClientToken={fetchPayPalClientToken}
         />,
@@ -411,7 +374,6 @@ describe('Checkout', () => {
         store: context.store,
         query: { query: true },
         params: { params: true },
-        isCheckoutRedesignEnabled: false
       })
     })
 
@@ -641,6 +603,25 @@ describe('Checkout', () => {
 
     test('redirect is called with the next step', () => {
       expect(redirectAction).toHaveBeenCalledWith('/check-out/yourdetails')
+    })
+  })
+
+  describe('when reloadCheckoutScript is called', () => {
+    let instance
+
+    beforeEach(() => {
+      wrapper = shallow(<Checkout />)
+      instance = wrapper.instance()
+
+      instance.reloadCheckoutScript()
+    })
+
+    test('then checkoutScriptReady state should be false', () => {
+      expect(wrapper.state('checkoutScriptReady')).toBeFalsy()
+    })
+
+    test('then loadCheckoutScript should be called', () => {
+      expect(loadCheckoutScript).toBeCalled()
     })
   })
 })
