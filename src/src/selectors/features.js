@@ -126,10 +126,6 @@ export const getBoxPricesPageRedesign = ({ features }) => (
   features && features.getIn(['isBoxPricesPageRedesignEnabled', 'value'], false)
 )
 
-export const getCheckoutRedesign = ({ features }) => (
-  features && features.getIn(['isCheckoutRedesignEnabled', 'value'], false)
-)
-
 export const getIsLoginModalAppAwarenessEnabled = ({ features }) => (
   features && features.getIn(['isLoginModalAppAwarenessEnabled', 'value'], false)
 )

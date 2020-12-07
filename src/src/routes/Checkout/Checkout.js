@@ -31,9 +31,7 @@ import ProgressBar from './Components/ProgressBar'
 import css from './Checkout.css'
 
 const defaultDesktop = ['aboutyou', 'delivery', 'payment']
-const defaultMobile = (isCheckoutRedesignEnabled) => (
-  [!isCheckoutRedesignEnabled && 'boxdetails', 'yourdetails', 'payment']
-).filter(item => item)
+const defaultMobile = ['boxdetails', 'yourdetails', 'payment']
 
 const desktopStepMapping = {
   boxdetails: { component: DesktopBoxDetails, humanName: 'Box Details' },
@@ -42,11 +40,11 @@ const desktopStepMapping = {
   payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
-const mobileStepMapping = (isCheckoutRedesignEnabled) => ({
-  ...(!isCheckoutRedesignEnabled && { boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' }}),
+const mobileStepMapping = {
+  boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' },
   yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
   payment: { component: CheckoutPayment, humanName: 'Payment' },
-})
+}
 
 const propTypes = {
   params: PropTypes.shape({
@@ -64,7 +62,6 @@ const propTypes = {
   trackCheckoutButtonPressed: PropTypes.func,
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutRedesignEnabled: PropTypes.bool,
   isPayWithPayPalEnabled: PropTypes.bool,
   fetchPayPalClientToken: PropTypes.func,
   clearPayPalClientToken: PropTypes.func,
@@ -84,7 +81,6 @@ const defaultProps = {
   loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
-  isCheckoutRedesignEnabled: false,
   isPayWithPayPalEnabled: false,
   fetchPayPalClientToken: () => {},
   clearPayPalClientToken: () => {},
@@ -97,8 +93,8 @@ const contextTypes = {
 }
 
 class Checkout extends PureComponent {
-  static fetchData = async ({ store, query, params, browser, isCheckoutRedesignEnabled }) => {
-    const steps = browser === 'mobile' ? defaultMobile(isCheckoutRedesignEnabled) : defaultDesktop
+  static fetchData = async ({ store, query, params, browser }) => {
+    const steps = browser === 'mobile' ? defaultMobile : defaultDesktop
 
     const firstStep = steps[0]
     const currentStep = params && params.stepName
@@ -165,9 +161,9 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutRedesignEnabled, isPayWithPayPalEnabled } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isPayWithPayPalEnabled } = this.props
 
-    Checkout.fetchData({ store, query, params, browser, isCheckoutRedesignEnabled }).then(() => {
+    Checkout.fetchData({ store, query, params, browser }).then(() => {
       trackSignupStep(1)
     }).then(() => {
       this.setState({
@@ -312,15 +308,13 @@ class Checkout extends PureComponent {
   }
 
   renderMobileSteps = () => {
-    const { params: { stepName }, isCheckoutRedesignEnabled } = this.props
-    const stepMapping = mobileStepMapping(isCheckoutRedesignEnabled)
-    const mobileSteps = defaultMobile(isCheckoutRedesignEnabled)
+    const { params: { stepName } } = this.props
 
     return (
       <Div>
-        {this.renderProgressBar(stepMapping, mobileSteps, stepName)}
-        {this.renderSteps(stepMapping, mobileSteps, stepName)}
-        {this.renderStaticPayment(stepMapping, mobileSteps, stepName)}
+        {this.renderProgressBar(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderSteps(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderStaticPayment(mobileStepMapping, defaultMobile, stepName)}
       </Div>
     )
   }
