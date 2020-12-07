@@ -32,3 +32,23 @@ export const getIsBoxPricesLoaded = createSelector(
   getBoxPrices,
   ({ requestState }) => Boolean((requestState || {}).isLoaded)
 )
+
+export const getPricePerPortionDiscounted = createSelector(
+  getDietaryPreference,
+  getMealsPerBox,
+  getBoxPricesNumPortion,
+  (dietaryPreference, mealPerBox, pricePerNumPortion) => pricePerNumPortion[mealPerBox][dietaryPreference].pricePerPortionDiscounted
+)
+
+export const getTotalBoxPriceDiscounted = createSelector(
+  getDietaryPreference,
+  getMealsPerBox,
+  getBoxPricesNumPortion,
+  (dietaryPreference, mealPerBox, pricePerNumPortion) => pricePerNumPortion[mealPerBox][dietaryPreference].recipeTotalDiscounted
+)
+
+export const getIsBoxAndPricesLoaded = createSelector(
+  getIsBoxLoaded,
+  getIsBoxPricesLoaded,
+  (isBoxLoaded, isBoxPricesLoaded) => isBoxLoaded && isBoxPricesLoaded
+)

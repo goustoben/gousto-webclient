@@ -17,6 +17,11 @@ describe('Given I am logged in', () => {
         cy.get('[data-testing="skip-a-box-section"]').should('be.visible')
         cy.get('[data-testing="pause-subscription-section"]').should('be.visible')
       })
+
+      it('And I should see Total price section with the right price', () => {
+        cy.get('[data-testing="price-per-servings"]').should('have.text', 'Price per Serving£2.85')
+        cy.get('[data-testing="total-price"]').should('have.text', 'Total Box Price£34.20')
+      })
     })
 
     describe('And I have subscription inactive', () => {

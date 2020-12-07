@@ -17,6 +17,7 @@ import {
 } from '../subscriptionsSectionsContent'
 import { DietaryPreference } from './sections/ChefSelectsSettings/DietaryPreference'
 import { MealsPerBox } from './sections/ChefSelectsSettings/MealsPerBox'
+import { TotalPrice } from './sections/TotalPrice'
 
 const ActiveSubscription = ({ accessToken, isMobile }) => (
   <Fragment>
@@ -71,7 +72,7 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
           subTitle={totalPriceSection.subTitle}
           testingSelector={totalPriceSection.testingSelector}
         >
-          <div />
+          <TotalPrice />
         </Section>
       </Column>
     </Grid>
