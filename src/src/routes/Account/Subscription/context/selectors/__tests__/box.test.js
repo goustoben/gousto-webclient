@@ -5,6 +5,9 @@ import {
   getMealsPerBox,
   getBoxPricesNumPortion,
   getIsBoxPricesLoaded,
+  getIsBoxAndPricesLoaded,
+  getPricePerPortionDiscounted,
+  getTotalBoxPriceDiscounted
 } from '../box'
 
 describe('box selectors', () => {
@@ -29,7 +32,8 @@ describe('box selectors', () => {
         2: {
           2: {
             gourmet: {
-              pricePerPortionDiscounted: '3.99'
+              pricePerPortionDiscounted: '3.99',
+              recipeTotalDiscounted: '24.59'
             }
           }
         },
@@ -99,7 +103,7 @@ describe('box selectors', () => {
 
   describe('getBoxPricesNumPortion', () => {
     test('should return mealsPerBox currentValue', () => {
-      expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99' }}})
+      expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99', recipeTotalDiscounted: '24.59' }}})
     })
 
     describe('When getBoxPricesNumPortion is not defined', () => {
@@ -107,8 +111,26 @@ describe('box selectors', () => {
         contextState.getBoxPricesNumPortion = undefined
       })
       test('should reselect from box prices', () => {
-        expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99' }}})
+        expect(getBoxPricesNumPortion(contextState)).toEqual({ 2: { gourmet: { pricePerPortionDiscounted: '3.99', recipeTotalDiscounted: '24.59' }}})
       })
+    })
+  })
+
+  describe('getIsBoxAndPricesLoaded', () => {
+    test('should return true', () => {
+      expect(getIsBoxAndPricesLoaded(contextState)).toEqual(true)
+    })
+  })
+
+  describe('getPricePerPortionDiscounted', () => {
+    test('should return pricePerPortionDiscounted', () => {
+      expect(getPricePerPortionDiscounted(contextState)).toEqual('3.99')
+    })
+  })
+
+  describe('getPricePerPortionDiscounted', () => {
+    test('should return recipeTotalDiscounted', () => {
+      expect(getTotalBoxPriceDiscounted(contextState)).toEqual('24.59')
     })
   })
 
@@ -138,6 +160,12 @@ describe('box selectors', () => {
     describe('getBoxPricesNumPortion', () => {
       test('should return undefined', () => {
         expect(getBoxPricesNumPortion(contextState)).toBe(undefined)
+      })
+    })
+
+    describe('getIsBoxAndPricesLoaded', () => {
+      test('should return false', () => {
+        expect(getIsBoxAndPricesLoaded(contextState)).toEqual(false)
       })
     })
   })

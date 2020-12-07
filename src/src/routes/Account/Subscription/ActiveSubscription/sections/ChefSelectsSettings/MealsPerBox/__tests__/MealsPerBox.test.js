@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils'
 import { SubscriptionContext } from '../../../../../context/index'
 import { MealsPerBox } from '../MealsPerBox'
 
-import { getMealsPerBox, getIsBoxLoaded, getIsBoxPricesLoaded, getDietaryPreference, getBoxPricesNumPortion } from '../../../../../context/selectors/box'
+import { getMealsPerBox, getIsBoxAndPricesLoaded, getDietaryPreference, getBoxPricesNumPortion } from '../../../../../context/selectors/box'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
 import * as trackingHooks from '../../../../../hooks/useTrackSubscriptionUpdate'
@@ -73,8 +73,7 @@ describe('MealsPerBox', () => {
 
   describe('Given data is not loaded', () => {
     beforeEach(() => {
-      getIsBoxLoaded.mockReturnValue(false)
-      getIsBoxPricesLoaded.mockReturnValue(false)
+      getIsBoxAndPricesLoaded.mockReturnValue(false)
       useUpdateSubscription.mockReturnValue([])
       getMealsPerBox.mockReturnValue(undefined)
       getBoxPricesNumPortion.mockReturnValue(undefined)
@@ -126,8 +125,7 @@ describe('MealsPerBox', () => {
 
   describe('Given data is loaded', () => {
     beforeEach(() => {
-      getIsBoxLoaded.mockReturnValue(true)
-      getIsBoxPricesLoaded.mockReturnValue(true)
+      getIsBoxAndPricesLoaded.mockReturnValue(true)
       useUpdateSubscription.mockReturnValue([false, true, false])
       getMealsPerBox.mockReturnValue(mockMealsPerBox)
       getBoxPricesNumPortion.mockReturnValue(mockBoxPricesNumPortion)

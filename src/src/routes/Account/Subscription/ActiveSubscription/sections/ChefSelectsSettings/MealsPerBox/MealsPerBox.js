@@ -7,9 +7,8 @@ import {
 } from '../../../../context'
 import {
   getMealsPerBox,
-  getIsBoxLoaded,
   getBoxPricesNumPortion,
-  getIsBoxPricesLoaded,
+  getIsBoxAndPricesLoaded,
   getDietaryPreference,
 } from '../../../../context/selectors/box'
 
@@ -27,8 +26,7 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
   const context = useContext(SubscriptionContext)
   const { state } = context
 
-  const isBoxLoaded = getIsBoxLoaded(state)
-  const isBoxPricesLoaded = getIsBoxPricesLoaded(state)
+  const isBoxAndPricesLoaded = getIsBoxAndPricesLoaded(state)
 
   const currentMealsPerBox = getMealsPerBox(state)
   const boxPrices = getBoxPricesNumPortion(state)
@@ -76,7 +74,7 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
       isCtaDisabled={isCtaDisabled}
       renderCurrentValue={(
         <p data-testing="current-meals-per-box">
-          {isBoxLoaded && isBoxPricesLoaded ? (
+          {isBoxAndPricesLoaded ? (
             `${MEALS_PER_BOX_MAP[selectedMealsPerBox || currentMealsPerBox]} meals (£${boxPrices[selectedMealsPerBox || currentMealsPerBox][dietaryPreference].pricePerPortionDiscounted} per serving)`
           ) : null}
         </p>
@@ -95,7 +93,7 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
       }
 
       {
-        isBoxLoaded && isBoxPricesLoaded ? (
+        isBoxAndPricesLoaded ? (
           <RadioGroup
             name="meals-per-box-radios"
             testingSelector="meals-per-box-radios"

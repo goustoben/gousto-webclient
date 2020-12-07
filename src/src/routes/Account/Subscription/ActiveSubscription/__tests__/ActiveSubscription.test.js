@@ -26,6 +26,10 @@ jest.mock('../sections/SkipABox', () => ({
   SkipABox: () => <div />
 }))
 
+jest.mock('../sections/TotalPrice', () => ({
+  TotalPrice: () => <div />
+}))
+
 const sections = ['your-subscription-details', 'chef-selects-settings', 'total-price', 'skip-a-box', 'pause-subscription']
 
 describe('ActiveSubscription', () => {
