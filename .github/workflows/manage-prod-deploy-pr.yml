@@ -15,7 +15,7 @@ jobs:
           query: |
             query release($owner:String!,$repo:String!) {
               repository(owner:$owner,name:$repo) {
-                pullRequests(baseRefName: "master", labels: ["production-deploy"], states: [OPEN], first: 1) {
+                pullRequests(baseRefName: "master", headRefName: "develop", states: [OPEN], first: 1) {
                   nodes {
                     number,
                     bodyText
@@ -36,15 +36,18 @@ jobs:
           bodyText: "repository.pullRequests.nodes[0].bodyText"
       - name: Create Production PR if one doesn't exist
         if: ${{ !steps.pull_requests_json.outputs.number }}
-        uses: peter-evans/create-pull-request@v3
+        uses: actions/github-script@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: "master"
-          branch: "develop"
-          title: "Production Deploy"
-          body: "- [ ] ${{ github.event.commits[0].message }} @${{ github.event.commits[0].author.username }}"
-          labels: |
-            "production-deploy"
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Production Deploy",
+              body: "- [ ] ${{ github.event.commits[0].message }} @${{ github.event.commits[0].author.username }}",
+              head: "develop",
+              base: "master"
+            })
       - name: Update Production PR if one exists
         if: ${{ steps.pull_requests_json.outputs.number }}
         uses: actions/github-script@v3
