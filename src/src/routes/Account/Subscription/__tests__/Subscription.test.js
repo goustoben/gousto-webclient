@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import * as useSubscriptionDataHook from '../hooks/useSubscriptionData'
-import { getIsSubscriptionActive } from '../context/selectors/subscription'
+import { getIsSubscriptionActive, getIsSubscriptionLoaded } from '../context/selectors/subscription'
 import { Subscription } from '../Subscription'
 
 jest.mock('../context/selectors/subscription')
@@ -41,10 +41,24 @@ describe('Subscription', () => {
     test('Then useSubscriptionData was called', () => {
       expect(useSubscriptionDataSpy).toHaveBeenCalled()
     })
+
+    describe('When data is loading', () => {
+      beforeEach(() => {
+        getIsSubscriptionLoaded.mockReturnValue(false)
+        mountWithProps()
+      })
+
+      test('Then should show only Loading state', () => {
+        expect(mountWrapper.find('Loading').exists()).toBeTruthy()
+        expect(mountWrapper.find('PausedSubscription').exists()).toBeFalsy()
+        expect(mountWrapper.find('ActiveSubscription').exists()).toBeFalsy()
+      })
+    })
   })
 
   describe('Given isSubscriptionActive true', () => {
     beforeEach(() => {
+      getIsSubscriptionLoaded.mockReturnValue(true)
       getIsSubscriptionActive.mockReturnValue(true)
       mountWithProps()
     })
@@ -60,6 +74,7 @@ describe('Subscription', () => {
 
   describe('Given isSubscriptionActive false', () => {
     beforeEach(() => {
+      getIsSubscriptionLoaded.mockReturnValue(true)
       mountWithProps()
     })
 
