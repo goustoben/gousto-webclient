@@ -9,16 +9,16 @@ export const hasCheckoutError = state => {
   return errors.filter(error => error).size > 0
 }
 
-export const getAboutYouFormName = (state) => {
+export const getAboutYouFormName = (state, isCheckoutOverhaulEnabled) => {
   const { request } = state
 
-  return request.get('browser') === 'mobile' ? 'yourdetails' : 'aboutyou'
+  return request.get('browser') === 'mobile' && !isCheckoutOverhaulEnabled ? 'yourdetails' : 'aboutyou'
 }
 
-export const getDeliveryFormName = state => {
+export const getDeliveryFormName = (state, isCheckoutOverhaulEnabled) => {
   const { request } = state
 
-  return request.get('browser') === 'mobile' ? 'yourdetails' : 'delivery'
+  return request.get('browser') === 'mobile' && !isCheckoutOverhaulEnabled ? 'yourdetails' : 'delivery'
 }
 
 export const getPromoCodeValidationDetails = state => {

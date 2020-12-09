@@ -45,6 +45,7 @@ import {
   getIsFirstMonthPromoOffset,
   getIsDiscountBoxPricesEnabled,
   getIsDiscountAppliedBarEnabled,
+  getIsCheckoutOverhaulEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -105,6 +106,7 @@ describe('when features are defined', () => {
     [getIsFirstMonthPromoOffset, 'isFirstMonthPromoOffset'],
     [getIsDiscountBoxPricesEnabled, 'isDiscountBoxPricesEnabled'],
     [getIsDiscountAppliedBarEnabled, 'isDiscountAppliedBarEnabled'],
+    [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

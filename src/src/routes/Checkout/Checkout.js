@@ -27,11 +27,13 @@ import MobileBoxDetails from './Steps/Mobile/BoxDetails'
 
 import { CheckoutPayment } from './Components/CheckoutPayment'
 import ProgressBar from './Components/ProgressBar'
+import { Breadcrumbs } from './Components/Breadcrumbs'
 
 import css from './Checkout.css'
 
 const defaultDesktop = ['aboutyou', 'delivery', 'payment']
 const defaultMobile = ['boxdetails', 'yourdetails', 'payment']
+const checkoutOverhaulSteps = ['account', 'delivery', 'payment']
 
 const desktopStepMapping = {
   boxdetails: { component: DesktopBoxDetails, humanName: 'Box Details' },
@@ -43,6 +45,12 @@ const desktopStepMapping = {
 const mobileStepMapping = {
   boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' },
   yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
+  payment: { component: CheckoutPayment, humanName: 'Payment' },
+}
+
+const checkoutOverhaulStepMapping = {
+  account: { component: DesktopAboutYou, humanName: 'Account' },
+  delivery: { component: DesktopDelivery, humanName: 'Delivery' },
   payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
@@ -65,6 +73,8 @@ const propTypes = {
   isPayWithPayPalEnabled: PropTypes.bool,
   fetchPayPalClientToken: PropTypes.func,
   clearPayPalClientToken: PropTypes.func,
+  trackCheckoutNavigationLinks: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -84,6 +94,8 @@ const defaultProps = {
   isPayWithPayPalEnabled: false,
   fetchPayPalClientToken: () => {},
   clearPayPalClientToken: () => {},
+  trackCheckoutNavigationLinks: () => {},
+  isCheckoutOverhaulEnabled: false,
 }
 
 const contextTypes = {
@@ -93,8 +105,12 @@ const contextTypes = {
 }
 
 class Checkout extends PureComponent {
-  static fetchData = async ({ store, query, params, browser }) => {
-    const steps = browser === 'mobile' ? defaultMobile : defaultDesktop
+  static fetchData = async ({ store, query, params, browser, isCheckoutOverhaulEnabled }) => {
+    let steps = browser === 'mobile' ? defaultMobile : defaultDesktop
+
+    if (isCheckoutOverhaulEnabled) {
+      steps = checkoutOverhaulSteps
+    }
 
     const firstStep = steps[0]
     const currentStep = params && params.stepName
@@ -161,9 +177,9 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isPayWithPayPalEnabled } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isPayWithPayPalEnabled, isCheckoutOverhaulEnabled } = this.props
 
-    Checkout.fetchData({ store, query, params, browser }).then(() => {
+    Checkout.fetchData({ store, query, params, browser, isCheckoutOverhaulEnabled }).then(() => {
       trackSignupStep(1)
     }).then(() => {
       this.setState({
@@ -308,27 +324,31 @@ class Checkout extends PureComponent {
   }
 
   renderMobileSteps = () => {
-    const { params: { stepName } } = this.props
+    const { params: { stepName }, isCheckoutOverhaulEnabled } = this.props
+    const stepMapping = isCheckoutOverhaulEnabled ? checkoutOverhaulStepMapping : mobileStepMapping
+    const steps = isCheckoutOverhaulEnabled ? checkoutOverhaulSteps : defaultMobile
 
     return (
       <Div>
-        {this.renderProgressBar(mobileStepMapping, defaultMobile, stepName)}
-        {this.renderSteps(mobileStepMapping, defaultMobile, stepName)}
-        {this.renderStaticPayment(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderProgressBar(stepMapping, steps, stepName)}
+        {this.renderSteps(stepMapping, steps, stepName)}
+        {this.renderStaticPayment(stepMapping, steps, stepName)}
       </Div>
     )
   }
 
   renderDesktopSteps = () => {
-    const { params: {stepName}} = this.props
-    const {isCreatingPreviewOrder} = this.state
+    const { params: { stepName }, isCheckoutOverhaulEnabled } = this.props
+    const { isCreatingPreviewOrder } = this.state
+    const stepMapping = isCheckoutOverhaulEnabled ? checkoutOverhaulStepMapping : desktopStepMapping
+    const steps = isCheckoutOverhaulEnabled ? checkoutOverhaulSteps : defaultDesktop
 
     return (
       <Div className={css.rowCheckout}>
         <Div className={css.section}>
-          {this.renderProgressBar(desktopStepMapping, defaultDesktop, stepName)}
-          {this.renderSteps(desktopStepMapping, defaultDesktop, stepName)}
-          {this.renderStaticPayment(desktopStepMapping, defaultDesktop, stepName)}
+          {this.renderProgressBar(stepMapping, steps, stepName)}
+          {this.renderSteps(stepMapping, steps, stepName)}
+          {this.renderStaticPayment(stepMapping, steps, stepName)}
         </Div>
 
         <Div className={css.aside}>
@@ -341,21 +361,36 @@ class Checkout extends PureComponent {
     )
   }
 
-  renderProgressBar = (stepMapping, steps, currentStep) => (
-    <Div margin={{ bottom: 'MD' }}>
-      <ProgressBar
-        currentId={currentStep}
-        items={steps.reduce((accumulatedSteps, stepName) => {
-          accumulatedSteps.push({
-            id: stepName,
-            label: stepMapping[stepName].humanName,
-          })
+  renderProgressBar = (stepMapping, steps, currentStep) => {
+    const { isCheckoutOverhaulEnabled, trackCheckoutNavigationLinks } = this.props
+    const progressSteps = steps.reduce((accumulatedSteps, stepName) => {
+      accumulatedSteps.push({
+        id: stepName,
+        label: stepMapping[stepName].humanName,
+      })
 
-          return accumulatedSteps
-        }, [])}
-      />
-    </Div>
-  )
+      return accumulatedSteps
+    }, [])
+
+    return (
+      <Div margin={{ bottom: 'MD' }}>
+        {isCheckoutOverhaulEnabled
+          ? (
+            <Breadcrumbs
+              currentId={currentStep}
+              items={progressSteps}
+              trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
+            />
+          )
+          : (
+            <ProgressBar
+              currentId={currentStep}
+              items={progressSteps}
+            />
+          )}
+      </Div>
+    )
+  }
 
   render() {
     const { browser } = this.props

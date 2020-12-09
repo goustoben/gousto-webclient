@@ -4,8 +4,8 @@ import actions from 'actions'
 import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { fetchPayPalClientToken, trackCheckoutButtonPressed, clearPayPalClientToken } from 'actions/checkout'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { getIsPayWithPayPalEnabled } from 'selectors/features'
+import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
+import { getIsPayWithPayPalEnabled, getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -17,6 +17,7 @@ function mapStateToProps(state, ownProps) {
     browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
     isPayWithPayPalEnabled: getIsPayWithPayPalEnabled(state),
+    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
   }
 }
 
@@ -33,4 +34,5 @@ export const CheckoutContainer = connect(mapStateToProps, {
   trackUTMAndPromoCode,
   fetchPayPalClientToken,
   clearPayPalClientToken,
+  trackCheckoutNavigationLinks,
 })(Checkout)

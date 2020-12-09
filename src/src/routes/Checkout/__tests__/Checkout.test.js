@@ -374,6 +374,7 @@ describe('Checkout', () => {
         store: context.store,
         query: { query: true },
         params: { params: true },
+        isCheckoutOverhaulEnabled: false,
       })
     })
 
@@ -612,16 +613,28 @@ describe('Checkout', () => {
     beforeEach(() => {
       wrapper = shallow(<Checkout />)
       instance = wrapper.instance()
+      loadCheckoutScript.mockImplementationOnce((callback) => {
+        callback()
+      })
 
       instance.reloadCheckoutScript()
     })
 
-    test('then checkoutScriptReady state should be false', () => {
-      expect(wrapper.state('checkoutScriptReady')).toBeFalsy()
-    })
-
     test('then loadCheckoutScript should be called', () => {
       expect(loadCheckoutScript).toBeCalled()
+      expect(wrapper.state('checkoutScriptReady')).toBeTruthy()
+    })
+  })
+
+  describe('when isCheckoutOverhaulEnabled is enabled', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true
+      })
+    })
+
+    test('then should render Breadcrumbs component', () => {
+      expect(wrapper.find('Breadcrumbs').exists()).toBeTruthy()
     })
   })
 })

@@ -18,6 +18,7 @@ import {
   trackClickBuildMyBox,
   trackLoginClickOnHungryPage,
   trackDiscountVisibilityBannerAppearance,
+  trackCheckoutNavigationLinks,
 } from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import {
@@ -28,6 +29,7 @@ import {
   clickSubmitOrder,
   subscriptionCreated,
   discountVisibilityBannerDisplayed,
+  clickAccountBreadcrumb,
 } from 'actions/trackingKeys'
 import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
@@ -1083,6 +1085,28 @@ describe('tracking actions', () => {
       expect(type).toEqual(discountVisibilityBannerDisplayed)
       expect(trackingData.step).toEqual(wizardStep)
       expect(trackingData.actionType).toEqual(discountVisibilityBannerDisplayed)
+    })
+  })
+
+  describe('trackCheckoutNavigationLinks', () => {
+    beforeEach(() => {
+      const state = {
+        tracking: Immutable.fromJS({
+          utmSource: {}
+        }),
+        basket: Immutable.fromJS({
+          promoCode: 'DTI-20M'
+        })
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('should dispatch trackCheckoutNavigationLinks with proper type', () => {
+      trackCheckoutNavigationLinks('Account')(dispatch, getState)
+      const { type, trackingData } = dispatch.mock.calls[0][0]
+      expect(type).toEqual(clickAccountBreadcrumb)
+      expect(trackingData.actionType).toEqual(clickAccountBreadcrumb)
     })
   })
 })
