@@ -78,7 +78,7 @@ class Hero2 extends Component {
           sectionForTracking={isHeroCTA ? 'hero' : 'stickyCTA'}
           dataTesting={isHeroCTA ? 'homepageHeroCTA' : 'stickyCTA'}
         >
-          {isSticky && !isHeroCTA && !isAuthenticated ? 'Get started with 20% off' : ctaText}
+          {isSticky && !isHeroCTA && !isAuthenticated ? 'Get started with 10% off' : ctaText}
         </CTAHomepageContainer>
         <NoLockIn />
       </div>
