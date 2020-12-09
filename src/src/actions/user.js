@@ -10,7 +10,13 @@ import * as prospectApi from 'apis/prospect'
 import { PaymentMethod, signupConfig } from 'config/signup'
 
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isChoosePlanEnabled, getNDDFeatureValue, getIsPayWithPayPalEnabled, getIsFirstMonthPromoOffset } from 'selectors/features'
+import {
+  isChoosePlanEnabled,
+  getNDDFeatureValue,
+  getIsPayWithPayPalEnabled,
+  getIsFirstMonthPromoOffset,
+  getIsCheckoutOverhaulEnabled,
+} from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
 import { getUserRecentRecipesIds } from 'selectors/user'
 
@@ -401,7 +407,8 @@ function userPromoApplyCode(promoCode) {
 function userProspect() {
   return async (dispatch, getState) => {
     const { basket, routing } = getState()
-    const aboutYouFormName = getAboutYouFormName(getState())
+    const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(getState())
+    const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutOverhaulEnabled)
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
       const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')

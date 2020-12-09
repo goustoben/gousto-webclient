@@ -454,3 +454,17 @@ export const trackDiscountVisibilityBannerAppearance = (wizardStep) => (dispatch
     }
   })
 }
+
+export const trackCheckoutNavigationLinks = (checkoutStep) => (dispatch, getState) => {
+  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const type = trackingKeys[`click${checkoutStep}Breadcrumb`]
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      ...UTM,
+      promoCode
+    }
+  })
+}

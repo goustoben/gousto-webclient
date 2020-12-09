@@ -1,0 +1,48 @@
+@value Bluecheese, Blackberry, Oyster from 'styles/colors.module.css';
+
+.breadcrumbsContainer {
+  composes: fontStyleS from 'design-language/typography.module.css';
+}
+
+.breadcrumbsList {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbsSeparator {
+  display: inline-block;
+  margin: 0 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.activeItem {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  text-decoration: none;
+  padding-top: 0.25rem;
+}
+
+a.activeItem:hover,
+a.activeItem:focus {
+  text-decoration: none;
+}
+
+.futureItem {
+  color: Blackberry;
+  pointer-events: none;
+  cursor: default;
+  border-bottom: 1px solid transparent;
+  padding-top: 0.25rem;
+}
