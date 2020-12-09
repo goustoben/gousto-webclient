@@ -1,0 +1,69 @@
+name: Create or update Production Deploy PR
+on:
+  push:
+    branches:
+      - "develop"
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get open pull requests
+        id: get_production_pr_number
+        uses: octokit/graphql-action@v2.x
+        with:
+          query: |
+            query release($owner:String!,$repo:String!) {
+              repository(owner:$owner,name:$repo) {
+                pullRequests(baseRefName: "master", headRefName: "develop", states: [OPEN], first: 1) {
+                  nodes {
+                    number,
+                    body
+                  }
+                }
+              }
+            }
+          owner: ${{ github.event.repository.owner.name }}
+          repo: ${{ github.event.repository.name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Parse response to JSON
+        id: pull_requests_json
+        uses: gr2m/get-json-paths-action@v1.x
+        with:
+          json: ${{ steps.get_production_pr_number.outputs.data }}
+          number: "repository.pullRequests.nodes[0].number"
+          body: "repository.pullRequests.nodes[0].body"
+      - name: Create Production PR if one doesn't exist
+        if: ${{ !steps.pull_requests_json.outputs.number }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "Production Deploy",
+              body: `- [ ] ${process.env.COMMIT_MSG} @${process.env.AUTHOR_USERNAME}`,
+              head: "develop",
+              base: "master"
+            })
+        env:
+          COMMIT_MSG: ${{github.event.commits[0].message}}
+          AUTHOR_USERNAME: ${{github.event.commits[0].author.username}}
+      - name: Update Production PR if one exists
+        if: ${{ steps.pull_requests_json.outputs.number }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `${process.env.PR_BODY}\n- [ ] ${process.env.COMMIT_MSG} @${process.env.AUTHOR_USERNAME}`,
+              pull_number: ${{ steps.pull_requests_json.outputs.number }}
+            })
+        env:
+          PR_BODY: ${{steps.pull_requests_json.outputs.body}}
+          COMMIT_MSG: ${{github.event.commits[0].message}}
+          AUTHOR_USERNAME: ${{github.event.commits[0].author.username}}
