@@ -24,6 +24,7 @@ import {
   orderCancelStart,
   generateModalTrackingData,
   trackViewDiscountReminder,
+  startOnScreenRecoverySubscriptionFlow,
 } from 'actions/onScreenRecovery'
 
 jest.mock('actions/order', () => ({
@@ -1012,6 +1013,20 @@ describe('onScreenRecovery', () => {
 
     test('should call dispatch with correct parameters', () => {
       orderCancelStart('12345', '34567', '2019-11-17 00:00:00')(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith(mockResponse)
+    })
+  })
+
+  describe('startOnScreenRecoverySubscriptionFlow', () => {
+    const mockResponse = {
+      type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
+      triggered: true,
+      modalType: 'subscription',
+    }
+
+    test('should call dispatch with correct parameters', () => {
+      startOnScreenRecoverySubscriptionFlow()(dispatchSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith(mockResponse)
     })

@@ -7,6 +7,7 @@ import { DeliveryDayAndTime } from './sections/YourSubscriptionDetails/DeliveryD
 import { Frequency } from './sections/YourSubscriptionDetails/Frequency'
 import { BoxSize } from './sections/YourSubscriptionDetails/BoxSize'
 import { SkipABox } from './sections/SkipABox'
+import { PauseSubscription } from './sections/PauseSubscription'
 
 import {
   yourSubscriptionDetailsSection,
@@ -19,7 +20,7 @@ import { DietaryPreference } from './sections/ChefSelectsSettings/DietaryPrefere
 import { MealsPerBox } from './sections/ChefSelectsSettings/MealsPerBox'
 import { TotalPrice } from './sections/TotalPrice'
 
-const ActiveSubscription = ({ accessToken, isMobile }) => (
+const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscriptionFlow }) => (
   <Fragment>
     <Grid>
       <Column
@@ -111,7 +112,7 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
           subTitle={pauseSubscriptionSection.subTitle}
           testingSelector={pauseSubscriptionSection.testingSelector}
         >
-          <div />
+          <PauseSubscription startOnScreenRecoverySubscriptionFlow={startOnScreenRecoverySubscriptionFlow} />
         </Section>
       </Column>
     </Grid>
@@ -121,7 +122,8 @@ const ActiveSubscription = ({ accessToken, isMobile }) => (
 
 ActiveSubscription.propTypes = {
   accessToken: PropTypes.string.isRequired,
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool.isRequired,
+  startOnScreenRecoverySubscriptionFlow: PropTypes.func.isRequired
 }
 
 export { ActiveSubscription }
