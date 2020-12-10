@@ -34,11 +34,24 @@ jobs:
           json: ${{ steps.get_production_pr_number.outputs.data }}
           number: "repository.pullRequests.nodes[0].number"
           body: "repository.pullRequests.nodes[0].body"
+      - name: Get first line of commit message
+        id: get_commit_message
+        uses: actions/github-script@v3
+        with:
+          script: |
+            if (!process.env.COMMIT_MSG) {
+              return "";
+            }
+
+            return process.env.COMMIT_MSG.split(/\r?\n/)[0];
+          result-encoding: string
+        env:
+          COMMIT_MSG: ${{ github.event.commits[0].message }}
       - name: Create Production PR if one doesn't exist
         if: ${{ !steps.pull_requests_json.outputs.number }}
         uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.pulls.create({
               owner: context.repo.owner,
@@ -49,13 +62,13 @@ jobs:
               base: "master"
             })
         env:
-          COMMIT_MSG: ${{github.event.commits[0].message}}
-          AUTHOR_USERNAME: ${{github.event.commits[0].author.username}}
+          COMMIT_MSG: ${{ steps.get_commit_message.outputs.result }}
+          AUTHOR_USERNAME: ${{ github.event.commits[0].author.username }}
       - name: Update Production PR if one exists
         if: ${{ steps.pull_requests_json.outputs.number }}
         uses: actions/github-script@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             github.pulls.update({
               owner: context.repo.owner,
@@ -64,6 +77,6 @@ jobs:
               pull_number: ${{ steps.pull_requests_json.outputs.number }}
             })
         env:
-          PR_BODY: ${{steps.pull_requests_json.outputs.body}}
-          COMMIT_MSG: ${{github.event.commits[0].message}}
-          AUTHOR_USERNAME: ${{github.event.commits[0].author.username}}
+          PR_BODY: ${{ steps.pull_requests_json.outputs.body }}
+          COMMIT_MSG: ${{ steps.get_commit_message.outputs.result }}
+          AUTHOR_USERNAME: ${{ github.event.commits[0].author.username }}
