@@ -357,3 +357,13 @@ export const orderCancelStart = (
     })
   }
 )
+
+export const startOnScreenRecoverySubscriptionFlow = () => (
+  (dispatch) => {
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
+      triggered: true,
+      modalType: 'subscription',
+    })
+  }
+)

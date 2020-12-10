@@ -21,11 +21,13 @@ import css from './Subscription.css'
 const propTypes = {
   accessToken: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
+  startOnScreenRecoverySubscriptionFlow: PropTypes.func.isRequired,
 }
 
 const Subscription = ({
   accessToken,
   isMobile,
+  startOnScreenRecoverySubscriptionFlow,
 }) => {
   const [shouldRequestDeliveryDays, setShouldRequestDeliveryDays] = useState(false)
   const [state, dispatch] = useReducer(SubscriptionReducer, {})
@@ -63,7 +65,7 @@ const Subscription = ({
             </Column>
           </Grid>
           {isSubscriptionActive
-            ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} />
+            ? <ActiveSubscription accessToken={accessToken} isMobile={isMobile} startOnScreenRecoverySubscriptionFlow={startOnScreenRecoverySubscriptionFlow} />
             : <PausedSubscription accessToken={accessToken} />}
         </LayoutPageWrapper>
 
