@@ -12,7 +12,6 @@ import {
   getDeliverySlots
 } from '../../../../../context/selectors/deliveries'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
-import * as trackingHooks from '../../../../../hooks/useTrackSubscriptionUpdate'
 import * as trackingSubscription from '../../../../../tracking'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
 import { ToastProvider } from '../../../../../components/Toast'
@@ -23,7 +22,6 @@ jest.mock('../../../../../context/selectors/deliveries')
 jest.mock('../../../../../hooks/useUpdateSubscription')
 
 const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
-const useTrackSubscriptionUpdateSpy = jest.spyOn(trackingHooks, 'useTrackSubscriptionUpdate')
 const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 
 const mockCurrentDeliverySlot = {
@@ -264,15 +262,6 @@ describe('DeliveryDayAndTime', () => {
                   useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
                 })
 
-                test('Then the useTrackSubscriptionUpdate is invoked as expected', () => {
-                  expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
-                    settingName: 'delivery_date',
-                    settingValue: '2',
-                    isUpdateSuccess: true,
-                    isUpdateError: false,
-                  })
-                })
-
                 test('Then useSubscriptionToast is invoked', () => {
                   expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
                 })
@@ -289,15 +278,6 @@ describe('DeliveryDayAndTime', () => {
                 })
 
                 wrapper.update()
-              })
-
-              test('Then the useTrackSubscriptionUpdate is invoked as expected', () => {
-                expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
-                  settingName: 'delivery_date',
-                  settingValue: '2',
-                  isUpdateSuccess: true,
-                  isUpdateError: false,
-                })
               })
 
               test('Then useSubscriptionToast is invoked', () => {

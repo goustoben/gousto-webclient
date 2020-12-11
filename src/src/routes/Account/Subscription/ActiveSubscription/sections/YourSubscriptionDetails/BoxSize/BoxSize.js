@@ -9,7 +9,6 @@ import { getNumPortions, getIsBoxLoaded } from '../../../../context/selectors/bo
 import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
-import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 import { BOX_SIZES } from '../../../../enum/box'
 
@@ -23,6 +22,8 @@ export const BoxSize = ({ accessToken, isMobile }) => {
   const [selectedBoxSize, setSelectedBoxSize] = useState(null)
   const [shouldSubmit, setShouldSubmit] = useState(false)
 
+  const settingName = 'box_size'
+
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
     trigger: {
@@ -31,19 +32,11 @@ export const BoxSize = ({ accessToken, isMobile }) => {
     },
     data: {
       num_portions: selectedBoxSize
-    }
+    },
+    settingName
   })
-
-  const settingName = 'box_size'
 
   useSubscriptionToast(updateResponse, updateError)
-
-  useTrackSubscriptionUpdate({
-    isUpdateSuccess: !!updateResponse,
-    isUpdateError: !!updateError,
-    settingName,
-    settingValue: selectedBoxSize
-  })
 
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()

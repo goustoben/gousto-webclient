@@ -14,6 +14,8 @@ import {
 
 import { getSubscriptionUpdatePayload } from '../context/selectors/subscription'
 
+import { trackSubscriptionSettingsChange } from '../tracking/subscriptionSettings'
+
 const validateUpdateSubscriptionPayload = (payload) => {
   const payloadKeys = Object.keys(payload)
   const requiredKeys = [
@@ -30,7 +32,8 @@ const validateUpdateSubscriptionPayload = (payload) => {
 export const useUpdateSubscription = ({
   accessToken,
   data,
-  trigger
+  trigger,
+  settingName,
 }) => {
   const context = useContext(SubscriptionContext)
   const { state, dispatch } = context
@@ -67,8 +70,12 @@ export const useUpdateSubscription = ({
           subscription: response.result.data
         }
       })
+
+      trackSubscriptionSettingsChange({ settingName, action: 'update_success' })()
+    } else if (error) {
+      trackSubscriptionSettingsChange({ settingName, action: 'update_error' })()
     }
-  }, [dispatch, response, error, isLoading])
+  }, [dispatch, response, error, isLoading, settingName])
 
   return [isLoading, response, error]
 }

@@ -12,7 +12,6 @@ import {
 } from '../../../../../context/selectors/deliveries'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
-import * as trackingHooks from '../../../../../hooks/useTrackSubscriptionUpdate'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
 
 jest.mock('../../../../../tracking')
@@ -50,7 +49,6 @@ const clickEdit = () => {
 
 describe('Frequency', () => {
   const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
-  const useTrackSubscriptionUpdateSpy = jest.spyOn(trackingHooks, 'useTrackSubscriptionUpdate')
   const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 
   beforeEach(() => {
@@ -184,15 +182,6 @@ describe('Frequency', () => {
             })
 
             describe('And the update is a success', () => {
-              test('Then the useTrackSubscriptionUpdate is called as expected', () => {
-                expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
-                  isUpdateSuccess: true,
-                  isUpdateError: false,
-                  settingName: 'box_frequency',
-                  settingValue: '2'
-                })
-              })
-
               test('Then useSubscriptionToast is invoked', () => {
                 expect(useSubscriptionToastSpy).toHaveBeenCalledWith({ data: '123' }, false)
               })
@@ -210,15 +199,6 @@ describe('Frequency', () => {
               })
 
               wrapper.update()
-            })
-
-            test('Then the useTrackSubscriptionUpdate is called with box_frequency_update_error', () => {
-              expect(useTrackSubscriptionUpdateSpy).toHaveBeenCalledWith({
-                isUpdateSuccess: false,
-                isUpdateError: true,
-                settingName: 'box_frequency',
-                settingValue: '2'
-              })
             })
 
             test('Then useSubscriptionToast is invoked', () => {
