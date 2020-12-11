@@ -19,7 +19,6 @@ import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
-import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 
 import css from './DeliveryDayAndTime.css'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
@@ -68,17 +67,11 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
     },
     data: {
       delivery_slot_id: selectedCoreId
-    }
+    },
+    settingName
   })
 
   useSubscriptionToast(updateResponse, updateError)
-
-  useTrackSubscriptionUpdate({
-    isUpdateSuccess: !!updateResponse,
-    isUpdateError: !!updateError,
-    settingName,
-    settingValue: selectedCoreId
-  })
 
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()

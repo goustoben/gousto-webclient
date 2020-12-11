@@ -20,6 +20,11 @@ jest.mock('../../context/selectors/subscription', () => ({
   })
 }))
 
+const mockTrackingFn = jest.fn()
+jest.mock('../../tracking/subscriptionSettings.js', () => ({
+  trackSubscriptionSettingsChange: (args) => () => mockTrackingFn(args)
+}))
+
 const realContext = React.useContext
 
 describe('useUpdateSubscription', () => {
@@ -33,6 +38,7 @@ describe('useUpdateSubscription', () => {
   }
 
   const accessToken = 'access-token'
+  const settingName = 'mock-setting-name'
   const data = {
     interval: 4
   }
@@ -95,7 +101,8 @@ describe('useUpdateSubscription', () => {
         () => useUpdateSubscription({
           accessToken,
           data,
-          trigger
+          trigger,
+          settingName
         }),
         fetchWrapper,
       )
@@ -133,7 +140,8 @@ describe('useUpdateSubscription', () => {
           () => useUpdateSubscription({
             accessToken,
             data,
-            trigger
+            trigger,
+            settingName
           }),
           fetchWrapper,
         )
@@ -148,49 +156,83 @@ describe('useUpdateSubscription', () => {
   })
 
   describe('when response is available', () => {
-    test('should dispatch SUBSCRIPTION_UPDATE_DATA_RECEIVED', async () => {
+    let updateResponseSuccess
+    let updateResponseError
+
+    beforeEach(() => {
+      mockFetchData = [isLoading, response, error]
+      useFetch.mockReturnValue(mockFetchData)
+
       const { result } = renderHook(
         () => useUpdateSubscription({
           accessToken,
           data,
-          trigger
+          trigger,
+          settingName
         }),
         fetchWrapper,
       )
-      const [, updateResponse, isError] = result.current
 
+      const [, isSuccess, isError ] = result.current
+      updateResponseSuccess = isSuccess
+      updateResponseError = isError
+    })
+
+    test('then it should dispatch SUBSCRIPTION_UPDATE_DATA_RECEIVED', async () => {
       const dispatchedData = {
         type: actionTypes.SUBSCRIPTION_UPDATE_DATA_RECEIVED,
         data: {
           subscription: response.result.data
         }
       }
+
       expect(mockDispatch).toHaveBeenCalledWith(dispatchedData)
-      expect(updateResponse).toEqual(response)
-      expect(isError).toBeFalsy()
+      expect(updateResponseSuccess).toEqual(response)
+      expect(updateResponseError).toBeFalsy()
+    })
+
+    test('then it should call the tracking with update_success', async () => {
+      expect(mockTrackingFn).toHaveBeenCalledWith({
+        action: 'update_success',
+        settingName,
+      })
     })
   })
 
-  describe('when useFetch is returning error', () => {
+  describe('when useFetch returns an error', () => {
+    let updateResponseSuccess
+    let updateResponseError
+
     beforeEach(() => {
       error = true
-      mockFetchData = [isLoading, response, error]
+      mockFetchData = [isLoading, null, error]
       useFetch.mockReturnValue(mockFetchData)
 
-      test('should not dispatch', async () => {
-        const { result } = renderHook(
-          () => useUpdateSubscription({
-            accessToken,
-            data,
-            trigger
-          }),
-          fetchWrapper,
-        )
-        const [, isSuccess, isError] = result.current
+      const { result } = renderHook(
+        () => useUpdateSubscription({
+          accessToken,
+          data,
+          trigger,
+          settingName
+        }),
+        fetchWrapper,
+      )
 
-        expect(mockDispatch).not.toHaveBeenCalled()
-        expect(isSuccess).toBeFalsy()
-        expect(isError).toBeTruthy()
+      const [, isSuccess, isError ] = result.current
+      updateResponseSuccess = isSuccess
+      updateResponseError = isError
+    })
+
+    test('then it should not dispatch', async () => {
+      expect(mockDispatch).not.toHaveBeenCalled()
+      expect(updateResponseSuccess).toBeFalsy()
+      expect(updateResponseError).toBeTruthy()
+    })
+
+    test('then it should call the tracking with update_error', async () => {
+      expect(mockTrackingFn).toHaveBeenCalledWith({
+        action: 'update_error',
+        settingName,
       })
     })
   })
@@ -211,6 +253,7 @@ describe('useUpdateSubscription', () => {
           accessToken,
           data: newData,
           trigger,
+          settingName
         }),
         fetchWrapper,
       )

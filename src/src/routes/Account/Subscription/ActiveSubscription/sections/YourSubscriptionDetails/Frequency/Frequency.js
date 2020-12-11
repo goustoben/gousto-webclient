@@ -15,7 +15,6 @@ import { SettingSection } from '../../../../components/SettingSection'
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
-import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 
 export const Frequency = ({ accessToken, isMobile }) => {
   const context = useContext(SubscriptionContext)
@@ -37,17 +36,11 @@ export const Frequency = ({ accessToken, isMobile }) => {
     },
     data: {
       interval: selectedInterval
-    }
+    },
+    settingName
   })
 
   useSubscriptionToast(updateResponse, updateError)
-
-  useTrackSubscriptionUpdate({
-    isUpdateSuccess: !!updateResponse,
-    isUpdateError: !!updateError,
-    settingName,
-    settingValue: selectedInterval
-  })
 
   const onChange = ({ target: { value } }) => setSelectedInterval(value)
 

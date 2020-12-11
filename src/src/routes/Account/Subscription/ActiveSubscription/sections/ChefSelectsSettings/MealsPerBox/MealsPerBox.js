@@ -17,7 +17,6 @@ import { SettingSection } from '../../../../components/SettingSection'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
-import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 
 import { MEALS_PER_BOX_MAP } from '../../../../enum/box'
@@ -35,6 +34,8 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
   const [selectedMealsPerBox, setSelectedMealsPerBox] = useState(null)
   const [shouldSubmit, setShouldSubmit] = useState(false)
 
+  const settingName = 'meals_per_box'
+
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
     trigger: {
@@ -43,19 +44,11 @@ export const MealsPerBox = ({ accessToken, isMobile }) => {
     },
     data: {
       num_recipes: selectedMealsPerBox
-    }
+    },
+    settingName,
   })
-
-  const settingName = 'meals_per_box'
 
   useSubscriptionToast(updateResponse, updateError)
-
-  useTrackSubscriptionUpdate({
-    isUpdateSuccess: !!updateResponse,
-    isUpdateError: !!updateError,
-    settingName,
-    settingValue: selectedMealsPerBox
-  })
 
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()

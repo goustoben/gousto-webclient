@@ -12,7 +12,6 @@ import { SettingSection } from '../../../../components/SettingSection'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
-import { useTrackSubscriptionUpdate } from '../../../../hooks/useTrackSubscriptionUpdate'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 
 import { DIETARY_PREFERENCES_MAP } from '../../../../enum/box'
@@ -28,6 +27,8 @@ export const DietaryPreference = ({ accessToken, isMobile }) => {
   const [selectedDietaryPreference, setSelectedDietaryPreference] = useState(null)
   const [shouldSubmit, setShouldSubmit] = useState(false)
 
+  const settingName = 'dietary_preference'
+
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
     trigger: {
@@ -36,19 +37,11 @@ export const DietaryPreference = ({ accessToken, isMobile }) => {
     },
     data: {
       box_type: selectedDietaryPreference
-    }
+    },
+    settingName,
   })
-
-  const settingName = 'dietary_preference'
 
   useSubscriptionToast(updateResponse, updateError)
-
-  useTrackSubscriptionUpdate({
-    isUpdateSuccess: !!updateResponse,
-    isUpdateError: !!updateError,
-    settingName,
-    settingValue: selectedDietaryPreference
-  })
 
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()
