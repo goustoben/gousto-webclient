@@ -1,5 +1,6 @@
 import { client as clientRoutes } from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
+import { deepCloneObject } from 'utils/deepClone'
 
 export const defaultMenuItems = {
   home: { name: 'Home', url: clientRoutes.home, clientRouted: true },
@@ -14,16 +15,25 @@ export const defaultMenuItems = {
   myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true, tracking: 'MyGoustoNavigation Clicked' },
   referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: true, tracking: 'ReferAFriendNavigation Clicked' },
   rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: trackingKeys.clickRateMyRecipesNavigation },
-  deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
-  subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
-  details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
-  sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
-  charityCampaign: { name: 'Table for 1 million', url: 'https://cook.gousto.co.uk/table-for-1-million/', clientRouted: false, tracking: 'CharityCampaignNavigation Clicked' },
-}
-
-export const experimentalMenuItems = {
-  ...defaultMenuItems,
   deliveries: { name: 'Upcoming Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
   subscription: { name: 'Subscription Settings', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
   details: { name: 'Account Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
+  sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
+}
+
+export const newSubscription = {
+  name: 'Subscription Settings',
+  url: clientRoutes.mySubscription2,
+  clientRouted: true,
+  tracking: 'SubscriptionSettingsNavigation Clicked'
+}
+
+export const getMenuItemsForFeatureFlag = (isNewSubscriptionPageEnabled) => {
+  const menuItems = deepCloneObject(defaultMenuItems)
+
+  if (isNewSubscriptionPageEnabled) {
+    menuItems.subscription = newSubscription
+  }
+
+  return menuItems
 }

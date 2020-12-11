@@ -3,11 +3,11 @@ import Immutable from 'immutable'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from 'apis/onScreenRecovery'
 import { orderCancel, projectedOrderCancel } from 'actions/order'
 import { redirect } from 'actions/redirect'
+import * as windowUtils from 'utils/window'
 import subPauseActions from 'actions/subscriptionPause'
 import { actionTypes } from 'actions/actionTypes'
 import userActions from 'actions/user'
 import logger from 'utils/logger'
-import moment from 'moment'
 
 import {
   modalVisibilityChange,
@@ -30,6 +30,10 @@ import {
 jest.mock('actions/order', () => ({
   orderCancel: jest.fn(),
   projectedOrderCancel: jest.fn(),
+}))
+
+jest.mock('utils/window', () => ({
+  redirect: jest.fn(),
 }))
 
 jest.mock('actions/redirect', () => ({
@@ -459,7 +463,30 @@ describe('onScreenRecovery', () => {
         })
 
         test('then the user should be redirected to my-subscription', async () => {
-          expect(redirect).toHaveBeenCalledWith('/my-subscription')
+          expect(windowUtils.redirect).toHaveBeenCalledWith('/my-subscription')
+        })
+      })
+    })
+    describe('when isNewSubscriptionPageEnabled is true', () => {
+      beforeEach(() => {
+        jest.resetAllMocks()
+        const newState = {...initialState(),
+          features: Immutable.fromJS({
+            subscriptionPauseOsr: {
+              experiment: false,
+              value: true
+            },
+            isNewSubscriptionPageEnabled: {
+              value: true
+            }
+          }),
+        }
+        getStateSpy.mockReturnValue(newState)
+        pauseSubscription()(dispatchSpy, getStateSpy)
+      })
+      describe('and a user pauses their subscription', () => {
+        test('then the user should be redirected to subscription-settings', async () => {
+          expect(windowUtils.redirect).toHaveBeenCalledWith('/subscription-settings')
         })
       })
     })

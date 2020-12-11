@@ -78,10 +78,6 @@ export const getUserMenuVariant = ({ features }) => (
 
 export const getFullScreenBoxSummary = ({ features }) => (features && features.getIn(['fullScreenBoxSummary', 'value'], false))
 
-export const isAccountTabNameTest = ({ features }) => (
-  features && features.getIn(['accountTabNameTest', 'value'], false)
-)
-
 export const getPromoOfferVariant = ({ features }) => (features && features.getIn(['enableTVPromoAds', 'value']))
 
 export const getIsSignupReductionEnabled = ({ features }) => (features && features.getIn(['enableSignupReduction', 'value'], false))
@@ -180,4 +176,8 @@ export const getIsCheckoutOverhaulEnabled = ({ features }) => (
 
 export const getIsOldCheckoutFieldsEnabled = ({ features }) => (
   features && features.getIn(['isOldCheckoutFieldEnabled', 'value'], false)
+)
+
+export const getIsNewSubscriptionPageEnabled = ({ features }) => (
+  features && features.getIn(['isNewSubscriptionPageEnabled', 'value'], false)
 )

@@ -4,30 +4,30 @@ import NavBar from './NavBar'
 import css from './Account.css'
 import Banner from './Banner'
 
+const propTypes = {
+  children: PropTypes.node,
+  renderChildren: PropTypes.bool,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+  rateRecipeCount: PropTypes.number,
+  cardExpiryDate: PropTypes.string,
+  isNewSubscriptionPageEnabled: PropTypes.bool,
+  userLoadData: PropTypes.func.isRequired,
+  userRecipeRatings: PropTypes.func.isRequired,
+  checkCardExpiry: PropTypes.func.isRequired,
+  subscriptionLoadData: PropTypes.func.isRequired,
+  loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
+}
+
+const defaultProps = {
+  children: null,
+  renderChildren: false,
+  rateRecipeCount: 0,
+  cardExpiryDate: '',
+  isNewSubscriptionPageEnabled: false,
+}
 class Account extends React.PureComponent {
-  static propTypes = {
-    children: PropTypes.node,
-    renderChildren: PropTypes.bool,
-    location: PropTypes.shape({
-      pathname: PropTypes.string,
-    }).isRequired,
-    rateRecipeCount: PropTypes.number,
-    cardExpiryDate: PropTypes.string,
-    isAccountTabNameTest: PropTypes.bool,
-    userLoadData: PropTypes.func.isRequired,
-    userRecipeRatings: PropTypes.func.isRequired,
-    checkCardExpiry: PropTypes.func.isRequired,
-    subscriptionLoadData: PropTypes.func.isRequired,
-    loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    renderChildren: false,
-    rateRecipeCount: 0,
-    cardExpiryDate: '',
-    isAccountTabNameTest: false,
-  }
-
   componentDidMount() {
     const {
       loadMenuServiceDataIfDeepLinked,
@@ -46,7 +46,7 @@ class Account extends React.PureComponent {
   }
 
   render() {
-    const { rateRecipeCount, cardExpiryDate, renderChildren, children, location, isAccountTabNameTest } = this.props
+    const { rateRecipeCount, cardExpiryDate, renderChildren, children, location, isNewSubscriptionPageEnabled } = this.props
 
     const pageTitles = {
       '/my-subscription': 'Manage my Subscription',
@@ -57,12 +57,20 @@ class Account extends React.PureComponent {
 
     return (
       <div className={css.accountWrap}>
-        <NavBar currentPath={location.pathname} rateRecipeCount={rateRecipeCount} cardExpiryDate={cardExpiryDate} isAccountTabNameTest={isAccountTabNameTest} />
+        <NavBar
+          currentPath={location.pathname}
+          rateRecipeCount={rateRecipeCount}
+          cardExpiryDate={cardExpiryDate}
+          isNewSubscriptionPageEnabled={isNewSubscriptionPageEnabled}
+        />
         {!renderChildren ? children : <div />}
         {currentPageTitle && <Banner title={currentPageTitle} />}
       </div>
     )
   }
 }
+
+Account.propTypes = propTypes
+Account.defaultProps = defaultProps
 
 export default Account

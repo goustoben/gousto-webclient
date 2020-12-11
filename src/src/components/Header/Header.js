@@ -20,10 +20,9 @@ import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
-import { deepCloneObject } from 'utils/deepClone'
 import { getLinkURL } from 'utils/header'
 import { MobileMenu } from './MobileMenu'
-import { defaultMenuItems, experimentalMenuItems } from './menuItemsHelper'
+import { getMenuItemsForFeatureFlag } from './menuItemsHelper'
 import css from './Header.css'
 
 class Header extends React.PureComponent {
@@ -90,11 +89,8 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin, isAccountTabNameTest } = this.props
-    const menuItems = isAccountTabNameTest
-      ? deepCloneObject(experimentalMenuItems)
-      : deepCloneObject(defaultMenuItems)
-
+    const { isAuthenticated, promoCodeUrl, fromJoin, isNewSubscriptionPageEnabled } = this.props
+    const menuItems = getMenuItemsForFeatureFlag(isNewSubscriptionPageEnabled)
     let pathLocal = path
     if (path.indexOf('/') === -1) {
       pathLocal = `/${pathLocal}`
@@ -457,7 +453,6 @@ Header.propTypes = {
   disabled: PropTypes.bool,
   fromJoin: PropTypes.bool,
   helpPreLoginVisibilityChange: PropTypes.func.isRequired,
-  isAccountTabNameTest: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   isHelpPreLoginOpen: PropTypes.bool,
   isLoginOpen: PropTypes.bool,
@@ -475,6 +470,7 @@ Header.propTypes = {
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
   isMenuRedirectPageEnabled: PropTypes.bool,
+  isNewSubscriptionPageEnabled: PropTypes.bool,
   postCode: PropTypes.string,
 }
 
@@ -482,7 +478,6 @@ Header.defaultProps = {
   abandonBasketFeature: false,
   disabled: false,
   fromJoin: false,
-  isAccountTabNameTest: false,
   isAuthenticated: false,
   isHelpPreLoginOpen: false,
   isLoginOpen: false,
@@ -497,6 +492,7 @@ Header.defaultProps = {
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
   isMenuRedirectPageEnabled: false,
+  isNewSubscriptionPageEnabled: false,
   postCode: ''
 }
 

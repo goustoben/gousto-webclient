@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
+import { client as clientRoutes } from 'config/routes'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 import Overlay from 'Overlay'
@@ -13,10 +14,12 @@ const CancelledAllBoxesModal = ({
   isModalOpen,
   pendingOrdersDates,
   toggleModalVisibility,
+  isNewSubscriptionPageEnabled
 }) => {
   const closeModal = () => {
     toggleModalVisibility(false)
   }
+  const subscriptionPageURL = isNewSubscriptionPageEnabled ? clientRoutes.mySubscription2 : clientRoutes.mySubscription
 
   return (
     <Overlay open={Boolean(isModalOpen)} from="top">
@@ -40,7 +43,7 @@ const CancelledAllBoxesModal = ({
             <Button color="negative" onClick={() => closeModal()} className={css.firstButton}>
               Keep subscription active
             </Button>
-            <Link to="/my-subscription" clientRouted={false}>
+            <Link to={subscriptionPageURL} clientRouted={false}>
               <Button color="primary" noDecoration className={css.secondButton}>
                 Pause subscription
               </Button>
@@ -56,12 +59,14 @@ CancelledAllBoxesModal.propTypes = {
   isModalOpen: PropTypes.bool,
   pendingOrdersDates: ImmutablePropTypes.mapOf(PropTypes.string),
   toggleModalVisibility: PropTypes.func,
+  isNewSubscriptionPageEnabled: PropTypes.bool
 }
 
 CancelledAllBoxesModal.defaultProps = {
   isModalOpen: false,
   pendingOrdersDates: Immutable.Map({}),
   toggleModalVisibility: () => {},
+  isNewSubscriptionPageEnabled: false
 }
 
 export default CancelledAllBoxesModal

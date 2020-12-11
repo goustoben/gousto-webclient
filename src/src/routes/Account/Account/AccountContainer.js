@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { isAccountTabNameTest } from 'selectors/features'
+import { getIsNewSubscriptionPageEnabled } from 'selectors/features'
 import userActions from 'actions/user'
 import subscriptionActions from 'actions/subscriptionPause'
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
@@ -9,7 +9,7 @@ function mapStateToProps(state) {
   return {
     rateRecipeCount: state.user.get('rateCount'),
     cardExpiryDate: state.user.getIn(['card', 'expiryDate']),
-    isAccountTabNameTest: isAccountTabNameTest(state),
+    isNewSubscriptionPageEnabled: getIsNewSubscriptionPageEnabled(state)
   }
 }
 
