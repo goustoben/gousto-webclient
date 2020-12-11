@@ -1,14 +1,15 @@
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-
 import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import classnames from 'classnames'
 import configCheckout from 'config/checkout'
+import CheckoutTooltip from '../../CheckoutTooltip/CheckoutTooltip'
 import css from '../Delivery.css'
 
 const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions.map(option => ({ value: option, label: option }))
+const leaveBoxTooltip = configCheckout.tooltip.leaveBox
 
 class DeliveryInstruction extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
@@ -21,9 +22,17 @@ class DeliveryInstruction extends React.PureComponent {
   shouldShowOtherInput = chosenValue =>
     ['neighbour', 'other'].includes(chosenValue.toLowerCase())
 
+  renderTooltip = () => (
+    <div className={css.checkoutTooltip}>
+      <CheckoutTooltip version="Desktop">{leaveBoxTooltip}</CheckoutTooltip>
+      <CheckoutTooltip version="Mobile" placement="topRight">{leaveBoxTooltip}</CheckoutTooltip>
+    </div>
+  )
+
   render() {
-    const { value, sectionName, receiveRef } = this.props
+    const { value, sectionName, receiveRef, isOldCheckoutFieldEnabled } = this.props
     const showOtherInput = this.shouldShowOtherInput(value)
+    const inputSuffix = isOldCheckoutFieldEnabled && this.renderTooltip()
 
     return (
       <div className={css.deliveryFieldWrapper}>
@@ -41,6 +50,7 @@ class DeliveryInstruction extends React.PureComponent {
                 ref={receiveRef}
                 refId={`${sectionName}.deliveryInstruction`}
                 color="secondary"
+                inputSuffix={inputSuffix}
               />
             </div>
           </div>
@@ -73,12 +83,14 @@ DeliveryInstruction.propTypes = {
   reset: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   sectionName: PropTypes.string,
+  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 DeliveryInstruction.defaultProps = {
   value: '',
   receiveRef: () => {},
   sectionName: 'delivery',
+  isOldCheckoutFieldEnabled: false,
 }
 
 export default DeliveryInstruction

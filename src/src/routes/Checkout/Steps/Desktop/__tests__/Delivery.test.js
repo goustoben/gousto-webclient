@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
+import { clickNextPayment } from 'actions/trackingKeys'
 import { DeliveryStep } from '../Delivery/Delivery'
 import CheckoutButton from '../../../Components/CheckoutButton'
 
@@ -39,7 +39,7 @@ describe('DeliveryStep', () => {
     })
 
     test('should dispatch trackUTMAndPromoCode actions with proper parameters', () => {
-      expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment')
+      expect(trackUTMAndPromoCode).toHaveBeenCalledWith(clickNextPayment, 'desktop')
       expect(submit).toBeCalled()
     })
   })

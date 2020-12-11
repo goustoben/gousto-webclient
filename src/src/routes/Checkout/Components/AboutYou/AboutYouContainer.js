@@ -5,6 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getAboutYouFormName } from 'selectors/checkout'
+import { getIsOldCheckoutFieldsEnabled } from 'selectors/features'
 import { AboutYou } from './AboutYou'
 
 function mapStateToProps(sectionName) {
@@ -13,7 +14,8 @@ function mapStateToProps(sectionName) {
     isLoginOpen: state.loginVisibility.get('login'),
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
-    isMobile: state.request.get('browser') === 'mobile'
+    isMobile: state.request.get('browser') === 'mobile',
+    isOldCheckoutFieldEnabled: getIsOldCheckoutFieldsEnabled(state),
   })
 }
 

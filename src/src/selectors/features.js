@@ -177,3 +177,7 @@ export const getIsDiscountAppliedBarEnabled = ({ features }) => (
 export const getIsCheckoutOverhaulEnabled = ({ features }) => (
   features && features.getIn(['isCheckoutOverhaulEnabled', 'value'], false)
 )
+
+export const getIsOldCheckoutFieldsEnabled = ({ features }) => (
+  features && features.getIn(['isOldCheckoutFieldEnabled', 'value'], false)
+)

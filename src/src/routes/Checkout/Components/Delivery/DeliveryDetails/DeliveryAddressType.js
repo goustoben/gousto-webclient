@@ -1,14 +1,15 @@
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-
 import React from 'react'
 import classnames from 'classnames'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import configCheckout from 'config/checkout'
+import CheckoutTooltip from '../../CheckoutTooltip/CheckoutTooltip'
 import css from '../Delivery.css'
 
 const DELIVER_TO_OPTIONS = configCheckout.deliverToOptions
+const addressTypeTooltip = configCheckout.tooltip.addressType
 
 class DeliveryAddressType extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
@@ -21,9 +22,17 @@ class DeliveryAddressType extends React.PureComponent {
   shouldShowOtherInput = chosenValue =>
     chosenValue.toLowerCase() === 'other'
 
+  renderInputSuffix = () => (
+    <div className={css.checkoutTooltip}>
+      <CheckoutTooltip version="Desktop">{addressTypeTooltip}</CheckoutTooltip>
+      <CheckoutTooltip version="Mobile" placement="top">{addressTypeTooltip}</CheckoutTooltip>
+    </div>
+  )
+
   render() {
-    const { value, receiveRef, sectionName } = this.props
+    const { value, receiveRef, sectionName, isOldCheckoutFieldEnabled } = this.props
     const showOtherInput = this.shouldShowOtherInput(value)
+    const inputSuffix = isOldCheckoutFieldEnabled && this.renderInputSuffix()
 
     return (
       <div className={css.deliveryFieldWrapper}>
@@ -39,6 +48,8 @@ class DeliveryAddressType extends React.PureComponent {
                 withRef
                 ref={receiveRef}
                 refId={`${sectionName}.addressType`}
+                inputSuffix={inputSuffix}
+                color="secondary"
               />
             </div>
           </div>
@@ -71,12 +82,14 @@ DeliveryAddressType.propTypes = {
   reset: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   sectionName: PropTypes.string,
+  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 DeliveryAddressType.defaultProps = {
   value: '',
   receiveRef: () => {},
   sectionName: 'delivery',
+  isOldCheckoutFieldEnabled: false,
 }
 
 export default DeliveryAddressType
