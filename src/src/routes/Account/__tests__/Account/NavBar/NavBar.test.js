@@ -41,24 +41,5 @@ describe('NavBar', () => {
       expect(navBars.at(3).props().href).toEqual(config.client.myReferral)
       expect(navBars.at(4).props().href).toEqual(config.client.rateMyRecipes)
     })
-
-    describe('when isAccountTabNameTest is true', () => {
-      test('then the navBar titles should be "Upcoming Deliveries", "Subscription Settings" and "Account Details"', () => {
-        wrapper = mount(<NavBar isAccountTabNameTest />)
-        navBars = wrapper.find('a')
-
-        expect(navBars.at(0).text()).toEqual('Upcoming Deliveries')
-        expect(navBars.at(1).text()).toEqual('Subscription Settings')
-        expect(navBars.at(2).text()).toEqual('Account Details')
-      })
-    })
-
-    describe('when isAccountTabNameTest is false', () => {
-      test('then the navBar titles should be "Deliveries", "Subscription" and "Details"', () => {
-        expect(navBars.at(0).text()).toEqual('Deliveries')
-        expect(navBars.at(1).text()).toEqual('Subscription')
-        expect(navBars.at(2).text()).toEqual('Details')
-      })
-    })
   })
 })

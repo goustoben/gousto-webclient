@@ -6,23 +6,15 @@ import css from './NavBar.css'
 import NavBarItem from './NavBarItem/NavBarItem'
 
 const NavBar = (props) => {
-  const { rateRecipeCount, isAccountTabNameTest } = props
+  const { rateRecipeCount, isNewSubscriptionPageEnabled } = props
+  const subscriptionUrl = isNewSubscriptionPageEnabled ? config.client.mySubscription2 : config.client.mySubscription
 
-  let menuTitles = {
+  const menuTitles = {
     myGousto: 'My Gousto',
-    myDeliveries: 'Deliveries',
-    mySubscription: 'Subscription',
-    myDetails: 'Details',
+    myDeliveries: 'Upcoming Deliveries',
+    mySubscription: 'Subscription Settings',
+    myDetails: 'Account Details',
     myReferral: 'Free Food'
-  }
-
-  if (isAccountTabNameTest) {
-    menuTitles = {
-      ...menuTitles,
-      myDeliveries: 'Upcoming Deliveries',
-      mySubscription: 'Subscription Settings',
-      myDetails: 'Account Details',
-    }
   }
 
   const menuItems = [
@@ -43,8 +35,8 @@ const NavBar = (props) => {
         </span>
       ),
     }, {
-      pathName: config.client.mySubscription,
-      clientRouted: false,
+      pathName: subscriptionUrl,
+      clientRouted: isNewSubscriptionPageEnabled,
       item: (
         <span className={css.link}>
           {menuTitles.mySubscription}
@@ -109,14 +101,13 @@ const NavBar = (props) => {
 NavBar.propTypes = {
   currentPath: PropTypes.string,
   rateRecipeCount: PropTypes.number,
-  isAccountTabNameTest: PropTypes.bool,
-
+  isNewSubscriptionPageEnabled: PropTypes.bool,
 }
 
 NavBar.defaultProps = {
   currentPath: config.client.myGousto,
   rateRecipeCount: 0,
-  isAccountTabNameTest: false,
+  isNewSubscriptionPageEnabled: false
 }
 
 export default NavBar

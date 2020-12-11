@@ -1,11 +1,15 @@
+import { client as clientRoutes } from 'config/routes'
 import logger from 'utils/logger'
 import seActions from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
+import { getIsNewSubscriptionPageEnabled } from 'selectors/features'
+import * as windowUtils from 'utils/window'
 import { actionTypes } from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
 import subPauseActions from './subscriptionPause'
 import userActions from './user'
 import statusActions from './status'
+
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
 
 export const generateModalTrackingData = ({
@@ -286,10 +290,12 @@ export const pauseSubscription = () => (
   async (dispatch, getState) => {
     await dispatch(subPauseActions.subscriptionDeactivate())
 
-    const { user, onScreenRecovery } = getState()
+    const { user, onScreenRecovery, features } = getState()
     const userId = user.get('id')
     const offer = onScreenRecovery.get('offer')
     const promoCode = offer ? offer.promoCode : null
+    const isNewSubscriptionPageEnabled = getIsNewSubscriptionPageEnabled({ features })
+    const subscriptionPageURL = isNewSubscriptionPageEnabled ? clientRoutes.mySubscription2 : clientRoutes.mySubscription
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
@@ -301,7 +307,7 @@ export const pauseSubscription = () => (
       },
     })
 
-    dispatch(redirect('/my-subscription'))
+    windowUtils.redirect(subscriptionPageURL)
   }
 )
 

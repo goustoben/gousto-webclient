@@ -215,30 +215,26 @@ describe('Header', () => {
     })
   })
 
-  describe('isAccountTabNameTest', () => {
+  describe('isNewSubscriptionPageEnabled', () => {
     beforeEach(() => {
       wrapper.setProps({ isAuthenticated: true })
     })
 
-    describe('when isAccountTabNameTest is set to true', () => {
+    describe('when isNewSubscriptionPageEnabled is set to true', () => {
       beforeEach(() => {
-        wrapper.setProps({ isAccountTabNameTest: true })
+        wrapper.setProps({ isNewSubscriptionPageEnabled: true })
       })
 
-      test('then the menu items should include "Upcoming Deliveries", "Subscription Settings" and "Account Details"', () => {
+      test('then the menu items should include "Subscription Settings" url', () => {
         const result = wrapper.instance().getMenuItems('mobile', '/')
-        expect(result[1].name).toEqual('Upcoming Deliveries')
-        expect(result[2].name).toEqual('Subscription Settings')
-        expect(result[3].name).toEqual('Account Details')
+        expect(result[2].url).toEqual('/subscription-settings')
       })
     })
 
-    describe('when isAccountTabNameTest is set to false', () => {
-      test('then the menu items should include "Deliveries", "My Subscription" and "Details"', () => {
+    describe('when isNewSubscriptionPageEnabled is set to false', () => {
+      test('then the menu items should include "My Subscription" url', () => {
         const result = wrapper.instance().getMenuItems('mobile', '/')
-        expect(result[1].name).toEqual('Deliveries')
-        expect(result[2].name).toEqual('Subscription')
-        expect(result[3].name).toEqual('Details')
+        expect(result[2].url).toEqual('/my-subscription')
       })
     })
   })
@@ -323,19 +319,19 @@ describe('Header', () => {
         },
         {
           clientRouted: false,
-          name: 'Deliveries',
+          name: 'Upcoming Deliveries',
           url: routesConfig.client.myDeliveries,
           tracking: 'DeliveriesNavigation Clicked',
         },
         {
           clientRouted: false,
-          name: 'Subscription',
+          name: 'Subscription Settings',
           url: routesConfig.client.mySubscription,
           tracking: 'SubscriptionNavigation Clicked',
         },
         {
           clientRouted: false,
-          name: 'Details',
+          name: 'Account Details',
           url: routesConfig.client.myDetails,
           tracking: 'DetailsNavigation Clicked',
         },
