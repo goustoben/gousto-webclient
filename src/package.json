@@ -264,5 +264,8 @@
     "hooks": {
       "pre-push": "npm audit --audit-level=critical"
     }
-  }
+  },
+  "engines": {
+    "node": "10.x"
+  }  
 }
