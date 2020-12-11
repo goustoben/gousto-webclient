@@ -5,7 +5,7 @@ import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import actions from 'actions'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
-import { getNDDFeatureValue } from 'selectors/features'
+import { getNDDFeatureValue, getIsOldCheckoutFieldsEnabled } from 'selectors/features'
 import Address from '../../Address'
 
 function getCutoffDate(state) {
@@ -31,6 +31,7 @@ function mapStateToProps(state, ownProps) {
     isNDDExperiment: getNDDFeatureFlagVal(state),
     isMobile: state.request.get('browser') === 'mobile',
     deliveryTariffId: getDeliveryTariffId(state.user, getNDDFeatureValue(state)),
+    isOldCheckoutFieldEnabled: getIsOldCheckoutFieldsEnabled(state),
   }
 }
 

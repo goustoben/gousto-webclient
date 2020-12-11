@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { change, getFormValues, untouch } from 'redux-form'
+import { getIsOldCheckoutFieldsEnabled } from 'selectors/features'
 import DeliveryDetails from './DeliveryDetails'
 
 function mapStateToProps(state, ownProps) {
@@ -7,6 +8,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     deliveryAddress: formValues && formValues[ownProps.sectionName] ? formValues[ownProps.sectionName] : {},
+    isOldCheckoutFieldEnabled: getIsOldCheckoutFieldsEnabled(state),
   }
 }
 

@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import delivery from 'validations/delivery'
+import { clickNextPayment } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
-
 import CheckoutButton from '../../../Components/CheckoutButton'
-
 import DeliveryContainer, { addInitialValues, validationMessages } from '../../../Components/Delivery'
 
 const sectionName = 'delivery'
@@ -16,7 +14,7 @@ export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scr
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   const handleClick = () => {
-    trackUTMAndPromoCode('clickNextPayment')
+    trackUTMAndPromoCode(clickNextPayment, 'desktop')
     submit()
   }
 

@@ -53,11 +53,11 @@ describe('YourDetailsStep', () => {
         expect(trackUTMAndPromoCode).not.toBeCalled()
         expect(userProspect).not.toBeCalled()
         expect(submit).not.toBeCalled()
-        wrapper.find(CheckoutButton).simulate('click')
+        wrapper.find(CheckoutButton).first().simulate('click')
       })
 
       test('then trackUTMAndPromoCode should be called with a proper parameter', () => {
-        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment')
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment', 'top')
         expect(userProspect).toBeCalled()
         expect(submit).toBeCalled()
       })

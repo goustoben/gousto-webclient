@@ -75,6 +75,7 @@ const propTypes = {
   clearPayPalClientToken: PropTypes.func,
   trackCheckoutNavigationLinks: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
+  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -96,6 +97,7 @@ const defaultProps = {
   clearPayPalClientToken: () => {},
   trackCheckoutNavigationLinks: () => {},
   isCheckoutOverhaulEnabled: false,
+  isOldCheckoutFieldEnabled: false,
 }
 
 const contextTypes = {
@@ -278,7 +280,7 @@ class Checkout extends PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, submitOrder, trackUTMAndPromoCode } = this.props
+    const { browser, submitOrder, trackUTMAndPromoCode, isOldCheckoutFieldEnabled } = this.props
     const { checkoutScriptReady, paypalScriptsReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
@@ -293,6 +295,7 @@ class Checkout extends PureComponent {
       checkoutScriptReady,
       paypalScriptsReady,
       trackUTMAndPromoCode,
+      isOldCheckoutFieldEnabled,
     }
 
     let element = <div />

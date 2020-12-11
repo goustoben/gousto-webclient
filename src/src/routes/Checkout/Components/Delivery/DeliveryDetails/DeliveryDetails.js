@@ -1,14 +1,15 @@
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-
-import React from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { showAddress } from 'routes/Checkout/utils/delivery'
+import Svg from 'Svg'
 import css from '../Delivery.css'
 import DeliveryInstruction from './DeliveryInstruction'
 import DeliveryPhoneNumber from './DeliveryPhoneNumber'
 import { DeliveryEducationBanner } from './DeliveryEducationBanner'
+import DeliveryAddressType from './DeliveryAddressType'
 
-class DeliveryDetails extends React.PureComponent {
+class DeliveryDetails extends PureComponent {
   reset = (field, value = '') => {
     const { change, formName, sectionName, untouch } = this.props
     const fieldName = `${sectionName}.${field}`
@@ -18,7 +19,7 @@ class DeliveryDetails extends React.PureComponent {
   }
 
   render() {
-    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName } = this.props
+    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName, isOldCheckoutFieldEnabled } = this.props
 
     return (
       <div className={css.deliveryInfoContainer}>
@@ -35,11 +36,29 @@ class DeliveryDetails extends React.PureComponent {
             <span className={css.linkRight} />
           </span>
         </p>
+        {isOldCheckoutFieldEnabled && (
+          <Fragment>
+            <DeliveryAddressType
+              value={formValues.addressType}
+              reset={this.reset}
+              receiveRef={receiveRef}
+              sectionName={sectionName}
+              isOldCheckoutFieldEnabled={isOldCheckoutFieldEnabled}
+            />
+            <div className={css.iconDeliverySection}>
+              <Svg fileName="icon-delivery" className={css.iconDelivery} />
+              <div className={css.iconDeliveryDescription}>
+                <p className={css.textSM}>Not going to be home? No problem. Just tell us a safe place to leave your box. Your food will keep cold for 12hrs.</p>
+              </div>
+            </div>
+          </Fragment>
+        )}
         <DeliveryInstruction
           value={formValues.deliveryInstruction}
           reset={this.reset}
           receiveRef={receiveRef}
           sectionName={sectionName}
+          isOldCheckoutFieldEnabled={isOldCheckoutFieldEnabled}
         />
         <DeliveryEducationBanner />
         <DeliveryPhoneNumber
@@ -60,6 +79,7 @@ DeliveryDetails.propTypes = {
   formName: PropTypes.string.isRequired,
   untouch: PropTypes.func.isRequired,
   onAddressEdit: PropTypes.func.isRequired,
+  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 DeliveryDetails.defaultProps = {
@@ -67,6 +87,7 @@ DeliveryDetails.defaultProps = {
   formValues: {},
   receiveRef: () => { },
   sectionName: 'delivery',
+  isOldCheckoutFieldEnabled: false,
 }
 
 export default DeliveryDetails

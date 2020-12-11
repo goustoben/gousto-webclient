@@ -30,7 +30,7 @@ class AboutYou extends React.PureComponent {
   }
 
   render() {
-    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen } = this.props
+    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen, isOldCheckoutFieldEnabled } = this.props
 
     return (
       <FormSection name={sectionName}>
@@ -43,6 +43,8 @@ class AboutYou extends React.PureComponent {
                 Already a customer?&nbsp;
                 <span
                   className={css.link}
+                  role="button"
+                  tabIndex="0"
                   onClick={(e) => {
                     if (!isAuthenticated) this.handleLoginOpen(e)
                     if (isMobile) trackCheckoutButtonPressed('LogInCTA Clicked')
@@ -129,6 +131,18 @@ class AboutYou extends React.PureComponent {
                 dataTesting="checkoutAllowEmailCheckbox"
               />
             </div>
+            {isOldCheckoutFieldEnabled && (
+              <div className={css.colHalf}>
+                <Field
+                  name="allowThirdPartyEmail"
+                  component={ReduxFormInput}
+                  inputType="CheckBox"
+                  childLabel="I would like to receive 3rd party communications from selected partners."
+                  style="disclaimer"
+                  mask
+                />
+              </div>
+            )}
           </div>
           <Overlay
             open={isLoginOpen}
@@ -161,6 +175,7 @@ AboutYou.propTypes = {
   clearErrors: PropTypes.func,
   receiveRef: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
+  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 AboutYou.defaultProps = {
@@ -172,6 +187,7 @@ AboutYou.defaultProps = {
   receiveRef: () => { },
   trackCheckoutButtonPressed: () => { },
   isMobile: false,
+  isOldCheckoutFieldEnabled: false,
 }
 
 export { AboutYou }

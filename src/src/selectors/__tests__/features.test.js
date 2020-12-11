@@ -46,6 +46,7 @@ import {
   getIsDiscountBoxPricesEnabled,
   getIsDiscountAppliedBarEnabled,
   getIsCheckoutOverhaulEnabled,
+  getIsOldCheckoutFieldsEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -107,6 +108,7 @@ describe('when features are defined', () => {
     [getIsDiscountBoxPricesEnabled, 'isDiscountBoxPricesEnabled'],
     [getIsDiscountAppliedBarEnabled, 'isDiscountAppliedBarEnabled'],
     [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
+    [getIsOldCheckoutFieldsEnabled, 'isOldCheckoutFieldEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
