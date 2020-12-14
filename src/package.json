@@ -106,7 +106,6 @@
     "transit-immutable-js": "0.7.0",
     "transit-js": "0.8.861",
     "url": "0.11.0",
-    "use-deep-compare-effect": "^1.5.0",
     "uuid": "3.3.2",
     "validator": "10.4.0"
   },
@@ -268,5 +267,5 @@
   },
   "engines": {
     "node": "10.x"
-  }  
+  }
 }

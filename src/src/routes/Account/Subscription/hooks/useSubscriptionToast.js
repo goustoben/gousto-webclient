@@ -1,18 +1,18 @@
-import { useContext } from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
-
+import { useContext, useEffect } from 'react'
 import { ToastContext, toastActions } from '../components/Toast'
 import { getSubscriptionToastContent } from '../utils/toast'
 
 export const useSubscriptionToast = (updateResponse, updateError) => {
   const { dispatch } = useContext(ToastContext)
 
-  useDeepCompareEffect(() => {
-    if (updateResponse || updateError) {
+  const responseString = JSON.stringify(updateResponse)
+
+  useEffect(() => {
+    if (responseString || updateError) {
       dispatch({
         type: toastActions.ADD_TOAST,
-        payload: getSubscriptionToastContent(updateResponse)
+        payload: getSubscriptionToastContent(responseString)
       })
     }
-  }, [(updateResponse || {}), (updateError || {}), dispatch])
+  }, [responseString, updateError, dispatch])
 }
