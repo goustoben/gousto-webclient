@@ -37,14 +37,14 @@ export const getPricePerPortionDiscounted = createSelector(
   getDietaryPreference,
   getMealsPerBox,
   getBoxPricesNumPortion,
-  (dietaryPreference, mealPerBox, pricePerNumPortion) => pricePerNumPortion[mealPerBox][dietaryPreference].pricePerPortionDiscounted
+  (dietaryPreference, mealPerBox, pricePerNumPortion) => (pricePerNumPortion ? pricePerNumPortion[mealPerBox][dietaryPreference].pricePerPortionDiscounted : null)
 )
 
 export const getTotalBoxPriceDiscounted = createSelector(
   getDietaryPreference,
   getMealsPerBox,
   getBoxPricesNumPortion,
-  (dietaryPreference, mealPerBox, pricePerNumPortion) => pricePerNumPortion[mealPerBox][dietaryPreference].recipeTotalDiscounted
+  (dietaryPreference, mealPerBox, pricePerNumPortion) => (pricePerNumPortion ? pricePerNumPortion[mealPerBox][dietaryPreference].recipeTotalDiscounted : null)
 )
 
 export const getIsBoxAndPricesLoaded = createSelector(
