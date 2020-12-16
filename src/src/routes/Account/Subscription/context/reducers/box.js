@@ -6,12 +6,13 @@ export const reduceBoxData = (state, data) => {
   }
 
   const camelCaseBox = parseObjectKeysToCamelCase(data.box)
-  const { sku, price, boxType, numRecipes, ...box } = camelCaseBox
+  const { sku, price, boxType, numRecipes, numPortions, ...box } = camelCaseBox
 
   return {
     ...state,
     box: {
       ...box,
+      numPortions: `${numPortions}`,
       dietaryPreference: {
         currentValue: boxType
       },
