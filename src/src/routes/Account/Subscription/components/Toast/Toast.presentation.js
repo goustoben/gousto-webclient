@@ -19,6 +19,7 @@ export const ToastPresentation = ({
   onDismiss,
   onRender,
   displayTime,
+  renderAnchor
 }) => {
   const { dispatch } = useContext(ToastContext)
 
@@ -65,6 +66,7 @@ export const ToastPresentation = ({
                 {anchor.text}
               </a>
             ) : null}
+          {renderAnchor ? renderAnchor() : null}
         </div>
       </div>
       {canDismiss
@@ -82,7 +84,7 @@ export const ToastPresentation = ({
 
 ToastPresentation.propTypes = {
   id: PropTypes.string.isRequired,
-  variant: PropTypes.oneOf(['error', 'success']),
+  variant: PropTypes.oneOf(['error', 'success', 'warning']),
   onDismiss: PropTypes.func,
   onRender: PropTypes.func,
   displayTime: PropTypes.oneOf(['short', 'long']),
@@ -90,6 +92,7 @@ ToastPresentation.propTypes = {
   body: PropTypes.string,
   anchor: PropTypes.shape({ text: PropTypes.string, href: PropTypes.string }),
   canDismiss: PropTypes.bool,
+  renderAnchor: PropTypes.func
 }
 
 ToastPresentation.defaultProps = {
@@ -100,4 +103,5 @@ ToastPresentation.defaultProps = {
   body: null,
   anchor: null,
   canDismiss: true,
+  renderAnchor: null
 }

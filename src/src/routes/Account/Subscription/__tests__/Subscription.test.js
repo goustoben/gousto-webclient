@@ -2,6 +2,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { act } from 'react-dom/test-utils'
 import * as useSubscriptionDataHook from '../hooks/useSubscriptionData'
+import * as useCurrentUserDataHook from '../hooks/useCurrentUserData'
+import * as useBoxPricesDataHook from '../hooks/useBoxPricesData'
+import * as useOrdersDataHook from '../hooks/useOrdersData'
 import { getIsSubscriptionActive, getIsSubscriptionLoaded } from '../context/selectors/subscription'
 import { Subscription } from '../Subscription'
 
@@ -15,7 +18,8 @@ let mountWrapper
 const defaultProps = {
   accessToken: 'auth-token',
   isMobile: false,
-  postcode: 'W14'
+  postcode: 'W14',
+  startOnScreenRecoverySubscriptionFlow: () => { }
 }
 
 const mountWithProps = (props = {}) => {
@@ -31,6 +35,9 @@ const mountWithProps = (props = {}) => {
 
 describe('Subscription', () => {
   const useSubscriptionDataSpy = jest.spyOn(useSubscriptionDataHook, 'useSubscriptionData')
+  const useCurrentUserDataSpy = jest.spyOn(useCurrentUserDataHook, 'useCurrentUserData')
+  const useBoxPricesDataSpy = jest.spyOn(useBoxPricesDataHook, 'useBoxPricesData')
+  const useOrdersDataSpy = jest.spyOn(useOrdersDataHook, 'useOrdersData')
 
   beforeEach(() => {
     jest.resetAllMocks()
@@ -40,6 +47,18 @@ describe('Subscription', () => {
   describe('Given Subscription has mounted', () => {
     test('Then useSubscriptionData was called', () => {
       expect(useSubscriptionDataSpy).toHaveBeenCalled()
+    })
+
+    test('Then useCurrentUserData was called', () => {
+      expect(useCurrentUserDataSpy).toHaveBeenCalled()
+    })
+
+    test('Then useBoxPricesData was called', () => {
+      expect(useBoxPricesDataSpy).toHaveBeenCalled()
+    })
+
+    test('Then useOrdersData was called', () => {
+      expect(useOrdersDataSpy).toHaveBeenCalled()
     })
 
     describe('When data is loading', () => {

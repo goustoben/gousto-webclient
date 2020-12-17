@@ -123,6 +123,18 @@ describe('Given ToastPresentation is rendered', () => {
     })
   })
 
+  describe('And renderAnchor is passed', () => {
+    beforeEach(() => {
+      mountWithProps({ renderAnchor: () => <div data-testing="render-anchor-elem" /> })
+    })
+
+    test('Then the expected custom anchor is rendered', () => {
+      expect(
+        wrapper.find('[data-testing="render-anchor-elem"]').exists()
+      ).toBeTruthy()
+    })
+  })
+
   describe('And anchor prop is not passed', () => {
     beforeEach(() => {
       mountWithProps({ anchor: undefined })
