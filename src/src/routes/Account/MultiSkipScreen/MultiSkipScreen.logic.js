@@ -14,7 +14,8 @@ export const MultiSkipScreenLogic = ({
   isMultiSkipSuccess,
   isMultiSkipError,
   multiSkippedBoxesCount,
-  trackViewMultiSkip
+  trackViewMultiSkip,
+  isNewSubscriptionPageEnabled
 }) => {
   const [selectedOrderIds, setSelectedOrderIds] = useState([])
   const [isSkipBoxesClicked, setSkipBoxesClicked] = useState(false)
@@ -44,6 +45,7 @@ export const MultiSkipScreenLogic = ({
   return isMultiSkipSuccess || isMultiSkipError
     ? (
       <MultiSkipResultScreen
+        isNewSubscriptionPageEnabled={isNewSubscriptionPageEnabled}
         closeModal={closeModal}
         nextDeliveryDate={nextDeliveryDate}
         isSuccess={isMultiSkipSuccess}
@@ -52,6 +54,7 @@ export const MultiSkipScreenLogic = ({
     )
     : (
       <MultiSkipScreen
+        isNewSubscriptionPageEnabled={isNewSubscriptionPageEnabled}
         alreadySkippedBoxesCount={alreadySkippedBoxesCount}
         closeModal={closeModal}
         handleContinueToPause={handleContinueToPauseWithTracking}
@@ -82,10 +85,12 @@ MultiSkipScreenLogic.propTypes = {
   isMultiSkipSuccess: PropTypes.bool.isRequired,
   isMultiSkipError: PropTypes.bool.isRequired,
   multiSkippedBoxesCount: PropTypes.number,
-  trackViewMultiSkip: PropTypes.func.isRequired
+  trackViewMultiSkip: PropTypes.func.isRequired,
+  isNewSubscriptionPageEnabled: PropTypes.bool
 }
 
 MultiSkipScreenLogic.defaultProps = {
   multiSkippedBoxesCount: null,
   nextDeliveryDate: null,
+  isNewSubscriptionPageEnabled: false
 }
