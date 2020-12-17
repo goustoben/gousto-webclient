@@ -13,7 +13,8 @@ export const MultiSkipScreen = ({
   isSkipBoxesDisabled,
   newOrders,
   handleSkipBoxes,
-  toggleSkipBox
+  toggleSkipBox,
+  isNewSubscriptionPageEnabled
 }) => (
   <Modal
     isOpen
@@ -23,7 +24,11 @@ export const MultiSkipScreen = ({
     variant="floating"
     animated={false}
   >
-    <div className={cssCommon.headerWrapper}>
+    <div className={classnames(
+      cssCommon.headerWrapper,
+      { [cssCommon.headerPaddingReset]: isNewSubscriptionPageEnabled }
+    )}
+    >
       <ModalHeader
         withSeparator
         align="left"
@@ -32,7 +37,11 @@ export const MultiSkipScreen = ({
       </ModalHeader>
     </div>
 
-    <div className={cssCommon.container}>
+    <div className={classnames(
+      cssCommon.container,
+      { [cssCommon.containerPaddingReset]: isNewSubscriptionPageEnabled }
+    )}
+    >
       <p className={classnames({ [css.noSkippedBoxesText]: !alreadySkippedBoxesCount })}>
         Skip the boxes you don’t want to be delivered.
       </p>
@@ -45,7 +54,11 @@ export const MultiSkipScreen = ({
         {`box${alreadySkippedBoxesCount > 1 ? 'es' : ''}`}
       </p>
       )}
-      <div className={css.tileContainer}>
+      <div className={classnames(
+        css.tileContainer,
+        { [css.tileContainerPaddingReset]: isNewSubscriptionPageEnabled }
+      )}
+      >
         {newOrders.map(({ id, canSkip, deliveryDate }) => (
           <InputCheck
             key={id}
@@ -101,4 +114,9 @@ MultiSkipScreen.propTypes = {
   newOrders: PropTypes.arrayOf(newOrderShape).isRequired,
   handleSkipBoxes: PropTypes.func.isRequired,
   toggleSkipBox: PropTypes.func.isRequired,
+  isNewSubscriptionPageEnabled: PropTypes.bool,
+}
+
+MultiSkipScreen.defaultProps = {
+  isNewSubscriptionPageEnabled: false,
 }

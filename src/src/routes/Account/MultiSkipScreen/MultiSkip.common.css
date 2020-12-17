@@ -22,3 +22,11 @@
     width: 500px;
   }
 }
+
+.containerPaddingReset, .headerPaddingReset h2 {
+  padding: 1rem;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem;
+  }
+}

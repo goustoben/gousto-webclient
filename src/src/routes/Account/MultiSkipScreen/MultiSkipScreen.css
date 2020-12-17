@@ -12,6 +12,14 @@
   padding: 2rem 0 3rem;
 }
 
+.tileContainerPaddingReset {
+  padding: 1rem 0 2rem;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 0 3rem;
+  }
+}
+
 .ctaContainer {
   display: flex;
   flex-direction: column;
