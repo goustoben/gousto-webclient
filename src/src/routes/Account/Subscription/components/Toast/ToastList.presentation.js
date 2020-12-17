@@ -35,6 +35,7 @@ export const ToastList = () => {
             onDismiss,
             onRender,
             displayTime,
+            renderAnchor
           }) => (
             <ToastPresentation
               key={id}
@@ -47,6 +48,7 @@ export const ToastList = () => {
               onDismiss={onDismiss}
               onRender={onRender}
               displayTime={displayTime}
+              renderAnchor={renderAnchor}
             />
           ))
         }

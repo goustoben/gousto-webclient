@@ -16,6 +16,7 @@ import { ToastProvider } from './components/Toast'
 import { useSubscriptionData } from './hooks/useSubscriptionData'
 import { useCurrentUserData } from './hooks/useCurrentUserData'
 import { useBoxPricesData } from './hooks/useBoxPricesData'
+import { useOrdersData } from './hooks/useOrdersData'
 import css from './Subscription.css'
 
 const propTypes = {
@@ -37,6 +38,7 @@ const Subscription = ({
 
   useCurrentUserData(accessToken, dispatch)
   useBoxPricesData(accessToken, dispatch)
+  useOrdersData(accessToken, dispatch)
   useSubscriptionData(
     accessToken,
     dispatch,

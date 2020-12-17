@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { RadioGroup, InputRadio } from 'goustouicomponents'
+import { Link } from 'react-router'
 import { frequencyMapping } from '../../../../enum/frequency'
 import {
   SubscriptionContext,
@@ -9,24 +10,34 @@ import {
 import {
   getIsSubscriptionLoaded
 } from '../../../../context/selectors/subscription'
+import { getOpenOrders } from '../../../../context/selectors/orders'
 
 import { getDeliveryFrequency } from '../../../../context/selectors/deliveries'
 import { SettingSection } from '../../../../components/SettingSection'
+
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
 import { trackSubscriptionSettingsChange } from '../../../../tracking'
+import { toastActions, ToastContext } from '../../../../components/Toast'
+
+import css from './Frequency.css'
 
 export const Frequency = ({ accessToken, isMobile }) => {
-  const context = useContext(SubscriptionContext)
-  const { state } = context
+  const subscriptionContext = useContext(SubscriptionContext)
+  const { state: subscriptionState } = subscriptionContext
+
+  const toastContext = useContext(ToastContext)
+  const { dispatch: toastDispatch } = toastContext
 
   const [selectedInterval, setSelectedInterval] = useState(null)
   const [shouldSubmit, setShouldSubmit] = useState(false)
 
-  const isSubscriptionLoaded = getIsSubscriptionLoaded(state)
+  const isSubscriptionLoaded = getIsSubscriptionLoaded(subscriptionState)
   const settingName = 'box_frequency'
 
-  const currentDeliveryFrequency = getDeliveryFrequency(state)
+  const currentDeliveryFrequency = getDeliveryFrequency(subscriptionState)
+  const openOrders = getOpenOrders(subscriptionState)
+  const showDeliveriesReminder = openOrders.length > 0
 
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
@@ -47,6 +58,21 @@ export const Frequency = ({ accessToken, isMobile }) => {
   const onSubmit = () => {
     trackSubscriptionSettingsChange({ settingName, action: 'update' })()
     setShouldSubmit(true)
+
+    if (showDeliveriesReminder) {
+      toastDispatch({
+        type: toastActions.ADD_TOAST,
+        payload: {
+          title: `You still have ${openOrders.length > 1 ? 'upcoming boxes' : 'an upcoming box'}`,
+          body: `Your next delivery is due on ${openOrders[0].deliveryDate}`,
+          variant: 'warning',
+          // eslint-disable-next-line
+          renderAnchor: () => <Link className={css.link} to="/my-deliveries">View my deliveries</Link>,
+          canDismiss: false,
+          displayTime: 'long'
+        }
+      })
+    }
   }
 
   const isCtaDisabled = selectedInterval === currentDeliveryFrequency || !selectedInterval

@@ -10,6 +10,9 @@ import { getIsSubscriptionLoaded } from '../../../../../context/selectors/subscr
 import {
   getDeliveryFrequency
 } from '../../../../../context/selectors/deliveries'
+import {
+  getOpenOrders
+} from '../../../../../context/selectors/orders'
 import { useUpdateSubscription } from '../../../../../hooks/useUpdateSubscription'
 import * as trackingSubscription from '../../../../../tracking'
 import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
@@ -17,7 +20,15 @@ import * as subscriptionToast from '../../../../../hooks/useSubscriptionToast'
 jest.mock('../../../../../tracking')
 jest.mock('../../../../../context/selectors/subscription')
 jest.mock('../../../../../context/selectors/deliveries')
+jest.mock('../../../../../context/selectors/orders')
 jest.mock('../../../../../hooks/useUpdateSubscription')
+
+const mockDispatch = jest.fn()
+
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: () => ({ state: {}, dispatch: mockDispatch })
+}))
 
 let wrapper
 
@@ -55,6 +66,7 @@ describe('Frequency', () => {
     jest.resetAllMocks()
     trackSubscriptionSettingsChangeSpy.mockReturnValue(() => { })
     useUpdateSubscription.mockReturnValue([undefined, undefined, undefined])
+    getOpenOrders.mockReturnValue([])
   })
 
   describe('Given data is not loaded', () => {
@@ -85,7 +97,7 @@ describe('Frequency', () => {
       mountWithProps()
     })
 
-    test('Then I should see the frequecny', () => {
+    test('Then I should see the frequency', () => {
       expect(
         wrapper
           .find('[data-testing="current-frequency"]')
@@ -151,6 +163,100 @@ describe('Frequency', () => {
         })
 
         describe('And I click "Save frequency"', () => {
+          describe('And there are multiple existing open orders', () => {
+            beforeEach(() => {
+              getOpenOrders.mockReturnValue([{
+                deliveryDate: '1st January 2021'
+              }, {
+                deliveryDate: '2nd February 2021'
+              }])
+
+              useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
+
+              mountWithProps()
+
+              act(() => {
+                const selectedElement = getOptionByProp('isChecked', false).at(0)
+                selectedElement.simulate('change', {
+                  target: {
+                    value: selectedElement.prop('value')
+                  }
+                })
+              })
+
+              act(() => {
+                wrapper
+                  .find('[data-testing="box-frequency-save-cta"]')
+                  .simulate('click')
+              })
+
+              wrapper.update()
+            })
+
+            test('Then the expected upcoming orders toast is dispatched', () => {
+              expect(mockDispatch).toHaveBeenCalledWith({
+                type: 'ADD_TOAST',
+                payload: {
+                  title: 'You still have upcoming boxes',
+                  body: 'Your next delivery is due on 1st January 2021',
+                  variant: 'warning',
+                  canDismiss: false,
+                  displayTime: 'long',
+                  renderAnchor: expect.any(Function)
+                }
+              })
+            })
+          })
+
+          describe('And there is a single existing open order', () => {
+            beforeEach(() => {
+              getOpenOrders.mockReturnValue([{
+                deliveryDate: '1st January 2021'
+              }])
+
+              useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
+
+              mountWithProps()
+
+              act(() => {
+                const selectedElement = getOptionByProp('isChecked', false).at(0)
+                selectedElement.simulate('change', {
+                  target: {
+                    value: selectedElement.prop('value')
+                  }
+                })
+              })
+
+              act(() => {
+                wrapper
+                  .find('[data-testing="box-frequency-save-cta"]')
+                  .simulate('click')
+              })
+
+              wrapper.update()
+            })
+
+            test('Then the expected upcoming orders toast is dispatched', () => {
+              expect(mockDispatch).toHaveBeenCalledWith({
+                type: 'ADD_TOAST',
+                payload: {
+                  title: 'You still have an upcoming box',
+                  body: 'Your next delivery is due on 1st January 2021',
+                  variant: 'warning',
+                  canDismiss: false,
+                  displayTime: 'long',
+                  renderAnchor: expect.any(Function)
+                }
+              })
+            })
+          })
+
+          describe('And there are no existing open orders', () => {
+            test('Then the upcoming orders toast is not dispatched', () => {
+              expect(mockDispatch).not.toHaveBeenCalled()
+            })
+          })
+
           describe('And the update is successful', () => {
             beforeEach(() => {
               useUpdateSubscription.mockReturnValue([false, { data: '123' }, false])
