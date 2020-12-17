@@ -5,8 +5,8 @@ export const getSubscriptionToastContent = (isSuccess) => {
 
   const basePayload = {
     id: toastId,
-    canDismiss: false,
-    displayTime: 'long'
+    canDismiss: true,
+    displayTime: 'short'
   }
 
   const errorPayload = {
