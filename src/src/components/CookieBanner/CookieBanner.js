@@ -12,7 +12,6 @@ const CookieBanner = ({
   trackCookiePolicyAccepted,
   trackCookiePolicyVisible,
   isPromoAppBannerEnabled,
-  isHomePageRedesignEnabled,
 }) => {
   if (!isCookiePolicyAccepted) {
     trackCookiePolicyVisible()
@@ -34,14 +33,14 @@ const CookieBanner = ({
           <button
             type="button"
             tabIndex="0"
-            className={classnames(css.button, { [css.homepageRedesign]: isHomePageRedesignEnabled })}
+            className={css.button}
             data-testing="cookiePolicyBannerBtn"
             onClick={() => {
               cookiePolicyAcceptanceChange(true)
               trackCookiePolicyAccepted()
             }}
           >
-            {isHomePageRedesignEnabled ? 'Agree' : copy.button}
+            {copy.button}
           </button>
         </div>
       </div>
@@ -62,13 +61,11 @@ CookieBanner.propTypes = {
   trackCookiePolicyAccepted: PropTypes.func.isRequired,
   trackCookiePolicyVisible: PropTypes.func.isRequired,
   isPromoAppBannerEnabled: PropTypes.bool,
-  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 CookieBanner.defaultProps = {
   isCookiePolicyAccepted: false,
   isPromoAppBannerEnabled: false,
-  isHomePageRedesignEnabled: false,
 }
 
 export { CookieBanner }
