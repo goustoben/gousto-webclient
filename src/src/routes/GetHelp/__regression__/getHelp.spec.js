@@ -1,6 +1,7 @@
 import { clickHelp } from './pageUtils/home/home'
 import {
   clickAcceptCTA,
+  clickContactUsCTA,
   clickContinueCTA,
   clickSubmitCTA,
   expandRecipes,
@@ -94,6 +95,23 @@ describe('Given the customer is logged in', () => {
             it('shows the refund confirmation step', () => {
               cy.url().should('include', 'confirmation')
               cy.contains('Thanks')
+            })
+          })
+
+          describe('And the credit is not accepted', () => {
+            beforeEach(() => {
+              cy.wait('@valueRequest')
+
+              cy.wait(2000)
+
+              clickContactUsCTA()
+            })
+
+            it('shows the Contact Us step', () => {
+              cy.url().should('include', 'contact')
+              cy.contains('chat')
+              cy.contains('email')
+              cy.contains('phone')
             })
           })
         })
