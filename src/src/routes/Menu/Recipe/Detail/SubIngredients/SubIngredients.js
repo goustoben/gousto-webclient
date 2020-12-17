@@ -3,11 +3,32 @@ import React from 'react'
 import Immutable from 'immutable'
 import css from './SubIngredients.css'
 
-export const isAllergen = (allergens, subIngredient) => (
-  allergens.some((allergen) => (
-    allergen.toLowerCase().includes(subIngredient.toLowerCase())
-  ))
-)
+const HARDCODED_ALLERGENS = [
+  'celery', 'celeriac', 'wheat', 'rye',
+  'barley', 'oats', 'oat', 'oatmeal',
+  'spelt', 'kamut', 'crustacean',
+  'egg', 'eggs', 'fish', 'lupin', 'milk',
+  'mollusc', 'mustard', 'almond', 'almonds',
+  'hazelnut', 'hazelnuts', 'cashew nut', 'cashew nuts',
+  'pecan nut', 'pecan nuts', 'pecans',
+  'brazil nut', 'brazil nuts',
+  'pistachio nut', 'pistachio nuts', 'pistachios',
+  'macadmaia nut', 'macadamia nuts', 'macadmamias',
+  'queensland nut', 'walnut', 'walnuts',
+  'peanut', 'peanuts', 'sesame',
+  'soy', 'soya', 'sulphites', 'sulphur dioxide',
+  'nuts'
+]
+
+export const isAllergen = (allergens, subIngredient) => {
+  const lowercaseIngredient = subIngredient.toLowerCase()
+
+  if (allergens.some(allergen => allergen.toLowerCase().includes(lowercaseIngredient))) {
+    return true
+  }
+
+  return HARDCODED_ALLERGENS.includes(lowercaseIngredient)
+}
 
 const SubIngredients = ({ subIngredients, allergens }) => (
   <span>

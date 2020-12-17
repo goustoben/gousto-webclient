@@ -1,83 +1,80 @@
 @value Blackberry, White from 'styles/colors.css';
 @value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
-@value BreakpointToMedium from 'design-language/breakpoints.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	background-color: Blackberry;
-	width: 100%;
-	padding: 5px 10px;
-	z-index: 3;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: Blackberry;
+  width: 100%;
+  padding: 5px 10px;
+  z-index: 3;
 
-	&.bottomPositioning {
-		position: fixed;
-		bottom: 0;
-	}
+&.bottomPositioning {
+   position: fixed;
+   bottom: 0;
+ }
 }
 
 .description {
-	color: White;
-	font-size: 12px;
-	align-self: center;
-	padding-right: 5px;
-	margin: 0;
+  color: White;
+  font-size: 12px;
+  align-self: center;
+  padding-right: 5px;
+  margin: 0;
 }
 
 .container > div {
-	display: inline-flex;
-	z-index: 2;
+  display: inline-flex;
+  z-index: 2;
 }
 
 .linkMessage {
-	color: White;
-	text-decoration: underline;
+  color: White;
+  text-decoration: underline;
 }
 
 .button {
-	appearance: none;
-	background: none;
-	color: White;
-	border: 1px solid White;
-	border-radius: 3px;
-	border-color: White;
-	cursor: pointer;
-	min-width: 110px;
-	align-self: center;
-	text-align: center;
-	padding: 5px 0;
-	font-size: 14px;
-}
+  appearance: none;
+  background: none;
+  color: White;
+  border: 1px solid White;
+  border-radius: 3px;
+  cursor: pointer;
+  min-width: 3.75rem;
+  align-self: center;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 14px;
 
-.homepageRedesign {
-  @media BreakpointToMedium {
-    min-width: 3.75rem;
-  }
+@media BreakpointFromMedium {
+  min-width: 6.5rem;
+}
 }
 
 .button:hover {
-	color: White;
-	text-decoration: none;
+  color: White;
+  text-decoration: none;
 }
 
 @media ScreenXXSMin {
-	.container {
-		flex-direction: row;
-		text-align: center;
-	}
+  .container {
+    flex-direction: row;
+    text-align: center;
+  }
 
-	.button {
-		margin-left: 15px;
-	}
+  .button {
+    margin-left: 15px;
+  }
 }
 
 @media ScreenMDMin {
-	.container {
-		padding: 10px 30px;
-	}
+  .container {
+    padding: 10px 30px;
+  }
 
-	.description {
-		font-size: 14px;
-	}
+  .description {
+    font-size: 14px;
+  }
 }
