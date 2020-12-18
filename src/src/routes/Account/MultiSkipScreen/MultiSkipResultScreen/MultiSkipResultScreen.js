@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 import { Modal, ModalHeader, CTA } from 'goustouicomponents'
 
@@ -44,6 +45,7 @@ export const MultiSkipResultScreen = ({
   nextDeliveryDate,
   isSuccess,
   skippedBoxesCount,
+  isNewSubscriptionPageEnabled
 }) => (
   <Modal
     isOpen
@@ -53,7 +55,11 @@ export const MultiSkipResultScreen = ({
     animated={false}
     hideCloseIcon
   >
-    <div className={cssCommon.headerWrapper}>
+    <div className={classnames(
+      cssCommon.headerWrapper,
+      { [cssCommon.headerPaddingReset]: isNewSubscriptionPageEnabled }
+    )}
+    >
       <ModalHeader
         withSeparator
         align="left"
@@ -64,14 +70,22 @@ export const MultiSkipResultScreen = ({
       </ModalHeader>
     </div>
 
-    <div className={cssCommon.container}>
+    <div className={classnames(
+      cssCommon.container,
+      { [cssCommon.containerPaddingReset]: isNewSubscriptionPageEnabled }
+    )}
+    >
       {isSuccess
         ? <SuccessMsg skippedBoxesCount={skippedBoxesCount} />
         : <FailureMsg />}
 
       {isSuccess && nextDeliveryDate && <NextDeliveryMsg date={nextDeliveryDate} />}
 
-      <div className={css.ctaContainer}>
+      <div className={classnames(
+        css.ctaContainer,
+        { [css.ctaContainerPaddingReset]: isNewSubscriptionPageEnabled }
+      )}
+      >
         <CTA
           variant="primary"
           onClick={closeModal}
@@ -98,9 +112,11 @@ MultiSkipResultScreen.propTypes = {
   nextDeliveryDate: PropTypes.string,
   isSuccess: PropTypes.bool.isRequired,
   skippedBoxesCount: PropTypes.number,
+  isNewSubscriptionPageEnabled: PropTypes.bool
 }
 
 MultiSkipResultScreen.defaultProps = {
   skippedBoxesCount: null,
-  nextDeliveryDate: null
+  nextDeliveryDate: null,
+  isNewSubscriptionPageEnabled: false
 }

@@ -11,8 +11,8 @@ describe('getSubscriptionToastContent', () => {
 
       expect(payload).toEqual({
         body: 'Your subscription details have been successfully updated',
-        canDismiss: false,
-        displayTime: 'long',
+        canDismiss: true,
+        displayTime: 'short',
         id: 'mock-uuid',
         title: 'Updated successfully',
         variant: 'success'
@@ -26,8 +26,8 @@ describe('getSubscriptionToastContent', () => {
 
       expect(payload).toEqual({
         body: 'Your subscription details have been successfully updated',
-        canDismiss: false,
-        displayTime: 'long',
+        canDismiss: true,
+        displayTime: 'short',
         id: 'mock-uuid',
         title: 'Updated successfully',
         variant: 'success'

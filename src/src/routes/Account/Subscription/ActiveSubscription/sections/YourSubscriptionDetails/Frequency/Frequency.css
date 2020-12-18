@@ -1,8 +1,0 @@
-@value Oyster from 'styles/colors.module.css';
-
-.link {
-  margin-top: 0.5rem;
-  font-weight: bold;
-  border-bottom: 1px solid Oyster;
-  display: inline-block;
-}
