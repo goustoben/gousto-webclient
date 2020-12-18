@@ -25,7 +25,7 @@ describe('useFetch', () => {
 
       const [isFetchLoading, fetchResponse, fetchError] = result.current
 
-      expect(global.fetch).toHaveBeenCalledWith('http://mock', { headers: {} })
+      expect(global.fetch).toHaveBeenCalledWith('http://mock/', { headers: {} })
       expect(isFetchLoading).toBe(true)
       expect(fetchResponse).toBe(undefined)
       expect(fetchError).toBe(false)
