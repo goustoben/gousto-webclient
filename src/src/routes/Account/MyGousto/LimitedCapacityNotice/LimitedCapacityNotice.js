@@ -5,6 +5,7 @@ import { zendesk as zendeskRoutes } from 'config/routes'
 import { addUserIdToUrl } from 'utils/url'
 
 const propTypes = {
+  isLimitedCapacityChristmas: PropTypes.bool.isRequired,
   isTransactionalOrdersBlocked: PropTypes.bool.isRequired,
   isResubscriptionBlocked: PropTypes.bool.isRequired,
   userId: PropTypes.string,
@@ -15,40 +16,49 @@ const defaultProps = {
 }
 
 const LimitedCapacityNotice = ({
+  isLimitedCapacityChristmas,
   isTransactionalOrdersBlocked,
   isResubscriptionBlocked,
   userId,
 }) => (
   <Alert type="info">
     <Heading type="h3" size="_legacy_medium">
-      We’re full to the brim
+      {isLimitedCapacityChristmas ? 'We’re really sorry but we’re unable to take any more orders' : 'We’re full to the brim' }
     </Heading>
-    <div>
-      <p>
-        Due to overwhelming demand, our delivery slots are nearly full.&nbsp;
-        {isTransactionalOrdersBlocked
-          ? 'We’re very sorry that we’re still unable to take one-off orders. '
-          : 'If you’re having issues finding an available slot, try changing your delivery day.'}
-        {isResubscriptionBlocked && 'Paused subscriptions cannot be reactivated right now.'}
-      </p>
-      <p>
-        This is only temporary, and we can’t apologise enough. We’re working non-stop to create more capacity.
-      </p>
-      <p>
-        Our customer care team is unable to place orders, but they’re here if you need anything else,
-        or you can head to our help centre.
-      </p>
-      <p>
-        Thank you for bearing with us and all your kind support over the last weeks.
-      </p>
-      <a
-        href={addUserIdToUrl(zendeskRoutes.covid, userId)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Visit our help centre for more info
-      </a>
-    </div>
+    {
+      isLimitedCapacityChristmas ? (
+        <div>
+          <p>With the Christmas period, we’ve had a mad rush on orders so you may have to try another delivery day. Thank you for bearing with us and your kind support.</p>
+        </div>
+      ) : (
+        <div>
+          <p>
+            Due to overwhelming demand, our delivery slots are nearly full.&nbsp;
+            {isTransactionalOrdersBlocked
+              ? 'We’re very sorry that we’re still unable to take one-off orders. '
+              : 'If you’re having issues finding an available slot, try changing your delivery day.'}
+            {isResubscriptionBlocked && 'Paused subscriptions cannot be reactivated right now.'}
+          </p>
+          <p>
+            This is only temporary, and we can’t apologise enough. We’re working non-stop to create more capacity.
+          </p>
+          <p>
+            Our customer care team is unable to place orders, but they’re here if you need anything else,
+            or you can head to our help centre.
+          </p>
+          <p>
+            Thank you for bearing with us and all your kind support over the last weeks.
+          </p>
+          <a
+            href={addUserIdToUrl(zendeskRoutes.covid, userId)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit our help centre for more info
+          </a>
+        </div>
+      )
+    }
   </Alert>
 )
 
