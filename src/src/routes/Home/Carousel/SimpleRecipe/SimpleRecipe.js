@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import classNames from 'classnames'
 import GoustoImage from 'Image'
 import { TimeIndicator, Rating } from 'goustouicomponents'
 import sanitizeText from 'utils/sanitizeText'
@@ -14,7 +13,6 @@ const SimpleRecipe = ({
   averageRating,
   ratingCount,
   cookingTime,
-  isHomePageRedesignEnabled,
 }) => {
   const recipeTitle = sanitizeText.removeDiacritics(title)
 
@@ -25,20 +23,17 @@ const SimpleRecipe = ({
           media={media}
           title={title}
           maxMediaSize={maxMediaSize}
-          className={css.recipeImg}
           lazy
         />
-        {isHomePageRedesignEnabled && (
-          <div className={css.cookingTime}>
-            <TimeIndicator time={cookingTime} />
-          </div>
-        )}
+        <div className={css.cookingTime}>
+          <TimeIndicator time={cookingTime} />
+        </div>
       </div>
-      <div className={classNames(css.textContainerCenter, { [css.textContainer]: isHomePageRedesignEnabled })}>
-        <h2 className={classNames(css.simpleHeading, { [css.recipeTitle]: isHomePageRedesignEnabled })}>
+      <div className={css.textContainer}>
+        <h2 className={css.recipeTitle}>
           {recipeTitle}
         </h2>
-        <div className={css.simpleTagContainer}>
+        <div className={css.ratingContainer}>
           {
             ratingCount && averageRating
               ? (
@@ -63,11 +58,6 @@ SimpleRecipe.propTypes = {
   averageRating: PropTypes.number.isRequired,
   ratingCount: PropTypes.number.isRequired,
   cookingTime: PropTypes.number.isRequired,
-  isHomePageRedesignEnabled: PropTypes.bool,
-}
-
-SimpleRecipe.defaultProps = {
-  isHomePageRedesignEnabled: false,
 }
 
 export { SimpleRecipe }

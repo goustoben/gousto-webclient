@@ -1,8 +1,8 @@
 import React from 'react'
-
+import Immutable from 'immutable'
+import { shallow } from 'enzyme'
 import { getKnownVariant } from 'routes/Home/HomeContainer'
-
-jest.mock('routes/Home/Home', () => () => <div />)
+import { HomeContainer } from '../HomeContainer'
 
 jest.mock('config/home', () => ({
   defaultVariant: 'default',
@@ -10,24 +10,64 @@ jest.mock('config/home', () => ({
     'default',
     'test',
   ],
+  whyGousto: {
+    steps: []
+  },
+  CTA: {
+    text: 'cta'
+  }
 }))
 
-describe('getKnownVariant', () => {
-  let variant
-
-  describe('when given a known variant', () => {
-    test('should return the given variant', () => {
-      variant = getKnownVariant('test')
-
-      expect(variant).toEqual('test')
+describe('HomeContainer', () => {
+  let wrapper
+  const initialState = {
+    auth: Immutable.fromJS({
+      isAuthenticated: false,
+    }),
+    features: Immutable.Map({
+      isSignupReductionEnabled: Immutable.fromJS({
+        value: false
+      })
     })
+  }
+  const redirectLoggedInUser = jest.fn()
+
+  const store = {
+    getState: jest.fn(() => initialState),
+    dispatch: jest.fn(),
+    subscribe: jest.fn(),
+  }
+
+  beforeEach(() => {
+    wrapper = shallow(
+      <HomeContainer store={store} redirectLoggedInUser={redirectLoggedInUser} />
+    )
   })
 
-  describe('when given an unknown variant', () => {
-    test('should return the default variant', () => {
-      variant = getKnownVariant('alternate')
+  test('should be rendered properly', () => {
+    const expected = {
+      isAuthenticated: false
+    }
+    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+  })
 
-      expect(variant).toEqual('default')
+  describe('getKnownVariant', () => {
+    let variant
+
+    describe('when given a known variant', () => {
+      test('should return the given variant', () => {
+        variant = getKnownVariant('test')
+
+        expect(variant).toEqual('test')
+      })
+    })
+
+    describe('when given an unknown variant', () => {
+      test('should return the default variant', () => {
+        variant = getKnownVariant('alternate')
+
+        expect(variant).toEqual('default')
+      })
     })
   })
 })

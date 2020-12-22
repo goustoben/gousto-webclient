@@ -26,22 +26,24 @@ class StepsGuide extends PureComponent {
   }
 
   render() {
-    const { steps } = this.props
+    const { steps, isBrandDesignEnabled } = this.props
 
     return (
       <div className={css.container}>
-        {steps.map((step, order) => this.renderStep(step, order))}
+        {steps(isBrandDesignEnabled).map((step, order) => this.renderStep(step, order))}
       </div>
     )
   }
 }
 
 StepsGuide.propTypes = {
-  steps: PropTypes.arrayOf(PropTypes.object),
+  steps: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+  isBrandDesignEnabled: PropTypes.bool,
 }
 
 StepsGuide.defaultProps = {
   steps: config.whyGousto.steps,
+  isBrandDesignEnabled: false,
 }
 
 export {

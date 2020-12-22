@@ -150,16 +150,6 @@ span:target .overlay {
 	margin: 0;
 }
 
-.btn.loginBtn {
-  text-transform: lowercase;
-  height: 45px;
-  padding: 0 1.67rem;
-}
-
-.loginBtn::first-letter {
-  text-transform: uppercase;
-}
-
 .btnLink {
 	composes: block from 'styles/display.css';
 	composes: textRight noDecor from 'styles/typography.css';
@@ -273,13 +263,4 @@ span:target .overlay {
 	composes: marginXXL paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
 	display: flex;
 	justify-content: center;
-}
-
-.homepageRedesign {
-  a,
-  span,
-  button {
-    font-size: FontBodySize;
-    text-transform: capitalize;
-  }
 }

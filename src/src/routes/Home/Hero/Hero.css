@@ -1,212 +1,175 @@
-@value ScreenSMMin, ScreenLGMin, ScreenXSMax, ScreenXXSMin from 'styles/screenSizes.css';
-@value SpacingXXXXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
-@value Coconut, White from 'styles/colors.css';
-@value desktopInfoSize: 470px;
-@value mobileInfoSize: 300px;
-@value mobileInfoBgSize: 220px;
+@value BreakpointFromMedium, BreakpointToMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value White from 'styles/colors.css';
 
 .container {
+  padding: 0.75rem 0.75rem 0;
 	width: 100%;
-	position: relative;
-	min-height: 0;
-	height: 300px;
+  max-width: 75rem;
+  margin: 0 auto 2.25rem;
+  display: flex;
+  flex-direction: column-reverse;
 
-	@media ScreenSMMin {
-		height: calc(100vh - 90px);
-		min-height: calc(desktopInfoSize + 150px);
-		margin-bottom: 0;
-	}
+  @media BreakpointFromMedium {
+    flex-direction: row;
+    padding: 1rem 2rem;
+    margin-bottom: 0;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 2.5rem 2rem;
+  }
 }
 
-.containerSignupOverride {
-	height: 395px;
-	padding-top: 24px;
-	margin-bottom: 0;
+.heroImage {
+  width: 100%;
+  height: 60vw;
+  min-height: 14rem;
+  max-height: 24.75rem;
+  margin-bottom: 1rem;
+  background: url('routes/Home/Hero/mobile-hero.png') center left / cover no-repeat;
 
-	@media ScreenSMMin {
-		min-height: calc(desktopInfoSize + 200px);
-	}
+  @media BreakpointFromMedium {
+    max-width: 24.75rem;
+    width: 100%;
+    min-height: 17rem;
+    max-height: 27rem;
+    background: url('routes/Home/Hero/tablet-choice.jpg') right top / contain no-repeat;
+  }
 
-	@media ScreenXXSMin {
-		height: 340px;
-	}
-}
-
-.container--default {
-	composes: container;
-	background: Coconut url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
-
-	@media ScreenSMMin {
-		background: Coconut url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
-	}
-}
-
-.container--tv {
-	composes: container;
-	background: Coconut url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
-
-	@media ScreenSMMin {
-		background: Coconut url('routes/Home/Hero/hero-alt-1300w.jpg') center center / cover no-repeat;
-	}
-
-	@media ScreenLGMin {
-		background: Coconut url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
-	}
-}
-
-.spacer {
-	height: 0;
-	background-color: Coconut;
-
-	@media ScreenXSMax {
-		height: mobileInfoBgSize;
-	}
+  @media BreakpointFromLarge {
+    min-height: 22.5rem;
+    max-height: 28.75rem;
+    width: 100%;
+    max-width: 29rem;
+    margin-bottom: 1.5rem;
+    background: url('routes/Home/Hero/desktop-choice.jpg') center top / contain no-repeat;
+  }
 }
 
 .textContainer {
-	composes: d-flex align-items-start flex-column from 'sass-loader!styles/bootstrap.scss';
-	position: relative;
-	width: mobileInfoSize;
-	height: mobileInfoSize;
-	top: 180px;
-	padding: SpacingXXXL 0;
-	border-radius: 100%;
-	z-index: 2;
-	margin: 0 auto;
+  width: 100%;
+  position: relative;
+  text-align: center;
 
-	@media ScreenSMMin {
-		position: absolute;
-		width: desktopInfoSize;
-		height: desktopInfoSize;
-		top: SpacingXXXL;
-		padding: SpacingXXXXXL SpacingXXXL;
-		margin: 0;
-	}
+  @media BreakpointFromMedium {
+    margin-right: 1.5rem;
+    text-align: left;
+    max-width: 32rem;
+  }
 
-	@media ScreenLGMin {
-		top: SpacingXXXXXL;
-	}
-}
-
-.textContainer--default {
-	composes: textContainer;
-	background-color: White;
-	left: auto;
-
-	@media ScreenSMMin {
-		left: 8%;
-		top: SpacingXXXL;
-	}
-}
-
-.textContainer--tv {
-	composes: textContainer;
-	background-color: White;
-	right: auto;
-
-	@media ScreenSMMin {
-		background-color: #FFFFFF00;
-		right: 0;
-		top: auto;
-		bottom: 10%;
-	}
-
-	@media ScreenLGMin {
-		right: 8%;
-		top: 100px;
-	}
-}
-
-.textContainerSignupOverride {
-	top: 50px;
-
-	@media ScreenSMMin {
-		top: 175px;
-	}
-}
-
-.headerBase {
-	text-align: center;
-	width: 100%;
-}
-
-.header {
-	composes: headerBase;
-	composes: headerXXL2 headlineFont from 'styles/typography.css';
-
-  @media ScreenSMMin {
-    margin-bottom: 1.5rem;
+  @media BreakpointFromLarge {
+    max-width: 41.5rem;
+    min-width: 32rem;
   }
 }
 
-.header,
-.cta,
-.noLockIn {
-  padding: 0 SpacingXXXL;
+.title {
+  margin-bottom: 0.5rem;
 
-  @media ScreenSMMin {
-    padding: 0;
+  @media BreakpointFromMedium {
+    margin-bottom: 1rem;
+    max-width: 22.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 32rem;
   }
 }
 
-.subHeader {
-	composes: headerBase;
-	composes: headerXL from 'styles/typography.css';
-  padding: 0 0.5rem;
+.subTitle {
+  margin-bottom: 1rem;
+}
 
-  @media ScreenSMMin {
-    margin-bottom: 1.5rem;
+.processImage {
+  @media BreakpointFromMedium {
+    height: 8rem;
+    width: 200%;
+    background: url('routes/Home/Hero/desktop-process.jpg') left top / contain no-repeat;
+    margin-bottom: 1rem;
   }
 
-  @media ScreenLGMin {
+  @media BreakpointFromLarge {
+    width: 120%;
+    height: 10rem;
     margin-bottom: 0;
   }
 }
 
-.cta {
-	margin-bottom: 0.5rem;
-	width: 100%;
-
-	& > div {
-		margin: 0 auto;
-  }
-
-	@media ScreenXSMax {
-		& > div {
-			width: auto;
-		}
-	}
-}
-
-.noLockIn {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  composes: fontStyleXS from 'design-language/typography.css';
-
-  @media ScreenSMMin {
-    align-items: center;
+.stickyContainer {
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
   }
 }
 
-.lockInBold {
-  font-weight: 600;
+.isHidden {
+  display: none;
 }
 
-.lockSign {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 0.25rem;
+.mobileStickyInitial {
+  display: none;
 
-  @media ScreenSMMin {
+  @media BreakpointToMedium {
     display: block;
+    padding: 0.75rem;
+    background: White;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 5;
+    margin: 0 -0.75rem;
+    transform: translateY(31.25rem);
+    box-shadow: 0 -0.25rem 3rem rgba(0, 0, 0, 0.2);
   }
 }
 
-.lockInIcon {
-  height: 1.5rem;
-  width: 1.5rem;
-  background-image: url('media/svgs/icon-play-pause.svg');
+.mobileStickyRemoval {
+  @media BreakpointToMedium {
+    transform-origin: bottom;
+    transform: translateY(31.25rem);
+    transition: transform 0.3s ease;
+  }
+}
+
+.mobileSticky {
+  @media BreakpointToMedium {
+    transform: translateY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+  }
+}
+
+.hideShadow {
+  bottom: auto;
+  box-shadow: none;
+}
+
+.brandHeroImage {
+  background: url('routes/Home/Hero/mobile-brand.png') center left / cover no-repeat;
+  min-height: 57vw;
+  height: 57vw;
+
+  @media BreakpointFromMedium {
+    max-height: 30.75rem;
+    max-width: 27rem;
+    min-height: auto;
+    margin-bottom: 0;
+    background: url('routes/Home/Hero/tablet-brand-dish.png') right top / cover no-repeat;
+  }
+
+  @media BreakpointFromLarge {
+    background: url('routes/Home/Hero/dish-brand.png') right top / cover no-repeat;
+    max-width: 35rem;
+  }
+}
+
+.brandImagesGroup {
+  @media BreakpointFromMedium {
+    width: 200%;
+    height: 11.25rem;
+    background: url('routes/Home/Hero/process-brand.png') left top / contain no-repeat;
+  }
+
+  @media BreakpointFromLarge {
+    width: 100%;
+  }
 }

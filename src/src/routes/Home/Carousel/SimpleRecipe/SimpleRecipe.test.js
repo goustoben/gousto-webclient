@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
@@ -39,8 +38,12 @@ describe('<SimpleRecipe />', () => {
   })
 
   test('should contain the recipe title', () => {
-    expect(wrapper.find('.simpleHeading').length).toEqual(1)
-    expect(wrapper.find('.simpleHeading').text()).toEqual('test')
+    expect(wrapper.find('.recipeTitle').length).toEqual(1)
+    expect(wrapper.find('.recipeTitle').text()).toEqual('test')
+  })
+
+  test('should contain TimeIndicator component', () => {
+    expect(wrapper.find('TimeIndicator').length).toEqual(1)
   })
 
   test('should not contain any AddRecipe components', () => {
@@ -63,24 +66,6 @@ describe('<SimpleRecipe />', () => {
 
     test('then should not contain rating component', () => {
       expect(wrapper.find('Rating').length).toEqual(0)
-    })
-  })
-
-  describe('when isHomePageRedesignEnabled is false', () => {
-    test('then should not contain TimeIndicator component', () => {
-      expect(wrapper.find('TimeIndicator').length).toEqual(0)
-    })
-  })
-
-  describe('when isHomePageRedesignEnabled is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isHomePageRedesignEnabled: true,
-      })
-    })
-
-    test('then should contain TimeIndicator component', () => {
-      expect(wrapper.find('TimeIndicator').length).toEqual(1)
     })
   })
 })

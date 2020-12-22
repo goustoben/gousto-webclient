@@ -1,84 +1,41 @@
 import React from 'react'
 import Icon from 'components/Icon'
-import Content from 'containers/Content'
 import { ACTIVE_PROMO_CODE, DEFAULT_PROMO_CODE } from './promoCode'
 
 import VarietyImg from 'routes/Home/WhyChooseGousto/variety.png'
+import VarietyImgBrand from 'routes/Home/WhyChooseGousto/variety-brand.png'
 import QualityImg from 'routes/Home/WhyChooseGousto/quality.png'
 import SimplicityImg from 'routes/Home/WhyChooseGousto/simplicity.png'
 
 module.exports = {
   hero: {
-    header: 'A recipe box full of flavour',
-    subheader: 'Precise ingredients, delicious recipes and a dollop of adventure.',
+    header: 'Endless choice in a recipe box',
+    subheader: 'Over 50 recipes every week',
   },
-  testimonials: [
-    {
-      author: 'Mrs H Pyke',
-      title: 'Gousto has changed my life....',
-      body: 'I cannot thank Gousto enough. What a fantastic idea! I have always struggled with time and ideas around what to cook. Now I am producing delicious, fresh and \'made from scratch\' meals for my family. I love that I don\'t have to think about what to make for our meals, its all done for me and delivered to my door (no more wandering around the supermarket hoping for inspiration). I am learning new skills and really enjoying it. I am telling everyone about Gousto, thanks so much!',
-      url: 'https://uk.trustpilot.com/reviews/581cf1892ae760087cadbf17',
-    },
-    {
-      author: 'Sophie',
-      title: 'Easy, convenient and super tasty!!!',
-      body: 'The best decision for my partner and I as we both work long hours! We enjoy cooking from scratch, as we know what goes into what we are eating! There is a fantastic range of meals available, all super tasty! 100% recommend to anyone!',
-      url: 'https://uk.trustpilot.com/reviews/5824c0f72ae760087caf02b7',
-    },
-    {
-      author: 'Sharon Wood',
-      title: 'Hey Presto - Dinner!',
-      body: 'This is a simple and convenient way to cook restaurant quality food at home. The recipes are easy to follow with everything you need in exactly the right amounts. There is a good choice of meals with new recipes added every week. All ingredients are of a vey high quality and are packed in reusable/recyclable chilled packaging. With flexible delivery schedules I would highly recommend Gousto to anybody.',
-      url: 'https://uk.trustpilot.com/reviews/5824bee32ae760087caf0213',
-    },
-  ],
   subscription: {
     header: 'How does Gousto work?',
     description: '',
     graphicType: 'svg',
-    steps: (redesignEnabled) => [{
-      path: redesignEnabled ? 'icon-choose-redesign' : 'icon-choose',
-      title: redesignEnabled ? '' : 'Click Click',
+    steps: [{
+      path: 'icon-choose-redesign',
+      title: '',
       description: 'Discover 50+ tasty recipes each week including new cuisines, family favourites, and ten minute meals.',
     }, {
-      path: redesignEnabled ? 'icon-delivery-redesign' : 'icon-delivery',
-      title: redesignEnabled ? '' : 'Ding-dong',
+      path: 'icon-delivery-redesign',
+      title: '',
       description: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.',
     }, {
-      path: redesignEnabled ? 'icon-cook-redesign' : 'icon-cook',
-      title: redesignEnabled ? '' : 'Ta-da!',
+      path: 'icon-cook-redesign',
+      title: '',
       description: 'Cook up impressive meals from just £2.98 per serving, with all of the flavour and none of the fuss.',
     }],
   },
-  //ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
-  howItWorks: {
-    header: <Content contentKeys={'productBenefitTitleDefault'}><span>3 simple reasons to choose Gousto</span></Content>,
-    description: <Content contentKeys={'productBenefitDescriptionDefault'}><span>With the right ingredients, you can create something amazing.</span></Content>,
-    steps: (variant, redesignEnabled) => ([
-      {
-        path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : (redesignEnabled ? require('media/photos/variety-redesign.jpg') : require('media/photos/variety.jpg')), // eslint-disable-line global-require
-        title: <Content contentKeys={'thirdProductBenefitTitleDefault'}><span>Variety</span></Content>,
-        description: <Content contentKeys={'thirdProductBenefitDescriptionDefault'}><span>From family classics and ten minute meals to Fine Dine In.</span></Content>,
-      },
-      {
-        path: (variant === 'tv') ? require('media/photos/quality-alt.jpg') : (redesignEnabled ? require('media/photos/quality-redesign.jpg') : require('media/photos/quality.jpg')), // eslint-disable-line global-require
-        title: <Content contentKeys={'firstProductBenefitTitleDefault'}><span>Quality</span></Content>,
-        description: <Content contentKeys={'firstProductBenefitDescriptionDefault'}><span>Fresh ingredients for tasty, home-cooked dinners.</span></Content>,
-      },
-      {
-        path: (variant === 'tv') ? require('media/photos/simplicity-alt.jpg') : (redesignEnabled ? require('media/photos/simplicity-redesign.jpg') : require('media/photos/simplicity.jpg')) , // eslint-disable-line global-require
-        title: <Content contentKeys={'secondProductBenefitTitleDefault'}><span>Simplicity</span></Content>,
-        description: <Content contentKeys={'secondProductBenefitDescriptionDefault'}><span>Easy to follow recipes and perfectly measured ingredients.</span></Content>,
-      },
-    ]),
-  },
   CTA: {
-    main: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
-    mainRedesign: <span>Get started</span>,
+    text: 'Get started',
+    stickyCTA: 'Get started with 10% off',
     join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     loggedIn: {
-      main: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
-      mainRedesign: <span>See Menu</span>,
+      text: 'See Menu',
       join: <span>See Menu <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     },
   },
@@ -89,8 +46,7 @@ module.exports = {
     mayCode: ACTIVE_PROMO_CODE,
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-      mayText: 'Get cooking with 10% off all boxes in your first month',
-      linkText: 'Claim discount',
+      mayText: 'Get 10% off all boxes for 1 month',
     },
   },
   emailForm: {
@@ -102,40 +58,55 @@ module.exports = {
     'tv',
   ],
   defaultVariant: 'default',
-  inYourBox: {
-    subheading: 'A Gousto recipe box is packed with everything you need to reinvent dinnertimes.',
-  },
   trustPilotReviews: '13,700',
   whyGousto: {
-    steps: [
+    steps: (isRedesignEnabled) => ([
       {
         title: 'Variety',
-        img: VarietyImg,
+        img: isRedesignEnabled ? VarietyImgBrand : VarietyImg,
         list: [
-          'Over 50 tasty recipes each week',
-          'From family classics and 10 min meals to global cuisines and health ranges',
-          'Tasty plant based and gluten free options',
+          '50+ recipes a week, cooked from 10 mins',
+          'Family classics, global cuisines plus Joe Wicks’s health range',
+          'Tasty plant based and gluten free options too',
         ]
       },
       {
         title: 'Quality',
         img: QualityImg,
         list: [
-          'Fresh quality ingredients from trusted suppliers',
+          'Fresh ingredients from trusted suppliers',
           '100% British meat',
-          'Tried and tested recipes',
+          'All recipes tried, tested and loved by our chefs and customers',
         ]
       },
       {
         title: 'Simplicity',
         img: SimplicityImg,
         list: [
-          'Easy to follow recipe cards',
+          'Easy-to-follow recipe cards',
           'Precise ingredients with zero food waste',
-          'Delivered to your door any day you like',
+          'Free, contactless delivery, any day you like',
         ]
       }
+    ]),
+    title: 'So why Gousto?',
+  },
+  joeWicks: '“I love coming home to a Gousto box with four different banging recipes each week. With so many dishes to choose from there\'s always something new to try!”',
+  carousel: {
+    title: 'Who says Tuesday can’t taste like Saturday?',
+    subtitle: 'Tuck into our 50 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
+  },
+  seo: {
+    title: 'Recipe Boxes | Get Fresh Food &amp; Recipes Delivered | Gousto',
+    meta: [
+      {
+        name: 'description',
+        content: 'Change the way you eat with our easy to follow recipes. We deliver fresh boxes of ingredients and delicious recipes 7 days a week. Get started now!',
+      },
+      {
+        name: 'keywords',
+        content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking, recipe box',
+      },
     ]
   },
-  joeWicks: '“I love knowing that when I get home each week my Gousto box is waiting for me, with four banging recipes and all the ingredients I need. It’s removed one stress and made life so much easier. There’s no going back for me!”'
 }

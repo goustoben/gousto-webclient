@@ -1,62 +1,125 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component, createRef } from 'react'
+import classNames from 'classnames'
 import home from 'config/home'
-import config from 'config/routes'
-import Content from 'containers/Content'
+import { Heading } from 'goustouicomponents'
 import { CTAHomepageContainer } from '../CTA'
+import { NoLockIn } from '../NoLockIn'
 import css from './Hero.css'
 
-// ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
+class Hero extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSticky: false,
+      maxHeight: 0,
+    }
+    this.heroRef = createRef()
+    this.stickyCTARef = createRef()
+  }
 
-const Hero = ({ ctaUri, ctaText, dataTesting, variant }) => (
-  <div
-    className={css[`container--${variant}`]}
-    data-testing={dataTesting}
-  >
-    <div className={css[`textContainer--${variant}`]}>
-      <h1 className={css.header}>
-        <Content contentKeys="propositionMainHeadlineDefault">
-          <span>{home.hero.header}</span>
-        </Content>
-      </h1>
-      <h2 className={css.subHeader}>
-        <Content contentKeys="propositionSupportingHeadlineDefault">
-          <span>{home.hero.subheader}</span>
-        </Content>
-      </h2>
-      <div className={css.cta}>
+  componentDidMount() {
+    window.addEventListener('scroll', this.onScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll)
+  }
+
+  onScroll = ({ hero = this.heroRef, CTA = this.stickyCTARef }) => {
+    const heroSection = hero.current
+    const stickyCTA = CTA.current
+    let isSticky = false
+
+    if (window.pageYOffset > heroSection.offsetHeight + heroSection.offsetTop) {
+      isSticky = true
+    }
+
+    const lastSection = heroSection.parentNode.parentNode.lastChild
+    const { bottom } = lastSection.getBoundingClientRect()
+    const sectionHeight = this.getStickyContainerHeight(isSticky, bottom, stickyCTA)
+
+    lastSection.style.marginBottom = sectionHeight || '0px'
+
+    this.setState({
+      isSticky,
+      maxHeight: sectionHeight ? bottom : 0,
+    })
+  }
+
+  getStickyContainerHeight = (isSticky, bottom, stickyCTA) => {
+    if (isSticky && bottom < window.innerHeight) {
+      return `${stickyCTA.clientHeight}px`
+    }
+
+    return false
+  }
+
+  renderGetStarted = (isHeroCTA) => {
+    const { ctaUri, ctaText, isAuthenticated } = this.props
+    const { isSticky, maxHeight } = this.state
+    const className = isHeroCTA
+      ? css.stickyContainer
+      : classNames(css.mobileStickyInitial, css.mobileStickyRemoval, {
+        [css.mobileSticky]: isSticky,
+        [css.hideShadow]: maxHeight && !isHeroCTA && isSticky
+      })
+
+    return (
+      <div
+        className={className}
+        style={maxHeight && !isHeroCTA ? { top: `${maxHeight}px` } : {}}
+        ref={this.stickyCTARef}
+      >
         <CTAHomepageContainer
-          width={240}
           ctaUri={ctaUri}
-          sectionForTracking="hero"
-          dataTesting="homepageHeroCTA"
+          responsive
+          sectionForTracking={isHeroCTA ? 'hero' : 'stickyCTA'}
+          dataTesting={isHeroCTA ? 'homepageHeroCTA' : 'stickyCTA'}
         >
-          {ctaText}
+          {isSticky && !isHeroCTA && !isAuthenticated ? home.CTA.stickyCTA : ctaText}
         </CTAHomepageContainer>
+        <NoLockIn />
       </div>
-      <div className={css.noLockIn}>
-        <div className={css.lockInIcon} />
-        <div className={css.lockSign}>
-          <span className={css.lockInBold}>No lock in. </span>
-          Pause or cancel anytime
+    )
+  }
+
+  render() {
+    const { dataTesting, isBrandDesignEnabled } = this.props
+
+    return (
+      <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
+        <div className={css.textContainer}>
+          <div className={css.title}>
+            <Heading type="h1" size="fontStyle4XL" hasMargin={false}>{home.hero.header}</Heading>
+          </div>
+          <div className={css.subTitle}>
+            <Heading type="h2" size="fontStyleL" hasMargin={false}>{home.hero.subheader}</Heading>
+          </div>
+          {this.renderGetStarted(true)}
+          <div className={classNames(css.processImage, { [css.brandImagesGroup]: isBrandDesignEnabled })} />
         </div>
+        <div className={classNames(css.heroImage, { [css.brandHeroImage]: isBrandDesignEnabled })} />
+        {this.renderGetStarted(false)}
       </div>
-    </div>
-    <div className={css.spacer} />
-  </div>
-)
+    )
+  }
+}
 
 Hero.propTypes = {
-  ctaUri: PropTypes.string,
-  ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  ctaUri: PropTypes.string.isRequired,
+  ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
-  variant: PropTypes.string,
+  isAuthenticated: PropTypes.bool,
+  isBrandDesignEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
-  ctaUri: config.client.menu,
-  ctaText: home.CTA.main,
-  variant: 'default',
+  dataTesting: 'hero',
+  isAuthenticated: false,
+  isBrandDesignEnabled: false,
 }
 
-export default Hero
+export {
+  Hero
+}

@@ -9,7 +9,7 @@ const TrustPilot = () => (
       <p className={css.deliveredMeals}>
         Over
         <span className={css.goustoRedColor}> 100 million meals </span>
-        delivered so far
+        cooked and loved
       </p>
       <div className={css.reviewContainer}>
         <div className={css.starsContainer}>
@@ -19,7 +19,7 @@ const TrustPilot = () => (
         </div>
         <p className={css.reviews}>
           Based on
-          <span className={css.goustoRedColor}>{` ${trustPilotReviews} `}</span>
+          <span className={css.amountOfReviews}>{` ${trustPilotReviews} `}</span>
           reviews
         </p>
       </div>

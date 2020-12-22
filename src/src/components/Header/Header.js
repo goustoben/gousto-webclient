@@ -177,7 +177,7 @@ class Header extends React.PureComponent {
   }
 
   renderAuthLink = () => {
-    const { isAuthenticated, isHomePageRedesignEnabled } = this.props
+    const { isAuthenticated } = this.props
     const { logoutPending } = this.state
     let buttonState
     let button
@@ -205,10 +205,9 @@ class Header extends React.PureComponent {
       )
     } else {
       buttonState = 'loggedOut'
-      const loginText = isHomePageRedesignEnabled ? 'Log in' : 'Login'
       button = (
-        <button type="button" className={classNames(css.btn, { [css.loginBtn]: isHomePageRedesignEnabled })} data-testing="loginButton">
-          {loginText}
+        <button type="button" className={css.btn} data-testing="loginButton">
+          Login
         </button>
       )
     }
@@ -322,7 +321,6 @@ class Header extends React.PureComponent {
       trackNavigationClick,
       abandonBasketFeature,
       routing,
-      isHomePageRedesignEnabled,
       isHelpCentreActive,
       showAppAwareness,
       isAppAwarenessEnabled,
@@ -353,7 +351,7 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <div className={classNames({[css.homepageRedesign]: isHomePageRedesignEnabled})}>
+      <div>
         <CookieBannerContainer />
         <AppBanner />
         {shouldShowAbandonBasketModal ? <AbandonBasketModal /> : null}
@@ -465,7 +463,6 @@ Header.propTypes = {
   simple: PropTypes.bool,
   title: PropTypes.string,
   trackNavigationClick: PropTypes.func,
-  isHomePageRedesignEnabled: PropTypes.bool,
   isHelpCentreActive: PropTypes.bool,
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
@@ -487,7 +484,6 @@ Header.defaultProps = {
   simple: false,
   title: '',
   trackNavigationClick: () => { },
-  isHomePageRedesignEnabled: false,
   isHelpCentreActive: false,
   showAppAwareness: false,
   isAppAwarenessEnabled: false,

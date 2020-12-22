@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import logger from 'utils/logger'
-import Banner from 'Banner'
 import { clickClaimDiscountBar } from 'actions/trackingKeys'
-import { DiscountBar } from '../DiscountBar/DiscountBar'
+import { DiscountBar } from './DiscountBar/DiscountBar'
 
 export class PromoBanner extends Component {
   constructor(props) {
@@ -23,18 +22,14 @@ export class PromoBanner extends Component {
   }
 
   onScroll = () => {
-    const { isHomePageRedesignEnabled } = this.props
+    const header = this.stickyBarRef.current
+    let isSticky = false
 
-    if (isHomePageRedesignEnabled) {
-      const header = this.stickyBarRef.current
-      let isSticky = false
-
-      if (window.pageYOffset > header.offsetTop) {
-        isSticky = true
-      }
-
-      this.setState({ isSticky })
+    if (window.pageYOffset > header.offsetTop) {
+      isSticky = true
     }
+
+    this.setState({ isSticky })
   }
 
   applyDiscount = () => {
@@ -62,28 +57,18 @@ export class PromoBanner extends Component {
   }
 
   render() {
-    const { hide, text, linkText, isHomePageRedesignEnabled } = this.props
+    const { hide, text } = this.props
     const { isSticky } = this.state
 
-    if (isHomePageRedesignEnabled) {
-      return (
-        <div ref={this.stickyBarRef}>
-          <DiscountBar
-            applyDiscount={this.applyDiscount}
-            isHidden={hide}
-            isSticky={isSticky}
-          />
-        </div>
-      )
-    }
-
     return (
-      <Banner
-        hide={hide}
-        text={text}
-        linkText={linkText}
-        onClick={this.applyDiscount}
-      />
+      <div ref={this.stickyBarRef}>
+        <DiscountBar
+          applyDiscount={this.applyDiscount}
+          isHidden={hide}
+          isSticky={isSticky}
+          text={text}
+        />
+      </div>
     )
   }
 }
@@ -91,17 +76,13 @@ export class PromoBanner extends Component {
 PromoBanner.propTypes = {
   hide: PropTypes.bool,
   text: PropTypes.string,
-  linkText: PropTypes.string,
   promoCode: PropTypes.string,
   trackUTMAndPromoCode: PropTypes.func,
-  isHomePageRedesignEnabled: PropTypes.bool,
 }
 
 PromoBanner.defaultProps = {
   hide: false,
   text: '',
-  linkText: '',
   promoCode: '',
   trackUTMAndPromoCode: () => {},
-  isHomePageRedesignEnabled: false,
 }

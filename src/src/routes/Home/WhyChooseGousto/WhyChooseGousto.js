@@ -1,44 +1,42 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import home from 'config/home'
-import config from 'config/routes'
-import { Heading } from 'goustouicomponents'
-import { StepsGuide } from './StepsGuide/StepsGuide'
-import css from './WhyChooseGousto.css'
+import { StepsGuide } from './StepsGuide'
 import { CTAHomepageContainer } from '../CTA'
+import { ModuleTitle } from '../ModuleTitle'
+import css from './WhyChooseGousto.css'
 
-const WhyChooseGousto = ({ ctaUri, ctaText }) => (
-  <div className={css.whyGoustoContainer}>
-    <div className={css.title}>
-      <Heading type="h1" size="fontStyle2XL" hasMargin={false}>Why choose Gousto?</Heading>
-    </div>
-    <div className={css.priceSubTitle}>
-      <p className={css.subTitle}>
-        Cook up impressive meals from just
-        <span className={css.pricePerServing}> £2.98 per serving</span>
-        . All of the flavour and none of the fuss!
-      </p>
-    </div>
-    <StepsGuide />
-    <div className={css.CTAContainer}>
-      <CTAHomepageContainer
-        ctaUri={ctaUri}
-        sectionForTracking="whyChooseGousto"
-      >
-        {ctaText}
-      </CTAHomepageContainer>
-    </div>
-  </div>
-)
+const WhyChooseGousto = ({ ctaUri, ctaText }) => {
+  const subtitle = (
+    <Fragment>
+      Impressively easy meals from just
+      <span className={css.pricePerServing}> £2.98 per serving</span>
+      . All of the flavour, none of the fuss.
+    </Fragment>
+  )
 
-WhyChooseGousto.propTypes = {
-  ctaUri: PropTypes.string,
-  ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  return (
+    <div className={css.whyGoustoContainer}>
+      <ModuleTitle
+        title={home.whyGousto.title}
+        subTitle={subtitle}
+      />
+      <StepsGuide />
+      <div className={css.CTAContainer}>
+        <CTAHomepageContainer
+          ctaUri={ctaUri}
+          sectionForTracking="whyChooseGousto"
+        >
+          {ctaText}
+        </CTAHomepageContainer>
+      </div>
+    </div>
+  )
 }
 
-WhyChooseGousto.defaultProps = {
-  ctaUri: config.client.signup,
-  ctaText: home.CTA.mainRedesign,
+WhyChooseGousto.propTypes = {
+  ctaUri: PropTypes.string.isRequired,
+  ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 }
 
 export {
