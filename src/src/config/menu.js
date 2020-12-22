@@ -55,8 +55,8 @@ module.exports = {
     switchoverDate: '2020-02-25T12:00:00+01:00',
   },
   communicationPanel: {
-    title: 'Has the menu changed?',
-    body: `Our menu is temporarily smaller, so we can get more boxes out to those in need during this tough time. We'll be ramping back up to 50 in the next few weeks. We've also added some delicious Oven Ready options, for those nights when you need a break from cooking.`,
+    title: 'We’re sorry there aren’t more options available',
+    body: `We’ve had a rush on orders this week so a lot of recipes have now sold out. If you change your delivery day, more options should become available." We can discuss further in stand up tomorrow, but thought I'd give you guys the heads up today!`,
     showIcon: true,
     level: 'info'
   }
