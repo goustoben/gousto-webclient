@@ -1,1 +1,1 @@
-export default from './HeroContainer'
+export { HeroContainer as Hero } from './HeroContainer'

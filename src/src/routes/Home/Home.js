@@ -1,34 +1,30 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Component } from 'react'
 import Helmet from 'react-helmet'
-
 import menuFetchData from 'routes/Menu/fetchData'
-import home from 'config/home'
-import routes from 'config/routes'
+import homeConfig from 'config/home'
+import routesConfig from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
 import { PromoBanner } from './PromoBanner'
-import HomeSections from './HomeSections'
+import { HomeSections } from './HomeSections'
 
-class Home extends React.Component {
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
+const contextTypes = {
+  store: PropTypes.instanceOf(Object).isRequired,
+}
 
-  static propTypes = {
-    moduleOrder: PropTypes.string,
-    isAuthenticated: PropTypes.bool,
-    variant: PropTypes.string,
-    redirectLoggedInUser: PropTypes.func,
-    isSignupReductionEnabled: PropTypes.bool,
-    isHomePageRedesignEnabled: PropTypes.bool,
-  }
+const propTypes = {
+  isAuthenticated: PropTypes.bool,
+  variant: PropTypes.string,
+  redirectLoggedInUser: PropTypes.func,
+}
 
-  static defaultProps = {
-    variant: 'default',
-    isSignupReductionEnabled: false,
-    isHomePageRedesignEnabled: false,
-  }
+const defaultProps = {
+  variant: 'default',
+  isAuthenticated: false,
+  redirectLoggedInUser: () => {},
+}
 
+class Home extends Component {
   componentDidMount() {
     const { store } = this.context
     const { redirectLoggedInUser } = this.props
@@ -45,74 +41,33 @@ class Home extends React.Component {
     }
   }
 
-  getModules() {
-    const { moduleOrder } = this.props
-
-    if (moduleOrder) {
-      return moduleOrder.split(',')
-    }
-
-    return this.defaultModules()
-  }
-
-  defaultModules() {
-    const { isAuthenticated, isHomePageRedesignEnabled } = this.props
-    if (isAuthenticated && !isHomePageRedesignEnabled) {
-      return [
-        'hero', 'howItWorks', 'subscription', 'recipes',
-        'whatsInYourBox', 'testimonials',
-        'testedAndLovedBy',
-      ]
-    }
-
-    if (isHomePageRedesignEnabled) {
-      return [
-        'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes'
-      ]
-    }
-
-    return [
-      'hero', 'howItWorks', 'subscription', 'recipes',
-      'whatsInYourBox', 'emailForm', 'testimonials',
-      'testedAndLovedBy',
-    ]
-  }
+  getModules = () => ['hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes']
 
   render() {
-    const { isAuthenticated, variant, isSignupReductionEnabled, isHomePageRedesignEnabled } = this.props
+    const { isAuthenticated, variant } = this.props
     const modules = this.getModules()
-    let ctaUri
-    let ctaText
+    const { menu, signup, home } = routesConfig.client
+    const { CTA, seo } = homeConfig
+    let ctaUri = signup
+    let ctaText = CTA.text
 
     if (isAuthenticated) {
-      ctaUri = routes.client.menu
-      ctaText = isHomePageRedesignEnabled ? home.CTA.loggedIn.mainRedesign : home.CTA.loggedIn.main
-    } else {
-      ctaUri = routes.client.signup
-      ctaText = isHomePageRedesignEnabled ? home.CTA.mainRedesign : home.CTA.main
+      ctaUri = menu
+      ctaText = CTA.loggedIn.text
     }
 
     const link = [
       (variant !== 'default') ? {
         rel: 'canonical',
-        href: generateHref(routes.client.home),
+        href: generateHref(home),
       } : null
     ].filter(item => Boolean(item))
 
     return (
-      <span>
+      <div>
         <Helmet
-          title="Recipe Boxes | Get Fresh Food &amp; Recipes Delivered | Gousto"
-          meta={[
-            {
-              name: 'description',
-              content: 'Change the way you eat with our easy to follow recipes. We deliver fresh boxes of ingredients and delicious recipes 7 days a week. Get started now!',
-            },
-            {
-              name: 'keywords',
-              content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking, recipe box',
-            },
-          ]}
+          title={seo.title}
+          meta={seo.meta}
           link={link}
           style={[{
             cssText: `
@@ -124,40 +79,20 @@ class Home extends React.Component {
         />
         <PromoBanner />
         <HomeSections
-          isSignupReductionEnabled={isSignupReductionEnabled}
-          isHomePageRedesignEnabled={isHomePageRedesignEnabled}
           modules={modules}
-          testimonials={{
-            ctaUri,
-            ctaText,
-          }}
-          hero={{
-            ctaUri,
-            ctaText,
-            dataTesting: 'hero',
-            variant,
-            isHomePageRedesignEnabled,
-            isAuthenticated,
-          }}
-          recipes={{
-            ctaUri,
-            ctaText,
-          }}
-          whatsInYourBox={{
-            ctaUri,
-            ctaText,
-          }}
-          howItWorks={{
-            variant,
-          }}
-          whyChooseGousto={{
-            ctaUri,
-            ctaText,
-          }}
+          ctaUri={ctaUri}
+          ctaText={ctaText}
+          isAuthenticated={isAuthenticated}
         />
-      </span>
+      </div>
     )
   }
 }
 
-export default Home
+Home.propTypes = propTypes
+Home.defaultProps = defaultProps
+Home.contextTypes = contextTypes
+
+export {
+  Home
+}

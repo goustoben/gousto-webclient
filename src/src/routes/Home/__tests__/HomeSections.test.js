@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
-import HomeSections from 'routes/Home/HomeSections'
+import { HomeSections } from 'routes/Home/HomeSections'
 
 describe('HomeSections', () => {
   let wrapper
@@ -22,14 +21,12 @@ describe('HomeSections', () => {
     })
 
     test('then should render all default modules', () => {
+      expect(wrapper.find('section')).toHaveLength(5)
       expect(wrapper.find('Connect(Hero)')).toHaveLength(1)
+      expect(wrapper.find('TrustPilot')).toHaveLength(1)
+      expect(wrapper.find('WhyChooseGousto')).toHaveLength(1)
+      expect(wrapper.find('JoeWicks')).toHaveLength(1)
       expect(wrapper.find('Connect(Carousel)')).toHaveLength(1)
-      expect(wrapper.find('Connect(Testimonials)')).toHaveLength(1)
-      expect(wrapper.find('HowItWorks')).toHaveLength(1)
-      expect(wrapper.find('Subscription')).toHaveLength(1)
-      expect(wrapper.find('Connect(InYourBox)')).toHaveLength(1)
-      expect(wrapper.find('TestedLoved')).toHaveLength(1)
-      expect(wrapper.find('EmailForm')).toHaveLength(1)
     })
   })
 
@@ -41,65 +38,22 @@ describe('HomeSections', () => {
     })
 
     test('then should render only specified modules', () => {
+      expect(wrapper.find('section')).toHaveLength(2)
       expect(wrapper.find('Connect(Hero)')).toHaveLength(1)
       expect(wrapper.find('Connect(Carousel)')).toHaveLength(1)
-      expect(wrapper.find('Connect(Testimonials)')).toHaveLength(0)
-      expect(wrapper.find('HowItWorks')).toHaveLength(0)
-      expect(wrapper.find('Subscription')).toHaveLength(0)
-      expect(wrapper.find('Connect(InYourBox)')).toHaveLength(0)
-      expect(wrapper.find('TestedLoved')).toHaveLength(0)
-      expect(wrapper.find('EmailForm')).toHaveLength(0)
     })
   })
 
-  describe('when isHomePageRedesignEnabled is enabled', () => {
+  describe('when modules has a section that is not defined', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isHomePageRedesignEnabled: true,
-        modules: ['hero','trustPilot', 'whyChooseGousto', 'joeWicks']
+        modules: ['hero', 'testimonials']
       })
     })
 
-    test('then should render Hero2 component', () => {
-      expect(wrapper.find('Hero2')).toBeDefined()
-      expect(wrapper.find('Hero')).toHaveLength(0)
-    })
-
-    test('then should render 4 specified modules', () => {
-      expect(wrapper.find('section')).toHaveLength(4)
-      expect(wrapper.find('Hero2')).toBeDefined()
-      expect(wrapper.find('TrustPilot')).toBeDefined()
-      expect(wrapper.find('WhyChooseGousto')).toBeDefined()
-      expect(wrapper.find('JoeWicks')).toBeDefined()
-    })
-
-    describe('and there is no such module to render', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          modules: ['test']
-        })
-      })
-
-      test('then should return an empty span without children', () => {
-        expect(wrapper.find('span').children()).toHaveLength(0)
-      })
-    })
-  })
-
-  describe('when isHomePageRedesignEnabled is disabled', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isHomePageRedesignEnabled: false
-      })
-    })
-
-    test('then should render Hero2 component', () => {
-      expect(wrapper.find('Hero2')).toBeDefined()
-      expect(wrapper.find('Hero')).toHaveLength(0)
-    })
-
-    test('then should render 8 default modules wrapped up with span', () => {
-      expect(wrapper.find('span').first().children()).toHaveLength(8)
+    test('then should return only defined sections', () => {
+      expect(wrapper.find('section')).toHaveLength(1)
+      expect(wrapper.find('Connect(Hero)')).toHaveLength(1)
     })
   })
 })

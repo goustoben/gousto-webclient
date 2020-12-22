@@ -41,30 +41,10 @@
 	}
 }
 
-.homepageRedesign {
-  .svg, .image {
-    width: graphicMaxSize;
-    height: graphicMaxSize;
-    border-radius: 0;
-  }
-
-  @media BreakpointFromMedium {
-    .svg, .image {
-      width: graphicDefaultSize;
-      height: graphicDefaultSize;
-    }
-  }
-}
-
 .title {
 	composes: textXL textBold from 'styles/typography.css';
 	composes: marginXLTopBottom from 'sass-loader!styles/spacing.scss';
 	text-align: center;
-}
-
-.titleRedesign {
-  composes: fontStyleM from 'design-language/typography.css';
-  text-align: center;
 }
 
 .descriptionContainer {
@@ -76,10 +56,4 @@
 	text-align: center;
 	margin: -5px auto 0 auto;
 	max-width: 310px;
-}
-
-.homepageRedesign {
-  .description {
-    color: NewGrey;
-  }
 }

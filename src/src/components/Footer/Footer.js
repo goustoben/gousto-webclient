@@ -64,7 +64,6 @@ const Footer = ({
   isAuthenticated,
   simple,
   type,
-  isHomePageRedesignEnabled,
   isHelpCentreActive,
   trackNavigationClick,
   isMenuRedirectPageEnabled,
@@ -255,7 +254,7 @@ const Footer = ({
   }
 
   return (
-    <div className={classNames(css.footer, {[css.homepageRedesign]: isHomePageRedesignEnabled})}>
+    <div className={css.footer}>
       {renderFooter()}
     </div>
   )
@@ -267,7 +266,6 @@ Footer.propTypes = {
   helpPreLoginVisibilityChange: PropTypes.func.isRequired,
   simple: PropTypes.bool,
   type: PropTypes.string,
-  isHomePageRedesignEnabled: PropTypes.bool,
   isHelpCentreActive: PropTypes.bool,
   trackNavigationClick: PropTypes.func.isRequired,
   isMenuRedirectPageEnabled: PropTypes.bool,
@@ -279,7 +277,6 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
-  isHomePageRedesignEnabled: false,
   isHelpCentreActive: false,
   isMenuRedirectPageEnabled: false,
   postCode: '',

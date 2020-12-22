@@ -116,3 +116,7 @@
   height: 1.25rem;
   background: url('routes/Home/TrustPilot/trustpilot-four-and-half-stars.png') left center / cover no-repeat;
 }
+
+.amountOfReviews {
+  composes: fontBold from 'design-language/typography.css';
+}

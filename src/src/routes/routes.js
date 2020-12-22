@@ -5,13 +5,12 @@ import MainLayout from 'layouts/MainLayout'
 import Page from 'containers/PageContainer'
 
 import ErrorPage from 'components/ErrorPage'
-import Home from './Home'
+import { Home } from './Home'
 import { Checkout } from './Checkout'
 import Menu from './Menu'
 import Account from './Account'
 import Signup from './Signup'
 import Welcome from './Welcome'
-import Join from './Join'
 import Cookbook from './Cookbook'
 import { Jobs } from './Jobs'
 import ResetPassword from './ResetPassword'
@@ -33,7 +32,6 @@ const routes = (store) => (
     {Menu}
     {ChoosePlan(store)}
     {BoxPrices}
-    {Join}
     {Cookbook}
     {Jobs}
     {OrderAddOns}

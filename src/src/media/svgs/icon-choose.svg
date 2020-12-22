@@ -19,11 +19,11 @@
 			C163.6,211.6,157.5,213.2,152.8,210.3z"/>
 		<path fill="#333D47" d="M111.2,203.1c-1-2.4,0.1-5.3,2.5-6.3c2.4-1.1,5.2,0.1,6.2,2.5c1,2.4-0.1,5.3-2.5,6.3
 			C115,206.7,112.2,205.6,111.2,203.1z"/>
-		
+
 			<line fill="none" stroke="#333D47" stroke-width="6.5" stroke-linecap="round" stroke-miterlimit="10" x1="226.8" y1="128.6" x2="220.3" y2="139.8"/>
-		
+
 			<line fill="none" stroke="#333D47" stroke-width="6.5" stroke-linecap="round" stroke-miterlimit="10" x1="126.6" y1="67.8" x2="120" y2="79"/>
-		
+
 			<line fill="none" stroke="#333D47" stroke-width="6.5" stroke-linecap="round" stroke-miterlimit="10" x1="116.1" y1="85.6" x2="109.6" y2="96.8"/>
 	</g>
 </g>

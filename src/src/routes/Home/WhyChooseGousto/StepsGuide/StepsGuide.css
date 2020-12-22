@@ -1,5 +1,4 @@
 @value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
-@value Haricot from 'styles/colors.css';
 
 .container {
   display: flex;

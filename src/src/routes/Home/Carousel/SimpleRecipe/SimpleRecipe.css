@@ -1,52 +1,11 @@
-@value SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
-@value ScreenSMMax from 'styles/screenSizes.css';
-@value sizeMD bodyFontStackBold from 'styles/typography.css';
-@value White, Blackberry from 'styles/colors.css';
-
-.base {
-	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
-	composes: textBold from 'styles/typography.css';
-}
+@value White, Blackberry, Basa from 'styles/colors.css';
 
 .recipeDetails {
-	composes: relative from 'styles/position.css';
-	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
-	composes: borderXS from 'styles/borders.css';
-	composes: flex, verticalCenter from 'styles/flex.css';
-	background: White;
-	border-radius: 0;
-	vertical-align: top;
-	composes: inlineBlock from 'styles/display.css';
 	position: relative;
+  border: 1px solid Basa;
+	background: White;
 	width: 100%;
-	@media ScreenXSMax {
-		flex-basis: MobColumnWidth;
-		border-left-width: 0;
-		border-right-width: 0;
-	}
-}
-
-.simpleHeading {
-	composes: textCenter headerLG from 'styles/typography.css';
-	composes: block from 'styles/display.css';
-	composes: headerLG from 'styles/typography.css';
-	composes: base;
-	min-height: 50px;
-	-webkit-font-smoothing: auto;
-	font-smoothing: auto;
-	font-weight: bold;
-	margin-top: 0;
-	@media ScreenXSMax {
-		font-size: sizeMD;
-	}
-
-	@media ScreenSMMax {
-		font-size: 15px;
-	}
-
-	@media (width > 1500px) {
-		height: 50px;
-	}
+  cursor: pointer;
 }
 
 .recipeTitle {
@@ -55,12 +14,11 @@
   margin: 0 0 0.5rem;
   composes: fontStyleSubHead from 'design-language/typography.module.css';
   overflow: hidden;
-  max-height: 3rem;
+  height: 3rem;
 }
 
 .simple {
-	min-height: 160px;
-	cursor: pointer;
+	min-height: 10rem;
   position: relative;
 }
 
@@ -70,18 +28,11 @@
   left: 1rem;
 }
 
-.textContainerCenter {
-  composes: paddingMD from 'sass-loader!styles/spacing.scss';
-	composes: textCenter from 'styles/typography.css';
-	padding-left: SpacingSM;
-	padding-right: SpacingSM;
-	padding-bottom: SpacingXXS;
-}
-
 .textContainer {
+	text-align: left;
   padding: 1rem;
 }
 
-.simpleTagContainer {
-	height: 30px;
+.ratingContainer {
+	height: 1.25rem;
 }

@@ -1,7 +1,11 @@
 import { connect } from 'react-redux'
+import { getIsBrandDesignEnabled } from 'selectors/features'
+import { Hero } from './Hero'
 
-import Hero from './Hero'
+const mapStateToProps = (state) => ({
+  isBrandDesignEnabled: getIsBrandDesignEnabled(state),
+})
 
-const HeroContainer = connect()(Hero)
-
-export default HeroContainer
+export const HeroContainer = connect(
+  mapStateToProps,
+)(Hero)

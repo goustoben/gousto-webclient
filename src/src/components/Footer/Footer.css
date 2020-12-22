@@ -1,8 +1,7 @@
-@value sizeXS, sizeLG, sizeXL, sizeXXL from 'styles/typography.css';
-@value SpacingXXS, SpacingXS, SpacingSM, SpacingMD, SpacingLG, SpacingXL, SpacingXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
-@value Black, Blackberry, Cacao, Chia, Mushroom50, Spruce, White, Bluecheese, Mackerel, LightestAccessible, Coconut from 'styles/colors.css';
-@value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenLGMin, ScreenMDMax from 'styles/screenSizes.css';
-@value BreakpointFromLarge, BreakpointToLarge from 'design-language/breakpoints.css';
+@value sizeLG, sizeXXL from 'styles/typography.css';
+@value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value Blackberry, White from 'styles/colors.css';
+@value MaxBreakPointXS, ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMLMin, ScreenLGMin from 'styles/screenSizes.css';
 
 .superContainer {
 	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
@@ -110,38 +109,6 @@
 	@media ScreenMLMin {
 		padding-top: 40px;
 	}
-
-  .homepageRedesign & {
-
-    @media ScreenMLMin {
-      max-width: 840px;
-      margin: auto;
-    }
-
-    li {
-      &, * {
-        color: Bluecheese;
-      }
-
-      &::after {
-         content: '';
-         border-bottom: 2px solid Mackerel;
-         display: block;
-      }
-    }
-  }
-}
-
-.homepageRedesign {
-  composes: fontStyleSubHead from 'design-language/typography.css';
-  .menuList li {
-    @media BreakpointFromLarge {
-      margin: 0 1rem 1rem;
-    }
-    @media BreakpointToLarge {
-      margin: 0.5rem 0.75rem;
-    }
-  }
 }
 
 .menuList li {
@@ -158,12 +125,6 @@
 	@media ScreenSMMax {
 		font-weight: normal;
 	}
-
-  .homepageRedesign & {
-    @media ScreenSMMax {
-      font-weight: inherit;
-    }
-  }
 
 	&:not(:last-child):after{
 		 content: '';
@@ -187,11 +148,6 @@
 	composes: paragraphXS from 'styles/typography.css';
 	composes: textXXS from 'styles/typography.css';
 	padding-bottom: 5px;
-  .homepageRedesign & {
-    color: LightestAccessible;
-    font-size: 12px;
-    font-weight: normal;
-  }
 }
 
 .contact {
@@ -366,8 +322,4 @@
 	@media ScreenXSMax {
 		display: none;
 	}
-}
-
-.homepageRedesign {
-  background: Coconut;
 }
