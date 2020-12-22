@@ -56,7 +56,7 @@ module.exports = {
   },
   communicationPanel: {
     title: 'We’re sorry there aren’t more options available',
-    body: `We’ve had a rush on orders this week so a lot of recipes have now sold out. If you change your delivery day, more options should become available." We can discuss further in stand up tomorrow, but thought I'd give you guys the heads up today!`,
+    body: `We’ve had a rush on orders this week so a lot of recipes have now sold out. If you change your delivery day, more options should become available.`,
     showIcon: true,
     level: 'info'
   }
