@@ -70,6 +70,10 @@ describe('Home', () => {
   })
 
   describe('helmet', () => {
+    test('should contain correct title', () => {
+      expect(wrapper.find(Helmet).prop('title')).toBe('Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto')
+    })
+
     describe('when given a variant', () => {
       beforeEach(() => {
         wrapper.setProps({
