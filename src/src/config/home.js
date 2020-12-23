@@ -97,7 +97,7 @@ module.exports = {
     subtitle: 'Tuck into our 50 dish menu, filled with global cuisines, family favourites and Joe Wicks approved healthy options. Meals for every appetite – sorted.',
   },
   seo: {
-    title: 'Recipe Boxes | Get Fresh Food &amp; Recipes Delivered | Gousto',
+    title: 'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto',
     meta: [
       {
         name: 'description',
