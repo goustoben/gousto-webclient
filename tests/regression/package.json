@@ -15,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "moment": "^2.25.3",
-    "cypress": "^4.5.0"
+    "cypress": "^6.2.0",
+    "moment": "^2.25.3"
   },
   "devDependencies": {
     "cypress-pipe": "^1.7.0"

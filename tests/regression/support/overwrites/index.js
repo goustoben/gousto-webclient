@@ -27,7 +27,7 @@ Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
 Cypress.Commands.overwrite('server', (originalFn, options) => {
   const goustoDefaultOptions = {
     force404: true,
-    whitelist: (xhr) => {
+    ignore: (xhr) => {
       const defaultCypressWhitelist = xhr.method === 'GET' && /\.(jsx?|html|css)(\?.*)?$/.test(xhr.url)
       const checkoutCom = xhr.url.match(/(checkout.com)/)
       const content = xhr.url.match(/(content)|(s3)/)
