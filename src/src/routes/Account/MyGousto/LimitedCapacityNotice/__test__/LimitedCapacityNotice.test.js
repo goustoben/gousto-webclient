@@ -82,7 +82,7 @@ describe('given LimitedCapacityNotice is rendered', () => {
     })
 
     test('the title is set to a custom one', () => {
-      expect(wrapper.find('Heading').text()).toBe('We’re really sorry but we’re unable to take any more orders')
+      expect(wrapper.find('Heading').text()).toBe('Recipes selling out - try another day')
     })
 
     test('the default copy is not rendered', () => {
@@ -93,7 +93,7 @@ describe('given LimitedCapacityNotice is rendered', () => {
 
     test('a custom copy is rendered', () => {
       expect(wrapper.find('Alert').text()).toContain(
-        'With the Christmas period'
+        'you may have difficulty placing an order or choosing certain recipes'
       )
     })
   })

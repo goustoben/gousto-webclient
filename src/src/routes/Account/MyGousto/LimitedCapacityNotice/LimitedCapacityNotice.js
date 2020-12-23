@@ -23,12 +23,12 @@ const LimitedCapacityNotice = ({
 }) => (
   <Alert type="info">
     <Heading type="h3" size="_legacy_medium">
-      {isLimitedCapacityChristmas ? 'We’re really sorry but we’re unable to take any more orders' : 'We’re full to the brim' }
+      {isLimitedCapacityChristmas ? 'Recipes selling out - try another day' : 'We’re full to the brim' }
     </Heading>
     {
       isLimitedCapacityChristmas ? (
         <div>
-          <p>With the Christmas period, we’ve had a mad rush on orders so you may have to try another delivery day. Thank you for bearing with us and your kind support.</p>
+          <p>Due to overwhelming demand, you may have difficulty placing an order or choosing certain recipes. If you’re having issues with your order, please try changing your delivery day. Thank you for bearing with us and your kind support.</p>
         </div>
       ) : (
         <div>
