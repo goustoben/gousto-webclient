@@ -88,7 +88,7 @@ describe('Refer A Friend Logic', () => {
       wrapper.instance().referAFriend = mockReferAFriend
       wrapper.instance().handleSubmit(mockEvent)
 
-      expect(wrapper.state().errorMessage).toEqual('Please provide a valid email address')
+      expect(wrapper.state().errorMessage).toEqual('Please provide a valid email address.')
     })
   })
 

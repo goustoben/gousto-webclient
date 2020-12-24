@@ -1,86 +1,93 @@
-@value Radish, White from 'styles/colors.css';
-@value ScreenXXSMin from 'styles/screenSizes.css';
-@value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
+@value CarrotLight, Carrot, Bluecheese, Oyster, Blueberry from 'styles/colors.css';
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointToMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
 
 .container {
-	background:#333D47;
-	padding-top:30px;
-	padding-bottom:30px;
+  margin: 0 auto;
+  max-width: 75rem;
+}
 
-  &.homepageRedesign {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+.wrapper {
+  background: CarrotLight;
+  border: 1px solid Carrot;
+  padding: 1.5rem;
+  margin: 2rem 2rem 0;
 
-    @media BreakpointFromMedium {
-      padding-top: 5rem;
-      padding-bottom: 5rem;
-    }
+  @media BreakpointFromMedium and BreakpointToLarge {
+    margin: 2rem;
+  }
 
-    @media BreakpointToMedium {
-      padding-right: 2rem;
-      padding-left: 2rem;
-    }
+  @media BreakpointToMedium {
+    margin: 0.75rem;
+    padding: 1rem;
   }
 }
 
 .title {
-	composes: headerLG from 'styles/typography.css';
+  composes: fontStyleM from 'design-language/typography.module.css';
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-
-	text-align: center;
-	color: White;
-	font-size: 24px;
 }
 
-.description {
-	composes: textCenter textMD from 'styles/typography.css';
-	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
-	color: white;
-}
-
-.form {
-	composes: marginXLTop marginXXLLeftRight from 'sass-loader!styles/spacing.scss';
-  .homepageRedesign & {
-    margin-top: 0;
-  }
+.text {
+  composes: fontStyleBody from 'design-language/typography.module.css';
 }
 
 .row {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
+  display: block;
+  margin: 0.5rem 0 1rem;
+  @media BreakpointFromMedium {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.mt05 {
+  margin-top: 0.5rem;
 }
 
 .input {
-	width: 350px;
-	@media ScreenXXSMin {
-		margin-right: 15px;
-	}
+  height: 54px;
+
+  @media BreakpointToMedium {
+    width: 100%;
+  }
+
+  @media BreakpointFromLarge {
+    width: 343px;
+    margin-right: 0.8rem;
+  }
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    width: 305px;
+    margin-right: 0.4rem;
+  }
 }
 
-.inputs {
-	composes: marginSMBottom noMargin from 'sass-loader!styles/spacing.scss';
+.loginAncor {
+  border-bottom: 1px solid Oyster;
+  padding-bottom: 0.25rem;
+  composes: fontSemiBold from 'design-language/typography.module.css';
+
+  &:hover {
+     color: Blueberry;
+     text-decoration: none;
+  }
 }
 
-.msg {
-	composes: textXS from 'styles/typography.css';
-	/* composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss'; */
-
-	&:first-letter {
-		text-transform: capitalize;
-	}
+.infoIcon {
+  background: url('media/svgs/icon-error-info.svg') center top no-repeat;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: Carrot;
+  position: relative;
+  top: 0.1rem;
 }
 
-.errorMsg {
-	composes: msg;
-	color: white;
-}
-
-.login {
-	composes: textCenter textMD from 'styles/typography.css';
-	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
-	color: White;
-	margin-top: 15px;
-	margin-bottom: 10px;
+.ctaText {
+  @media BreakpointFromMedium {
+    padding: 0 1.73rem;
+    display: block;
+  }
 }

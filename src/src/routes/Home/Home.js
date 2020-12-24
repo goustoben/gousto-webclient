@@ -16,12 +16,14 @@ const propTypes = {
   isAuthenticated: PropTypes.bool,
   variant: PropTypes.string,
   redirectLoggedInUser: PropTypes.func,
+  isSignupReductionEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
   variant: 'default',
   isAuthenticated: false,
   redirectLoggedInUser: () => {},
+  isSignupReductionEnabled: false,
 }
 
 class Home extends Component {
@@ -41,11 +43,11 @@ class Home extends Component {
     }
   }
 
-  getModules = () => ['hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes']
+  getModules = (isSignupReductionEnabled) => [(isSignupReductionEnabled && 'emailForm'), 'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes'].filter(Boolean)
 
   render() {
-    const { isAuthenticated, variant } = this.props
-    const modules = this.getModules()
+    const { isAuthenticated, variant, isSignupReductionEnabled } = this.props
+    const modules = this.getModules(isSignupReductionEnabled)
     const { menu, signup, home } = routesConfig.client
     const { CTA, seo } = homeConfig
     let ctaUri = signup
@@ -83,6 +85,7 @@ class Home extends Component {
           ctaUri={ctaUri}
           ctaText={ctaText}
           isAuthenticated={isAuthenticated}
+          isSignupReductionEnabled={isSignupReductionEnabled}
         />
       </div>
     )

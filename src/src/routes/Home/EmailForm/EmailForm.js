@@ -1,14 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import { P } from 'Page/Elements'
 import TextInput from 'Form/Input'
-import { Button } from 'goustouicomponents'
+import { CTA } from 'goustouicomponents'
 import Form from 'Form'
 import { validateEmail } from 'utils/auth'
 import { newsletterSubscribe } from 'apis/customers'
 import config from 'config/home'
-import typography from 'design-language/typography.css'
 import css from './EmailForm.css'
 
 class EmailForm extends React.PureComponent {
@@ -54,73 +51,60 @@ class EmailForm extends React.PureComponent {
 
   render() {
     const { email, emailSubmitted, errorMessage } = this.state
-    const { isHomePageRedesignEnabled } = this.props
 
     return (
-      <div className={classnames(css.container, { [css.homepageRedesign]: isHomePageRedesignEnabled })}>
-        <h2 className={classnames(css.title, { [typography.fontStyleXL]: isHomePageRedesignEnabled })}>
-          <span>Hungry for cooking ideas?</span>
-        </h2>
-        <div className={css.form}>
-          {
-            !emailSubmitted
-              ? (
-                <div>
-                  <P className={classnames(css.description, {[typography.fontStyleBody]: isHomePageRedesignEnabled })}>
-                    <span>Get weekly recipe inspiration and our best cooking tips delivered straight to your inbox</span>
-                  </P>
-                  <Form onSubmit={this.handleSubmit}>
-                    <div className={css.row}>
-                      <div className={css.input}>
-                        <TextInput
-                          name="email"
-                          color="gray"
-                          textAlign="left"
-                          type="email"
-                          placeholder="Enter email"
-                          onChange={this.emailChanges}
-                          value={email}
-                          required
-                          className={css.inputs}
-                        />
+      <div className={css.container}>
+        <div className={css.wrapper}>
+          <h2 className={css.title}>
+            <span className={css.infoIcon} />
+            <span>Sorry, we’re full to the brim!</span>
+          </h2>
+          <div>
+            {
+              emailSubmitted
+                ? (<P className={`${css.text} ${css.mt05}`}><span>{config.emailForm.success}</span></P>)
+                : (
+                  <div>
+                    <P className={css.text}>
+                      <span>We can’t take any new customer orders right now. Leave your email below and we’ll let you know as soon as you can place your order.  Won’t be long!</span>
+                    </P>
+                    <Form onSubmit={this.handleSubmit}>
+                      <div className={css.row}>
+                        <div className={css.mt05}>
+                          <TextInput
+                            name="email"
+                            color="gray"
+                            textAlign="left"
+                            type="email"
+                            placeholder="Enter your email"
+                            onChange={this.emailChanges}
+                            value={email}
+                            required
+                            className={css.input}
+                          />
+                        </div>
+                        <div className={css.mt05}>
+                          <CTA onClick={this.handleSubmit} isFullWidth="small-screens-only">
+                            <span className={css.ctaText}>Join waitlist</span>
+                          </CTA>
+                        </div>
                       </div>
-                      <Button
-                        onClick={this.handleSubmit}
-                        className={classnames(css.inputs, {[typography.fontStyleSubHead]: isHomePageRedesignEnabled })}
-                      >
-                        Subscribe now
-                      </Button>
-                    </div>
-                  </Form>
-                </div>
-              )
-              : (
-                <P className={css.description}>
-                  <span>Hooray! You are now subscribed to our delicious emails.</span>
-                </P>
-              )
-          }
-          {
-            errorMessage
-              ? (
-                <div className={css.row}>
-                  <p className={css.errorMsg}>{errorMessage}</p>
-                </div>
-              )
-              : null
-          }
+                      <P className={css.text}>
+                        <span>
+                          Already a Gousto subscriber? &nbsp;
+                          <a href="#login" className={css.loginAncor}>Log in</a>
+                        </span>
+                      </P>
+                    </Form>
+                  </div>
+                )
+            }
+            {errorMessage && (<p className={`${css.text} ${css.mt05}`}>{errorMessage}</p>)}
+          </div>
         </div>
       </div>
     )
   }
-}
-
-EmailForm.propTypes = {
-  isHomePageRedesignEnabled: PropTypes.bool,
-}
-
-EmailForm.defaultProps = {
-  isHomePageRedesignEnabled: false,
 }
 
 export {

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import { EmailForm } from 'routes/Home/EmailForm'
 import Form from 'Form'
 import TextInput from 'Form/Input'
-import { Button } from 'goustouicomponents'
+import { CTA } from 'goustouicomponents'
 import { P } from 'Page/Elements'
 import { newsletterSubscribe } from 'apis/customers'
 
@@ -18,37 +18,33 @@ jest.mock('apis/customers', () => ({
 }))
 
 describe('EmailForm', () => {
+  const emailAddress = 'test@test.com'
+
   beforeEach(() => {
     wrapper = shallow(<EmailForm />)
   })
 
-  test('should render a form', () => {
+  test('should render properly', () => {
     expect(wrapper.find(Form).length).toEqual(1)
-  })
-
-  test('should render a button', () => {
-    expect(wrapper.find(Button).length).toEqual(1)
-  })
-
-  test('should render an input field', () => {
+    expect(wrapper.find(CTA).length).toEqual(1)
     expect(wrapper.find(TextInput).length).toEqual(1)
   })
 
   test('should cause a newsletterSubscribe action to be dispatched on button click if email valid', async () => {
     wrapper
       .find(TextInput)
-      .simulate('change', 'test@test.com')
+      .simulate('change', emailAddress)
     await wrapper
-      .find(Button)
+      .find(CTA)
       .simulate('click', { preventDefault: e => e })
-    expect(wrapper.state().emailValid).toEqual(true)
-    expect(wrapper.state().email).toEqual('test@test.com')
-    expect(newsletterSubscribe).toHaveBeenCalled()
+    expect(wrapper.state().emailValid).toBeTruthy()
+    expect(wrapper.state().email).toEqual(emailAddress)
+    expect(newsletterSubscribe).toHaveBeenCalledWith(emailAddress)
   })
 
   test('should display successful message for newsletter subscription', () => {
     wrapper.setState({ emailSubmitted: true })
-    expect(wrapper.find(P).at(0).find('span').text()).toEqual('Hooray! You are now subscribed to our delicious emails.')
+    expect(wrapper.find(P).first().find('span').text()).toEqual('Hooray! We’ll let you know as soon as you can place your order.')
   })
 
   test('should show an error message if email not valid', () => {
@@ -56,11 +52,36 @@ describe('EmailForm', () => {
       .find(TextInput)
       .simulate('change', 'testtest.com')
     wrapper
-      .find(Button)
+      .find(CTA)
       .simulate('click', { preventDefault: e => e })
     expect(wrapper.state().emailValid).toEqual(false)
     expect(wrapper.state().emailSubmitted).toEqual(false)
     expect(wrapper.state().email).toEqual('testtest.com')
-    expect(wrapper.find('p').text()).toEqual('Please provide a valid email address')
+    expect(wrapper.find('p').text()).toEqual('Please provide a valid email address.')
+  })
+
+  test('should display login anchor', () => {
+    expect(wrapper.find(P).last().find('span').text()).toEqual('Already a Gousto subscriber?  Log in')
+  })
+
+  test('should catch server error', () => {
+    // eslint-disable-next-line prefer-promise-reject-errors
+    newsletterSubscribe.mockImplementation(() => Promise.reject({
+      code: 'validation.unique.email'
+    }))
+    wrapper
+      .find(TextInput)
+      .simulate('change', emailAddress)
+    wrapper
+      .find(CTA)
+      .simulate('click', { preventDefault: e => e })
+    setImmediate(() => {
+      expect(wrapper.state()).toStrictEqual({
+        emailSubmitted: true,
+        emailValid: true,
+        errorMessage: '',
+        email: emailAddress
+      })
+    })
   })
 })

@@ -32,7 +32,7 @@ module.exports = {
   },
   CTA: {
     text: 'Get started',
-    stickyCTA: 'Get started with 10% off',
+    stickyCTA: 'Get started with 20% off',
     join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
     loggedIn: {
       text: 'See Menu',
@@ -46,12 +46,13 @@ module.exports = {
     mayCode: ACTIVE_PROMO_CODE,
     banner: {
       text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-      mayText: 'Get 10% off all boxes for 1 month',
+      mayText: 'Get 20% off all boxes for 1 month',
     },
   },
   emailForm: {
-    emailRequired: 'Please provide a valid email address',
-    serverError: 'There is a techinal issue, please try again later',
+    emailRequired: 'Please provide a valid email address.',
+    serverError: 'There is a technical issue, please try again later.',
+    success: 'Hooray! We’ll let you know as soon as you can place your order.',
   },
   knownVariants: [
     'default',

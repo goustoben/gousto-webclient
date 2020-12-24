@@ -56,4 +56,31 @@ describe('HomeSections', () => {
       expect(wrapper.find('Connect(Hero)')).toHaveLength(1)
     })
   })
+
+  describe('emailForm', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isSignupReductionEnabled: false,
+        modules: ['emailForm']
+      })
+    })
+
+    test('should not return emailForm module', () => {
+      expect(wrapper.find('section')).toHaveLength(0)
+      expect(wrapper.find('EmailForm')).toHaveLength(0)
+    })
+
+    describe('when signup reduction is enabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isSignupReductionEnabled: true,
+        })
+      })
+
+      test('then should return emailForm module', () => {
+        expect(wrapper.find('section')).toHaveLength(1)
+        expect(wrapper.find('EmailForm')).toHaveLength(1)
+      })
+    })
+  })
 })
