@@ -111,4 +111,28 @@ describe('Home', () => {
       expect(homeSectionsWrapper.props().ctaText).toEqual('See Menu')
     })
   })
+
+  describe('getModules', () => {
+    const defaultHomeModules = ['hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes']
+
+    describe('given no arguments passed', () => {
+      describe('when getModules is called', () => {
+        test('then should return default home modules', () => {
+          const { getModules } = wrapper.instance()
+          expect(getModules()).toEqual(defaultHomeModules)
+        })
+      })
+    })
+
+    describe('given arguments are passed', () => {
+      describe('when getModules is called and arguments are truthy', () => {
+        test('then returned modules should contain emailForm', () => {
+          const { getModules } = wrapper.instance()
+          const expected = ['emailForm', ...defaultHomeModules]
+          const isSignupReductionEnabled = true
+          expect(getModules(isSignupReductionEnabled)).toEqual(expected)
+        })
+      })
+    })
+  })
 })

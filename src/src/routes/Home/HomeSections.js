@@ -7,12 +7,14 @@ import { Carousel } from './Carousel'
 import { TrustPilot } from './TrustPilot'
 import { WhyChooseGousto } from './WhyChooseGousto'
 import { JoeWicks } from './JoeWicks'
+import { EmailForm } from './EmailForm'
 
 const propTypes = {
   modules: PropTypes.arrayOf(PropTypes.string),
   ctaUri: PropTypes.string,
   ctaText: PropTypes.string,
   isAuthenticated: PropTypes.bool,
+  isSignupReductionEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -20,11 +22,12 @@ const defaultProps = {
   ctaUri: routesConfig.client.menu,
   ctaText: homeConfig.CTA.text,
   isAuthenticated: false,
+  isSignupReductionEnabled: false,
 }
 
 class HomeSections extends Component {
   mapModules = () => {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, isSignupReductionEnabled } = this.props
 
     return {
       hero: (props) => <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />,
@@ -32,6 +35,11 @@ class HomeSections extends Component {
       whyChooseGousto: (props) => <WhyChooseGousto ctaText={props.ctaText} ctaUri={props.ctaUri} />,
       joeWicks: () => <JoeWicks />,
       recipes: (props) => <Carousel ctaText={props.ctaText} ctaUri={props.ctaUri} />,
+      ...(
+        isSignupReductionEnabled
+          ? { emailForm: () => <EmailForm /> }
+          : {}
+      ),
     }
   }
 

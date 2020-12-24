@@ -27,7 +27,7 @@ class Page extends React.PureComponent {
     isSignupReductionEnabled: false,
   }
 
-  static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus/'
+  static COVID_19_LINK = 'https://cook.gousto.co.uk/coronavirus-3'
 
   componentDidMount() {
     const { isSignupReductionEnabled, disabled, isAuthenticated, email, loginVisibilityChange, goustoReference, trackUserAttributes } = this.props
