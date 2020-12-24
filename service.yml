@@ -67,7 +67,7 @@ ecs_log_filters:
           owner: squad-haricots
           level: critical
 
-scaling: 
+scaling:
   ecsCpuTargetTrackingScalingPolicyPercentage: 50
   ecsMemoryTargetTrackingScalingPolicyPercentage: 20
 
@@ -110,11 +110,11 @@ environments:
   - name: production
     instanceType: t2.medium
     minInstanceSize: 0
-    maxInstanceSize: 8
+    maxInstanceSize: 16
     desiredInstanceSize: 0
     availability: alwaysOn
-    ecsDesiredTaskCount: 8
-    ecsMaxTaskCount: 18
+    ecsDesiredTaskCount: 16
+    ecsMaxTaskCount: 32
     ecsMemory: 2048
     ecsCpu: 1024
 
