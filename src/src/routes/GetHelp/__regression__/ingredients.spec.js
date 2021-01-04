@@ -139,6 +139,29 @@ describe('Given the customer is logged in', () => {
           cy.contains('phone')
         })
       })
+
+      describe('And ingredients are selected but they are too many', () => {
+        beforeEach(() => {
+          cy.fixture('getHelp/ssr/validateIngredientsNotValid').as('validateIngredientsNotValid')
+          cy.route({
+            method: 'POST',
+            url: /ssr\/v2\/validate-ingredients/,
+            status: 422,
+            response: '@validateIngredientsNotValid',
+          })
+
+          expandRecipes([0, 1, 2])
+          selectIngredients([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 15, 16])
+          clickContinueCTA()
+        })
+
+        it('shows the Contact Us step', () => {
+          cy.url().should('include', 'contact')
+          cy.contains('chat')
+          cy.contains('email')
+          cy.contains('phone')
+        })
+      })
     })
   })
 })
