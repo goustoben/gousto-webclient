@@ -25,7 +25,7 @@ describe('useFetch', () => {
 
       const [isFetchLoading, fetchResponse, fetchError] = result.current
 
-      expect(global.fetch).toHaveBeenCalledWith('http://mock/', { headers: {} })
+      expect(global.fetch).toHaveBeenCalledWith('http://mock', { headers: {} })
       expect(isFetchLoading).toBe(true)
       expect(fetchResponse).toBe(undefined)
       expect(fetchError).toBe(false)
@@ -40,7 +40,7 @@ describe('useFetch', () => {
         fetchWrapper,
       )
 
-      expect(global.fetch).toHaveBeenCalledWith('http://mock/?testParam=test_param', { headers: {} })
+      expect(global.fetch).toHaveBeenCalledWith('http://mock?testParam=test_param', { headers: {} })
 
       await waitForNextUpdate()
     })
