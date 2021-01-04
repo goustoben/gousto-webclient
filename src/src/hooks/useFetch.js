@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import queryString from 'query-string'
 
 export const useFetch = ({
   url,
@@ -28,11 +29,7 @@ export const useFetch = ({
     }
 
     if (url) {
-      const urlToFetch = new URL(url)
-
-      if (parameters) {
-        urlToFetch.search = new URLSearchParams(parameters)
-      }
+      const urlToFetch = `${url}${parameters ? `?${queryString.stringify(parameters)}` : ''}`
 
       const fetchData = async () => {
         try {
