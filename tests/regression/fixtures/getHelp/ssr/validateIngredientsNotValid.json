@@ -2,7 +2,7 @@
   "status": "error",
   "errors": {
     "ingredient_id": [
-      "Ingredient(s) price(s) are too high."
+      "We don't care about the reason in webclient"
     ]
   }
 }
