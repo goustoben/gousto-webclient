@@ -33,6 +33,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
       ${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
       ${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}
       ${scripts.other ? head.pingdom() : ''}
+      ${head.trustpilot ? head.trustpilot() : ''}
 
     </head>
     <body>

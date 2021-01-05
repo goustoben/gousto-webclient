@@ -1,7 +1,9 @@
 import { gtm } from './gtm'
+import { trustpilot } from './trustpilot'
 
 const head = {
   gtm,
+  trustpilot,
   defaultMeta: require('./defaultMeta').default,
   fbTracking: require('./fbTracking').default,
   pingdom: require('./pingdom').default,
