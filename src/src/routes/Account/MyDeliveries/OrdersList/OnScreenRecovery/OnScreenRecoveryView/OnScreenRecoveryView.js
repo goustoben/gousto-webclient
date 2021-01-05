@@ -77,7 +77,7 @@ export class OnScreenRecoveryView extends React.Component {
                   <div className={css.discountIconContainer}>
                     <Svg fileName="pause-osr-modal-icon" className={css.discountIcon} />
                   </div>
-                  <h4 className={css.subHeader}>{offer.message}</h4>
+                  <h4 className={css.subHeader} data-testing="pause-discount-offer">{offer.message}</h4>
                 </div>
               )
             }
@@ -85,7 +85,7 @@ export class OnScreenRecoveryView extends React.Component {
               <div className={css.keepCta}>
                 <CTA
                   size="small"
-                  data-testing="keep-subscription-link"
+                  testingSelector="keep-subscription-link"
                   onClick={onKeep}
                   isFullWidth
                 >
@@ -94,7 +94,7 @@ export class OnScreenRecoveryView extends React.Component {
               </div>
               <CTA
                 size="small"
-                data-testing="continue-to-pause-link"
+                testingSelector="continue-to-pause-link"
                 onClick={onConfirm}
                 variant="secondary"
                 isFullWidth

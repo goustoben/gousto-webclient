@@ -79,7 +79,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   if (platform === 'WEB') {
     // Go to /menu
     cy.get("[href='/menu']").first().click()
-    
+
     // Try to add a recipe
     cy.get('[data-testing="menuRecipeAdd"]').eq(0).click()
     cy.get('[data-testing="menuBrowseCTAButton"]').last().click()
@@ -108,45 +108,59 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   } else {
     cy.get('[data-testing="boxSummaryButton"]').first().click()
   }
-  
+
   cy.wait(['@getIntervals', '@getStock', '@getPrices', '@previewOrder'])
 })
 
-Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive }) => {
-      cy.server()
-      cy.fixture('user/userCurrent').as('userCurrent')
-      cy.route('GET', /user\/current/, '@userCurrent')
+Cypress.Commands.add('setFeatures', (features) => {
+  cy.window()
+    .then(win => {
+      const dispatch = win.__store__.dispatch
 
-      if(isSubscriptionActive) {
-        cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as('currentActiveSubscription')
-      } else {
-        cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentPausedSubscription.json').as('currentPausedSubscription')
-      }
+      dispatch({
+        type: 'FEATURES_SET',
+        features
+      })
+    })
+})
 
-      cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
-      cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('currentOrders')
+Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, features = [] }) => {
+  cy.server()
+  cy.fixture('user/userCurrent').as('userCurrent')
+  cy.route('GET', /user\/current/, '@userCurrent')
 
-      cy.fixture('user/userAddresses').as('userAdresses')
-      cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')
+  if (isSubscriptionActive) {
+    cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentActiveSubscription.json').as('currentActiveSubscription')
+  } else {
+    cy.route('GET', /user\/current\/subscription/, 'fixture:user/userCurrentPausedSubscription.json').as('currentPausedSubscription')
+  }
 
-      cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as('getPrices')
+  cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
+  cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('currentOrders')
 
-      cy.route('GET', /^(?=.*\bdeliveries\/v1.0\/days\b).*$/, 'fixture:deliveries/deliveryDays.json').as('deliveryDays')
+  cy.fixture('user/userAddresses').as('userAdresses')
+  cy.route('GET', '/customers/v1/customers/17247344/addresses', '@userAdresses')
 
-      cy.fixture('user/userCurrentProjectedDeliveries').as('userCurrentProjectedDeliveries')
-      cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
+  cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as('getPrices')
 
-      cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
-      cy.route('GET', /user\/current\/address/, '@userCurrentAddress')
+  cy.route('GET', /^(?=.*\bdeliveries\/v1.0\/days\b).*$/, 'fixture:deliveries/deliveryDays.json').as('deliveryDays')
 
-      cy.route('PUT', /user\/current\/subscription\/activate/, 'fixture:user/userCurrentActivateSubscription.json').as('currentActivateSubscription')
+  cy.fixture('user/userCurrentProjectedDeliveries').as('userCurrentProjectedDeliveries')
+  cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
 
-      cy.visit('/subscription-settings')
+  cy.fixture('user/userCurrentAddress').as('userCurrentAddress')
+  cy.route('GET', /user\/current\/address/, '@userCurrentAddress')
 
-      if (isSubscriptionActive) {
-        cy.wait('@currentActiveSubscription')
-      } else {
-        cy.wait('@currentPausedSubscription')
-      }
-      cy.wait('@deliveryDays')
+  cy.route('PUT', /user\/current\/subscription\/activate/, 'fixture:user/userCurrentActivateSubscription.json').as('currentActivateSubscription')
+
+  cy.visit('/subscription-settings')
+
+  cy.setFeatures(features)
+
+  if (isSubscriptionActive) {
+    cy.wait('@currentActiveSubscription')
+  } else {
+    cy.wait('@currentPausedSubscription')
+  }
+  cy.wait('@deliveryDays')
 })

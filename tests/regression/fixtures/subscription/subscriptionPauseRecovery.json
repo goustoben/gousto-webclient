@@ -1,0 +1,32 @@
+{
+  "status": "ok",
+  "meta": null,
+  "data": {
+    "title": "Are you sure you want to pause?",
+    "value_proposition": {
+      "title": "Need more flexibility?",
+      "message": "Skip boxes at any time on your deliveries."
+    },
+    "intervene": true,
+    "offer": {
+      "details": {
+        "message": "You have 40% off on your next order",
+        "formatted_value": "40%",
+        "raw_message": {
+          "text": "You have {:value:} off on your next order",
+          "values": [
+            {
+              "value": "40%",
+              "key": "value"
+            }
+          ]
+        },
+        "require_active_subscription": false
+      }
+    },
+    "call_to_actions": {
+      "confirm": "Pause anyway",
+      "keep": "Keep subscription and get 40% off"
+    }
+  }
+}
