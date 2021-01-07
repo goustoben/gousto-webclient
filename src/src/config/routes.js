@@ -139,7 +139,6 @@ module.exports = {
     userOrders: '/user/current/orders',
     userOrder: '/user/current/order',
     userProjectedDeliveries: '/user/current/projected-deliveries',
-    rateCount: '/user/current/ratings/count',
     userAddress: '/user/current/address',
     userDelivery: '/user/current/subscription/delivery',
     userPromo: '/user/current/promotion-codes',

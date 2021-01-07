@@ -10,11 +10,9 @@ const propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,
-  rateRecipeCount: PropTypes.number,
   cardExpiryDate: PropTypes.string,
   isNewSubscriptionPageEnabled: PropTypes.bool,
   userLoadData: PropTypes.func.isRequired,
-  userRecipeRatings: PropTypes.func.isRequired,
   checkCardExpiry: PropTypes.func.isRequired,
   subscriptionLoadData: PropTypes.func.isRequired,
   loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
@@ -23,7 +21,6 @@ const propTypes = {
 const defaultProps = {
   children: null,
   renderChildren: false,
-  rateRecipeCount: 0,
   cardExpiryDate: '',
   isNewSubscriptionPageEnabled: false,
 }
@@ -34,19 +31,17 @@ class Account extends React.PureComponent {
       checkCardExpiry,
       subscriptionLoadData,
       userLoadData,
-      userRecipeRatings
     } = this.props
 
     Promise.all([
       userLoadData(),
-      userRecipeRatings(),
       loadMenuServiceDataIfDeepLinked(),
       subscriptionLoadData(),
     ]).then(() => checkCardExpiry())
   }
 
   render() {
-    const { rateRecipeCount, cardExpiryDate, renderChildren, children, location, isNewSubscriptionPageEnabled } = this.props
+    const { cardExpiryDate, renderChildren, children, location, isNewSubscriptionPageEnabled } = this.props
 
     const pageTitles = {
       '/my-subscription': 'Manage my Subscription',
@@ -59,7 +54,6 @@ class Account extends React.PureComponent {
       <div className={css.accountWrap}>
         <NavBar
           currentPath={location.pathname}
-          rateRecipeCount={rateRecipeCount}
           cardExpiryDate={cardExpiryDate}
           isNewSubscriptionPageEnabled={isNewSubscriptionPageEnabled}
         />

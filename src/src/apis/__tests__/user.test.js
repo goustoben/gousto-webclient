@@ -14,7 +14,6 @@ import {
   skipDelivery,
   restoreDelivery,
   reactivate,
-  userRateCount,
   checkDuplicateUser,
   verifyAge,
   referralDetails,
@@ -51,7 +50,6 @@ jest.mock('config/routes', () => ({
     userOrder: '/userOrder',
     userDelivery: '/userDelivery',
     user: '/user',
-    rateCount: '/rateCount'
   }
 }))
 
@@ -279,21 +277,6 @@ describe('user api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await verifyAge('token', '123')
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('userRateCount', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const reqData = { a: 1, b: 2 }
-      await userRateCount(accessToken, reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/rateCount', reqData, 'GET')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await userRateCount('token', {})
       expect(result).toEqual(mockFetchResult)
     })
   })

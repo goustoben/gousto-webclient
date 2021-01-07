@@ -7,7 +7,6 @@ import Account from './Account'
 
 function mapStateToProps(state) {
   return {
-    rateRecipeCount: state.user.get('rateCount'),
     cardExpiryDate: state.user.getIn(['card', 'expiryDate']),
     isNewSubscriptionPageEnabled: getIsNewSubscriptionPageEnabled(state)
   }
@@ -18,7 +17,6 @@ const AccountContainer = connect(
   {
     loadMenuServiceDataIfDeepLinked,
     userLoadData: userActions.userLoadData,
-    userRecipeRatings: userActions.userRecipeRatings,
     checkCardExpiry: userActions.checkCardExpiry,
     subscriptionLoadData: subscriptionActions.subscriptionLoadData,
   }

@@ -652,20 +652,6 @@ describe('user reducer', () => {
     })
   })
 
-  describe('USER_RATE_COUNT', () => {
-    test('should set the rateCount prop of the state', () => {
-      const state = Immutable.Map({})
-
-      const result = user(state, {
-        type: actionTypes.USER_RATE_COUNT,
-        rateCount: 2,
-      })
-      const expected = Immutable.Map({ rateCount: 2 })
-
-      expect(Immutable.is(result, expected)).toBe(true)
-    })
-  })
-
   describe('PS_SUBSCRIPTION_PAUSED', () => {
     test('should set the subscription.state prop of the state to "inactive"', () => {
       const state = Immutable.fromJS({ subscription: { state: 'active' } })
