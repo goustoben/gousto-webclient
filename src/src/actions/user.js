@@ -254,19 +254,6 @@ function userOrderSkipNextProjected() {
   }
 }
 
-function userRecipeRatings() {
-  return async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    const { data = {} } = await userApi.userRateCount(accessToken)
-    const rateCount = data.count
-
-    dispatch({
-      type: actionTypes.USER_RATE_COUNT,
-      rateCount
-    })
-  }
-}
-
 function userLoadData() {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
@@ -873,7 +860,6 @@ const userActions = {
   userOrderCancelNext,
   userOrderSkipNextProjected,
   userSubscribe,
-  userRecipeRatings,
   userLoadData,
   userLoadReferralDetails,
   userFetchShippingAddresses,

@@ -36,9 +36,6 @@ const user = {
     case actionTypes.USER_SUBSCRIBE:
       return state.merge(action.user)
 
-    case actionTypes.USER_RATE_COUNT:
-      return state.set('rateCount', action.rateCount)
-
     case actionTypes.USER_LOAD_DATA:
       return state.merge(action.user).set('ageVerified', action.user.ageVerified === '1')
 

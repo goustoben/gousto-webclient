@@ -16,7 +16,6 @@ describe('Account', () => {
       <AccountComponent
         location={location}
         userLoadData={() => {}}
-        userRecipeRatings={() => {}}
         checkCardExpiry={() => {}}
         subscriptionLoadData={() => {}}
         loadMenuServiceDataIfDeepLinked={() => {}}
@@ -45,7 +44,6 @@ describe('Account', () => {
         <AccountComponent
           location={location}
           userLoadData={() => {}}
-          userRecipeRatings={() => {}}
           checkCardExpiry={() => {}}
           subscriptionLoadData={() => {}}
           loadMenuServiceDataIfDeepLinked={() => {}}

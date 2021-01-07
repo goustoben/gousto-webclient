@@ -64,10 +64,6 @@ export function verifyAge(accessToken, userId) {
   return fetch(accessToken, `${endpoint('core')}/user/${userId}`, { age_verified: 1 }, 'PUT')
 }
 
-export function userRateCount(accessToken, reqData) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.rateCount}`, reqData, 'GET')
-}
-
 export function checkDuplicateUser(reqData) {
   return fetch(null, `${endpoint('core')}/user/check-duplicate`, reqData, 'POST')
 }

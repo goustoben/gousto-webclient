@@ -6,7 +6,7 @@ import css from './NavBar.css'
 import NavBarItem from './NavBarItem/NavBarItem'
 
 const NavBar = (props) => {
-  const { rateRecipeCount, isNewSubscriptionPageEnabled } = props
+  const { isNewSubscriptionPageEnabled } = props
   const subscriptionUrl = isNewSubscriptionPageEnabled ? config.client.mySubscription2 : config.client.mySubscription
 
   const menuTitles = {
@@ -71,7 +71,6 @@ const NavBar = (props) => {
             <span className={css.tabletHide}>My </span>
             Recipes
           </span>
-          {(rateRecipeCount > 0) ? <span className={css.badge}>{rateRecipeCount}</span> : null}
         </span>
       ),
     },
@@ -100,13 +99,11 @@ const NavBar = (props) => {
 
 NavBar.propTypes = {
   currentPath: PropTypes.string,
-  rateRecipeCount: PropTypes.number,
   isNewSubscriptionPageEnabled: PropTypes.bool,
 }
 
 NavBar.defaultProps = {
   currentPath: config.client.myGousto,
-  rateRecipeCount: 0,
   isNewSubscriptionPageEnabled: false
 }
 

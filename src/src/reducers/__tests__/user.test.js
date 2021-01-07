@@ -170,4 +170,45 @@ describe('User reducer', () => {
       })
     })
   })
+
+  describe('Given UNSUBSCRIBED_USER is dispatched', () => {
+    test('Then the user is unsubscribed from emails', () => {
+      const state = userReducer.user(defaultState, {
+        type: actionTypes.UNSUBSCRIBED_USER
+      })
+
+      expect(state.get('unsubscribedFromEmail')).toBe(true)
+    })
+  })
+
+  describe('Given USER_ORDER_CARD_OPEN_CLOSE is dispatched', () => {
+    test('Then the orderCardsCollapsedStatus state is updated', () => {
+      const state = userReducer.user(defaultState, {
+        type: actionTypes.USER_ORDER_CARD_OPEN_CLOSE,
+        orderId: 999,
+        isCollapsed: true
+      })
+
+      expect(state.get('orderCardsCollapsedStatus').toJS()).toEqual({
+        999: true,
+      })
+    })
+  })
+
+  describe('Given USER_LOAD_REFERRAL_DETAILS is dispatched', () => {
+    test('Then the referralDetails state is updated', () => {
+      const state = userReducer.user(defaultState, {
+        type: actionTypes.USER_LOAD_REFERRAL_DETAILS,
+        referralDetails: {
+          referralCount: 1,
+          referralCredit: 2
+        }
+      })
+
+      expect(state.get('referralDetails').toJS()).toEqual({
+        referralCount: 1,
+        referralCredit: 2
+      })
+    })
+  })
 })
