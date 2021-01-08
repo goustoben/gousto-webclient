@@ -1,6 +1,5 @@
 import { fetchFeatures } from 'apis/fetchS3'
 import logger from 'utils/logger'
-import { v4 as uuidv4 } from 'uuid'
 import {
   getUserToken,
   identifyUser,
@@ -8,9 +7,7 @@ import {
   forgetUserToken,
   validateRecaptchaUserToken,
   validateUserPassword,
-  getClientToken,
 } from 'apis/auth'
-import { triggerLoggingManagerEvent } from 'apis/loggingManager'
 import env from 'utils/env'
 import routes from 'config/routes'
 import {
@@ -18,7 +15,6 @@ import {
   addSessionCookies,
   removeSessionCookies,
   getCookieValue,
-  addClientSessionCookies,
 } from './utils'
 import { RECAPTCHA_PRIVATE_KEY } from '../config/recaptcha'
 
@@ -160,44 +156,6 @@ export async function validate(ctx) {
   }
 }
 
-/**
-* Authenticate Client and log event Route
-* @param {*} ctx
-*/
-const logEventWithClientAuth = async (ctx) => {
-  try {
-    const { body: { eventName, authUserId, isAnonymousUser, data } } = ctx.request
-    const { authClientId, authClientSecret } = env
-    const expiresAt = getCookieValue(ctx, 'client_oauth_expiry', 'expires_at')
-    const currentDateISOString = new Date().toISOString()
-    let accessToken = getCookieValue(ctx, 'client_oauth_token', 'access_token')
-
-    const request = {
-      id: uuidv4(),
-      name: eventName,
-      authUserId,
-      isAnonymousUser,
-      occurredAt: currentDateISOString,
-      data
-    }
-
-    if (!expiresAt || expiresAt <= currentDateISOString) {
-      const authResponse = await getClientToken({ authClientId, authClientSecret })
-      addClientSessionCookies(ctx, authResponse)
-      accessToken = authResponse.data.accessToken
-    }
-
-    const loggingManagerResponse = await triggerLoggingManagerEvent({ accessToken, body: request })
-
-    ctx.response.body = loggingManagerResponse
-  } catch (error) {
-    ctx.response.status = 500
-    ctx.response.body = {
-      error,
-    }
-  }
-}
-
 /* eslint-disable consistent-return */
 const auth = (app) => {
   app.use(async (ctx, next) => {
@@ -213,8 +171,6 @@ const auth = (app) => {
       await forget(ctx)
     } else if (routeMatches(ctx, routes.auth.validate, 'POST')) {
       await validate(ctx)
-    } else if (routeMatches(ctx, routes.auth.logEvent, 'POST')) {
-      await logEventWithClientAuth(ctx)
     } else {
       return next()
     }
@@ -223,5 +179,4 @@ const auth = (app) => {
 
 export {
   auth,
-  logEventWithClientAuth,
 }

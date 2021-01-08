@@ -1,6 +1,7 @@
-import { logEventToServer } from 'apis/loggingManager'
+import { triggerLoggingManagerEvent } from 'apis/loggingManager'
 import statusActions from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
+import { v4 as uuidv4 } from 'uuid'
 
 export const EVENT_NAMES = {
   basketUpdated: 'basket-updated',
@@ -12,19 +13,35 @@ export const EVENT_NAMES = {
   rafLinkShared: 'rafLink-shared',
 }
 
+const generateLoggingManagerRequest = ({ loggingManagerEvent }) => {
+  const { eventName, authUserId, data, isAnonymousUser } = loggingManagerEvent
+  const currentDateISOString = new Date().toISOString()
+
+  const request = {
+    id: uuidv4(),
+    name: eventName,
+    authUserId,
+    isAnonymousUser,
+    occurredAt: currentDateISOString,
+    data
+  }
+
+  return request
+}
+
 const getDefaultParams = (state) => {
   const { auth, request } = state
 
   return {
     authUserId: auth.get('id'),
+    accessToken: auth.get('accessToken'),
     device: request.get('browser'),
-
   }
 }
 
 const trackUserFreeFoodPageView = () => (
   async (dispatch, getState) => {
-    const { authUserId, device } = getDefaultParams(getState())
+    const { authUserId, device, accessToken } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.rafPageVisited
 
     const loggingManagerEvent = {
@@ -35,13 +52,15 @@ const trackUserFreeFoodPageView = () => (
       },
     }
 
-    logEventToServer(loggingManagerEvent)
+    const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
+
+    triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
   }
 )
 
 const trackUserLogin = () => (
   async (dispatch, getState) => {
-    const { authUserId, device } = getDefaultParams(getState())
+    const { authUserId, device, accessToken } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.userLoggedIn
 
     const loggingManagerEvent = {
@@ -52,7 +71,9 @@ const trackUserLogin = () => (
       },
     }
 
-    logEventToServer(loggingManagerEvent)
+    const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
+
+    triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
   }
 )
 
@@ -60,7 +81,7 @@ const trackUserAddRemoveRecipe = () => (
   async (dispatch, getState) => {
     const state = getState()
     const { basket, boxSummaryDeliveryDays } = state
-    const { authUserId, device } = getDefaultParams(state)
+    const { authUserId, device, accessToken } = getDefaultParams(state)
 
     if (authUserId && basket.get('date') && boxSummaryDeliveryDays.get(basket.get('date'))) {
       const recipes = basket.get('recipes')
@@ -92,7 +113,9 @@ const trackUserAddRemoveRecipe = () => (
           },
         }
 
-        logEventToServer(loggingManagerEvent)
+        const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
+
+        triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
       }
     }
   }
@@ -100,7 +123,7 @@ const trackUserAddRemoveRecipe = () => (
 
 const sendGoustoAppLinkSMS = ({ isAnonymousUser, goustoAppEventName: eventName, userPhoneNumber }) => (
   async (dispatch, getState) => {
-    const { authUserId, device } = getDefaultParams(getState())
+    const { authUserId, device, accessToken } = getDefaultParams(getState())
     const loggingManagerEvent = {
       eventName,
       ...(!isAnonymousUser && { authUserId }),
@@ -125,7 +148,9 @@ const sendGoustoAppLinkSMS = ({ isAnonymousUser, goustoAppEventName: eventName, 
     })
 
     try {
-      await logEventToServer(loggingManagerEvent)
+      const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
+
+      await triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
 
       dispatch({
         type: actionTypes.LOGGING_MANAGER_EVENT_SENT,
@@ -157,7 +182,7 @@ const sendGoustoAppLinkSMS = ({ isAnonymousUser, goustoAppEventName: eventName, 
 
 const trackUserFreeFoodLinkShare = ({ target }) => (
   async (dispatch, getState) => {
-    const { authUserId, device } = getDefaultParams(getState())
+    const { authUserId, device, accessToken } = getDefaultParams(getState())
     const eventName = EVENT_NAMES.rafLinkShared
 
     const loggingManagerEvent = {
@@ -169,7 +194,9 @@ const trackUserFreeFoodLinkShare = ({ target }) => (
       },
     }
 
-    logEventToServer(loggingManagerEvent)
+    const loggingManagerRequest = generateLoggingManagerRequest({ loggingManagerEvent })
+
+    triggerLoggingManagerEvent({ accessToken, loggingManagerRequest })
   }
 )
 

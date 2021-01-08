@@ -13,7 +13,6 @@ import {
   serverIdentify,
   serverForget,
   serverValidatePassword,
-  getClientToken,
   validateRecaptchaUserToken,
 } from '../auth'
 const mockFetchResult = { data: [1, 2, 3] }
@@ -305,33 +304,6 @@ describe('auth api', () => {
     test('should return the results of the fetch unchanged', async () => {
       const result = await serverValidatePassword('password')
       expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('getClientToken', () => {
-    describe('when the client token is requested', () => {
-      const authClientId = 1
-      const authClientSecret = '12345'
-      let result
-
-      beforeEach(async () => {
-        result = await getClientToken({ authClientId, authClientSecret })
-      })
-
-      test('then the correct url should be fetched', async () => {
-        const expectedReqData = {
-          grant_type: 'client_credentials',
-          client_id: authClientId,
-          client_secret: authClientSecret
-        }
-
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache')
-      })
-
-      test('then it should return the results of the fetch unchanged', async () => {
-        expect(result).toEqual(mockFetchResult)
-      })
     })
   })
 

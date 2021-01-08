@@ -1,6 +1,6 @@
 import { set } from 'utils/cookieHelper2'
 
-import { addClientSessionCookies, addSessionCookies } from '../utils'
+import { addSessionCookies } from '../utils'
 
 jest.mock('utils/cookieHelper2', () => ({
   set: jest.fn(),
@@ -19,33 +19,6 @@ jest.mock('moment', () => {
 describe('utils', () => {
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  describe('addClientSessionCookies', () => {
-    describe('given an authenticated client request', () => {
-      const ctx = { cookies: {} }
-      const response = {
-        data: {
-          accessToken: 'mock-access-token',
-          refreshToken: 'mock-refresh-token',
-          expiresAt: '123456789',
-        }
-      }
-
-      describe('when addClientSessionCookies is called', () => {
-        beforeEach(() => {
-          addClientSessionCookies(ctx, response)
-        })
-
-        test('then set should be called with the correct params', () => {
-          expect(set.mock.calls).toEqual([
-            [{}, 'client_oauth_token', { access_token: 'mock-access-token' }, null, true, true, true],
-            [{}, 'client_oauth_expiry', { expires_at: 'mock-expires-response' }, null],
-            [{}, 'client_oauth_refresh', { refresh_token: 'mock-refresh-token' }, null, true, true, true],
-          ])
-        })
-      })
-    })
   })
 
   describe('addSessionCookies', () => {
