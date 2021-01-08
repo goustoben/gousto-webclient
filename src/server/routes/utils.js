@@ -36,12 +36,3 @@ export function getCookieValue(ctx, key, property) {
 
   return value
 }
-
-export function addClientSessionCookies(ctx, response) {
-  const { expiresIn, accessToken, refreshToken } = response.data
-  const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
-
-  set(ctx.cookies, 'client_oauth_token', { access_token: accessToken }, null, true, true, true)
-  set(ctx.cookies, 'client_oauth_expiry', { expires_at: expiresAt }, null)
-  set(ctx.cookies, 'client_oauth_refresh', { refresh_token: refreshToken }, null, true, true, true)
-}

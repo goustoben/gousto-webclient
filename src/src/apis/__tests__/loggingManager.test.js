@@ -29,12 +29,12 @@ describe('loggingManager api', () => {
       beforeEach(async () => {
         await triggerLoggingManagerEvent({
           accessToken: 'mock-access-token',
-          body: {
+          loggingManagerRequest: {
             eventName: 'test-event',
             data: {
               auth_user_id: '12345',
             },
-          },
+          }
         })
       })
 

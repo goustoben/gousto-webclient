@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { logEventToServer } from 'apis/loggingManager'
+import { triggerLoggingManagerEvent } from 'apis/loggingManager'
 import {
   EVENT_NAMES,
   sendGoustoAppLinkSMS,
@@ -10,13 +10,18 @@ import {
 } from 'actions/loggingmanager'
 
 jest.mock('apis/loggingManager', () => ({
-  logEventToServer: jest.fn(),
+  triggerLoggingManagerEvent: jest.fn(),
+}))
+
+jest.mock('uuid', () => ({
+  v4: jest.fn().mockReturnValue('mock-event-id'),
 }))
 
 describe('trackUserFreeFoodPageView', () => {
   let getState
   let dispatch
   const id = 'mock-user-id'
+  const accessToken = 'mock-access-token'
   const browser = 'mobile'
 
   const state = {
@@ -25,11 +30,19 @@ describe('trackUserFreeFoodPageView', () => {
     }),
     auth: Immutable.fromJS({
       id,
+      accessToken
     }),
   }
 
+  beforeEach(() => {
+    const mockDate = new Date('2021-01-07')
+    jest
+      .spyOn(global, 'Date')
+      .mockImplementation(() => mockDate)
+  })
+
   afterEach(() => {
-    logEventToServer.mockReset()
+    triggerLoggingManagerEvent.mockReset()
   })
 
   describe('when the free food page is viewed', async () => {
@@ -41,11 +54,17 @@ describe('trackUserFreeFoodPageView', () => {
     })
 
     test('then the logging manager event should be triggered', async () => {
-      expect(logEventToServer).toHaveBeenCalledWith({
-        eventName: 'rafPage-visited',
-        authUserId: id,
-        data: {
-          device: browser,
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: 'mock-access-token',
+        loggingManagerRequest: {
+          name: 'rafPage-visited',
+          id: 'mock-event-id',
+          authUserId: 'mock-user-id',
+          isAnonymousUser: undefined,
+          occurredAt: '2021-01-07T00:00:00.000Z',
+          data: {
+            device: browser,
+          }
         }
       })
     })
@@ -56,6 +75,7 @@ describe('trackUserLogin', () => {
   let getState
   let dispatch
   const id = 'mock-user-id'
+  const accessToken = 'mock-access-token'
   const browser = 'mobile'
   const eventName = 'user-loggedin'
 
@@ -67,6 +87,7 @@ describe('trackUserLogin', () => {
         }),
         auth: Immutable.fromJS({
           id,
+          accessToken
         }),
       }
 
@@ -77,12 +98,18 @@ describe('trackUserLogin', () => {
     })
 
     test('then the logging manager event should be triggered', async () => {
-      expect(logEventToServer).toHaveBeenCalledWith({
-        eventName,
-        authUserId: id,
-        data: {
-          device: browser,
-        },
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: 'mock-access-token',
+        loggingManagerRequest: {
+          name: eventName,
+          id: 'mock-event-id',
+          authUserId: 'mock-user-id',
+          isAnonymousUser: undefined,
+          occurredAt: '2021-01-07T00:00:00.000Z',
+          data: {
+            device: browser,
+          }
+        }
       })
     })
   })
@@ -103,7 +130,7 @@ describe('trackUserLogin', () => {
     })
 
     test('then the logging manager event should NOT be triggered', async () => {
-      expect(logEventToServer).not.toHaveBeenCalledWith()
+      expect(triggerLoggingManagerEvent).not.toHaveBeenCalledWith()
     })
   })
 })
@@ -113,6 +140,7 @@ describe('trackUserAddRemoveRecipe', () => {
   let dispatch
   let state
   const id = 'mock-user-id'
+  const accessToken = 'mock-access-token'
   const browser = 'mobile'
   const defaultState = {
     request: Immutable.fromJS({
@@ -120,11 +148,12 @@ describe('trackUserAddRemoveRecipe', () => {
     }),
     auth: Immutable.fromJS({
       id,
+      accessToken
     }),
   }
 
   afterEach(() => {
-    logEventToServer.mockReset()
+    triggerLoggingManagerEvent.mockReset()
   })
 
   describe('when trackUserAddRemoveRecipe is called', () => {
@@ -165,19 +194,25 @@ describe('trackUserAddRemoveRecipe', () => {
         await trackUserAddRemoveRecipe()(dispatch, getState)
       })
 
-      test('logEventToServer is called with at least recipes, dayId, slotId, addressId and numPortions', () => {
-        expect(logEventToServer).toHaveBeenCalledWith({
-          eventName: 'basket-updated',
-          authUserId: 'mock-user-id',
-          data: {
-            device: 'mobile',
-            recipe1: 'recipeTest1',
-            recipe2: 'recipeTest2',
-            dayId: 'day-id-1',
-            slotId: 'slot-id-1',
-            addressId: 'chosen-address-id-1',
-            numPortions: 3,
-          },
+      test('triggerLoggingManagerEvent is called with at least recipes, dayId, slotId, addressId and numPortions', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+          accessToken: 'mock-access-token',
+          loggingManagerRequest: {
+            name: 'basket-updated',
+            id: 'mock-event-id',
+            authUserId: 'mock-user-id',
+            isAnonymousUser: undefined,
+            occurredAt: '2021-01-07T00:00:00.000Z',
+            data: {
+              device: 'mobile',
+              recipe1: 'recipeTest1',
+              recipe2: 'recipeTest2',
+              dayId: 'day-id-1',
+              slotId: 'slot-id-1',
+              addressId: 'chosen-address-id-1',
+              numPortions: 3,
+            }
+          }
         })
       })
     })
@@ -189,6 +224,7 @@ describe('trackUserAddRemoveRecipe', () => {
           auth: Immutable.fromJS({
             ...state.auth,
             id: '',
+            accessToken: null,
           })
         }
 
@@ -197,8 +233,8 @@ describe('trackUserAddRemoveRecipe', () => {
         await trackUserAddRemoveRecipe()(dispatch, getState)
       })
 
-      test('logEventToServer is not called', () => {
-        expect(logEventToServer).toHaveBeenCalledTimes(0)
+      test('triggerLoggingManagerEvent is not called', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -214,8 +250,8 @@ describe('trackUserAddRemoveRecipe', () => {
         await trackUserAddRemoveRecipe()(dispatch, getState)
       })
 
-      test('logEventToServer is not called', () => {
-        expect(logEventToServer).toHaveBeenCalledTimes(0)
+      test('triggerLoggingManagerEvent is not called', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -256,8 +292,8 @@ describe('trackUserAddRemoveRecipe', () => {
         await trackUserAddRemoveRecipe()(dispatch, getState)
       })
 
-      test('logEventToServer is not called', () => {
-        expect(logEventToServer).toHaveBeenCalledTimes(0)
+      test('triggerLoggingManagerEvent is not called', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -298,8 +334,8 @@ describe('trackUserAddRemoveRecipe', () => {
         await trackUserAddRemoveRecipe()(dispatch, getState)
       })
 
-      test('logEventToServer is not called', () => {
-        expect(logEventToServer).toHaveBeenCalledTimes(0)
+      test('triggerLoggingManagerEvent is not called', () => {
+        expect(triggerLoggingManagerEvent).toHaveBeenCalledTimes(0)
       })
     })
   })
@@ -317,6 +353,7 @@ describe('sendGoustoAppLinkSMS', () => {
       }),
       auth: Immutable.fromJS({
         id: 'mock-user-id',
+        accessToken: 'mock-access-token'
       })
     }
 
@@ -331,7 +368,7 @@ describe('sendGoustoAppLinkSMS', () => {
 
   afterEach(() => {
     dispatch.mockReset()
-    logEventToServer.mockReset()
+    triggerLoggingManagerEvent.mockReset()
   })
 
   describe('and isAnonymousUser is false', () => {
@@ -339,15 +376,20 @@ describe('sendGoustoAppLinkSMS', () => {
       await callSendGoustoAppLinkSMS({ isAnonymousUser: false })
     })
 
-    test('logEventToServer is called with authUserId', () => {
-      expect(logEventToServer).toHaveBeenCalledWith({
-        eventName: 'sendsmsapplink-appstore',
-        authUserId: 'mock-user-id',
-        isAnonymousUser: false,
-        data: {
-          device: 'mobile',
-          userPhoneNumber: 'test-phone-number',
-        },
+    test('triggerLoggingManagerEvent is called with authUserId', () => {
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: 'mock-access-token',
+        loggingManagerRequest: {
+          name: 'sendsmsapplink-appstore',
+          id: 'mock-event-id',
+          authUserId: 'mock-user-id',
+          isAnonymousUser: false,
+          occurredAt: '2021-01-07T00:00:00.000Z',
+          data: {
+            device: 'mobile',
+            userPhoneNumber: 'test-phone-number',
+          }
+        }
       })
     })
 
@@ -368,21 +410,27 @@ describe('sendGoustoAppLinkSMS', () => {
       await callSendGoustoAppLinkSMS({ isAnonymousUser: true })
     })
 
-    test('logEventToServer is called without authUserId', () => {
-      expect(logEventToServer).toHaveBeenCalledWith({
-        eventName: 'sendsmsapplink-appstore',
-        isAnonymousUser: true,
-        data: {
-          device: 'mobile',
-          userPhoneNumber: 'test-phone-number',
-        },
+    test('triggerLoggingManagerEvent is called without authUserId', () => {
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: 'mock-access-token',
+        loggingManagerRequest: {
+          name: 'sendsmsapplink-appstore',
+          id: 'mock-event-id',
+          authUserId: undefined,
+          isAnonymousUser: true,
+          occurredAt: '2021-01-07T00:00:00.000Z',
+          data: {
+            device: 'mobile',
+            userPhoneNumber: 'test-phone-number',
+          }
+        }
       })
     })
   })
 
   describe('when an error occurs', () => {
     beforeEach(async () => {
-      logEventToServer.mockRejectedValue({ message: 'test-error' })
+      triggerLoggingManagerEvent.mockRejectedValue({ message: 'test-error' })
 
       await sendGoustoAppLinkSMS({
         isAnonymousUser: false,
@@ -416,6 +464,7 @@ describe('trackUserFreeFoodLinkShare', () => {
   let getState
   let dispatch
   const id = 'mock-user-id'
+  const accessToken = 'mock-access-token'
   const browser = 'mobile'
   const target = 'Email'
 
@@ -425,11 +474,12 @@ describe('trackUserFreeFoodLinkShare', () => {
     }),
     auth: Immutable.fromJS({
       id,
+      accessToken
     }),
   }
 
   afterEach(() => {
-    logEventToServer.mockReset()
+    triggerLoggingManagerEvent.mockReset()
   })
 
   describe('when the free food link is clicked', async () => {
@@ -441,12 +491,18 @@ describe('trackUserFreeFoodLinkShare', () => {
     })
 
     test('then the logging manager event should be triggered', async () => {
-      expect(logEventToServer).toHaveBeenCalledWith({
-        eventName: 'rafLink-shared',
-        authUserId: id,
-        data: {
-          device: browser,
-          target,
+      expect(triggerLoggingManagerEvent).toHaveBeenCalledWith({
+        accessToken: 'mock-access-token',
+        loggingManagerRequest: {
+          name: 'rafLink-shared',
+          id: 'mock-event-id',
+          authUserId: id,
+          isAnonymousUser: undefined,
+          occurredAt: '2021-01-07T00:00:00.000Z',
+          data: {
+            device: browser,
+            target,
+          }
         }
       })
     })
