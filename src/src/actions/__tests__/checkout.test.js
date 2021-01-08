@@ -379,9 +379,6 @@ const createState = (stateOverrides) => ({
     enable3DSForSignUp: {
       value: false
     },
-    enablePayPal: {
-      value: false
-    },
   }),
   ...stateOverrides,
 })
@@ -678,9 +675,6 @@ describe('checkout actions', () => {
               enable3DSForSignUp: {
                 value: true
               },
-              enablePayPal: {
-                value: true
-              }
             }),
             payment: Immutable.fromJS({
               paymentMethod: PaymentMethod.PayPal,
@@ -717,9 +711,6 @@ describe('checkout actions', () => {
             enable3DSForSignUp: {
               value: true
             },
-            enablePayPal: {
-              value: true
-            }
           }),
           payment: Immutable.fromJS({
             paymentMethod: PaymentMethod.PayPal,

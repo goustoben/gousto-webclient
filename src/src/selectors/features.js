@@ -150,10 +150,6 @@ export const getisNewSSRDeliveriesEnabled = ({ features }) => (
   features && features.getIn(['isNewSSRDeliveriesEnabled', 'value'], false)
 )
 
-export const getIsPayWithPayPalEnabled = ({ features }) => (
-  features && features.getIn(['enablePayPal', 'value'], false)
-)
-
 export const getIsMultiSkipEnabled = ({ features }) => (
   features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )

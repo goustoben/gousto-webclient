@@ -9,7 +9,7 @@ import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
 const mapStateToProps = (state) => ({
   token: getPayPalClientToken(state),
   isPayPalSetupDone: isPayPalReady(state),
-  hasErrors: state.checkout.get('paypalErrors').size > 0,
+  hasErrors: state.checkout.get('paypalErrors', []).size > 0,
   isSubmitting: isSubmitting(state),
 })
 

@@ -66,9 +66,6 @@ const defaultFeatures = () => ({
   enable3DSForSignUp: {
     value: false
   },
-  enablePayPal: {
-    value: false
-  },
   isAppAwarenessEnabled: {
     value: false
   },
