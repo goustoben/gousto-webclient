@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { referAFriend } from 'apis/user'
+import { referAFriend, fetchUserCredit } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import prospectAPI from 'apis/prospect'
@@ -33,6 +33,7 @@ import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDe
 
 jest.mock('apis/user', () => ({
   referAFriend: jest.fn(),
+  fetchUserCredit: jest.fn(),
   referralDetails: jest.fn().mockImplementation(accessToken => {
     if (accessToken !== 'user-access-token') {
       return null
@@ -48,7 +49,7 @@ jest.mock('apis/user', () => ({
         firstMonthDiscountFormatted: '30%',
         expiry: ''
       }
-    })
+    }),
 }))
 
 jest.mock('apis/customers', () => ({
@@ -265,7 +266,7 @@ describe('user actions', () => {
       )
     })
 
-    describe('When successful submitted order', () => {
+    describe('when order is submitted', () => {
       beforeEach(() => {
         const localState = {
           ...state,
@@ -276,32 +277,36 @@ describe('user actions', () => {
           })
         }
         getState.mockReturnValue(localState)
-
-        customerSignup.mockReturnValue(
-          new Promise(resolve => {
-            resolve({
-              data: {
-                customer: {
-                  id: 111,
-                  goustoReference: '9999'
-                },
-                addresses: {
-                  billing_address: 'some address'
-                },
-                subscription: {
-                  id: 222
-                },
-                orderId: 333,
-              }
-            })
-          })
-        )
       })
 
-      test('Then should dispatch trackSubscriptionCreated action', async () => {
-        await userSubscribe()(dispatch, getState)
+      describe('and subscription was successful', () => {
+        beforeEach(() => {
+          customerSignup.mockReturnValue(
+            new Promise(resolve => {
+              resolve({
+                data: {
+                  customer: {
+                    id: 111,
+                    goustoReference: '9999'
+                  },
+                  addresses: {
+                    billing_address: 'some address'
+                  },
+                  subscription: {
+                    id: 222
+                  },
+                  orderId: 333,
+                }
+              })
+            })
+          )
+        })
 
-        expect(trackSubscriptionCreated).toHaveBeenCalledWith(333, 111, 222)
+        test('then should dispatch trackSubscriptionCreated action', async () => {
+          await userSubscribe()(dispatch, getState)
+
+          expect(trackSubscriptionCreated).toHaveBeenCalledWith(333, 111, 222)
+        })
       })
     })
 
@@ -359,7 +364,7 @@ describe('user actions', () => {
       })
     })
 
-    describe('enablePayPal feature is enabled and PayPal payment method is selected', () => {
+    describe('when PayPal payment method is selected', () => {
       const sca3ds = true
       const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
 
@@ -374,9 +379,6 @@ describe('user actions', () => {
           features: Immutable.fromJS({
             ndd: {
               value: deliveryTariffTypes.NON_NDD,
-            },
-            enablePayPal: {
-              value: true,
             },
           })
         }
@@ -539,7 +541,10 @@ describe('user actions', () => {
               }
             }
           }
-        }
+        },
+        payment: Immutable.fromJS({
+          paymentMethod: PaymentMethod.Card,
+        })
       }
 
       beforeEach(() => {
@@ -1274,6 +1279,47 @@ describe('user actions', () => {
             visibility: false
           })
         })
+      })
+    })
+  })
+
+  describe('userFetchCredit', () => {
+    const dispatchSpy = jest.fn()
+    const getStateSpy = () => ({
+      auth: Immutable.Map({ accessToken: 'access-token' }),
+    })
+
+    beforeEach(async () => {
+      fetchUserCredit.mockReturnValue(
+        new Promise(resolve => {
+          resolve({
+            data: {
+              balance: '10'
+            }
+          })
+        })
+      )
+      await userActions.userFetchCredit()(dispatchSpy, getStateSpy)
+    })
+
+    test('then should dispatch proper action and params', () => {
+      expect(fetchUserCredit).toHaveBeenCalledWith('access-token')
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_CREDIT,
+        userCredit: '10',
+      })
+    })
+  })
+
+  describe('userReactivate', () => {
+    const dispatchSpy = jest.fn()
+    const user = 'user'
+
+    test('should dispatch action for EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE', async () => {
+      userActions.userReactivate(user)(dispatchSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_REACTIVATE,
+        user
       })
     })
   })

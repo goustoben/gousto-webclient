@@ -10,7 +10,6 @@ import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import { getPreviewOrderErrorName } from 'utils/order'
-import { hasPropUpdated } from 'utils/react'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
 import { loadCheckoutScript } from './loadCheckoutScript'
@@ -70,7 +69,6 @@ const propTypes = {
   trackCheckoutButtonPressed: PropTypes.func,
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
-  isPayWithPayPalEnabled: PropTypes.bool,
   fetchPayPalClientToken: PropTypes.func,
   clearPayPalClientToken: PropTypes.func,
   trackCheckoutNavigationLinks: PropTypes.func,
@@ -92,7 +90,6 @@ const defaultProps = {
   loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
-  isPayWithPayPalEnabled: false,
   fetchPayPalClientToken: () => {},
   clearPayPalClientToken: () => {},
   trackCheckoutNavigationLinks: () => {},
@@ -179,7 +176,8 @@ class Checkout extends PureComponent {
     Overlay.forceCloseAll()
 
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isPayWithPayPalEnabled, isCheckoutOverhaulEnabled } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutOverhaulEnabled } = this.props
+    const { paypalScriptsReady } = this.state
 
     Checkout.fetchData({ store, query, params, browser, isCheckoutOverhaulEnabled }).then(() => {
       trackSignupStep(1)
@@ -193,7 +191,7 @@ class Checkout extends PureComponent {
         checkoutScriptReady: true,
       })
     })
-    if (isPayWithPayPalEnabled) {
+    if (!paypalScriptsReady) {
       this.loadPayPal()
     }
 
@@ -205,14 +203,6 @@ class Checkout extends PureComponent {
 
     if (tariffId !== nextProps.tariffId) {
       loadPrices()
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { isPayWithPayPalEnabled } = this.props
-
-    if (hasPropUpdated(isPayWithPayPalEnabled, prevProps.isPayWithPayPalEnabled)) {
-      this.loadPayPal()
     }
   }
 

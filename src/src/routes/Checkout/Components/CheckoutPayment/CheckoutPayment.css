@@ -4,12 +4,8 @@
 .container {
 	composes: textBold from 'styles/typography.css';
 	position: relative;
-	min-height: 450px;
 	padding: SpacingLG;
 	background-color: BluecheeseLight;
-}
-
-.payWithPayPalAutosizeContainer {
 	min-height: inherit;
 }
 

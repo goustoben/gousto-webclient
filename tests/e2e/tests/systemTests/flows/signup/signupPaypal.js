@@ -6,7 +6,7 @@ module.exports = {
     const checkout = browser.page.checkoutV2()
     const welcome = browser.page.welcome()
 
-    const url = home.api.launchUrl + '?features[enablePayPal]=true'
+    const url = home.api.launchUrl
 
     performSignUpFlowUpToPaymentStep(browser, url)
 

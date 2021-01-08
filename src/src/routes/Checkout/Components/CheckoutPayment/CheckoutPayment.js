@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import { PaymentMethod } from 'config/signup'
@@ -8,7 +7,6 @@ import ReCAPTCHA from 'components/Recaptcha'
 import { Section } from 'Page/Elements'
 
 import BoxDetails from '../BoxDetails'
-import { PaymentHeader } from '../PaymentHeader'
 import Summary from '../Summary'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
@@ -129,7 +127,6 @@ class CheckoutPayment extends React.Component {
       sectionName,
       isRecaptchaEnabled,
       is3DSEnabled,
-      isPayWithPayPalEnabled,
       isPayPalReady,
       currentPaymentMethod,
       setCurrentPaymentMethod,
@@ -140,20 +137,14 @@ class CheckoutPayment extends React.Component {
     return (
       <div className={prerender ? css.hide : ''}>
         <div
-          className={classNames(css.container, {
-            [css.payWithPayPalAutosizeContainer]: isPayWithPayPalEnabled
-          })}
+          className={css.container}
           data-testing="checkoutPaymentSection"
         >
-          {isPayWithPayPalEnabled ? (
-            <PaymentMethodSelector
-              currentPaymentMethod={currentPaymentMethod}
-              onPaymentMethodChanged={setCurrentPaymentMethod}
-              showSelector={!isPayPalReady}
-            />
-          ) : (
-            <PaymentHeader />
-          )}
+          <PaymentMethodSelector
+            currentPaymentMethod={currentPaymentMethod}
+            onPaymentMethodChanged={setCurrentPaymentMethod}
+            showSelector={!isPayPalReady}
+          />
           <CheckoutCardDetails
             hide={currentPaymentMethod !== PaymentMethod.Card}
             prerender={prerender}
@@ -167,12 +158,10 @@ class CheckoutPayment extends React.Component {
             cardTokenReady={this.cardTokenReady}
             disableCardSubmission={this.disableCardSubmission}
           />
-          {isPayWithPayPalEnabled && (
-            <CheckoutPayPalDetails
-              hide={currentPaymentMethod !== PaymentMethod.PayPal}
-              paypalScriptsReady={paypalScriptsReady}
-            />
-          )}
+          <CheckoutPayPalDetails
+            hide={currentPaymentMethod !== PaymentMethod.PayPal}
+            paypalScriptsReady={paypalScriptsReady}
+          />
           <div className={css.row}>
             {!prerender && isRecaptchaEnabled && (
               <div className={css.recaptchaContainer}>
@@ -231,7 +220,6 @@ CheckoutPayment.propTypes = {
   recaptchaValue: PropTypes.string,
   submitOrder: PropTypes.func,
   storeSignupRecaptchaToken: PropTypes.func,
-  isPayWithPayPalEnabled: PropTypes.bool,
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func,
 }
@@ -259,7 +247,6 @@ CheckoutPayment.defaultProps = {
   submitOrder: () => {},
   storeSignupRecaptchaToken: () => {},
   setCurrentPaymentMethod: () => {},
-  isPayWithPayPalEnabled: false,
 }
 
 export { CheckoutPayment }

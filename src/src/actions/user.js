@@ -13,7 +13,6 @@ import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
-  getIsPayWithPayPalEnabled,
   getIsFirstMonthPromoOffset,
   getIsCheckoutOverhaulEnabled,
 } from 'selectors/features'
@@ -632,8 +631,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
       const payment = Immutable.fromJS(form.payment.values).get('payment')
 
-      const isPayPalEnabled = getIsPayWithPayPalEnabled(state)
-      const isCard = !isPayPalEnabled || getCurrentPaymentMethod(state) === PaymentMethod.Card
+      const isCard = getCurrentPaymentMethod(state) === PaymentMethod.Card
 
       const deliveryAddress = getAddress(delivery)
       const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress

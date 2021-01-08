@@ -8,7 +8,7 @@ import {
   setCurrentPaymentMethod
 } from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
-import { getIs3DSForSignUpEnabled, getIsPayWithPayPalEnabled } from 'selectors/features'
+import { getIs3DSForSignUpEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, getCanSubmitPaymentDetails, isPayPalReady } from 'selectors/payment'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
@@ -23,7 +23,6 @@ const mapStateToProps = (state) => ({
   is3DSEnabled: getIs3DSForSignUpEnabled(state),
   isRecaptchaEnabled: getIsRecaptchaEnabled(state),
   recaptchaValue: getSignupRecaptchaToken(state),
-  isPayWithPayPalEnabled: getIsPayWithPayPalEnabled(state),
   sectionName,
   currentPaymentMethod: getCurrentPaymentMethod(state),
   canSubmit: getCanSubmitPaymentDetails(state),

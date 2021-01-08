@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 
 import { PaymentMethod } from 'config/signup'
 import { SubmitButton } from 'routes/Checkout/Components/SubmitButton'
-import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
 import { Checkout3DSModal } from '../Checkout3DSModal'
 import { CheckoutPayment } from '../CheckoutPayment'
 import { CheckoutCardDetails } from '../CheckoutCardDetails'
@@ -68,8 +67,9 @@ describe('CheckoutPayment', () => {
   })
 
   describe('rendering', () => {
-    test('should render a PaymentHeader', () => {
-      expect(wrapper.find(PaymentHeader)).toHaveLength(1)
+    test('should render a CheckoutPayPalDetails', () => {
+      expect(wrapper.find(CheckoutPayPalDetails)).toHaveLength(1)
+      expect(wrapper.find(CheckoutPayPalDetails).prop('hide')).toBeTruthy()
     })
 
     test('should render CheckoutCardDetails', () => {
@@ -247,55 +247,37 @@ describe('CheckoutPayment', () => {
     })
   })
 
-  describe('when isPayWithPayPalEnabled is true', () => {
+  describe('when Card method is selected', () => {
     beforeEach(() => {
-      wrapper.setProps({ isPayWithPayPalEnabled: true })
+      wrapper.setProps({ currentPaymentMethod: PaymentMethod.Card })
     })
 
-    test('then it should render selector instead of the usual header, and details for both payment methods', () => {
-      expect(wrapper.find(PaymentHeader)).toHaveLength(0)
-
-      expect(wrapper.find(PaymentMethodSelector)).toHaveLength(1)
-
-      expect(wrapper.find(CheckoutCardDetails)).toHaveLength(1)
+    test('then it should show the Card details and hide PayPal details', () => {
       expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeFalsy()
-
-      expect(wrapper.find(CheckoutPayPalDetails)).toHaveLength(1)
       expect(wrapper.find(CheckoutPayPalDetails).prop('hide')).toBeTruthy()
     })
+  })
 
-    describe('and when Card method is selected', () => {
-      beforeEach(() => {
-        wrapper.setProps({ currentPaymentMethod: PaymentMethod.Card })
-      })
-
-      test('then it should show the Card details and hide PayPal details', () => {
-        expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeFalsy()
-        expect(wrapper.find(CheckoutPayPalDetails).prop('hide')).toBeTruthy()
-      })
+  describe('when PayPal method is selected', () => {
+    beforeEach(() => {
+      wrapper.setProps({ currentPaymentMethod: PaymentMethod.PayPal })
     })
 
-    describe('and when PayPal method is selected', () => {
-      beforeEach(() => {
-        wrapper.setProps({ currentPaymentMethod: PaymentMethod.PayPal })
-      })
+    test('then it should hide the Card details and show PayPal details', () => {
+      expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeTruthy()
+      expect(wrapper.find(CheckoutPayPalDetails).prop('hide')).toBeFalsy()
+    })
+  })
 
-      test('then it should hide the Card details and show PayPal details', () => {
-        expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeTruthy()
-        expect(wrapper.find(CheckoutPayPalDetails).prop('hide')).toBeFalsy()
-      })
+  describe('and when PaymentMethodSelector reports a new selected method', () => {
+    test('to Card: then it should be set as current', () => {
+      wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.Card)
+      expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.Card)
     })
 
-    describe('and when PaymentMethodSelector reports a new selected method', () => {
-      test('to Card: then it should be set as current', () => {
-        wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.Card)
-        expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.Card)
-      })
-
-      test('to PayPal: then it should be set as current', () => {
-        wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.PayPal)
-        expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
-      })
+    test('to PayPal: then it should be set as current', () => {
+      wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.PayPal)
+      expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
     })
   })
 })
