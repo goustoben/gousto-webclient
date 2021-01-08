@@ -10,6 +10,7 @@ module.exports = {
     deliveries: 'v1.0',
     menu: 'v1',
     orders: 'v1',
+    ordersV2: 'v2',
     products: 'v2.0',
     recipes: 'v2',
     ssr: 'v1',
