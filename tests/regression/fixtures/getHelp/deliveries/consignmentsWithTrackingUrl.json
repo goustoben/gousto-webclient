@@ -1,0 +1,67 @@
+{
+  "status": "ok",
+  "meta": {
+    "offset": 0,
+    "limit": 50,
+    "count": 1,
+    "total": 1
+  },
+  "data": [
+    {
+      "id": "3eda2f96-e6dd-4a3a-b603-e388767aeecf",
+      "shipping_status": "manifested",
+      "shipping_provider": "scurri",
+      "shipping_id": "09e6e38e675040c9a1f8065ee1f36877",
+      "courier_shipping_id": "",
+      "warehouse_id": "SP01",
+      "warehouse_order_id": "S22854828",
+      "tracking_url": "http://tracking-url.com'",
+      "rejection_reason": "",
+      "manifest_id": "2834516",
+      "order_id": "16269494",
+      "box_sku": "SKU-GMT-4-2",
+      "price": "34.99",
+      "delivery": {
+        "start": "2020-05-26T08:00:00+00:00",
+        "end": "2020-05-26T19:00:00+00:00"
+      },
+      "weight": "5.0",
+      "dimensions": {
+        "height": "33",
+        "length": "49.3",
+        "width": "29.3"
+      },
+      "user_id": "1747",
+      "recipient": {
+        "email": "obfuscated@gousto.info",
+        "first_name": "Gousto",
+        "last_name": "User",
+        "phone": "01234567890",
+        "address": {
+          "delivery_instructions": "Front Porch",
+          "company": "",
+          "line_1": "",
+          "line_2": "",
+          "line_3": "",
+          "town": "",
+          "county": "",
+          "postcode": "SL6 7RF"
+        }
+      },
+      "wms_created_at": "2020-12-27T12:11:51+00:00",
+      "auth_user_id": "6e10f2d4-effb-11e5-b03c-0244d0a43387",
+      "created_at": "2020-12-27T12:11:51+00:00",
+      "updated_at": "2020-12-29T17:02:58+00:00",
+      "deleted_at": null,
+      "courier_service": {
+        "id": "d6d7b070-12d1-11e6-b7ad-06ddb628bdc5",
+        "name": "Yodel MF",
+        "code": "1VN",
+        "courier": {
+          "id": "d6cc68a0-12d1-11e6-bc53-06ddb628bdc5",
+          "name": "Yodel"
+        }
+      }
+    }
+  ]
+}

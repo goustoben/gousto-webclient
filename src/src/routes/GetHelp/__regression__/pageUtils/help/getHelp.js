@@ -37,7 +37,11 @@ export const selectIngredients = (ingredientIndexes) => {
 export const selectOrderIssue = (issue) => {
   switch (issue) {
   case 'ingredient': {
-    cy.get('[data-testing="getHelpIssuesIngredient"]').click()
+    cy.get('[data-testing="getHelpIssuesIngredient"] a').click()
+    break
+  }
+  case 'delivery': {
+    cy.get('[data-testing="getHelpIssuesDelivery"] a').click()
     break
   }
   default: {
