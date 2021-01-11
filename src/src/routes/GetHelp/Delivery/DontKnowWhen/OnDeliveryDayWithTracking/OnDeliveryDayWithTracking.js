@@ -27,7 +27,7 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
       <Heading size="fontStyleM" type="h2">
         I don&apos;t know when my box will arrive
       </Heading>
-      <div className={css.mainText} data-testing="onDeliveryDayWithTrackingContent">
+      <div className={css.mainText}>
         <p>
           Your box&apos;s estimated arrival time is&nbsp;
           {humanFriendlyStart}
@@ -54,7 +54,6 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
             <CTA
               isFullWidth
               size="small"
-              testingSelector="viewMyGoustoCTA"
               variant="secondary"
               onClick={redirectToInternal(client.myGousto)}
             >
@@ -65,7 +64,6 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
             <CTA
               isFullWidth
               size="small"
-              testingSelector="trackMyBoxCTA"
               onClick={redirectToExternal(trackMyBoxLink)}
             >
               Track my box

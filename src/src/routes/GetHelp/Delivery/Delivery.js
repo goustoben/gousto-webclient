@@ -80,20 +80,17 @@ class Delivery extends PureComponent {
             label="I don't know when my box will arrive"
             to={client.getHelp.deliveryDontKnowWhen(params)}
             clientRouted
-            testingSelector="deliveryDontKnowWhen"
           />
           <ItemLink
             label="My box did not arrive"
             to={client.getHelp.deliveryDidntArrive(params)}
             clientRouted
-            testingSelector="deliveryDidntArrive"
           />
           <ItemLink
             label="I had another issue"
             trackClick={trackDeliveryOther}
             to={`${client.getHelp.index}/${client.getHelp.contact}`}
             clientRouted
-            testingSelector="deliveryOtherIssue"
           />
         </List>
       </GetHelpLayout2>

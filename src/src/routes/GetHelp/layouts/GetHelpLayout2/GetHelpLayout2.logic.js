@@ -12,7 +12,7 @@ const GetHelpLayout2 = ({
   <LayoutPageWrapper>
     <div className={css.wrapperWide}>
       <div className={css.wrapperBack}>
-        <CTABack url={backUrl} testingSelector="CTABack" />
+        <CTABack url={backUrl} />
       </div>
       <div className={css.wrapper}>
         <div className={css.heading}>

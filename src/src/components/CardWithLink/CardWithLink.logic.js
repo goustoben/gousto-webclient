@@ -10,10 +10,9 @@ const CardWithLink = ({
   linkLabel,
   linkUrl,
   tooltipContent,
-  testingSelector,
-  trackClick,
+  trackClick
 }) => (
-  <div className={css.cardWrapper} data-testing={testingSelector}>
+  <div className={css.cardWrapper}>
     <LayoutContentWrapper>
       <div className={css.contentWrapper}>
         <LayoutContentWrapper>
@@ -38,14 +37,12 @@ CardWithLink.propTypes = {
   clientRouted: PropTypes.bool,
   linkLabel: PropTypes.string.isRequired,
   linkUrl: PropTypes.string.isRequired,
-  testingSelector: PropTypes.string,
   tooltipContent: PropTypes.node,
   trackClick: PropTypes.func,
 }
 
 CardWithLink.defaultProps = {
   clientRouted: true,
-  testingSelector: null,
   tooltipContent: null,
   trackClick: () => {},
 }
