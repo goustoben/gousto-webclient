@@ -10,7 +10,7 @@ import { formContainer } from '../../../Components/formContainer'
 import CheckoutButton from '../../../Components/CheckoutButton'
 import SectionContainer from '../SectionContainer'
 import Summary from '../../../Components/Summary'
-import BoxDetails from '../../../Components/BoxDetails'
+import { BoxDetailsContainer } from '../../../Components/BoxDetails'
 
 import AboutYouContainer, { addInitialValues as aboutYouAddInitialValues } from '../../../Components/AboutYou'
 import DeliveryContainer, { addInitialValues as deliveryAddInitialValues, validationMessages as deliveryValidationMessages } from '../../../Components/Delivery'
@@ -70,7 +70,7 @@ export const YourDetailsStep = ({
           <SectionContainer>
             <Summary />
             <Section margin={{ top: 'LG' }}>
-              <BoxDetails />
+              <BoxDetailsContainer />
             </Section>
           </SectionContainer>
           {isAddressConfirmed && (

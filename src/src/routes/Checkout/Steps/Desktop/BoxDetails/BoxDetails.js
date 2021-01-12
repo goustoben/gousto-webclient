@@ -3,7 +3,7 @@ import React from 'react'
 
 import CheckoutButton from '../../../Components/CheckoutButton'
 
-import BoxDetailsContainer from '../../../Components/BoxDetails'
+import { BoxDetailsContainer } from '../../../Components/BoxDetails'
 
 const BoxDetails = ({ onStepChange }) => (
   <div>

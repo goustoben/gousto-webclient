@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-// import css from './RecipeSummary.css'
 import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
-import OrderedRecipe from './OrderedRecipe'
+import { OrderedRecipes } from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
   static propTypes = {
@@ -14,6 +13,7 @@ class RecipeSummary extends React.PureComponent {
     numPortions: PropTypes.number,
     menuBoxPrices: PropTypes.instanceOf(Immutable.Map),
     view: PropTypes.oneOf(['summary', 'boxdetails']),
+    isCheckoutOverhaulEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -23,6 +23,7 @@ class RecipeSummary extends React.PureComponent {
     recipes: Immutable.Map({}),
     numPortions: 2,
     view: 'boxdetails',
+    isCheckoutOverhaulEnabled: false,
   }
 
   static contextTypes = {
@@ -43,13 +44,21 @@ class RecipeSummary extends React.PureComponent {
   }
 
   render() {
-    const {recipes, menuRecipesStore, menuRecipeStock, numPortions, menuBoxPrices, view} = this.props
+    const {
+      recipes,
+      menuRecipesStore,
+      menuRecipeStock,
+      numPortions,
+      menuBoxPrices,
+      view,
+      isCheckoutOverhaulEnabled,
+    } = this.props
     const prices = menuBoxPrices.getIn([numPortions.toString(), (basketSum(recipes).toString()), 'gourmet'], Immutable.Map({}))
 
     return (
       <div data-testing="checkoutRecipeSummary">
         {recipes.map((serving, recipeId) => (
-          <OrderedRecipe
+          <OrderedRecipes
             key={recipeId}
             recipeId={recipeId}
             view={view}
@@ -62,6 +71,7 @@ class RecipeSummary extends React.PureComponent {
             isFineDineIn={menuRecipesStore.getIn([recipeId, 'isFineDineIn'], false)}
             pricePerServing={Number(prices.get('pricePerPortion', 0))}
             pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
+            isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
           />
         )).toArray()}
       </div>
@@ -69,4 +79,6 @@ class RecipeSummary extends React.PureComponent {
   }
 }
 
-export default RecipeSummary
+export {
+  RecipeSummary
+}

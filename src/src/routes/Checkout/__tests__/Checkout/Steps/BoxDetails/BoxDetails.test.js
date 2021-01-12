@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
-import RecipeSummary from 'routes/Checkout/Components/RecipeSummary'
-import BoxDetails from 'routes/Checkout/Components/BoxDetails/BoxDetails'
+import { RecipeSummary } from 'routes/Checkout/Components/RecipeSummary'
+import { BoxDetails } from 'routes/Checkout/Components/BoxDetails/BoxDetails'
 import Link from 'Link'
 
 describe('BoxDetails', () => {

@@ -6,7 +6,7 @@ import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
 import { Section } from 'Page/Elements'
 
-import BoxDetails from '../BoxDetails'
+import { BoxDetailsContainer } from '../BoxDetails'
 import Summary from '../Summary'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
@@ -183,7 +183,7 @@ class CheckoutPayment extends React.Component {
               <div>
                 <Summary />
                 <Section margin={{ top: 'LG' }}>
-                  <BoxDetails />
+                  <BoxDetailsContainer />
                 </Section>
               </div>
             )}

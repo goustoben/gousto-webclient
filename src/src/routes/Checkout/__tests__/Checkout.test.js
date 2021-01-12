@@ -9,7 +9,7 @@ import ProgressBar from 'routes/Checkout/Components/ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
-import BoxDetails from 'routes/Checkout/Components/BoxDetails'
+import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
 import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
@@ -186,8 +186,8 @@ describe('Checkout', () => {
       expect(wrapper.children(Div)).toHaveLength(1)
     })
 
-    test('should render 1 <BoxDetails> component(s)', () => {
-      expect(wrapper.find(BoxDetails)).toHaveLength(1)
+    test('should render 1 <BoxDetailsContainer> component(s)', () => {
+      expect(wrapper.find(BoxDetailsContainer)).toHaveLength(1)
     })
   })
 
