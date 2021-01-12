@@ -86,6 +86,9 @@
 
   {{ filter.name }}:
     Type: AWS::Logs::MetricFilter
+    DependsOn:
+      - EcsTaskDefinition
+      - EcsService
     Properties:
       LogGroupName: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-{{ log.name}}
       FilterPattern: {{ filter.pattern }}
