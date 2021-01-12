@@ -5,7 +5,7 @@ import CheckoutButton from '../../../Components/CheckoutButton'
 import Summary from '../../../Components/Summary'
 import SectionContainer from '../SectionContainer'
 
-import BoxDetailsContainer from '../../../Components/BoxDetails'
+import { BoxDetailsContainer } from '../../../Components/BoxDetails'
 
 const BoxDetails = ({ onStepChange, trackClick, trackUTMAndPromoCode }) => (
   <div>

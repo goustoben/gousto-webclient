@@ -1,1 +1,1 @@
-export default from './RecipeSummaryContainer'
+export { RecipeSummaryContainer as RecipeSummary } from './RecipeSummaryContainer'

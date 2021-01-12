@@ -19,7 +19,7 @@ import DesktopAboutYou from './Steps/Desktop/AboutYou'
 import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
 import DesktopDelivery from './Steps/Desktop/Delivery'
 import Summary from './Components/Summary'
-import BoxDetails from './Components/BoxDetails'
+import { BoxDetailsContainer } from './Components/BoxDetails'
 
 import MobileYourDetails from './Steps/Mobile/YourDetails'
 import MobileBoxDetails from './Steps/Mobile/BoxDetails'
@@ -347,7 +347,7 @@ class Checkout extends PureComponent {
         <Div className={css.aside}>
           <Summary showPromocode isLoading={isCreatingPreviewOrder} />
           <Div margin={{ top: 'LG' }}>
-            <BoxDetails />
+            <BoxDetailsContainer />
           </Div>
         </Div>
       </Div>

@@ -1,8 +1,29 @@
 @value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
-@value White, Mushroom50, Parsley from 'styles/colors.css';
+@value White, Mushroom50, Parsley, Bluecheese, Oyster, Mackerel from 'styles/colors.css';
 
 .header {
 	composes: headerMD headlineFont from 'styles/typography.css';
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.redesignHeader {
+  composes: fontStyleM from 'design-language/typography.css';
+  margin-bottom: 0;
+}
+
+.editOrder {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  text-decoration: none;
+  composes: fontStyleS from 'design-language/typography.css';
+  composes: fontBold from 'design-language/typography.css';
+  white-space: nowrap;
 }
 
 .boxDetailsContainer {
@@ -32,4 +53,20 @@
 .text {
 	composes: textSM from 'styles/typography.css';
 	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.separator {
+  border-bottom: 1px solid Mackerel;
+  margin-bottom: 1rem;
+}
+
+.deliveryDate {
+  margin: 0;
+  composes: fontStyleSubHead from 'design-language/typography.css';
+}
+
+.deliveryTime {
+  composes: fontStyleBody from 'design-language/typography.css';
+  text-transform: uppercase;
+  margin: 0;
 }

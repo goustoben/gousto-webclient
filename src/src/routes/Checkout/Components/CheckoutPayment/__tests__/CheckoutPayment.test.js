@@ -8,7 +8,7 @@ import { CheckoutPayment } from '../CheckoutPayment'
 import { CheckoutCardDetails } from '../CheckoutCardDetails'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
-import BoxDetails from '../../BoxDetails'
+import { BoxDetailsContainer } from '../../BoxDetails'
 import { ErrorMessage } from '../../ErrorMessage'
 import Summary from '../../Summary'
 
@@ -97,7 +97,7 @@ describe('CheckoutPayment', () => {
           currentPaymentMethod={PaymentMethod.Card}
         />
       )
-      expect(wrapper.find(BoxDetails)).toHaveLength(1)
+      expect(wrapper.find(BoxDetailsContainer)).toHaveLength(1)
       expect(wrapper.find(Summary)).toHaveLength(1)
     })
 
@@ -113,7 +113,7 @@ describe('CheckoutPayment', () => {
           currentPaymentMethod={PaymentMethod.Card}
         />
       )
-      expect(wrapper.find(BoxDetails)).toHaveLength(0)
+      expect(wrapper.find(BoxDetailsContainer)).toHaveLength(0)
       expect(wrapper.find(Summary)).toHaveLength(0)
     })
   })

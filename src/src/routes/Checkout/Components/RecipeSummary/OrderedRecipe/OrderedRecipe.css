@@ -1,10 +1,24 @@
 @value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 @value SpacingXS, SpacingMD from 'sass-loader!styles/spacing.scss';
 @value Blueberry, Bluecheese, Parsley, Bronze, Blackberry from 'styles/colors.css';
 @value sizeXXS from 'styles/typography.css';
 
 @value imgLarge 80px;
 @value imgSmall 60px;
+
+.redesignContainer {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+}
+
+.redesignContainer:last-child {
+  margin: 0 0 1rem 0;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
 
 p {
 	margin-bottom: SpacingXS;
@@ -14,6 +28,17 @@ p {
 	width: imgLarge;
 	height: imgLarge;
 	border-radius: 100%;
+}
+
+.redesignImg {
+  border-radius: 0;
+  width: imgSmall;
+  height: imgSmall;
+
+  @media BreakpointFromMedium {
+    width: imgLarge;
+    height: imgLarge;
+  }
 }
 
 .summaryImg {
@@ -31,7 +56,7 @@ p {
 
 	&:hover {
 		color: Blueberry;
-		cursor: pointer; 
+		cursor: pointer;
 		text-decoration: underline;
 	}
 }
@@ -69,6 +94,10 @@ p {
 	}
 }
 
+.redesignRecipeContainer {
+  margin-left: 1rem;
+}
+
 .boxdetailsFlex {
 	composes: row spaceBetween from 'styles/flex.css';
 }
@@ -94,9 +123,14 @@ p {
 	flex: 1 100%;
 }
 
-.receipeName {
+.detailsRedesign {
+  flex: 0 auto;
+}
+
+.recipeName {
 	composes: column from 'styles/flex.css';
 	align-content: flex-start;
+  display: flex;
 	@media ScreenSMMin {
 		flex: 3 0;
 	}
@@ -104,6 +138,10 @@ p {
 
 .textBold {
 	composes: textBold from 'styles/typography.css';
+}
+
+.redesignRecipeName {
+  composes: fontStyleSubHead from 'design-language/typography.css';
 }
 
 .textSM {

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import RecipeSummary from './RecipeSummary'
+import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import { RecipeSummary } from './RecipeSummary'
 
 function mapStateToProps(state) {
   return {
@@ -8,9 +9,8 @@ function mapStateToProps(state) {
     menuRecipesStore: state.recipes,
     menuRecipeStock: state.menuRecipeStock,
     menuBoxPrices: state.menuBoxPrices,
+    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
   }
 }
 
-const RecipeSummaryContainer = connect(mapStateToProps, {})(RecipeSummary)
-
-export default RecipeSummaryContainer
+export const RecipeSummaryContainer = connect(mapStateToProps, {})(RecipeSummary)
