@@ -11,7 +11,7 @@ export function addSessionCookies(ctx, response, rememberMe) {
   const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
 
   set(ctx.cookies, 'oauth_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, true, true)
-  set(ctx.cookies, 'oauth_recipe_feedback_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, false, true, '/recipe-feedback')
+  set(ctx.cookies, 'oauth_recipe_feedback_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, false, true, '/rate-my-recipes')
   set(ctx.cookies, 'oauth_help_centre_token', { access_token: accessToken }, rememberMe ? (10 / 24) : null, true, false, true, '/help-centre')
   set(ctx.cookies, 'oauth_expiry', { expires_at: expiresAt }, rememberMe ? (10 / 24) : null)
   set(ctx.cookies, 'oauth_refresh', { refresh_token: refreshToken }, rememberMe ? 90 : null, true, true, true)
@@ -20,7 +20,7 @@ export function addSessionCookies(ctx, response, rememberMe) {
 
 export function removeSessionCookies(ctx) {
   set(ctx.cookies, 'oauth_token', { access_token: '' }, null, true, true, true)
-  set(ctx.cookies, 'oauth_recipe_feedback_token', { access_token: '' }, null, true, true, true, '/recipe-feedback')
+  set(ctx.cookies, 'oauth_recipe_feedback_token', { access_token: '' }, null, true, true, true, '/rate-my-recipes')
   set(ctx.cookies, 'oauth_help_centre_token', { access_token: '' }, null, true, true, true, '/help-centre')
   set(ctx.cookies, 'oauth_expiry', { expires_at: '' })
   set(ctx.cookies, 'oauth_refresh', { refresh_token: '' }, null, true, true, true)
