@@ -38,12 +38,14 @@ const OrderIssue = ({
         to={`${routes.getHelp.index}/${routes.getHelp.recipeCards}`}
         clientRouted
       />
-      <ItemLink
-        label={deliveryItem}
-        trackClick={trackClick(selectOrderIssue, 'delivery')}
-        to={routes.getHelp.delivery({userId, orderId})}
-        clientRouted
-      />
+      <div data-testing="getHelpIssuesDelivery">
+        <ItemLink
+          label={deliveryItem}
+          trackClick={trackClick(selectOrderIssue, 'delivery')}
+          to={routes.getHelp.delivery({userId, orderId})}
+          clientRouted
+        />
+      </div>
       <ItemLink
         label={otherItem}
         trackClick={trackClick(selectOrderIssue, 'other')}

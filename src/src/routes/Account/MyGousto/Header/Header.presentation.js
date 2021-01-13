@@ -32,6 +32,7 @@ const HeaderPresentation = ({
         linkLabel={linkLabel}
         linkUrl={linkUrl}
         clientRouted={!linkUrl.includes(client.myDeliveries)}
+        testingSelector="nextBoxDeliveryHelp"
         tooltipContent={hasTooltipForNextOrder
           && 'Any issues with this box? Let us know and we\'ll sort it out.'}
       >
