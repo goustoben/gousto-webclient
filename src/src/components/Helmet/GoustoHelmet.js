@@ -33,7 +33,7 @@ const GoustoHelmet = ({ requestUrl, scripts: { other } }) => (
   other ? (
     <span>
       <CanonicalLink href={generateHref(requestUrl)} />
-      <Facebook admins={templateConfig.head.fbAdmins} appID={templateConfig.head.fbAppID} />
+      <Facebook admins={templateConfig.head.fbAdmins} appID={templateConfig.head.fbAppID} domainVerification={templateConfig.head.domainVerification} />
       <OpenGraph href={generateHref(requestUrl)} />
       <Twitter href={generateHref(requestUrl)} />
       <SiteVerification />
