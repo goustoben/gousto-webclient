@@ -20,7 +20,6 @@ import {
   orderConfirmationUpdateOrderTracking,
 } from 'actions/orderConfirmation'
 
-import { orderAddOnRedirect } from 'actions/orderAddOn'
 import * as menuApis from '../../routes/Menu/fetchData/menuApi'
 
 jest.mock('apis/orders')
@@ -82,16 +81,6 @@ describe('orderConfirmation actions', () => {
       expect(redirect).not.toHaveBeenCalled()
       expect(push).toHaveBeenCalledWith(
         '/order-confirmation/1234?order_action=transactional'
-      )
-    })
-  })
-
-  describe('orderAddOnRedirect', () => {
-    test('should push the client to the order confirmation', () => {
-      orderAddOnRedirect('1234', 'transactional')(dispatch, getState)
-
-      expect(push).toHaveBeenCalledWith(
-        '/order-add-ons/1234?order_action=transactional'
       )
     })
   })

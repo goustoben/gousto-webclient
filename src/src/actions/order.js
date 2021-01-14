@@ -20,7 +20,6 @@ import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot
 import { redirect } from 'utils/window'
 import {
   getNDDFeatureValue,
-  getAddOnsBeforeOrderConfirmation,
 } from 'selectors/features'
 import { getChosenAddressId } from 'selectors/basket'
 import { orderTrackingActions } from 'config/order'
@@ -29,7 +28,6 @@ import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
-import { orderAddOnRedirect } from './orderAddOn'
 import { actionTypes } from './actionTypes'
 import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 import { anyUnset } from '../utils/object'
@@ -109,12 +107,7 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
 
         sendClientMetric('menu-edit-complete', 1, 'Count')
 
-        const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
-        if (isAddOnsFeatureFlagOn) {
-          dispatch(orderAddOnRedirect(savedOrder.id, orderAction))
-        } else {
-          dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
-        }
+        dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
       }
     } catch (err) {
       logger.error({ message: 'saveOrder api call failed, logging error below...' })
@@ -298,12 +291,8 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
           orderAction,
           savedOrder,
         ))
-        const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
-        if (isAddOnsFeatureFlagOn) {
-          dispatch(orderAddOnRedirect(savedOrder.id, orderAction))
-        } else {
-          dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
-        }
+
+        dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
       } else {
         throw new GoustoException('Order could not be assigned to user', {
           error: 'assign-order-fail',

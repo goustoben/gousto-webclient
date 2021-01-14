@@ -39,9 +39,6 @@ const defaultFeatures = () => ({
   sortMarketProducts: {
     value: false,
   },
-  addOnsBeforeOrderConfirmation: {
-    value: false,
-  },
   showUserCredit: {
     value: false,
   },

@@ -4,6 +4,51 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import { IngredientsList } from 'routes/Menu/Recipe/Detail/IngredientsList'
+import { splitSentences } from 'routes/Menu/Recipe/Detail/IngredientsList/IngredientsList'
+
+describe('splitSentences', () => {
+  test('should return an array of words and character', () => {
+    const array = splitSentences('May contain peanut, (nuts) and sesame. Also may contain 1 or 2rd garlic purée tasty-ness!')
+
+    expect(array).toEqual(['May',
+      ' ',
+      'contain',
+      ' ',
+      'peanut',
+      ',',
+      ' ',
+      '(',
+      'nuts',
+      ')',
+      ' ',
+      'and',
+      ' ',
+      'sesame',
+      '.',
+      ' ',
+      'Also',
+      ' ',
+      'may',
+      ' ',
+      'contain',
+      ' ',
+      '1',
+      ' ',
+      'or',
+      ' ',
+      '2',
+      'rd',
+      ' ',
+      'garlic',
+      ' ',
+      'purée',
+      ' ',
+      'tasty',
+      '-',
+      'ness',
+      '!'])
+  })
+})
 
 describe('<IngredientsList />', () => {
   let ingredients
@@ -11,9 +56,9 @@ describe('<IngredientsList />', () => {
   beforeEach(() => {
     ingredients = Immutable.fromJS([
       { name: 'name1', subIngredients: 'subIngredients1', allergens: ['test'] },
-      { name: 'name1', subIngredients: 'subIngredients1', allergens: ['test'] },
-      { name: 'name1', subIngredients: 'subIngredients1', allergens: ['test'] },
-      { name: 'name1', subIngredients: 'subIngredients1', allergens: ['test'] },
+      { name: 'name2', subIngredients: 'subIngredients1', allergens: ['test'] },
+      { name: 'name3', subIngredients: 'subIngredients1', allergens: ['test'] },
+      { name: 'name4', subIngredients: 'subIngredients1', allergens: ['test'] },
     ])
     allergens = Immutable.List(['test'])
   })
