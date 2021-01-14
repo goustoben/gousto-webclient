@@ -9,5 +9,6 @@ module.exports = {
       '793975323',
     ],
     description: "Food delivery is simple with Gousto's popular recipe kit boxes. Receive fresh and seasonal ingredients straight to your home with FREE delivery",
+    domainVerification: '5duc2owjjtp98bf1i3mqr2izosu9lg',
   },
 }

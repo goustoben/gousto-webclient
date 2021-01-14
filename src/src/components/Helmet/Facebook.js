@@ -2,12 +2,16 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 
-const Facebook = ({ admins, appID }) => {
+const Facebook = ({ admins, appID, domainVerification }) => {
   const metaData = [
     {
       property: 'fb:app_id',
       content: appID,
     },
+    {
+      name: 'facebook-domain-verification',
+      content: domainVerification,
+    }
   ]
 
   if (admins && admins.length) {
@@ -27,6 +31,7 @@ Facebook.defaultProps = {
 Facebook.propTypes = {
   admins: PropTypes.array.isRequired,
   appID: PropTypes.string.isRequired,
+  domainVerification: PropTypes.string.isRequired,
 }
 
 export default Facebook

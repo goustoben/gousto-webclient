@@ -83,6 +83,7 @@ describe('Helmet GoustoHelmet', () => {
       templateConfigHead = sinon.stub(templateConfig, 'head').get(() => ({
         fbAppID: 'abc123',
         fbAdmins: ['admin1id', 'admin2id'],
+        domainVerification: '1111',
       }))
       wrapper = shallow(<GoustoHelmet />)
     })
@@ -100,6 +101,10 @@ describe('Helmet GoustoHelmet', () => {
 
     test('should set appId to fbAppID value from head config', () => {
       expect(wrapper.children(Facebook).prop('appID')).toEqual('abc123')
+    })
+
+    test('should set domainVerification value from head config', () => {
+      expect(wrapper.children(Facebook).prop('domainVerification')).toEqual('1111')
     })
   })
 
