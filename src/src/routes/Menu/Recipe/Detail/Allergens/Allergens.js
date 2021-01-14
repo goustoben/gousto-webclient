@@ -3,8 +3,12 @@ import React from 'react'
 import Immutable from 'immutable'
 import css from './Allergens.css'
 
+const replaceGluten = (allergens) => allergens.map(a =>
+  (a === 'gluten' ? 'cereals containing gluten' : a)
+)
+
 export const allergenNamesInParentheses = (allergens) => {
-  const allergenString = allergens.join(', ')
+  const allergenString = replaceGluten(allergens).join(', ')
   const allergenText = `(${allergenString})`
 
   return allergenText
