@@ -5,7 +5,7 @@ import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { fetchPayPalClientToken, trackCheckoutButtonPressed, clearPayPalClientToken } from 'actions/checkout'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
-import { getIsCheckoutOverhaulEnabled, getIsOldCheckoutFieldsEnabled } from 'selectors/features'
+import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -17,7 +17,6 @@ function mapStateToProps(state, ownProps) {
     browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
     isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
-    isOldCheckoutFieldEnabled: getIsOldCheckoutFieldsEnabled(state),
   }
 }
 

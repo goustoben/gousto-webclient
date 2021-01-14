@@ -5,7 +5,8 @@ import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getAboutYouFormName } from 'selectors/checkout'
-import { getIsOldCheckoutFieldsEnabled } from 'selectors/features'
+import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import * as stateUtils from 'routes/Checkout/utils/state'
 import { AboutYou } from './AboutYou'
 
 function mapStateToProps(sectionName) {
@@ -15,7 +16,9 @@ function mapStateToProps(sectionName) {
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
     isMobile: state.request.get('browser') === 'mobile',
-    isOldCheckoutFieldEnabled: getIsOldCheckoutFieldsEnabled(state),
+    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
+    submitting: stateUtils.isSubmitting(state),
+    createAccountValues: state.form.aboutyou && state.form.aboutyou.values.aboutyou,
   })
 }
 

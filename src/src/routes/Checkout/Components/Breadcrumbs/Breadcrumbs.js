@@ -14,17 +14,21 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks }) => {
       <ul className={css.breadcrumbsList}>
         {items.map(({ id, label }, index) => (
           <li key={id} className={css.listItem}>
-            <Link
-              clientRouted
-              to={`/check-out/${id}`}
-              tracking={trackNavigation(label)}
-              className={classNames({
-                [css.activeItem]: index === activeIndex || index < activeIndex,
-                [css.futureItem]: index > activeIndex,
-              })}
-            >
-              {label}
-            </Link>
+            {index > activeIndex
+              ? <span className={css.futureItem}>{label}</span>
+              : (
+                <Link
+                  clientRouted
+                  to={`/check-out/${id}`}
+                  tracking={trackNavigation(label)}
+                  className={classNames({
+                    [css.activeItem]: index === activeIndex || index < activeIndex,
+                    [css.futureItem]: index > activeIndex,
+                  })}
+                >
+                  {label}
+                </Link>
+              )}
             <Svg
               fileName="icon-chevron-small-right"
               className={classNames(

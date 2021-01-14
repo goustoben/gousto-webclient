@@ -25,7 +25,8 @@ export class CheckBox extends React.PureComponent {
       name,
       required,
       style,
-      textSize
+      textSize,
+      childLabelClassName,
     } = this.props
 
     const labelElementClasses = classNames(
@@ -51,6 +52,7 @@ export class CheckBox extends React.PureComponent {
       css.text,
       {
         [css.textChecked]: checked,
+        [childLabelClassName]: childLabelClassName,
       }
     )
 
@@ -89,6 +91,7 @@ CheckBox.propTypes = {
   required: PropTypes.bool,
   style: PropTypes.oneOf(['','disclaimer']),
   textSize: PropTypes.oneOf(['ExtraSmall', 'Medium']),
+  childLabelClassName: PropTypes.string,
 }
 
 CheckBox.defaultProps = {
@@ -103,6 +106,7 @@ CheckBox.defaultProps = {
   required: false,
   style: '',
   textSize: 'ExtraSmall',
+  childLabelClassName: '',
 }
 
 export default InputWrapper(CheckBox)

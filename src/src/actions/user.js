@@ -401,8 +401,8 @@ function userProspect() {
 
       const reqData = {
         email: aboutyou.get('email'),
-        user_name_first: aboutyou.get('firstName').trim(),
-        user_name_last: aboutyou.get('lastName').trim(),
+        user_name_first: isCheckoutOverhaulEnabled ? 'test' : aboutyou.get('firstName').trim(),
+        user_name_last: isCheckoutOverhaulEnabled ? 'test' : aboutyou.get('lastName').trim(),
         promocode: basket.get('promoCode'),
         allow_marketing_email: aboutyou.get('allowEmail'),
         preview_order_id: basket.get('previewOrderId'),
@@ -622,10 +622,11 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
     const state = getState()
     const prices = state.pricing.get('prices')
+    const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
     try {
       const { form, basket, promoAgeVerified } = state
-      const deliveryFormName = getDeliveryFormName(state)
-      const aboutYouFormName = getAboutYouFormName(state)
+      const deliveryFormName = getDeliveryFormName(state, isCheckoutOverhaulEnabled)
+      const aboutYouFormName = getAboutYouFormName(state, isCheckoutOverhaulEnabled)
 
       const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
@@ -633,7 +634,12 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
 
       const isCard = getCurrentPaymentMethod(state) === PaymentMethod.Card
 
-      const deliveryAddress = getAddress(delivery)
+      let deliveryAddress = getAddress(delivery)
+      if (!deliveryAddress.postcode && isCheckoutOverhaulEnabled) {
+        const yourDetails = Immutable.fromJS(form.yourdetails.values).get('delivery')
+        deliveryAddress = getAddress(yourDetails)
+      }
+
       const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
       const intervalId = delivery.get('interval_id', 1)
@@ -666,8 +672,8 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
           tariff_id: basket.get('tariffId', ''),
           phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
           email: aboutYou.get('email'),
-          name_first: aboutYou.get('firstName').trim(),
-          name_last: aboutYou.get('lastName').trim(),
+          name_first: isCheckoutOverhaulEnabled ? 'test' : aboutYou.get('firstName').trim(),
+          name_last: isCheckoutOverhaulEnabled ? 'test' : aboutYou.get('lastName').trim(),
           promo_code: basket.get('promoCode', ''),
           password: aboutYou.get('password'),
           age_verified: Number(promoAgeVerified || false),

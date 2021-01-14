@@ -14,7 +14,7 @@ const sectionName = 'aboutyou'
 
 const AboutYouSection = AboutYouContainer(sectionName)
 
-export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid, trackUTMAndPromoCode }) => {
+export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid, trackUTMAndPromoCode, isCheckoutOverhaulEnabled }) => {
   const handleSubmit = () => {
     if (checkoutValid) {
       trackUTMAndPromoCode('clickNextDelivery')
@@ -25,12 +25,20 @@ export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, c
 
   return (
     <div>
-      <AboutYouSection receiveRef={receiveRef} />
-      <CheckoutButton
-        onClick={handleSubmit}
-        stepName={`Next: ${nextStepName}`}
-        valid={checkoutValid}
+      <AboutYouSection
+        receiveRef={receiveRef}
+        submit={submit}
+        userProspect={userProspect}
+        checkoutValid={checkoutValid}
+        trackUTMAndPromoCode={trackUTMAndPromoCode}
       />
+      {!isCheckoutOverhaulEnabled && (
+        <CheckoutButton
+          onClick={handleSubmit}
+          stepName={`Next: ${nextStepName}`}
+          valid={checkoutValid}
+        />
+      )}
     </div>
   )
 }
@@ -42,6 +50,7 @@ AboutYouStep.propTypes = {
   nextStepName: PropTypes.string,
   checkoutValid: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 AboutYouStep.defaultProps = {
@@ -50,6 +59,7 @@ AboutYouStep.defaultProps = {
   checkoutValid: false,
   nextStepName: '',
   trackUTMAndPromoCode: () => {},
+  isCheckoutOverhaulEnabled: false,
 }
 
 const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports

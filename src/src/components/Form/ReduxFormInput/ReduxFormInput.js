@@ -18,15 +18,19 @@ class ReduxFormInput extends React.PureComponent {
     inputType: PropTypes.oneOf(['CheckBox', 'DropDown', 'Input']).isRequired,
     inputPrefix: PropTypes.node,
     inputSuffix: PropTypes.node,
-    label: PropTypes.string,
-    subLabel: PropTypes.string,
+    label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    subLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     dataTesting: PropTypes.string,
     'data-testing': PropTypes.string,
+    className: PropTypes.string,
   }
 
   static defaultProps = {
     input: {},
     inputType: 'Input',
+    label: '',
+    subLabel: '',
+    className: '',
   }
 
   debounceTouch(dispatch, formName, field) {
