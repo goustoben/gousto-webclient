@@ -8,7 +8,7 @@ const capitalizeFirstLetter = (string) => (
   string.charAt(0).toUpperCase() + string.slice(1)
 )
 
-const REGEX_TO_SPLIT_SENTENCES = /\w+|\s+|[^\s\w]+/g
+const REGEX_TO_SPLIT_SENTENCES = /([A-Za-zÀ-ÖØ-öø-ÿ]+)|\s+|[^\sA-Za-zÀ-ÖØ-öø-ÿ]+/g
 
 export const splitSentences = (string) => string.match(REGEX_TO_SPLIT_SENTENCES)
 

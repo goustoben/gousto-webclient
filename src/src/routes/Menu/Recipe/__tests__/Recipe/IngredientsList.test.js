@@ -8,10 +8,9 @@ import { splitSentences } from 'routes/Menu/Recipe/Detail/IngredientsList/Ingred
 
 describe('splitSentences', () => {
   test('should return an array of words and character', () => {
-    const array = splitSentences('May contain peanut, (nuts) and sesame. Also may contain tasty-ness!')
+    const array = splitSentences('May contain peanut, (nuts) and sesame. Also may contain 1 or 2rd garlic purée tasty-ness!')
 
-    expect(array).toEqual( [
-      'May',
+    expect(array).toEqual(['May',
       ' ',
       'contain',
       ' ',
@@ -33,11 +32,21 @@ describe('splitSentences', () => {
       ' ',
       'contain',
       ' ',
+      '1',
+      ' ',
+      'or',
+      ' ',
+      '2',
+      'rd',
+      ' ',
+      'garlic',
+      ' ',
+      'purée',
+      ' ',
       'tasty',
       '-',
       'ness',
-      '!'
-    ])
+      '!'])
   })
 })
 
