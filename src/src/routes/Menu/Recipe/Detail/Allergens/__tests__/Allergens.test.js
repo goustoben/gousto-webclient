@@ -9,5 +9,13 @@ describe('Allergens', () => {
 
       expect(result).toEqual('(wheat, milk, celery)')
     })
+
+    test('should render "gluten" as "cereals containing gluten"', () => {
+      const allergensMock = ['wheat', 'gluten', 'celery']
+
+      const result = allergenNamesInParentheses(allergensMock)
+
+      expect(result).toEqual('(wheat, cereals containing gluten, celery)')
+    })
   })
 })
