@@ -82,6 +82,48 @@ jest.mock('utils/myDeliveries', () => ({
   transformProjectedDeliveries: jest.fn(),
 }))
 
+const formValues = {
+  delivery: {
+    values: {
+      delivery: {
+        companyName: 'My Address',
+        houseNo: '',
+        street: '',
+        line3: '',
+        town: '',
+        county: '',
+        postcode: ''
+      }
+    }
+  },
+  payment: {
+    values: {
+      payment: {
+        companyName: 'My Address',
+        houseNo: '',
+        street: '',
+        line3: '',
+        town: '',
+        county: '',
+        postcode: ''
+      }
+    }
+  },
+  yourdetails: {
+    values: {
+      delivery: {
+        companyName: 'My Address',
+        houseNo: '',
+        street: '',
+        line3: '',
+        town: '',
+        county: '',
+        postcode: ''
+      }
+    }
+  },
+}
+
 describe('user actions', () => {
   const [dispatch, getState] = [jest.fn(), jest.fn()]
 
@@ -219,32 +261,7 @@ describe('user actions', () => {
               }
             }
           },
-          delivery: {
-            values: {
-              delivery: {
-                companyName: 'My Address',
-                houseNo: '',
-                street: '',
-                line3: '',
-                town: '',
-                county: '',
-                postcode: ''
-              }
-            }
-          },
-          payment: {
-            values: {
-              payment: {
-                companyName: 'My Address',
-                houseNo: '',
-                street: '',
-                line3: '',
-                town: '',
-                county: '',
-                postcode: ''
-              }
-            }
-          }
+          ...formValues,
         },
         features: Immutable.fromJS({})
       }
@@ -515,32 +532,7 @@ describe('user actions', () => {
               }
             }
           },
-          delivery: {
-            values: {
-              delivery: {
-                companyName: 'My Address',
-                houseNo: '',
-                street: '',
-                line3: '',
-                town: '',
-                county: '',
-                postcode: ''
-              }
-            }
-          },
-          payment: {
-            values: {
-              payment: {
-                companyName: 'My Address',
-                houseNo: '',
-                street: '',
-                line3: '',
-                town: '',
-                county: '',
-                postcode: ''
-              }
-            }
-          }
+          ...formValues,
         },
         payment: Immutable.fromJS({
           paymentMethod: PaymentMethod.Card,
@@ -633,32 +625,7 @@ describe('user actions', () => {
                 }
               }
             },
-            delivery: {
-              values: {
-                delivery: {
-                  companyName: 'My Address',
-                  houseNo: '',
-                  street: '',
-                  line3: '',
-                  town: '',
-                  county: '',
-                  postcode: ''
-                }
-              }
-            },
-            payment: {
-              values: {
-                payment: {
-                  companyName: 'My Address',
-                  houseNo: '',
-                  street: '',
-                  line3: '',
-                  town: '',
-                  county: '',
-                  postcode: ''
-                }
-              }
-            }
+            ...formValues,
           }
         }
         beforeEach(() => {

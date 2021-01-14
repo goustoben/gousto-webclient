@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { Field, FormSection } from 'redux-form'
+import classNames from 'classnames'
 import ReduxFormInput from 'Form/ReduxFormInput'
-import { emailValidator } from 'utils/forms'
+import { onEnter } from 'utils/accessibility'
 import { Login } from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
+import { CTA } from 'goustouicomponents'
 import { ErrorMessage } from '../ErrorMessage'
+import { fieldsConfig } from './fieldsConfig'
 import css from './AboutYou.css'
 
-class AboutYou extends React.PureComponent {
+class AboutYou extends PureComponent {
   componentDidMount() {
     const { clearErrors } = this.props
     clearErrors()
@@ -29,121 +32,181 @@ class AboutYou extends React.PureComponent {
     loginVisibilityChange(true)
   }
 
+  onLoginClick = (e) => {
+    const { trackCheckoutButtonPressed, isMobile, isAuthenticated, } = this.props
+    if (!isAuthenticated) {
+      this.handleLoginOpen(e)
+    }
+    if (isMobile) {
+      trackCheckoutButtonPressed('LogInCTA Clicked')
+    }
+  }
+
+  handleSubmit = () => {
+    const { createAccountValues, userProspect, submit, trackUTMAndPromoCode } = this.props
+    const { email, password } = createAccountValues
+    if (email && password) {
+      trackUTMAndPromoCode('checkout_click_continue_to_delivery')
+      userProspect()
+    }
+    submit()
+  }
+
+  renderLoginButton = () => {
+    const { isCheckoutOverhaulEnabled } = this.props
+    const loginCTA = (
+      <span
+        className={classNames(css.link, { [css.linkRedesign]: isCheckoutOverhaulEnabled })}
+        role="button"
+        tabIndex="0"
+        onClick={this.onLoginClick}
+        onKeyDown={onEnter(this.onLoginClick)}
+      >
+        {isCheckoutOverhaulEnabled
+          ? 'Log in'
+          : (
+            <Fragment>
+              Log in here&nbsp;
+              <span className={css.arrowRight} />
+            </Fragment>
+          )
+        }
+      </span>
+    )
+
+    if (isCheckoutOverhaulEnabled) {
+      return (
+        <span className={css.emailLabelContainer}>
+          <span className={css.fieldLabel}>Email address</span>
+          <span className={css.account}>
+            Have an account?&nbsp;
+            {loginCTA}
+          </span>
+        </span>
+      )
+    }
+
+    return (
+      <div className={css.infoSection}>
+        <p className={css.textSMNoMargin}>
+          Already a customer?&nbsp;
+          {loginCTA}
+        </p>
+      </div>
+    )
+  }
+
+  renderFields = () => {
+    const { isCheckoutOverhaulEnabled, sectionName, receiveRef } = this.props
+    const fields = fieldsConfig({ isCheckoutOverhaulEnabled, loginCTA: this.renderLoginButton, sectionName })
+
+    return fields.map(item => (
+      <div
+        key={item.name}
+        className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}
+      >
+        <div className={classNames(css.colHalf, { [css.fieldContainer]: isCheckoutOverhaulEnabled })}>
+          <Field
+            name={item.name}
+            component={ReduxFormInput}
+            inputType={item.inputType}
+            type={item.type || null}
+            label={item.label || null}
+            subLabel={item.subLabel || null}
+            className={item.className || null}
+            mask
+            withRef
+            ref={receiveRef || null}
+            refId={item.refId || null}
+            dataTesting={item.dataTesting}
+            validate={item.validate || null}
+            childLabel={item.childLabel || null}
+            childLabelClassName={item.childLabelClassName || null}
+            style={item.style || null}
+          />
+        </div>
+      </div>
+    ))
+  }
+
   render() {
-    const { sectionName, trackCheckoutButtonPressed, isMobile, isAuthenticated, receiveRef, isLoginOpen, isOldCheckoutFieldEnabled } = this.props
+    const {
+      sectionName,
+      receiveRef,
+      isLoginOpen,
+      isCheckoutOverhaulEnabled,
+      submitting,
+      createAccountValues,
+    } = this.props
+    const { email, password } = createAccountValues
 
     return (
       <FormSection name={sectionName}>
-        <div className={css.aboutYouContainer} data-testing="checkoutAboutYouSection">
+        <div
+          className={classNames(css.aboutYouContainer, {
+            [css.aboutYouContainerRedesign]: isCheckoutOverhaulEnabled
+          })}
+          data-testing="checkoutAboutYouSection"
+        >
           <div>
-            <h3 className={css.header}>About you</h3>
-            <span className={css.boldInfo}>All fields are required</span>
-            <div className={css.infoSection}>
-              <p className={css.textSMNoMargin}>
-                Already a customer?&nbsp;
-                <span
-                  className={css.link}
-                  role="button"
-                  tabIndex="0"
-                  onClick={(e) => {
-                    if (!isAuthenticated) this.handleLoginOpen(e)
-                    if (isMobile) trackCheckoutButtonPressed('LogInCTA Clicked')
-                  }}
-                >
-                  Log in here&nbsp;
-                  <span className={css.arrowRight} />
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className={css.row}>
-            <div className={css.colSM}>
-              <Field
-                name="firstName"
-                component={ReduxFormInput}
-                inputType="Input"
-                label="First name"
-                mask
-                withRef
-                ref={receiveRef}
-                refId={`${sectionName}.firstName`}
-                dataTesting="checkoutFirstNameInput"
-              />
-            </div>
-            <div className={css.colSM}>
-              <Field
-                name="lastName"
-                component={ReduxFormInput}
-                inputType="Input"
-                label="Last name"
-                mask
-                withRef
-                ref={receiveRef}
-                refId={`${sectionName}.lastName`}
-                dataTesting="checkoutLastNameInput"
-              />
-            </div>
-          </div>
-          <div className={css.row}>
-            <div className={css.colMD}>
-              <Field
-                name="email"
-                component={ReduxFormInput}
-                inputType="Input"
-                type="email"
-                label="Email address"
-                subLabel="You'll use this to log in to your account"
-                mask
-                withRef
-                ref={receiveRef}
-                refId={`${sectionName}.email`}
-                dataTesting="checkoutEmailInput"
-                validate={emailValidator}
-              />
-            </div>
-          </div>
-          <div className={css.row}>
-            <div className={css.colMD}>
-              <Field
-                name="password"
-                component={ReduxFormInput}
-                inputType="Input"
-                type="password"
-                label="Password"
-                subLabel="Must be at least 8 characters"
-                mask
-                withRef
-                ref={receiveRef}
-                refId={`${sectionName}.password`}
-                dataTesting="checkoutPasswordInput"
-              />
-            </div>
-          </div>
-          <div className={css.row}>
-            <div className={css.colHalf}>
-              <Field
-                name="allowEmail"
-                component={ReduxFormInput}
-                inputType="CheckBox"
-                childLabel="I'd like to receive the latest news and offers from Gousto, and be contacted occasionally for Customer Success purposes. I can unsubscribe at any time."
-                style="disclaimer"
-                mask
-                dataTesting="checkoutAllowEmailCheckbox"
-              />
-            </div>
-            {isOldCheckoutFieldEnabled && (
-              <div className={css.colHalf}>
-                <Field
-                  name="allowThirdPartyEmail"
-                  component={ReduxFormInput}
-                  inputType="CheckBox"
-                  childLabel="I would like to receive 3rd party communications from selected partners."
-                  style="disclaimer"
-                  mask
-                />
-              </div>
+            <h3 className={classNames(css.header, {
+              [css.headerRedesign]: isCheckoutOverhaulEnabled
+            })}
+            >
+              {isCheckoutOverhaulEnabled ? 'Create account' : 'About you'}
+            </h3>
+            {!isCheckoutOverhaulEnabled && (
+              <Fragment>
+                <span className={css.boldInfo}>All fields are required</span>
+                {this.renderLoginButton()}
+              </Fragment>
             )}
           </div>
+          {!isCheckoutOverhaulEnabled && (
+            <Fragment>
+              <div className={css.row}>
+                <div className={css.colSM}>
+                  <Field
+                    name="firstName"
+                    component={ReduxFormInput}
+                    inputType="Input"
+                    label="First name"
+                    mask
+                    withRef
+                    ref={receiveRef}
+                    refId={`${sectionName}.firstName`}
+                    dataTesting="checkoutFirstNameInput"
+                  />
+                </div>
+                <div className={css.colSM}>
+                  <Field
+                    name="lastName"
+                    component={ReduxFormInput}
+                    inputType="Input"
+                    label="Last name"
+                    mask
+                    withRef
+                    ref={receiveRef}
+                    refId={`${sectionName}.lastName`}
+                    dataTesting="checkoutLastNameInput"
+                  />
+                </div>
+              </div>
+            </Fragment>
+          )}
+          {this.renderFields()}
+          {isCheckoutOverhaulEnabled && (
+            <CTA
+              testingSelector="checkoutCTA"
+              onClick={this.handleSubmit}
+              isLoading={submitting}
+              isFullWidth
+              isDisabled={!email || !password}
+              size="small"
+            >
+              Continue to Delivery
+            </CTA>
+          )}
           <Overlay
             open={isLoginOpen}
             contentClassName={css.modalOverlay}
@@ -175,7 +238,15 @@ AboutYou.propTypes = {
   clearErrors: PropTypes.func,
   receiveRef: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
-  isOldCheckoutFieldEnabled: PropTypes.bool,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+  submit: PropTypes.func,
+  userProspect: PropTypes.func,
+  submitting: PropTypes.bool,
+  trackUTMAndPromoCode: PropTypes.func,
+  createAccountValues: PropTypes.shape({
+    email: PropTypes.string,
+    password: PropTypes.string,
+  }),
 }
 
 AboutYou.defaultProps = {
@@ -187,7 +258,12 @@ AboutYou.defaultProps = {
   receiveRef: () => { },
   trackCheckoutButtonPressed: () => { },
   isMobile: false,
-  isOldCheckoutFieldEnabled: false,
+  isCheckoutOverhaulEnabled: false,
+  submit: () => { },
+  userProspect: () => { },
+  trackUTMAndPromoCode: () => { },
+  submitting: false,
+  createAccountValues: {},
 }
 
 export { AboutYou }

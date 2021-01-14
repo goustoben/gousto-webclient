@@ -19,7 +19,7 @@ import { createPreviewOrder } from 'apis/orders'
 
 import { getChosenAddressId } from 'selectors/basket'
 import { getAboutYouFormName, getDeliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
-import { getNDDFeatureValue, getIs3DSForSignUpEnabled } from 'selectors/features'
+import { getNDDFeatureValue, getIs3DSForSignUpEnabled, getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
 
 import { actionTypes } from './actionTypes'
@@ -456,7 +456,8 @@ export function checkoutPostSignup(recaptchaValue) {
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
       const { form, pricing } = getState()
-      const aboutYouFormName = getAboutYouFormName(getState())
+      const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(getState())
+      const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutOverhaulEnabled)
       const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
       const aboutYou = aboutYouValues.get('aboutyou')
       const email = aboutYou.get('email')

@@ -192,6 +192,16 @@ describe('Checkout', () => {
   })
 
   describe('fetchData', () => {
+    test('should redirect to the first checkout step', async () => {
+      await Checkout.fetchData({
+        store: context.store,
+        query: {},
+        params: {},
+      })
+      expect(dispatch).toHaveBeenCalled()
+      expect(replace).toHaveBeenCalledWith('/check-out/aboutyou')
+    })
+
     test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, pricingRequest', async () => {
       await Checkout.fetchData({
         store: context.store,
@@ -619,6 +629,14 @@ describe('Checkout', () => {
 
     test('then should render Breadcrumbs component', () => {
       expect(wrapper.find('Breadcrumbs').exists()).toBeTruthy()
+      expect(wrapper.find('ProgressBar').exists()).toBeFalsy()
+    })
+
+    test('then should add redesign classes to desktop component wrappers', () => {
+      expect(wrapper.find('.checkoutContent').hasClass('checkoutContentRedesign')).toBeTruthy()
+      expect(wrapper.find('.rowCheckout').hasClass('rowCheckoutRedesign')).toBeTruthy()
+      expect(wrapper.find('.section').hasClass('sectionRedesign')).toBeTruthy()
+      expect(wrapper.find('.aside').hasClass('asideRedesign')).toBeTruthy()
     })
   })
 })

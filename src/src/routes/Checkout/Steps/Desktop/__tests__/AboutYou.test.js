@@ -58,4 +58,16 @@ describe('AboutYouStep', () => {
       })
     })
   })
+
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true
+      })
+    })
+
+    test('then CheckoutButton should not be displayed', () => {
+      expect(wrapper.find(CheckoutButton).exists()).toBeFalsy()
+    })
+  })
 })

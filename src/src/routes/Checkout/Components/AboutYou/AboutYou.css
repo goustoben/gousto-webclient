@@ -1,5 +1,7 @@
-@value Bluecheese, Chia, Radish, White from 'styles/colors.css';
+@value Bluecheese, Chia, Radish, White, Mackerel, Oyster, NewGrey from 'styles/colors.css';
 @value avenirBookFontStack from 'styles/typography.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value FontFamilyAxiformaBook from 'design-language/typography.css';
 
 .aboutYouContainer {
 	background-color: White;
@@ -7,8 +9,26 @@
 	composes: paddingLG from 'sass-loader!styles/spacing.scss';
 }
 
+.aboutYouContainerRedesign {
+  border-bottom: 1px solid Mackerel;
+  border-top: 1px solid Mackerel;
+  padding: 1rem 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    border: 1px solid Mackerel;
+    padding: 1.5rem 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
 .row {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.rowRedesign {
+  margin: 0;
+  font-family: FontFamilyAxiformaBook;
 }
 
 .col {
@@ -18,6 +38,22 @@
 .colMD {
 	composes: col;
 	composes: col-md-8 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.fieldContainer {
+  max-width: 100%;
+  flex: 0 0 100%;
+  margin: 0 0 1rem 0;
+  padding: 0;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.input {
+  composes: fontStyleBody from 'design-language/typography.css';
+  padding: 0.625rem 0.75rem;
 }
 
 .colSM {
@@ -39,9 +75,33 @@
 	}
 }
 
+.linkRedesign {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  text-decoration: none;
+  composes: fontStyleS from 'design-language/typography.css';
+  composes: fontBold from 'design-language/typography.css';
+  white-space: nowrap;
+}
+
 .header {
 	composes: headerMD headlineFont from 'styles/typography.css';
 	composes: inlineBlock from 'styles/display.css';
+}
+
+.headerRedesign {
+  composes: fontStyleL from 'design-language/typography.css';
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.emailLabelContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .arrowRight {
@@ -79,10 +139,21 @@
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
 }
 
-.errorMsg {
-	color: Radish;
-	composes: textXS from 'styles/typography.css';
-	composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss';
+.fieldLabel {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+}
+
+.fieldSubLabel {
+  color: NewGrey;
+  composes: fontStyleS from 'design-language/typography.css';
+}
+
+.checkboxLabel {
+  composes: fontStyleXS from 'design-language/typography.css';
+}
+
+.account {
+  composes: fontStyleS from 'design-language/typography.css';
 }
 
 .modal {

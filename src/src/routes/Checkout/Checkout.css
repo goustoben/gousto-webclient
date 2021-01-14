@@ -1,10 +1,25 @@
 @value SpacingMD from 'sass-loader!styles/spacing.scss';
 @value ScreenXSMax from 'styles/screenSizes.css';
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
 
 .rowCheckout {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
 	width: 100%;
 	margin: 0 auto;
+}
+
+.rowCheckoutRedesign {
+  padding: 0;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    max-width: 36rem;
+    padding: 0 2rem;
+    display: block;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 0 2rem;
+  }
 }
 
 .col {
@@ -16,6 +31,18 @@
 	composes: col-md-7 from 'sass-loader!styles/bootstrap.scss';
 }
 
+.sectionRedesign {
+  padding: 0;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    max-width: 36rem;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 0 1.5rem 0 0;
+  }
+}
+
 .aside {
 	composes: col;
 	composes: col-md-5 from 'sass-loader!styles/bootstrap.scss';
@@ -24,12 +51,34 @@
 	}
 }
 
+.asideRedesign {
+  padding: 0;
+
+  @media BreakpointFromMedium and BreakpointToLarge {
+    max-width: 36rem;
+  }
+}
+
 .checkoutContent {
 	composes: rowCheckout;
 	composes: pageContainerLG from 'styles/layout.css';
 	composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
 	padding-top: 20px;
 	padding-bottom: 15px;
+}
+
+.checkoutContentRedesign {
+  padding: 1rem 0;
+  margin: 0 auto;
+
+  @media BreakpointFromMedium {
+    padding: 2rem;
+    display: block;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 3rem 2rem;
+  }
 }
 
 .menuTitle {

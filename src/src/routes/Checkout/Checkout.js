@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import classNames from 'classnames'
 
 import logger from 'utils/logger'
 import routesConfig from 'config/routes'
@@ -73,7 +74,6 @@ const propTypes = {
   clearPayPalClientToken: PropTypes.func,
   trackCheckoutNavigationLinks: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
-  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -94,7 +94,6 @@ const defaultProps = {
   clearPayPalClientToken: () => {},
   trackCheckoutNavigationLinks: () => {},
   isCheckoutOverhaulEnabled: false,
-  isOldCheckoutFieldEnabled: false,
 }
 
 const contextTypes = {
@@ -270,7 +269,7 @@ class Checkout extends PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, submitOrder, trackUTMAndPromoCode, isOldCheckoutFieldEnabled } = this.props
+    const { browser, submitOrder, trackUTMAndPromoCode, isCheckoutOverhaulEnabled } = this.props
     const { checkoutScriptReady, paypalScriptsReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
@@ -285,7 +284,7 @@ class Checkout extends PureComponent {
       checkoutScriptReady,
       paypalScriptsReady,
       trackUTMAndPromoCode,
-      isOldCheckoutFieldEnabled,
+      isCheckoutOverhaulEnabled,
     }
 
     let element = <div />
@@ -317,15 +316,13 @@ class Checkout extends PureComponent {
   }
 
   renderMobileSteps = () => {
-    const { params: { stepName }, isCheckoutOverhaulEnabled } = this.props
-    const stepMapping = isCheckoutOverhaulEnabled ? checkoutOverhaulStepMapping : mobileStepMapping
-    const steps = isCheckoutOverhaulEnabled ? checkoutOverhaulSteps : defaultMobile
+    const { params: { stepName } } = this.props
 
     return (
       <Div>
-        {this.renderProgressBar(stepMapping, steps, stepName)}
-        {this.renderSteps(stepMapping, steps, stepName)}
-        {this.renderStaticPayment(stepMapping, steps, stepName)}
+        {this.renderProgressBar(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderSteps(mobileStepMapping, defaultMobile, stepName)}
+        {this.renderStaticPayment(mobileStepMapping, defaultMobile, stepName)}
       </Div>
     )
   }
@@ -337,14 +334,18 @@ class Checkout extends PureComponent {
     const steps = isCheckoutOverhaulEnabled ? checkoutOverhaulSteps : defaultDesktop
 
     return (
-      <Div className={css.rowCheckout}>
-        <Div className={css.section}>
-          {this.renderProgressBar(stepMapping, steps, stepName)}
+      <Div className={classNames(
+        css.rowCheckout,
+        { [css.rowCheckoutRedesign]: isCheckoutOverhaulEnabled }
+      )}
+      >
+        <Div className={classNames(css.section, { [css.sectionRedesign]: isCheckoutOverhaulEnabled })}>
+          {!isCheckoutOverhaulEnabled && this.renderProgressBar(stepMapping, steps, stepName)}
           {this.renderSteps(stepMapping, steps, stepName)}
           {this.renderStaticPayment(stepMapping, steps, stepName)}
         </Div>
 
-        <Div className={css.aside}>
+        <Div className={classNames(css.aside, { [css.asideRedesign]: isCheckoutOverhaulEnabled })}>
           <Summary showPromocode isLoading={isCreatingPreviewOrder} />
           <Div margin={{ top: 'LG' }}>
             <BoxDetailsContainer />
@@ -366,11 +367,11 @@ class Checkout extends PureComponent {
     }, [])
 
     return (
-      <Div margin={{ bottom: 'MD' }}>
+      <Div margin={{ bottom: isCheckoutOverhaulEnabled ? 0 : 'MD' }}>
         {isCheckoutOverhaulEnabled
           ? (
             <Breadcrumbs
-              currentId={currentStep}
+              currentId={currentStep || 'account'}
               items={progressSteps}
               trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
             />
@@ -386,12 +387,17 @@ class Checkout extends PureComponent {
   }
 
   render() {
-    const { browser } = this.props
-    const renderSteps = browser === 'mobile' ? this.renderMobileSteps : this.renderDesktopSteps
+    const { browser, isCheckoutOverhaulEnabled, params: { stepName } } = this.props
+    const renderSteps = browser === 'mobile' && !isCheckoutOverhaulEnabled ? this.renderMobileSteps : this.renderDesktopSteps
 
     return (
       <Div data-testing="checkoutContainer">
-        <Div className={css.checkoutContent}>
+        <Div className={classNames(
+          css.checkoutContent,
+          { [css.checkoutContentRedesign]: isCheckoutOverhaulEnabled }
+        )}
+        >
+          {isCheckoutOverhaulEnabled && this.renderProgressBar(checkoutOverhaulStepMapping, checkoutOverhaulSteps, stepName)}
           {renderSteps()}
         </Div>
       </Div>
