@@ -22,41 +22,10 @@ describe('CheckoutButton', () => {
   })
 
   describe('the button text', () => {
-    const wrap = (props) => {
-      const checkoutProps = { ...propsToPass, ...props }
-      wrapper = shallow(
-        <Checkout {...checkoutProps} />
-      )
-    }
+    test('is Checkout', () => {
+      wrapper = shallow(<Checkout />)
 
-    describe('when the "isAddOnsFeatureFlagOn" is true and user is logged in', () => {
-      beforeEach(() => {
-        wrap({ isAddOnsFeatureFlagOn: true, isAuthenticated: true })
-      })
-
-      test('is Confirm', () => {
-        expect(wrapper.childAt(0).text()).toBe('Confirm')
-      })
-    })
-
-    describe('when the "isAddOnsFeatureFlagOn" is false and user is logged in', () => {
-      beforeEach(() => {
-        wrap({ isAddOnsFeatureFlagOn: false, isAuthenticated: true })
-      })
-
-      test('is Checkout', () => {
-        expect(wrapper.childAt(0).text()).toBe('Checkout')
-      })
-    })
-
-    describe('when the user is not logged in', () => {
-      beforeEach(() => {
-        wrap({ isAuthenticated: false })
-      })
-
-      test('is Checkout', () => {
-        expect(wrapper.childAt(0).text()).toBe('Checkout')
-      })
+      expect(wrapper.childAt(0).text()).toBe('Checkout')
     })
   })
 

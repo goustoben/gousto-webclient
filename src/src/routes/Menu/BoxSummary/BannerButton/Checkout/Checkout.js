@@ -10,8 +10,6 @@ const Checkout = (props) => {
   const {
     basketPreviewOrderChangePending,
     checkoutPending,
-    isAddOnsFeatureFlagOn,
-    isAuthenticated,
     menuRecipes,
     numPortions,
     orderSavePending,
@@ -33,7 +31,7 @@ const Checkout = (props) => {
       spinnerContainerClassName={css.coSpinnerContainer}
       onClick={() => checkoutBasket(section, view)}
     >
-      {isAddOnsFeatureFlagOn && isAuthenticated ? 'Confirm' : 'Checkout'}
+      Checkout
     </BaseBannerButton>
   )
 }
@@ -44,14 +42,12 @@ Checkout.propTypes = {
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
   view: PropTypes.string.isRequired,
   section: PropTypes.string.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
   checkoutBasket: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
-  isAddOnsFeatureFlagOn: PropTypes.bool,
 }
 
 Checkout.defaultProps = {
@@ -60,7 +56,6 @@ Checkout.defaultProps = {
   orderSavePending: false,
   recipes: Immutable.Map({}),
   basketPreviewOrderChangePending: false,
-  isAddOnsFeatureFlagOn: false,
 }
 
 export { Checkout }

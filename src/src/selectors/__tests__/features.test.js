@@ -16,7 +16,6 @@ import {
   getPromoBannerText,
   getPromoBannerCode,
   getNDDFeatureValue,
-  getAddOnsBeforeOrderConfirmation,
   getFeatureShorterCompensationPeriod,
   getFullScreenBoxSummary,
   getUserMenuVariant,
@@ -60,7 +59,6 @@ describe('when features are defined', () => {
 
   const cases = [
     [getAbandonBasket, 'abandonBasket'],
-    [getAddOnsBeforeOrderConfirmation, 'addOnsBeforeOrderConfirmation'],
     [getAppBanner, 'appBanner'],
     [getBlockedResubscription, 'blockedResubscription'],
     [getBlockedTransactionalOrders, 'blockedTransactionalOrders'],
