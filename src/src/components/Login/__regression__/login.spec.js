@@ -52,6 +52,13 @@ describe('User log in flow', () => {
       cy.get('button[data-testing="burgerMenu"]').click()
       cy.get('li[data-testing="burgerMenuLogin"]').click()
 
+      // Wait until recaptcha is loaded because submitting the form
+      // relies on recaptcha.execute().  In normal operation, recaptcha
+      // (a third-party script) loads faster than the user is able to
+      // press the Submit button; but this test presses more quickly, so
+      // the wait is needed.
+      cy.get('.grecaptcha-badge')
+
       cy.get('form').within(() => {
         cy.get('[data-testing="inputLoginEmail"]').type('email@gmail.com')
         cy.get('[data-testing="inputLoginPassword"]').type('password')
@@ -71,6 +78,13 @@ describe('User log in flow', () => {
         cy.visit('/menu')
         cy.get('button[data-testing="burgerMenu"]').click()
         cy.get('li[data-testing="burgerMenuLogin"]').click()
+
+        // Wait until recaptcha is loaded because submitting the form
+        // relies on recaptcha.execute().  In normal operation, recaptcha
+        // (a third-party script) loads faster than the user is able to
+        // press the Submit button; but this test presses more quickly, so
+        // the wait is needed.
+        cy.get('.grecaptcha-badge')
 
         cy.get('form').within(() => {
           cy.get('[data-testing="inputLoginEmail"]').type('email@gmail.com')
