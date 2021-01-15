@@ -1,3 +1,4 @@
+import jsonfile from 'jsonfile'
 import { extractScriptOptions } from './routes/scripts'
 
 const Koa = require('koa')
@@ -26,7 +27,7 @@ const { clearPersistentStore } = require('middlewares/persist/persistStore')
 const withStatic = process.env.withStatic === 'true'
 
 const uuidv1 = require('uuid/v1')
-const {loggerSetUuid} = require('actions/logger')
+const { loggerSetUuid } = require('actions/logger')
 const addressLookupRoute = require('./routes/addressLookup').default
 const routes = require('./routes').default
 const htmlTemplate = require('./template')
@@ -39,18 +40,18 @@ app.use(sessionMiddleware())
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
   const startTime = new Date()
-  const { header, request: { path }} = ctx
-  const writeLog = (path.indexOf('/ping') === -1) && (path.indexOf('/nsassets') === -1 )
+  const { header, request: { path } } = ctx
+  const writeLog = (path.indexOf('/ping') === -1) && (path.indexOf('/nsassets') === -1)
 
   if (writeLog) {
     const uuid = uuidv1()
     ctx.uuid = uuid
-    logger.notice({message: '[START] REQUEST', requestUrl: path, uuid: ctx.uuid, headers: header})
+    logger.notice({ message: '[START] REQUEST', requestUrl: path, uuid: ctx.uuid, headers: header })
   }
 
   await next()
   if (writeLog) {
-    logger.notice({message: '[END] REQUEST', requestUrl: path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header})
+    logger.notice({ message: '[END] REQUEST', requestUrl: path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header })
   }
 })
 
@@ -72,7 +73,7 @@ app.use(async (ctx, next) => {
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }
-    logger.critical({message: err.message, status: err.status, uuid, errors: [err]})
+    logger.critical({ message: err.message, status: err.status, uuid, errors: [err] })
 
     if (Number(err.status) === 200) {
       ctx.status = 500
@@ -135,6 +136,20 @@ app.use(async (ctx, next) => {
   } else {
     await next()
   }
+})
+
+// XHR REQUEST AUDIT ROUTE
+app.use(async (ctx, next) => {
+  const { path, method, body } = ctx.request
+  if (path === '/audit' && method === 'POST') {
+    console.log('@@@--main.js--L142--AUDIT ROUTE')
+    console.log(ctx.request.body)
+    ctx.status = 200
+
+    return ctx
+  }
+
+  await next()
 })
 
 if (__DEV__ || withStatic) { // required for local DEV build

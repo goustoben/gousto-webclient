@@ -62,7 +62,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   const { uuid } = getStore().getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
-      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid })
+      logger.error({ message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid })
     }
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
@@ -71,7 +71,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     if (env && env.apiToken) {
       requestHeaders['API-Token'] = env.apiToken
     } else {
-      logger.error({message: 'Missing env.apiToken', uuid })
+      logger.error({ message: 'Missing env.apiToken', uuid })
     }
   }
 
@@ -101,10 +101,20 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   }
 
   const startTime = new Date()
-  logger.notice({message: '[fetch start]', requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+  logger.notice({ message: '[fetch start]', requestUrl, uuid, extra: { serverSide: __SERVER__ === true, } })
   let responseStatus
   let responseRedirected
   let responseUrl
+
+  // Get url of the page making the fetch
+
+  console.log(
+    `@@@--fetch.js--L109--requestUrl, requestDetails
+    ${requestUrl} ${JSON.stringify(requestDetails)}`
+  )
+
+  // Get invokation point
+  console.trace(url)
 
   const fetchPromise = isomorphicFetch(requestUrl, requestDetails)
 
@@ -121,9 +131,9 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     .then(response => [JSONParse(response, useMenuService), responseStatus]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
+      logger.notice({ message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, } })
 
-      if ( useMenuService ) {
+      if (useMenuService) {
         return { data: response.data, included: response.included, meta: response.meta }
       }
 
