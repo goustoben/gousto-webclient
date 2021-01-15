@@ -22,4 +22,4 @@ Title.propTypes = {
   dates: PropTypes.array.isRequired,
 }
 
-export default Title
+export { Title }

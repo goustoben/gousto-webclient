@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
+import { Calendar } from '../Calendar'
 import { SlotPicker } from '../SlotPicker'
 
 import css from '../DeliverySlot.css'
@@ -76,8 +76,7 @@ DatePicker.propTypes = {
     orderId: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.oneOf([undefined])
-    ]),
-    orderEmpty: PropTypes.bool
+    ])
   })).isRequired,
   disableNewDatePicker: PropTypes.bool.isRequired,
   tempDate: PropTypes.string.isRequired,

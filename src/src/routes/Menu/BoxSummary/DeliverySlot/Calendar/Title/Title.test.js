@@ -1,10 +1,9 @@
 import React from 'react'
-
-import Title from 'Form/Calendar/Title'
-
 import { shallow } from 'enzyme'
 
-describe('Form/Calendar/Title', () => {
+import { Title } from './Title'
+
+describe('DatePicker Calendar Title', () => {
   let wrapper
   let dates
 

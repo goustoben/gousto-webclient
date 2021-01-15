@@ -1,11 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
 import sinon from 'sinon'
 
-import Day from 'Form/Calendar/Day'
+import { Day } from './Day'
 
-describe('Form/Calendar/Day', () => {
+describe('DatePicker Calendar Day', () => {
   let date
   let weekNo
   let dayNo
