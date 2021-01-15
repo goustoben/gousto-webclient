@@ -50,4 +50,4 @@ Day.propTypes = {
   className: PropTypes.string,
 }
 
-export default Day
+export { Day }

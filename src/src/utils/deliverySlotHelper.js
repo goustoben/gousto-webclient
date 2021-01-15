@@ -125,8 +125,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
       value: date,
       disabled,
       icon,
-      orderId,
-      orderEmpty: hasEmptyOrders,
+      orderId
     }
   })
 

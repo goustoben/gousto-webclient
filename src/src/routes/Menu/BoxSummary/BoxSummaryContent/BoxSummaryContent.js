@@ -54,4 +54,3 @@ BoxSummaryContent.propTypes = {
 }
 
 export { BoxSummaryContent }
-
