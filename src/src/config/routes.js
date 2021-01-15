@@ -36,6 +36,7 @@ module.exports = {
     forget: '/forget',
     validate: '/validate',
     logEvent: '/log-event',
+    audit: '/audit',
   },
   client: {
     appsRedirect: '/apps',

@@ -113,6 +113,9 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     ${requestUrl} ${JSON.stringify(requestDetails)}`
   )
 
+  // Audit APIs
+  isomorphicFetch('/audit', { body: JSON.stringify({requestUrl, requestDetails}), method: 'POST' })
+
   // Get invokation point
   console.trace(url)
 
