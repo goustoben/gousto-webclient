@@ -138,7 +138,7 @@ app.use(async (ctx, next) => {
   }
 })
 
-const aggregatedData = {}
+let aggregatedData = {}
 
 const auditToJSON = () => {
   const INTERVAL = 2000
@@ -150,27 +150,13 @@ const auditToJSON = () => {
     // Prob clean this up
     setInterval(async () => {
       try {
-        const result = await jsonfile.writeFile(
+        await jsonfile.writeFile(
           'audit.json',
           aggregatedData,
           {
             spaces: 2,
           },
-          // (err) => {
-          //   if (err) {
-          //     console.log('@@@--main.js--L155--ERROR WRITING AUDIT TO JSON')
-
-          //     return
-          //   }
-
-          //   console.log('@@@--main.js--L159--AUDIT DATA WRITTEN TO JSON')
-          // }
         )
-
-        // console.log(
-        //   `@@@--main.js--L170--result:
-        //   ${result}`
-        // )
       } catch (error) {
         console.log(
           `@@@--main.js--L170--ERROR WRITING AUDIT TO FILE:
@@ -187,7 +173,9 @@ const startAuditToJSON = auditToJSON()
 
 // XHR REQUEST AUDIT ROUTE
 const audit = (requestData) => {
-  const { requestUrl, method } = requestData
+  const { requestUrl, requestDetails } = requestData
+
+  const { method } = requestDetails
 
   if (aggregatedData[requestUrl]) {
     aggregatedData[requestUrl][method] = aggregatedData[requestUrl][method]
@@ -204,18 +192,33 @@ const audit = (requestData) => {
 
 app.use(async (ctx, next) => {
   const { path, method, body } = ctx.request
-  if (path === '/audit' && method === 'POST') {
-    startAuditToJSON()
-    audit(body)
+  if (path === '/audit') {
+    if (method === 'POST') {
+      startAuditToJSON()
+      audit(JSON.parse(body))
 
-    console.log(
-      `@@@--main.js--L163--aggregatedData:
-      ${JSON.stringify(aggregatedData)}`
-    )
+      console.log(
+        `@@@--main.js--L163--aggregatedData:
+        ${JSON.stringify(aggregatedData)}`
+      )
 
-    ctx.status = 200
+      ctx.status = 200
 
-    return ctx
+      return ctx
+    }
+
+    if (method === 'DELETE') {
+      aggregatedData = {}
+
+      console.log(
+        `@@@--main.js--L213--aggregatedData:
+        ${aggregatedData}`
+      )
+
+      ctx.status = 200
+
+      return ctx
+    }
   }
 
   await next()
