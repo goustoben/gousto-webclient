@@ -138,12 +138,81 @@ app.use(async (ctx, next) => {
   }
 })
 
+const aggregatedData = {}
+
+const auditToJSON = () => {
+  const INTERVAL = 2000
+  let instantiated = false
+
+  return () => {
+    if (instantiated) return
+
+    // Prob clean this up
+    setInterval(async () => {
+      try {
+        const result = await jsonfile.writeFile(
+          'audit.json',
+          aggregatedData,
+          {
+            spaces: 2,
+          },
+          // (err) => {
+          //   if (err) {
+          //     console.log('@@@--main.js--L155--ERROR WRITING AUDIT TO JSON')
+
+          //     return
+          //   }
+
+          //   console.log('@@@--main.js--L159--AUDIT DATA WRITTEN TO JSON')
+          // }
+        )
+
+        // console.log(
+        //   `@@@--main.js--L170--result:
+        //   ${result}`
+        // )
+      } catch (error) {
+        console.log(
+          `@@@--main.js--L170--ERROR WRITING AUDIT TO FILE:
+          ${error}`
+        )
+      }
+    }, INTERVAL)
+
+    instantiated = true
+  }
+}
+
+const startAuditToJSON = auditToJSON()
+
 // XHR REQUEST AUDIT ROUTE
+const audit = (requestData) => {
+  const { requestUrl, method } = requestData
+
+  if (aggregatedData[requestUrl]) {
+    aggregatedData[requestUrl][method] = aggregatedData[requestUrl][method]
+      ? aggregatedData[requestUrl][method] + 1
+      : 1
+
+    return
+  }
+
+  aggregatedData[requestUrl] = {
+    [method]: 1
+  }
+}
+
 app.use(async (ctx, next) => {
   const { path, method, body } = ctx.request
   if (path === '/audit' && method === 'POST') {
-    console.log('@@@--main.js--L142--AUDIT ROUTE')
-    console.log(ctx.request.body)
+    startAuditToJSON()
+    audit(body)
+
+    console.log(
+      `@@@--main.js--L163--aggregatedData:
+      ${JSON.stringify(aggregatedData)}`
+    )
+
     ctx.status = 200
 
     return ctx
