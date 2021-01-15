@@ -114,7 +114,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   )
 
   // Audit APIs
-  isomorphicFetch('/audit', { body: JSON.stringify({ requestUrl: url, requestDetails, currentUrl: window.location.pathname }), method: 'POST' })
+  isomorphicFetch('/audit', { body: JSON.stringify({ requestUrl: url, requestDetails }), method: 'POST' })
 
   // Get invokation point
   console.trace(url)
