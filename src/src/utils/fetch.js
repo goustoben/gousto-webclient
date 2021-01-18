@@ -107,17 +107,13 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   let responseUrl
 
   // Get url of the page making the fetch
-
-  console.log(
-    `@@@--fetch.js--L109--requestUrl, requestDetails
-    ${requestUrl} ${JSON.stringify(requestDetails)}`
-  )
+  const currentUrl = typeof window !== 'undefined' ? window.location.pathname : 'SSR'
 
   // Audit APIs
-  isomorphicFetch('/audit', { body: JSON.stringify({ requestUrl: url, requestDetails }), method: 'POST' })
+  isomorphicFetch('/audit', { body: JSON.stringify({ requestUrl: url, requestDetails, currentUrl }), method: 'POST' })
 
   // Get invokation point
-  console.trace(url)
+  // console.trace(url)
 
   const fetchPromise = isomorphicFetch(requestUrl, requestDetails)
 

@@ -24,3 +24,5 @@ src/vendor
 jsconfig.json
 .idea
 src/config/env.json
+#Audit
+audit.json

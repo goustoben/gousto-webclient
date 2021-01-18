@@ -141,7 +141,7 @@ app.use(async (ctx, next) => {
 let aggregatedData = {}
 
 const auditToJSON = () => {
-  const INTERVAL = 2000
+  const JSON_WRITE_INTERVAL = 5000
   let instantiated = false
 
   return () => {
@@ -163,7 +163,7 @@ const auditToJSON = () => {
           ${error}`
         )
       }
-    }, INTERVAL)
+    }, JSON_WRITE_INTERVAL)
 
     instantiated = true
   }
@@ -173,34 +173,24 @@ const startAuditToJSON = auditToJSON()
 
 // XHR REQUEST AUDIT ROUTE
 const audit = (requestData) => {
-  const { requestUrl, requestDetails } = requestData
-
+  const { currentUrl, requestUrl, requestDetails } = requestData
   const { method } = requestDetails
 
-  if (aggregatedData[requestUrl]) {
-    aggregatedData[requestUrl][method] = aggregatedData[requestUrl][method]
-      ? aggregatedData[requestUrl][method] + 1
-      : 1
+  const auditKey = `${currentUrl}~${requestUrl}~${method}`
 
-    return
-  }
-
-  aggregatedData[requestUrl] = {
-    [method]: 1
+  aggregatedData = {
+    ...aggregatedData,
+    [auditKey]: aggregatedData[auditKey] ? aggregatedData[auditKey] + 1 : 1
   }
 }
 
 app.use(async (ctx, next) => {
   const { path, method, body } = ctx.request
+
   if (path === '/audit') {
     if (method === 'POST') {
       startAuditToJSON()
       audit(JSON.parse(body))
-
-      console.log(
-        `@@@--main.js--L163--aggregatedData:
-        ${JSON.stringify(aggregatedData)}`
-      )
 
       ctx.status = 200
 
@@ -209,11 +199,6 @@ app.use(async (ctx, next) => {
 
     if (method === 'DELETE') {
       aggregatedData = {}
-
-      console.log(
-        `@@@--main.js--L213--aggregatedData:
-        ${aggregatedData}`
-      )
 
       ctx.status = 200
 
