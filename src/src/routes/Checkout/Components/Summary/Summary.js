@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import configRoute from 'config/routes'
 import Immutable from 'immutable'
 import { Alert } from 'goustouicomponents'
 import { PricePerServingMessage } from 'PricePerServingMessage'
 import { H3 } from 'Page/Header'
-import classnames from 'classnames'
+import classNames from 'classnames'
 import Receipt from 'Receipt'
 import Link from 'Link'
 import Loading from 'Loading'
@@ -14,31 +14,31 @@ import { onEnter } from 'utils/accessibility'
 import { basketSum } from 'utils/basket'
 import css from './Summary.css'
 
-class Summary extends React.PureComponent {
-  static propTypes = {
-    prices: PropTypes.instanceOf(Immutable.Map),
-    basketRecipes: PropTypes.object,
-    routing: PropTypes.object,
-    isLoading: PropTypes.bool,
-    showNoDiscountCTA: PropTypes.bool,
-    showAddPromocode: PropTypes.bool,
-    promoCode: PropTypes.string,
-    promoApplyCheckoutCode: PropTypes.func,
-  }
+const propTypes = {
+  prices: PropTypes.instanceOf(Immutable.Map),
+  basketRecipes: PropTypes.object,
+  routing: PropTypes.object,
+  isLoading: PropTypes.bool,
+  showNoDiscountCTA: PropTypes.bool,
+  showAddPromocode: PropTypes.bool,
+  promoCode: PropTypes.string,
+  promoApplyCheckoutCode: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+}
 
-  static defaultProps = {
-    prices: Immutable.Map({}),
-    basketRecipes: Immutable.Map({}),
-    deliveryDate: '',
-    slotId: '',
-    showPromocode: false,
-    loadingPreviewOrder: false,
-    showAddPromocode: true,
-  }
+const defaultProps = {
+  prices: Immutable.Map({}),
+  basketRecipes: Immutable.Map({}),
+  showPromocode: false,
+  loadingPreviewOrder: false,
+  showAddPromocode: true,
+  isCheckoutOverhaulEnabled: false,
+}
 
+class Summary extends PureComponent {
   renderLink() {
     const { showNoDiscountCTA, promoCode , promoApplyCheckoutCode} = this.props
-    const classes = classnames(css.link, css.noDiscountCTA)
+    const classes = classNames(css.link, css.noDiscountCTA)
 
     if (showNoDiscountCTA) {
       return !promoCode && (
@@ -64,7 +64,7 @@ class Summary extends React.PureComponent {
   }
 
   render() {
-    const { prices, basketRecipes, isLoading, routing, showAddPromocode } = this.props
+    const { prices, basketRecipes, isLoading, routing, showAddPromocode, isCheckoutOverhaulEnabled } = this.props
     const numRecipes = basketSum(basketRecipes)
 
     let currentStep
@@ -77,42 +77,63 @@ class Summary extends React.PureComponent {
     }
 
     return (
-      <div className={css.summaryContainer} data-testing="checkoutOrderSummary">
-        {!isLoading && (
+      <div
+        className={classNames(css.summaryContainer,
+          { [css.summaryContainerRedesign]: isCheckoutOverhaulEnabled }
+        )}
+        data-testing="checkoutOrderSummary"
+      >
+        {!isLoading && !isCheckoutOverhaulEnabled && (
           <Alert type="info">
             <PricePerServingMessage />
           </Alert>
         )}
-        <H3 headlineFont>Order total</H3>
-        {(isLoading) ? (
-          <div className={css.loaderContainer}>
+        {isCheckoutOverhaulEnabled
+          ? <div className={css.headerRedesign}>Order total</div>
+          : <H3 headlineFont>Order total</H3>}
+        {isLoading ? (
+          <div className={classNames(css.loaderContainer, { [css.loaderContainerRedesign]: isCheckoutOverhaulEnabled })}>
             <Loading className={css.loadingImage} />
           </div>
         ) : (
-          <div className={css.details}>
-            <Receipt
-              numRecipes={numRecipes}
-              prices={prices}
-              deliveryTotalPrice={prices.get('deliveryTotal')}
-              surcharges={getSurchargeItems(prices.get('items'))}
-              surchargeTotal={prices.get('surchargeTotal')}
-              recipeTotalPrice={prices.get('recipeTotal')}
-              totalToPay={prices.get('total')}
-              recipeDiscountAmount={prices.get('recipeDiscount')}
-              recipeDiscountPercent={prices.get('percentageOff')}
-              extrasTotalPrice={prices.get('productTotal')}
-              showAddPromocode={showAddPromocode}
-              hasFirstDeliveryDay
-            />
-            <div>
-              {(currentStep !== 'payment')
-                && this.renderLink()}
+          <Fragment>
+            {isCheckoutOverhaulEnabled && (
+              <div className={css.pricePerServingBlock}>
+                <div className={css.discountIcon} />
+                <PricePerServingMessage isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled} />
+              </div>
+            )}
+            <div className={classNames(css.details, { [css.detailsRedesign]: isCheckoutOverhaulEnabled })}>
+              <Receipt
+                numRecipes={numRecipes}
+                prices={prices}
+                deliveryTotalPrice={prices.get('deliveryTotal')}
+                surcharges={getSurchargeItems(prices.get('items'))}
+                surchargeTotal={prices.get('surchargeTotal')}
+                recipeTotalPrice={prices.get('recipeTotal')}
+                totalToPay={prices.get('total')}
+                recipeDiscountAmount={prices.get('recipeDiscount')}
+                recipeDiscountPercent={prices.get('percentageOff')}
+                extrasTotalPrice={prices.get('productTotal')}
+                showAddPromocode={showAddPromocode}
+                hasFirstDeliveryDay
+                isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
+              />
+              {!isCheckoutOverhaulEnabled && (
+                <div>
+                  {(currentStep !== 'payment')
+                  && this.renderLink()}
+                </div>
+              )}
             </div>
-          </div>
+          </Fragment>
         )}
       </div>
     )
   }
 }
+
+Summary.defaultProps = defaultProps
+Summary.propTypes = propTypes
 
 export default Summary

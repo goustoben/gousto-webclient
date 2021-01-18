@@ -1,0 +1,16 @@
+@value White from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
+.expandableSection {
+  width: 100%;
+  margin-bottom: 1rem;
+  background: White;
+
+  @media BreakpointFromMedium {
+    display: none;
+  }
+}
+
+.expandedContent {
+  padding: 0;
+}

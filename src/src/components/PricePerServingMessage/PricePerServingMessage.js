@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import css from './PricePerServingMessage.css'
 
-const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null }) => {
+const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null, isCheckoutOverhaulEnabled = false }) => {
   if (discountedPrice) {
     const oldPrice = fullPrice !== discountedPrice ? (
-      <span className={css.oldPrice}>
+      <span className={classNames(css.oldPrice, { [css.oldPriceRedesign]: isCheckoutOverhaulEnabled })}>
         <s>
           £
           {fullPrice}
@@ -16,12 +17,13 @@ const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null }) =>
     ) : null
 
     return (
-      <p className={css.pricePerServingMessage}>
+      <p className={classNames(css.pricePerServingMessage, { [css.redesignMessage]: isCheckoutOverhaulEnabled })}>
         Price per serving:
         {' '}
         {oldPrice}
-        £
-        {discountedPrice}
+        {isCheckoutOverhaulEnabled
+          ? <span className={css.newPriceRedesign}>{`£${discountedPrice}`}</span>
+          : `£${discountedPrice}`}
       </p>
     )
   } else {
@@ -31,7 +33,8 @@ const PricePerServingMessage = ({ fullPrice = null, discountedPrice = null }) =>
 
 PricePerServingMessage.propTypes = {
   fullPrice: PropTypes.string,
-  discountedPrice: PropTypes.string
+  discountedPrice: PropTypes.string,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 export { PricePerServingMessage }

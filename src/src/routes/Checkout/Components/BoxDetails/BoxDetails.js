@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import { basketSum } from 'utils/basket'
 import moment from 'moment'
+import classNames from 'classnames'
 import Immutable from 'immutable'
 import routes from 'config/routes'
 import config from 'config/basket'
@@ -23,7 +24,7 @@ export const BoxDetails = ({
   const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
 
   return (
-    <div className={css.boxDetailsContainer} data-testing="checkoutBoxDetailsSection">
+    <div className={classNames(css.boxDetailsContainer, { [css.redesignContainer]: isCheckoutOverhaulEnabled })} data-testing="checkoutBoxDetailsSection">
       {isCheckoutOverhaulEnabled
         ? (
           <div className={css.headerWrapper}>

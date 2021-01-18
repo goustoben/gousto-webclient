@@ -1,10 +1,19 @@
 @value SpacingLG from 'sass-loader!styles/spacing.scss';
-@value White, Pepper30, BlueBase from 'styles/colors.css';
+@value White, Pepper30, BlueBase, HaricotLight from 'styles/colors.css';
 @value sizeXXS, sizeSM from 'styles/typography.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
-.summaryContainer{
+.summaryContainer {
 	padding: SpacingLG;
 	background-color: White;
+}
+
+.summaryContainerRedesign {
+  padding: 1rem 0.75rem 0;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 1.5rem 0;
+  }
 }
 
 .loaderContainer {
@@ -15,14 +24,23 @@
 	padding-bottom: 50px;
 }
 
+.loaderContainerRedesign {
+  min-height: 18.75rem;
+  padding: 0;
+}
+
 .loadingImage {
 	width: 50px;
 	height: 50px;
 }
 
-.details{
+.details {
 	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
 	font-weight: normal;
+}
+
+.detailsRedesign {
+  margin: 0;
 }
 
 .link {
@@ -38,4 +56,33 @@
 .arrowRight {
 	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 	font-size: sizeXXS;
+}
+
+.headerRedesign {
+  composes: fontStyleL from 'design-language/typography.css';
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.pricePerServingBlock {
+  background: HaricotLight;
+  padding: 0.75rem 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.discountIcon {
+  background: url('routes/Checkout/Components/Summary/discount.svg');
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
 }

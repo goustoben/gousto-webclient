@@ -1,6 +1,7 @@
 @value SpacingMD from 'sass-loader!styles/spacing.scss';
 @value ScreenXSMax from 'styles/screenSizes.css';
 @value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value Mackerel from 'styles/colors.css';
 
 .rowCheckout {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
@@ -53,6 +54,12 @@
 
 .asideRedesign {
   padding: 0;
+  display: none;
+
+  @media BreakpointFromMedium {
+    display: block;
+    border: 1px solid Mackerel;
+  }
 
   @media BreakpointFromMedium and BreakpointToLarge {
     max-width: 36rem;
@@ -68,7 +75,7 @@
 }
 
 .checkoutContentRedesign {
-  padding: 1rem 0;
+  padding: 0 0 1rem 0;
   margin: 0 auto;
 
   @media BreakpointFromMedium {

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classNames from 'classnames'
@@ -21,6 +21,7 @@ import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
 import DesktopDelivery from './Steps/Desktop/Delivery'
 import Summary from './Components/Summary'
 import { BoxDetailsContainer } from './Components/BoxDetails'
+import { ExpandableBoxSummary } from './Components/ExpandableBoxSummary'
 
 import MobileYourDetails from './Steps/Mobile/YourDetails'
 import MobileBoxDetails from './Steps/Mobile/BoxDetails'
@@ -74,6 +75,7 @@ const propTypes = {
   clearPayPalClientToken: PropTypes.func,
   trackCheckoutNavigationLinks: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
+  prices: PropTypes.instanceOf(Immutable.Map),
 }
 
 const defaultProps = {
@@ -94,6 +96,7 @@ const defaultProps = {
   clearPayPalClientToken: () => {},
   trackCheckoutNavigationLinks: () => {},
   isCheckoutOverhaulEnabled: false,
+  prices: Immutable.Map({}),
 }
 
 const contextTypes = {
@@ -327,9 +330,22 @@ class Checkout extends PureComponent {
     )
   }
 
+  renderSummaryAndYourBox = () => {
+    const { isCheckoutOverhaulEnabled } = this.props
+    const { isCreatingPreviewOrder } = this.state
+
+    return (
+      <Fragment>
+        <Summary showPromocode isLoading={isCreatingPreviewOrder} />
+        <Div margin={{ top: isCheckoutOverhaulEnabled ? 0 : 'LG' }}>
+          <BoxDetailsContainer />
+        </Div>
+      </Fragment>
+    )
+  }
+
   renderDesktopSteps = () => {
     const { params: { stepName }, isCheckoutOverhaulEnabled } = this.props
-    const { isCreatingPreviewOrder } = this.state
     const stepMapping = isCheckoutOverhaulEnabled ? checkoutOverhaulStepMapping : desktopStepMapping
     const steps = isCheckoutOverhaulEnabled ? checkoutOverhaulSteps : defaultDesktop
 
@@ -346,10 +362,7 @@ class Checkout extends PureComponent {
         </Div>
 
         <Div className={classNames(css.aside, { [css.asideRedesign]: isCheckoutOverhaulEnabled })}>
-          <Summary showPromocode isLoading={isCreatingPreviewOrder} />
-          <Div margin={{ top: 'LG' }}>
-            <BoxDetailsContainer />
-          </Div>
+          {this.renderSummaryAndYourBox()}
         </Div>
       </Div>
     )
@@ -387,7 +400,7 @@ class Checkout extends PureComponent {
   }
 
   render() {
-    const { browser, isCheckoutOverhaulEnabled, params: { stepName } } = this.props
+    const { browser, isCheckoutOverhaulEnabled, params: { stepName }, prices, trackUTMAndPromoCode } = this.props
     const renderSteps = browser === 'mobile' && !isCheckoutOverhaulEnabled ? this.renderMobileSteps : this.renderDesktopSteps
 
     return (
@@ -397,7 +410,19 @@ class Checkout extends PureComponent {
           { [css.checkoutContentRedesign]: isCheckoutOverhaulEnabled }
         )}
         >
-          {isCheckoutOverhaulEnabled && this.renderProgressBar(checkoutOverhaulStepMapping, checkoutOverhaulSteps, stepName)}
+          {isCheckoutOverhaulEnabled && (
+            <Fragment>
+              <ExpandableBoxSummary
+                totalToPay={prices.get('total')}
+                totalWithoutDiscount={prices.get('recipeTotal')}
+                trackUTMAndPromoCode={trackUTMAndPromoCode}
+                promoCodeValid={prices.get('promoCodeValid')}
+              >
+                {this.renderSummaryAndYourBox()}
+              </ExpandableBoxSummary>
+              {this.renderProgressBar(checkoutOverhaulStepMapping, checkoutOverhaulSteps, stepName)}
+            </Fragment>
+          )}
           {renderSteps()}
         </Div>
       </Div>

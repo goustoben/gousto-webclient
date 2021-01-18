@@ -17,6 +17,7 @@ function mapStateToProps(state, ownProps) {
     browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
     isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
+    prices: state.pricing.get('prices'),
   }
 }
 

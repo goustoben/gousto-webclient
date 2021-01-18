@@ -1,5 +1,6 @@
 @value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 @value White, Mushroom50, Parsley, Bluecheese, Oyster, Mackerel from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .header {
 	composes: headerMD headlineFont from 'styles/typography.css';
@@ -30,6 +31,16 @@
 	composes: flex column stretch from 'styles/flex.css';
 	composes: paddingLG from 'sass-loader!styles/spacing.scss';
 	background-color: White;
+}
+
+.redesignContainer {
+  border-bottom: 1px solid Oyster;
+  padding: 0 0.75rem 1rem;
+
+  @media BreakpointFromMedium {
+    padding: 0 1.5rem 1.5rem;
+    border: none;
+  }
 }
 
 .col {
