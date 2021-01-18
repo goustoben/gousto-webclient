@@ -1,4 +1,4 @@
-import { notice } from 'utils/logger'
+import logger from 'utils/logger'
 import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from './basket'
 import { actionTypes } from './actionTypes'
@@ -20,7 +20,7 @@ export const subscriptionLoadData = () => (
         dispatch(basketNumPortionChange(box.numPortions))
       }
     } catch (err) {
-      notice(`Subscription load error: ${err}`)
+      logger.notice(`Subscription load error: ${err}`)
     }
   }
 )

@@ -2,7 +2,7 @@
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { limitReached } from 'utils/basket'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
-import status from '.../../../actions/status'
+import status from '../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
 import { getBasketRecipes , getBasketPostcode} from '../../../selectors/basket'
 import { actionTypes } from '../../../actions/actionTypes'
