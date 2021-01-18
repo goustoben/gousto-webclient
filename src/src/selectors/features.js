@@ -147,7 +147,7 @@ export const getisNewSSRDeliveriesEnabled = ({ features }) => (
 )
 
 export const getIsMultiSkipEnabled = ({ features }) => (
-  features && features.getIn(['isMultiSkipEnabled', 'value'], false)
+  features && features.getIn(['isMultiSkipEnabled', 'value'], true)
 )
 
 export const getIsMenuRedirectPageEnabled = ({ features }) => (
@@ -180,4 +180,8 @@ export const getIsNewSubscriptionPageEnabled = ({ features }) => (
 
 export const getIsBrandDesignEnabled = ({ features }) => (
   features && features.getIn(['isBrandDesignEnabled', 'value'], false)
+)
+
+export const getIsSubscriberPricingEnabled = ({ features }) => (
+  features && features.getIn(['isSubscriberPricingEnabled', 'value'], false)
 )

@@ -27,7 +27,6 @@
   margin-bottom: 0.5rem;
   @media BreakpointFromMedium {
     font: FontWeightBold 3XLarge FontFamilyAxiformaBook;
-    margin-bottom: 1rem;
   }
 }
 

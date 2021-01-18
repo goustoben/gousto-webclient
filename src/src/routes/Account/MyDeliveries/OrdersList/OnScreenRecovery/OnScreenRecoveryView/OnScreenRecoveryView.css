@@ -51,18 +51,22 @@
     border-radius: borderRadius;
     width: 56px;
     height: 56px;
-    padding: 16px;
+    padding: 0.75rem;
     margin-right: 16px;
 
     .discountIcon {
-      width: 24px;
-      height: 24px;
+      width: 2rem;
+      height: 2rem;
     }
   }
 
   @media BreakpointFromMedium {
     margin-bottom: 48px;
   }
+}
+
+.discountDetailsSubscriberPricing {
+  margin-bottom: 1rem;
 }
 
 .ctaContainer {
@@ -73,5 +77,5 @@
 }
 
 .keepCta {
-  margin-bottom: 8px;
+  margin-bottom: 1rem;
 }

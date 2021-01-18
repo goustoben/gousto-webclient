@@ -11,12 +11,21 @@ import { useFetch } from '../../../../../../hooks/useFetch'
 import { isCoreRequestSuccessful } from '../../../utils/response'
 import { SubscriptionContext } from '../../../context'
 import { actionTypes } from '../../../context/reducers'
+import { SubscriberPricingInfoPanel } from '../../../../AccountComponents/SubscriberPricingInfoPanel'
+import { trackSubscriptionSettingsChange } from '../../../tracking'
+import css from './Resubscribe.css'
 
 export const Resubscribe = ({ accessToken }) => {
-  const { dispatch } = useContext(SubscriptionContext)
+  const { dispatch, state: { isSubscriberPricingEnabled } = {}} = useContext(SubscriptionContext)
 
   const [shouldResubscribe, setShouldResubscribe] = useState(false)
-  const reactivateSubscription = () => setShouldResubscribe(true)
+  const reactivateSubscription = () => {
+    if (isSubscriberPricingEnabled) {
+      trackSubscriptionSettingsChange({ settingName: 'click', action: 'reactivate_subscription'})()
+    }
+
+    setShouldResubscribe(true)
+  }
 
   const reactivateSubscriptionUrl = `${endpoint('core')}${routes.core.activateSub}`
 
@@ -46,16 +55,24 @@ export const Resubscribe = ({ accessToken }) => {
 
   return (
     <Section
-      title={resubscribeSection.title}
-      subTitle={resubscribeSection.subTitle}
+      title={isSubscriberPricingEnabled ? resubscribeSection.pricingTitle : resubscribeSection.title}
+      subTitle={isSubscriberPricingEnabled ? resubscribeSection.pricingSubTitle : resubscribeSection.subTitle}
       testingSelector={resubscribeSection.testingSelector}
     >
+      {
+        isSubscriberPricingEnabled && (
+          <div>
+            <SubscriberPricingInfoPanel variant="resubscribe" />
+            <div className={css.bottomContent}>{resubscribeSection.pricingParagraph}</div>
+          </div>
+        )
+      }
       <CTA
         testingSelector="resubscribe-cta"
         isFullWidth
         onClick={reactivateSubscription}
       >
-        Reactivate subscription
+        { isSubscriberPricingEnabled ? 'Restart my subscription' : 'Reactivate subscription' }
       </CTA>
     </Section>
   )

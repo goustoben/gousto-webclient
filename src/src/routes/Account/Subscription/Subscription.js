@@ -23,15 +23,21 @@ const propTypes = {
   accessToken: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
   startOnScreenRecoverySubscriptionFlow: PropTypes.func.isRequired,
+  isSubscriberPricingEnabled: PropTypes.bool,
+}
+
+const defaultProps = {
+  isSubscriberPricingEnabled: false,
 }
 
 const Subscription = ({
   accessToken,
   isMobile,
   startOnScreenRecoverySubscriptionFlow,
+  isSubscriberPricingEnabled,
 }) => {
   const [shouldRequestDeliveryDays, setShouldRequestDeliveryDays] = useState(false)
-  const [state, dispatch] = useReducer(SubscriptionReducer, {})
+  const [state, dispatch] = useReducer(SubscriptionReducer, { isSubscriberPricingEnabled })
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
   const isSubscriptionActive = getIsSubscriptionActive(state)
   const isSubscriptionLoaded = getIsSubscriptionLoaded(state)
@@ -77,5 +83,6 @@ const Subscription = ({
 }
 
 Subscription.propTypes = propTypes
+Subscription.defaultProps = defaultProps
 
 export { Subscription }

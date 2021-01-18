@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Modal, CTA } from 'goustouicomponents'
+import { Modal, CTA, ModalHeader } from 'goustouicomponents'
 import Svg from 'Svg'
+import classnames from 'classnames'
 import css from './OnScreenRecoveryView.css'
+import { SubscriberPricingInfoPanel } from '../../../../AccountComponents/SubscriberPricingInfoPanel'
 
 const propTypes = {
   offer: PropTypes.shape({
@@ -24,7 +26,9 @@ const propTypes = {
   triggered: PropTypes.bool,
   getRecoveryContent: PropTypes.func.isRequired,
   modalVisibilityChange: PropTypes.func.isRequired,
-  trackViewDiscountReminder: PropTypes.func.isRequired
+  trackViewDiscountReminder: PropTypes.func.isRequired,
+  isSubscriberPricingEnabled: PropTypes.bool,
+  isMobileViewport: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -35,6 +39,8 @@ const defaultProps = {
   keepCopy: '',
   confirmCopy: '',
   triggered: false,
+  isSubscriberPricingEnabled: false,
+  isMobileViewport: false,
 }
 
 export class OnScreenRecoveryView extends React.Component {
@@ -57,29 +63,42 @@ export class OnScreenRecoveryView extends React.Component {
   }
 
   render() {
-    const { onKeep, onConfirm, offer, title, keepCopy, confirmCopy } = this.props
+    const { onKeep, onConfirm, offer, title, keepCopy, confirmCopy, isSubscriberPricingEnabled, isMobileViewport } = this.props
 
     return (
       <Modal
         isOpen
-        variant="floating"
+        variant={isMobileViewport && isSubscriberPricingEnabled ? 'bottomSheet' : 'floating'}
         name="pause-discount"
         description="modal attempting to prevent sub pause"
         handleClose={this.handleModalClose}
       >
+        {
+          isSubscriberPricingEnabled && (
+            <ModalHeader
+              withSeparator
+              align="left"
+            >
+              {title}
+            </ModalHeader>
+          )
+        }
         <div className={css.container}>
-          <div className={css.backgroundHeader} />
+          {!isSubscriberPricingEnabled && <div className={css.backgroundHeader} data-testing="modal-background-header" />}
           <div className={css.bodyContainer}>
-            <h2 className={css.header}>{title}</h2>
+            {!isSubscriberPricingEnabled && <h2 className={css.header}>{title}</h2>}
             {
               offer && (
-                <div className={css.discountDetails}>
+                <div className={classnames(css.discountDetails, { [css.discountDetailsSubscriberPricing]: isSubscriberPricingEnabled })}>
                   <div className={css.discountIconContainer}>
                     <Svg fileName="pause-osr-modal-icon" className={css.discountIcon} />
                   </div>
                   <h4 className={css.subHeader} data-testing="pause-discount-offer">{offer.message}</h4>
                 </div>
               )
+            }
+            {
+              isSubscriberPricingEnabled && <SubscriberPricingInfoPanel variant={offer ? 'offer' : 'noOffer' } />
             }
             <div className={css.ctaContainer}>
               <div className={css.keepCta}>
@@ -103,7 +122,6 @@ export class OnScreenRecoveryView extends React.Component {
               </CTA>
             </div>
           </div>
-
         </div>
       </Modal>
     )
