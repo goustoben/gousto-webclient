@@ -17,7 +17,7 @@ export const OrderABox = () => {
       variant="secondary"
       testingSelector="order-a-box-cta"
     >
-      Order a box
+      Order a one-off box
     </CTA>
   )
 }

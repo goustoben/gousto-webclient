@@ -1,11 +1,14 @@
 export const resubscribeSection = {
   title: 'Resubscribe',
   subTitle: 'Want to easily recieve Weekly, Fortnightly or Monthly boxes, bursting full of flavourful recipes? Reactivate below.',
+  pricingTitle: 'Subscribe and save',
+  pricingSubTitle: 'Restart your subscription today!',
+  pricingParagraph: 'And you can edit your settings any time after you\'ve restarted.',
   testingSelector: 'resubscribe-section'
 }
 
 export const orderABoxSection = {
-  title: 'Order a box',
+  title: 'Order a single box',
   subTitle: 'Don’t fancy subscribing? No problem, you can still order a box whenever you like!',
   testingSelector: 'order-a-box-section'
 }

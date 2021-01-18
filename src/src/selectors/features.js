@@ -181,3 +181,7 @@ export const getIsNewSubscriptionPageEnabled = ({ features }) => (
 export const getIsBrandDesignEnabled = ({ features }) => (
   features && features.getIn(['isBrandDesignEnabled', 'value'], false)
 )
+
+export const getIsSubscriberPricingEnabled = ({ features }) => (
+  features && features.getIn(['isSubscriberPricingEnabled', 'value'], false)
+)
