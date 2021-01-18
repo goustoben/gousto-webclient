@@ -345,7 +345,7 @@ describe('Header', () => {
           clientRouted: false,
           name: 'Rate My Recipes',
           url: routesConfig.client.rateMyRecipes,
-          tracking: trackingKeys.clickRateMyRecipesNavigation,
+          tracking: trackingKeys.clickRateMyRecipeNavigation,
         },
         {
           clientRouted: true,

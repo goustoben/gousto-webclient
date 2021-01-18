@@ -51,7 +51,7 @@ jobs:
         if: ${{ !steps.pull_requests_json.outputs.number }}
         uses: actions/github-script@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.CREATE_PR_GITHUB_TOKEN }}
           script: |
             github.pulls.create({
               owner: context.repo.owner,
@@ -68,7 +68,7 @@ jobs:
         if: ${{ steps.pull_requests_json.outputs.number }}
         uses: actions/github-script@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.CREATE_PR_GITHUB_TOKEN }}
           script: |
             github.pulls.update({
               owner: context.repo.owner,

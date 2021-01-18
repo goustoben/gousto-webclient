@@ -1,11 +1,9 @@
 import { connect } from 'react-redux'
 import {
-  abandonBasketModalViewed,
   getAbandonBasketSessionState,
   trackAbandonBasketEligibility,
   trackAbandonBasketContinueToMenu
 } from 'actions/abandonBasket'
-import { basketRecipesClear } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { getUserOrders } from 'selectors/user'
 import { getNumPortions, getBasketRecipes, getBasketDate } from 'selectors/basket'
@@ -24,10 +22,8 @@ const mapStateToProps = state => ({
 export const AbandonBasketModalContainer = connect(
   mapStateToProps,
   {
-    abandonBasketModalViewed,
     getAbandonBasketSessionState,
     redirect,
-    basketRecipesClear,
     trackAbandonBasketEligibility,
     trackAbandonBasketContinueToMenu
   }
