@@ -147,7 +147,7 @@ export const getisNewSSRDeliveriesEnabled = ({ features }) => (
 )
 
 export const getIsMultiSkipEnabled = ({ features }) => (
-  features && features.getIn(['isMultiSkipEnabled', 'value'], true)
+  features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )
 
 export const getIsMenuRedirectPageEnabled = ({ features }) => (
