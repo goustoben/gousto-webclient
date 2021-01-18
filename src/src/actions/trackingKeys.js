@@ -85,3 +85,5 @@ export const discountVisibilityBannerDisplayed = 'discount_visibility_banner_dis
 export const clickAccountBreadcrumb = 'checkout_click_breadcrumb_account'
 export const clickDeliveryBreadcrumb = 'checkout_click_breadcrumb_delivery'
 export const clickPaymentBreadcrumb = 'checkout_click_breadcrumb_payment'
+export const checkoutClickHideOrderSummary = 'checkout_click_hide_order_summary'
+export const checkoutClickShowOrderSummary = 'checkout_click_show_order_summary'

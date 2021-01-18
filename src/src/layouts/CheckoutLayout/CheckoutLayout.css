@@ -31,3 +31,11 @@ html, body {
 .pageContainer:after {
 	height: 156px;
 }
+
+.pageContainerRedesign:after {
+  height: auto;
+}
+
+.layoutContainerRedesign {
+  height: 100%;
+}

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
+import classNames from 'classnames'
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
 
 import PromoCode from 'routes/Checkout/Components/PromoCode'
@@ -29,6 +30,7 @@ class Receipt extends React.Component {
     showTitleSection: PropTypes.bool,
     orderNumber: PropTypes.string,
     hasFirstDeliveryDay: PropTypes.bool,
+    isCheckoutOverhaulEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -46,43 +48,44 @@ class Receipt extends React.Component {
     showTitleSection: false,
     orderNumber: '',
     hasFirstDeliveryDay: false,
+    isCheckoutOverhaulEnabled: false,
   }
 
   dash = <span className={css.dash}>&mdash;</span>
 
   render() {
-    const { prices, recipeTotalPrice, totalToPay, extrasTotalPrice, numRecipes, shippingAddress, surcharges, surchargeTotal, recipeDiscountAmount, recipeDiscountPercent, deliveryTotalPrice, showAddPromocode, showTitleSection, orderNumber, hasFirstDeliveryDay } = this.props
+    const { prices, recipeTotalPrice, totalToPay, extrasTotalPrice, numRecipes, shippingAddress, surcharges, surchargeTotal, recipeDiscountAmount, recipeDiscountPercent, deliveryTotalPrice, showAddPromocode, showTitleSection, orderNumber, hasFirstDeliveryDay, isCheckoutOverhaulEnabled } = this.props
     const showRecipeDiscount = parseFloat(recipeDiscountAmount) > 0 ? true : null
     const showExtrasTotalPrice = parseFloat(extrasTotalPrice) > 0 ? true : null
     const showFreeDelivery = parseFloat(deliveryTotalPrice) === 0 ? true : null
     const showSurchargeTotalPrice = surcharges.size && surchargeTotal
 
     return (
-      <div className={css.row}>
+      <div className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}>
         {
           showTitleSection
             ? <div className={css.row}><p className={css.titleSection}>Order Summary</p></div>
             : null
         }
-        <ReceiptLine label={formatLabelPlural('Recipe', numRecipes)} style="normal" dataTesting="grossPrice">{formatDashOrPrice(recipeTotalPrice, numRecipes, prices, this.dash)}</ReceiptLine>
+        <ReceiptLine label={formatLabelPlural('Recipe', numRecipes)} style="normal" dataTesting="grossPrice" isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{formatDashOrPrice(recipeTotalPrice, numRecipes, prices, this.dash)}</ReceiptLine>
         {
           showRecipeDiscount
-            ? <ReceiptLine label={formatRecipeDiscount(recipeDiscountPercent)} style="primary" dataTesting="discountAmount">{`-${formatPrice(recipeDiscountAmount)}`}</ReceiptLine>
+            ? <ReceiptLine label={formatRecipeDiscount(recipeDiscountPercent)} style="primary" dataTesting="discountAmount" showLineAbove={isCheckoutOverhaulEnabled} isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{`-${formatPrice(recipeDiscountAmount)}`}</ReceiptLine>
             : null
         }
         {
           showSurchargeTotalPrice
-            ? <ReceiptLine label={formatLabelPlural('Recipe surcharge', surcharges.size)} showLineAbove style="normal">{formatPrice(surchargeTotal)}</ReceiptLine>
+            ? <ReceiptLine label={formatLabelPlural('Recipe surcharge', surcharges.size)} showLineAbove style="normal" isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{formatPrice(surchargeTotal)}</ReceiptLine>
             : null
         }
         {
           showExtrasTotalPrice
-            ? <ReceiptLine label="Extras" showLineAbove style="normal">{formatPrice(extrasTotalPrice)}</ReceiptLine>
+            ? <ReceiptLine label="Extras" showLineAbove style="normal" isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{formatPrice(extrasTotalPrice)}</ReceiptLine>
             : null
         }
-        <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? 'primary' : 'normal'}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
-        <ReceiptLine label="Total" style="bold" showLineAbove dataTesting="totalPrice">{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
-        { hasFirstDeliveryDay && <FirstDeliveryDayContainer /> }
+        <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? 'primary' : 'normal'} isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
+        <ReceiptLine label="Total" style="bold" showLineAbove dataTesting="totalPrice" isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
+        { hasFirstDeliveryDay && !isCheckoutOverhaulEnabled && <FirstDeliveryDayContainer /> }
         {
           showAddPromocode && <PromoCode />
         }

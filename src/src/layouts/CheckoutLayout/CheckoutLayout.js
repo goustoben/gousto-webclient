@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import { Header } from 'Header'
 import Footer from 'components/Footer/Footer'
 import Helmet from 'react-helmet'
@@ -9,12 +10,14 @@ class CheckoutLayout extends React.PureComponent {
   static propTypes = {
     children: PropTypes.object.isRequired,
     params: PropTypes.object,
+    isCheckoutOverhaulEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
     params: {
       stepName: '',
     },
+    isCheckoutOverhaulEnabled: false,
   }
 
   getMobileTitle = () => {
@@ -39,6 +42,8 @@ class CheckoutLayout extends React.PureComponent {
   }
 
   render() {
+    const { isCheckoutOverhaulEnabled } = this.props
+
     return (
       <span>
         <Helmet
@@ -52,12 +57,12 @@ class CheckoutLayout extends React.PureComponent {
           }]}
         />
 
-        <div className={css.layoutContainer}>
-          <div className={css.pageContainer}>
+        <div className={classNames(css.layoutContainer, { [css.layoutContainerRedesign]: isCheckoutOverhaulEnabled })}>
+          <div className={classNames(css.pageContainer, { [css.pageContainerRedesign]: isCheckoutOverhaulEnabled })}>
             <Header simple title={this.getMobileTitle()} />
             {this.props.children}
           </div>
-          <Footer type="checkout" simple={false} />
+          {!isCheckoutOverhaulEnabled && <Footer type="checkout" simple={false} />}
         </div>
       </span>
     )

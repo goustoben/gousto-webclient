@@ -12,6 +12,11 @@
 	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
 }
 
+.rowRedesign {
+  margin-bottom: 0;
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
 .dash {
 	composes: inlineBlock from 'styles/display.css';
 	composes: marginSMRight from 'sass-loader!styles/spacing.scss';

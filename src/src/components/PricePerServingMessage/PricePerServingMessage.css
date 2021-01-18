@@ -1,7 +1,28 @@
+@value DarkHaricot from 'styles/colors.css';
+
 .pricePerServingMessage {
   font-weight: bold;
 }
 
 .oldPrice {
   font-weight: normal;
+}
+
+.oldPriceRedesign {
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin: 0.25rem 0 0 0.75rem;
+}
+
+.newPriceRedesign {
+  composes: fontStyleBodyL from 'design-language/typography.css';
+  composes: fontBold from 'design-language/typography.css';
+  color: DarkHaricot;
+  margin-left: 0.75rem;
+}
+
+.redesignMessage {
+  display: flex;
+  align-items: center;
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin: 0;
 }
