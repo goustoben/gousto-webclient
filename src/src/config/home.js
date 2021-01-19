@@ -3,7 +3,6 @@ import Icon from 'components/Icon'
 import { ACTIVE_PROMO_CODE, DEFAULT_PROMO_CODE } from './promoCode'
 
 import VarietyImg from 'routes/Home/WhyChooseGousto/variety.png'
-import VarietyImgBrand from 'routes/Home/WhyChooseGousto/variety-brand.png'
 import QualityImg from 'routes/Home/WhyChooseGousto/quality.png'
 import SimplicityImg from 'routes/Home/WhyChooseGousto/simplicity.png'
 
@@ -66,10 +65,10 @@ export const defaultVariant=  'default';
 export const trustPilotReviews = '13,700';
 
 export const whyGousto = {
-  steps: (isRedesignEnabled) => ([
+  steps: [
     {
       title: 'Variety',
-      img: isRedesignEnabled ? VarietyImgBrand : VarietyImg,
+      img: VarietyImg,
       list: [
         '50+ recipes a week, cooked from 10 mins',
         'Family classics, global cuisines plus Joe Wicks’s health range',
@@ -94,7 +93,7 @@ export const whyGousto = {
         'Free, contactless delivery, any day you like',
       ]
     }
-  ]),
+  ],
   title: 'So why Gousto?',
 }
 

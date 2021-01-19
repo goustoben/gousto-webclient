@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import config from 'config/home'
+import { whyGousto } from 'config/home'
 import css from './StepsGuide.css'
 
 class StepsGuide extends PureComponent {
@@ -26,24 +25,14 @@ class StepsGuide extends PureComponent {
   }
 
   render() {
-    const { steps, isBrandDesignEnabled } = this.props
+    const { steps } = whyGousto
 
     return (
       <div className={css.container}>
-        {steps(isBrandDesignEnabled).map((step, order) => this.renderStep(step, order))}
+        {steps.map((step, order) => this.renderStep(step, order))}
       </div>
     )
   }
-}
-
-StepsGuide.propTypes = {
-  steps: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-  isBrandDesignEnabled: PropTypes.bool,
-}
-
-StepsGuide.defaultProps = {
-  steps: config.whyGousto.steps,
-  isBrandDesignEnabled: false,
 }
 
 export {

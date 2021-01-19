@@ -45,7 +45,6 @@ import {
   getIsDiscountAppliedBarEnabled,
   getIsCheckoutOverhaulEnabled,
   getIsOldCheckoutFieldsEnabled,
-  getIsBrandDesignEnabled,
   getIsSubscriberPricingEnabled,
 } from 'selectors/features'
 
@@ -107,7 +106,6 @@ describe('when features are defined', () => {
     [getIsDiscountAppliedBarEnabled, 'isDiscountAppliedBarEnabled'],
     [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
     [getIsOldCheckoutFieldsEnabled, 'isOldCheckoutFieldEnabled'],
-    [getIsBrandDesignEnabled, 'isBrandDesignEnabled'],
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled']
   ]
 

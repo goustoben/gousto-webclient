@@ -22,27 +22,24 @@
 
 .heroImage {
   width: 100%;
-  height: 60vw;
-  min-height: 14rem;
-  max-height: 24.75rem;
   margin-bottom: 1rem;
-  background: url('routes/Home/Hero/mobile-hero.png') center left / cover no-repeat;
+
+  background: url('routes/Home/Hero/mobile-brand.png') center left / cover no-repeat;
+  min-height: 57vw;
+  height: 57vw;
 
   @media BreakpointFromMedium {
-    max-width: 24.75rem;
-    width: 100%;
-    min-height: 17rem;
-    max-height: 27rem;
-    background: url('routes/Home/Hero/tablet-choice.jpg') right top / contain no-repeat;
+    max-height: 30.75rem;
+    max-width: 27rem;
+    min-height: auto;
+    margin-bottom: 0;
+    background: url('routes/Home/Hero/tablet-brand-dish.png') right top / cover no-repeat;
   }
 
   @media BreakpointFromLarge {
-    min-height: 22.5rem;
-    max-height: 28.75rem;
-    width: 100%;
-    max-width: 29rem;
+    background: url('routes/Home/Hero/desktop-brand-dish.png') right top / cover no-repeat;
+    max-width: 35rem;
     margin-bottom: 1.5rem;
-    background: url('routes/Home/Hero/desktop-choice.jpg') center top / contain no-repeat;
   }
 }
 
@@ -81,16 +78,16 @@
 }
 
 .processImage {
+
   @media BreakpointFromMedium {
-    height: 8rem;
     width: 200%;
-    background: url('routes/Home/Hero/desktop-process.jpg') left top / contain no-repeat;
+    height: 11.25rem;
+    background: url('routes/Home/Hero/process-brand.png') left top / contain no-repeat;
     margin-bottom: 1rem;
   }
 
   @media BreakpointFromLarge {
-    width: 120%;
-    height: 10rem;
+    width: 100%;
     margin-bottom: 0;
   }
 }
@@ -141,35 +138,4 @@
 .hideShadow {
   bottom: auto;
   box-shadow: none;
-}
-
-.brandHeroImage {
-  background: url('routes/Home/Hero/mobile-brand.png') center left / cover no-repeat;
-  min-height: 57vw;
-  height: 57vw;
-
-  @media BreakpointFromMedium {
-    max-height: 30.75rem;
-    max-width: 27rem;
-    min-height: auto;
-    margin-bottom: 0;
-    background: url('routes/Home/Hero/tablet-brand-dish.png') right top / cover no-repeat;
-  }
-
-  @media BreakpointFromLarge {
-    background: url('routes/Home/Hero/dish-brand.png') right top / cover no-repeat;
-    max-width: 35rem;
-  }
-}
-
-.brandImagesGroup {
-  @media BreakpointFromMedium {
-    width: 200%;
-    height: 11.25rem;
-    background: url('routes/Home/Hero/process-brand.png') left top / contain no-repeat;
-  }
-
-  @media BreakpointFromLarge {
-    width: 100%;
-  }
 }
