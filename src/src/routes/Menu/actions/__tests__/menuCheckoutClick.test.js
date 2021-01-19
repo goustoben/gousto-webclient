@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import * as basketActions from 'actions/basket'
 import * as boxSummaryActions from 'actions/boxSummary'
-import * as checkoutActions from 'actions/checkout'
+import * as menuCheckoutActions from 'routes/Menu/actions/checkout'
 import * as orderActions from 'actions/order'
 import { safeJestMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
 import { checkoutBasket, clearBasketNotValidError } from '../menuCheckoutClick'
@@ -57,7 +57,7 @@ describe('checkoutBasket', () => {
     const orderUpdateSpy = safeJestMock(orderActions, 'orderUpdate')
     returnArgumentsFromMock(orderUpdateSpy, 'orderUpdate')
 
-    const checkoutTransactionalOrderSpy = safeJestMock(checkoutActions, 'checkoutTransactionalOrder')
+    const checkoutTransactionalOrderSpy = safeJestMock(menuCheckoutActions, 'checkoutTransactionalOrder')
     returnArgumentsFromMock(checkoutTransactionalOrderSpy, 'checkoutTransactionalOrder')
 
     const basketProceedToCheckoutSpy = safeJestMock(basketActions, 'basketProceedToCheckout')
