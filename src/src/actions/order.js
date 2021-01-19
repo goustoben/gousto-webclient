@@ -22,7 +22,6 @@ import {
 import { getChosenAddressId } from 'selectors/basket'
 import { orderTrackingActions } from 'config/order'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
-import { orderAssignToUser } from 'routes/Menu/actions/order'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -594,7 +593,6 @@ export default {
   orderCheckout,
   orderUpdate,
   orderUpdateDayAndSlot,
-  orderAssignToUser,
   orderCheckPossibleDuplicate,
   orderHasAnyProducts,
   projectedOrderCancel,
