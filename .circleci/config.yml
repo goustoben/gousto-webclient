@@ -306,7 +306,8 @@ workflows:
             branches:
               only:
                 - e2e-manual
-  development-environment:
+
+  lower-environment:
     jobs:
       - setup-src:
           context: gousto-beta-aws-app-circleci
@@ -314,13 +315,97 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-                - develop
       - setup-platform:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
               only:
                 - /^env-.*/
+      - build-nginx-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - build-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-application
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - build-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - deploy-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-application
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - deploy-containers:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-nginx-image
+            - build-webclient-image
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - install-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-regression:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+            - deploy-application
+            - deploy-containers
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-regression-mobile:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+            - deploy-application
+            - deploy-containers
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+
+  staging-environment:
+    jobs:
+      - setup-src:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - develop
+      - setup-platform:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
                 - develop
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
@@ -337,7 +422,6 @@ workflows:
           filters:
             branches:
               only:
-                - /^env-.*/
                 - develop
       - build-webclient-image:
           context: gousto-beta-aws-app-circleci
@@ -346,7 +430,6 @@ workflows:
           filters:
             branches:
               only:
-                - /^env-.*/
                 - develop
       - build-application:
           context: gousto-beta-aws-app-circleci
@@ -356,7 +439,6 @@ workflows:
           filters:
             branches:
               only:
-                - /^env-.*/
                 - develop
       - deploy-application:
           context: gousto-beta-aws-app-circleci
@@ -366,7 +448,6 @@ workflows:
           filters:
             branches:
               only:
-                - /^env-.*/
                 - develop
       - deploy-containers:
           context: gousto-beta-aws-app-circleci
@@ -377,7 +458,6 @@ workflows:
           filters:
             branches:
               only:
-                - /^env-.*/
                 - develop
       - install-test-dependencies:
           context: gousto-beta-aws-app-circleci
@@ -388,9 +468,6 @@ workflows:
             branches:
               only:
                 - develop
-                - env-radishes
-                - env-rockets
-                - env-beetroots
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -400,9 +477,6 @@ workflows:
           filters:
             branches:
               only:
-                - env-rockets
-                - env-radishes
-                - env-beetroots
                 - develop
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
@@ -413,12 +487,7 @@ workflows:
           filters:
             branches:
               only:
-                - env-rockets
-                - env-radishes
-                - env-beetroots
                 - develop
-
-
 
   production-environment:
     jobs:
