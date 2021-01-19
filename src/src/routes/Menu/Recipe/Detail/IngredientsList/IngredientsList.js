@@ -8,10 +8,6 @@ const capitalizeFirstLetter = (string) => (
   string.charAt(0).toUpperCase() + string.slice(1)
 )
 
-const REGEX_TO_SPLIT_SENTENCES = /([A-Za-zÀ-ÖØ-öø-ÿ]+)|\s+|[^\sA-Za-zÀ-ÖØ-öø-ÿ]+/g
-
-export const splitSentences = (string) => string.match(REGEX_TO_SPLIT_SENTENCES)
-
 export const IngredientsList = ({ ingredients, allergens, inset }) => (
   <div>
     {(ingredients.size > 0) ? (
@@ -22,7 +18,6 @@ export const IngredientsList = ({ ingredients, allergens, inset }) => (
 
           if (!subIngredients) return <span key={index} />
 
-          const subIngredientsArray = splitSentences(subIngredients)
           const name = ingredient.get('name')
 
           return (
@@ -32,7 +27,7 @@ export const IngredientsList = ({ ingredients, allergens, inset }) => (
                 :
                 {' '}
               </span>
-              <SubIngredients subIngredients={subIngredientsArray} allergens={allergens} />
+              <SubIngredients subIngredients={subIngredients} allergens={allergens} />
             </dl>
           )
         })}

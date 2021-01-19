@@ -1,12 +1,42 @@
 import React from 'react'
 
 import { mount } from 'enzyme'
-import Immutable from 'immutable'
+import Immutable, { List, Map } from 'immutable'
 import Image from 'Image'
 import CloseButton from 'Overlay/CloseButton'
-import Details from 'Product/Detail/Detail'
+import Details, { getAllergenListFromAttributes } from 'Product/Detail/Detail'
 import Attributes from 'Product/Attributes/Attributes'
 import Buttons from 'Product/Buttons/Buttons'
+
+describe('getAllergenListFromAttributes', function () {
+  test('should return an empty list if no attributes provided', function () {
+    const attributes = undefined
+
+    expect(getAllergenListFromAttributes(attributes)).toEqual(new List([]))
+  })
+
+  test('should return an empty list if no allergens exist', function () {
+    const attributes = Immutable.fromJS([
+      { title: 'nothing', value: ''}
+    ])
+
+    expect(getAllergenListFromAttributes(attributes)).toEqual(new List([]))
+  })
+
+  test('should return a list of allergies when allergens exist', function () {
+    const attributes = new List([
+      new Map({ title: 'allergen', value: ' soya, soya, milk, egg, sulphur dioxide' })
+    ])
+
+    expect(getAllergenListFromAttributes(attributes)).toEqual(new List([
+      'soya',
+      'milk',
+      'egg',
+      'sulphur',
+      'dioxide',
+    ]))
+  })
+})
 
 describe('Product Detail', function () {
   let onVisibilityChangeSpy
