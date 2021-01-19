@@ -11,10 +11,9 @@ import {
 } from 'apis/orders'
 import actionStatus from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
-import { getOrderDetails } from 'utils/basket'
 import * as deliveriesUtils from 'utils/deliveries'
 import { trackAffiliatePurchase } from 'actions/tracking'
-import { saveUserOrder, updateUserOrder, skipDelivery } from 'apis/user'
+import { skipDelivery } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
 
@@ -22,7 +21,6 @@ import {
   trackOrder,
   orderUpdate,
   orderCheckout,
-  orderAssignToUser,
   orderUpdateProducts,
   orderHasAnyProducts,
   orderGetDeliveryDays,
@@ -554,126 +552,6 @@ describe('order actions', () => {
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
         error: 'error',
       })
-    })
-  })
-
-  describe('orderAssignToUser', () => {
-    beforeEach(() => {
-      recipes = [1, 2, 3, 4, 5]
-      saveOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
-      ))
-      cancelOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve() })
-      ))
-      updateOrderAddress.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve() })
-      ))
-      getOrderDetails.mockReturnValue({
-        recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
-        delivery_slot_id: coreSlotId,
-        delivery_day_id: coreDayId,
-      })
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
-    test('should mark ORDER_SAVE as pending', async () => {
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
-      ))
-      await orderAssignToUser(orderAction)(dispatch, getState)
-
-      expect(pending).toHaveBeenCalledTimes(2)
-      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
-      expect(pending).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', false)
-    })
-
-    test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async () => {
-      const err = new Error('oops')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(err) })
-      ))
-      await orderAssignToUser(orderAction)(dispatch, getState)
-
-      expect(pending).toHaveBeenCalledTimes(3)
-      expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
-      expect(pending).toHaveBeenNthCalledWith(2, 'BASKET_CHECKOUT', false)
-      expect(pending).toHaveBeenNthCalledWith(3, 'ORDER_SAVE', false)
-
-      expect(error).toHaveBeenCalledTimes(2)
-      expect(error).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', null)
-      expect(error).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', 'save-order-fail')
-    })
-
-    test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async () => {
-      const orderSaveErr = new Error('user already has an order for chosen delivery day')
-      const orderUpdateErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
-      updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderUpdateErr) })
-      ))
-
-      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
-
-      expect(error).toHaveBeenCalledWith('ORDER_SAVE', 'update-order-fail')
-    })
-
-    test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async () => {
-      const orderSaveErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
-
-      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
-
-      expect(updateUserOrder).toHaveBeenCalledWith('access-token', {
-        recipe_choices: [
-          { id: 1, quantity: 3, type: 'Recipe' },
-          { id: 2, quantity: 3, type: 'Recipe' },
-          { id: 3, quantity: 3, type: 'Recipe' },
-          { id: 4, quantity: 3, type: 'Recipe' },
-          { id: 5, quantity: 3, type: 'Recipe' },
-        ],
-        delivery_slot_id: coreSlotId,
-        delivery_day_id: coreDayId,
-        order_id: 'order-123',
-      })
-    })
-
-    test('should redirect the user to the order summary page if it succeeds on saving new order', async () => {
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '4321' } }) })
-      ))
-
-      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
-
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(
-        '4321',
-        'transaction',
-      )
-    })
-
-    test('should redirect the user to the order summary page if it succeeds on updating existing order', async () => {
-      const orderSaveErr = new Error('user already has an order for chosen delivery day')
-      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr) })
-      ))
-
-      updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '3456' } }) })
-      ))
-
-      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
-
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(
-        '3456',
-        'transaction',
-      )
     })
   })
 

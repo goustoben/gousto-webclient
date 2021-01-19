@@ -85,7 +85,7 @@ class Hero extends Component {
   }
 
   render() {
-    const { dataTesting, isBrandDesignEnabled } = this.props
+    const { dataTesting } = this.props
 
     return (
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
@@ -97,9 +97,9 @@ class Hero extends Component {
             <Heading type="h2" size="fontStyleL" hasMargin={false}>{home.hero.subheader}</Heading>
           </div>
           {this.renderGetStarted(true)}
-          <div className={classNames(css.processImage, { [css.brandImagesGroup]: isBrandDesignEnabled })} />
+          <div className={css.processImage} />
         </div>
-        <div className={classNames(css.heroImage, { [css.brandHeroImage]: isBrandDesignEnabled })} />
+        <div className={css.heroImage} />
         {this.renderGetStarted(false)}
       </div>
     )
@@ -111,13 +111,11 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
-  isBrandDesignEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   dataTesting: 'hero',
   isAuthenticated: false,
-  isBrandDesignEnabled: false,
 }
 
 export {

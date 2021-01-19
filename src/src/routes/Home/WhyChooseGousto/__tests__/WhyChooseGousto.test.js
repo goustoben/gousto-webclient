@@ -11,10 +11,10 @@ describe('WhyChooseGousto', () => {
   })
 
   describe('when component is mounted', () => {
-    test('then should renders correctly', () => {
+    test('then it should render correctly', () => {
       expect(wrapper.find(WhyChooseGousto)).toBeDefined()
       expect(wrapper.find('ModuleTitle')).toHaveLength(1)
-      expect(wrapper.find('Connect(StepsGuide)')).toHaveLength(1)
+      expect(wrapper.find('StepsGuide')).toHaveLength(1)
       expect(wrapper.find(CTAHomepageContainer)).toHaveLength(1)
     })
   })
