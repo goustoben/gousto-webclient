@@ -11,6 +11,7 @@ import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import userActions from 'actions/user'
 import { getUserId } from 'selectors/user'
 import { getIsHelpCentreActive } from 'selectors/features'
+import { orderAssignToUser } from '../routes/Menu/actions/order'
 import orderActions from './order'
 import pricingActions from './pricing'
 import statusActions from './status'
@@ -212,7 +213,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
       if (orderId) {
         dispatch(push(`${client.welcome}/${orderId}`))
       } else {
-        dispatch(orderActions.orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
+        dispatch(orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
       }
     } else {
       setTimeout(() => {

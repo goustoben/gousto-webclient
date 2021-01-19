@@ -1,8 +1,8 @@
-FROM node:12.20.0-buster-slim
+FROM ubuntu:18.04
 ARG SSH_PRIVATE_KEY
 
 RUN apt-get update -y &&\
-    apt-get install -y net-tools git wget curl xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+    apt-get install -y net-tools git wget xvfb libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
 
 # Copy SSH key for git private repos
 # This will be replaced with SSH agent forwarding on prod/later

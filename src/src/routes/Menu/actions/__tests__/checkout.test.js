@@ -1,16 +1,20 @@
 import Immutable from 'immutable'
 
+import { safeJestMock } from '_testing/mocks'
 import { createPreviewOrder } from 'apis/orders'
 
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import { pending, error } from 'actions/status'
-import { orderAssignToUser } from 'actions/order'
 
 import { warning } from 'utils/logger'
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 
 import { checkoutCreatePreviewOrder, checkoutTransactionalOrder } from '../checkout'
+
+import * as orderActions from '../order'
+
+const orderAssignToUser = safeJestMock(orderActions, 'orderAssignToUser')
 
 jest.mock('apis/orders', () => ({
   createPreviewOrder: jest.fn(),
@@ -29,10 +33,6 @@ jest.mock('actions/redirect', () => ({
 jest.mock('actions/status', () => ({
   error: jest.fn(() => ({ type: 'error_action' })),
   pending: jest.fn(() => ({ type: 'pending_action' })),
-}))
-
-jest.mock('actions/order', () => ({
-  orderAssignToUser: jest.fn(),
 }))
 
 const createState = (stateOverrides) => ({

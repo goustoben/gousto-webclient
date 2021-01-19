@@ -144,7 +144,7 @@
     "eslint-plugin-you-dont-need-lodash-underscore": "6.4.0",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
     "file-loader": "2.0.0",
-    "gousto-gulp": "git@github.com:Gousto/gousto-gulp.git#3.4.0",
+    "gousto-gulp": "git@github.com:Gousto/gousto-gulp.git#v3.2.0",
     "husky": "^4.2.2",
     "identity-obj-proxy": "3.0.0",
     "ignore": "^5.1.8",

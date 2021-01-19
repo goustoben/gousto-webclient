@@ -1,4 +1,4 @@
-FROM node:12.20.0-buster-slim
+FROM node:10-jessie-slim
 
 # AWS CLI to download secrets
 RUN apt-get update && apt-get install -y \

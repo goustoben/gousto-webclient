@@ -14,7 +14,6 @@ tests/e2e/reports
 tests/e2e/screenshots
 tests/regression/node_modules
 tests/regression/screenshots
-tests/load/__pycache__
 src/coverage/
 **/eslint-results.json
 yarn-error.log

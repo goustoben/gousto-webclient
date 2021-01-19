@@ -13,8 +13,9 @@ import {
   basketPreviewOrderChange,
 } from 'actions/basket'
 import { redirect } from 'actions/redirect'
-import { orderAssignToUser } from 'actions/order'
 import statusActions from 'actions/status'
+
+import { orderAssignToUser } from './order'
 
 const { pending, error } = statusActions
 
