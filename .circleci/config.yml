@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Test coverage
           command: cd src && npm run test:jest:ci:coverage
+          no_output_timeout: 30m
       - run:
           name: eslint coverage
           command: cd src && scripts/run-eslint-ci.sh
