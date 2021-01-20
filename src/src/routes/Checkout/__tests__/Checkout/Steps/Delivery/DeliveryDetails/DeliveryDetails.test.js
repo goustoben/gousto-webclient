@@ -1,15 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import DeliveryDetailsComponent from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryDetails'
+import { DeliveryDetails } from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryDetails'
 
-import DeliveryInstruction from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryInstruction'
+import { DeliveryInstruction } from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryInstruction'
 import DeliveryPhoneNumber from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryPhoneNumber'
 
 describe('DeliveryDetails', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<DeliveryDetailsComponent />)
+    wrapper = shallow(<DeliveryDetails />)
   })
 
   test('should return div', () => {

@@ -1,0 +1,24 @@
+@value Mackerel, White from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value borderRadius 3px;
+
+.deliveryCardContainer {
+  padding: 1rem;
+  border: 1px solid Mackerel;
+  display: flex;
+  align-items: flex-start;
+  border-radius: borderRadius;
+  background: White;
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    display: none;
+  }
+}
+
+.icon {
+  min-width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+}

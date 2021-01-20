@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta, change } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
-
+import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 
-import Delivery from './Delivery'
+import { Delivery } from './Delivery'
 
 function mapStateToProps(sectionName) {
   return state => ({
@@ -21,6 +21,10 @@ function mapStateToProps(sectionName) {
 
     formValues: getFormValues(getDeliveryFormName(state))(state),
     formFields: getFormMeta(getDeliveryFormName(state))(state),
+    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
+    deliveryDays: state.boxSummaryDeliveryDays,
+    date: state.basket.get('date'),
+    slotId: state.basket.get('slotId'),
   })
 }
 
