@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
-import DeliveryAddressType from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryAddressType'
+import { DeliveryAddressType } from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryAddressType'
 
 describe('DeliveryAddressType', () => {
   let wrapper

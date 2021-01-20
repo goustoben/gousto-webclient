@@ -1,42 +1,51 @@
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-
 import React from 'react'
+import moment from 'moment'
+import Immutable from 'immutable'
 import { FormSection } from 'redux-form'
 import * as deliveryUtils from 'routes/Checkout/utils/delivery'
 import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
+import { getSlotTimes } from 'utils/deliveries'
 
 import Subscription from 'routes/Checkout/Components/Subscription'
-import css from './Delivery.css'
 import DeliveryDetails from './DeliveryDetails'
 import DeliveryAddress from './DeliveryAddress'
+import { DeliveryCard } from './DeliveryCard'
 
-class Delivery extends React.PureComponent {
-  static propTypes = {
-    formValues: PropTypes.object,
-    formName: PropTypes.string,
-    sectionName: PropTypes.string,
-    clearErrors: PropTypes.func,
-    asyncValidate: PropTypes.func,
-    change: PropTypes.func,
-    receiveRef: PropTypes.func,
-    triggerSubmit: PropTypes.func,
-    scrollToFirstMatchingRef: PropTypes.func,
-  }
+import css from './Delivery.css'
 
-  static defaultProps = {
-    clearErrors: () => {},
-    formValues: {},
-    formName: '',
-    sectionName: 'delivery',
-    change: () => {},
-    receiveRef: () => {},
-    asyncValidate: () => {},
-    triggerSubmit: () => {},
-    scrollToFirstMatchingRef: () => {},
-  }
+const propTypes = {
+  formValues: PropTypes.object,
+  formName: PropTypes.string,
+  sectionName: PropTypes.string,
+  clearErrors: PropTypes.func,
+  asyncValidate: PropTypes.func,
+  change: PropTypes.func,
+  receiveRef: PropTypes.func,
+  triggerSubmit: PropTypes.func,
+  scrollToFirstMatchingRef: PropTypes.func,
+  deliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
+  slotId: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+}
 
+const defaultProps = {
+  clearErrors: () => {},
+  formValues: {},
+  formName: '',
+  sectionName: 'delivery',
+  change: () => {},
+  receiveRef: () => {},
+  asyncValidate: () => {},
+  triggerSubmit: () => {},
+  scrollToFirstMatchingRef: () => {},
+  isCheckoutOverhaulEnabled: false,
+}
+
+export class Delivery extends React.PureComponent {
   componentDidMount() {
     // reset error msg
     const { clearErrors } = this.props
@@ -95,16 +104,38 @@ class Delivery extends React.PureComponent {
     )
   }
 
+  renderDeliveryDay = () => {
+    const { date, deliveryDays, slotId } = this.props
+    const deliveryDate = moment(date).format('dddd Do MMMM')
+    const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
+
+    return (
+      <div>
+        Your selected delivery day is
+        {' '}
+        <span className={css.boldDeliveryDate}>{deliveryDate}</span>
+        ,
+        {' '}
+        <span className={css.upperCase}>{deliveryTime}</span>
+      </div>
+    )
+  }
+
   render() {
-    const { sectionName } = this.props
+    const { sectionName, formValues, isCheckoutOverhaulEnabled } = this.props
 
     return (
       <div ref={el => { this.container = el }}>
         <Subscription sectionName={sectionName} />
         <div className={css.deliveryContainer} data-testing="checkoutDeliverySection">
+          {isCheckoutOverhaulEnabled && (
+            <DeliveryCard iconName="icon-calendar">
+              {this.renderDeliveryDay()}
+            </DeliveryCard>
+          )}
           <h3 className={css.header}>Delivery details</h3>
           <FormSection name={sectionName}>
-            {deliveryUtils.isAddressConfirmed(this.props.formValues) ? this.renderDetails() : this.renderAddress()}
+            {deliveryUtils.isAddressConfirmed(formValues) ? this.renderDetails() : this.renderAddress()}
           </FormSection>
         </div>
       </div>
@@ -112,4 +143,5 @@ class Delivery extends React.PureComponent {
   }
 }
 
-export default Delivery
+Delivery.defaultProps = defaultProps
+Delivery.propTypes = propTypes

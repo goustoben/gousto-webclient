@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field } from 'redux-form'
 import { shallow } from 'enzyme'
-import DeliveryInstruction from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryInstruction'
+import { DeliveryInstruction } from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryInstruction'
 
 describe('DeliveryInstruction', () => {
   let wrapper

@@ -1,26 +1,35 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 import { FormSection } from 'redux-form'
-import DeliveryComponent from 'routes/Checkout/Components/Delivery/Delivery'
-
-import DeliveryAddress from 'routes/Checkout/Components/Delivery/DeliveryAddress'
+import { Delivery } from 'routes/Checkout/Components/Delivery/Delivery'
 
 describe('Delivery', () => {
   let wrapper
+  const props = {
+    deliveryDays: Immutable.Map([]),
+    slotId: '',
+    date: '',
+  }
 
   beforeEach(() => {
-    wrapper = shallow(<DeliveryComponent />)
+    wrapper = shallow(<Delivery {...props} />)
   })
 
-  test('should return div', () => {
+  test('should renders correctly', () => {
     expect(wrapper.type()).toEqual('div')
+    expect(wrapper.find(FormSection)).toHaveLength(1)
   })
 
-  test('should render 1 <FormSection> component(s)', () => {
-    expect(wrapper.find(FormSection).length).toEqual(1)
-  })
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true
+      })
+    })
 
-  test('should render 1 <DeliveryAddress> component(s)', () => {
-    expect(wrapper.find(DeliveryAddress).length).toEqual(1)
+    test('then should render DeliveryCard component', () => {
+      expect(wrapper.find('DeliveryCard')).toHaveLength(1)
+    })
   })
 })

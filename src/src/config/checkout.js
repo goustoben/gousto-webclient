@@ -90,8 +90,6 @@ module.exports = {
     other: 'More details about where to leave your box?',
   },
   tooltip: {
-    leaveBox: 'You don\'t have to be in to accept your deliveries, just tell us the safest place to leave your boxes. Please choose somewhere dry and easily accessible - we can\'t leave boxes in cupboards, in wheelie bins, through windows, or over fences.',
-    addressType: 'This makes it easier for our courier to deliver your To aid delivery, please suggest a safe, dry and easily accessible place. Our couriers are unable to leave boxes in cupboards, wheelie bins, through windows, or over fences.',
     security: 'The 3-digit security code is found on the back of the card',
     outOfstock: 'You got the last one',
     limitReached: 'You\'ve run out of space in your box!',
