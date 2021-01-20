@@ -1,6 +1,6 @@
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, task
 
-class UserBehavior(TaskSet):
+class UserBehavior(HttpUser):
     @task
     def index(self):
         self.client.get("/")
@@ -20,9 +20,3 @@ class UserBehavior(TaskSet):
     @task
     def cookbook(self):
         self.client.get("/cookbook")
-
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
-    host = "http://frontend.gousto.local"
-    min_wait = 2000
-    max_wait = 3000
