@@ -142,10 +142,10 @@ export class MenuRecipesPage extends PureComponent {
         <CategoriesModalContainer />
         <VariantRecipeListModalContainer />
 
-        <ExperimentsContainer experimentName="bucketing-experiment-one" />
-        <ExperimentsContainer experimentName="bucketing-experiment-two" />
-        <ExperimentsContainer experimentName="bucketing-experiment-three" />
-        <ExperimentsContainer experimentName="bucketing-experiment-four" />
+        <ExperimentsContainer experimentName="entropy-experiment-one" />
+        <ExperimentsContainer experimentName="entropy-experiment-two" />
+        <ExperimentsContainer experimentName="entropy-experiment-three" />
+        <ExperimentsContainer experimentName="entropy-experiment-four" />
       </div>
     )
   }

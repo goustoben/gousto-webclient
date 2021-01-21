@@ -2,22 +2,22 @@
   "status": "ok",
   "data": [
     {
-      "name": "bucketing-experiment-four",
+      "name": "entropy-experiment-four",
       "bucket": "control",
       "withinExperiment": true
     },
     {
-      "name": "bucketing-experiment-one",
+      "name": "entropy-experiment-one",
       "bucket": "variant",
       "withinExperiment": true
     },
     {
-      "name": "bucketing-experiment-three",
+      "name": "entropy-experiment-three",
       "bucket": "variant",
       "withinExperiment": true
     },
     {
-      "name": "bucketing-experiment-two",
+      "name": "entropy-experiment-two",
       "bucket": "control",
       "withinExperiment": true
     }
