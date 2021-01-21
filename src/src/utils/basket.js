@@ -1,49 +1,9 @@
 import config from 'config'
-import { getSlot } from 'utils/deliveries'
 import { getAllBasketProducts, getFirstProductCategoryAtLimit, getProductItemLimitReached, productsOverallLimitReached } from 'utils/basketProductLimits'
 import { unset } from './cookieHelper2'
-import { getChosenAddressId } from '../selectors/basket'
 
 export function basketSum(items) {
   return Array.from(items.values()).reduce((sum, qty) => sum + qty, 0)
-}
-
-export function getOrderDetails(basket, deliveryDays) {
-  const date = basket.get('date')
-  const slotId = basket.get('slotId')
-  const slot = getSlot(deliveryDays, date, slotId)
-
-  const deliverySlotId = slot.get('coreSlotId', '')
-  const daySlotLeadTimeId = slot.get('daySlotLeadTimeId', '')
-
-  const deliveryDayId = deliveryDays.getIn([date, 'coreDayId'])
-
-  const recipes = basket.get('recipes')
-  const quantity = basket.get('numPortions')
-
-  const chosenAddressId = getChosenAddressId({ basket })
-
-  const recipeChoices = (
-    recipes.reduce((recipesArray, qty, id) => {
-      for (let i = 1; i <= qty; i++) {
-        recipesArray.push({
-          id,
-          quantity,
-          type: 'Recipe',
-        })
-      }
-
-      return recipesArray
-    }, [])
-  )
-
-  return {
-    delivery_day_id: deliveryDayId,
-    delivery_slot_id: deliverySlotId,
-    recipe_choices: recipeChoices,
-    day_slot_lead_time_id: daySlotLeadTimeId,
-    address_id: chosenAddressId
-  }
 }
 
 export function okRecipes(recipes, menuRecipes, menuRecipeStock, numPortions) {

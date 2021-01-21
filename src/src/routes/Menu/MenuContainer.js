@@ -51,8 +51,6 @@ const mapDispatchToProps = {
   loginVisibilityChange: actions.loginVisibilityChange,
   basketNumPortionChange: actions.basketNumPortionChange,
   shouldJfyTutorialBeVisible,
-  orderHasAnyProducts: actions.orderHasAnyProducts,
-  orderUpdateProducts: actions.orderUpdateProducts,
   orderCheckoutAction: actions.orderCheckout,
   selectCurrentCollection: actions.changeCollectionById,
   onOverlayClick: menuOverlayClick,

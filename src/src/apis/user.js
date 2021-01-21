@@ -38,14 +38,6 @@ export function fetchUserProjectedDeliveries(accessToken) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userProjectedDeliveries}`, {}, 'GET')
 }
 
-export function saveUserOrder(accessToken, reqData) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.userOrder}`, reqData, 'POST')
-}
-
-export function updateUserOrder(accessToken, reqData) {
-  return fetch(accessToken, `${endpoint('core')}${routes.core.userOrder}`, reqData, 'PUT')
-}
-
 export function skipDelivery(accessToken, deliveryDayId) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userDelivery}/disable`, { delivery_day_id: deliveryDayId }, 'PUT')
 }

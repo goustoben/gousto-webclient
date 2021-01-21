@@ -9,8 +9,6 @@ import {
   fetchUserOrders,
   fetchUserOrdersNew,
   fetchUserProjectedDeliveries,
-  saveUserOrder,
-  updateUserOrder,
   skipDelivery,
   restoreDelivery,
   reactivate,
@@ -185,36 +183,6 @@ describe('user api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchUserProjectedDeliveries('token')
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('saveUserOrder', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const reqData = { a: 1 }
-      await saveUserOrder(accessToken, reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userOrder', reqData, 'POST')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await saveUserOrder('token', {})
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('updateUserOrder', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const reqData = { a: 1 }
-      await updateUserOrder(accessToken, reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userOrder', reqData, 'PUT')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await updateUserOrder('token', {})
       expect(result).toEqual(mockFetchResult)
     })
   })

@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import {
   getUserId,
   getUserPhoneNumber,
+  getUserStatus,
   getUserPhoneWithoutLeadingZero,
   getUserRecentRecipesIds,
   getUsersOrdersDaySlotLeadTimeIds,
@@ -390,6 +391,18 @@ describe('when getUserPhoneNumber is called', () => {
     }
 
     expect(getUserPhoneNumber(state)).toBe('phone-number')
+  })
+})
+
+describe('when getUserStatus is called', () => {
+  test('returns user status from the store', () => {
+    const state = {
+      user: Immutable.fromJS({
+        status: 'pending'
+      })
+    }
+
+    expect(getUserStatus(state)).toBe('pending')
   })
 })
 

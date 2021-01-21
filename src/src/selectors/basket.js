@@ -6,6 +6,7 @@ export const getBasketRecipes = state => state.basket.get('recipes')
 export const getBasketTotalRecipes = state => state.basket.get('recipes').reduce((acc, cur) => acc + cur)
 export const getNumPortions = state => state.basket.get('numPortions')
 export const getPromoCode = state => state.basket.get('promoCode', false)
+export const getPreviewOrderId = state => state.basket.get('previewOrderId')
 export const getSignupChosenCollection = state => state.basket.get('collection')
 export const getBasketOrderDetails = state => state.basket.get('orderDetails', false)
 export const getBasketOrderDetailId = state => state.basket.getIn(['orderDetails', 'id'])
@@ -61,4 +62,5 @@ export default {
   getBasketPostcode,
   getBasketProducts,
   getBasketProductsCost,
+  getPreviewOrderId
 }
