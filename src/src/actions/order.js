@@ -1,17 +1,6 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
-import {
-  saveOrder,
-  fetchOrder,
-  cancelOrder,
-  checkoutOrder,
-  updateOrderItems,
-  updateOrderAddress,
-} from 'apis/orders'
-
-import { fetchDeliveryDays } from 'apis/deliveries'
-import * as userApi from 'apis/user'
 import logger from 'utils/logger'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
@@ -29,6 +18,16 @@ import { orderConfirmationRedirect } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 import { anyUnset } from '../utils/object'
+
+import {
+  saveOrder,
+  cancelOrder,
+  checkoutOrder,
+  updateOrderAddress,
+} from '../apis/orders'
+
+import { fetchDeliveryDays } from '../apis/deliveries'
+import * as userApi from '../apis/user'
 
 export const trackOrder = (orderAction, order) => (
   (dispatch, getState) => {
@@ -366,52 +365,6 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
   }
 )
 
-export const orderUpdateProducts = (orderId, itemChoices) => (
-  async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    const reqData = { item_choices: itemChoices, restrict: 'Product' }
-
-    try {
-      await updateOrderItems(accessToken, orderId, reqData)
-      dispatch({
-        type: actionTypes.ORDER_UPDATE_PRODUCTS,
-      })
-    } catch (error) {
-      dispatch({
-        type: actionTypes.ORDER_UPDATE_PRODUCTS,
-        error,
-      })
-    }
-  }
-)
-
-export const orderHasAnyProducts = (orderId) => (
-  async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    const dispatchError = (error) => (
-      dispatch({
-        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
-        error,
-      })
-    )
-
-    try {
-      if (orderId === undefined || orderId === null || orderId === '') {
-        return dispatchError(new Error('missing orderId'))
-      }
-
-      const response = await fetchOrder(accessToken, orderId)
-      const hasProducts = response.data.productItems.length > 0
-      dispatch({
-        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
-        hasProducts,
-      })
-    } catch (error) {
-      dispatchError(error)
-    }
-  }
-)
-
 export const cancelOrderModalToggleVisibility = (visibility, orderId) => (
   (dispatch) => {
     dispatch({
@@ -594,12 +547,10 @@ export default {
   orderUpdate,
   orderUpdateDayAndSlot,
   orderCheckPossibleDuplicate,
-  orderHasAnyProducts,
   projectedOrderCancel,
   cancelledAllBoxesModalToggleVisibility,
   projectedOrderRestore,
   orderAddressChange,
   orderGetDeliveryDays,
-  orderUpdateProducts,
   cancelOrderModalToggleVisibility,
 }

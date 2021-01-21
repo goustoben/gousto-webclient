@@ -13,7 +13,6 @@ import jobs from './jobs'
 import login from './login'
 import menu from './menu'
 import newsletter from './newsletter'
-import { orders } from './orders'
 import { payment } from './payment'
 import persist from './persist'
 import products from './products'
@@ -65,7 +64,6 @@ const reducers = {
   ...menu,
   menuService,
   ...newsletter,
-  orders,
   ...onScreenRecovery,
   ...persist,
   ...products,

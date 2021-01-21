@@ -6,7 +6,6 @@ import {
   fetchOrder,
   cancelOrder,
   checkoutOrder,
-  updateOrderItems,
   updateOrderAddress,
 } from 'apis/orders'
 import actionStatus from 'actions/status'
@@ -21,8 +20,6 @@ import {
   trackOrder,
   orderUpdate,
   orderCheckout,
-  orderUpdateProducts,
-  orderHasAnyProducts,
   orderGetDeliveryDays,
   orderUpdateDayAndSlot,
   clearUpdateDateErrorAndPending,
@@ -452,106 +449,6 @@ describe('order actions', () => {
       await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
       expect(window.location.assign).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  describe('orderUpdateProducts', () => {
-    test('api function is called with correct parameters', async () => {
-      const itemChoices = [
-        { id: 'df0ddd72-beb3-11e5-8432-02fada0dd3b9', quantity: 1, type: 'Product' },
-        { id: 'd533155a-7c4f-11e7-b81e-02e92c52d95a', quantity: 2, type: 'Product' }
-      ]
-      await orderUpdateProducts(orderId, itemChoices)(dispatch, getState)
-
-      expect(updateOrderItems).toHaveBeenCalledWith(
-        'access-token',
-        orderId,
-        { item_choices: itemChoices, restrict: 'Product' }
-      )
-    })
-
-    test('when the api call succeeds it dispatches an action', async () => {
-      await orderUpdateProducts(orderId)(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.ORDER_UPDATE_PRODUCTS
-      })
-    })
-
-    test('when the api call errors it dispatches the error in an action', async () => {
-      updateOrderItems.mockRejectedValue('error')
-      await orderUpdateProducts(orderId)(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.ORDER_UPDATE_PRODUCTS,
-        error: 'error',
-      })
-    })
-  })
-
-  describe('orderHasAnyProducts', () => {
-    test('api function is called with correct parameters', async () => {
-      await orderHasAnyProducts(orderId)(dispatch, getState)
-
-      expect(fetchOrder).toHaveBeenCalledWith(
-        'access-token',
-        orderId
-      )
-    })
-
-    test('when the order has a product, it dispatches true in an action', async () => {
-      const fetchOrderResult = {
-        data: {
-          productItems: [],
-        },
-      }
-      fetchOrder.mockResolvedValue(fetchOrderResult)
-      await orderHasAnyProducts(orderId)(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
-        hasProducts: false
-      })
-    })
-
-    test('when the order has a product, it dispatches true in an action', async () => {
-      const fetchOrderResult = {
-        data: {
-          productItems: ['1', '2', '3'],
-        },
-      }
-      fetchOrder.mockResolvedValue(fetchOrderResult)
-      await orderHasAnyProducts(orderId)(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
-        hasProducts: true
-      })
-    })
-
-    test('when the orderId is not empty, null or undefined, it dispatches an error in an action', async () => {
-      const errorAction = {
-        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
-        error: new Error('missing orderId')
-      }
-      await orderHasAnyProducts('')(dispatch, getState)
-      await orderHasAnyProducts(null)(dispatch, getState)
-      await orderHasAnyProducts()(dispatch, getState)
-
-      expect(dispatch).toHaveBeenNthCalledWith(1, errorAction)
-      expect(dispatch).toHaveBeenNthCalledWith(2, errorAction)
-      expect(dispatch).toHaveBeenNthCalledWith(3, errorAction)
-      expect(fetchOrder).not.toHaveBeenCalled()
-    })
-
-    test('when the api call throws an error, it dispatches the error in an action', async () => {
-      fetchOrder.mockRejectedValue('error')
-      await orderHasAnyProducts(orderId)(dispatch, getState)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
-        error: 'error',
-      })
     })
   })
 
