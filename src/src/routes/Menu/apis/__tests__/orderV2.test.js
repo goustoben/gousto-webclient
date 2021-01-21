@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { createOrder, deleteOrder, getOrder, getUserOrders } from './orderV2'
+import { createOrder, deleteOrder, getOrder, getUserOrders } from '../orderV2'
 
 const mockFetchResult = { data: [1, 2, 3] }
 const reqData = { a: 1, b: 2}

@@ -7,7 +7,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import { pending, error } from 'actions/status'
 
-import { warning } from 'utils/logger'
+import logger from 'utils/logger'
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 
 import { checkoutCreatePreviewOrder, checkoutTransactionalOrder } from '../checkout'
@@ -142,6 +142,33 @@ describe('menu checkout actions', () => {
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
 
+    describe('when createPreviewOrder fails', () => {
+      test('should dispatch the error and log the error', async () => {
+        const standardError = new Error('standard-error')
+        createPreviewOrder.mockImplementation(() => Promise.reject(standardError))
+
+        await checkoutCreatePreviewOrder()(
+          dispatch,
+          getState,
+        )
+
+        expect(error).toHaveBeenCalledWith(
+          actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
+          {
+            message: 'standard-error',
+            code: undefined,
+          },
+        )
+
+        expect(logger.warning).toHaveBeenCalledWith(expect.stringContaining('standard-error'))
+        expect(logger.error).toBeCalledTimes(2)
+        expect(logger.error).toHaveBeenNthCalledWith(1, expect.objectContaining({
+          message: 'createPreviewOrder failed, logging error below...',
+        }))
+        expect(logger.error).toHaveBeenNthCalledWith(2, standardError)
+      })
+    })
+
     test('should call create preview order and log the error, coreDayId empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: Immutable.fromJS({
@@ -188,7 +215,10 @@ describe('menu checkout actions', () => {
 
       expect(error).toHaveBeenCalledWith(
         actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
-        "Cannot read property 'getIn' of null",
+        {
+          message: 'Missing data, persistent basket might be expired',
+          code: 'basket-expired',
+        },
       )
     })
 
@@ -302,7 +332,7 @@ describe('menu checkout actions', () => {
       test('should log a warning', async () => {
         await checkoutTransactionalOrder()(dispatch, getState)
 
-        expect(warning).toHaveBeenCalledWith(expect.stringContaining('undefined-error'))
+        expect(logger.warning).toHaveBeenCalledWith(expect.stringContaining('undefined-error'))
       })
 
       test('should redirect to the menu', async () => {

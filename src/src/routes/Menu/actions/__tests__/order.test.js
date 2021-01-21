@@ -7,21 +7,24 @@ import {
   updateOrderAddress,
 } from 'apis/orders'
 import actionStatus from 'actions/status'
-import { getOrderDetails } from 'utils/basket'
 import * as deliveriesUtils from 'utils/deliveries'
-import { saveUserOrder, updateUserOrder } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import { trackOrder } from 'actions/order'
 
 import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
+import { actionTypes } from 'src/actions/actionTypes'
+import { saveUserOrder, updateUserOrder } from '../../apis/core'
+import { getOrderDetails } from '../../selectors/order'
 import { orderAssignToUser } from '../order'
 
 import { safeJestMock } from '../../../../_testing/mocks'
 
-jest.mock('apis/user')
+jest.mock('../../apis/core')
 jest.mock('apis/orders')
-jest.mock('utils/basket')
+jest.mock('../../selectors/order')
 jest.mock('actions/status')
 jest.mock('actions/tracking')
+jest.mock('actions/order')
 jest.mock('actions/orderConfirmation')
 jest.mock('utils/logger', () => ({
   error: jest.fn()
@@ -71,7 +74,7 @@ describe('order actions', () => {
     coreSlotId = 8
     numPortions = 3
     orderAction = 'transaction'
-    dispatch = jest.fn()
+
     fetchOrder.mockClear()
     getState.mockReturnValue({
       auth: Immutable.Map({ accessToken: 'access-token' }),
@@ -98,6 +101,9 @@ describe('order actions', () => {
       id: 'deliveries-uuid',
       daySlotLeadTimeId: 'day-slot-lead-time-uuid'
     }))
+
+    // We stub out some action so they will be `undefined`
+    dispatch = jest.fn(async (fn) => (fn ? fn(dispatch, getState) : undefined))
 
     sendClientMetricMock.mockReset()
   })
@@ -194,6 +200,20 @@ describe('order actions', () => {
       })
     })
 
+    test('should mark ORDER_SAVE as errored with "assign-order-fail" if updating order doesn\'t return data', async () => {
+      const orderSaveErr = new Error('user already has an order for chosen delivery day')
+      saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { reject(orderSaveErr) })
+      ))
+      updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve) => { resolve({}) })
+      ))
+
+      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
+
+      expect(error).toHaveBeenCalledWith('ORDER_SAVE', 'assign-order-fail')
+    })
+
     test('should redirect the user to the order summary page if it succeeds on saving new order', async () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve({ data: { id: '4321' } }) })
@@ -201,9 +221,14 @@ describe('order actions', () => {
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
+      expect(trackOrder).toHaveBeenCalledWith('transaction', { id: '4321' })
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(
         '4321',
         'transaction',
+      )
+      expect(pending).toHaveBeenCalledWith(
+        actionTypes.ORDER_SAVE,
+        false,
       )
     })
 
@@ -219,9 +244,14 @@ describe('order actions', () => {
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
+      expect(trackOrder).toHaveBeenCalledWith('transaction', { id: '3456' })
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(
         '3456',
         'transaction',
+      )
+      expect(pending).toHaveBeenCalledWith(
+        actionTypes.ORDER_SAVE,
+        false,
       )
     })
   })
