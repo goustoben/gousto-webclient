@@ -2,6 +2,10 @@ export const clickAcceptCTA = () => {
   cy.get('[role=button]').contains('Accept').click()
 }
 
+export const clickCTABack = () => {
+  cy.get('[data-testing="CTABack"]').click()
+}
+
 export const clickContactUsCTA = () => {
   cy.get('[role=button]').contains('Contact Us').click()
 }
