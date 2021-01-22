@@ -1,5 +1,5 @@
 import { setFeatureFlag, clickMyGousto } from './pageUtils/home/home'
-import { selectOrderIssue } from './pageUtils/help/getHelp'
+import { clickCTABack, selectOrderIssue } from './pageUtils/help/getHelp'
 
 const deliveryDate = new Date(2020, 4, 26)
 
@@ -84,7 +84,7 @@ describe('Given the customer is logged in and the order delivery is today', () =
 
         cy.clock(deliveryDate.getTime(), ['Date'])
 
-        cy.get('[data-testing="CTABack"]').click()
+        clickCTABack()
 
         cy.get('[data-testing="deliveryDontKnowWhen"]').click()
       })
@@ -105,6 +105,20 @@ describe('Given the customer is logged in and the order delivery is today', () =
       it('View My Gousto and Track my box CTAs are rendered', () => {
         cy.get('[data-testing="viewMyGoustoCTA"]').should('exist')
         cy.get('[data-testing="trackMyBoxCTA"]').should('exist')
+      })
+    })
+
+    describe('When they select "I had another issue"', () => {
+      before(() => {
+        clickCTABack()
+        cy.get('[data-testing="deliveryOtherIssue"]').click()
+      })
+
+      it('shows Contact Us page', () => {
+        cy.url().should('include', 'contact')
+        cy.contains('chat')
+        cy.contains('email')
+        cy.contains('phone')
       })
     })
   })
