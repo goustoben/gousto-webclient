@@ -39,7 +39,6 @@ jest.mock('utils/basket')
 jest.mock('actions/status')
 jest.mock('actions/tracking')
 jest.mock('actions/orderConfirmation')
-jest.mock('actions/orderAddOn')
 jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))

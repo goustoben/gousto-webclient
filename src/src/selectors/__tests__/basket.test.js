@@ -11,7 +11,6 @@ import {
   getSignupChosenCollection,
   getBasketOrderId,
   getBasketLimitReached,
-  getBasketProductsCost,
   getBasketProducts,
   getChosenAddressId
 } from '../basket'
@@ -229,94 +228,6 @@ describe('the getBasketProducts selector', () => {
   })
 })
 
-describe('the getBasketProductsCost selector', () => {
-  let state
-
-  describe('when products havent been loaded into the store yet', () => {
-    beforeEach(() => {
-      state = {
-        basket: Immutable.fromJS({
-          products: { product1: 1 }
-        }),
-        products: Immutable.Map()
-      }
-    })
-
-    test('returns zero', () => {
-      expect(getBasketProductsCost(state)).toBe('0.00')
-    })
-  })
-
-  describe('when there are no products in the basket', () => {
-    beforeEach(() => {
-      state = {
-        basket: Immutable.fromJS({
-          products: {}
-        }),
-        products: Immutable.fromJS({
-          product1: {
-            listPrice: '5.00',
-          }
-        })
-      }
-    })
-
-    test('returns zero', () => {
-      expect(getBasketProductsCost(state)).toBe('0.00')
-    })
-  })
-
-  describe('when there are products in the basket', () => {
-    beforeEach(() => {
-      state = {
-        basket: Immutable.fromJS({
-          products: {
-            product1: 1,
-            product2: 1,
-          }
-        }),
-        products: Immutable.fromJS({
-          product1: {
-            listPrice: '5.00',
-          },
-          product2: {
-            listPrice: '6.50',
-          },
-        })
-      }
-    })
-
-    test('returns the total cost', () => {
-      expect(getBasketProductsCost(state)).toBe('11.50')
-    })
-
-    describe('and there are products with multiple quantity', () => {
-      beforeEach(() => {
-        state = {
-          basket: Immutable.fromJS({
-            products: {
-              product1: 1,
-              product2: 4,
-            },
-          }),
-          products: Immutable.fromJS({
-            product1: {
-              listPrice: '5.00',
-            },
-            product2: {
-              listPrice: '6.50',
-            },
-          })
-        }
-      })
-
-      test('returns the total ccost', () => {
-        expect(getBasketProductsCost(state)).toBe('31.00')
-      })
-    })
-  })
-})
-
 describe('getChosenAddressId', () => {
   let state
   describe('when chosenAddress exists', () => {
@@ -346,4 +257,3 @@ describe('getChosenAddressId', () => {
     })
   })
 })
-

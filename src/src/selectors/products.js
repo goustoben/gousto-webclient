@@ -1,6 +1,6 @@
-import { actionTypes } from 'actions/actionTypes'
 import { createSelector } from 'reselect'
-import { getCategoriesFromProducts, getProductsByCategoryId } from 'utils/products'
+import { actionTypes } from 'actions/actionTypes'
+import { getCategoriesFromProducts } from 'utils/products'
 
 export const getProducts = state => state.products
 
@@ -28,9 +28,4 @@ export const getProductsForMarket = createSelector(
   (inStockProducts, outOfStockProducts) => (
     inStockProducts.concat(outOfStockProducts).toJS()
   )
-)
-
-export const getDesserts = createSelector(
-  getProducts,
-  products => getProductsByCategoryId(products, 'fec10d0e-bf7d-11e5-90a9-02fada0dd3b9').toJS()
 )

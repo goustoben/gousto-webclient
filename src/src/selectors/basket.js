@@ -1,6 +1,3 @@
-import { createSelector } from 'reselect'
-import { getProducts } from 'selectors/products'
-
 export const getBasketOrderId = state => state.basket.get('orderId')
 export const getBasketRecipes = state => state.basket.get('recipes')
 export const getBasketTotalRecipes = state => state.basket.get('recipes').reduce((acc, cur) => acc + cur)
@@ -21,23 +18,6 @@ export const getBasketPostcode = ({ basket }) => basket.get('postcode')
 export const getBasketMenuId = ({ basket }) => basket.get('currentMenuId')
 
 export const getBasketProducts = ({ basket }) => basket.get('products')
-export const getBasketProductsCost = createSelector(
-  [getBasketProducts, getProducts],
-  (basketProducts, products) => {
-    const basketProductsCost = basketProducts.reduce((totalCost, productQuantity, productId) => {
-      if (products.size) {
-        const product = products.get(productId)
-        const listPrice = parseFloat(product.get('listPrice'))
-
-        totalCost += productQuantity * listPrice
-      }
-
-      return totalCost
-    }, 0)
-
-    return basketProductsCost.toFixed(2)
-  }
-)
 
 export const shouldShowBoxSummary = (state) => !getBasketSlotId(state) && !!getBasketPostcode(state)
 
@@ -61,6 +41,5 @@ export default {
   getBasketSlotId,
   getBasketPostcode,
   getBasketProducts,
-  getBasketProductsCost,
   getPreviewOrderId
 }
