@@ -9,7 +9,14 @@ import { orderUpdate } from 'actions/order'
 import { getBasketRecipes, getNumPortions } from 'selectors/basket'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getSlot } from 'utils/deliveries'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/menu'
+
+export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_create_web_enabled')
+
+export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_update_web_enabled')
+
+export const isOrderApiCancelEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')
 
 const expandRecipeArrayForQuantity = (recipes) => (
   recipes.reduce((recipesArray, qty, recipeId) => {

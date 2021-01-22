@@ -1,11 +1,60 @@
-import Immutable from 'immutable'
+import Immutable, { Map } from 'immutable'
 import * as basketActions from 'actions/basket'
 import * as boxSummaryActions from 'actions/boxSummary'
 import * as menuCheckoutActions from 'routes/Menu/actions/checkout'
 import * as orderActions from 'actions/order'
+import optimizelySdk from '@optimizely/optimizely-sdk'
 import { safeJestMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
-import { checkoutBasket, clearBasketNotValidError } from '../menuCheckoutClick'
+import {
+  isOrderApiCreateEnabled,
+  isOrderApiUpdateEnabled,
+  isOrderApiCancelEnabled,
+  checkoutBasket,
+  clearBasketNotValidError
+} from '../menuCheckoutClick'
 import * as menuSelectors from '../../selectors/menu'
+
+describe('feature flags', () => {
+  const isFeatureEnabled = jest.fn().mockReturnValue(true)
+  const getState = jest.fn().mockReturnValue({ auth: Map({ id: 'user_id' }) })
+  const dispatch = jest.fn()
+
+  beforeEach(() => {
+    jest.spyOn(optimizelySdk, 'createInstance')
+      .mockReturnValue({ onReady: () => ({ success: true }), isFeatureEnabled })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('isOrderApiCreateEnabled', () => {
+    test('it calls feature enabled with the correct flag', async () => {
+      const isEnabled = await isOrderApiCreateEnabled(dispatch, getState)
+
+      expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_create_web_enabled', 'user_id')
+      expect(isEnabled).toBe(true)
+    })
+  })
+
+  describe('isOrderApiUpdateEnabled', () => {
+    test('it calls feature enabled with the correct flag', async () => {
+      const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
+
+      expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+      expect(isEnabled).toBe(true)
+    })
+  })
+
+  describe('isOrderApiCancelEnabled', () => {
+    test('it calls feature enabled with the correct flag', async () => {
+      const isEnabled = await isOrderApiCancelEnabled(dispatch, getState)
+
+      expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_cancel_web_enabled', 'user_id')
+      expect(isEnabled).toBe(true)
+    })
+  })
+})
 
 describe('checkoutBasket', () => {
   let state

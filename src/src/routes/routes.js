@@ -21,7 +21,6 @@ import OrderConfirmation from './OrderConfirmation'
 import { Payment } from './Payment'
 import { PrivacyStatement } from './PrivacyStatement'
 import ChoosePlan from './ChoosePlan'
-import { OrderAddOns } from './OrderAddOns'
 import { ModernSlaveryStatement } from './ModernSlaveryStatement'
 import { MenuRedirectRoute } from './MenuRedirect'
 
@@ -34,7 +33,6 @@ const routes = (store) => (
     {BoxPrices}
     {Cookbook}
     {Jobs}
-    {OrderAddOns}
     {ResetPassword}
     {Unsubscribe}
     {PrivacyStatement}
