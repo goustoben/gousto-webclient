@@ -13,6 +13,7 @@ const propTypes = {
   modules: PropTypes.arrayOf(PropTypes.string),
   ctaUri: PropTypes.string,
   ctaText: PropTypes.string,
+  pricePerServing: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   isSignupReductionEnabled: PropTypes.bool,
 }
@@ -23,16 +24,17 @@ const defaultProps = {
   ctaText: homeConfig.CTA.text,
   isAuthenticated: false,
   isSignupReductionEnabled: false,
+  pricePerServing: null,
 }
 
 class HomeSections extends Component {
   mapModules = () => {
-    const { isAuthenticated, isSignupReductionEnabled } = this.props
+    const { isAuthenticated, isSignupReductionEnabled, pricePerServing } = this.props
 
     return {
       hero: (props) => <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />,
       trustPilot: () => <TrustPilot />,
-      whyChooseGousto: (props) => <WhyChooseGousto ctaText={props.ctaText} ctaUri={props.ctaUri} />,
+      whyChooseGousto: (props) => <WhyChooseGousto ctaText={props.ctaText} ctaUri={props.ctaUri} pricePerServing={pricePerServing} />,
       joeWicks: () => <JoeWicks />,
       recipes: (props) => <Carousel ctaText={props.ctaText} ctaUri={props.ctaUri} />,
       ...(

@@ -8,7 +8,6 @@ import dottify from 'utils/dottify'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
-import DeliveryInfo from './DeliveryInfo'
 import css from './Address.css'
 
 const propTypes = {
@@ -34,8 +33,6 @@ const propTypes = {
   isNDDExperiment: PropTypes.bool,
   isMobile: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
-  cutOffDate: PropTypes.string,
-  isOldCheckoutFieldEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -63,8 +60,6 @@ const defaultProps = {
   deliveryTariffId: '',
   deliveryDate: '',
   menuCutoffUntil: '',
-  cutOffDate: '',
-  isOldCheckoutFieldEnabled: false,
 }
 
 class Address extends React.PureComponent {
@@ -300,21 +295,20 @@ class Address extends React.PureComponent {
    * @param selectedAddress
    */
   renderAddressInputs = () => {
-    const { receiveRef, sectionName, isOldCheckoutFieldEnabled } = this.props
+    const { receiveRef, sectionName } = this.props
 
     return (
       <div>
         <AddressInputs
           receiveRef={receiveRef}
           sectionName={sectionName}
-          isOldCheckoutFieldEnabled={isOldCheckoutFieldEnabled}
         />
       </div>
     )
   }
 
   render() {
-    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef, deliveryDate, cutOffDate, isOldCheckoutFieldEnabled } = this.props
+    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef } = this.props
     const addresses = this.getFormValue('addresses') || []
     const postcodeTemp = this.getFormValue('postcodeTemp')
     const addressId = this.getFormValue('addressId')
@@ -326,12 +320,6 @@ class Address extends React.PureComponent {
 
     return (
       <div>
-        {isDelivery && isOldCheckoutFieldEnabled && (
-          <DeliveryInfo
-            deliveryDate={deliveryDate}
-            cutOffDate={cutOffDate}
-          />
-        )}
         <Postcode
           postcodePending={addressesPending}
           onPostcodeLookup={this.getAddresses}

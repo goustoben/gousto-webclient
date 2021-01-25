@@ -9,8 +9,10 @@ import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { CTA } from 'goustouicomponents'
 import { ErrorMessage } from '../ErrorMessage'
+import { SectionHeader } from '../SectionHeader'
 import { fieldsConfig } from './fieldsConfig'
 import css from './AboutYou.css'
+import redesignCss from '../../CheckoutRedesignContainer.css'
 
 class AboutYou extends PureComponent {
   componentDidMount() {
@@ -77,7 +79,7 @@ class AboutYou extends PureComponent {
     if (isCheckoutOverhaulEnabled) {
       return (
         <span className={css.emailLabelContainer}>
-          <span className={css.fieldLabel}>Email address</span>
+          Email address
           <span className={css.account}>
             Have an account?&nbsp;
             {loginCTA}
@@ -105,7 +107,7 @@ class AboutYou extends PureComponent {
         key={item.name}
         className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}
       >
-        <div className={classNames(css.colHalf, { [css.fieldContainer]: isCheckoutOverhaulEnabled })}>
+        <div className={classNames(css.colHalf, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
           <Field
             name={item.name}
             component={ReduxFormInput}
@@ -113,7 +115,6 @@ class AboutYou extends PureComponent {
             type={item.type || null}
             label={item.label || null}
             subLabel={item.subLabel || null}
-            className={item.className || null}
             mask
             withRef
             ref={receiveRef || null}
@@ -123,6 +124,7 @@ class AboutYou extends PureComponent {
             childLabel={item.childLabel || null}
             childLabelClassName={item.childLabelClassName || null}
             style={item.style || null}
+            isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
           />
         </div>
       </div>
@@ -144,17 +146,14 @@ class AboutYou extends PureComponent {
       <FormSection name={sectionName}>
         <div
           className={classNames(css.aboutYouContainer, {
-            [css.aboutYouContainerRedesign]: isCheckoutOverhaulEnabled
+            [redesignCss.sectionRedesignContainer]: isCheckoutOverhaulEnabled
           })}
           data-testing="checkoutAboutYouSection"
         >
           <div>
-            <h3 className={classNames(css.header, {
-              [css.headerRedesign]: isCheckoutOverhaulEnabled
-            })}
-            >
-              {isCheckoutOverhaulEnabled ? 'Create account' : 'About you'}
-            </h3>
+            {isCheckoutOverhaulEnabled
+              ? <SectionHeader title="Create account" />
+              : <h3 className={css.header}>About you</h3>}
             {!isCheckoutOverhaulEnabled && (
               <Fragment>
                 <span className={css.boldInfo}>All fields are required</span>

@@ -158,20 +158,12 @@ export const getIsFirstMonthPromoOffset = ({ features }) => (
   features && features.getIn(['isFirstMonthPromoOffset', 'value'], false)
 )
 
-export const getIsDiscountBoxPricesEnabled = ({ features }) => (
-  features && features.getIn(['isDiscountBoxPricesEnabled', 'value'], false)
-)
-
 export const getIsDiscountAppliedBarEnabled = ({ features }) => (
   features && features.getIn(['isDiscountAppliedBarEnabled', 'value'], false)
 )
 
 export const getIsCheckoutOverhaulEnabled = ({ features }) => (
   features && features.getIn(['isCheckoutOverhaulEnabled', 'value'], false)
-)
-
-export const getIsOldCheckoutFieldsEnabled = ({ features }) => (
-  features && features.getIn(['isOldCheckoutFieldEnabled', 'value'], false)
 )
 
 export const getIsNewSubscriptionPageEnabled = ({ features }) => (

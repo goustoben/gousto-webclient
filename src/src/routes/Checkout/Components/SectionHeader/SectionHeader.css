@@ -1,0 +1,10 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
+.sectionContainer {
+  composes: fontStyleL from 'design-language/typography.css';
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}

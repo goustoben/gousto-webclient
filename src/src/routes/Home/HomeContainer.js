@@ -1,8 +1,10 @@
 import { connect } from 'react-redux'
 import { knownVariants, defaultVariant } from 'config/home'
 import actions from 'actions/auth'
-import { getIsSignupReductionEnabled } from 'selectors/features'
+import { updatePricePerServing } from 'actions/boxPrices'
 import { getIsAuthenticated } from 'selectors/auth'
+import { getPricePerServing } from 'selectors/boxPrices'
+import { getIsSignupReductionEnabled } from 'selectors/features'
 
 import { Home } from './Home'
 
@@ -14,10 +16,12 @@ const mapStateToProps = (state, props) => ({
   isAuthenticated: state.auth.get('isAuthenticated'),
   variant: (props.location && props.location.query) ? getKnownVariant(props.location.query.variant) : defaultVariant,
   isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
+  pricePerServing: getPricePerServing(state),
 })
 
 const mapDispatchToProps = {
-  redirectLoggedInUser: actions.redirectLoggedInUser
+  updatePricePerServing,
+  redirectLoggedInUser: actions.redirectLoggedInUser,
 }
 
 const HomeContainer = connect(

@@ -44,13 +44,27 @@ describe('Home', () => {
   })
 
   describe('componentDidMount', () => {
-    test('should call menu fetch data after 2.5 seconds', () => {
+    let updatePricePerServing
+
+    beforeEach(() => {
+      updatePricePerServing = jest.fn()
+
       jest.useFakeTimers()
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} updatePricePerServing={updatePricePerServing} />, { context: { store } })
+    })
+
+    afterEach(() => {
+      jest.clearAllTimers()
+    })
+
+    test('should call menu fetch data after 2.5 seconds', () => {
       expect(menuFetchData).not.toHaveBeenCalled()
       jest.advanceTimersByTime(4000)
       expect(menuFetchData).toHaveBeenCalled()
-      jest.clearAllTimers()
+    })
+
+    test('should update price per service', () => {
+      expect(updatePricePerServing).toHaveBeenCalled()
     })
   })
 
@@ -101,7 +115,8 @@ describe('Home', () => {
 
     beforeEach(() => {
       wrapper.setProps({
-        isAuthenticated: true
+        isAuthenticated: true,
+        pricePerServing: '2.87',
       })
       homeSectionsWrapper = wrapper.find('HomeSections')
     })
@@ -109,6 +124,7 @@ describe('Home', () => {
     test('then should pass proper props', () => {
       expect(homeSectionsWrapper.props().ctaUri).toEqual('/menu')
       expect(homeSectionsWrapper.props().ctaText).toEqual('See Menu')
+      expect(homeSectionsWrapper.props().pricePerServing).toEqual('2.87')
     })
   })
 

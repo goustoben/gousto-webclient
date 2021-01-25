@@ -1,14 +1,12 @@
 import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
-import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { trackSubscriptionIntervalChanged } from 'actions/checkout'
 
 import Subscription from './Subscription'
 
 const mapStateToProps = (state) => {
-  const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
-  const formName = getDeliveryFormName(state, isCheckoutOverhaulEnabled)
+  const formName = getDeliveryFormName(state)
 
   const formValues = getFormValues(formName)(state)
 

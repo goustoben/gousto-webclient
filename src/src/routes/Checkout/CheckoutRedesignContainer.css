@@ -1,0 +1,29 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value FontFamilyAxiformaBook from 'design-language/typography.css';
+@value Mackerel, White from 'styles/colors.css';
+
+.sectionRedesignContainer {
+  border-bottom: 1px solid Mackerel;
+  border-top: 1px solid Mackerel;
+  padding: 1rem 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+  background: White;
+
+  @media BreakpointFromMedium {
+    border: 1px solid Mackerel;
+    padding: 1.5rem 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.inputContainer {
+  max-width: 100%;
+  flex: 0 0 100%;
+  margin: 0 0 1rem 0;
+  padding: 0;
+  font-family: FontFamilyAxiformaBook, Helvetica, sans-serif;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 1.5rem 0;
+  }
+}
