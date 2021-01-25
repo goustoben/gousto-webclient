@@ -44,7 +44,6 @@ import {
   getIsDiscountBoxPricesEnabled,
   getIsDiscountAppliedBarEnabled,
   getIsCheckoutOverhaulEnabled,
-  getIsOldCheckoutFieldsEnabled,
   getIsSubscriberPricingEnabled,
 } from 'selectors/features'
 
@@ -105,7 +104,6 @@ describe('when features are defined', () => {
     [getIsDiscountBoxPricesEnabled, 'isDiscountBoxPricesEnabled'],
     [getIsDiscountAppliedBarEnabled, 'isDiscountAppliedBarEnabled'],
     [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
-    [getIsOldCheckoutFieldsEnabled, 'isOldCheckoutFieldEnabled'],
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled']
   ]
 

@@ -93,16 +93,4 @@ describe('DeliveryAddressType', () => {
       })
     })
   })
-
-  describe('when isOldCheckoutFieldEnabled is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isOldCheckoutFieldEnabled: true
-      })
-    })
-
-    test('then should render tooltip', () => {
-      expect(wrapper.find('.checkoutTooltip')).toBeTruthy()
-    })
-  })
 })

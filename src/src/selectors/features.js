@@ -170,10 +170,6 @@ export const getIsCheckoutOverhaulEnabled = ({ features }) => (
   features && features.getIn(['isCheckoutOverhaulEnabled', 'value'], false)
 )
 
-export const getIsOldCheckoutFieldsEnabled = ({ features }) => (
-  features && features.getIn(['isOldCheckoutFieldEnabled', 'value'], false)
-)
-
 export const getIsNewSubscriptionPageEnabled = ({ features }) => (
   features && features.getIn(['isNewSubscriptionPageEnabled', 'value'], false)
 )
