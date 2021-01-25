@@ -6,11 +6,16 @@ import { CTAHomepageContainer } from '../CTA'
 import { ModuleTitle } from '../ModuleTitle'
 import css from './WhyChooseGousto.css'
 
-const WhyChooseGousto = ({ ctaUri, ctaText }) => {
+const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
   const subtitle = (
     <Fragment>
       Impressively easy meals from just
-      <span className={css.pricePerServing}> £2.98 per serving</span>
+      <span className={css.pricePerServing}>
+        {' £'}
+        {pricePerServing}
+        {' '}
+        per serving
+      </span>
       . All of the flavour, none of the fuss.
     </Fragment>
   )
@@ -37,6 +42,7 @@ const WhyChooseGousto = ({ ctaUri, ctaText }) => {
 WhyChooseGousto.propTypes = {
   ctaUri: PropTypes.string.isRequired,
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  pricePerServing: PropTypes.string.isRequired,
 }
 
 export {

@@ -24,6 +24,9 @@ describe('HomeContainer', () => {
     auth: Immutable.fromJS({
       isAuthenticated: false,
     }),
+    boxPrices: Immutable.fromJS({
+      pricePerServing: '2.87',
+    }),
     features: Immutable.Map({
       isSignupReductionEnabled: Immutable.fromJS({
         value: false
@@ -48,6 +51,14 @@ describe('HomeContainer', () => {
     const expected = {
       isAuthenticated: false
     }
+    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
+  })
+
+  test('should pass pricePerServing', () => {
+    const expected = {
+      pricePerServing: '2.87'
+    }
+
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })
 

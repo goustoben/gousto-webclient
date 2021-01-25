@@ -5,6 +5,7 @@ module.exports = {
     header: 'Box Prices',
     image: require('media/images/box-prices/box-prices-hero.png'),
   },
+  pricePerServing: '2.87',
   cta: 'Build My Box',
   ctaRedesign: 'Get started',
   boxTypes: {

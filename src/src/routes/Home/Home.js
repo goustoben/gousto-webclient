@@ -17,6 +17,8 @@ const propTypes = {
   variant: PropTypes.string,
   redirectLoggedInUser: PropTypes.func,
   isSignupReductionEnabled: PropTypes.bool,
+  pricePerServing: PropTypes.string,
+  updatePricePerServing: PropTypes.func,
 }
 
 const defaultProps = {
@@ -24,13 +26,16 @@ const defaultProps = {
   isAuthenticated: false,
   redirectLoggedInUser: () => {},
   isSignupReductionEnabled: false,
+  pricePerServing: null,
+  updatePricePerServing: () => {}
 }
 
 class Home extends Component {
   componentDidMount() {
     const { store } = this.context
-    const { redirectLoggedInUser } = this.props
+    const { redirectLoggedInUser, updatePricePerServing } = this.props
     redirectLoggedInUser()
+    updatePricePerServing()
 
     this.prefetchTimer = setTimeout(() => {
       store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
@@ -46,7 +51,7 @@ class Home extends Component {
   getModules = (isSignupReductionEnabled) => [(isSignupReductionEnabled && 'emailForm'), 'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes'].filter(Boolean)
 
   render() {
-    const { isAuthenticated, variant, isSignupReductionEnabled } = this.props
+    const { isAuthenticated, variant, isSignupReductionEnabled, pricePerServing } = this.props
     const modules = this.getModules(isSignupReductionEnabled)
     const { menu, signup, home } = routesConfig.client
     const { CTA, seo } = homeConfig
@@ -86,6 +91,7 @@ class Home extends Component {
           ctaText={ctaText}
           isAuthenticated={isAuthenticated}
           isSignupReductionEnabled={isSignupReductionEnabled}
+          pricePerServing={pricePerServing}
         />
       </div>
     )
