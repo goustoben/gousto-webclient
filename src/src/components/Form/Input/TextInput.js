@@ -29,6 +29,8 @@ const propTypes = {
   pattern: PropTypes.string,
   'data-testing': PropTypes.string,
   error: PropTypes.bool,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+  inputPrefix: PropTypes.node,
 }
 
 const defaultProps = {
@@ -46,6 +48,8 @@ const defaultProps = {
   autocompleteOff: false,
   onKeyDown: () => {},
   error: false,
+  isCheckoutOverhaulEnabled: false,
+  inputPrefix: null,
 }
 
 export class TextInput extends Component {
@@ -117,10 +121,10 @@ export class TextInput extends Component {
   }
 
   render = () => {
-    const { additionalProps, autocompleteOff, color, className, disabled, error, isFixed, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting } = this.props
+    const { additionalProps, autocompleteOff, color, className, disabled, error, isFixed, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isCheckoutOverhaulEnabled, inputPrefix } = this.props
 
     return (
-      <span>
+      <span className={classNames({ [css.relative]: isCheckoutOverhaulEnabled && inputPrefix })}>
         <input
           { ...additionalProps }
           className={classNames(
@@ -131,6 +135,9 @@ export class TextInput extends Component {
               [formsCss.inputError]: error,
               [formsCss.disabled]: disabled,
               [css[textAlign]]: css[textAlign],
+              [css.inputRedesign]: isCheckoutOverhaulEnabled,
+              [css.inputErrorRedesign]: error && isCheckoutOverhaulEnabled,
+              [css.prefixPadding]: isCheckoutOverhaulEnabled && inputPrefix,
             },
           )}
           placeholder={placeholder}
@@ -150,6 +157,7 @@ export class TextInput extends Component {
           ref={input => { this.input = input }}
           data-testing={dataTesting}
         />
+        {isCheckoutOverhaulEnabled && inputPrefix}
       </span>
     )
   }

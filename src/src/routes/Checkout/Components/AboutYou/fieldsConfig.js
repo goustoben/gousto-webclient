@@ -1,4 +1,3 @@
-import React from 'react'
 import { emailValidator } from 'utils/forms'
 import css from './AboutYou.css'
 
@@ -9,9 +8,7 @@ const checkboxLabelRedesign = 'I’d like to receive the latest news and offers 
 
 export const fieldsConfig = ({ isCheckoutOverhaulEnabled, loginCTA, sectionName }) => {
   const emailAddressLabelNode = isCheckoutOverhaulEnabled ? loginCTA() : 'Email address'
-  const passwordSubLabel = isCheckoutOverhaulEnabled ? <span className={css.fieldSubLabel}>{subLabelForPassword}</span> : subLabelForPassword
   const labelForCheckbox = isCheckoutOverhaulEnabled ? checkboxLabelRedesign : checkboxLabel
-  const inputClassName = isCheckoutOverhaulEnabled ? css.input : ''
   const emailSubLabel = !isCheckoutOverhaulEnabled ? 'You’ll use this to log in to your account' : ''
 
   return [
@@ -21,7 +18,6 @@ export const fieldsConfig = ({ isCheckoutOverhaulEnabled, loginCTA, sectionName 
       type: 'email',
       label: emailAddressLabelNode,
       subLabel: emailSubLabel,
-      className: inputClassName,
       refId: `${sectionName}.email`,
       dataTesting: 'checkoutEmailInput',
       validate: emailValidator,
@@ -30,9 +26,8 @@ export const fieldsConfig = ({ isCheckoutOverhaulEnabled, loginCTA, sectionName 
       name: 'password',
       inputTyp: 'Input',
       type: 'password',
-      label: isCheckoutOverhaulEnabled ? <span className={css.fieldLabel}>{passwordLabel}</span> : passwordLabel,
-      subLabel: passwordSubLabel,
-      className: inputClassName,
+      label: passwordLabel,
+      subLabel: subLabelForPassword,
       refId: `${sectionName}.password`,
       dataTesting: 'checkoutPasswordInput',
     },

@@ -58,15 +58,6 @@
 	font-size: sizeXXS;
 }
 
-.headerRedesign {
-  composes: fontStyleL from 'design-language/typography.css';
-  margin-bottom: 1rem;
-
-  @media BreakpointFromMedium {
-    margin-bottom: 1.5rem;
-  }
-}
-
 .pricePerServingBlock {
   background: HaricotLight;
   padding: 0.75rem 0.25rem;

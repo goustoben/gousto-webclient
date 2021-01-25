@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import { touch } from 'redux-form'
 
 import Input from 'Form/Input'
@@ -23,6 +22,7 @@ class ReduxFormInput extends React.PureComponent {
     dataTesting: PropTypes.string,
     'data-testing': PropTypes.string,
     className: PropTypes.string,
+    isCheckoutOverhaulEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -31,6 +31,7 @@ class ReduxFormInput extends React.PureComponent {
     label: '',
     subLabel: '',
     className: '',
+    isCheckoutOverhaulEnabled: false,
   }
 
   debounceTouch(dispatch, formName, field) {
@@ -51,7 +52,7 @@ class ReduxFormInput extends React.PureComponent {
   }
 
   render() {
-    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, ...inputProps } = this.props
+    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, isCheckoutOverhaulEnabled, ...inputProps } = this.props
     const dataTesting = this.props.dataTesting || this.props['data-testing']
 
     let Component
@@ -82,13 +83,15 @@ class ReduxFormInput extends React.PureComponent {
       inputType,
       'data-testing': dataTesting,
       onChange: this.onChange,
+      isCheckoutOverhaulEnabled,
+      inputPrefix,
     })
 
     return (
       <div>
-        {label && <Label label={label} subLabel={subLabel} />}
+        {label && <Label label={label} subLabel={subLabel} isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled} />}
         <div className={css.flexRow}>
-          {React.isValidElement(inputPrefix) && inputPrefix}
+          {React.isValidElement(inputPrefix) && !isCheckoutOverhaulEnabled && inputPrefix}
           {inputEl && (
             <div className={css.flexItem}>
               {inputEl}

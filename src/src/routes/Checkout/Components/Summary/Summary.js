@@ -12,6 +12,7 @@ import Loading from 'Loading'
 import { getSurchargeItems } from 'utils/pricing'
 import { onEnter } from 'utils/accessibility'
 import { basketSum } from 'utils/basket'
+import { SectionHeader } from '../SectionHeader'
 import css from './Summary.css'
 
 const propTypes = {
@@ -89,7 +90,7 @@ class Summary extends PureComponent {
           </Alert>
         )}
         {isCheckoutOverhaulEnabled
-          ? <div className={css.headerRedesign}>Order total</div>
+          ? <SectionHeader title="Order total" />
           : <H3 headlineFont>Order total</H3>}
         {isLoading ? (
           <div className={classNames(css.loaderContainer, { [css.loaderContainerRedesign]: isCheckoutOverhaulEnabled })}>
