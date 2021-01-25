@@ -8,7 +8,6 @@ import { trackClickBuildMyBox } from 'actions/tracking'
 import { fetchBoxPrices } from 'apis/boxPrices'
 import config from 'config/boxprices'
 import { getBasketPostcode } from 'selectors/basket'
-import { getIsDiscountBoxPricesEnabled } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
 import logger from 'utils/logger'
 
@@ -26,10 +25,9 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
   if (destination === 'menu') {
     dispatch(redirect(menu))
   } else {
-    const isDiscountBoxPricesEnabled = getIsDiscountBoxPricesEnabled(state)
     let success = false
 
-    if (isDiscountBoxPricesEnabled && !hide && canApplyPromo) {
+    if (!hide && canApplyPromo) {
       success = await dispatch(applyPromoCodeAndRedirect(dispatch, state, `${signup}/${postcodeStep}`))
     }
 

@@ -41,7 +41,6 @@ import {
   getIsMultiSkipEnabled,
   getIsMenuRedirectPageEnabled,
   getIsFirstMonthPromoOffset,
-  getIsDiscountBoxPricesEnabled,
   getIsDiscountAppliedBarEnabled,
   getIsCheckoutOverhaulEnabled,
   getIsSubscriberPricingEnabled,
@@ -101,7 +100,6 @@ describe('when features are defined', () => {
     [getIsMultiSkipEnabled, 'isMultiSkipEnabled'],
     [getIsMenuRedirectPageEnabled, 'isMenuRedirectPageEnabled'],
     [getIsFirstMonthPromoOffset, 'isFirstMonthPromoOffset'],
-    [getIsDiscountBoxPricesEnabled, 'isDiscountBoxPricesEnabled'],
     [getIsDiscountAppliedBarEnabled, 'isDiscountAppliedBarEnabled'],
     [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled']

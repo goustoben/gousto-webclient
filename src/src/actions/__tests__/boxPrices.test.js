@@ -67,44 +67,16 @@ describe('boxPrices actions', () => {
         expect(signupNextStep).toHaveBeenCalledWith('postcode')
       })
 
-      describe('and isDiscountBoxPricesEnabled is disabled', () => {
+      describe('and applyPromoCodeAndRedirect returns an error', () => {
         beforeEach(() => {
-          getState.mockReturnValue({
-            ...defaultState,
-            features: Immutable.fromJS({
-              isDiscountBoxPricesEnabled: { value: false }
-            })
-          })
+          applyPromoCodeAndRedirect.mockReturnValue(false)
         })
 
-        test('then should redirect to the wizard', async () => {
+        test('then should redirect to the next step', async () => {
           await boxPricesBoxSizeSelected(2)(dispatch, getState)
 
+          expect(applyPromoCodeAndRedirect).toBeCalled()
           expect(signupNextStep).toHaveBeenCalledWith('postcode')
-        })
-      })
-
-      describe('and isDiscountBoxPricesEnabled is enabled', () => {
-        beforeEach(() => {
-          getState.mockReturnValue({
-            ...defaultState,
-            features: Immutable.fromJS({
-              isDiscountBoxPricesEnabled: { value: true }
-            })
-          })
-        })
-
-        describe('and applyPromoCodeAndRedirect returns an error', () => {
-          beforeEach(() => {
-            applyPromoCodeAndRedirect.mockReturnValue(false)
-          })
-
-          test('then should redirect to the next step', async () => {
-            await boxPricesBoxSizeSelected(2)(dispatch, getState)
-
-            expect(applyPromoCodeAndRedirect).toBeCalled()
-            expect(signupNextStep).toHaveBeenCalledWith('postcode')
-          })
         })
       })
     })
