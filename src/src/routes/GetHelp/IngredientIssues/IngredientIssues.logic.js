@@ -14,7 +14,7 @@ const propTypes = {
   ingredients: PropTypes.objectOf(
     PropTypes.shape({
       recipeId: PropTypes.string.isRequired,
-      ingredientId: PropTypes.string.isRequired,
+      ingredientUuid: PropTypes.string.isRequired,
       issueId: PropTypes.string,
       issueName: PropTypes.string,
       label: PropTypes.string.isRequired,
@@ -28,7 +28,7 @@ const propTypes = {
     })
   ).isRequired,
   selectedIngredients: PropTypes.objectOf(PropTypes.shape({
-    ingredientId: PropTypes.string,
+    ingredientUuid: PropTypes.string,
     issueName: PropTypes.string,
     recipeId: PropTypes.string,
   })),
@@ -57,7 +57,7 @@ class IngredientIssues extends PureComponent {
     const ingredientAndRecipeIdsWithIssueName = Object.keys(selectedIngredients)
       .map(key => ({
         recipeId: selectedIngredients[key].recipeId,
-        ingredientId: selectedIngredients[key].ingredientId,
+        ingredientUuid: selectedIngredients[key].ingredientUuid,
         issueName: selectedIngredients[key].issueName
       }))
 

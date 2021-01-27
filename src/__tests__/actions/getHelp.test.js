@@ -94,7 +94,7 @@ describe('getHelp actions', () => {
     const body = {
       accessToken: 'user-access-token',
       costumerId: '777',
-      ingredientIds: ['2222'],
+      ingredientUuids: ['2222'],
       orderId: '888',
     }
     const expectedParams = [

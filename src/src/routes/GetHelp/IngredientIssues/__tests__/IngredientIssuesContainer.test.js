@@ -31,29 +31,29 @@ describe('<IngredientIssuesContainer />', () => {
               id: '1917',
               title: 'Ten-Min Chilli Con Carne',
               ingredients: [
-                { id: 'aaa', label: '1 beef stock cube' },
-                { id: 'bbb', label: '1 can of chopped tomatoes (210g)' },
-                { id: 'ccc', label: '1 can of kidney beans' },
+                { uuid: 'aaa', label: '1 beef stock cube' },
+                { uuid: 'bbb', label: '1 can of chopped tomatoes (210g)' },
+                { uuid: 'ccc', label: '1 can of kidney beans' },
               ],
             },
             {
               id: '1494',
               title: 'Creamy Chicken & Pesto Farfalle With Basil',
               ingredients: [
-                { id: 'bbb', label: '1 can of chopped tomatoes (210g)' },
-                { id: 'eee', label: '1/2 chicken stock cube' },
+                { uuid: 'bbb', label: '1 can of chopped tomatoes (210g)' },
+                { uuid: 'eee', label: '1/2 chicken stock cube' },
               ]
             },
           ],
           selectedIngredients: {
-            '1917-bbb': {
+            '1917&bbb': {
               recipeId: '1917',
-              ingredientId: 'bbb',
+              ingredientUuid: 'bbb',
               label: '1 can of chopped tomatoes (210g)'
             },
-            '1494-bbb': {
+            '1494&bbb': {
               recipeId: '1494',
-              ingredientId: 'bbb',
+              ingredientUuid: 'bbb',
               label: '1 can of chopped tomatoes (210g)'
             },
           },
@@ -127,16 +127,16 @@ describe('<IngredientIssuesContainer />', () => {
 
     test('default ingredient issues options are set in the store', () => {
       const expectedSelectedIngredients = fromJS({
-        '1917-bbb': {
+        '1917&bbb': {
           recipeId: '1917',
-          ingredientId: 'bbb',
+          ingredientUuid: 'bbb',
           label: '1 can of chopped tomatoes (210g)',
           issueId: '101',
           issueName: 'Missing ingredients',
         },
-        '1494-bbb': {
+        '1494&bbb': {
           recipeId: '1494',
-          ingredientId: 'bbb',
+          ingredientUuid: 'bbb',
           label: '1 can of chopped tomatoes (210g)',
           issueId: '101',
           issueName: 'Missing ingredients',
@@ -154,16 +154,16 @@ describe('<IngredientIssuesContainer />', () => {
         />
       )
       const expectedSelectedIngredients = fromJS({
-        '1917-bbb': {
+        '1917&bbb': {
           recipeId: '1917',
-          ingredientId: 'bbb',
+          ingredientUuid: 'bbb',
           label: '1 can of chopped tomatoes (210g)',
           issueId: '101',
           issueName: 'Missing ingredients',
         },
-        '1494-bbb': {
+        '1494&bbb': {
           recipeId: '1494',
-          ingredientId: 'bbb',
+          ingredientUuid: 'bbb',
           label: '1 can of chopped tomatoes (210g)',
           issueId: '104',
           issueName: 'Fruit or Veg - Mouldy',

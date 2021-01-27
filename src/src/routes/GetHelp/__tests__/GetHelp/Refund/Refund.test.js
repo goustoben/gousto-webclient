@@ -20,7 +20,7 @@ describe('<Refund />', () => {
   const selectedIngredients = {
     '1010-1234': {
       recipeId: '1010',
-      ingredientId: '1234',
+      ingredientUuid: '1234',
       issueId: '999999',
       issueDescription: 'a description <> <script>alert("hi")<script>'
         + '<b onmouseover=alert(\'Wufff!\')>click me!</b>'
@@ -28,7 +28,7 @@ describe('<Refund />', () => {
     },
     '2020-1234': {
       recipeId: '2020',
-      ingredientId: '1234',
+      ingredientUuid: '1234',
       issueId: '999999',
       issueDescription: 'another &description'
         + '<IMG SRC=j&#X41vascript:alert(\'test2\')>'

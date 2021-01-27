@@ -12,14 +12,14 @@ describe('<Ingredients />', () => {
     button1Copy: 'Done',
   }
   const recipes = [
-    { id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
+    { id: '1', title: 'test 1', ingredients: [{ uuid: '1', label: 'test' }] },
     {
       id: '2',
       title: 'test 2',
-      ingredients: [{ id: '2', label: 'test' }, { id: '2222', label: 'test2' }]
+      ingredients: [{ id: '2', label: 'test' }, { uuid: '2222', label: 'test2' }]
     },
-    { id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
-    { id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
+    { id: '3', title: 'test 3', ingredients: [{ uuid: '3', label: 'test' }] },
+    { id: '4', title: 'test 4', ingredients: [{ uuid: '4', label: 'test' }] },
   ]
   const user = {
     id: '777',
@@ -184,7 +184,7 @@ describe('<Ingredients />', () => {
         expect(validateSelectedIngredients).toHaveBeenCalledWith({
           accessToken: 'user-access-token',
           costumerId: '777',
-          ingredientIds: ['2222'],
+          ingredientUuids: ['2222'],
           orderId: '888',
         })
       })
@@ -222,7 +222,7 @@ describe('<Ingredients />', () => {
         await ContinueButton.prop('onClick')()
 
         expect(storeSelectedIngredients).toHaveBeenCalledWith([
-          { ingredientId: '2222', recipeId: '2' }
+          { ingredientUuid: '2222', recipeId: '2' }
         ])
       })
     })

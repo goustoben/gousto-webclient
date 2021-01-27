@@ -6,11 +6,11 @@ import { recipePropType } from '../../getHelpPropTypes'
 const RecipeIngredients = ({ onChange, recipe, selectedIngredients }) => (
   <div>
     {recipe.ingredients.map(ingredient => {
-      const ingredientFullId = `${recipe.id}-${ingredient.id}`
+      const ingredientFullId = `${recipe.id}&${ingredient.uuid}`
       const isChecked = selectedIngredients.get(ingredientFullId) || false
 
       return (
-        <div data-testing="getHelpIngredientInputCheck" key={ingredient.id}>
+        <div data-testing="getHelpIngredientInputCheck" key={ingredient.uuid}>
           <InputCheck
             id={ingredientFullId}
             label={ingredient.label}

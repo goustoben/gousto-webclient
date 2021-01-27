@@ -17,8 +17,8 @@ const FETCH_RECIPES_RESPONSE = {
       title: 'aa',
       url: 'url10',
       ingredients: [
-        { id: '1000', label: 'label1000', more: 'props' },
-        { id: '1001', label: 'label1001', more: 'props' },
+        { uuid: '1000', label: 'label1000', more: 'props' },
+        { uuid: '1001', label: 'label1001', more: 'props' },
       ],
       more: 'props',
     },
@@ -27,8 +27,8 @@ const FETCH_RECIPES_RESPONSE = {
       title: 'bb',
       url: 'url20',
       ingredients: [
-        { id: '1002', label: 'label1002', more: 'props' },
-        { id: '1003', label: 'label1003', more: 'props' },
+        { uuid: '1002', label: 'label1002', more: 'props' },
+        { uuid: '1003', label: 'label1003', more: 'props' },
       ],
       more: 'props',
     },
