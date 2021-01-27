@@ -4,6 +4,8 @@ import { get } from 'utils/cookieHelper2'
 import { OptimizelyRollouts } from './OptimizelyRollouts'
 import { getAuthUserId } from '../../selectors/auth'
 import { trackExperimentInSnowplow } from './trackExperimentInSnowplow'
+import { actionTypes } from '../../actions/actionTypes'
+import { loadOptimizelySDK } from '../../actions/optimizely'
 
 const withVersionPrefixAsFalse = false
 
@@ -12,13 +14,14 @@ const mapStateToProps = state => {
 
   return {
     authUserId: getAuthUserId(state),
-    sessionId
-
+    sessionId,
+    isLoading: state.pending.get(actionTypes.OPTIMIZELY_ROLLOUT_LOADING, true)
   }
 }
 
 const mapDispatchToProps = {
   trackExperimentInSnowplow,
+  loadOptimizelySDK
 }
 
 export const OptimizelyRolloutsContainer = connect(mapStateToProps, mapDispatchToProps)(OptimizelyRollouts)

@@ -5,15 +5,16 @@
 @value padding: 1rem;
 
 .tab {
-	composes: textCenter from 'styles/typography.css';
-	composes: marginXXLRight from 'sass-loader!styles/spacing.scss';
+  composes: textCenter from 'styles/typography.css';
+  composes: marginXXLRight from 'sass-loader!styles/spacing.scss';
 	color: Blackberry;
 	position: relative;
 	border-bottom: solid 2px White;
 
-	@media ScreenXSMax {
-		margin-right: 0px;
-	}
+  @media ScreenXSMax {
+    margin-right: 2rem;
+		margin-right: 0px;	
+  }
 
 	&:hover, &:focus, &:active {
 		cursor: pointer;
