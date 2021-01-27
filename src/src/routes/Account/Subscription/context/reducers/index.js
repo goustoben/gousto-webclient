@@ -1,7 +1,8 @@
 import {
   reduceSubscriptionPageData,
   reduceSubscriptionUpdateData,
-  reduceSubscriptionStatusUpdate
+  reduceSubscriptionStatusUpdate,
+  reduceSubscriptionHideResubscriptionModal
 } from './subscription'
 
 import { reduceCurrentUserData } from './currentUser'
@@ -24,6 +25,7 @@ export const actionTypes = {
   CURRENT_USER_DATA_RECEIVED: 'CURRENT_USER_DATA_RECEIVED',
   BOX_PRICES_DATA_RECEIVED: 'BOX_PRICES_DATA_RECEIVED',
   ORDERS_DATA_RECEIVED: 'ORDERS_DATA_RECEIVED',
+  SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL: 'SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL',
 }
 
 export const SubscriptionReducer = (state, action) => {
@@ -56,6 +58,9 @@ export const SubscriptionReducer = (state, action) => {
 
   case actionTypes.ORDERS_DATA_RECEIVED:
     return reduceOrdersData(state, data)
+
+  case actionTypes.SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL:
+    return reduceSubscriptionHideResubscriptionModal(state)
 
   default:
     return state
