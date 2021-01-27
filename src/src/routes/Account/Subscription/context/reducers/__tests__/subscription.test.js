@@ -2,7 +2,8 @@ import {
   reduceSubscriptionData,
   reduceSubscriptionPageData,
   reduceSubscriptionUpdateData,
-  reduceSubscriptionStatusUpdate
+  reduceSubscriptionStatusUpdate,
+  reduceSubscriptionHideResubscriptionModal
 } from '../subscription'
 
 import * as deliveryReducers from '../deliveries'
@@ -172,20 +173,73 @@ describe('subscription reducers', () => {
   describe('reduceSubscriptionStatusUpdate', () => {
     describe('Given expected data and state are passed', () => {
       beforeEach(() => {
-        result = reduceSubscriptionStatusUpdate(mockReducedState, {
+        result = reduceSubscriptionStatusUpdate({
+          ...mockReducedState,
+          isSubscriberPricingEnabled: false,
+        }, {
           state: 'inactive'
         })
       })
 
       test('Then the state is reduced as expected', () => {
         expect(result).toEqual({
+          isSubscriberPricingEnabled: false,
           box: 'data',
           delivery: 'data',
           subscription: {
             deliverySlotId: 'mock-delivery-slot-id',
+            showResubscriptionModal: false,
             status: 'inactive',
             requestState: { isLoaded: true, isLoading: false }
           }
+        })
+      })
+    })
+
+    describe('reduceSubscriptionHideResubscriptionModal', () => {
+      describe('Given expected data and isSubscriberPricingEnabled is true', () => {
+        beforeEach(() => {
+          result = reduceSubscriptionHideResubscriptionModal({
+            ...mockReducedState,
+            isSubscriberPricingEnabled: true,
+          })
+        })
+
+        test('Then the state is reduced as expected', () => {
+          expect(result).toEqual({
+            isSubscriberPricingEnabled: true,
+            box: 'data',
+            delivery: 'data',
+            subscription: {
+              deliverySlotId: 'mock-delivery-slot-id',
+              showResubscriptionModal: false,
+              status: 'active',
+              requestState: { isLoaded: true, isLoading: false }
+            }
+          })
+        })
+      })
+
+      describe('Given expected data and isSubscriberPricingEnabled is false', () => {
+        beforeEach(() => {
+          result = reduceSubscriptionHideResubscriptionModal({
+            ...mockReducedState,
+            isSubscriberPricingEnabled: false,
+          })
+        })
+
+        test('Then the state is reduced as expected', () => {
+          expect(result).toEqual({
+            isSubscriberPricingEnabled: false,
+            box: 'data',
+            delivery: 'data',
+            subscription: {
+              deliverySlotId: 'mock-delivery-slot-id',
+              showResubscriptionModal: false,
+              status: 'active',
+              requestState: { isLoaded: true, isLoading: false }
+            }
+          })
         })
       })
     })

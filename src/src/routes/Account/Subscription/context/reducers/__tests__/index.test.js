@@ -7,7 +7,8 @@ import {
 import {
   reduceSubscriptionPageData,
   reduceSubscriptionUpdateData,
-  reduceSubscriptionStatusUpdate
+  reduceSubscriptionStatusUpdate,
+  reduceSubscriptionHideResubscriptionModal
 } from '../subscription'
 import { reduceCurrentUserData } from '../currentUser'
 import { reduceLoadingState } from '../loading'
@@ -77,6 +78,18 @@ describe('SubscriptionReducer', () => {
 
     test('Then reduceSubscriptionPageData is invoked as expected', () => {
       expect(reduceSubscriptionStatusUpdate).toHaveBeenCalledWith(mockState, { state: 'inactive' })
+    })
+  })
+
+  describe('Given subscription hide resub modal action is received', () => {
+    beforeEach(() => {
+      SubscriptionReducer(mockState, {
+        type: actionTypes.SUBSCRIPTION_HIDE_RESUBSCRIPTION_MODAL,
+      })
+    })
+
+    test('Then reduceSubscriptionPageData is invoked as expected', () => {
+      expect(reduceSubscriptionHideResubscriptionModal).toHaveBeenCalledWith(mockState)
     })
   })
 

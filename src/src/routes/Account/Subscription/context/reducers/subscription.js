@@ -25,6 +25,14 @@ export const reduceSubscriptionData = (state, data) => {
   }
 }
 
+export const reduceSubscriptionHideResubscriptionModal = (state) => ({
+  ...state,
+  subscription: {
+    ...state.subscription,
+    showResubscriptionModal: false,
+  }
+})
+
 export const reduceSubscriptionPageData = (state, data) => {
   try {
     const reducedSubscriptionState = reduceSubscriptionData(state, data.subscription)
@@ -85,7 +93,8 @@ export const reduceSubscriptionStatusUpdate = (state, data) => {
 
     const reducedSubscriptionState = {
       ...state.subscription,
-      status: subscriptionStatus
+      status: subscriptionStatus,
+      showResubscriptionModal: state.isSubscriberPricingEnabled,
     }
 
     return {

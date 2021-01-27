@@ -1,4 +1,4 @@
-import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload, getIsSubscriptionActive } from '../subscription'
+import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload, getIsSubscriptionActive, getShowResubscriptionModal } from '../subscription'
 
 describe('subscription selectors', () => {
   let contextState
@@ -59,6 +59,25 @@ describe('subscription selectors', () => {
       })
       test('should return true', () => {
         expect(getIsSubscriptionActive(contextState)).toBe(true)
+      })
+    })
+  })
+
+  describe('getShowResubscriptionModal', () => {
+    test('should return false', () => {
+      expect(getShowResubscriptionModal(contextState)).toBe(undefined)
+    })
+
+    describe('When showResubscriptionModal is false', () => {
+      beforeEach(() => {
+        contextState = {
+          subscription: {
+            showResubscriptionModal: false
+          }
+        }
+      })
+      test('should return false', () => {
+        expect(getIsSubscriptionActive(contextState)).toBe(false)
       })
     })
   })

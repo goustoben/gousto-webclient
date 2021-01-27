@@ -20,6 +20,11 @@ export const getIsSubscriptionActive = createSelector(
   (subscription) => (subscription.status === 'active')
 )
 
+export const getShowResubscriptionModal = createSelector(
+  getSubscription,
+  (subscription) => subscription.showResubscriptionModal
+)
+
 export const getSubscriptionUpdatePayload = createSelector(
   [getNumPortions, getMealsPerBox, getDietaryPreference, getCurrentDeliverySlot, getDeliveryFrequency],
   (numPortions, mealsPerBox, dietaryPreference, currentDeliverySlot, deliveryFrequency) => ({

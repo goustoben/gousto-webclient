@@ -8,6 +8,7 @@ import { Frequency } from './sections/YourSubscriptionDetails/Frequency'
 import { BoxSize } from './sections/YourSubscriptionDetails/BoxSize'
 import { SkipABox } from './sections/SkipABox'
 import { PauseSubscription } from './sections/PauseSubscription'
+import { ResubscriptionModal } from './ResubscriptionModal'
 
 import {
   yourSubscriptionDetailsSection,
@@ -22,6 +23,7 @@ import { TotalPrice } from './sections/TotalPrice'
 
 const ActiveSubscription = ({ accessToken, isMobile, startOnScreenRecoverySubscriptionFlow }) => (
   <Fragment>
+    <ResubscriptionModal />
     <Grid>
       <Column
         smallScreen={12}
