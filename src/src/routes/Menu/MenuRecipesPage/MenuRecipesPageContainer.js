@@ -13,7 +13,6 @@ import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getLoadingStateForOrder, getUserId } from 'selectors/user'
 import { getBrowserType } from 'selectors/browser'
 import { checkQueryParams } from '../actions/menuRecipeDetails'
-import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
 import { getCurrentCollectionIdByExperimentStatus } from '../selectors/collections'
@@ -55,7 +54,6 @@ const mapDispatchToProps = {
   selectCurrentCollection: changeCollectionById,
   basketOrderLoaded: actions.basketOrderLoaded,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
-  loadOptimizelySDK,
   fetchMenuData: fetchData,
 }
 

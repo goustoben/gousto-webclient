@@ -16,7 +16,7 @@
 }
 
 .nav {
-	width: 70%;
+	width: 100%;
 	composes: flex row spaceBetween from 'styles/flex.css';
 	list-style: none;
 	margin: 0;

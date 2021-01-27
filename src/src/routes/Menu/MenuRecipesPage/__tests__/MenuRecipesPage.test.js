@@ -33,8 +33,6 @@ describe('initial render', () => {
         portionSizeSelectedTracking: jest.fn(),
         userId: '1234',
         isAuthenticated: true,
-        loadOptimizelySDK: jest.fn(),
-
       }
       checkQueryParamsSpy = jest.fn()
       SubHeaderContainer.mockReturnValue(<div />)
@@ -175,7 +173,6 @@ describe('with the collections feature enabled', () => {
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
       isAuthenticated: true,
-      loadOptimizelySDK: jest.fn(),
     }
     wrapper = shallow(
       <MenuRecipes
@@ -206,7 +203,6 @@ describe('with the force collections feature enabled', () => {
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
       isAuthenticated: true,
-      loadOptimizelySDK: jest.fn(),
     }
   })
 
@@ -257,7 +253,6 @@ describe('selectCurrentCollection', () => {
       portionSizeSelectedTracking: jest.fn(),
       userId: '1234',
       isAuthenticated: true,
-      loadOptimizelySDK: jest.fn(),
     }
     wrapper = shallow(
       <MenuRecipes
