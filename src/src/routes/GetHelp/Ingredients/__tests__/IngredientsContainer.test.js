@@ -35,17 +35,17 @@ describe('<IngredientsContainer />', () => {
           id: '1917',
           title: 'Ten-Min Chilli Con Carne',
           ingredients: [
-            { id: 'aaa', label: '1 beef stock cube' },
-            { id: 'bbb', label: '1 can of chopped tomatoes (210g)' },
-            { id: 'ccc', label: '1 can of kidney beans' },
+            { uuid: 'aaa', label: '1 beef stock cube' },
+            { uuid: 'bbb', label: '1 can of chopped tomatoes (210g)' },
+            { uuid: 'ccc', label: '1 can of kidney beans' },
           ],
         },
         {
           id: '1494',
           title: 'Creamy Chicken & Pesto Farfalle With Basil',
           ingredients: [
-            { id: 'bbb', label: '1 can of chopped tomatoes (210g)' },
-            { id: 'eee', label: '1/2 chicken stock cube' },
+            { uuid: 'bbb', label: '1 can of chopped tomatoes (210g)' },
+            { uuid: 'eee', label: '1/2 chicken stock cube' },
           ]
         },
       ],
@@ -80,7 +80,7 @@ describe('<IngredientsContainer />', () => {
       )
     })
 
-    test('selected ingredientId, recipeId and label are set in the store', async () => {
+    test('selected ingredientUuid, recipeId and label are set in the store', async () => {
       await wrapper.update()
 
       const recipe = wrapper.find('ItemExpandable').at(0)
@@ -93,7 +93,7 @@ describe('<IngredientsContainer />', () => {
       await ContinueButton.prop('onClick')()
 
       expect(store.getState().getHelp.get('selectedIngredients'))
-        .toEqual(fromJS({'1917-aaa': {ingredientId: 'aaa', label: '1 beef stock cube', recipeId: '1917', recipeGoustoReference: '123'}}))
+        .toEqual(fromJS({'1917&aaa': {ingredientUuid: 'aaa', label: '1 beef stock cube', recipeId: '1917', recipeGoustoReference: '123'}}))
     })
 
     test('/v2/validate-ingredients endpoint is called correctly', async () => {

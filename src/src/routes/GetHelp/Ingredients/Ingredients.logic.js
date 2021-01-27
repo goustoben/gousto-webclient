@@ -26,8 +26,8 @@ const propTypes = {
       title: PropTypes.string,
       ingredients: PropTypes.arrayOf(
         PropTypes.shape({
-          id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
+          uuid: PropTypes.string.isRequired,
         })
       )
     })
@@ -101,13 +101,13 @@ class Ingredients extends PureComponent {
       validateSelectedIngredients
     } = this.props
     const { selectedIngredients } = this.state
-    const ingredientIds = []
+    const ingredientUuids = []
     const recipeAndIngredientIds = []
 
     selectedIngredients.forEach((value, checkboxId) => {
-      const [recipeId, ingredientId] = checkboxId.split('-')
-      ingredientIds.push(ingredientId)
-      recipeAndIngredientIds.push({ recipeId, ingredientId })
+      const [recipeId, ingredientUuid] = checkboxId.split('&')
+      ingredientUuids.push(ingredientUuid)
+      recipeAndIngredientIds.push({ recipeId, ingredientUuid })
     })
 
     try {
@@ -115,7 +115,7 @@ class Ingredients extends PureComponent {
         accessToken: user.accessToken,
         costumerId: user.id,
         orderId: order.id,
-        ingredientIds,
+        ingredientUuids,
       })
 
       storeSelectedIngredients(recipeAndIngredientIds)

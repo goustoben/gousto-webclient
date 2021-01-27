@@ -32,7 +32,7 @@ const propTypes = {
     id: PropTypes.string.isRequired,
   }).isRequired,
   selectedIngredients: PropTypes.objectOf(PropTypes.shape({
-    ingredientId: PropTypes.string.isRequired,
+    ingredientUuid: PropTypes.string.isRequired,
     issueDescription: PropTypes.string.isRequired,
     issueId: PropTypes.string.isRequired,
     recipeGoustoReference: PropTypes.string.isRequired,
@@ -68,7 +68,7 @@ class Refund extends PureComponent {
           customer_id: Number(user.id),
           order_id: Number(order.id),
           ingredient_ids: Object.keys(selectedIngredients).map(
-            key => selectedIngredients[key].ingredientId
+            key => selectedIngredients[key].ingredientUuid
           ),
         },
         featureShorterCompensationPeriod,
@@ -108,14 +108,14 @@ class Refund extends PureComponent {
     const issues = Object.keys(selectedIngredients).map(key => {
       const {
         issueId,
-        ingredientId,
+        ingredientUuid,
         issueDescription,
         recipeGoustoReference,
       } = selectedIngredients[key]
 
       return {
         category_id: Number(issueId),
-        ingredient_id: ingredientId,
+        ingredient_id: ingredientUuid,
         description: sanitize(issueDescription),
         recipe_gousto_reference: recipeGoustoReference,
       }

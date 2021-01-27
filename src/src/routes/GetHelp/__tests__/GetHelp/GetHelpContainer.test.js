@@ -53,7 +53,7 @@ describe('<GetHelpContainer />', () => {
       })
 
       fetchRecipes.mockResolvedValue({
-        data: [{ id: 'recipeIdX', ingredients: [{ id: '321', label: 'my-ingredient-label' }], title: 'a-title' }]
+        data: [{ id: 'recipeIdX', ingredients: [{ uuid: '321', label: 'my-ingredient-label' }], title: 'a-title' }]
       })
 
       mount(
@@ -81,7 +81,7 @@ describe('<GetHelpContainer />', () => {
     test('fetched recipes ends up in the store', () => {
       expect(
         store.getState().getHelp.get('recipes').toJS()
-      ).toEqual([{ id: 'recipeIdX', ingredients: [{ id: '321', label: 'my-ingredient-label' }], title: 'a-title' }])
+      ).toEqual([{ id: 'recipeIdX', ingredients: [{ uuid: '321', label: 'my-ingredient-label' }], title: 'a-title' }])
     })
   })
 })

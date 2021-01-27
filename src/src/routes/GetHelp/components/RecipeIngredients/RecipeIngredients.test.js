@@ -6,9 +6,9 @@ describe('the RecipeWithIngredients componennt', () => {
   let wrapper
 
   const TEST_INGREDIENTS = [
-    { id: '1', label: 'First ingredient' },
-    { id: '2', label: 'Second ingredient' },
-    { id: '3', label: 'Third ingredient' },
+    { uuid: '1', label: 'First ingredient' },
+    { uuid: '2', label: 'Second ingredient' },
+    { uuid: '3', label: 'Third ingredient' },
   ]
 
   const TEST_RECIPE = {
@@ -39,7 +39,7 @@ describe('the RecipeWithIngredients componennt', () => {
 
   describe('when ingredients have been selected', () => {
     beforeEach(() => {
-      const TEST_SELECTED_INGREDIENTS = new Map([ ['1-1', true] ])
+      const TEST_SELECTED_INGREDIENTS = new Map([ ['1&1', true] ])
       wrapper.setProps({ selectedIngredients: TEST_SELECTED_INGREDIENTS })
     })
 

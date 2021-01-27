@@ -10,14 +10,14 @@ describe('<IngredientIssues />', () => {
     button1Copy: 'Done',
   }
   const ingredients = {
-    'recipId1-ingId1': {
+    'recipId1&ingId1': {
       recipeId: 'recipId1',
-      ingredientId: 'ingId1',
+      ingredientUuid: 'ingId1',
       label: 'ingLabel1'
     },
-    'recipId2-ingId1': {
+    'recipId2&ingId1': {
       recipeId: 'recipId2',
-      ingredientId: 'ingId1',
+      ingredientUuid: 'ingId1',
       label: 'ingLabel2'
     },
   }
@@ -54,14 +54,14 @@ describe('<IngredientIssues />', () => {
     },
   ]
   const selectedIngredients = {
-    '1010-1234': {
+    '1010&1234': {
       recipeId: '1010',
-      ingredientId: '1234',
+      ingredientUuid: '1234',
       issueName: 'issue name 1',
     },
-    '2020-1234': {
+    '2020&1234': {
       recipeId: '2020',
-      ingredientId: '1234',
+      ingredientUuid: '1234',
       issueName: 'issue name 2',
     },
   }
@@ -120,7 +120,7 @@ describe('<IngredientIssues />', () => {
 
       expect(selects).toHaveLength(2)
 
-      expect(selects.at(0).prop('id')).toBe('recipId1-ingId1')
+      expect(selects.at(0).prop('id')).toBe('recipId1&ingId1')
       expect(options1.at(0).prop('value')).toBe('101')
       expect(options1.at(1).prop('value')).toBe('102')
       expect(options1.at(0).text()).toBe('Missing ingredients')
@@ -133,7 +133,7 @@ describe('<IngredientIssues />', () => {
       expect(group12.text()).toBe('Another group')
       expect(suboptions13.prop('value')).toBe('107')
       expect(suboptions13.text()).toBe('Meat - gristle or bones')
-      expect(selects.at(1).prop('id')).toBe('recipId2-ingId1')
+      expect(selects.at(1).prop('id')).toBe('recipId2&ingId1')
       expect(options2.at(0).prop('value')).toBe('101')
       expect(options2.at(1).prop('value')).toBe('102')
       expect(options2.at(0).text()).toBe('Missing ingredients')
@@ -183,10 +183,10 @@ describe('<IngredientIssues />', () => {
     })
 
     test('when an issue is selected an action is called with issueId and issueLabel', () => {
-      const select = getHelpLayout.find('select[id="recipId1-ingId1"]')
+      const select = getHelpLayout.find('select[id="recipId1&ingId1"]')
       select.simulate('change', { target: { value: '104' } })
 
-      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith('recipId1-ingId1', '104', 'Fruit or Veg - Mouldy')
+      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith('recipId1&ingId1', '104', 'Fruit or Veg - Mouldy')
     })
 
     test('tracking action and redirect is being called when Continue button is clicked', () => {
@@ -195,8 +195,8 @@ describe('<IngredientIssues />', () => {
       Button.props().onClick()
 
       expect(trackIngredientIssuesSpy).toHaveBeenCalledWith([
-        { ingredientId: '1234', issueName: 'issue name 1', recipeId: '1010' },
-        { ingredientId: '1234', issueName: 'issue name 2', recipeId: '2020' }
+        { ingredientUuid: '1234', issueName: 'issue name 1', recipeId: '1010' },
+        { ingredientUuid: '1234', issueName: 'issue name 2', recipeId: '2020' }
       ])
       expect(browserHistory.push).toHaveBeenCalledTimes(1)
     })

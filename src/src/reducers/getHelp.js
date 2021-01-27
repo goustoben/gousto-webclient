@@ -25,8 +25,8 @@ const reduceRecipes = (recipes) => (
     const recipe = recipes[recipeId]
     const { id, title, url } = recipe
     const ingredients = recipe.ingredients.map(
-      ({ id: ingredientId, label: ingredientLabel }) => (
-        { id: ingredientId, label: ingredientLabel, url }
+      ({ label: ingredientLabel, uuid: ingredientUuid }) => (
+        { label: ingredientLabel, url, uuid: ingredientUuid }
       )
     )
 
@@ -57,15 +57,15 @@ const getHelp = (state, action) => {
     const orderRecipeItems = state.getIn(['order', 'recipeDetailedItems']).toJS()
     const selectedIngredients = action.selectedIngredientAndRecipeIds
       .reduce((accumulator, selectedIngredientAndRecipeId) => {
-        const { recipeId, ingredientId } = selectedIngredientAndRecipeId
+        const { recipeId, ingredientUuid } = selectedIngredientAndRecipeId
 
         const currentRecipe = state.get('recipes')
           .find(recipe => recipe.get('id') === recipeId)
 
         const currentIngredient = currentRecipe && currentRecipe.get('ingredients')
-          .find(ingredient => ingredient.get('id') === ingredientId)
+          .find(ingredient => ingredient.get('uuid') === ingredientUuid)
 
-        return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
+        return accumulator.set(`${recipeId}&${ingredientUuid}`, fromJS({
           ...selectedIngredientAndRecipeId,
           label: currentIngredient.get('label'),
           recipeGoustoReference: orderRecipeItems[recipeId],
@@ -85,9 +85,9 @@ const getHelp = (state, action) => {
   case webClientActionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS: {
     const issueReasons = Object.keys(action.issueReasons)
       .reduce((accumulator, key) => {
-        const { recipeId, ingredientId } = action.issueReasons[key]
+        const { recipeId, ingredientUuid } = action.issueReasons[key]
 
-        return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
+        return accumulator.set(`${recipeId}&${ingredientUuid}`, fromJS({
           ...action.issueReasons[key],
         }))
       }, state.get('selectedIngredients'))

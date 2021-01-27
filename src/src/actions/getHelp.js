@@ -74,7 +74,7 @@ const validateSelectedIngredients = ({
   accessToken,
   orderId,
   costumerId,
-  ingredientIds,
+  ingredientUuids,
 }) => async (dispatch, getState) => {
   dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
   dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
@@ -85,7 +85,7 @@ const validateSelectedIngredients = ({
       body: {
         customer_id: Number(costumerId),
         order_id: Number(orderId),
-        ingredient_ids: ingredientIds
+        ingredient_ids: ingredientUuids
       },
       featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
     })
@@ -138,7 +138,7 @@ const fetchIngredientIssues = () => async (dispatch, getState) => {
     const selectedIngredients = getState().getHelp.get('selectedIngredients')
     const { id, name } = ingredientIssues.data[0].category
     selectedIngredients.forEach(selectedIngredient => {
-      const ingredientAndRecipeId = `${selectedIngredient.get('recipeId')}-${selectedIngredient.get('ingredientId')}`
+      const ingredientAndRecipeId = `${selectedIngredient.get('recipeId')}&${selectedIngredient.get('ingredientUuid')}`
       dispatch({
         type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
         ingredientAndRecipeId,

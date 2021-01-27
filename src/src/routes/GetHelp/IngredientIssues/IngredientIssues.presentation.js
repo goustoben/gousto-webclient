@@ -17,7 +17,7 @@ const propTypes = {
   ingredients: PropTypes.objectOf(
     PropTypes.shape({
       recipeId: PropTypes.string.isRequired,
-      ingredientId: PropTypes.string.isRequired,
+      ingredientUuid: PropTypes.string.isRequired,
       issueId: PropTypes.string,
       issueName: PropTypes.string,
       label: PropTypes.string.isRequired,
