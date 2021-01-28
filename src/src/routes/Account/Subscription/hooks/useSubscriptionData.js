@@ -10,11 +10,12 @@ import routes from 'config/routes'
 import { useFetch } from '../../../../hooks/useFetch'
 import {
 } from '../context'
-import { getCurrentUserPostcode } from '../context/selectors/currentUser'
+import { getCurrentUserPostcode, getCurrentUserDeliveryTariffId } from '../context/selectors/currentUser'
 import { actionTypes } from '../context/reducers'
 
 export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
   const postcode = getCurrentUserPostcode(state)
+  const deliveryTariffId = getCurrentUserDeliveryTariffId(state)
   const subscriptionUrl = `${endpoint('core')}${routes.core.currentSubscription}`
   const deliveriesUrl = `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.days}`
   const deliveryParams = useMemo(() => ({
@@ -25,8 +26,9 @@ export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
       .toISOString(),
     postcode,
     sort: 'date',
-    direction: 'asc'
-  }), [postcode])
+    direction: 'asc',
+    delivery_tariff_id: deliveryTariffId
+  }), [postcode, deliveryTariffId])
 
   const [, subscriptionResponse, subscriptionError
   ] = useFetch({
