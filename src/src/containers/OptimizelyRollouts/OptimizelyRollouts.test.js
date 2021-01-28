@@ -9,17 +9,14 @@ const mockedHasValidInstance = safeJestMock(optimizelySDK, 'hasValidInstance')
 
 describe('OptimizelyRollouts', () => {
   let wrapper
-  let mockedLoadOptimizelySDK
-
   beforeEach(() => {
     mockedGetOptimizelyInstance.mockResolvedValue({
       isFeatureEnabled: () => false,
     })
     mockedHasValidInstance.mockResolvedValue(true)
-    mockedLoadOptimizelySDK = jest.fn()
 
     wrapper = shallow(
-      <OptimizelyRollouts featureName="mock-feature" trackExperimentInSnowplow={() => {}} isLoading={false} loadOptimizelySDK={mockedLoadOptimizelySDK}>
+      <OptimizelyRollouts featureName="mock-feature" trackExperimentInSnowplow={() => {}}>
         <div>mock-child</div>
       </OptimizelyRollouts>
     )
@@ -27,32 +24,6 @@ describe('OptimizelyRollouts', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  describe('When component mounts', () => {
-    test('calls loadOptimizelySDK', () => {
-      expect(mockedLoadOptimizelySDK).toHaveBeenCalled()
-    })
-  })
-
-  describe('When "isLoading" is true', () => {
-    beforeEach(() => {
-      wrapper = shallow(
-        <OptimizelyRollouts
-          featureName="mock-feature"
-          trackExperimentInSnowplow={() => {}}
-          isLoading
-          featureEnabled
-          loadOptimizelySDK={mockedLoadOptimizelySDK}
-        >
-          <div>mock-child</div>
-        </OptimizelyRollouts>
-      )
-    })
-
-    test('renders null', () => {
-      expect(wrapper.getElement()).toEqual(null)
-    })
   })
 
   describe('When no "authUserId" is given', () => {
@@ -94,14 +65,7 @@ describe('OptimizelyRollouts', () => {
           })
 
           wrapper = await shallow(
-            <OptimizelyRollouts
-              featureName="mock-feature"
-              featureEnabled
-              authUserId="mock-auth-id"
-              trackExperimentInSnowplow={mockedTrackExperimentInSnowplow}
-              isLoading={false}
-              loadOptimizelySDK={mockedLoadOptimizelySDK}
-            >
+            <OptimizelyRollouts featureName="mock-feature" featureEnabled authUserId="mock-auth-id" trackExperimentInSnowplow={mockedTrackExperimentInSnowplow}>
               <div>mock-child</div>
             </OptimizelyRollouts>
           )
@@ -152,14 +116,7 @@ describe('OptimizelyRollouts', () => {
           })
 
           wrapper = await shallow(
-            <OptimizelyRollouts
-              isLoading={false}
-              featureName="mock-feature"
-              featureEnabled
-              sessionId="mock-session-id"
-              trackExperimentInSnowplow={mockedTrackExperimentInSnowplow}
-              loadOptimizelySDK={mockedLoadOptimizelySDK}
-            >
+            <OptimizelyRollouts featureName="mock-feature" featureEnabled sessionId="mock-session-id" trackExperimentInSnowplow={mockedTrackExperimentInSnowplow}>
               <div>mock-child</div>
             </OptimizelyRollouts>
           )

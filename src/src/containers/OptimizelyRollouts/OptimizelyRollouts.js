@@ -7,21 +7,18 @@ export class OptimizelyRollouts extends React.PureComponent {
     super(props)
 
     this.state = {
+      loading: true,
       isOptimizelyFeatureEnabled: false,
     }
   }
 
   async componentDidMount() {
-    const { loadOptimizelySDK } = this.props
-
-    loadOptimizelySDK()
     await this.updateInstance()
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { authUserId, sessionId, isLoading } = this.props
-
-    if (isLoading !== nextProps.isLoading || authUserId !== nextProps.authUserId || sessionId !== nextProps.sessionId) {
+    const { authUserId, sessionId } = this.props
+    if (authUserId !== nextProps.authUserId || sessionId !== nextProps.sessionId) {
       await this.updateInstance()
     }
   }
@@ -42,11 +39,18 @@ export class OptimizelyRollouts extends React.PureComponent {
 
       trackExperimentInSnowplow(featureName, isOptimizelyFeatureEnabled, authUserId, sessionId)
     }
+
+    // After the first call we set the loading state to false
+    // If we change this behaviour to only do it if we have a auth user and valid instance
+    // It will be possible to render nothing at all, which is something we dont want
+    this.setState({
+      loading: false
+    })
   }
 
   render() {
-    const { isOptimizelyFeatureEnabled } = this.state
-    const { authUserId, featureEnabled, sessionId, children, isLoading } = this.props
+    const { isOptimizelyFeatureEnabled, loading } = this.state
+    const { authUserId, featureEnabled, sessionId, children } = this.props
 
     // If user is not logged in and the feature flag is disabled
     // we should display the children component
@@ -56,7 +60,7 @@ export class OptimizelyRollouts extends React.PureComponent {
 
     // If the component is still loading or if the feature flag is different from
     // optimizely we should display nothing
-    if (isLoading || isOptimizelyFeatureEnabled !== featureEnabled) {
+    if (loading || isOptimizelyFeatureEnabled !== featureEnabled) {
       return null
     }
 
@@ -73,8 +77,6 @@ OptimizelyRollouts.defaultProps = {
 }
 
 OptimizelyRollouts.propTypes = {
-  loadOptimizelySDK: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   featureName: PropTypes.string.isRequired,
   featureEnabled: PropTypes.bool,
   authUserId: PropTypes.string,

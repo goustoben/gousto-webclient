@@ -7,9 +7,7 @@ import { helpPreLoginVisibilityChange } from 'actions/login'
 import { Header } from 'Header/Header'
 import routesConfig, { zendesk } from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
-import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts/OptimizelyRolloutsContainer'
 
-jest.mock('../../../containers/OptimizelyRollouts/OptimizelyRolloutsContainer')
 jest.mock('actions')
 jest.mock('actions/login')
 
@@ -43,8 +41,6 @@ describe('Header', () => {
   let wrapper
 
   beforeEach(() => {
-    OptimizelyRolloutsContainer.mockImplementation(({ featureEnabled, children }) => (!featureEnabled ? children : null))
-
     wrapper = shallow(
       <Header
         loginVisibilityChange={loginVisibilityChange}
@@ -230,15 +226,15 @@ describe('Header', () => {
       })
 
       test('then the menu items should include "Subscription Settings" url', () => {
-        const [menuItems] = wrapper.instance().getMenuItems('mobile', '/')
-        expect(menuItems[2].url).toEqual('/subscription-settings')
+        const result = wrapper.instance().getMenuItems('mobile', '/')
+        expect(result[2].url).toEqual('/subscription-settings')
       })
     })
 
     describe('when isNewSubscriptionPageEnabled is set to false', () => {
       test('then the menu items should include "My Subscription" url', () => {
-        const [menuItems] = wrapper.instance().getMenuItems('mobile', '/')
-        expect(menuItems[2].url).toEqual('/my-subscription')
+        const result = wrapper.instance().getMenuItems('mobile', '/')
+        expect(result[2].url).toEqual('/my-subscription')
       })
     })
   })
@@ -312,6 +308,73 @@ describe('Header', () => {
       expect(wrapper.find('Button').findWhere(el => el.text() === 'Logout').exists()).toEqual(false)
     })
 
+    test('renders menu items in correct order', () => {
+      const getHelpRoute = routesConfig.client.getHelp
+      const expected = [
+        {
+          clientRouted: true,
+          name: 'My Gousto',
+          url: routesConfig.client.myGousto,
+          tracking: 'MyGoustoNavigation Clicked',
+        },
+        {
+          clientRouted: false,
+          name: 'Upcoming Deliveries',
+          url: routesConfig.client.myDeliveries,
+          tracking: 'DeliveriesNavigation Clicked',
+        },
+        {
+          clientRouted: false,
+          name: 'Subscription Settings',
+          url: routesConfig.client.mySubscription,
+          tracking: 'SubscriptionNavigation Clicked',
+        },
+        {
+          clientRouted: false,
+          name: 'Account Details',
+          url: routesConfig.client.myDetails,
+          tracking: 'DetailsNavigation Clicked',
+        },
+        {
+          clientRouted: true,
+          name: 'Free Food',
+          url: routesConfig.client.myReferral,
+          tracking: 'ReferAFriendNavigation Clicked',
+        },
+        {
+          clientRouted: false,
+          name: 'Rate My Recipes',
+          url: routesConfig.client.rateMyRecipes,
+          tracking: trackingKeys.clickRateMyRecipeNavigation,
+        },
+        {
+          clientRouted: true,
+          disabled: true,
+          name: 'Home',
+          url: routesConfig.client.home,
+        },
+        {
+          name: 'Choose Recipes',
+          url: routesConfig.client.menu,
+          tracking: trackingKeys.clickRecipeNavigation,
+        },
+        {
+          clientRouted: false,
+          name: 'Sustainability',
+          url: routesConfig.client.weCare,
+          tracking: 'SustainabilityNavigation Clicked',
+        },
+        {
+          clientRouted: true,
+          name: 'Help',
+          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
+          tracking: 'FAQNavigation Clicked',
+        }
+      ]
+
+      expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
+    })
+
     test('on desktop the help links to eligibility check page', () => {
       const helpLink = wrapper.find('GoustoLink').at(4)
 
@@ -321,148 +384,11 @@ describe('Header', () => {
     test('on mobile the help links to eligibility check page', () => {
       const helpMenuItem = wrapper
         .find('MobileMenu')
-        .at(0)
         .prop('mobileMenuItems')
         .filter((menuItem) => menuItem.name === 'Help')
         .pop()
 
       expect(helpMenuItem.url).toContain('get-help/eligibility-check')
-    })
-
-    test('renders menu items in correct order', () => {
-      const getHelpRoute = routesConfig.client.getHelp
-      const expected = [
-        {
-          clientRouted: true,
-          name: 'My Gousto',
-          url: routesConfig.client.myGousto,
-          tracking: 'MyGoustoNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Upcoming Deliveries',
-          url: routesConfig.client.myDeliveries,
-          tracking: 'DeliveriesNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Subscription Settings',
-          url: routesConfig.client.mySubscription,
-          tracking: 'SubscriptionNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Account Details',
-          url: routesConfig.client.myDetails,
-          tracking: 'DetailsNavigation Clicked',
-        },
-        {
-          clientRouted: true,
-          name: 'Free Food',
-          url: routesConfig.client.myReferral,
-          tracking: 'ReferAFriendNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Rate My Recipes',
-          url: routesConfig.client.rateMyRecipes,
-          tracking: trackingKeys.clickRateMyRecipeNavigation,
-        },
-
-        {
-          clientRouted: true,
-          disabled: true,
-          name: 'Home',
-          url: routesConfig.client.home,
-        },
-        {
-          name: 'Choose Recipes',
-          url: routesConfig.client.menu,
-          tracking: trackingKeys.clickRecipeNavigation,
-        },
-        {
-          clientRouted: false,
-          name: 'Sustainability',
-          url: routesConfig.client.weCare,
-          tracking: 'SustainabilityNavigation Clicked',
-        },
-        {
-          clientRouted: true,
-          name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
-          tracking: 'FAQNavigation Clicked',
-        }
-      ]
-
-      expect(wrapper.find('MobileMenu').at(0).prop('mobileMenuItems')).toEqual(expected)
-    })
-
-    test('renders menu items in correct order', () => {
-      const getHelpRoute = routesConfig.client.getHelp
-      const expected = [
-        {
-          clientRouted: true,
-          name: 'My Gousto',
-          url: routesConfig.client.myGousto,
-          tracking: 'MyGoustoNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Upcoming Deliveries',
-          url: routesConfig.client.myDeliveries,
-          tracking: 'DeliveriesNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Subscription Settings',
-          url: routesConfig.client.mySubscription,
-          tracking: 'SubscriptionNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Account Details',
-          url: routesConfig.client.myDetails,
-          tracking: 'DetailsNavigation Clicked',
-        },
-        {
-          clientRouted: true,
-          name: 'Free Food',
-          url: routesConfig.client.myReferral,
-          tracking: 'ReferAFriendNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Rate My Recipes',
-          url: routesConfig.client.rateMyRecipes,
-          tracking: trackingKeys.clickRateMyRecipeNavigation,
-        },
-
-        {
-          clientRouted: true,
-          disabled: true,
-          name: 'Home',
-          url: routesConfig.client.home,
-        },
-        {
-          name: 'Choose Recipes',
-          url: routesConfig.client.menu,
-          tracking: trackingKeys.clickRecipeNavigation,
-        },
-        {
-          clientRouted: false,
-          name: 'Sustainability',
-          url: routesConfig.client.weCare,
-          tracking: 'SustainabilityNavigation Clicked',
-        },
-        {
-          clientRouted: true,
-          name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
-          tracking: 'FAQNavigation Clicked',
-        }
-      ]
-
-      expect(wrapper.find('MobileMenu').at(0).prop('mobileMenuItems')).toEqual(expected)
     })
 
     describe('when the isHelpCentreActive prop is passed as true', () => {
@@ -528,7 +454,7 @@ describe('Header', () => {
           tracking: 'FAQNavigation Clicked',
         }
       ]
-      expect(wrapper.find('MobileMenu').at(0).prop('mobileMenuItems')).toEqual(expected)
+      expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
     })
 
     test('the help link is not a Link component', () => {
@@ -658,80 +584,5 @@ describe('Header', () => {
       expect(closeBoxModalVisibilityChange).toHaveBeenCalled()
     })
   })
-
-  describe('when the user is in the optimizely header experiment', () => {
-    beforeEach(() => {
-      OptimizelyRolloutsContainer.mockImplementation(({ featureEnabled, children }) => (featureEnabled ? children : null))
-
-      wrapper = shallow(<Header isAuthenticated trackNavigationClick={jest.fn()} />, { context: { store } })
-    })
-
-    test('then render the menu items in the correct order', () => {
-      const getHelpRoute = routesConfig.client.getHelp
-      const expected = [
-        {
-          clientRouted: true,
-          name: 'My Gousto',
-          url: routesConfig.client.myGousto,
-          tracking: 'MyGoustoNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Upcoming Deliveries',
-          url: routesConfig.client.myDeliveries,
-          tracking: 'DeliveriesNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Subscription Settings',
-          url: routesConfig.client.mySubscription,
-          tracking: 'SubscriptionNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Rate My Recipes',
-          url: routesConfig.client.rateMyRecipes,
-          tracking: trackingKeys.clickRateMyRecipeNavigation,
-        },
-        {
-          clientRouted: true,
-          name: 'Free Food',
-          url: routesConfig.client.myReferral,
-          tracking: 'ReferAFriendNavigation Clicked',
-        },
-        {
-          clientRouted: false,
-          name: 'Account Details',
-          url: routesConfig.client.myDetails,
-          tracking: 'DetailsNavigation Clicked',
-        },
-
-        {
-          clientRouted: true,
-          disabled: true,
-          name: 'Home',
-          url: routesConfig.client.home,
-        },
-        {
-          name: 'Choose Recipes',
-          url: routesConfig.client.menu,
-          tracking: trackingKeys.clickRecipeNavigation,
-        },
-        {
-          clientRouted: false,
-          name: 'Sustainability',
-          url: routesConfig.client.weCare,
-          tracking: 'SustainabilityNavigation Clicked',
-        },
-        {
-          clientRouted: true,
-          name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
-          tracking: 'FAQNavigation Clicked',
-        }
-      ]
-
-      expect(wrapper.find('MobileMenu').at(1).prop('mobileMenuItems')).toEqual(expected)
-    })
-  })
 })
+
