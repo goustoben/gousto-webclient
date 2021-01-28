@@ -10,9 +10,6 @@ describe('OptimizelyRolloutsContainer', () => {
       auth: Immutable.Map({
         id: '88ca946c-1111-4201-8e1a-b68f9ec582h5'
       }),
-      pending: Immutable.Map({
-        OPTIMIZELY_ROLLOUT_LOADING: true,
-      })
     }
     wrapper = shallow(<OptimizelyRolloutsContainer />, {
       context: {
@@ -28,9 +25,7 @@ describe('OptimizelyRolloutsContainer', () => {
       authUserId: '88ca946c-1111-4201-8e1a-b68f9ec582h5',
       featureEnabled: false,
       children: null,
-      trackExperimentInSnowplow: expect.any(Function),
-      isLoading: true,
-      loadOptimizelySDK: expect.any(Function)
+      trackExperimentInSnowplow: expect.any(Function)
     })
   })
 })

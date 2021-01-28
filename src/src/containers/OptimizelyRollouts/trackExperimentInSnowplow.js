@@ -18,12 +18,6 @@ const experimentsConfig = {
     name: 'Test Feature',
     variationName: 'Variation',
     defaultName: 'Control',
-  },
-  web_rate_recipe_navbar_order_experiment: {
-    id: 'web_rate_recipe_navbar_order_experiment',
-    name: 'web_rate_recipe_navbar_order_experiment',
-    variationName: 'Variation',
-    defaultName: 'Control',
   }
 }
 export const trackExperimentInSnowplow = (featureName, isOptimizelyFeatureEnabled, authUserId, sessionId) => (dispatch) => {

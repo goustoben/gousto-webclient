@@ -21,9 +21,6 @@ const initialState = {
   auth: Immutable.fromJS({
     id: 'user-id'
   }),
-  pending: Immutable.Map({
-    OPTIMIZELY_ROLLOUT_LOADING: false,
-  }),
   routing: { locationBeforeTransitions: { pathname: '/menu' } },
 }
 

@@ -23,7 +23,6 @@ import { onEnter } from 'utils/accessibility'
 import { getLinkURL } from 'utils/header'
 import { MobileMenu } from './MobileMenu'
 import { getMenuItemsForFeatureFlag } from './menuItemsHelper'
-import { OptimizelyRolloutsContainer } from '../../containers/OptimizelyRollouts'
 import css from './Header.css'
 
 class Header extends React.PureComponent {
@@ -136,8 +135,6 @@ class Header extends React.PureComponent {
     const details = [menuItems.details]
     const referFriend = [menuItems.referFriend]
 
-    const experimentalMobileMenu = myGousto.concat(deliveries, subscription, rateMyRecipes, referFriend, details, homeMenuItem, mobileItems)
-
     let mobileMenu = []
 
     if (isAuthenticated) {
@@ -146,7 +143,7 @@ class Header extends React.PureComponent {
       mobileMenu = mobileMenu.concat(homeMenuItem, mobileItems)
     }
 
-    return (device === 'mobile') ? [mobileMenu, experimentalMobileMenu] : desktopItems
+    return (device === 'mobile') ? mobileMenu : desktopItems
   }
 
   handleQuery = () => {
@@ -333,7 +330,7 @@ class Header extends React.PureComponent {
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
     const hideNav = fromWizard || joinPage || disabled || false
-    const [mobileMenuItems, experimentalMenuItems] = this.getMenuItems('mobile', path)
+    const mobileMenuItems = this.getMenuItems('mobile', path)
     const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
     const desktopMenuItems = this.getMenuItems('desktop', path)
     let hasUserStartedNewSession
@@ -383,45 +380,23 @@ class Header extends React.PureComponent {
                     (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled)
                     && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button>
                   }
-                  <OptimizelyRolloutsContainer featureName="web_rate_recipe_navbar_order_experiment" featureEnabled={false}>
-                    <MobileMenu
-                      hideMobileMenu={this.hideMobileMenu}
-                      onLoginClick={this.onLoginClick}
-                      onLogoutClick={this.onLogoutClick}
-                      showMobileMenu={this.showMobileMenu}
-                      mobileMenuItems={mobileMenuItems}
-                      mobileMenuOpen={mobileMenuOpen}
-                      hideNav={hideNav}
-                      isAuthenticated={isAuthenticated}
-                      promoCodeUrl={promoCodeUrl}
-                      trackNavigationClick={(param) => {
-                        trackNavigationClick(param)
-                        this.hideMobileMenu()
-                      }}
-                      serverError={serverError}
-                      shouldRenderAccountLink={isAuthenticated && pathName && (pathName.startsWith('/menu'))}
-                    />
-                  </OptimizelyRolloutsContainer>
-
-                  <OptimizelyRolloutsContainer featureName="web_rate_recipe_navbar_order_experiment" featureEnabled>
-                    <MobileMenu
-                      hideMobileMenu={this.hideMobileMenu}
-                      onLoginClick={this.onLoginClick}
-                      onLogoutClick={this.onLogoutClick}
-                      showMobileMenu={this.showMobileMenu}
-                      mobileMenuItems={experimentalMenuItems}
-                      mobileMenuOpen={mobileMenuOpen}
-                      hideNav={hideNav}
-                      isAuthenticated={isAuthenticated}
-                      promoCodeUrl={promoCodeUrl}
-                      trackNavigationClick={(param) => {
-                        trackNavigationClick(param)
-                        this.hideMobileMenu()
-                      }}
-                      serverError={serverError}
-                      shouldRenderAccountLink={isAuthenticated && pathName && (pathName.startsWith('/menu'))}
-                    />
-                  </OptimizelyRolloutsContainer>
+                  <MobileMenu
+                    hideMobileMenu={this.hideMobileMenu}
+                    onLoginClick={this.onLoginClick}
+                    onLogoutClick={this.onLogoutClick}
+                    showMobileMenu={this.showMobileMenu}
+                    mobileMenuItems={mobileMenuItems}
+                    mobileMenuOpen={mobileMenuOpen}
+                    hideNav={hideNav}
+                    isAuthenticated={isAuthenticated}
+                    promoCodeUrl={promoCodeUrl}
+                    trackNavigationClick={(param) => {
+                      trackNavigationClick(param)
+                      this.hideMobileMenu()
+                    }}
+                    serverError={serverError}
+                    shouldRenderAccountLink={isAuthenticated && pathName && (pathName.startsWith('/menu'))}
+                  />
                 </div>
               </div>
             </div>

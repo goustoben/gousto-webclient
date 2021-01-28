@@ -59,6 +59,7 @@ export class MenuRecipesPage extends PureComponent {
       isLoading,
       menuCurrentCollectionId,
       selectCurrentCollection,
+      loadOptimizelySDK,
       orderId,
       query,
       params,
@@ -70,6 +71,8 @@ export class MenuRecipesPage extends PureComponent {
     if (!isLoading && prevProps.isLoading !== isLoading) {
       shouldJfyTutorialBeVisible()
     }
+
+    loadOptimizelySDK()
 
     // /menu-> /menu/:orderId
     const editingOrder = (prevProps.orderId || orderId) && prevProps.orderId !== orderId
@@ -202,6 +205,7 @@ MenuRecipesPage.propTypes = {
   checkQueryParams: PropTypes.func.isRequired,
   userId: PropTypes.string,
   shouldShowCapacityInfo: PropTypes.bool,
+  loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
   browserType: PropTypes.string.isRequired,
   fetchMenuData: PropTypes.func.isRequired,
