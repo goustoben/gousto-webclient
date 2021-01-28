@@ -1,7 +1,8 @@
 import {
   getCurrentUserPostcode,
   getFirstName,
-  getIsCurrentUserLoaded
+  getIsCurrentUserLoaded,
+  getCurrentUserDeliveryTariffId
 } from '../currentUser'
 
 describe('currentUser selectors', () => {
@@ -12,7 +13,8 @@ describe('currentUser selectors', () => {
         shippingAddress: {
           postcode: 'W1A',
         },
-        nameFirst: 'Bob'
+        nameFirst: 'Bob',
+        deliveryTariffId: 'a1b2c3-d4e5f6'
       }
     }
   })
@@ -20,6 +22,12 @@ describe('currentUser selectors', () => {
   describe('getCurrentUserPostcode', () => {
     test('should return postcode', () => {
       expect(getCurrentUserPostcode(contextState)).toEqual('W1A')
+    })
+  })
+
+  describe('getCurrentUserDeliveryTariffId', () => {
+    test('should return deliveryTariffId', () => {
+      expect(getCurrentUserDeliveryTariffId(contextState)).toEqual('a1b2c3-d4e5f6')
     })
   })
 

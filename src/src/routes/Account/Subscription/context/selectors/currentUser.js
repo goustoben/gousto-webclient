@@ -16,3 +16,8 @@ export const getIsCurrentUserLoaded = createSelector(
   getCurrentUser,
   (currentUser) => Boolean(Object.keys(currentUser).length)
 )
+
+export const getCurrentUserDeliveryTariffId = createSelector(
+  getCurrentUser,
+  ({ deliveryTariffId }) => deliveryTariffId
+)

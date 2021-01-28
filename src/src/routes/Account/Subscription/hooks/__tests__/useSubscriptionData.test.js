@@ -18,7 +18,8 @@ const mockState = {
   currentUser: {
     shippingAddress: {
       postcode: 'W1A',
-    }
+    },
+    deliveryTariffId: 'a1b2c3-d4e5f6'
   }
 }
 const mockDispatch = jest.fn()
@@ -55,6 +56,7 @@ describe('Given useSubscriptionData is invoked', () => {
         'filters[cutoff_datetime_from]': 'start of day',
         'filters[cutoff_datetime_until]': '7 days later',
         postcode: 'W1A',
+        delivery_tariff_id: 'a1b2c3-d4e5f6',
         sort: 'date'
       },
       url: 'localhost/days',
