@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import Helmet from 'react-helmet'
 import Immutable from 'immutable'
 import classNames from 'classnames'
@@ -80,7 +80,7 @@ const contextTypes = {
 
 const postCodePath = '/signup/postcode'
 
-class Signup extends React.PureComponent {
+class Signup extends PureComponent {
   static fetchData = async ({ store, params = {}, query = {}, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled }) => {
     let steps = Immutable.List(signupConfig.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
@@ -90,11 +90,9 @@ class Signup extends React.PureComponent {
     const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
 
     if (querySteps.length) {
-      const requestedSteps = querySteps
-      steps = Immutable.List(requestedSteps)
+      steps = Immutable.List(querySteps)
     } else if (featureSteps.length) {
-      const requestedSteps = featureSteps
-      steps = Immutable.List(requestedSteps)
+      steps = Immutable.List(featureSteps)
     } else if (Immutable.Iterable.isIterable(signupSteps) && signupSteps.size) {
       steps = signupSteps
     }
@@ -154,7 +152,8 @@ class Signup extends React.PureComponent {
     Signup.fetchData({ store, query, params: signupParams, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled })
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { changeStep } = this.props
     const step = stepByName(nextProps.currentStepName)
     if (nextProps.stepName !== step.get('slug')) {

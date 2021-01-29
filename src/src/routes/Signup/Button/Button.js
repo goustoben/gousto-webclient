@@ -19,7 +19,7 @@ const Button = ({
   onClick,
   isLastStep,
   isTastePreferencesEnabled,
-  ...buttonProps,
+  ...buttonProps
 }) => {
   const buttonText = children || ctaText(isLastStep, isTastePreferencesEnabled)
 

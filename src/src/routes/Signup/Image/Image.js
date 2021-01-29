@@ -4,7 +4,8 @@ import React from 'react'
 import css from './Image.css'
 
 const SignupImage = ({ name }) => (
-  <div className={css.image} style={{ backgroundImage: `url(${require(`media/photos/${name}.jpg`)})` }} /> // eslint-disable-line global-require
+  // eslint-disable-next-line import/no-dynamic-require,global-require
+  <div className={css.image} style={{ backgroundImage: `url(${require(`media/photos/${name}.jpg`)})` }} />
 )
 
 SignupImage.propTypes = {

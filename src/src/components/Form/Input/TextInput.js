@@ -156,6 +156,7 @@ export class TextInput extends Component {
           onBlur={this.handleBlur}
           ref={input => { this.input = input }}
           data-testing={dataTesting}
+          onChange={() => {}}
         />
         {isCheckoutOverhaulEnabled && inputPrefix}
       </span>

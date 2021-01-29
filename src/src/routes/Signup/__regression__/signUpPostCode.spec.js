@@ -5,6 +5,7 @@ const POSTCODE_8_CHARS = 'W140EE14'
 
 describe('Given I land on postcode slide of the wizard', () => {
   const getBoxSummaryError = (win) => (
+    // eslint-disable-next-line no-underscore-dangle
     win.__store__.getState().error.get('BOXSUMMARY_DELIVERY_DAYS_RECEIVE')
   )
 
@@ -31,6 +32,7 @@ describe('Given I land on postcode slide of the wizard', () => {
 
     it('And the postcode is stored in the basket object of the redux store', () => {
       const getTempPostCode = (win) => (
+        // eslint-disable-next-line no-underscore-dangle
         win.__store__.getState().temp.get('postcode')
       )
 

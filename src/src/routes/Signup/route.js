@@ -4,7 +4,7 @@ import SignupLayout from 'layouts/SignupLayout'
 import { client } from 'config/routes'
 import { SignupContainer } from './SignupContainer'
 
-export default (
+export const Signup = (
   <Route component={SignupLayout}>
     <Route path={`${client.signup}(/:stepName)`} component={SignupContainer} />
     <Redirect from="/signup-2(/:stepName)" to="/signup" />

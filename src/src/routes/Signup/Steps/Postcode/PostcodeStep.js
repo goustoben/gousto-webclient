@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import TextInput from 'Form/Input'
 import {reminder} from 'config/freeDelivery'
@@ -10,7 +10,7 @@ import { Image } from '../../Image'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
-class PostcodeStep extends React.PureComponent {
+class PostcodeStep extends PureComponent {
   render() {
     const {
       tempPostcode,
@@ -41,7 +41,7 @@ class PostcodeStep extends React.PureComponent {
                     minLength={5}
                     maxLength={8}
                     textAlign="center"
-                    value={tempPostcode.toUpperCase()}
+                    value={tempPostcode}
                     mask
                     data-testing="signupPostcodeInput"
                   />
@@ -71,7 +71,7 @@ class PostcodeStep extends React.PureComponent {
           </div>
         </div>
         <div className={css.footer}>
-          <div className={classNames(css.inputContainer, { [postcodeCss.pricingClarityInput]: isPricingClarityEnabled })}>
+          <div className={css.inputContainer}>
             <Button
               disabled={tempPostcode.length < 5}
               data-testing="signupPostcodeCTA"
