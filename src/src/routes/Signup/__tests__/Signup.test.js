@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import { menuLoadDays, redirect, menuLoadBoxPrices } from 'actions'
+import { menuLoadDays, redirect, menuLoadBoxPrices, changeStep } from 'actions'
 import { StepIndicator } from 'goustouicomponents'
 
 import { Signup } from 'routes/Signup/Signup'
@@ -13,6 +13,7 @@ jest.mock('actions', () => ({
   redirect: jest.fn().mockReturnValue(Promise.resolve()),
   menuLoadDays: jest.fn().mockReturnValue(Promise.resolve()),
   menuLoadBoxPrices: jest.fn().mockReturnValue(Promise.resolve()),
+  changeStep: jest.fn().mockReturnValue(Promise.resolve()),
 }))
 
 jest.mock('../../Menu/fetchData/menuService')
@@ -23,6 +24,14 @@ describe('Signup', () => {
   let dispatch
   let getState
   let subscribe
+  const props = {
+    changeStep,
+    menuLoadBoxPrices,
+    promoModalVisible: false,
+    promoBannerState: {
+      hide: false
+    },
+  }
 
   beforeEach(() => {
     store = {
@@ -100,9 +109,16 @@ describe('Signup', () => {
 
   describe('Step size on Signup', () => {
     let wrapper
+
+    beforeEach(() => {
+      wrapper = shallow(<Signup {...props} />, { context })
+    })
+
     describe('when isTastePreferencesEnabled is true', () => {
       beforeEach(() => {
-        wrapper = shallow(<Signup isTastePreferencesEnabled />, { context })
+        wrapper.setProps({
+          isTastePreferencesEnabled: true
+        })
       })
 
       test('should display step size 5', () => {
@@ -112,7 +128,9 @@ describe('Signup', () => {
 
     describe('when isTastePreferencesEnabled is false', () => {
       beforeEach(() => {
-        wrapper = shallow(<Signup isTastePreferencesEnabled={false} />, { context })
+        wrapper.setProps({
+          isTastePreferencesEnabled: false
+        })
       })
 
       test('should display step size 3', () => {

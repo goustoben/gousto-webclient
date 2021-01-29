@@ -1,6 +1,7 @@
 const PAGE_URL = 'signup/box-size'
 
 const getNumPortions = (win) => (
+  // eslint-disable-next-line no-underscore-dangle
   win.__store__.getState().basket.get('numPortions')
 )
 
