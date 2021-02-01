@@ -5,7 +5,9 @@ import { menuLoadDays, redirect, menuLoadBoxPrices, changeStep } from 'actions'
 import { StepIndicator } from 'goustouicomponents'
 
 import { Signup } from 'routes/Signup/Signup'
+import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
+import css from '../Signup.css'
 
 jest.mock('actions', () => ({
   signupStepsReceive: jest.fn().mockReturnValue(Promise.resolve()),
@@ -135,6 +137,40 @@ describe('Signup', () => {
 
       test('should display step size 3', () => {
         expect(wrapper.find(StepIndicator).prop('size')).toEqual(3)
+      })
+    })
+  })
+
+  describe('given <DiscountAppliedBar>', () => {
+    let wrapper
+
+    describe('when state is hidden', () => {
+      beforeEach(() => {
+        wrapper = shallow(<Signup promoModalVisible={false} promoBannerState={{ hide: true }} />, { context })
+      })
+
+      test('should hide DiscountAppliedBar element', () => {
+        expect(wrapper.find(DiscountAppliedBar).prop('promoModalVisible')).toBe(false)
+        expect(wrapper.find(DiscountAppliedBar).prop('isPromoBarHidden')).toBe(true)
+      })
+
+      test('should add discountApplied css class', () => {
+        expect(wrapper.hasClass(css.discountApplied)).toBe(true)
+      })
+    })
+
+    describe('when state is visible', () => {
+      beforeEach(() => {
+        wrapper = shallow(<Signup promoModalVisible promoBannerState={{ hide: false }} />, { context })
+      })
+
+      test('should show DiscountAppliedBar element', () => {
+        expect(wrapper.find(DiscountAppliedBar).prop('promoModalVisible')).toBe(true)
+        expect(wrapper.find(DiscountAppliedBar).prop('isPromoBarHidden')).toBe(false)
+      })
+
+      test('should add discountApplied css class', () => {
+        expect(wrapper.hasClass(css.discountApplied)).toBe(false)
       })
     })
   })

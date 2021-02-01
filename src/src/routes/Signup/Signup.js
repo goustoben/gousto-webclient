@@ -45,11 +45,10 @@ const propTypes = {
   isPricingClarityEnabled: PropTypes.bool,
   orderDiscount: PropTypes.string,
   menuLoadBoxPrices: PropTypes.func.isRequired,
-  isDiscountAppliedBarEnabled: PropTypes.bool,
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
     hide: PropTypes.bool,
-  }).isRequired,
+  }),
   trackDiscountVisibility: PropTypes.func,
 }
 
@@ -67,10 +66,12 @@ const defaultProps = {
     stepName: '',
   },
   currentStepName: '',
+  promoBannerState: {
+    hide: true,
+  },
   isTastePreferencesEnabled: false,
   isPricingClarityEnabled: false,
   orderDiscount: '',
-  isDiscountAppliedBarEnabled: false,
   trackDiscountVisibility: () => {},
 }
 
@@ -232,7 +233,6 @@ class Signup extends PureComponent {
     const {
       isPricingClarityEnabled,
       stepName,
-      isDiscountAppliedBarEnabled,
       promoModalVisible,
       promoBannerState,
       trackDiscountVisibility,
@@ -249,7 +249,7 @@ class Signup extends PureComponent {
 
     const pricingMinHeight = isPricingClarityEnabled && (isPostcodeStep || isDeliveryStep)
     const autosizeAnimationContainer = isPricingClarityEnabled && isBoxSizeStep
-    const isDiscountApplied = isDiscountAppliedBarEnabled && (!promoModalVisible && promoBannerState && promoBannerState.hide)
+    const isDiscountApplied = !promoModalVisible && promoBannerState.hide
 
     return (
       <div className={classNames(
@@ -269,14 +269,12 @@ class Signup extends PureComponent {
             `,
           }]}
         />
-        {isDiscountAppliedBarEnabled && (
-          <DiscountAppliedBar
-            promoModalVisible={promoModalVisible}
-            isPromoBarHidden={promoBannerState.hide}
-            trackDiscountVisibility={trackDiscountVisibility}
-            wizardStep={currentStepName}
-          />
-        )}
+        <DiscountAppliedBar
+          promoModalVisible={promoModalVisible}
+          isPromoBarHidden={promoBannerState.hide}
+          trackDiscountVisibility={trackDiscountVisibility}
+          wizardStep={currentStepName}
+        />
         <div className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}>
           <div className={classNames(css.animationContainer, { [css.autosize]: autosizeAnimationContainer })}>
             <div className={css.stepIndicatorContainer}>

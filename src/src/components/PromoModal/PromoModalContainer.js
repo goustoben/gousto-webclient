@@ -76,6 +76,5 @@ const mapStateToProps = (state) => {
 
 export const PromoModalContainer = connect(mapStateToProps, {
   promoApply: actions.promoApply,
-  close: actions.promoCloseModal,
   trackUTMAndPromoCode,
 })(PromoModal)

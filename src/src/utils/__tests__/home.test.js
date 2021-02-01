@@ -135,7 +135,8 @@ describe('getPromoBannerState', () => {
     }),
     auth: Immutable.fromJS({
       isAuthenticated: false
-    })
+    }),
+    error: Immutable.fromJS({})
   }
 
   const expectedPromoCode = home.promo.mayCode

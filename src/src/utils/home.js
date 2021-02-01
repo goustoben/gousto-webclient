@@ -4,6 +4,7 @@ import {
   getIsSignupReductionEnabled,
 } from 'selectors/features'
 import home from 'config/home'
+import {actionTypes} from '../actions/actionTypes'
 
 export const promoApplicable = (isAuthenticated, criteria) => {
   switch (criteria) {
@@ -30,7 +31,10 @@ export const getPromoBannerState = (state, ownPromoCode, propsLocation) => {
   const hasCurrentPromo = currentPromo.length > 0
   const hasQueryStringPromo = queryStringPromo.length > 0
 
+  const hasError = !!state.error.get(actionTypes.PROMO_GET) || !!state.error.get(actionTypes.PROMO_APPLY)
+
   const hide = isAuthenticated
+    || hasError
     || hasBasketPromo
     || hasQueryStringPromo
     || hasCurrentPromo
