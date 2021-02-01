@@ -28,7 +28,7 @@ describe('Postcode', () => {
 
   describe('when find address button is clicked', () => {
     beforeEach(() => {
-      wrapper.find('[data-testing="checkoutFindAddressButton"]').simulate('click')
+      wrapper.find('[testingSelector="checkoutFindAddressButton"]').simulate('click')
     })
 
     test('then onPostcodeLookup should be called with proper parameter', () => {

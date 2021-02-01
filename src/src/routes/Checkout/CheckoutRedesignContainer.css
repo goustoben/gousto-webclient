@@ -1,6 +1,6 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value FontFamilyAxiformaBook from 'design-language/typography.css';
-@value Mackerel, White from 'styles/colors.css';
+@value Mackerel, White, Oyster, Bluecheese, Radish from 'styles/colors.css';
 
 .sectionRedesignContainer {
   border-bottom: 1px solid Mackerel;
@@ -14,6 +14,10 @@
     padding: 1.5rem 1.5rem 2rem;
     margin-bottom: 1.5rem;
   }
+
+  button {
+    height: 3rem;
+  }
 }
 
 .inputContainer {
@@ -26,4 +30,35 @@
   @media BreakpointFromMedium {
     margin: 0 0 1.5rem 0;
   }
+}
+
+.inputRedesign {
+  composes: fontStyleBody from 'design-language/typography.css';
+  padding: 0 0.75rem;
+  border-color: Oyster;
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  height: 3rem;
+
+  &:hover {
+    border: 1px solid Bluecheese !important;
+  }
+
+  &:focus {
+    border: 2px solid Bluecheese !important;
+  }
+}
+
+.inputErrorRedesign {
+  background: White;
+  border: 2px solid Radish;
+}
+
+.prefixPadding {
+  padding-left: 4rem;
+}
+
+.relative {
+  position: relative;
 }

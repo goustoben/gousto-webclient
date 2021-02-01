@@ -26,7 +26,6 @@ describe('Given I’m a gousto logged-out website visitor', () => {
 
       describe('And when I click on `Can’t find your address` button', () => {
         before(() => {
-          cy.get('[data-testing="checkoutFindAddressButton"]').click()
           cy.get('[data-testing="addressNotFound"]').click()
         })
 

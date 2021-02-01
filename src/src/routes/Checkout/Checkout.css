@@ -59,6 +59,7 @@
   @media BreakpointFromMedium {
     display: block;
     border: 1px solid Mackerel;
+    height: 100%;
   }
 
   @media BreakpointFromMedium and BreakpointToLarge {

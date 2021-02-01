@@ -1,7 +1,8 @@
 import { addPrefix } from 'validations/util'
 import addressRules from 'validations/address'
+import regExp from './regularExpressions'
 
-const rules = {
+const rules = (isCheckoutOverhaulEnabled) => ({
   phone: {
     field: 'phone number',
     rules: [
@@ -9,7 +10,35 @@ const rules = {
       { name: 'isLength', options: { max: 10 } },
     ],
   },
-}
+  firstName: {
+    field: 'first name',
+    rules: [
+      { name: 'isLength', options: { min: 1 } },
+      { name: 'isLength', options: { max: 200 } },
+      { name: 'matches', options: regExp.name },
+    ],
+  },
+  lastName: {
+    field: 'last name',
+    rules: [
+      { name: 'isLength', options: { min: 1 } },
+      { name: 'isLength', options: { max: 200 } },
+      { name: 'matches', options: regExp.name },
+    ],
+  },
+  ...(isCheckoutOverhaulEnabled && {
+    deliveryInstruction: {
+      field: 'dropdown',
+      rules: [(formValues) => {
+        const isDeliveryInstruction = formValues && formValues.delivery
+          && formValues.delivery.deliveryInstruction
+          && (formValues.delivery.deliveryInstruction === 'Please select an option')
+
+        return (isDeliveryInstruction ? { errorMessage: 'Delivery instruction is required' } : true)
+      }]
+    }
+  }),
+})
 
 /**
  * Dynamic delivery rules, designed for
@@ -56,9 +85,9 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
  * @param formSectionName
  * @returns {{}}
  */
-export default formSectionName => (formValues) => {
+export default formSectionName => (formValues, isCheckoutOverhaulEnabled) => {
   const combinedRulesWithPrefix = addPrefix(formSectionName, {
-    ...rules,
+    ...rules(isCheckoutOverhaulEnabled),
     ...deliveryExtraRules(formValues, formSectionName),
   })
   const addressRulesWithPrefix = addressRules(formSectionName)(formValues)

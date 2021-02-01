@@ -7,9 +7,9 @@ import { onEnter } from 'utils/accessibility'
 import { Login } from 'Login'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
-import { CTA } from 'goustouicomponents'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
+import CheckoutButton from '../CheckoutButton'
 import { fieldsConfig } from './fieldsConfig'
 import css from './AboutYou.css'
 import redesignCss from '../../CheckoutRedesignContainer.css'
@@ -195,16 +195,12 @@ class AboutYou extends PureComponent {
           )}
           {this.renderFields()}
           {isCheckoutOverhaulEnabled && (
-            <CTA
-              testingSelector="checkoutCTA"
+            <CheckoutButton
               onClick={this.handleSubmit}
-              isLoading={submitting}
-              isFullWidth
-              isDisabled={!email || !password}
-              size="small"
-            >
-              Continue to Delivery
-            </CTA>
+              submitting={submitting}
+              isDisabled={(!email || !password)}
+              stepName="Continue to Delivery"
+            />
           )}
           <Overlay
             open={isLoginOpen}

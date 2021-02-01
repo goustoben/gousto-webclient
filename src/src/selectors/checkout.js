@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 
 export const hasCheckoutError = state => {
   const errors = state.checkout.get('errors')
@@ -9,14 +10,16 @@ export const hasCheckoutError = state => {
   return errors.filter(error => error).size > 0
 }
 
-export const getAboutYouFormName = (state, isCheckoutOverhaulEnabled) => {
+export const getAboutYouFormName = (state) => {
   const { request } = state
+  const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
 
   return request.get('browser') === 'mobile' && !isCheckoutOverhaulEnabled ? 'yourdetails' : 'aboutyou'
 }
 
-export const getDeliveryFormName = (state, isCheckoutOverhaulEnabled) => {
+export const getDeliveryFormName = (state) => {
   const { request } = state
+  const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
 
   return request.get('browser') === 'mobile' && !isCheckoutOverhaulEnabled ? 'yourdetails' : 'delivery'
 }

@@ -394,7 +394,7 @@ function userProspect() {
   return async (dispatch, getState) => {
     const { basket, routing } = getState()
     const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(getState())
-    const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutOverhaulEnabled)
+    const aboutYouFormName = getAboutYouFormName(getState())
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
       const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')
@@ -625,20 +625,15 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
     const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
     try {
       const { form, basket, promoAgeVerified } = state
-      const deliveryFormName = getDeliveryFormName(state, isCheckoutOverhaulEnabled)
-      const aboutYouFormName = getAboutYouFormName(state, isCheckoutOverhaulEnabled)
+      const deliveryFormName = getDeliveryFormName(state)
+      const aboutYouFormName = getAboutYouFormName(state)
 
       const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
       const payment = Immutable.fromJS(form.payment.values).get('payment')
 
       const isCard = getCurrentPaymentMethod(state) === PaymentMethod.Card
-
-      let deliveryAddress = getAddress(delivery)
-      if (!deliveryAddress.postcode && isCheckoutOverhaulEnabled) {
-        const yourDetails = Immutable.fromJS(form.yourdetails.values).get('delivery')
-        deliveryAddress = getAddress(yourDetails)
-      }
+      const deliveryAddress = getAddress(delivery)
 
       const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
@@ -672,8 +667,8 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
           tariff_id: basket.get('tariffId', ''),
           phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
           email: aboutYou.get('email'),
-          name_first: isCheckoutOverhaulEnabled ? 'test' : aboutYou.get('firstName').trim(),
-          name_last: isCheckoutOverhaulEnabled ? 'test' : aboutYou.get('lastName').trim(),
+          name_first: isCheckoutOverhaulEnabled ? delivery.get('firstName').trim() : aboutYou.get('firstName').trim(),
+          name_last: isCheckoutOverhaulEnabled ? delivery.get('lastName').trim() : aboutYou.get('lastName').trim(),
           promo_code: basket.get('promoCode', ''),
           password: aboutYou.get('password'),
           age_verified: Number(promoAgeVerified || false),

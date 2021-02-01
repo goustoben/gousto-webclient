@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import formsCss from 'styles/forms.css'
 import InputWrapper from 'Form/InputWrapper'
 import css from './input.css'
+import redesignCss from '../../../routes/Checkout/CheckoutRedesignContainer.css'
 
 const propTypes = {
   additionalProps: PropTypes.shape({}),
@@ -124,7 +125,7 @@ export class TextInput extends Component {
     const { additionalProps, autocompleteOff, color, className, disabled, error, isFixed, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isCheckoutOverhaulEnabled, inputPrefix } = this.props
 
     return (
-      <span className={classNames({ [css.relative]: isCheckoutOverhaulEnabled && inputPrefix })}>
+      <div className={classNames({ [redesignCss.relative]: isCheckoutOverhaulEnabled && inputPrefix })}>
         <input
           { ...additionalProps }
           className={classNames(
@@ -135,9 +136,9 @@ export class TextInput extends Component {
               [formsCss.inputError]: error,
               [formsCss.disabled]: disabled,
               [css[textAlign]]: css[textAlign],
-              [css.inputRedesign]: isCheckoutOverhaulEnabled,
-              [css.inputErrorRedesign]: error && isCheckoutOverhaulEnabled,
-              [css.prefixPadding]: isCheckoutOverhaulEnabled && inputPrefix,
+              [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled,
+              [redesignCss.inputErrorRedesign]: error && isCheckoutOverhaulEnabled,
+              [redesignCss.prefixPadding]: isCheckoutOverhaulEnabled && inputPrefix,
             },
           )}
           placeholder={placeholder}
@@ -159,7 +160,7 @@ export class TextInput extends Component {
           onChange={() => {}}
         />
         {isCheckoutOverhaulEnabled && inputPrefix}
-      </span>
+      </div>
     )
   }
 }

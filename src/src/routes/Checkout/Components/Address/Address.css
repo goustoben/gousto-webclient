@@ -1,4 +1,5 @@
-@value Bluecheese, Radish, Radish40 from 'styles/colors.css';
+@value Bluecheese, Radish, Radish40, Oyster from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .flex {
 	composes: flex rowWrap from 'styles/flex.css';
@@ -60,4 +61,33 @@
 
 :global .deliveryDropdown select{
 	width: 100%;
+}
+
+.addressContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.deliveryAddress {
+  text-transform: none;
+  margin-bottom: 0.5rem;
+}
+
+.editAddressLink {
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  composes: fontStyleS from 'design-language/typography.module.css';
+  composes: fontBold from 'design-language/typography.css';
+}
+
+.enterAddressManually {
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.fieldContainer {
+  margin: 0.5rem 0;
 }

@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { hasCheckoutError, getPromoCodeValidationDetails, getAboutYouFormName } from 'selectors/checkout'
+import { hasCheckoutError, getPromoCodeValidationDetails, getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 
 function setDefaultState(browser) {
   return {
@@ -128,6 +128,37 @@ describe('checkout selectors', () => {
 
       test('then should return "aboutyou"', () => {
         expect(aboutYouFormNameOutput).toBe(expected)
+      })
+    })
+  })
+
+  describe('getDeliveryFormName', () => {
+    let deliveryFormNameOutput
+    let state
+
+    describe('when browser param is mobile', () => {
+      const expected = 'yourdetails'
+
+      beforeEach(() => {
+        state = setDefaultState('mobile')
+        deliveryFormNameOutput = getDeliveryFormName(state)
+      })
+
+      test('then should return "yourdetails"', () => {
+        expect(deliveryFormNameOutput).toBe(expected)
+      })
+    })
+
+    describe('and browser param is not mobile', () => {
+      const expected = 'delivery'
+
+      beforeEach(() => {
+        state = setDefaultState('web')
+        deliveryFormNameOutput = getDeliveryFormName(state)
+      })
+
+      test('then should return "delivery"', () => {
+        expect(deliveryFormNameOutput).toBe(expected)
       })
     })
   })

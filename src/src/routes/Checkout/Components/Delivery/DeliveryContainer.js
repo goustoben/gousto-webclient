@@ -8,7 +8,7 @@ import { trackUTMAndPromoCode } from 'actions/tracking'
 
 import { Delivery } from './Delivery'
 
-function mapStateToProps(sectionName) {
+export function mapStateToProps(sectionName) {
   return state => ({
     formName: getDeliveryFormName(state),
     sectionName,
@@ -44,12 +44,31 @@ export function validationMessages(sectionName) {
   })
 }
 
+export const getInitialValues = (state, sectionName) => {
+  const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
+
+  return {
+    [sectionName]: {
+      addressId: 'placeholder',
+      notFound: false,
+      addressType: 'home',
+      deliveryInstruction: isCheckoutOverhaulEnabled ? 'Please select an option' : 'Front Porch',
+      phone: state.basket.get('phone', ''),
+      addresses: [],
+      confirmed: false,
+      ...(isCheckoutOverhaulEnabled && {
+        firstName: '',
+        lastName: '',
+      }),
+    },
+  }
+}
+
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
       const formName = getDeliveryFormName(state)
       const delivery = state.form[formName]
-
       const initialValues = delivery && delivery.initial ? delivery.initial : {}
 
       return {
@@ -61,16 +80,8 @@ export function addInitialValues(Component, { sectionName }) {
         initialValues: {
           ...ownProps.initialValues,
           ...initialValues,
-          [sectionName]: {
-            addressId: 'placeholder',
-            notFound: false,
-            addressType: 'home',
-            deliveryInstruction: 'Front Porch',
-            phone: state.basket.get('phone', ''),
-            addresses: [],
-            confirmed: false,
-          },
-        },
+          ...getInitialValues(state, sectionName)
+        }
       }
     },
     { trackUTMAndPromoCode })(Component)

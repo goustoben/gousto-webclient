@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import css from '../Delivery.css'
 import { DeliveryInstruction } from './DeliveryInstruction'
 import DeliveryPhoneNumber from './DeliveryPhoneNumber'
 import { DeliveryEducationBanner } from './DeliveryEducationBanner'
-import { DeliveryCard } from '../DeliveryCard'
 
 class DeliveryDetails extends PureComponent {
   reset = (field, value = '') => {
@@ -18,38 +17,25 @@ class DeliveryDetails extends PureComponent {
   }
 
   render() {
-    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName, isCheckoutOverhaulEnabled } = this.props
+    const { formValues, deliveryAddress, onAddressEdit, receiveRef, sectionName } = this.props
 
     return (
       <div className={css.deliveryInfoContainer}>
-        {isCheckoutOverhaulEnabled
-          ? (
-            <DeliveryCard iconName="icon-home">
-              <div className={css.addressContainer}>
-                <p className={css.deliveryAddress}>{showAddress(deliveryAddress).toLowerCase()}</p>
-                <div>
-                  <span className={css.editAddressLink}>Edit address</span>
-                </div>
-              </div>
-            </DeliveryCard>
-          )
-          : (
-            <Fragment>
-              <h4>Deliver to</h4>
-              <p className={css.textSM} data-testing="checkoutDeliveryDetailsAddress">
-                {showAddress(deliveryAddress)}
-                &nbsp;
-                <span
-                  onClick={onAddressEdit}
-                  className={css.linkBase}
-                  data-testing="checkoutDeliveryDetailsEditAddress"
-                >
-                  Edit address&nbsp;
-                  <span className={css.linkRight} />
-                </span>
-              </p>
-            </Fragment>
-          )}
+        <div>
+          <h4>Deliver to</h4>
+          <p className={css.textSM} data-testing="checkoutDeliveryDetailsAddress">
+            {showAddress(deliveryAddress)}
+            &nbsp;
+            <span
+              onClick={onAddressEdit}
+              className={css.linkBase}
+              data-testing="checkoutDeliveryDetailsEditAddress"
+            >
+              Edit address&nbsp;
+              <span className={css.linkRight} />
+            </span>
+          </p>
+        </div>
         <DeliveryInstruction
           value={formValues.deliveryInstruction}
           reset={this.reset}
@@ -75,7 +61,6 @@ DeliveryDetails.propTypes = {
   formName: PropTypes.string.isRequired,
   untouch: PropTypes.func.isRequired,
   onAddressEdit: PropTypes.func.isRequired,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 DeliveryDetails.defaultProps = {
@@ -83,7 +68,6 @@ DeliveryDetails.defaultProps = {
   formValues: {},
   receiveRef: () => { },
   sectionName: 'delivery',
-  isCheckoutOverhaulEnabled: false,
 }
 
 export {

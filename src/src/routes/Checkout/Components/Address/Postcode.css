@@ -1,4 +1,5 @@
 @value ScreenXXSMin from 'styles/screenSizes.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .postCodeField, .findAddressButton {
 	flex: 1 100%;
@@ -21,5 +22,36 @@
 
 .findAddressButton {
 	flex: 2 0;
-	margin-top: 28px;
+  margin-top: 0.85rem;
+
+  @media BreakpointFromMedium {
+    margin-top: 0.5rem;
+  }
+}
+
+.postcodeContainer {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.postCodeFieldRedesign {
+  max-width: 15.25rem;
+  flex: 1 1 100%;
+  margin: 0 0.5rem 0.5rem 0;
+
+  @media BreakpointFromMedium {
+    margin: 0 1rem 1rem 0;
+  }
+}
+
+.searchCTA {
+  margin: 2rem 0 0;
+}
+
+.deliveryDropdown {
+  margin-bottom: 0.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1rem;
+  }
 }
