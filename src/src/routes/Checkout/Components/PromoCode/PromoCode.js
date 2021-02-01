@@ -6,6 +6,7 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import configCheckout from 'config/checkout'
 import css from './PromoCode.css'
+import redesignCss from '../../CheckoutRedesignContainer.css'
 
 const propTypes = {
   promoCode: PropTypes.string,
@@ -174,7 +175,12 @@ class PromoCode extends PureComponent {
 
   renderMessage = () => {
     const { errorMsg } = this.state
-    if (errorMsg) return (<p className={css.errorMsg}>{errorMsg}</p>)
+    const { isCheckoutOverhaulEnabled } = this.props
+    const checkoutOverhaulError = isCheckoutOverhaulEnabled && errorMsg.includes('promocode')
+      ? errorMsg.replace('promocode', 'discount code') : errorMsg
+    if (errorMsg) {
+      return (<p className={css.errorMsg}>{checkoutOverhaulError}</p>)
+    }
 
     return null
   }
@@ -199,7 +205,7 @@ class PromoCode extends PureComponent {
                 value={promoCode}
                 onInput={this.handleInput}
                 onKeyUp={this.handleKeyUp}
-                className={classNames(this.getInputClassName(), { [css.inputRedesign]: isCheckoutOverhaulEnabled })}
+                className={classNames(this.getInputClassName(), { [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled })}
               />
               {isCheckoutOverhaulEnabled && <span className={classNames(css.inputIcon, inputIcon, { [css.isHidden]: !promoCode })} />}
             </div>

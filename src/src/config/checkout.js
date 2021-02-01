@@ -71,7 +71,8 @@ module.exports = {
   },
   maxNameLen: 255,
   promoValidationTime: 500,
-  leaveBoxOptions: [
+  leaveBoxOptions: (isCheckoutOverhaulEnabled) => [
+    (isCheckoutOverhaulEnabled ? 'Please select an option' : ''),
     'Front Porch',
     'Back Porch',
     'Garage',

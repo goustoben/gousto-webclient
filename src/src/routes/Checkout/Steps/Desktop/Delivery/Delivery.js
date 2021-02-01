@@ -10,7 +10,7 @@ const sectionName = 'delivery'
 
 const DeliverySection = DeliveryContainer(sectionName)
 
-export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef, trackUTMAndPromoCode }) => {
+export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef, trackUTMAndPromoCode, isCheckoutOverhaulEnabled }) => {
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   const handleClick = () => {
@@ -23,8 +23,9 @@ export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scr
       <DeliverySection
         receiveRef={receiveRef}
         scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+        submit={submit}
       />
-      {isAddressConfirmed && (
+      {isAddressConfirmed && !isCheckoutOverhaulEnabled && (
         <CheckoutButton
           onClick={handleClick}
           stepName={`Next: ${nextStepName}`}
@@ -41,6 +42,7 @@ DeliveryStep.propTypes = {
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -49,6 +51,7 @@ DeliveryStep.defaultProps = {
   formValues: {},
   receiveRef: () => { },
   scrollToFirstMatchingRef: () => { },
+  isCheckoutOverhaulEnabled: false,
 }
 
 const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), sectionName, validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports

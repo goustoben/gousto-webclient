@@ -1,6 +1,6 @@
 @value SpacingLG, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value ScreenMDMin, ScreenSMMax from 'styles/screenSizes.css';
-@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White, BlueberryLight, Oyster from 'styles/colors.css';
+@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White, BlueberryLight, Oyster, LightestAccessible from 'styles/colors.css';
 @value avenirBookFontStack from 'styles/typography.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
@@ -105,6 +105,7 @@
 
 .deliveryFieldWrapper{
 	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+  margin-bottom: 1.5rem;
 }
 
 .labelWithMargin {
@@ -185,6 +186,14 @@
 	min-width: 60px;
 }
 
+.phonePrefixRedesign {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  color: LightestAccessible;
+  composes: fontStyleBody from 'design-language/typography.module.css';
+}
+
 :global .deliveryDropdown select{
 	width: 100%;
 }
@@ -219,11 +228,14 @@
 }
 
 .deliveryEducationBanner {
-  padding: 0.75rem 1rem;
-  margin: 1rem 0 1rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
   background-color: BlueberryLight;
-  composes: fontStyleS from 'design-language/typography.module.css';
-  composes: fontWeightBold from 'design-language/typography.module.css';
+  composes: fontStyleBody from 'design-language/typography.module.css';
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
 
   p {
     margin: 0;
@@ -234,12 +246,19 @@
   display: flex;
 }
 
+.deliverySection:first-child {
+  margin-bottom: 1rem;
+}
+
+.iconSize {
+  min-width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
+}
+
 .deliverySlot {
-  composes: fa-basic-class fa-truck from 'styles/vendor/font-awesome-module.css';
-  color: Bluecheese;
-  transform: scale(-1, 1);
-  font-size: 1rem;
-  margin-right: 0.5rem;
+  composes: iconSize;
+  background: url('media/svgs/icon-delivery-new.svg');
 
   p {
     margin-bottom: 0.25rem;
@@ -251,30 +270,32 @@
 }
 
 .insulatedPackaging {
-  background: url('media/svgs/icon-snowflake.svg');
-  min-width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
+  background: url('media/svgs/icon-cool.svg');
+  composes: iconSize;
 }
 
 .boldDeliveryDate {
   composes: fontBold from 'design-language/typography.module.css';
 }
 
-.addressContainer {
-  display: flex;
-  flex-direction: column;
+.rowRedesign {
+  margin: 0;
 }
 
-.deliveryAddress {
-  text-transform: none;
-  margin-bottom: 0.5rem;
+.deliveryFieldWrapperRedesign {
+  margin: 0;
 }
 
-.editAddressLink {
-  color: Bluecheese;
-  border-bottom: 1px solid Oyster;
-  text-transform: capitalize;
-  composes: fontStyleS from 'design-language/typography.module.css';
-  composes: fontBold from 'design-language/typography.css';
+.namesContainer {
+  display: block;
+
+  @media BreakpointFromMedium {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    > div {
+      max-width: 16.75rem;
+    }
+  }
 }

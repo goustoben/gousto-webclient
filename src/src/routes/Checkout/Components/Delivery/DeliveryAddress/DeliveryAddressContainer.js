@@ -1,6 +1,15 @@
 import { connect } from 'react-redux'
 import { Map } from 'immutable'
-import { change, getFormAsyncErrors, getFormMeta, getFormSyncErrors, registerField, touch, untouch } from 'redux-form'
+import {
+  change,
+  getFormAsyncErrors,
+  getFormMeta,
+  getFormSyncErrors,
+  getFormValues,
+  registerField,
+  touch,
+  untouch
+} from 'redux-form'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import actions from 'actions'
@@ -18,6 +27,8 @@ function getCutoffDate(state) {
 }
 
 function mapStateToProps(state, ownProps) {
+  const formValues = getFormValues(ownProps.formName)(state)
+
   return {
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
@@ -31,6 +42,7 @@ function mapStateToProps(state, ownProps) {
     isNDDExperiment: getNDDFeatureFlagVal(state),
     isMobile: state.request.get('browser') === 'mobile',
     deliveryTariffId: getDeliveryTariffId(state.user, getNDDFeatureValue(state)),
+    deliveryAddress: formValues && formValues[ownProps.sectionName] ? formValues[ownProps.sectionName] : {},
   }
 }
 

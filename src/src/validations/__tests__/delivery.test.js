@@ -25,9 +25,9 @@ function getRules() {
 describe('When formSectionName is called', () => {
   let output
 
-  describe('And formValues is undefined', () => {
+  describe('And formValues is {}', () => {
     beforeEach(() => {
-      output = formSectionName()
+      output = formSectionName({})
     })
 
     test('Then validation rules should not have delivery.deliveryInstructionsCustom', () => {
@@ -54,6 +54,23 @@ describe('When formSectionName is called', () => {
       const expected = getRules()
 
       expect(output['delivery.deliveryInstructionsCustom']).toEqual(expected)
+    })
+  })
+
+  describe('And isCheckoutOverhaulEnabled is true', () => {
+    const values = {
+      delivery: {
+        deliveryInstruction: 'Please select an option'
+      }
+    }
+
+    beforeEach(() => {
+      output = formSectionName('delivery')(values, true)
+    })
+
+    test('Then delivery.phone and delivery.deliveryInstruction should have expected rules', () => {
+      const expectedDeliveryRules = { errorMessage: 'Delivery instruction is required' }
+      expect(output['delivery.deliveryInstruction'].rules[0](values)).toEqual(expectedDeliveryRules)
     })
   })
 })

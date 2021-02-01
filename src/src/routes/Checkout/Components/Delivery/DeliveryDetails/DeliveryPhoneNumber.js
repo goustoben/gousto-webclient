@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'redux-form'
+import classNames from 'classnames'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import css from '../Delivery.css'
+import redesignCss from '../../../CheckoutRedesignContainer.css'
 
 class DeliveryPhoneNumber extends React.PureComponent {
   static propTypes = {
     receiveRef: PropTypes.func,
     sectionName: PropTypes.string,
+    isCheckoutOverhaulEnabled: PropTypes.bool,
   }
 
   static defaultProps = {
     receiveRef: () => {},
+    sectionName: 'delivery',
+    isCheckoutOverhaulEnabled: false,
   }
 
   constructor(props) {
@@ -87,17 +92,25 @@ class DeliveryPhoneNumber extends React.PureComponent {
   }
 
   render() {
-    const inputPrefix = (
-      <div className={css.phonePrefix}>
-        <span className={css.prefix} />
-        <span className={this.state.addZero ? css.withZero : css.withoutZero} />
-      </div>
-    )
+    const { receiveRef, sectionName, isCheckoutOverhaulEnabled } = this.props
+    let inputPrefix
+    if (isCheckoutOverhaulEnabled) {
+      inputPrefix = (
+        <span className={css.phonePrefixRedesign}>+44(0)</span>
+      )
+    } else {
+      inputPrefix = (
+        <div className={css.phonePrefix}>
+          <span className={css.prefix} />
+          <span className={this.state.addZero ? css.withZero : css.withoutZero} />
+        </div>
+      )
+    }
 
     return (
-      <div className={css.deliveryFieldWrapper}>
-        <div className={css.row}>
-          <div className={css.colMDhalf}>
+      <div className={classNames(css.deliveryFieldWrapper, { [css.deliveryFieldWrapperRedesign]: isCheckoutOverhaulEnabled })}>
+        <div className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}>
+          <div className={classNames(css.colMDhalf, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
             <Field
               name="phone"
               component={ReduxFormInput}
@@ -107,13 +120,14 @@ class DeliveryPhoneNumber extends React.PureComponent {
               required
               onKeyDown={this.handleKeyDown}
               color="gray"
-              subLabel="For account queries"
+              subLabel={isCheckoutOverhaulEnabled ? 'Used to update you on your delivery' : 'For account queries'}
               label="Phone number"
               mask
               withRef
-              ref={this.props.receiveRef}
-              refId={`${this.props.sectionName}.phone`}
+              ref={receiveRef}
+              refId={`${sectionName}.phone`}
               data-testing="checkoutPhoneNumberInput"
+              isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
             />
           </div>
         </div>

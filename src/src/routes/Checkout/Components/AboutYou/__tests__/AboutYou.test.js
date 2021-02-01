@@ -26,7 +26,7 @@ describe('Given AboutYou component', () => {
   })
 
   test('should not have CheckoutButton button', () => {
-    expect(wrapper.find('CTA')).toHaveLength(0)
+    expect(wrapper.find('Connect(CheckoutButton)')).toHaveLength(0)
   })
 
   describe('when isCheckoutOverhaulEnabled is true', () => {
@@ -37,15 +37,15 @@ describe('Given AboutYou component', () => {
     })
 
     test('then CheckoutButton should be displayed', () => {
-      expect(wrapper.find('CTA')).toHaveLength(1)
+      expect(wrapper.find('Connect(CheckoutButton)')).toHaveLength(1)
     })
 
-    describe('and CTA is displayed and clicked', () => {
+    describe('and CheckoutButton is clicked', () => {
       describe('and email && password are undefined', () => {
         test('then trackUTMAndPromoCode should not be called', () => {
           expect(submit).not.toBeCalled()
           expect(trackUTMAndPromoCode).not.toBeCalled()
-          wrapper.find('CTA').simulate('click')
+          wrapper.find('Connect(CheckoutButton)').simulate('click')
           expect(submit).toBeCalled()
           expect(trackUTMAndPromoCode).not.toBeCalled()
         })
@@ -66,7 +66,7 @@ describe('Given AboutYou component', () => {
           expect(trackUTMAndPromoCode).not.toBeCalled()
           expect(userProspect).not.toBeCalled()
           expect(submit).not.toBeCalled()
-          wrapper.find('CTA').simulate('click')
+          wrapper.find('Connect(CheckoutButton)').simulate('click')
           expect(trackUTMAndPromoCode).toHaveBeenCalledWith('checkout_click_continue_to_delivery')
           expect(userProspect).toBeCalled()
           expect(submit).toBeCalled()

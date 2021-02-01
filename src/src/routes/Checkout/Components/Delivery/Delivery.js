@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { Fragment } from 'react'
 import moment from 'moment'
 import Immutable from 'immutable'
-import { FormSection } from 'redux-form'
+import classNames from 'classnames'
+import { Field, FormSection } from 'redux-form'
+import ReduxFormInput from 'Form/ReduxFormInput'
 import * as deliveryUtils from 'routes/Checkout/utils/delivery'
 import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
@@ -13,7 +15,9 @@ import Subscription from 'routes/Checkout/Components/Subscription'
 import DeliveryDetails from './DeliveryDetails'
 import DeliveryAddress from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
+import { SectionHeader } from '../SectionHeader'
 
+import redesignCss from '../../CheckoutRedesignContainer.css'
 import css from './Delivery.css'
 
 const propTypes = {
@@ -30,6 +34,7 @@ const propTypes = {
   slotId: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   isCheckoutOverhaulEnabled: PropTypes.bool,
+  submit: PropTypes.func,
 }
 
 const defaultProps = {
@@ -43,6 +48,7 @@ const defaultProps = {
   triggerSubmit: () => {},
   scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
+  submit: () => {},
 }
 
 export class Delivery extends React.PureComponent {
@@ -69,7 +75,7 @@ export class Delivery extends React.PureComponent {
   }
 
   renderAddress = () => {
-    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef } = this.props
+    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef, isCheckoutOverhaulEnabled, submit } = this.props
 
     return (
       <div>
@@ -82,6 +88,8 @@ export class Delivery extends React.PureComponent {
           triggerSubmit={triggerSubmit}
           receiveRef={receiveRef}
           scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+          isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
+          submit={submit}
         />
       </div>
     )
@@ -126,16 +134,52 @@ export class Delivery extends React.PureComponent {
 
     return (
       <div ref={el => { this.container = el }}>
-        <Subscription sectionName={sectionName} />
-        <div className={css.deliveryContainer} data-testing="checkoutDeliverySection">
-          {isCheckoutOverhaulEnabled && (
-            <DeliveryCard iconName="icon-calendar">
-              {this.renderDeliveryDay()}
-            </DeliveryCard>
-          )}
-          <h3 className={css.header}>Delivery details</h3>
+        {!isCheckoutOverhaulEnabled && <Subscription sectionName={sectionName} />}
+        <div
+          className={classNames({
+            [css.deliveryContainer]: !isCheckoutOverhaulEnabled,
+            [redesignCss.sectionRedesignContainer]: isCheckoutOverhaulEnabled,
+          })}
+          data-testing="checkoutDeliverySection"
+        >
+          {isCheckoutOverhaulEnabled
+            ? (
+              <Fragment>
+                <DeliveryCard iconName="icon-calendar">
+                  {this.renderDeliveryDay()}
+                </DeliveryCard>
+                <SectionHeader title="Delivery details" />
+              </Fragment>
+            )
+            : <h3 className={css.header}>Delivery details</h3>}
           <FormSection name={sectionName}>
-            {deliveryUtils.isAddressConfirmed(formValues) ? this.renderDetails() : this.renderAddress()}
+            {isCheckoutOverhaulEnabled && (
+              <div className={css.namesContainer}>
+                <div className={redesignCss.inputContainer}>
+                  <Field
+                    name="firstName"
+                    component={ReduxFormInput}
+                    inputType="Input"
+                    label="First name"
+                    refId={`${sectionName}.firstName`}
+                    dataTesting="checkoutFirstNameInput"
+                    isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
+                  />
+                </div>
+                <div className={redesignCss.inputContainer}>
+                  <Field
+                    name="lastName"
+                    component={ReduxFormInput}
+                    inputType="Input"
+                    label="Last name"
+                    refId={`${sectionName}.lastName`}
+                    dataTesting="checkoutLastNameInput"
+                    isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
+                  />
+                </div>
+              </div>
+            )}
+            {deliveryUtils.isAddressConfirmed(formValues) && !isCheckoutOverhaulEnabled ? this.renderDetails() : this.renderAddress()}
           </FormSection>
         </div>
       </div>
