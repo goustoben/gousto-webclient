@@ -3,7 +3,6 @@ import actions from 'actions'
 import {
   getIsTastePreferencesEnabled,
   getPricingClarityRedesign,
-  getIsDiscountAppliedBarEnabled,
 } from 'selectors/features'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
@@ -16,7 +15,6 @@ const mapStateToProps = (state, ownProps) => ({
   isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
   isPricingClarityEnabled: getPricingClarityRedesign(state),
   orderDiscount: state.promoStore.getIn([state.promoCurrent, 'details', 'discount-whole-order-percent']),
-  isDiscountAppliedBarEnabled: getIsDiscountAppliedBarEnabled(state),
   promoModalVisible: state.promoModalVisible,
   promoBannerState: getPromoBannerState(state),
 })

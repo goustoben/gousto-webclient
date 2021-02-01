@@ -155,46 +155,33 @@ const promoCloseModal = () => (
 
 const promoApply = () => (
   async (dispatch, getState) => {
-    if (!getState().pending.get(actionTypes.PROMO_APPLY, false)) {
-      const code = getState().promoCurrent
-      const hasAgeRestricted = getState().promoStore.getIn([code, 'hasAgeRestricted'], false)
-      dispatch(pending(actionTypes.PROMO_APPLY, true))
-      const ageVerified = getState().promoAgeVerified
+    const state = getState()
 
-      if (hasAgeRestricted) {
-        if (ageVerified) {
-          try {
-            if (getState().auth.get('isAuthenticated')) {
-              await dispatch(userActions.userVerifyAge(ageVerified, true))
-              await dispatch(userActions.userPromoApplyCode(code))
-            } else {
-              dispatch(basketPromoCodeChange(code))
-              await legacyVerifyAge()
-            }
-            await dispatch(menuLoadBoxPrices())
-          } catch (e) {
-            dispatch(pending(actionTypes.PROMO_APPLY, false))
-            dispatch(error(actionTypes.PROMO_APPLY, e.message))
-            throw e
-          }
-        }
-      } else {
-        if (getState().auth.get('isAuthenticated')) {
-          try {
-            await dispatch(userActions.userPromoApplyCode(code))
-            await dispatch(menuLoadBoxPrices())
-          } catch (e) {
-            dispatch(error(actionTypes.PROMO_APPLY, e))
-            dispatch(pending(actionTypes.PROMO_APPLY, false))
-            throw e
-          }
+    if (!state.pending.get(actionTypes.PROMO_APPLY, false)) {
+      dispatch(pending(actionTypes.PROMO_APPLY, true))
+
+      const code = state.promoCurrent
+      const hasAgeRestricted = state.promoStore.getIn([code, 'hasAgeRestricted'], false)
+      const isAuthenticated = state.auth.get('isAuthenticated')
+
+      try {
+        if (isAuthenticated) {
+          await dispatch(userActions.userPromoApplyCode(code))
         } else {
           dispatch(basketPromoCodeChange(code))
-          await dispatch(menuLoadBoxPrices())
-        }
-      }
 
-      dispatch(pending(actionTypes.PROMO_APPLY, false))
+          if (hasAgeRestricted) {
+            await legacyVerifyAge()
+          }
+        }
+
+        await dispatch(menuLoadBoxPrices())
+      } catch (e) {
+        dispatch(error(actionTypes.PROMO_APPLY, e.message))
+        throw e
+      } finally {
+        dispatch(pending(actionTypes.PROMO_APPLY, false))
+      }
 
       dispatch(promoCloseModal())
     }

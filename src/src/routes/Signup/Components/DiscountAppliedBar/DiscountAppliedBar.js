@@ -10,7 +10,7 @@ class DiscountAppliedBar extends Component {
     super(props)
     const { promoModalVisible, isPromoBarHidden } = props
     this.state = {
-      isHidden: promoModalVisible || !(!promoModalVisible && isPromoBarHidden),
+      isHidden: promoModalVisible || !isPromoBarHidden,
     }
   }
 
