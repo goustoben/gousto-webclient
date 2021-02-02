@@ -9,10 +9,15 @@ import {
 describe('cookie actions', () => {
   describe('cookiePolicyAcceptanceChange', () => {
     let dispatch
+    let cookieHelperSpy
 
     beforeEach(() => {
       dispatch = jest.fn()
-      cookieHelper.set = jest.fn()
+      cookieHelperSpy = jest.spyOn(cookieHelper, 'set')
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
     })
 
     test('COOKIE_POLICY_ACCEPTANCE_CHANGE action type is dispatched with value passed to the action', () => {
@@ -25,18 +30,20 @@ describe('cookie actions', () => {
     })
 
     test('cookie is set to the value passed to the action when in client', () => {
-      cookieHelper.set = jest.fn()
       cookiePolicyAcceptanceChange('isAcceptedValue')(dispatch)
-      expect(cookieHelper.set).toHaveBeenCalled()
-      expect(cookieHelper.set.mock.calls[0][1]).toEqual('cookie_policy_v2')
-      expect(cookieHelper.set.mock.calls[0][2]).toEqual({ isAccepted: 'isAcceptedValue' })
+
+      expect(cookieHelperSpy).toHaveBeenCalled()
+      expect(cookieHelperSpy.mock.calls[0][1]).toEqual('cookie_policy_v2')
+      expect(cookieHelperSpy.mock.calls[0][2]).toEqual({ isAccepted: 'isAcceptedValue' })
     })
 
     test('cookie is set to the value passed to the action when not in client', () => {
       __CLIENT__ = false // eslint-disable-line no-global-assign
-      cookieHelper.set = jest.fn()
+
       cookiePolicyAcceptanceChange(true)(dispatch)
-      expect(cookieHelper.set).not.toHaveBeenCalled()
+
+      expect(cookieHelperSpy).not.toHaveBeenCalled()
+
       __CLIENT__ = true // eslint-disable-line no-global-assign
     })
   })

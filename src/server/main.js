@@ -161,6 +161,7 @@ if (__HMR__) {
   /* eslint-disable global-require, import/no-extraneous-dependencies */
   const WebpackDevServer = require('webpack-dev-server')
   const webpack = require('webpack')
+  // eslint-disable-next-line import/no-unresolved
   const config = require('config/webpack.client.js')
   /* eslint-enable */
 

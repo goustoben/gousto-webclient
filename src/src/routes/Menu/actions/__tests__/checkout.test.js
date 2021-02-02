@@ -5,7 +5,7 @@ import { createPreviewOrder } from 'apis/orders'
 
 import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
-import { pending, error } from 'actions/status'
+import status from 'actions/status'
 
 import logger from 'utils/logger'
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
@@ -152,7 +152,7 @@ describe('menu checkout actions', () => {
           getState,
         )
 
-        expect(error).toHaveBeenCalledWith(
+        expect(status.error).toHaveBeenCalledWith(
           actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
           {
             message: 'standard-error',
@@ -194,7 +194,7 @@ describe('menu checkout actions', () => {
         getState,
       )
 
-      expect(error).toHaveBeenCalledWith(
+      expect(status.error).toHaveBeenCalledWith(
         actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
         {
           message: 'Missing data, persistent basket might be expired',
@@ -213,7 +213,7 @@ describe('menu checkout actions', () => {
         getState,
       )
 
-      expect(error).toHaveBeenCalledWith(
+      expect(status.error).toHaveBeenCalledWith(
         actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
         {
           message: 'Missing data, persistent basket might be expired',
@@ -311,7 +311,7 @@ describe('menu checkout actions', () => {
       const previewOrderAction = dispatch.mock.calls[0][0]
       previewOrderAction(dispatch, getState)
 
-      expect(pending).toHaveBeenCalledWith(
+      expect(status.pending).toHaveBeenCalledWith(
         actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
         true,
       )

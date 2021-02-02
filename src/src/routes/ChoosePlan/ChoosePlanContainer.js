@@ -5,7 +5,7 @@ import { areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal, arePric
 import { getNumPortions, getBasketTotalRecipes, getPromoCode } from 'selectors/basket'
 import { getTempPromoCode } from 'selectors/temp'
 import { ChoosePlan } from './ChoosePlan'
-import { calculateTransactionalOptionPrices} from './helper.js'
+import { calculateTransactionalOptionPrices} from './helper'
 
 const mapStateToProps = state => {
   const numPortions = getNumPortions(state)

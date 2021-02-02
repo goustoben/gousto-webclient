@@ -49,20 +49,25 @@ const fetchOrderIssuesMockResponse = {
   ],
 }
 
+// eslint-disable-next-line no-undef
 const fetchOrderIssues = jest.fn()
 fetchOrderIssues.mockResolvedValue(fetchOrderIssuesMockResponse)
 
+// eslint-disable-next-line no-undef
 const fetchRefundAmount = jest.fn()
 fetchRefundAmount.mockResolvedValue({ data: { value: 7.77, type: 'a-type' } })
 
+// eslint-disable-next-line no-undef
 const setComplaint = jest.fn()
 setComplaint.mockResolvedValue({})
 
+// eslint-disable-next-line no-undef
 const validateOrder = jest.fn()
 validateOrder.mockResolvedValue({
   data: { valid: true }
 })
 
+// eslint-disable-next-line no-undef
 const validateIngredients = jest.fn()
 validateIngredients.mockResolvedValue({
   data: { valid: true }

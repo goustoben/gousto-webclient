@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import css from './RAFOffer.css'
-import { YouGet } from './YouGet.js'
-import { YourFriendGets } from './YourFriendGets.js'
+import { YouGet } from './YouGet'
+import { YourFriendGets } from './YourFriendGets'
 
 const propTypes = {
   youGetOffer: PropTypes.string,

@@ -135,9 +135,10 @@ describe('given DeliverySimple is rendered', () => {
       describe('when the delivery tracking link is available', () => {
         const TRACKING_URL = 'https://test-tracking-url/order-id'
         let deliveryStatusContent
+        let windowOpenSpy
 
         beforeEach(() => {
-          windowUtils.windowOpen = jest.fn()
+          windowOpenSpy = jest.spyOn(windowUtils, 'windowOpen')
 
           wrapper.setProps({
             orders: upcomingOrders,
@@ -145,6 +146,10 @@ describe('given DeliverySimple is rendered', () => {
           })
 
           deliveryStatusContent = wrapper.find('ItemExpandable').find('.deliveryStatusContent')
+        })
+
+        afterEach(() => {
+          jest.clearAllMocks()
         })
 
         test('the loadOrderTrackingInfo is being passed the order id', () => {
@@ -168,7 +173,7 @@ describe('given DeliverySimple is rendered', () => {
           })
 
           test('the URL is opened on a new window with the delivery tracking URL in', () => {
-            expect(windowUtils.windowOpen).toHaveBeenCalledWith(TRACKING_URL)
+            expect(windowOpenSpy).toHaveBeenCalledWith(TRACKING_URL)
           })
 
           test('tracking for analytics is called correctly', () => {

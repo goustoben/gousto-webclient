@@ -64,10 +64,6 @@ jest.mock('apis/deliveries', () => ({
   })
 }))
 
-deliveriesUtils.getSlot = jest.fn()
-deliveriesUtils.getAvailableDeliveryDays = jest.fn()
-deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
-
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
 
 const { pending, error } = actionStatus
@@ -91,6 +87,11 @@ describe('order actions', () => {
     orderAction = 'transaction'
     dispatch = jest.fn()
     fetchOrder.mockClear()
+
+    jest.spyOn(deliveriesUtils, 'getSlot')
+    jest.spyOn(deliveriesUtils, 'getAvailableDeliveryDays')
+    jest.spyOn(deliveriesUtils, 'transformDaySlotLeadTimesToMockSlots')
+
     getState.mockReturnValue({
       auth: Immutable.Map({ accessToken: 'access-token' }),
       features: Immutable.Map({
@@ -572,8 +573,12 @@ describe('order actions', () => {
           })
 
           getState.mockReturnValue(state)
-          deliveriesUtils.getDeliveryTariffId = jest.fn().mockReturnValue(deliveryTariffId)
-          deliveriesUtils.getNDDFeatureFlagVal = jest.fn().mockReturnValue(false)
+          jest.spyOn(deliveriesUtils, 'getDeliveryTariffId').mockReturnValue(deliveryTariffId)
+          jest.spyOn(deliveriesUtils, 'getNDDFeatureFlagVal').mockReturnValue(false)
+        })
+
+        afterEach(() => {
+          jest.clearAllMocks()
         })
 
         describe('when call `orderGetDeliveryDays`', () => {
@@ -661,8 +666,8 @@ describe('order actions', () => {
           })
 
           getState.mockReturnValue(state)
-          deliveriesUtils.getDeliveryTariffId = jest.fn().mockReturnValue(deliveryTariffId)
-          deliveriesUtils.getNDDFeatureFlagVal = jest.fn().mockReturnValue(true)
+          jest.spyOn(deliveriesUtils, 'getDeliveryTariffId').mockReturnValue(deliveryTariffId)
+          jest.spyOn(deliveriesUtils, 'getNDDFeatureFlagVal').mockReturnValue(true)
         })
 
         describe('when call `orderGetDeliveryDays`', () => {
@@ -677,7 +682,7 @@ describe('order actions', () => {
           })
 
           test('then `ORDER_DELIVERY_DAYS_RECEIVE` cleared of error', () => {
-            expect(actionStatus.error).toHaveBeenCalledTimes(1)
+            expect(actionStatus.error).toHaveBeenCalledTimes(2)
             expect(actionStatus.error).toHaveBeenCalledWith('ORDER_DELIVERY_DAYS_RECEIVE', null)
           })
 

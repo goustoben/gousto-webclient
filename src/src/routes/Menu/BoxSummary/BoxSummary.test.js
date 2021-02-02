@@ -9,11 +9,6 @@ import BoxSummary from './BoxSummary'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 
-jest.mock('utils/basket', () => ({
-  basketSum: jest.fn(),
-  okRecipes: jest.fn()
-}))
-
 describe('<BoxSummary />', () => {
   let wrapper
   const defaultProps = {
@@ -53,8 +48,8 @@ describe('<BoxSummary />', () => {
 
   describe('rendering', () => {
     beforeEach(() => {
-      basketUtils.basketSum = jest.fn(() => false)
-      basketUtils.okRecipes = jest.fn(() => false)
+      jest.spyOn(basketUtils, 'basketSum').mockImplementation(() => false)
+      jest.spyOn(basketUtils, 'okRecipes').mockImplementation(() => false)
       boxDetailsVisibilityChangeSpy = jest.fn()
       wrapper = shallow(<BoxSummary
         {...defaultProps}
@@ -83,8 +78,8 @@ describe('<BoxSummary />', () => {
   describe('componentDidMount', () => {
     describe('when shouldShowBoxSummary is true', () => {
       beforeEach(() => {
-        basketUtils.basketSum = jest.fn(() => false)
-        basketUtils.okRecipes = jest.fn(() => false)
+        jest.spyOn(basketUtils, 'basketSum').mockImplementation(() => false)
+        jest.spyOn(basketUtils, 'okRecipes').mockImplementation(() => false)
         boxDetailsVisibilityChangeSpy = jest.fn()
         wrapper = shallow(<BoxSummary
           {...defaultProps}

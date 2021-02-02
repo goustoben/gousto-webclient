@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import basket from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
-import orderConfirmationActions from 'actions/orderConfirmation'
+import * as orderConfirmationActions from 'actions/orderConfirmation'
 import * as menuActions from 'actions/menu'
 import { updateOrderItems } from 'apis/orders'
 import utilsLogger from 'utils/logger'
@@ -55,11 +55,6 @@ describe('basket actions', () => {
     basketProceedToCheckout, basketRecipesInitialise,
     basketPostcodeChange,
     basketNumPortionChange, basketSlotChange, basketOrderLoaded } = basket
-
-  beforeEach(() => {
-    basketUtils.basketSumMock = jest.fn(() => false)
-    basketUtils.okRecipes = jest.fn(recipes => recipes)
-  })
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -518,7 +513,7 @@ describe('basket actions', () => {
           })
         })
 
-        basketUtils.naiveLimitReached = jest.fn(() => true)
+        jest.spyOn(basketUtils, 'naiveLimitReached').mockReturnValue(true)
         pricingActions.pricingRequest.mockReturnValue(pricingRequestAction)
 
         recipes = { 123: 1, 234: 2 }
