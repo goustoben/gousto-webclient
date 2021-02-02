@@ -1,7 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-// eslint-disable-next-line import/named
 import { menuLoadDays, redirect, menuLoadBoxPrices, changeStep } from 'actions'
 import { StepIndicator } from 'goustouicomponents'
 

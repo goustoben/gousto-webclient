@@ -4,6 +4,7 @@ import now from 'performance-now'
 
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
+import { preselectOrderIdForDeliveryDate } from 'actions/user'
 import { initialState as initialAuthState } from 'reducers/auth'
 import { initialState as initialBasketState } from 'reducers/basket'
 import { initialState as initialRequestState } from 'reducers/request'
@@ -25,6 +26,10 @@ import * as clientMetrics from '../../apis/clientMetrics'
 import fetchData from '../fetchData'
 
 import { setSlotFromIds, getPreselectedCollectionName, selectCollection } from '../utils'
+
+jest.mock('actions/user', () => ({
+  preselectOrderIdForDeliveryDate: jest.fn()
+}))
 
 jest.mock('../utils')
 jest.mock('utils/deliveries')
@@ -76,15 +81,14 @@ describe('menu fetchData', () => {
   actions.menuLoadOrderDetails = jest.fn()
   actions.menuLoadMenu = jest.fn()
   actions.menuLoadDays = jest.fn()
+  boxSummaryActions.boxSummaryDeliveryDaysLoad = jest.fn()
   actions.basketNumPortionChange = jest.fn()
   actions.userLoadOrders = jest.fn()
   actions.userLoadData = jest.fn()
-
   const getBrandInfoMock = safeJestMock(brandHeadersActions, 'getBrandInfo')
   const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
 
   beforeEach(() => {
-    jest.spyOn(boxSummaryActions, 'boxSummaryDeliveryDaysLoad')
     getState = () => state
     dispatch = jest.fn().mockResolvedValue(undefined)
     state = { ...originalState }
@@ -110,6 +114,7 @@ describe('menu fetchData', () => {
 
     fetchMenus.mockReset()
     fetchBrandInfo.mockReset()
+    preselectOrderIdForDeliveryDate.mockReset()
     sendClientMetricMock.mockReset()
   })
 

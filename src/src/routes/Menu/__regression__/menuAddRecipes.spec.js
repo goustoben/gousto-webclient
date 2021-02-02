@@ -25,7 +25,6 @@ describe('Given I am a logged out user', () => {
       cy.wait('@getDeliveryDays')
     })
 
-    // eslint-disable-next-line no-undef
     after(() => {
       cy.clock().then((clock) => {
         clock.restore()

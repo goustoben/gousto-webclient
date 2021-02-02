@@ -100,13 +100,9 @@ describe('the products selectors', () => {
 
   describe('the getCategoriesForNavBar selector', () => {
     test('calls the getCategoriesFromProducts utility function', () => {
-      const getCategoriesFromProductsSpy = jest.spyOn(productUtils, 'getCategoriesFromProducts').mockImplementation()
-
+      const getCategoriesFromProductsMock = productUtils.getCategoriesFromProducts = jest.fn()
       getCategoriesForNavBar.resultFunc(products)
-
-      expect(getCategoriesFromProductsSpy).toHaveBeenCalledWith(products)
-
-      getCategoriesFromProductsSpy.mockClear()
+      expect(getCategoriesFromProductsMock).toHaveBeenCalledWith(products)
     })
   })
 

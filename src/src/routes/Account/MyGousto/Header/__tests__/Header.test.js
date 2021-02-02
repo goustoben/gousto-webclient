@@ -287,19 +287,13 @@ describe('MyGousto - Header', () => {
       })
 
       describe('and the tracking button is clicked', () => {
-        let windowOpenSpy
-
         beforeEach(() => {
-          windowOpenSpy = jest.spyOn(windowUtils, 'windowOpen')
+          windowUtils.windowOpen = jest.fn()
           wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
         })
 
-        afterEach(() => {
-          jest.clearAllMocks()
-        })
-
         test('opens the tracking page in a new tab', () => {
-          expect(windowOpenSpy).toHaveBeenCalledWith(TRACKING_URL)
+          expect(windowUtils.windowOpen).toHaveBeenCalledWith(TRACKING_URL)
         })
 
         test('dispatches the tracking action', () => {

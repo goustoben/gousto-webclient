@@ -4,8 +4,8 @@ import { mount } from 'enzyme'
 import { client, zendesk } from 'config/routes'
 
 import { Item, ItemExpandable } from 'goustouicomponents'
-import itemCSS from 'components/Item/Item.css'
 import { ItemLink } from '../../components/ItemLink'
+import itemCSS from '../../components/Item/Item.css'
 import { Contact } from '../Contact'
 
 describe('<Contact />', () => {

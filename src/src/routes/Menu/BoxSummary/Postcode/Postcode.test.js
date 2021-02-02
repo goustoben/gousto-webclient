@@ -6,7 +6,7 @@ import TextInput from 'Form/Input'
 import Form from 'Form'
 import DropdownInput from 'Form/Dropdown'
 import { LayoutContentWrapper, Button, Segment } from 'goustouicomponents'
-import css from './Postcode.css'
+import css from '../Postcode.css'
 import { Postcode } from './Postcode'
 
 describe('Postcode', () => {

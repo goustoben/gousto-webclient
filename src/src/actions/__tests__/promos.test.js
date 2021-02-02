@@ -1,4 +1,4 @@
-import pricing from 'actions/pricing'
+import { pricingRequest } from 'actions/pricing'
 import promoActions from 'actions/promos'
 import { trackPromocodeChange } from 'actions/checkout'
 
@@ -31,7 +31,7 @@ describe('promo actions', () => {
     })
 
     test('should call pricingRequest', () => {
-      expect(pricing.pricingRequest).toHaveBeenCalled()
+      expect(pricingRequest).toHaveBeenCalled()
     })
 
     test('should track promoCode change', () => {

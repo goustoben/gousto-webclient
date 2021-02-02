@@ -25,6 +25,8 @@ import {
   isFreeSlotAvailable
 } from '../deliveries'
 
+features.getLogoutUserDisabledSlots = jest.fn()
+
 const userWithDeliveryTariff = (deliveryTariffId) => Immutable.fromJS({
   deliveryTariffId,
 })
@@ -34,14 +36,6 @@ const mockDate = dateString => {
 }
 
 describe('utils/deliveries', () => {
-  beforeEach(() => {
-    jest.spyOn(features, 'getLogoutUserDisabledSlots').mockImplementation()
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe('getSlot', () => {
     test('should return false if deliveryDays is not an Immutable object', () => {
       expect(getSlot()).toBe(false)

@@ -9,7 +9,6 @@ describe('Page Elements', () => {
   Object.keys(Elements).forEach(elementName => {
     describe(`${elementName} rendering`, () => {
       const expectedType = elementName.toLowerCase()
-      // eslint-disable-next-line import/namespace
       const El = Elements[elementName]
 
       beforeEach(() => {

@@ -3,9 +3,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { spacingPropValidation, getSpacingStyles } from 'styles/spacing'
 
-// eslint-disable-next-line import/no-unresolved
 import typography from 'styles/typography.css'
-// eslint-disable-next-line import/no-unresolved
 import colors from 'styles/colors.css'
 
 function Header({ margin, padding, type, size, headlineFont, colorName, children, ...props }) {

@@ -1,7 +1,7 @@
 import GoustoException from 'utils/GoustoException'
 import { collectionsLoadCollectionBySlug } from 'actions/collections'
 import { fetchCollectionBySlug } from 'apis/collections'
-import status from 'actions/status'
+import { errorLoad } from 'actions/status'
 
 jest.mock('actions/status', () => ({
   errorLoad: jest.fn(),
@@ -63,8 +63,8 @@ describe('collection actions', () => {
         const thunk = collectionsLoadCollectionBySlug(collectionSlug)
 
         await thunk(dispatch, getState)
-        expect(status.errorLoad).toHaveBeenCalledTimes(1)
-        expect(status.errorLoad).toHaveBeenNthCalledWith(1, 'COLLECTIONS_RECEIVE_COLLECTIONS', err)
+        expect(errorLoad).toHaveBeenCalledTimes(1)
+        expect(errorLoad).toHaveBeenNthCalledWith(1, 'COLLECTIONS_RECEIVE_COLLECTIONS', err)
       })
     })
   })

@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 import { Ingredients } from 'routes/Menu/Recipe/Ingredients'
-import { Ingredient } from 'routes/Menu/Recipe/Ingredients/Ingredient'
+import { Ingredient } from 'routes/Menu/Recipe/Ingredients/Ingredient.js'
 import Immutable from 'immutable'
 
 describe('<Ingredients />', () => {

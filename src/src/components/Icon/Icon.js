@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-// eslint-disable-next-line import/no-unresolved
 import css from 'styles/vendor/font-awesome-module.css'
 
 const Icon = ({ name, fixedWidth, size, style, className }) => (

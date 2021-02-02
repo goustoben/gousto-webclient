@@ -6,11 +6,10 @@ import * as trackingKeys from 'actions/trackingKeys'
 describe('app banner actions', () => {
   describe('appBannerDismiss', () => {
     let dispatch
-    let cookieSetSpy
 
     beforeEach(() => {
       dispatch = jest.fn()
-      cookieSetSpy = jest.spyOn(cookieHelper, 'set')
+      cookieHelper.set = jest.fn()
     })
 
     test('APP_BANNER_DISMISSED action type is dispatched', () => {
@@ -19,10 +18,11 @@ describe('app banner actions', () => {
     })
 
     test('cookie is set to true when in the client', () => {
+      cookieHelper.set = jest.fn()
       appBannerDismiss()(dispatch)
-
-      expect(cookieSetSpy).toHaveBeenCalled()
-      expect(cookieSetSpy).toBeCalledWith(expect.any(Function), 'app_banner_dismissed', true, 1)
+      expect(cookieHelper.set).toHaveBeenCalled()
+      expect(cookieHelper.set.mock.calls[0][1]).toEqual('app_banner_dismissed')
+      expect(cookieHelper.set.mock.calls[0][2]).toEqual(true)
     })
   })
 

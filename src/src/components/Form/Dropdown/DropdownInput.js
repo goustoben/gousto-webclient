@@ -4,7 +4,6 @@ import Select from 'react-select'
 import classNames from 'classnames'
 import restrictProps from 'utils/restrictProps'
 import InputWrapper from 'Form/InputWrapper'
-// eslint-disable-next-line import/no-unresolved
 import formsCss from 'styles/forms.css'
 import globalCss from './reactSelect.css' // eslint-disable-line no-unused-vars
 import css from './DropdownInput.css'

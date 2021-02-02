@@ -3,7 +3,6 @@ import Svg from 'Svg'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 
-// eslint-disable-next-line import/no-unresolved
 import typography from 'design-language/typography.css'
 import css from './AppBannerDetails.css'
 

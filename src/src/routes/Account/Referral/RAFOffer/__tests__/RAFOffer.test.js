@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { userFetchReferralOffer } from 'actions/user'
+import { userFetchReferralOffer } from 'actions'
 import { RAFOffer } from '../RAFOffer'
-import { YouGet } from '../YouGet'
-import { YourFriendGets } from '../YourFriendGets'
+import { YouGet } from '../YouGet.js'
+import { YourFriendGets } from '../YourFriendGets.js'
 
-jest.mock('actions/user', () => ({
+jest.mock('actions', () => ({
   userFetchReferralOffer: jest.fn().mockReturnValue(Promise.resolve()),
 }))
 

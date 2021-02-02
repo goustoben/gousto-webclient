@@ -469,7 +469,7 @@ describe('validBasketRecipeAdd', () => {
         }
       })
 
-      jest.spyOn(basketUtils, 'limitReached').mockImplementation(() => true)
+      basketUtils.limitReached = jest.fn(() => true)
     })
 
     describe('when call  `validBasketRecipeAdd`', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Gel from 'Gel'
-import { YourFriendGets } from '../YourFriendGets'
+import { YourFriendGets } from '../YourFriendGets.js'
 
 describe('YouGet', () => {
   let wrapper

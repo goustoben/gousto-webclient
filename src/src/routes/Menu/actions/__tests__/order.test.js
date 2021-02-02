@@ -51,6 +51,10 @@ jest.mock('apis/deliveries', () => ({
   })
 }))
 
+deliveriesUtils.getSlot = jest.fn()
+deliveriesUtils.getAvailableDeliveryDays = jest.fn()
+deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
+
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
 
 const { pending, error } = actionStatus
@@ -92,7 +96,7 @@ describe('order actions', () => {
       })
     })
 
-    jest.spyOn(deliveriesUtils, 'getSlot').mockReturnValue(Immutable.fromJS({
+    deliveriesUtils.getSlot.mockReturnValue(Immutable.fromJS({
       coreSlotId: '4',
       id: 'deliveries-uuid',
       daySlotLeadTimeId: 'day-slot-lead-time-uuid'
@@ -102,9 +106,6 @@ describe('order actions', () => {
     dispatch = jest.fn(async (fn) => (fn ? fn(dispatch, getState) : undefined))
 
     sendClientMetricMock.mockReset()
-
-    jest.spyOn(deliveriesUtils, 'getAvailableDeliveryDays')
-    jest.spyOn(deliveriesUtils, 'transformDaySlotLeadTimesToMockSlots')
   })
 
   afterEach(() => {

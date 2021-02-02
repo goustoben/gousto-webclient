@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { referAFriend, fetchUserCredit } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import * as prospectAPI from 'apis/prospect'
+import prospectAPI from 'apis/prospect'
 
 import { actionTypes } from 'actions/actionTypes'
 import { placeOrder } from 'actions/trackingKeys'

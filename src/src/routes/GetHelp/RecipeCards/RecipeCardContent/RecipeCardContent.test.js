@@ -59,10 +59,8 @@ describe('The RecipeCardContent component', () => {
     })
 
     describe('When the cookbookUrl exists', () => {
-      let windowOpenSpy
-
       beforeEach(() => {
-        windowOpenSpy = jest.spyOn(windowUtils, 'windowOpen')
+        windowUtils.windowOpen = jest.fn()
         wrapper.find('CTA').first().simulate('click')
       })
 
@@ -71,7 +69,7 @@ describe('The RecipeCardContent component', () => {
       })
 
       test('Opens the cookbook in a new tab or window', () => {
-        expect(windowOpenSpy).toHaveBeenCalledWith(TEST_RECIPE.url)
+        expect(windowUtils.windowOpen).toHaveBeenCalledWith(TEST_RECIPE.url)
       })
 
       test('Tracking function is called', () => {
@@ -84,12 +82,10 @@ describe('The RecipeCardContent component', () => {
         ...TEST_RECIPE,
         url: '',
       }
-      let browserHistorySpy
 
       beforeEach(() => {
         wrapper.setProps({ recipe: RECIPE_NO_URL })
-        browserHistorySpy = jest.spyOn(browserHistory, 'push')
-
+        browserHistory.push = jest.fn()
         wrapper.find('CTA').first().simulate('click')
       })
 
@@ -98,7 +94,7 @@ describe('The RecipeCardContent component', () => {
       })
 
       test('Redirect to the Contact page', () => {
-        expect(browserHistorySpy).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
+        expect(browserHistory.push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
       })
 
       test('Tracking function is called', () => {

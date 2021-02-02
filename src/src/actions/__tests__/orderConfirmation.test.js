@@ -7,7 +7,7 @@ import { redirect } from 'utils/window'
 import { fetchOrder } from 'apis/orders'
 
 import { basketOrderLoad } from 'actions/basket'
-import recipes from 'actions/recipes'
+import { recipesLoadFromMenuRecipesById } from 'actions/recipes'
 import { orderCheckPossibleDuplicate } from 'actions/order'
 import {
   productsLoadProducts,
@@ -119,7 +119,7 @@ describe('orderConfirmation actions', () => {
       test('should fetch the recipes for the given recipe ids in the order', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(recipes.recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
+        expect(recipesLoadFromMenuRecipesById).toHaveBeenCalledWith(['uuid-1', 'uuid-2'])
       })
     })
 

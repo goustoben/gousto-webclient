@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { getSurcharge } from 'utils/recipe'
-import { defaultMetaImageLink, perPortionPrice } from '../config'
+import { defaultMetaImageLink, perPortionPrice } from '../config.js'
 import {
   getMetaImageLink,
   getPortionPrice,

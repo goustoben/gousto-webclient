@@ -17,10 +17,8 @@ jest.mock('config/routes', () => ({
 }))
 
 describe('menus', () => {
-  let fetchRawSpy
-
   beforeEach(() => {
-    fetchRawSpy = jest.spyOn(fetchModule, 'fetchRaw').mockImplementation(() => {
+    fetchModule.fetchRaw = jest.fn().mockImplementation(() => {
       const getData = async () => (mockFetchResult)
 
       return getData()
@@ -28,7 +26,7 @@ describe('menus', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    fetchModule.fetchRaw.mockClear()
   })
 
   describe('fetchMenus', () => {
@@ -39,8 +37,8 @@ describe('menus', () => {
 
     test('should fetch the correct url', async () => {
       await fetchMenus('token', query)
-      expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+      expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients' },
         {
           accessToken: 'token',
@@ -74,7 +72,7 @@ describe('menus', () => {
       test('should pass preview query information', async () => {
         await fetchMenus('token', query)
 
-        expect(fetchRawSpy).toHaveBeenCalledWith(
+        expect(fetchModule.fetchRaw).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
             'preview[menu_id]': previewMenuId,
@@ -97,7 +95,7 @@ describe('menus', () => {
       test('should pass tasteProfileId', async () => {
         await fetchMenus('token', query)
 
-        expect(fetchRawSpy).toHaveBeenCalledWith(
+        expect(fetchModule.fetchRaw).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
             tasteProfileId
@@ -116,8 +114,8 @@ describe('menus', () => {
 
     test('should fetch the correct url', async () => {
       await fetchMenusWithUserId('token', query, 'e34rder')
-      expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+      expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients', userId: 'e34rder' },
         {
           accessToken: 'token',
@@ -145,7 +143,7 @@ describe('menus', () => {
       test('should pass tasteProfileId', async () => {
         await fetchMenusWithUserId('token', query, 'e34rder')
 
-        expect(fetchRawSpy).toHaveBeenCalledWith(
+        expect(fetchModule.fetchRaw).toHaveBeenCalledWith(
           expect.any(String),
           expect.objectContaining({
             tasteProfileId
@@ -159,8 +157,8 @@ describe('menus', () => {
   describe('fetchSimpleMenu', () => {
     test('should fetch the correct url', async () => {
       await fetchSimpleMenu('token', 'user-id')
-      expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+      expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
         {
           includeMenuRelationships: false,
           userId: 'user-id', },

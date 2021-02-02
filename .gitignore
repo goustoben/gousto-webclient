@@ -22,5 +22,6 @@ src/_coverage
 src/vendor
 # VSCode
 .vs
+jsconfig.json
 .idea
 src/config/env.json
