@@ -7,7 +7,6 @@ import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 
 const selectAddress = () => {
   if (Cypress.env().platform === 'mobile') {
-    cy.contains('Find Address').click()
     cy.get('[data-testing="checkoutAddressDropdown"]')
       .click()
       .get('select')
@@ -16,7 +15,6 @@ const selectAddress = () => {
     cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
   } else {
     cy.get('[data-testing="checkoutCTA"]').click()
-    cy.get('[data-testing="checkoutFindAddressButton"]').click()
     cy.get('[data-testing="checkoutAddressDropdown"]')
       .find('.Select')
       .click()
