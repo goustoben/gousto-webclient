@@ -2,13 +2,9 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { Button } from 'goustouicomponents'
-import { EditDate } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/EditDate.js'
+import { EditDate } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/EditDate'
 import DropdownInput from 'components/Form/Dropdown/DropdownInput'
-import { getDeliveryDaysAndSlotsOptions } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js'
-
-jest.mock('routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js', () => ({
-  getDeliveryDaysAndSlotsOptions: jest.fn()
-}))
+import EditDateUtil from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util'
 
 describe('EditDate', () => {
   const deliveryDays = Immutable.fromJS({
@@ -42,10 +38,10 @@ describe('EditDate', () => {
 
   let wrapper
   let orderUpdateDayAndSlotSpy
+  let getDeliveryDaysAndSlotsOptionsSpy
 
   beforeEach(() => {
-    jest.clearAllMocks()
-    getDeliveryDaysAndSlotsOptions.mockReturnValue(
+    getDeliveryDaysAndSlotsOptionsSpy = jest.spyOn(EditDateUtil, 'getDeliveryDaysAndSlotsOptions').mockReturnValue(
       {
         deliveryDaysOptions: daysOptionsSample,
         slotsOptions: slotsOptionsSample
@@ -68,6 +64,10 @@ describe('EditDate', () => {
       userTrackSlotSelected={() => {}}
       orderUpdateDayAndSlot={orderUpdateDayAndSlotSpy}
     />)
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   describe('rendering', () => {
@@ -102,26 +102,26 @@ describe('EditDate', () => {
 
     it('should call getDeliveryDaysAndSlotsOptions when deliveryDays prop is updated', () => {
       wrapper.setProps({ deliveryDays: newDeliveryDays }, () => {
-        expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledTimes(2)
-        expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledWith(newDeliveryDays, recipes, recipesStock, '2', '8', 'de03', orders)
+        expect(getDeliveryDaysAndSlotsOptionsSpy).toHaveBeenCalledTimes(2)
+        expect(getDeliveryDaysAndSlotsOptionsSpy).toHaveBeenCalledWith(newDeliveryDays, recipes, recipesStock, '2', '8', 'de03', orders)
       })
     })
 
     it('should call getDeliveryDaysAndSlotsOptions when recipesStock prop is updated', () => {
       const newRecipesStock = recipesStock.push('c')
       wrapper.setProps({ recipesStock: newRecipesStock })
-      expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledTimes(2)
-      expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledWith(deliveryDays, recipes, newRecipesStock, '2', '8', 'de03', orders)
+      expect(getDeliveryDaysAndSlotsOptionsSpy).toHaveBeenCalledTimes(2)
+      expect(getDeliveryDaysAndSlotsOptionsSpy).toHaveBeenCalledWith(deliveryDays, recipes, newRecipesStock, '2', '8', 'de03', orders)
     })
 
     it('should change the selected day to the first option when current selection is not available in the new props', () => {
-      getDeliveryDaysAndSlotsOptions.mockReturnValueOnce({ deliveryDaysOptions: daysOptionsSample, slotsOptions: slotsOptionsSample })
+      getDeliveryDaysAndSlotsOptionsSpy.mockReturnValueOnce({ deliveryDaysOptions: daysOptionsSample, slotsOptions: slotsOptionsSample })
       wrapper.setProps({ deliveryDays: newDeliveryDays })
       expect(wrapper.state('selectedDeliveryDayId')).toBe('1241')
     })
 
     it('should change the selected slot to the first option when current selection is not available in the new props', () => {
-      getDeliveryDaysAndSlotsOptions.mockReturnValueOnce({ deliveryDaysOptions: daysOptionsSample, slotsOptions: slotsOptionsSample })
+      getDeliveryDaysAndSlotsOptionsSpy.mockReturnValueOnce({ deliveryDaysOptions: daysOptionsSample, slotsOptions: slotsOptionsSample })
       wrapper.setProps({ deliveryDays: newDeliveryDays })
       expect(wrapper.state('selectedDeliverySlotId')).toBe('1')
     })

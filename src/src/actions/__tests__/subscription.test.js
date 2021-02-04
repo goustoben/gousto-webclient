@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from 'actions/basket'
-import { notice } from 'utils/logger'
+import logger from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
 
@@ -59,7 +59,7 @@ describe('subscription actions', () => {
       test('should log a notice with the error', async () => {
         await subscriptionLoadData()(dispatch, getState)
 
-        expect(notice).toHaveBeenCalledWith(
+        expect(logger.notice).toHaveBeenCalledWith(
           'Subscription load error: Error: fetch-subscription-fail'
         )
       })
@@ -76,7 +76,7 @@ describe('subscription actions', () => {
       test('should dispatch a SUBSCRIPTION_LOAD_DATA action with returned data', async () => {
         await subscriptionLoadData()(dispatch, getState)
 
-        expect(notice).not.toHaveBeenCalled()
+        expect(logger.notice).not.toHaveBeenCalled()
         expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
           type: actionTypes.SUBSCRIPTION_LOAD_DATA,
           data,

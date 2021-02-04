@@ -2,12 +2,19 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { spacingPropValidation, getSpacingStyles } from 'styles/spacing'
 
+// eslint-disable-next-line import/no-unresolved
 import borders from 'styles/borders.css'
+// eslint-disable-next-line import/no-unresolved
 import colors from 'styles/colors.css'
+// eslint-disable-next-line import/no-unresolved
 import effects from 'styles/effects.css'
+// eslint-disable-next-line import/no-unresolved
 import overlays from 'styles/overlays.css'
+// eslint-disable-next-line import/no-unresolved
 import position from 'styles/position.css'
+// eslint-disable-next-line import/no-unresolved
 import typography from 'styles/typography.css'
+// eslint-disable-next-line import/no-unresolved
 import layout from 'styles/layout.css'
 import bootstrap from 'styles/bootstrap.scss'
 import css from './StyledElement.css'

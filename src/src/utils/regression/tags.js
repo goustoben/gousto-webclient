@@ -2,11 +2,12 @@ export const WEB = 'web'
 export const MOBILE = 'mobile'
 
 export const withPlatformTags = (...tags) => {
+  // eslint-disable-next-line no-undef
   const envPlatform = Cypress.env('platform') || ''
   const platformTags = envPlatform.split(/[,]+/)
 
   const filteredTags = tags.filter(tag => platformTags.includes(tag))
-  if(filteredTags.length === 0) {
+  if (filteredTags.length === 0) {
     return { it: window.it.skip, describe: window.describe.skip }
   }
 

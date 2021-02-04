@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { shallow } from 'enzyme'
-import { Ingredient } from 'routes/Menu/Recipe/Ingredients/Ingredient.js'
+import { Ingredient } from 'routes/Menu/Recipe/Ingredients/Ingredient'
 import Image from 'Image'
 import Svg from 'Svg'
 import Immutable from 'immutable'

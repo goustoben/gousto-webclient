@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { RecipeDisclaimer } from '../RecipeDisclaimer.js'
+import { RecipeDisclaimer } from '../RecipeDisclaimer'
 
 describe('RecipeDisclaimer', () => {
   let wrapper

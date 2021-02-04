@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import css from './Ingredients.css'
-import { Ingredient } from './Ingredient.js'
+import { Ingredient } from './Ingredient'
 
 const Ingredients = ({ ingredients, inset }) => (
   <div>

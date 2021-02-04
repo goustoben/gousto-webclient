@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { getSurcharge } from 'utils/recipe'
 
-import { defaultMetaImageLink, perPortionPrice } from './config.js'
+import { defaultMetaImageLink, perPortionPrice } from './config'
 
 export const getPortionPrice = (recipe) => {
   const surcharge = recipe && getSurcharge(recipe.get('meals'), 4)

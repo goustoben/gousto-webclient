@@ -10,6 +10,7 @@ function mapStateToProps(state, ownProps) {
     checkoutInvalid: isInvalid('delivery')(state),
     checkoutMobileInvalid: isInvalid('yourdetails')(state),
     formValues: getFormValues(form)(state),
+    // eslint-disable-next-line no-undef
     browser,
     nextStepName: ownProps.nextStepName,
     onStepChange: ownProps.onStepChange,

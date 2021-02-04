@@ -607,6 +607,7 @@ describe('collections selectors', () => {
 
       describe('When user is not in the experiment', () => {
         beforeEach(() => {
+          // eslint-disable-next-line import/namespace
           optimizelySDK.instance = {
             optimizelyRolloutsInstance: {
               isFeatureEnabled: jest.fn().mockReturnValue(false)
@@ -622,6 +623,7 @@ describe('collections selectors', () => {
 
       describe('When user is in the experiment', () => {
         beforeEach(() => {
+          // eslint-disable-next-line import/namespace
           optimizelySDK.instance = {
             optimizelyRolloutsInstance: {
               isFeatureEnabled: jest.fn().mockReturnValue(true)

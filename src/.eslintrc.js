@@ -1,16 +1,62 @@
-{
+const path = require('path')
+const fs = require('fs');
+
+const srcFileAliases = fs.readdirSync('./src', { withFileTypes: true }).
+  filter(dirent => dirent.isDirectory()).
+  // We load `style` manually to highligh that its a shared alias
+  filter(dirent => dirent.name !== 'style').
+  map(({ name }) => {
+  return [name, './src/' + name]
+});
+
+const componentFileAliases = fs.readdirSync('./src/components', { withFileTypes: true })
+.filter(dirent => dirent.isDirectory())
+.map(({ name }) => {
+  return [name, './src/components/' + name]
+});
+
+module.exports = {
   "parser": "babel-eslint",
-    "extends": [
-      "airbnb",
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:you-dont-need-lodash-underscore/compatible",
-      "plugin:jsx-a11y/recommended",
-      "plugin:import/errors",
-      "plugin:import/warnings",
-      "plugin:react-hooks/recommended"
-    ],
-    "rules": {
+  "extends": [
+    "airbnb",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:you-dont-need-lodash-underscore/compatible",
+    "plugin:jsx-a11y/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:react-hooks/recommended"
+  ],
+  "settings": {
+    "import/resolver": {
+      // Resolving to our webpack config didn't work within the time-box
+      // for this change, but is the preferred solutions.
+      // "webpack": {
+      //   config: {
+      //     paths: [path.resolve(__dirname, './config/webpack.client.js')],
+      //   }
+      // },
+      node: {
+        paths: ['.'],
+      },
+      "alias": {
+        map: [
+          ["store", "./src/store.js"],
+          ["jsdom", "./fallbacks/jsdom"],
+          ["goustouicomponents", "./libs/goustouicomponents/src/main"],
+          ["zest", "./libs/goustouicomponents/dist"],
+          ["design-language", "./libs/goustouicomponents/dist/design-language"],
+          ["server", "./server"],
+          ["styles", "./libs/goustouicomponents/dist/styles"],
+          ["styles", "./src/styles"],
+          ...srcFileAliases,
+          ...componentFileAliases,
+        ],
+        extensions: ['.js', '.css']
+      }
+    }
+  },
+  "rules": {
       "react/no-children-prop": 2,
       "react/prop-types": 2,
       "newline-before-return": 2,
@@ -26,8 +72,6 @@
       "react/no-unused-prop-types": 2,
       "padded-blocks": 2,
       "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
-      "import/extensions": 0,
-      "import/no-unresolved": 0,
       "import/prefer-default-export": 0,
       "import/newline-after-import": 0,
       "react/jsx-curly-spacing": 0,
@@ -48,6 +92,11 @@
       "space-unary-ops": 0,
       "comma-dangle": 0,
       //beginning of gousto extended warnings
+      "import/no-unresolved": 2,
+      "import/named": 2,
+      "import/extensions": 2,
+      "import/namespace": 2,
+      "no-undef": 2,
       "import/no-default-export" : 1,
       "no-underscore-dangle": [1, {
         "allow": ["__initialState__"]
@@ -110,7 +159,6 @@
       "no-spaced-func": 1,
       "no-throw-literal": 1,
       "no-trailing-spaces": 1,
-      "no-undef": 1,
       "no-unneeded-ternary": 1,
       "no-unused-expressions": 1,
       "no-unused-vars": 1,

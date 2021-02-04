@@ -6,7 +6,7 @@ import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
 
-import BillingForm from '../BillingForm/BillingForm.js'
+import BillingForm from '../BillingForm/BillingForm'
 import css from '../BillingForm/BillingForm.css'
 
 describe('BillingForm', () => {
