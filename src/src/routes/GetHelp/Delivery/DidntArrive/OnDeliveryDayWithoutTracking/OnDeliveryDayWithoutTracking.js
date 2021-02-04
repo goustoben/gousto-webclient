@@ -18,7 +18,7 @@ const OnDeliveryDayWithoutTracking = ({ deliverySlot }) => {
       <Heading size="fontStyleM" type="h2">
         My box didn&apos;t arrive
       </Heading>
-      <div className={css.mainText}>
+      <div className={css.mainText} data-testing="onDeliveryDayWithoutTrackingContent">
         <p>
           {`Your box's estimated arrival time is ${humanFriendlyStart} - ${humanFriendlyEnd}.`}
         </p>

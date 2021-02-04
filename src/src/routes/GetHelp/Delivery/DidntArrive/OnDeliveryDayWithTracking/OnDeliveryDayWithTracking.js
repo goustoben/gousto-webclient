@@ -26,7 +26,7 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
       <Heading size="fontStyleM" type="h2">
         Your box may still be on its way
       </Heading>
-      <div className={css.mainText}>
+      <div className={css.mainText} data-testing="onDeliveryDayWithTrackingContent">
         <p>
           Your box&apos;s estimated arrival time is&nbsp;
           {humanFriendlyStart}
@@ -47,6 +47,7 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
             <CTA
               isFullWidth
               size="small"
+              testingSelector="getInTouchCTA"
               variant="secondary"
               onClick={redirectToInternal(`${index}/${contact}`)}
             >
@@ -54,7 +55,12 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
             </CTA>
           </div>
           <div className={css.cta}>
-            <CTA isFullWidth size="small" onClick={redirectToExternal(trackMyBoxLink)}>
+            <CTA
+              isFullWidth
+              size="small"
+              testingSelector="trackMyBoxCTA"
+              onClick={redirectToExternal(trackMyBoxLink)}
+            >
               Track my box
             </CTA>
           </div>
