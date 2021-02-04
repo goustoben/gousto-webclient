@@ -11,7 +11,7 @@ const propTypes = {
 const CONTENT = {
   resubscribe: {
     title: 'So many tasty benefits',
-    row1: 'Save 5% on every repeat order',
+    row1: 'Save on every repeat order',
     row2: 'Guarantee your weekly delivery slot',
     row3: 'Skip boxes whenever you like',
   },
@@ -23,7 +23,7 @@ const CONTENT = {
   },
   noOffer: {
     title: 'Reasons to stay subscribed',
-    row1: "You're saving 5% on every repeat order vs ordering one off",
+    row1: "You're saving on every repeat order vs ordering one off",
     row2: 'Guarantee your weekly delivery slot',
     row3: 'Skip boxes whenever you like',
   },

@@ -5,6 +5,7 @@ import { CardWithLink } from 'CardWithLink'
 import { Button } from 'goustouicomponents'
 import { windowOpen } from 'utils/window'
 import { OrderDetails } from './OrderDetails/OrderDetails'
+import { SubscriberPricingBanner } from './SubscriberPricingBanner'
 import css from './Header.css'
 
 const HeaderPresentation = ({
@@ -17,6 +18,8 @@ const HeaderPresentation = ({
   getHelpQueryParam,
   trackNextBoxTrackingClick,
   onPreviousBoxGetHelpClick,
+  showSubscriberPricingBanner,
+  subscriptionStatus,
 }) => {
   const getHelpUrlSuffix = getHelpQueryParam
     || `/${config.routes.client.getHelp.contact}`
@@ -91,9 +94,12 @@ const HeaderPresentation = ({
   )
 
   return (
-    <div className={css.cardsContainer}>
-      {hasNextOrder ? renderNextOrder() : renderNoNextOrder()}
-      {previousOrderMessage && renderPreviousOrder()}
+    <div>
+      {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
+      <div className={css.cardsContainer}>
+        {hasNextOrder ? renderNextOrder() : renderNoNextOrder()}
+        {previousOrderMessage && renderPreviousOrder()}
+      </div>
     </div>
   )
 }
@@ -113,6 +119,8 @@ HeaderPresentation.propTypes = {
   getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   trackNextBoxTrackingClick: PropTypes.func,
   onPreviousBoxGetHelpClick: PropTypes.func,
+  showSubscriberPricingBanner: PropTypes.bool.isRequired,
+  subscriptionStatus: PropTypes.string,
 }
 
 HeaderPresentation.defaultProps = {
@@ -130,6 +138,7 @@ HeaderPresentation.defaultProps = {
   getHelpQueryParam: false,
   trackNextBoxTrackingClick: () => {},
   onPreviousBoxGetHelpClick: () => {},
+  subscriptionStatus: 'inactive',
 }
 
 export { HeaderPresentation }

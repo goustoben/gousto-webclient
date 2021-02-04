@@ -3,6 +3,7 @@ import {
   trackNotificationLinkClick,
   trackOrderNotEligibleForSelfServiceResolutionClick,
   trackOrderEligibleForSelfServiceResolutionClick,
+  trackMyGoustoSubscriberPricingBannerClick,
 } from '../tracking'
 
 describe('myGousto tracking actions', () => {
@@ -44,6 +45,17 @@ describe('myGousto tracking actions', () => {
         trackingData: {
           actionType: 'click_get_help_eligible',
           orderId,
+        }
+      })
+    })
+  })
+
+  describe('trackMyGoustoSubscriberPricingBannerClick', () => {
+    test('creates the tracking action', () => {
+      expect(trackMyGoustoSubscriberPricingBannerClick()).toEqual({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'click_subscriber_pricing_banner',
         }
       })
     })

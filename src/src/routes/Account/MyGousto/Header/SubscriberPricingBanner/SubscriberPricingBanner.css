@@ -1,0 +1,44 @@
+@value BreakpointFromLarge from 'design-language/breakpoints.css';
+@value Blackberry, Pomegranate, White, Bluecheese from 'styles/colors.css';
+
+.wrapper {
+  margin-bottom: 2rem;
+  position: relative;
+  background: White;
+  padding: 1.5rem;
+}
+
+.copy {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  color: Blackberry;
+  margin-bottom: 1rem;
+}
+
+.arrow {
+  margin-left: 0.5rem;
+  height: 1rem;
+  width: 1rem;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+.close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.heading {
+  color: Pomegranate;
+}
+
+.linkButton {
+  composes: fontSemiBold from 'design-language/typography.module.css';
+  background: White;
+  color: Bluecheese;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
