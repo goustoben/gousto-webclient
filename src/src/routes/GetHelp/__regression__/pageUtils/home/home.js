@@ -13,8 +13,8 @@ export const clickHelp = () => {
 export const clickMyGousto = () => {
   const platform = Cypress.env('platform')
   if (platform === 'mobile') {
-    cy.get('[data-testing=burgerMenu]').click()
-    cy.get('[href="/my-gousto"] li').click()
+    cy.get('[data-testing=burgerMenu]').click({ force: true })
+    cy.get('[href="/my-gousto"] li').click({ force: true })
   }
 
   if (platform === 'web') {

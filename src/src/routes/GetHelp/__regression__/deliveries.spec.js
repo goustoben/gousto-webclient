@@ -49,62 +49,133 @@ describe('Given the customer is logged in and the order delivery is today', () =
       cy.get('ul [data-testing="deliveryOtherIssue"]').should('exist')
     })
 
-    describe('When they select I don\'t know when my box will arrive, and there is no tracking link available', () => {
-      before(() => {
-        cy.clock(deliveryDate.getTime(), ['Date'])
+    describe('When there is no tracking link available', () => {
+      describe('and they select "I don\'t know when my box will arrive"', () => {
+        before(() => {
+          cy.clock(deliveryDate.getTime(), ['Date'])
 
-        cy.get('[data-testing="deliveryDontKnowWhen"]').click()
+          cy.get('[data-testing="deliveryDontKnowWhen"]').click()
+        })
+
+        it('shows the correct heading', () => {
+          cy.get('h2').contains('I don\'t know when my box will arrive')
+        })
+
+        it('shows estimated arrival time without tracking link', () => {
+          cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"]')
+            .contains('Your box\'s estimated arrival time is 8am - 7pm')
+
+          cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"]')
+            .should('not.contain', 'tracking link is available below')
+        })
+
+        it('shows a link to Contact Us page', () => {
+          cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"] a')
+            .should('have.attr', 'href', '/get-help/contact')
+        })
+
+        it('View My Gousto and Track my box CTAs are not rendered', () => {
+          cy.get('[data-testing="viewMyGoustoCTA"]').should('not.exist')
+          cy.get('[data-testing="trackMyBoxCTA"]').should('not.exist')
+        })
       })
 
-      it('shows estimated arrival time without tracking link', () => {
-        cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"]')
-          .contains('Your box\'s estimated arrival time is 8am - 7pm')
+      describe('and they select "My box did not arrive"', () => {
+        before(() => {
+          cy.clock(deliveryDate.getTime(), ['Date'])
 
-        cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"]')
-          .should('not.contain', 'tracking link is available below')
-      })
+          clickCTABack()
 
-      it('shows a link to Contact Us page', () => {
-        cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"] a')
-          .should('have.attr', 'href', '/get-help/contact')
-      })
+          cy.get('[data-testing="deliveryDidntArrive"]').click()
+        })
 
-      it('View My Gousto and Track my box CTAs are not rendered', () => {
-        cy.get('[data-testing="viewMyGoustoCTA"]').should('not.exist')
-        cy.get('[data-testing="trackMyBoxCTA"]').should('not.exist')
+        it('shows the correct heading', () => {
+          cy.get('h2').contains('My box didn\'t arrive')
+        })
+
+        it('shows estimated arrival time without tracking link', () => {
+          cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"]')
+            .contains('Your box\'s estimated arrival time is 8am - 7pm')
+
+          cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"]')
+            .should('not.contain', 'try the tracking link below')
+        })
+
+        it('shows a link to Contact Us page', () => {
+          cy.get('[data-testing="onDeliveryDayWithoutTrackingContent"] a')
+            .should('have.attr', 'href', '/get-help/contact')
+        })
+
+        it('Get in Touch and Track my box CTAs are not rendered', () => {
+          cy.get('[data-testing="getInTouchCTA"]').should('not.exist')
+          cy.get('[data-testing="trackMyBoxCTA"]').should('not.exist')
+        })
       })
     })
 
-    describe('When they select I don\'t know when my box will arrive, and there is a tracking link available', () => {
-      before(() => {
-        cy.server()
+    describe('When there is a tracking link available', () => {
+      describe('and they select "I don\'t know when my box will arrive"', () => {
+        before(() => {
+          cy.server()
 
-        cy.fixture('getHelp/deliveries/consignmentsWithTrackingUrl').as('consignmentsWithTrackingUrl')
-        cy.route('GET', /deliveries\/v1.0\/consignments/, '@consignmentsWithTrackingUrl')
+          cy.fixture('getHelp/deliveries/consignmentsWithTrackingUrl').as('consignmentsWithTrackingUrl')
+          cy.route('GET', /deliveries\/v1.0\/consignments/, '@consignmentsWithTrackingUrl')
 
-        cy.clock(deliveryDate.getTime(), ['Date'])
+          cy.clock(deliveryDate.getTime(), ['Date'])
 
-        clickCTABack()
+          clickCTABack()
 
-        cy.get('[data-testing="deliveryDontKnowWhen"]').click()
+          cy.get('[data-testing="deliveryDontKnowWhen"]').click()
+        })
+
+        it('shows the correct heading', () => {
+          cy.get('h2').contains('I don\'t know when my box will arrive')
+        })
+
+        it('shows estimated arrival time with tracking information', () => {
+          cy.get('[data-testing="onDeliveryDayWithTrackingContent"]')
+            .contains('Your box\'s estimated arrival time is 8am - 7pm')
+
+          cy.get('[data-testing="onDeliveryDayWithTrackingContent"]')
+            .contains('tracking link is available below')
+        })
+
+        it('shows a link to Contact Us page', () => {
+          cy.get('[data-testing="onDeliveryDayWithTrackingContent"] a')
+            .should('have.attr', 'href', '/get-help/contact')
+        })
+
+        it('View My Gousto and Track my box CTAs are rendered', () => {
+          cy.get('[data-testing="viewMyGoustoCTA"]').should('exist')
+          cy.get('[data-testing="trackMyBoxCTA"]').should('exist')
+        })
       })
 
-      it('shows estimated arrival time with tracking information', () => {
-        cy.get('[data-testing="onDeliveryDayWithTrackingContent"]')
-          .contains('Your box\'s estimated arrival time is 8am - 7pm')
+      describe('and they select "My box didn\'t arrive', () => {
+        before(() => {
+          cy.clock(deliveryDate.getTime(), ['Date'])
 
-        cy.get('[data-testing="onDeliveryDayWithTrackingContent"]')
-          .contains('tracking link is available below')
-      })
+          clickCTABack()
 
-      it('shows a link to Contact Us page', () => {
-        cy.get('[data-testing="onDeliveryDayWithTrackingContent"] a')
-          .should('have.attr', 'href', '/get-help/contact')
-      })
+          cy.get('[data-testing="deliveryDidntArrive"]').click()
+        })
 
-      it('View My Gousto and Track my box CTAs are rendered', () => {
-        cy.get('[data-testing="viewMyGoustoCTA"]').should('exist')
-        cy.get('[data-testing="trackMyBoxCTA"]').should('exist')
+        it('shows the correct heading', () => {
+          cy.get('h2').contains('Your box may still be on its way')
+        })
+
+        it('shows estimated arrival time with tracking information', () => {
+          cy.get('[data-testing="onDeliveryDayWithTrackingContent"]')
+            .contains('Your box\'s estimated arrival time is 8am - 7pm')
+
+          cy.get('[data-testing="onDeliveryDayWithTrackingContent"]')
+            .contains('try the tracking link below')
+        })
+
+        it('Get in Touch and Track my box CTAs are rendered', () => {
+          cy.get('[data-testing="getInTouchCTA"]').should('exist')
+          cy.get('[data-testing="trackMyBoxCTA"]').should('exist')
+        })
       })
     })
 
