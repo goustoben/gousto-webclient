@@ -49,7 +49,7 @@ export const ResubscriptionModal = () => {
           <p>
             You&apos;re now
             {' '}
-            <b>saving 5%</b>
+            <b>saving</b>
             {' '}
             on every repeat order.
           </p>

@@ -121,6 +121,8 @@ class Header extends PureComponent {
       trackNextBoxTrackingClick,
       trackOrderNotEligibleForSelfServiceResolutionClick,
       trackOrderEligibleForSelfServiceResolutionClick,
+      showSubscriberPricingBanner,
+      subscriptionStatus,
     } = this.props
     const {
       hasTooltipForNextOrder,
@@ -170,6 +172,8 @@ class Header extends PureComponent {
             getHelpQueryParam={getHelpQueryParam}
             trackNextBoxTrackingClick={trackNextBoxTrackingClick}
             onPreviousBoxGetHelpClick={onPreviousBoxGetHelpClick}
+            showSubscriberPricingBanner={showSubscriberPricingBanner}
+            subscriptionStatus={subscriptionStatus}
           />
         )
         : null
@@ -185,6 +189,8 @@ Header.propTypes = {
   trackNextBoxTrackingClick: PropTypes.func,
   trackOrderNotEligibleForSelfServiceResolutionClick: PropTypes.func,
   trackOrderEligibleForSelfServiceResolutionClick: PropTypes.func,
+  showSubscriberPricingBanner: PropTypes.bool,
+  subscriptionStatus: PropTypes.string,
 }
 
 Header.defaultProps = {
@@ -194,6 +200,8 @@ Header.defaultProps = {
   trackNextBoxTrackingClick: () => {},
   trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
   trackOrderEligibleForSelfServiceResolutionClick: () => {},
+  showSubscriberPricingBanner: false,
+  subscriptionStatus: 'inactive',
 }
 
 export { Header }

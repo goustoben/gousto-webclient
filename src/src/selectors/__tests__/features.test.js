@@ -43,6 +43,7 @@ import {
   getIsFirstMonthPromoOffset,
   getIsCheckoutOverhaulEnabled,
   getIsSubscriberPricingEnabled,
+  getIsMyGoustoBannerSubscriberPricingEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -100,7 +101,8 @@ describe('when features are defined', () => {
     [getIsMenuRedirectPageEnabled, 'isMenuRedirectPageEnabled'],
     [getIsFirstMonthPromoOffset, 'isFirstMonthPromoOffset'],
     [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
-    [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled']
+    [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
+    [getIsMyGoustoBannerSubscriberPricingEnabled, 'isMyGoustoBannerSubscriberPricingEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

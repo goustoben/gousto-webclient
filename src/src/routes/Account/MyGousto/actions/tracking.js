@@ -24,3 +24,10 @@ export const trackOrderEligibleForSelfServiceResolutionClick = orderId => ({
     orderId,
   }
 })
+
+export const trackMyGoustoSubscriberPricingBannerClick = () => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'click_subscriber_pricing_banner',
+  }
+})
