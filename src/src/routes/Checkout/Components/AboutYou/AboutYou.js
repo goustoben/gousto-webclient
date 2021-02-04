@@ -11,6 +11,7 @@ import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
 import CheckoutButton from '../CheckoutButton'
 import { fieldsConfig } from './fieldsConfig'
+import { checkoutClickContinueToDelivery } from '../../../../actions/trackingKeys'
 import css from './AboutYou.css'
 import redesignCss from '../../CheckoutRedesignContainer.css'
 
@@ -48,7 +49,7 @@ class AboutYou extends PureComponent {
     const { createAccountValues, userProspect, submit, trackUTMAndPromoCode } = this.props
     const { email, password } = createAccountValues
     if (email && password) {
-      trackUTMAndPromoCode('checkout_click_continue_to_delivery')
+      trackUTMAndPromoCode(checkoutClickContinueToDelivery)
       userProspect()
     }
     submit()

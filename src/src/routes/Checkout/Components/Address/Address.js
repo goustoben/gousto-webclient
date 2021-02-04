@@ -8,6 +8,7 @@ import dottify from 'utils/dottify'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import { onEnter } from 'utils/accessibility'
+import { clickUseThisAddress, checkoutClickContinueToPayment } from '../../../../actions/trackingKeys'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
 import DeliveryPhoneNumber from '../Delivery/DeliveryDetails/DeliveryPhoneNumber'
@@ -312,7 +313,7 @@ class Address extends React.PureComponent {
         onAddressConfirm(postcode)
       }
 
-      trackUTMAndPromoCode('clickUseThisAddress')
+      trackUTMAndPromoCode(isCheckoutOverhaulEnabled ? checkoutClickContinueToPayment : clickUseThisAddress)
 
       if (isMobile) {
         trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: true, missing_field: null })

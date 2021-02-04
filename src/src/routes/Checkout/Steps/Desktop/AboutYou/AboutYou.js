@@ -4,10 +4,10 @@ import React from 'react'
 import userRules from 'validations/user'
 import userAsyncValidation from 'validations/userAsync'
 import { addPrefix } from 'validations/util'
+import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
 
 import CheckoutButton from '../../../Components/CheckoutButton'
-
 import AboutYouContainer, { addInitialValues } from '../../../Components/AboutYou'
 
 const sectionName = 'aboutyou'
@@ -17,7 +17,7 @@ const AboutYouSection = AboutYouContainer(sectionName)
 export const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid, trackUTMAndPromoCode, isCheckoutOverhaulEnabled }) => {
   const handleSubmit = () => {
     if (checkoutValid) {
-      trackUTMAndPromoCode('clickNextDelivery')
+      trackUTMAndPromoCode(checkoutClickContinueToDelivery)
       userProspect()
     }
     submit()

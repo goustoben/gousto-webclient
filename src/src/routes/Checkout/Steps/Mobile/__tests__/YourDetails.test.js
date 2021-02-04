@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
+import { checkoutClickContinueToPayment } from '../../../../../actions/trackingKeys'
 import { YourDetailsStep } from '../YourDetails/YourDetails'
 import CheckoutButton from '../../../Components/CheckoutButton'
 
@@ -57,7 +57,7 @@ describe('YourDetailsStep', () => {
       })
 
       test('then trackUTMAndPromoCode should be called with a proper parameter', () => {
-        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextPayment', 'top')
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith(checkoutClickContinueToPayment, 'top')
         expect(userProspect).toBeCalled()
         expect(submit).toBeCalled()
       })

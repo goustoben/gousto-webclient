@@ -205,6 +205,7 @@ class PromoCode extends PureComponent {
                 value={promoCode}
                 onInput={this.handleInput}
                 onKeyUp={this.handleKeyUp}
+                onChange={() => {}}
                 className={classNames(this.getInputClassName(), { [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled })}
               />
               {isCheckoutOverhaulEnabled && <span className={classNames(css.inputIcon, inputIcon, { [css.isHidden]: !promoCode })} />}

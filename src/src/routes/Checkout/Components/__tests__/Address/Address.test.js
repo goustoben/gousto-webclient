@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-
 import { Button } from 'goustouicomponents'
+import { clickUseThisAddress } from '../../../../../actions/trackingKeys'
 import Address from '../../Address/Address'
 
 describe('Address', () => {
@@ -28,7 +28,7 @@ describe('Address', () => {
   describe('when Button clicked', () => {
     test('should dispatch trackUTMAndPromoCode actions with proper parameters', () => {
       wrapper.find(Button).simulate('click')
-      expect(props.trackUTMAndPromoCode).toHaveBeenCalledWith('clickUseThisAddress')
+      expect(props.trackUTMAndPromoCode).toHaveBeenCalledWith(clickUseThisAddress)
     })
   })
 

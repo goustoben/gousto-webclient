@@ -8,7 +8,7 @@ import css from './CheckoutLayout.css'
 
 class CheckoutLayout extends React.PureComponent {
   static propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.node.isRequired,
     params: PropTypes.object,
     isCheckoutOverhaulEnabled: PropTypes.bool,
   }
@@ -21,7 +21,8 @@ class CheckoutLayout extends React.PureComponent {
   }
 
   getMobileTitle = () => {
-    const currentStep = this.props.params.stepName
+    const { params } = this.props
+    const currentStep = params.stepName
     let title
 
     switch (currentStep) {
@@ -42,7 +43,7 @@ class CheckoutLayout extends React.PureComponent {
   }
 
   render() {
-    const { isCheckoutOverhaulEnabled } = this.props
+    const { isCheckoutOverhaulEnabled, children } = this.props
 
     return (
       <span>
@@ -59,10 +60,17 @@ class CheckoutLayout extends React.PureComponent {
 
         <div className={classNames(css.layoutContainer, { [css.layoutContainerRedesign]: isCheckoutOverhaulEnabled })}>
           <div className={classNames(css.pageContainer, { [css.pageContainerRedesign]: isCheckoutOverhaulEnabled })}>
-            <Header simple title={this.getMobileTitle()} />
-            {this.props.children}
+            <Header simple title={isCheckoutOverhaulEnabled ? '' : this.getMobileTitle()} />
+            {children}
           </div>
-          {!isCheckoutOverhaulEnabled && <Footer type="checkout" simple={false} />}
+          {!isCheckoutOverhaulEnabled && (
+            <Footer
+              type="checkout"
+              simple={false}
+              helpPreLoginVisibilityChange={() => {}}
+              trackNavigationClick={() => {}}
+            />
+          )}
         </div>
       </span>
     )
