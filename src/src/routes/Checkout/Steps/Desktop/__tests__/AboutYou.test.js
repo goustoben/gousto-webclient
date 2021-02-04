@@ -52,7 +52,7 @@ describe('AboutYouStep', () => {
         expect(userProspect).not.toBeCalled()
         expect(submit).not.toBeCalled()
         wrapper.find(CheckoutButton).simulate('click')
-        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickNextDelivery')
+        expect(trackUTMAndPromoCode).toHaveBeenCalledWith('checkout_click_continue_to_delivery')
         expect(userProspect).toBeCalled()
         expect(submit).toBeCalled()
       })

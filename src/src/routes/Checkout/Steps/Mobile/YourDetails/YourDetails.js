@@ -3,8 +3,8 @@ import React from 'react'
 
 import userRules from 'validations/user'
 import { addPrefix } from 'validations/util'
-
 import delivery from 'validations/delivery'
+import { checkoutClickContinueToPayment } from '../../../../../actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
 import CheckoutButton from '../../../Components/CheckoutButton'
 import SectionContainer from '../SectionContainer'
@@ -34,7 +34,7 @@ export const YourDetailsStep = ({
   const handleSubmit = (btnPosition) => () => {
     if (checkoutValid) {
       userProspect()
-      trackUTMAndPromoCode('clickNextPayment', btnPosition)
+      trackUTMAndPromoCode(checkoutClickContinueToPayment, btnPosition)
       trackClick('NextCTA Clicked', { succeeded: true, missing_field: null })
     }
     submit()

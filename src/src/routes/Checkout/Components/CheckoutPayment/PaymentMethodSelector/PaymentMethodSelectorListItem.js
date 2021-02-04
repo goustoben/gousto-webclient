@@ -18,6 +18,7 @@ export const PaymentMethodSelectorListItem = ({
       className={classNames(css.listItem, { [css.isActive]: isActive })}
     >
       <InputRadio
+        id={paymentMethod}
         value={paymentMethod}
         name="paymentMethod"
         isChecked={isActive}
