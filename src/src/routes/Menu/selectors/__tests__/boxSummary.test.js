@@ -19,12 +19,19 @@ describe('given getOneOffSlotAvailableSlots is called', () => {
           boxSummaryDeliveryDays: Immutable.fromJS({
             '2020-04-19': {
               daySlots: [{
+                activeForSignups: false,
                 activeForNonSubscribersOneOff: false,
                 activeForSubscribersOneOff: false,
+              },
+              {
+                activeForSignups: true,
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: true,
               }],
             },
             '2020-04-20': {
               daySlots: [{
+                activeForSignups: true,
                 activeForNonSubscribersOneOff: true,
                 activeForSubscribersOneOff: true,
               }],
@@ -38,8 +45,22 @@ describe('given getOneOffSlotAvailableSlots is called', () => {
       test('returns the days with active slots', () => {
         expect(expected).toEqual(
           Immutable.fromJS({
+            '2020-04-19': {
+              daySlots: [
+                {
+                  activeForSignups: false,
+                  activeForNonSubscribersOneOff: false,
+                  activeForSubscribersOneOff: false,
+                },{
+                  activeForSignups: true,
+                  activeForNonSubscribersOneOff: true,
+                  activeForSubscribersOneOff: true,
+                }
+              ],
+            },
             '2020-04-20': {
               daySlots: [{
+                activeForSignups: true,
                 activeForNonSubscribersOneOff: true,
                 activeForSubscribersOneOff: true,
               }],
@@ -65,12 +86,19 @@ describe('given getOneOffSlotAvailableSlots is called', () => {
           boxSummaryDeliveryDays: Immutable.fromJS({
             '2020-04-19': {
               daySlots: [{
+                activeForSignups: false,
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+              },
+              {
+                activeForSignups: false,
                 activeForNonSubscribersOneOff: false,
                 activeForSubscribersOneOff: false,
               }],
             },
             '2020-04-20': {
               daySlots: [{
+                activeForSignups: false,
                 activeForNonSubscribersOneOff: false,
                 activeForSubscribersOneOff: false,
               }],
@@ -158,6 +186,11 @@ describe('given getOneOffSlotAvailableSlots is called', () => {
                 activeForNonSubscribersOneOff: true,
                 activeForSubscribersOneOff: true,
                 activeForSignups: false,
+              },
+              {
+                activeForNonSubscribersOneOff: true,
+                activeForSubscribersOneOff: true,
+                activeForSignups: false,
               }],
             }
           })
@@ -196,6 +229,11 @@ describe('given getOneOffSlotAvailableSlots is called', () => {
                 activeForNonSubscribersOneOff: false,
                 activeForSubscribersOneOff: false,
                 activeForSignups: false,
+              },
+              {
+                activeForNonSubscribersOneOff: false,
+                activeForSubscribersOneOff: false,
+                activeForSignups: false,
               }],
             },
             '2020-04-20': {
@@ -222,6 +260,7 @@ describe('given getOneOffSlotAvailableSlots is called', () => {
 
 describe('given the getDisabledSlots is called', () => {
   let expected
+  let state
   const OPEN_ORDER = {
     'order-id-1': {
       phase: 'open'
@@ -229,7 +268,7 @@ describe('given the getDisabledSlots is called', () => {
   }
 
   beforeEach(() => {
-    const state = {
+    state = {
       auth: Immutable.fromJS({
         isAuthenticated: true
       }),
@@ -275,6 +314,179 @@ describe('given the getDisabledSlots is called', () => {
       id: 'slot-id-2',
       date: '2020-04-20',
     }]))
+  })
+
+  describe('when getDisabledSlots is called with multiple daySlots and only one is disabled', () => {
+    beforeEach(() => {
+      state = {
+        ...state,
+        boxSummaryDeliveryDays: Immutable.fromJS({
+          '2020-04-19': {
+            date: '2020-04-19',
+            daySlots: [{
+              slotId: 'slot-id-1',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            },
+            {
+              slotId: 'slot-id-1b',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            }],
+            slots: [{
+              id: 'slot-id-1',
+            },{
+              id: 'slot-id-1b',
+            }]
+          },
+          '2020-04-20': {
+            date: '2020-04-20',
+            daySlots: [{
+              slotId: 'slot-id-2',
+              activeForNonSubscribersOneOff: false,
+              activeForSubscribersOneOff: false,
+            },{
+              slotId: 'slot-id-2b',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            }],
+            slots: [{
+              id: 'slot-id-2',
+            },{
+              id: 'slot-id-2b',
+            }]
+          }
+        })
+      }
+
+      expected = getDisabledSlots(state)
+    })
+
+    test('returns the disabled slots correctly', () => {
+      expect(expected).toEqual(fromJS([{
+        id: 'slot-id-2',
+        date: '2020-04-20',
+      }]))
+    })
+  })
+
+  describe('when getDisabledSlots is called with multiple daySlots and none are disabled', () => {
+    beforeEach(() => {
+      state = {
+        ...state,
+        boxSummaryDeliveryDays: Immutable.fromJS({
+          '2020-04-19': {
+            date: '2020-04-19',
+            daySlots: [{
+              slotId: 'slot-id-1',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            },
+            {
+              slotId: 'slot-id-1b',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            }],
+            slots: [{
+              id: 'slot-id-1',
+            },{
+              id: 'slot-id-1b',
+            }]
+          },
+          '2020-04-20': {
+            date: '2020-04-20',
+            daySlots: [{
+              slotId: 'slot-id-2',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            },{
+              slotId: 'slot-id-2b',
+              activeForNonSubscribersOneOff: true,
+              activeForSubscribersOneOff: true,
+            }],
+            slots: [{
+              id: 'slot-id-2',
+            },{
+              id: 'slot-id-2b',
+            }]
+          }
+        })
+      }
+
+      expected = getDisabledSlots(state)
+    })
+
+    test('returns the disabled slots correctly', () => {
+      expect(expected).toEqual(fromJS([]))
+    })
+  })
+
+  describe('when getDisabledSlots is called with multiple daySlots and all are disabled', () => {
+    beforeEach(() => {
+      state = {
+        ...state,
+        boxSummaryDeliveryDays: Immutable.fromJS({
+          '2020-04-19': {
+            date: '2020-04-19',
+            daySlots: [{
+              slotId: 'slot-id-1',
+              activeForNonSubscribersOneOff: false,
+              activeForSubscribersOneOff: false,
+            },
+            {
+              slotId: 'slot-id-1b',
+              activeForNonSubscribersOneOff: false,
+              activeForSubscribersOneOff: false,
+            }],
+            slots: [{
+              id: 'slot-id-1',
+            },{
+              id: 'slot-id-1b',
+            }]
+          },
+          '2020-04-20': {
+            date: '2020-04-20',
+            daySlots: [{
+              slotId: 'slot-id-2',
+              activeForNonSubscribersOneOff: false,
+              activeForSubscribersOneOff: false,
+            },{
+              slotId: 'slot-id-2b',
+              activeForNonSubscribersOneOff: false,
+              activeForSubscribersOneOff: false,
+            }],
+            slots: [{
+              id: 'slot-id-2',
+            },{
+              id: 'slot-id-2b',
+            }]
+          }
+        })
+      }
+
+      expected = getDisabledSlots(state)
+    })
+
+    test('returns the disabled slots correctly', () => {
+      expect(expected).toEqual(fromJS([
+        {
+          id: 'slot-id-1',
+          date: '2020-04-19',
+        },
+        {
+          id: 'slot-id-1b',
+          date: '2020-04-19',
+        },
+        {
+          id: 'slot-id-2',
+          date: '2020-04-20',
+        },
+        {
+          id: 'slot-id-2b',
+          date: '2020-04-20',
+        },
+      ]))
+    })
   })
 })
 

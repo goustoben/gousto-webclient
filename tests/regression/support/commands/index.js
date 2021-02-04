@@ -36,7 +36,6 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
     ? 'prices/2person2portionDiscount'
     : 'prices/2person2portionNoDiscount'
 
-  const DATE = new Date(2020, 4, 1).getTime()
   cy.server()
   cy.clearCookies()
   cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
@@ -49,8 +48,11 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
   cy.route('GET', '/menu/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
   cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+
+  cy.mockDate()
+
   cy.visit('/')
-  cy.clock(DATE, ['Date'])
+
   cy.wait(['@getMenu', '@getBrand', '@getStock'])
 })
 

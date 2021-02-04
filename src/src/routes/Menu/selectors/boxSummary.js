@@ -62,7 +62,7 @@ export const getDisabledSlots = createSelector(
         })
 
       if (disabledSlot.size > 0) {
-        return acc.push(disabledSlot.first())
+        return acc.concat(disabledSlot)
       }
 
       return acc
@@ -91,15 +91,19 @@ export const getOneOffSlotAvailableSlots = createSelector(
     getUserSubscriptionState,
     getIsAuthenticated
   ],
-  (boxSummaryDeliveryDays, userSubscriptionState, isUserAuthenticated) => (
-    boxSummaryDeliveryDays.filter(deliveryDay => (
-      isOneOffSlotActive({
-        daySlot: deliveryDay.get('daySlots').first(),
+  (boxSummaryDeliveryDays, userSubscriptionState, isUserAuthenticated) => {
+    const availableBoxSummaryDeliveryDays = boxSummaryDeliveryDays.filter((deliveryDay) => {
+      const availableSlots = deliveryDay.get('daySlots').filter((daySlot) => isOneOffSlotActive({
+        daySlot,
         userSubscriptionState,
         isUserAuthenticated,
-      })
-    ))
-  ))
+      }))
+
+      return availableSlots.size > 0
+    })
+
+    return availableBoxSummaryDeliveryDays
+  })
 
 export const userHasAvailableSlots = createSelector([
   getUserOpenOrders,
