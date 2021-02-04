@@ -200,6 +200,7 @@ export const trackSubmitOrderEvent = () => (dispatch, getState) => {
 
 export const trackUTMAndPromoCode = (keyType, section) => (dispatch, getState) => {
   const { promoCode, UTM } = getUTMAndPromoCode(getState())
+  // eslint-disable-next-line import/namespace
   const type = trackingKeys[keyType] || keyType
 
   dispatch({
@@ -457,6 +458,7 @@ export const trackDiscountVisibilityBannerAppearance = (wizardStep) => (dispatch
 
 export const trackCheckoutNavigationLinks = (checkoutStep) => (dispatch, getState) => {
   const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  // eslint-disable-next-line import/namespace
   const type = trackingKeys[`click${checkoutStep}Breadcrumb`]
 
   dispatch({

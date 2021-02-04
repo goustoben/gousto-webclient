@@ -1,1 +1,1 @@
-export default from './Receipt.js'
+export default from './Receipt'

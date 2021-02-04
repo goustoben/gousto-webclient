@@ -15,6 +15,8 @@ describe('Menu-BrowseCTA', () => {
     cy.visit('/menu')
     cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveries'])
   })
+
+  // eslint-disable-next-line no-undef
   after(() => {
     cy.clock().then((clock) => {
       clock.restore()

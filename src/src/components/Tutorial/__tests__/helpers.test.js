@@ -40,6 +40,7 @@ describe('Tutorial helpers', () => {
       element.dataset.testing = 'target'
       document.body.appendChild(element)
 
+      // eslint-disable-next-line no-undef
       Element.prototype.getBoundingClientRect = jest.fn(() => (
         getBoundingClientRect(250, 125)
       ))
@@ -60,6 +61,7 @@ describe('Tutorial helpers', () => {
         x: 0,
         y: 0
       })
+      // eslint-disable-next-line no-undef
       expect(Element.prototype.getBoundingClientRect).toHaveBeenCalled()
     })
   })
@@ -165,6 +167,7 @@ describe('Tutorial helpers', () => {
         element.dataset.testing = 'target'
         document.body.appendChild(element)
 
+        // eslint-disable-next-line no-undef
         Element.prototype.getBoundingClientRect = jest.fn(() => (
           getBoundingClientRect(25, 50)
         ))
@@ -228,6 +231,7 @@ describe('Tutorial helpers', () => {
         element.dataset.testing = 'target'
         document.body.appendChild(element)
 
+        // eslint-disable-next-line no-undef
         Element.prototype.getBoundingClientRect = jest.fn(() => (
           getBoundingClientRect(100, 100)
         ))
@@ -248,6 +252,7 @@ describe('Tutorial helpers', () => {
 
   describe('isElementHidden', () => {
     beforeEach(() => {
+      // eslint-disable-next-line no-undef
       Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
         get() { return this.parentNode },
       })

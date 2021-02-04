@@ -1,1 +1,1 @@
-export default from './GenericScreen.js'
+export default from './GenericScreen'

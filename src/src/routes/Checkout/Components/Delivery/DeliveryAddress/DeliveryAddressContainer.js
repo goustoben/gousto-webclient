@@ -48,7 +48,6 @@ function mapStateToProps(state, ownProps) {
 
 const DeliveryAddressContainer = connect(mapStateToProps, {
   checkoutAddressLookup: actions.checkoutAddressLookup,
-  checkoutAddressDetailLookup: actions.checkoutAddressDetailLookup,
   onAddressConfirm: actions.basketPostcodeChange,
   change,
   untouch,

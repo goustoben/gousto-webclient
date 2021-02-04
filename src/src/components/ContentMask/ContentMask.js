@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+// eslint-disable-next-line import/no-unresolved
 import colors from 'styles/colors.css'
 import css from './ContentMask.css'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import ExpiredBillingModal from 'ExpiredBillingModal/ExpiredBillingModal.js'
+import ExpiredBillingModal from 'ExpiredBillingModal/ExpiredBillingModal'
 import css from 'ExpiredBillingModal/ExpiredBillingModal.css'
 
 describe('CancelOrderModal', () => {

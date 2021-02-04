@@ -9,7 +9,7 @@ import pricingActions from 'actions/pricing'
 import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
 import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
-import { pending, error } from 'actions/status'
+import status from 'actions/status'
 import { userSubscribe } from 'actions/user'
 
 import routes from 'config/routes'
@@ -408,7 +408,7 @@ describe('checkout actions', () => {
 
       await checkoutAddressLookup(postcode)(dispatch)
 
-      expect(pending).toHaveBeenCalledWith(
+      expect(status.pending).toHaveBeenCalledWith(
         actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
         true,
       )
@@ -421,7 +421,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED')(dispatch, getState)
 
-      expect(error).toHaveBeenCalledWith(
+      expect(status.error).toHaveBeenCalledWith(
         'CARD_TOKENIZATION_FAILED',
         true,
       )
@@ -433,7 +433,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED', errorText)(dispatch, getState)
 
-      expect(error).toHaveBeenCalledWith(
+      expect(status.error).toHaveBeenCalledWith(
         'CARD_TOKENIZATION_FAILED',
         errorText,
       )
@@ -448,7 +448,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutPendingEvent(pendingName)(dispatch, getState)
 
-      expect(pending).toHaveBeenCalledWith(pendingName, checkoutValue)
+      expect(status.pending).toHaveBeenCalledWith(pendingName, checkoutValue)
     })
   })
 
@@ -634,8 +634,8 @@ describe('checkout actions', () => {
       test('should show duplicated promo code error', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith(error(actionTypes.CHECKOUT_SIGNUP, '409-duplicate-details'))
-        expect(dispatch).toHaveBeenCalledWith(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+        expect(dispatch).toHaveBeenCalledWith(status.error(actionTypes.CHECKOUT_SIGNUP, '409-duplicate-details'))
+        expect(dispatch).toHaveBeenCalledWith(status.error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
       })
 
       test('should update pricing', async () => {
@@ -647,7 +647,7 @@ describe('checkout actions', () => {
       test('should discard pending signup', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith(pending(actionTypes.CHECKOUT_SIGNUP, false))
+        expect(dispatch).toHaveBeenCalledWith(status.pending(actionTypes.CHECKOUT_SIGNUP, false))
       })
 
       test('should prevent signup process', async () => {
@@ -800,7 +800,7 @@ describe('checkout actions', () => {
       test('should trigger signup error', async () => {
         await checkPaymentAuth(failedSessionId)(dispatch, getState)
 
-        expect(error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
+        expect(status.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
       })
 
       test('should not trigger 3ds_success event', async () => {
@@ -1112,7 +1112,7 @@ describe('checkout actions', () => {
         firePayPalError(err)(dispatch)
 
         expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
-        expect(error).toHaveBeenCalledWith(actionTypes.PAYPAL_ERROR, true)
+        expect(status.error).toHaveBeenCalledWith(actionTypes.PAYPAL_ERROR, true)
       })
     })
   })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Gel from 'Gel'
-import { YouGet } from '../YouGet.js'
+import { YouGet } from '../YouGet'
 
 describe('YouGet', () => {
   let wrapper

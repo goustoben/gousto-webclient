@@ -21,9 +21,11 @@ jest.mock('actions/basket', () => ({
   portionSizeSelectedTracking: jest.fn()
 }))
 
-deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
-
 describe('boxSummary actions', () => {
+  beforeEach(() => {
+    jest.spyOn(deliveriesUtils, 'transformDaySlotLeadTimesToMockSlots')
+  })
+
   describe('basketDeliveryDaysReceive', () => {
     test('should return an action with the correct response', () => {
       const days = {

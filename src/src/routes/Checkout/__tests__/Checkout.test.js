@@ -11,6 +11,7 @@ import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
 import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
+// eslint-disable-next-line import/named
 import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
