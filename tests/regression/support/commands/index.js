@@ -95,6 +95,9 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     cy.get('div').contains('Get Started').click()
   }
 
+  // This stops the `ndd` experiment from effecting our specs when running on staging
+  cy.setFeatures([{ feature: 'ndd', value: false }])
+
   // Add Postcode
   cy.get('[data-testing="menuPostcodeInput"]').click().type(`${POSTCODE}{enter}`)
   cy.wait('@getDeliveryDays')
