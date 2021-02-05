@@ -9,7 +9,7 @@ import css from './ExpandBoxSummaryButton.css'
 
 const ExpandBoxSummaryButton = ({ showDetails, pricingPending, numPortions, numRecipes, date, slotId, warning, onClick }) => (
   <div className={css.bsButton}>
-    <Button fill={showDetails} className={css.overflowFix} color="secondary" pending={pricingPending}>
+    <Button fill={showDetails} className={css.overflowFix} color="secondary" pending={pricingPending} data-testing="expandBoxSummaryButton">
       <Segment fill={showDetails} onClick={onClick} className={css.summaryDesktopSegment} color="secondary">
         <div>
           {numRecipes > 0 ? <span className={css.badge}>{numRecipes}</span> : ''}
