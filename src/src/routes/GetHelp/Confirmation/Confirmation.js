@@ -1,42 +1,38 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { BottomFixedContent, CTA, Heading, Alert } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
-import { GetHelpLayout } from '../layouts/GetHelpLayout'
-import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
-import { BottomButton } from '../components/BottomButton'
+import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
+import css from './Confirmation.css'
 
 const propTypes = {
-  content: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    button1: PropTypes.string.isRequired,
-    button2: PropTypes.string.isRequired,
-    confirmationBody: PropTypes.string.isRequired,
-  }),
   trackConfirmationCTA: PropTypes.func.isRequired,
 }
-const defaultProps = {
-  content: {}
-}
 
-const Confirmation = ({ content, trackConfirmationCTA }) => (
-  <GetHelpLayout title={content.title} body={content.confirmationBody}>
-    <BottomFixedContentWrapper>
-      <BottomButton color="secondary" url={routes.myDetails} clientRouted={false}>
-        {content.button1}
-      </BottomButton>
-      <BottomButton
-        clientRouted={false}
-        color="primary"
-        onClick={trackConfirmationCTA}
-        url={routes.myGousto}
+const Confirmation = ({ trackConfirmationCTA }) => (
+  <GetHelpLayout2 headingText="Thanks for your feedback">
+    <Heading size="fontStyleM" type="h2">
+      We really appreciate you letting us know about this issue.
+    </Heading>
+    <Alert type="info">We&apos;ve added the credit to your account. You can view it using the link below but please allow some time for it to appear on your account.</Alert>
+    <p className={css.content}>
+      The credit will be automatically taken off your next order. It won&apos;t show the deduction on your Gousto account but it should show on your bank statement.
+    </p>
+    <BottomFixedContent>
+      <CTA
+        isFullWidth
+        size="small"
+        onClick={() => {
+          trackConfirmationCTA()
+          window.location.assign(routes.myGousto)
+        }}
       >
-        {content.button2}
-      </BottomButton>
-    </BottomFixedContentWrapper>
-  </GetHelpLayout>
+        Done
+      </CTA>
+    </BottomFixedContent>
+  </GetHelpLayout2>
 )
 
-Confirmation.defaultProps = defaultProps
 Confirmation.propTypes = propTypes
 
 export {
