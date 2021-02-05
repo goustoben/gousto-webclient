@@ -7,7 +7,7 @@ describe('Given I’m a gousto logged-out website visitor', () => {
     before(() => {
       cy.setCookie('v1_goustoStateStore_basket_postcode', '"W14"')
       checkoutDelivery.setMocks({ validPostcode: false })
-      cy.clock(new Date(2020, 4, 1).getTime(), ['Date'])
+      cy.mockDate()
       checkoutAboutYou.goToCheckout()
 
       checkoutAboutYou.clearAndFillCheckoutForm({
