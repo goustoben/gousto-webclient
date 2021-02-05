@@ -6,7 +6,7 @@ import {
   goToCheckout,
   clearAndFillCheckoutForm
 } from './pageUtils/checkout/checkoutAboutYou'
-const DATE = new Date(2020, 4, 1).getTime()
+
 const NAME_ERROR = {
   firstName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters.",
   lastName: "Please use only letters (a-z), hyphens (-), apostrophes (' and ‘) and European special characters."
@@ -29,7 +29,7 @@ describe("Given I'm a logged out user", () => {
       cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
       cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
       cy.route('GET', 'address/postcode-lookup**', 'fixture:address/postcodeLookup.json').as('getAddresses')
-      cy.clock(DATE, ['Date'])
+      cy.mockDate()
       goToCheckout()
     })
 

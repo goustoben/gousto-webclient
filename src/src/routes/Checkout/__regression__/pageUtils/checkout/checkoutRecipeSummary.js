@@ -1,7 +1,5 @@
 import { getStore } from './checkoutGeneralUtils'
 
-const DATE = new Date(2020, 4, 1).getTime()
-
 export const setMocks = () => {
   cy.server()
   cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
@@ -14,7 +12,7 @@ export const setMocks = () => {
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
   cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
   cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
-  cy.clock(DATE, ['Date'])
+  cy.mockDate()
 }
 
 export const visitCheckout = () => {
