@@ -145,7 +145,7 @@ describe('when the user is logged out', () => {
       })
 
       it('should create an order and navigate to order confirmation page', () => {
-        cy.get('[data-testing="boxSummaryButton"]').eq(1).click()
+        cy.contains('Checkout').click({ force: true })
 
         cy.wait(['@getPreviewOrder', '@currentOrder'])
 
