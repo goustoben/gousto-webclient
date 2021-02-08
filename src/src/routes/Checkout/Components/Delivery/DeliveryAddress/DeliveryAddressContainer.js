@@ -5,7 +5,6 @@ import {
   getFormAsyncErrors,
   getFormMeta,
   getFormSyncErrors,
-  getFormValues,
   registerField,
   touch,
   untouch
@@ -15,7 +14,7 @@ import { trackUTMAndPromoCode } from 'actions/tracking'
 import actions from 'actions'
 import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
-import Address from '../../Address'
+import { Address } from '../../Address'
 
 function getCutoffDate(state) {
   const date = state.basket.get('date')
@@ -27,8 +26,6 @@ function getCutoffDate(state) {
 }
 
 function mapStateToProps(state, ownProps) {
-  const formValues = getFormValues(ownProps.formName)(state)
-
   return {
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
@@ -42,11 +39,10 @@ function mapStateToProps(state, ownProps) {
     isNDDExperiment: getNDDFeatureFlagVal(state),
     isMobile: state.request.get('browser') === 'mobile',
     deliveryTariffId: getDeliveryTariffId(state.user, getNDDFeatureValue(state)),
-    deliveryAddress: formValues && formValues[ownProps.sectionName] ? formValues[ownProps.sectionName] : {},
   }
 }
 
-const DeliveryAddressContainer = connect(mapStateToProps, {
+export const DeliveryAddressContainer = connect(mapStateToProps, {
   checkoutAddressLookup: actions.checkoutAddressLookup,
   onAddressConfirm: actions.basketPostcodeChange,
   change,
@@ -56,5 +52,3 @@ const DeliveryAddressContainer = connect(mapStateToProps, {
   trackCheckoutButtonPressed,
   trackUTMAndPromoCode
 })(Address)
-
-export default DeliveryAddressContainer

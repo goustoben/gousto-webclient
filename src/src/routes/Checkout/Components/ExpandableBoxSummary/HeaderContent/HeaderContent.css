@@ -10,6 +10,10 @@
   outline: 0;
 }
 
+.hideBottomBorder {
+  border: none;
+}
+
 .title {
   composes: fontStyleSubHead from 'design-language/typography.css';
 }

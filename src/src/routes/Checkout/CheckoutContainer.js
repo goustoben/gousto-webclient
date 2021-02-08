@@ -18,6 +18,10 @@ function mapStateToProps(state, ownProps) {
     tariffId: state.basket.get('tariffId'),
     isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
     prices: state.pricing.get('prices'),
+
+    isLoginOpen: state.loginVisibility.get('login'),
+    isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
+    isMobile: state.request.get('browser') === 'mobile',
   }
 }
 
@@ -35,4 +39,5 @@ export const CheckoutContainer = connect(mapStateToProps, {
   fetchPayPalClientToken,
   clearPayPalClientToken,
   trackCheckoutNavigationLinks,
+  loginVisibilityChange: actions.loginVisibilityChange,
 })(Checkout)

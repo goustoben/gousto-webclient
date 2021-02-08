@@ -1,9 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-
 import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
-import css from '../CheckoutFrame.css'
 
 jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
   publicKey: 'checkout-com-public-key',
@@ -82,13 +80,13 @@ describe('CheckoutFrame', () => {
         it('with the correct frames selectors', () => {
           const expected = {
             cardNumber: {
-              frameSelector: `.${css.cardNumberFramesContainer} [data-frames]`,
+              frameSelector: '[data-frames="cardNumber"]',
             },
             expiryDate: {
-              frameSelector: `.${css.expiryDateFramesContainer} [data-frames]`,
+              frameSelector: '[data-frames="expiryDate"]',
             },
             cvv: {
-              frameSelector: `.${css.cvvFramesContainer} [data-frames]`,
+              frameSelector: '[data-frames="cvv"]',
             },
           }
 
@@ -548,6 +546,50 @@ describe('CheckoutFrame', () => {
       it('should call disableCardSubmission', () => {
         expect(disableCardSubmission).toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('when handleSubmit is called', () => {
+    const onSubmitFromCardDetails = jest.fn()
+    const event = { preventDefault: () => {} }
+
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame onSubmitFromCardDetails={onSubmitFromCardDetails} />)
+      wrapper.instance().handleSubmit(event)
+    })
+
+    test('then should render correctly', () => {
+      expect(onSubmitFromCardDetails).toHaveBeenCalled()
+    })
+  })
+
+  describe('when handleCardValidationChanged is called', () => {
+    const onFramesValidationChanged = jest.fn()
+    const event = { isValid: true }
+
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame onFramesValidationChanged={onFramesValidationChanged} />)
+      wrapper.instance().handleCardValidationChanged(event)
+    })
+
+    test('then should render correctly', () => {
+      expect(onFramesValidationChanged).toHaveBeenCalled()
+    })
+  })
+
+  describe('when checkoutScriptReady is changed', () => {
+    const initFrames = jest.fn()
+
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame checkoutScriptReady={false} />)
+      wrapper.instance().initFrames = initFrames
+      wrapper.setProps({
+        checkoutScriptReady: true
+      })
+    })
+
+    test('then initFrames should be called', () => {
+      expect(initFrames).toHaveBeenCalled()
     })
   })
 })

@@ -154,10 +154,13 @@ class PromoCode extends PureComponent {
   }
 
   handleInput = (event) => {
-    const { basketPromoCodeChange } = this.props
-    if (!event || !event.target) {
+    const { basketPromoCodeChange, isCheckoutOverhaulEnabled } = this.props
+    if ((!event || !event.target) && !isCheckoutOverhaulEnabled) {
       return
+    } else {
+      this.removePromoCode()
     }
+
     basketPromoCodeChange(event.target.value)
   }
 

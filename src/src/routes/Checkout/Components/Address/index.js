@@ -1,1 +1,1 @@
-export default from './Address'
+export { Address } from './Address'

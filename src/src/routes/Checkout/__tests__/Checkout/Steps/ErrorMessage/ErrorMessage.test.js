@@ -65,4 +65,17 @@ describe('ErrorMessage', () => {
       })
     })
   })
+
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true,
+        errorType: 'paypal',
+      })
+    })
+
+    test('then should be rendered correctly', () => {
+      expect(wrapper.find('AlertCheckoutOverhaul').exists()).toBeTruthy()
+    })
+  })
 })

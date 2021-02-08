@@ -101,7 +101,7 @@ describe('PromoCode', () => {
       collection.forEach((node) => {
         node.simulate('input', { target: { value: 'promo' } })
         node.simulate('keyup', {keyCode: 13})
-        expect(basketPromoCodeChange).toHaveBeenCalledTimes(1)
+        expect(basketPromoCodeChange).toHaveBeenCalledTimes(2)
         expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
       })
     })

@@ -1,0 +1,36 @@
+@value (
+  Blackberry,
+  Blueberry,
+  BlueberryLight,
+  Bluecheese,
+  Carrot,
+  CarrotLight,
+  Haricot,
+  HaricotLight,
+  Radish,
+  RadishLight
+) from 'styles/colors.module.css';
+
+.alert {
+  background: RadishLight;
+  border: 1px solid Radish;
+  border-radius: 3px;
+  display: flex;
+  padding: 1rem;
+}
+
+@value iconSize 1.5rem;
+
+.iconContainer {
+  flex: 0 0 iconSize;
+  margin-right: 0.5rem;
+}
+
+.icon {
+  width: iconSize;
+  height: iconSize;
+}
+
+.content {
+  flex: 1;
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Button } from 'goustouicomponents'
 import { clickUseThisAddress } from '../../../../../actions/trackingKeys'
-import Address from '../../Address/Address'
+import { Address } from '../../Address/Address'
 
 describe('Address', () => {
   let wrapper
@@ -70,6 +70,22 @@ describe('Address', () => {
       test('then should call change and untouch', () => {
         expect(change).toHaveBeenCalledWith('delivery', 'delivery.addressId', '')
         expect(untouch).toHaveBeenCalledWith('delivery', 'delivery.addressId')
+      })
+    })
+
+    describe('when handleEditAddressManually is invoked from a child component', () => {
+      beforeEach(() => {
+        const onEnterAddressManuallyClick = wrapper.find('AddressOverhaul').prop('onEnterAddressManuallyClick')
+        onEnterAddressManuallyClick()
+      })
+
+      test('then it should change the form state to manual-editing mode', () => {
+        expect(change.mock.calls.length).toBe(4)
+
+        expect(change.mock.calls[0]).toEqual(['delivery', 'delivery.addressId', ''])
+        expect(change.mock.calls[1]).toEqual(['delivery', 'delivery.notFound', true])
+        expect(change.mock.calls[2]).toEqual(['delivery', 'delivery.postcode', 'w3 7up'])
+        expect(change.mock.calls[3]).toEqual(['delivery', 'delivery.addressId', 'placeholder'])
       })
     })
   })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import CheckBox from 'Form/CheckBox'
 import { BillingAddress } from '../BillingAddress'
 import Address from '../AddressContainer'
 
@@ -51,6 +52,9 @@ describe('Billing Address', () => {
         asyncValidate={jest.fn()}
         receiveRef={jest.fn()}
         scrollToFirstMatchingRef={jest.fn()}
+        form={form}
+        sectionName={sectionName}
+        formValues={store.form.payment.values}
       />,
       { context }
     )
@@ -70,11 +74,13 @@ describe('Billing Address', () => {
         wrapper = shallow(
           <BillingAddress
             deliveryAddress={deliveryAddress}
+            form={form}
             formValues={formValues}
             sectionName={sectionName}
             asyncValidate={jest.fn()}
             receiveRef={jest.fn()}
             scrollToFirstMatchingRef={jest.fn()}
+            change={change}
           />,
           { context }
         )
@@ -98,11 +104,13 @@ describe('Billing Address', () => {
         wrapper = shallow(
           <BillingAddress
             deliveryAddress={deliveryAddress}
+            form={form}
             formValues={formValues}
             sectionName={sectionName}
             asyncValidate={jest.fn()}
             receiveRef={jest.fn()}
             scrollToFirstMatchingRef={jest.fn()}
+            change={change}
           />,
           { context }
         )
@@ -142,6 +150,37 @@ describe('Billing Address', () => {
     test('should call the redux-form change() function with the correct parameters ', () => {
       wrapper.instance().toggleDeliveryAddress()
       expect(change).toHaveBeenCalledWith('payment', 'payment.isBillingAddressDifferent', true)
+    })
+  })
+
+  describe('when isCheckoutOverhaulEnabled is set', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true,
+        formValues: {
+          payment: { isBillingAddressDifferent: false }
+        },
+      })
+    })
+
+    test('then it should render correctly', () => {
+      expect(wrapper.find('.fieldHeader').exists()).toBeTruthy()
+      expect(wrapper.find('.fieldHeader').prop('children')).toBe('Billing address')
+
+      const checkbox = wrapper.find(CheckBox)
+      expect(checkbox.exists()).toBeTruthy()
+      expect(checkbox.prop('label')).toBe('My billing address is the same as my delivery address')
+      expect(checkbox.prop('checked')).toBeTruthy()
+    })
+
+    describe('when checkbox is unchecked', () => {
+      beforeEach(() => {
+        wrapper.find(CheckBox).prop('onChange')(false)
+      })
+
+      test('should call the redux-form change() function to set isBillingAddressDifferent', () => {
+        expect(change).toHaveBeenCalledWith('payment', 'payment.isBillingAddressDifferent', true)
+      })
     })
   })
 })

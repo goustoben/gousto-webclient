@@ -112,6 +112,12 @@ describe('delivery utils', () => {
       })
     })
 
+    describe('when called with the empty address', () => {
+      test('then the result is the empty string', () => {
+        expect(showAddress(null)).toBe('')
+      })
+    })
+
     describe('when isCheckoutOverhaulRedesign is true', () => {
       describe('and showAddress is called', () => {
         beforeEach(() => {

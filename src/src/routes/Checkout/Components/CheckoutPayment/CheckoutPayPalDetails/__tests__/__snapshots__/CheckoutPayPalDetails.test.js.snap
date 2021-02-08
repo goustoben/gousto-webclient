@@ -8,6 +8,7 @@ ShallowWrapper {
     firePayPalError={[Function]}
     hasErrors={false}
     hide={false}
+    isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={false}
     isSubmitting={false}
     paypalScriptsReady={false}
@@ -308,6 +309,7 @@ ShallowWrapper {
     firePayPalError={[Function]}
     hasErrors={false}
     hide={false}
+    isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={false}
     isSubmitting={false}
     paypalScriptsReady={false}
@@ -568,6 +570,7 @@ ShallowWrapper {
     firePayPalError={[Function]}
     hasErrors={false}
     hide={false}
+    isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={true}
     isSubmitting={false}
     paypalScriptsReady={false}
@@ -1140,6 +1143,7 @@ ShallowWrapper {
     firePayPalError={[Function]}
     hasErrors={false}
     hide={true}
+    isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={false}
     isSubmitting={false}
     paypalScriptsReady={false}

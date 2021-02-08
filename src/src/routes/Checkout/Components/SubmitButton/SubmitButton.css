@@ -16,3 +16,16 @@
 	color: HaricotMedium;
 	font-size: 1.25rem;
 }
+
+.checkoutOverhaulContainer {
+  margin-bottom: 1.5rem;
+
+  /* Temporary; short-term it should be applied at the level of CheckoutButton; long-term in ui-components/CTA. */
+  & > button {
+    height: 3rem;
+  }
+
+  & > button > span {
+    padding: 0.5rem;
+  }
+}

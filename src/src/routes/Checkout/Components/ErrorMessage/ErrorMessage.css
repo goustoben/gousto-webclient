@@ -19,3 +19,15 @@
 .goBackButton:hover {
 	text-decoration: underline;
 }
+
+.checkoutOverhaulContainer {
+  margin-bottom: 1.5rem;
+}
+
+.header {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+}
+
+.messageContainer {
+  composes: fontStyleBody from 'design-language/typography.css';
+}

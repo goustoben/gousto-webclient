@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getFormSyncErrors, getFormAsyncErrors, change, untouch, touch, registerField } from 'redux-form'
 import { checkoutAddressLookup } from 'actions/checkout'
-import Address from '../Address'
+import { Address } from '../Address'
 
 function mapStateToProps(state, ownProps) {
   return {

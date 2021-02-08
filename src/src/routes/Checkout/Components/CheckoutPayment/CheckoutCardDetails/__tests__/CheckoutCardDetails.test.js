@@ -70,4 +70,17 @@ describe('given CheckoutCardDetails is rendered', () => {
       expect(wrapper.hasClass('hide')).toBeFalsy()
     })
   })
+
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true
+      })
+    })
+
+    test('then component should be rendered correctly', () => {
+      expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
+      expect(wrapper.find(CheckoutAddress)).toHaveLength(1)
+    })
+  })
 })

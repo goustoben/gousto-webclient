@@ -10,7 +10,7 @@ const poundSign = String.fromCharCode(163)
 
 export const HeaderContent = ({ isExpanded, handleClick, totalWithoutDiscount, totalToPay, promoCodeValid }) => (
   <div
-    className={css.toggleHeader}
+    className={classNames(css.toggleHeader, { [css.hideBottomBorder]: isExpanded })}
     role="button"
     tabIndex="0"
     onClick={handleClick}

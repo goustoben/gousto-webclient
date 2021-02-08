@@ -4,9 +4,15 @@ import { AddressOverhaul } from '../AddressOverhaul'
 
 describe('Given AddressOverhaul', () => {
   let wrapper
+  const onEnterAddressManuallyClick = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<AddressOverhaul />)
+    wrapper = shallow(
+      <AddressOverhaul
+        isEditingManually={false}
+        onEnterAddressManuallyClick={onEnterAddressManuallyClick}
+      />
+    )
   })
 
   describe('When component is mounted', () => {
@@ -14,10 +20,11 @@ describe('Given AddressOverhaul', () => {
       expect(wrapper.exists()).toBeTruthy()
       expect(wrapper.find('Postcode').exists()).toBeTruthy()
       expect(wrapper.find('.enterAddressManually').exists()).toBeTruthy()
+      expect(wrapper.find('AddressInputs').exists()).toBeFalsy()
     })
   })
 
-  describe('When address is selected and "edit address" is not clicked', () => {
+  describe('When address is selected', () => {
     beforeEach(() => {
       wrapper.setProps({
         isAddressSelected: true
@@ -38,19 +45,15 @@ describe('Given AddressOverhaul', () => {
       expect(wrapper.find('DeliveryCard').exists()).toBeFalsy()
     })
 
-    test('Then isEditAddressClicked state should be true', () => {
-      expect(wrapper.state('isEditAddressClicked')).toBeTruthy()
-    })
-
-    test('Then should not render AddressInputs component', () => {
-      expect(wrapper.find('AddressInputs').exists()).toBeTruthy()
+    test('Then onEnterAddressManuallyClick should be called', () => {
+      expect(onEnterAddressManuallyClick).toHaveBeenCalled()
     })
   })
 
-  describe('When notFound props is false', () => {
+  describe('When isEditingManually prop is not set', () => {
     beforeEach(() => {
       wrapper.setProps({
-        notFound: false
+        isEditingManually: false
       })
     })
 
@@ -59,8 +62,6 @@ describe('Given AddressOverhaul', () => {
     })
 
     describe('And user clicks on "Enter address manually"', () => {
-      const onEnterAddressManuallyClick = jest.fn()
-
       beforeEach(() => {
         wrapper.setProps({
           onEnterAddressManuallyClick
@@ -68,13 +69,21 @@ describe('Given AddressOverhaul', () => {
         wrapper.find('.editAddressLink').simulate('click')
       })
 
-      test('Then isEditAddressClicked state should be true', () => {
-        expect(wrapper.state('isEditAddressClicked')).toBeTruthy()
-      })
-
       test('Then onEnterAddressManuallyClick should be called', () => {
         expect(onEnterAddressManuallyClick).toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('When isEditingManually prop is set', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isEditingManually: true
+      })
+    })
+
+    test('Then should show the address inputs', () => {
+      expect(wrapper.find('AddressInputs').exists()).toBeTruthy()
     })
   })
 })

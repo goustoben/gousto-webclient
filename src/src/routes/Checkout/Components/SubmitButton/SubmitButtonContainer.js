@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { trackSubmitOrderEvent } from 'actions/tracking'
+import { isSubmitting } from 'routes/Checkout/utils/state'
 import { SubmitButton } from './SubmitButton'
 
 function mapStateToProps(state, ownProps) {
@@ -8,6 +9,7 @@ function mapStateToProps(state, ownProps) {
   return {
     nextStepName: ownProps.nextStepName,
     onClick: ownProps.onClick,
+    submitting: isSubmitting(state),
     browser,
   }
 }

@@ -145,6 +145,51 @@ module.exports = {
     'user-phone-number-invalid': 'Oh dear, it looks like there was a problem with the phone number you gave us. Please go back a step and try again.',
     '3ds-challenge-failed': 'Please try again or try a different bank card. If you’re experiencing difficulties, please contact your bank.',
   },
+  errorMessagesForCheckoutOverhaul: {
+    'paypal-token-fetch-failed': {
+      header: 'Cannot connect to PayPal',
+      message: 'Click the PayPal button below to try again or select card payment above.',
+    },
+    'paypal-error': {
+      header: 'Cannot connect to PayPal',
+      message: 'Click the PayPal button below to try again or select card payment above.',
+    },
+    'postcodeInvalid': {
+      header: 'Invalid postcode',
+      message: 'Enter a valid postcode, for example, W3 7UP.',
+    },
+    'user-exists': {
+      header: 'Email already in use',
+      message: ' with this email or sign up with a different email.',
+      prependLoginLinkToMessage: true,
+      loginLinkText: 'Log in',
+    },
+    'payment-failure': {
+      header: 'Payment failed',
+      message: 'Check your card details and try again.',
+    },
+    'user-promo-invalid': {
+      header: 'Discount removed',
+      message: 'A discount has already been used at this address.',
+    },
+    'out-of-stock': {
+      header: 'Cannot create order',
+      message: 'Go back to the menu and checkout again.',
+    },
+    'user-phone-number-invalid': {
+      header: 'Invalid phone number',
+      message: 'Go back a step and enter a valid phone number.',
+    },
+    '3ds-challenge-failed': {
+      header: 'Payment failed',
+      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
+    },
+    'generic': {
+      header: 'Cannot create order',
+      message: 'Try again or get in touch our Customer Care team.',
+      displayCustomerCareDetails: true,
+    },
+  },
   errorsRequireGoBack: ['user-phone-number-invalid'],
   terms: 'By placing your order you agree to our',
   supportedCardTypes: ['VISA', 'MC', 'DELTA', 'MCDEBIT', 'UKE', 'MAESTRO'],

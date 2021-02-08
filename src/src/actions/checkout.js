@@ -510,17 +510,19 @@ export function clearPayPalClientToken() {
   }
 }
 
-export function setCurrentPaymentMethod(paymentMethod) {
+export function setCurrentPaymentMethod(paymentMethod, options = {}) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.PAYMENT_SET_PAYMENT_METHOD,
       paymentMethod
     })
 
-    const trackingKey = paymentMethod === PaymentMethod.Card
-      ? trackingKeys.selectCardPayment
-      : trackingKeys.selectPayPalPayment
-    dispatch(trackUTMAndPromoCode(trackingKey))
+    if (!options.disableTracking) {
+      const trackingKey = paymentMethod === PaymentMethod.Card
+        ? trackingKeys.selectCardPayment
+        : trackingKeys.selectPayPalPayment
+      dispatch(trackUTMAndPromoCode(trackingKey))
+    }
   }
 }
 
