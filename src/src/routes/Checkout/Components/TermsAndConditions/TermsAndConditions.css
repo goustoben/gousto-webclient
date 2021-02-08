@@ -1,17 +1,25 @@
 @value Blueberry, Bluecheese from 'styles/colors.css';
 
 .centeredSmallTextWithTopMargin {
-	composes: textCenter textSM from 'styles/typography.css';
-	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+  composes: textCenter textSM from 'styles/typography.css';
+  composes: marginSMTop from 'sass-loader!styles/spacing.scss';
 }
 
 .link {
-	color: Bluecheese;
-	text-decoration: underline;
-	cursor: pointer;
+  color: Bluecheese;
+  text-decoration: underline;
+  cursor: pointer;
 
-	&:hover {
-		 color: Blueberry;
-	 }
+  &:hover {
+    color: Blueberry;
+  }
 }
 
+.checkoutOverhaulTermsAndConditions {
+  composes: fontStyleXS from 'design-language/typography.css';
+  margin-top: 1.5rem;
+}
+
+.checkoutOverhaulLink {
+  composes: fontBold from 'design-language/typography.css';
+}

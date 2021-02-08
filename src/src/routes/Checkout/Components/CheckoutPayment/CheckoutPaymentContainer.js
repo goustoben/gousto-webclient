@@ -8,7 +8,7 @@ import {
   setCurrentPaymentMethod
 } from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
-import { getIs3DSForSignUpEnabled } from 'selectors/features'
+import { getIs3DSForSignUpEnabled, getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, getCanSubmitPaymentDetails, isPayPalReady } from 'selectors/payment'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
@@ -26,7 +26,8 @@ const mapStateToProps = (state) => ({
   sectionName,
   currentPaymentMethod: getCurrentPaymentMethod(state),
   canSubmit: getCanSubmitPaymentDetails(state),
-  isPayPalReady: isPayPalReady(state)
+  isPayPalReady: isPayPalReady(state),
+  isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
 })
 
 const mapDispatchToProps = {
@@ -35,7 +36,7 @@ const mapDispatchToProps = {
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
-  setCurrentPaymentMethod
+  setCurrentPaymentMethod,
 }
 
 const ConnectedCheckoutPaymentContainer = connect(

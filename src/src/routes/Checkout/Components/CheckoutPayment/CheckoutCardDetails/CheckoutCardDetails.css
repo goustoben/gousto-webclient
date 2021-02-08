@@ -1,3 +1,5 @@
+@value Blackberry from 'styles/colors.css';
+
 .frame {
   composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
 }

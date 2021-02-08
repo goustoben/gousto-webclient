@@ -4,25 +4,31 @@ import { FormSection } from 'redux-form'
 
 import { BillingAddress } from 'routes/Checkout/Components/BillingAddress'
 
-const propTypes = {
-  receiveRef: PropTypes.func,
-  asyncValidate: PropTypes.func,
-  sectionName: PropTypes.string,
-  scrollToFirstMatchingRef: PropTypes.func,
-}
-
-const CheckoutAddress = ({ sectionName, asyncValidate, receiveRef, scrollToFirstMatchingRef }) => (
+export const CheckoutAddress = ({
+  sectionName,
+  asyncValidate,
+  receiveRef,
+  scrollToFirstMatchingRef,
+  isCheckoutOverhaulEnabled,
+}) => (
   <FormSection name={sectionName}>
     <BillingAddress
       asyncValidate={asyncValidate}
       receiveRef={receiveRef}
       scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+      isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
     />
   </FormSection>
 )
 
-CheckoutAddress.propTypes = propTypes
+CheckoutAddress.propTypes = {
+  receiveRef: PropTypes.func,
+  asyncValidate: PropTypes.func,
+  sectionName: PropTypes.string,
+  scrollToFirstMatchingRef: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+}
 
-export {
-  CheckoutAddress,
+CheckoutAddress.defaultProps = {
+  isCheckoutOverhaulEnabled: false,
 }

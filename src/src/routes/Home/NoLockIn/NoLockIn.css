@@ -11,6 +11,10 @@
   }
 }
 
+.isCentered {
+  justify-content: center;
+}
+
 .lockInBold {
   font-weight: 600;
 }

@@ -26,6 +26,7 @@
   margin: 0 0 1rem 0;
   padding: 0;
   font-family: FontFamilyAxiformaBook, Helvetica, sans-serif;
+  border-radius: 3px;
 
   @media BreakpointFromMedium {
     margin: 0 0 1.5rem 0;
@@ -53,6 +54,7 @@
 .inputErrorRedesign {
   background: White;
   border: 2px solid Radish;
+  box-shadow: none;
 }
 
 .prefixPadding {
@@ -61,4 +63,9 @@
 
 .relative {
   position: relative;
+}
+
+.fieldHeader {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin-bottom: 0.5rem;
 }

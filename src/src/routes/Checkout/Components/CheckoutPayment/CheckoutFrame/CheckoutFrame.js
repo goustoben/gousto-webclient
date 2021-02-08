@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
 import { actionTypes } from 'actions/actionTypes'
 import InputError from 'Form/InputError'
+
 import { publicKey } from '../config'
 import { getErrorType } from './utils'
-import { checkoutStyles } from './checkoutStyles'
+import { checkoutStyles, checkoutStylesForCheckoutOverhaul } from './checkoutStyles'
+import { CheckoutName } from '../CheckoutName'
+import { FrameField } from './FrameField'
 
 import css from './CheckoutFrame.css'
+import redesignCss from '../../../CheckoutRedesignContainer.css'
 
 /* global Frames */
 class CheckoutFrame extends React.Component {
@@ -32,15 +35,23 @@ class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } = this.props
+    const {
+      billingAddress,
+      cardName,
+      checkoutScriptReady,
+      isSubmitCardEnabled,
+      hasCheckoutError,
+    } = this.props
 
     if (checkoutScriptReady) {
       if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
         this.initFrames()
       }
 
-      if (hasPropUpdated(cardName, prevProps.cardName)
-        || hasPropUpdated(billingAddress, prevProps.billingAddress)) {
+      if (
+        hasPropUpdated(cardName, prevProps.cardName)
+        || hasPropUpdated(billingAddress, prevProps.billingAddress)
+      ) {
         Frames.cardholder = this.getCardholderDetails()
       }
 
@@ -68,13 +79,8 @@ class CheckoutFrame extends React.Component {
 
   getCardholderDetails() {
     const {
-      billingAddress: {
-        addressLine1,
-        addressLine2,
-        city,
-        postcode: zip,
-      },
-      cardName: name
+      billingAddress: { addressLine1, addressLine2, city, postcode: zip },
+      cardName: name,
     } = this.props
 
     return {
@@ -84,7 +90,7 @@ class CheckoutFrame extends React.Component {
         addressLine2,
         city,
         zip,
-      }
+      },
     }
   }
 
@@ -115,7 +121,13 @@ class CheckoutFrame extends React.Component {
 
   cardTokenized = (event) => {
     const { paymentForm } = this
-    const { change, cardTokenReady, sectionName, fireCheckoutPendingEvent, trackingCardTokenizationSuccessfully } = this.props
+    const {
+      change,
+      cardTokenReady,
+      sectionName,
+      fireCheckoutPendingEvent,
+      trackingCardTokenizationSuccessfully,
+    } = this.props
     const { token } = event
 
     Frames.addCardToken(paymentForm, token)
@@ -126,7 +138,11 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenizationFailed = (event) => {
-    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenizationFailed } = this.props
+    const {
+      fireCheckoutError,
+      fireCheckoutPendingEvent,
+      trackingCardTokenizationFailed,
+    } = this.props
     const errorMessage = event ? event.data.message : ''
     const errorType = getErrorType(event.data.errorCode)
 
@@ -136,31 +152,45 @@ class CheckoutFrame extends React.Component {
     trackingCardTokenizationFailed(errorMessage)
   }
 
+  handleCardValidationChanged = (event) => {
+    const { onFramesValidationChanged } = this.props
+    onFramesValidationChanged(event.isValid)
+  }
+
+  handleSubmit = (event) => {
+    const { onSubmitFromCardDetails } = this.props
+    // When Enter is pressed in the CheckoutName field, report back to
+    // CheckoutPayment so it tries to submit the overall payment form.
+    event.preventDefault()
+    onSubmitFromCardDetails()
+  }
+
   submitCard() {
     const { disableCardSubmission, fireCheckoutError, fireCheckoutPendingEvent } = this.props
 
     fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, true)
-    Frames.submitCard()
-      .catch(() => {
-        fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
-        fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
-      })
+    Frames.submitCard().catch(() => {
+      fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+      fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+    })
 
     disableCardSubmission()
   }
 
   initFrames() {
+    const { isCheckoutOverhaulEnabled } = this.props
+
     Frames.init({
       publicKey,
-      style: checkoutStyles,
+      style: isCheckoutOverhaulEnabled ? checkoutStylesForCheckoutOverhaul : checkoutStyles,
       cardNumber: {
-        frameSelector: `.${css.cardNumberFramesContainer} [data-frames]`,
+        frameSelector: '[data-frames="cardNumber"]',
       },
       expiryDate: {
-        frameSelector: `.${css.expiryDateFramesContainer} [data-frames]`,
+        frameSelector: '[data-frames="expiryDate"]',
       },
       cvv: {
-        frameSelector: `.${css.cvvFramesContainer} [data-frames]`,
+        frameSelector: '[data-frames="cvv"]',
       },
       localization: {
         cardNumberPlaceholder: 'Card number',
@@ -170,6 +200,7 @@ class CheckoutFrame extends React.Component {
       },
       cardholder: this.getCardholderDetails(),
       frameValidationChanged: this.frameValidationChanged,
+      cardValidationChanged: this.handleCardValidationChanged,
       cardSubmitted: this.cardSubmitted,
       cardTokenized: this.cardTokenized,
       cardTokenizationFailed: this.cardTokenizationFailed,
@@ -177,30 +208,91 @@ class CheckoutFrame extends React.Component {
   }
 
   render() {
+    const { isCheckoutOverhaulEnabled, receiveRef, sectionName } = this.props
     const { showCardNumberError, showExpiryDateError, showCVVError } = this.state
 
-    return (
-      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" className={css.framesForm}>
-        <div className={css.cardNumberFramesContainer}>
-          <div data-frames className={css.framesContainer} />
-          <div data-testing="checkoutFrameCardNoError">
-            {showCardNumberError && (<InputError>Please enter a valid card number</InputError>)}
+    if (isCheckoutOverhaulEnabled) {
+      return (
+        <form
+          ref={this.setPaymentFormRef}
+          id="payment-form"
+          name="payment-form"
+          onSubmit={this.handleSubmit}
+        >
+          <div className={css.row}>
+            <FrameField
+              header="Card number"
+              hasLockIcon
+              dataFrames="cardNumber"
+              errorDataTesting="checkoutFrameCardNoError"
+              showError={showCardNumberError}
+              errorMessage="Please enter a valid card number"
+            />
           </div>
-        </div>
-        <div className={css.expiryDateFramesContainer}>
-          <div data-frames className={css.framesContainer} />
-          <div data-testing="checkoutFrameExpiryError">
-            {showExpiryDateError && (<InputError>Please enter a valid expiry date</InputError>)}
+          <div className={css.row}>
+            <div className={css.fieldContainer}>
+              <div className={redesignCss.fieldHeader}>Name on card</div>
+              <CheckoutName
+                receiveRef={receiveRef}
+                sectionName={sectionName}
+                isCheckoutOverhaulEnabled
+              />
+            </div>
           </div>
-        </div>
-        <div className={css.cvvFramesContainer}>
-          <div data-frames className={css.framesContainer} />
-          <div data-testing="checkoutFrameCVVError">
-            {showCVVError && (<InputError>Please enter a valid CVV code</InputError>)}
+          <div className={css.row}>
+            <FrameField
+              header={(
+                <div>
+                  Expiry
+                  <br className={css.forceLineBreakOnSmallScreens} />
+                  {' '}
+                  (MM/YY)
+                </div>
+              )}
+              dataFrames="expiryDate"
+              errorDataTesting="checkoutFrameExpiryError"
+              showError={showExpiryDateError}
+              errorMessage="Please enter a valid expiry date"
+            />
+            <FrameField
+              header="Security code (CVV)"
+              dataFrames="cvv"
+              errorDataTesting="checkoutFrameCVVError"
+              showError={showCVVError}
+              errorMessage="Please enter a valid CVV code"
+            />
           </div>
-        </div>
-      </form>
-    )
+        </form>
+      )
+    } else {
+      return (
+        <form
+          ref={this.setPaymentFormRef}
+          id="payment-form"
+          name="payment-form"
+          className={css.framesForm}
+        >
+          <div className={css.cardNumberFramesContainer}>
+            <div data-frames="cardNumber" className={css.framesContainer} />
+            <div data-testing="checkoutFrameCardNoError">
+              {showCardNumberError && <InputError>Please enter a valid card number</InputError>}
+            </div>
+          </div>
+          <div className={css.expiryDateFramesContainer}>
+            <div data-frames="expiryDate" className={css.framesContainer} />
+            <div data-testing="checkoutFrameExpiryError">
+              {showExpiryDateError && <InputError>Please enter a valid expiry date</InputError>}
+            </div>
+          </div>
+          <div className={css.cvvFramesContainer}>
+            <div data-frames="cvv" className={css.framesContainer} />
+            <div data-testing="checkoutFrameCVVError">
+              {showCVVError && <InputError>Please enter a valid CVV code</InputError>}
+            </div>
+          </div>
+        </form>
+      )
+    }
   }
 }
 
@@ -225,6 +317,10 @@ CheckoutFrame.propTypes = {
   checkoutScriptReady: PropTypes.bool,
   isSubmitCardEnabled: PropTypes.bool,
   hasCheckoutError: PropTypes.bool,
+  onFramesValidationChanged: PropTypes.func,
+  onSubmitFromCardDetails: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+  receiveRef: PropTypes.func,
 }
 
 CheckoutFrame.defaultProps = {
@@ -241,13 +337,17 @@ CheckoutFrame.defaultProps = {
     addressLine1: '',
     addressLine2: '',
     postcode: '',
-    city: ''
+    city: '',
   },
   cardName: '',
   sectionName: 'payment',
   checkoutScriptReady: false,
   isSubmitCardEnabled: false,
   hasCheckoutError: false,
+  onFramesValidationChanged: () => {},
+  onSubmitFromCardDetails: () => {},
+  isCheckoutOverhaulEnabled: false,
+  receiveRef: () => {},
 }
 
 export { CheckoutFrame }

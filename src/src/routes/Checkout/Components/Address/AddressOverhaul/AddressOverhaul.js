@@ -7,22 +7,8 @@ import { DeliveryCard } from '../../Delivery/DeliveryCard'
 import css from '../Address.css'
 
 export class AddressOverhaul extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isEditAddressClicked: false
-    }
-  }
-
-  handleEditAddressClick = () => {
-    this.setState({
-      isEditAddressClicked: true
-    })
-  }
-
   handleEditAddressManually = () => {
     const { onEnterAddressManuallyClick } = this.props
-    this.handleEditAddressClick()
     onEnterAddressManuallyClick()
   }
 
@@ -38,8 +24,8 @@ export class AddressOverhaul extends PureComponent {
               className={css.editAddressLink}
               role="button"
               tabIndex="0"
-              onClick={this.handleEditAddressClick}
-              onKeyDown={onEnter(this.handleEditAddressClick)}
+              onClick={this.handleEditAddressManually}
+              onKeyDown={onEnter(this.handleEditAddressManually)}
             >
               Edit address
             </span>
@@ -61,10 +47,8 @@ export class AddressOverhaul extends PureComponent {
       isMobile,
       isAddressSelected,
       sectionName,
-      notFound,
-      isBillingAddress,
+      isEditingManually,
     } = this.props
-    const { isEditAddressClicked } = this.state
 
     return (
       <Fragment>
@@ -81,9 +65,9 @@ export class AddressOverhaul extends PureComponent {
           isAddressSelected={isAddressSelected}
         />
 
-        {!isEditAddressClicked && isAddressSelected && this.renderAddressCard()}
+        {!isEditingManually && isAddressSelected && this.renderAddressCard()}
 
-        {(isBillingAddress || isEditAddressClicked) && (
+        {isEditingManually && (
           <AddressInputs
             receiveRef={receiveRef}
             sectionName={sectionName}
@@ -91,7 +75,7 @@ export class AddressOverhaul extends PureComponent {
           />
         )}
 
-        {!notFound && (
+        {(!(isEditingManually || isAddressSelected)) && (
           <div className={css.enterAddressManually}>
             <span
               role="button"
@@ -122,10 +106,9 @@ AddressOverhaul.propTypes = {
   onSelectedAddressChange: PropTypes.func,
   showDropdown: PropTypes.bool,
   isAddressSelected: PropTypes.bool,
-  notFound: PropTypes.bool,
   onEnterAddressManuallyClick: PropTypes.func,
-  isBillingAddress: PropTypes.bool,
   currentAddress: PropTypes.string,
+  isEditingManually: PropTypes.bool.isRequired,
 }
 
 AddressOverhaul.defaultProps = {
@@ -138,11 +121,9 @@ AddressOverhaul.defaultProps = {
   onSelectedAddressChange: () => {},
   onEnterAddressManuallyClick: () => {},
   isAddressSelected: false,
-  notFound: false,
   isMobile: false,
   showDropdown: false,
   addresses: [],
   postcodeTemp: '',
-  isBillingAddress: false,
   currentAddress: '',
 }

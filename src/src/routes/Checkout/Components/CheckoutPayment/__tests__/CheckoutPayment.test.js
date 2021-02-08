@@ -280,4 +280,97 @@ describe('CheckoutPayment', () => {
       expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
     })
   })
+
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true,
+        isPayPalReady: true,
+      })
+    })
+
+    test('then component should be rendered correctly', () => {
+      expect(wrapper.find('.checkoutOverhaulContainer')).toHaveLength(1)
+      expect(wrapper.find('SectionHeader').exists()).toBeTruthy()
+      expect(wrapper.find('PaymentMethodSelectorCheckoutOverhaul').exists()).toBeTruthy()
+      expect(wrapper.find('PaymentFooter').exists()).toBeTruthy()
+    })
+  })
+
+  describe('when handleFramesValidationChanged is called', () => {
+    beforeEach(() => {
+      wrapper.instance().handleFramesValidationChanged(true)
+    })
+
+    test('then framesFieldsAreValid should be changed', () => {
+      expect(wrapper.state().framesFieldsAreValid).toBeTruthy()
+    })
+  })
+
+  describe('when handleSubmitFromCardDetails is called', () => {
+    const handleClick = jest.fn()
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    describe('and getSubmitButtonIsDisabledForCardPayment returns false', () => {
+      const getSubmitButtonIsDisabledForCardPayment = jest.fn(() => false)
+      beforeEach(() => {
+        const instance = wrapper.instance()
+        instance.getSubmitButtonIsDisabledForCardPayment = getSubmitButtonIsDisabledForCardPayment
+        instance.handleClick = handleClick
+        instance.handleSubmitFromCardDetails()
+      })
+
+      test('then getSubmitButtonIsDisabledForCardPayment and handleClick should be called', () => {
+        expect(getSubmitButtonIsDisabledForCardPayment).toHaveBeenCalled()
+        expect(handleClick).toHaveBeenCalled()
+      })
+    })
+
+    describe('and getSubmitButtonIsDisabledForCardPayment returns true', () => {
+      beforeEach(() => {
+        const instance = wrapper.instance()
+        instance.getSubmitButtonIsDisabledForCardPayment = jest.fn(() => true)
+        instance.handleClick = handleClick
+        instance.handleSubmitFromCardDetails()
+      })
+
+      test('then handleClick should not be called', () => {
+        expect(handleClick).not.toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('when handleRecaptchaChange is called', () => {
+    const processSignup = jest.fn()
+    const storeSignupRecaptchaToken = jest.fn()
+
+    describe('and value is null', () => {
+      beforeEach(() => {
+        wrapper.setProps({ storeSignupRecaptchaToken })
+        wrapper.instance().processSignup = processSignup
+        wrapper.instance().handleRecaptchaChange(null)
+      })
+
+      test('then processSignup should not be called', () => {
+        expect(storeSignupRecaptchaToken).toHaveBeenCalled()
+        expect(wrapper.instance().processSignup).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('and value is defined', () => {
+      beforeEach(() => {
+        wrapper.setProps({ storeSignupRecaptchaToken })
+        wrapper.instance().processSignup = processSignup
+        wrapper.instance().handleRecaptchaChange('value')
+      })
+
+      test('then storeSignupRecaptchaToken and processSignup are called', () => {
+        expect(storeSignupRecaptchaToken).toHaveBeenCalled()
+        expect(processSignup).toHaveBeenCalled()
+      })
+    })
+  })
 })

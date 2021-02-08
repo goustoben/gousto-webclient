@@ -99,7 +99,9 @@ class ReduxFormInput extends React.PureComponent {
           )}
           {React.isValidElement(inputSuffix) && inputSuffix}
         </div>
-        <div data-testing={`${dataTesting}Error`}>{error && (<InputError>{meta.error}</InputError>)}</div>
+        <div data-testing={`${dataTesting}Error`}>
+          {error && (<InputError isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{meta.error}</InputError>)}
+        </div>
       </div>
     )
   }

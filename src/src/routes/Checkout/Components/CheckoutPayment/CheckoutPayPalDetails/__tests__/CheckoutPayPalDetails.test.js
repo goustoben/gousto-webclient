@@ -361,4 +361,41 @@ describe('CheckoutPayPalDetails', () => {
       })
     })
   })
+
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true
+      })
+    })
+
+    test('then should be rendered correctly', () => {
+      expect(wrapper.find('.checkoutOverhaul')).toHaveLength(1)
+    })
+
+    describe('and renderPayPalButton is called', () => {
+      const paypalButtonsInstance = {
+        name: 'data-collector-instance',
+        render: jest.fn(() => Promise.resolve())
+      }
+      const paypalObj = {
+        FUNDING: {
+          PAYPAL: 'PAYPAL',
+        },
+        Buttons: jest.fn(() => paypalButtonsInstance),
+      }
+
+      beforeEach(() => {
+        global.paypal = paypalObj
+        wrapper.instance().renderPayPalButton()
+      })
+
+      test('then should have style', () => {
+        expect(paypalObj.Buttons).toHaveBeenCalledWith(expect.objectContaining({
+          fundingSource: 'PAYPAL',
+          style: { height: 48 }
+        }))
+      })
+    })
+  })
 })

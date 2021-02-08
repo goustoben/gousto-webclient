@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
 import { Section } from 'Page/Elements'
+import Svg from 'Svg'
 
 import { BoxDetailsContainer } from '../BoxDetails'
 import Summary from '../Summary'
@@ -15,6 +17,10 @@ import { PaymentMethodSelector } from './PaymentMethodSelector'
 import { CheckoutCardDetails } from './CheckoutCardDetails'
 import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
 
+import { SectionHeader } from '../SectionHeader'
+import { PaymentFooter } from './PaymentFooter'
+import { PaymentMethodSelectorCheckoutOverhaul } from './PaymentMethodSelectorCheckoutOverhaul'
+
 import css from './CheckoutPayment.css'
 
 class CheckoutPayment extends React.Component {
@@ -23,7 +29,29 @@ class CheckoutPayment extends React.Component {
 
     this.state = {
       isSubmitCardEnabled: false,
+      framesFieldsAreValid: false,
     }
+  }
+
+  componentDidMount() {
+    const { currentPaymentMethod, setCurrentPaymentMethod, isCheckoutOverhaulEnabled } = this.props
+    if (currentPaymentMethod === null && !isCheckoutOverhaulEnabled) {
+      setCurrentPaymentMethod(PaymentMethod.Card, { disableTracking: true })
+    }
+  }
+
+  getSubmitButtonIsDisabledForCardPayment() {
+    const { formErrors, sectionName } = this.props
+    const { framesFieldsAreValid } = this.state
+
+    const hasFramesFieldError = !framesFieldsAreValid
+
+    const errors = formErrors && formErrors[sectionName] ? formErrors[sectionName] : {}
+
+    const hasCardNameError = !!errors.cardName
+    const hasBillingAddressError = !!(errors.houseNo || errors.street || errors.town)
+
+    return hasCardNameError || hasBillingAddressError || hasFramesFieldError
   }
 
   applyValidationErrors = () => {
@@ -113,7 +141,19 @@ class CheckoutPayment extends React.Component {
     this.recaptchaElement = el
   }
 
-  render() {
+  handleSubmitFromCardDetails = () => {
+    const isDisabled = this.getSubmitButtonIsDisabledForCardPayment()
+    if (isDisabled) {
+      return
+    }
+    this.handleClick()
+  }
+
+  handleFramesValidationChanged = (isValid) => {
+    this.setState({ framesFieldsAreValid: isValid })
+  }
+
+  renderBaseline() {
     const {
       asyncValidate,
       browser,
@@ -193,6 +233,128 @@ class CheckoutPayment extends React.Component {
       </div>
     )
   }
+
+  renderCardContent() {
+    const {
+      currentPaymentMethod,
+      prerender,
+      receiveRef,
+      sectionName,
+      checkoutScriptReady,
+      reloadCheckoutScript,
+      asyncValidate,
+      scrollToFirstMatchingRef,
+    } = this.props
+
+    const { isSubmitCardEnabled } = this.state
+
+    const { cardTokenReady, disableCardSubmission } = this
+
+    return (
+      <CheckoutCardDetails
+        hide={currentPaymentMethod !== PaymentMethod.Card}
+        prerender={prerender}
+        receiveRef={receiveRef}
+        sectionName={sectionName}
+        checkoutScriptReady={checkoutScriptReady}
+        reloadCheckoutScript={reloadCheckoutScript}
+        asyncValidate={asyncValidate}
+        scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+        isSubmitCardEnabled={isSubmitCardEnabled}
+        cardTokenReady={cardTokenReady}
+        disableCardSubmission={disableCardSubmission}
+        isCheckoutOverhaulEnabled
+        onFramesValidationChanged={this.handleFramesValidationChanged}
+        onSubmitFromCardDetails={this.handleSubmitFromCardDetails}
+      />
+    )
+  }
+
+  renderPaypalContent = () => (
+    <div className={css.paypalSetupBox}>
+      <Svg className={css.paypalSetupIcon} fileName="paypal-setup" />
+      <div className={css.paypalSetupInfo}>
+        After clicking the PayPal button below, you will be redirected to PayPal to complete your purchase securely.
+      </div>
+    </div>
+  )
+
+  renderOuterContent() {
+    const {
+      currentPaymentMethod,
+      paypalScriptsReady,
+      isPayPalReady,
+      prerender,
+      onLoginClick,
+    } = this.props
+
+    let showSubmitButton
+    let submitButtonIsDisabled = false
+
+    if (currentPaymentMethod === PaymentMethod.Card) {
+      showSubmitButton = true
+      submitButtonIsDisabled = this.getSubmitButtonIsDisabledForCardPayment()
+    } else {
+      showSubmitButton = isPayPalReady
+    }
+
+    return (
+      <div className={classNames({ [css.hide]: prerender })}>
+        <ErrorMessage
+          showPayPalErrors={currentPaymentMethod === PaymentMethod.PayPal}
+          isCheckoutOverhaulEnabled
+          onLoginClick={onLoginClick}
+        />
+        <CheckoutPayPalDetails
+          isCheckoutOverhaulEnabled
+          hide={currentPaymentMethod !== PaymentMethod.PayPal}
+          paypalScriptsReady={paypalScriptsReady}
+        />
+        {showSubmitButton && (
+          <SubmitButton
+            onClick={this.handleClick}
+            isCheckoutOverhaulEnabled
+            isDisabled={submitButtonIsDisabled}
+          />
+        )}
+      </div>
+    )
+  }
+
+  renderCheckoutOverhaul() {
+    const {
+      prerender,
+      currentPaymentMethod,
+      setCurrentPaymentMethod,
+      isPayPalReady,
+      is3DSEnabled,
+    } = this.props
+
+    return (
+      <div className={classNames(css.checkoutOverhaulContainer, {[css.hide]: prerender})}>
+        <SectionHeader title="Payment method" />
+        <PaymentMethodSelectorCheckoutOverhaul
+          currentPaymentMethod={currentPaymentMethod}
+          setCurrentPaymentMethod={setCurrentPaymentMethod}
+          isPayPalReady={isPayPalReady}
+          renderCardContent={() => this.renderCardContent()}
+          renderPaypalContent={() => this.renderPaypalContent()}
+        />
+        {this.renderOuterContent()}
+        <PaymentFooter />
+        {is3DSEnabled && <Checkout3DSModal />}
+      </div>
+    )
+  }
+
+  render() {
+    const { isCheckoutOverhaulEnabled } = this.props
+    if (isCheckoutOverhaulEnabled) {
+      return this.renderCheckoutOverhaul()
+    } else {
+      return this.renderBaseline()
+    }
+  }
 }
 
 CheckoutPayment.propTypes = {
@@ -222,6 +384,8 @@ CheckoutPayment.propTypes = {
   storeSignupRecaptchaToken: PropTypes.func,
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+  onLoginClick: PropTypes.func,
 }
 
 CheckoutPayment.defaultProps = {
@@ -247,6 +411,8 @@ CheckoutPayment.defaultProps = {
   submitOrder: () => {},
   storeSignupRecaptchaToken: () => {},
   setCurrentPaymentMethod: () => {},
+  isCheckoutOverhaulEnabled: false,
+  onLoginClick: () => {},
 }
 
 export { CheckoutPayment }

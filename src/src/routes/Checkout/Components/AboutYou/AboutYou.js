@@ -4,9 +4,6 @@ import { Field, FormSection } from 'redux-form'
 import classNames from 'classnames'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import { onEnter } from 'utils/accessibility'
-import { Login } from 'Login'
-import ModalPanel from 'Modal/ModalPanel'
-import Overlay from 'Overlay'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
 import CheckoutButton from '../CheckoutButton'
@@ -21,30 +18,6 @@ class AboutYou extends PureComponent {
     clearErrors()
   }
 
-  handleLoginClose = (e) => {
-    const { loginVisibilityChange } = this.props
-    if (e) {
-      e.stopPropagation()
-    }
-    loginVisibilityChange(false)
-  }
-
-  handleLoginOpen = (e) => {
-    const { loginVisibilityChange } = this.props
-    e.stopPropagation()
-    loginVisibilityChange(true)
-  }
-
-  onLoginClick = (e) => {
-    const { trackCheckoutButtonPressed, isMobile, isAuthenticated, } = this.props
-    if (!isAuthenticated) {
-      this.handleLoginOpen(e)
-    }
-    if (isMobile) {
-      trackCheckoutButtonPressed('LogInCTA Clicked')
-    }
-  }
-
   handleSubmit = () => {
     const { createAccountValues, userProspect, submit, trackUTMAndPromoCode } = this.props
     const { email, password } = createAccountValues
@@ -56,14 +29,14 @@ class AboutYou extends PureComponent {
   }
 
   renderLoginButton = () => {
-    const { isCheckoutOverhaulEnabled } = this.props
+    const { onLoginClick, isCheckoutOverhaulEnabled } = this.props
     const loginCTA = (
       <span
         className={classNames(css.link, { [css.linkRedesign]: isCheckoutOverhaulEnabled })}
         role="button"
         tabIndex="0"
-        onClick={this.onLoginClick}
-        onKeyDown={onEnter(this.onLoginClick)}
+        onClick={onLoginClick}
+        onKeyDown={onEnter(onLoginClick)}
       >
         {isCheckoutOverhaulEnabled
           ? 'Log in'
@@ -136,7 +109,6 @@ class AboutYou extends PureComponent {
     const {
       sectionName,
       receiveRef,
-      isLoginOpen,
       isCheckoutOverhaulEnabled,
       submitting,
       createAccountValues,
@@ -203,21 +175,6 @@ class AboutYou extends PureComponent {
               stepName="Continue to Delivery"
             />
           )}
-          <Overlay
-            open={isLoginOpen}
-            contentClassName={css.modalOverlay}
-            from="top"
-          >
-            <ModalPanel
-              closePortal={this.handleLoginClose}
-              className={css.modal}
-              containerClassName={css.modalContainer}
-              disableOverlay
-              isNarrow
-            >
-              <Login />
-            </ModalPanel>
-          </Overlay>
         </div>
         <ErrorMessage />
       </FormSection>
@@ -226,14 +183,9 @@ class AboutYou extends PureComponent {
 }
 
 AboutYou.propTypes = {
-  loginVisibilityChange: PropTypes.func,
-  isLoginOpen: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
-  isMobile: PropTypes.bool,
   sectionName: PropTypes.string,
   clearErrors: PropTypes.func,
   receiveRef: PropTypes.func,
-  trackCheckoutButtonPressed: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   submit: PropTypes.func,
   userProspect: PropTypes.func,
@@ -243,23 +195,20 @@ AboutYou.propTypes = {
     email: PropTypes.string,
     password: PropTypes.string,
   }),
+  onLoginClick: PropTypes.func,
 }
 
 AboutYou.defaultProps = {
   clearErrors: () => { },
-  loginVisibilityChange: () => { },
-  isLoginOpen: false,
-  isAuthenticated: false,
   sectionName: 'aboutyou',
   receiveRef: () => { },
-  trackCheckoutButtonPressed: () => { },
-  isMobile: false,
   isCheckoutOverhaulEnabled: false,
   submit: () => { },
   userProspect: () => { },
   trackUTMAndPromoCode: () => { },
   submitting: false,
   createAccountValues: {},
+  onLoginClick: () => {},
 }
 
 export { AboutYou }

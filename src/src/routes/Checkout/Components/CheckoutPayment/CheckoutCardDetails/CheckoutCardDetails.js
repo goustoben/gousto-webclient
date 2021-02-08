@@ -18,40 +18,64 @@ export const CheckoutCardDetails = (props) => {
     scrollToFirstMatchingRef,
     isSubmitCardEnabled,
     cardTokenReady,
-    disableCardSubmission
+    disableCardSubmission,
+    isCheckoutOverhaulEnabled,
+    onFramesValidationChanged,
+    onSubmitFromCardDetails,
   } = props
 
-  return (
-    <div className={classNames({ [css.hide]: hide })}>
-      {prerender ? null : (
-        <CheckoutName
-          receiveRef={receiveRef}
-          sectionName={sectionName}
-        />
-      )}
-      <div className={css.frame}>
+  if (isCheckoutOverhaulEnabled) {
+    return (
+      <div className={classNames({ [css.hide]: hide })}>
         <CheckoutFrame
           checkoutScriptReady={checkoutScriptReady}
           isSubmitCardEnabled={isSubmitCardEnabled}
           reloadCheckoutScript={reloadCheckoutScript}
           cardTokenReady={cardTokenReady}
           disableCardSubmission={disableCardSubmission}
+          isCheckoutOverhaulEnabled
+          receiveRef={receiveRef}
+          sectionName={sectionName}
+          onFramesValidationChanged={onFramesValidationChanged}
+          onSubmitFromCardDetails={onSubmitFromCardDetails}
+        />
+        <CheckoutAddress
+          sectionName={sectionName}
+          asyncValidate={asyncValidate}
+          receiveRef={receiveRef}
+          scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+          isCheckoutOverhaulEnabled
         />
       </div>
-      <div className={css.row}>
-        {prerender ? null : (
-          <div className={css.addressContainer}>
-            <CheckoutAddress
-              sectionName={sectionName}
-              asyncValidate={asyncValidate}
-              receiveRef={receiveRef}
-              scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-            />
-          </div>
-        )}
+    )
+  } else {
+    return (
+      <div className={classNames({ [css.hide]: hide })}>
+        {prerender ? null : <CheckoutName receiveRef={receiveRef} sectionName={sectionName} />}
+        <div className={css.frame}>
+          <CheckoutFrame
+            checkoutScriptReady={checkoutScriptReady}
+            isSubmitCardEnabled={isSubmitCardEnabled}
+            reloadCheckoutScript={reloadCheckoutScript}
+            cardTokenReady={cardTokenReady}
+            disableCardSubmission={disableCardSubmission}
+          />
+        </div>
+        <div className={css.row}>
+          {prerender ? null : (
+            <div className={css.addressContainer}>
+              <CheckoutAddress
+                sectionName={sectionName}
+                asyncValidate={asyncValidate}
+                receiveRef={receiveRef}
+                scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+              />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 CheckoutCardDetails.propTypes = {
@@ -66,6 +90,7 @@ CheckoutCardDetails.propTypes = {
   isSubmitCardEnabled: PropTypes.bool.isRequired,
   cardTokenReady: PropTypes.func.isRequired,
   disableCardSubmission: PropTypes.func.isRequired,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 CheckoutCardDetails.defaultProps = {
@@ -76,5 +101,6 @@ CheckoutCardDetails.defaultProps = {
   checkoutScriptReady: false,
   reloadCheckoutScript: () => {},
   asyncValidate: () => {},
-  scrollToFirstMatchingRef: () => {}
+  scrollToFirstMatchingRef: () => {},
+  isCheckoutOverhaulEnabled: false,
 }

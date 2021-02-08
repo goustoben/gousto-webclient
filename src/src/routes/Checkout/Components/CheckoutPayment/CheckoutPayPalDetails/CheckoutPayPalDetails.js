@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import Svg from 'components/Svg'
+import { Loader } from 'goustouicomponents'
 
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { onEnter } from 'utils/accessibility'
@@ -98,28 +99,36 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderPayPalButton = () => {
-    const { firePayPalError, trackEvent } = this.props
+    const { firePayPalError, trackEvent, isCheckoutOverhaulEnabled } = this.props
+
+    const buttonsConfig = {
+      fundingSource: paypal.FUNDING.PAYPAL,
+      createBillingAgreement: () => {
+        trackEvent(clickContinuePayPal)
+
+        return this.createPayment()
+      },
+      onApprove: (data) => {
+        trackEvent(clickConfirmPayPal)
+
+        this.fetchPayPalNonce(data)
+      },
+      onCancel: () => {
+        trackEvent(clickCancelPayPal)
+      },
+      onError: (e) => {
+        firePayPalError(e)
+      },
+    }
+
+    if (isCheckoutOverhaulEnabled) {
+      buttonsConfig.style = {
+        height: 48,
+      }
+    }
 
     return paypal
-      .Buttons({
-        fundingSource: paypal.FUNDING.PAYPAL,
-        createBillingAgreement: () => {
-          trackEvent(clickContinuePayPal)
-
-          return this.createPayment()
-        },
-        onApprove: (data) => {
-          trackEvent(clickConfirmPayPal)
-
-          this.fetchPayPalNonce(data)
-        },
-        onCancel: () => {
-          trackEvent(clickCancelPayPal)
-        },
-        onError: (e) => {
-          firePayPalError(e)
-        }
-      })
+      .Buttons(buttonsConfig)
       .render('#paypal-container')
   }
 
@@ -146,7 +155,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
     }
   }
 
-  render() {
+  renderBaseline() {
     const { hide, isPayPalSetupDone, hasErrors, resetPaymentMethod, isSubmitting } = this.props
     const { isPayPalInitialized } = this.state
 
@@ -186,6 +195,39 @@ class CheckoutPayPalDetails extends React.PureComponent {
       </div>
     )
   }
+
+  renderCheckoutOverhaul() {
+    const { hide, isPayPalSetupDone, hasErrors } = this.props
+    const { isPayPalInitialized } = this.state
+
+    const isLoading = !hasErrors && !isPayPalInitialized
+
+    return (
+      <div className={classNames(css.checkoutOverhaul, { [css.hide]: hide || isPayPalSetupDone })}>
+        <div
+          id="paypal-container"
+          className={classNames(css.checkoutOverhaulPaypalContainer, {
+            [css.transparent]: !isPayPalInitialized,
+          })}
+        />
+        {isLoading && (
+          <div className={css.loaderContainer}>
+            <Loader color="Bluecheese" />
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  render() {
+    const { isCheckoutOverhaulEnabled } = this.props
+
+    if (isCheckoutOverhaulEnabled) {
+      return this.renderCheckoutOverhaul()
+    } else {
+      return this.renderBaseline()
+    }
+  }
 }
 
 CheckoutPayPalDetails.propTypes = {
@@ -201,6 +243,7 @@ CheckoutPayPalDetails.propTypes = {
   isPayPalSetupDone: PropTypes.bool,
   isSubmitting: PropTypes.bool,
   token: PropTypes.string,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 CheckoutPayPalDetails.defaultProps = {
@@ -216,6 +259,7 @@ CheckoutPayPalDetails.defaultProps = {
   isPayPalSetupDone: false,
   isSubmitting: false,
   token: null,
+  isCheckoutOverhaulEnabled: false,
 }
 
 export { CheckoutPayPalDetails }

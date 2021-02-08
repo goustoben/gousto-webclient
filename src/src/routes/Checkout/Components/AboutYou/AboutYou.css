@@ -109,37 +109,10 @@
   composes: fontStyleS from 'design-language/typography.css';
 }
 
-.modal {
-	position: relative !important;
-	left: inherit !important;
-	top: 0 !important;
-	transform: inherit !important;
-	min-width: 288px;
-	width: 60% !important;
-	margin: 0 auto !important;
-	box-shadow: none !important;
-	max-width: 650px !important;
-	border-radius: 0px !important;
-	padding: 1rem !important;
-	@media ScreenXSMax {
-		width: 98% !important;
-	}
-}
-
-.modalContainer {
-	width: 100%;
-}
-
 .aboutYouContainer :global .Select-value {
 	text-transform: none;
 }
 
 .infoSection {
 	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
-}
-
-.modalOverlay {
-	display: flex;
-	align-items: center;
-	padding: 1rem;
 }

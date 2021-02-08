@@ -9,6 +9,8 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import Overlay from 'Overlay'
+import ModalPanel from 'Modal/ModalPanel'
+import { Login } from 'Login'
 import { Div } from 'Page/Elements'
 import { getPreviewOrderErrorName } from 'utils/order'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
@@ -65,6 +67,8 @@ const propTypes = {
   trackSignupStep: PropTypes.func,
   tariffId: PropTypes.string,
   query: PropTypes.shape({
+    // Not sure how to fix it, so suppressing for now to have clean output.
+    // eslint-disable-next-line react/forbid-prop-types
     steps: PropTypes.array
   }),
   loadPrices: PropTypes.func,
@@ -76,6 +80,11 @@ const propTypes = {
   trackCheckoutNavigationLinks: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   prices: PropTypes.instanceOf(Immutable.Map),
+
+  isLoginOpen: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  loginVisibilityChange: PropTypes.func,
+  isMobile: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -97,6 +106,11 @@ const defaultProps = {
   trackCheckoutNavigationLinks: () => {},
   isCheckoutOverhaulEnabled: false,
   prices: Immutable.Map({}),
+
+  isLoginOpen: false,
+  isAuthenticated: false,
+  loginVisibilityChange: () => {},
+  isMobile: false,
 }
 
 const contextTypes = {
@@ -116,9 +130,6 @@ class Checkout extends PureComponent {
     const firstStep = steps[0]
     const currentStep = params && params.stepName
 
-    /**
-     * redirect to the first step
-     */
     if (!query.steps && firstStep && (!currentStep || currentStep !== firstStep)) {
       store.dispatch(actions.replace(`${routesConfig.client['check-out']}/${firstStep}`))
     }
@@ -200,7 +211,8 @@ class Checkout extends PureComponent {
     changeRecaptcha()
   }
 
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { tariffId, loadPrices } = this.props
 
     if (tariffId !== nextProps.tariffId) {
@@ -282,6 +294,7 @@ class Checkout extends PureComponent {
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
       reloadCheckoutScript: this.reloadCheckoutScript,
+      onLoginClick: this.handleLoginClick,
       submitOrder,
       browser,
       checkoutScriptReady,
@@ -314,6 +327,7 @@ class Checkout extends PureComponent {
         isLastStep={this.isLastStep(steps, currentStep)}
         onStepChange={this.onStepChange(steps, currentStep)}
         nextStepName={this.getNextStepName(stepMapping, steps, currentStep)}
+        onLoginClick={this.handleLoginClick}
       />
     )
   }
@@ -399,6 +413,52 @@ class Checkout extends PureComponent {
     )
   }
 
+  handleLoginClose = (e) => {
+    const { loginVisibilityChange } = this.props
+    if (e) {
+      e.stopPropagation()
+    }
+    loginVisibilityChange(false)
+  }
+
+  handleLoginOpen = (e) => {
+    const { loginVisibilityChange } = this.props
+    e.stopPropagation()
+    loginVisibilityChange(true)
+  }
+
+  handleLoginClick = (e) => {
+    const { trackCheckoutButtonPressed, isMobile, isAuthenticated } = this.props
+    if (!isAuthenticated) {
+      this.handleLoginOpen(e)
+    }
+    if (isMobile) {
+      trackCheckoutButtonPressed('LogInCTA Clicked')
+    }
+  }
+
+  renderLoginModal = () => {
+    const { isLoginOpen } = this.props
+
+    return (
+      <Overlay
+        open={isLoginOpen}
+        contentClassName={css.modalOverlay}
+        from="top"
+      >
+        <ModalPanel
+          closePortal={this.handleLoginClose}
+          className={css.modal}
+          containerClassName={css.modalContainer}
+          disableOverlay
+          isNarrow
+        >
+          <Login />
+        </ModalPanel>
+      </Overlay>
+    )
+  }
+
   render() {
     const { browser, isCheckoutOverhaulEnabled, params: { stepName }, prices, trackUTMAndPromoCode } = this.props
     const renderSteps = browser === 'mobile' && !isCheckoutOverhaulEnabled ? this.renderMobileSteps : this.renderDesktopSteps
@@ -424,6 +484,7 @@ class Checkout extends PureComponent {
             </Fragment>
           )}
           {renderSteps()}
+          {this.renderLoginModal()}
         </Div>
       </Div>
     )

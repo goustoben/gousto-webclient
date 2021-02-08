@@ -42,9 +42,7 @@ const propTypes = {
   isMobile: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
-  deliveryAddress: PropTypes.objectOf(PropTypes.object),
   submit: PropTypes.func,
-  isBillingAddress: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -73,12 +71,11 @@ const defaultProps = {
   deliveryDate: '',
   menuCutoffUntil: '',
   isCheckoutOverhaulEnabled: false,
-  deliveryAddress: {},
   submit: () => { },
-  isBillingAddress: false,
 }
 
-class Address extends React.PureComponent {
+export class Address extends React.PureComponent {
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { initialPostcode, sectionName, formName, change, touch } = this.props
     const addresses = this.getFormValue('allAddresses') || []
@@ -97,6 +94,12 @@ class Address extends React.PureComponent {
     registerField(formName, `${sectionName}.addressesFetched`, 'Field')
     registerField(formName, `${sectionName}.deliverable`, 'Field')
     registerField(formName, `${sectionName}.confirmed`, 'Field')
+  }
+
+  getAddressObjectFromForm() {
+    const { formValues, sectionName } = this.props
+
+    return (formValues && formValues[sectionName]) ? formValues[sectionName] : null
   }
 
   getFormValue = inputName => {
@@ -268,6 +271,15 @@ class Address extends React.PureComponent {
     change(formName, `${sectionName}.addressId`, 'placeholder')
   }
 
+  handleEnterAddressManually = () => {
+    const { formName, sectionName, change } = this.props
+    const postcode = this.getFormValue('postcodeTemp')
+
+    change(formName, `${sectionName}.notFound`, true)
+    change(formName, `${sectionName}.postcode`, postcode)
+    change(formName, `${sectionName}.addressId`, 'placeholder')
+  }
+
   validateRedesignFields = () => {
     const { sectionName, formErrors } = this.props
     const errors = formErrors[sectionName] || {}
@@ -383,10 +395,10 @@ class Address extends React.PureComponent {
   }
 
   renderVariation = () => {
-    const { isMobile, addressesPending, receiveRef, sectionName, isBillingAddress, deliveryAddress } = this.props
+    const { isMobile, addressesPending, receiveRef, sectionName, isDelivery } = this.props
     const { addresses, postcodeTemp, notFound, showDropdown, isAddressSelected, deliveryInstructions } = this.getAddressProps()
     const isCTADisabled = this.validateRedesignFields()
-    const currentSelectedAddress = showAddress(deliveryAddress, true)
+    const currentSelectedAddress = showAddress(this.getAddressObjectFromForm(), true)
 
     return (
       <Fragment>
@@ -401,13 +413,12 @@ class Address extends React.PureComponent {
           isMobile={isMobile}
           isAddressSelected={isAddressSelected}
           sectionName={sectionName}
-          notFound={notFound}
-          onEnterAddressManuallyClick={this.handleCantFind}
-          isBillingAddress={isBillingAddress}
+          onEnterAddressManuallyClick={this.handleEnterAddressManually}
           currentAddress={currentSelectedAddress}
+          isEditingManually={!!notFound}
         />
 
-        {!isBillingAddress && (
+        {isDelivery && (
           <Fragment>
             <DeliveryPhoneNumber
               receiveRef={receiveRef}
@@ -460,6 +471,8 @@ class Address extends React.PureComponent {
               onClick={this.handleCantFind}
               className={css.linkBase}
               onKeyDown={onEnter(this.handleCantFind)}
+              role="button"
+              tabIndex="0"
             >
               Can’t find your address?
             </span>
@@ -499,5 +512,3 @@ class Address extends React.PureComponent {
 Address.propTypes = propTypes
 
 Address.defaultProps = defaultProps
-
-export default Address

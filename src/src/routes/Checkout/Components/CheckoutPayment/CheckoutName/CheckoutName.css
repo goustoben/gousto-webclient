@@ -6,3 +6,13 @@
 .cardDetails {
 	width: 100%;
 }
+
+.checkoutOverhaulContainer {
+  width: 100%;
+}
+
+.checkoutNameInputCheckoutOverhaul {
+  /* Consistent with checkout.com's inputs whose font cannot be set to Axiforma
+     because of the iframe resource restrictions. */
+  font-family: Avenir, Roboto, sans-serif;
+}

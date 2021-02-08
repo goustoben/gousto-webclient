@@ -7,6 +7,10 @@ export function transformAddressParts(address) {
 }
 
 export function showAddress(address, isCheckoutOverhaulRedesign) {
+  if (!address) {
+    return ''
+  }
+
   const addressPieces = []
 
   const fields = ['houseNo', 'street', 'town', 'county', 'postcode']

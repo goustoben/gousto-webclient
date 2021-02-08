@@ -13,7 +13,7 @@ import { getSlotTimes } from 'utils/deliveries'
 
 import Subscription from 'routes/Checkout/Components/Subscription'
 import DeliveryDetails from './DeliveryDetails'
-import DeliveryAddress from './DeliveryAddress'
+import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
 import { SectionHeader } from '../SectionHeader'
 
@@ -79,7 +79,7 @@ export class Delivery extends React.PureComponent {
 
     return (
       <div>
-        <DeliveryAddress
+        <DeliveryAddressContainer
           isDelivery
           asyncValidate={asyncValidate}
           formName={formName}
@@ -145,10 +145,10 @@ export class Delivery extends React.PureComponent {
           {isCheckoutOverhaulEnabled
             ? (
               <Fragment>
+                <SectionHeader title="Delivery details" />
                 <DeliveryCard iconName="icon-calendar">
                   {this.renderDeliveryDay()}
                 </DeliveryCard>
-                <SectionHeader title="Delivery details" />
               </Fragment>
             )
             : <h3 className={css.header}>Delivery details</h3>}

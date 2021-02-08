@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import DeliveryAddressContainer from '../DeliveryAddress/DeliveryAddressContainer'
+import { DeliveryAddressContainer } from '../DeliveryAddress/DeliveryAddressContainer'
 
 const deliveryDays = Immutable.fromJS({
   '2020-02-14': {
@@ -93,7 +93,6 @@ describe('DeliveryAddressContainer', () => {
   test('should be rendered properly', () => {
     const expected = {
       isMobile: true,
-      deliveryAddress: {}
     }
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })

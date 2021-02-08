@@ -16,6 +16,10 @@ import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, bask
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
 import logger from 'utils/logger'
+import Overlay from 'Overlay'
+import ModalPanel from 'Modal/ModalPanel'
+import { Login } from 'Login'
+
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 
 jest.mock('actions', () => ({
@@ -189,6 +193,18 @@ describe('Checkout', () => {
 
     test('should render 1 <BoxDetailsContainer> component(s)', () => {
       expect(wrapper.find(BoxDetailsContainer)).toHaveLength(1)
+    })
+
+    test('should render 1 Overlay', () => {
+      expect(wrapper.find(Overlay).length).toEqual(1)
+    })
+
+    test('should render 1 ModalPanel', () => {
+      expect(wrapper.find(ModalPanel).length).toEqual(1)
+    })
+
+    test('should render 1 Login', () => {
+      expect(wrapper.find(Login).length).toEqual(1)
     })
   })
 
@@ -436,7 +452,7 @@ describe('Checkout', () => {
     })
 
     test('should call loadPrices if tariffId has changed', async () => {
-      await wrapper.instance().componentWillReceiveProps({ tariffId: 2 })
+      await wrapper.instance().UNSAFE_componentWillReceiveProps({ tariffId: 2 })
       expect(loadPrices).toHaveBeenCalledTimes(1)
     })
   })
@@ -638,6 +654,126 @@ describe('Checkout', () => {
       expect(wrapper.find('.rowCheckout').hasClass('rowCheckoutRedesign')).toBeTruthy()
       expect(wrapper.find('.section').hasClass('sectionRedesign')).toBeTruthy()
       expect(wrapper.find('.aside').hasClass('asideRedesign')).toBeTruthy()
+    })
+  })
+
+  describe('when toggling isLoginOpen', () => {
+    describe('when isLoginOpen is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isLoginOpen: true })
+      })
+
+      test('then the Overlay should be open', () => {
+        expect(wrapper.find(Overlay).prop('open')).toBeTruthy()
+      })
+    })
+
+    describe('when isLoginOpen is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isLoginOpen: false })
+      })
+
+      test('then the Overlay should not be "open"', () => {
+        expect(wrapper.find(Overlay).prop('open')).toBeFalsy()
+      })
+    })
+  })
+
+  describe('when handleLoginClick is called from a child component', () => {
+    const trackCheckoutButtonPressed = jest.fn()
+    const loginVisibilityChange = jest.fn()
+    let instance
+    const event = {
+      preventDefault: jest.fn(),
+      stopPropagation: jest.fn(),
+    }
+
+    beforeEach(() => {
+      instance = wrapper.instance()
+    })
+
+    describe('and isMobile false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isMobile: false,
+          isAuthenticated: true,
+          trackCheckoutButtonPressed
+        })
+      })
+
+      test('then should not call trackCheckoutButtonPressed', () => {
+        expect(trackCheckoutButtonPressed).not.toBeCalled()
+        instance.handleLoginClick(event)
+        expect(trackCheckoutButtonPressed).not.toBeCalled()
+      })
+    })
+
+    describe('and isMobile true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isMobile: true,
+          isAuthenticated: true,
+          trackCheckoutButtonPressed
+        })
+      })
+
+      test('then should dispatch trackCheckoutButtonPressed with proper parameter', () => {
+        expect(trackCheckoutButtonPressed).not.toBeCalled()
+        instance.handleLoginClick(event)
+        expect(trackCheckoutButtonPressed).toHaveBeenCalledWith('LogInCTA Clicked')
+      })
+    })
+
+    describe('and isAuthenticated is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: true,
+          loginVisibilityChange
+        })
+      })
+
+      test('then should not call loginVisibilityChange', () => {
+        expect(loginVisibilityChange).not.toBeCalled()
+        instance.handleLoginClick(event)
+        expect(loginVisibilityChange).not.toBeCalled()
+      })
+    })
+
+    describe('and isAuthenticated is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isAuthenticated: false,
+          loginVisibilityChange
+        })
+      })
+
+      test('then should call loginVisibilityChange', () => {
+        expect(loginVisibilityChange).not.toBeCalled()
+        instance.handleLoginClick(event)
+        expect(loginVisibilityChange).toHaveBeenCalledWith(true)
+      })
+    })
+  })
+
+  describe('when handleLoginClose is called from the modal', () => {
+    const loginVisibilityChange = jest.fn()
+    let instance
+    const event = {
+      preventDefault: jest.fn(),
+      stopPropagation: jest.fn(),
+    }
+
+    beforeEach(() => {
+      wrapper.setProps({
+        loginVisibilityChange,
+      })
+      instance = wrapper.instance()
+    })
+
+    test('then should call loginVisibilityChange', () => {
+      expect(loginVisibilityChange).not.toBeCalled()
+      instance.handleLoginClose(event)
+      expect(loginVisibilityChange).toHaveBeenCalledWith(false)
     })
   })
 })

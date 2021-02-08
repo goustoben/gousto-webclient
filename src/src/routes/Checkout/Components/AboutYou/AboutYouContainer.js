@@ -12,10 +12,7 @@ import { AboutYou } from './AboutYou'
 function mapStateToProps(sectionName) {
   return state => ({
     sectionName,
-    isLoginOpen: state.loginVisibility.get('login'),
-    isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
-    isMobile: state.request.get('browser') === 'mobile',
     isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
     submitting: stateUtils.isSubmitting(state),
     createAccountValues: state.form.aboutyou && state.form.aboutyou.values.aboutyou,
@@ -24,7 +21,6 @@ function mapStateToProps(sectionName) {
 
 function connectComponent(sectionName) {
   return connect(mapStateToProps(sectionName), {
-    loginVisibilityChange: actions.loginVisibilityChange,
     clearErrors: actions.checkoutClearErrors,
     trackCheckoutButtonPressed,
     trackUTMAndPromoCode,

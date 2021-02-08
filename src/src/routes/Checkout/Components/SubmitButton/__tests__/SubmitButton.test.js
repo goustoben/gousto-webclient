@@ -11,6 +11,7 @@ describe('SubmitButton', () => {
   const props = {
     onClick: jest.fn(),
     trackSubmitOrderEvent: jest.fn(),
+    submitting: true,
   }
 
   beforeEach(() => {
@@ -57,6 +58,19 @@ describe('SubmitButton', () => {
     test('should call onClick and trackSubmitOrderEvent', () => {
       expect(props.trackSubmitOrderEvent).toHaveBeenCalled()
       expect(props.onClick).toBeCalled()
+    })
+  })
+
+  describe('when isCheckoutOverhaulEnabled is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isCheckoutOverhaulEnabled: true,
+      })
+    })
+
+    test('then should be rendered correctly', () => {
+      expect(wrapper.find('.checkoutOverhaulContainer')).toHaveLength(1)
+      expect(wrapper.find('CTA').exists()).toBeTruthy()
     })
   })
 })

@@ -39,3 +39,24 @@
 .hide {
 	display: none;
 }
+
+.checkoutOverhaulContainer {
+  composes: sectionRedesignContainer from '../../CheckoutRedesignContainer.css';
+}
+
+.paypalSetupBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.paypalSetupIcon {
+  width: 92px;
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+.paypalSetupInfo {
+  text-align: center;
+  composes: fontStyleS from 'design-language/typography.css';
+}
