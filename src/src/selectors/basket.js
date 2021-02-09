@@ -23,6 +23,8 @@ export const shouldShowBoxSummary = (state) => !getBasketSlotId(state) && !!getB
 
 export const getChosenAddressId = ({ basket }) => (basket.getIn(['chosenAddress', 'id'], null))
 
+export const getBasketTariffId = ({ basket }) => basket.get('tariffId')
+
 export default {
   getBasketOrderId,
   getBasketRecipes,

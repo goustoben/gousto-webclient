@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 // eslint-disable-next-line import/named
-import { menuLoadDays, redirect, menuLoadBoxPrices, changeStep } from 'actions'
+import { menuLoadDays, redirect, menuLoadBoxPrices, changeStep, updatePricePerServing } from 'actions'
 import { StepIndicator } from 'goustouicomponents'
 
 import { Signup } from 'routes/Signup/Signup'
@@ -17,6 +17,7 @@ jest.mock('actions', () => ({
   menuLoadDays: jest.fn().mockReturnValue(Promise.resolve()),
   menuLoadBoxPrices: jest.fn().mockReturnValue(Promise.resolve()),
   changeStep: jest.fn().mockReturnValue(Promise.resolve()),
+  updatePricePerServing: jest.fn().mockReturnValue(Promise.resolve()),
 }))
 
 jest.mock('../../Menu/fetchData/menuService')
@@ -34,6 +35,7 @@ describe('Signup', () => {
     promoBannerState: {
       hide: false
     },
+    updatePricePerServing,
   }
 
   beforeEach(() => {
@@ -60,13 +62,16 @@ describe('Signup', () => {
     menuLoadDays.mockReset()
     loadMenuServiceDataIfDeepLinked.mockClear()
     menuLoadBoxPrices.mockClear()
+    updatePricePerServing.mockClear()
   })
 
   describe('fetchData', () => {
     const fetchDataProps = {
       query: { },
       params: { },
-      menuLoadBoxPrices,
+      fetchProps: {
+        menuLoadBoxPrices,
+      }
     }
 
     test('loadMenuServiceDataIfDeepLinked', async () => {
@@ -79,16 +84,20 @@ describe('Signup', () => {
       expect(dispatch).toHaveBeenCalled()
       expect(menuLoadDays).toHaveBeenCalledTimes(1)
       expect(menuLoadBoxPrices).not.toBeCalled()
+      expect(updatePricePerServing).not.toBeCalled()
     })
 
     describe('when isPricingClarityEnabled is true', () => {
       describe('and promo code is not applied', () => {
         test('then should call menuLoadBoxPrices', async () => {
+          fetchDataProps.fetchProps = {
+            ...fetchDataProps.fetchProps,
+            orderDiscount: '',
+            isPricingClarityEnabled: true
+          }
           await Signup.fetchData({
             ...fetchDataProps,
             store: context.store,
-            orderDiscount: '',
-            isPricingClarityEnabled: true
           })
 
           expect(menuLoadBoxPrices).toHaveBeenCalled()
@@ -97,14 +106,35 @@ describe('Signup', () => {
 
       describe('and promo code is applied', () => {
         test('then menuLoadBoxPrices should not be called', async () => {
+          fetchDataProps.fetchProps = {
+            ...fetchDataProps.fetchProps,
+            orderDiscount: '50',
+            isPricingClarityEnabled: true
+          }
           await Signup.fetchData({
             ...fetchDataProps,
             store: context.store,
-            orderDiscount: '50',
-            isPricingClarityEnabled: true
           })
 
           expect(menuLoadBoxPrices).not.toBeCalled()
+        })
+      })
+    })
+
+    describe('when wizard price per serving is enabled', () => {
+      describe('and is not on box size step', () => {
+        test('then should not call updatePricePerServing', async () => {
+          fetchDataProps.fetchProps = {
+            ...fetchDataProps.fetchProps,
+            isWizardPricePerServingEnabled: true,
+            lowestPricePerPortion: {}
+          }
+          await Signup.fetchData({
+            ...fetchDataProps,
+            store: context.store,
+          })
+
+          expect(updatePricePerServing).not.toHaveBeenCalled()
         })
       })
     })

@@ -123,7 +123,16 @@ describe('boxPrices actions', () => {
             4: {
               4: {
                 gourmet: {
-                  pricePerPortion: '2.33'
+                  pricePerPortion: '2.33',
+                  pricePerPortionDiscounted: '4.04'
+                }
+              }
+            },
+            2: {
+              4: {
+                gourmet: {
+                  pricePerPortion: '2.04',
+                  pricePerPortionDiscounted: '2.04'
                 }
               }
             }
@@ -147,6 +156,16 @@ describe('boxPrices actions', () => {
         const expected = {
           type: actionTypes.BOXPRICE_SET_PRICE_PER_SERVING,
           price: '2.33',
+          lowestPricePerPortion: {
+            forTwo: {
+              price: '2.04',
+              priceDiscounted: '2.04'
+            },
+            forFour: {
+              price: '2.33',
+              priceDiscounted: '4.04'
+            }
+          }
         }
 
         await updatePricePerServing()(dispatch, getState)

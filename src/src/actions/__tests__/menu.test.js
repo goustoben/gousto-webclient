@@ -7,6 +7,7 @@ const mockGetCutoffDateTime = jest.fn()
 
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
+const mockFetchBoxPrices = jest.fn().mockResolvedValue({ data: {} })
 
 jest.mock('apis/recipes', () => ({
   fetchRecipeStock: mockFetchRecipeStock,
@@ -27,6 +28,10 @@ jest.mock('actions/menuServiceLoadDays', () => ({
 jest.mock('actions/menuActionHelper', () => ({
   getStockAvailability: jest.fn(),
   loadMenuCollectionsWithMenuService: mockLoadMenuCollectionsWithMenuService,
+}))
+
+jest.mock('apis/boxPrices', () => ({
+  fetchBoxPrices: mockFetchBoxPrices,
 }))
 
 describe('menu actions', () => {
@@ -374,6 +379,38 @@ describe('menu actions', () => {
           actionType: 'disclose_recipe_variants',
           show: true,
         },
+      })
+    })
+  })
+
+  describe('menuLoadBoxPrices', () => {
+    describe('when dispatched', () => {
+      test('then updates store with received prices', async () => {
+        const getStateForPrice = () => ({
+          ...state,
+          features: Immutable.fromJS({
+            isWizardPricePerServingEnabled: {
+              value: true,
+            }
+          }),
+          basket: Immutable.fromJS({
+            promoCode: 'promo',
+            tariffId: 'id'
+          }),
+          routing: {
+            locationBeforeTransitions: {
+              pathname: 'signup/box-size',
+            }
+          }
+        })
+
+        await menuActions.menuLoadBoxPrices()(dispatch, getStateForPrice)
+
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: actionTypes.MENU_BOX_PRICES_RECEIVE,
+          prices: {},
+          tariffId: 'id'
+        })
       })
     })
   })
