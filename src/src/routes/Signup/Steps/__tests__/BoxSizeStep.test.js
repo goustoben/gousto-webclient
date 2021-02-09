@@ -73,4 +73,66 @@ describe('given the user is at the Box Size Step', () => {
       expect(wrapper.find('BoxSizeBox')).toHaveLength(2)
     })
   })
+
+  describe('given wizard price per serving is enabled', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isWizardPricePerServingEnabled: true,
+        lowestPricePerPortion: {
+          forTwo: {
+            price: '2',
+            priceDiscounted: '2'
+          },
+          forFour: {
+            price: '4',
+            priceDiscounted: '4'
+          },
+        }
+      })
+    })
+
+    test('then should render PricePerServing properly', () => {
+      expect(wrapper.find('PricePerServing')).toHaveLength(2)
+      expect(wrapper.find('PricePerServing').first().props()).toEqual(expect.objectContaining({
+        portion: 2,
+        image: 'per-two-people',
+        cost: {
+          price: '2',
+          priceDiscounted: '2'
+        },
+      }))
+      expect(wrapper.find('PricePerServing').at(1).props()).toEqual(expect.objectContaining({
+        portion: 4,
+        image: 'per-four-people',
+        cost: {
+          price: '4',
+          priceDiscounted: '4'
+        },
+      }))
+    })
+
+    describe('when the PricePerServing button is clicked', () => {
+      let sections
+
+      beforeEach(() => {
+        sections = wrapper.find('PricePerServing')
+      })
+
+      test('for 2 people - then the portions are set to 2', () => {
+        sections.at(0).prop('onClick')()
+
+        expect(numPortionChange).toHaveBeenCalledWith(2)
+        expect(numPortionChangeTracking).toHaveBeenCalledWith(2)
+        expect(next).toHaveBeenCalledWith()
+      })
+
+      test('for 4 people - then the portions are set to 4', () => {
+        sections.at(1).prop('onClick')()
+
+        expect(numPortionChange).toHaveBeenCalledWith(4)
+        expect(numPortionChangeTracking).toHaveBeenCalledWith(4)
+        expect(next).toHaveBeenCalledWith()
+      })
+    })
+  })
 })

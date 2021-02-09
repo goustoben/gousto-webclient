@@ -16,6 +16,7 @@ import { BoxSizeStep } from './Steps/BoxSize'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
+import { updatePricePerServing } from '../../actions/boxPrices'
 
 const components = {
   boxSize: BoxSizeStep,
@@ -50,6 +51,17 @@ const propTypes = {
     hide: PropTypes.bool,
   }),
   trackDiscountVisibility: PropTypes.func,
+  isWizardPricePerServingEnabled: PropTypes.bool,
+  lowestPricePerPortion: PropTypes.shape({
+    forTwo: PropTypes.shape({
+      priceDiscounted: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+    }),
+    forFour: PropTypes.shape({
+      priceDiscounted: PropTypes.string.isRequired,
+      price: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 }
 
 const defaultProps = {
@@ -73,6 +85,7 @@ const defaultProps = {
   isPricingClarityEnabled: false,
   orderDiscount: '',
   trackDiscountVisibility: () => {},
+  isWizardPricePerServingEnabled: false,
 }
 
 const contextTypes = {
@@ -82,13 +95,14 @@ const contextTypes = {
 const postCodePath = '/signup/postcode'
 
 class Signup extends PureComponent {
-  static fetchData = async ({ store, params = {}, query = {}, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled }) => {
+  static fetchData = async ({ store, params = {}, query = {}, fetchProps = {} }) => {
     let steps = Immutable.List(signupConfig.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
     const promoCode = query.promo_code
     const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
     const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
     const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
+    const { menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled, isWizardPricePerServingEnabled, lowestPricePerPortion } = fetchProps
 
     if (querySteps.length) {
       steps = Immutable.List(querySteps)
@@ -102,6 +116,7 @@ class Signup extends PureComponent {
       .filter(step => step && availableSteps.includes(step))
 
     const firstStep = stepByName(steps.first())
+    const isBoxSizeStep = firstStep.get('slug') === 'box-size'
 
     // defensive code to ensure menu load days works below for deeplinks
     const isSignUpPage = true
@@ -119,8 +134,12 @@ class Signup extends PureComponent {
       actions.signupSetStep(firstStep)
     )
 
-    if (isPricingClarityEnabled && firstStep.get('slug') === 'box-size' && !orderDiscount) {
+    if (isPricingClarityEnabled && isBoxSizeStep && !orderDiscount) {
       menuLoadBoxPrices()
+    }
+
+    if (isBoxSizeStep && isWizardPricePerServingEnabled && !Object.keys(lowestPricePerPortion).length) {
+      store.dispatch(updatePricePerServing())
     }
 
     // No Step specified and no query string specified
@@ -145,12 +164,19 @@ class Signup extends PureComponent {
   }
 
   componentDidMount() {
-    const { location, params, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled } = this.props
+    const { location, params, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled, isWizardPricePerServingEnabled, lowestPricePerPortion } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
     const boxPricesExperimentParams = { stepName: 'postcode', pathname: postCodePath }
     const signupParams = location.pathname === routes.client.signup ? params : boxPricesExperimentParams
-    Signup.fetchData({ store, query, params: signupParams, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled })
+    const fetchProps = {
+      isWizardPricePerServingEnabled,
+      isPricingClarityEnabled,
+      lowestPricePerPortion,
+      menuLoadBoxPrices,
+      orderDiscount,
+    }
+    Signup.fetchData({ store, query, params: signupParams, fetchProps })
   }
 
   // eslint-disable-next-line camelcase

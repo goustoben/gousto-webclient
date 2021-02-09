@@ -10,6 +10,7 @@ import config from 'config/boxprices'
 import { getBasketPostcode } from 'selectors/basket'
 import { getPromoBannerState } from 'utils/home'
 import logger from 'utils/logger'
+import { setLowestPricePerPortion } from './boxPricesPricePerPortion'
 
 export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getState) => {
   const state = getState()
@@ -39,6 +40,7 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
 
 export const updatePricePerServing = () => async (dispatch, getState) => {
   let price = config.pricePerServing
+  let lowestPricePerPortion = {}
 
   try {
     const state = getState()
@@ -60,7 +62,7 @@ export const updatePricePerServing = () => async (dispatch, getState) => {
     }
 
     const { data } = await fetchBoxPrices(accessToken, reqData)
-
+    lowestPricePerPortion = setLowestPricePerPortion(data)
     price = data[4][4].gourmet.pricePerPortion
   } catch (err) {
     logger.error(err)
@@ -68,6 +70,7 @@ export const updatePricePerServing = () => async (dispatch, getState) => {
     dispatch({
       type: actionTypes.BOXPRICE_SET_PRICE_PER_SERVING,
       price,
+      ...lowestPricePerPortion,
     })
   }
 }

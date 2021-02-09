@@ -173,3 +173,7 @@ export const getIsSubscriberPricingEnabled = ({ features }) => (
 export const getIsMyGoustoBannerSubscriberPricingEnabled = ({ features }) => (
   features && features.getIn(['isMyGoustoBannerSubscriberPricingEnabled', 'value'], false)
 )
+
+export const getIsWizardPricePerServingEnabled = ({ features }) => (
+  features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
+)

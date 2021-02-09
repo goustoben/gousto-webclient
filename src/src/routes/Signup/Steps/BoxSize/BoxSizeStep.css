@@ -1,4 +1,4 @@
-@value ScreenXSMax, HeightMDMax from 'styles/screenSizes.css';
+@value ScreenXSMax, HeightMDMax, ScreenXSMax from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingXS, SpacingSM, SpacingMD from 'sass-loader!styles/spacing.scss';
 @value Medium, Small, FontFamilyAxiformaBook from 'design-language/typography.css';
 @value NewGrey from 'styles/colors.css';
@@ -55,5 +55,21 @@
 
   @media BreakpointFromMedium {
     flex-wrap: nowrap;
+  }
+}
+
+.pricePerServingRow {
+  display: flex;
+  margin: 2rem -0.75rem 0;
+  @media ScreenXSMax {
+    width: 34rem;
+    margin: 2rem 0 3rem;
+  }
+}
+
+.pricePerServingRowWrapper {
+  @media ScreenXSMax {
+    overflow-x: scroll;
+    padding-bottom: 1rem;
   }
 }

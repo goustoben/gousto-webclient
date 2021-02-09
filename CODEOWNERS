@@ -180,6 +180,9 @@
 /src/src/apis/payments.js                               @Gousto/squad-beetroots
 /src/src/apis/__tests__/payments.test.js                @Gousto/squad-beetroots
 /src/src/apis/__tests__/checkout.test.js                @Gousto/squad-beetroots
+/src/src/actions/boxPrices.js                           @Gousto/squad-beetroots
+/src/src/actions/boxPricesPricePerPortion.js            @Gousto/squad-beetroots
+/src/src/actions/boxPricesPricePerPortion.test.js       @Gousto/squad-beetroots
 /src/src/actions/checkout.js                            @Gousto/squad-beetroots
 /src/src/actions/promos.js                              @Gousto/squad-beetroots
 /src/src/actions/signup.js                              @Gousto/squad-beetroots
@@ -221,4 +224,3 @@
 /tests/e2e/tests/systemTests/flows/signup/              @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                     @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                     @Gousto/squad-beetroots
-

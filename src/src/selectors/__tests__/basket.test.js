@@ -12,7 +12,8 @@ import {
   getBasketOrderId,
   getBasketLimitReached,
   getBasketProducts,
-  getChosenAddressId
+  getChosenAddressId,
+  getBasketTariffId,
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -204,6 +205,22 @@ describe('the basket selectors', () => {
         })
       }
       expect(getBasketLimitReached(state)).toEqual(false)
+    })
+  })
+
+  describe('getBasketTariffId', () => {
+    const tariffId = '123'
+
+    beforeEach(() => {
+      state = {
+        basket: Immutable.Map({
+          tariffId,
+        })
+      }
+    })
+
+    test('should return the basket tariff id', () => {
+      expect(getBasketTariffId(state)).toEqual(tariffId)
     })
   })
 })

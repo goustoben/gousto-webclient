@@ -3,6 +3,7 @@ import actions from 'actions'
 import {
   getIsTastePreferencesEnabled,
   getPricingClarityRedesign,
+  getIsWizardPricePerServingEnabled,
 } from 'selectors/features'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
@@ -17,6 +18,8 @@ const mapStateToProps = (state, ownProps) => ({
   orderDiscount: state.promoStore.getIn([state.promoCurrent, 'details', 'discount-whole-order-percent']),
   promoModalVisible: state.promoModalVisible,
   promoBannerState: getPromoBannerState(state),
+  isWizardPricePerServingEnabled: getIsWizardPricePerServingEnabled(state),
+  lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
 })
 
 const SignupContainer = connect(mapStateToProps, {

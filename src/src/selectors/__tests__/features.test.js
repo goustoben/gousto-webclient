@@ -44,6 +44,7 @@ import {
   getIsCheckoutOverhaulEnabled,
   getIsSubscriberPricingEnabled,
   getIsMyGoustoBannerSubscriberPricingEnabled,
+  getIsWizardPricePerServingEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -103,6 +104,8 @@ describe('when features are defined', () => {
     [getIsCheckoutOverhaulEnabled, 'isCheckoutOverhaulEnabled'],
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
     [getIsMyGoustoBannerSubscriberPricingEnabled, 'isMyGoustoBannerSubscriberPricingEnabled'],
+    [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
+    [getIsWizardPricePerServingEnabled, 'isWizardPricePerServingEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

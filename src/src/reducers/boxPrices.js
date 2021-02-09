@@ -4,6 +4,7 @@ import config from 'config/boxprices'
 
 const defaultState = Immutable.Map({
   pricePerServing: config.pricePerServing,
+  lowestPricePerPortion: {},
 })
 
 export const boxPrices = {
@@ -12,6 +13,7 @@ export const boxPrices = {
     case actionTypes.BOXPRICE_SET_PRICE_PER_SERVING:
       return state
         .set('pricePerServing', action.price)
+        .setIn(['lowestPricePerPortion'], action.lowestPricePerPortion)
     default:
       return state
     }
