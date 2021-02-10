@@ -8,7 +8,6 @@ import { safeJestMock, returnArgumentsFromMock } from '../../../../_testing/mock
 import {
   isOrderApiCreateEnabled,
   isOrderApiUpdateEnabled,
-  isOrderApiCancelEnabled,
   checkoutBasket,
   clearBasketNotValidError
 } from '../menuCheckoutClick'
@@ -42,15 +41,6 @@ describe('feature flags', () => {
       const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
 
       expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
-      expect(isEnabled).toBe(true)
-    })
-  })
-
-  describe('isOrderApiCancelEnabled', () => {
-    test('it calls feature enabled with the correct flag', async () => {
-      const isEnabled = await isOrderApiCancelEnabled(dispatch, getState)
-
-      expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_cancel_web_enabled', 'user_id')
       expect(isEnabled).toBe(true)
     })
   })

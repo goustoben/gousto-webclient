@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import {
   saveOrder,
   fetchOrder,
-  cancelOrder,
   updateOrderAddress,
 } from 'apis/orders'
 import actionStatus from 'actions/status'
@@ -11,8 +10,9 @@ import * as deliveriesUtils from 'utils/deliveries'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { trackOrder } from 'actions/order'
 
-import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
-import { actionTypes } from 'src/actions/actionTypes'
+import * as clientMetrics from '../../apis/clientMetrics'
+import * as rocketsCoreApi from '../../apis/rockets-core'
+import { actionTypes } from '../../../../actions/actionTypes'
 import { saveUserOrder, updateUserOrder } from '../../apis/core'
 import { getOrderDetails } from '../../selectors/order'
 import { orderAssignToUser } from '../order'
@@ -52,6 +52,7 @@ jest.mock('apis/deliveries', () => ({
 }))
 
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
+const cancelOrder = jest.spyOn(rocketsCoreApi, 'cancelOrder')
 
 const { pending, error } = actionStatus
 

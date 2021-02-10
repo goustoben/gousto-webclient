@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { cancelOrder, fetchOrder } from 'apis/orders'
+import { fetchOrder } from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 
 import { PaymentMethod, signupConfig } from 'config/signup'
@@ -40,6 +40,9 @@ import {
   trackNewOrder,
   trackSubscriptionCreated,
 } from './tracking'
+import { cancelOrder } from '../routes/Menu/apis/rockets-core'
+import { deleteOrder } from '../routes/Menu/apis/rockets-orderV2'
+import { isOptimizelyFeatureEnabledFactory } from '../containers/OptimizelyRollouts/index'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -103,7 +106,7 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error({message: err.message})
+      logger.error({ message: err.message })
     }
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
   }
@@ -179,7 +182,14 @@ function userOrderCancelNext(afterBoxNum = 1) {
 
         try {
           const accessToken = getState().auth.get('accessToken')
-          await cancelOrder(accessToken, orderToCancelId)
+          const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')(dispatch, getState)
+
+          if (useOrderApiV2) {
+            await deleteOrder(accessToken, orderToCancelId)
+          } else {
+            await cancelOrder(accessToken, orderToCancelId)
+          }
+
           dispatch({
             type: actionTypes.USER_UNLOAD_ORDERS,
             orderIds: [orderToCancelId]

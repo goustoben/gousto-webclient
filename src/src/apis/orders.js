@@ -28,12 +28,6 @@ export function saveOrder(accessToken, orderId, reqData) {
   })
 }
 
-export function cancelOrder(accessToken, orderId, reqData = {}) {
-  return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'DELETE', undefined, {
-    'Content-Type': 'application/json',
-  })
-}
-
 export function cancelExistingOrders(accessToken, reqData = {}) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.cancelPending}`, reqData, 'POST')
 }

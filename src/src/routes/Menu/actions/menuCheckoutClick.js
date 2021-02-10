@@ -1,4 +1,3 @@
-
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import { basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout } from 'actions/basket'
@@ -15,8 +14,6 @@ import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/
 export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_create_web_enabled')
 
 export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_update_web_enabled')
-
-export const isOrderApiCancelEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')
 
 const expandRecipeArrayForQuantity = (recipes) => (
   recipes.reduce((recipesArray, qty, recipeId) => {

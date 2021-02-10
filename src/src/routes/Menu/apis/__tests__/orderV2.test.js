@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { createOrder, deleteOrder, getOrder, getUserOrders } from '../orderV2'
+import { createOrder, getOrder, getUserOrders } from '../orderV2'
 
 const mockFetchResult = { data: [1, 2, 3] }
 const reqData = { a: 1, b: 2}
@@ -271,26 +271,6 @@ describe('orderApi', () => {
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith('token', 'endpoint-order/v2/orders', expectedOrder, 'POST', expectedHeaders)
       })
-    })
-  })
-
-  describe('deleteOrder', () => {
-    test('should fetch the correct url', async () => {
-      const expectedHeaders = {
-        'Content-Type': 'application/json',
-        'x-gousto-device-id': undefined,
-        'x-gousto-user-id': undefined
-      }
-      const orderId = '123'
-      await deleteOrder('token', orderId)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-order/v2/orders/${orderId}`, 'DELETE', expectedHeaders)
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const orderId = '123'
-      const result = await deleteOrder('token', orderId)
-      expect(result).toEqual(mockFetchResult)
     })
   })
 })
