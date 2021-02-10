@@ -4,7 +4,6 @@ import { fetchDeliveryDays } from 'apis/deliveries'
 import {
   saveOrder,
   fetchOrder,
-  cancelOrder,
   checkoutOrder,
   updateOrderAddress,
 } from 'apis/orders'
@@ -28,7 +27,10 @@ import {
   trackCancelMultipleBoxes
 } from 'actions/order'
 
+import * as optimizelyUtils from '../../containers/OptimizelyRollouts/optimizelyUtils'
 import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
+import * as rocketsCoreApi from '../../routes/Menu/apis/rockets-core'
+import * as rocketsOrderV2 from '../../routes/Menu/apis/rockets-orderV2'
 import { safeJestMock } from '../../_testing/mocks'
 
 import { flushPromises } from '../../_testing/utils'
@@ -65,6 +67,9 @@ jest.mock('apis/deliveries', () => ({
 }))
 
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
+const cancelOrder = jest.spyOn(rocketsCoreApi, 'cancelOrder')
+const deleteOrder = jest.spyOn(rocketsOrderV2, 'deleteOrder')
+const isOptimizelyFeatureEnabledFactory = jest.spyOn(optimizelyUtils, 'isOptimizelyFeatureEnabledFactory')
 
 const { pending, error } = actionStatus
 
@@ -887,7 +892,9 @@ describe('order actions', () => {
 
     beforeEach(() => {
       cancelOrder.mockResolvedValue(null)
+      deleteOrder.mockResolvedValue(null)
       skipDelivery.mockResolvedValue(null)
+      isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(false))
     })
 
     afterEach(() => {
@@ -895,13 +902,13 @@ describe('order actions', () => {
     })
 
     test('takes a list of selected orders', async () => {
-      cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
+      await cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
 
       await flushPromises()
     })
 
     test('dispatches the expected multiskip start action', async () => {
-      cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
+      await cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
 
       await flushPromises()
 
@@ -918,7 +925,7 @@ describe('order actions', () => {
     ])('if malformed orders passed, dispatches a multiskip error action', async (malformedSelectedOrder) => {
       expect.assertions(2)
 
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: [malformedSelectedOrder]
       })(dispatch, getState)
 
@@ -934,7 +941,7 @@ describe('order actions', () => {
     })
 
     test('if no orders are passed, dispatches a multiskip error action', async () => {
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: []
       })(dispatch, getState)
 
@@ -948,7 +955,7 @@ describe('order actions', () => {
     })
 
     test('for each projected selected orders, calls the disable delivery day endpoint', async () => {
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: [
           { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-1' },
           { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-2' }
@@ -969,7 +976,7 @@ describe('order actions', () => {
     })
 
     test('for any pending selected orders, calls the cancel order endpoint', async () => {
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: [
           { ...mockSelectedOrder, id: 'order-id-1' },
           { ...mockSelectedOrder, id: 'order-id-2' }
@@ -989,8 +996,35 @@ describe('order actions', () => {
       )
     })
 
+    describe('when feature flag is true', async () => {
+      beforeEach(() => {
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(true))
+      })
+
+      test('for any pending selected orders, calls the v2 delete order endpoint', async () => {
+        await cancelMultipleBoxes({
+          selectedOrders: [
+            { ...mockSelectedOrder, id: 'order-id-1' },
+            { ...mockSelectedOrder, id: 'order-id-2' }
+          ]
+        })(dispatch, getState)
+
+        await flushPromises()
+
+        expect(deleteOrder).toHaveBeenCalledTimes(2)
+        expect(deleteOrder).toHaveBeenNthCalledWith(1,
+          'access-token',
+          'order-id-1'
+        )
+        expect(deleteOrder).toHaveBeenNthCalledWith(2,
+          'access-token',
+          'order-id-2'
+        )
+      })
+    })
+
     test('for each box successfully cancelled, dispatches a cancellation event', async () => {
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: [
           mockSelectedOrder,
           mockProjectedSelectedOrder
@@ -1037,16 +1071,17 @@ describe('order actions', () => {
         // First should succeed, second should fail
         cancelOrder.mockResolvedValueOnce(null)
         skipDelivery.mockRejectedValueOnce(null)
+        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(false))
+      })
 
-        cancelMultipleBoxes({
+      test('only dispatches cancellation action for successes', async () => {
+        await cancelMultipleBoxes({
           selectedOrders: [
             mockSelectedOrder,
             mockProjectedSelectedOrder
           ]
         })(dispatch, getState)
-      })
 
-      test('only dispatches cancellation action for successes', async () => {
         const cancellationActions = queryDispatch(actionTypes.ORDER_CANCEL)
 
         expect(cancellationActions.length).toEqual(1)
@@ -1067,6 +1102,13 @@ describe('order actions', () => {
       })
 
       test('still dispatches tracking action for successes', async () => {
+        await cancelMultipleBoxes({
+          selectedOrders: [
+            mockSelectedOrder,
+            mockProjectedSelectedOrder
+          ]
+        })(dispatch, getState)
+
         const [trackingEvent] = queryDispatch(actionTypes.TRACKING)
         expect(trackingEvent).toEqual({
           type: actionTypes.TRACKING,
@@ -1079,7 +1121,7 @@ describe('order actions', () => {
     })
 
     test('if boxes are successfully cancelled, dispatches a success action with count', async () => {
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: [
           mockSelectedOrder,
           mockProjectedSelectedOrder
@@ -1097,7 +1139,7 @@ describe('order actions', () => {
     })
 
     test('if boxes are successfully cancelled, dispatches the expected tracking action', async () => {
-      cancelMultipleBoxes({
+      await cancelMultipleBoxes({
         selectedOrders: [
           mockSelectedOrder,
           mockProjectedSelectedOrder
@@ -1123,7 +1165,7 @@ describe('order actions', () => {
     test('if any box fails to cancel, dispatches a multiskip error action', async () => {
       cancelOrder.mockRejectedValueOnce()
 
-      cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
+      await cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
 
       await flushPromises()
 

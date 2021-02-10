@@ -3,7 +3,6 @@ import fetch from 'utils/fetch'
 import {
   saveOrder,
   fetchOrder,
-  cancelOrder,
   checkoutOrder,
   updateOrderItems,
   createPreviewOrder,
@@ -136,30 +135,6 @@ describe('orders api', () => {
     test('should return the results of the fetch unchanged', async () => {
       const result = await saveOrder('token', '123', {})
       expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('cancelOrder', () => {
-    test('should fetch the correct url', async () => {
-      const orderId = '123'
-      const reqData = { a: 1, b: 2 }
-      await cancelOrder('token', orderId, reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, reqData, 'DELETE', undefined, expectedHeaders)
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await cancelOrder('token', '123', {})
-      expect(result).toEqual(mockFetchResult)
-    })
-
-    describe('when reqData not provided', () => {
-      test('should fetch the correct url', async () => {
-        const orderId = '123'
-        await cancelOrder('token', orderId)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-core/order/${orderId}`, {}, 'DELETE', undefined, expectedHeaders)
-      })
     })
   })
 

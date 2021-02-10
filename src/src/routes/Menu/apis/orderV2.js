@@ -87,13 +87,3 @@ export function createOrder(orderDetails) {
 
   return fetch(accessToken, `${endpoint('order', version)}/orders`, order, 'POST', headers)
 }
-
-export function deleteOrder(accessToken, orderId, sessionId, userId) {
-  const headers = {
-    'Content-Type': 'application/json',
-    'x-gousto-device-id': sessionId,
-    'x-gousto-user-id': userId
-  }
-
-  return fetch(accessToken, `${endpoint('order', version)}/orders/${orderId}`, 'DELETE', headers)
-}

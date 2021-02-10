@@ -1,8 +1,5 @@
 import { fetch } from 'utils/fetch'
-import {
-  saveUserOrder,
-  updateUserOrder,
-} from '../core'
+import { saveUserOrder, updateUserOrder } from '../core'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () => ({
@@ -23,7 +20,7 @@ jest.mock('config/routes', () => ({
   }
 }))
 
-describe('user api', () => {
+describe('radish core apis', () => {
   beforeEach(() => {
     fetch.mockClear()
   })
