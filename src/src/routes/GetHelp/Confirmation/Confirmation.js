@@ -20,6 +20,7 @@ const Confirmation = ({ trackConfirmationCTA }) => (
     </p>
     <BottomFixedContent>
       <CTA
+        testingSelector="doneCTA"
         isFullWidth
         size="small"
         onClick={() => {
