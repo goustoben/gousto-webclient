@@ -1,4 +1,9 @@
 export const clickHelp = () => {
+  // Without this cy.wait(), sometimes the pre Help login modal shows wiht a message
+  // that you are logged in, (race condition?) when clicking help. Instead of going
+  // to Self Serve Resolution.
+  cy.wait(1000)
+
   const platform = Cypress.env('platform')
   if (platform === 'mobile') {
     cy.get('[data-testing=burgerMenu]').click()

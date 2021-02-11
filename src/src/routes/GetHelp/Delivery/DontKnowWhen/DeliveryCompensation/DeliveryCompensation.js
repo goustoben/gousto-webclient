@@ -40,7 +40,7 @@ class DeliveryCompensation extends PureComponent {
         <Heading size="fontStyleM" type="h2">
           We&apos;re sorry to hear your box didn&apos;t arrive
         </Heading>
-        <div className={css.mainText}>
+        <div className={css.mainText} data-testing="deliveryCompensationContent">
           {isApplyCompensationError
             ? (
               <p>
@@ -66,6 +66,7 @@ class DeliveryCompensation extends PureComponent {
               <CTA
                 isFullWidth
                 size="small"
+                testingSelector="contactUsCTA"
                 variant={isApplyCompensationError ? 'primary' : 'secondary'}
                 isDisabled={isApplyCompensationPending}
                 onClick={DeliveryCompensation.redirectTo(`${index}/${contact}`)}
@@ -79,6 +80,7 @@ class DeliveryCompensation extends PureComponent {
                   <CTA
                     isFullWidth
                     size="small"
+                    testingSelector="acceptCreditCTA"
                     isLoading={isApplyCompensationPending}
                     onClick={() => {
                       applyDeliveryRefund(
