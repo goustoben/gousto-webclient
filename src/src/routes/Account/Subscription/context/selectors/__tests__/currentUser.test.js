@@ -2,7 +2,8 @@ import {
   getCurrentUserPostcode,
   getFirstName,
   getIsCurrentUserLoaded,
-  getCurrentUserDeliveryTariffId
+  getCurrentUserDeliveryTariffId,
+  getCurrentUserId,
 } from '../currentUser'
 
 describe('currentUser selectors', () => {
@@ -10,6 +11,7 @@ describe('currentUser selectors', () => {
   beforeEach(() => {
     contextState = {
       currentUser: {
+        id: '12345',
         shippingAddress: {
           postcode: 'W1A',
         },
@@ -44,6 +46,16 @@ describe('currentUser selectors', () => {
 
     test('should return false if user data is not loaded', () => {
       expect(getIsCurrentUserLoaded(contextState)).toEqual(true)
+    })
+  })
+
+  describe('getCurrentUserId', () => {
+    test('should return nothing if state is not loaded', () => {
+      expect(getCurrentUserId({})).toBeFalsy()
+    })
+
+    test('should return converted id if state is loaded', () => {
+      expect(getCurrentUserId(contextState)).toEqual(12345)
     })
   })
 })

@@ -21,3 +21,8 @@ export const getCurrentUserDeliveryTariffId = createSelector(
   getCurrentUser,
   ({ deliveryTariffId }) => deliveryTariffId
 )
+
+export const getCurrentUserId = createSelector(
+  getCurrentUser,
+  ({ id }) => id && Number(id)
+)
