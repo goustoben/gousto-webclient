@@ -21,11 +21,11 @@ describe('<SimpleRecipe />', () => {
       {
         src: 'test',
       },
-    ])
+    ]),
   }
 
   beforeEach(() => {
-    jest.spyOn(sanitizeText, 'removeDiacritics').mockImplementation((param => param))
+    jest.spyOn(sanitizeText, 'removeDiacritics').mockImplementation((param) => param)
     wrapper = shallow(<SimpleRecipe {...recipe} />)
   })
 

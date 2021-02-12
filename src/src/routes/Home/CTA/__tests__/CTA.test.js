@@ -10,10 +10,7 @@ describe('CTA', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <CTA
-        ctaUri={ctaUri}
-        homeGetStarted={homeGetStarted}
-      >
+      <CTA ctaUri={ctaUri} homeGetStarted={homeGetStarted}>
         {children}
       </CTA>
     )
@@ -39,7 +36,7 @@ describe('CTA', () => {
     describe('And CTA is clicked', () => {
       beforeEach(() => {
         wrapper.setProps({
-          sectionForTracking: 'hero'
+          sectionForTracking: 'hero',
         })
         wrapper.find('CTA').simulate('click')
       })

@@ -32,16 +32,20 @@ class HomeSections extends Component {
     const { isAuthenticated, isSignupReductionEnabled, pricePerServing } = this.props
 
     return {
-      hero: (props) => <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />,
+      hero: (props) => (
+        <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />
+      ),
       trustPilot: () => <TrustPilot />,
-      whyChooseGousto: (props) => <WhyChooseGousto ctaText={props.ctaText} ctaUri={props.ctaUri} pricePerServing={pricePerServing} />,
+      whyChooseGousto: (props) => (
+        <WhyChooseGousto
+          ctaText={props.ctaText}
+          ctaUri={props.ctaUri}
+          pricePerServing={pricePerServing}
+        />
+      ),
       joeWicks: () => <JoeWicks />,
       recipes: (props) => <Carousel ctaText={props.ctaText} ctaUri={props.ctaUri} />,
-      ...(
-        isSignupReductionEnabled
-          ? { emailForm: () => <EmailForm /> }
-          : {}
-      ),
+      ...(isSignupReductionEnabled ? { emailForm: () => <EmailForm /> } : {}),
     }
   }
 
@@ -55,14 +59,11 @@ class HomeSections extends Component {
     const { ctaUri, ctaText } = this.props
     const componentProps = Object.assign(moduleConfig, {
       ctaUri,
-      ctaText
+      ctaText,
     })
 
     return (
-      <section
-        key={order}
-        data-module-name={name}
-      >
+      <section key={order} data-module-name={name}>
         {mappedModules[name](componentProps)}
       </section>
     )
@@ -71,17 +72,11 @@ class HomeSections extends Component {
   render() {
     const { modules } = this.props
 
-    return (
-      <div>
-        {modules.map((name, order) => this.renderModule(name, order))}
-      </div>
-    )
+    return <div>{modules.map((name, order) => this.renderModule(name, order))}</div>
   }
 }
 
 HomeSections.propTypes = propTypes
 HomeSections.defaultProps = defaultProps
 
-export {
-  HomeSections
-}
+export { HomeSections }

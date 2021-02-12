@@ -3,24 +3,14 @@ import React from 'react'
 import { CTA as CTAButton } from 'goustouicomponents'
 import css from './CTA.css'
 
-const CTA = ({
-  homeGetStarted,
-  ctaUri,
-  sectionForTracking,
-  children,
-  dataTesting,
-}) => {
+const CTA = ({ homeGetStarted, ctaUri, sectionForTracking, children, dataTesting }) => {
   const handleClick = () => {
     homeGetStarted(ctaUri, sectionForTracking)
   }
 
   return (
     <div className={css.ctaContainer}>
-      <CTAButton
-        testingSelector={dataTesting}
-        onClick={handleClick}
-        isFullWidth
-      >
+      <CTAButton testingSelector={dataTesting} onClick={handleClick} isFullWidth>
         {children}
       </CTAButton>
     </div>
@@ -35,7 +25,7 @@ CTA.propTypes = {
     PropTypes.string,
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.element
+    PropTypes.element,
   ]).isRequired,
   dataTesting: PropTypes.string,
 }

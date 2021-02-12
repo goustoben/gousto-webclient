@@ -163,6 +163,11 @@ Please install [EditorConfig](https://editorconfig.org/) for your text editor or
 
 Why is this important? Imagine two developer working on the same file, one person has tab indentation with size of 4, and the other has space indentation with size of 2. Even if they change nothing in the shared file, just by running commands such as `format document` git will pick it up as all lines changed. This makes tracking and tracing changes very difficult (not mentioning how eye strain it is when it comes to code review).
 
+### Use of Prettier
+This project is in the process of gradual migration to Prettier.  As such, only the files whitelisted under `src/.prettierignore` should be formatted with prettier.
+
+This means that generally, you shouldn't configure your IDE to format every file on save: instead it should respect the `.prettierignore` file if it's possible.  Sorry for the inconvenience.
+
 ## [Code Health](#code-health)
 ### Run code health locally
 Create a CircleCI access token (“Personal API Tokens” https://circleci.com/account/api) and set it as environment variable:

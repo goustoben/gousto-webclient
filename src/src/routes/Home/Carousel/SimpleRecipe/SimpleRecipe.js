@@ -6,45 +6,23 @@ import { TimeIndicator, Rating } from 'goustouicomponents'
 import sanitizeText from 'utils/sanitizeText'
 import css from './SimpleRecipe.css'
 
-const SimpleRecipe = ({
-  media,
-  title,
-  maxMediaSize,
-  averageRating,
-  ratingCount,
-  cookingTime,
-}) => {
+const SimpleRecipe = ({ media, title, maxMediaSize, averageRating, ratingCount, cookingTime }) => {
   const recipeTitle = sanitizeText.removeDiacritics(title)
 
   return (
     <div className={css.recipeDetails}>
       <div className={css.simple}>
-        <GoustoImage
-          media={media}
-          title={title}
-          maxMediaSize={maxMediaSize}
-          lazy
-        />
+        <GoustoImage media={media} title={title} maxMediaSize={maxMediaSize} lazy />
         <div className={css.cookingTime}>
           <TimeIndicator time={cookingTime} />
         </div>
       </div>
       <div className={css.textContainer}>
-        <h2 className={css.recipeTitle}>
-          {recipeTitle}
-        </h2>
+        <h2 className={css.recipeTitle}>{recipeTitle}</h2>
         <div className={css.ratingContainer}>
-          {
-            ratingCount && averageRating
-              ? (
-                <Rating
-                  amountOfReviews={ratingCount}
-                  average={averageRating}
-                  size="Medium"
-                />
-              )
-              : null
-          }
+          {ratingCount && averageRating ? (
+            <Rating amountOfReviews={ratingCount} average={averageRating} size="Medium" />
+          ) : null}
         </div>
       </div>
     </div>

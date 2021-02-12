@@ -13,25 +13,28 @@ const getRecipesFromAllRecipesCollection = createSelector(
       return Immutable.OrderedMap({})
     }
 
-    const recipesIdsInCollection = getRecipesInCollection(menuCollections, ALL_RECIPES_COLLECTION_ID) || []
+    const recipesIdsInCollection =
+      getRecipesInCollection(menuCollections, ALL_RECIPES_COLLECTION_ID) || []
 
-    const getRecipeDetailsById = (recipeId) => allRecipes.find(recipe => getRecipeId(recipe) === recipeId)
+    const getRecipeDetailsById = (recipeId) =>
+      allRecipes.find((recipe) => getRecipeId(recipe) === recipeId)
 
     // recipesInCollection is in recommended order whilst allRecipes is the default order of the menu
-    const recipesOrderedByCollectionIds = recipesIdsInCollection.map(getRecipeDetailsById).filter(recipe => {
-      const recipeSlug = recipe && recipe.getIn(['foodBrand', 'slug'])
-      const isEveryDayFavourites = recipeSlug === 'everyday-favourites'
-      const isOvenReady = recipe && recipe.get('title').includes("Charlie Bigham's")
+    const recipesOrderedByCollectionIds = recipesIdsInCollection
+      .map(getRecipeDetailsById)
+      .filter((recipe) => {
+        const recipeSlug = recipe && recipe.getIn(['foodBrand', 'slug'])
+        const isEveryDayFavourites = recipeSlug === 'everyday-favourites'
+        const isOvenReady = recipe && recipe.get('title').includes("Charlie Bigham's")
 
-      return (recipeSlug && !isOvenReady && !isEveryDayFavourites && recipe)
-    })
+        return recipeSlug && !isOvenReady && !isEveryDayFavourites && recipe
+      })
 
-    return recipesOrderedByCollectionIds
-      .reduce((reducerState, recipe) =>
-        reducerState.set(recipe.get('id'), recipe), Immutable.OrderedMap({}))
+    return recipesOrderedByCollectionIds.reduce(
+      (reducerState, recipe) => reducerState.set(recipe.get('id'), recipe),
+      Immutable.OrderedMap({})
+    )
   }
 )
 
-export {
-  getRecipesFromAllRecipesCollection
-}
+export { getRecipesFromAllRecipesCollection }

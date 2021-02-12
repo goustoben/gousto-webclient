@@ -1,10 +1,10 @@
 @value White, Blackberry, Basa from 'styles/colors.css';
 
 .recipeDetails {
-	position: relative;
+  position: relative;
   border: 1px solid Basa;
-	background: White;
-	width: 100%;
+  background: White;
+  width: 100%;
   cursor: pointer;
 }
 
@@ -18,7 +18,7 @@
 }
 
 .simple {
-	min-height: 10rem;
+  min-height: 10rem;
   position: relative;
 }
 
@@ -29,10 +29,10 @@
 }
 
 .textContainer {
-	text-align: left;
+  text-align: left;
   padding: 1rem;
 }
 
 .ratingContainer {
-	height: 1.25rem;
+  height: 1.25rem;
 }

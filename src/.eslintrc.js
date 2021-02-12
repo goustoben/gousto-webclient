@@ -236,6 +236,7 @@ module.exports = {
     "ga": false,
     "hj": true
   },
+  "plugins": ["prettier"],
   "overrides": [
     {
       "files": [
@@ -256,6 +257,30 @@ module.exports = {
         "Cypress": "readonly",
         "cy": "readonly",
         "before": "readonly"
+      }
+    },
+    {
+      // Make eslint rules agree with prettier.
+      "files": [
+        "src/routes/Home/**/*.js",
+        "src/routes/Payment/**/*.js"
+      ],
+      "rules": {
+        "prettier/prettier": "error",
+        "operator-linebreak": [
+          1, "after", {
+            "overrides": {
+              "?": "before",
+              ":": "before"
+            }
+          }
+        ],
+        "indent": [2, 2, {
+          "ignoredNodes": ["JSXElement"],
+          "ObjectExpression": "off"
+        }],
+        "no-confusing-arrow": 0,
+        "react/jsx-one-expression-per-line": 0
       }
     }
   ]

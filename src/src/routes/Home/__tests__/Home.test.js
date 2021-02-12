@@ -50,7 +50,10 @@ describe('Home', () => {
       updatePricePerServing = jest.fn()
 
       jest.useFakeTimers()
-      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} updatePricePerServing={updatePricePerServing} />, { context: { store } })
+      wrapper = shallow(
+        <Home redirectLoggedInUser={jest.fn()} updatePricePerServing={updatePricePerServing} />,
+        { context: { store } }
+      )
     })
 
     afterEach(() => {
@@ -85,21 +88,25 @@ describe('Home', () => {
 
   describe('helmet', () => {
     test('should contain correct title', () => {
-      expect(wrapper.find(Helmet).prop('title')).toBe('Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto')
+      expect(wrapper.find(Helmet).prop('title')).toBe(
+        'Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto'
+      )
     })
 
     describe('when given a variant', () => {
       beforeEach(() => {
         wrapper.setProps({
-          variant: 'alt'
+          variant: 'alt',
         })
       })
 
       test('should put a canonical tag in the url', () => {
-        expect(wrapper.find(Helmet).first().prop('link')).toEqual([{
-          href: 'https://www.gousto.local/',
-          rel: 'canonical',
-        }])
+        expect(wrapper.find(Helmet).first().prop('link')).toEqual([
+          {
+            href: 'https://www.gousto.local/',
+            rel: 'canonical',
+          },
+        ])
       })
     })
 

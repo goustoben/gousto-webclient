@@ -8,7 +8,7 @@ export class PromoBanner extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSticky: false
+      isSticky: false,
     }
     this.stickyBarRef = React.createRef()
   }

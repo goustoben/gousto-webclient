@@ -3,7 +3,7 @@
 
 .container {
   padding: 0.75rem 0.75rem 0;
-	width: 100%;
+  width: 100%;
   max-width: 75rem;
   margin: 0 auto 2.25rem;
   display: flex;
@@ -78,7 +78,6 @@
 }
 
 .processImage {
-
   @media BreakpointFromMedium {
     width: 200%;
     height: 11.25rem;

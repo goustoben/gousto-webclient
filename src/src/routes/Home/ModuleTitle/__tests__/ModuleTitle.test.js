@@ -19,7 +19,7 @@ describe('Given ModuleTitle', () => {
   describe('when subTitle is passed', () => {
     beforeEach(() => {
       wrapper.setProps({
-        subTitle: 'sub title text'
+        subTitle: 'sub title text',
       })
     })
 

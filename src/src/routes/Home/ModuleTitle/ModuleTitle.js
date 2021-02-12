@@ -6,11 +6,7 @@ import css from './ModuleTitle.css'
 const ModuleTitle = ({ title, subTitle }) => (
   <Fragment>
     <div className={css.title}>
-      <Heading
-        size="fontStyle2XL"
-        hasMargin={false}
-        isCenter
-      >
+      <Heading size="fontStyle2XL" hasMargin={false} isCenter>
         {title}
       </Heading>
     </div>
@@ -24,10 +20,7 @@ const ModuleTitle = ({ title, subTitle }) => (
 
 ModuleTitle.propTypes = {
   title: PropTypes.string.isRequired,
-  subTitle: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-  ])
+  subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 }
 
 ModuleTitle.defaultProps = {

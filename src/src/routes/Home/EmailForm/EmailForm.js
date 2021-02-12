@@ -60,46 +60,51 @@ class EmailForm extends React.PureComponent {
             <span>Sorry, we’re full to the brim!</span>
           </h2>
           <div>
-            {
-              emailSubmitted
-                ? (<P className={`${css.text} ${css.mt05}`}><span>{config.emailForm.success}</span></P>)
-                : (
-                  <div>
-                    <P className={css.text}>
-                      <span>We can’t take any new customer orders right now. Leave your email below and we’ll let you know as soon as you can place your order.  Won’t be long!</span>
-                    </P>
-                    <Form onSubmit={this.handleSubmit}>
-                      <div className={css.row}>
-                        <div className={css.mt05}>
-                          <TextInput
-                            name="email"
-                            color="gray"
-                            textAlign="left"
-                            type="email"
-                            placeholder="Enter your email"
-                            onChange={this.emailChanges}
-                            value={email}
-                            required
-                            className={css.input}
-                          />
-                        </div>
-                        <div className={css.mt05}>
-                          <CTA onClick={this.handleSubmit} isFullWidth="small-screens-only">
-                            <span className={css.ctaText}>Join waitlist</span>
-                          </CTA>
-                        </div>
-                      </div>
-                      <P className={css.text}>
-                        <span>
-                          Already a Gousto subscriber? &nbsp;
-                          <a href="#login" className={css.loginAncor}>Log in</a>
-                        </span>
-                      </P>
-                    </Form>
+            {emailSubmitted ? (
+              <P className={`${css.text} ${css.mt05}`}>
+                <span>{config.emailForm.success}</span>
+              </P>
+            ) : (
+              <div>
+                <P className={css.text}>
+                  <span>
+                    We can’t take any new customer orders right now. Leave your email below and
+                    we’ll let you know as soon as you can place your order. Won’t be long!
+                  </span>
+                </P>
+                <Form onSubmit={this.handleSubmit}>
+                  <div className={css.row}>
+                    <div className={css.mt05}>
+                      <TextInput
+                        name="email"
+                        color="gray"
+                        textAlign="left"
+                        type="email"
+                        placeholder="Enter your email"
+                        onChange={this.emailChanges}
+                        value={email}
+                        required
+                        className={css.input}
+                      />
+                    </div>
+                    <div className={css.mt05}>
+                      <CTA onClick={this.handleSubmit} isFullWidth="small-screens-only">
+                        <span className={css.ctaText}>Join waitlist</span>
+                      </CTA>
+                    </div>
                   </div>
-                )
-            }
-            {errorMessage && (<p className={`${css.text} ${css.mt05}`}>{errorMessage}</p>)}
+                  <P className={css.text}>
+                    <span>
+                      Already a Gousto subscriber? &nbsp;
+                      <a href="#login" className={css.loginAncor}>
+                        Log in
+                      </a>
+                    </span>
+                  </P>
+                </Form>
+              </div>
+            )}
+            {errorMessage && <p className={`${css.text} ${css.mt05}`}>{errorMessage}</p>}
           </div>
         </div>
       </div>
@@ -107,6 +112,4 @@ class EmailForm extends React.PureComponent {
   }
 }
 
-export {
-  EmailForm
-}
+export { EmailForm }

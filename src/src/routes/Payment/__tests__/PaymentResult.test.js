@@ -48,7 +48,8 @@ describe('PaymentResult', () => {
   })
 
   describe('when rendered with children ', () => {
-    const message = 'You will now be automatically redirected back to Gousto with no further action required.'
+    const message =
+      'You will now be automatically redirected back to Gousto with no further action required.'
 
     beforeEach(() => {
       wrapper = shallow(<PaymentResult>{message}</PaymentResult>)

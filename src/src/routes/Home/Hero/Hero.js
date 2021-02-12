@@ -61,9 +61,9 @@ class Hero extends Component {
     const className = isHeroCTA
       ? css.stickyContainer
       : classNames(css.mobileStickyInitial, css.mobileStickyRemoval, {
-        [css.mobileSticky]: isSticky,
-        [css.hideShadow]: maxHeight && !isHeroCTA && isSticky
-      })
+          [css.mobileSticky]: isSticky,
+          [css.hideShadow]: maxHeight && isSticky,
+        }) // eslint-disable-line indent
 
     return (
       <div
@@ -91,10 +91,14 @@ class Hero extends Component {
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
         <div className={css.textContainer}>
           <div className={css.title}>
-            <Heading type="h1" size="fontStyle4XL" hasMargin={false}>{home.hero.header}</Heading>
+            <Heading type="h1" size="fontStyle4XL" hasMargin={false}>
+              {home.hero.header}
+            </Heading>
           </div>
           <div className={css.subTitle}>
-            <Heading type="h2" size="fontStyleL" hasMargin={false}>{home.hero.subheader}</Heading>
+            <Heading type="h2" size="fontStyleL" hasMargin={false}>
+              {home.hero.subheader}
+            </Heading>
           </div>
           {this.renderGetStarted(true)}
           <div className={css.processImage} />
@@ -118,6 +122,4 @@ Hero.defaultProps = {
   isAuthenticated: false,
 }
 
-export {
-  Hero
-}
+export { Hero }

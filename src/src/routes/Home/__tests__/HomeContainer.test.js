@@ -6,16 +6,13 @@ import { HomeContainer } from '../HomeContainer'
 
 jest.mock('config/home', () => ({
   defaultVariant: 'default',
-  knownVariants: [
-    'default',
-    'test',
-  ],
+  knownVariants: ['default', 'test'],
   whyGousto: {
-    steps: []
+    steps: [],
   },
   CTA: {
-    text: 'cta'
-  }
+    text: 'cta',
+  },
 }))
 
 describe('HomeContainer', () => {
@@ -29,9 +26,9 @@ describe('HomeContainer', () => {
     }),
     features: Immutable.Map({
       isSignupReductionEnabled: Immutable.fromJS({
-        value: false
-      })
-    })
+        value: false,
+      }),
+    }),
   }
   const redirectLoggedInUser = jest.fn()
 
@@ -42,21 +39,19 @@ describe('HomeContainer', () => {
   }
 
   beforeEach(() => {
-    wrapper = shallow(
-      <HomeContainer store={store} redirectLoggedInUser={redirectLoggedInUser} />
-    )
+    wrapper = shallow(<HomeContainer store={store} redirectLoggedInUser={redirectLoggedInUser} />)
   })
 
   test('should be rendered properly', () => {
     const expected = {
-      isAuthenticated: false
+      isAuthenticated: false,
     }
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })
 
   test('should pass pricePerServing', () => {
     const expected = {
-      pricePerServing: '2.87'
+      pricePerServing: '2.87',
     }
 
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))

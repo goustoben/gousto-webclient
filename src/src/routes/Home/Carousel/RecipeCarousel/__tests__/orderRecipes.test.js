@@ -130,7 +130,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '123',
@@ -139,7 +139,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Fish',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '234',
@@ -148,7 +148,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '678',
@@ -157,7 +157,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '456',
@@ -166,7 +166,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Fish',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '567',
@@ -175,7 +175,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '901',
@@ -184,7 +184,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 3 },
-      }),
+      })
     )
     expected = expected.set(
       '789',
@@ -193,7 +193,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Fish',
         rating: { average: 3 },
-      }),
+      })
     )
     expected = expected.set(
       '890',
@@ -202,7 +202,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 3 },
-      }),
+      })
     )
     expected = expected.set(
       '765',
@@ -211,7 +211,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '987',
@@ -220,7 +220,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Fish',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '876',
@@ -229,7 +229,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '432',
@@ -238,7 +238,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '654',
@@ -247,7 +247,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Fish',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '543',
@@ -256,7 +256,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '109',
@@ -265,7 +265,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '321',
@@ -274,7 +274,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Fish',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '210',
@@ -283,7 +283,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
-      }),
+      })
     )
 
     expect(Immutable.is(result, expected)).toEqual(true)
@@ -411,7 +411,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '234',
@@ -420,7 +420,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '345',
@@ -429,7 +429,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '567',
@@ -438,7 +438,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '456',
@@ -447,7 +447,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '890',
@@ -456,7 +456,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 3 },
-      }),
+      })
     )
     expected = expected.set(
       '678',
@@ -465,7 +465,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '876',
@@ -474,7 +474,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '789',
@@ -483,7 +483,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 3 },
-      }),
+      })
     )
     expected = expected.set(
       '543',
@@ -492,7 +492,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '901',
@@ -501,7 +501,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 3 },
-      }),
+      })
     )
     expected = expected.set(
       '210',
@@ -510,7 +510,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '765',
@@ -519,7 +519,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '987',
@@ -528,7 +528,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '432',
@@ -537,7 +537,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '654',
@@ -546,7 +546,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '109',
@@ -555,7 +555,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '321',
@@ -564,7 +564,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
 
     expect(Immutable.is(result, expected)).toEqual(true)
@@ -698,7 +698,7 @@ describe('orderRecipes', () => {
         isFeaturedRecipe: true,
         dietType: 'anything',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '123',
@@ -707,7 +707,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '234',
@@ -716,7 +716,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '345',
@@ -725,7 +725,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 5 },
-      }),
+      })
     )
     expected = expected.set(
       '567',
@@ -734,7 +734,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '456',
@@ -743,7 +743,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '876',
@@ -752,7 +752,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '678',
@@ -761,7 +761,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 4 },
-      }),
+      })
     )
     expected = expected.set(
       '543',
@@ -770,7 +770,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '765',
@@ -779,7 +779,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '210',
@@ -788,7 +788,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '987',
@@ -797,7 +797,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 2 },
-      }),
+      })
     )
     expected = expected.set(
       '890',
@@ -806,7 +806,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Vegetarian',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '432',
@@ -815,7 +815,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '654',
@@ -824,7 +824,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 1 },
-      }),
+      })
     )
     expected = expected.set(
       '109',
@@ -833,7 +833,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '321',
@@ -842,7 +842,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '789',
@@ -851,7 +851,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
     expected = expected.set(
       '901',
@@ -860,7 +860,7 @@ describe('orderRecipes', () => {
         availability: [],
         dietType: 'Meat',
         rating: { average: 0 },
-      }),
+      })
     )
 
     expect(Immutable.is(result, expected)).toEqual(true)
@@ -992,7 +992,7 @@ describe('orderRecipes', () => {
           isFeaturedRecipe: true,
           dietType: 'Meat',
           rating: { average: 1 },
-        }),
+        })
       )
       expected = expected.set(
         '345',
@@ -1001,7 +1001,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Meat',
           rating: { average: 5 },
-        }),
+        })
       )
       expected = expected.set(
         '123',
@@ -1010,7 +1010,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Fish',
           rating: { average: 5 },
-        }),
+        })
       )
       expected = expected.set(
         '234',
@@ -1019,7 +1019,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 5 },
-        }),
+        })
       )
       expected = expected.set(
         '678',
@@ -1028,7 +1028,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Meat',
           rating: { average: 4 },
-        }),
+        })
       )
       expected = expected.set(
         '456',
@@ -1037,7 +1037,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Fish',
           rating: { average: 4 },
-        }),
+        })
       )
       expected = expected.set(
         '567',
@@ -1046,7 +1046,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 4 },
-        }),
+        })
       )
       expected = expected.set(
         '901',
@@ -1055,7 +1055,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Meat',
           rating: { average: 3 },
-        }),
+        })
       )
       expected = expected.set(
         '789',
@@ -1064,7 +1064,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Fish',
           rating: { average: 3 },
-        }),
+        })
       )
       expected = expected.set(
         '890',
@@ -1073,7 +1073,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 3 },
-        }),
+        })
       )
       expected = expected.set(
         '765',
@@ -1082,7 +1082,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Meat',
           rating: { average: 2 },
-        }),
+        })
       )
       expected = expected.set(
         '987',
@@ -1091,7 +1091,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Fish',
           rating: { average: 2 },
-        }),
+        })
       )
       expected = expected.set(
         '876',
@@ -1100,7 +1100,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 2 },
-        }),
+        })
       )
       expected = expected.set(
         '109',
@@ -1109,7 +1109,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Meat',
           rating: { average: 0 },
-        }),
+        })
       )
       expected = expected.set(
         '654',
@@ -1118,7 +1118,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Fish',
           rating: { average: 1 },
-        }),
+        })
       )
       expected = expected.set(
         '543',
@@ -1127,7 +1127,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 1 },
-        }),
+        })
       )
       expected = expected.set(
         '321',
@@ -1136,7 +1136,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Fish',
           rating: { average: 0 },
-        }),
+        })
       )
       expected = expected.set(
         '210',
@@ -1145,7 +1145,7 @@ describe('orderRecipes', () => {
           availability: [],
           dietType: 'Vegetarian',
           rating: { average: 0 },
-        }),
+        })
       )
 
       expect(Immutable.is(result, expected)).toEqual(true)

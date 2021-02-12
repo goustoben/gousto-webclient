@@ -29,7 +29,7 @@ describe('Hero', () => {
   describe('when isSticky is true', () => {
     beforeEach(() => {
       wrapper.setState({
-        isSticky: true
+        isSticky: true,
       })
     })
 
@@ -41,7 +41,7 @@ describe('Hero', () => {
   describe('when isSticky is false', () => {
     beforeEach(() => {
       wrapper.setState({
-        isSticky: false
+        isSticky: false,
       })
     })
 
@@ -53,7 +53,7 @@ describe('Hero', () => {
   describe('when maxHeight is equal to 0', () => {
     beforeEach(() => {
       wrapper.setState({
-        maxHeight: 0
+        maxHeight: 0,
       })
     })
 
@@ -65,7 +65,7 @@ describe('Hero', () => {
   describe('when maxHeight is equal to 500', () => {
     beforeEach(() => {
       wrapper.setState({
-        maxHeight: 500
+        maxHeight: 500,
       })
     })
 
@@ -81,7 +81,7 @@ describe('Hero', () => {
 
     beforeEach(() => {
       wrapper.setProps({
-        ctaUri
+        ctaUri,
       })
     })
 
@@ -140,7 +140,7 @@ describe('Hero', () => {
         const isSticky = true
         const bottom = 500
         const stickyCTA = {
-          clientHeight: 150
+          clientHeight: 150,
         }
 
         describe('and bottom is greater than window.innerHeight', () => {
@@ -169,19 +169,19 @@ describe('Hero', () => {
       const initialState = {
         features: Immutable.Map({
           isHomePageRedesignEnabled: Immutable.fromJS({
-            value: false
-          })
-        })
+            value: false,
+          }),
+        }),
       }
       const store = {
         getState: jest.fn(() => initialState),
         dispatch: jest.fn(),
-        subscribe: jest.fn()
+        subscribe: jest.fn(),
       }
       const stickyCTARef = {
         current: {
           offsetHeight: 150,
-        }
+        },
       }
       const heroRef = (offsetHeight) => ({
         current: {
@@ -192,12 +192,12 @@ describe('Hero', () => {
               lastChild: {
                 getBoundingClientRect: jest.fn().mockReturnValueOnce({ bottom: 150 }),
                 style: {
-                  marginBottom: '0'
-                }
-              }
-            }
-          }
-        }
+                  marginBottom: '0',
+                },
+              },
+            },
+          },
+        },
       })
 
       beforeEach(() => {

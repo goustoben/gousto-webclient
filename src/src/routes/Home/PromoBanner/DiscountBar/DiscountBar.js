@@ -10,13 +10,10 @@ const DiscountBar = ({ isHidden, isSticky, applyDiscount, text }) => (
     tabIndex="0"
     onClick={applyDiscount}
     onKeyDown={onEnter(applyDiscount)}
-    className={classnames(
-      css.discountContainer,
-      {
-        [css.hideBar]: isHidden,
-        [css.stickyBar]: isSticky,
-      }
-    )}
+    className={classnames(css.discountContainer, {
+      [css.hideBar]: isHidden,
+      [css.stickyBar]: isSticky,
+    })}
   >
     <p className={css.discountText}>{text}</p>
     <div className={css.arrowRightIcon} />
@@ -30,6 +27,4 @@ DiscountBar.propTypes = {
   text: PropTypes.string.isRequired,
 }
 
-export {
-  DiscountBar
-}
+export { DiscountBar }
