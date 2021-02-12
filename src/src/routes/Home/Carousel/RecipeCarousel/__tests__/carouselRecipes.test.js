@@ -8,7 +8,9 @@ describe('getRecipesFromAllRecipesCollection', () => {
 
   describe('when there are no recipes', () => {
     beforeEach(() => {
-      menuCollections = Immutable.fromJS({ [ALL_RECIPES_COLLECTION_ID]: { recipesInCollection: ['123', '456', '954']} })
+      menuCollections = Immutable.fromJS({
+        [ALL_RECIPES_COLLECTION_ID]: { recipesInCollection: ['123', '456', '954'] },
+      })
       allRecipes = Immutable.fromJS({})
     })
 
@@ -20,11 +22,17 @@ describe('getRecipesFromAllRecipesCollection', () => {
 
   describe('when there is a recipe from everyday-favorites category', () => {
     beforeEach(() => {
-      menuCollections = Immutable.fromJS({ [ALL_RECIPES_COLLECTION_ID]: { recipesInCollection: ['123', '456', '954']} })
+      menuCollections = Immutable.fromJS({
+        [ALL_RECIPES_COLLECTION_ID]: { recipesInCollection: ['123', '456', '954'] },
+      })
       allRecipes = Immutable.fromJS([
         { id: '123', title: 'title', foodBrand: Immutable.Map({ slug: 'slug' }) },
         { id: '456', title: "Charlie Bigham's", foodBrand: Immutable.Map({ slug: 'slug-slug' }) },
-        { id: '954', title: 'title title', foodBrand: Immutable.Map({ slug: 'everyday-favourites' }) },
+        {
+          id: '954',
+          title: 'title title',
+          foodBrand: Immutable.Map({ slug: 'everyday-favourites' }),
+        },
       ])
     })
 
@@ -34,8 +42,8 @@ describe('getRecipesFromAllRecipesCollection', () => {
         123: {
           title: 'title',
           foodBrand: { slug: 'slug' },
-          id: '123'
-        }
+          id: '123',
+        },
       })
     })
   })

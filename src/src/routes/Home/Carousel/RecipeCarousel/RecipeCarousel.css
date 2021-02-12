@@ -1,29 +1,29 @@
 .container {
-	width: 100%;
+  width: 100%;
   padding-bottom: 2rem;
 }
 
 .recipe {
-	margin: 0 0.5rem;
-	position: relative;
-	z-index: 1;
-	transition: all .3s linear;
+  margin: 0 0.5rem;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s linear;
 }
 
 .container :global .carousel-no-js .slick-list {
-	overflow-x: scroll;
+  overflow-x: scroll;
 }
 
 .container :global .slick-initialized :local .recipeContainer {
-	min-width: 0;
+  min-width: 0;
 }
 
 .container :global .carousel-no-js :local .recipeContainer {
-	min-width: 270px;
-	width: 270px;
+  min-width: 270px;
+  width: 270px;
 }
 
 .container :global .carousel-no-js .slick-track {
-	display: flex;
-	flex-wrap: nowrap;
+  display: flex;
+  flex-wrap: nowrap;
 }

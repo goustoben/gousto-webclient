@@ -34,6 +34,4 @@ const TrustPilot = () => (
   </div>
 )
 
-export {
-  TrustPilot
-}
+export { TrustPilot }

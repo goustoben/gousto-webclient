@@ -32,7 +32,7 @@ describe('PromoBanner', () => {
 
     beforeEach(() => {
       wrapper.setProps({
-        trackUTMAndPromoCode
+        trackUTMAndPromoCode,
       })
       instance = wrapper.instance()
       spyOnApplyPromoCode = jest.spyOn(instance, 'applyPromoCode')
@@ -68,7 +68,9 @@ describe('PromoBanner', () => {
       describe('when canApplyPromo is true and promoChange returns an error', () => {
         const err = new Error('oops')
         const onPromoChange = promoActions.promoChange.mockReturnValueOnce(
-          new Promise((resolve, reject) => { reject(err) })
+          new Promise((resolve, reject) => {
+            reject(err)
+          })
         )
 
         beforeEach(() => {

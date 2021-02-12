@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import css from './NoLockIn.css'
 
 const NoLockIn = ({ isCentered }) => (
-  <div className={classNames(css.noLockIn, {[css.isCentered]: isCentered})}>
+  <div className={classNames(css.noLockIn, { [css.isCentered]: isCentered })}>
     <div className={css.lockInIcon} />
     <div className={css.lockSign}>
       <span className={css.lockInBold}>No lock in: </span>
@@ -18,9 +18,7 @@ NoLockIn.propTypes = {
 }
 
 NoLockIn.defaultProps = {
-  isCentered: false
+  isCentered: false,
 }
 
-export {
-  NoLockIn
-}
+export { NoLockIn }

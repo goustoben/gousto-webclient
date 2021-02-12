@@ -9,12 +9,10 @@ const JoeWicks = () => (
       <div className={css.textContainer}>
         <p className={css.quote}>{config.joeWicks}</p>
         <span className={css.joeWicksSign}>Joe Wicks</span>
-        <span className={css.bodyCoach}> |  The Body Coach</span>
+        <span className={css.bodyCoach}> | The Body Coach</span>
       </div>
     </div>
   </div>
 )
 
-export {
-  JoeWicks
-}
+export { JoeWicks }

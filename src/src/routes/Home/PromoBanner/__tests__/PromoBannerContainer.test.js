@@ -7,13 +7,13 @@ import { PromoBannerContainer } from '../PromoBannerContainer'
 jest.mock('config/home', () => ({
   promo: {
     banner: {
-      mayText: 'promo banner text'
-    }
-  }
+      mayText: 'promo banner text',
+    },
+  },
 }))
 
 jest.mock('utils/home', () => ({
-  getPromoBannerState: jest.fn()
+  getPromoBannerState: jest.fn(),
 }))
 
 describe('PromoBannerContainer', () => {
@@ -21,9 +21,9 @@ describe('PromoBannerContainer', () => {
   const initialState = {
     features: Immutable.Map({
       promoBannerText: Immutable.fromJS({
-        value: ''
-      })
-    })
+        value: '',
+      }),
+    }),
   }
 
   const store = {
@@ -38,9 +38,7 @@ describe('PromoBannerContainer', () => {
       canApplyPromo: true,
       promoCode: '',
     })
-    wrapper = shallow(
-      <PromoBannerContainer store={store} />
-    )
+    wrapper = shallow(<PromoBannerContainer store={store} />)
   })
 
   test('should be rendered properly', () => {

@@ -11,13 +11,17 @@ import { PromoBanner } from './PromoBanner'
 
 const mapStateToProps = (state, ownProps) => {
   const text = getPromoBannerText(state) || home.promo.banner.mayText
-  const { hide, promoCode, canApplyPromo } = getPromoBannerState(state, ownProps.promoCode, ownProps.location)
+  const { hide, promoCode, canApplyPromo } = getPromoBannerState(
+    state,
+    ownProps.promoCode,
+    ownProps.location
+  )
 
   return {
     text,
     hide,
     promoCode,
-    canApplyPromo
+    canApplyPromo,
   }
 }
 
@@ -28,7 +32,4 @@ const mapDispatchToProps = {
   trackUTMAndPromoCode,
 }
 
-export const PromoBannerContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PromoBanner)
+export const PromoBannerContainer = connect(mapStateToProps, mapDispatchToProps)(PromoBanner)

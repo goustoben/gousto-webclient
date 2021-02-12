@@ -9,17 +9,11 @@ import css from './Carousel.css'
 const Carousel = ({ numRecipes, ctaUri, ctaText }) => (
   <Fragment>
     <div className={css.carouselContainer}>
-      <ModuleTitle
-        title={home.carousel.title}
-        subTitle={home.carousel.subtitle}
-      />
+      <ModuleTitle title={home.carousel.title} subTitle={home.carousel.subtitle} />
     </div>
     {numRecipes > 0 ? <RecipeCarousel /> : null}
     <div className={css.CTAContainer}>
-      <CTAHomepageContainer
-        ctaUri={ctaUri}
-        sectionForTracking="recipeCarousel"
-      >
+      <CTAHomepageContainer ctaUri={ctaUri} sectionForTracking="recipeCarousel">
         {ctaText}
       </CTAHomepageContainer>
     </div>

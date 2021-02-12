@@ -27,7 +27,7 @@ const defaultProps = {
   redirectLoggedInUser: () => {},
   isSignupReductionEnabled: false,
   pricePerServing: null,
-  updatePricePerServing: () => {}
+  updatePricePerServing: () => {},
 }
 
 class Home extends Component {
@@ -48,7 +48,15 @@ class Home extends Component {
     }
   }
 
-  getModules = (isSignupReductionEnabled) => [(isSignupReductionEnabled && 'emailForm'), 'hero', 'trustPilot', 'whyChooseGousto', 'joeWicks', 'recipes'].filter(Boolean)
+  getModules = (isSignupReductionEnabled) =>
+    [
+      isSignupReductionEnabled && 'emailForm',
+      'hero',
+      'trustPilot',
+      'whyChooseGousto',
+      'joeWicks',
+      'recipes',
+    ].filter(Boolean)
 
   render() {
     const { isAuthenticated, variant, isSignupReductionEnabled, pricePerServing } = this.props
@@ -63,12 +71,7 @@ class Home extends Component {
       ctaText = CTA.loggedIn.text
     }
 
-    const link = [
-      (variant !== 'default') ? {
-        rel: 'canonical',
-        href: generateHref(home),
-      } : null
-    ].filter(item => Boolean(item))
+    const link = variant !== 'default' ? [{ rel: 'canonical', href: generateHref(home) }] : []
 
     return (
       <div>
@@ -76,13 +79,15 @@ class Home extends Component {
           title={seo.title}
           meta={seo.meta}
           link={link}
-          style={[{
-            cssText: `
+          style={[
+            {
+              cssText: `
               #react-root {
                 height: 100%;
               }
             `,
-          }]}
+            },
+          ]}
         />
         <PromoBanner />
         <HomeSections
@@ -102,6 +107,4 @@ Home.propTypes = propTypes
 Home.defaultProps = defaultProps
 Home.contextTypes = contextTypes
 
-export {
-  Home
-}
+export { Home }

@@ -27,7 +27,8 @@ describe('PaymentFailure', () => {
     })
 
     test('should render correct message', () => {
-      const expected = 'You will now be automatically redirected back to Gousto with further details.'
+      const expected =
+        'You will now be automatically redirected back to Gousto with further details.'
 
       expect(wrapper.find(PaymentResult).find('p').text()).toBe(expected)
     })

@@ -24,7 +24,7 @@
 
 .title {
   composes: fontStyleM from 'design-language/typography.module.css';
-	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+  composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .text {
@@ -69,8 +69,8 @@
   composes: fontSemiBold from 'design-language/typography.module.css';
 
   &:hover {
-     color: Blueberry;
-     text-decoration: none;
+    color: Blueberry;
+    text-decoration: none;
   }
 }
 

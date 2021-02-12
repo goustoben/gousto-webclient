@@ -11,7 +11,7 @@ describe('CTAHomepageContainer', () => {
   const store = {
     getState: jest.fn(),
     dispatch: jest.fn(),
-    subscribe: jest.fn()
+    subscribe: jest.fn(),
   }
 
   beforeEach(() => {

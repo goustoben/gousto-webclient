@@ -1,0 +1,12 @@
+# For gradual migration, ignore everything but the directories that have been
+# migrated.  Use explicit `**` syntax instead of `src` to make sure the walker
+# visits all directories so that the `!` override can have the effect.
+**/*.js
+**/*.css
+**/*.json
+**/*.gql
+**/*.scss
+**/*.md
+
+!src/routes/Home/**/*
+!src/routes/Payment/**/*

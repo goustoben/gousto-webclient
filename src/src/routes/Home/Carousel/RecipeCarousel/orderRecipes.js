@@ -1,26 +1,26 @@
 import Immutable from 'immutable'
 
 const ratingSort = (a, b) => b.getIn(['rating', 'average'], 0) - a.getIn(['rating', 'average'], 0)
-const isMeat = recipe => recipe.get('dietType', '').toLowerCase() === 'meat'
-const isFish = recipe => recipe.get('dietType', '').toLowerCase() === 'fish'
-const isOther = recipe => !(isFish(recipe) || isMeat(recipe))
+const isMeat = (recipe) => recipe.get('dietType', '').toLowerCase() === 'meat'
+const isFish = (recipe) => recipe.get('dietType', '').toLowerCase() === 'fish'
+const isOther = (recipe) => !(isFish(recipe) || isMeat(recipe))
 
 const orderRecipes = (recipesMap) => {
   const recipes = recipesMap.toList()
-  const featuredRecipes = recipes.filter(recipe => recipe.get('isFeaturedRecipe'))
+  const featuredRecipes = recipes.filter((recipe) => recipe.get('isFeaturedRecipe'))
   const meatRecipes = recipes
-    .filter(recipe => !recipe.get('isFeaturedRecipe'))
+    .filter((recipe) => !recipe.get('isFeaturedRecipe'))
     .filter(isMeat)
     .sort(ratingSort)
 
   const fishRecipes = recipes
-    .filter(recipe => !recipe.get('isFeaturedRecipe'))
+    .filter((recipe) => !recipe.get('isFeaturedRecipe'))
     .filter(isFish)
     .sort(ratingSort)
 
   // veggie and anything else
   const otherRecipes = recipes
-    .filter(recipe => !recipe.get('isFeaturedRecipe'))
+    .filter((recipe) => !recipe.get('isFeaturedRecipe'))
     .filter(isOther)
     .sort(ratingSort)
 
@@ -43,7 +43,10 @@ const orderRecipes = (recipesMap) => {
     }
   }
 
-  return orderedRecipes.reduce((reducerState, recipe) => reducerState.set(recipe.get('id'), recipe), Immutable.OrderedMap({}))
+  return orderedRecipes.reduce(
+    (reducerState, recipe) => reducerState.set(recipe.get('id'), recipe),
+    Immutable.OrderedMap({})
+  )
 }
 
 export { orderRecipes }

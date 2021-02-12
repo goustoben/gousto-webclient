@@ -42,7 +42,7 @@
 
   > div > div {
     &:first-of-type {
-       padding-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
     }
   }
 }

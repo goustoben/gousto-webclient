@@ -24,7 +24,7 @@ describe('WhyChooseGousto', () => {
 
     beforeEach(() => {
       wrapper.setProps({
-        ctaUri
+        ctaUri,
       })
     })
 

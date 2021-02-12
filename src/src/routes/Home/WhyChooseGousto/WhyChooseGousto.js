@@ -12,9 +12,7 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
       Impressively easy meals from just
       <span className={css.pricePerServing}>
         {' £'}
-        {pricePerServing}
-        {' '}
-        per serving
+        {pricePerServing} per serving
       </span>
       . All of the flavour, none of the fuss.
     </Fragment>
@@ -22,16 +20,10 @@ const WhyChooseGousto = ({ ctaUri, ctaText, pricePerServing }) => {
 
   return (
     <div className={css.whyGoustoContainer}>
-      <ModuleTitle
-        title={home.whyGousto.title}
-        subTitle={subtitle}
-      />
+      <ModuleTitle title={home.whyGousto.title} subTitle={subtitle} />
       <StepsGuide />
       <div className={css.CTAContainer}>
-        <CTAHomepageContainer
-          ctaUri={ctaUri}
-          sectionForTracking="whyChooseGousto"
-        >
+        <CTAHomepageContainer ctaUri={ctaUri} sectionForTracking="whyChooseGousto">
           {ctaText}
         </CTAHomepageContainer>
       </div>
@@ -45,6 +37,4 @@ WhyChooseGousto.propTypes = {
   pricePerServing: PropTypes.string.isRequired,
 }
 
-export {
-  WhyChooseGousto
-}
+export { WhyChooseGousto }

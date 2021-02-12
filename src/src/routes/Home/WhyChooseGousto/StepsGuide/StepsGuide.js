@@ -35,6 +35,4 @@ class StepsGuide extends PureComponent {
   }
 }
 
-export {
-  StepsGuide
-}
+export { StepsGuide }

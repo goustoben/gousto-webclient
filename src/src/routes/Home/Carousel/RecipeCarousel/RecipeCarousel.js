@@ -32,23 +32,26 @@ const RecipeCarousel = ({ homeCarouselRecipes }) => (
         { breakpoint: 1600, settings: { slidesToShow: 5 } },
       ]}
     >
-      {
-        orderRecipes(homeCarouselRecipes)
-          .map(recipe => (
-            <div className={css.recipeContainer} key={recipe.get('id')}>
-              <div className={css.recipe} key={recipe.get('id')}>
-                <SimpleRecipe
-                  title={formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))}
-                  media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
-                  averageRating={recipe.getIn(['rating', 'average']) || 0}
-                  ratingCount={recipe.getIn(['rating', 'count'])}
-                  maxMediaSize={400}
-                  cookingTime={recipe.get('cookingTime')}
-                />
-              </div>
+      {orderRecipes(homeCarouselRecipes)
+        .map((recipe) => (
+          <div className={css.recipeContainer} key={recipe.get('id')}>
+            <div className={css.recipe} key={recipe.get('id')}>
+              <SimpleRecipe
+                title={formatRecipeTitle(
+                  recipe.get('title'),
+                  recipe.get('boxType', ''),
+                  recipe.get('dietType', '')
+                )}
+                media={recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))}
+                averageRating={recipe.getIn(['rating', 'average']) || 0}
+                ratingCount={recipe.getIn(['rating', 'count'])}
+                maxMediaSize={400}
+                cookingTime={recipe.get('cookingTime')}
+              />
             </div>
-          )).toArray()
-      }
+          </div>
+        ))
+        .toArray()}
     </Carousel>
   </div>
 )
@@ -58,7 +61,7 @@ RecipeCarousel.propTypes = {
 }
 
 Arrow.propTypes = {
-  side: PropTypes.string.isRequired
+  side: PropTypes.string.isRequired,
 }
 
 export { RecipeCarousel }

@@ -3,7 +3,7 @@ import { homeGetStarted } from 'actions/home'
 import { CTA } from './CTA'
 
 const mapDispatchToProps = {
-  homeGetStarted
+  homeGetStarted,
 }
 
 const CTAHomepageContainer = connect(null, mapDispatchToProps)(CTA)

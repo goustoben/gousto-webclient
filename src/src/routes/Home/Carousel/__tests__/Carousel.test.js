@@ -22,7 +22,7 @@ describe('Carousel', () => {
   describe('CTA', () => {
     beforeEach(() => {
       wrapper.setProps({
-        ctaUri
+        ctaUri,
       })
     })
 
@@ -36,7 +36,7 @@ describe('Carousel', () => {
   describe('RecipeCarousel', () => {
     beforeEach(() => {
       wrapper.setProps({
-        numRecipes: 1
+        numRecipes: 1,
       })
     })
 

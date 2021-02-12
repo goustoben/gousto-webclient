@@ -16,7 +16,7 @@ describe('HomeSections', () => {
   describe('when modules prop is not defined', () => {
     beforeEach(() => {
       wrapper.setProps({
-        modules: undefined
+        modules: undefined,
       })
     })
 
@@ -33,7 +33,7 @@ describe('HomeSections', () => {
   describe('when modules prop is passed', () => {
     beforeEach(() => {
       wrapper.setProps({
-        modules: ['hero', 'recipes']
+        modules: ['hero', 'recipes'],
       })
     })
 
@@ -47,7 +47,7 @@ describe('HomeSections', () => {
   describe('when modules has a section that is not defined', () => {
     beforeEach(() => {
       wrapper.setProps({
-        modules: ['hero', 'testimonials']
+        modules: ['hero', 'testimonials'],
       })
     })
 
@@ -61,7 +61,7 @@ describe('HomeSections', () => {
     beforeEach(() => {
       wrapper.setProps({
         isSignupReductionEnabled: false,
-        modules: ['emailForm']
+        modules: ['emailForm'],
       })
     })
 
