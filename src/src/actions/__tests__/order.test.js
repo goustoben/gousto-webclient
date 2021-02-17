@@ -150,64 +150,120 @@ describe('order actions', () => {
     })
 
     describe('when the orderTrackingAction contains an actionType', () => {
-      const order = {
-        id: '735702932',
-        prices: {
-          total: 31.99,
-          promo_code: '',
-        }
-      }
-
-      describe('if affiliate is not configured to track', () => {
-        test('should not dispatch an affiliate tracking action', () => {
-          trackOrder('action-no-affiliate', order)(dispatch, getState)
-
-          expect(getState).not.toHaveBeenCalled()
-          expect(dispatch).toHaveBeenCalled()
-          expect(trackAffiliatePurchase).not.toHaveBeenCalled()
-        })
-      })
-
-      describe('if affiliate is configured to track', () => {
-        test('should dispatch an affiliate tracking action', () => {
-          trackOrder('affiliate-no-action', order)(dispatch, getState)
-
-          expect(getState).toHaveBeenCalled()
-          expect(dispatch).not.toHaveBeenCalled()
-          expect(trackAffiliatePurchase).toHaveBeenCalledWith({
-            orderId: '735702932',
+      describe('when order is OrderAPI V1', () => {
+        const order = {
+          id: '735702932',
+          prices: {
             total: 31.99,
-            promoCode: 'B4SK3T-ST4T3-PR0M0',
-            commissionGroup: 'EXISTING',
+            promo_code: false,
+          }
+        }
+
+        describe('if affiliate is not configured to track', () => {
+          test('should not dispatch an affiliate tracking action', () => {
+            trackOrder('action-no-affiliate', order)(dispatch, getState)
+
+            expect(getState).not.toHaveBeenCalled()
+            expect(dispatch).toHaveBeenCalled()
+            expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('if affiliate is configured to track', () => {
+          test('should dispatch an affiliate tracking action', () => {
+            trackOrder('affiliate-no-action', order)(dispatch, getState)
+
+            expect(getState).toHaveBeenCalled()
+            expect(dispatch).not.toHaveBeenCalled()
+            expect(trackAffiliatePurchase).toHaveBeenCalledWith({
+              orderId: '735702932',
+              total: 31.99,
+              promoCode: 'B4SK3T-ST4T3-PR0M0',
+              commissionGroup: 'EXISTING',
+            })
+          })
+        })
+
+        describe('if no action type is configured', () => {
+          test('should not dispatch an affiliate tracking action', () => {
+            trackOrder('affiliate-no-action', order)(dispatch, getState)
+
+            expect(getState).toHaveBeenCalled()
+            expect(dispatch).not.toHaveBeenCalled()
+            expect(trackAffiliatePurchase).toHaveBeenCalled()
+          })
+        })
+
+        describe('if an action type is configured', () => {
+          test('should not dispatch an affiliate tracking action', () => {
+            trackOrder('action-no-affiliate', order)(dispatch, getState)
+
+            expect(getState).not.toHaveBeenCalled()
+            expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+            expect(dispatch).toHaveBeenCalledWith({
+              type: 'A_TEST_ACTION',
+              order,
+            })
           })
         })
       })
 
-      describe('if no action type is configured', () => {
-        test('should not dispatch an affiliate tracking action', () => {
-          trackOrder('affiliate-no-action', order)(dispatch, getState)
+      describe('when order is OrderAPI V2', () => {
+        const order = {
+          data: {
+            id: '735702932',
+            prices: {
+              total: 31.99,
+              has_promo_code: false,
+            }
+          }
+        }
 
-          expect(getState).toHaveBeenCalled()
-          expect(dispatch).not.toHaveBeenCalled()
-          expect(trackAffiliatePurchase).toHaveBeenCalled()
+        describe('if affiliate is not configured to track', () => {
+          test('should not dispatch an affiliate tracking action', () => {
+            trackOrder('action-no-affiliate', order)(dispatch, getState)
+
+            expect(getState).not.toHaveBeenCalled()
+            expect(dispatch).toHaveBeenCalled()
+            expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+          })
         })
-      })
 
-      describe('if an action type is configured', () => {
-        test('should not dispatch an affiliate tracking action', () => {
-          trackOrder('action-no-affiliate', order)(dispatch, getState)
+        describe('if affiliate is configured to track', () => {
+          test('should dispatch an affiliate tracking action', () => {
+            trackOrder('affiliate-no-action', order)(dispatch, getState)
 
-          expect(getState).not.toHaveBeenCalled()
-          expect(trackAffiliatePurchase).not.toHaveBeenCalled()
-          expect(dispatch).toHaveBeenCalledWith({
-            type: 'A_TEST_ACTION',
-            order: {
-              id: '735702932',
-              prices: {
-                promo_code: '',
-                total: 31.99,
-              }
-            },
+            expect(getState).toHaveBeenCalled()
+            expect(dispatch).not.toHaveBeenCalled()
+            expect(trackAffiliatePurchase).toHaveBeenCalledWith({
+              orderId: '735702932',
+              total: 31.99,
+              promoCode: 'B4SK3T-ST4T3-PR0M0',
+              commissionGroup: 'EXISTING',
+            })
+          })
+        })
+
+        describe('if no action type is configured', () => {
+          test('should not dispatch an affiliate tracking action', () => {
+            trackOrder('affiliate-no-action', order)(dispatch, getState)
+
+            expect(getState).toHaveBeenCalled()
+            expect(dispatch).not.toHaveBeenCalled()
+            expect(trackAffiliatePurchase).toHaveBeenCalled()
+          })
+        })
+
+        describe('if an action type is configured', () => {
+          test('should not dispatch an affiliate tracking action', () => {
+            trackOrder('action-no-affiliate', order)(dispatch, getState)
+
+            expect(getState).not.toHaveBeenCalled()
+            expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+            expect(dispatch).toHaveBeenCalledWith({
+              type: 'A_TEST_ACTION',
+              order,
+            })
           })
         })
       })

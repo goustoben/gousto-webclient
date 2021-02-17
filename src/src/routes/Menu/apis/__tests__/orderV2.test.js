@@ -1,24 +1,79 @@
-import fetch from 'utils/fetch'
-import { createOrder, getOrder, getUserOrders } from '../orderV2'
-
-const mockFetchResult = { data: [1, 2, 3] }
-const reqData = { a: 1, b: 2}
-
-jest.mock('utils/fetch', () =>
-  jest.fn().mockImplementation(() => {
-    const getData = async () => ({ data: [1, 2, 3] })
-
-    return getData()
-  })
-)
-
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
+import * as fetch from 'utils/fetch'
+import * as endpoint from 'config/endpoint'
+import { updateOrder, createOrder, getOrder, getUserOrders } from '../orderV2'
 
 describe('orderApi', () => {
+  let fetchSpy
+
   beforeEach(() => {
-    fetch.mockClear()
+    fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
+    jest.spyOn(endpoint, 'default').mockImplementation((service, version) => `endpoint-${service}/${version}`)
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('createOrder', () => {
+    test('should fetch the correct url', async () => {
+      await createOrder('token', { order: 'body' }, 'session-id', 'user-id')
+
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(
+        'token',
+        'endpoint-order/v2/orders',
+        { data: { order: 'body' } },
+        'POST',
+        'default',
+        {
+          'Content-Type': 'application/json',
+          'x-gousto-device-id': 'session-id',
+          'x-gousto-user-id': 'user-id'
+        }
+      )
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const apiResponse = { data: [1, 2, 3] }
+      fetchSpy.mockResolvedValue(apiResponse)
+
+      const result = await createOrder('token', { order: 'body' })
+
+      expect(result).toEqual(apiResponse)
+    })
+  })
+
+  describe('updateOrder', () => {
+    test('should fetch the correct url', async () => {
+      await updateOrder('token', 'order-id', { order: 'body' }, 'session-id', 'user-id')
+
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(
+        'token',
+        'endpoint-order/v2/orders/order-id',
+        { data: { order: 'body' } },
+        'PUT',
+        'default',
+        {
+          'Content-Type': 'application/json',
+          'x-gousto-device-id': 'session-id',
+          'x-gousto-user-id': 'user-id'
+        },
+        null,
+        false,
+        false,
+        false
+      )
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const apiResponse = { data: [1, 2, 3] }
+      fetchSpy.mockResolvedValue(apiResponse)
+
+      const result = await updateOrder('token', 'order-id', { order: 'body' })
+
+      expect(result).toEqual(apiResponse)
+    })
   })
 
   describe('getOrder', () => {
@@ -36,13 +91,24 @@ describe('orderApi', () => {
       const include = ['data']
 
       await getOrder('token', orderId, include)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-order/v2/orders/${orderId}`, expectedReqData, 'GET', expectedHeaders)
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(
+        'token',
+        `endpoint-order/v2/orders/${orderId}`,
+        expectedReqData,
+        'GET',
+        'default',
+        expectedHeaders
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await getOrder('token', '123', reqData)
-      expect(result).toEqual(mockFetchResult)
+      const apiResponse = { data: [1, 2, 3] }
+      fetchSpy.mockResolvedValue(apiResponse)
+
+      const result = await getOrder('token', '123', {})
+
+      expect(result).toEqual(apiResponse)
     })
 
     describe('when reqData not provided', () => {
@@ -54,8 +120,14 @@ describe('orderApi', () => {
         }
         const orderId = '123'
         await getOrder('token', orderId)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-order/v2/orders/${orderId}`, {}, 'GET', expectedHeaders)
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(
+          'token',
+          `endpoint-order/v2/orders/${orderId}`,
+          {},
+          'GET',
+          'default',
+          expectedHeaders)
       })
     })
   })
@@ -78,14 +150,24 @@ describe('orderApi', () => {
       const deviceId = '5678'
 
       await getUserOrders('token', userId, deviceId, 'delivery', ['data'])
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', `endpoint-order/v2/users/${userId}/orders`, expectedReqData, 'GET', expectedHeaders)
+      expect(fetchSpy).toHaveBeenCalledTimes(1)
+      expect(fetchSpy).toHaveBeenCalledWith(
+        'token',
+        `endpoint-order/v2/users/${userId}/orders`,
+        expectedReqData,
+        'GET',
+        'default',
+        expectedHeaders
+      )
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const userId = '1234'
-      const result = await getUserOrders('token', userId, reqData)
-      expect(result).toEqual(mockFetchResult)
+      const apiResponse = { data: [1, 2, 3] }
+      fetchSpy.mockResolvedValue(apiResponse)
+
+      const result = await getUserOrders('token', 'user-id', {})
+
+      expect(result).toEqual(apiResponse)
     })
 
     describe('when reqData is not proviced', () => {
@@ -106,170 +188,16 @@ describe('orderApi', () => {
         const sessionId = '5678'
 
         await getUserOrders('token', userId, sessionId)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', `endpoint-order/v2/users/${userId}/orders`, expectedReqData, 'GET', expectedHeaders)
-      })
-    })
-  })
 
-  describe('createOrder', () => {
-    test('should fetch the correct url', async () => {
-      const expectedHeaders = {
-        'Content-Type': 'application/json',
-        'x-gousto-device-id': '5678',
-        'x-gousto-user-id': '1234'
-      }
-
-      const expectedOrder = {
-        data: {
-          attributes: {
-            delivery_day_id: '2302'
-          },
-          relationships: {
-            shipping_address: {
-              data: {
-                type: 'shipping-address',
-                id: '1233'
-              }
-            },
-            delivery_slot: {
-              data: {
-                type: 'delivery-slot',
-                id: '11'
-              }
-            },
-            delivery_slot_lead_time: {
-              data: {
-                type: 'delivery-slot-lead-time',
-                id: '10'
-              }
-            },
-            components: {
-              data: [
-                {
-                  id: '212',
-                  type: 'recipe'},
-                {
-                  id: '145',
-                  type: 'recipe'}]
-            },
-          }
-        }
-      }
-
-      const orderDetails = {
-        accessToken: 'token',
-        sessionId: '5678',
-        userId: '1234',
-        deliveryDayId: '2302',
-        deliverySlotId: '11',
-        components: [{id: '212', type: 'recipe'}, {id: '145', type: 'recipe'}],
-        shippingAddressId: '1233',
-        deliverySlotLeadTimeId: '10',
-      }
-
-      await createOrder(orderDetails)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-order/v2/orders', expectedOrder, 'POST', expectedHeaders)
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const orderDetails = {
-        accessToken: 'token',
-        sessionId: '5678',
-        userId: '1234',
-        deliveryDayId: '2302',
-        deliverySlotId: '11',
-        components: [{id: '212', type: 'recipe'}, {id: '145', type: 'recipe'}],
-        shippingAddressId: '1233',
-        deliverySlotLeadTimeId: '10',
-      }
-
-      const result = await createOrder(orderDetails)
-      expect(result).toEqual(mockFetchResult)
-    })
-
-    describe('when optional parameters shippingAddress and deliverySlotLeadtime are not defined', () => {
-      test('should fetch the correct url with an order object that does not have shippingAddress or deliverySlotLeadTime', async () => {
-        const expectedHeaders = {
-          'Content-Type': 'application/json',
-          'x-gousto-device-id': '5678',
-          'x-gousto-user-id': '1234'
-        }
-
-        const expectedOrder = {
-          data: {
-            attributes: {
-              delivery_day_id: '2302'
-            },
-            relationships: {
-              delivery_slot: {
-                data: {
-                  type: 'delivery-slot',
-                  id: '11'
-                }
-              },
-              components: {
-                data: [
-                  {
-                    id: '212',
-                    type: 'recipe'},
-                  {
-                    id: '145',
-                    type: 'recipe'}]
-              }
-            }
-          }
-        }
-
-        const orderDetails = {
-          accessToken: 'token',
-          sessionId: '5678',
-          userId: '1234',
-          deliveryDayId: '2302',
-          deliverySlotId: '11',
-          components: [{id: '212', type: 'recipe'}, {id: '145', type: 'recipe'}],
-        }
-
-        await createOrder(orderDetails)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-order/v2/orders', expectedOrder, 'POST', expectedHeaders)
-      })
-    })
-
-    describe('when order data is not provided', () => {
-      test('should fetch the correct url', async () => {
-        const expectedHeaders = {
-          'Content-Type': 'application/json',
-          'x-gousto-device-id': undefined,
-          'x-gousto-user-id': undefined
-        }
-
-        const expectedOrder = {
-          data: {
-            attributes: {
-              delivery_day_id: undefined,
-            },
-            relationships: {
-              delivery_slot: {
-                data: {
-                  type: 'delivery-slot',
-                  id: undefined
-                }
-              },
-              components: {
-                data: undefined
-              }
-            }
-          }
-        }
-
-        const orderDetails = {
-          accessToken: 'token'
-        }
-        await createOrder(orderDetails)
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-order/v2/orders', expectedOrder, 'POST', expectedHeaders)
+        expect(fetchSpy).toHaveBeenCalledTimes(1)
+        expect(fetchSpy).toHaveBeenCalledWith(
+          'token',
+          `endpoint-order/v2/users/${userId}/orders`,
+          expectedReqData,
+          'GET',
+          'default',
+          expectedHeaders
+        )
       })
     })
   })

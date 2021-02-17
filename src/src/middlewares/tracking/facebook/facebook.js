@@ -3,6 +3,7 @@ import globals from 'config/globals'
 import { actionTypes } from 'actions/actionTypes'
 import { getPathName } from 'middlewares/tracking/utils'
 import { getWindow } from 'utils/window'
+import { ResourceType } from 'routes/Menu/constants/resources'
 import { getRecipesInCollection } from '../../../routes/Menu/selectors/collections'
 import { getUserData } from './router'
 
@@ -105,16 +106,48 @@ export const signupPurchaseCompleted = ({ orderId }, { basket, pricing }) => {
   })
 }
 
-/**
- * Existing customer order placed
- * @param action
- */
-export const customerPurchaseCompleted = ({ order }) => {
+const getV1OrderAPIKeys = (order) => {
   const recipes = order.recipeItems || []
   const recipeIds = recipes.map(recipe => recipe.recipeId)
   const recipeCount = order.box.numRecipes
   const totalPrice = order.prices.total
   const orderId = order.id.toString()
+
+  return {
+    recipeIds,
+    recipeCount,
+    totalPrice,
+    orderId,
+  }
+}
+
+const getV2OrderAPIKeys = (order) => {
+  const recipes = order.data.relationships.components.data.filter((i) => i.type === ResourceType.Recipe)
+  const recipeIds = recipes.map(recipe => recipe.id)
+  const recipeCount = recipes.length
+  const totalPrice = order.data.prices.total
+  const orderId = order.data.id.toString()
+
+  return {
+    recipeIds,
+    recipeCount,
+    totalPrice,
+    orderId,
+  }
+}
+
+/**
+ * Existing customer order placed
+ * @param action
+ */
+export const customerPurchaseCompleted = ({ order }) => {
+  const fn = order.data && order.data.relationships ? getV2OrderAPIKeys : getV1OrderAPIKeys
+  const {
+    recipeIds,
+    recipeCount,
+    totalPrice,
+    orderId,
+  } = fn(order)
 
   sendTrackingData('Purchase', {
     content_ids: recipeIds,

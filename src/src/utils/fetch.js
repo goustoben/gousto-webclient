@@ -8,6 +8,15 @@ import { timeout as fetchWithTimeout } from 'promise-timeout'
 
 const DEFAULT_TIME_OUT = 50000
 
+export const dataDefault = {}
+export const methodDefault = 'GET'
+export const cacheDefault = 'default'
+export const headerDefault = {}
+export const timeoutDefault = null
+export const includeCookiesDefault = false
+export const useMenuServiceDefault = false
+export const useOverwriteRequestMethodDefault = true
+
 export function fetchRaw(url, data = {}, options) {
   return fetch(
     options.accessToken,
@@ -21,13 +30,24 @@ export function fetchRaw(url, data = {}, options) {
     options.useMenuService)
 }
 
-export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, useMenuService = false) {
+export function fetch(
+  accessToken,
+  url,
+  data = dataDefault,
+  method = methodDefault,
+  cache = cacheDefault,
+  headers = headerDefault,
+  timeout = timeoutDefault,
+  includeCookies = includeCookiesDefault,
+  useMenuService = useMenuServiceDefault,
+  useOverwriteRequestMethod = useOverwriteRequestMethodDefault
+) {
   const requestData = {
     ...data,
   }
 
   let httpMethod = method.toUpperCase()
-  if (method === 'PUT' || method === 'PATCH') {
+  if (useOverwriteRequestMethod && (method === 'PUT' || method === 'PATCH')) {
     requestData._method = httpMethod // eslint-disable-line no-underscore-dangle
     httpMethod = 'POST'
   }

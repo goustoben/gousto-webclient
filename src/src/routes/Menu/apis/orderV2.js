@@ -1,9 +1,48 @@
-import fetch from 'utils/fetch'
+import fetch, {
+  cacheDefault,
+  timeoutDefault,
+  includeCookiesDefault,
+  useMenuServiceDefault,
+} from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
+
 const version = routes.version.ordersV2
 
-export function getOrder(accessToken, orderId, include, sessionId, userId) {
+export const createOrder = (accessToken, order, sessionId, userId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-gousto-device-id': sessionId,
+    'x-gousto-user-id': userId
+  }
+
+  return fetch(accessToken, `${endpoint('order', version)}/orders`, { data: order }, 'POST', cacheDefault, headers)
+}
+
+export const updateOrder = (accessToken, orderId, order, sessionId, userId) => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'x-gousto-device-id': sessionId,
+    'x-gousto-user-id': userId
+  }
+  const useOverwriteRequestMethod = false
+
+  return fetch(
+    accessToken,
+    `${endpoint('order', version)}/orders/${orderId}`,
+    { data: order },
+    'PUT',
+    cacheDefault,
+    headers,
+    timeoutDefault,
+    includeCookiesDefault,
+    useMenuServiceDefault,
+    // This flag makes sure that the method isn't overwritten `POST`
+    useOverwriteRequestMethod
+  )
+}
+
+export const getOrder = (accessToken, orderId, include, sessionId, userId) => {
   const reqData = {
     include
   }
@@ -14,10 +53,10 @@ export function getOrder(accessToken, orderId, include, sessionId, userId) {
     'x-gousto-user-id': userId,
   }
 
-  return fetch(accessToken, `${endpoint('order', version)}/orders/${orderId}`, reqData, 'GET', headers)
+  return fetch(accessToken, `${endpoint('order', version)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
 }
 
-export function getUserOrders(accessToken, userId, sessionId, phases, include, limit = 15, sort = 'deliveryDate') {
+export const getUserOrders = (accessToken, userId, sessionId, phases, include, limit = 15, sort = 'deliveryDate') => {
   const headers = {
     'Content-Type': 'application/json',
     'x-gousto-device-id': sessionId,
@@ -31,59 +70,5 @@ export function getUserOrders(accessToken, userId, sessionId, phases, include, l
     sort,
   }
 
-  return fetch(accessToken, `${endpoint('order', version)}/users/${userId}/orders`, reqData, 'GET', headers)
-}
-
-export function createOrder(orderDetails) {
-  const {accessToken, sessionId, userId, deliveryDayId, deliverySlotId, components, shippingAddressId, deliverySlotLeadTimeId} = orderDetails
-
-  const headers = {
-    'Content-Type': 'application/json',
-    'x-gousto-device-id': sessionId,
-    'x-gousto-user-id': userId
-  }
-
-  let shippingAddress = {}
-  let deliverySlotLeadTime = {}
-
-  if (shippingAddressId) {
-    shippingAddress = { shipping_address: {
-      data: {
-        type: 'shipping-address',
-        id: shippingAddressId
-      }
-    }}
-  }
-
-  if (deliverySlotLeadTimeId) {
-    deliverySlotLeadTime = { delivery_slot_lead_time: {
-      data: {
-        type: 'delivery-slot-lead-time',
-        id: deliverySlotLeadTimeId
-      }
-    }}
-  }
-
-  const order = {
-    data: {
-      attributes: {
-        delivery_day_id: deliveryDayId,
-      },
-      relationships: {
-        ...shippingAddress,
-        delivery_slot: {
-          data: {
-            type: 'delivery-slot',
-            id: deliverySlotId
-          }
-        },
-        ...deliverySlotLeadTime,
-        components: {
-          data: components
-        }
-      }
-    }
-  }
-
-  return fetch(accessToken, `${endpoint('order', version)}/orders`, order, 'POST', headers)
+  return fetch(accessToken, `${endpoint('order', version)}/users/${userId}/orders`, reqData, 'GET', cacheDefault, headers)
 }
