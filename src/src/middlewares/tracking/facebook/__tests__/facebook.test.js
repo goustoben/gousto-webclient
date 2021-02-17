@@ -158,32 +158,68 @@ describe('fbTracking', () => {
     })
   })
 
-  test('should call customerPurchaseCompleted with actions.ORDER_CREATE_TRANSACTIONAL', () => {
-    Tracker({
-      type: actionTypes.ORDER_CREATE_TRANSACTIONAL,
-      order: {
-        id: 2,
-        recipeItems: [
-          { recipeId: '3' },
-          { recipeId: '4' },
-        ],
-        box: {
-          numRecipes: 2,
-        },
-        prices: {
-          total: '19.99',
+  describe('when OrderAPI V1 Order', () => {
+    test('should call customerPurchaseCompleted with actions.ORDER_CREATE_TRANSACTIONAL', () => {
+      Tracker({
+        type: actionTypes.ORDER_CREATE_TRANSACTIONAL,
+        order: {
+          id: 2,
+          recipeItems: [
+            { recipeId: '3' },
+            { recipeId: '4' },
+          ],
+          box: {
+            numRecipes: 2,
+          },
+          prices: {
+            total: '19.99',
+          }
         }
-      }
-    })
+      })
 
-    expect(fbq).toHaveBeenCalled()
-    expect(fbq).toHaveBeenCalledWith('track', 'Purchase', {
-      content_ids: ['3', '4'],
-      content_type: 'product',
-      num_items: 2,
-      value: '19.99',
-      currency: 'GBP',
-      order_id: '2',
+      expect(fbq).toHaveBeenCalled()
+      expect(fbq).toHaveBeenCalledWith('track', 'Purchase', {
+        content_ids: ['3', '4'],
+        content_type: 'product',
+        num_items: 2,
+        value: '19.99',
+        currency: 'GBP',
+        order_id: '2',
+      })
+    })
+  })
+
+  describe('when OrderAPI V2 Order', () => {
+    test('should call customerPurchaseCompleted with actions.ORDER_CREATE_TRANSACTIONAL', () => {
+      Tracker({
+        type: actionTypes.ORDER_CREATE_TRANSACTIONAL,
+        order: {
+          data: {
+            id: 2,
+            prices: {
+              total: '19.99',
+            },
+            relationships: {
+              components: {
+                data: [
+                  { id: '3', type: 'recipe' },
+                  { id: '4', type: 'recipe' },
+                ]
+              }
+            }
+          }
+        }
+      })
+
+      expect(fbq).toHaveBeenCalled()
+      expect(fbq).toHaveBeenCalledWith('track', 'Purchase', {
+        content_ids: ['3', '4'],
+        content_type: 'product',
+        num_items: 2,
+        value: '19.99',
+        currency: 'GBP',
+        order_id: '2',
+      })
     })
   })
 
