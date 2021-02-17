@@ -48,7 +48,7 @@ export function addInitialValues(Component, { sectionName }) {
           ...initialValues,
           [sectionName]: {
             title: 'miss',
-            allowEmail: !getIsCheckoutOverhaulEnabled(state),
+            allowEmail: true,
           },
         },
       }
