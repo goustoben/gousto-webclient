@@ -32,6 +32,18 @@ import { isOptimizelyFeatureEnabledFactory } from '../containers/OptimizelyRollo
 import { deleteOrder } from '../routes/Menu/apis/rockets-orderV2'
 import { cancelOrder } from '../routes/Menu/apis/rockets-core'
 
+const getTrackingInformationForV1 = (order) => ({
+  id: order.id,
+  promoCode: order.prices.promo_code,
+  total: order.prices.total
+})
+
+const getTrackingInformationForV2 = (order) => ({
+  id: order.data.id,
+  promoCode: order.data.prices.has_promo_code,
+  total: order.data.prices.total,
+})
+
 export const trackOrder = (orderAction, order) => (
   (dispatch, getState) => {
     if (Object.keys(orderTrackingActions).includes(orderAction)) {
@@ -39,13 +51,14 @@ export const trackOrder = (orderAction, order) => (
 
       if (trackAffiliate) {
         const { basket } = getState()
-        const { id, prices } = order
+        const fn = order.data ? getTrackingInformationForV2 : getTrackingInformationForV1
+        const { id, promoCode, total = '' } = fn(order)
 
         const affiliateTracking = {
           orderId: id,
-          total: prices.total || '',
+          total,
           commissionGroup: 'EXISTING',
-          promoCode: prices.promo_code || basket.get('promoCode') || '',
+          promoCode: promoCode || basket.get('promoCode') || '',
         }
 
         trackAffiliatePurchase(affiliateTracking)
