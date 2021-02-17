@@ -18,6 +18,7 @@ module.exports = {
     ssrV2: 'v2',
     tastePreferences: 'v1',
     userBucketing: 'v1',
+    userFeedback: 'v1',
     clientMetrics: 'v1',
     workable: 'v1',
   },
@@ -209,5 +210,9 @@ module.exports = {
 
   userBucketing: {
     experiments: '/user/experiments'
+  },
+
+  userFeedback: {
+    feedback: '/feedback'
   }
 }
