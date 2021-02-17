@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+import Immutable, { Iterable } from 'immutable'
 import thunk from 'redux-thunk'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
@@ -15,7 +17,6 @@ import { gtmMiddleware } from 'middlewares/tracking/gtm'
 import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import persistenceConfig from 'config/storePersistence'
 import globals from 'config/globals'
-import { Iterable } from 'immutable'
 
 class GoustoStore {
   constructor() {
@@ -57,10 +58,20 @@ class GoustoStore {
       middleware.push(persistenceMiddleware(persistenceConfig, cookies))
     }
 
-    const composeEnhancers = globals.client && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // eslint-disable-line no-underscore-dangle
+    const composeEnhancers = globals.client && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function'
+      ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        trace: true,
+        // This is has to be greater than the default limit of 10
+        // because we have so many middlewares in between the call
+        // and were the action was called.
+        traceLimit: 20,
+        serialize: {
+          immutable: Immutable,
+        }
+      }) : compose
 
     this.store = createStore(
-      combineReducers(Object.assign({}, reducers, { routing: routerReducer }, { form: reduxFormReducer })),
+      combineReducers({ ...reducers, routing: routerReducer, form: reduxFormReducer}),
       initialState,
       composeEnhancers(applyMiddleware(...middleware))
     )
