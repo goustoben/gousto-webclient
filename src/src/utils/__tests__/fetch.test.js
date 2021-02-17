@@ -19,7 +19,15 @@ jest.mock('store', () => ({
 describe('fetch', () => {
   // this require here is needed, rather than an import
   // so that the jest.mocks are set up in time
-  const { fetch } = require('../fetch')
+  const {
+    fetch,
+    cacheDefault,
+    headerDefault,
+    timeoutDefault,
+    includeCookiesDefault,
+    useMenuServiceDefault,
+  // eslint-disable-next-line global-require
+  } = require('../fetch')
 
   const setMockFetchResult = (data, status = 200) => (
     mockFetch.mockResolvedValue({
@@ -337,6 +345,67 @@ describe('fetch', () => {
       expect(result).toEqual({ data: expected, meta: null })
 
       expect(PromiseTimeout.timeout.mock.calls[0][1]).toBe(50000)
+    })
+  })
+
+  describe('useOverwriteRequestMethod', () => {
+    const data = {
+      status: 'ok',
+      data: {
+        recipe_title: 'Test',
+        meat_ingredients: [
+          'chicken',
+          'prawn_with_shell',
+        ],
+        nutInfo: {
+          e_nergy: 100,
+        },
+      },
+    }
+    const expected = {
+      recipeTitle: 'Test',
+      meatIngredients: [
+        'chicken',
+        'prawn_with_shell',
+      ],
+      nutInfo: {
+        eNergy: 100,
+      },
+    }
+
+    beforeEach(() => {
+      PromiseTimeout.timeout = jest.fn().mockResolvedValue({
+        text: () => JSON.stringify(data),
+        status: 200,
+      })
+    })
+
+    test('should allow requests for PUT to be sent', async () => {
+      const useOverwriteRequestMethod = false
+
+      const result = await fetch(
+        'token',
+        'url/',
+        { id: 1, include: ['test1', 'test2'] },
+        'PUT',
+        cacheDefault,
+        headerDefault,
+        timeoutDefault,
+        includeCookiesDefault,
+        useMenuServiceDefault,
+        useOverwriteRequestMethod
+      )
+
+      expect(result).toEqual({ data: expected, meta: null })
+      expect(mockFetch).toHaveBeenCalledWith('url', {
+        body: 'id=1&include%5B0%5D=test1&include%5B1%5D=test2',
+        cache: 'default',
+        headers: {
+          Authorization: 'Bearer token',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        method: 'PUT'
+      })
     })
   })
 })
