@@ -45,6 +45,7 @@ import {
   getIsSubscriberPricingEnabled,
   getIsMyGoustoBannerSubscriberPricingEnabled,
   getIsWizardPricePerServingEnabled,
+  getIsMenuProgressBarHidden,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -106,6 +107,7 @@ describe('when features are defined', () => {
     [getIsMyGoustoBannerSubscriberPricingEnabled, 'isMyGoustoBannerSubscriberPricingEnabled'],
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
     [getIsWizardPricePerServingEnabled, 'isWizardPricePerServingEnabled'],
+    [getIsMenuProgressBarHidden, 'isMenuProgressBarHidden'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
