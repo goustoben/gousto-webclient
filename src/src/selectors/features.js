@@ -177,3 +177,7 @@ export const getIsMyGoustoBannerSubscriberPricingEnabled = ({ features }) => (
 export const getIsWizardPricePerServingEnabled = ({ features }) => (
   features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
 )
+
+export const getIsMenuProgressBarHidden = ({ features }) => (
+  features && features.getIn(['isMenuProgressBarHidden', 'value'], false)
+)

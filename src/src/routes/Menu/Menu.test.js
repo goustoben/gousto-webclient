@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
@@ -37,7 +38,13 @@ describe('Menu', () => {
     features: Immutable.fromJS({
       menuService: {
         value: false
-      }
+      },
+      isMenuProgressBarHidden: {
+        value: false
+      },
+    }),
+    auth: Immutable.fromJS({
+      isAuthenticated: false
     })
   })
 
@@ -67,7 +74,19 @@ describe('Menu', () => {
       recipesCount: 3,
       onOverlayClick: jest.fn(),
       fetchData: jest.fn(),
-      menuCalculateTimeToUsable: jest.fn()
+      menuCalculateTimeToUsable: jest.fn(),
+    }
+
+    mountOptions = {
+      context: {
+        store: {
+          getState: getStateMock,
+          subscribe: () => { },
+          dispatch: () => { },
+        },
+      },
+      // eslint-disable-next-line react/forbid-prop-types
+      childContextTypes: { store: PropTypes.object.isRequired }
     }
   })
 
@@ -77,15 +96,6 @@ describe('Menu', () => {
 
   describe('when rendering', () => {
     let wrapper
-
-    mountOptions = {
-      context: {
-        store: {
-          dispatch: jest.fn(),
-          getState: getStateMock,
-        },
-      },
-    }
 
     afterEach(() => {
       jest.clearAllMocks()
@@ -160,14 +170,6 @@ describe('Menu', () => {
     let basketNumPortionChangeSpy
 
     beforeEach(() => {
-      mountOptions = {
-        context: {
-          store: {
-            getState: getStateMock,
-            subscribe: () => { },
-          },
-        },
-      }
       menuLoadBoxPrices = jest.fn()
       basketNumPortionChangeSpy = jest.fn()
     })
@@ -236,14 +238,7 @@ describe('Menu', () => {
           basketNumPortionChange={basketNumPortionChangeSpy}
           query={{ num_portions: '4' }}
         />,
-        {
-          context: {
-            store: {
-              getState: getStateMock,
-              subscribe: () => { }
-            },
-          },
-        },
+        mountOptions
       )
 
       expect(shouldJfyTutorialBeVisibleMock).toHaveBeenCalled()
@@ -259,14 +254,7 @@ describe('Menu', () => {
         <Menu
           {...requiredProps}
         />,
-        {
-          context: {
-            store: {
-              getState: getStateMock,
-              subscribe: () => { }
-            },
-          },
-        },
+        mountOptions
       )
       forceCheck.mockClear()
     })

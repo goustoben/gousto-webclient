@@ -5,7 +5,7 @@ import { RecipesInBasketProgressPresentation } from './RecipesInBasketProgress.p
 
 const propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  selectedRecipesCount: PropTypes.number.isRequired
+  selectedRecipesCount: PropTypes.number.isRequired,
 }
 
 const RecipesInBasketProgress = ({ isAuthenticated, selectedRecipesCount }) => {
