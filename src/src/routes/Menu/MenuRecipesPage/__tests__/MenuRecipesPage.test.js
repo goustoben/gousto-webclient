@@ -103,10 +103,10 @@ describe('initial render', () => {
       })
 
       it.each([
-        ['entropy-experiment-one', 0],
-        ['entropy-experiment-two', 1],
-        ['entropy-experiment-three', 2],
-        ['entropy-experiment-four', 3],
+        ['allocation-experiment-one', 0],
+        ['allocation-experiment-two', 1],
+        ['allocation-experiment-three', 2],
+        ['allocation-experiment-four', 3],
       ])('renders experiment container with experiment name %s', (experimentName, index) => {
         expect(wrapper.find(ExperimentsContainer).at(index).prop('experimentName')).toBe(experimentName)
       })
