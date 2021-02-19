@@ -3,7 +3,7 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
-	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+  composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
 }
 
 .pricingClarityRedesign {
@@ -48,118 +48,118 @@
 }
 
 .row {
-	composes: row from 'sass-loader!styles/bootstrap.scss';
-	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
 }
 
-.left, .right {
-	width: 50%;
-	@media ScreenXSMax and HeightMDMax {
-		width: 100%;
-	}
+.left,
+.right {
+  width: 50%;
+  @media ScreenXSMax and HeightMDMax {
+    width: 100%;
+  }
 }
 
 .left {
-	padding-left: SpacingMD;
-	padding-right: calc(SpacingXS * .5);
+  padding-left: SpacingMD;
+  padding-right: calc(SpacingXS * 0.5);
 
-	@media ScreenXSMax and HeightMDMax {
-		padding: 0 SpacingSM;
-	}
+  @media ScreenXSMax and HeightMDMax {
+    padding: 0 SpacingSM;
+  }
 }
 
 .right {
-	padding-left: calc(SpacingXS * .5);
-	padding-right: SpacingMD;
+  padding-left: calc(SpacingXS * 0.5);
+  padding-right: SpacingMD;
 
-	@media ScreenXSMax and HeightMDMax {
-		margin-top: SpacingSM;
-		padding: 0 SpacingSM;
-	}
+  @media ScreenXSMax and HeightMDMax {
+    margin-top: SpacingSM;
+    padding: 0 SpacingSM;
+  }
 }
 
 .dropdown :global .Select-menu-outer {
-	max-height: 130px;
+  max-height: 130px;
 
-	@media HeightSMMax {
-		max-height: 92px;
-	}
+  @media HeightSMMax {
+    max-height: 92px;
+  }
 }
 
 .dropdown :global .Select-menu {
-	max-height: 130px;
-	overflow-y: auto;
+  max-height: 130px;
+  overflow-y: auto;
 
-	@media HeightSMMax {
-		max-height: 92px;
-	}
+  @media HeightSMMax {
+    max-height: 92px;
+  }
 }
 
 .radio {
-	margin-right: 7px;
-	margin-top: 1px;
+  margin-right: 7px;
+  margin-top: 1px;
 }
 
 .modal {
-	padding: 22px;
-	min-width: 342px;
-	max-width: 342px;
-	min-height: 610px;
+  padding: 22px;
+  min-width: 342px;
+  max-width: 342px;
+  min-height: 610px;
 }
 
 .modalTitleDiv {
-	font-family: 'Avenir-Heavy', 'Avenir Heavy', 'Avenir Book', 'Avenir';
-	width: 260px;
-	margin-bottom: 100px;
+  font-family: 'Avenir-Heavy', 'Avenir Heavy', 'Avenir Book', 'Avenir';
+  width: 260px;
+  margin-bottom: 100px;
 }
 
 .modalFirstTitle {
-	border-width: 0px;
-	position: absolute;
-	top: 34px;
-	left: 16px;
-	text-align: center;
-	white-space: nowrap;
-	span {
-		&::before {
-			content: "\A";
-			white-space: pre;
-		}
-	}
-
+  border-width: 0px;
+  position: absolute;
+  top: 34px;
+  left: 16px;
+  text-align: center;
+  white-space: nowrap;
+  span {
+    &::before {
+      content: '\A';
+      white-space: pre;
+    }
+  }
 }
 
 .modalSecondTitle {
-	border-width: 0px;
-	position: absolute;
-	top: 66px;
-	left: 80px;
-	white-space: nowrap;
+  border-width: 0px;
+  position: absolute;
+  top: 66px;
+  left: 80px;
+  white-space: nowrap;
 }
 
 .modalrow {
-	display: block;
-	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+  display: block;
+  composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .label {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 .iconDeliverySection {
-	height: 170px;
-	composes: flex rowWrap from 'styles/flex.css';
-	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+  height: 170px;
+  composes: flex rowWrap from 'styles/flex.css';
+  composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .iconDelivery {
-	width: 250px;
-	height: 250px;
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, -20%);
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -20%);
 }
 
 .centralize {
-	justify-content: center;
+  justify-content: center;
 }

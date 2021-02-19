@@ -3,17 +3,15 @@ import React from 'react'
 
 import css from './Image.css'
 
-const SignupImage = ({ name }) => (
-  // eslint-disable-next-line import/no-dynamic-require,global-require
-  <div className={css.image} style={{ backgroundImage: `url(${require(`media/photos/${name}.jpg`)})` }} />
-)
+const SignupImage = ({ name }) => {
+  // eslint-disable-next-line import/no-dynamic-require, global-require
+  const style = { backgroundImage: `url(${require(`media/photos/${name}.jpg`)})` }
 
-SignupImage.propTypes = {
-  name: PropTypes.string,
+  return <div className={css.image} style={style} />
 }
 
-SignupImage.defaultProps = {
-  name: '',
+SignupImage.propTypes = {
+  name: PropTypes.string.isRequired,
 }
 
 export { SignupImage }

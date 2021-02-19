@@ -9,7 +9,13 @@ import Immutable from 'immutable'
 import { DiscountAppliedNotice } from '../DiscountAppliedNotice/DiscountAppliedNotice'
 import css from './BoxSizeBox.css'
 
-const BoxSizeBox = ({ numPortionChange, numPortionChangeTracking, next, numPersons, boxPrices }) => {
+const BoxSizeBox = ({
+  numPortionChange,
+  numPortionChangeTracking,
+  next,
+  numPersons,
+  boxPrices,
+}) => {
   const boxType = signupConfig.boxSizeStep.boxSize[numPersons]
   const isPromoCodeApplied = boxPrices && boxPrices.get('promoCodeValid')
   const recipeTotal = boxPrices && boxPrices.get('recipeTotal')
@@ -18,16 +24,8 @@ const BoxSizeBox = ({ numPortionChange, numPortionChangeTracking, next, numPerso
 
   const renderPrices = () => (
     <div className={css.portionsSign}>
-      <span className={css.price}>
-        £
-        {total || ''}
-      </span>
-      {isPromoCodeApplied && (
-        <span className={css.redPrice}>
-          £
-          {recipeTotal || ''}
-        </span>
-      )}
+      <span className={css.price}>£{total || ''}</span>
+      {isPromoCodeApplied && <span className={css.redPrice}>£{recipeTotal || ''}</span>}
       <span className={css.priceText}>&nbsp;per box</span>
     </div>
   )
@@ -49,9 +47,11 @@ const BoxSizeBox = ({ numPortionChange, numPortionChangeTracking, next, numPerso
           &nbsp;people
         </h2>
         <p className={css.subtitle}>{boxType.description}</p>
-        <div className={classNames(css.priceContainer, {[css.discountApplied]: isPromoCodeApplied})}>
+        <div
+          className={classNames(css.priceContainer, { [css.discountApplied]: isPromoCodeApplied })}
+        >
           <p className={css.priceText}>from</p>
-          { isLoading ? (
+          {isLoading ? (
             <div className={css.loading}>
               <Loader color="Bluecheese" />
             </div>
@@ -59,9 +59,7 @@ const BoxSizeBox = ({ numPortionChange, numPortionChangeTracking, next, numPerso
             renderPrices()
           )}
         </div>
-        {isPromoCodeApplied && (
-          <DiscountAppliedNotice />
-        )}
+        {isPromoCodeApplied && <DiscountAppliedNotice />}
         <Button
           width="full"
           data-testing={`signupBoxSize${numPersons}Portions`}
@@ -82,12 +80,12 @@ BoxSizeBox.propTypes = {
   boxPrices: ImmutablePropTypes.contains({
     promoCodeValid: PropTypes.bool,
     recipeTotalDiscounted: PropTypes.string,
-    recipeTotal: PropTypes.string
-  })
+    recipeTotal: PropTypes.string,
+  }),
 }
 
 BoxSizeBox.defaultProps = {
-  boxPrices: Immutable.Map({})
+  boxPrices: Immutable.Map({}),
 }
 
 export { BoxSizeBox }

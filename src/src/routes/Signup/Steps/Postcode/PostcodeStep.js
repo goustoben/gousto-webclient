@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import classNames from 'classnames'
 import TextInput from 'Form/Input'
-import {reminder} from 'config/freeDelivery'
+import { reminder } from 'config/freeDelivery'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
@@ -19,19 +19,35 @@ class PostcodeStep extends PureComponent {
       changePostcode,
       deliveryDaysError,
       nextStepName,
-      isPricingClarityEnabled
+      isPricingClarityEnabled,
     } = this.props
 
     return (
-      <div className={classNames(css.stepContainer, { [postcodeCss.pricingClarityRedesign]: isPricingClarityEnabled })} data-testing="signupPostcodeStep">
+      <div
+        className={classNames(css.stepContainer, {
+          [postcodeCss.pricingClarityRedesign]: isPricingClarityEnabled,
+        })}
+        data-testing="signupPostcodeStep"
+      >
         <div className={css.fullWidth}>
           <div className={css.header}>
-            <Heading type="h1" className={css.heading}>{signupConfig.postCodeStep.title}</Heading>
+            <Heading type="h1" className={css.heading}>
+              {signupConfig.postCodeStep.title}
+            </Heading>
             {!isPricingClarityEnabled && <Image name="where-to-deliver" />}
           </div>
           <div className={css.body}>
             <div className={postcodeCss.inputContainer}>
-              <form onSubmit={e => { if (e) { e.preventDefault() } changePostcode(tempPostcode, nextStepName) }} action="#" className={postcodeCss.row}>
+              <form
+                onSubmit={(e) => {
+                  if (e) {
+                    e.preventDefault()
+                  }
+                  changePostcode(tempPostcode, nextStepName)
+                }}
+                action="#"
+                className={postcodeCss.row}
+              >
                 <div className={postcodeCss.left}>
                   <TextInput
                     isFixed
@@ -50,23 +66,21 @@ class PostcodeStep extends PureComponent {
             </div>
             <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
               {!deliveryDaysError && <span className={postcodeCss.tick} />}
-              {
-                (() => {
-                  let textMsg
+              {(() => {
+                let textMsg
 
-                  if (deliveryDaysError) {
-                    if (deliveryDaysError === 'do-not-deliver') {
-                      textMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
-                    } else {
-                      textMsg = 'Please enter a valid postcode'
-                    }
+                if (deliveryDaysError) {
+                  if (deliveryDaysError === 'do-not-deliver') {
+                    textMsg = "Sorry, it looks like we don't currently deliver to your area."
                   } else {
-                    textMsg = reminder
+                    textMsg = 'Please enter a valid postcode'
                   }
+                } else {
+                  textMsg = reminder
+                }
 
-                  return textMsg
-                })()
-              }
+                return textMsg
+              })()}
             </p>
           </div>
         </div>
@@ -89,20 +103,13 @@ class PostcodeStep extends PureComponent {
 }
 
 PostcodeStep.propTypes = {
-  deliveryDaysError: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-    PropTypes.object,
-  ]),
+  deliveryDaysError: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.object]),
   postcodePending: PropTypes.bool,
   tempPostcode: PropTypes.string,
   changeTempPostcode: PropTypes.func,
   changePostcode: PropTypes.func,
-  nextStepName: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  isPricingClarityEnabled: PropTypes.bool
+  nextStepName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isPricingClarityEnabled: PropTypes.bool,
 }
 
 PostcodeStep.defaultProps = {
@@ -112,7 +119,7 @@ PostcodeStep.defaultProps = {
   changeTempPostcode: () => {},
   changePostcode: () => {},
   nextStepName: '',
-  isPricingClarityEnabled: false
+  isPricingClarityEnabled: false,
 }
 
 export { PostcodeStep }

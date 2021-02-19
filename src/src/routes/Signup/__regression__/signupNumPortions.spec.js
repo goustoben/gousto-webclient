@@ -1,9 +1,8 @@
 const PAGE_URL = 'signup/box-size'
 
-const getNumPortions = (win) => (
+const getNumPortions = (win) =>
   // eslint-disable-next-line no-underscore-dangle
   win.__store__.getState().basket.get('numPortions')
-)
 
 describe('Given I am a logged out user', () => {
   describe('When I land on the num portions code slide of the wizard', () => {
@@ -11,9 +10,15 @@ describe('Given I am a logged out user', () => {
       cy.server()
       cy.clearCookies()
       cy.clearLocalStorage()
-      cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as('getPrices')
+      cy.route('GET', /boxPrices|prices/, 'fixture:boxPrices/priceWithPromoCode.json').as(
+        'getPrices'
+      )
       cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
-      cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+      cy.route(
+        'GET',
+        '/userbucketing/v1/user/experiments',
+        'fixture:userbucketing/userbucketing.json'
+      ).as('getExperiments')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
       cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
       cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')

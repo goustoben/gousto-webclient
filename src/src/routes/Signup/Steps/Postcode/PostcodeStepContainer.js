@@ -13,7 +13,7 @@ function mapStateToProps(state) {
 }
 
 const PostcodeStepContainer = connect(mapStateToProps, {
-  changeTempPostcode: postcode => tempActions.temp('postcode', postcode.toUpperCase()),
+  changeTempPostcode: (postcode) => tempActions.temp('postcode', postcode.toUpperCase()),
   changePostcode: signupChangePostcode,
 })(PostcodeStep)
 

@@ -16,34 +16,26 @@ const PricePerServing = ({ portion, image, cost, onClick }) => {
       <div className={css.body}>
         <div className={css.title}>
           <Heading size="fontStyleM" type="h2" hasMargin={false}>
-            {portion}
-            {' '}
-            people
+            {portion} people
           </Heading>
         </div>
         <span className={typography.fontStyleXS}>from</span>
         <div className={css.row}>
           <div>
             <Heading size="fontStyleL" type="h3" hasMargin={false}>
-              £
-              {priceDiscounted === price ? price : priceDiscounted}
+              £{priceDiscounted === price ? price : priceDiscounted}
             </Heading>
           </div>
           {priceDiscounted !== price && (
-          <div className={css.discountCol}>
-            <del className={`${typography.fontStyleXXS} ${css.discount}`}>
-              £
-              {price}
-            </del>
-            <span className={typography.fontStyleS}>per serving</span>
-          </div>
+            <div className={css.discountCol}>
+              <del className={`${typography.fontStyleXXS} ${css.discount}`}>£{price}</del>
+              <span className={typography.fontStyleS}>per serving</span>
+            </div>
           )}
         </div>
         <div className={css.cardCTA}>
           <CTA isFullWidth onClick={onClick} testingSelector={`signupBoxSize${portion}Portions`}>
-            Choose
-            {' '}
-            {portion}
+            Choose {portion}
             -person box
           </CTA>
         </div>

@@ -1,24 +1,20 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-// eslint-disable-next-line import/named
-import { menuLoadDays, redirect, menuLoadBoxPrices, changeStep, updatePricePerServing } from 'actions'
+import actions from 'actions'
 import { StepIndicator } from 'goustouicomponents'
-
 import { Signup } from 'routes/Signup/Signup'
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 import css from '../Signup.css'
 
-jest.mock('actions', () => ({
-  signupStepsReceive: jest.fn().mockReturnValue(Promise.resolve()),
-  signupSetStep: jest.fn().mockReturnValue(Promise.resolve()),
-  redirect: jest.fn().mockReturnValue(Promise.resolve()),
-  menuLoadDays: jest.fn().mockReturnValue(Promise.resolve()),
-  menuLoadBoxPrices: jest.fn().mockReturnValue(Promise.resolve()),
-  changeStep: jest.fn().mockReturnValue(Promise.resolve()),
-  updatePricePerServing: jest.fn().mockReturnValue(Promise.resolve()),
-}))
+jest.spyOn(actions, 'signupStepsReceive').mockResolvedValue()
+
+const redirect = jest.spyOn(actions, 'redirect').mockResolvedValue()
+const menuLoadDays = jest.spyOn(actions, 'menuLoadDays').mockResolvedValue()
+const menuLoadBoxPrices = jest.spyOn(actions, 'menuLoadBoxPrices').mockResolvedValue()
+const signupSetStep = jest.spyOn(actions, 'signupSetStep').mockResolvedValue()
+const updatePricePerServing = jest.spyOn(actions, 'updatePricePerServing').mockResolvedValue()
 
 jest.mock('../../Menu/fetchData/menuService')
 
@@ -29,11 +25,11 @@ describe('Signup', () => {
   let getState
   let subscribe
   const props = {
-    changeStep,
+    changeStep: signupSetStep,
     menuLoadBoxPrices,
     promoModalVisible: false,
     promoBannerState: {
-      hide: false
+      hide: false,
     },
     updatePricePerServing,
   }
@@ -67,11 +63,11 @@ describe('Signup', () => {
 
   describe('fetchData', () => {
     const fetchDataProps = {
-      query: { },
-      params: { },
+      query: {},
+      params: {},
       fetchProps: {
         menuLoadBoxPrices,
-      }
+      },
     }
 
     test('loadMenuServiceDataIfDeepLinked', async () => {
@@ -87,13 +83,30 @@ describe('Signup', () => {
       expect(updatePricePerServing).not.toBeCalled()
     })
 
+    describe('when requested step is not the first one', () => {
+      beforeEach(async () => {
+        await Signup.fetchData({
+          ...fetchDataProps,
+          params: {
+            stepName: 'delivery-options',
+          },
+          store: context.store,
+        })
+      })
+
+      test('then should redirect to the first step', async () => {
+        expect(redirect).toHaveBeenCalledWith('/signup/box-size')
+        expect(dispatch).toHaveBeenCalled()
+      })
+    })
+
     describe('when isPricingClarityEnabled is true', () => {
       describe('and promo code is not applied', () => {
         test('then should call menuLoadBoxPrices', async () => {
           fetchDataProps.fetchProps = {
             ...fetchDataProps.fetchProps,
             orderDiscount: '',
-            isPricingClarityEnabled: true
+            isPricingClarityEnabled: true,
           }
           await Signup.fetchData({
             ...fetchDataProps,
@@ -109,7 +122,7 @@ describe('Signup', () => {
           fetchDataProps.fetchProps = {
             ...fetchDataProps.fetchProps,
             orderDiscount: '50',
-            isPricingClarityEnabled: true
+            isPricingClarityEnabled: true,
           }
           await Signup.fetchData({
             ...fetchDataProps,
@@ -127,7 +140,7 @@ describe('Signup', () => {
           fetchDataProps.fetchProps = {
             ...fetchDataProps.fetchProps,
             isWizardPricePerServingEnabled: true,
-            lowestPricePerPortion: {}
+            lowestPricePerPortion: {},
           }
           await Signup.fetchData({
             ...fetchDataProps,
@@ -150,7 +163,7 @@ describe('Signup', () => {
     describe('when isTastePreferencesEnabled is true', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isTastePreferencesEnabled: true
+          isTastePreferencesEnabled: true,
         })
       })
 
@@ -162,7 +175,7 @@ describe('Signup', () => {
     describe('when isTastePreferencesEnabled is false', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isTastePreferencesEnabled: false
+          isTastePreferencesEnabled: false,
         })
       })
 
@@ -177,7 +190,12 @@ describe('Signup', () => {
 
     describe('when state is hidden', () => {
       beforeEach(() => {
-        wrapper = shallow(<Signup promoModalVisible={false} promoBannerState={{ hide: true }} />, { context })
+        wrapper = shallow(
+          <Signup {...props} promoModalVisible={false} promoBannerState={{ hide: true }} />,
+          {
+            context,
+          }
+        )
       })
 
       test('should hide DiscountAppliedBar element', () => {
@@ -192,7 +210,12 @@ describe('Signup', () => {
 
     describe('when state is visible', () => {
       beforeEach(() => {
-        wrapper = shallow(<Signup promoModalVisible promoBannerState={{ hide: false }} />, { context })
+        wrapper = shallow(
+          <Signup {...props} promoModalVisible promoBannerState={{ hide: false }} />,
+          {
+            context,
+          }
+        )
       })
 
       test('should show DiscountAppliedBar element', () => {

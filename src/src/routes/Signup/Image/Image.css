@@ -3,32 +3,32 @@
 @value imgSize 250px;
 
 .image {
-	composes: marginXLTop from 'sass-loader!styles/spacing.scss';
-	background: none;
-	background-size: cover;
-	border-radius: 100%;
-	width: imgSize;
-	height: imgSize;
-	margin-left: auto;
-	margin-right: auto;
+  composes: marginXLTop from 'sass-loader!styles/spacing.scss';
+  background: none;
+  background-size: cover;
+  border-radius: 100%;
+  width: imgSize;
+  height: imgSize;
+  margin-left: auto;
+  margin-right: auto;
 
-	@media ScreenXSMax {
-		width: 200px;
-		height: 200px;
-	}
+  @media ScreenXSMax {
+    width: 200px;
+    height: 200px;
+  }
 
-	@media HeightSMMax and ScreenSMMin {
-		width: 240px;
-		height: 240px;
-	}
+  @media HeightSMMax and ScreenSMMin {
+    width: 240px;
+    height: 240px;
+  }
 
-	@media HeightSMMax and ScreenXSMax {
-		width: 150px;
-		height: 150px;
-	}
+  @media HeightSMMax and ScreenXSMax {
+    width: 150px;
+    height: 150px;
+  }
 
-	@media HeightMDMin {
-		width: 260px;
-		height: 260px;
-	}
+  @media HeightMDMin {
+    width: 260px;
+    height: 260px;
+  }
 }

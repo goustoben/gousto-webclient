@@ -35,7 +35,7 @@ const propTypes = {
       steps: PropTypes.string,
       promo_code: PropTypes.string,
     }),
-    pathname: PropTypes.string
+    pathname: PropTypes.string,
   }),
   params: PropTypes.shape({
     stepName: PropTypes.string,
@@ -61,7 +61,7 @@ const propTypes = {
       priceDiscounted: PropTypes.string.isRequired,
       price: PropTypes.string.isRequired,
     }),
-  }).isRequired,
+  }),
 }
 
 const defaultProps = {
@@ -72,7 +72,7 @@ const defaultProps = {
     query: {
       steps: '',
       promo_code: '',
-    }
+    },
   },
   params: {
     stepName: '',
@@ -86,6 +86,7 @@ const defaultProps = {
   orderDiscount: '',
   trackDiscountVisibility: () => {},
   isWizardPricePerServingEnabled: false,
+  lowestPricePerPortion: {},
 }
 
 const contextTypes = {
@@ -102,7 +103,13 @@ class Signup extends PureComponent {
     const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
     const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
     const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
-    const { menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled, isWizardPricePerServingEnabled, lowestPricePerPortion } = fetchProps
+    const {
+      menuLoadBoxPrices,
+      orderDiscount,
+      isPricingClarityEnabled,
+      isWizardPricePerServingEnabled,
+      lowestPricePerPortion,
+    } = fetchProps
 
     if (querySteps.length) {
       steps = Immutable.List(querySteps)
@@ -112,8 +119,7 @@ class Signup extends PureComponent {
       steps = signupSteps
     }
 
-    steps = steps
-      .filter(step => step && availableSteps.includes(step))
+    steps = steps.filter((step) => step && availableSteps.includes(step))
 
     const firstStep = stepByName(steps.first())
     const isBoxSizeStep = firstStep.get('slug') === 'box-size'
@@ -126,25 +132,32 @@ class Signup extends PureComponent {
       await store.dispatch(actions.menuLoadDays())
     }
 
-    store.dispatch(
-      actions.signupStepsReceive(steps)
-    )
+    store.dispatch(actions.signupStepsReceive(steps))
 
-    store.dispatch(
-      actions.signupSetStep(firstStep)
-    )
+    store.dispatch(actions.signupSetStep(firstStep))
 
     if (isPricingClarityEnabled && isBoxSizeStep && !orderDiscount) {
       menuLoadBoxPrices()
     }
 
-    if (isBoxSizeStep && isWizardPricePerServingEnabled && !Object.keys(lowestPricePerPortion).length) {
+    if (
+      isBoxSizeStep &&
+      isWizardPricePerServingEnabled &&
+      !Object.keys(lowestPricePerPortion).length
+    ) {
       store.dispatch(updatePricePerServing())
     }
 
     // No Step specified and no query string specified
     if (!params.stepName && querySteps.length === 0) {
-      return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
+      return store.dispatch(
+        actions.redirect(
+          `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
+            promoCode,
+            '?'
+          )}`
+        )
+      )
     }
 
     // No Step specified but query steps overwrite
@@ -152,23 +165,49 @@ class Signup extends PureComponent {
       const step = stepByName(querySteps.slice(0, 1).pop())
       const futureSteps = querySteps.join(',')
 
-      return store.dispatch(actions.redirect(`${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(promoCode)}`))
+      return store.dispatch(
+        actions.redirect(
+          `${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(
+            promoCode
+          )}`
+        )
+      )
     }
 
     // Step landed is not the first step
-    if (params.stepName && firstStep.get('slug') !== params.stepName && params.pathname !== postCodePath) {
-      return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
+    if (
+      params.stepName &&
+      firstStep.get('slug') !== params.stepName &&
+      params.pathname !== postCodePath
+    ) {
+      return store.dispatch(
+        actions.redirect(
+          `${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(
+            promoCode,
+            '?'
+          )}`
+        )
+      )
     }
 
     return null
   }
 
   componentDidMount() {
-    const { location, params, menuLoadBoxPrices, orderDiscount, isPricingClarityEnabled, isWizardPricePerServingEnabled, lowestPricePerPortion } = this.props
+    const {
+      location,
+      params,
+      menuLoadBoxPrices,
+      orderDiscount,
+      isPricingClarityEnabled,
+      isWizardPricePerServingEnabled,
+      lowestPricePerPortion,
+    } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
     const boxPricesExperimentParams = { stepName: 'postcode', pathname: postCodePath }
-    const signupParams = location.pathname === routes.client.signup ? params : boxPricesExperimentParams
+    const signupParams =
+      location.pathname === routes.client.signup ? params : boxPricesExperimentParams
     const fetchProps = {
       isWizardPricePerServingEnabled,
       isPricingClarityEnabled,
@@ -190,7 +229,7 @@ class Signup extends PureComponent {
 
   getCurrentStepNumber(steps) {
     const { stepName } = this.props
-    const stepNumber = steps.findIndex(step => step.get('slug') === stepName)
+    const stepNumber = steps.findIndex((step) => step.get('slug') === stepName)
 
     if (stepNumber < 0) {
       return 0
@@ -203,8 +242,8 @@ class Signup extends PureComponent {
     const { steps } = this.props
 
     const signupSteps = steps
-      .filter(step => step && availableSteps.includes(step))
-      .map(stepName => stepByName(stepName))
+      .filter((step) => step && availableSteps.includes(step))
+      .map((stepName) => stepByName(stepName))
 
     if (signupSteps.size === 0) {
       return Immutable.fromJS(signupConfig.defaultSteps.map(stepByName))
@@ -230,21 +269,19 @@ class Signup extends PureComponent {
     )
   }
 
-  renderSteps = (steps, currentStepNumber) => (
-    steps.map((step, stepNumber) => (
-      <div
-        className={css.step}
-        key={step.get('slug')}
-      >
-        {this.renderStep(
-          step.get('name'),
-          steps.getIn([stepNumber + 1, 'name']),
-          currentStepNumber,
-          stepNumber === steps.size - 1
-        )}
-      </div>
-    )).toArray()
-  )
+  renderSteps = (steps, currentStepNumber) =>
+    steps
+      .map((step, stepNumber) => (
+        <div className={css.step} key={step.get('slug')}>
+          {this.renderStep(
+            step.get('name'),
+            steps.getIn([stepNumber + 1, 'name']),
+            currentStepNumber,
+            stepNumber === steps.size - 1
+          )}
+        </div>
+      ))
+      .toArray()
 
   getStepSize = (stepsSize) => {
     const { isTastePreferencesEnabled } = this.props
@@ -266,7 +303,7 @@ class Signup extends PureComponent {
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
 
-    const currentStep = steps.find(step => step.get('slug') === stepName) || steps.get(0)
+    const currentStep = steps.find((step) => step.get('slug') === stepName) || steps.get(0)
     const currentStepName = currentStep.get('name')
 
     const isBoxSizeStep = currentStepName === 'boxSize'
@@ -278,22 +315,22 @@ class Signup extends PureComponent {
     const isDiscountApplied = !promoModalVisible && promoBannerState.hide
 
     return (
-      <div className={classNames(
-        css.signupContainer,
-        {
+      <div
+        className={classNames(css.signupContainer, {
           [css.priceClarityRedesign]: isPricingClarityEnabled,
           [css.discountApplied]: isDiscountApplied,
-        }
-      )}
+        })}
       >
         <Helmet
-          style={[{
-            cssText: `
+          style={[
+            {
+              cssText: `
               #react-root {
                 height: 100%;
               }
             `,
-          }]}
+            },
+          ]}
         />
         <DiscountAppliedBar
           promoModalVisible={promoModalVisible}
@@ -301,12 +338,21 @@ class Signup extends PureComponent {
           trackDiscountVisibility={trackDiscountVisibility}
           wizardStep={currentStepName}
         />
-        <div className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}>
-          <div className={classNames(css.animationContainer, { [css.autosize]: autosizeAnimationContainer })}>
+        <div
+          className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}
+        >
+          <div
+            className={classNames(css.animationContainer, {
+              [css.autosize]: autosizeAnimationContainer,
+            })}
+          >
             <div className={css.stepIndicatorContainer}>
               <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
             </div>
-            <div className={css.animation} style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}>
+            <div
+              className={css.animation}
+              style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}
+            >
               {this.renderSteps(steps, stepNumber)}
             </div>
           </div>

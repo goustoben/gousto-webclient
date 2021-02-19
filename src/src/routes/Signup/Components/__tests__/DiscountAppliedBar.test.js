@@ -35,7 +35,7 @@ describe('Given DiscountAppliedBar component', () => {
   describe('when isHidden state is true', () => {
     beforeEach(() => {
       wrapper.setState({
-        isHidden: false
+        isHidden: false,
       })
     })
 
@@ -52,7 +52,7 @@ describe('Given DiscountAppliedBar component', () => {
     describe('and user clicks to close it', () => {
       beforeEach(() => {
         wrapper.setState({
-          isHidden: false
+          isHidden: false,
         })
         wrapper.find('.closeIcon').simulate('click')
       })

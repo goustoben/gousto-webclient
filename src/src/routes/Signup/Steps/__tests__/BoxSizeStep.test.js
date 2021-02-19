@@ -61,7 +61,7 @@ describe('given the user is at the Box Size Step', () => {
     beforeEach(() => {
       wrapper.setProps({
         isPricingClarityEnabled: true,
-        menuBoxPrices
+        menuBoxPrices,
       })
     })
 
@@ -81,34 +81,38 @@ describe('given the user is at the Box Size Step', () => {
         lowestPricePerPortion: {
           forTwo: {
             price: '2',
-            priceDiscounted: '2'
+            priceDiscounted: '2',
           },
           forFour: {
             price: '4',
-            priceDiscounted: '4'
+            priceDiscounted: '4',
           },
-        }
+        },
       })
     })
 
     test('then should render PricePerServing properly', () => {
       expect(wrapper.find('PricePerServing')).toHaveLength(2)
-      expect(wrapper.find('PricePerServing').first().props()).toEqual(expect.objectContaining({
-        portion: 2,
-        image: 'per-two-people',
-        cost: {
-          price: '2',
-          priceDiscounted: '2'
-        },
-      }))
-      expect(wrapper.find('PricePerServing').at(1).props()).toEqual(expect.objectContaining({
-        portion: 4,
-        image: 'per-four-people',
-        cost: {
-          price: '4',
-          priceDiscounted: '4'
-        },
-      }))
+      expect(wrapper.find('PricePerServing').first().props()).toEqual(
+        expect.objectContaining({
+          portion: 2,
+          image: 'per-two-people',
+          cost: {
+            price: '2',
+            priceDiscounted: '2',
+          },
+        })
+      )
+      expect(wrapper.find('PricePerServing').at(1).props()).toEqual(
+        expect.objectContaining({
+          portion: 4,
+          image: 'per-four-people',
+          cost: {
+            price: '4',
+            priceDiscounted: '4',
+          },
+        })
+      )
     })
 
     describe('when the PricePerServing button is clicked', () => {

@@ -14,13 +14,7 @@ const ctaText = (isLastStep, isTastePreferencesEnabled) => {
   return 'Continue'
 }
 
-const Button = ({
-  children,
-  onClick,
-  isLastStep,
-  isTastePreferencesEnabled,
-  ...buttonProps
-}) => {
+const Button = ({ children, onClick, isLastStep, isTastePreferencesEnabled, ...buttonProps }) => {
   const buttonText = children || ctaText(isLastStep, isTastePreferencesEnabled)
 
   return (
@@ -30,7 +24,7 @@ const Button = ({
       width={buttonProps.width}
       data-testing={buttonProps['data-testing']}
       fill={buttonProps.fill}
-      onClick={args => {
+      onClick={(args) => {
         if (typeof onClick === 'function') {
           onClick(args)
         }
@@ -55,4 +49,3 @@ Button.defaultProps = {
 }
 
 export { Button }
-

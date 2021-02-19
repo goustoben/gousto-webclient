@@ -13,35 +13,46 @@ import signupCss from '../../Signup.css'
 
 import { Image } from '../../Image'
 
-const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next, isPricingClarityEnabled, menuBoxPrices, lowestPricePerPortion, isWizardPricePerServingEnabled }) => {
+const BoxSizeStep = ({
+  numPortionChange,
+  numPortionChangeTracking,
+  next,
+  isPricingClarityEnabled,
+  menuBoxPrices,
+  lowestPricePerPortion,
+  isWizardPricePerServingEnabled,
+}) => {
   const portions = [2, 4]
 
-  const renderButtons = () => (portions.map((value, index) => (
-    <div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions`}>
-      <Button
-        data-testing={`signupBoxSize${value}Portions`}
-        fill={false}
-        onClick={() => { numPortionChange(value); numPortionChangeTracking(value); next() }}
-        width="full"
-      >
-        {`${value} People`}
-      </Button>
-    </div>
-  )))
+  const renderButtons = () =>
+    portions.map((value, index) => (
+      <div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions`}>
+        <Button
+          data-testing={`signupBoxSize${value}Portions`}
+          fill={false}
+          onClick={() => {
+            numPortionChange(value)
+            numPortionChangeTracking(value)
+            next()
+          }}
+          width="full"
+        >
+          {`${value} People`}
+        </Button>
+      </div>
+    ))
 
   const renderBody = () => (
     <div className={signupCss.body}>
       <div className={css.container}>
-        <div className={css.row}>
-          {renderButtons()}
-        </div>
+        <div className={css.row}>{renderButtons()}</div>
       </div>
     </div>
   )
 
   const renderPricingClarityBody = () => (
     <div className={css.boxSizeContainer}>
-      {portions.map(portion => (
+      {portions.map((portion) => (
         <BoxSizeBox
           numPortionChange={numPortionChange}
           numPortionChangeTracking={numPortionChangeTracking}
@@ -67,7 +78,7 @@ const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next, isPrici
     }
     const priceList = [
       { portion: 2, image: 'per-two-people', cost: forTwo },
-      { portion: 4, image: 'per-four-people', cost: forFour }
+      { portion: 4, image: 'per-four-people', cost: forFour },
     ]
 
     return (
@@ -91,11 +102,21 @@ const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next, isPrici
     <div className={signupCss.stepContainer} data-testing="signupBoxSizeStep">
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
-          <Heading type="h1" className={signupCss.heading}>{signupConfig.boxSizeStep.title}</Heading>
-          <p className={classNames(signupCss.bodyText, { [css.subTitlePriceClarity]: isPricingClarityEnabled })}>
-            {isPricingClarityEnabled ? signupConfig.boxSizeStep.subtitle : signupConfig.boxSizeStep.pricingClaritySubtitle}
+          <Heading type="h1" className={signupCss.heading}>
+            {signupConfig.boxSizeStep.title}
+          </Heading>
+          <p
+            className={classNames(signupCss.bodyText, {
+              [css.subTitlePriceClarity]: isPricingClarityEnabled,
+            })}
+          >
+            {isPricingClarityEnabled
+              ? signupConfig.boxSizeStep.subtitle
+              : signupConfig.boxSizeStep.pricingClaritySubtitle}
           </p>
-          {!isPricingClarityEnabled && !isWizardPricePerServingEnabled && <Image name="how-many-people" />}
+          {!isPricingClarityEnabled && !isWizardPricePerServingEnabled && (
+            <Image name="how-many-people" />
+          )}
           {renderPricePerServing()}
         </div>
         {!isWizardPricePerServingEnabled && isPricingClarityEnabled && renderPricingClarityBody()}

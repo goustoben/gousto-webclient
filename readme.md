@@ -18,6 +18,12 @@ Gousto Web Client
   *  Running the application at http://frontend.gousto.local
   *  Watching the application for local development
 
+### Ignore bulk-change revisions (optional)
+
+Because of a migration to prettier, there were several bulk formatting changes.  In order to make them not show up in your `git blame` invocations, you might want to invoke this command inside the repo, once only after cloning:
+
+`git config blame.ignoreRevsFile .git-blame-ignore-revs`
+
 ## Deployment
 ### Deployment without a new route
 1. Deploy into staging by raising a PR into `develop`
@@ -167,6 +173,27 @@ Why is this important? Imagine two developer working on the same file, one perso
 This project is in the process of gradual migration to Prettier.  As such, only the files whitelisted under `src/.prettierignore` should be formatted with prettier.
 
 This means that generally, you shouldn't configure your IDE to format every file on save: instead it should respect the `.prettierignore` file if it's possible.  Sorry for the inconvenience.
+
+#### Migrating a new route
+
+If you'd like to introduce prettier inside an unmigrated-yet route, please follow these steps:
+
+1. Modify "files" section under "Make eslint rules agree with prettier" in
+   `devbox-platform/code/gousto-webclient/src/.eslintrc.js`
+2. Modify the end of devbox-platform/code/gousto-webclient/src/.prettierignore
+3. In the top `src`, invoke `prettier -w src`
+4. Review changes to catch any weirdness (due to automatic semicolon insertion
+   or a human-visible change in a React component output)
+5. Invoke `./scripts/compare-code-health.sh`
+6. For each eslint warning, decide how to fix it:
+   - bless: modify overrides in `.eslintrc.js` to say it's not an error
+   - pacify: refactor code to make both prettier and eslint happy
+   - suppress: add "// eslint-ignore-next-line <type>"
+7. For test coverage warnings (due to changing amount of lines and thus
+   percentages), find out how to increase the coverage
+8. Check that the app behaves the same
+
+*After* the merge into `develop`, add the commit's hash into `.git-blame-ignore-revs` so that the bulk change doesn't show up in people's `git blame` invocations. Unfortunately it requires two merges, because we haven't invented self-referencing commits yet.
 
 ## [Code Health](#code-health)
 ### Run code health locally

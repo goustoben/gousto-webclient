@@ -44,7 +44,7 @@ describe('given we are rendering BoxSizeBox', () => {
       const boxPrices = Immutable.fromJS({
         promoCodeValid: false,
         recipeTotal: '31.75',
-        recipeTotalDiscounted: '31.75'
+        recipeTotalDiscounted: '31.75',
       })
       wrapper.setProps({ boxPrices })
     })
@@ -75,7 +75,7 @@ describe('given we are rendering BoxSizeBox', () => {
     const boxPrices = Immutable.fromJS({
       promoCodeValid: true,
       recipeTotal: '24.99',
-      recipeTotalDiscounted: '17.50'
+      recipeTotalDiscounted: '17.50',
     })
 
     beforeEach(() => {
