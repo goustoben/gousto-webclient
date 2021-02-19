@@ -12,6 +12,7 @@ import logger from 'utils/logger'
 import { updateOrderItems } from 'apis/orders'
 import { isChoosePlanEnabled } from 'selectors/features'
 import { getUserOrders } from 'selectors/user'
+import { getBasketRecipes } from 'selectors/basket'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
@@ -21,6 +22,7 @@ import tempActions from './temp'
 import { getUTMAndPromoCode } from '../selectors/tracking'
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import { trackingOrderCheckout } from './tracking'
+import { getIsAuthenticated } from '../selectors/auth'
 
 export const basketOrderLoaded = (orderId) => (
   (dispatch, getState) => {
@@ -487,34 +489,34 @@ export const basketCheckoutClicked = section => (
   }
 )
 
-export const basketCheckedOut = (numRecipes, view) => (
-  (dispatch, getState) => {
-    const { auth } = getState()
-    const isAuthenticated = auth.get('isAuthenticated')
+export const basketCheckedOut = (view) => (dispatch, getState) => {
+  const state = getState()
+  const isAuthenticated = getIsAuthenticated(state)
+  const recipes = getBasketRecipes(state)
+  const numRecipes = recipes.size
 
-    try {
-      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
+  try {
+    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
 
-      if (isAuthenticated) {
-        dispatch(trackingOrderCheckout())
-      }
-
-      dispatch({
-        type: actionTypes.BASKET_CHECKOUT,
-        trackingData: {
-          actionType: trackingKeys.checkOutBasketAttempt,
-          numRecipes,
-          view,
-        },
-      })
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, true))
-      logger.error(err)
-    } finally {
-      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
+    if (isAuthenticated) {
+      dispatch(trackingOrderCheckout())
     }
+
+    dispatch({
+      type: actionTypes.BASKET_CHECKOUT,
+      trackingData: {
+        actionType: trackingKeys.checkOutBasketAttempt,
+        numRecipes,
+        view,
+      },
+    })
+  } catch (err) {
+    dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, true))
+    logger.error(err)
+  } finally {
+    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
   }
-)
+}
 
 export const basketProceedToCheckout = () => (
   async (dispatch, getState) => {

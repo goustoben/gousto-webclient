@@ -4,8 +4,11 @@ import statusActions from 'actions/status'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { actionTypes } from 'actions/actionTypes'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
+import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import * as coreApi from '../apis/core'
-import { getOrderDetails } from '../selectors/order'
+import { updateOrder } from '../apis/orderV2'
+import { getOrderDetails, getOrderForUpdateOrderV2, getOrderAction } from '../selectors/order'
+import { getBasketOrderId } from '../../../selectors/basket'
 
 const handleErrorForOrder = (message) => (dispatch) => {
   dispatch(statusActions.error(actionTypes.ORDER_SAVE, message))
@@ -82,10 +85,40 @@ export const orderAssignToUser = (orderAction, existingOrderId) => async (dispat
     return
   }
 
-  dispatch(trackOrder(
-    orderAction,
-    savedOrder,
-  ))
+  dispatch(trackOrder(orderAction, savedOrder))
   dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+  dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
+}
+
+export const sendUpdateOrder = () => async (dispatch, getState) => {
+  dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
+  dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
+
+  const state = getState()
+  const accessToken = getAccessToken(state)
+  const orderId = getBasketOrderId(state)
+  const orderPayload = getOrderForUpdateOrderV2(state)
+  const orderAction = getOrderAction(state)
+
+  try {
+    const { data: order } = await updateOrder(accessToken, orderId, orderPayload)
+
+    if (order) {
+      dispatch(trackOrder(
+        orderAction,
+        order,
+      ))
+
+      sendClientMetric('menu-edit-complete-order-api-v2', 1, 'Count')
+
+      dispatch(orderConfirmationRedirect(orderId, orderAction))
+    }
+  } catch (err) {
+    logger.error({ message: 'saveOrder api call failed, logging error below...' })
+    logger.error(err)
+    dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
+    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
+  }
+
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
 }

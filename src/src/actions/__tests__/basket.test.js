@@ -198,25 +198,32 @@ describe('basket actions', () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
+        }),
+        basket: Immutable.Map({
+          recipes: Immutable.Map({
+            recipe_id_1: 1,
+            recipe_id_2: 2,
+            recipe_id_3: 1
+          }),
         })
       })
     })
 
     test('should dispatch  BASKET_CHECKOUT tracking', async () => {
-      await basketCheckedOut(2, 'grid')(dispatch, getState)
+      await basketCheckedOut('grid')(dispatch, getState)
 
       expect(dispatch.mock.calls[2][0]).toEqual({
         type: 'BASKET_CHECKOUT',
         trackingData: {
           actionType: trackingKeys.checkOutBasketAttempt,
-          numRecipes: 2,
+          numRecipes: 3,
           view: 'grid',
         },
       })
     })
 
     test('should dispatch trackingOrderCheckout', async () => {
-      await basketCheckedOut(2, 'grid')(dispatch, getState)
+      await basketCheckedOut('grid')(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith(trackingOrderCheckout())
     })

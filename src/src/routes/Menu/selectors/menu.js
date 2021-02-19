@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import moment from 'moment'
 import { actionTypes } from 'actions/actionTypes'
 import { getRecipes, getMenuRecipeIds } from 'selectors/root'
-import { getNumPortions, getBasketMenuId } from 'selectors/basket'
+import { getNumPortions, getBasketMenuId , getBasketRecipes } from 'selectors/basket'
 import { getMenuLimits } from 'selectors/menu'
 import { getMenuCategoryIdForDetails } from './menuRecipeDetails'
 
@@ -74,7 +74,11 @@ export const getMenuLimitsForBasket = createSelector(
   }
 )
 
-export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketRecipes) => {
+export const validateMenuLimitsForBasket = createSelector([
+  (_, recipeId) => recipeId || null,
+  getBasketRecipes,
+  getMenuLimitsForBasket
+], (recipeId, basketRecipes, menuLimitsForBasket) => {
   const limitsReached = menuLimitsForBasket.map(limit => {
     const { name, limitProps, items } = limit
 
@@ -107,7 +111,7 @@ export const validateRecipeAgainstRule = (menuLimitsForBasket, recipeId, basketR
   })
 
   return limitsReached.filter(item => item !== null)
-}
+})
 
 export const isMenuLoading = createSelector(
   [
