@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './RecipeTilePurchaseInfo.css'
-import { DropdownArrowContainer } from '../../../Recipe/AddRecipe/DropdownArrow'
+import { DropdownArrowContainer } from '../DropdownArrow'
 
 export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFineDineIn, recipeVariants, isInCarousel, categoryId, originalId, fdiStyling }) => {
   if (isOutOfStock) {

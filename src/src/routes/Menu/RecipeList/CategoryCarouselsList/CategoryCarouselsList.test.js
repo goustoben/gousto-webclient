@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { CategoryCarouselContainer } from '../CategoryCarousel'
+import { CategoryCarouselContainer } from '../../components/CategoryCarousel'
 import { CategoryCarouselsList } from './CategoryCarouselsList'
 
 describe('RecipeCategoriesCarousel', () => {

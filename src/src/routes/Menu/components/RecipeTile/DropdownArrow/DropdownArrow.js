@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import css from './DropdownArrow.css'
-import { VariantRecipeListContainer } from '../../VariantRecipeList/VariantRecipeList'
+import { VariantRecipeListContainer } from '../../../Recipe/VariantRecipeList/VariantRecipeList'
 
 const DropdownArrow = ({
   recipeId,

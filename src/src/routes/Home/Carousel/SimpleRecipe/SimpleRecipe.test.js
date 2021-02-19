@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import sanitizeText from 'utils/sanitizeText'
 import { SimpleRecipe } from './SimpleRecipe'
-import { AddRecipe } from '../../../Menu/Recipe/AddRecipe'
 
 describe('<SimpleRecipe />', () => {
   let wrapper
@@ -40,10 +39,6 @@ describe('<SimpleRecipe />', () => {
 
   test('should contain TimeIndicator component', () => {
     expect(wrapper.find('TimeIndicator').length).toEqual(1)
-  })
-
-  test('should not contain any AddRecipe components', () => {
-    expect(wrapper.find(AddRecipe).length).toEqual(0)
   })
 
   describe('when a recipe has reviews', () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { CategoryCarouselContainer } from '../CategoryCarousel'
+import { CategoryCarouselContainer } from '../../components/CategoryCarousel'
 import css from './CategoryCarouselsList.css'
 
 const CategoryCarouselsList = ({ categories }) => {

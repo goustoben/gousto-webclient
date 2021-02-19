@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { trackCategoryScroll } from '../../actions/menuCategoryTrackScroll'
-import { CategoryScrollTracker } from './CategoryScrollTracker'
 import { getCurrentCollectionId, getCurrentCollectionSlug } from '../../selectors/collections'
+import { CategoryScrollTracker } from './CategoryScrollTracker'
 
 function mapStateToProps(state, props) {
   return {

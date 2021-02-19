@@ -14,8 +14,8 @@ jest.mock('routes/Menu/RecipeDisclaimer', () => ({
   RecipeDisclaimerContainer: () => <div />
 }))
 
-jest.mock('routes/Menu/Recipe/AddRecipe', () => ({
-  AddRecipe: () => <div />
+jest.mock('../DetailAddRecipe', () => ({
+  DetailAddRecipe: () => <div />
 }))
 
 jest.mock('routes/Menu/Recipe/VariantRecipeList/VariantRecipeList', () => ({

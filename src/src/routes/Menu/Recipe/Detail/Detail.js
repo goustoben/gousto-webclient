@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import { Image } from 'routes/Menu/Recipe/Image'
 import { Title } from 'routes/Menu/Recipe/Title'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import { AddRecipe } from 'routes/Menu/Recipe/AddRecipe'
 import Carousel from './Carousel'
 
 import { VariantRecipeListContainer } from '../VariantRecipeList/VariantRecipeList'
@@ -16,6 +15,7 @@ import { DetailIngredientsContainer } from './DetailIngredients'
 import { DetailAllergenIngredientsContainer } from './DetailAllergenIngredients'
 import { DetailPerPortionContainer } from './DetailPerPortion'
 import { DetailAttributeGridContainer } from './DetailAttributeGrid'
+import { DetailAddRecipe } from './DetailAddRecipe'
 
 import css from './Detail.css'
 
@@ -113,14 +113,13 @@ export const Detail = (props) => {
         </div>
 
         <div className={css.stickyContainer}>
-          <AddRecipe
+          <DetailAddRecipe
             id={id}
             isOutOfStock={isOutOfStock}
             view={view}
             surcharge={surcharge}
             position={position}
             buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
-            isOnDetailScreen
           />
         </div>
       </div>

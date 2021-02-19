@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import Link from 'Link'
-import { RecipeTileContainer } from '../../components/RecipeTile'
+import { RecipeTileContainer } from '../RecipeTile'
 import { CategoryCarousel } from './CategoryCarousel'
 
 const initialState = {

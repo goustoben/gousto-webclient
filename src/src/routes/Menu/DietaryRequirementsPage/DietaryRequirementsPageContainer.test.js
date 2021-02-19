@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { safeJestMock } from '_testing/mocks'
-import * as recipeListSelectors from '../../selectors/recipeList'
-import * as menuSelectors from '../../selectors/menu'
+import * as recipeListSelectors from '../selectors/recipeList'
+import * as menuSelectors from '../selectors/menu'
 import { DietaryRequirementsPageContainer } from './DietaryRequirementsPageContainer'
 import { DietaryRequirementsPage } from './DietaryRequirementsPage'
 

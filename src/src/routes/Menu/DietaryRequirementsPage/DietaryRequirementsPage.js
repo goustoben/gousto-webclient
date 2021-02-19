@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { CategoriesHeaderContainer } from '../CategoriesHeader'
-import { CategoryCarouselContainer } from '../CategoryCarousel'
-import { DetailOverlayContainer } from '../../DetailOverlay'
-import { VariantRecipeListModalContainer } from '../VariantRecipeListModal'
-import Loading from '../../Loading'
+import { CategoriesHeaderContainer } from '../components/CategoriesHeader'
+import { CategoryCarouselContainer } from '../components/CategoryCarousel'
+import { DetailOverlayContainer } from '../DetailOverlay'
+import { VariantRecipeListModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
+import Loading from '../Loading'
 import css from './DietaryRequirements.css'
 
 export const DietaryRequirementsPage = (props) => {
