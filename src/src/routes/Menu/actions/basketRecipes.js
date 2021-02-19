@@ -4,13 +4,13 @@ import { limitReached } from 'utils/basket'
 import { trackUserAddRemoveRecipe } from 'actions/loggingmanager'
 import status from '../../../actions/status'
 import { getCurrentCollectionId } from '../selectors/collections'
-import { getBasketRecipes , getBasketPostcode} from '../../../selectors/basket'
+import { getBasketPostcode} from '../../../selectors/basket'
 import { actionTypes } from '../../../actions/actionTypes'
 import pricingActions from '../../../actions/pricing'
 import * as trackingKeys from '../../../actions/trackingKeys'
 import { getUTMAndPromoCode } from '../../../selectors/tracking'
 import { getBasketNotValidError } from '../../../selectors/status'
-import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/menu'
+import { validateMenuLimitsForBasket } from '../selectors/menu'
 import { clearBasketNotValidError } from './menuCheckoutClick'
 import { menuRecipeDetailVisibilityChange } from './menuRecipeDetails'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
@@ -105,15 +105,13 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
 
 export const basketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, orderId) => (
   (dispatch, getState) => {
-    const menuLimitsForBasket = getMenuLimitsForBasket(getState())
-    const basketRecipes = getBasketRecipes(getState())
+    const state = getState()
     const basketBreakingRules = {
       errorTitle: 'Oven Ready meals',
       recipeId,
-      rules: []
+      rules: validateMenuLimitsForBasket(state, recipeId)
     }
-    basketBreakingRules.rules = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, basketRecipes)
-    const shouldCloseDetailsScreen = basketBreakingRules.rules.length && getMenuRecipeIdForDetails(getState())
+    const shouldCloseDetailsScreen = basketBreakingRules.rules.length && getMenuRecipeIdForDetails(state)
 
     if (shouldCloseDetailsScreen) {
       dispatch(menuRecipeDetailVisibilityChange())

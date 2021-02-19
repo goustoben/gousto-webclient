@@ -14,6 +14,7 @@ import { trackAffiliatePurchase } from 'actions/tracking'
 import { skipDelivery } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
+import * as menuOrderSelectors from 'routes/Menu/selectors/order'
 
 import {
   trackOrder,
@@ -75,21 +76,15 @@ const { pending, error } = actionStatus
 
 describe('order actions', () => {
   let orderId
-  let recipes
   let coreDayId
   let coreSlotId
-  let numPortions
-  let orderAction
   let dispatch
   const getState = jest.fn()
 
   beforeEach(() => {
     orderId = '12345'
-    recipes = [1, 2, 3, 4, 5]
     coreDayId = 3
     coreSlotId = 8
-    numPortions = 3
-    orderAction = 'transaction'
     dispatch = jest.fn()
     fetchOrder.mockClear()
 
@@ -106,7 +101,8 @@ describe('order actions', () => {
       }),
       basket: Immutable.Map({
         date: '2019-10-11',
-        slotId: '4'
+        slotId: '4',
+        orderId: 'order-id',
       }),
       onScreenRecovery: Immutable.Map({
         valueProposition: 'mock-value-proposition',
@@ -271,11 +267,18 @@ describe('order actions', () => {
   })
 
   describe('orderUpdate', () => {
+    let spyGetOrderForUpdateOrderV1
+
+    beforeEach(() => {
+      spyGetOrderForUpdateOrderV1 = jest.spyOn(menuOrderSelectors, 'getOrderForUpdateOrderV1').mockImplementation(jest.fn)
+    })
+
     test('should mark ORDER_SAVE as pending', async () => {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve(resolve) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+      await orderUpdate()(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
       expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
@@ -287,7 +290,8 @@ describe('order actions', () => {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => { reject(err) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+      await orderUpdate()(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(3)
       expect(pending).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', true)
@@ -297,86 +301,42 @@ describe('order actions', () => {
       expect(error).toHaveBeenCalledTimes(2)
       expect(error).toHaveBeenNthCalledWith(1, 'ORDER_SAVE', null)
       expect(error).toHaveBeenNthCalledWith(2, 'ORDER_SAVE', err.message)
-      expect(dispatch.mock.calls.length).toEqual(5)
+      expect(dispatch).toBeCalledTimes(5)
     })
 
     test('should map the arguments through to saveOrder correctly', async () => {
-      const order = {
-        recipe_choices: [
-          { id: 1, type: 'Recipe', quantity: 3 },
-          { id: 2, type: 'Recipe', quantity: 3 },
-          { id: 3, type: 'Recipe', quantity: 3 },
-          { id: 4, type: 'Recipe', quantity: 3 },
-          { id: 5, type: 'Recipe', quantity: 3 },
-        ],
-        order_action: 'transaction',
-        delivery_slot_id: 8,
-        delivery_day_id: 3,
-        day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-        address_id: null
-      }
+      spyGetOrderForUpdateOrderV1.mockReturnValue({ id: 'order_id' })
 
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+      await orderUpdate()(dispatch, getState)
 
+      expect(spyGetOrderForUpdateOrderV1).toBeCalledWith(getState())
+      expect(spyGetOrderForUpdateOrderV1).toHaveBeenCalledTimes(1)
       expect(saveOrder).toHaveBeenCalledTimes(1)
-      expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)
+      expect(saveOrder).toHaveBeenCalledWith('access-token', 'order-id', { id: 'order_id' })
     })
 
     test('should redirect the user to the order summary page if it succeeds', async () => {
-      orderAction = 'something'
+      spyGetOrderForUpdateOrderV1.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
+        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+      await orderUpdate()(dispatch, getState)
 
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(
-        '5678',
-        'something',
+        'order_id',
+        'order_action',
       )
     })
 
     test('should call sendClientMetric with correct details', async () => {
-      orderAction = 'something'
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
+        new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+      await orderUpdate()(dispatch, getState)
 
       expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-complete', 1, 'Count')
-    })
-
-    describe('when customer choseAddress', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          auth: Immutable.Map({ accessToken: 'access-token' }),
-          basket: Immutable.fromJS({
-            chosenAddress: {
-              id: '1234'
-            }
-          })
-        })
-      })
-
-      test('should send address_id to saveOrder', async () => {
-        const order = {
-          recipe_choices: [
-            { id: 1, type: 'Recipe', quantity: 3 },
-            { id: 2, type: 'Recipe', quantity: 3 },
-            { id: 3, type: 'Recipe', quantity: 3 },
-            { id: 4, type: 'Recipe', quantity: 3 },
-            { id: 5, type: 'Recipe', quantity: 3 },
-          ],
-          order_action: 'transaction',
-          delivery_slot_id: 8,
-          delivery_day_id: 3,
-          day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-          address_id: '1234'
-        }
-
-        await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
-
-        expect(saveOrder).toHaveBeenCalledWith('access-token', '12345', order)
-      })
     })
   })
 

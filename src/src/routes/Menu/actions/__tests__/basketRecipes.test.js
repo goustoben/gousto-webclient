@@ -485,14 +485,13 @@ describe('validBasketRecipeAdd', () => {
 })
 
 describe('basketRecipeAdd', () => {
-  let validateRecipeAgainstRuleSpy
+  let validateMenuLimitsForBasketSpy
   let state
   let getStateSpy
   let dispatch
 
   beforeEach(() => {
-    safeJestMock(menuSelectors, 'getMenuLimitsForBasket')
-    validateRecipeAgainstRuleSpy = safeJestMock(menuSelectors, 'validateRecipeAgainstRule')
+    validateMenuLimitsForBasketSpy = jest.spyOn(menuSelectors, 'validateMenuLimitsForBasket')
     state = {
       basket: Immutable.Map({
         123: 1,
@@ -508,31 +507,39 @@ describe('basketRecipeAdd', () => {
 
   describe('when there are no rules that will break the basket ', () => {
     beforeEach(() => {
-      safeJestMock(loggingmanagerActions, 'trackUserAddRemoveRecipe')
-      safeJestMock(basketActions, 'validBasketRecipeAdd')
+      jest.spyOn(loggingmanagerActions, 'trackUserAddRemoveRecipe')
+      jest.spyOn(basketActions, 'validBasketRecipeAdd')
         .mockReturnValue('mockedValidBasketRecipeAddReturn')
-      validateRecipeAgainstRuleSpy.mockReturnValue([])
-      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+      validateMenuLimitsForBasketSpy.mockReturnValue([])
     })
 
     afterEach(() => {
       jest.resetAllMocks()
     })
 
+    test('then it should call validateMenuLimitsForBasket', () => {
+      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+
+      expect(validateMenuLimitsForBasketSpy).toBeCalledWith(state, '123')
+    })
+
     test('then it should dispatch validBasketRecipeAdd', () => {
+      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+
       expect(dispatch).toHaveBeenCalledWith('mockedValidBasketRecipeAddReturn')
     })
 
     test('then trackUserAddRemoveRecipe is called correctly', () => {
+      basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+
       expect(loggingmanagerActions.trackUserAddRemoveRecipe).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('when there are rules that will break the basket ', () => {
     beforeEach(() => {
-      safeJestMock(basketActions, 'validBasketRecipeAdd')
-        .mockReturnValue('mockedValidBasketRecipeAddReturn')
-      validateRecipeAgainstRuleSpy.mockReturnValue([
+      jest.spyOn(basketActions, 'validBasketRecipeAdd').mockReturnValue('mockedValidBasketRecipeAddReturn')
+      validateMenuLimitsForBasketSpy.mockReturnValue([
         {
           items: ['3037'],
           message: 'Only 1 oven ready meal is available per order',
@@ -552,6 +559,8 @@ describe('basketRecipeAdd', () => {
 
     test('then it should dispatch validBasketRecipeAdd', () => {
       basketActions.basketRecipeAdd('123', 'view', {}, 4)(dispatch, getStateSpy)
+
+      expect(validateMenuLimitsForBasketSpy).toBeCalledWith(state, '123')
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(
         {

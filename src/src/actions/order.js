@@ -8,9 +8,9 @@ import { redirect } from 'utils/window'
 import {
   getNDDFeatureValue,
 } from 'selectors/features'
-import { getChosenAddressId } from 'selectors/basket'
 import { orderTrackingActions } from 'config/order'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
+import { getOrderForUpdateOrderV1 } from 'routes/Menu/selectors/order'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -18,7 +18,6 @@ import { orderConfirmationRedirect } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
 import { sendClientMetric } from '../routes/Menu/apis/clientMetrics'
 import { anyUnset } from '../utils/object'
-
 import {
   saveOrder,
   checkoutOrder,
@@ -27,6 +26,8 @@ import {
 
 import { fetchDeliveryDays } from '../apis/deliveries'
 import * as userApi from '../apis/user'
+import { getAccessToken } from '../selectors/auth'
+import { getBasketOrderId } from '../selectors/basket'
 
 import { isOptimizelyFeatureEnabledFactory } from '../containers/OptimizelyRollouts/optimizelyUtils'
 import { deleteOrder } from '../routes/Menu/apis/rockets-orderV2'
@@ -88,48 +89,37 @@ export const cancelledAllBoxesModalToggleVisibility = (visibility) => ({
   visibility,
 })
 
-export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction) => (
-  async (dispatch, getState) => {
-    dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
-    dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
+export const orderUpdate = () => async (dispatch, getState) => {
+  dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
+  dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
 
-    const { basket, boxSummaryDeliveryDays } = getState()
-    const date = basket.get('date')
-    const slotId = basket.get('slotId')
-    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
-    const chosenAddressId = getChosenAddressId({ basket })
+  const state = getState()
+  const accessToken = getAccessToken(state)
+  const orderId = getBasketOrderId(state)
+  const order = getOrderForUpdateOrderV1(state)
+  const orderAction = order.order_action
 
-    const order = {
-      recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
-      order_action: orderAction,
-      delivery_slot_id: coreSlotId,
-      delivery_day_id: coreDayId,
-      day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
-      address_id: chosenAddressId
+  try {
+    const { data: savedOrder } = await saveOrder(accessToken, orderId, order)
+
+    if (savedOrder && savedOrder.id) {
+      dispatch(trackOrder(
+        orderAction,
+        savedOrder,
+      ))
+
+      sendClientMetric('menu-edit-complete', 1, 'Count')
+
+      dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
     }
-
-    const accessToken = getState().auth.get('accessToken')
-    try {
-      const { data: savedOrder } = await saveOrder(accessToken, orderId, order)
-
-      if (savedOrder && savedOrder.id) {
-        dispatch(trackOrder(
-          orderAction,
-          savedOrder,
-        ))
-
-        sendClientMetric('menu-edit-complete', 1, 'Count')
-
-        dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
-      }
-    } catch (err) {
-      logger.error({ message: 'saveOrder api call failed, logging error below...' })
-      logger.error(err)
-      dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
-      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-    }
-    dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
-  })
+  } catch (err) {
+    logger.error({ message: 'saveOrder api call failed, logging error below...' })
+    logger.error(err)
+    dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
+    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
+  }
+  dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
+}
 
 export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, slotDate, availableDeliveryDays) => (
   async (dispatch, getState) => {

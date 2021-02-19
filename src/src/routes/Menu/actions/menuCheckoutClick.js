@@ -1,83 +1,57 @@
-import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import { basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout } from 'actions/basket'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
 import { checkoutTransactionalOrder } from 'actions/checkout'
 import status from 'actions/status'
 import { orderUpdate } from 'actions/order'
-import { getBasketRecipes, getNumPortions } from 'selectors/basket'
 import { getIsAuthenticated } from 'selectors/auth'
-import { getSlot } from 'utils/deliveries'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
-import { getMenuLimitsForBasket, validateRecipeAgainstRule } from '../selectors/menu'
+import { sendUpdateOrder } from 'routes/Menu/actions/order'
+import { validateMenuLimitsForBasket } from '../selectors/menu'
+import { getBasketOrderId } from '../../../selectors/basket'
 
 export const isOrderApiCreateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_create_web_enabled')
 
 export const isOrderApiUpdateEnabled = isOptimizelyFeatureEnabledFactory('radishes_order_api_update_web_enabled')
 
-const expandRecipeArrayForQuantity = (recipes) => (
-  recipes.reduce((recipesArray, qty, recipeId) => {
-    for (let i = 1; i <= qty; i++) {
-      recipesArray.push(recipeId)
-    }
-
-    return recipesArray
-  }, [])
-)
-
-const getOrderAction = (userOrders, orderId) => {
-  const userOrder = userOrders.find(order => order.get('id') === orderId)
-  const recipeAction = (userOrder && userOrder.get('recipeItems').size > 0) ? 'update' : 'choice'
-  const orderAction = orderId ? `recipe-${recipeAction}` : 'create'
-
-  return orderAction
-}
-
-const getCoreSlotId = (deliveryDays, date, slotId) => {
-  const slot = getSlot(deliveryDays, date, slotId)
-  let coreSlotId = ''
-  if (slot) {
-    coreSlotId = slot.get('coreSlotId', '')
-  }
-
-  return coreSlotId
-}
-
-export const checkoutBasket = (section, view) => (dispatch, getState) => {
-  const { boxSummaryDeliveryDays, basket, user, auth } = getState()
-  const isAuthenticated = getIsAuthenticated({ auth })
-  const slotId = getCoreSlotId(boxSummaryDeliveryDays, basket.get('date'), basket.get('slotId'))
-  const deliveryDayId = boxSummaryDeliveryDays.getIn([basket.get('date'), 'coreDayId'])
-  const orderId = basket.get('orderId')
-  const userOrders = user.get('orders', Immutable.List([]))
-  const recipes = getBasketRecipes({ basket })
-  const numPortions = getNumPortions({ basket })
-  const menuLimitsForBasket = getMenuLimitsForBasket(getState())
+export const checkoutBasket = (section, view) => async (dispatch, getState) => {
+  const state = getState()
+  const isAuthenticated = getIsAuthenticated(state)
+  const orderId = getBasketOrderId(state)
+  const rules = validateMenuLimitsForBasket(state)
 
   dispatch(boxSummaryVisibilityChange(false))
-  dispatch(basketCheckedOut(recipes.size, view))
+  dispatch(basketCheckedOut(view))
   dispatch(basketCheckoutClicked(section))
 
-  const basketBreakingRules = {
-    errorTitle: 'Basket Not Valid',
-    recipeId: null,
-    rules: []
-  }
-
-  basketBreakingRules.rules = validateRecipeAgainstRule(menuLimitsForBasket, null, recipes)
-
-  if (basketBreakingRules.rules.length) {
-    dispatch(status.error(actionTypes.BASKET_NOT_VALID, basketBreakingRules))
+  if (rules.length !== 0) {
+    dispatch(status.error(actionTypes.BASKET_NOT_VALID, {
+      errorTitle: 'Basket Not Valid',
+      recipeId: null,
+      rules
+    }))
 
     return
   }
 
-  if (orderId) {
-    dispatch(orderUpdate(orderId, expandRecipeArrayForQuantity(recipes), deliveryDayId, slotId, numPortions, getOrderAction(userOrders, orderId)))
-  } else if (!isAuthenticated) {
+  if (!orderId && !isAuthenticated) {
     dispatch(basketProceedToCheckout())
-  } else {
+
+    return
+  }
+
+  if (!orderId) {
     dispatch(checkoutTransactionalOrder('create'))
+
+    return
+  }
+
+  const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
+
+  if (isEnabled) {
+    dispatch(sendUpdateOrder())
+  } else {
+    dispatch(orderUpdate())
   }
 }
 

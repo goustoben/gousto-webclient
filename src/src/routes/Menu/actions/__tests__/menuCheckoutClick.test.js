@@ -4,7 +4,7 @@ import * as boxSummaryActions from 'actions/boxSummary'
 import * as menuCheckoutActions from 'routes/Menu/actions/checkout'
 import * as orderActions from 'actions/order'
 import optimizelySdk from '@optimizely/optimizely-sdk'
-import { safeJestMock, returnArgumentsFromMock } from '../../../../_testing/mocks'
+import * as menuActions from 'routes/Menu/actions/order'
 import {
   isOrderApiCreateEnabled,
   isOrderApiUpdateEnabled,
@@ -13,12 +13,17 @@ import {
 } from '../menuCheckoutClick'
 import * as menuSelectors from '../../selectors/menu'
 
+// The first spec to create optimizely instance will point to this function.
+// as we memories the optimizely instances onces created.
+// see: getOptimizelyInstance in src/containers/OptimizelyRollouts/optimizelySDK.js
+const isFeatureEnabled = jest.fn()
+
 describe('feature flags', () => {
-  const isFeatureEnabled = jest.fn().mockReturnValue(true)
   const getState = jest.fn().mockReturnValue({ auth: Map({ id: 'user_id' }) })
   const dispatch = jest.fn()
 
   beforeEach(() => {
+    isFeatureEnabled.mockReturnValue(true)
     jest.spyOn(optimizelySdk, 'createInstance')
       .mockReturnValue({ onReady: () => ({ success: true }), isFeatureEnabled })
   })
@@ -49,258 +54,185 @@ describe('feature flags', () => {
 describe('checkoutBasket', () => {
   let state
   const dispatch = jest.fn()
-  let getState = () => state
+  const getState = jest.fn()
+  let basketCheckedOutSpy
+  let basketCheckoutClickedSpy
+  let basketProceedToCheckoutSpy
+  let boxSummaryVisibilityChangeSpy
+  let checkoutTransactionalOrderSpy
+  let validateMenuLimitsForBasketSpy
 
   beforeEach(() => {
     state = {
-      boxSummaryDeliveryDays: Immutable.fromJS({
-        '2020-04-17': {
-          id: 'day-id-1234',
-          date: '2020-04-17',
-          coreDayId: '2314',
-          slots: [{
-            whenCutoff: '2020-04-14T11:59:59+01:00',
-            cutoffDay: 2,
-            coreSlotId: 4,
-            id: 'slot-id-date-17'
-          }]
-        }
-      }),
       basket: Immutable.fromJS({
-        date: '2020-04-17',
-        slotId: 'slot-id-date-17',
         orderId: '',
-        recipes: {
-          123: 1,
-          324: 2
-        },
-        numPortion: 2,
-        currentMenuId: 321,
-      }),
-      user: Immutable.fromJS({
-        orders: []
       }),
       auth: Immutable.fromJS({
+        id: 'user_id',
         isAuthenticated: true
       }),
-      menu: Immutable.fromJS({
-        menuLimits: {
-          321: {
-            limits: []
-          }
-        }
-      })
     }
-    getState = () => state
+    getState.mockReturnValue(state)
 
-    const orderUpdateSpy = safeJestMock(orderActions, 'orderUpdate')
-    returnArgumentsFromMock(orderUpdateSpy, 'orderUpdate')
-
-    const checkoutTransactionalOrderSpy = safeJestMock(menuCheckoutActions, 'checkoutTransactionalOrder')
-    returnArgumentsFromMock(checkoutTransactionalOrderSpy, 'checkoutTransactionalOrder')
-
-    const basketProceedToCheckoutSpy = safeJestMock(basketActions, 'basketProceedToCheckout')
-    returnArgumentsFromMock(basketProceedToCheckoutSpy, 'basketProceedToCheckout')
-
-    const basketCheckedOutSpy = safeJestMock(basketActions, 'basketCheckedOut')
-    returnArgumentsFromMock(basketCheckedOutSpy, 'basketCheckedOut')
-
-    const basketCheckoutClickedSpy = safeJestMock(basketActions, 'basketCheckoutClicked')
-    returnArgumentsFromMock(basketCheckoutClickedSpy, 'basketCheckoutClicked')
-
-    const boxSummaryVisibilityChangeSpy = safeJestMock(boxSummaryActions, 'boxSummaryVisibilityChange')
-    returnArgumentsFromMock(boxSummaryVisibilityChangeSpy, 'boxSummaryVisibilityChange')
+    basketCheckedOutSpy = jest.spyOn(basketActions, 'basketCheckedOut').mockImplementation()
+    basketCheckoutClickedSpy = jest.spyOn(basketActions, 'basketCheckoutClicked').mockImplementation()
+    basketProceedToCheckoutSpy = jest.spyOn(basketActions, 'basketProceedToCheckout').mockImplementation()
+    boxSummaryVisibilityChangeSpy = jest.spyOn(boxSummaryActions, 'boxSummaryVisibilityChange').mockImplementation()
+    checkoutTransactionalOrderSpy = jest.spyOn(menuCheckoutActions, 'checkoutTransactionalOrder').mockImplementation()
+    validateMenuLimitsForBasketSpy = jest.spyOn(menuSelectors, 'validateMenuLimitsForBasket').mockReturnValue([])
   })
 
-  test('should dispatch boxSummaryVisibilityChange with false', () => {
-    checkoutBasket('menu', '')(dispatch, getState)
-    expect(dispatch).toHaveBeenCalledWith(['boxSummaryVisibilityChange', [false]])
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
-  test('should dispatch basketCheckedOut with false', () => {
-    checkoutBasket('menu', '')(dispatch, getState)
-    expect(dispatch).toHaveBeenCalledWith(['basketCheckedOut', [2, '']])
+  afterAll(() => {
+    jest.restoreAllMocks()
   })
 
-  test('should dispatch basketCheckedOut with false', () => {
-    checkoutBasket('menu', '')(dispatch, getState)
-    expect(dispatch).toHaveBeenCalledWith(['basketCheckoutClicked', ['menu']])
+  test('should dispatch boxSummaryVisibilityChange with false', async () => {
+    const boxSummaryVisibilityChangeMock = jest.fn()
+    boxSummaryVisibilityChangeSpy.mockReturnValue(boxSummaryVisibilityChangeMock)
+
+    await checkoutBasket('menu', 'view')(dispatch, getState)
+
+    expect(boxSummaryVisibilityChangeSpy).toHaveBeenCalledWith(false)
+    expect(dispatch).toHaveBeenCalledWith(boxSummaryVisibilityChangeMock)
+  })
+
+  test('should dispatch basketCheckedOut with the view', async () => {
+    const basketCheckedOutMock = jest.fn()
+    basketCheckedOutSpy.mockReturnValue(basketCheckedOutMock)
+
+    await checkoutBasket('menu', 'view')(dispatch, getState)
+
+    expect(basketCheckedOutSpy).toHaveBeenCalledWith('view')
+    expect(dispatch).toHaveBeenCalledWith(basketCheckedOutMock)
+  })
+
+  test('should dispatch basketCheckoutClicked with the section', async () => {
+    const basketCheckoutClickedMock = jest.fn()
+    basketCheckoutClickedSpy.mockReturnValue(basketCheckoutClickedMock)
+
+    await checkoutBasket('menu', 'view')(dispatch, getState)
+
+    expect(basketCheckoutClickedSpy).toHaveBeenCalledWith('menu')
+    expect(dispatch).toHaveBeenCalledWith(basketCheckoutClickedMock)
   })
 
   describe('when no basket rules are broken', () => {
-    beforeEach(() => {
-      safeJestMock(menuSelectors, 'getMenuLimitsForBasket')
+    describe('when orderId is available', () => {
+      describe('when user is authenticated', () => {
+        beforeEach(() => {
+          state = {
+            basket: Immutable.fromJS({
+              orderId: '1234567',
+            }),
+            auth: Immutable.fromJS({
+              id: 'user_id',
+              isAuthenticated: true
+            }),
+          }
 
-      const validateRecipeAgainstRuleSpy = safeJestMock(menuSelectors, 'validateRecipeAgainstRule')
-      validateRecipeAgainstRuleSpy.mockReturnValue([])
+          jest.spyOn(optimizelySdk, 'createInstance')
+            .mockReturnValue({ onReady: () => ({ success: true }), isFeatureEnabled })
+
+          getState.mockReturnValue(state)
+        })
+
+        test('should dispatch orderUpdate', async () => {
+          isFeatureEnabled.mockReturnValue(false)
+
+          const orderUpdateMock = jest.fn()
+          const orderUpdateSpy = jest.spyOn(orderActions, 'orderUpdate').mockReturnValue(orderUpdateMock)
+
+          await checkoutBasket('menu', 'orderUpdate')(dispatch, getState)
+
+          expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+          expect(orderUpdateSpy).toBeCalled()
+          expect(dispatch).toHaveBeenCalledWith(orderUpdateMock)
+        })
+
+        describe('when update OrderAPI V1 feature flag returns true', () => {
+          test('should dispatch sendUpdateOrder', async () => {
+            isFeatureEnabled.mockReturnValue(true)
+
+            const sendUpdateOrderMock = jest.fn()
+            const sendUpdateOrderSpy = jest.spyOn(menuActions, 'sendUpdateOrder').mockReturnValue(sendUpdateOrderMock)
+
+            await checkoutBasket('menu', 'sendUpdateOrder')(dispatch, getState)
+
+            expect(isFeatureEnabled).toBeCalledWith('radishes_order_api_update_web_enabled', 'user_id')
+            expect(sendUpdateOrderSpy).toBeCalled()
+            expect(dispatch).toHaveBeenCalledWith(sendUpdateOrderMock)
+          })
+        })
+      })
     })
 
-    describe('when has orderId', () => {
+    describe('when not orderId is available', () => {
+      describe('when user is not authenticated', () => {
+        beforeEach(() => {
+          state = {
+            basket: Immutable.fromJS({
+              orderId: '',
+            }),
+            auth: Immutable.fromJS({
+              isAuthenticated: false
+            }),
+          }
+
+          getState.mockReturnValue(state)
+        })
+
+        test('should dispatch basketProceedToCheckout', async () => {
+          const basketProceedToCheckoutMock = jest.fn()
+          basketProceedToCheckoutSpy.mockReturnValue(basketProceedToCheckoutMock)
+
+          await checkoutBasket('menu', '')(dispatch, getState)
+
+          expect(basketProceedToCheckoutSpy).toBeCalled()
+          expect(dispatch).toHaveBeenCalledWith(basketProceedToCheckoutMock)
+        })
+      })
+    })
+
+    describe('when is authenticated', () => {
       beforeEach(() => {
         state = {
-          boxSummaryDeliveryDays: Immutable.fromJS({
-            '2020-04-17': {
-              id: 'day-id-1234',
-              date: '2020-04-17',
-              coreDayId: '2314',
-              slots: [{
-                whenCutoff: '2020-04-14T11:59:59+01:00',
-                cutoffDay: 2,
-                coreSlotId: 4,
-                id: 'slot-id-date-17'
-              }]
-            }
-          }),
           basket: Immutable.fromJS({
-            date: '2020-04-17',
             slotId: 'slot-id-date-17',
-            orderId: '1234567',
-            recipes: {
-              123: 1,
-              324: 2
-            },
-            numPortions: 2,
-            currentMenuId: 321,
-          }),
-          user: Immutable.fromJS({
-            orders: [{
-              id: '1234567',
-              recipeItems: []
-            }]
           }),
           auth: Immutable.fromJS({
             isAuthenticated: true
           }),
-          menu: Immutable.fromJS({
-            menuLimits: {
-              321: {
-                limits: []
-              }
-            }
-          })
         }
 
-        getState = () => state
+        getState.mockReturnValue(state)
       })
 
-      test('should dispatch orderUpdate', () => {
-        checkoutBasket('menu', '')(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith(['orderUpdate', ['1234567', ['123', '324', '324'], '2314', 4, 2, 'recipe-choice']])
-      })
-    })
+      test('should dispatch checkoutTransactionalOrder', async () => {
+        const checkoutTransactionalOrderMock = jest.fn()
+        checkoutTransactionalOrderSpy.mockReturnValue(checkoutTransactionalOrderMock)
 
-    describe('when no authentificated', () => {
-      beforeEach(() => {
-        state = {
-          boxSummaryDeliveryDays: Immutable.fromJS({
-            '2020-04-17': {
-              id: 'day-id-1234',
-              date: '2020-04-17',
-              coreDayId: '2314',
-              slots: [{
-                whenCutoff: '2020-04-14T11:59:59+01:00',
-                cutoffDay: 2,
-                coreSlotId: 4,
-                id: 'slot-id-date-17'
-              }]
-            }
-          }),
-          basket: Immutable.fromJS({
-            date: '2020-04-17',
-            slotId: 'slot-id-date-17',
-            orderId: '',
-            recipes: {
-              123: 1,
-              324: 2
-            },
-            numPortions: 2,
-            currentMenuId: 321,
-          }),
-          user: Immutable.fromJS({}),
-          auth: Immutable.fromJS({
-            isAuthenticated: false
-          }),
-          menu: Immutable.fromJS({
-            menuLimits: {
-              321: {
-                limits: []
-              }
-            }
-          })
-        }
+        await checkoutBasket('menu', '')(dispatch, getState)
 
-        getState = () => state
-      })
-
-      test('should dispatch basketProceedToCheckout', () => {
-        checkoutBasket('menu', '')(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith(['basketProceedToCheckout', []])
-      })
-    })
-
-    describe('when is authentificated', () => {
-      beforeEach(() => {
-        state = {
-          boxSummaryDeliveryDays: Immutable.fromJS({
-            '2020-04-17': {
-              id: 'day-id-1234',
-              date: '2020-04-17',
-              coreDayId: '2314',
-              slots: [{
-                whenCutoff: '2020-04-14T11:59:59+01:00',
-                cutoffDay: 2,
-                coreSlotId: 4,
-                id: 'slot-id-date-17'
-              }]
-            }
-          }),
-          basket: Immutable.fromJS({
-            date: '2020-04-17',
-            slotId: 'slot-id-date-17',
-            orderId: '',
-            recipes: {
-              123: 1,
-              324: 2
-            },
-            numPortions: 2,
-          }),
-          user: Immutable.fromJS({}),
-          auth: Immutable.fromJS({
-            isAuthenticated: true
-          }),
-          menu: Immutable.fromJS({
-            menuLimits: {
-              321: {
-                limits: []
-              }
-            }
-          })
-        }
-
-        getState = () => state
-      })
-
-      test('should dispatch basketProceedToCheckout', () => {
-        checkoutBasket('menu', '')(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith(['checkoutTransactionalOrder', ['create']])
+        expect(checkoutTransactionalOrderSpy).toBeCalledWith('create')
+        expect(dispatch).toHaveBeenCalledWith(checkoutTransactionalOrderMock)
       })
     })
   })
 
   describe('when menu has broken rules', () => {
-    beforeEach(() => {
-      safeJestMock(menuSelectors, 'getMenuLimitsForBasket')
-
-      const validateRecipeAgainstRuleSpy = safeJestMock(menuSelectors, 'validateRecipeAgainstRule')
-      validateRecipeAgainstRuleSpy.mockReturnValue([{
+    test('should dispatch BASKET_NOT_VALID with validation response', async () => {
+      validateMenuLimitsForBasketSpy.mockReturnValue([{
         items: ['123'],
         message: 'Only 1 oven ready meal is available per order',
         name: 'charlie-binghams-basket-limit'
       }])
-    })
 
-    test('should dispatch BASKET_NOT_VALID with validation response', () => {
-      checkoutBasket('menu', '')(dispatch, getState)
+      await checkoutBasket('menu', '')(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledWith({
         key: 'BASKET_NOT_VALID',
         type: 'ERROR',
@@ -320,7 +252,9 @@ describe('checkoutBasket', () => {
 describe('clearBasketNotValidError', () => {
   test('should dispatch error BASKET_NOT_VALID with null', () => {
     const dispatch = jest.fn()
+
     clearBasketNotValidError()(dispatch)
+
     expect(dispatch).toHaveBeenCalledWith({
       key: 'BASKET_NOT_VALID',
       type: 'ERROR',

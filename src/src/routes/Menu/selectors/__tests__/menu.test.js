@@ -1,8 +1,11 @@
 import Immutable from 'immutable'
 import {
-  activeMenuForDate, getMenuLimitsForBasket,
-  validateRecipeAgainstRule, getCurrentMenuRecipes,
-  getActiveMenuIdForOrderDate, isMenuLoading,
+  activeMenuForDate,
+  getMenuLimitsForBasket,
+  validateMenuLimitsForBasket,
+  getCurrentMenuRecipes,
+  getActiveMenuIdForOrderDate,
+  isMenuLoading,
   getCategoryIdForVariants
 } from '../menu'
 
@@ -411,92 +414,86 @@ describe('getMenuLimitsForBasket', () => {
   })
 })
 
-describe('validateRecipeAgainstRule', () => {
-  let menuLimitsForBasket
-  let recipeId
-  let basketRecipes
+describe('validateMenuLimitsForBasket', () => {
+  const createState = ({ recipes = {} }) => ({
+    basket: Immutable.fromJS({
+      currentMenuId: '340',
+      numPortions: 2,
+      recipes: Immutable.fromJS(recipes),
+    }),
+    menu: Immutable.Map({
+      menuLimits: {
+        340: {
+          limits: [{
+            name: 'charlie-binghams-basket-limit',
+            rules: {
+              per2: {
+                value: 1,
+                description: 'Only 1 oven ready meal is available per order',
+              },
+              per4: {
+                value: 1,
+                description: 'Only 1 oven ready meal is available per order',
+              }
+            },
+            items: [
+              {
+                type: 'recipe',
+                core_recipe_id: '3037'
+              },
+              {
+                type: 'recipe',
+                core_recipe_id: '3038'
+              },
+            ]
+          },
+          {
+            name: 'new-rule',
+            rules: {
+              per2: {
+                value: 1,
+                description: 'Only 1 new-rule meal is available per order',
+              },
+              per4: {
+                value: 1,
+                description: 'Only 1 new-rule meal is available per order',
+              }
+            },
+            items: [
+              {
+                type: 'recipe',
+                core_recipe_id: '3037'
+              }
+            ]
+          },]
+        }
+      },
+    }),
+  })
 
   describe('when no recipes in basket', () => {
-    beforeEach(() => {
-      menuLimitsForBasket = [
-        {
-          name: 'charlie-binghams-basket-limit',
-          limitProps: {
-            value: 1,
-            description: 'Only 1 oven ready meal is available per order'
-          },
-          items: [
-            {
-              type: 'recipe',core_recipe_id: '3037'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3038'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3039'
-            }
-          ]
-        }
-      ]
-      recipeId = '3037'
-      basketRecipes = Immutable.fromJS({})
-    })
-
     test('should return emptyArray', () => {
-      const result = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, basketRecipes)
-      expect(result).toEqual([])
+      const state = createState({})
+      const recipeId = '12343'
+
+      const validationRules = validateMenuLimitsForBasket(state, recipeId)
+
+      expect(validationRules).toEqual([])
     })
   })
 
   describe('when rules break', () => {
     beforeEach(() => {
-      menuLimitsForBasket = [
-        {
-          name: 'charlie-binghams-basket-limit',
-          limitProps: {
-            value: 1,
-            description: 'Only 1 oven ready meal is available per order'
-          },
-          items: [
-            {
-              type: 'recipe',core_recipe_id: '3037'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3038'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3039'
-            }
-          ]
-        },
-        {
-          name: 'new-rule',
-          limitProps: {
-            value: 1,
-            description: 'Only 1 new-rule meal is available per order'
-          },
-          items: [
-            {
-              type: 'recipe',core_recipe_id: '3037'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3038'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3039'
-            }
-          ]
-        }
-      ]
-      recipeId = '3037'
-      basketRecipes = Immutable.fromJS({
-        3037: 1
-      })
+
     })
 
     test('should return broken rules', () => {
-      const result = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, basketRecipes)
-      expect(result).toEqual([
+      const state = createState({ recipes: { 3037: 1 } })
+      const recipeId = '3037'
+
+      const validationRules = validateMenuLimitsForBasket(state, recipeId)
+
+      expect(validationRules).toEqual([
         {
           items: ['3037'],
           message: 'Only 1 oven ready meal is available per order',
@@ -512,103 +509,47 @@ describe('validateRecipeAgainstRule', () => {
   })
 
   describe('when recipe is not in rule break items', () => {
-    beforeEach(() => {
-      menuLimitsForBasket = [
-        {
-          name: 'charlie-binghams-basket-limit',
-          limitProps: {
-            value: 1,
-            description: 'Only 1 oven ready meal is available per order'
-          },
-          items: [
-            {
-              type: 'recipe',core_recipe_id: '3037'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3038'
-            },
-            {
-              type: 'recipe',core_recipe_id: '3039'
-            }
-          ]
-        }
-      ]
-      recipeId = '303'
-      basketRecipes = Immutable.fromJS({
-        3037: 1
-      })
-    })
-
     test('should return emptyArray', () => {
-      const result = validateRecipeAgainstRule(menuLimitsForBasket, recipeId, basketRecipes)
-      expect(result).toEqual([])
+      const state = createState({
+        recipes: Immutable.fromJS({
+          3037: 1
+        })
+      })
+      const recipeId = '303'
+
+      const validationRules = validateMenuLimitsForBasket(state, recipeId)
+
+      expect(validationRules).toEqual([])
     })
   })
 
   describe('when recipeId is not sent', () => {
     describe('when basket is valid', () => {
-      beforeEach(() => {
-        menuLimitsForBasket = [
-          {
-            name: 'charlie-binghams-basket-limit',
-            limitProps: {
-              value: 1,
-              description: 'Only 1 oven ready meal is available per order'
-            },
-            items: [
-              {
-                type: 'recipe',core_recipe_id: '3037'
-              },
-              {
-                type: 'recipe',core_recipe_id: '3038'
-              },
-              {
-                type: 'recipe',core_recipe_id: '3039'
-              }
-            ]
-          }
-        ]
-        basketRecipes = Immutable.fromJS({
-          3037: 1
-        })
-      })
       test('should return emptyArray', () => {
-        const result = validateRecipeAgainstRule(menuLimitsForBasket, null, basketRecipes)
-        expect(result).toEqual([])
+        const state = createState({
+          recipes: Immutable.fromJS({
+            3037: 1
+          })
+        })
+
+        const validationRules = validateMenuLimitsForBasket(state)
+
+        expect(validationRules).toEqual([])
       })
     })
 
     describe('when basket is NOT valid', () => {
-      beforeEach(() => {
-        menuLimitsForBasket = [
-          {
-            name: 'charlie-binghams-basket-limit',
-            limitProps: {
-              value: 1,
-              description: 'Only 1 oven ready meal is available per order'
-            },
-            items: [
-              {
-                type: 'recipe',core_recipe_id: '3037'
-              },
-              {
-                type: 'recipe',core_recipe_id: '3038'
-              },
-              {
-                type: 'recipe',core_recipe_id: '3039'
-              }
-            ]
-          }
-        ]
-        basketRecipes = Immutable.fromJS({
-          3037: 1,
-          3038: 2
-        })
-      })
-
       test('should return broken rules', () => {
-        const result = validateRecipeAgainstRule(menuLimitsForBasket, null, basketRecipes)
-        expect(result).toEqual([
+        const state = createState({
+          recipes: Immutable.fromJS({
+            3037: 1,
+            3038: 1,
+          })
+        })
+
+        const validationRules = validateMenuLimitsForBasket(state)
+
+        expect(validationRules).toEqual([
           {
             items: [ '3037', '3038',],
             message: 'Only 1 oven ready meal is available per order',
