@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
-import { DropdownArrowContainer } from '../../../Recipe/AddRecipe/DropdownArrow'
+import { DropdownArrowContainer } from '../DropdownArrow'
 
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper

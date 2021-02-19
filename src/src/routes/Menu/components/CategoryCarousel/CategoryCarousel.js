@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import css from './CategoryCarousel.css'
-import { RecipeTileContainer } from '../../components/RecipeTile'
+import { RecipeTileContainer } from '../RecipeTile'
 import { CategoryScrollTrackerContainer } from '../CategoryScrollTracker'
+import { CollectionLinkChangeContainer } from '../CollectionLinkChange'
 import { OptimizelyRolloutsContainer } from '../../../../containers/OptimizelyRollouts'
-import { CollectionLinkChangeContainer } from '../../components/CollectionLinkChange'
 
 const CategoryCarousel = ({ category, recipes, categoryButtonClicked, carouselConfig }) => {
   if (!recipes.size) return null

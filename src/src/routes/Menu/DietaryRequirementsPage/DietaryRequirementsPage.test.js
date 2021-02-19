@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import React from 'react'
+import { CategoryCarouselContainer } from '../components/CategoryCarousel'
+import { CategoriesHeaderContainer } from '../components/CategoriesHeader'
+import { DetailOverlayContainer } from '../DetailOverlay'
 import { DietaryRequirementsPage } from './DietaryRequirementsPage'
-import { CategoriesHeaderContainer } from '../CategoriesHeader'
-import { DetailOverlayContainer } from '../../DetailOverlay'
-import { CategoryCarouselContainer } from '../CategoryCarousel'
-import Loading from '../../Loading'
+import Loading from '../Loading'
 
 describe('DietaryRequirementsPage', () => {
   let wrapper

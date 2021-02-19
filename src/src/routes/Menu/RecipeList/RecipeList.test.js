@@ -4,8 +4,8 @@ import Immutable from 'immutable'
 
 import { RecipeList } from './RecipeList'
 import { RecipeTileContainer } from '../components/RecipeTile'
-import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
-import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
+import { CategoryCarouselsListContainer } from './CategoryCarouselsList'
+import { ViewAllRecipesButtonContainer } from './ViewAllRecipesButton'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 jest.mock('actions/tracking', () => ({

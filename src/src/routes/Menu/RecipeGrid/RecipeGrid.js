@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { RecipeListContainer, FilteredRecipeListContainer } from '../RecipeList'
 import { DetailOverlayContainer } from '../DetailOverlay'
-import { CategoriesHeaderContainer } from '../ElevatedMenuExperience/CategoriesHeader'
+import { CategoriesHeaderContainer } from '../components/CategoriesHeader'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 import css from '../Menu.css'

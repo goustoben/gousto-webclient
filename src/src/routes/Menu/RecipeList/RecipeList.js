@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 import { RecipeTileContainer } from '../components/RecipeTile'
-import { CategoryScrollTrackerContainer } from '../ElevatedMenuExperience/CategoryScrollTracker'
-import { CategoryCarouselsListContainer } from '../ElevatedMenuExperience/CategoryCarouselsList'
-import { ViewAllRecipesButtonContainer } from '../ElevatedMenuExperience/ViewAllRecipesButton'
+import { CategoryScrollTrackerContainer } from '../components/CategoryScrollTracker'
+import { CategoryCarouselsListContainer } from './CategoryCarouselsList'
+import { ViewAllRecipesButtonContainer } from './ViewAllRecipesButton'
 import css from './RecipeList.css'
 
 class RecipeList extends React.PureComponent {
