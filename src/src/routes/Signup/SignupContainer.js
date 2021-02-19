@@ -15,7 +15,11 @@ const mapStateToProps = (state, ownProps) => ({
   steps: state.signup.getIn(['wizard', 'steps']),
   isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
   isPricingClarityEnabled: getPricingClarityRedesign(state),
-  orderDiscount: state.promoStore.getIn([state.promoCurrent, 'details', 'discount-whole-order-percent']),
+  orderDiscount: state.promoStore.getIn([
+    state.promoCurrent,
+    'details',
+    'discount-whole-order-percent',
+  ]),
   promoModalVisible: state.promoModalVisible,
   promoBannerState: getPromoBannerState(state),
   isWizardPricePerServingEnabled: getIsWizardPricePerServingEnabled(state),

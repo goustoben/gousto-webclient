@@ -11,6 +11,7 @@
 /.circleci/        @Gousto/frontend-foundations
 /.github/        @Gousto/frontend-foundations
 /.gitignore        @Gousto/frontend-foundations
+/.git-blame-ignore-revs        @Gousto/frontend-foundations
 /src/.babelrc        @Gousto/frontend-foundations
 /src/.bowerrc        @Gousto/frontend-foundations
 /src/bower.json        @Gousto/frontend-foundations

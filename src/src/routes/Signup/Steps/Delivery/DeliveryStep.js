@@ -6,7 +6,11 @@ import classNames from 'classnames'
 import DropdownInput from 'Form/Dropdown'
 
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
-import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
+import {
+  createNextDayDeliveryDays,
+  generateNextDayDeliverySlots,
+  getDateOffset,
+} from 'utils/deliverySlot'
 import { redirect } from 'utils/window'
 import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
@@ -17,35 +21,52 @@ import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
 import { Image } from '../../Image'
 
-const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
-  tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
-)
+const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => {
+  if (!tempDate) {
+    return ''
+  }
 
-const formatDate = (date) => (
-  `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
-)
+  return `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(
+    `${tempDate} ${deliveryEndTime}`
+  ).format('ha')} `
+}
 
-const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, disabledSlots, userHasAvailableSlots) => {
+const formatDate = (date) => `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
+
+const getDeliveryDaysAndSlots = (
+  boxSummaryDeliveryDays,
+  tempDate,
+  disabledSlots,
+  userHasAvailableSlots
+) => {
   const slots = {}
-  const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
-    const date = dd.get('date')
-    slots[date] = dd.get('slots').map(slot => {
-      const isSlotDisabled = !!(disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')))
+  const deliveryDays = boxSummaryDeliveryDays
+    .map((dd) => {
+      const date = dd.get('date')
+      slots[date] = dd
+        .get('slots')
+        .map((slot) => {
+          const isSlotDisabled = !!(
+            disabledSlots && disabledSlots.includes(slot.get('disabledSlotId'))
+          )
 
-      return {
-        label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
-        subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
-        value: slot.get('id'),
-        coreSlotId: slot.get('coreSlotId'),
-        disabled: isSlotDisabled
-      }
-    }).toArray()
-    const disabled = userHasAvailableSlots === false
-    || (dd && dd.get('alternateDeliveryDay') !== null)
-    || slots[date].every(slot => slot.disabled)
+          return {
+            label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
+            subLabel:
+              slot.get('deliveryPrice') === '0.00' ? 'Free' : `£${slot.get('deliveryPrice')}`,
+            value: slot.get('id'),
+            coreSlotId: slot.get('coreSlotId'),
+            disabled: isSlotDisabled,
+          }
+        })
+        .toArray()
+      const disabled =
+        userHasAvailableSlots === false ||
+        (dd && dd.get('alternateDeliveryDay') !== null) ||
+        slots[date].every((slot) => slot.disabled)
 
-    return { date, value: date, disabled, label: formatDate(moment(date))}
-  })
+      return { date, value: date, disabled, label: formatDate(moment(date)) }
+    })
     .toArray()
     .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
 
@@ -70,7 +91,7 @@ const DeliveryStep = ({
   disabledSlots,
   userHasAvailableSlots,
   isTastePreferencesEnabled,
-  isPricingClarityEnabled
+  isPricingClarityEnabled,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -85,7 +106,7 @@ const DeliveryStep = ({
     slots = { ...generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
   }
 
-  const onTempDateChange = date => {
+  const onTempDateChange = (date) => {
     // If the date value has changed
     if (date !== tempDate) {
       // Track the edit
@@ -101,9 +122,7 @@ const DeliveryStep = ({
   }
 
   const onShowRecipe = () => {
-    const nextStep = isTastePreferencesEnabled
-      ? () => redirect('/taste-preferences')
-      : next
+    const nextStep = isTastePreferencesEnabled ? () => redirect('/taste-preferences') : next
 
     boxSummaryDeliverySlotChosen({
       date: tempDate,
@@ -111,7 +130,7 @@ const DeliveryStep = ({
     }).then(nextStep)
   }
 
-  const onTempSlotChange = slotId => {
+  const onTempSlotChange = (slotId) => {
     // If the slot id has changed
     if (slotId !== tempSlotId) {
       // Track the edit
@@ -144,13 +163,11 @@ const DeliveryStep = ({
             <div className={css.container}>
               <div className={`${css.row} ${css.centralize}`}>
                 <Alert type="info">
-                  <Heading type="h3" size="_legacy_medium">Due to extremely high demand, we don’t have any available slots right now.</Heading>
+                  <Heading type="h3" size="_legacy_medium">
+                    Due to extremely high demand, we don’t have any available slots right now.
+                  </Heading>
                   <p>
-                    <a
-                      href={unbounceRoutes.covid}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <a href={unbounceRoutes.covid} target="_blank" rel="noopener noreferrer">
                       Register your interest
                     </a>
                     &nbsp;to be notified when more slots open up or check back soon!
@@ -165,10 +182,17 @@ const DeliveryStep = ({
   }
 
   return (
-    <span className={classNames(signupCss.stepContainer, { [css.pricingClarityRedesign]: isPricingClarityEnabled })} data-testing="signupDeliveryStep">
+    <span
+      className={classNames(signupCss.stepContainer, {
+        [css.pricingClarityRedesign]: isPricingClarityEnabled,
+      })}
+      data-testing="signupDeliveryStep"
+    >
       <div className={signupCss.fullWidth}>
         <div className={classNames(signupCss.header, signupCss.largerSpacing)}>
-          <Heading type="h1" className={signupCss.heading}>{signupConfig.deliveryOptionsStep.title}</Heading>
+          <Heading type="h1" className={signupCss.heading}>
+            {signupConfig.deliveryOptionsStep.title}
+          </Heading>
           {!isPricingClarityEnabled && <Image name="delivery-day" />}
         </div>
         <div className={classNames(signupCss.body, css.body)}>
@@ -202,7 +226,11 @@ const DeliveryStep = ({
         </div>
       </div>
       <div className={signupCss.footer}>
-        <div className={classNames(signupCss.inputContainer, { [css.pricingClarityButton]: isPricingClarityEnabled })}>
+        <div
+          className={classNames(signupCss.inputContainer, {
+            [css.pricingClarityButton]: isPricingClarityEnabled,
+          })}
+        >
           <Button
             data-testing="signupDeliveryCTA"
             disabled={!tempDate || !tempSlotId}

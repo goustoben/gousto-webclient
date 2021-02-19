@@ -15,13 +15,7 @@ import { DeliveryStep } from './DeliveryStep'
 function mapStateToProps(state) {
   const deliveryDaysWithDisabled = addDisabledSlotIds(state.boxSummaryDeliveryDays)
 
-  const landing = getLandingDay(
-    state,
-    true,
-    true,
-    deliveryDaysWithDisabled,
-    false
-  )
+  const landing = getLandingDay(state, true, true, deliveryDaysWithDisabled, false)
 
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
@@ -41,8 +35,8 @@ function mapStateToProps(state) {
 }
 
 const DeliveryStepContainer = connect(mapStateToProps, {
-  setTempDate: date => actions.temp('date', date),
-  setTempSlotId: slotId => actions.temp('slotId', slotId),
+  setTempDate: (date) => actions.temp('date', date),
+  setTempSlotId: (slotId) => actions.temp('slotId', slotId),
   boxSummaryDeliverySlotChosen,
   trackDeliveryDayDropDownOpened: actions.trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed: actions.trackDeliveryDayDropDownClosed,

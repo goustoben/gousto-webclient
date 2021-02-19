@@ -13,7 +13,7 @@ describe('PricePerServing', () => {
         onClick={onClick}
         cost={{
           price: '2.04',
-          priceDiscounted: '2.04'
+          priceDiscounted: '2.04',
         }}
         portion={2}
       />
@@ -37,8 +37,8 @@ describe('PricePerServing', () => {
       wrapper.setProps({
         cost: {
           priceDiscounted: '2.30',
-          price: '2.4'
-        }
+          price: '2.4',
+        },
       })
     })
 

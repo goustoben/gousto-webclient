@@ -4,20 +4,20 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .smMinHidden {
-	display: inherit;
-	@media ScreenSMMin {
-		display: none;
-	}
+  display: inherit;
+  @media ScreenSMMin {
+    display: none;
+  }
 }
 
 .inputContainer {
-	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
-	composes: basicInputContainer from 'routes/Signup/Signup.css';
-	margin-left: auto;
-	margin-right: auto;
-	@media ScreenXSMax {
-		min-width: 291px;
-	}
+  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  composes: basicInputContainer from 'routes/Signup/Signup.css';
+  margin-left: auto;
+  margin-right: auto;
+  @media ScreenXSMax {
+    min-width: 291px;
+  }
 }
 
 .pricingClarityRedesign {
@@ -39,33 +39,34 @@
 }
 
 .row {
-	white-space: nowrap;
-	&:after {
-		clear: both;
-		content: '';
-		display: table;
-	}
+  white-space: nowrap;
+  &:after {
+    clear: both;
+    content: '';
+    display: table;
+  }
 }
 
-.left, .right {
-	@media ScreenXSMax {
-		display: inline-block;
-	}
+.left,
+.right {
+  @media ScreenXSMax {
+    display: inline-block;
+  }
 }
 
 .errorText {
-	composes: bodyText from 'routes/Signup/Signup.css';
-	color: Radish;
+  composes: bodyText from 'routes/Signup/Signup.css';
+  color: Radish;
 }
 
 .tick {
-	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
-	margin-right: 5px;
+  composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+  margin-right: 5px;
 }
 
 .bodyText {
-	composes: bodyText from 'routes/Signup/Signup.css';
-	color: Haricot;
-	font-family: Avenir;
-	font-weight: 500;
+  composes: bodyText from 'routes/Signup/Signup.css';
+  color: Haricot;
+  font-family: Avenir;
+  font-weight: 500;
 }

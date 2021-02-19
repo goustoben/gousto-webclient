@@ -263,7 +263,8 @@ module.exports = {
       // Make eslint rules agree with prettier.
       "files": [
         "src/routes/Home/**/*.js",
-        "src/routes/Payment/**/*.js"
+        "src/routes/Payment/**/*.js",
+        "src/routes/Signup/**/*.js"
       ],
       "rules": {
         "prettier/prettier": "error",

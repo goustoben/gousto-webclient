@@ -20,7 +20,7 @@ class DiscountAppliedBar extends Component {
 
     if (prevProps.promoModalVisible !== promoModalVisible) {
       this.setState({
-        isHidden: promoModalVisible && isPromoBarHidden
+        isHidden: promoModalVisible && isPromoBarHidden,
       })
     }
 
@@ -31,7 +31,7 @@ class DiscountAppliedBar extends Component {
 
   onClose = () => {
     this.setState({
-      isHidden: true
+      isHidden: true,
     })
   }
 
@@ -42,11 +42,7 @@ class DiscountAppliedBar extends Component {
       <div className={classNames(css.container, { [css.isHidden]: isHidden })}>
         <div className={css.successIcon} />
         <span className={css.discountText}>
-          <span className={css.discountApplied}>
-            {signupConfig.boxSizeStep.discountApplied}
-            !
-          </span>
-          {' '}
+          <span className={css.discountApplied}>{signupConfig.boxSizeStep.discountApplied}!</span>{' '}
           {signupConfig.discountAppliedText}
         </span>
         <div
@@ -68,6 +64,4 @@ DiscountAppliedBar.propTypes = {
   wizardStep: PropTypes.string.isRequired,
 }
 
-export {
-  DiscountAppliedBar,
-}
+export { DiscountAppliedBar }

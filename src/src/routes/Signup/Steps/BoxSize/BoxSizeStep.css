@@ -5,39 +5,40 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
-	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+  composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
 }
 
 .row {
-	composes: row from 'sass-loader!styles/bootstrap.scss';
-	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
 }
 
-.left, .right {
-	width: 50%;
+.left,
+.right {
+  width: 50%;
 
-	@media ScreenXSMax and HeightMDMax  {
-		width: 100%;
-	}
+  @media ScreenXSMax and HeightMDMax {
+    width: 100%;
+  }
 }
 
 .left {
-	padding-left: SpacingMD;
-	padding-right: calc(SpacingXS * .5);
+  padding-left: SpacingMD;
+  padding-right: calc(SpacingXS * 0.5);
 
-	@media ScreenXSMax and HeightMDMax {
-		padding: 0 SpacingSM;
-	}
+  @media ScreenXSMax and HeightMDMax {
+    padding: 0 SpacingSM;
+  }
 }
 
 .right {
-	padding-left: calc(SpacingXS * .5);
-	padding-right: SpacingMD;
+  padding-left: calc(SpacingXS * 0.5);
+  padding-right: SpacingMD;
 
-	@media ScreenXSMax and HeightMDMax {
-		margin-top: SpacingSM;
-		padding: 0 SpacingSM;
-	}
+  @media ScreenXSMax and HeightMDMax {
+    margin-top: SpacingSM;
+    padding: 0 SpacingSM;
+  }
 }
 
 .subTitlePriceClarity {
