@@ -284,7 +284,7 @@ module.exports = {
           selector: 'n/a', // nightwatch requires it, but we never use it
           elements: {
             consentButton: {
-              selector: 'button#consentButton'
+              selector: '*[data-test-id="continueButton"]'
             }
           },
           props: {
