@@ -21,6 +21,7 @@ describe('<Refund />', () => {
     '1010-1234': {
       recipeId: '1010',
       ingredientUuid: '1234',
+      recipeGoustoReference: 'rgr10101234',
       issueId: '999999',
       issueDescription: 'a description <> <script>alert("hi")<script>'
         + '<b onmouseover=alert(\'Wufff!\')>click me!</b>'
@@ -29,6 +30,7 @@ describe('<Refund />', () => {
     '2020-1234': {
       recipeId: '2020',
       ingredientUuid: '1234',
+      recipeGoustoReference: 'rgr20201234',
       issueId: '999999',
       issueDescription: 'another &description'
         + '<IMG SRC=j&#X41vascript:alert(\'test2\')>'
@@ -45,6 +47,7 @@ describe('<Refund />', () => {
     order: { id: '888' },
     selectedIngredients,
     trackAcceptRefund: trackAcceptRefundSpy,
+    trackRejectRefund: () => {},
     trackUserCannotGetCompensation: trackUserCannotGetCompensationSpy,
   }
 
@@ -59,7 +62,7 @@ describe('<Refund />', () => {
       getHelpLayout = wrapper.find('GetHelpLayout')
     })
 
-    test('layout is rendering correctly', async() => {
+    test('layout is rendering correctly', async () => {
       await wrapper.setState({
         isFetching: false,
       })
@@ -77,7 +80,7 @@ describe('<Refund />', () => {
       expect(getHelpLayout.prop('title')).toBe(content.title)
     })
 
-    test('bottom bar buttons are rendering correctly', async() => {
+    test('bottom bar buttons are rendering correctly', async () => {
       await wrapper.setState({
         isFetching: false,
       })
@@ -169,11 +172,13 @@ describe('<Refund />', () => {
           issues: [
             {
               ingredient_id: '1234',
+              recipe_gousto_reference: 'rgr10101234',
               category_id: 999999,
               description: 'a description &lt;&gt; '
             },
             {
               ingredient_id: '1234',
+              recipe_gousto_reference: 'rgr20201234',
               category_id: 999999,
               description: 'another &amp;description<img>'
             },
@@ -214,7 +219,7 @@ describe('<Refund />', () => {
         })
 
         describe('when user accepts the refund offer', () => {
-          test('redirect when refund is accepted', async() => {
+          test('redirect when refund is accepted', async () => {
             await Button.props().onClick()
             expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
           })
@@ -239,11 +244,7 @@ describe('<Refund />', () => {
             beforeEach(async () => {
               trackUserCannotGetCompensationSpy.mockClear()
 
-              setComplaint.mockRejectedValueOnce({ errors: {
-                criteria: {
-                  daysSinceLastCompensation: 1
-                }
-              } })
+              setComplaint.mockRejectedValueOnce()
 
               await Button.props().onClick()
             })
@@ -254,7 +255,6 @@ describe('<Refund />', () => {
 
             test('the tracking is being called correctly', async () => {
               expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledTimes(1)
-              expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledWith(1)
             })
           })
         })

@@ -11,17 +11,9 @@ export const getUserOrdersForGetHelp = ({ getHelp }) => (
   getHelp.get('orders')
 )
 
-export const getDaysSinceLastCompensation = createSelector(
+export const getIsOrderValidationError = createSelector(
   getOrderValidationError,
-  ({ errors }) => {
-    if (errors && errors.criteria) {
-      const { daysSinceLastCompensation } = errors.criteria
-
-      return daysSinceLastCompensation
-    }
-
-    return -1
-  }
+  (orderValidationError) => !!orderValidationError
 )
 
 export const getRecipesForGetHelp = state => state.getHelp.get('recipes').toJS()

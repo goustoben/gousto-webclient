@@ -5,7 +5,7 @@ import {
   storeSelectedIngredients,
   trackUserCannotGetCompensation,
 } from 'actions/getHelp'
-import { getOrderValidationPendingState, getDaysSinceLastCompensation } from 'selectors/getHelp'
+import { getOrderValidationPendingState, getIsOrderValidationError } from 'selectors/getHelp'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
     button1Copy: state.content.get('get-help_orderissues_pagecontent_button1copy')
       || 'Continue',
   },
-  daysSinceLastCompensation: getDaysSinceLastCompensation(state),
+  isOrderValidationError: getIsOrderValidationError(state),
   isValidateOrderLoading: getOrderValidationPendingState(state),
   order: state.getHelp.get('order').toJS(),
   recipes: state.getHelp.get('recipes').toJS(),

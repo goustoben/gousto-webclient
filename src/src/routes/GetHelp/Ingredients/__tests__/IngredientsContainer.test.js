@@ -136,9 +136,7 @@ describe('<IngredientsContainer />', () => {
       validateOrder.mockRejectedValueOnce({
         message: {
           errors: {
-            criteria: {
-              daysSinceLastCompensation: 0
-            }
+            whatever: 'whatever'
           }
         }
       })

@@ -15,7 +15,7 @@ const propTypes = {
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
   }).isRequired,
-  daysSinceLastCompensation: PropTypes.number,
+  isOrderValidationError: PropTypes.bool.isRequired,
   isValidateOrderLoading: PropTypes.bool.isRequired,
   order: PropTypes.shape({
     id: PropTypes.string.isRequired
@@ -43,7 +43,6 @@ const propTypes = {
 }
 
 const defaultProps = {
-  daysSinceLastCompensation: -1,
   order: {},
   recipes: [],
   user: {},
@@ -69,10 +68,10 @@ class Ingredients extends PureComponent {
   }
 
   componentDidUpdate() {
-    const { daysSinceLastCompensation, trackUserCannotGetCompensation } = this.props
+    const { isOrderValidationError, trackUserCannotGetCompensation } = this.props
 
-    if (daysSinceLastCompensation >= 0) {
-      trackUserCannotGetCompensation(daysSinceLastCompensation)
+    if (isOrderValidationError) {
+      trackUserCannotGetCompensation()
 
       this.redirectToContactPage()
     }
