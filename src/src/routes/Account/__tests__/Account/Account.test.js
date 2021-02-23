@@ -19,6 +19,7 @@ describe('Account', () => {
         checkCardExpiry={() => {}}
         subscriptionLoadData={() => {}}
         loadMenuServiceDataIfDeepLinked={() => {}}
+        userRecipeRatings={() => {}}
       >
         {children}
       </AccountComponent>
@@ -47,6 +48,7 @@ describe('Account', () => {
           checkCardExpiry={() => {}}
           subscriptionLoadData={() => {}}
           loadMenuServiceDataIfDeepLinked={() => {}}
+          userRecipeRatings={() => {}}
         >
           {children}
         </AccountComponent>

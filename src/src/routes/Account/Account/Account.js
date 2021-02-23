@@ -16,6 +16,8 @@ const propTypes = {
   checkCardExpiry: PropTypes.func.isRequired,
   subscriptionLoadData: PropTypes.func.isRequired,
   loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
+  rateRecipeCount: PropTypes.number,
+  userRecipeRatings: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -23,7 +25,9 @@ const defaultProps = {
   renderChildren: false,
   cardExpiryDate: '',
   isNewSubscriptionPageEnabled: false,
+  rateRecipeCount: 0,
 }
+
 class Account extends React.PureComponent {
   componentDidMount() {
     const {
@@ -31,18 +35,26 @@ class Account extends React.PureComponent {
       checkCardExpiry,
       subscriptionLoadData,
       userLoadData,
+      userRecipeRatings,
     } = this.props
 
     Promise.all([
       userLoadData(),
+      userRecipeRatings(),
       loadMenuServiceDataIfDeepLinked(),
       subscriptionLoadData(),
     ]).then(() => checkCardExpiry())
   }
 
   render() {
-    const { cardExpiryDate, renderChildren, children, location, isNewSubscriptionPageEnabled } = this.props
-
+    const {
+      cardExpiryDate,
+      renderChildren,
+      children,
+      location,
+      isNewSubscriptionPageEnabled,
+      rateRecipeCount,
+    } = this.props
     const pageTitles = {
       '/my-subscription': 'Manage my Subscription',
       '/my-details': 'My Details',
@@ -56,6 +68,7 @@ class Account extends React.PureComponent {
           currentPath={location.pathname}
           cardExpiryDate={cardExpiryDate}
           isNewSubscriptionPageEnabled={isNewSubscriptionPageEnabled}
+          rateRecipeCount={rateRecipeCount}
         />
         {!renderChildren ? children : <div />}
         {currentPageTitle && <Banner title={currentPageTitle} />}

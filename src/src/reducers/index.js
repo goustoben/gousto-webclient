@@ -41,6 +41,7 @@ import { menuService } from './menuService'
 import { brand } from './brand'
 import { experimentsReducer } from './experiments'
 import { loggingManager } from './loggingmanager'
+import { feedback } from './feedback'
 
 const reducers = {
   ...abandonBasket,
@@ -57,6 +58,7 @@ const reducers = {
   ...cookbookRecipes,
   ...cookies,
   ...content,
+  ...feedback,
   ...features,
   ...filters,
   ...jobs,

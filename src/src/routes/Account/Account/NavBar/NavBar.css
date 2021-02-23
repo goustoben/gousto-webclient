@@ -1,6 +1,6 @@
 @value ScreenSMMin, ScreenXXSMax, ScreenMDMax from 'styles/screenSizes.css';
 @value White, Duckegg, Pomegranate, Chia, Basa from 'styles/colors.css';
-@value sizeSM from 'styles/typography.css';
+@value sizeSM, textBold noDecor textXS from 'styles/typography.css';
 
 .navContainer {
 	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
@@ -28,6 +28,8 @@
 
 .mobileHide {
 	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	display: flex;
+	flex-direction: row;
 }
 
 .tabletHide {
@@ -36,6 +38,26 @@
 
 .desktopHide {
 	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.badge {
+	composes: textBold noDecor textXS from 'styles/typography.css';
+	composes: relative from 'styles/position.css';
+	background-color: Pomegranate;
+	margin-left: 0.25rem;
+	padding: 3px 6px;
+	border-radius: 100px;
+	line-height: 14px;
+	z-index: 10;
+	color: white;
+	height: 1.25rem;
+	align-self: center;
+	font-weight: 600;
+
+	&:hover {
+		text-decoration: none !important;
+	}
+
 }
 
 .link {
@@ -56,3 +78,9 @@
 		text-decoration: none;
 	}
 }
+
+.linkContainer {
+	display: flex;
+	flex-direction: row;
+}
+
