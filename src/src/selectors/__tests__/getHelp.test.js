@@ -1,12 +1,12 @@
 import { fromJS, Map } from 'immutable'
 import {
-  getRecipesForGetHelp,
-  getDaysSinceLastCompensation,
+  getIsOrderValidationError,
   getOrderId,
+  getRecipesForGetHelp,
 } from '../getHelp'
 
-describe('getHelp', () => {
-  describe('the getRecipesForGetHelp selector', () => {
+describe('getHelp selectors', () => {
+  describe('getRecipesForGetHelp', () => {
     let state
     const RECIPES = [
       { id: '1', ingredients: [{ id: '1', label: 'First ingredient' }], title: 'First recipe' },
@@ -26,45 +26,71 @@ describe('getHelp', () => {
     })
   })
 
-  describe('the getDaysSinceLastRefund selector', () => {
+  describe('getIsOrderValidationError', () => {
     let state
+
+    describe('when GET_HELP_VALIDATE_ORDER errored', () => {
+      beforeEach(() => {
+        state = {
+          error: Map(({
+            GET_HELP_VALIDATE_ORDER: {
+              errors: {
+                anyCriteria: 'any error'
+              }
+            }
+          }))
+        }
+      })
+
+      test('returns true', () => {
+        expect(getIsOrderValidationError(state)).toEqual(true)
+      })
+    })
+
+    describe('when GET_HELP_VALIDATE_ORDER did not errored', () => {
+      beforeEach(() => {
+        state = {
+          error: Map(({
+            GET_HELP_VALIDATE_ORDER: null,
+          }))
+        }
+      })
+
+      test('returns false', () => {
+        expect(getIsOrderValidationError(state)).toEqual(false)
+      })
+    })
+
+    describe('when GET_HELP_VALIDATE_ORDER did not happened', () => {
+      beforeEach(() => {
+        state = {
+          error: Map(({}))
+        }
+      })
+
+      test('returns false', () => {
+        expect(getIsOrderValidationError(state)).toEqual(false)
+      })
+    })
+  })
+
+  describe('getOrderId', () => {
+    let state
+
+    const ORDER_ID = '12345'
 
     beforeEach(() => {
       state = {
-        error: Map(({
-          GET_HELP_VALIDATE_ORDER: {
-            errors: {
-              criteria: {
-                daysSinceLastCompensation: 2
-              }
-            }
-          }
-        }))
+        getHelp: Map({
+          order: Map({
+            id: ORDER_ID,
+          }),
+        }),
       }
     })
 
-    test('days since last refund is returned when validation has failed', () => {
-      expect(getDaysSinceLastCompensation(state)).toEqual(2)
+    test('returns the order ID', () => {
+      expect(getOrderId(state)).toEqual(ORDER_ID)
     })
-  })
-})
-
-describe('the getOrderId selector', () => {
-  let state
-
-  const ORDER_ID = '12345'
-
-  beforeEach(() => {
-    state = {
-      getHelp: Map({
-        order: Map({
-          id: ORDER_ID,
-        }),
-      }),
-    }
-  })
-
-  test('returns the order ID', () => {
-    expect(getOrderId(state)).toEqual(ORDER_ID)
   })
 })

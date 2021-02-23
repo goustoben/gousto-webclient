@@ -143,13 +143,7 @@ class Refund extends PureComponent {
 
       return response
     } catch (err) {
-      const { errors } = err
-
-      if (errors && errors.criteria) {
-        const { daysSinceLastCompensation } = errors.criteria
-
-        trackUserCannotGetCompensation(daysSinceLastCompensation)
-      }
+      trackUserCannotGetCompensation()
 
       return this.requestFailure()
     }

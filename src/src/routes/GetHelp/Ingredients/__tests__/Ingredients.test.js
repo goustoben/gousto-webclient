@@ -16,7 +16,7 @@ describe('<Ingredients />', () => {
     {
       id: '2',
       title: 'test 2',
-      ingredients: [{ id: '2', label: 'test' }, { uuid: '2222', label: 'test2' }]
+      ingredients: [{ uuid: '1111', label: 'test' }, { uuid: '2222', label: 'test2' }]
     },
     { id: '3', title: 'test 3', ingredients: [{ uuid: '3', label: 'test' }] },
     { id: '4', title: 'test 4', ingredients: [{ uuid: '4', label: 'test' }] },
@@ -39,6 +39,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          isOrderValidationError={false}
           isValidateOrderLoading={false}
           storeSelectedIngredients={() => {}}
           trackUserCannotGetCompensation={() => {}}
@@ -113,6 +114,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          isOrderValidationError={false}
           isValidateOrderLoading={false}
           storeSelectedIngredients={storeSelectedIngredients}
           trackUserCannotGetCompensation={() => {}}
@@ -246,6 +248,7 @@ describe('<Ingredients />', () => {
               user={user}
               recipes={recipes}
               content={content}
+              isOrderValidationError={false}
               isValidateOrderLoading={false}
               storeSelectedIngredients={storeSelectedIngredients}
               trackUserCannotGetCompensation={trackUserCannotGetCompensation}
@@ -253,7 +256,7 @@ describe('<Ingredients />', () => {
               validateSelectedIngredients={validateSelectedIngredients}
             />
           )
-          wrapper.setProps({ daysSinceLastCompensation: 1 })
+          wrapper.setProps({ isOrderValidationError: true })
         })
 
         test('redirects to /contact if order validation request fails', () => {
