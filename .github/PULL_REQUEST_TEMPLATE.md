@@ -1,6 +1,9 @@
 # Description
 <!--- Update the JIRA ticket below -->
 This PR relates to the following [JIRA ticket](http://gousto.atlassian.net/browse/TECH-XXXX)
+<!-- What has changed? -->
+<!-- Why has it changed? -->
+<!-- How has it changed? -->
 
 # Merge Checklist - Must be complete 
 - [ ] I have installed the [Merge Autoselector extension](https://github.com/Gousto/chrome-ext-merge-autoselector)
@@ -11,11 +14,15 @@ This PR relates to the following [JIRA ticket](http://gousto.atlassian.net/brows
 - [ ] I have completed cross browser testing **/ or /** I have taken a decision that this work is not vulnerable to cross-browser issues
 
 # How has this been tested?
-<!--- Please describe in detail how you tested your changes. -->
-<!--- Include details of your testing environment, and the tests you ran to -->
-<!--- see how your change affects other areas of the code, etc. -->
+<!-- Delete check list testing items that is not relevant to you code changes -->
+- [ ] This pull request has added/updated jest specs to cover the changes
+- [ ] This pull request has added/updated regression (Cypress) specs to cover the changes
+- [ ] This pull request has been manually tested against a lower environment
+- [ ] This pull request has added/updated the E2E specs to cover the changes
+    - [ ] And tested the change against the [`e2e-manual`](https://github.com/Gousto/gousto-webclient/tree/e2e-manual) branch
 
 # Experiments
+<!-- Delete experiment block if this pull request DOES NOT have experiment changes  -->
 - [ ] These code changes are part of an experiment
 <!-- Details of whether code changes are part of an experiment -->
 <!-- Listing any compromises/dispensations made as part of an experiment should streamline code review -->
