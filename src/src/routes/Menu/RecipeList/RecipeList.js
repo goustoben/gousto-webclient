@@ -28,13 +28,18 @@ class RecipeList extends React.PureComponent {
   }
 
   render() {
-    const { recipes } = this.props
+    const { recipes, currentCollectionId } = this.props
 
     return (
       <div className={css.emeRecipeList}>
-        {recipes.map((value) =>
-          <RecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
-        )}
+        {recipes.map((value) => (
+          <RecipeTileContainer
+            key={value.recipe.get('id')}
+            recipeId={value.recipe.get('id')}
+            originalId={value.originalId}
+            categoryId={currentCollectionId}
+          />
+        ))}
       </div>
     )
   }

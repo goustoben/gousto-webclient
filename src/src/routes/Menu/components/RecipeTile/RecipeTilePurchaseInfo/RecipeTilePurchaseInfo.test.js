@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeTilePurchaseInfo } from './RecipeTilePurchaseInfo'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
-import { DropdownArrowContainer } from '../DropdownArrow'
+import { DropdownArrowContainer } from '../DropdownArrow/DropdownArrowContainer'
 
 describe('RecipeTilePurchaseInfo', () => {
   let wrapper
@@ -75,12 +75,39 @@ describe('RecipeTilePurchaseInfo', () => {
     beforeEach(() => {
       wrapper = shallow(<RecipeTilePurchaseInfo {...defaultProps} />)
     })
+
     test('should render AddRecipeButtonContainer', () => {
       expect(wrapper.find(AddRecipeButtonContainer)).toHaveLength(1)
     })
 
-    test('should render a dropdown for variants', () => {
-      expect(wrapper.find(DropdownArrowContainer)).toHaveLength(1)
+    describe('when showDropdown is not provided', () => {
+      test('should render a DropdownArrowContainer', () => {
+        expect(wrapper.find(DropdownArrowContainer)).toHaveLength(1)
+      })
+    })
+
+    describe('when showDropdown is set to true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          showDropdown: true
+        })
+      })
+
+      test('should render a DropdownArrowContainer', () => {
+        expect(wrapper.find(DropdownArrowContainer)).toHaveLength(1)
+      })
+    })
+
+    describe('when showDropdown is set to false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          showDropdown: false
+        })
+      })
+
+      test('should not render a DropdownArrowContainer', () => {
+        expect(wrapper.find(DropdownArrowContainer)).toHaveLength(0)
+      })
     })
   })
 
@@ -121,7 +148,7 @@ describe('RecipeTilePurchaseInfo', () => {
     })
 
     test('should have class of surchargeInfo', () => {
-      expect(wrapper.find('.surchargeInfo').length).toEqual(1 )
+      expect(wrapper.find('.surchargeInfo').length).toEqual(1)
     })
   })
 

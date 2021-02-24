@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { recipeVariantDropdownExpanded } from 'actions/menu'
 import { getBasketTotalRecipes } from 'selectors/basket'
 import { AddRecipeButton } from './AddRecipeButton'
 import { basketRecipeAddAttempt, basketRecipeRemove } from '../../../actions/basketRecipes'
@@ -33,12 +34,14 @@ const mapStateToProps = (state, ownProps) => {
     recipeVariants: getVariantsForRecipe(state, ownProps),
     hasSideAddedToBasket,
     firstSideRecipeId,
+    mandatoryVariantFeatureEnabled: false // this will be driven from feature flag
   }
 }
 const mapDispatchToProps = {
   basketRecipeAddAttempt,
   basketRecipeRemove,
   setSidesModalRecipe,
+  recipeVariantDropdownExpanded
 }
 
 export const AddRecipeButtonContainer = connect(mapStateToProps, mapDispatchToProps)(AddRecipeButton)

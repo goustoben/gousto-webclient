@@ -5,21 +5,31 @@ import css from './AddRecipeButton.css'
 export const AddRecipeButton = ({
   basketRecipeAddAttempt,
   basketRecipeRemove,
+  recipeVariantDropdownExpanded,
+  setSidesModalRecipe,
   recipeId,
+  categoryId,
+  originalId,
   isInBasket,
   isBasketLimitReached,
   buttonProps,
-  setSidesModalRecipe,
   recipeVariants,
   hasSideAddedToBasket,
   firstSideRecipeId,
+  mandatoryVariantFeatureEnabled
 }) => {
   const hasSideAddedToBasketOrIsInBasket = hasSideAddedToBasket || isInBasket
   const disabled = isBasketLimitReached && !hasSideAddedToBasketOrIsInBasket
+
+  const hasAlternatives = recipeVariants && recipeVariants.type === 'alternatives'
+  const hasSides = recipeVariants && recipeVariants.type === 'sides'
+
   const buttonAction = (e) => {
     if (hasSideAddedToBasketOrIsInBasket) {
       basketRecipeRemove(hasSideAddedToBasket ? firstSideRecipeId : recipeId)
-    } else if (recipeVariants && recipeVariants.type === 'sides') {
+    } else if (hasAlternatives && mandatoryVariantFeatureEnabled) {
+      recipeVariantDropdownExpanded({ recipeId, originalId, categoryId })
+    } else if (hasSides) {
       setSidesModalRecipe({ recipeId })
     } else {
       basketRecipeAddAttempt(recipeId)
@@ -59,8 +69,12 @@ export const AddRecipeButton = ({
 }
 AddRecipeButton.propTypes = {
   recipeId: PropTypes.string.isRequired,
+  categoryId: PropTypes.string.isRequired,
+  originalId: PropTypes.string.isRequired,
   basketRecipeAddAttempt: PropTypes.func.isRequired,
   basketRecipeRemove: PropTypes.func.isRequired,
+  recipeVariantDropdownExpanded: PropTypes.func.isRequired,
+  setSidesModalRecipe: PropTypes.func.isRequired,
   isInBasket: PropTypes.bool.isRequired,
   isBasketLimitReached: PropTypes.bool.isRequired,
   buttonProps: PropTypes.shape({
@@ -73,11 +87,12 @@ AddRecipeButton.propTypes = {
     alternatives: PropTypes.arrayOf(PropTypes.shape),
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
-  setSidesModalRecipe: PropTypes.func.isRequired,
   hasSideAddedToBasket: PropTypes.bool.isRequired,
   firstSideRecipeId: PropTypes.string.isRequired,
+  mandatoryVariantFeatureEnabled: PropTypes.bool,
 }
 
 AddRecipeButton.defaultProps = {
   recipeVariants: null,
+  mandatoryVariantFeatureEnabled: false
 }
