@@ -20,8 +20,8 @@ describe('snowplow get help tracking events', () => {
       data: {
         order_issue: 'ingredients',
       },
-      seCategory: 'Order Get Help',
-      type: 'OrderIssue Selected'
+      seCategory: 'help',
+      type: 'ssr_order_issue_selected'
     })
   })
 
@@ -35,8 +35,8 @@ describe('snowplow get help tracking events', () => {
       data: {
         channel: 'email',
       },
-      seCategory: 'Order Get Help',
-      type: 'GoustoAgent Contact'
+      seCategory: 'help',
+      type: 'click_agent_contact_method'
     })
   })
 
