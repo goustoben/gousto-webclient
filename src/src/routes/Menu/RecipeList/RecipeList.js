@@ -1,11 +1,7 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 import { RecipeTileContainer } from '../components/RecipeTile'
-import { CategoryScrollTrackerContainer } from '../components/CategoryScrollTracker'
-import { CategoryCarouselsListContainer } from './CategoryCarouselsList'
-import { ViewAllRecipesButtonContainer } from './ViewAllRecipesButton'
 import css from './RecipeList.css'
 
 class RecipeList extends React.PureComponent {
@@ -32,40 +28,13 @@ class RecipeList extends React.PureComponent {
   }
 
   render() {
-    const {
-      recipes,
-      browserType,
-      query
-    } = this.props
+    const { recipes } = this.props
 
     return (
-      <div>
-        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
-          <Fragment>
-            {browserType === 'mobile' && !query.collection
-              ? (
-                <div>
-                  <CategoryCarouselsListContainer />
-                  <ViewAllRecipesButtonContainer />
-                </div>
-              )
-              : (
-                <div className={css.emeRecipeList}>
-                  {recipes.map((value) =>
-                    <RecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
-                  )}
-                </div>
-              )}
-            {browserType !== 'mobile' && <CategoryScrollTrackerContainer actionType="scroll_recipes" />}
-          </Fragment>
-        </OptimizelyRolloutsContainer>
-        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
-          <div className={css.emeRecipeList}>
-            {recipes.map((value) =>
-              <RecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
-            )}
-          </div>
-        </OptimizelyRolloutsContainer>
+      <div className={css.emeRecipeList}>
+        {recipes.map((value) =>
+          <RecipeTileContainer key={value.recipe.get('id')} recipeId={value.recipe.get('id')} originalId={value.originalId} />
+        )}
       </div>
     )
   }
@@ -75,16 +44,11 @@ RecipeList.propTypes = {
   originalOrderRecipeIds: PropTypes.instanceOf(Immutable.List),
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   currentCollectionId: PropTypes.string.isRequired,
-  trackRecipeOrderDisplayed: PropTypes.func.isRequired,
-  browserType: PropTypes.string.isRequired,
-  query: PropTypes.shape({
-    collection: PropTypes.string
-  }),
+  trackRecipeOrderDisplayed: PropTypes.func.isRequired
 }
 
 RecipeList.defaultProps = {
-  originalOrderRecipeIds: Immutable.List([]),
-  query: {}
+  originalOrderRecipeIds: Immutable.List([])
 }
 
 export { RecipeList }

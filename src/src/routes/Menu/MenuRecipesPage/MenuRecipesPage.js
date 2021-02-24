@@ -15,10 +15,7 @@ import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { RecipeSidesModalContainer } from './RecipeSidesModal'
 import { VariantRecipeListModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
-import { CategoriesShortcutsContainer } from '../ElevatedMenuExperience/CategoriesShortcuts'
 import css from './MenuRecipesPage.css'
-import { CategoriesModalContainer } from '../ElevatedMenuExperience/CategoriesModal'
-import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 
@@ -88,19 +85,11 @@ export class MenuRecipesPage extends PureComponent {
       isSignupReductionEnabled,
       showCommunicationPanel,
       menuLoadingErrorMessage,
-      browserType,
       query,
     } = this.props
     const { communicationPanel } = menuConfig
 
     const showError = !!menuLoadingErrorMessage && !stateRecipeCount
-
-    let experimentContent = null
-    if (browserType !== 'mobile') {
-      experimentContent = <CollectionsNavContainer />
-    } else if (!query.collection) {
-      experimentContent = <CategoriesShortcutsContainer />
-    }
 
     return (
       <div>
@@ -120,16 +109,11 @@ export class MenuRecipesPage extends PureComponent {
         <SubHeaderContainer />
         <MenuDateRangeContainer variant="mobile" />
         <BannerTastePreferencesContainer />
-        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled>
-          {experimentContent}
-          {browserType !== 'mobile' && <CollectionHeaderWrapperContainer /> }
-        </OptimizelyRolloutsContainer>
-        <OptimizelyRolloutsContainer featureName="categories_browsing_experiment" featureEnabled={false}>
-          {!showLoading && <CollectionsNavContainer />}
-          <CollectionHeaderWrapperContainer />
-        </OptimizelyRolloutsContainer>
 
-        {stateRecipeCount ? <RecipeGrid browserType={browserType} query={query} /> : null}
+        {!showLoading && <CollectionsNavContainer />}
+        <CollectionHeaderWrapperContainer />
+
+        {stateRecipeCount ? <RecipeGrid query={query} /> : null}
         {showError ? (
           <h2 className={css.menuLoadingErrorMessage}>
             {menuLoadingErrorMessage}
@@ -139,7 +123,6 @@ export class MenuRecipesPage extends PureComponent {
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
-        <CategoriesModalContainer />
         <VariantRecipeListModalContainer />
 
         <ExperimentsContainer experimentName="allocation-experiment-one" />
@@ -207,7 +190,6 @@ MenuRecipesPage.propTypes = {
   shouldShowCapacityInfo: PropTypes.bool,
   loadOptimizelySDK: PropTypes.func.isRequired,
   menuLoadingErrorMessage: PropTypes.string,
-  browserType: PropTypes.string.isRequired,
   fetchMenuData: PropTypes.func.isRequired,
 }
 MenuRecipesPage.defaultProps = {

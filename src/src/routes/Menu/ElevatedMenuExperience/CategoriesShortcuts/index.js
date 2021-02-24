@@ -1,1 +1,0 @@
-export { CategoriesShortcutsContainer } from './CategoriesShortcutsContainer'

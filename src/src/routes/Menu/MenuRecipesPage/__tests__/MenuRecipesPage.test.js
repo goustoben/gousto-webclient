@@ -4,11 +4,9 @@ import { SubHeaderContainer } from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { CollectionsNavContainer } from '../../CollectionsNav'
-import { MenuRecipesPage as MenuRecipes, MenuRecipesPage } from '../MenuRecipesPage'
+import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
-import { OptimizelyRolloutsContainer } from '../../../../containers/OptimizelyRollouts'
-import { CategoriesShortcutsContainer } from '../../ElevatedMenuExperience/CategoriesShortcuts'
 import { ExperimentsContainer } from '../../../../containers/Experiments'
 
 jest.mock('routes/Menu/SubHeader')
@@ -47,7 +45,6 @@ describe('initial render', () => {
           showLoading={false}
           checkQueryParams={checkQueryParamsSpy}
           shouldShowCapacityInfo={false}
-          browserType="desktop"
         />
       )
     })
@@ -286,30 +283,5 @@ describe('selectCurrentCollection', () => {
   test('should only call selectCurrentCollection if menuCollectionId changes', () => {
     wrapper.setProps({ menuCurrentCollectionId: '567xyz' })
     expect(selectCurrentCollection).toHaveBeenCalled()
-  })
-})
-
-describe('when the optimizely rollouts featureEnabled is true', () => {
-  let wrapper
-  beforeEach(() => {
-    const context = {
-      store: {
-        dispatch: jest.fn(),
-      },
-    }
-    context.store.dispatch.mockClear()
-    const query = {
-      collection: null
-    }
-
-    wrapper = shallow(
-      <MenuRecipesPage browserType="mobile" query={query} />,
-      { context }
-    )
-  })
-
-  test('should render OptimizelyRolloutsContainer with featureEnabled true for EMERecipeList', () => {
-    expect(wrapper.find(OptimizelyRolloutsContainer).first().prop('featureEnabled')).toBe(true)
-    expect(wrapper.find(OptimizelyRolloutsContainer).first().find(CategoriesShortcutsContainer)).toHaveLength(1)
   })
 })

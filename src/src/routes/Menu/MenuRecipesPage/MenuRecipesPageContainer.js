@@ -11,12 +11,11 @@ import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
 import { getIsAuthenticated } from 'selectors/auth'
 import { userHasAvailableSlots } from 'routes/Menu/selectors/boxSummary'
 import { getLoadingStateForOrder, getUserId } from 'selectors/user'
-import { getBrowserType } from 'selectors/browser'
 import { checkQueryParams } from '../actions/menuRecipeDetails'
 import { loadOptimizelySDK } from '../../../actions/optimizely'
 
 import { MenuRecipesPage } from './MenuRecipesPage'
-import { getCurrentCollectionIdByExperimentStatus } from '../selectors/collections'
+import { getCurrentCollectionId } from '../selectors/collections'
 import { isMenuLoading } from '../selectors/menu'
 import fetchData from '../fetchData'
 
@@ -26,10 +25,7 @@ const mapStateToProps = (state, ownProps) => {
     location: { query }
   } = ownProps
 
-  const collectionId = getCurrentCollectionIdByExperimentStatus(state, {
-    featureName: 'categories_browsing_experiment',
-    userId: getUserId(state)
-  })
+  const collectionId = getCurrentCollectionId(state)
 
   return ({
     showTastePreferencesLoading: getIsTastePreferencesEnabled(state),
@@ -44,7 +40,6 @@ const mapStateToProps = (state, ownProps) => {
     userId: getUserId(state),
     shouldShowCapacityInfo: !userHasAvailableSlots(state) && getBoxSummaryDeliveryDays(state).size > 0 && (!getLoadingStateForOrder(state) || !getIsAuthenticated(state)),
     menuLoadingErrorMessage: state.menu.get('menuLoadingErrorMessage'),
-    browserType: getBrowserType(state),
     query: query || {},
   })
 }

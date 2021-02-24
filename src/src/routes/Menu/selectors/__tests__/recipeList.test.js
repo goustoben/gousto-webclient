@@ -1,7 +1,5 @@
 import Immutable from 'immutable'
-import { safeJestMock } from '_testing/mocks'
 import { isRecipeInBasket } from 'utils/menu'
-import * as collectionSelectors from 'selectors/collections'
 import * as recipeListSelectors from '../recipeList'
 
 jest.mock('utils/menu')
@@ -858,59 +856,6 @@ describe('RecipeList selectors', () => {
         const expected = '123'
         expect(recipeListSelectors.replaceSideRecipeIdWithBaseRecipeId.resultFunc(recipeId, recipeSides)).toEqual(expected)
       })
-    })
-  })
-
-  describe('getRecipesByCollectionSlugs', () => {
-    let mockedGetRecipeListRecipes
-    let mockedGetMenuCollectionIdBySlug
-
-    beforeEach(() => {
-      mockedGetRecipeListRecipes = safeJestMock(recipeListSelectors, 'getRecipeListRecipes').mockReturnValue({ recipes: [] })
-      mockedGetMenuCollectionIdBySlug = safeJestMock(collectionSelectors, 'getMenuCollectionIdBySlug').mockReturnValue('mock')
-    })
-
-    afterEach(() => {
-      mockedGetRecipeListRecipes.mockReset()
-      mockedGetMenuCollectionIdBySlug.mockReset()
-    })
-
-    test('returns an empty array if no collectionSlugs is empty', () => {
-      const state = {}
-      const result = recipeListSelectors.getRecipesByCollectionSlugs(state)
-
-      expect(result).toEqual([])
-    })
-
-    test('returns recipes and collections for given slugs', () => {
-      const collectionSlugsFromProps = {
-        collectionSlugs: ['vegetarian', 'plant-based']
-      }
-      const menuCollections = Immutable.Map({ mock: 'menu-collection' })
-
-      const state = {
-        mock: 'state',
-        menuCollections
-      }
-
-      const result = recipeListSelectors.getRecipesByCollectionSlugs(
-        state,
-        collectionSlugsFromProps,
-      )
-
-      expect(mockedGetMenuCollectionIdBySlug).toHaveBeenCalledWith(menuCollections, 'vegetarian')
-      expect(mockedGetMenuCollectionIdBySlug).toHaveBeenCalledWith(menuCollections, 'plant-based')
-
-      expect(mockedGetRecipeListRecipes).toHaveBeenCalledWith(state, { collectionId: 'mock' })
-      expect(mockedGetRecipeListRecipes).toHaveBeenCalledWith(state, { collectionId: 'mock' })
-
-      expect(result).toEqual([{
-        recipeList: { recipes: [] },
-        collection: 'menu-collection'
-      }, {
-        recipeList: { recipes: [] },
-        collection: 'menu-collection'
-      }])
     })
   })
 })

@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { getNumPortions, getBasketMenuId } from 'selectors/basket'
 import { getCollectionIdWithName } from 'utils/collections'
-import * as optimizelySDK from 'containers/OptimizelyRollouts/optimizelySDK'
 import menuConfig from 'config/menu'
 import { isOutOfStock } from './recipe'
 
@@ -161,16 +160,6 @@ export const getCurrentCollectionSlug = createSelector(
   }
 )
 
-export const getCurrentCollectionShortTitle = createSelector(
-  [getCurrentCollectionId, getDisplayedCollections],
-  (collectionId, collections) => (
-    collections.getIn([
-      collectionId,
-      'shortTitle',
-    ], 'All Recipes')
-  )
-)
-
 const getCollectionHeaders = ({ menu }) => menu.get('collectionHeaders')
 const getHeaders = (state) => getCollectionHeaders(state).headers
 
@@ -207,18 +196,3 @@ export const getCurrentCollectionThumbnail = createSelector(
   [getMenuCollections, getCurrentCollectionId],
   (menuCollections, currentCollectionId) => menuCollections.getIn([currentCollectionId, 'thumbnail'], null)
 )
-
-export const getCurrentCollectionIdByExperimentStatus = (state, { featureName, userId }) => {
-  if (!optimizelySDK.hasValidInstance()) {
-    return getCurrentCollectionId(state)
-  }
-
-  const optimizelyInstance = optimizelySDK.instance.optimizelyRolloutsInstance
-  const inExperiment = optimizelyInstance.isFeatureEnabled(featureName, userId)
-
-  if (inExperiment) {
-    return null
-  }
-
-  return getCurrentCollectionId(state)
-}

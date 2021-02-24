@@ -1,1 +1,0 @@
-export { CategoriesHeaderContainer } from './CategoriesHeaderContainer'

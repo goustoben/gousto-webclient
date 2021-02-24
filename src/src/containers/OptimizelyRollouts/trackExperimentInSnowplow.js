@@ -1,18 +1,5 @@
 import { optimizelyRolloutsExperiment } from '../../actions/trackingKeys'
 const experimentsConfig = {
-  // we can add here another feature flag in the future
-  categories_browsing_experiment: {
-    id: 'CategoryBrowsingExperiment',
-    name: 'Category Browsing Experiment',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
-  christmas_merchandising_experiment_2020: {
-    id: 'christmas_merchandising_experiment_2020',
-    name: 'christmas_merchandising_experiment_2020',
-    variationName: 'Variation',
-    defaultName: 'Control',
-  },
   testFeature: {
     id: 'TestFeature',
     name: 'Test Feature',
