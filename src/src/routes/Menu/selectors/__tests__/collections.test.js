@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import * as optimizelySDK from 'containers/OptimizelyRollouts/optimizelySDK'
 import {
   getMenuCollections,
   getRecommendationsCollection,
@@ -10,8 +9,7 @@ import {
   getRecommendationShortName,
   getCurrentCollectionSlug,
   getCollectionsHeaders,
-  getCurrentCollectionDietaryClaims,
-  getCurrentCollectionIdByExperimentStatus
+  getCurrentCollectionDietaryClaims
 } from '../collections'
 
 jest.mock('containers/OptimizelyRollouts/optimizelySDK')
@@ -550,91 +548,6 @@ describe('collections selectors', () => {
       test('should return the diatery claims for collection with slug', () => {
         const result = getCurrentCollectionDietaryClaims(state)
         expect(result).toEqual(Immutable.List(['gluten-free']))
-      })
-    })
-  })
-
-  describe('getCurrentCollectionIdByExperimentStatus', () => {
-    let state
-
-    beforeEach(() => {
-      state = {
-        menuCollections: Immutable.fromJS({
-          'collection-id-with-slug': {
-            published: true,
-            shortTitle: 'something',
-            slug: 'gluten-free',
-            id: 'collection-id-with-slug',
-            default: true,
-            recipesInCollection: ['123', '321', '4578'],
-            requirements: {
-              dietary_claims: ['gluten-free']
-            }
-          },
-        }),
-        basket: Immutable.fromJS({
-          numPortions: 2,
-        }),
-        routing: {
-          locationBeforeTransitions: {
-            query: {
-              collection: 'gluten-free'
-            }
-          }
-        }
-      }
-    })
-
-    afterEach(() => {
-      jest.clearAllMocks()
-    })
-
-    describe('Given there is no valid optimizely instance', () => {
-      beforeEach(() => {
-        optimizelySDK.hasValidInstance.mockReturnValue(false)
-      })
-
-      test('returns current collection id from state', () => {
-        const result = getCurrentCollectionIdByExperimentStatus(state, {})
-        expect(result).toEqual('collection-id-with-slug')
-      })
-    })
-
-    describe('Given there is a valid optimizely instance', () => {
-      beforeEach(() => {
-        optimizelySDK.hasValidInstance.mockReturnValue(true)
-      })
-
-      describe('When user is not in the experiment', () => {
-        beforeEach(() => {
-          // eslint-disable-next-line import/namespace
-          optimizelySDK.instance = {
-            optimizelyRolloutsInstance: {
-              isFeatureEnabled: jest.fn().mockReturnValue(false)
-            }
-          }
-        })
-
-        test('returns current collection id from state', () => {
-          const result = getCurrentCollectionIdByExperimentStatus(state, {})
-          expect(result).toEqual('collection-id-with-slug')
-        })
-      })
-
-      describe('When user is in the experiment', () => {
-        beforeEach(() => {
-          // eslint-disable-next-line import/namespace
-          optimizelySDK.instance = {
-            optimizelyRolloutsInstance: {
-              isFeatureEnabled: jest.fn().mockReturnValue(true)
-            }
-          }
-        })
-
-        test('returns null', () => {
-          const result = getCurrentCollectionIdByExperimentStatus(state, {})
-          expect(result).toEqual(null)
-        })
       })
     })
   })

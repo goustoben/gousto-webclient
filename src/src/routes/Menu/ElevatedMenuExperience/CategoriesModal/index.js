@@ -1,1 +1,0 @@
-export { CategoriesModalContainer } from './CategoriesModalContainer'

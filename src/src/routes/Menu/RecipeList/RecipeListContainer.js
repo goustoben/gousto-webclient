@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
-import { getBrowserType } from 'selectors/browser'
 import { getCurrentCollectionId } from '../selectors/collections'
 
 import { RecipeList } from './RecipeList'
@@ -13,8 +12,7 @@ const mapStateToProps = (state) => {
   return {
     currentCollectionId,
     recipes,
-    originalOrderRecipeIds,
-    browserType: getBrowserType(state),
+    originalOrderRecipeIds
   }
 }
 const RecipeListContainer = connect(mapStateToProps, {trackRecipeOrderDisplayed})(RecipeList)

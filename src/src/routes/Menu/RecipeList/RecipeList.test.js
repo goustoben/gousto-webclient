@@ -4,24 +4,15 @@ import Immutable from 'immutable'
 
 import { RecipeList } from './RecipeList'
 import { RecipeTileContainer } from '../components/RecipeTile'
-import { CategoryCarouselsListContainer } from './CategoryCarouselsList'
-import { ViewAllRecipesButtonContainer } from './ViewAllRecipesButton'
-import { OptimizelyRolloutsContainer } from '../../../containers/OptimizelyRollouts'
 
 jest.mock('actions/tracking', () => ({
   trackRecipeOrderDisplayed: jest.fn()
     .mockReturnValue('trackRecipeOrderDisplayed return value'),
 }))
 describe('RecipeList', () => {
-  const context = {
-    store: {
-      dispatch: jest.fn(),
-    },
-  }
   let trackRecipeOrderDisplayed
   let wrapper
   let recipes
-  let query
   beforeEach(() => {
     trackRecipeOrderDisplayed = jest.fn()
     trackRecipeOrderDisplayed.mockClear()
@@ -45,11 +36,8 @@ describe('RecipeList', () => {
         recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
       }
     ])
-    query = {
-      collection: 'vegetarian'
-    }
     describe('when the recipe list is initially rendered', () => {
-      test('should dispatch trackRecipeOrderDisplayed once', () => {
+      test('should call trackRecipeOrderDisplayed once', () => {
         const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
 
         shallow(
@@ -71,7 +59,7 @@ describe('RecipeList', () => {
     })
 
     describe('when the recipe collection selection is changed', () => {
-      test('should dispatch trackRecipeOrderDisplayed an additional time', () => {
+      test('should call trackRecipeOrderDisplayed an additional time', () => {
         const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
 
         wrapper = shallow(
@@ -96,7 +84,7 @@ describe('RecipeList', () => {
     })
 
     describe('when the recipe collection remains the same', () => {
-      test('should not dispatch trackRecipeOrderDisplayed after initial render', () => {
+      test('should not call trackRecipeOrderDisplayed after initial render', () => {
         const originalOrderRecipeIds = Immutable.List(['1', '2', '3'])
 
         wrapper = shallow(
@@ -134,96 +122,51 @@ describe('RecipeList', () => {
     })
   })
 
-  describe('when featureEnabled is false', () => {
+  recipes = Immutable.List([
+    {
+      originalId: '3',
+      recipe: Immutable.Map({
+        id: '3',
+        availability: [],
+        title: 'recipe3',
+        boxType: 'vegetarian',
+        dietType: 'Vegetarian',
+        isRecommended: false,
+      })
+    },
+    {
+      originalId: '1',
+      recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
+    }
+  ])
+
+  describe('when there is one recipe', () => {
     beforeEach(() => {
-      context.store.dispatch.mockClear()
-      trackRecipeOrderDisplayed.mockClear()
+      recipes = Immutable.List([
+        {
+          originalId: '3',
+          recipe: Immutable.Map({
+            id: '3',
+            availability: [],
+            title: 'recipe3',
+            boxType: 'vegetarian',
+            dietType: 'Vegetarian',
+            isRecommended: false,
+          })
+        }
+      ])
+
+      wrapper = shallow(
+        <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} currentCollectionId="123" browserType="desktop" />,
+      )
     })
-
-    recipes = Immutable.List([
-      {
-        originalId: '3',
-        recipe: Immutable.Map({
-          id: '3',
-          availability: [],
-          title: 'recipe3',
-          boxType: 'vegetarian',
-          dietType: 'Vegetarian',
-          isRecommended: false,
-        })
-      },
-      {
-        originalId: '1',
-        recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
-      }
-    ])
-
-    describe('when there is one recipe', () => {
-      beforeEach(() => {
-        recipes = Immutable.List([
-          {
-            originalId: '3',
-            recipe: Immutable.Map({
-              id: '3',
-              availability: [],
-              title: 'recipe3',
-              boxType: 'vegetarian',
-              dietType: 'Vegetarian',
-              isRecommended: false,
-            })
-          }
-        ])
-
-        wrapper = shallow(
-          <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} currentCollectionId="123" browserType="desktop" />,
-        )
-      })
-      test('then it should render one RecipeTileContainer', () => {
-        expect(wrapper.find(OptimizelyRolloutsContainer).at(1).prop('featureEnabled')).toBe(false)
-        expect(wrapper.find(OptimizelyRolloutsContainer).first().find(RecipeTileContainer)).toHaveLength(1)
-      })
-    })
-
-    describe('when there are multiple recipes', () => {
-      beforeEach(() => {
-        recipes = Immutable.List([
-          {
-            originalId: '3',
-            recipe: Immutable.Map({
-              id: '3',
-              availability: [],
-              title: 'recipe3',
-              boxType: 'vegetarian',
-              dietType: 'Vegetarian',
-              isRecommended: false,
-            })
-          },
-          {
-            originalId: '1',
-            recipe: Immutable.Map({
-              id: '1',
-              availability: [],
-              title: 'recipe1',
-              isRecommended: false
-            })
-          }
-        ])
-
-        wrapper = shallow(
-          <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} currentCollectionId="123" browserType="desktop" />,
-        )
-      })
-      test('then it should render multiple RecipeTileContainer', () => {
-        expect(wrapper.find(OptimizelyRolloutsContainer).at(1).prop('featureEnabled')).toBe(false)
-        expect(wrapper.find(OptimizelyRolloutsContainer).first().find(RecipeTileContainer)).toHaveLength(2)
-      })
+    test('then it should render one RecipeTileContainer', () => {
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(1)
     })
   })
 
-  describe('when featureEnabled is true', () => {
+  describe('when there are multiple recipes', () => {
     beforeEach(() => {
-      context.store.dispatch.mockClear()
-      trackRecipeOrderDisplayed.mockClear()
       recipes = Immutable.List([
         {
           originalId: '3',
@@ -238,23 +181,21 @@ describe('RecipeList', () => {
         },
         {
           originalId: '1',
-          recipe: Immutable.Map({ id: '1', availability: [], title: 'recipe1', isRecommended: false })
+          recipe: Immutable.Map({
+            id: '1',
+            availability: [],
+            title: 'recipe1',
+            isRecommended: false
+          })
         }
       ])
-      query = {
-        collection: null
-      }
 
       wrapper = shallow(
-        <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} browserType="mobile" query={query} />,
-        { context }
+        <RecipeList recipes={recipes} trackRecipeOrderDisplayed={trackRecipeOrderDisplayed} currentCollectionId="123" browserType="desktop" />,
       )
     })
-
-    test('should render OptimizelyRolloutsContainer with featureEnabled true for EMERecipeList', () => {
-      expect(wrapper.find(OptimizelyRolloutsContainer).first().prop('featureEnabled')).toBe(true)
-      expect(wrapper.find(OptimizelyRolloutsContainer).first().find(CategoryCarouselsListContainer)).toHaveLength(1)
-      expect(wrapper.find(OptimizelyRolloutsContainer).first().find(ViewAllRecipesButtonContainer)).toHaveLength(1)
+    test('then it should render multiple RecipeTileContainer', () => {
+      expect(wrapper.find(RecipeTileContainer)).toHaveLength(2)
     })
   })
 })

@@ -12,7 +12,6 @@ import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandD
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
 import { setSidesModalRecipe, clearSidesModalRecipe } from '../../routes/Menu/actions/menuRecipeSidesModal'
-import { showCategoriesModal, hideCategoriesModal } from '../../routes/Menu/actions/menuCategoriesModal'
 
 describe('menu reducer', () => {
   describe('menu', () => {
@@ -495,30 +494,6 @@ describe('menu reducer', () => {
         const result = menu.menu(initialState, unselectRecipeSide(recipeId))
 
         expect(result.get('selectedRecipeSides')).toEqual({ [recipeId]: null })
-      })
-    })
-  })
-
-  describe('categories sides modal', () => {
-    describe('when opening the categories modal', () => {
-      test('should correctly set isCategoriesModalVisible', () => {
-        const initialState = Immutable.Map({
-          isCategoriesModalVisible: false,
-        })
-        const result = menu.menu(initialState, showCategoriesModal())
-
-        expect(result.get('isCategoriesModalVisible')).toEqual(true)
-      })
-    })
-
-    describe('when clearing the menu sides modal recipe ID', () => {
-      test('should set sidesModalRecipeId to null', () => {
-        const initialState = Immutable.Map({
-          isCategoriesModalVisible: true,
-        })
-        const result = menu.menu(initialState, hideCategoriesModal())
-
-        expect(result.get('isCategoriesModalVisible')).toEqual(false)
       })
     })
   })
