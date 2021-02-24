@@ -11,7 +11,7 @@ const acceptRefund = (action) => ({
 const selectContactChannel = (action) => ({
   type: seActions[action.type],
   data: { channel: action.channel },
-  seCategory,
+  seCategory: 'help',
 })
 
 const selectIngredients = (action) => ({
@@ -29,7 +29,7 @@ const selectIngredientIssues = (action) => ({
 const selectOrderIssue = (action) => ({
   type: seActions[action.type],
   data: { order_issue: action.issue },
-  seCategory,
+  seCategory: 'help',
 })
 
 export {
