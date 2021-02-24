@@ -5,7 +5,18 @@ import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './RecipeTilePurchaseInfo.css'
 import { DropdownArrowContainer } from '../DropdownArrow'
 
-export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFineDineIn, recipeVariants, isInCarousel, categoryId, originalId, fdiStyling }) => {
+export const RecipeTilePurchaseInfo = ({
+  recipeId,
+  originalId,
+  categoryId,
+  recipeVariants,
+  showDropdown,
+  surcharge,
+  isOutOfStock,
+  isFineDineIn,
+  isInCarousel,
+  fdiStyling
+}) => {
   if (isOutOfStock) {
     return null
   }
@@ -18,8 +29,10 @@ export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFi
         <div className={
           classnames(
             css.surchargeInfo,
-            { [css.surchargeInfoIsFineDineIn]: isFineDineIn && fdiStyling,
-              [css.surchargeInfoRow]: surchageOnTop}
+            {
+              [css.surchargeInfoIsFineDineIn]: isFineDineIn && fdiStyling,
+              [css.surchargeInfoRow]: surchageOnTop
+            }
           )
         }
         >
@@ -27,29 +40,34 @@ export const RecipeTilePurchaseInfo = ({ surcharge, isOutOfStock, recipeId, isFi
             +£
             {surcharge.toFixed(2)}
           </span>
-          <span className={classnames(css.perServingText, {[css.spaceLeft]: surchageOnTop})}>
+          <span className={classnames(css.perServingText, { [css.spaceLeft]: surchageOnTop })}>
             <span className={css.perText}>per</span>
             serving
           </span>
         </div>
       ) : null}
       <div className={css.buttonsWrapper}>
-        <AddRecipeButtonContainer recipeId={recipeId} categoryId={categoryId} />
-        <DropdownArrowContainer recipeId={recipeId} originalId={originalId} isInCarousel={isInCarousel} categoryId={categoryId} />
+        <AddRecipeButtonContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
+
+        {
+          showDropdown
+          && <DropdownArrowContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} isInCarousel={isInCarousel} />
+        }
       </div>
     </div>
   )
 }
 
 RecipeTilePurchaseInfo.propTypes = {
-  surcharge: PropTypes.number,
-  isOutOfStock: PropTypes.bool.isRequired,
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string,
-  isFineDineIn: PropTypes.bool.isRequired,
-  recipeVariants: PropTypes.arrayOf(PropTypes.shape),
-  isInCarousel: PropTypes.bool,
   categoryId: PropTypes.string,
+  recipeVariants: PropTypes.arrayOf(PropTypes.shape),
+  showDropdown: PropTypes.bool,
+  surcharge: PropTypes.number,
+  isOutOfStock: PropTypes.bool.isRequired,
+  isFineDineIn: PropTypes.bool.isRequired,
+  isInCarousel: PropTypes.bool,
   fdiStyling: PropTypes.bool
 }
 
@@ -59,5 +77,6 @@ RecipeTilePurchaseInfo.defaultProps = {
   recipeVariants: null,
   isInCarousel: false,
   categoryId: null,
-  fdiStyling: false
+  fdiStyling: false,
+  showDropdown: true
 }
