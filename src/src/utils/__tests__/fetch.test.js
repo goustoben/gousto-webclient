@@ -95,6 +95,52 @@ describe('fetch', () => {
     }
   })
 
+  describe('when handling 204 response ', () => {
+    describe('when there is a response body', () => {
+      const data = {
+        status: 'ok',
+        data: {
+          recipe_title: 'Test',
+          meat_ingredients: [
+            'chicken',
+            'prawn_with_shell',
+          ],
+          nutInfo: {
+            e_nergy: 100,
+          },
+        },
+      }
+      const expected = {
+        recipeTitle: 'Test',
+        meatIngredients: [
+          'chicken',
+          'prawn_with_shell',
+        ],
+        nutInfo: {
+          eNergy: 100,
+        },
+      }
+
+      it('should return response object', async () => {
+        setMockFetchResult(JSON.stringify(data), 204)
+
+        const result = await fetch('token', 'test/', { id: 1, include: ['test1', 'test2'] }, 'GET')
+
+        expect(result).toEqual({ data: expected, meta: null })
+      })
+    })
+
+    describe('when the response body is empty', () => {
+      it('should return valid empty response object', async () => {
+        setMockFetchResult('', 204)
+
+        const result = await fetch('token', 'test/', { id: 1, include: ['test1', 'test2'] }, 'GET')
+
+        expect(result).toEqual({data: {}, meta: null})
+      })
+    })
+  })
+
   test('should return with error if response is not in a recognised JSON format', async () => {
     const data = {
       something: '...',

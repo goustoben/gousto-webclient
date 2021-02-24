@@ -7,6 +7,7 @@ import { getStore } from 'store'
 import { timeout as fetchWithTimeout } from 'promise-timeout'
 
 const DEFAULT_TIME_OUT = 50000
+const STATUS_CODES_WITH_NO_CONTENT = [204]
 
 export const dataDefault = {}
 export const methodDefault = 'GET'
@@ -138,7 +139,13 @@ export function fetch(
       return response
     })
     .then(response => response.text())
-    .then(response => [JSONParse(response, useMenuService), responseStatus]) // eslint-disable-line new-cap
+    .then(response => {
+      if (!response && STATUS_CODES_WITH_NO_CONTENT.includes(responseStatus) ) {
+        return [{}, responseStatus]
+      }
+
+      return [JSONParse(response, useMenuService), responseStatus]
+    }) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
       logger.notice({message: '[fetch end]', status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl, uuid, extra: { serverSide: __SERVER__ === true, }})
