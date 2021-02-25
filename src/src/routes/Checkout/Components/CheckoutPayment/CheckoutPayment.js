@@ -20,6 +20,7 @@ import { CheckoutPayPalDetails } from './CheckoutPayPalDetails'
 import { SectionHeader } from '../SectionHeader'
 import { PaymentFooter } from './PaymentFooter'
 import { PaymentMethodSelectorCheckoutOverhaul } from './PaymentMethodSelectorCheckoutOverhaul'
+import { PayPalConfirmation } from './PayPalConfirmation'
 
 import css from './CheckoutPayment.css'
 
@@ -153,6 +154,62 @@ class CheckoutPayment extends React.Component {
     this.setState({ framesFieldsAreValid: isValid })
   }
 
+  getVariationContent = () => {
+    const {
+      isCheckoutCardDefaultEnabled,
+      isCheckoutPayPalFirstEnabled,
+      isPayPalReady,
+      setCurrentPaymentMethod,
+      currentPaymentMethod,
+      isCheckoutCardFirstEnabled,
+    } = this.props
+
+    if (isCheckoutCardDefaultEnabled) {
+      return (
+        <PaymentMethodSelectorCheckoutOverhaul
+          currentPaymentMethod={currentPaymentMethod}
+          setCurrentPaymentMethod={setCurrentPaymentMethod}
+          isPayPalReady={isPayPalReady}
+          renderCardContent={() => this.renderCardContent()}
+          renderPaypalContent={() => this.renderPaypalContent()}
+        />
+      )
+    }
+
+    const payPalButton = this.renderPayPalButton()
+    const separator = this.renderSeparator()
+    const cardDetails = this.renderCardContent()
+    const startYourSubscriptionButton = this.renderStartYourSubscriptionButton()
+    const error = this.renderErrorMessage()
+    const hideClass = isPayPalReady ? css.hide : ''
+
+    if (isCheckoutPayPalFirstEnabled) {
+      return (
+        <div className={hideClass}>
+          {payPalButton}
+          {separator}
+          {cardDetails}
+          {error}
+          {startYourSubscriptionButton}
+        </div>
+      )
+    }
+
+    if (isCheckoutCardFirstEnabled) {
+      return (
+        <div className={hideClass}>
+          {cardDetails}
+          {error}
+          {startYourSubscriptionButton}
+          {separator}
+          {payPalButton}
+        </div>
+      )
+    }
+
+    return null
+  }
+
   renderBaseline() {
     const {
       asyncValidate,
@@ -244,6 +301,7 @@ class CheckoutPayment extends React.Component {
       reloadCheckoutScript,
       asyncValidate,
       scrollToFirstMatchingRef,
+      isCheckoutOverhaulEnabled,
     } = this.props
 
     const { isSubmitCardEnabled } = this.state
@@ -252,7 +310,7 @@ class CheckoutPayment extends React.Component {
 
     return (
       <CheckoutCardDetails
-        hide={currentPaymentMethod !== PaymentMethod.Card}
+        hide={currentPaymentMethod !== PaymentMethod.Card && !isCheckoutOverhaulEnabled}
         prerender={prerender}
         receiveRef={receiveRef}
         sectionName={sectionName}
@@ -279,68 +337,86 @@ class CheckoutPayment extends React.Component {
     </div>
   )
 
+  renderStartYourSubscriptionButton = () => {
+    const { isPayPalReady, currentPaymentMethod } = this.props
+    const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : this.getSubmitButtonIsDisabledForCardPayment()
+
+    return (
+      <SubmitButton
+        onClick={this.handleClick}
+        isCheckoutOverhaulEnabled
+        isDisabled={isDisabled}
+      />
+    )
+  }
+
+  renderErrorMessage() {
+    const { currentPaymentMethod, onLoginClick } = this.props
+
+    return (
+      <ErrorMessage
+        showPayPalErrors={currentPaymentMethod === PaymentMethod.PayPal}
+        isCheckoutOverhaulEnabled
+        onLoginClick={onLoginClick}
+      />
+    )
+  }
+
   renderOuterContent() {
     const {
       currentPaymentMethod,
-      paypalScriptsReady,
       isPayPalReady,
       prerender,
-      onLoginClick,
+      isCheckoutCardDefaultEnabled,
+      isCheckoutCardFirstEnabled,
+      isCheckoutPayPalFirstEnabled,
     } = this.props
 
-    let showSubmitButton
-    let submitButtonIsDisabled = false
-
-    if (currentPaymentMethod === PaymentMethod.Card) {
-      showSubmitButton = true
-      submitButtonIsDisabled = this.getSubmitButtonIsDisabledForCardPayment()
-    } else {
-      showSubmitButton = isPayPalReady
-    }
+    const isCheckoutVariationEnabled = isCheckoutCardFirstEnabled || isCheckoutPayPalFirstEnabled || isCheckoutCardDefaultEnabled
+    const showSubmitButton = currentPaymentMethod === PaymentMethod.Card && isCheckoutCardDefaultEnabled
+      ? true
+      : isPayPalReady && isCheckoutVariationEnabled
 
     return (
       <div className={classNames({ [css.hide]: prerender })}>
-        <ErrorMessage
-          showPayPalErrors={currentPaymentMethod === PaymentMethod.PayPal}
-          isCheckoutOverhaulEnabled
-          onLoginClick={onLoginClick}
-        />
-        <CheckoutPayPalDetails
-          isCheckoutOverhaulEnabled
-          hide={currentPaymentMethod !== PaymentMethod.PayPal}
-          paypalScriptsReady={paypalScriptsReady}
-        />
-        {showSubmitButton && (
-          <SubmitButton
-            onClick={this.handleClick}
-            isCheckoutOverhaulEnabled
-            isDisabled={submitButtonIsDisabled}
-          />
-        )}
+        {this.renderErrorMessage()}
+        {isCheckoutCardDefaultEnabled && this.renderPayPalButton()}
+        {showSubmitButton && this.renderStartYourSubscriptionButton()}
       </div>
     )
   }
 
-  renderCheckoutOverhaul() {
-    const {
-      prerender,
-      currentPaymentMethod,
-      setCurrentPaymentMethod,
-      isPayPalReady,
-      is3DSEnabled,
-    } = this.props
+  renderPayPalButton = () => {
+    const { paypalScriptsReady, isCheckoutPayPalFirstEnabled, isCheckoutCardFirstEnabled, currentPaymentMethod } = this.props
 
     return (
-      <div className={classNames(css.checkoutOverhaulContainer, {[css.hide]: prerender})}>
+      <CheckoutPayPalDetails
+        isPaymentMethodVariationEnabled={isCheckoutPayPalFirstEnabled || isCheckoutCardFirstEnabled}
+        isCheckoutOverhaulEnabled
+        hide={!isCheckoutPayPalFirstEnabled && !isCheckoutCardFirstEnabled && currentPaymentMethod !== PaymentMethod.PayPal}
+        paypalScriptsReady={paypalScriptsReady}
+      />
+    )
+  }
+
+  renderSeparator = () => (
+    <div className={css.methodSeparatorContainer}>
+      <div className={css.border} />
+      <span className={css.content}>or</span>
+      <div className={css.border} />
+    </div>
+  )
+
+  renderExperimentVariation = () => {
+    const { prerender, isPayPalReady, is3DSEnabled, isCheckoutCardDefaultEnabled } = this.props
+    const variationContent = this.getVariationContent()
+
+    return (
+      <div className={classNames(css.checkoutOverhaulContainer, { [css.hide]: prerender })}>
         <SectionHeader title="Payment method" />
-        <PaymentMethodSelectorCheckoutOverhaul
-          currentPaymentMethod={currentPaymentMethod}
-          setCurrentPaymentMethod={setCurrentPaymentMethod}
-          isPayPalReady={isPayPalReady}
-          renderCardContent={() => this.renderCardContent()}
-          renderPaypalContent={() => this.renderPaypalContent()}
-        />
-        {this.renderOuterContent()}
+        {variationContent}
+        {isPayPalReady && <PayPalConfirmation />}
+        {(isCheckoutCardDefaultEnabled || isPayPalReady) && this.renderOuterContent()}
         <PaymentFooter />
         {is3DSEnabled && <Checkout3DSModal />}
       </div>
@@ -350,10 +426,10 @@ class CheckoutPayment extends React.Component {
   render() {
     const { isCheckoutOverhaulEnabled } = this.props
     if (isCheckoutOverhaulEnabled) {
-      return this.renderCheckoutOverhaul()
-    } else {
-      return this.renderBaseline()
+      return this.renderExperimentVariation()
     }
+
+    return this.renderBaseline()
   }
 }
 
@@ -386,6 +462,9 @@ CheckoutPayment.propTypes = {
   setCurrentPaymentMethod: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   onLoginClick: PropTypes.func,
+  isCheckoutPayPalFirstEnabled: PropTypes.bool,
+  isCheckoutCardDefaultEnabled: PropTypes.bool,
+  isCheckoutCardFirstEnabled: PropTypes.bool,
 }
 
 CheckoutPayment.defaultProps = {
@@ -413,6 +492,9 @@ CheckoutPayment.defaultProps = {
   setCurrentPaymentMethod: () => {},
   isCheckoutOverhaulEnabled: false,
   onLoginClick: () => {},
+  isCheckoutPayPalFirstEnabled: false,
+  isCheckoutCardDefaultEnabled: false,
+  isCheckoutCardFirstEnabled: false,
 }
 
 export { CheckoutPayment }

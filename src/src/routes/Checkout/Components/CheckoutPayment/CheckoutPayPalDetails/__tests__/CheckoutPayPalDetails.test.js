@@ -1,9 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { PaymentMethod } from 'config/signup'
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
-import css from '../CheckoutPayPalDetails.css'
 
 describe('CheckoutPayPalDetails', () => {
   let wrapper
@@ -13,7 +13,7 @@ describe('CheckoutPayPalDetails', () => {
   })
 
   test('should hide content', () => {
-    expect(wrapper.hasClass(css.hide)).toBe(false)
+    expect(wrapper.hasClass('hide')).toBe(false)
   })
 
   test('should render correctly', () => {
@@ -26,7 +26,7 @@ describe('CheckoutPayPalDetails', () => {
     })
 
     test('then it should be hidden', () => {
-      expect(wrapper.hasClass(css.hide)).toBe(true)
+      expect(wrapper.hasClass('hide')).toBe(true)
     })
 
     test('should render correctly', () => {
@@ -67,15 +67,7 @@ describe('CheckoutPayPalDetails', () => {
       })
 
       test('should hide "Change payment method" button', () => {
-        expect(wrapper.find(`.${css.paypalAlternativeText}`).exists()).toBe(false)
-      })
-    })
-
-    describe('when user clicks on "Change payment method" link', () => {
-      test('should trigger payment method reset', () => {
-        wrapper.find(`.${css.resetPaymentMethod}`).simulate('click')
-
-        expect(resetPaymentMethod).toHaveBeenCalled()
+        expect(wrapper.find('.paypalAlternativeText').exists()).toBe(false)
       })
     })
   })
@@ -130,6 +122,7 @@ describe('CheckoutPayPalDetails', () => {
     let trackEvent
     let braintree
     let paypal
+    let setCurrentPaymentMethod
     const clientInstance = {
       name: 'client-instance'
     }
@@ -152,6 +145,7 @@ describe('CheckoutPayPalDetails', () => {
       firePayPalError = jest.fn()
       setPayPalNonce = jest.fn()
       trackEvent = jest.fn()
+      setCurrentPaymentMethod = jest.fn()
       paypalButtonsInstance = {
         render: jest.fn(() => Promise.resolve())
       }
@@ -267,6 +261,31 @@ describe('CheckoutPayPalDetails', () => {
         await wrapper.instance().initPayPal()
 
         expect(wrapper.state().isPayPalInitialized).toBe(false)
+      })
+    })
+
+    describe('when isPaymentMethodVariationEnabled is true', () => {
+      let buttonConfig
+
+      beforeEach(async () => {
+        wrapper.setProps({
+          isPaymentMethodVariationEnabled: true,
+          setCurrentPaymentMethod
+        })
+        await wrapper.instance().initPayPal()
+
+        // eslint-disable-next-line prefer-destructuring
+        buttonConfig = paypal.Buttons.mock.calls[0][0]
+      })
+
+      describe('and createBillingAgreement is called', () => {
+        beforeEach(() => {
+          buttonConfig.createBillingAgreement()
+        })
+
+        test('then should trigger setCurrentPaymentMethod', () => {
+          expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
+        })
       })
     })
 
@@ -394,6 +413,40 @@ describe('CheckoutPayPalDetails', () => {
         expect(paypalObj.Buttons).toHaveBeenCalledWith(expect.objectContaining({
           fundingSource: 'PAYPAL',
           style: { height: 48 }
+        }))
+      })
+    })
+  })
+
+  describe('when isPaymentMethodVariationEnabled is true', () => {
+    const paypalButtonsInstance = {
+      name: 'data-collector-instance',
+      render: jest.fn(() => Promise.resolve())
+    }
+    const paypalObj = {
+      FUNDING: {
+        PAYPAL: 'PAYPAL',
+      },
+      Buttons: jest.fn(() => paypalButtonsInstance),
+    }
+
+    beforeEach(() => {
+      global.paypal = paypalObj
+      wrapper.setProps({
+        isPaymentMethodVariationEnabled: true,
+      })
+      wrapper.instance().renderPayPalButton()
+    })
+
+    describe('and renderPayPalButton is called', () => {
+      test('then should have style with proper options', () => {
+        expect(paypalObj.Buttons).toHaveBeenCalledWith(expect.objectContaining({
+          fundingSource: 'PAYPAL',
+          style: {
+            height: 48,
+            label: 'pay',
+            tagline: false,
+          }
         }))
       })
     })

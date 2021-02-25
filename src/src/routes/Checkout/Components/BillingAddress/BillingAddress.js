@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import classNames from 'classnames'
 import CheckBox from 'Form/CheckBox'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import css from './BillingAddress.css'
@@ -26,12 +26,13 @@ export class BillingAddress extends React.PureComponent {
       receiveRef,
       scrollToFirstMatchingRef,
       isCheckoutOverhaulEnabled,
+      isCheckoutVariationEnabled,
     } = this.props
     const isBillingAddressDifferent = formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
 
     if (isCheckoutOverhaulEnabled) {
       return (
-        <div>
+        <div className={classNames({ [css.variationContainer]: isCheckoutVariationEnabled })}>
           <div className={redesignCss.fieldHeader}>Billing address</div>
           <CheckBox
             checked={!isBillingAddressDifferent}
@@ -111,6 +112,7 @@ BillingAddress.propTypes = {
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
+  isCheckoutVariationEnabled: PropTypes.bool,
 }
 
 BillingAddress.defaultProps = {
@@ -118,4 +120,5 @@ BillingAddress.defaultProps = {
   receiveRef: () => {},
   scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
+  isCheckoutVariationEnabled: false,
 }

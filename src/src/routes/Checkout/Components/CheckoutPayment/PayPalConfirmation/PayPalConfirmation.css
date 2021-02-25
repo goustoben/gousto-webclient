@@ -1,0 +1,73 @@
+@value Bluecheese, Blueberry, Oyster, LightestAccessible from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
+
+.text {
+  composes: text from '../CheckoutPayPalDetails/CheckoutPayPalDetails.css';
+}
+
+.checkmarkIcon {
+  composes: checkmarkIcon from 'styles/icons.css';
+  padding: 0;
+  margin-right: 0.25rem;
+}
+
+.successTickIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.paypalIcon {
+  height: 24px;
+  width: 99px;
+  vertical-align: top;
+  margin-top: -2px;
+}
+
+.paypalAlternativeText {
+  composes: fontStyleS from 'design-language/typography.css';
+}
+
+.resetPaymentMethod {
+  color: Bluecheese;
+  border-bottom: 1px solid transparent;
+  transition: all 200ms ease;
+  transition-property: color, border;
+
+  &:active,
+  &:hover,
+  &:focus {
+    color: Blueberry;
+    border-color: Blueberry;
+  }
+}
+
+.checkoutVariationContainer,
+.checkoutVariationText {
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.checkoutVariationContainer {
+  composes: fontStyleBodyL from 'design-language/typography.css';
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkoutVariationText {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  color: LightestAccessible;
+}
+
+.checkoutVariationLink {
+  border-bottom: 1px solid Oyster;
+  composes: fontStyleSubHead from 'design-language/typography.module.css';
+}
+
+.checkoutVariationMessage {
+  margin-right: 0.5rem;
+  white-space: nowrap;
+}

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import Svg from 'components/Svg'
 import { Loader } from 'goustouicomponents'
 
+import { PaymentMethod } from 'config/signup'
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
-import { onEnter } from 'utils/accessibility'
+import { PayPalConfirmation } from '../PayPalConfirmation'
 
 import css from './CheckoutPayPalDetails.css'
 
@@ -99,12 +99,15 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderPayPalButton = () => {
-    const { firePayPalError, trackEvent, isCheckoutOverhaulEnabled } = this.props
+    const { firePayPalError, trackEvent, isCheckoutOverhaulEnabled, isPaymentMethodVariationEnabled, setCurrentPaymentMethod } = this.props
 
     const buttonsConfig = {
       fundingSource: paypal.FUNDING.PAYPAL,
       createBillingAgreement: () => {
         trackEvent(clickContinuePayPal)
+        if (isPaymentMethodVariationEnabled) {
+          setCurrentPaymentMethod(PaymentMethod.PayPal)
+        }
 
         return this.createPayment()
       },
@@ -124,6 +127,14 @@ class CheckoutPayPalDetails extends React.PureComponent {
     if (isCheckoutOverhaulEnabled) {
       buttonsConfig.style = {
         height: 48,
+      }
+    }
+
+    if (isPaymentMethodVariationEnabled) {
+      buttonsConfig.style = {
+        height: 48,
+        label: 'pay',
+        tagline: false,
       }
     }
 
@@ -156,7 +167,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderBaseline() {
-    const { hide, isPayPalSetupDone, hasErrors, resetPaymentMethod, isSubmitting } = this.props
+    const { hide, isPayPalSetupDone, hasErrors } = this.props
     const { isPayPalInitialized } = this.state
 
     return (
@@ -170,40 +181,23 @@ class CheckoutPayPalDetails extends React.PureComponent {
           <div id="paypal-container" className={classNames(css.paypalContainer, {[css.transparent]: !isPayPalInitialized})} />
         </div>
 
-        {isPayPalSetupDone && (
-          <div className={css.text}>
-            <span className={css.checkmarkIcon} />
-            Great, you’re all set to pay with&nbsp;
-            <Svg className={css.paypalIcon} fileName="paypal" />
-            <br />
-            {isSubmitting || (
-              <span className={css.paypalAlternativeText}>
-                or&nbsp;
-                <span
-                  role="button"
-                  tabIndex="0"
-                  className={css.resetPaymentMethod}
-                  onClick={resetPaymentMethod}
-                  onKeyDown={onEnter(resetPaymentMethod)}
-                >
-                  Change payment method
-                </span>
-              </span>
-            )}
-          </div>
-        )}
+        {isPayPalSetupDone && <PayPalConfirmation />}
       </div>
     )
   }
 
   renderCheckoutOverhaul() {
-    const { hide, isPayPalSetupDone, hasErrors } = this.props
+    const { hide, isPayPalSetupDone, hasErrors, isPaymentMethodVariationEnabled } = this.props
     const { isPayPalInitialized } = this.state
 
     const isLoading = !hasErrors && !isPayPalInitialized
 
     return (
-      <div className={classNames(css.checkoutOverhaul, { [css.hide]: hide || isPayPalSetupDone })}>
+      <div className={classNames(css.checkoutOverhaul, {
+        [css.hide]: hide || isPayPalSetupDone,
+        [css.payPalButtonVariation]: isPaymentMethodVariationEnabled,
+      })}
+      >
         <div
           id="paypal-container"
           className={classNames(css.checkoutOverhaulPaypalContainer, {
@@ -233,7 +227,6 @@ class CheckoutPayPalDetails extends React.PureComponent {
 CheckoutPayPalDetails.propTypes = {
   setPayPalNonce: PropTypes.func,
   setPayPalDeviceData: PropTypes.func,
-  resetPaymentMethod: PropTypes.func,
   trackEvent: PropTypes.func,
   firePayPalError: PropTypes.func,
   clearPayPalErrors: PropTypes.func,
@@ -241,15 +234,15 @@ CheckoutPayPalDetails.propTypes = {
   hasErrors: PropTypes.bool,
   hide: PropTypes.bool,
   isPayPalSetupDone: PropTypes.bool,
-  isSubmitting: PropTypes.bool,
   token: PropTypes.string,
   isCheckoutOverhaulEnabled: PropTypes.bool,
+  isPaymentMethodVariationEnabled: PropTypes.bool,
+  setCurrentPaymentMethod: PropTypes.func,
 }
 
 CheckoutPayPalDetails.defaultProps = {
   setPayPalNonce: () => {},
   setPayPalDeviceData: () => {},
-  resetPaymentMethod: () => {},
   trackEvent: () => {},
   firePayPalError: () => {},
   clearPayPalErrors: () => {},
@@ -257,9 +250,10 @@ CheckoutPayPalDetails.defaultProps = {
   hasErrors: false,
   hide: false,
   isPayPalSetupDone: false,
-  isSubmitting: false,
   token: null,
   isCheckoutOverhaulEnabled: false,
+  isPaymentMethodVariationEnabled: false,
+  setCurrentPaymentMethod: () => {},
 }
 
 export { CheckoutPayPalDetails }

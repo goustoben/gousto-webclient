@@ -1,4 +1,5 @@
 @value Haricot, HaricotMedium from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 
 .helperText {
 	text-align: center;
@@ -19,6 +20,10 @@
 
 .checkoutOverhaulContainer {
   margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
 
   /* Temporary; short-term it should be applied at the level of CheckoutButton; long-term in ui-components/CTA. */
   & > button {

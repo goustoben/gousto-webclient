@@ -1,5 +1,6 @@
-@value BluecheeseLight from 'styles/colors.css';
+@value BluecheeseLight, LightestAccessible, Oyster from 'styles/colors.css';
 @value SpacingLG from 'sass-loader!styles/spacing.scss';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 
 .container {
 	composes: textBold from 'styles/typography.css';
@@ -59,4 +60,25 @@
 .paypalSetupInfo {
   text-align: center;
   composes: fontStyleS from 'design-language/typography.css';
+}
+
+.methodSeparatorContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.border {
+  border-bottom: 1px solid Oyster;
+  width: 100%;
+}
+
+.content {
+  padding: 0 1rem;
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  color: LightestAccessible;
 }

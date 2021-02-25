@@ -2,6 +2,10 @@ import { connect } from 'react-redux'
 import { change, getFormValues } from 'redux-form'
 
 import { getDeliveryFormName } from 'selectors/checkout'
+import {
+  getIsCheckoutOverhaulCardFirstEnabled,
+  getIsCheckoutOverhaulPayPalFirstEnabled,
+} from 'selectors/features'
 import { form, sectionName } from './config'
 
 import { BillingAddress } from './BillingAddress'
@@ -21,6 +25,7 @@ const mapStateToProps = (state) => {
     sectionName,
     formValues,
     deliveryAddress: getDeliveryAddress(state),
+    isCheckoutVariationEnabled: getIsCheckoutOverhaulCardFirstEnabled(state) || getIsCheckoutOverhaulPayPalFirstEnabled(state),
   }
 }
 

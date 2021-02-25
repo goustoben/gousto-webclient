@@ -9,6 +9,10 @@ import {
   trackingCardTokenizationSuccessfully,
   trackingCardTokenizationFailed
 } from 'actions/checkout'
+import {
+  getIsCheckoutOverhaulCardFirstEnabled,
+  getIsCheckoutOverhaulPayPalFirstEnabled,
+} from 'selectors/features'
 import { sectionName, deliveryAddressSectionName } from '../config'
 import { getBillingAddress } from './utils'
 import { CheckoutFrame } from './CheckoutFrame'
@@ -24,6 +28,7 @@ const mapStateToProps = state => {
     cardName: formValues && formValues[sectionName] && formValues[sectionName].cardName ? formValues[sectionName].cardName : '',
     billingAddress: getBillingAddress(formValues),
     hasCheckoutError: hasCheckoutError(state),
+    isCheckoutVariationEnabled: getIsCheckoutOverhaulCardFirstEnabled(state) || getIsCheckoutOverhaulPayPalFirstEnabled(state),
   }
 }
 
