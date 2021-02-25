@@ -3,7 +3,7 @@ import actions from 'actions'
 import { userGetReferralDetails } from 'actions/user'
 import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
-import { getIsMyGoustoBannerAppAwarenessEnabled, getLimitedCapacity } from 'selectors/features'
+import { getIsMyGoustoBannerAppAwarenessEnabled, getLimitedCapacity, getRatingsButtonFeature } from 'selectors/features'
 import { MyGousto } from './MyGousto'
 
 function mapStateToProps(state) {
@@ -15,13 +15,15 @@ function mapStateToProps(state) {
     isCapacityLimited: getLimitedCapacity(state),
     isMobileViewport: getBrowserType(state) === 'mobile',
     showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),
+    rateRecipeCount: state.feedback.get('feedbackCount'),
+    showRatingsButtonFeature: getRatingsButtonFeature(state),
   }
 }
 
 const MyGoustoContainer = connect(mapStateToProps, {
   userLoadOrders: actions.userLoadOrders,
   userGetReferralDetails,
-  redirect
+  redirect,
 })(MyGousto)
 
 export { MyGoustoContainer }
