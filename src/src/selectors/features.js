@@ -182,6 +182,8 @@ export const getIsMenuProgressBarHidden = ({ features }) => (
   features && features.getIn(['isMenuProgressBarHidden', 'value'], false)
 )
 
+export const getRatingsButtonFeature = ({ features }) => (features && features.getIn(['showRatingsButtonFeature', 'value'], false))
+
 export const getIsCheckoutOverhaulCardDefaultEnabled = ({ features }) => (
   features && features.getIn(['isCheckoutCardDefaultEnabled', 'value'], false)
 )
@@ -193,3 +195,4 @@ export const getIsCheckoutOverhaulPayPalFirstEnabled = ({ features }) => (
 export const getIsCheckoutOverhaulCardFirstEnabled = ({ features }) => (
   features && features.getIn(['isCheckoutCardFirstEnabled', 'value'], false)
 )
+

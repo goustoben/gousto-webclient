@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import Link from 'Link'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
 import { LimitedCapacityNotice } from './LimitedCapacityNotice'
@@ -22,6 +23,8 @@ const propTypes = {
   isCapacityLimited: PropTypes.bool,
   isMobileViewport: PropTypes.bool.isRequired,
   showAppAwareness: PropTypes.bool,
+  rateRecipeCount: PropTypes.number,
+  showRatingsButtonFeature: PropTypes.bool
 }
 
 const contextTypes = {
@@ -37,6 +40,8 @@ const defaultProps = {
   redirect: () => {},
   isCapacityLimited: false,
   showAppAwareness: false,
+  rateRecipeCount: 0,
+  showRatingsButtonFeature: false
 }
 
 class MyGousto extends React.PureComponent {
@@ -62,6 +67,8 @@ class MyGousto extends React.PureComponent {
       isCapacityLimited,
       isMobileViewport,
       showAppAwareness,
+      rateRecipeCount,
+      showRatingsButtonFeature
     } = this.props
     const headerTitle = `Hello ${nameFirst},`
     const showAppAwarenessBanner = !isMobileViewport && showAppAwareness
@@ -71,7 +78,7 @@ class MyGousto extends React.PureComponent {
         <div className={css.wrapper}>
           <div className={css.notificationContent}>
             {showAppAwarenessBanner && <AppAwarenessBanner />}
-            {(isCapacityLimited && !showAppAwarenessBanner) && <LimitedCapacityNotice />}
+            {isCapacityLimited && !showAppAwarenessBanner && <LimitedCapacityNotice />}
           </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />
@@ -80,8 +87,30 @@ class MyGousto extends React.PureComponent {
         <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>
           <HeaderContainer orders={orders} />
         </Section>
-        <Section title="Your recent cookbook" alternateColour>
+        <Section title="Your recent recipes" alternateColour>
+          {showRatingsButtonFeature && rateRecipeCount && rateRecipeCount > 0 ? (
+            <div className={css.desktopHide}>
+              <Link className={css.rateRecipesButton} to="/rate-my-recipes" clientRouted={false}>
+                <span>
+                  Rate your recipes (
+                  {rateRecipeCount}
+                  )
+                </span>
+              </Link>
+            </div>
+          ) : null}
           <Cookbook />
+          {showRatingsButtonFeature && rateRecipeCount && rateRecipeCount > 0 ? (
+            <div className={css.mobileHide}>
+              <Link className={css.rateRecipesButton} to="/rate-my-recipes" clientRouted={false}>
+                <span>
+                  Rate your recipes (
+                  {rateRecipeCount}
+                  )
+                </span>
+              </Link>
+            </div>
+          ) : null }
         </Section>
         <Section title="Your Gousto wins" alternateColour>
           <ReferAFriend referralDetails={referralDetails} redirect={redirect} />

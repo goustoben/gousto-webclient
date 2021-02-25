@@ -1,5 +1,5 @@
-@value ScreenLGMin, ScreenMDMin from 'styles/screenSizes.css';
-@value White from 'styles/colors.css';
+@value ScreenLGMin, ScreenMDMin, ScreenXSMax from 'styles/screenSizes.css';
+@value White, Bluecheese from 'styles/colors.css';
 
 .wrapper {
   background-color: White;
@@ -23,4 +23,39 @@
 
 .notificationContent:empty {
   padding-top: 0;
+}
+
+.rateRecipesButton {
+    width: 40%;
+    background-color: White;
+    color: Bluecheese;
+    padding: 0.5rem;
+    border: 1px solid Bluecheese;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    @media ScreenXSMax {
+      width: 100%;
+    }
+}
+.rateRecipesButton:hover {
+  border: 3px solid Bluecheese;
+}
+
+.rateRecipesButton:focus {
+  border: 3px solid Bluecheese;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.desktopHide {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
