@@ -292,7 +292,6 @@ describe('CheckoutPayment', () => {
     test('then component should be rendered correctly', () => {
       expect(wrapper.find('.checkoutOverhaulContainer')).toHaveLength(1)
       expect(wrapper.find('SectionHeader').exists()).toBeTruthy()
-      expect(wrapper.find('PaymentMethodSelectorCheckoutOverhaul').exists()).toBeTruthy()
       expect(wrapper.find('PaymentFooter').exists()).toBeTruthy()
     })
   })

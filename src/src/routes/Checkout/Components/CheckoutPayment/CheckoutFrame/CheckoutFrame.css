@@ -130,3 +130,12 @@
     display: none;
   }
 }
+
+.cardNameHeaderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardsIcon {
+  composes: cardsIcon from '../PaymentMethodSelectorCheckoutOverhaul/PaymentMethodSelectorCheckoutOverhaul.css';
+}

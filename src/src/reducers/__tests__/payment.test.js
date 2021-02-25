@@ -18,10 +18,10 @@ describe('Payment state', () => {
       expect(result.get('challengeUrl')).toBeFalsy()
     })
 
-    test('payment method should be unset by default', () => {
+    test('payment method should be set to card', () => {
       const result = initialState()
 
-      expect(result.get('paymentMethod')).toBe(null)
+      expect(result.get('paymentMethod')).toBe(PaymentMethod.Card)
     })
 
     test('PayPal client token should not be defined', () => {

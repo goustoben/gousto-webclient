@@ -10,9 +10,9 @@ ShallowWrapper {
     hide={false}
     isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={false}
-    isSubmitting={false}
+    isPaymentMethodVariationEnabled={false}
     paypalScriptsReady={false}
-    resetPaymentMethod={[Function]}
+    setCurrentPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}
     setPayPalNonce={[Function]}
     token={null}
@@ -311,9 +311,9 @@ ShallowWrapper {
     hide={false}
     isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={false}
-    isSubmitting={false}
+    isPaymentMethodVariationEnabled={false}
     paypalScriptsReady={false}
-    resetPaymentMethod={[Function]}
+    setCurrentPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}
     setPayPalNonce={[Function]}
     token={null}
@@ -572,9 +572,10 @@ ShallowWrapper {
     hide={false}
     isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={true}
-    isSubmitting={false}
+    isPaymentMethodVariationEnabled={false}
     paypalScriptsReady={false}
     resetPaymentMethod={[MockFunction]}
+    setCurrentPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}
     setPayPalNonce={[Function]}
     token={null}
@@ -616,33 +617,7 @@ ShallowWrapper {
             id="paypal-container"
           />
         </div>,
-        <div
-          className="text"
-        >
-          <span
-            className="checkmarkIcon"
-          />
-          Great, you’re all set to pay with 
-          <Svg
-            className="paypalIcon"
-            fileName="paypal"
-          />
-          <br />
-          <span
-            className="paypalAlternativeText"
-          >
-            or 
-            <span
-              className="resetPaymentMethod"
-              onClick={[MockFunction]}
-              onKeyDown={[Function]}
-              role="button"
-              tabIndex="0"
-            >
-              Change payment method
-            </span>
-          </span>
-        </div>,
+        <Connect(PayPalConfirmation) />,
       ],
       "className": "",
     },
@@ -736,113 +711,11 @@ ShallowWrapper {
       Object {
         "instance": null,
         "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": Array [
-            <span
-              className="checkmarkIcon"
-            />,
-            "Great, you’re all set to pay with ",
-            <Svg
-              className="paypalIcon"
-              fileName="paypal"
-            />,
-            <br />,
-            <span
-              className="paypalAlternativeText"
-            >
-              or 
-              <span
-                className="resetPaymentMethod"
-                onClick={[MockFunction]}
-                onKeyDown={[Function]}
-                role="button"
-                tabIndex="0"
-              >
-                Change payment method
-              </span>
-            </span>,
-          ],
-          "className": "text",
-        },
+        "nodeType": "class",
+        "props": Object {},
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "className": "checkmarkIcon",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": "span",
-          },
-          "Great, you’re all set to pay with ",
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "function",
-            "props": Object {
-              "className": "paypalIcon",
-              "fileName": "paypal",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {},
-            "ref": null,
-            "rendered": null,
-            "type": "br",
-          },
-          Object {
-            "instance": null,
-            "key": undefined,
-            "nodeType": "host",
-            "props": Object {
-              "children": Array [
-                "or ",
-                <span
-                  className="resetPaymentMethod"
-                  onClick={[MockFunction]}
-                  onKeyDown={[Function]}
-                  role="button"
-                  tabIndex="0"
-                >
-                  Change payment method
-                </span>,
-              ],
-              "className": "paypalAlternativeText",
-            },
-            "ref": null,
-            "rendered": Array [
-              "or ",
-              Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "host",
-                "props": Object {
-                  "children": "Change payment method",
-                  "className": "resetPaymentMethod",
-                  "onClick": [MockFunction],
-                  "onKeyDown": [Function],
-                  "role": "button",
-                  "tabIndex": "0",
-                },
-                "ref": null,
-                "rendered": "Change payment method",
-                "type": "span",
-              },
-            ],
-            "type": "span",
-          },
-        ],
-        "type": "div",
+        "rendered": null,
+        "type": [Function],
       },
     ],
     "type": "div",
@@ -875,33 +748,7 @@ ShallowWrapper {
               id="paypal-container"
             />
           </div>,
-          <div
-            className="text"
-          >
-            <span
-              className="checkmarkIcon"
-            />
-            Great, you’re all set to pay with 
-            <Svg
-              className="paypalIcon"
-              fileName="paypal"
-            />
-            <br />
-            <span
-              className="paypalAlternativeText"
-            >
-              or 
-              <span
-                className="resetPaymentMethod"
-                onClick={[MockFunction]}
-                onKeyDown={[Function]}
-                role="button"
-                tabIndex="0"
-              >
-                Change payment method
-              </span>
-            </span>
-          </div>,
+          <Connect(PayPalConfirmation) />,
         ],
         "className": "",
       },
@@ -995,113 +842,11 @@ ShallowWrapper {
         Object {
           "instance": null,
           "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": Array [
-              <span
-                className="checkmarkIcon"
-              />,
-              "Great, you’re all set to pay with ",
-              <Svg
-                className="paypalIcon"
-                fileName="paypal"
-              />,
-              <br />,
-              <span
-                className="paypalAlternativeText"
-              >
-                or 
-                <span
-                  className="resetPaymentMethod"
-                  onClick={[MockFunction]}
-                  onKeyDown={[Function]}
-                  role="button"
-                  tabIndex="0"
-                >
-                  Change payment method
-                </span>
-              </span>,
-            ],
-            "className": "text",
-          },
+          "nodeType": "class",
+          "props": Object {},
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "className": "checkmarkIcon",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": "span",
-            },
-            "Great, you’re all set to pay with ",
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "function",
-              "props": Object {
-                "className": "paypalIcon",
-                "fileName": "paypal",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {},
-              "ref": null,
-              "rendered": null,
-              "type": "br",
-            },
-            Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "host",
-              "props": Object {
-                "children": Array [
-                  "or ",
-                  <span
-                    className="resetPaymentMethod"
-                    onClick={[MockFunction]}
-                    onKeyDown={[Function]}
-                    role="button"
-                    tabIndex="0"
-                  >
-                    Change payment method
-                  </span>,
-                ],
-                "className": "paypalAlternativeText",
-              },
-              "ref": null,
-              "rendered": Array [
-                "or ",
-                Object {
-                  "instance": null,
-                  "key": undefined,
-                  "nodeType": "host",
-                  "props": Object {
-                    "children": "Change payment method",
-                    "className": "resetPaymentMethod",
-                    "onClick": [MockFunction],
-                    "onKeyDown": [Function],
-                    "role": "button",
-                    "tabIndex": "0",
-                  },
-                  "ref": null,
-                  "rendered": "Change payment method",
-                  "type": "span",
-                },
-              ],
-              "type": "span",
-            },
-          ],
-          "type": "div",
+          "rendered": null,
+          "type": [Function],
         },
       ],
       "type": "div",
@@ -1145,9 +890,9 @@ ShallowWrapper {
     hide={true}
     isCheckoutOverhaulEnabled={false}
     isPayPalSetupDone={false}
-    isSubmitting={false}
+    isPaymentMethodVariationEnabled={false}
     paypalScriptsReady={false}
-    resetPaymentMethod={[Function]}
+    setCurrentPaymentMethod={[Function]}
     setPayPalDeviceData={[Function]}
     setPayPalNonce={[Function]}
     token={null}

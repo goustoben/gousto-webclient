@@ -1,10 +1,11 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
+import { PaymentMethod } from 'config/signup'
 
 export const initialState = () => Immutable.Map({
   challengeUrl: null,
   isModalVisible: false,
-  paymentMethod: null,
+  paymentMethod: PaymentMethod.Card,
   paypalClientToken: null,
   paypalNonce: null,
   paypalDeviceData: null,

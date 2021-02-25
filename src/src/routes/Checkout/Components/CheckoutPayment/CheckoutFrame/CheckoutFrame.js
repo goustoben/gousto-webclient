@@ -4,6 +4,7 @@ import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
 import { actionTypes } from 'actions/actionTypes'
 import InputError from 'Form/InputError'
+import Svg from 'Svg'
 
 import { publicKey } from '../config'
 import { getErrorType } from './utils'
@@ -208,8 +209,16 @@ class CheckoutFrame extends React.Component {
   }
 
   render() {
-    const { isCheckoutOverhaulEnabled, receiveRef, sectionName } = this.props
+    const { isCheckoutOverhaulEnabled, receiveRef, sectionName, isCheckoutVariationEnabled } = this.props
     const { showCardNumberError, showExpiryDateError, showCVVError } = this.state
+    const cardNameHeader = isCheckoutVariationEnabled
+      ? (
+        <div className={css.cardNameHeaderContainer}>
+          <span>Card number</span>
+          <Svg fileName="payment-method-4-cards" className={css.cardsIcon} />
+        </div>
+      )
+      : 'Card number'
 
     if (isCheckoutOverhaulEnabled) {
       return (
@@ -221,7 +230,7 @@ class CheckoutFrame extends React.Component {
         >
           <div className={css.row}>
             <FrameField
-              header="Card number"
+              header={cardNameHeader}
               hasLockIcon
               dataFrames="cardNumber"
               errorDataTesting="checkoutFrameCardNoError"
@@ -321,6 +330,7 @@ CheckoutFrame.propTypes = {
   onSubmitFromCardDetails: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   receiveRef: PropTypes.func,
+  isCheckoutVariationEnabled: PropTypes.bool,
 }
 
 CheckoutFrame.defaultProps = {
@@ -348,6 +358,7 @@ CheckoutFrame.defaultProps = {
   onSubmitFromCardDetails: () => {},
   isCheckoutOverhaulEnabled: false,
   receiveRef: () => {},
+  isCheckoutVariationEnabled: false,
 }
 
 export { CheckoutFrame }

@@ -8,7 +8,13 @@ import {
   setCurrentPaymentMethod
 } from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
-import { getIs3DSForSignUpEnabled, getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import {
+  getIs3DSForSignUpEnabled,
+  getIsCheckoutOverhaulEnabled,
+  getIsCheckoutOverhaulPayPalFirstEnabled,
+  getIsCheckoutOverhaulCardDefaultEnabled,
+  getIsCheckoutOverhaulCardFirstEnabled,
+} from 'selectors/features'
 import { getCurrentPaymentMethod, getCanSubmitPaymentDetails, isPayPalReady } from 'selectors/payment'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
@@ -28,6 +34,9 @@ const mapStateToProps = (state) => ({
   canSubmit: getCanSubmitPaymentDetails(state),
   isPayPalReady: isPayPalReady(state),
   isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
+  isCheckoutCardDefaultEnabled: getIsCheckoutOverhaulCardDefaultEnabled(state),
+  isCheckoutCardFirstEnabled: getIsCheckoutOverhaulCardFirstEnabled(state),
+  isCheckoutPayPalFirstEnabled: getIsCheckoutOverhaulPayPalFirstEnabled(state),
 })
 
 const mapDispatchToProps = {

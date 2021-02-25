@@ -46,6 +46,9 @@ import {
   getIsMyGoustoBannerSubscriberPricingEnabled,
   getIsWizardPricePerServingEnabled,
   getIsMenuProgressBarHidden,
+  getIsCheckoutOverhaulPayPalFirstEnabled,
+  getIsCheckoutOverhaulCardFirstEnabled,
+  getIsCheckoutOverhaulCardDefaultEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -108,6 +111,9 @@ describe('when features are defined', () => {
     [getIsSubscriberPricingEnabled, 'isSubscriberPricingEnabled'],
     [getIsWizardPricePerServingEnabled, 'isWizardPricePerServingEnabled'],
     [getIsMenuProgressBarHidden, 'isMenuProgressBarHidden'],
+    [getIsCheckoutOverhaulPayPalFirstEnabled, 'isCheckoutPayPalFirstEnabled'],
+    [getIsCheckoutOverhaulCardFirstEnabled, 'isCheckoutCardFirstEnabled'],
+    [getIsCheckoutOverhaulCardDefaultEnabled, 'isCheckoutCardDefaultEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

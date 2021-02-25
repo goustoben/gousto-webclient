@@ -181,3 +181,15 @@ export const getIsWizardPricePerServingEnabled = ({ features }) => (
 export const getIsMenuProgressBarHidden = ({ features }) => (
   features && features.getIn(['isMenuProgressBarHidden', 'value'], false)
 )
+
+export const getIsCheckoutOverhaulCardDefaultEnabled = ({ features }) => (
+  features && features.getIn(['isCheckoutCardDefaultEnabled', 'value'], false)
+)
+
+export const getIsCheckoutOverhaulPayPalFirstEnabled = ({ features }) => (
+  features && features.getIn(['isCheckoutPayPalFirstEnabled', 'value'], false)
+)
+
+export const getIsCheckoutOverhaulCardFirstEnabled = ({ features }) => (
+  features && features.getIn(['isCheckoutCardFirstEnabled', 'value'], false)
+)
