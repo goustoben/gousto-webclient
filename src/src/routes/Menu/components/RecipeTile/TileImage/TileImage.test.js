@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import GoustoImage from 'Image'
 import { SoldOutOverlay } from 'routes/Menu/Recipe/SoldOutOverlay'
+import { VariantHeaderContainer } from 'routes/Menu/Recipe/VariantHeader/VariantHeaderContainer'
 import { TileImage } from './TileImage'
 import { CookingTimeIconContainer } from '../CookingTimeIcon'
 
@@ -32,13 +33,13 @@ describe('<TileImage />', () => {
   })
 
   it('shouldn\'t render a GoustoImage without media', () => {
-    wrapper = shallow(<TileImage media={Immutable.List()} />)
+    wrapper = shallow(<TileImage media={Immutable.List()} recipeId="1234" categoryId="abcde" />)
 
     expect(wrapper.find(GoustoImage)).toHaveLength(0)
   })
 
   it('should render a GoustoImage with media', () => {
-    wrapper = shallow(<TileImage media={media} />)
+    wrapper = shallow(<TileImage media={media} recipeId="1234" categoryId="abcde" />)
 
     expect(wrapper.find(GoustoImage)).toHaveLength(1)
   })
@@ -76,8 +77,16 @@ describe('<TileImage />', () => {
       cookingTime: 30,
       cookingTimeFamily: 30
     })
-    wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
+    wrapper = shallow(<TileImage recipe={recipe} recipeId={recipe.get('id')} categoryId="abcde" index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
     expect(wrapper.find(CookingTimeIconContainer).length).toEqual(1)
+  })
+
+  test('should contain one VariantHeaderContainer component', () => {
+    wrapper = shallow(<TileImage recipeId="1234" categoryId="abcde" isOutOfStock={false} media={Immutable.List()} />)
+    expect(wrapper.find(VariantHeaderContainer).length).toEqual(1)
+    expect(wrapper.find(VariantHeaderContainer).prop('recipeId')).toEqual('1234')
+    expect(wrapper.find(VariantHeaderContainer).prop('categoryId')).toEqual('abcde')
+    expect(wrapper.find(VariantHeaderContainer).prop('isOutOfStock')).toEqual(false)
   })
 
   describe('when in carousel', () => {
@@ -109,10 +118,9 @@ describe('<TileImage />', () => {
         cookingTime: 30,
         cookingTimeFamily: 30
       })
-      wrapper = shallow(<TileImage isInCarousel recipe={recipe} recipeId={recipe.get('id')} index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
+      wrapper = shallow(<TileImage isInCarousel recipe={recipe} recipeId={recipe.get('id')} categoryId="abcde" index={index} numPortions={2} showDetailRecipe={showDetailRecipe} media={media} />)
 
       expect(wrapper.find('.carouselImageWrapper').length).toEqual(1)
     })
   })
 })
-

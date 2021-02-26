@@ -1,14 +1,14 @@
-@value White, Bluecheese, NewGrey from 'styles/colors.css';
+@value White, Bluecheese, NewGrey, Blackberry from 'styles/colors.css';
 
 .variantHeader {
     padding: 0.25rem 0;
     color: White;
     font-weight: bold;
     box-sizing: content-box;
-    background: Bluecheese;
     position: absolute;
     width: 100%;
     z-index: 100;
+    text-align: left;
 }
 
 .variantHeaderSides {
@@ -34,4 +34,20 @@
 
 .variantHeaderText {
     padding-left: 0.625rem;
+}
+
+.themeBlue {
+    background: Bluecheese;
+}
+
+.themeGrey {
+    background: Blackberry;
+}
+
+.positionTop {
+    top: 0;
+}
+
+.positionBottom {
+    bottom: 0;
 }
