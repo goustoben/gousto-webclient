@@ -7,8 +7,6 @@ import { SlotPicker } from '../SlotPicker'
 
 import css from '../DeliverySlot.css'
 
-const getDefaultFromDropdownOptions = (options = []) => (options.find((option) => !option.disabled) || {}).value
-
 const DatePicker = (props) => {
   const {
     slots,
@@ -36,7 +34,6 @@ const DatePicker = (props) => {
             value={tempDate}
             className={css.dropdown}
             subLabelClassName={subLabelClassName}
-            defaultValue={getDefaultFromDropdownOptions(deliveryDays)}
           />
         </div>
         <div className={css.halfRight}>
@@ -47,7 +44,6 @@ const DatePicker = (props) => {
             onChange={setTempSlotId}
             value={tempSlotId}
             className={css.dropdown}
-            defaultValue={getDefaultFromDropdownOptions(deliverySlotOptions)}
           />
         </div>
       </div>
