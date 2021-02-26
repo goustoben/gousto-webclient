@@ -15,7 +15,7 @@ describe('VariantHeader', () => {
     describe('When there is an array of recipe variants', () => {
       describe('When the array is empty', () => {
         test('then it should not render a header', () => {
-          const wrapper = mount(<VariantHeader recipeVariants={[]} />)
+          const wrapper = mount(<VariantHeader recipeVariants={{ type: 'alternatives', alternatives: Immutable.List() }} />)
           expect(wrapper.find('.variantHeader')).toHaveLength(0)
         })
       })
@@ -39,7 +39,19 @@ describe('VariantHeader', () => {
         })
 
         test('then it should render the correct number of recipe variants on the header', () => {
-          expect(wrapper.find('.variantHeader').text()).toContain('3 options available')
+          expect(wrapper.find('.variantHeader').text()).toEqual('3 options available')
+        })
+
+        describe('when textOverride is provided', () => {
+          const override = 'Swap for Lean Beef'
+
+          beforeEach(() => {
+            wrapper.setProps({ textOverride: override })
+          })
+
+          test('then it should render the text', () => {
+            expect(wrapper.find('.variantHeader').text()).toEqual(override)
+          })
         })
 
         describe('When given the theme grey', () => {
@@ -144,17 +156,17 @@ describe('VariantHeader', () => {
             }
             isOutOfStock={false}
           />)
-          expect(wrapper.find('.variantHeader').text()).toContain('6 options available')
+          expect(wrapper.find('.variantHeader').text()).toEqual('6 options available')
         })
       })
 
       describe('When the recipe is out of stock', () => {
         test('then it should not render a header', () => {
           const wrapper = mount(<VariantHeader
-            recipeVariants={[
-              { id: '1230' },
-              { id: '125' },
-            ]}
+            recipeVariants={{
+              type: 'alternatives',
+              alternatives: Immutable.List([{ id: '1230' }])
+            }}
             isOutOfStock
           />)
           expect(wrapper.find('.variantHeader')).toHaveLength(0)
@@ -174,7 +186,7 @@ describe('VariantHeader', () => {
     describe('When there is an array of recipe sides variants', () => {
       describe('When the array is empty', () => {
         test('then it should not render a header', () => {
-          const wrapper = mount(<VariantHeader recipeVariants={[]} />)
+          const wrapper = mount(<VariantHeader recipeVariants={{ type: 'sides', sides: Immutable.List() }} />)
           expect(wrapper.find('.variantHeaderSides')).toHaveLength(0)
         })
       })
