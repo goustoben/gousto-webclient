@@ -1,0 +1,16 @@
+name: Raise Pager Duty Incident on Test Fail
+on:
+  # temporary for debugging
+  push
+  # Triggered on webhook from circle CI job
+  # repository_dispatch:
+  #   types:
+  #     - GET_WEBHOOK_NAME
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ../actions/regression-test-pagerduty

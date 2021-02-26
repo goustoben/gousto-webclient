@@ -1,0 +1,6 @@
+name: "Regression tests pagerduty"
+description: "After n subsequent regression test fails, raise a PX PagerDuty incident"
+author: "Gousto"
+runs:
+  using: "node12"
+  main: "dist/index.js"
