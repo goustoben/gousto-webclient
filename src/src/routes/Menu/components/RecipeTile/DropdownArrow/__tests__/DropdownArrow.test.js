@@ -20,55 +20,90 @@ describe('DropdownArrow', () => {
     })
 
     describe('When there are recipe variants', () => {
-      test('then it should render the dropdown arrow', () => {
-        const wrapper = mount(<DropdownArrow recipeVariants={[
-          { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
-          { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
-        ]}
+      const recipeId = '123'
+      const originalId = '456'
+      const categoryId = '789'
+      let recipeVariantDropdownExpanded
+      let wrapper
+
+      beforeEach(() => {
+        recipeVariantDropdownExpanded = jest.fn()
+
+        wrapper = shallow(<DropdownArrow
+          recipeId={recipeId}
+          originalId={originalId}
+          categoryId={categoryId}
+          recipeVariants={[
+            { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
+            { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
+          ]}
+          recipeVariantDropdownExpanded={recipeVariantDropdownExpanded}
         />)
+      })
+
+      test('then it should render the dropdown arrow', () => {
         expect(wrapper.find('.arrowContainer')).toHaveLength(1)
       })
 
-      describe('When clicking on arrow with no currentExpandedRecipeVariantsDropdown', () => {
-        test('then it should call recipeVariantDropdownExpanded with current recipe', () => {
-          const recipeVariantDropdownExpanded = jest.fn()
-          const recipeId = '123'
-          const originalId = '456'
-          const categoryId = '789'
-          const wrapper = mount(<DropdownArrow
-            recipeId={recipeId}
-            originalId={originalId}
-            categoryId={categoryId}
-            recipeVariants={[
-              { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
-              { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
-            ]}
-            recipeVariantDropdownExpanded={recipeVariantDropdownExpanded}
-          />)
+      describe('When theme is blue', () => {
+        beforeEach(() => {
+          wrapper.setProps({ theme: 'blue' })
+        })
 
-          wrapper.find('.arrowContainer').simulate('click')
+        test('then it should have class themeBlue', () => {
+          expect(wrapper.find('.arrowContainer').hasClass('themeBlue')).toBe(true)
+        })
+
+        test('then it should not have class themeGrey', () => {
+          expect(wrapper.find('.arrowContainer').hasClass('themeGrey')).toBe(false)
+        })
+      })
+
+      describe('When theme is grey', () => {
+        beforeEach(() => {
+          wrapper.setProps({ theme: 'grey' })
+        })
+
+        test('then it should have class themeGrey', () => {
+          expect(wrapper.find('.arrowContainer').hasClass('themeGrey')).toBe(true)
+        })
+
+        test('then it should not have class themeBlue', () => {
+          expect(wrapper.find('.arrowContainer').hasClass('themeBlue')).toBe(false)
+        })
+      })
+
+      describe('When theme is not set', () => {
+        beforeEach(() => {
+          wrapper.setProps({ theme: undefined })
+        })
+
+        test('then it should have class themeBlue', () => {
+          expect(wrapper.find('.arrowContainer').hasClass('themeBlue')).toBe(true)
+        })
+
+        test('then it should not have class themeGrey', () => {
+          expect(wrapper.find('.arrowContainer').hasClass('themeGrey')).toBe(false)
+        })
+      })
+
+      describe('When showDropdown is false', () => {
+        beforeEach(() => {
+          wrapper.setProps({ showDropdown: false })
+        })
+
+        test('then it should call recipeVariantDropdownExpanded with current recipe', () => {
+          wrapper.find('.arrowContainer').simulate('click', { stopPropagation: jest.fn() })
           expect(recipeVariantDropdownExpanded).toHaveBeenCalledWith({ recipeId, originalId, categoryId })
         })
       })
 
-      describe('When clicking on arrow with currentExpandedRecipeVariantsDropdown', () => {
-        test('then it should call recipeVariantDropdownExpanded with current recipe', () => {
-          const recipeVariantDropdownExpanded = jest.fn()
-          const recipeId = '123'
-          const originalId = '456'
-          const categoryId = '789'
-          const wrapper = shallow(<DropdownArrow
-            recipeId={recipeId}
-            originalId={originalId}
-            categoryId={categoryId}
-            recipeVariants={[
-              { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
-              { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
-            ]}
-            recipeVariantDropdownExpanded={recipeVariantDropdownExpanded}
-            showDropdown
-          />)
+      describe('When showDropdown is true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ showDropdown: true })
+        })
 
+        test('then it should call recipeVariantDropdownExpanded with null', () => {
           wrapper.find('.arrowContainer').simulate('click', { stopPropagation: jest.fn() })
           expect(recipeVariantDropdownExpanded).toHaveBeenCalledWith(null)
         })

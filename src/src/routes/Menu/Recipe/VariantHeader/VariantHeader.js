@@ -1,8 +1,12 @@
 import React from 'react'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import css from './VariantHeader.css'
 
-const VariantHeader = ({ recipeVariants, isOutOfStock}) => {
+const getClassForTheme = (theme) => (theme === 'grey' ? css.themeGrey : css.themeBlue)
+const getClassForBannerPosition = (bannerPosition) => (bannerPosition === 'top' ? css.positionTop : css.positionBottom)
+
+const VariantHeader = ({ recipeVariants, isOutOfStock, theme, bannerPosition, textOverride }) => {
   if (!recipeVariants || isOutOfStock) {
     return null
   }
@@ -24,16 +28,13 @@ const VariantHeader = ({ recipeVariants, isOutOfStock}) => {
     )
   }
 
+  const alternativeCount = recipeVariants.alternatives.size + 1
+  const text = textOverride || `${alternativeCount} options available`
+
   return (
-
-    <div className={css.variantHeader}>
-      <div className={css.variantHeaderText}>
-        {recipeVariants.alternatives.size + 1}
-        {' '}
-        options available
-      </div>
+    <div className={classnames(css.variantHeader, getClassForTheme(theme), getClassForBannerPosition(bannerPosition))}>
+      <div className={css.variantHeaderText}>{text}</div>
     </div>
-
   )
 }
 
@@ -43,11 +44,17 @@ VariantHeader.propTypes = {
     alternatives: PropTypes.arrayOf(PropTypes.shape),
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
-  isOutOfStock: PropTypes.bool
+  isOutOfStock: PropTypes.bool,
+  theme: PropTypes.oneOf([ 'blue', 'grey' ]),
+  bannerPosition: PropTypes.oneOf([ 'top', 'bottom' ]),
+  textOverride: PropTypes.string
 }
 
 VariantHeader.defaultProps = {
   recipeVariants: null,
   isOutOfStock: false,
+  theme: 'blue',
+  bannerPosition: 'top',
+  textOverride: null
 }
 export { VariantHeader }

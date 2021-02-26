@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 import css from './DropdownArrow.css'
 import { VariantRecipeListContainer } from '../../../Recipe/VariantRecipeList/VariantRecipeList'
+
+const getClassForTheme = (theme) => (theme === 'grey' ? css.themeGrey : css.themeBlue)
 
 const DropdownArrow = ({
   recipeId,
@@ -13,6 +16,7 @@ const DropdownArrow = ({
   isInCarousel,
   categoryId,
   browserType,
+  theme
 }) => {
   if (!recipeVariants || recipeVariants.size === 0) {
     return null
@@ -25,7 +29,7 @@ const DropdownArrow = ({
   }
 
   return (
-    <button className={css.arrowContainer} type="button" onClick={onClick}>
+    <button className={classnames(css.arrowContainer, getClassForTheme(theme))} type="button" onClick={onClick}>
       <span className={showDropdown ? css.arrowUp : css.arrowDown} />
       {showDropdown && browserType !== 'mobile'
         && (
@@ -46,12 +50,14 @@ DropdownArrow.propTypes = {
   isInCarousel: PropTypes.bool,
   categoryId: PropTypes.string,
   browserType: PropTypes.string.isRequired,
+  theme: PropTypes.oneOf([ 'blue', 'grey' ])
 }
 
 DropdownArrow.defaultProps = {
   recipeVariants: [],
   isInCarousel: false,
-  categoryId: null
+  categoryId: null,
+  theme: 'blue'
 }
 
 export { DropdownArrow }

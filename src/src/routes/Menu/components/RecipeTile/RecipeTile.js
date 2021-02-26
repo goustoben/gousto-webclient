@@ -6,7 +6,6 @@ import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
-import { VariantHeaderContainer } from '../../Recipe/VariantHeader'
 import css from './RecipeTile.css'
 
 const RecipeTile = ({
@@ -22,7 +21,7 @@ const RecipeTile = ({
   brandTagline,
   brandAvailability,
   categoryId,
-  fdiStyling
+  fdiStyling,
 }) => {
   if (!recipe) {
     return null
@@ -46,13 +45,12 @@ const RecipeTile = ({
       onClick={onClick}
       onKeyPress={onClick}
     >
-      <VariantHeaderContainer recipeId={recipeId} isOutOfStock={isOutOfStock} categoryId={categoryId} />
       <div
         className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
           [css.recipeTileIsFineDineIn]: isFineDineIn && fdiStyling
         })}
       >
-        <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} />
+        <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} categoryId={categoryId} />
         {hasTopLeftTag && (
         <RecipeTag brandTag={brandAvailability} />
         )}

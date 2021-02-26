@@ -1,13 +1,23 @@
-@value White, Bluecheese, Black from 'styles/colors.css';
+@value White, Bluecheese, Black, Blackberry from 'styles/colors.css';
 .arrowContainer {
     background-color: White;
     width: 2.5rem;
     text-align: center;
     margin-left: 0.325rem;
-    border: 1px solid Bluecheese;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 3px;
-    color: Bluecheese;
     position: relative;
+}
+
+.themeBlue {
+    border-color: Bluecheese;
+    color: Bluecheese;
+}
+
+.themeGrey {
+    border-color: Blackberry;
+    color: Blackberry;
 }
 
 .arrowDown {

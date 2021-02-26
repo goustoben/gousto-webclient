@@ -27,4 +27,20 @@ describe('CookingTimeIcon', () => {
       expect(wrapper.find('div').first().prop('className')).toEqual('cookingTimeIcon')
     })
   })
+
+  describe('when pushUp is true', () => {
+    test('should have class pushUp', () => {
+      const wrapper = shallow(<CookingTimeIcon cookingTime={30} pushUp />)
+
+      expect(wrapper.find('div').first().prop('className')).toEqual('cookingTimeIcon pushUp')
+    })
+  })
+
+  describe('when pushUp is false', () => {
+    test('should not have class pushUp', () => {
+      const wrapper = shallow(<CookingTimeIcon cookingTime={30} pushUp={false} />)
+
+      expect(wrapper.find('div').first().prop('className')).toEqual('cookingTimeIcon')
+    })
+  })
 })
