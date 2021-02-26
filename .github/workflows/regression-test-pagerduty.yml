@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: ../actions/regression-test-pagerduty
+      - uses: ./.github/actions/regression-test-pagerduty
