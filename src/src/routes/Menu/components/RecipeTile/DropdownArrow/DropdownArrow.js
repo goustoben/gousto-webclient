@@ -13,7 +13,6 @@ const DropdownArrow = ({
   recipeVariants,
   showDropdown,
   recipeVariantDropdownExpanded,
-  isInCarousel,
   categoryId,
   browserType,
   theme
@@ -33,7 +32,7 @@ const DropdownArrow = ({
       <span className={showDropdown ? css.arrowUp : css.arrowDown} />
       {showDropdown && browserType !== 'mobile'
         && (
-          <div className={isInCarousel ? css.carouselDropdownListContainer : css.dropdownListContainer}>
+          <div className={css.dropdownListContainer}>
             <VariantRecipeListContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
           </div>
         )}
@@ -47,7 +46,6 @@ DropdownArrow.propTypes = {
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
   showDropdown: PropTypes.bool.isRequired,
   recipeVariantDropdownExpanded: PropTypes.func.isRequired,
-  isInCarousel: PropTypes.bool,
   categoryId: PropTypes.string,
   browserType: PropTypes.string.isRequired,
   theme: PropTypes.oneOf([ 'blue', 'grey' ])
@@ -55,7 +53,6 @@ DropdownArrow.propTypes = {
 
 DropdownArrow.defaultProps = {
   recipeVariants: [],
-  isInCarousel: false,
   categoryId: null,
   theme: 'blue'
 }

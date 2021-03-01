@@ -4,36 +4,45 @@ import PropTypes from 'prop-types'
 import css from './VariantHeader.css'
 
 const getClassForTheme = (theme) => (theme === 'grey' ? css.themeGrey : css.themeBlue)
-const getClassForBannerPosition = (bannerPosition) => (bannerPosition === 'top' ? css.positionTop : css.positionBottom)
+const getClassForBannerPosition = (bannerPosition) => {
+  if (bannerPosition === 'top') {
+    return css.positionTop
+  }
 
-const VariantHeader = ({ recipeVariants, isOutOfStock, theme, bannerPosition, textOverride }) => {
+  if (bannerPosition === 'bottom') {
+    return css.positionBottom
+  }
+
+  return null
+}
+
+const VariantHeader = ({ recipeVariants, isOutOfStock, theme, bannerPosition, textOverride, textAlign }) => {
   if (!recipeVariants || isOutOfStock) {
     return null
   }
 
   const alternativesSize = recipeVariants.alternatives ? recipeVariants.alternatives.size : 0
-  const sidesSize = recipeVariants.sides ? recipeVariants.sides.size : 0
 
-  if (!alternativesSize && !sidesSize) {
+  if (!alternativesSize) {
     return null
-  }
-
-  if (recipeVariants.type === 'sides') {
-    return (
-      <div className={css.variantHeaderSides}>
-        <div className={css.variantHeaderText}>
-          Add a side
-        </div>
-      </div>
-    )
   }
 
   const alternativeCount = recipeVariants.alternatives.size + 1
   const text = textOverride || `${alternativeCount} options available`
 
   return (
-    <div className={classnames(css.variantHeader, getClassForTheme(theme), getClassForBannerPosition(bannerPosition))}>
-      <div className={css.variantHeaderText}>{text}</div>
+    <div
+      className={classnames(
+        css.variantHeader,
+        getClassForTheme(theme),
+        getClassForBannerPosition(bannerPosition),
+        {
+          [css.textLeft]: textAlign === 'left',
+          [css.textRight]: textAlign === 'right'
+        }
+      )}
+    >
+      {text}
     </div>
   )
 }
@@ -45,8 +54,9 @@ VariantHeader.propTypes = {
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
   isOutOfStock: PropTypes.bool,
-  theme: PropTypes.oneOf([ 'blue', 'grey' ]),
-  bannerPosition: PropTypes.oneOf([ 'top', 'bottom' ]),
+  theme: PropTypes.oneOf(['blue', 'grey']),
+  bannerPosition: PropTypes.oneOf(['top', 'bottom']),
+  textAlign: PropTypes.oneOf(['left', 'right']),
   textOverride: PropTypes.string
 }
 
@@ -55,6 +65,7 @@ VariantHeader.defaultProps = {
   isOutOfStock: false,
   theme: 'blue',
   bannerPosition: 'top',
+  textAlign: 'left',
   textOverride: null
 }
 export { VariantHeader }

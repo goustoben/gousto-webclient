@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
+import { getBrowserType } from 'selectors/browser'
 import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../../selectors/recipe'
 import { getVariantsForRecipe } from '../../selectors/variants'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
@@ -18,6 +19,7 @@ const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeForRecipeTile(state, ownProps)
 
   return {
+    browserType: getBrowserType(state),
     recipe,
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
     title: getRecipeTitle(state, ownProps),

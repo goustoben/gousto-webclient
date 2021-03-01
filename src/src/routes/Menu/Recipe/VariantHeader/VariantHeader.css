@@ -4,36 +4,19 @@
     padding: 0.25rem 0;
     color: White;
     font-weight: bold;
-    box-sizing: content-box;
-    position: absolute;
     width: 100%;
     z-index: 100;
     text-align: left;
 }
 
-.variantHeaderSides {
-    padding: 0.25rem 0;
-    color: White;
-    font-weight: bold;
-    box-sizing: content-box;
-    background: NewGrey;
-    width: 100%;
-    z-index: 100;
-}
-
-.variantHeaderSidesCarousel {
-    padding: 0.25rem 0;
-    color: White;
-    font-weight: bold;
-    box-sizing: content-box;
-    background: NewGrey;
-    position: absolute;
-    width: 100%;
-    z-index: 100;
-}
-
-.variantHeaderText {
+.textLeft {
     padding-left: 0.625rem;
+    text-align: left;
+}
+
+.textRight {
+    padding-right: 0.625rem;
+    text-align: right;
 }
 
 .themeBlue {
@@ -45,9 +28,11 @@
 }
 
 .positionTop {
+    position: absolute;
     top: 0;
 }
 
 .positionBottom {
+    position: absolute;
     bottom: 0;
 }

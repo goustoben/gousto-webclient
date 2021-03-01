@@ -91,35 +91,15 @@
     text-decoration: underline;
 }
 
-/* carousel */
-
-.carouselRecipeTile {
-    width: 100%;
-    position: relative;
-    flex-direction: column;
-}
-
-.carouselRecipeTileContainer {
-    display: flex;
-    flex-direction: column;
-    background-color: White;
-    color:  Blackberry;
-    position: relative;
-    height: 350px;
-    width: 230px;
-}
-
-.carouselRecipeTileInfo {
-    margin: 1rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 140px;
-}
-
-.variantHeaderTileTitle {
+.variantPushDown {
     padding-top: 30px;
+    @media ScreenSMMin {
+        padding-top: 0;
+    }
+}
+
+.variantPushUp {
+    padding-bottom: 30px;
     @media ScreenSMMin {
         padding-top: 0;
     }

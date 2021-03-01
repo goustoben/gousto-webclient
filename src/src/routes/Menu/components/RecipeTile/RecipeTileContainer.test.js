@@ -89,7 +89,10 @@ describe('<RecipeTileContainer />', () => {
           availabilityTag
         ]
       }
-    }
+    },
+    request: Immutable.fromJS({
+      browser: 'desktop'
+    })
   }
 
   const wrapperOptions = {
@@ -119,19 +122,6 @@ describe('<RecipeTileContainer />', () => {
     expect(wrapper.prop('isFineDineIn')).toEqual(true)
     expect(wrapper.prop('brandTagline')).toEqual(expectedTagline)
     expect(wrapper.prop('brandAvailability')).toEqual(expectedAvailability)
-    expect(wrapper.prop('isInCarousel')).toEqual(false)
-  })
-
-  describe('when in carousel', () => {
-    beforeEach(() => {
-      wrapper = shallow(
-        <RecipeTileContainer recipeId={recipeId} isInCarousel />,
-        wrapperOptions
-      )
-    })
-
-    test('should pass down correct props', () => {
-      expect(wrapper.prop('isInCarousel')).toEqual(true)
-    })
+    expect(wrapper.prop('browserType')).toEqual('desktop')
   })
 })
