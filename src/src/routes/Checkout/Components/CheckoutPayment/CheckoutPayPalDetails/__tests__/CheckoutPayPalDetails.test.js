@@ -4,6 +4,7 @@ import { shallow } from 'enzyme'
 import { PaymentMethod } from 'config/signup'
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
+import { PayPalConfirmation } from '../../PayPalConfirmation'
 
 describe('CheckoutPayPalDetails', () => {
   let wrapper
@@ -12,35 +13,70 @@ describe('CheckoutPayPalDetails', () => {
     wrapper = shallow(<CheckoutPayPalDetails />)
   })
 
-  test('should hide content', () => {
-    expect(wrapper.hasClass('hide')).toBe(false)
-  })
+  describe('when component is mounted', () => {
+    describe('and hide is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hide: true })
+      })
 
-  test('should render correctly', () => {
-    expect(wrapper).toMatchSnapshot()
-  })
-
-  describe('when hide is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({ hide: true })
+      test('then it should be hidden', () => {
+        expect(wrapper.hasClass('hide')).toBeTruthy()
+      })
     })
 
-    test('then it should be hidden', () => {
-      expect(wrapper.hasClass('hide')).toBe(true)
+    describe('and isPayPalSetupDone is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isPayPalSetupDone: true
+        })
+      })
+
+      test('then should be rendered correctly', () => {
+        expect(wrapper.find('div.hide').exists()).toBeTruthy()
+      })
+
+      test('then should render PayPalConfirmation', () => {
+        expect(wrapper.find(PayPalConfirmation).exists()).toBeTruthy()
+      })
     })
 
-    test('should render correctly', () => {
-      expect(wrapper).toMatchSnapshot()
-    })
-  })
+    describe('and isPayPalSetupDone is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isPayPalSetupDone: false
+        })
+      })
 
-  describe('when PayPal initialized', () => {
-    beforeEach(() => {
-      wrapper.setState({ isPayPalInitialized: true })
+      test('then should not render PayPalConfirmation', () => {
+        expect(wrapper.find(PayPalConfirmation).exists()).toBeFalsy()
+      })
     })
 
-    test('should render correctly', () => {
-      expect(wrapper).toMatchSnapshot()
+    describe('when isCheckoutOverhaulEnabled is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isCheckoutOverhaulEnabled: true
+        })
+      })
+
+      test('then should be rendered correctly', () => {
+        expect(wrapper.find('.checkoutOverhaul').exists()).toBeTruthy()
+        expect(wrapper.find('.checkoutOverhaulPaypalContainer').exists()).toBeTruthy()
+      })
+
+      describe('and paypal is initialized and there are errors', () => {
+        beforeEach(() => {
+          wrapper.setProps({
+            isPayPalInitialized: true,
+            hasErrors: true,
+          })
+        })
+
+        test('then should not render .loaderContainer section and Loader component', () => {
+          expect(wrapper.find('.loaderContainer').exists()).toBeFalsy()
+          expect(wrapper.find('Loader').exists()).toBeFalsy()
+        })
+      })
     })
   })
 
@@ -53,10 +89,6 @@ describe('CheckoutPayPalDetails', () => {
         isPayPalSetupDone: true,
         resetPaymentMethod,
       })
-    })
-
-    test('should render correctly', () => {
-      expect(wrapper).toMatchSnapshot()
     })
 
     describe('when the form is submitting', () => {
