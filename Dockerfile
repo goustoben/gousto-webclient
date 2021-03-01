@@ -1,4 +1,4 @@
-FROM node:12.20.0-buster-slim
+FROM node:12.21.0-buster-slim
 ARG SSH_PRIVATE_KEY
 
 RUN apt-get update -y &&\
