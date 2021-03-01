@@ -7,8 +7,11 @@ import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
 import css from './RecipeTile.css'
+import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
 
 const RecipeTile = ({
+  browserType,
+  variantHeaderPosition,
   recipe,
   recipeId,
   originalId,
@@ -17,7 +20,6 @@ const RecipeTile = ({
   title,
   isFineDineIn,
   recipeVariants,
-  isInCarousel,
   brandTagline,
   brandAvailability,
   categoryId,
@@ -36,38 +38,62 @@ const RecipeTile = ({
   const hasTopLeftTag = Boolean(brandAvailability)
   const hasTopRightTag = Boolean(brandTagline)
 
+  // experiment code for signposting ui
+  const mobileBannerShown = (showVariantHeader && browserType === 'mobile')
+  const desktopBannerShown = (showVariantHeader && (browserType === 'desktop' || browserType === 'tablet'))
+  const mobileBottomBannerShown = mobileBannerShown && variantHeaderPosition === 'bottom'
+  const shouldPushUpCookingTime = mobileBottomBannerShown
+  const headerTextAlign = mobileBottomBannerShown ? 'right' : undefined
+
   return (
     <div
       role="button"
       tabIndex={0}
-      className={classnames(isInCarousel ? css.carouselRecipeTile : css.recipeTile)}
+      className={css.recipeTile}
       data-testing={isOutOfStock ? 'menuRecipeOutOfStock' : 'menuRecipeViewDetails'}
       onClick={onClick}
       onKeyPress={onClick}
     >
+      {
+        (browserType === 'mobile')
+        && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} bannerPosition={variantHeaderPosition} textAlign={headerTextAlign} />
+      }
+
       <div
-        className={classnames(isInCarousel ? css.carouselRecipeTileContainer : css.recipeTileContainer, {
+        className={classnames(css.recipeTileContainer, {
           [css.recipeTileIsFineDineIn]: isFineDineIn && fdiStyling
         })}
       >
-        <TileImageContainer recipeId={recipeId} isInCarousel={isInCarousel} categoryId={categoryId} />
+        <TileImageContainer
+          recipeId={recipeId}
+          categoryId={categoryId}
+          showVariantHeader={desktopBannerShown}
+          variantHeaderPosition={variantHeaderPosition}
+          pushUpCookingTime={shouldPushUpCookingTime}
+        />
         {hasTopLeftTag && (
-        <RecipeTag brandTag={brandAvailability} />
+          <RecipeTag brandTag={brandAvailability} />
         )}
-        <div className={isInCarousel ? css.carouselRecipeTileInfo : css.recipeTileInfo}>
-          <div className={showVariantHeader && !isInCarousel && css.variantHeaderTileTitle}>
-            {hasTopRightTag && (
+        <div
+          className={classnames(
+            css.recipeTileInfo,
+            {
+              [css.variantPushUp]: (mobileBannerShown && variantHeaderPosition === 'bottom'),
+              [css.variantPushDown]: (mobileBannerShown && variantHeaderPosition === 'top')
+            }
+          )}
+        >
+          {hasTopRightTag && (
             <RecipeTagTitle brandTag={brandTagline} showVariantHeader={showVariantHeader} />
-            )}
-            <div
-              className={css.titleWrapper}
-            >
-              <h2 className={css.recipeTitle}>
-                {title}
-              </h2>
-            </div>
+          )}
+          <div
+            className={css.titleWrapper}
+          >
+            <h2 className={css.recipeTitle}>
+              {title}
+            </h2>
           </div>
-          <RecipeTilePurchaseInfoContainer recipeId={recipeId} originalId={originalId} isInCarousel={isInCarousel} categoryId={categoryId} fdiStyling={fdiStyling} />
+          <RecipeTilePurchaseInfoContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} fdiStyling={fdiStyling} />
         </div>
       </div>
     </div>
@@ -75,6 +101,8 @@ const RecipeTile = ({
 }
 
 RecipeTile.propTypes = {
+  browserType: PropTypes.oneOf(['desktop', 'tablet', 'mobile']).isRequired,
+  variantHeaderPosition: PropTypes.oneOf(['top', 'bottom']),
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string,
@@ -93,16 +121,15 @@ RecipeTile.propTypes = {
   }),
   isFineDineIn: PropTypes.bool.isRequired,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  isInCarousel: PropTypes.bool,
   categoryId: PropTypes.string,
   fdiStyling: PropTypes.bool
 }
 
 RecipeTile.defaultProps = {
+  variantHeaderPosition: 'top',
   originalId: null,
   brandTagline: null,
   brandAvailability: null,
-  isInCarousel: false,
   categoryId: null,
   fdiStyling: true
 }

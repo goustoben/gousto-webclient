@@ -11,25 +11,26 @@ import css from './TileImage.css'
 const TileImage = ({
   recipeId,
   categoryId,
+  showVariantHeader,
   media,
   title,
   maxMediaSize,
   isOutOfStock,
   lazy,
   onClick,
-  isInCarousel,
+  variantHeaderPosition,
+  pushUpCookingTime
 }) => {
-  let tileImageClass = css.imageWrapper
-
-  if (isInCarousel) {
-    tileImageClass = css.carouselImageWrapper
-  }
+  const shouldPushUpCookingTime = (
+    pushUpCookingTime
+    || (showVariantHeader && variantHeaderPosition === 'bottom')
+  )
 
   return (
     <button
       onClick={onClick}
       type="button"
-      className={tileImageClass}
+      className={css.imageWrapper}
     >
       {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />)}
       {(media.size > 0) && (
@@ -41,11 +42,11 @@ const TileImage = ({
             className={css.imageStyle}
             lazy={lazy}
           />
-          <CookingTimeIconContainer recipeId={recipeId} />
+          <CookingTimeIconContainer recipeId={recipeId} pushUp={shouldPushUpCookingTime} />
         </div>
       )}
 
-      <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />
+      {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} bannerPosition={variantHeaderPosition} />}
     </button>
   )
 }
@@ -59,7 +60,9 @@ TileImage.propTypes = {
   isOutOfStock: PropTypes.bool,
   lazy: PropTypes.bool,
   onClick: PropTypes.func,
-  isInCarousel: PropTypes.bool,
+  showVariantHeader: PropTypes.bool.isRequired,
+  pushUpCookingTime: PropTypes.bool,
+  variantHeaderPosition: PropTypes.oneOf(['top', 'bottom']),
 }
 
 TileImage.defaultProps = {
@@ -68,7 +71,8 @@ TileImage.defaultProps = {
   isOutOfStock: false,
   maxMediaSize: null,
   lazy: true,
-  isInCarousel: false,
+  pushUpCookingTime: false,
+  variantHeaderPosition: 'top',
 }
 
 export { TileImage }

@@ -14,7 +14,6 @@ export const RecipeTilePurchaseInfo = ({
   surcharge,
   isOutOfStock,
   isFineDineIn,
-  isInCarousel,
   fdiStyling
 }) => {
   if (isOutOfStock) {
@@ -51,7 +50,7 @@ export const RecipeTilePurchaseInfo = ({
 
         {
           showDropdown
-          && <DropdownArrowContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} isInCarousel={isInCarousel} />
+          && <DropdownArrowContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
         }
       </div>
     </div>
@@ -67,7 +66,6 @@ RecipeTilePurchaseInfo.propTypes = {
   surcharge: PropTypes.number,
   isOutOfStock: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
-  isInCarousel: PropTypes.bool,
   fdiStyling: PropTypes.bool
 }
 
@@ -75,7 +73,6 @@ RecipeTilePurchaseInfo.defaultProps = {
   originalId: null,
   surcharge: 0,
   recipeVariants: null,
-  isInCarousel: false,
   categoryId: null,
   fdiStyling: false,
   showDropdown: true

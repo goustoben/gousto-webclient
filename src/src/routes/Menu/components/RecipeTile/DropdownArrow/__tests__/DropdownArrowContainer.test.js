@@ -60,7 +60,6 @@ describe('DropdownArrowContainer', () => {
       expect(wrapper.props()).toEqual({
         browserType: 'mobile',
         categoryId: null,
-        isInCarousel: false,
         recipeId: '123',
         recipeVariantDropdownExpanded: expect.any(Function),
         recipeVariants: null,
@@ -119,7 +118,6 @@ describe('DropdownArrowContainer', () => {
       expect(wrapper.props()).toEqual({
         browserType: 'mobile',
         categoryId: null,
-        isInCarousel: false,
         recipeId: '123',
         recipeVariantDropdownExpanded: expect.any(Function),
         recipeVariants: Immutable.fromJS([{

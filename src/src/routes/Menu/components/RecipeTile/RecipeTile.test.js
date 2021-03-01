@@ -151,18 +151,4 @@ describe('RecipeTile', () => {
       })
     })
   })
-
-  describe('when in carousel', () => {
-    beforeEach(() => {
-      wrapper = shallow(<RecipeTile
-        {...defaultProps}
-        isInCarousel
-      />)
-    })
-
-    test('should have class of carouselRecipeTileInfo', () => {
-      expect(wrapper.find('.carouselRecipeTileContainer').length).toEqual(1)
-      expect(wrapper.find('.carouselRecipeTileInfo').length).toEqual(1)
-    })
-  })
 })

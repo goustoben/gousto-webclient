@@ -130,35 +130,4 @@ describe('DropdownArrow', () => {
       expect(stopPropagation).toHaveBeenCalled()
     })
   })
-
-  describe('When the dropdown is in carousel', () => {
-    describe('when not in carousel', () => {
-      test('should find .carouselDropdownListContainer', () => {
-        const wrapper = shallow(<DropdownArrow
-          recipeVariants={[
-            { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
-            { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
-          ]}
-          recipeVariantDropdownExpanded={jest.fn()}
-          showDropdown
-        />)
-        expect(wrapper.find('.dropdownListContainer')).toHaveLength(1)
-      })
-    })
-
-    describe('when in carousel', () => {
-      test('should find .carouselDropdownListContainer', () => {
-        const wrapper = shallow(<DropdownArrow
-          recipeVariants={[
-            { id: '1230-1230', coreRecipeId: '1230', displayName: 'Variant One' },
-            { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
-          ]}
-          recipeVariantDropdownExpanded={jest.fn()}
-          isInCarousel
-          showDropdown
-        />)
-        expect(wrapper.find('.carouselDropdownListContainer')).toHaveLength(1)
-      })
-    })
-  })
 })
