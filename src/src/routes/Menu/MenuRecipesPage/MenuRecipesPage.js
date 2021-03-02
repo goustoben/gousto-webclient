@@ -13,12 +13,12 @@ import { BasketValidationErrorModalContainer } from './BasketValidationErrorModa
 import { CapacityInfo } from '../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from './BannerTastePreferences'
 import { RecipeSidesModalContainer } from './RecipeSidesModal'
-import { VariantRecipeListModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
+import { VariantRecipeListModalContainer, VariantRecipeListDesktopModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
 import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
-import { SignpostingExperimentWrapper } from '../context/uiSignpostingContext'
+import { SignpostingExperimentWrapper, isMandatoryBucket, SignpostingExperimentContext } from '../context/uiSignpostingContext'
 
 const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
@@ -124,7 +124,12 @@ export class MenuRecipesPage extends PureComponent {
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
+
         <VariantRecipeListModalContainer />
+
+        <SignpostingExperimentContext.Consumer>
+          {bucket => isMandatoryBucket(bucket) && <VariantRecipeListDesktopModalContainer />}
+        </SignpostingExperimentContext.Consumer>
 
         <ExperimentsContainer experimentName="allocation-experiment-one" />
         <ExperimentsContainer experimentName="allocation-experiment-two" />

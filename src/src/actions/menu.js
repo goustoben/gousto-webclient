@@ -357,12 +357,13 @@ export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   useMenuService
 })
 
-export const selectRecipeVariant = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid') => ({
+export const selectRecipeVariant = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true) => ({
   type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
   payload: {
     collectionId,
     originalRecipeId,
-    variantId
+    variantId,
+    close
   },
   trackingData: {
     actionType: trackingKeys.selectRecipeVariant,

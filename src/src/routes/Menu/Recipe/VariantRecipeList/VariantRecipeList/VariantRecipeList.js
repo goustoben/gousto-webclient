@@ -33,7 +33,8 @@ class VariantRecipeList extends React.PureComponent {
       basketRecipeAdd,
       basketRecipeRemove,
       trackSelectSide,
-      trackDeselectSide
+      trackDeselectSide,
+      closeOnSelection
     } = this.props
 
     const view = isOnDetailScreen ? 'details' : 'grid'
@@ -61,7 +62,7 @@ class VariantRecipeList extends React.PureComponent {
         }
       }
     } else {
-      selectRecipeVariant(originalId, checkedRecipeId, collectionId, isOutOfStock, view)
+      selectRecipeVariant(originalId, checkedRecipeId, collectionId, isOutOfStock, view, closeOnSelection)
 
       if (isOnDetailScreen) {
         menuRecipeDetailVisibilityChange(checkedRecipeId)
@@ -151,6 +152,7 @@ VariantRecipeList.propTypes = {
   unselectRecipeSide: PropTypes.func.isRequired,
   basketRecipeAdd: PropTypes.func.isRequired,
   basketRecipeRemove: PropTypes.func.isRequired,
+  closeOnSelection: PropTypes.bool,
 }
 
 VariantRecipeList.defaultProps = {
@@ -158,5 +160,6 @@ VariantRecipeList.defaultProps = {
   selectedRecipe: {},
   isOnDetailScreen: false,
   isOnSidesModal: false,
+  closeOnSelection: true
 }
 export { VariantRecipeList }

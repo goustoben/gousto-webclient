@@ -4,7 +4,7 @@ import Button from '../../Buttons'
 
 import css from './DetailAddRecipe.css'
 
-const DetailAddRecipe = ({ id, view, position, isOutOfStock, buttonText }) => {
+const DetailAddRecipe = ({ id, view, position, isOutOfStock, buttonText, closeOnAdd }) => {
   if (isOutOfStock) {
     return null
   }
@@ -17,6 +17,7 @@ const DetailAddRecipe = ({ id, view, position, isOutOfStock, buttonText }) => {
         view={view}
         isOutOfStock={isOutOfStock}
         buttonText={buttonText}
+        closeOnAdd={closeOnAdd}
       />
     </div>
 
@@ -29,11 +30,13 @@ DetailAddRecipe.propTypes = {
   position: PropTypes.number.isRequired,
   buttonText: PropTypes.string,
   view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'chefPrepared', 'fineDineIn', 'fineDineInDetail', 'detail', 'smallGrid']).isRequired,
+  closeOnAdd: PropTypes.bool
 }
 
 DetailAddRecipe.defaultProps = {
   buttonText: 'Add recipe',
-  isOutOfStock: false
+  isOutOfStock: false,
+  closeOnAdd: false
 }
 
 export { DetailAddRecipe }

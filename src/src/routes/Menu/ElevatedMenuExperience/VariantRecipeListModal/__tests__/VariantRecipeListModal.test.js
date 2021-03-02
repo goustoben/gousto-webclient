@@ -50,26 +50,6 @@ describe('VariantRecipeListModal', () => {
       })
     })
 
-    describe('when has currentExpandedRecipeVariantsDropdown', () => {
-      beforeEach(() => {
-        props = {
-          currentExpandedRecipeVariantsDropdown,
-          recipeVariantDropdownExpanded,
-          browserType: 'mobile',
-        }
-        wrapper = shallow(<VariantRecipeListModal {...props} />)
-      })
-
-      test('should render ModalComponent with right props', () => {
-        expect(wrapper.find('ModalComponent').prop('visible')).toEqual(true)
-        expect(wrapper.find('ModalComponent').prop('styleName')).toEqual('variantRecipeListModal')
-      })
-
-      test('should render VariantRecipeListModalContent with right props', () => {
-        expect(wrapper.find(VariantRecipeListModalContent).props()).toEqual({ recipeId: '123', originalId: '456', categoryId: '789' })
-      })
-    })
-
     describe('when click on close button', () => {
       beforeEach(() => {
         props = {

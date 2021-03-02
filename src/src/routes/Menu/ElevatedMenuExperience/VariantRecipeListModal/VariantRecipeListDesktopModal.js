@@ -3,17 +3,15 @@ import PropTypes from 'prop-types'
 import ModalComponent, { ModalTitle, ModalContent } from 'ModalComponent'
 import css from './VariantRecipeListModal.css'
 import { VariantRecipeListModalContent } from './VariantRecipeListModalContent'
-import { isMandatoryBucket, SignpostingExperimentContext } from '../../context/uiSignpostingContext'
 
-export const VariantRecipeListModal = ({
+export const VariantRecipeListDesktopModal = ({
   currentExpandedRecipeVariantsDropdown,
   recipeVariantDropdownExpanded,
   browserType
 }) => {
-  if (browserType !== 'mobile') {
+  if (browserType === 'mobile') {
     return null
   }
-
   const hideModal = () => {
     recipeVariantDropdownExpanded(null)
   }
@@ -21,8 +19,7 @@ export const VariantRecipeListModal = ({
   return (
     <ModalComponent
       visible={!!currentExpandedRecipeVariantsDropdown}
-      styleName={css.variantRecipeListModal}
-      from="bottom"
+      from="top"
       onClose={hideModal}
       overlayContentClassName={css.variantRecipeListOverlayContent}
     >
@@ -30,29 +27,23 @@ export const VariantRecipeListModal = ({
         <h1 className={css.variantRecipeListModalTitle}>Options available</h1>
         <button type="button" className={css.variantRecipeListModalCloseX} onClick={hideModal} />
       </ModalTitle>
-
       <ModalContent className={css.variantRecipeListModalContent}>
         {
           currentExpandedRecipeVariantsDropdown
           && (
-            <SignpostingExperimentContext.Consumer>
-              {bucket => (
-                <VariantRecipeListModalContent
-                  originalId={currentExpandedRecipeVariantsDropdown.originalId}
-                  recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
-                  categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
-                  closeOnSelection={!isMandatoryBucket(bucket)}
-                />
-              )}
-            </SignpostingExperimentContext.Consumer>
+            <VariantRecipeListModalContent
+              originalId={currentExpandedRecipeVariantsDropdown.originalId}
+              recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
+              categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
+              closeOnSelection={false}
+            />
           )
         }
       </ModalContent>
     </ModalComponent>
   )
 }
-
-VariantRecipeListModal.propTypes = {
+VariantRecipeListDesktopModal.propTypes = {
   currentExpandedRecipeVariantsDropdown: PropTypes.shape({
     recipeId: PropTypes.string,
     originalId: PropTypes.string,
@@ -62,6 +53,6 @@ VariantRecipeListModal.propTypes = {
   browserType: PropTypes.string.isRequired
 }
 
-VariantRecipeListModal.defaultProps = {
+VariantRecipeListDesktopModal.defaultProps = {
   currentExpandedRecipeVariantsDropdown: null
 }
