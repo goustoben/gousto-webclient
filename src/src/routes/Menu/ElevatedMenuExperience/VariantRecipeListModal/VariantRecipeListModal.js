@@ -1,11 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ModalComponent, { ModalTitle, ModalContent } from 'ModalComponent'
-import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList'
 import css from './VariantRecipeListModal.css'
+import { VariantRecipeListModalContent } from './VariantRecipeListModalContent'
 
-export const VariantRecipeListModal = ({ currentExpandedRecipeVariantsDropdown, recipeVariantDropdownExpanded, browserType }) => {
-  if (browserType !== 'mobile') return null
+export const VariantRecipeListModal = ({
+  currentExpandedRecipeVariantsDropdown,
+  recipeVariantDropdownExpanded,
+  browserType
+}) => {
+  if (browserType !== 'mobile') {
+    return null
+  }
 
   const hideModal = () => {
     recipeVariantDropdownExpanded(null)
@@ -25,13 +31,16 @@ export const VariantRecipeListModal = ({ currentExpandedRecipeVariantsDropdown, 
       </ModalTitle>
 
       <ModalContent className={css.variantRecipeListModalContent}>
-        {currentExpandedRecipeVariantsDropdown && (
-        <VariantRecipeListContainer
-          recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
-          originalId={currentExpandedRecipeVariantsDropdown.originalId}
-          categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
-        />
-        )}
+        {
+          currentExpandedRecipeVariantsDropdown
+          && (
+            <VariantRecipeListModalContent
+              originalId={currentExpandedRecipeVariantsDropdown.originalId}
+              recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
+              categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
+            />
+          )
+        }
       </ModalContent>
     </ModalComponent>
   )
@@ -44,9 +53,9 @@ VariantRecipeListModal.propTypes = {
     categoryId: PropTypes.string,
   }),
   recipeVariantDropdownExpanded: PropTypes.func.isRequired,
-  browserType: PropTypes.string.isRequired,
+  browserType: PropTypes.string.isRequired
 }
 
 VariantRecipeListModal.defaultProps = {
-  currentExpandedRecipeVariantsDropdown: null,
+  currentExpandedRecipeVariantsDropdown: null
 }

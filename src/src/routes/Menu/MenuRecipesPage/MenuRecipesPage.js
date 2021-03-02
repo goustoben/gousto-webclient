@@ -18,6 +18,7 @@ import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
 import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
+import { SignpostingExperimentWrapper } from '../context/uiSignpostingContext'
 
 const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
@@ -151,16 +152,18 @@ export class MenuRecipesPage extends PureComponent {
 
     return (
       <div data-testing="menuRecipes">
-        {
-          showLoading
-            ? (
-              <Loading
-                loading={showLoading}
-                showTastePreferencesLoading={showTastePreferencesLoading}
-              />
-            )
-            : <div className={fadeCss}>{this.getMenuContent()}</div>
-        }
+        <SignpostingExperimentWrapper>
+          {
+            showLoading
+              ? (
+                <Loading
+                  loading={showLoading}
+                  showTastePreferencesLoading={showTastePreferencesLoading}
+                />
+              )
+              : <div className={fadeCss}>{this.getMenuContent()}</div>
+          }
+        </SignpostingExperimentWrapper>
       </div>
     )
   }

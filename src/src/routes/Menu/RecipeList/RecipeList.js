@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { RecipeTileContainer } from '../components/RecipeTile'
 import css from './RecipeList.css'
+import { SignpostingExperimentContext, isMandatoryBucket, isSignpostingBucket } from '../context/uiSignpostingContext'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -31,16 +32,27 @@ class RecipeList extends React.PureComponent {
     const { recipes, currentCollectionId } = this.props
 
     return (
-      <div className={css.emeRecipeList}>
-        {recipes.map((value) => (
-          <RecipeTileContainer
-            key={value.recipe.get('id')}
-            recipeId={value.recipe.get('id')}
-            originalId={value.originalId}
-            categoryId={currentCollectionId}
-          />
-        ))}
-      </div>
+      <SignpostingExperimentContext.Consumer>
+        {bucket => {
+          const mandatory = isMandatoryBucket(bucket)
+          const signposting = isSignpostingBucket(bucket)
+
+          return (
+            <div className={css.emeRecipeList}>
+              {recipes.map((value) => (
+                <RecipeTileContainer
+                  key={value.recipe.get('id')}
+                  recipeId={value.recipe.get('id')}
+                  originalId={value.originalId}
+                  categoryId={currentCollectionId}
+                  inMandatoryVariantExperimentBucket={mandatory}
+                  inSignpostingExperimentBucket={signposting}
+                />
+              ))}
+            </div>
+          )
+        }}
+      </SignpostingExperimentContext.Consumer>
     )
   }
 }

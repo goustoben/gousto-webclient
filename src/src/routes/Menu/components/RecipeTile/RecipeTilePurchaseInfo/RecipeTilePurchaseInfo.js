@@ -4,13 +4,13 @@ import classnames from 'classnames'
 import { AddRecipeButtonContainer } from '../AddRecipeButton'
 import css from './RecipeTilePurchaseInfo.css'
 import { DropdownArrowContainer } from '../DropdownArrow'
+import { isMandatoryBucket, SignpostingExperimentContext } from '../../../context/uiSignpostingContext'
 
 export const RecipeTilePurchaseInfo = ({
   recipeId,
   originalId,
   categoryId,
   recipeVariants,
-  showDropdown,
   surcharge,
   isOutOfStock,
   isFineDineIn,
@@ -48,10 +48,9 @@ export const RecipeTilePurchaseInfo = ({
       <div className={css.buttonsWrapper}>
         <AddRecipeButtonContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
 
-        {
-          showDropdown
-          && <DropdownArrowContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
-        }
+        <SignpostingExperimentContext.Consumer>
+          {bucket => !isMandatoryBucket(bucket) && <DropdownArrowContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />}
+        </SignpostingExperimentContext.Consumer>
       </div>
     </div>
   )
@@ -62,7 +61,6 @@ RecipeTilePurchaseInfo.propTypes = {
   originalId: PropTypes.string,
   categoryId: PropTypes.string,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape),
-  showDropdown: PropTypes.bool,
   surcharge: PropTypes.number,
   isOutOfStock: PropTypes.bool.isRequired,
   isFineDineIn: PropTypes.bool.isRequired,
@@ -74,6 +72,5 @@ RecipeTilePurchaseInfo.defaultProps = {
   surcharge: 0,
   recipeVariants: null,
   categoryId: null,
-  fdiStyling: false,
-  showDropdown: true
+  fdiStyling: false
 }

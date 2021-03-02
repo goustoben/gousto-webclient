@@ -21,6 +21,7 @@ const TileImage = ({
   variantHeaderPosition,
   pushUpCookingTime
 }) => {
+  // experiment code for signposting test
   const shouldPushUpCookingTime = (
     pushUpCookingTime
     || (showVariantHeader && variantHeaderPosition === 'bottom')
@@ -46,7 +47,7 @@ const TileImage = ({
         </div>
       )}
 
-      {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} bannerPosition={variantHeaderPosition} />}
+      {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />}
     </button>
   )
 }

@@ -4,8 +4,15 @@ import classnames from 'classnames'
 
 import css from './DropdownArrow.css'
 import { VariantRecipeListContainer } from '../../../Recipe/VariantRecipeList/VariantRecipeList'
+import { isMandatoryBucket, isSignpostingBucket, SignpostingExperimentContext } from '../../../context/uiSignpostingContext'
 
-const getClassForTheme = (theme) => (theme === 'grey' ? css.themeGrey : css.themeBlue)
+const getThemeForBucket = (bucket) => {
+  if (!isMandatoryBucket(bucket) && isSignpostingBucket(bucket)) {
+    return css.themeGrey
+  }
+
+  return css.themeBlue
+}
 
 const DropdownArrow = ({
   recipeId,
@@ -14,8 +21,7 @@ const DropdownArrow = ({
   showDropdown,
   recipeVariantDropdownExpanded,
   categoryId,
-  browserType,
-  theme
+  browserType
 }) => {
   if (!recipeVariants || recipeVariants.size === 0) {
     return null
@@ -28,15 +34,19 @@ const DropdownArrow = ({
   }
 
   return (
-    <button className={classnames(css.arrowContainer, getClassForTheme(theme))} type="button" onClick={onClick}>
-      <span className={showDropdown ? css.arrowUp : css.arrowDown} />
-      {showDropdown && browserType !== 'mobile'
-        && (
-          <div className={css.dropdownListContainer}>
-            <VariantRecipeListContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
-          </div>
-        )}
-    </button>
+    <SignpostingExperimentContext.Consumer>
+      {bucket => (
+        <button className={classnames(css.arrowContainer, getThemeForBucket(bucket))} type="button" onClick={onClick}>
+          <span className={showDropdown ? css.arrowUp : css.arrowDown} />
+
+          {showDropdown && browserType !== 'mobile' && !isMandatoryBucket(bucket) && (
+            <div className={css.dropdownListContainer}>
+              <VariantRecipeListContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
+            </div>
+          )}
+        </button>
+      )}
+    </SignpostingExperimentContext.Consumer>
   )
 }
 
@@ -47,14 +57,12 @@ DropdownArrow.propTypes = {
   showDropdown: PropTypes.bool.isRequired,
   recipeVariantDropdownExpanded: PropTypes.func.isRequired,
   categoryId: PropTypes.string,
-  browserType: PropTypes.string.isRequired,
-  theme: PropTypes.oneOf([ 'blue', 'grey' ])
+  browserType: PropTypes.string.isRequired
 }
 
 DropdownArrow.defaultProps = {
   recipeVariants: [],
-  categoryId: null,
-  theme: 'blue'
+  categoryId: null
 }
 
 export { DropdownArrow }

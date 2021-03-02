@@ -11,7 +11,6 @@ import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeader
 
 const RecipeTile = ({
   browserType,
-  variantHeaderPosition,
   recipe,
   recipeId,
   originalId,
@@ -24,6 +23,8 @@ const RecipeTile = ({
   brandAvailability,
   categoryId,
   fdiStyling,
+  inSignpostingExperimentBucket,
+  inMandatoryVariantExperimentBucket
 }) => {
   if (!recipe) {
     return null
@@ -39,11 +40,9 @@ const RecipeTile = ({
   const hasTopRightTag = Boolean(brandTagline)
 
   // experiment code for signposting ui
+  const variantHeaderPosition = inSignpostingExperimentBucket ? 'bottom' : 'top'
   const mobileBannerShown = (showVariantHeader && browserType === 'mobile')
   const desktopBannerShown = (showVariantHeader && (browserType === 'desktop' || browserType === 'tablet'))
-  const mobileBottomBannerShown = mobileBannerShown && variantHeaderPosition === 'bottom'
-  const shouldPushUpCookingTime = mobileBottomBannerShown
-  const headerTextAlign = mobileBottomBannerShown ? 'right' : undefined
 
   return (
     <div
@@ -55,8 +54,9 @@ const RecipeTile = ({
       onKeyPress={onClick}
     >
       {
+        // mobile banner needs to sit outside of TileImage
         (browserType === 'mobile')
-        && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} bannerPosition={variantHeaderPosition} textAlign={headerTextAlign} />
+        && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />
       }
 
       <div
@@ -69,7 +69,7 @@ const RecipeTile = ({
           categoryId={categoryId}
           showVariantHeader={desktopBannerShown}
           variantHeaderPosition={variantHeaderPosition}
-          pushUpCookingTime={shouldPushUpCookingTime}
+          pushUpCookingTime={showVariantHeader && inSignpostingExperimentBucket}
         />
         {hasTopLeftTag && (
           <RecipeTag brandTag={brandAvailability} />
@@ -93,7 +93,13 @@ const RecipeTile = ({
               {title}
             </h2>
           </div>
-          <RecipeTilePurchaseInfoContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} fdiStyling={fdiStyling} />
+          <RecipeTilePurchaseInfoContainer
+            recipeId={recipeId}
+            originalId={originalId}
+            categoryId={categoryId}
+            fdiStyling={fdiStyling}
+            showDropdown={!inMandatoryVariantExperimentBucket}
+          />
         </div>
       </div>
     </div>
@@ -102,7 +108,6 @@ const RecipeTile = ({
 
 RecipeTile.propTypes = {
   browserType: PropTypes.oneOf(['desktop', 'tablet', 'mobile']).isRequired,
-  variantHeaderPosition: PropTypes.oneOf(['top', 'bottom']),
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipeId: PropTypes.string.isRequired,
   originalId: PropTypes.string,
@@ -122,16 +127,20 @@ RecipeTile.propTypes = {
   isFineDineIn: PropTypes.bool.isRequired,
   recipeVariants: PropTypes.arrayOf(PropTypes.shape).isRequired,
   categoryId: PropTypes.string,
-  fdiStyling: PropTypes.bool
+  fdiStyling: PropTypes.bool,
+
+  inSignpostingExperimentBucket: PropTypes.bool,
+  inMandatoryVariantExperimentBucket: PropTypes.bool,
 }
 
 RecipeTile.defaultProps = {
-  variantHeaderPosition: 'top',
   originalId: null,
   brandTagline: null,
   brandAvailability: null,
   categoryId: null,
-  fdiStyling: true
+  fdiStyling: true,
+  inSignpostingExperimentBucket: false,
+  inMandatoryVariantExperimentBucket: false
 }
 
 export { RecipeTile }

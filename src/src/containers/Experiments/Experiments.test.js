@@ -10,7 +10,7 @@ describe('Experiments', () => {
   let fetchOrAssignUserToExperiment
 
   beforeEach(() => {
-    children = jest.fn(() => null)
+    children = jest.fn(() => <h1>Foo</h1>)
     fetchOrAssignUserToExperiment = jest.fn()
   })
 
@@ -21,17 +21,47 @@ describe('Experiments', () => {
   describe('When component renders', () => {
     describe('When there is no experiment', () => {
       beforeEach(() => {
-        wrapper = shallow(
-          <Experiments
-            experimentName=""
-            isFetchingExperiments={false}
-            fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
-          />
-        )
+        experiment = null
       })
 
-      test('renders null', () => {
-        expect(wrapper.getElement()).toEqual(null)
+      describe('when children is passed as a prop', () => {
+        beforeEach(() => {
+          wrapper = shallow(
+            <Experiments
+              experimentName="mock-experiment"
+              experiment={experiment}
+              isFetchingExperiments={false}
+              fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+            >
+              {children}
+            </Experiments>
+          )
+        })
+
+        test('calls children() with the null as an argument', () => {
+          expect(children).toHaveBeenCalledWith(null)
+        })
+
+        test('returns the result of children', () => {
+          expect(wrapper.getElement()).toEqual(<h1>Foo</h1>)
+        })
+      })
+
+      describe('when children is not passed as a prop', () => {
+        beforeEach(() => {
+          wrapper = shallow(
+            <Experiments
+              experimentName="mock-experiment"
+              experiment={experiment}
+              isFetchingExperiments={false}
+              fetchOrAssignUserToExperiment={fetchOrAssignUserToExperiment}
+            />
+          )
+        })
+
+        test('renders null', () => {
+          expect(wrapper.getElement()).toEqual(null)
+        })
       })
     })
 

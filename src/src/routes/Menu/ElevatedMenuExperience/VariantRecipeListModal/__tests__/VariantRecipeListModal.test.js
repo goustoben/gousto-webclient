@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { VariantRecipeListModal } from '../VariantRecipeListModal'
 import { VariantRecipeListContainer } from '../../../Recipe/VariantRecipeList/VariantRecipeList'
+import { VariantRecipeListModalContent } from '../VariantRecipeListModalContent'
 
 describe('VariantRecipeListModal', () => {
   let wrapper
@@ -64,8 +65,8 @@ describe('VariantRecipeListModal', () => {
         expect(wrapper.find('ModalComponent').prop('styleName')).toEqual('variantRecipeListModal')
       })
 
-      test('should render VariantRecipeListContainer with right props', () => {
-        expect(wrapper.find(VariantRecipeListContainer).props()).toEqual({ recipeId: '123', originalId: '456', categoryId: '789' })
+      test('should render VariantRecipeListModalContent with right props', () => {
+        expect(wrapper.find(VariantRecipeListModalContent).props()).toEqual({ recipeId: '123', originalId: '456', categoryId: '789' })
       })
     })
 
