@@ -139,23 +139,30 @@ class Buttons extends React.Component {
       isOnSidesModal,
       isOnDetailScreen,
       selectedRecipeSide,
+      closeOnAdd,
+      recipeVariantDropdownExpanded,
     } = this.props
 
-    if (!disable) {
-      if (stock !== null && Boolean(basketPostcode)) {
-        if (hasSides && !isOnSidesModal && !isOnDetailScreen) {
-          setSidesModalRecipe({ recipeId, view, position, score })
-        } else if (selectedRecipeSide) {
-          onAdd(selectedRecipeSide, view, { position, score }, undefined, recipeId)
-        } else {
-          onAdd(recipeId, view, { position, score })
-        }
-      } else if (config.recipeDetailViews.includes(view)) {
-        menuRecipeDetailVisibilityChange()
-        setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)
+    if (disable) {
+      return
+    }
+
+    if (stock !== null && Boolean(basketPostcode)) {
+      if (hasSides && !isOnSidesModal && !isOnDetailScreen) {
+        setSidesModalRecipe({ recipeId, view, position, score })
+      } else if (selectedRecipeSide) {
+        onAdd(selectedRecipeSide, view, { position, score }, undefined, recipeId)
       } else {
-        menuBrowseCTAVisibilityChange(true)
+        onAdd(recipeId, view, { position, score })
+        if (closeOnAdd) {
+          recipeVariantDropdownExpanded(null)
+        }
       }
+    } else if (config.recipeDetailViews.includes(view)) {
+      menuRecipeDetailVisibilityChange()
+      setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)
+    } else {
+      menuBrowseCTAVisibilityChange(true)
     }
   }
 
@@ -254,6 +261,8 @@ Buttons.propTypes = {
   firstSideRecipeId: PropTypes.string,
   hasSideAddedToBasket: PropTypes.bool.isRequired,
   hasSides: PropTypes.bool.isRequired,
+  closeOnAdd: PropTypes.bool,
+  recipeVariantDropdownExpanded: PropTypes.bool.isRequired,
 }
 
 Buttons.defaultProps = {
@@ -265,7 +274,8 @@ Buttons.defaultProps = {
   selectedRecipeSide: null,
   firstSideRecipeId: null,
   isOnDetailScreen: false,
-  surchargePerPortion: null
+  surchargePerPortion: null,
+  closeOnAdd: false,
 }
 
 export default Buttons

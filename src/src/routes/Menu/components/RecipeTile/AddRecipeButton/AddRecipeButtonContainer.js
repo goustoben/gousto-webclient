@@ -33,8 +33,7 @@ const mapStateToProps = (state, ownProps) => {
     buttonProps: formattedButtonProps,
     recipeVariants: getVariantsForRecipe(state, ownProps),
     hasSideAddedToBasket,
-    firstSideRecipeId,
-    mandatoryVariantFeatureEnabled: false // this will be driven from feature flag
+    firstSideRecipeId
   }
 }
 const mapDispatchToProps = {

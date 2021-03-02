@@ -47,6 +47,15 @@ const menu = {
     case actionTypes.MENU_RECIPE_VARIANT_SELECTED: {
       const originalVariants = state.get('selectedRecipeVariants')
       const newVariants = switchSelectedVariants(originalVariants, action.payload)
+      const { close = true, variantId, collectionId, originalRecipeId } = action.payload
+
+      if (!close) {
+        return state.set('selectedRecipeVariants', newVariants).set('currentExpandedRecipeVariantsDropdown', {
+          recipeId: variantId,
+          collectionId,
+          originalRecipeId,
+        })
+      }
 
       return state
         .set('currentExpandedRecipeVariantsDropdown', null)

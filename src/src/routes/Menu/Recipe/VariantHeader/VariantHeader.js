@@ -2,21 +2,25 @@ import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import css from './VariantHeader.css'
+import { isMandatoryBucket, isSignpostingBucket, SignpostingExperimentContext } from '../../context/uiSignpostingContext'
 
-const getClassForTheme = (theme) => (theme === 'grey' ? css.themeGrey : css.themeBlue)
-const getClassForBannerPosition = (bannerPosition) => {
-  if (bannerPosition === 'top') {
-    return css.positionTop
+const getThemeForBucket = (bucket) => {
+  if (!isMandatoryBucket(bucket) && isSignpostingBucket(bucket)) {
+    return css.themeGrey
   }
 
-  if (bannerPosition === 'bottom') {
-    return css.positionBottom
+  return css.themeBlue
+}
+const getBannerPositionForBucket = (bucket) => (isSignpostingBucket(bucket) ? css.positionBottom : css.positionTop)
+const getTextAlignForBucket = (bucket, browserType) => {
+  if (isSignpostingBucket(bucket) && browserType === 'mobile') {
+    return css.textRight
   }
 
-  return null
+  return css.textLeft
 }
 
-const VariantHeader = ({ recipeVariants, isOutOfStock, theme, bannerPosition, textOverride, textAlign }) => {
+const VariantHeader = ({ browserType, recipeVariants, isOutOfStock, textOverride }) => {
   if (!recipeVariants || isOutOfStock) {
     return null
   }
@@ -31,41 +35,39 @@ const VariantHeader = ({ recipeVariants, isOutOfStock, theme, bannerPosition, te
   const text = textOverride || `${alternativeCount} options available`
 
   return (
-    <div
-      className={classnames(
-        css.variantHeader,
-        getClassForTheme(theme),
-        getClassForBannerPosition(bannerPosition),
-        {
-          [css.textLeft]: textAlign === 'left',
-          [css.textRight]: textAlign === 'right'
-        }
-      )}
-    >
-      {text}
-    </div>
+    <SignpostingExperimentContext.Consumer>
+      {
+        bucket => (
+          <div
+            className={classnames(
+              css.variantHeader,
+              getThemeForBucket(bucket),
+              getBannerPositionForBucket(bucket),
+              getTextAlignForBucket(bucket, browserType)
+            )}
+          >
+            {text}
+          </div>
+        )
+      }
+    </SignpostingExperimentContext.Consumer>
   )
 }
 
 VariantHeader.propTypes = {
+  browserType: PropTypes.oneOf(['desktop', 'tablet', 'mobile']).isRequired,
   recipeVariants: PropTypes.shape({
     type: PropTypes.string,
     alternatives: PropTypes.arrayOf(PropTypes.shape),
     sides: PropTypes.arrayOf(PropTypes.shape),
   }),
   isOutOfStock: PropTypes.bool,
-  theme: PropTypes.oneOf(['blue', 'grey']),
-  bannerPosition: PropTypes.oneOf(['top', 'bottom']),
-  textAlign: PropTypes.oneOf(['left', 'right']),
   textOverride: PropTypes.string
 }
 
 VariantHeader.defaultProps = {
   recipeVariants: null,
   isOutOfStock: false,
-  theme: 'blue',
-  bannerPosition: 'top',
-  textAlign: 'left',
   textOverride: null
 }
 export { VariantHeader }

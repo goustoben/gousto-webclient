@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
+import { recipeVariantDropdownExpanded } from 'actions/menu'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
 import { menuRecipeDetailVisibilityChange } from '../../actions/menuRecipeDetails'
 import { basketRecipeAdd, basketRecipeRemove } from '../../actions/basketRecipes'
@@ -47,6 +48,7 @@ const ButtonsContainer = connect(mapStateToProps, {
   menuRecipeDetailVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
   setSidesModalRecipe,
+  recipeVariantDropdownExpanded,
 })(Buttons)
 
 export default ButtonsContainer

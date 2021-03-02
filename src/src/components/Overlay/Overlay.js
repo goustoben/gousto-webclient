@@ -1,183 +1,73 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import globals from 'config/globals'
-import { forceCheck } from 'react-lazyload'
+import Modal from 'react-modal'
 import css from './Overlay.css'
 
-let __scrollFromTop // eslint-disable-line no-underscore-dangle
-let __bodyPrevStyle // eslint-disable-line no-underscore-dangle
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+if (!__SERVER__) {
+  Modal.setAppElement('#react-root')
+}
 
-/*
- * Warning - here be dragons
- *
- * This component does NOT update props correctly on its children. Please avoid using this.
- *
- * The example below will not work correctly:
- *
- * const Foo = ({ someValue }) => <Overlay><Bar someProp={someValue} /></Overlay>;
- *
- * <Bar /> will never re-render with an updated value for `someProp`.
- *
- */
-class Overlay extends React.PureComponent {
-  static closeOverlayForEachNode(nodeOverride) {
-    const reactRoot = document.getElementById('react-root')
-    reactRoot.setAttribute('style', '')
-    reactRoot.className = ''
-    if (this.reactRoot) {
-      this.reactRoot = null
-    }
-    ReactDOM.unmountComponentAtNode(nodeOverride)
-    document.body.removeChild(nodeOverride)
-    if (this.node) {
-      this.node = null
-    }
-
-    document.body.setAttribute('style', __bodyPrevStyle)
-    document.body.removeAttribute('data-gousto-overlay-open')
-
-    const scrollFromTop = this.resetScroll ? 0 : __scrollFromTop
-    window.scrollTo(0, scrollFromTop)
-    if (this.resetScroll) {
-      forceCheck()
-    }
+// We apply styling to the document using `ReactModal__Body--open` class
+// which is added to the `body` when a model is open.
+const customStyles = {
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    zIndex: 1001,
+    overflow: 'auto'
+  },
+  // This removes the default styling of `react-modal`
+  content: {
+    border: '',
+    padding: '',
+    inset: '',
+    borderRadius: '',
+    position: 'relative',
+    background: '',
+    height: '100%',
   }
+}
 
-  static forceCloseAll() {
-    if (globals.client) {
-      const nodes = document.querySelectorAll('.__goustoOverlayContainer__')
-      if (nodes.length > 0) {
-        nodes.forEach(node => {
-          Overlay.closeOverlayForEachNode(node)
-        })
-      }
-    }
-  }
+const Overlay = ({
+  open,
+  from,
+  onBackgroundClick,
+  className,
+  contentClassName,
+  contentLabel,
+  children
+}) => {
+  // We don't load `react-modal` on the server cause Portals
+  // are not currently supported by the server renderer.
+  if (__SERVER__) return null
 
-  componentWillReceiveProps(newProps) {
-    const { open } = this.props
-    if (open !== newProps.open) {
-      if (newProps.open) {
-        this.renderOverlay(newProps)
-      } else {
-        setTimeout(this.fadeOut, 0)
-      }
-    }
-  }
-
-  closeOverlay = () => {
-    const { node, reactRoot, scrollFromTop, bodyPrevStyle, resetScroll } = this
-    if (reactRoot) {
-      reactRoot.setAttribute('style', '')
-      reactRoot.className = ''
-      if (this.reactRoot) {
-        this.reactRoot = null
-      }
-    }
-
-    if (node) {
-      ReactDOM.unmountComponentAtNode(node)
-      document.body.removeChild(node)
-      if (this.node) {
-        this.node = null
-      }
-    }
-
-    document.body.setAttribute('style', bodyPrevStyle)
-    document.body.removeAttribute('data-gousto-overlay-open')
-
-    const scrollFromTopValue = resetScroll ? 0 : scrollFromTop
-    window.scrollTo(0, scrollFromTopValue)
-    if (resetScroll) {
-      forceCheck()
-    }
-  }
-
-  getDocumentHeight = () => {
-    const { body } = document
-    const html = document.documentElement
-
-    return Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
-  }
-
-  getWindowHeight = () => (window.innerHeight || document.body.clientHeight || document.documentElement.clientHeight)
-
-  fadeOut = () => {
-    const { className, contentClassName, from } = this.props
-    const overlay = (
-      <div className={classNames(className, css.overlayContainer)}>
-        <div className={css.greyFadeOut}>&nbsp;</div>
+  return (
+    <Modal
+      isOpen={open}
+      style={customStyles}
+      contentLabel={contentLabel}
+      closeTimeoutMS={200}
+      preventScroll
+    >
+      <div className={classNames(className)}>
         <div
-          className={classNames(contentClassName, css[`contentSlideOutFrom${from}`], css.overlayContent)}
+          className={open ? css.animation : css.fadeOutAnimation}
+          onClick={open ? onBackgroundClick : () => {}}
+          onKeyPress={open ? onBackgroundClick : () => {} }
+          role="button"
+          tabIndex={0}
         >
-          {this.children}
+                  &nbsp;
+        </div>
+        <div
+          className={classNames(contentClassName, css[`contentFrom${from}`], css.overlayContent)}
+        >
+          {children || <span />}
         </div>
       </div>
-    )
-
-    ReactDOM.unstable_renderSubtreeIntoContainer(this, overlay, this.node)
-    if (this.reactRoot) {
-      this.reactRoot.className = css.reactRootOverlayBlurIn
-    }
-
-    this.closeOverlay()
-  }
-
-  renderOverlay = (props) => {
-    if (!this.node) {
-      this.scrollFromTop = window.pageYOffset
-      this.bodyPrevStyle = document.body.getAttribute('style') || ''
-      this.resetScroll = props.resetScroll
-
-      __scrollFromTop = this.scrollFromTop
-      __bodyPrevStyle = this.bodyPrevStyle
-
-      if (this.getWindowHeight() < this.getDocumentHeight()) {
-        document.body.setAttribute('style', `${this.bodyPrevStyle}; overflow-y: scroll; overflow-x: hidden;`)
-      }
-
-      this.reactRoot = document.getElementById(props.rootId)
-      if (this.reactRoot) {
-        this.reactRoot.className = css.reactRootOverlay
-        this.reactRoot.setAttribute('style', `top: -${this.scrollFromTop}px`)
-      }
-
-      this.children = props.children
-
-      this.node = document.createElement('div')
-      this.node.className = '__goustoOverlayContainer__'
-      document.body.setAttribute('data-gousto-overlay-open', 'true')
-      document.body.appendChild(this.node)
-      const { from, onBackgroundClick } = this.props
-      const overlay = (
-        <div className={classNames(props.className, css.overlayContainer)}>
-          <div
-            className={css.grey}
-            onClick={onBackgroundClick}
-            onKeyPress={onBackgroundClick}
-            role="button"
-            tabIndex={0}
-          >
-            &nbsp;
-          </div>
-          <div
-            className={classNames(props.contentClassName, css[`contentFrom${from}`], css.overlayContent)}
-          >
-            {props.children ? props.children : <span />}
-          </div>
-        </div>
-      )
-
-      ReactDOM.unstable_renderSubtreeIntoContainer(this, overlay, this.node)
-      window.scrollTo(0, 0)
-    }
-  }
-
-  render() {
-    return null
-  }
+    </Modal>
+  )
 }
 
 Overlay.propTypes = {
@@ -185,18 +75,18 @@ Overlay.propTypes = {
   className: PropTypes.string,
   contentClassName: PropTypes.string,
   from: PropTypes.string,
-  resetScroll: PropTypes.bool,//eslint-disable-line
-  rootId: PropTypes.string, //eslint-disable-line
   onBackgroundClick: PropTypes.func,
+  contentLabel: PropTypes.string,
+  children: PropTypes.node,
 }
 
 Overlay.defaultProps = {
-  rootId: 'react-root',
+  contentLabel: 'Modal',
   from: 'right',
-  resetScroll: false,
   contentClassName: '',
   className: '',
   onBackgroundClick: null,
+  children: null,
 }
 
 export default Overlay

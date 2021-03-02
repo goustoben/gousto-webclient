@@ -22,7 +22,7 @@ export class Experiments extends React.PureComponent {
   render() {
     const { children, experiment } = this.props
 
-    if (!experiment) {
+    if (!children) {
       return null
     }
 

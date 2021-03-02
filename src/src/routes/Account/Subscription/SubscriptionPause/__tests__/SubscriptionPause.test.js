@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import SubscriptionPause from '../SubscriptionPause'
 
@@ -19,7 +19,9 @@ const mockProps = {
 const shouldComponentUpdateSpy = jest.spyOn(SubscriptionPause.prototype, 'render')
 
 const mountWithProps = (props = {}) => {
-  wrapper = mount(<SubscriptionPause {...mockProps} {...props} />)
+  wrapper = shallow(
+    <SubscriptionPause {...mockProps} {...props} />
+  )
 }
 
 describe('Given I render SubScriptionPause', () => {

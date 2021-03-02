@@ -63,8 +63,7 @@ describe('DropdownArrowContainer', () => {
         recipeId: '123',
         recipeVariantDropdownExpanded: expect.any(Function),
         recipeVariants: null,
-        showDropdown: false,
-        theme: 'blue'
+        showDropdown: false
       })
     })
   })
@@ -123,8 +122,7 @@ describe('DropdownArrowContainer', () => {
         recipeVariants: Immutable.fromJS([{
           coreRecipeId: '456',
         }]),
-        showDropdown: true,
-        theme: 'blue'
+        showDropdown: true
       })
     })
   })

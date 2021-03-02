@@ -1,6 +1,7 @@
 // setup file
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('enzyme-adapter-react-16');
+import Modal from 'react-modal'
 
 require('jest-fetch-mock').enableMocks()
 
@@ -29,3 +30,7 @@ if (!Object.entries) {
 }
 
 Enzyme.configure({ adapter: new EnzymeAdapter() });
+
+jest
+  .spyOn(Modal, "setAppElement")
+  .mockImplementation(() => {});

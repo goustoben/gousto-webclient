@@ -36,7 +36,7 @@ jest.mock('apis/boxPrices', () => ({
 
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
-  const { findSlot, ...menuActions }= require('../menu')//eslint-disable-line
+  const { findSlot, ...menuActions } = require('../menu')//eslint-disable-line
   const { getStockAvailability } = require('../menuActionHelper')//eslint-disable-line
   const dispatch = jest.fn()
   const state = {
@@ -65,14 +65,16 @@ describe('menu actions', () => {
   const getState = () => state
 
   beforeEach(() => {
-    mockFetchRecipeStock.mockResolvedValue({ data: {
-      '001': {
-        recipeId: '001',
-        committed: '1',
-        number: '53',
-        familyNumber: '100'
+    mockFetchRecipeStock.mockResolvedValue({
+      data: {
+        '001': {
+          recipeId: '001',
+          committed: '1',
+          number: '53',
+          familyNumber: '100'
+        }
       }
-    }})
+    })
   })
 
   afterEach(() => {
@@ -155,10 +157,12 @@ describe('menu actions', () => {
 
   describe('menuLoadDays', () => {
     beforeEach(() => {
-      mockFetchAvailableDates.mockResolvedValue({ data: [
-        { until: '2019-09-17T00:00:00+01:00' },
-        { until: '2019-10-22T00:00:00+01:00' }
-      ]})
+      mockFetchAvailableDates.mockResolvedValue({
+        data: [
+          { until: '2019-09-17T00:00:00+01:00' },
+          { until: '2019-10-22T00:00:00+01:00' }
+        ]
+      })
     })
 
     describe('given menuService turned on', () => {
@@ -218,7 +222,7 @@ describe('menu actions', () => {
 
         // jest has no way of seeing how many times a function was called only with specific arguments
         const callsForFirstRecipe = dispatch.mock.calls.filter(c => c[0].type && c[0].type === actionTypes.MENU_RECIPE_STOCK_CHANGE
-            && c[0].stock && c[0].stock['1234'] && c[0].stock['1234'][2] === -1)
+          && c[0].stock && c[0].stock['1234'] && c[0].stock['1234'][2] === -1)
 
         expect(callsForFirstRecipe).toHaveLength(2)
         expect(dispatch).toHaveBeenCalledWith({
@@ -320,7 +324,8 @@ describe('menu actions', () => {
         payload: {
           collectionId,
           originalRecipeId,
-          variantId
+          variantId,
+          close: true
         },
         trackingData: {
           actionType: 'select_recipe_variant',

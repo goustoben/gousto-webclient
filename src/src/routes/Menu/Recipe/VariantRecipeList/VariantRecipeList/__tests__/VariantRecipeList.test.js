@@ -105,7 +105,7 @@ describe('VariantRecipeList', () => {
           const changeCheckedRecipe = wrapper.find(VariantRecipeListItemContainer).first().prop('changeCheckedRecipe')
 
           changeCheckedRecipe(recipeVariantsArray[0].coreRecipeId, false)
-          expect(selectRecipeVariant).toHaveBeenCalledWith('9999', '1230', '1234abcd', false, 'grid')
+          expect(selectRecipeVariant).toHaveBeenCalledWith('9999', '1230', '1234abcd', false, 'grid', true)
         })
 
         test('should stop propagation on click event', () => {

@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { VariantRecipeListModal } from '../VariantRecipeListModal'
 import { VariantRecipeListContainer } from '../../../Recipe/VariantRecipeList/VariantRecipeList'
+import { VariantRecipeListModalContent } from '../VariantRecipeListModalContent'
 
 describe('VariantRecipeListModal', () => {
   let wrapper
@@ -46,26 +47,6 @@ describe('VariantRecipeListModal', () => {
 
       test('should render variantRecipeListModalCloseX', () => {
         expect(wrapper.find('.variantRecipeListModalCloseX').exists()).toBe(true)
-      })
-    })
-
-    describe('when has currentExpandedRecipeVariantsDropdown', () => {
-      beforeEach(() => {
-        props = {
-          currentExpandedRecipeVariantsDropdown,
-          recipeVariantDropdownExpanded,
-          browserType: 'mobile',
-        }
-        wrapper = shallow(<VariantRecipeListModal {...props} />)
-      })
-
-      test('should render ModalComponent with right props', () => {
-        expect(wrapper.find('ModalComponent').prop('visible')).toEqual(true)
-        expect(wrapper.find('ModalComponent').prop('styleName')).toEqual('variantRecipeListModal')
-      })
-
-      test('should render VariantRecipeListContainer with right props', () => {
-        expect(wrapper.find(VariantRecipeListContainer).props()).toEqual({ recipeId: '123', originalId: '456', categoryId: '789' })
       })
     })
 

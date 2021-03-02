@@ -38,53 +38,11 @@ describe('DropdownArrow', () => {
             { id: '1234-1234', coreRecipeId: '1234', displayName: 'Variant Two' }
           ]}
           recipeVariantDropdownExpanded={recipeVariantDropdownExpanded}
-        />)
+        />).shallow()
       })
 
       test('then it should render the dropdown arrow', () => {
         expect(wrapper.find('.arrowContainer')).toHaveLength(1)
-      })
-
-      describe('When theme is blue', () => {
-        beforeEach(() => {
-          wrapper.setProps({ theme: 'blue' })
-        })
-
-        test('then it should have class themeBlue', () => {
-          expect(wrapper.find('.arrowContainer').hasClass('themeBlue')).toBe(true)
-        })
-
-        test('then it should not have class themeGrey', () => {
-          expect(wrapper.find('.arrowContainer').hasClass('themeGrey')).toBe(false)
-        })
-      })
-
-      describe('When theme is grey', () => {
-        beforeEach(() => {
-          wrapper.setProps({ theme: 'grey' })
-        })
-
-        test('then it should have class themeGrey', () => {
-          expect(wrapper.find('.arrowContainer').hasClass('themeGrey')).toBe(true)
-        })
-
-        test('then it should not have class themeBlue', () => {
-          expect(wrapper.find('.arrowContainer').hasClass('themeBlue')).toBe(false)
-        })
-      })
-
-      describe('When theme is not set', () => {
-        beforeEach(() => {
-          wrapper.setProps({ theme: undefined })
-        })
-
-        test('then it should have class themeBlue', () => {
-          expect(wrapper.find('.arrowContainer').hasClass('themeBlue')).toBe(true)
-        })
-
-        test('then it should not have class themeGrey', () => {
-          expect(wrapper.find('.arrowContainer').hasClass('themeGrey')).toBe(false)
-        })
       })
 
       describe('When showDropdown is false', () => {
@@ -95,17 +53,6 @@ describe('DropdownArrow', () => {
         test('then it should call recipeVariantDropdownExpanded with current recipe', () => {
           wrapper.find('.arrowContainer').simulate('click', { stopPropagation: jest.fn() })
           expect(recipeVariantDropdownExpanded).toHaveBeenCalledWith({ recipeId, originalId, categoryId })
-        })
-      })
-
-      describe('When showDropdown is true', () => {
-        beforeEach(() => {
-          wrapper.setProps({ showDropdown: true })
-        })
-
-        test('then it should call recipeVariantDropdownExpanded with null', () => {
-          wrapper.find('.arrowContainer').simulate('click', { stopPropagation: jest.fn() })
-          expect(recipeVariantDropdownExpanded).toHaveBeenCalledWith(null)
         })
       })
     })

@@ -1,6 +1,18 @@
+/* eslint-disable no-underscore-dangle */
+import { Helmet } from 'react-helmet'
 const { processRequest } = require('../../server/processRequest')
 
 describe('router', () => {
+  beforeEach(() => {
+    global.__SERVER__ = true
+    Helmet.canUseDOM = false
+  })
+
+  afterEach(() => {
+    global.__SERVER__ = false
+    Helmet.canUseDOM = true
+  })
+
   test('should 404 when given an unknown route', async () => {
     const ctx = {
       request: {
