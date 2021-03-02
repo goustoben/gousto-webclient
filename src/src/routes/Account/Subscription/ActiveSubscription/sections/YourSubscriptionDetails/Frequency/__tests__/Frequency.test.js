@@ -231,7 +231,7 @@ describe('Frequency', () => {
       getIsSubscriptionLoaded.mockReturnValue(true)
       getDeliveryFrequency.mockReturnValue('1')
 
-      mountWithProps({}, { currentUser: { id: '99999999998' } })
+      mountWithProps({}, { currentUser: { id: '42298808' } })
     })
 
     test('Then trackWeeklyFrequencyVariantSpy should be called', () => {

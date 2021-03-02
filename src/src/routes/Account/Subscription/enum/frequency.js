@@ -14,6 +14,6 @@ export const frequencyMappingC = {
 }
 
 export const userIdRange = {
-  START: 99999999997,
-  END: 99999999999
+  START: 42298805,
+  END: 42398805
 }
