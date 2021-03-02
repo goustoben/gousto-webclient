@@ -98,7 +98,7 @@ const RecipeTile = ({
             originalId={originalId}
             categoryId={categoryId}
             fdiStyling={fdiStyling}
-            showDropdown={!inMandatoryVariantExperimentBucket}
+            inMandatoryVariantExperimentBucket={inMandatoryVariantExperimentBucket}
           />
         </div>
       </div>
