@@ -137,7 +137,7 @@ const promoClear = () => ({
   code: '',
 })
 
-const promoToggleModalVisibility = visible => ({
+export const promoToggleModalVisibility = visible => ({
   type: actionTypes.PROMO_MODAL_VISIBILITY_CHANGE,
   visible,
 })

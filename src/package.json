@@ -84,6 +84,7 @@
     "react-lazyload": "2.3.0",
     "react-markdown": "2.5.0",
     "react-media": "^1.10.0",
+    "react-modal": "^3.12.1",
     "react-nl2br": "0.2.0",
     "react-portal": "^4.2.1",
     "react-redux": "5.0.6",

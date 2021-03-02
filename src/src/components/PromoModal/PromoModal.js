@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Overlay from 'Overlay'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 import PromoModalBody from './PromoModalBody'
@@ -9,9 +8,9 @@ import AgeVerify from './AgeVerify'
 
 class PromoModal extends React.Component {
   handleClick = () => {
-    const { error, promoApply, justApplied } = this.props
+    const { error, promoApply, justApplied, closeModal } = this.props
 
-    return (error || justApplied) ? Overlay.forceCloseAll() : promoApply()
+    return (error || justApplied) ? closeModal() : promoApply()
   }
 
   render() {
@@ -53,6 +52,7 @@ PromoModal.propTypes = {
   pending: PropTypes.bool,
   justApplied: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
+  closeModal: PropTypes.func.isRequired
 }
 
 PromoModal.defaultProps = {

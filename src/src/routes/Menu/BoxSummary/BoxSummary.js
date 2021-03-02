@@ -5,7 +5,6 @@ import Immutable from 'immutable'
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
 
-import Overlay from 'Overlay'
 import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
@@ -88,7 +87,6 @@ class BoxSummary extends React.PureComponent {
     }
 
     boxDetailsVisibilityChange(false)
-    Overlay.forceCloseAll()
   }
 
   handleClick = (e) => {

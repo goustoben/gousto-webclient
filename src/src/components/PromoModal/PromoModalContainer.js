@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
+import { promoToggleModalVisibility } from 'actions/promos'
 import Immutable from 'immutable'
 import { PromoModal } from './PromoModal'
 
@@ -77,4 +78,5 @@ const mapStateToProps = (state) => {
 export const PromoModalContainer = connect(mapStateToProps, {
   promoApply: actions.promoApply,
   trackUTMAndPromoCode,
+  closeModal: () => promoToggleModalVisibility(false)
 })(PromoModal)

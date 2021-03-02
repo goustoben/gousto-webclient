@@ -186,8 +186,6 @@ class Checkout extends PureComponent {
   }
 
   componentDidMount() {
-    Overlay.forceCloseAll()
-
     const { store } = this.context
     const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutOverhaulEnabled } = this.props
     const { paypalScriptsReady } = this.state
