@@ -36,11 +36,11 @@ describe('<RecipeTilePurchaseInfoContainer />', () => {
     menuCollections: Immutable.fromJS({
       a12345: {}
     }),
-    menu: Immutable.fromJS({
+    menu: Immutable.Map({
       menuVariants: Immutable.fromJS({
         375: {}
-      }),
-    }),
+      })
+    })
   }
 
   const wrapperOptions = {

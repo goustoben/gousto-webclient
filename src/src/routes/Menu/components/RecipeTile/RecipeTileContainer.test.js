@@ -75,12 +75,13 @@ describe('<RecipeTileContainer />', () => {
     menuCollections: Immutable.fromJS({
       a12345: {}
     }),
-    menu: Immutable.fromJS({
-      menuVariants: {
+    menu: Immutable.Map({
+      menuVariants: Immutable.fromJS({
         321: {
 
         }
-      }
+      }),
+      currentExpandedRecipeVariantsDropdown: { recipeId },
     }),
     brand: {
       data: {
@@ -123,5 +124,6 @@ describe('<RecipeTileContainer />', () => {
     expect(wrapper.prop('brandTagline')).toEqual(expectedTagline)
     expect(wrapper.prop('brandAvailability')).toEqual(expectedAvailability)
     expect(wrapper.prop('browserType')).toEqual('desktop')
+    expect(wrapper.prop('showVariantDropdown')).toEqual(true)
   })
 })

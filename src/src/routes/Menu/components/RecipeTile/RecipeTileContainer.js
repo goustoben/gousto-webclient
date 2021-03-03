@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
 import { getBrowserType } from 'selectors/browser'
+import { getCurrentExpandedRecipeVariantsDropdown } from 'selectors/menu'
 import { getRecipeOutOfStock, getRecipeTitle, getRecipeIsFineDineIn } from '../../selectors/recipe'
 import { getVariantsForRecipe } from '../../selectors/variants'
 import { showDetailRecipe } from '../../actions/menuRecipeDetails'
@@ -17,10 +18,16 @@ const getRecipeForRecipeTile = createSelector(
 
 const mapStateToProps = (state, ownProps) => {
   const recipe = getRecipeForRecipeTile(state, ownProps)
+  const currentExpandedRecipeVariantsDropdown = getCurrentExpandedRecipeVariantsDropdown(state)
+  const browserType = getBrowserType(state)
+  const showVariantDropdown = (currentExpandedRecipeVariantsDropdown && browserType !== 'mobile')
+    ? currentExpandedRecipeVariantsDropdown.recipeId === ownProps.recipeId
+    : false
 
   return {
-    browserType: getBrowserType(state),
+    browserType,
     recipe,
+    showVariantDropdown,
     isOutOfStock: getRecipeOutOfStock(state, ownProps),
     title: getRecipeTitle(state, ownProps),
     brandAvailability: getBrandAvailability(state, ownProps),

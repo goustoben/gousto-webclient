@@ -9,7 +9,7 @@ describe('RecipeTilePurchaseInfo', () => {
     surcharge: 0,
     isOutOfStock: false,
     recipeId: '123',
-    isFineDineIn: false,
+    isFineDineIn: false
   }
 
   describe('when the recipe is out of stock', () => {

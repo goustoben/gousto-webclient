@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputRadio, InputCheck } from 'goustouicomponents'
+import { InputRadio } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import css from './VariantRecipeListItem.css'
@@ -10,22 +10,13 @@ const VariantRecipeListItem = ({
   changeCheckedRecipe,
   isChecked,
   isOnDetailScreen,
-  isOnSidesModal,
   isOutOfStock,
-  surcharge,
-  hasSides,
-  numPortions,
-  allergenInfo
+  surcharge
 }) => {
-  const isOnDetailScreenOrSidesModal = isOnDetailScreen || isOnSidesModal
-  const allergenText = allergenInfo.containsGlutenOrDairy === true ? 'Contains gluten & milk' : null
-  const surchargeText = hasSides ? `${numPortions} servings` : 'per serving'
-
   const getInputContent = () => (
-    <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer, { [css.labelContainerSides]: isOnSidesModal })}>
+    <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer)}>
       <span>
-        <span className={classnames(css.titleText, {[css.boldTitle]: hasSides})}>{recipeName}</span>
-        {hasSides && <div className={css.allergenText}>{allergenText}</div>}
+        <span className={classnames(css.titleText)}>{recipeName}</span>
       </span>
       {surcharge && !isOutOfStock ? (
         <div className={
@@ -38,7 +29,7 @@ const VariantRecipeListItem = ({
             +£
             {surcharge.toFixed(2)}
           </span>
-          <span className={css.perServingText}>{surchargeText}</span>
+          <span className={css.perServingText}>per serving</span>
         </div>
       ) : null}
       {isOutOfStock && <span className={css.soldOutText}>Sold out</span>}
@@ -49,35 +40,19 @@ const VariantRecipeListItem = ({
     <li
       className={
         classnames(
-          { [css.listItem]: !isOnDetailScreenOrSidesModal },
-          { [css.listItemWithBorder]: isOnDetailScreenOrSidesModal },
-          { [css.listItemWithBlueBorder]: isChecked && isOnDetailScreenOrSidesModal}
+          css.listItem,
+          { [css.listItemChecked]: isChecked }
         )
       }
     >
-      {isOnSidesModal || hasSides ? (
-        <div className={css.inputSidesOuter}>
-          <div className={css.inputSidesCheckOuter}>
-            <InputCheck
-              id={recipeId}
-              name="variantList"
-              onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
-              defaultValue={isChecked}
-            />
-          </div>
-          {getInputContent()}
-        </div>
-      ) : (
-        <InputRadio
-          id={recipeId}
-          name="variantList"
-          onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
-          isChecked={isChecked}
-        >
-          {getInputContent()}
-        </InputRadio>
-
-      )}
+      <InputRadio
+        id={recipeId}
+        name="variantList"
+        onChange={() => changeCheckedRecipe(recipeId, isOutOfStock)}
+        isChecked={isChecked}
+      >
+        {getInputContent()}
+      </InputRadio>
     </li>
   )
 }
@@ -88,11 +63,8 @@ VariantRecipeListItem.propTypes = {
   changeCheckedRecipe: PropTypes.func.isRequired,
   isChecked: PropTypes.bool.isRequired,
   isOnDetailScreen: PropTypes.bool.isRequired,
-  isOnSidesModal: PropTypes.bool.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
   surcharge: PropTypes.number,
-  hasSides: PropTypes.bool.isRequired,
-  numPortions: PropTypes.number.isRequired,
   allergenInfo: PropTypes.shape({
     containsGlutenOrDairy: PropTypes.bool
   }).isRequired

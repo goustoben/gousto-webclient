@@ -2,12 +2,8 @@ import { connect } from 'react-redux'
 import {
   selectRecipeVariant,
   trackVariantListDisplay,
-  selectRecipeSide,
-  unselectRecipeSide,
 } from 'actions/menu'
-import { trackDeselectSide, trackSelectSide } from '../../../actions/menuRecipeSidesTracking'
 import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
-import { basketRecipeAdd, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getSidesData } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
 import { getCurrentCollectionId } from '../../../selectors/collections'
@@ -34,8 +30,7 @@ const mapStateToProps = (state, ownProps) => {
     collectionId: getCurrentCollectionId(state, ownProps),
     recipeVariants,
     recipeVariantsArray,
-    selectedRecipe,
-    basketRecipes: state.basket.get('recipes')
+    selectedRecipe
   }
 }
 
@@ -45,12 +40,6 @@ const VariantRecipeListContainer = connect(
     selectRecipeVariant,
     menuRecipeDetailVisibilityChange,
     trackVariantListDisplay,
-    trackDeselectSide,
-    trackSelectSide,
-    selectRecipeSide,
-    unselectRecipeSide,
-    basketRecipeAdd,
-    basketRecipeRemove,
   }
 )(VariantRecipeList)
 
