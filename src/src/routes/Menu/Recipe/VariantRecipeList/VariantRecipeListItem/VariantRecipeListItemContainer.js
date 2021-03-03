@@ -3,15 +3,11 @@ import { createSelector } from 'reselect'
 import { getRecipes } from 'selectors/root'
 import { getDietaryTags } from 'utils/recipe'
 import { getNumPortions } from '../../../../../selectors/basket'
-import { getRecipeOutOfStock, getRecipeSidesSurcharge, getRecipeSurcharge, getRecipeIdFromProps } from '../../../selectors/recipe'
+import { getRecipeOutOfStock, getRecipeSurcharge, getRecipeIdFromProps } from '../../../selectors/recipe'
 import { VariantRecipeListItem } from './VariantRecipeListItem'
 
 const mapStateToProps = (state, ownProps) => {
-  const surcharge = (
-    ownProps.hasSides
-      ? getRecipeSidesSurcharge(state, ownProps)
-      : getRecipeSurcharge(state, ownProps)
-  )
+  const surcharge = getRecipeSurcharge(state, ownProps)
 
   const getRecipeAllergenInformation = createSelector(
     [getRecipeIdFromProps, getRecipes],

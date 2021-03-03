@@ -8,6 +8,8 @@ import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
 import css from './RecipeTile.css'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
+import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList/VariantRecipeListContainer'
+import { RecipeTileTitleContainer } from './RecipeTileTitle'
 
 const RecipeTile = ({
   browserType,
@@ -16,13 +18,13 @@ const RecipeTile = ({
   originalId,
   showDetailRecipe,
   isOutOfStock,
-  title,
   isFineDineIn,
   recipeVariants,
   brandTagline,
   brandAvailability,
   categoryId,
   fdiStyling,
+  showVariantDropdown,
   inSignpostingExperimentBucket,
   inMandatoryVariantExperimentBucket
 }) => {
@@ -59,6 +61,12 @@ const RecipeTile = ({
         && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />
       }
 
+      {showVariantDropdown && !inMandatoryVariantExperimentBucket && (
+        <div className={css.variantDropdownContainer}>
+          <VariantRecipeListContainer recipeId={recipeId} originalId={originalId} categoryId={categoryId} />
+        </div>
+      )}
+
       <div
         className={classnames(css.recipeTileContainer, {
           [css.recipeTileIsFineDineIn]: isFineDineIn && fdiStyling
@@ -86,13 +94,7 @@ const RecipeTile = ({
           {hasTopRightTag && (
             <RecipeTagTitle brandTag={brandTagline} showVariantHeader={showVariantHeader} />
           )}
-          <div
-            className={css.titleWrapper}
-          >
-            <h2 className={css.recipeTitle}>
-              {title}
-            </h2>
-          </div>
+          <RecipeTileTitleContainer recipeId={recipeId} />
           <RecipeTilePurchaseInfoContainer
             recipeId={recipeId}
             originalId={originalId}
@@ -110,10 +112,10 @@ RecipeTile.propTypes = {
   browserType: PropTypes.oneOf(['desktop', 'tablet', 'mobile']).isRequired,
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipeId: PropTypes.string.isRequired,
+  showVariantDropdown: PropTypes.bool,
   originalId: PropTypes.string,
   showDetailRecipe: PropTypes.func.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
   brandTagline: PropTypes.shape({
     slug: PropTypes.string,
     text: PropTypes.string,
@@ -139,6 +141,7 @@ RecipeTile.defaultProps = {
   brandAvailability: null,
   categoryId: null,
   fdiStyling: true,
+  showVariantDropdown: false,
   inSignpostingExperimentBucket: false,
   inMandatoryVariantExperimentBucket: false
 }

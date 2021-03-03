@@ -7,25 +7,27 @@ import { TileImageContainer } from './TileImage'
 import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
+import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList/VariantRecipeListContainer'
+import { RecipeTileTitleContainer } from './RecipeTileTitle'
 
 describe('RecipeTile', () => {
   let wrapper
   let defaultProps
+  const recipeId = '1234'
   beforeEach(() => {
     defaultProps = {
       recipe: Immutable.fromJS({
-        id: '1234',
+        id: recipeId,
         title: 'Bobs Brilliant Beef Burger',
         url: 'example.com/food',
         media: {
           images: []
         }
       }),
-      recipeId: '1234',
+      recipeId,
       index: 0,
       numPortions: 2,
       showDetailRecipe: jest.fn(),
-      title: 'Bobs Brilliant Beef Burger',
       isOutOfStock: false,
       isFineDineIn: false,
       surcharge: 0,
@@ -75,28 +77,46 @@ describe('RecipeTile', () => {
       />)
     })
 
+    test('should contain a RecipeTileTitleContainer', () => {
+      expect(wrapper.find(RecipeTileTitleContainer)).toHaveLength(1)
+      expect(wrapper.find(RecipeTileTitleContainer).prop('recipeId')).toEqual(recipeId)
+    })
+
     describe('when a recipe is in stock', () => {
       test('should return a <div>', () => {
         expect(wrapper.type()).toBe('div')
       })
 
       test('should contain one TileImageContainer component', () => {
-        expect(wrapper.find(TileImageContainer).length).toEqual(1)
-      })
-
-      test('should contain a title', () => {
-        expect(wrapper.find('h2').length).toEqual(1)
+        expect(wrapper.find(TileImageContainer)).toHaveLength(1)
       })
 
       test('should contain one RecipeTag component', () => {
-        expect(wrapper.find(RecipeTag).length).toEqual(1)
+        expect(wrapper.find(RecipeTag)).toHaveLength(1)
       })
 
       test('should contain one RecipeTagTitle component', () => {
-        expect(wrapper.find(RecipeTagTitle).length).toEqual(1)
+        expect(wrapper.find(RecipeTagTitle)).toHaveLength(1)
       })
       test('should contain an RecipeTilePurchaseInfoContainer ', () => {
-        expect(wrapper.find(RecipeTilePurchaseInfoContainer).length).toEqual(1)
+        expect(wrapper.find(RecipeTilePurchaseInfoContainer)).toHaveLength(1)
+      })
+
+      describe('when showVariantDropdown is true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ showVariantDropdown: true })
+        })
+
+        describe('when inMandatoryVariantExperimentBucket is false', () => {
+          beforeEach(() => {
+            wrapper.setProps({ inMandatoryVariantExperimentBucket: false })
+          })
+
+          test('then it should render variant dropdown', () => {
+            expect(wrapper.find('.variantDropdownContainer')).toHaveLength(1)
+            expect(wrapper.find(VariantRecipeListContainer)).toHaveLength(1)
+          })
+        })
       })
     })
 
@@ -109,19 +129,14 @@ describe('RecipeTile', () => {
       })
 
       test('should contain one TileImageContainer component', () => {
-        expect(wrapper.find(TileImageContainer).length).toEqual(1)
-      })
-
-      test('should contain a title ', () => {
-        expect(wrapper.find('h2').length).toEqual(1)
-        expect(wrapper.find('h2').text()).toEqual('Bobs Brilliant Beef Burger')
+        expect(wrapper.find(TileImageContainer)).toHaveLength(1)
       })
     })
 
     describe('when click on recipe Tile', () => {
       test('should call showDetailRecipe function', () => {
         wrapper.simulate('click', {
-          stopPropagation: () => {}
+          stopPropagation: () => { }
         })
 
         expect(defaultProps.showDetailRecipe).toHaveBeenCalled()
@@ -137,7 +152,7 @@ describe('RecipeTile', () => {
       })
 
       test('should have class of recipeTileIsFineDineIn', () => {
-        expect(wrapper.find('.recipeTileIsFineDineIn').length).toEqual(1)
+        expect(wrapper.find('.recipeTileIsFineDineIn')).toHaveLength(1)
       })
     })
 
@@ -147,7 +162,7 @@ describe('RecipeTile', () => {
       })
 
       test('should have class of recipeTileIsFineDineIn', () => {
-        expect(wrapper.find('.recipeTileIsFineDineIn').length).toEqual(0)
+        expect(wrapper.find('.recipeTileIsFineDineIn')).toHaveLength(0)
       })
     })
   })

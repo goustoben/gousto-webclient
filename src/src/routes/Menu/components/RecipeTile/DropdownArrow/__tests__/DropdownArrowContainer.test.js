@@ -40,9 +40,6 @@ describe('DropdownArrowContainer', () => {
         basket: Immutable.fromJS({
           currentMenuId: menuId,
         }),
-        request: Immutable.fromJS({
-          browser: 'mobile',
-        }),
       }
 
       wrapper = shallow(<DropdownArrowContainer {...props} />, {
@@ -58,7 +55,6 @@ describe('DropdownArrowContainer', () => {
 
     test('should set correct props', () => {
       expect(wrapper.props()).toEqual({
-        browserType: 'mobile',
         categoryId: null,
         recipeId: '123',
         recipeVariantDropdownExpanded: expect.any(Function),
@@ -97,9 +93,6 @@ describe('DropdownArrowContainer', () => {
         basket: Immutable.fromJS({
           currentMenuId: menuId,
         }),
-        request: Immutable.fromJS({
-          browser: 'mobile',
-        }),
       }
 
       wrapper = shallow(<DropdownArrowContainer {...props} />, {
@@ -115,7 +108,6 @@ describe('DropdownArrowContainer', () => {
 
     test('should set correct props', () => {
       expect(wrapper.props()).toEqual({
-        browserType: 'mobile',
         categoryId: null,
         recipeId: '123',
         recipeVariantDropdownExpanded: expect.any(Function),

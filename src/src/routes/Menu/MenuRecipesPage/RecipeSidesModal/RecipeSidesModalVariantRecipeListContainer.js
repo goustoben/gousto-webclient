@@ -9,8 +9,7 @@ const mapStateToProps = (state, props) => {
   return {
     originalId: sidesModalRecipeId,
     recipeId: selectedRecipeSide || null,
-    variantsType: 'sides',
-    isOnSidesModal: true
+    variantsType: 'sides'
   }
 }
 

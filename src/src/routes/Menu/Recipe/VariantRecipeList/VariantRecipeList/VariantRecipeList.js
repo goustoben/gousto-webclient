@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import css from './VariantRecipeList.css'
 import { VariantRecipeListItemContainer } from '../VariantRecipeListItem'
 
 const compareCoreRecipeIds = (a, b) => a.coreRecipeId - b.coreRecipeId
-const hasRecipeInBasket = (basketRecipes, recipeId) => basketRecipes.get(recipeId, 0) !== 0
 
 class VariantRecipeList extends React.PureComponent {
   componentDidMount() {
@@ -20,53 +18,20 @@ class VariantRecipeList extends React.PureComponent {
   changeCheckedRecipe = (checkedRecipeId, isOutOfStock) => {
     const {
       originalId,
-      selectedRecipe,
-      basketRecipes,
 
       selectRecipeVariant,
       collectionId,
       menuRecipeDetailVisibilityChange,
       isOnDetailScreen,
-      recipeVariants,
-      selectRecipeSide,
-      unselectRecipeSide,
-      basketRecipeAdd,
-      basketRecipeRemove,
-      trackSelectSide,
-      trackDeselectSide,
       closeOnSelection
     } = this.props
 
     const view = isOnDetailScreen ? 'details' : 'grid'
-    const hasSides = recipeVariants && recipeVariants.type === 'sides'
 
-    if (hasSides) {
-      const selectedRecipeId = selectedRecipe ? selectedRecipe.coreRecipeId : null
-      const sideWasUnchecked = (selectedRecipeId === checkedRecipeId)
+    selectRecipeVariant(originalId, checkedRecipeId, collectionId, isOutOfStock, view, closeOnSelection)
 
-      if (sideWasUnchecked) {
-        unselectRecipeSide(originalId)
-        trackDeselectSide(originalId, checkedRecipeId, isOnDetailScreen ? 'detail' : 'grid')
-
-        if (hasRecipeInBasket(basketRecipes, checkedRecipeId)) {
-          basketRecipeRemove(checkedRecipeId)
-          basketRecipeAdd(originalId)
-        }
-      } else {
-        selectRecipeSide(originalId, checkedRecipeId)
-        trackSelectSide(originalId, checkedRecipeId, isOnDetailScreen ? 'detail' : 'grid')
-
-        if (hasRecipeInBasket(basketRecipes, originalId)) {
-          basketRecipeRemove(originalId)
-          basketRecipeAdd(checkedRecipeId)
-        }
-      }
-    } else {
-      selectRecipeVariant(originalId, checkedRecipeId, collectionId, isOutOfStock, view, closeOnSelection)
-
-      if (isOnDetailScreen) {
-        menuRecipeDetailVisibilityChange(checkedRecipeId)
-      }
+    if (isOnDetailScreen) {
+      menuRecipeDetailVisibilityChange(checkedRecipeId)
     }
   }
 
@@ -80,32 +45,19 @@ class VariantRecipeList extends React.PureComponent {
       recipeVariants,
       recipeVariantsArray,
       isOnDetailScreen,
-      isOnSidesModal,
     } = this.props
-    const variantsType = recipeVariants ? recipeVariants.type : null
-
     if (!recipeVariants || recipeVariantsArray.length === 0) {
       return null
     }
 
     const selectedRecipeId = selectedRecipe ? selectedRecipe.coreRecipeId : null
-
-    const hasSides = variantsType === 'sides'
-    const detailScreenVariants = hasSides ? recipeVariantsArray.sort(compareCoreRecipeIds) : [selectedRecipe, ...recipeVariantsArray].sort(compareCoreRecipeIds)
-    const allVariants = isOnDetailScreen
-      ? detailScreenVariants
-      : (
-        isOnSidesModal
-          ? recipeVariantsArray
-          : [selectedRecipe, ...recipeVariantsArray]
-      ).sort(compareCoreRecipeIds)
-    const variantsTitle = hasSides ? 'Add a side' : 'Variants available'
+    const variants = ([selectedRecipe, ...recipeVariantsArray]).sort(compareCoreRecipeIds)
 
     return (
       <div className={css.recipeList} role="button" tabIndex={-1} onClick={this.preventPropagation} onKeyPress={this.preventPropagation}>
-        {isOnDetailScreen && <h2 className={css.variantsTitle}>{variantsTitle}</h2>}
+        {isOnDetailScreen && <h2 className={css.variantsTitle}>Variants available</h2>}
         <ul className={css.recipeListText}>
-          {allVariants.map(({ coreRecipeId, displayName }) => (
+          {variants.map(({ coreRecipeId, displayName }) => (
             <VariantRecipeListItemContainer
               key={coreRecipeId}
               recipeId={coreRecipeId}
@@ -113,8 +65,6 @@ class VariantRecipeList extends React.PureComponent {
               changeCheckedRecipe={this.changeCheckedRecipe}
               isChecked={selectedRecipeId === coreRecipeId}
               isOnDetailScreen={isOnDetailScreen}
-              isOnSidesModal={isOnSidesModal}
-              hasSides={hasSides}
             />
           )
           )}
@@ -126,8 +76,6 @@ class VariantRecipeList extends React.PureComponent {
 
 VariantRecipeList.propTypes = {
   originalId: PropTypes.string.isRequired,
-
-  basketRecipes: ImmutablePropTypes.map.isRequired,
 
   collectionId: PropTypes.string.isRequired,
   recipeVariants: PropTypes.shape({
@@ -142,16 +90,9 @@ VariantRecipeList.propTypes = {
     displayName: PropTypes.string
   }),
   isOnDetailScreen: PropTypes.bool,
-  isOnSidesModal: PropTypes.bool,
   selectRecipeVariant: PropTypes.func.isRequired,
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   trackVariantListDisplay: PropTypes.func.isRequired,
-  trackSelectSide: PropTypes.func.isRequired,
-  trackDeselectSide: PropTypes.func.isRequired,
-  selectRecipeSide: PropTypes.func.isRequired,
-  unselectRecipeSide: PropTypes.func.isRequired,
-  basketRecipeAdd: PropTypes.func.isRequired,
-  basketRecipeRemove: PropTypes.func.isRequired,
   closeOnSelection: PropTypes.bool,
 }
 
@@ -159,7 +100,6 @@ VariantRecipeList.defaultProps = {
   recipeVariants: null,
   selectedRecipe: {},
   isOnDetailScreen: false,
-  isOnSidesModal: false,
   closeOnSelection: true
 }
 export { VariantRecipeList }

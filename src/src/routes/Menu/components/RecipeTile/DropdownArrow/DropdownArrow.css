@@ -29,15 +29,3 @@
     font-size: 24px;
     composes: fa-basic-class  fa-angle-up from 'styles/vendor/font-awesome-module.css';
 }
-
-.dropdownListContainer {
-    width: 300px;
-    position: absolute;
-    top: 45px;
-    z-index: 150;
-    right: 0;
-    box-shadow: 0px 2px 4px Black;
-    border-radius: 3px;
-    padding: 0.5rem;
-    background-color: White;
-}

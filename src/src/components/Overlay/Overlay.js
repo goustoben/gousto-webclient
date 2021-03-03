@@ -15,7 +15,11 @@ const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     zIndex: 1001,
-    overflow: 'auto'
+    overflow: 'auto',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   // This removes the default styling of `react-modal`
   content: {
@@ -26,6 +30,10 @@ const customStyles = {
     position: 'relative',
     background: '',
     height: '100%',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   }
 }
 

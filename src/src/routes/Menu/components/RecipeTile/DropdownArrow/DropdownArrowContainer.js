@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { recipeVariantDropdownExpanded } from 'actions/menu'
-import { getBrowserType } from 'selectors/browser'
 import { getCurrentExpandedRecipeVariantsDropdown } from 'selectors/menu'
 import { getAlternativesForRecipe } from '../../../selectors/variants'
 import { DropdownArrow} from './DropdownArrow'
@@ -11,7 +10,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     recipeVariants: getAlternativesForRecipe(state, ownProps),
     showDropdown: currentExpandedRecipeVariantsDropdown ? currentExpandedRecipeVariantsDropdown.recipeId === ownProps.recipeId : false,
-    browserType: getBrowserType(state),
   }
 }
 
