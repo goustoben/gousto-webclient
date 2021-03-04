@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { getIsHelpCentreActive, getIsMenuRedirectPageEnabled } from 'selectors/features'
 import { BurgerMobileMenu } from './BurgerMobileMenu'
+import { trackClickRateRecipes } from '../../../../routes/Ratings/actions/feedback'
 
 const mapStateToProps = (state) => ({
   isHelpCentreActive: getIsHelpCentreActive(state),
@@ -11,4 +12,5 @@ const mapStateToProps = (state) => ({
 
 export const BurgerMobileMenuContainer = connect(mapStateToProps, {
   helpPreLoginVisibilityChange,
+  trackClickRateRecipes
 })(BurgerMobileMenu)

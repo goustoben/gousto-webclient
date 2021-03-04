@@ -24,7 +24,8 @@ const propTypes = {
   isMobileViewport: PropTypes.bool.isRequired,
   showAppAwareness: PropTypes.bool,
   rateRecipeCount: PropTypes.number,
-  showRatingsButtonFeature: PropTypes.bool
+  showRatingsButtonFeature: PropTypes.bool,
+  trackClickRateRecipes: PropTypes.func,
 }
 
 const contextTypes = {
@@ -41,7 +42,8 @@ const defaultProps = {
   isCapacityLimited: false,
   showAppAwareness: false,
   rateRecipeCount: 0,
-  showRatingsButtonFeature: false
+  showRatingsButtonFeature: false,
+  trackClickRateRecipes: () => {},
 }
 
 class MyGousto extends React.PureComponent {
@@ -68,7 +70,8 @@ class MyGousto extends React.PureComponent {
       isMobileViewport,
       showAppAwareness,
       rateRecipeCount,
-      showRatingsButtonFeature
+      showRatingsButtonFeature,
+      trackClickRateRecipes,
     } = this.props
     const headerTitle = `Hello ${nameFirst},`
     const showAppAwarenessBanner = !isMobileViewport && showAppAwareness
@@ -90,7 +93,14 @@ class MyGousto extends React.PureComponent {
         <Section title="Your recent recipes" alternateColour>
           {showRatingsButtonFeature && rateRecipeCount && rateRecipeCount > 0 ? (
             <div className={css.desktopHide}>
-              <Link className={css.rateRecipesButton} to="/rate-my-recipes" clientRouted={false}>
+              <Link
+                className={css.rateRecipesButton}
+                to="/rate-my-recipes"
+                clientRouted={false}
+                tracking={() => {
+                  trackClickRateRecipes('mygousto_button')
+                }}
+              >
                 <span>
                   Rate your recipes (
                   {rateRecipeCount}
@@ -102,7 +112,14 @@ class MyGousto extends React.PureComponent {
           <Cookbook />
           {showRatingsButtonFeature && rateRecipeCount && rateRecipeCount > 0 ? (
             <div className={css.mobileHide}>
-              <Link className={css.rateRecipesButton} to="/rate-my-recipes" clientRouted={false}>
+              <Link
+                className={css.rateRecipesButton}
+                to="/rate-my-recipes"
+                clientRouted={false}
+                tracking={() => {
+                  trackClickRateRecipes('mygousto_button')
+                }}
+              >
                 <span>
                   Rate your recipes (
                   {rateRecipeCount}
@@ -110,7 +127,7 @@ class MyGousto extends React.PureComponent {
                 </span>
               </Link>
             </div>
-          ) : null }
+          ) : null}
         </Section>
         <Section title="Your Gousto wins" alternateColour>
           <ReferAFriend referralDetails={referralDetails} redirect={redirect} />

@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import AccountComponent from 'routes/Account/Account/Account'
-import NavBar from 'routes/Account/Account/NavBar'
+import { NavBar } from 'routes/Account/Account/NavBar'
 import Banner from 'routes/Account/Account/Banner'
 
 describe('Account', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Link from 'Link'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { BurgerMobileMenu } from '../BurgerMobileMenu'
@@ -15,13 +15,15 @@ describe('given BurgerMobileMenu is called', () => {
     { disabled: false, name: 'Home', url: '/home', clientRouted: true },
     { disabled: false, name: 'Choose Recipes', url: '/menu' },
     { disabled: false, name: 'Help', url: '/help', clientRouted: true },
-    { disabled: false, name: 'Rate My Recipes', url: '/rate-my-recipes', clientRouted: false },
+    { disabled: false, name: 'Rate My Recipes', url: '/rate-my-recipes', clientRouted: false, tracking: 'clickRateRecipes' },
   ]
 
   describe('when the menu is rendered', () => {
     let wrapper
 
     beforeEach(() => {
+      const trackClickRateRecipesSpy = jest.fn()
+      const trackNavigationClickSpy = jest.fn()
       wrapper = shallow(
         <BurgerMobileMenu
           show
@@ -31,6 +33,11 @@ describe('given BurgerMobileMenu is called', () => {
           logoutFunc={jest.fn()}
           hideNav={false}
           promoCodeUrl=""
+          trackClickRateRecipes={trackClickRateRecipesSpy}
+          trackNavigationClick={trackNavigationClickSpy}
+          onLoginClick={jest.fn()}
+          onLogoutClick={jest.fn()}
+          helpPreLoginVisibilityChange={jest.fn()}
         />
       )
     })
@@ -46,6 +53,30 @@ describe('given BurgerMobileMenu is called', () => {
         expect(wrapper.find(Link).find({ to: '/menu' })).toHaveLength(1)
         expect(wrapper.find(Link).find({ to: '/help' })).toHaveLength(1)
         expect(wrapper.find(Link).find({ to: '/rate-my-recipes' })).toHaveLength(1)
+      })
+
+      test('rate-my-recipes button should dispatch a tracking action', () => {
+        const trackClickRateRecipesSpy = jest.fn()
+        const trackNavigationClickSpy = jest.fn()
+        wrapper = mount(
+          <BurgerMobileMenu
+            show
+            menuItems={menuItems}
+            isAuthenticated={false}
+            loginFunc={jest.fn()}
+            logoutFunc={jest.fn()}
+            hideNav={false}
+            promoCodeUrl=""
+            trackClickRateRecipes={trackClickRateRecipesSpy}
+            trackNavigationClick={trackNavigationClickSpy}
+            onLoginClick={jest.fn()}
+            onLogoutClick={jest.fn()}
+            helpPreLoginVisibilityChange={jest.fn()}
+          />
+        )
+        wrapper.find(Link).find({ to: '/rate-my-recipes' }).at(0).simulate('click')
+        expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('hamburger')
+        expect(trackNavigationClickSpy).toHaveBeenCalledWith('clickRateRecipes')
       })
 
       describe('and the feature isHelpCentreActive is true', () => {
@@ -88,6 +119,11 @@ describe('given BurgerMobileMenu is called', () => {
               logoutFunc={jest.fn()}
               hideNav={false}
               promoCodeUrl=""
+              trackClickRateRecipes={jest.fn()}
+              trackNavigationClick={jest.fn()}
+              onLoginClick={jest.fn()}
+              onLogoutClick={jest.fn()}
+              helpPreLoginVisibilityChange={jest.fn()}
             />
           )
         })

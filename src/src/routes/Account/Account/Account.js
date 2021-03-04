@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import NavBar from './NavBar'
+import { NavBar } from './NavBar'
 import css from './Account.css'
 import Banner from './Banner'
 

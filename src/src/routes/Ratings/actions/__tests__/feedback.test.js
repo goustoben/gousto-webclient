@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
+import * as trackingKeys from 'actions/trackingKeys'
 import { actionTypes } from 'actions/actionTypes'
-import { userRecipeRatings } from 'routes/Ratings/actions/feedback'
+import { userRecipeRatings, trackClickRateRecipes } from 'routes/Ratings/actions/feedback'
 import { getUserFeedbackCount } from '../../apis/feedback'
 
 jest.mock('../../apis/feedback', () => ({
@@ -25,6 +26,23 @@ describe('feedback actions', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.FEEDBACK_COUNT_RECEIVED,
         payload: expectedFeedbackCount
+      })
+    })
+  })
+
+  describe('trackClickRateRecipes', () => {
+    test('creates the correct action', async () => {
+      const dispatchSpy = jest.fn()
+      const location = 'nav'
+      const type = trackingKeys.clickRateRecipes
+
+      trackClickRateRecipes('nav')(dispatchSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type,
+        trackingData: {
+          actionType: type,
+          location
+        }
       })
     })
   })
