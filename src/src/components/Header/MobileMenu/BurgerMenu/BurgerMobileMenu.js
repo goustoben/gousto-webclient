@@ -30,6 +30,7 @@ class BurgerMobileMenu extends React.PureComponent {
       isHelpCentreActive,
       isMenuRedirectPageEnabled,
       postCode,
+      trackClickRateRecipes
     } = this.props
 
     return menuItems.map(menuItem => {
@@ -37,6 +38,7 @@ class BurgerMobileMenu extends React.PureComponent {
       const myGoustoMenuItem = menuItem.name === 'My Gousto'
       const homeMenuItem = menuItem.name === 'Home'
       const isHelpPreloginNeeded = menuItem.name.toLowerCase() === 'help'
+      const rateRecipesItem = menuItem.name === 'Rate My Recipes'
 
       if (isHelpPreloginNeeded && !isAuthenticated) {
         return (
@@ -61,10 +63,9 @@ class BurgerMobileMenu extends React.PureComponent {
           <Link
             to={menuItem.url}
             className={css.menuItem}
-            activeClassName={classNames(css.menuItem, css.disabled)}
+            activeclassname={classNames(css.menuItem, css.disabled)}
             key={menuItem.name}
             clientRouted={!promoCodeUrl}
-            onlyActiveOnIndex
           >
             <li className={isAuthenticated ? css.borderListElement : css.listElement}>
               {menuItem.name}
@@ -88,6 +89,25 @@ class BurgerMobileMenu extends React.PureComponent {
       const isHelpLink = menuItem.name === 'Help'
       const url = getLinkURL({ isHelpCentreActive, menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
 
+      if (rateRecipesItem) {
+        return (
+          <Link
+            to={url}
+            className={css.menuItem}
+            key={menuItem.name}
+            clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
+            tracking={() => {
+              trackClickRateRecipes('hamburger')
+              trackNavigationClick(menuItem.tracking)
+            }}
+          >
+            <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
+              {menuItem.name}
+            </li>
+          </Link>
+        )
+      }
+
       return (
         <Link
           to={url}
@@ -95,7 +115,9 @@ class BurgerMobileMenu extends React.PureComponent {
           className={css.menuItem}
           key={menuItem.name}
           clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
-          tracking={() => trackNavigationClick(menuItem.tracking)}
+          tracking={() => {
+            trackNavigationClick(menuItem.tracking)
+          }}
         >
           <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
             {menuItem.name}
@@ -143,6 +165,7 @@ BurgerMobileMenu.propTypes = {
   isHelpCentreActive: PropTypes.bool,
   isMenuRedirectPageEnabled: PropTypes.bool,
   postCode: PropTypes.string,
+  trackClickRateRecipes: PropTypes.func
 }
 
 BurgerMobileMenu.defaultProps = {
@@ -150,6 +173,7 @@ BurgerMobileMenu.defaultProps = {
   isHelpCentreActive: false,
   postCode: '',
   isMenuRedirectPageEnabled: false,
+  trackClickRateRecipes: () => {}
 }
 
 export { BurgerMobileMenu }

@@ -1,1 +1,1 @@
-export default from './NavBar'
+export { NavBarContainer as NavBar } from './NavBarContainer'

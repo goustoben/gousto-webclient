@@ -6,7 +6,7 @@ import css from './NavBar.css'
 import NavBarItem from './NavBarItem/NavBarItem'
 
 const NavBar = (props) => {
-  const { isNewSubscriptionPageEnabled, rateRecipeCount } = props
+  const { isNewSubscriptionPageEnabled, rateRecipeCount, trackClickRateRecipes } = props
   const subscriptionUrl = isNewSubscriptionPageEnabled
     ? config.client.mySubscription2
     : config.client.mySubscription
@@ -78,6 +78,9 @@ const NavBar = (props) => {
           {rateRecipeCount > 0 ? <span className={css.badge}>{rateRecipeCount}</span> : null}
         </span>
       ),
+      tracking: () => {
+        trackClickRateRecipes('nav')
+      }
     },
   ]
 
@@ -92,6 +95,7 @@ const NavBar = (props) => {
               isActive={props.currentPath === menuItem.pathName}
               className={menuItem.className ? menuItem.className : ''}
               clientRouted={menuItem.clientRouted}
+              tracking={menuItem.tracking}
             >
               {menuItem.item}
             </NavBarItem>
@@ -106,12 +110,14 @@ NavBar.propTypes = {
   currentPath: PropTypes.string,
   isNewSubscriptionPageEnabled: PropTypes.bool,
   rateRecipeCount: PropTypes.number,
+  trackClickRateRecipes: PropTypes.func
 }
 
 NavBar.defaultProps = {
   currentPath: config.client.myGousto,
   isNewSubscriptionPageEnabled: false,
   rateRecipeCount: 0,
+  trackClickRateRecipes: () => {}
 }
 
 export default NavBar

@@ -5,6 +5,7 @@ import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
 import { getIsMyGoustoBannerAppAwarenessEnabled, getLimitedCapacity, getRatingsButtonFeature } from 'selectors/features'
 import { MyGousto } from './MyGousto'
+import { trackClickRateRecipes } from '../../Ratings/actions/feedback'
 
 function mapStateToProps(state) {
   return {
@@ -24,6 +25,7 @@ const MyGoustoContainer = connect(mapStateToProps, {
   userLoadOrders: actions.userLoadOrders,
   userGetReferralDetails,
   redirect,
+  trackClickRateRecipes,
 })(MyGousto)
 
 export { MyGoustoContainer }

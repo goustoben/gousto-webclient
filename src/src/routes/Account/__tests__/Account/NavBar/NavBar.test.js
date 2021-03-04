@@ -1,19 +1,28 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
-import NavBar from 'routes/Account/Account/NavBar'
+import { mount } from 'enzyme'
+import * as trackingKeys from 'actions/trackingKeys'
+import { NavBar } from 'routes/Account/Account/NavBar'
 import NavBarItem from 'routes/Account/Account/NavBar/NavBarItem/NavBarItem'
 import config from 'config/routes'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 
 describe('NavBar', () => {
+  const initialState = {}
+
   describe('rendering', () => {
     let wrapper
+    let store
 
     beforeEach(() => {
-      wrapper = shallow(<NavBar />)
-    })
-
-    test('should render a <div> with no props', () => {
-      expect(wrapper.type()).toEqual('div')
+      const mockStore = configureStore([thunk])
+      store = mockStore(initialState)
+      wrapper = mount(
+        <Provider store={store}>
+          <NavBar />
+        </Provider>
+      )
     })
 
     test('should render 6 NavBarItem', () => {
@@ -28,9 +37,16 @@ describe('NavBar', () => {
   describe('mounting', () => {
     let wrapper
     let navBars
+    let store
 
     beforeEach(() => {
-      wrapper = mount(<NavBar />)
+      const mockStore = configureStore([thunk])
+      store = mockStore(initialState)
+      wrapper = mount(
+        <Provider store={store}>
+          <NavBar />
+        </Provider>
+      )
       navBars = wrapper.find('a')
     })
 
@@ -40,6 +56,19 @@ describe('NavBar', () => {
       expect(navBars.at(2).props().href).toEqual(config.client.myDetails)
       expect(navBars.at(3).props().href).toEqual(config.client.myReferral)
       expect(navBars.at(4).props().href).toEqual(config.client.rateMyRecipes)
+    })
+
+    test('should pass a tracking prop', () => {
+      const location = 'nav'
+      const type = trackingKeys.clickRateRecipes
+      navBars.at(4).simulate('click')
+      expect(store.getActions()).toEqual([{
+        type,
+        trackingData: {
+          actionType: type,
+          location
+        }
+      }])
     })
   })
 })
