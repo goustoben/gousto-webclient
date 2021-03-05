@@ -4,6 +4,7 @@ import * as trackingKeys from '../../../actions/trackingKeys'
 import { getMenuRecipeIdForDetails } from '../selectors/menuRecipeDetails'
 import { replaceSideRecipeIdWithBaseRecipeId } from '../selectors/recipeList'
 import { locationQuery, locationBeforeTransitions } from '../../../selectors/routing'
+import { doesRecipeHaveSurcharges } from '../selectors/menuService'
 
 export const menuRecipeDetailVisibilityChange = (recipeId, categoryId) =>
   (dispatch, getState) => {
@@ -48,3 +49,40 @@ export const checkQueryParams = () => (dispatch, getState) => {
     dispatch(exports.showDetailRecipe(recipeId))
   }
 }
+
+export const selectRecipeVariantAction = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true, hasSurcharge) => ({
+  type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
+  payload: {
+    collectionId,
+    originalRecipeId,
+    variantId,
+    close
+  },
+  trackingData: {
+    actionType: trackingKeys.selectRecipeVariant,
+    recipe_id: originalRecipeId,
+    recipe_variant_id: variantId,
+    collection_id: collectionId,
+    variant_out_of_stock: variantOutOfStock,
+    view,
+    has_surcharge: hasSurcharge,
+  }
+})
+
+export const selectRecipeVariant = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true) =>
+  async (dispatch, getState) => {
+    const hasSurcharges = doesRecipeHaveSurcharges(getState(), variantId)
+
+    dispatch(
+      selectRecipeVariantAction(
+        originalRecipeId,
+        variantId,
+        collectionId,
+        variantOutOfStock,
+        view,
+        close,
+        hasSurcharges
+      )
+    )
+  }
+

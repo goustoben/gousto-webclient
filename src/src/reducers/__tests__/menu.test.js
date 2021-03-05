@@ -2,12 +2,12 @@ import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import menu, { menuInitialState } from 'reducers/menu'
 import {
-  selectRecipeVariant,
   clearSelectedRecipeVariants,
   recipeVariantDropdownExpanded,
   selectRecipeSide,
   unselectRecipeSide, menuLoadingError
 } from '../../actions/menu'
+import { selectRecipeVariantAction } from '../../routes/Menu/actions/menuRecipeDetails'
 import { menuCollectionsHeadersReceived } from '../../routes/Menu/actions/brandData'
 import { setMenuPrefetched } from '../../routes/Menu/actions/menuPrefetch'
 import { trackTimeToUsable } from '../../routes/Menu/actions/menuCalculateTimeToUsable'
@@ -159,13 +159,13 @@ describe('menu reducer', () => {
       })
     })
 
-    describe('when selectRecipeVariant action is received', () => {
+    describe('when selectRecipeVariantAction action is received', () => {
       const recipeId = '1234'
 
       describe('when variantId is null', () => {
         const variantId = null
         const collectionId = 'collection-id'
-        const action = selectRecipeVariant(recipeId, variantId, collectionId, false)
+        const action = selectRecipeVariantAction(recipeId, variantId, collectionId, false, false)
 
         test('should set selectedRecipeVariant entry to null', () => {
           const result = menu.menu(menuInitialState, action)
@@ -179,7 +179,7 @@ describe('menu reducer', () => {
       describe('when variantId is a recipe id', () => {
         const variantId = '5678'
         const collectionId = 'collection-id'
-        const action = selectRecipeVariant(recipeId, variantId, collectionId, false)
+        const action = selectRecipeVariantAction(recipeId, variantId, collectionId, false, false)
 
         test('should set selectedRecipeVariant entry to the selected id', () => {
           const result = menu.menu(menuInitialState, action)

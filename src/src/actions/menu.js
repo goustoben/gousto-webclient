@@ -357,24 +357,6 @@ export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   useMenuService
 })
 
-export const selectRecipeVariant = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true) => ({
-  type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
-  payload: {
-    collectionId,
-    originalRecipeId,
-    variantId,
-    close
-  },
-  trackingData: {
-    actionType: trackingKeys.selectRecipeVariant,
-    recipe_id: originalRecipeId,
-    recipe_variant_id: variantId,
-    collection_id: collectionId,
-    variant_out_of_stock: variantOutOfStock,
-    view
-  }
-})
-
 export const clearSelectedRecipeVariants = () => ({
   type: actionTypes.MENU_CLEAR_SELECTED_RECIPE_VARIANTS
 })

@@ -309,36 +309,6 @@ describe('menu actions', () => {
     })
   })
 
-  describe('selectRecipeVariant', () => {
-    test('should return a MENU_RECIPE_VARIANT_SELECTED action with correct payload and trackingData', () => {
-      const originalRecipeId = '101'
-      const variantId = '102'
-      const collectionId = '999'
-      const variantOutOfStock = false
-      const view = 'detail'
-
-      const result = menuActions.selectRecipeVariant(originalRecipeId, variantId, collectionId, variantOutOfStock, view)
-
-      expect(result).toEqual({
-        type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
-        payload: {
-          collectionId,
-          originalRecipeId,
-          variantId,
-          close: true
-        },
-        trackingData: {
-          actionType: 'select_recipe_variant',
-          recipe_id: originalRecipeId,
-          recipe_variant_id: variantId,
-          collection_id: collectionId,
-          variant_out_of_stock: variantOutOfStock,
-          view
-        }
-      })
-    })
-  })
-
   describe('menuReceiveBoxPrices', () => {
     const prices = {
       items: []
