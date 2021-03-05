@@ -4,10 +4,86 @@ import * as trackingKeys from '../../../../actions/trackingKeys'
 import { actionTypes } from '../../../../actions/actionTypes'
 import * as menuRecipeDetailsActions from '../menuRecipeDetails'
 import * as recipeListSelectors from '../../selectors/recipeList'
+import { wellformedMenuService, wellformedRecipe } from '../../selectors/__tests__/menuService.test'
 import { safeJestMock } from '../../../../_testing/mocks'
+
 jest.mock('react-router-redux', () => ({
   push: jest.fn()
 }))
+
+const {
+  selectRecipeVariant,
+  selectRecipeVariantAction,
+  showDetailRecipe,
+  menuRecipeDetailVisibilityChange,
+  checkQueryParams,
+} = menuRecipeDetailsActions
+
+describe('selectRecipeVariant', () => {
+  test('should dispatch a MENU_RECIPE_VARIANT_SELECTED action with correct payload and trackingData', async () => {
+    const originalRecipeId = '101'
+    const variantId = '102'
+    const collectionId = '999'
+    const variantOutOfStock = false
+    const view = 'detail'
+    const dispatch = jest.fn()
+    const getState = () => wellformedMenuService({ recipes: [wellformedRecipe({ id: variantId })] })
+
+    await selectRecipeVariant(originalRecipeId, variantId, collectionId, variantOutOfStock, view)(dispatch, getState)
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
+      payload: {
+        collectionId,
+        originalRecipeId,
+        variantId,
+        close: true
+      },
+      trackingData: {
+        actionType: 'select_recipe_variant',
+        recipe_id: originalRecipeId,
+        recipe_variant_id: variantId,
+        collection_id: collectionId,
+        variant_out_of_stock: variantOutOfStock,
+        view,
+        has_surcharge: false,
+      }
+    })
+  })
+})
+
+describe('selectRecipeVariantAction', () => {
+  test('should return a MENU_RECIPE_VARIANT_SELECTED action with correct payload and trackingData', async () => {
+    const originalRecipeId = '101'
+    const variantId = '102'
+    const collectionId = '999'
+    const variantOutOfStock = false
+    const view = 'detail'
+    const close = true
+    const hasSurcharge = false
+
+    const result = selectRecipeVariantAction(originalRecipeId, variantId, collectionId, variantOutOfStock, view, close, hasSurcharge)
+
+    expect(result).toEqual({
+      type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,
+      payload: {
+        collectionId,
+        originalRecipeId,
+        variantId,
+        close,
+      },
+      trackingData: {
+        actionType: 'select_recipe_variant',
+        recipe_id: originalRecipeId,
+        recipe_variant_id: variantId,
+        collection_id: collectionId,
+        variant_out_of_stock: variantOutOfStock,
+        view,
+        has_surcharge: hasSurcharge
+      }
+    })
+  })
+})
 
 describe('showDetailRecipe', () => {
   const state = {
@@ -37,7 +113,7 @@ describe('showDetailRecipe', () => {
       }
       const getStateForTest = () => stateWithTrueBoxSummaryShow
 
-      menuRecipeDetailsActions.showDetailRecipe('1234')(dispatch, getStateForTest)
+      showDetailRecipe('1234')(dispatch, getStateForTest)
     })
 
     test('should call menuRecipeDetailVisibilityChange', () => {
@@ -102,7 +178,7 @@ describe('menuRecipeDetailVisibilityChange', () => {
       })
     })
     test('should not dispatch', () => {
-      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('123')(dispatch, getState)
+      menuRecipeDetailVisibilityChange('123')(dispatch, getState)
       expect(dispatch).not.toHaveBeenCalled()
     })
   })
@@ -130,7 +206,7 @@ describe('menuRecipeDetailVisibilityChange', () => {
     })
 
     test('should replace recipeId with the base recipeId', () => {
-      menuRecipeDetailsActions.menuRecipeDetailVisibilityChange('789')(dispatch, getState)
+      menuRecipeDetailVisibilityChange('789')(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
@@ -165,7 +241,7 @@ describe('checkQueryParams', () => {
   })
 
   test('should not call dispatch', () => {
-    menuRecipeDetailsActions.checkQueryParams()(dispatch, getState)
+    checkQueryParams()(dispatch, getState)
     expect(dispatch).not.toHaveBeenCalled()
   })
 

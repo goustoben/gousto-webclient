@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
+import { selectRecipeVariant , menuRecipeDetailVisibilityChange } from 'routes/Menu/actions/menuRecipeDetails'
 import {
-  selectRecipeVariant,
   trackVariantListDisplay,
 } from 'actions/menu'
-import { menuRecipeDetailVisibilityChange } from '../../../actions/menuRecipeDetails'
 import { getSidesData } from '../../../selectors/variants'
 import { getRecipeById, getRecipeTitle } from '../../../../../selectors/recipe'
 import { getCurrentCollectionId } from '../../../selectors/collections'
