@@ -19,10 +19,7 @@
 }
 
 .recipeTagShowVariantHeader {
-  top: 2.2rem;
-  @media ScreenSMMin {
-    top: 2.2rem;
-  }
+  top: 2.625rem;
 }
 
 .recipeTagDetailScreen {

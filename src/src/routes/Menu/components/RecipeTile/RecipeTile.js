@@ -76,11 +76,10 @@ const RecipeTile = ({
           recipeId={recipeId}
           categoryId={categoryId}
           showVariantHeader={desktopBannerShown}
-          variantHeaderPosition={variantHeaderPosition}
-          pushUpCookingTime={showVariantHeader && inSignpostingExperimentBucket}
+          pushUpCookingTime={showVariantHeader && variantHeaderPosition === 'bottom'}
         />
         {hasTopLeftTag && (
-          <RecipeTag brandTag={brandAvailability} />
+          <RecipeTag brandTag={brandAvailability} showVariantHeader={showVariantHeader && variantHeaderPosition === 'top'} />
         )}
         <div
           className={classnames(

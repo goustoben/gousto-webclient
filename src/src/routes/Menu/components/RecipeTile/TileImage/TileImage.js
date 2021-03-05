@@ -18,39 +18,30 @@ const TileImage = ({
   isOutOfStock,
   lazy,
   onClick,
-  variantHeaderPosition,
   pushUpCookingTime
-}) => {
-  // experiment code for signposting test
-  const shouldPushUpCookingTime = (
-    pushUpCookingTime
-    || (showVariantHeader && variantHeaderPosition === 'bottom')
-  )
+}) => (
+  <button
+    onClick={onClick}
+    type="button"
+    className={css.imageWrapper}
+  >
+    {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />)}
+    {(media.size > 0) && (
+      <div className={css.recipeImageAndCookingTimeWrapper}>
+        <GoustoImage
+          media={media}
+          title={title}
+          maxMediaSize={maxMediaSize}
+          className={css.imageStyle}
+          lazy={lazy}
+        />
+        <CookingTimeIconContainer recipeId={recipeId} pushUp={pushUpCookingTime} />
+      </div>
+    )}
 
-  return (
-    <button
-      onClick={onClick}
-      type="button"
-      className={css.imageWrapper}
-    >
-      {(media.size > 0) && (<SoldOutOverlay isOutOfStock={isOutOfStock} />)}
-      {(media.size > 0) && (
-        <div className={css.recipeImageAndCookingTimeWrapper}>
-          <GoustoImage
-            media={media}
-            title={title}
-            maxMediaSize={maxMediaSize}
-            className={css.imageStyle}
-            lazy={lazy}
-          />
-          <CookingTimeIconContainer recipeId={recipeId} pushUp={shouldPushUpCookingTime} />
-        </div>
-      )}
-
-      {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />}
-    </button>
-  )
-}
+    {showVariantHeader && <VariantHeaderContainer recipeId={recipeId} categoryId={categoryId} isOutOfStock={isOutOfStock} />}
+  </button>
+)
 
 TileImage.propTypes = {
   recipeId: PropTypes.string.isRequired,
@@ -63,7 +54,6 @@ TileImage.propTypes = {
   onClick: PropTypes.func,
   showVariantHeader: PropTypes.bool.isRequired,
   pushUpCookingTime: PropTypes.bool,
-  variantHeaderPosition: PropTypes.oneOf(['top', 'bottom']),
 }
 
 TileImage.defaultProps = {
@@ -73,7 +63,6 @@ TileImage.defaultProps = {
   maxMediaSize: null,
   lazy: true,
   pushUpCookingTime: false,
-  variantHeaderPosition: 'top',
 }
 
 export { TileImage }
