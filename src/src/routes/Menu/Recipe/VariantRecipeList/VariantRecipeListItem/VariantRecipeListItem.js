@@ -14,24 +14,25 @@ const VariantRecipeListItem = ({
   surcharge
 }) => {
   const getInputContent = () => (
-    <div className={classnames(isOutOfStock || surcharge ? css.labelContainerSplit : css.labelContainer)}>
-      <span>
-        <span className={classnames(css.titleText)}>{recipeName}</span>
-      </span>
-      {surcharge && !isOutOfStock ? (
-        <div className={
-          classnames(css.extraInformation,
-            { [css.negativeMargin]: isOnDetailScreen }
-          )
-        }
-        >
-          <span className={css.surchargeAmountText}>
-            +£
-            {surcharge.toFixed(2)}
-          </span>
-          <span className={css.perServingText}>per serving</span>
-        </div>
-      ) : null}
+    <div className={css.labelContainer}>
+      <div className={css.titleContainer}>
+        <span className={css.titleText}>{recipeName}</span>
+      </div>
+      {
+        (surcharge && !isOutOfStock)
+        && (
+          <div className={
+            classnames(
+              css.extraInformation,
+              { [css.negativeMargin]: isOnDetailScreen }
+            )
+          }
+          >
+            <span className={css.surchargeAmountText}>{`+£${surcharge.toFixed(2)}`}</span>
+            <span className={css.perServingText}>per serving</span>
+          </div>
+        )
+      }
       {isOutOfStock && <span className={css.soldOutText}>Sold out</span>}
     </div>
   )

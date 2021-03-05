@@ -30,7 +30,7 @@
 }
 
 .extraInformation {
-    margin-left: .75rem;
+    margin-left: 1rem;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -40,6 +40,10 @@
     color: Blackberry;
     font-weight: 800;
     white-space: nowrap;
+}
+
+.titleContainer {
+    margin-left: 0.5rem;
 }
 
 .titleText {
@@ -53,17 +57,17 @@
     font-size: sizeSM;
 }
 
-.labelContainer {
-    cursor: pointer;
-    margin: 0;
-    display: flex;
+.perServingText {
+    white-space: nowrap;
+    font-size: 0.8rem;
 }
 
-.labelContainerSplit {
+.labelContainer {
     cursor: pointer;
     margin: 0;
     display: flex;
     width: 100%;
     justify-content: space-between;
     line-height: 1.3;
+    margin-left: 0.25rem
 }

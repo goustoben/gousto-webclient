@@ -96,13 +96,26 @@
 }
 
 .variantDropdownContainer {
-    width: 96%;
+    width: 100%;
     position: absolute;
     top: 98%;
-    left: 2%;
+    right: 0;
     z-index: 150;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     padding: 0.5rem;
     background-color: White;
+
+    @media ScreenSMMin {
+        width: 112%;
+        right: -6%;
+    }
+    @media ScreenMDMin {
+        width: 112%;
+        right: -6%;
+    }
+    @media ScreenLGMin {
+        width: 112%;
+        right: -6%;
+    }
 }
