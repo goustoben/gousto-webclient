@@ -89,7 +89,6 @@
 /src/src/utils/recipe.js                                @Gousto/squad-radishes
 /src/src/utils/__tests__/recipe.test.js                 @Gousto/squad-radishes
 /src/src/containers/OptimizelyRollouts/                 @Gousto/squad-radishes
-/src/src/containers/Experiments/                        @Gousto/squad-radishes
 /src/src/routes/OrderConfirmation/                      @Gousto/squad-radishes
 
 
@@ -122,6 +121,7 @@
 /tests/regression/fixtures/getHelp/                                 @Gousto/squad-haricots
 
 
+/src/src/containers/Experiments/                    @Gousto/squad-turnips
 /src/__tests__/router/Cookbook.test.js              @Gousto/squad-turnips
 /src/__tests__/utils/cookbook.test.js               @Gousto/squad-turnips
 /src/src/actions/__tests__/cookbook.test.js         @Gousto/squad-turnips

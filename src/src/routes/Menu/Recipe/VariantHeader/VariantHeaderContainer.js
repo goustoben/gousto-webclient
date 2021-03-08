@@ -5,7 +5,13 @@ import { getRecipeIdFromProps } from '../../selectors/recipe'
 import { getVariantsForRecipe } from '../../selectors/variants'
 import { VariantHeader } from './VariantHeader'
 
-const LEAN_BEEF_OVERRIDES = ['2171', '2041', '2169', '2809', '1239']
+const LEAN_BEEF_OVERRIDES = [
+  '2171', '2041', '2169', '2809', '1239', '2154', '3204',
+  '2046', '2048', '1938', '1020', '1476', '2532', '2443',
+  '527', '1511', '953', '2026', '1237', '941', '390',
+  '1255', '2676', '2031', '1493'
+]
+
 const getTextOverride = createSelector(
   [getRecipeIdFromProps],
   (recipeId) => {
