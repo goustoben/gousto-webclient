@@ -234,7 +234,9 @@ module.exports = {
     "__TEST__": false,
     "__GIT_HASH__": false,
     "ga": false,
-    "hj": true
+    "hj": true,
+    "after": true,
+    "Cypress": true
   },
   "plugins": ["prettier"],
   "overrides": [

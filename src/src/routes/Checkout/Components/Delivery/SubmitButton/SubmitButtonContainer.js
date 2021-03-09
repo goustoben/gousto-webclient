@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { getFormValues, isInvalid, submit } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
+import { getBrowserType } from 'selectors/browser'
 import SubmitButton from './SubmitButton'
 
 function mapStateToProps(state, ownProps) {
@@ -10,8 +11,7 @@ function mapStateToProps(state, ownProps) {
     checkoutInvalid: isInvalid('delivery')(state),
     checkoutMobileInvalid: isInvalid('yourdetails')(state),
     formValues: getFormValues(form)(state),
-    // eslint-disable-next-line no-undef
-    browser,
+    browser: getBrowserType(state),
     nextStepName: ownProps.nextStepName,
     onStepChange: ownProps.onStepChange,
   }

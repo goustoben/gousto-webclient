@@ -1,7 +1,6 @@
 import { ACTIVE_PROMO_CODE } from '../../../config/promoCode'
 
 describe('Promo Code', () => {
-  // eslint-disable-next-line no-undef
   after(() => {
     cy.clock().then((clock) => {
       clock.restore()
