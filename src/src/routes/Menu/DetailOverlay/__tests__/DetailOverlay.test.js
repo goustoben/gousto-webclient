@@ -158,8 +158,7 @@ describe('DetailOverlay file', () => {
 
       describe('when Escape key is pressed', () => {
         it('should not call onCloseOverlay', () => {
-          // eslint-disable-next-line no-undef
-          const event = new KeyboardEvent('keyup', { keyCode: 27, type: 'keyup' })
+          const event = new global.KeyboardEvent('keyup', { keyCode: 27, type: 'keyup' })
           window.document.dispatchEvent(event)
           expect(onCloseOverlaySpy).not.toHaveBeenCalled()
         })
@@ -196,8 +195,7 @@ describe('DetailOverlay file', () => {
 
       describe('when Escape key is pressed', () => {
         it('should call onCloseOverlay', () => {
-          // eslint-disable-next-line no-undef
-          const event = new KeyboardEvent('keyup', { keyCode: 27, type: 'keyup' })
+          const event = new global.KeyboardEvent('keyup', { keyCode: 27, type: 'keyup' })
           window.document.dispatchEvent(event)
           expect(onCloseOverlaySpy).toHaveBeenCalled()
         })

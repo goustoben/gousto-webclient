@@ -44,7 +44,6 @@ describe('when the user is logged out', () => {
       cy.wait(['@identifyRequest'])
     })
 
-    // eslint-disable-next-line no-undef
     after(() => {
       cy.clock().then((clock) => {
         clock.restore()

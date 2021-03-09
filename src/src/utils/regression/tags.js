@@ -2,7 +2,6 @@ export const WEB = 'web'
 export const MOBILE = 'mobile'
 
 export const withPlatformTags = (...tags) => {
-  // eslint-disable-next-line no-undef
   const envPlatform = Cypress.env('platform') || ''
   const platformTags = envPlatform.split(/[,]+/)
 

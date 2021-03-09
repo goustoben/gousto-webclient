@@ -7,6 +7,7 @@ import {
   getCouldBasketBeExpired,
   getOrderForUpdateOrderV1,
   getOrderForUpdateOrderV2,
+  getUpdateOrderProductItemsOrderV1,
 } from '../order'
 
 describe('order selectors', () => {
@@ -549,5 +550,42 @@ describe('order selectors', () => {
         })
       })
     })
+  })
+})
+
+describe('getUpdateOrderProductItemsOrderV1', () => {
+  let state
+  beforeEach(() => {
+    state = {
+      basket: Immutable.fromJS({
+        orderId: '23',
+        products: {
+          'product-1': 2,
+          'product-2': 1,
+        },
+      })
+    }
+  })
+
+  test('should call updateOrderItems api with products', () => {
+    const updateOrderProductItemsOrderV1 = getUpdateOrderProductItemsOrderV1(state)
+
+    expect(updateOrderProductItemsOrderV1).toEqual(
+      {
+        item_choices: [
+          {
+            id: 'product-1',
+            quantity: 2,
+            type: 'Product',
+          },
+          {
+            id: 'product-2',
+            quantity: 1,
+            type: 'Product',
+          },
+        ],
+        restrict: 'Product',
+      },
+    )
   })
 })
