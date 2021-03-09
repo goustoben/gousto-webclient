@@ -5,6 +5,7 @@ import userUtils from 'utils/user'
 import OrderSummary from 'OrderSummary'
 import { actionTypes } from 'actions/actionTypes'
 import { getIsWelcomePageOnboardingEnabled } from 'selectors/features'
+import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 
 function mapStateToProps(state) {
   const orderId = state.basket.get('orderId')
@@ -32,7 +33,7 @@ function mapStateToProps(state) {
 }
 
 const OrderSummaryContainer = connect(mapStateToProps, {
-  onSave: basketActions.basketUpdateProducts,
+  onSave: basketUpdateProducts,
   removeProduct: basketActions.basketProductRemove,
   showProductDetail: productActions.productDetailVisibilityChange,
 })(OrderSummary)

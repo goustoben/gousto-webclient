@@ -1,5 +1,4 @@
 import { push } from 'react-router-redux'
-import Immutable from 'immutable'
 
 import config from 'config'
 import basketActions from 'actions/basket'
@@ -9,16 +8,13 @@ import { limitReached, naiveLimitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
-import { updateOrderItems } from 'apis/orders'
 import { isChoosePlanEnabled } from 'selectors/features'
 import { getUserOrders } from 'selectors/user'
 import { getBasketRecipes } from 'selectors/basket'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import { boxSummaryDeliveryDaysLoad } from './boxSummary'
-import { orderConfirmationUpdateOrderTracking } from './orderConfirmation'
 import { actionTypes } from './actionTypes'
-import tempActions from './temp'
 import { getUTMAndPromoCode } from '../selectors/tracking'
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import { trackingOrderCheckout } from './tracking'
@@ -549,82 +545,6 @@ export const basketProceedToCheckout = () => (
   }
 )
 
-export const basketUpdateProducts = (isOrderConfirmation = false) => (
-  async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
-    const productData = getState().basket.get('products').map((productQty, productId) => ({
-      id: productId,
-      quantity: productQty,
-      type: 'Product',
-    })).toArray()
-    const submitData = {
-      item_choices: productData,
-      restrict: 'Product',
-    }
-    const token = getState().auth.get('accessToken')
-    const orderId = getState().basket.get('orderId')
-    const { temp } = getState()
-
-    try {
-      const { data: order } = await updateOrderItems(token, orderId, submitData)
-      dispatch({
-        type: actionTypes.BASKET_CHECKOUT,
-        trackingData: {
-          actionType: trackingKeys.checkOutBasketAttempt,
-          order,
-        },
-      })
-
-      await dispatch({
-        type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
-        orderId: order.id,
-        orderDetails: Immutable.fromJS(order),
-      })
-
-      if (isOrderConfirmation) {
-        dispatch(orderConfirmationUpdateOrderTracking())
-      }
-
-      const originalGrossTotal = temp.get('originalGrossTotal')
-      const originalNetTotal = temp.get('originalNetTotal')
-      const orderTotal = order && order.prices && order.prices.total
-      const grossTotal = order && order.prices && order.prices.grossTotal
-      const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
-      const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
-
-      dispatch({
-        type: actionTypes.TRACKING,
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_edited_gross',
-          tags: {
-            revenue: editedGrossTotal
-          }
-        }
-      })
-      dispatch({
-        type: actionTypes.TRACKING,
-        optimizelyData: {
-          type: 'event',
-          eventName: 'order_edited_net',
-          tags: {
-            revenue: editedNetTotal
-          }
-        }
-      })
-
-      dispatch(tempActions.temp('originalGrossTotal', grossTotal))
-      dispatch(tempActions.temp('originalNetTotal', orderTotal))
-      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
-      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-      logger.error(err)
-      throw err
-    }
-  }
-)
-
 export const basketReset = (chosenAddress = null) => ({
   type: actionTypes.BASKET_RESET,
   payload: {
@@ -673,7 +593,6 @@ export const actions = {
   basketCheckedOut,
   basketCheckoutClicked,
   basketProceedToCheckout,
-  basketUpdateProducts,
   basketReset,
   basketSignupCollectionReceive,
   basketSetSubscriptionOption,

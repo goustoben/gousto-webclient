@@ -3,6 +3,7 @@ import basketActions from 'actions/basket'
 import productActions from 'actions/products'
 import OrderSummary from 'OrderSummary'
 import { actionTypes } from 'actions/actionTypes'
+import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { getOrderRecipes } from '../../selectors/orderDetails'
 
 function mapStateToProps(state) {
@@ -28,7 +29,7 @@ function mapStateToProps(state) {
 }
 
 const OrderSummaryContainer = connect(mapStateToProps, {
-  onSave: basketActions.basketUpdateProducts,
+  onSave: basketUpdateProducts,
   removeProduct: basketActions.basketProductRemove,
   showProductDetail: productActions.productDetailVisibilityChange,
 })(OrderSummary)

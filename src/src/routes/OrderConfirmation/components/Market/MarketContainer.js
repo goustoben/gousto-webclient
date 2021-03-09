@@ -8,8 +8,8 @@ import {
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
 import { actionTypes } from 'actions/actionTypes'
-import basketActions from 'actions/basket'
 import { filterProductCategory } from 'actions/filters'
+import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { Market } from './Market.logic'
 
 const mapStateToProps = (state) => {
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   filterProductCategory,
-  onSave: basketActions.basketUpdateProducts,
+  onSave: basketUpdateProducts,
 }
 
 const MarketContainer = connect(mapStateToProps, mapDispatchToProps)(Market)

@@ -1,7 +1,8 @@
-export const getTempCutoffDate = state => state.temp.get('cutoffDateTime')
-export const getTempProductId = state => state.temp.get('productId')
-export const getTempAddProduct = state => state.temp.get('addProduct')
-export const getTempPromoCode = state => state.temp.get('promoCode', '')
+export const getTemp = (state) => state.temp
+export const getTempCutoffDate = state => getTemp(state).get('cutoffDateTime')
+export const getTempProductId = state => getTemp(state).get('productId')
+export const getTempAddProduct = state => getTemp(state).get('addProduct')
+export const getTempPromoCode = state => getTemp(state).get('promoCode', '')
 
 export default {
   getTempCutoffDate,

@@ -2,6 +2,7 @@ import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import {
   getBasketDate,
   getBasketOrderId,
+  getBasketProducts,
   getBasketRecipes,
   getBasketSlotId,
   getChosenAddressId,
@@ -186,5 +187,18 @@ export const getOrderForUpdateOrderV2 = createSelector([
         ]
       }
     }
+  }
+})
+
+export const getUpdateOrderProductItemsOrderV1 = createSelector([getBasketProducts], (products) => {
+  const productData = products.map((productQty, productId) => ({
+    id: productId,
+    quantity: productQty,
+    type: 'Product',
+  })).toArray()
+
+  return {
+    item_choices: productData,
+    restrict: 'Product',
   }
 })

@@ -2,10 +2,7 @@ import Immutable from 'immutable'
 import basket from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
-import * as orderConfirmationActions from 'actions/orderConfirmation'
 import * as menuActions from 'actions/menu'
-import { updateOrderItems } from 'apis/orders'
-import utilsLogger from 'utils/logger'
 import { push } from 'react-router-redux'
 import config from 'config'
 import { safeJestMock, returnArgumentsFromMock } from '_testing/mocks'
@@ -17,10 +14,6 @@ import * as trackingActions from '../tracking'
 import { basketReset } from '../basket'
 
 jest.mock('utils/basket')
-
-jest.mock('apis/orders', () => ({
-  updateOrderItems: jest.fn()
-}))
 
 jest.mock('utils/logger', () => ({
   error: jest.fn()
@@ -305,154 +298,6 @@ describe('basket actions', () => {
       expect(basketProductAddSpy).not.toHaveBeenCalled()
       expect(basketRecipeAddSpy).not.toHaveBeenCalled()
       expect(basketGiftAddSpy).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('basketUpdateProducts', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.fromJS({
-          orderId: '23',
-          products: {
-            'product-1': 2,
-            'product-2': 1,
-          },
-        }),
-        auth: Immutable.Map({ accessToken: '12234' }),
-        temp: Immutable.Map({
-          originalGrossTotal: ''
-        })
-      })
-    })
-
-    afterEach(() => {
-      jest.clearAllMocks()
-    })
-
-    describe('when update is sucessful', () => {
-      const order = {
-        id: '23',
-        products: [
-          { id: 1, itemableId: 'product-1', quantity: 2 },
-          { id: 2, itemableId: 'product-2', quantity: 1 },
-        ],
-      }
-
-      updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
-
-      test('should call updateOrderItems api with products', () => {
-        basket.basketUpdateProducts()(dispatch, getStateSpy)
-        expect(updateOrderItems).toHaveBeenCalled()
-        expect(updateOrderItems).toHaveBeenCalledWith(
-          '12234',
-          '23',
-          {
-            item_choices: [
-              {
-                id: 'product-1',
-                quantity: 2,
-                type: 'Product',
-              },
-              {
-                id: 'product-2',
-                quantity: 1,
-                type: 'Product',
-              },
-            ],
-            restrict: 'Product',
-          },
-        )
-      })
-      test('should dispatch correct pending and action events for BASKET_CHECKOUT', (done) => {
-        updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
-        basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .then(() => {
-            expect(dispatch.mock.calls.length).toBe(8)
-            expect(dispatch.mock.calls[0][0]).toEqual({
-              type: actionTypes.PENDING,
-              key: actionTypes.BASKET_CHECKOUT,
-              value: true,
-            })
-            expect(dispatch.mock.calls[1][0]).toEqual({
-              type: actionTypes.BASKET_CHECKOUT,
-              trackingData: {
-                actionType: trackingKeys.checkOutBasketAttempt,
-                order,
-              },
-            })
-            expect(dispatch.mock.calls[7][0]).toEqual({
-              type: actionTypes.PENDING,
-              key: actionTypes.BASKET_CHECKOUT,
-              value: false,
-            })
-          })
-          .then(done, done)
-      })
-
-      test('should dispatch BASKET_ORDER_DETAILS_LOADED action with the orderDetails', (done) => {
-        updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
-        basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .then(() => {
-            expect(dispatch.mock.calls.length).toBe(8)
-            expect(dispatch.mock.calls[2][0]).toEqual({
-              type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
-              orderId: order.id,
-              orderDetails: Immutable.fromJS(order),
-            })
-          })
-          .then(done, done)
-      })
-
-      test('should dispatch orderConfirmationUpdateOrderTrackingSpy if isOrderConfirmation true', (done) => {
-        updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
-        const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(orderConfirmationActions, 'orderConfirmationUpdateOrderTracking')
-        basket.basketUpdateProducts(true)(dispatch, getStateSpy)
-          .then(() => {
-            expect(dispatch.mock.calls.length).toBe(9)
-            expect(orderConfirmationUpdateOrderTrackingSpy).toHaveBeenCalledTimes(1)
-          })
-          .then(done, done)
-      })
-    })
-
-    describe('when it fails to update order', () => {
-      let loggerErrorSpy
-      beforeEach(() => {
-        dispatch = jest.fn()
-        updateOrderItems.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
-        loggerErrorSpy = jest.spyOn(utilsLogger, 'error')
-      })
-      test('should put the error into the error store for BASKET_CHECKOUT', (done) => {
-        basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .catch(() => {
-            expect(updateOrderItems).toHaveBeenCalledTimes(1)
-            expect(dispatch.mock.calls[0][0]).toEqual({
-              type: actionTypes.PENDING,
-              key: actionTypes.BASKET_CHECKOUT,
-              value: true,
-            })
-            expect(dispatch.mock.calls[1][0]).toEqual({
-              type: actionTypes.ERROR,
-              key: actionTypes.BASKET_CHECKOUT,
-              value: new Error({ e: 'Error' }).message,
-            })
-            expect(dispatch.mock.calls[2][0]).toEqual({
-              type: actionTypes.PENDING,
-              key: actionTypes.BASKET_CHECKOUT,
-              value: false,
-            })
-          })
-          .then(done, done)
-      })
-      test('should log the error', (done) => {
-        basket.basketUpdateProducts()(dispatch, getStateSpy)
-          .catch(() => {
-            expect(loggerErrorSpy).toHaveBeenCalledTimes(1)
-            expect(loggerErrorSpy).toHaveBeenCalledWith((new Error({ e: 'Error' })))
-          })
-          .then(done, done)
-      })
     })
   })
 
