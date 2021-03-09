@@ -30,10 +30,6 @@ export function fetchUserOrders(accessToken, reqData) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userOrders}`, reqData, 'GET')
 }
 
-export function fetchUserOrdersNew(accessToken, reqData) {
-  return fetch(accessToken, `${endpoint('orders', routes.version.orders)}/customers/${reqData.userId}/orders/`, reqData, 'GET')
-}
-
 export function fetchUserProjectedDeliveries(accessToken) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userProjectedDeliveries}`, {}, 'GET')
 }

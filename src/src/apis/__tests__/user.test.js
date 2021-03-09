@@ -7,7 +7,6 @@ import {
   fetchShippingAddresses,
   fetchUserCredit,
   fetchUserOrders,
-  fetchUserOrdersNew,
   fetchUserProjectedDeliveries,
   skipDelivery,
   restoreDelivery,
@@ -153,22 +152,6 @@ describe('user api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchUserOrders('token', {})
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('fetchUserOrdersNew', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const userId = 123
-      const reqData = { userId, a: 1, b: 2 }
-      await fetchUserOrdersNew(accessToken, reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-ordersv2/customers/${userId}/orders/`, reqData, 'GET')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchUserOrdersNew('token', { userId: 123 })
       expect(result).toEqual(mockFetchResult)
     })
   })
