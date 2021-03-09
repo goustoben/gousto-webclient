@@ -353,29 +353,6 @@ function userLoadNewOrders() {
   }
 }
 
-function userFetchOrders(forceRefresh = false) {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS_NEW, true))
-    dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS_NEW, null))
-    try {
-      if (forceRefresh || !getState().user.get('newOrders').size) {
-        const accessToken = getState().auth.get('accessToken')
-        const userId = getState().user.get('id')
-        const { data: orders } = await userApi.fetchUserOrdersNew(accessToken, { userId })
-        dispatch({
-          type: actionTypes.USER_LOAD_ORDERS_NEW,
-          orders
-        })
-      }
-    } catch (err) {
-      statusActions.errorLoad(actionTypes.USER_LOAD_ORDERS_NEW, err)(dispatch)
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS_NEW, false))
-    }
-  }
-}
-
 function userReactivate(user) {
   return dispatch => {
     dispatch({
@@ -875,7 +852,6 @@ const userActions = {
   userClearData,
   userLoadOrder,
   userLoadOrders,
-  userFetchOrders,
   userLoadNewOrders,
   userLoadOrderTrackingInfo,
   userLoadProjectedDeliveries,

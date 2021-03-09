@@ -189,27 +189,6 @@ describe('user reducer', () => {
     })
   })
 
-  describe('USER_LOAD_ORDERS_NEW action type', () => {
-    const ordersSample = Immutable.fromJS([
-      { id: '123', state: 'scheduled' },
-      { id: '456', email: 'cancelled' },
-    ])
-
-    test('should set user orders', () => {
-      const action = {
-        type: actionTypes.USER_LOAD_ORDERS_NEW,
-        orders: ordersSample,
-      }
-      const result = user(defaultInitialState, action)
-      const expected = Immutable.fromJS({
-        123: { id: '123', state: 'scheduled' },
-        456: { id: '456', email: 'cancelled' },
-      })
-
-      expect(Immutable.is(result.get('newOrders'), expected)).toBe(true)
-    })
-  })
-
   describe('USER_LOAD_PROJECTED_DELIVERIES action type', () => {
     test('should set projected deliveries to Immutable map keyed by action.projectedDeliveries array ids, adding the fields deliveryDate and state', () => {
       const result = user(defaultInitialState, {

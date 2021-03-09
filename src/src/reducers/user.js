@@ -66,14 +66,6 @@ const user = {
       )
     }
 
-    case actionTypes.USER_LOAD_ORDERS_NEW: {
-      const keyedorders = Immutable.fromJS(action.orders).reduce((workingorders, order) => (
-        workingorders.set(order.get('id'), order)
-      ), Immutable.Map({}))
-
-      return state.set('newOrders', keyedorders)
-    }
-
     case actionTypes.USER_LOAD_ORDER_TRACKING: {
       return state.set('nextOrderTracking', action.trackingUrl)
     }

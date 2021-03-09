@@ -21,7 +21,7 @@ describe('MyDeliveries', () => {
       jest.clearAllMocks()
     })
 
-    test('should call userFetchOrders', () => {
+    test('should call userLoadAddresses', () => {
       expect(userLoadAddressesMock).toHaveBeenCalled()
     })
 
