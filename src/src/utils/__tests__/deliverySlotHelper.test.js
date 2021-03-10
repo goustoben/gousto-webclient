@@ -1,6 +1,6 @@
 
 import Immutable from 'immutable'
-import { addDisabledSlotIds, formatAndValidateDisabledSlots, getDeliveryDaysAndSlots } from '../deliverySlotHelper'
+import { addDisabledSlotIds, getDeliveryDaysAndSlots } from '../deliverySlotHelper'
 
 describe('Delivery Slot Helper', () => {
   let deliveryDays
@@ -175,30 +175,5 @@ describe('Delivery Slot Helper', () => {
         })
       })
     })
-  })
-})
-
-describe('Format and validate Disabled Slots', () => {
-  test('should return all valid disabled slots', () => {
-    const validDisabledSlots = '2019-02-02_08-19,2019-02-02_08-22, 2019-02-02_18-22'
-    const validDisabledSlotsArray = ['2019-02-02_08-19', '2019-02-02_08-22', '2019-02-02_18-22']
-    const result = formatAndValidateDisabledSlots(validDisabledSlots)
-
-    expect(result).toEqual(validDisabledSlotsArray)
-  })
-
-  test('should filter out all invalid disabled slots', () => {
-    const validDisabledSlots = '2019-02-02_08-19,2019-02-02_08-22, 2019-02-02_18-22'
-    const validDisabledSlotsArray = ['2019-02-02_08-19', '2019-02-02_08-22', '2019-02-02_18-22']
-    const invalidDisabledSlots = 'slot,2019-02-02,02-02-2019_00-00, 2019-02-02_00_00, 2019-02-02-00-00'
-    const result = formatAndValidateDisabledSlots(`${validDisabledSlots},${invalidDisabledSlots}`)
-
-    expect(result).toEqual(validDisabledSlotsArray)
-  })
-
-  test('should return empty Array if nothing passed in', () => {
-    const result = formatAndValidateDisabledSlots()
-
-    expect(result).toEqual([])
   })
 })

@@ -15,7 +15,6 @@ jest.mock('actions/basket', () => ({
 
 jest.mock('utils/deliverySlotHelper', () => ({
   getTempDeliveryOptions: jest.fn(),
-  formatAndValidateDisabledSlots: jest.fn().mockReturnValue([]),
   getDeliveryDaysAndSlots: jest.fn()
 }))
 

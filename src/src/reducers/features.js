@@ -9,9 +9,6 @@ const defaultFeatures = () => ({
   collections: {
     value: true,
   },
-  landingOrder: {
-    value: true,
-  },
   featureRecommendedRecipe: {
     value: true,
   },

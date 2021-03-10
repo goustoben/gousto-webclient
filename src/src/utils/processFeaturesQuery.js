@@ -44,8 +44,6 @@ const processFeaturesQuery = (query, store) => {
 
     const featureValues = getFeatureValues(query)
 
-    featureValues.push({ feature: 'landingOrder', value: true })
-
     store.dispatch(featuresSet(featureValues))
   }
 }

@@ -7,7 +7,6 @@ import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
-import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import * as trackingKeys from 'actions/trackingKeys'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
@@ -103,18 +102,11 @@ export const boxSummaryDeliveryDaysLoad = (cutoffDatetimeFrom, cutoffDatetimeUnt
 export const boxSummaryNext = () => (
   (dispatch, getState) => {
     const state = getState()
-    const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
-    const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
-    const landing = getLandingDay(
-      state,
-      true,
-      !canLandOnOrder,
-      deliveryDays
-    )
+    const landing = getLandingDay(state, { useCurrentSlot: true })
 
     const tempDate = state.temp.get('date', landing.date)
     const tempSlotId = state.temp.get('slotId', landing.slotId)
-    const tempOrderId = state.temp.get('orderId', landing.orderId)
+    const tempOrderId = state.temp.get('orderId')
 
     const basketPostcode = state.basket.get('postcode')
 
