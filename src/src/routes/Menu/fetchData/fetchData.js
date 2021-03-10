@@ -37,12 +37,7 @@ const chooseFirstDate = () => async (dispatch, getState) => {
   await dispatch(actions.menuLoadDays())
   await dispatch(boxSummaryDeliveryDaysLoad())
 
-  const canLandOnOrder = getState().features.getIn(['landingOrder', 'value'], false)
-  const { date } = getLandingDay(
-    getState(),
-    false,
-    !canLandOnOrder,
-  )
+  const { date } = getLandingDay(getState())
 
   return dispatch(actions.basketDateChange(date))
 }

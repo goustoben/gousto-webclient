@@ -1,7 +1,7 @@
 import { basketSlotChange } from 'actions/basket'
 import tempActions from 'actions/temp'
 import { getSlot } from 'utils/deliveries'
-import { getDeliveryDaysAndSlots, formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
+import { getDeliveryDaysAndSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getDisabledSlotDates } from 'routes/Menu/selectors/boxSummary'
 import { getIsAuthenticated } from 'selectors/auth'
 import { actionTypes } from './actionTypes'
@@ -132,8 +132,7 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
   const state = getState()
   const { user } = state
   const isAuthenticated = getIsAuthenticated(state)
-  const disabledSlotDates = getDisabledSlotDates(state)
-  const disabledSlots = formatAndValidateDisabledSlots(disabledSlotDates)
+  const disabledSlots = getDisabledSlotDates(state)
   const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(state)
   const helperProps = {
     disabledSlots,

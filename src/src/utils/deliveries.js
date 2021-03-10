@@ -1,10 +1,9 @@
 import moment from 'moment'
-import Immutable from 'immutable'
 import GoustoException from 'utils/GoustoException'
 import { getNDDFeatureValue } from 'selectors/features'
 import { getDisabledSlotDates } from 'routes/Menu/selectors/boxSummary'
 import { getBasketDate } from 'selectors/basket'
-import { formatAndValidateDisabledSlots } from './deliverySlotHelper'
+import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
 
 export const deliveryTariffTypes = {
   NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af',
@@ -290,18 +289,22 @@ export function isDaySlotLeadTimeActive(slot) {
   return slot.get('daySlotLeadTimeActive', true)
 }
 
-export function isFreeSlotAvailable(slots) {
-  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) == 0).size > 0 // eslint-disable-line eqeqeq
+const doesSlotHaveDeliveryFees = (slot) => parseFloat(slot.get('deliveryPrice', 0)) !== 0
+
+export function doesDayHaveSlotsWithoutDeliveryFees(day) {
+  const slotsWithoutDeliveryFess = day.get('slots', []).filter(slot => isDaySlotLeadTimeActive(slot) && !doesSlotHaveDeliveryFees(slot))
+
+  return slotsWithoutDeliveryFess.size > 0
 }
 
-export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds, useBasketDate = true) {
+export function getLandingDay(state, options = {}) {
+  const { useCurrentSlot = false, cantLandOnOrderDate = false, useBasketDate = true } = options
   const date = useBasketDate ? getBasketDate(state) : null
   const defaultDate = state.features.getIn(['default_day', 'value'])
-  const deliveryDays = deliveryDaysWithDisabledSlotIds || state.boxSummaryDeliveryDays
+  const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
   const userOrders = state.user.get('orders')
-  const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const disabledSlotDates = getDisabledSlotDates(state)
-  const disabledSlots = formatAndValidateDisabledSlots(disabledSlotDates)
+  const slotId = state.basket.get(useCurrentSlot ? 'slotId' : 'prevSlotId')
+  const disabledSlots = getDisabledSlotDates(state) || []
 
   // try and find the delivery day
   let day
@@ -349,7 +352,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
     // if we don't have user orders or an explicit date fall back to the default date, so long as that date has a free slot available.
     if (!day) {
       const defaultDay = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
-      day = (defaultDay && isFreeSlotAvailable(defaultDay.get('slots'))) ? defaultDay : null
+      day = (defaultDay && doesDayHaveSlotsWithoutDeliveryFees(defaultDay)) ? defaultDay : null
     }
 
     // if we have none of the above get the first one
@@ -367,13 +370,12 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
             const diffToD2 = moment(comparisonDay2.get('date')).diff(Date.now(), 'days')
 
             // we want to order all free slot to the beginning and the rest at the end
-            const day1 = diffToD1 + (isFreeSlotAvailable(comparisonDay1.get('slots', [])) ? 0 : 9999)
-            const day2 = diffToD2 + (isFreeSlotAvailable(comparisonDay2.get('slots', [])) ? 0 : 9999)
+            const day1 = diffToD1 + (doesDayHaveSlotsWithoutDeliveryFees(comparisonDay1) ? 0 : 9999)
+            const day2 = diffToD2 + (doesDayHaveSlotsWithoutDeliveryFees(comparisonDay2) ? 0 : 9999)
 
             return day1 > day2 ? 1 : -1
           }
-        )
-        .first()
+        ).first()
     }
   }
 
@@ -396,17 +398,11 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       }
     } else {
       // try to find the default slot for that day
-      let foundSlot = day.get('slots', Immutable.List([])).find(slot => (
-        (
-          !disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))
-        ) && slot.get('isDefault')
-      ))
+      let foundSlot = day.get('slots', []).find(slot => !disabledSlots.includes(slot.get('disabledSlotId')) && slot.get('isDefault'))
 
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
-        foundSlot = day.get('slots', Immutable.List([])).find(slot => (
-          (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot
-        ))
+        foundSlot = day.get('slots', []).find(slot => !disabledSlots.includes(slot.get('disabledSlotId')))
       }
 
       if (foundSlot) {

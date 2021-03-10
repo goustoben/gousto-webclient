@@ -10,32 +10,34 @@ import {
   getSlot,
   getSlotTimes,
   transformDaySlotLeadTimesToMockSlots,
-  isSlotActive,
   userHasOrderWithDSLT,
-  isSlotBeforeCutoffTime
-} from 'utils/deliveries'
-import GoustoException from 'utils/GoustoException'
-import Immutable from 'immutable'
-import * as features from 'selectors/features'
-import {
+  isSlotBeforeCutoffTime,
   deliveryTariffTypes,
   getDeliveryTariffId,
   getNDDFeatureFlagVal,
   isDaySlotLeadTimeActive,
-  isFreeSlotAvailable
-} from '../deliveries'
+  doesDayHaveSlotsWithoutDeliveryFees,
+} from 'utils/deliveries'
+import GoustoException from 'utils/GoustoException'
+import Immutable from 'immutable'
+import * as features from 'selectors/features'
+import * as DeliverySlotHelper from 'utils/deliverySlotHelper'
 
-const userWithDeliveryTariff = (deliveryTariffId) => Immutable.fromJS({
-  deliveryTariffId,
-})
+const userWithDeliveryTariff = (deliveryTariffId) =>
+  Immutable.fromJS({
+    deliveryTariffId,
+  })
 
-const mockDate = dateString => {
+const mockDate = (dateString) => {
   Date.now = jest.fn(() => new Date(dateString))
 }
 
 describe('utils/deliveries', () => {
+  let addDisabledSlotIdsSpy
+
   beforeEach(() => {
     jest.spyOn(features, 'getLogoutUserDisabledSlots').mockImplementation()
+    addDisabledSlotIdsSpy = jest.spyOn(DeliverySlotHelper, 'addDisabledSlotIds').mockImplementation((arg) => arg)
   })
 
   afterEach(() => {
@@ -57,7 +59,7 @@ describe('utils/deliveries', () => {
           '2016-06-26': { slots: [{ id: 'slot1' }, { id: 'slot2' }] },
         }),
         '2016-06-26',
-        '',
+        ''
       )
       expect(Immutable.is(result, Immutable.fromJS({ id: 'slot1' }))).toBe(true)
     })
@@ -70,7 +72,7 @@ describe('utils/deliveries', () => {
           },
         }),
         '2016-06-26',
-        'slot2',
+        'slot2'
       )
       expect(Immutable.is(result, Immutable.fromJS({ id: 'slot2' }))).toBe(true)
     })
@@ -81,18 +83,21 @@ describe('utils/deliveries', () => {
       const [deliveryDays, date, slotId] = [
         Immutable.fromJS({
           '2016-06-26': {
-            slots: [{
-              id: 'slot1',
-              deliveryStartTime: '08:00:00',
-              deliveryEndTime: '12:00:00'
-
-            }, {
-              id: 'slot2',
-              deliveryStartTime: '08:00:00',
-              deliveryEndTime: '19:00:00'
-            }, {
-              id: 'slot3'
-            }],
+            slots: [
+              {
+                id: 'slot1',
+                deliveryStartTime: '08:00:00',
+                deliveryEndTime: '12:00:00',
+              },
+              {
+                id: 'slot2',
+                deliveryStartTime: '08:00:00',
+                deliveryEndTime: '19:00:00',
+              },
+              {
+                id: 'slot3',
+              },
+            ],
           },
         }),
         '2016-06-26',
@@ -107,18 +112,21 @@ describe('utils/deliveries', () => {
         const [deliveryDays, date, slotId] = [
           Immutable.fromJS({
             '2016-06-26': {
-              slots: [{
-                id: 'slot1',
-                deliveryStartTime: '08:00:00',
-                deliveryEndTime: '12:00:00'
-
-              }, {
-                id: 'slot2',
-                deliveryStartTime: '08:00:00',
-                deliveryEndTime: '19:00:00'
-              }, {
-                id: 'slot3'
-              }],
+              slots: [
+                {
+                  id: 'slot1',
+                  deliveryStartTime: '08:00:00',
+                  deliveryEndTime: '12:00:00',
+                },
+                {
+                  id: 'slot2',
+                  deliveryStartTime: '08:00:00',
+                  deliveryEndTime: '19:00:00',
+                },
+                {
+                  id: 'slot3',
+                },
+              ],
             },
           }),
           '2016-06-26',
@@ -269,26 +277,30 @@ describe('utils/deliveries', () => {
 
     describe('with day slot lead time active false ', () => {
       test('should return false', () => {
-        const result = isDaySlotLeadTimeActive(Immutable.fromJS({
-          daySlotLeadTimeActive: false,
-        }))
+        const result = isDaySlotLeadTimeActive(
+          Immutable.fromJS({
+            daySlotLeadTimeActive: false,
+          })
+        )
         expect(result).toEqual(false)
       })
     })
   })
 
-  describe('isFreeSlotAvailable', () => {
+  describe('doesDayHaveSlotsWithoutDeliveryFees', () => {
     describe('with free active slot', () => {
       test('should return true', () => {
-        const slots = Immutable.fromJS([
-          {
-            id: 'free-active',
-            deliveryPrice: '0',
-            daySlotLeadTimeActive: true,
-          },
-        ])
+        const day = Immutable.fromJS({
+          slots: [
+            {
+              id: 'free-active',
+              deliveryPrice: '0',
+              daySlotLeadTimeActive: true,
+            },
+          ],
+        })
 
-        const result = isFreeSlotAvailable(slots)
+        const result = doesDayHaveSlotsWithoutDeliveryFees(day)
 
         expect(result).toEqual(true)
       })
@@ -296,15 +308,17 @@ describe('utils/deliveries', () => {
 
     describe('with free inactive slot', () => {
       test('should return false', () => {
-        const slots = Immutable.fromJS([
-          {
-            id: 'free-inactive',
-            deliveryPrice: 0,
-            daySlotLeadTimeActive: false,
-          },
-        ])
+        const day = Immutable.fromJS({
+          slots: [
+            {
+              id: 'free-inactive',
+              deliveryPrice: 0,
+              daySlotLeadTimeActive: false,
+            },
+          ],
+        })
 
-        const result = isFreeSlotAvailable(slots)
+        const result = doesDayHaveSlotsWithoutDeliveryFees(day)
 
         expect(result).toEqual(false)
       })
@@ -312,30 +326,34 @@ describe('utils/deliveries', () => {
 
     describe('with paid active slot', () => {
       test('should return false', () => {
-        const slots = Immutable.fromJS([
-          {
-            id: 'paid-active',
-            deliveryPrice: 2,
-            daySlotLeadTimeActive: true,
-          },
-        ])
+        const day = Immutable.fromJS({
+          slots: [
+            {
+              id: 'paid-active',
+              deliveryPrice: 2,
+              daySlotLeadTimeActive: true,
+            },
+          ],
+        })
 
-        const result = isFreeSlotAvailable(slots)
+        const result = doesDayHaveSlotsWithoutDeliveryFees(day)
 
         expect(result).toEqual(false)
       })
     })
 
-    describe('with free slot wihout active key', () => {
+    describe('with free slot without active key', () => {
       test('should return true', () => {
-        const slots = Immutable.fromJS([
-          {
-            id: 'paid-active',
-            deliveryPrice: 0,
-          },
-        ])
+        const day = Immutable.fromJS({
+          slots: [
+            {
+              id: 'paid-active',
+              deliveryPrice: 0,
+            },
+          ],
+        })
 
-        const result = isFreeSlotAvailable(slots)
+        const result = doesDayHaveSlotsWithoutDeliveryFees(day)
 
         expect(result).toEqual(true)
       })
@@ -375,8 +393,8 @@ describe('utils/deliveries', () => {
         user: Immutable.Map({
           orders: userOrders,
           subscription: Immutable.Map({
-            state: 'active'
-          })
+            state: 'active',
+          }),
         }),
       }
     })
@@ -400,16 +418,18 @@ describe('utils/deliveries', () => {
             '2019-12-02': {
               isDefault: false,
               date: '2019-12-02',
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-2',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-2',
+                },
+              ],
               slots: [
                 {
                   id: 'paid-1',
@@ -426,16 +446,18 @@ describe('utils/deliveries', () => {
             '2019-12-20': {
               date: '2019-12-20',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'free-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'free-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+              ],
               slots: [
                 {
                   id: 'free-1',
@@ -452,16 +474,18 @@ describe('utils/deliveries', () => {
             '2019-12-10': {
               date: '2019-12-10',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'free-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'free-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+              ],
               slots: [
                 {
                   id: 'free-1',
@@ -476,7 +500,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
 
         test('should return closest day that has free slots available', () => {
@@ -494,16 +518,18 @@ describe('utils/deliveries', () => {
             '2019-12-02': {
               isDefault: false,
               date: '2019-12-02',
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-2',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-2',
+                },
+              ],
               slots: [
                 {
                   id: 'paid-1',
@@ -522,16 +548,18 @@ describe('utils/deliveries', () => {
             '2019-12-20': {
               date: '2019-12-20',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'free-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'free-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+              ],
               slots: [
                 {
                   id: 'free-1',
@@ -550,16 +578,18 @@ describe('utils/deliveries', () => {
             '2019-12-10': {
               date: '2019-12-10',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'free-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'free-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+              ],
               slots: [
                 {
                   id: 'free-1',
@@ -576,7 +606,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
 
         test('should return closest day that has active free slots available', () => {
@@ -594,16 +624,18 @@ describe('utils/deliveries', () => {
             '2019-12-02': {
               isDefault: false,
               date: '2019-12-02',
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-2',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-2',
+                },
+              ],
               slots: [
                 {
                   id: 'paid-1',
@@ -622,16 +654,18 @@ describe('utils/deliveries', () => {
             '2019-12-20': {
               date: '2019-12-20',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-1',
-              },
-              {
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: 'paid-2',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-1',
+                },
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: 'paid-2',
+                },
+              ],
               slots: [
                 {
                   id: 'paid-1',
@@ -648,7 +682,7 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
 
         test('should return closest day available', () => {
@@ -664,11 +698,13 @@ describe('utils/deliveries', () => {
             '2016-03-02': {
               isDefault: false,
               date: '2016-03-02',
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '123-123-123',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '123-123-123',
+                },
+              ],
               slots: [
                 {
                   id: '123-123-123',
@@ -679,11 +715,13 @@ describe('utils/deliveries', () => {
             '2015-12-12': {
               date: '2015-12-12',
               isDefault: true,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '321-321-321',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '321-321-321',
+                },
+              ],
               slots: [
                 {
                   id: '321-321-321',
@@ -694,11 +732,13 @@ describe('utils/deliveries', () => {
             '2014-12-12': {
               date: '2014-12-12',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '456-456-456',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '456-456-456',
+                },
+              ],
               slots: [
                 {
                   id: '456-456-456',
@@ -707,10 +747,10 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
         test('should return that day', () => {
-          const result = getLandingDay(state, false, true)
+          const result = getLandingDay(state, { useCurrentSlot: false, cantLandOnOrderDate: true })
           const expected = { date: '2015-12-12', slotId: '321-321-321' }
 
           expect(state.boxSummaryDeliveryDays).toEqual(deliveryDays)
@@ -719,10 +759,13 @@ describe('utils/deliveries', () => {
         describe('and an order on that date', () => {
           beforeEach(() => {
             userOrders = Immutable.fromJS([{ deliveryDate: '2015-12-12' }])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           })
           test('should not default to the default day', () => {
-            const result = getLandingDay(state, false, true)
+            const result = getLandingDay(state, {
+              useCurrentSlot: false,
+              cantLandOnOrderDate: true,
+            })
             const expected = { date: '2014-12-12', slotId: '456-456-456' }
             expect(result).toEqual(expected)
           })
@@ -738,11 +781,13 @@ describe('utils/deliveries', () => {
                   date: '2015-12-24',
                   isDefault: false,
                 },
-                daySlots: [{
-                  activeForSubscribersOneOff: true,
-                  activeForNonSubscribersOneOff: true,
-                  slotId: '321-321-321',
-                }],
+                daySlots: [
+                  {
+                    activeForSubscribersOneOff: true,
+                    activeForNonSubscribersOneOff: true,
+                    slotId: '321-321-321',
+                  },
+                ],
                 slots: [
                   {
                     id: '321-321-321',
@@ -753,11 +798,13 @@ describe('utils/deliveries', () => {
               '2015-12-24': {
                 date: '2015-12-24',
                 isDefault: false,
-                daySlots: [{
-                  activeForSubscribersOneOff: true,
-                  activeForNonSubscribersOneOff: true,
-                  slotId: '12a-12a-12a',
-                }],
+                daySlots: [
+                  {
+                    activeForSubscribersOneOff: true,
+                    activeForNonSubscribersOneOff: true,
+                    slotId: '12a-12a-12a',
+                  },
+                ],
                 slots: [
                   {
                     id: '12a-12a-12a',
@@ -767,10 +814,13 @@ describe('utils/deliveries', () => {
               },
             })
             deliveryDays = deliveryDays.mergeDeep(alternate)
-            state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+            state = { ...state, boxSummaryDeliveryDays: deliveryDays }
           })
           test('should use the alternate day instead', () => {
-            const result = getLandingDay(state, false, true)
+            const result = getLandingDay(state, {
+              useCurrentSlot: false,
+              cantLandOnOrderDate: true,
+            })
             const expected = { date: '2015-12-24', slotId: '12a-12a-12a' }
             expect(result).toEqual(expected)
           })
@@ -782,11 +832,13 @@ describe('utils/deliveries', () => {
             '2016-03-02': {
               date: '2016-03-02',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '123-123-123',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '123-123-123',
+                },
+              ],
               slots: [
                 {
                   id: '123-123-123',
@@ -798,11 +850,13 @@ describe('utils/deliveries', () => {
             '2015-12-12': {
               date: '2015-12-12',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '321-321-321',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '321-321-321',
+                },
+              ],
               slots: [
                 {
                   id: '321-321-321',
@@ -814,11 +868,13 @@ describe('utils/deliveries', () => {
             '2014-12-12': {
               date: '2014-12-12',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '456-456-456',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '456-456-456',
+                },
+              ],
               slots: [
                 {
                   id: '456-456-456',
@@ -828,20 +884,23 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
         test('should return the first free day available', () => {
-          const result = getLandingDay(state, false, true)
+          const result = getLandingDay(state, { useCurrentSlot: false, cantLandOnOrderDate: true })
           const expected = { date: '2014-12-12', slotId: '456-456-456' }
           expect(result).toEqual(expected)
         })
         describe('and an order on the first day available', () => {
           beforeEach(() => {
             userOrders = Immutable.fromJS([{ deliveryDate: '2014-12-12' }])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           })
           test('should return the next date', () => {
-            const result = getLandingDay(state, prevSlotId, true)
+            const result = getLandingDay(state, {
+              useCurrentSlot: prevSlotId,
+              cantLandOnOrderDate: true,
+            })
             const expected = { date: '2015-12-12', slotId: '321-321-321' }
             expect(result).toEqual(expected)
           })
@@ -849,10 +908,12 @@ describe('utils/deliveries', () => {
         describe('and a valid feature date set', () => {
           beforeEach(() => {
             defaultDay = '2016-03-02'
-            state = { ...state,
+            state = {
+              ...state,
               features: Immutable.Map({
                 default_day: Immutable.Map({ value: defaultDay }),
-              }),}
+              }),
+            }
           })
           test('should return the feature date', () => {
             const result = getLandingDay(state)
@@ -863,10 +924,12 @@ describe('utils/deliveries', () => {
         describe('and an invalid feature date set', () => {
           beforeEach(() => {
             defaultDay = '2017-10-10'
-            state = { ...state,
+            state = {
+              ...state,
               features: Immutable.Map({
                 default_day: Immutable.Map({ value: defaultDay }),
-              }),}
+              }),
+            }
           })
           test('should return the first day available', () => {
             const result = getLandingDay(state)
@@ -880,10 +943,10 @@ describe('utils/deliveries', () => {
     describe('with a basket date passed in', () => {
       beforeEach(() => {
         date = '2017-01-01'
-        state = { ...state, basket: Immutable.Map({ date })}
+        state = { ...state, basket: Immutable.Map({ date }) }
       })
       test('should return undefined', () => {
-        const result = getLandingDay(state, false, true)
+        const result = getLandingDay(state, { useCurrentSlot: false, cantLandOnOrderDate: true })
         const expected = { date: undefined, slotId: undefined }
         expect(result).toEqual(expected)
       })
@@ -893,11 +956,13 @@ describe('utils/deliveries', () => {
             '2016-03-02': {
               date: '2016-03-02',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '123-123-123',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '123-123-123',
+                },
+              ],
               slots: [
                 {
                   id: '123-123-123',
@@ -908,11 +973,13 @@ describe('utils/deliveries', () => {
             '2015-12-12': {
               date: '2015-12-12',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '321-321-321',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '321-321-321',
+                },
+              ],
               slots: [
                 {
                   id: '321-321-321',
@@ -923,11 +990,13 @@ describe('utils/deliveries', () => {
             '2014-12-12': {
               date: '2014-12-12',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '456-456-456',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '456-456-456',
+                },
+              ],
               slots: [
                 {
                   id: '456-456-456',
@@ -938,11 +1007,13 @@ describe('utils/deliveries', () => {
             '2017-01-01': {
               date: '2017-01-01',
               isDefault: false,
-              daySlots: [{
-                activeForSubscribersOneOff: true,
-                activeForNonSubscribersOneOff: true,
-                slotId: '789-789-789',
-              }],
+              daySlots: [
+                {
+                  activeForSubscribersOneOff: true,
+                  activeForNonSubscribersOneOff: true,
+                  slotId: '789-789-789',
+                },
+              ],
               slots: [
                 {
                   id: '789-789-789',
@@ -951,11 +1022,11 @@ describe('utils/deliveries', () => {
               ],
             },
           })
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
 
         test('should return with that date', () => {
-          const result = getLandingDay(state, false, true)
+          const result = getLandingDay(state, { useCurrentSlot: false, cantLandOnOrderDate: true })
           const expected = { date: '2017-01-01', slotId: '789-789-789' }
           expect(result).toEqual(expected)
         })
@@ -963,10 +1034,12 @@ describe('utils/deliveries', () => {
         describe('and a valid feature date set', () => {
           beforeEach(() => {
             defaultDay = '2016-03-02'
-            state = { ...state,
+            state = {
+              ...state,
               features: Immutable.Map({
                 default_day: Immutable.Map({ value: defaultDay }),
-              }),}
+              }),
+            }
           })
           test('should return the basket date', () => {
             const result = getLandingDay(state)
@@ -977,7 +1050,11 @@ describe('utils/deliveries', () => {
 
         describe('and with the ignore basket date flag passed in', () => {
           test('should return the closes day that has free slots available', () => {
-            const result = getLandingDay(state, false, true, deliveryDays, false)
+            const result = getLandingDay(state, {
+              useCurrentSlot: false,
+              cantLandOnOrderDate: true,
+              useBasketDate: false,
+            })
             const expected = { date: '2014-12-12', slotId: '456-456-456' }
             expect(result).toEqual(expected)
           })
@@ -992,11 +1069,13 @@ describe('utils/deliveries', () => {
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '123-123-1234',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '123-123-1234',
+              },
+            ],
             slots: [
               {
                 id: '123-123-1234',
@@ -1009,11 +1088,13 @@ describe('utils/deliveries', () => {
           '2015-12-12': {
             date: '2015-12-12',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '321-321-321',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '321-321-321',
+              },
+            ],
             slots: [
               {
                 id: '321-321-321',
@@ -1026,11 +1107,13 @@ describe('utils/deliveries', () => {
           '2014-12-12': {
             date: '2014-12-12',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '456-456-456',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '456-456-456',
+              },
+            ],
             slots: [
               {
                 id: '456-456-456',
@@ -1043,16 +1126,18 @@ describe('utils/deliveries', () => {
           '2017-01-01': {
             date: '2017-01-01',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '789-789-789',
-            },
-            {
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '123-123-123',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '789-789-789',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              },
+            ],
             slots: [
               {
                 id: '789-789-789',
@@ -1075,11 +1160,13 @@ describe('utils/deliveries', () => {
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '123-123-1234',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '123-123-1234',
+              },
+            ],
             slots: [
               {
                 id: '123-123-1234',
@@ -1091,48 +1178,54 @@ describe('utils/deliveries', () => {
           '2015-12-12': {
             date: '2015-12-12',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '321-321-321',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '321-321-321',
+              },
+            ],
             slots: [
               {
                 id: '321-321-321',
                 whenCutoff: 'qwerty',
-                disabledSlotId: '2015-12-12_08-19'
+                disabledSlotId: '2015-12-12_08-19',
               },
             ],
           },
           '2014-12-12': {
             date: '2014-12-12',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '456-456-456',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '456-456-456',
+              },
+            ],
             slots: [
               {
                 id: '456-456-456',
                 whenCutoff: 'zxcvb',
-                disabledSlotId: '2014-12-12_08-19'
+                disabledSlotId: '2014-12-12_08-19',
               },
             ],
           },
           '2017-01-01': {
             date: '2017-01-01',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: false,
-              activeForNonSubscribersOneOff: false,
-              slotId: '789-789-789',
-            },
-            {
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '123-123-123',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: false,
+                activeForNonSubscribersOneOff: false,
+                slotId: '789-789-789',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              },
+            ],
             slots: [
               {
                 id: '789-789-789',
@@ -1149,6 +1242,8 @@ describe('utils/deliveries', () => {
             ],
           },
         })
+
+        addDisabledSlotIdsSpy.mockReturnValue(deliveryDaysWithDisabledSlotIds)
         state = {
           ...state,
           basket: Immutable.Map({ date }),
@@ -1156,7 +1251,10 @@ describe('utils/deliveries', () => {
         }
       })
       test('should return the default delivery slot if not disabled', () => {
-        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const result = getLandingDay(state, {
+          useCurrentSlot: false,
+          cantLandOnOrderDate: true
+        })
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).toEqual(expected)
       })
@@ -1170,7 +1268,7 @@ describe('utils/deliveries', () => {
             }),
             subscription: Immutable.Map({
               state: 'inactive',
-            })
+            }),
           }
         })
 
@@ -1181,16 +1279,18 @@ describe('utils/deliveries', () => {
               '2017-01-01': {
                 date: '2017-01-01',
                 isDefault: false,
-                daySlots: [{
-                  activeForSubscribersOneOff: true,
-                  activeForNonSubscribersOneOff: false,
-                  slotId: '789-789-789',
-                },
-                {
-                  activeForSubscribersOneOff: true,
-                  activeForNonSubscribersOneOff: true,
-                  slotId: '123-123-123',
-                }],
+                daySlots: [
+                  {
+                    activeForSubscribersOneOff: true,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '789-789-789',
+                  },
+                  {
+                    activeForSubscribersOneOff: true,
+                    activeForNonSubscribersOneOff: true,
+                    slotId: '123-123-123',
+                  },
+                ],
                 slots: [
                   {
                     id: '789-789-789',
@@ -1213,16 +1313,18 @@ describe('utils/deliveries', () => {
               '2017-01-01': {
                 date: '2017-01-01',
                 isDefault: false,
-                daySlots: [{
-                  activeForSubscribersOneOff: true,
-                  activeForNonSubscribersOneOff: true,
-                  slotId: '789-789-789',
-                },
-                {
-                  activeForSubscribersOneOff: false,
-                  activeForNonSubscribersOneOff: false,
-                  slotId: '123-123-123',
-                }],
+                daySlots: [
+                  {
+                    activeForSubscribersOneOff: true,
+                    activeForNonSubscribersOneOff: true,
+                    slotId: '789-789-789',
+                  },
+                  {
+                    activeForSubscribersOneOff: false,
+                    activeForNonSubscribersOneOff: false,
+                    slotId: '123-123-123',
+                  },
+                ],
                 slots: [
                   {
                     id: '789-789-789',
@@ -1239,6 +1341,7 @@ describe('utils/deliveries', () => {
                 ],
               },
             })
+            addDisabledSlotIdsSpy.mockReturnValue(deliveryDaysWithDisabledSlotIds)
             state = {
               ...state,
               basket: Immutable.Map({ date }),
@@ -1247,13 +1350,19 @@ describe('utils/deliveries', () => {
           })
 
           test('should NOT return the default delivery slot', () => {
-            const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+            const result = getLandingDay(state, {
+              useCurrentSlot: false,
+              cantLandOnOrderDate: true
+            })
             const expected = { date: '2017-01-01', slotId: '123-123-123' }
             expect(result).not.toEqual(expected)
           })
 
           test('should return first non blocked slot if the default delivery slot', () => {
-            const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+            const result = getLandingDay(state, {
+              useCurrentSlot: false,
+              cantLandOnOrderDate: true
+            })
             const expected = { date: '2017-01-01', slotId: '789-789-789' }
             expect(result).toEqual(expected)
           })
@@ -1265,16 +1374,18 @@ describe('utils/deliveries', () => {
                 '2017-01-01': {
                   date: '2017-01-01',
                   isDefault: false,
-                  daySlots: [{
-                    activeForSubscribersOneOff: false,
-                    activeForNonSubscribersOneOff: false,
-                    slotId: '789-789-789',
-                  },
-                  {
-                    activeForSubscribersOneOff: false,
-                    activeForNonSubscribersOneOff: false,
-                    slotId: '123-123-123',
-                  }],
+                  daySlots: [
+                    {
+                      activeForSubscribersOneOff: false,
+                      activeForNonSubscribersOneOff: false,
+                      slotId: '789-789-789',
+                    },
+                    {
+                      activeForSubscribersOneOff: false,
+                      activeForNonSubscribersOneOff: false,
+                      slotId: '123-123-123',
+                    },
+                  ],
                   slots: [
                     {
                       id: '789-789-789',
@@ -1295,19 +1406,22 @@ describe('utils/deliveries', () => {
                 '2017-01-01': {
                   date: '2017-01-01',
                   isDefault: false,
-                  daySlots: [{
-                    activeForSubscribersOneOff: false,
-                    activeForNonSubscribersOneOff: false,
-                    slotId: '789-789-789',
-                  },
-                  {
-                    activeForSubscribersOneOff: false,
-                    activeForNonSubscribersOneOff: false,
-                    slotId: '123-123-123',
-                  }],
+                  daySlots: [
+                    {
+                      activeForSubscribersOneOff: false,
+                      activeForNonSubscribersOneOff: false,
+                      slotId: '789-789-789',
+                    },
+                    {
+                      activeForSubscribersOneOff: false,
+                      activeForNonSubscribersOneOff: false,
+                      slotId: '123-123-123',
+                    },
+                  ],
                   slots: [],
                 },
               })
+              addDisabledSlotIdsSpy.mockReturnValue(deliveryDaysWithDisabledSlotIds)
               state = {
                 ...state,
                 basket: Immutable.Map({ date }),
@@ -1316,7 +1430,10 @@ describe('utils/deliveries', () => {
             })
 
             test('should return nothing if the default delivery slot', () => {
-              const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+              const result = getLandingDay(state, {
+                useCurrentSlot: false,
+                cantLandOnOrderDate: true
+              })
               const expected = { date: '2017-01-01', slotId: undefined }
               expect(result).toEqual(expected)
             })
@@ -1333,11 +1450,13 @@ describe('utils/deliveries', () => {
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '123-123-123',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              },
+            ],
             slots: [
               {
                 id: '123-123-123',
@@ -1348,11 +1467,13 @@ describe('utils/deliveries', () => {
           '2015-12-12': {
             date: '2015-12-12',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '321-321-321',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '321-321-321',
+              },
+            ],
             slots: [
               {
                 id: '321-321-321',
@@ -1363,11 +1484,13 @@ describe('utils/deliveries', () => {
           '2014-12-12': {
             date: '2014-12-12',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '456-456-456',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '456-456-456',
+              },
+            ],
             slots: [
               {
                 id: '456-456-456',
@@ -1378,16 +1501,18 @@ describe('utils/deliveries', () => {
           '2017-01-01': {
             date: '2017-01-01',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '123-123-123',
-            },
-            {
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: '789-789-789',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '123-123-123',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: '789-789-789',
+              },
+            ],
             slots: [
               {
                 id: '789-789-789',
@@ -1401,17 +1526,19 @@ describe('utils/deliveries', () => {
           },
         })
         userOrders = Immutable.fromJS([{ deliveryDate: '2016-03-02' }])
-        state = { ...state,
+        state = {
+          ...state,
           basket: Immutable.Map({
             date,
             prevSlotId,
           }),
           boxSummaryDeliveryDays: deliveryDays,
-          user: Immutable.Map({ orders: userOrders }),}
+          user: Immutable.Map({ orders: userOrders }),
+        }
       })
 
       test('should keep the selected date', () => {
-        const result = getLandingDay(state, false, true)
+        const result = getLandingDay(state, { useCurrentSlot: false, cantLandOnOrderDate: true })
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).toEqual(expected)
       })
@@ -1425,16 +1552,18 @@ describe('utils/deliveries', () => {
           '2019-12-02': {
             isDefault: true,
             date: '2019-12-02',
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: 'paid-1',
-            },
-            {
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: 'paid-2',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-2',
+              },
+            ],
             slots: [
               {
                 id: 'paid-1',
@@ -1453,16 +1582,18 @@ describe('utils/deliveries', () => {
           '2019-12-20': {
             date: '2019-12-20',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: 'free-1',
-            },
-            {
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: 'paid-1',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'free-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+            ],
             slots: [
               {
                 id: 'free-1',
@@ -1481,16 +1612,18 @@ describe('utils/deliveries', () => {
           '2019-12-10': {
             date: '2019-12-10',
             isDefault: false,
-            daySlots: [{
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: 'free-1',
-            },
-            {
-              activeForSubscribersOneOff: true,
-              activeForNonSubscribersOneOff: true,
-              slotId: 'paid-1',
-            }],
+            daySlots: [
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'free-1',
+              },
+              {
+                activeForSubscribersOneOff: true,
+                activeForNonSubscribersOneOff: true,
+                slotId: 'paid-1',
+              },
+            ],
             slots: [
               {
                 id: 'free-1',
@@ -1529,11 +1662,13 @@ describe('utils/deliveries', () => {
           whenCutoff: '2016-03-01T11:59:59+01:00',
           coreSlotId: '1',
         }
-        const daySlots = [{
-          activeForSubscribersOneOff: true,
-          activeForNonSubscribersOneOff: true,
-          slotId: '123-123-123',
-        }]
+        const daySlots = [
+          {
+            activeForSubscribersOneOff: true,
+            activeForNonSubscribersOneOff: true,
+            slotId: '123-123-123',
+          },
+        ]
         const dds = {}
         // two weeks of valid delivery days with slots
         for (let i = 1; i <= 14; i++) {
@@ -1541,10 +1676,8 @@ describe('utils/deliveries', () => {
           dds[d] = { date: d, slots: [slot], daySlots }
         }
         deliveryDays = Immutable.fromJS(dds)
-        state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
-        clock = sinon.useFakeTimers(
-          new Date(Date.UTC(2016, 2, 1, 0, 0, 0)).getTime(),
-        )
+        state = { ...state, boxSummaryDeliveryDays: deliveryDays }
+        clock = sinon.useFakeTimers(new Date(Date.UTC(2016, 2, 1, 0, 0, 0)).getTime())
       })
 
       afterEach(() => {
@@ -1569,7 +1702,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1592,7 +1725,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1609,7 +1742,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1626,7 +1759,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1649,7 +1782,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1672,7 +1805,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1689,7 +1822,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1712,7 +1845,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-03', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1735,7 +1868,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-01', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1745,7 +1878,7 @@ describe('utils/deliveries', () => {
       describe('with this weeks order: none, next weeks order: none, default delivery day: not set', () => {
         test('should land on first available delivery date', () => {
           userOrders = Immutable.fromJS([])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-01', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1762,7 +1895,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2016-02-20',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1784,7 +1917,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-10', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1806,7 +1939,7 @@ describe('utils/deliveries', () => {
               whenCutoff: '2017-01-01',
             },
           ])
-          state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+          state = { ...state, user: Immutable.Map({ orders: userOrders }) }
           const result = getLandingDay(state)
           const expected = { date: '2016-03-01', slotId: '123-123-123' }
           expect(result).toEqual(expected)
@@ -1820,11 +1953,13 @@ describe('utils/deliveries', () => {
             whenCutoff: 'asdf',
             coreSlotId: '1',
           }
-          const daySlots = [{
-            activeForSubscribersOneOff: true,
-            activeForNonSubscribersOneOff: true,
-            slotId: '123-123-123',
-          }]
+          const daySlots = [
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            },
+          ]
           const dds = {}
           // two weeks of valid delivery days with slots
           for (let i = 1; i <= 14; i++) {
@@ -1833,7 +1968,7 @@ describe('utils/deliveries', () => {
           }
           dds['2016-03-05'].isDefault = true
           deliveryDays = Immutable.fromJS(dds)
-          state = { ...state, boxSummaryDeliveryDays: deliveryDays,}
+          state = { ...state, boxSummaryDeliveryDays: deliveryDays }
         })
 
         describe('with this weeks order: none, next weeks order: none, default delivery day: set to day with no order', () => {
@@ -1854,7 +1989,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1877,7 +2012,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1894,7 +2029,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1917,7 +2052,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1940,7 +2075,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1957,7 +2092,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -1980,7 +2115,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -2003,7 +2138,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -2020,7 +2155,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2016-02-20',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -2042,7 +2177,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -2064,7 +2199,7 @@ describe('utils/deliveries', () => {
                 whenCutoff: '2017-01-01',
               },
             ])
-            state = { ...state, user: Immutable.Map({ orders: userOrders }),}
+            state = { ...state, user: Immutable.Map({ orders: userOrders }) }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-05', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -2080,11 +2215,13 @@ describe('utils/deliveries', () => {
             whenCutoff: '2016-03-01T11:59:59+01:00',
             coreSlotId: '1',
           }
-          const daySlots = [{
-            activeForSubscribersOneOff: true,
-            activeForNonSubscribersOneOff: true,
-            slotId: '123-123-123',
-          }]
+          const daySlots = [
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            },
+          ]
           dds = {}
           // two weeks of valid delivery days with slots
           for (let i = 1; i <= 14; i++) {
@@ -2105,9 +2242,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
             expect(result).toEqual(expected)
@@ -2126,9 +2265,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2154,9 +2295,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2182,9 +2325,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -2210,9 +2355,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2238,9 +2385,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -2257,11 +2406,13 @@ describe('utils/deliveries', () => {
             whenCutoff: '2016-03-01T11:59:59+01:00',
             coreSlotId: '1',
           }
-          const daySlots = [{
-            activeForSubscribersOneOff: true,
-            activeForNonSubscribersOneOff: true,
-            slotId: '123-123-123',
-          }]
+          const daySlots = [
+            {
+              activeForSubscribersOneOff: true,
+              activeForNonSubscribersOneOff: true,
+              slotId: '123-123-123',
+            },
+          ]
           dds = {}
           // two weeks of valid delivery days with slots
           for (let i = 1; i <= 14; i++) {
@@ -2282,9 +2433,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -2310,9 +2463,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-03'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-10', slotId: '123-123-123' }
@@ -2332,9 +2487,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2360,9 +2517,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-03', slotId: '123-123-123' }
@@ -2388,9 +2547,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
@@ -2415,9 +2576,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-10'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
@@ -2449,9 +2612,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-05'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-07', slotId: '123-123-123' }
@@ -2482,9 +2647,11 @@ describe('utils/deliveries', () => {
             ])
             dds['2016-03-05'].isDefault = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-06', slotId: '123-123-123' }
@@ -2517,9 +2684,11 @@ describe('utils/deliveries', () => {
             dds['2016-03-05'].isDefault = true
             dds['2016-03-07'].alternateDeliveryDay = true
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-08', slotId: '123-123-123' }
@@ -2560,9 +2729,11 @@ describe('utils/deliveries', () => {
             dds['2016-03-14'].alternateDeliveryDay = true
 
             deliveryDays = Immutable.fromJS(dds)
-            state = { ...state,
+            state = {
+              ...state,
               boxSummaryDeliveryDays: deliveryDays,
-              user: Immutable.Map({ orders: userOrders }),}
+              user: Immutable.Map({ orders: userOrders }),
+            }
 
             const result = getLandingDay(state)
             const expected = { date: '2016-03-01', slotId: '123-123-123' }
@@ -2593,7 +2764,7 @@ describe('utils/deliveries', () => {
               {
                 id: '321-321-321',
                 whenCutoff: '2019-12-31T11:59:59+01:00',
-                disabledSlotId: '2020-02-14_08-19'
+                disabledSlotId: '2020-02-14_08-19',
               },
             ],
           },
@@ -2604,7 +2775,7 @@ describe('utils/deliveries', () => {
               {
                 id: '456-456-456',
                 whenCutoff: '2020-02-10T11:59:59+01:00',
-                disabledSlotId: '2020-02-13_08-19'
+                disabledSlotId: '2020-02-13_08-19',
               },
             ],
           },
@@ -2615,7 +2786,7 @@ describe('utils/deliveries', () => {
               {
                 id: '789-789-789',
                 whenCutoff: '2020-02-12T11:59:59+01:00',
-                disabledSlotId: '2020-02-15_08-19'
+                disabledSlotId: '2020-02-15_08-19',
               },
               {
                 id: '123-123-123',
@@ -2623,9 +2794,10 @@ describe('utils/deliveries', () => {
                 disabledSlotId: '2020-02-1_18-22',
                 isDefault: true,
               },
-            ]
-          }
+            ],
+          },
         })
+        addDisabledSlotIdsSpy.mockReturnValue(deliveryDaysWithDisabledSlotIds)
         state = {
           ...state,
           auth: Immutable.fromJS({
@@ -2636,7 +2808,10 @@ describe('utils/deliveries', () => {
       })
 
       test('then the first chronological date is returned', () => {
-        const result = getLandingDay(state, true, true, deliveryDaysWithDisabledSlotIds )
+        const result = getLandingDay(state, {
+          useCurrentSlot: true,
+          cantLandOnOrderDate: true
+        })
         const expected = { date: '2020-01-02', slotId: '123-123-123' }
         expect(result).toEqual(expected)
       })
@@ -2662,7 +2837,7 @@ describe('utils/deliveries', () => {
                     activeForNonSubscribersOneOff: false,
                     slotId: '123-123-123',
                     activeForSignups: false,
-                  }
+                  },
                 ],
                 slots: [
                   {
@@ -2683,7 +2858,7 @@ describe('utils/deliveries', () => {
                     activeForNonSubscribersOneOff: false,
                     activeForSignups: false,
                     slotId: '125-125-125',
-                  }
+                  },
                 ],
                 slots: [
                   {
@@ -2700,7 +2875,10 @@ describe('utils/deliveries', () => {
         })
 
         test('then the first available chronological date is returned', () => {
-          const result = getLandingDay(state, true, true, deliveryDaysWithDisabledSlotIds )
+          const result = getLandingDay(state, {
+            useCurrentSlot: true,
+            cantLandOnOrderDate: true
+          })
           const expected = { date: '2020-02-14', slotId: '321-321-321' }
           expect(result).toEqual(expected)
         })
@@ -2736,7 +2914,10 @@ describe('utils/deliveries', () => {
       {
         id: 'day3',
         date: '2016-07-04',
-        slots: [{ whenCutoff: '2016-07-07', daySlotLeadTimeActive: false }, { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false }],
+        slots: [
+          { whenCutoff: '2016-07-07', daySlotLeadTimeActive: false },
+          { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false },
+        ],
       },
     ]
 
@@ -2756,7 +2937,7 @@ describe('utils/deliveries', () => {
         '2016-06-30': {
           id: 'day2',
           date: '2016-06-30',
-          slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08'}],
+          slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08' }],
         },
       })
     })
@@ -2792,13 +2973,18 @@ describe('utils/deliveries', () => {
     test('should filter out inactive slots', async () => {
       const result = getAvailableDeliveryDays(days)
 
-      expect(result).toEqual(expect.not.objectContaining({
-        '2016-07-04': {
-          id: 'day3',
-          date: '2016-07-04',
-          slots: [{ whenCutoff: '2016-07-07', daySlotLeadTimeActive: false }, { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false }],
-        }
-      }))
+      expect(result).toEqual(
+        expect.not.objectContaining({
+          '2016-07-04': {
+            id: 'day3',
+            date: '2016-07-04',
+            slots: [
+              { whenCutoff: '2016-07-07', daySlotLeadTimeActive: false },
+              { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false },
+            ],
+          },
+        })
+      )
     })
 
     describe('if the user has an order with a day slot lead time', () => {
@@ -2811,13 +2997,13 @@ describe('utils/deliveries', () => {
               {
                 whenCutoff: '2016-07-01',
                 daySlotLeadTimeActive: true,
-                daySlotLeadTimeId: 'dslt1'
+                daySlotLeadTimeId: 'dslt1',
               },
               {
                 whenCutoff: '2016-07-05',
                 daySlotLeadTimeActive: true,
-                daySlotLeadTimeId: 'dslt2'
-              }
+                daySlotLeadTimeId: 'dslt2',
+              },
             ],
           },
           {
@@ -2827,13 +3013,13 @@ describe('utils/deliveries', () => {
               {
                 whenCutoff: '2016-07-03',
                 daySlotLeadTimeActive: false,
-                daySlotLeadTimeId: 'dslt3'
+                daySlotLeadTimeId: 'dslt3',
               },
               {
                 whenCutoff: '2016-07-08',
                 daySlotLeadTimeActive: false,
-                daySlotLeadTimeId: 'dslt4'
-              }
+                daySlotLeadTimeId: 'dslt4',
+              },
             ],
           },
         ]
@@ -2846,13 +3032,21 @@ describe('utils/deliveries', () => {
           '2016-06-26': {
             id: 'day1',
             date: '2016-06-26',
-            slots: [{ whenCutoff: '2016-07-05', daySlotLeadTimeActive: true, daySlotLeadTimeId: 'dslt2' }]
+            slots: [
+              { whenCutoff: '2016-07-05', daySlotLeadTimeActive: true, daySlotLeadTimeId: 'dslt2' },
+            ],
           },
           '2016-06-30': {
             id: 'day2',
             date: '2016-06-30',
-            slots: [{ whenCutoff: '2016-07-08', daySlotLeadTimeActive: false, daySlotLeadTimeId: 'dslt4' }]
-          }
+            slots: [
+              {
+                whenCutoff: '2016-07-08',
+                daySlotLeadTimeActive: false,
+                daySlotLeadTimeId: 'dslt4',
+              },
+            ],
+          },
         })
       })
     })
@@ -2898,9 +3092,9 @@ describe('utils/deliveries', () => {
             deliveryPrice: '0.00',
             shouldCutoffAt: '2014-01-14T11:59:59+00:00',
             isExpress: false,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ]
 
     test('should transform a dslt response to a mock slot', () => {
@@ -2944,7 +3138,7 @@ describe('utils/deliveries', () => {
               deliveryPrice: '0.00',
               shouldCutoffAt: '2014-01-14T11:59:59+00:00',
               isExpress: false,
-            }
+            },
           ],
           slots: [
             {
@@ -2970,7 +3164,7 @@ describe('utils/deliveries', () => {
               daySlotLeadTimeId: '386932e5-71bd-4610-b9a4-baae4bc91be9',
               daySlotLeadTimeActive: true,
               daySlotLeadTimeIsExpress: false,
-            }
+            },
           ],
         },
       ]
@@ -2985,15 +3179,20 @@ describe('utils/deliveries', () => {
     })
 
     test('should throw a GoustoException when no days with DSLTs passed', () => {
-      expect(() => transformDaySlotLeadTimesToMockSlots(new Error('Is broke'))).toThrow(GoustoException)
+      expect(() => transformDaySlotLeadTimesToMockSlots(new Error('Is broke'))).toThrow(
+        GoustoException
+      )
     })
   })
 
   describe('getDeliveryTariffId', () => {
-    test('it should return a user\'s existing tariff ID', () => {
+    test("it should return a user's existing tariff ID", () => {
       const expectedTariff = deliveryTariffTypes.PAID_NDD
 
-      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), deliveryTariffTypes.FREE_NDD)
+      const resolvedTariff = getDeliveryTariffId(
+        userWithDeliveryTariff(expectedTariff),
+        deliveryTariffTypes.FREE_NDD
+      )
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
@@ -3024,7 +3223,7 @@ describe('utils/deliveries', () => {
       const state = {
         user: userWithDeliveryTariff(deliveryTariffTypes.FREE_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({ value: deliveryTariffTypes.NON_NDD }),
         }),
       }
 
@@ -3037,7 +3236,7 @@ describe('utils/deliveries', () => {
       const state = {
         user: userWithDeliveryTariff(deliveryTariffTypes.PAID_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({ value: deliveryTariffTypes.NON_NDD }),
         }),
       }
 
@@ -3049,7 +3248,7 @@ describe('utils/deliveries', () => {
     test('it should return true when a new user is on the free NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: deliveryTariffTypes.FREE_NDD}),
+          ndd: Immutable.Map({ value: deliveryTariffTypes.FREE_NDD }),
         }),
       }
 
@@ -3061,7 +3260,7 @@ describe('utils/deliveries', () => {
     test('it should return true when a new user is on the paid NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: deliveryTariffTypes.PAID_NDD}),
+          ndd: Immutable.Map({ value: deliveryTariffTypes.PAID_NDD }),
         }),
       }
 
@@ -3073,7 +3272,7 @@ describe('utils/deliveries', () => {
     test('it should return false when a new user is on a non NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({ value: deliveryTariffTypes.NON_NDD }),
         }),
       }
 
@@ -3086,7 +3285,7 @@ describe('utils/deliveries', () => {
       const state = {
         user: userWithDeliveryTariff(deliveryTariffTypes.NON_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({ value: deliveryTariffTypes.NON_NDD }),
         }),
       }
 
@@ -3096,39 +3295,11 @@ describe('utils/deliveries', () => {
     })
   })
 
-  describe('isSlotActive', () => {
-    test('should return true when day slot lead time is active', () => {
-      const slot = {
-        id: '123',
-        daySlotLeadTimeActive: true
-      }
-
-      expect(isSlotActive(slot)).toBeTruthy()
-    })
-
-    test('should return false when day slot lead time is inactive', () => {
-      const slot = {
-        id: '123',
-        daySlotLeadTimeActive: false
-      }
-
-      expect(isSlotActive(slot)).toBeFalsy()
-    })
-
-    test('should return a default true value when no day slot lead times present', () => {
-      const slot = {
-        id: '123'
-      }
-
-      expect(isSlotActive(slot)).toBeTruthy()
-    })
-  })
-
   describe('userHasOrderWithDSLT', () => {
     test('should return true when users orders dslt id is the same as the slots', () => {
       const slot = {
         id: '123',
-        daySlotLeadTimeId: 'a1b2c3d4'
+        daySlotLeadTimeId: 'a1b2c3d4',
       }
       const usersOrderDaySlotLeadTimeIds = ['a1b2c3d4']
 
@@ -3137,7 +3308,7 @@ describe('utils/deliveries', () => {
     test('should return false when users orders dslt id is not the same as the slots', () => {
       const slot = {
         id: '123',
-        daySlotLeadTimeId: 'a5b6c7d8'
+        daySlotLeadTimeId: 'a5b6c7d8',
       }
       const usersOrderDaySlotLeadTimeIds = ['a1b2c3d4']
 
@@ -3156,7 +3327,7 @@ describe('utils/deliveries', () => {
   describe('isSlotBeforeCutoffTime', () => {
     test('should return true if slots cutoff time is after provided cutoff time', () => {
       const slot = {
-        whenCutoff: '2019-11-02 11:59:59'
+        whenCutoff: '2019-11-02 11:59:59',
       }
 
       const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')
@@ -3166,7 +3337,7 @@ describe('utils/deliveries', () => {
 
     test('should return false if slots cutoff time is before provided cutoff time', () => {
       const slot = {
-        whenCutoff: '2019-10-30 11:59:59'
+        whenCutoff: '2019-10-30 11:59:59',
       }
 
       const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')

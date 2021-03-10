@@ -70,18 +70,27 @@ export const getDisabledSlots = createSelector(
   )
 )
 
+export const createDisabledSlotId = (slot, deliveryDate) => {
+  const deliveryStartTime = slot.get('deliveryStartTime')
+  const deliveryEndTime = slot.get('deliveryEndTime')
+  const date = deliveryDate || slot.get('date')
+
+  if (!deliveryStartTime || !deliveryEndTime) {
+    return ''
+  }
+
+  const slotStartTime = deliveryStartTime.substring(0, 2)
+  const slotEndTime = deliveryEndTime.substring(0, 2)
+  const disabledSlotId = `${date}_${slotStartTime}-${slotEndTime}`
+
+  return disabledSlotId
+}
+
+// Returns an array ["2021-03-08_08-19"]
 export const getDisabledSlotDates = createSelector(
   [getDisabledSlots],
   (disabledSlots) => (
-    disabledSlots.reduce((disabledSlotDates, slot) => {
-      const hourEndTime = slot.get('deliveryEndTime').slice(0, 2)
-      const hourStartTime = slot.get('deliveryStartTime').slice(0, 2)
-      const formattedSlot = `${slot.get('date')}_${hourStartTime}-${hourEndTime}`
-
-      disabledSlotDates.push(formattedSlot)
-
-      return disabledSlotDates
-    }, []).toString()
+    disabledSlots.map((slot) => createDisabledSlotId(slot)).filter((id) => id !== '')
   )
 )
 
