@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import {
-  validateLatestOrder,
   validateSelectedIngredients,
   storeSelectedIngredients,
   trackUserCannotGetCompensation,
 } from 'actions/getHelp'
 import { getOrderValidationPendingState, getIsOrderValidationError } from 'selectors/getHelp'
+import { validateLatestOrder } from '../actions/getHelp'
+import { getIneligibleIngredientUuids } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
@@ -17,6 +18,7 @@ const mapStateToProps = (state) => ({
     button1Copy: state.content.get('get-help_orderissues_pagecontent_button1copy')
       || 'Continue',
   },
+  ineligibleIngredientUuids: getIneligibleIngredientUuids(state),
   isOrderValidationError: getIsOrderValidationError(state),
   isValidateOrderLoading: getOrderValidationPendingState(state),
   order: state.getHelp.get('order').toJS(),

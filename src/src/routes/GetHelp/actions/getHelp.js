@@ -3,10 +3,12 @@ import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as userApi from 'apis/user'
-import { applyDeliveryCompensation, validateDelivery } from 'apis/getHelp'
+import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
+import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
+import { getFeatureShorterCompensationPeriod } from '../../../selectors/features'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 
@@ -118,6 +120,38 @@ export const loadTrackingUrl = (orderId) => async (dispatch, getState) => {
     getPayload,
     errorMessage: `Failed to loadTrackingUrl for orderId: ${orderId}`,
   })
+}
+
+export const validateLatestOrder = ({
+  accessToken,
+  orderId,
+  costumerId
+}) => async (dispatch, getState) => {
+  dispatch(webClientStatusActions.pending(webClientActionTypes.GET_HELP_VALIDATE_ORDER, true))
+  dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, ''))
+
+  try {
+    const response = await validateOrder(
+      accessToken,
+      appendFeatureToRequest({
+        body: {
+          customer_id: Number(costumerId),
+          order_id: Number(orderId),
+        },
+        featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
+      })
+    )
+    const { ineligibleIngredientUuids } = response.data
+
+    dispatch({
+      type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
+      ineligibleIngredientUuids,
+    })
+  } catch (error) {
+    dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, error.message))
+  } finally {
+    dispatch(webClientStatusActions.pending(webClientActionTypes.GET_HELP_VALIDATE_ORDER, false))
+  }
 }
 
 export const validateDeliveryAction = (customerId, orderId) => async (dispatch, getState) => {

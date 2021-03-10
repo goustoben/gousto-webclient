@@ -15,6 +15,7 @@ const propTypes = {
     body: PropTypes.string.isRequired,
     button1Copy: PropTypes.string.isRequired,
   }).isRequired,
+  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
   isOrderValidationError: PropTypes.bool.isRequired,
   isValidateOrderLoading: PropTypes.bool.isRequired,
   order: PropTypes.shape({
@@ -130,7 +131,7 @@ class Ingredients extends PureComponent {
   }
 
   render() {
-    const { content, recipes, isValidateOrderLoading } = this.props
+    const { content, recipes, ineligibleIngredientUuids, isValidateOrderLoading } = this.props
     const { selectedIngredients } = this.state
     const hasSelectAnyIngredient = selectedIngredients.size > 0
     const buttonLeftUrl = client.getHelp.index
@@ -149,6 +150,7 @@ class Ingredients extends PureComponent {
         >
           <RecipeList recipes={recipes}>
             <RecipeIngredients
+              ineligibleIngredientUuids={ineligibleIngredientUuids}
               selectedIngredients={selectedIngredients}
               onChange={this.changeHandler}
             />

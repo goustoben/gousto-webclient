@@ -1,7 +1,7 @@
 import { List, Map, OrderedMap, fromJS } from 'immutable'
 import { storeGetHelpOrder } from 'routes/GetHelp/actions/getHelp'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
-import { actionTypes as webclientActionTypes } from 'actions/actionTypes'
+import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 
 const MOCK_ORDERS = [
@@ -119,7 +119,7 @@ describe('getHelp reducer', () => {
   describe('given an action with type GET_HELP_LOAD_ORDERS_BY_ID is received', () => {
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {
-        type: webclientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
+        type: webClientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
         order: MOCK_ORDERS[0]
       })
     })
@@ -181,6 +181,35 @@ describe('getHelp reducer', () => {
     test('the delivery compensation amount is stored in the new state.order.deliveryCompensationAmount', () => {
       expect(newState.getIn(['order', 'deliveryCompensationAmount']))
         .toEqual(COMPENSATION_AMOUNT)
+    })
+  })
+
+  describe('given an action with type GET_HELP_VALIDATE_ORDER is received', () => {
+    describe('when the payload does not contain ineligibleIngredientUuids', () => {
+      beforeEach(() => {
+        newState = getHelp(getHelpInitialState, {
+          type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
+        })
+      })
+
+      test('ineligibleIngredientUuids state is set as an empty array', () => {
+        expect(newState.get('ineligibleIngredientUuids').toJS()).toEqual([])
+      })
+    })
+
+    describe('when there is a payload', () => {
+      const INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
+
+      beforeEach(() => {
+        newState = getHelp(getHelpInitialState, {
+          type: webClientActionTypes.GET_HELP_VALIDATE_ORDER,
+          ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS
+        })
+      })
+
+      test('ineligibleIngredientUuids state is set as that payload', () => {
+        expect(newState.get('ineligibleIngredientUuids').toJS()).toEqual(INELIGIBLE_INGREDIENT_UUIDS)
+      })
     })
   })
 })

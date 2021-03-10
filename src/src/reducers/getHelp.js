@@ -18,6 +18,7 @@ const getHelpInitialState = fromJS({
   orders: Map(),
   recipes: [],
   selectedIngredients: {},
+  ineligibleIngredientUuids: [],
 })
 
 const reduceRecipes = (recipes) => (
@@ -178,6 +179,13 @@ const getHelp = (state, action) => {
   case actionTypes.GET_HELP_VALIDATE_DELIVERY: {
     return state.setIn(['order', 'deliveryCompensationAmount'], action.payload.compensation)
       .setIn(['order', 'hasPassedDeliveryValidation'], action.payload.isValid)
+  }
+  case webClientActionTypes.GET_HELP_VALIDATE_ORDER: {
+    if (action.ineligibleIngredientUuids) {
+      return state.set('ineligibleIngredientUuids', fromJS(action.ineligibleIngredientUuids))
+    }
+
+    return state
   }
   default:
     return state

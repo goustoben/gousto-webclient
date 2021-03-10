@@ -4,12 +4,10 @@ import { actionTypes } from 'actions/actionTypes'
 import {
   fetchOrderIssues as fetchOrderIssuesApi,
   validateIngredients,
-  validateOrder,
 } from 'apis/getHelp'
 import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
 import {
   fetchIngredientIssues as fetchOrderIssuesAction,
-  validateLatestOrder,
   validateSelectedIngredients,
 } from 'actions/getHelp'
 
@@ -130,51 +128,6 @@ describe('getHelp actions', () => {
       test('the validateIngredients has ssrShorterCompensationPeriod attached to the body request', () => {
         const [accessToken, body] = expectedParams
         expect(validateIngredients).toHaveBeenCalledWith(accessToken, {
-          ...body,
-          features: ['ssrShorterCompensationPeriod'],
-        })
-      })
-    })
-  })
-
-  describe('given validateLatestOrder is called', () => {
-    const body = {
-      accessToken: 'user-access-token',
-      costumerId: '777',
-      orderId: '888',
-    }
-    const expectedParams = [
-      'user-access-token',
-      {
-        customer_id: 777,
-        order_id: 888,
-        features: [],
-      }
-    ]
-
-    beforeEach(async () => {
-      getState = jest.fn().mockReturnValueOnce(GET_STATE_PARAMS)
-
-      await validateLatestOrder(body)(dispatch, getState)
-    })
-
-    test('the validateOrder is being called correctly', () => {
-      expect(validateOrder).toHaveBeenCalledWith(...expectedParams)
-    })
-
-    describe('when ssrShorterCompensationPeriod feature is turned on', () => {
-      beforeEach(async () => {
-        getState = jest.fn().mockReturnValueOnce({
-          ...GET_STATE_PARAMS,
-          features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: true } }),
-        })
-
-        await validateLatestOrder(body)(dispatch, getState)
-      })
-
-      test('the validateOrder has ssrShorterCompensationPeriod attached to the body request', () => {
-        const [accessToken, body] = expectedParams
-        expect(validateOrder).toHaveBeenCalledWith(accessToken, {
           ...body,
           features: ['ssrShorterCompensationPeriod'],
         })

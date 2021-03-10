@@ -1,6 +1,5 @@
 import {
   validateIngredients,
-  validateOrder,
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
 import logger from 'utils/logger'
@@ -103,32 +102,6 @@ const validateSelectedIngredients = ({
   }
 }
 
-const validateLatestOrder = ({
-  accessToken,
-  orderId,
-  costumerId
-}) => async (dispatch, getState) => {
-  dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
-  dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
-
-  try {
-    await validateOrder(
-      accessToken,
-      appendFeatureToRequest({
-        body: {
-          customer_id: Number(costumerId),
-          order_id: Number(orderId),
-        },
-        featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
-      })
-    )
-  } catch (error) {
-    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
-  } finally {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, false))
-  }
-}
-
 const fetchIngredientIssues = () => async (dispatch, getState) => {
   dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, true))
   dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, null))
@@ -211,7 +184,6 @@ export {
   storeSelectedIngredients,
   storeSelectedIngredientIssue,
   validateSelectedIngredients,
-  validateLatestOrder,
   fetchIngredientIssues,
   trackAcceptRefund,
   trackIngredientIssues,

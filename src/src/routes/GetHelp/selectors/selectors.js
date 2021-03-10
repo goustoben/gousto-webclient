@@ -26,3 +26,7 @@ export const getOrderDeliverySlot = (state) => (
 export const getTrackingUrl = (state) => (
   state.getHelp.getIn(['order', 'trackingUrl'])
 )
+
+export const getIneligibleIngredientUuids = (state) => (
+  state.getHelp.get('ineligibleIngredientUuids').toJS()
+)
