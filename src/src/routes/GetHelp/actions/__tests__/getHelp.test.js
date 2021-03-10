@@ -17,7 +17,8 @@ import {
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
   trackRejectRefund,
-  validateDeliveryAction
+  validateDeliveryAction,
+  validateLatestOrder,
 } from '../getHelp'
 
 jest.mock('utils/logger', () => ({
@@ -28,6 +29,13 @@ jest.mock('apis/deliveries')
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
 const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
+const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
+
+const GET_STATE_PARAMS = {
+  auth: Immutable.fromJS({ accessToken: 'access-token' }),
+  features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
+}
+
 safeJestMock(logger, 'error')
 
 const DELIVERY_COMPENSATION_ERRORS = {
@@ -37,11 +45,7 @@ const DELIVERY_COMPENSATION_ERRORS = {
 
 describe('GetHelp action generators and thunks', () => {
   const dispatch = jest.fn()
-  const getState = jest.fn().mockReturnValue({
-    auth: Immutable.fromJS({
-      accessToken: 'acc-token',
-    }),
-  })
+  let getState = jest.fn().mockReturnValue(GET_STATE_PARAMS)
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -320,6 +324,69 @@ describe('GetHelp action generators and thunks', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'GET_HELP_VALIDATE_DELIVERY',
         payload: { compensation: null, isValid: false }
+      })
+    })
+  })
+  describe('ValidateLatestOrder action', () => {
+    describe('when it succeeds', () => {
+      const params = {
+        accessToken: 'user-access-token',
+        costumerId: '777',
+        orderId: '888',
+      }
+      const validationResponse = {
+        valid: true,
+        ineligibleIngredientUuids: ['a', 'b'],
+      }
+      const expectedParams = [
+        'user-access-token',
+        {
+          customer_id: 777,
+          order_id: 888,
+          features: [],
+        }
+      ]
+
+      beforeEach(() => {
+        validateOrder.mockResolvedValueOnce({
+          data: validationResponse
+        })
+      })
+
+      describe('when validateLatestOrder is called', () => {
+        beforeEach(() => {
+          validateLatestOrder(params)(dispatch, getState)
+        })
+
+        test('the validateOrder is being called correctly', () => {
+          expect(validateOrder).toHaveBeenCalledWith(...expectedParams)
+        })
+
+        test('the ineligible ingredient uuids are dispatched correctly', () => {
+          expect(dispatch).toHaveBeenCalledWith({
+            type: 'GET_HELP_VALIDATE_ORDER',
+            ineligibleIngredientUuids: validationResponse.ineligibleIngredientUuids,
+          })
+        })
+      })
+
+      describe('when ssrShorterCompensationPeriod feature is turned on', () => {
+        beforeEach(async () => {
+          getState = jest.fn().mockReturnValueOnce({
+            ...GET_STATE_PARAMS,
+            features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: true } }),
+          })
+
+          await validateLatestOrder(params)(dispatch, getState)
+        })
+
+        test('the validateOrder has ssrShorterCompensationPeriod attached to the body request', () => {
+          const [accessToken, body] = expectedParams
+          expect(validateOrder).toHaveBeenCalledWith(accessToken, {
+            ...body,
+            features: ['ssrShorterCompensationPeriod'],
+          })
+        })
       })
     })
   })

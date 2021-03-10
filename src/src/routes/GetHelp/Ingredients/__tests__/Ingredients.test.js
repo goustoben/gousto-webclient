@@ -11,6 +11,7 @@ describe('<Ingredients />', () => {
     body: 'text...',
     button1Copy: 'Done',
   }
+  const INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
   const recipes = [
     { id: '1', title: 'test 1', ingredients: [{ uuid: '1', label: 'test' }] },
     {
@@ -39,6 +40,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          ineligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS}
           isOrderValidationError={false}
           isValidateOrderLoading={false}
           storeSelectedIngredients={() => {}}
@@ -94,6 +96,11 @@ describe('<Ingredients />', () => {
       expect(getHelpLayout.find('RecipeList')).toHaveLength(1)
       expect(getHelpLayout.find('RecipeList').prop('recipes')).toBe(recipes)
     })
+
+    test('RecipeIngredients are rendered with the ineligible ingredient uuids', () => {
+      expect(wrapper.find('RecipeList').prop('children').props.ineligibleIngredientUuids)
+        .toBe(INELIGIBLE_INGREDIENT_UUIDS)
+    })
   })
 
   describe('behaviour', () => {
@@ -114,6 +121,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          ineligibleIngredientUuids={[]}
           isOrderValidationError={false}
           isValidateOrderLoading={false}
           storeSelectedIngredients={storeSelectedIngredients}
@@ -248,6 +256,7 @@ describe('<Ingredients />', () => {
               user={user}
               recipes={recipes}
               content={content}
+              ineligibleIngredientUuids={[]}
               isOrderValidationError={false}
               isValidateOrderLoading={false}
               storeSelectedIngredients={storeSelectedIngredients}

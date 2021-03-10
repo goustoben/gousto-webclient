@@ -7,10 +7,12 @@ import {
   getOrderDeliveryDate,
   getOrderDeliverySlot,
   getTrackingUrl,
+  getIneligibleIngredientUuids,
 } from '../selectors'
 
 const ACCESS_TOKEN = 'shhh-its-a-secret'
 const ERROR_MESSAGE = 'An error message'
+const INELIGIBLE_INGREDIENT_UUIDS = ['a', 'b', 'c']
 const ORDER_PENDING_VALUE = 'order pending can be true or false'
 const TRACKING_URL_PENDING_VALUE = 'trackingUrl pending can be true or false'
 const DELIVERY_DATE = '2020-01-01 01:02:03'
@@ -32,6 +34,7 @@ const STATE = {
       deliverySlot: DELIVERY_SLOT,
       trackingUrl: TRACKING_URL,
     },
+    ineligibleIngredientUuids: fromJS(INELIGIBLE_INGREDIENT_UUIDS),
   }),
   pending: fromJS({
     GET_HELP_LOAD_ORDERS_BY_ID: ORDER_PENDING_VALUE,
@@ -49,6 +52,7 @@ describe('Get Help selectors', () => {
     ['getOrderDeliveryDate', getOrderDeliveryDate, DELIVERY_DATE],
     ['getOrderDeliverySlot', getOrderDeliverySlot, DELIVERY_SLOT],
     ['getTrackingUrl', getTrackingUrl, TRACKING_URL],
+    ['getIneligibleIngredientUuids', getIneligibleIngredientUuids, INELIGIBLE_INGREDIENT_UUIDS],
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {
     beforeEach(() => {
       result = selector(STATE)

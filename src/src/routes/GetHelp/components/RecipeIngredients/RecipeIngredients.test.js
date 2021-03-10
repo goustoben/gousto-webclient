@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeIngredients } from '.'
 
-describe('the RecipeWithIngredients componennt', () => {
+describe('the RecipeIngredients component', () => {
   let wrapper
 
   const TEST_INGREDIENTS = [
@@ -17,7 +17,11 @@ describe('the RecipeWithIngredients componennt', () => {
     ingredients: TEST_INGREDIENTS,
   }
 
+  const NO_INELIGIBLE_INGREDIENTS = []
+  const INELIGIBLE_INGREDIENT_UUIDS = ['2', '3']
+
   const testProps = {
+    ineligibleIngredientUuids: NO_INELIGIBLE_INGREDIENTS,
     recipe: TEST_RECIPE,
     selectedIngredients: new Map(),
     onChange: jest.fn(),
@@ -35,6 +39,41 @@ describe('the RecipeWithIngredients componennt', () => {
 
   test('renders a list of ingredients for the given recipe',() => {
     expect(wrapper.find('InputCheck').length).toBe(TEST_INGREDIENTS.length)
+  })
+
+  describe('when ineligible ingredients uuids are not passed', () => {
+    test('an Alert is not rendered', () => {
+      expect(wrapper.find('Alert').exists()).toBe(false)
+    })
+
+    test('all of the ingredients have disabled prop set to false', () => {
+      const enabledFields = wrapper.find('InputCheck').findWhere(el => el.prop('disabled') === false)
+      expect(enabledFields.length).toBe(TEST_INGREDIENTS.length)
+    })
+  })
+
+  describe('when ineligible ingredients uuids are passed', () => {
+    beforeEach(() => {
+      wrapper.setProps({ ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS })
+    })
+
+    test('an Alert is rendered', () => {
+      expect(wrapper.find('Alert').exists()).toBe(true)
+    })
+
+    test('ineligible ingredients have disabled prop set to true', () => {
+      const disabledFields = wrapper.find('InputCheck').findWhere(el => el.prop('disabled') === true)
+      disabledFields.forEach((disabledField, index) => {
+        const [, ingredientUuid] = disabledField.prop('id').split('&')
+        expect(ingredientUuid).toBe(INELIGIBLE_INGREDIENT_UUIDS[index])
+      })
+    })
+
+    test('correct number of eligible ingredients have disabled prop set to false', () => {
+      const enabledFields = wrapper.find('InputCheck').findWhere(el => el.prop('disabled') === false)
+      const [, ingredientUuid] = enabledFields.prop('id').split('&')
+      expect(ingredientUuid).toBe('1')
+    })
   })
 
   describe('when ingredients have been selected', () => {

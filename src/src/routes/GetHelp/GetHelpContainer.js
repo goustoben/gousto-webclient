@@ -3,11 +3,11 @@ import {
   loadOrderById,
   loadRecipesById,
   storeGetHelpOrderId,
-  validateLatestOrder
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import { getUserId } from 'selectors/user'
+import { validateLatestOrder } from './actions/getHelp'
 import { GetHelp } from './GetHelp'
 
 const getContent = ({ content }) => ({
