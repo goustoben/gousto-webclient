@@ -10,7 +10,7 @@ export const PaymentMethodListItem = ({
   currentPaymentMethod,
   setCurrentPaymentMethod,
 }) => {
-  const { paymentMethod, renderContent, hideContent } = methodDescriptor
+  const { paymentMethod } = methodDescriptor
   const isActive = paymentMethod === currentPaymentMethod
 
   return (
@@ -24,11 +24,6 @@ export const PaymentMethodListItem = ({
         isActive={isActive}
         setCurrentPaymentMethod={setCurrentPaymentMethod}
       />
-      <div
-        className={classNames(css.paymentMethodContent, { [css.hide]: !isActive || hideContent })}
-      >
-        {renderContent()}
-      </div>
     </li>
   )
 }

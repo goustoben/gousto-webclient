@@ -22,6 +22,7 @@ export const CheckoutCardDetails = (props) => {
     isCheckoutOverhaulEnabled,
     onFramesValidationChanged,
     onSubmitFromCardDetails,
+    isStartSubscriptionSubmitted,
   } = props
 
   if (isCheckoutOverhaulEnabled) {
@@ -38,6 +39,7 @@ export const CheckoutCardDetails = (props) => {
           sectionName={sectionName}
           onFramesValidationChanged={onFramesValidationChanged}
           onSubmitFromCardDetails={onSubmitFromCardDetails}
+          isStartSubscriptionSubmitted={isStartSubscriptionSubmitted}
         />
         <CheckoutAddress
           sectionName={sectionName}
@@ -91,6 +93,7 @@ CheckoutCardDetails.propTypes = {
   cardTokenReady: PropTypes.func.isRequired,
   disableCardSubmission: PropTypes.func.isRequired,
   isCheckoutOverhaulEnabled: PropTypes.bool,
+  isStartSubscriptionSubmitted: PropTypes.bool,
 }
 
 CheckoutCardDetails.defaultProps = {
@@ -103,4 +106,5 @@ CheckoutCardDetails.defaultProps = {
   asyncValidate: () => {},
   scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
+  isStartSubscriptionSubmitted: false,
 }

@@ -184,6 +184,10 @@ module.exports = {
       header: 'Payment failed',
       message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
+    'valid-card-details-not-provided': {
+      header: 'Payment failed',
+      message: 'Please check your card details and try again.'
+    },
     'generic': {
       header: 'Cannot create order',
       message: 'Try again or get in touch our Customer Care team.',

@@ -51,9 +51,9 @@
 }
 
 .payPalButtonVariation {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   @media BreakpointFromMedium {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
 }

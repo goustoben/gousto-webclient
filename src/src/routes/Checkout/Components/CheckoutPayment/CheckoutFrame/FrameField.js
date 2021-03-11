@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import InputError from 'Form/InputError'
 import Svg from 'Svg'
 import css from './CheckoutFrame.css'
@@ -16,7 +17,7 @@ export const FrameField = ({
   <div className={css.fieldContainer}>
     <div className={redesignCss.fieldHeader}>{header}</div>
     <div className={hasLockIcon ? css.fieldWithIcon : null}>
-      <div data-frames={dataFrames} className={css.iframeContainer} />
+      <div data-frames={dataFrames} className={classNames(css.iframeContainer, 'frame--activated', { 'frame--invalid': showError })} />
       {hasLockIcon && (
         <div className={css.lockIconContainer}>
           <Svg fileName="icon-checkout-lock" className={css.lockIcon} />

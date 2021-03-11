@@ -19,10 +19,10 @@
 }
 
 .checkoutOverhaulContainer {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   @media BreakpointFromMedium {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
 
   /* Temporary; short-term it should be applied at the level of CheckoutButton; long-term in ui-components/CTA. */

@@ -7,7 +7,7 @@
 .paymentMethods {
   list-style: none;
   padding: 0;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1rem;
 }
 
 .paymentMethodListItem {
@@ -51,8 +51,4 @@
 .paypalConnectedLabel {
   composes: fontBold from 'design-language/typography.css';
   color: Haricot;
-}
-
-.paymentMethodContent {
-  padding: 0.25rem 0.75rem 1.5rem;
 }

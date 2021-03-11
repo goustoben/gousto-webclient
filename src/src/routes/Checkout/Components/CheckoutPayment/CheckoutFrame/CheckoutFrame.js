@@ -4,7 +4,6 @@ import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
 import { actionTypes } from 'actions/actionTypes'
 import InputError from 'Form/InputError'
-import Svg from 'Svg'
 
 import { publicKey } from '../config'
 import { getErrorType } from './utils'
@@ -17,13 +16,17 @@ import redesignCss from '../../../CheckoutRedesignContainer.css'
 
 /* global Frames */
 class CheckoutFrame extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       showCardNumberError: false,
       showExpiryDateError: false,
       showCVVError: false,
+      isStartSubscriptionSubmitted: false,
+      isCardNumberEmpty: true,
+      isExpiryEmpty: true,
+      isCVVEmpty: true,
     }
   }
 
@@ -66,6 +69,21 @@ class CheckoutFrame extends React.Component {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { isStartSubscriptionSubmitted } = nextProps
+    const { showCardNumberError, showCVVError, showExpiryDateError, isCardNumberEmpty, isExpiryEmpty, isCVVEmpty } = prevState
+    if (prevState.isStartSubscriptionSubmitted !== isStartSubscriptionSubmitted) {
+      return {
+        showCardNumberError: isCardNumberEmpty || showCardNumberError,
+        showExpiryDateError: isExpiryEmpty || showExpiryDateError,
+        showCVVError: isCVVEmpty || showCVVError,
+        isStartSubscriptionSubmitted,
+      }
+    }
+
+    return null
+  }
+
   componentWillUnmount() {
     const { reloadCheckoutScript } = this.props
 
@@ -97,16 +115,17 @@ class CheckoutFrame extends React.Component {
 
   frameValidationChanged = (event) => {
     let newState = {}
+    const { element, isValid, isEmpty } = event
 
-    switch (event.element) {
+    switch (element) {
     case 'card-number':
-      newState = { showCardNumberError: !event.isValid }
+      newState = { showCardNumberError: !isValid, isCardNumberEmpty: isEmpty }
       break
     case 'expiry-date':
-      newState = { showExpiryDateError: !event.isValid }
+      newState = { showExpiryDateError: !isValid, isExpiryEmpty: isEmpty }
       break
     case 'cvv':
-      newState = { showCVVError: !event.isValid }
+      newState = { showCVVError: !isValid, isCVVEmpty: isEmpty }
       break
     default:
     }
@@ -209,16 +228,8 @@ class CheckoutFrame extends React.Component {
   }
 
   render() {
-    const { isCheckoutOverhaulEnabled, receiveRef, sectionName, isCheckoutVariationEnabled } = this.props
+    const { isCheckoutOverhaulEnabled, receiveRef, sectionName } = this.props
     const { showCardNumberError, showExpiryDateError, showCVVError } = this.state
-    const cardNameHeader = isCheckoutVariationEnabled
-      ? (
-        <div className={css.cardNameHeaderContainer}>
-          <span>Card number</span>
-          <Svg fileName="payment-method-4-cards" className={css.cardsIcon} />
-        </div>
-      )
-      : 'Card number'
 
     if (isCheckoutOverhaulEnabled) {
       return (
@@ -230,7 +241,7 @@ class CheckoutFrame extends React.Component {
         >
           <div className={css.row}>
             <FrameField
-              header={cardNameHeader}
+              header="Card number"
               hasLockIcon
               dataFrames="cardNumber"
               errorDataTesting="checkoutFrameCardNoError"
@@ -244,7 +255,7 @@ class CheckoutFrame extends React.Component {
               <CheckoutName
                 receiveRef={receiveRef}
                 sectionName={sectionName}
-                isCheckoutOverhaulEnabled
+                isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
               />
             </div>
           </div>
@@ -330,7 +341,7 @@ CheckoutFrame.propTypes = {
   onSubmitFromCardDetails: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   receiveRef: PropTypes.func,
-  isCheckoutVariationEnabled: PropTypes.bool,
+  isStartSubscriptionSubmitted: PropTypes.bool,
 }
 
 CheckoutFrame.defaultProps = {
@@ -358,7 +369,7 @@ CheckoutFrame.defaultProps = {
   onSubmitFromCardDetails: () => {},
   isCheckoutOverhaulEnabled: false,
   receiveRef: () => {},
-  isCheckoutVariationEnabled: false,
+  isStartSubscriptionSubmitted: false,
 }
 
 export { CheckoutFrame }
