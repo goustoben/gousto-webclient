@@ -8,7 +8,7 @@ import { RecipeTag } from '../RecipeTag'
 import { RecipeTagTitle } from './RecipeTagTitle'
 import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
 import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList/VariantRecipeListContainer'
-import { RecipeTileTitleContainer } from './RecipeTileTitle'
+import { Title } from '../Recipe'
 
 describe('RecipeTile', () => {
   let wrapper
@@ -77,9 +77,8 @@ describe('RecipeTile', () => {
       />)
     })
 
-    test('should contain a RecipeTileTitleContainer', () => {
-      expect(wrapper.find(RecipeTileTitleContainer)).toHaveLength(1)
-      expect(wrapper.find(RecipeTileTitleContainer).prop('recipeId')).toEqual(recipeId)
+    test('should contain a Title', () => {
+      expect(wrapper.find(Title)).toHaveLength(1)
     })
 
     describe('when a recipe is in stock', () => {

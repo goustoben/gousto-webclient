@@ -9,6 +9,7 @@ import Modal from 'Modal'
 import { DetailContainer } from '../Recipe/Detail'
 import { EscapeKeyPressed } from '../../../utils/DOMEvents'
 import { isWindowDefined } from '../../../utils/window'
+import { RecipeContextProvider } from '../context/recipeContext'
 
 const propTypes = {
   showOverlay: PropTypes.bool,
@@ -96,24 +97,26 @@ class DetailOverlay extends PureComponent {
 
     return (
       <Modal isOpen={showOverlay}>
-        <DetailContainer
-          id={detailRecipe.get('id')}
-          chosenSideRecipeId={chosenSideRecipeId}
-          view={view}
-          media={media}
-          title={detailRecipe.get('title', '')}
-          count={detailRecipe.getIn(['rating', 'count'], 0)}
-          average={detailRecipe.getIn(['rating', 'average'], 0)}
-          isOutOfStock={isOutOfStock}
-          description={detailRecipe.get('description')}
-          availability={detailRecipe.get('availability')}
-          youWillNeed={detailRecipe.get('basics')}
-          equipment={detailRecipe.get('equipment')}
-          surcharge={surcharge}
-          position={position}
-          isChefPrepared={isChefPrepared}
-          isFineDineIn={isFineDineIn}
-        />
+        <RecipeContextProvider value={detailRecipe}>
+          <DetailContainer
+            id={detailRecipe.get('id')}
+            chosenSideRecipeId={chosenSideRecipeId}
+            view={view}
+            media={media}
+            title={detailRecipe.get('title', '')}
+            count={detailRecipe.getIn(['rating', 'count'], 0)}
+            average={detailRecipe.getIn(['rating', 'average'], 0)}
+            isOutOfStock={isOutOfStock}
+            description={detailRecipe.get('description')}
+            availability={detailRecipe.get('availability')}
+            youWillNeed={detailRecipe.get('basics')}
+            equipment={detailRecipe.get('equipment')}
+            surcharge={surcharge}
+            position={position}
+            isChefPrepared={isChefPrepared}
+            isFineDineIn={isFineDineIn}
+          />
+        </RecipeContextProvider>
       </Modal>
     )
   }
