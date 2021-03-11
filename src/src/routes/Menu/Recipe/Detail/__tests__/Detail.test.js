@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
+import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { Detail } from '../Detail'
 import { DetailContainer } from '../DetailContainer'
@@ -45,6 +46,62 @@ describe('<Detail />', () => {
 
   beforeEach(() => {
     wrapper = shallow(DETAIL)
+  })
+
+  test('should render two <Title /> components', () => {
+    expect(wrapper.find(Title)).toHaveLength(2)
+  })
+
+  test('first <Title /> component should have class containerLG', () => {
+    expect(wrapper.find(Title).at(0).hasClass('containerLG')).toBeTruthy()
+  })
+
+  test('second <Title /> component should have class containerLG', () => {
+    expect(wrapper.find(Title).at(1).hasClass('containerLG')).toBeTruthy()
+  })
+
+  describe('when view is "detail"', () => {
+    beforeEach(() => {
+      wrapper.setProps({ view: 'detail' })
+    })
+
+    test('first <Title /> component should have class detailHeading', () => {
+      expect(wrapper.find(Title).at(0).hasClass('detailHeading')).toBeTruthy()
+    })
+
+    test('second <Title /> component should have class detailHeading', () => {
+      expect(wrapper.find(Title).at(1).hasClass('detailHeading')).toBeTruthy()
+    })
+
+    test('first <Title /> component should not have class fineDineInDetailHeading', () => {
+      expect(wrapper.find(Title).at(0).hasClass('fineDineInDetailHeading')).toBeFalsy()
+    })
+
+    test('second <Title /> component should not have class fineDineInDetailHeading', () => {
+      expect(wrapper.find(Title).at(1).hasClass('fineDineInDetailHeading')).toBeFalsy()
+    })
+  })
+
+  describe('when view is "fineDineInDetail"', () => {
+    beforeEach(() => {
+      wrapper.setProps({ view: 'fineDineInDetail' })
+    })
+
+    test('first <Title /> component should have class fineDineInDetailHeading', () => {
+      expect(wrapper.find(Title).at(0).hasClass('fineDineInDetailHeading')).toBeTruthy()
+    })
+
+    test('second <Title /> component should have class fineDineInDetailHeading', () => {
+      expect(wrapper.find(Title).at(1).hasClass('fineDineInDetailHeading')).toBeTruthy()
+    })
+
+    test('first <Title /> component should not have class detailHeading', () => {
+      expect(wrapper.find(Title).at(0).hasClass('detailHeading')).toBeFalsy()
+    })
+
+    test('second <Title /> component should not have class detailHeading', () => {
+      expect(wrapper.find(Title).at(1).hasClass('detailHeading')).toBeFalsy()
+    })
   })
 
   test('should render an overlay which calls the closeRecipeDetails function prop on click', () => {

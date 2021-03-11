@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import { Title } from 'routes/Menu/Recipe/Title'
+import { Title } from '../Title'
 
 describe('<Title />', () => {
   test('should return a <h2>', () => {

@@ -1,0 +1,68 @@
+@value ScreenXXSMax, ScreenXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMax from 'styles/screenSizes.css';
+@value sizeXXL, sizeXL, sizeLG, sizeMD, sizeSM, bodyFontStackBold from 'styles/typography.css';
+@value Cacao, White from 'styles/colors.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.base {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	composes: textBold from 'styles/typography.css';
+}
+
+.container {
+	composes: headerMD textBold from 'styles/typography.css';
+	composes: base;
+	font-size: sizeSM;
+}
+
+.containerLG {
+	composes: headerLG from 'styles/typography.css';
+	composes: base;
+	margin-top: 0;
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+}
+
+.detailHeading {
+	composes: paddingMDLeft from 'sass-loader!styles/spacing.scss';
+	font-family: bodyFontStackBold;
+	margin-top: SpacingSM;
+	margin-bottom: 0;
+	font-size: sizeXXL;
+	@media ScreenSMMax {
+		font-size: sizeXL;
+	}
+	@media ScreenXSMax {
+		font-size: sizeLG;
+	}
+	@media ScreenXXSMax {
+		margin-top: 0;
+	}
+}
+
+.icon {
+	margin-left: 0.25rem;
+	display: inline;
+	composes: fa-basic-class fa-angle-right from 'styles/vendor/font-awesome-module.css';
+}
+
+.largeIcon {
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+
+.link {
+	cursor: pointer;
+}
+
+.fineDineInDetailHeading {
+	composes: headlineFont from 'styles/typography.css';
+	margin-top: SpacingSM;
+	margin-bottom: 0;
+	font-size: sizeMD;
+
+	@media ScreenMDMin {
+		font-size: sizeXXL;
+	}
+}

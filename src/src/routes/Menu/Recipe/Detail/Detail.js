@@ -1,9 +1,10 @@
 import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
 import { Image } from 'routes/Menu/Recipe/Image'
-import { Title } from 'routes/Menu/Recipe/Title'
+import { Title } from 'routes/Menu/components/Recipe'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
 import Carousel from './Carousel'
 
@@ -18,6 +19,7 @@ import { DetailAttributeGridContainer } from './DetailAttributeGrid'
 import { DetailAddRecipe } from './DetailAddRecipe'
 
 import css from './Detail.css'
+import titleCss from './DetailTitle.css'
 
 export const Detail = (props) => {
   const {
@@ -35,6 +37,13 @@ export const Detail = (props) => {
   } = props
 
   const recipeLegalDetailId = chosenSideRecipeId || id
+  const titleClass = classnames(
+    titleCss.containerLG,
+    {
+      [titleCss.detailHeading]: view === 'detail',
+      [titleCss.fineDineInDetailHeading]: view === 'fineDineInDetail'
+    }
+  )
 
   return (
     <div
@@ -49,7 +58,7 @@ export const Detail = (props) => {
         <div className={css.header}>
           <div className={css.stickyHeader}>
             <div className={css.titleFlex}>
-              <Title title={title} view={view} detail />
+              <Title className={titleClass} />
               <span
                 className={css.closeIcon}
                 role="button"
@@ -62,7 +71,7 @@ export const Detail = (props) => {
           </div>
           <div className={css.badges}>
             <div className={css.titleHidden}>
-              <Title title={title} view={view} detail />
+              <Title className={titleClass} />
             </div>
             <RecipeTag brandTag={brandAvailability} isOnDetailScreen />
             <RecipeRating count={count} average={average} />

@@ -12,9 +12,9 @@ import Link from 'Link'
 import { Image } from 'routes/Menu/Recipe/Image'
 import Info from 'routes/Menu/Recipe/Info'
 import { RecipeRating } from 'routes/Menu/Recipe/Rating'
-import { Title } from 'routes/Menu/Recipe/Title'
 import { H1 } from 'Page/Header'
 import { ReadMoreText } from 'routes/Cookbook/Hub/ReadMoreText'
+import { Title } from '../../Hub/Title'
 
 jest.mock('utils/logger', () => ({
   error: () => { }

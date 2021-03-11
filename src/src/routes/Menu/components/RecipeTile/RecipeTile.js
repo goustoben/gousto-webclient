@@ -9,7 +9,7 @@ import { RecipeTilePurchaseInfoContainer } from './RecipeTilePurchaseInfo'
 import css from './RecipeTile.css'
 import { VariantHeaderContainer } from '../../Recipe/VariantHeader/VariantHeaderContainer'
 import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList/VariantRecipeListContainer'
-import { RecipeTileTitleContainer } from './RecipeTileTitle'
+import { Title } from '../Recipe'
 
 const RecipeTile = ({
   browserType,
@@ -93,7 +93,8 @@ const RecipeTile = ({
           {hasTopRightTag && (
             <RecipeTagTitle brandTag={brandTagline} showVariantHeader={showVariantHeader} />
           )}
-          <RecipeTileTitleContainer recipeId={recipeId} />
+          <Title className={css.recipeTileTitle} />
+
           <RecipeTilePurchaseInfoContainer
             recipeId={recipeId}
             originalId={originalId}

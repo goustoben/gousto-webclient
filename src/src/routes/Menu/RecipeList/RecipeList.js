@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import { RecipeTileContainer } from '../components/RecipeTile'
 import css from './RecipeList.css'
 import { SignpostingExperimentContext, isMandatoryBucket, isSignpostingBucket } from '../context/uiSignpostingContext'
+import { RecipeContextProvider } from '../context/recipeContext'
 
 class RecipeList extends React.PureComponent {
   componentDidMount() {
@@ -40,14 +41,15 @@ class RecipeList extends React.PureComponent {
           return (
             <div className={css.emeRecipeList}>
               {recipes.map((value) => (
-                <RecipeTileContainer
-                  key={value.recipe.get('id')}
-                  recipeId={value.recipe.get('id')}
-                  originalId={value.originalId}
-                  categoryId={currentCollectionId}
-                  inMandatoryVariantExperimentBucket={mandatory}
-                  inSignpostingExperimentBucket={signposting}
-                />
+                <RecipeContextProvider key={value.recipe.get('id')} value={value.recipe}>
+                  <RecipeTileContainer
+                    recipeId={value.recipe.get('id')}
+                    originalId={value.originalId}
+                    categoryId={currentCollectionId}
+                    inMandatoryVariantExperimentBucket={mandatory}
+                    inSignpostingExperimentBucket={signposting}
+                  />
+                </RecipeContextProvider>
               ))}
             </div>
           )

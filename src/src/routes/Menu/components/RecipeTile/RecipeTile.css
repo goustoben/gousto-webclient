@@ -119,3 +119,15 @@
         right: -6%;
     }
 }
+
+.recipeTileTitle {
+    margin-bottom: 1rem;
+    flex: 1;
+    font-family: axiformaFontStack;
+    font-size: sizeXS;
+    font-weight: 600;
+    line-height: 1.6;
+    @media ScreenSMMin {
+        font-size: sizeMD;
+    }
+}
