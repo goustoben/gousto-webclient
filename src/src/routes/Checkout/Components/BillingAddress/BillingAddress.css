@@ -1,5 +1,4 @@
 @value Blackberry, Blueberry, Bluecheese from 'styles/colors.css';
-@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 
 .textSMWithBottomMargin {
 	composes: textSM from 'styles/typography.css';
@@ -33,9 +32,5 @@
 }
 
 .variationContainer {
-  margin-bottom: 1.5rem;
-
-  @media BreakpointFromMedium {
-    margin-bottom: 2rem;
-  }
+  margin-bottom: 1rem;
 }

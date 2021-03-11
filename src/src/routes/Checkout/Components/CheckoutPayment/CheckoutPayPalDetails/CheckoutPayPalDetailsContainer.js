@@ -4,7 +4,6 @@ import {
   clearPayPalErrors,
   setPayPalDeviceData,
   setPayPalNonce,
-  setCurrentPaymentMethod,
 } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getPayPalClientToken, isPayPalReady } from 'selectors/payment'
@@ -22,7 +21,6 @@ const mapDispatchToProps = {
   trackEvent: trackUTMAndPromoCode,
   firePayPalError,
   clearPayPalErrors,
-  setCurrentPaymentMethod,
 }
 
 export const CheckoutPayPalDetailsContainer = connect(

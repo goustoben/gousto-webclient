@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { PaymentMethod } from 'config/signup'
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 import { PayPalConfirmation } from '../../PayPalConfirmation'
@@ -154,7 +153,6 @@ describe('CheckoutPayPalDetails', () => {
     let trackEvent
     let braintree
     let paypal
-    let setCurrentPaymentMethod
     const clientInstance = {
       name: 'client-instance'
     }
@@ -177,7 +175,6 @@ describe('CheckoutPayPalDetails', () => {
       firePayPalError = jest.fn()
       setPayPalNonce = jest.fn()
       trackEvent = jest.fn()
-      setCurrentPaymentMethod = jest.fn()
       paypalButtonsInstance = {
         render: jest.fn(() => Promise.resolve())
       }
@@ -293,31 +290,6 @@ describe('CheckoutPayPalDetails', () => {
         await wrapper.instance().initPayPal()
 
         expect(wrapper.state().isPayPalInitialized).toBe(false)
-      })
-    })
-
-    describe('when isPaymentMethodVariationEnabled is true', () => {
-      let buttonConfig
-
-      beforeEach(async () => {
-        wrapper.setProps({
-          isPaymentMethodVariationEnabled: true,
-          setCurrentPaymentMethod
-        })
-        await wrapper.instance().initPayPal()
-
-        // eslint-disable-next-line prefer-destructuring
-        buttonConfig = paypal.Buttons.mock.calls[0][0]
-      })
-
-      describe('and createBillingAgreement is called', () => {
-        beforeEach(() => {
-          buttonConfig.createBillingAgreement()
-        })
-
-        test('then should trigger setCurrentPaymentMethod', () => {
-          expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
-        })
       })
     })
 
@@ -442,36 +414,6 @@ describe('CheckoutPayPalDetails', () => {
       })
 
       test('then should have style', () => {
-        expect(paypalObj.Buttons).toHaveBeenCalledWith(expect.objectContaining({
-          fundingSource: 'PAYPAL',
-          style: { height: 48 }
-        }))
-      })
-    })
-  })
-
-  describe('when isPaymentMethodVariationEnabled is true', () => {
-    const paypalButtonsInstance = {
-      name: 'data-collector-instance',
-      render: jest.fn(() => Promise.resolve())
-    }
-    const paypalObj = {
-      FUNDING: {
-        PAYPAL: 'PAYPAL',
-      },
-      Buttons: jest.fn(() => paypalButtonsInstance),
-    }
-
-    beforeEach(() => {
-      global.paypal = paypalObj
-      wrapper.setProps({
-        isPaymentMethodVariationEnabled: true,
-      })
-      wrapper.instance().renderPayPalButton()
-    })
-
-    describe('and renderPayPalButton is called', () => {
-      test('then should have style with proper options', () => {
         expect(paypalObj.Buttons).toHaveBeenCalledWith(expect.objectContaining({
           fundingSource: 'PAYPAL',
           style: {

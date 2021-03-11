@@ -16,5 +16,4 @@ export const methodDescriptorPropType = {
   paymentMethod: PropTypes.string.isRequired,
   leftItem: itemType.isRequired,
   rightItem: itemType.isRequired,
-  renderContent: PropTypes.func.isRequired,
 }

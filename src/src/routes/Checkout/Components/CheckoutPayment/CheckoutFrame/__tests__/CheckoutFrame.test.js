@@ -592,4 +592,19 @@ describe('CheckoutFrame', () => {
       expect(initFrames).toHaveBeenCalled()
     })
   })
+
+  describe('when isStartSubscriptionSubmitted is true', () => {
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame isStartSubscriptionSubmitted />)
+    })
+
+    test('then wrapper state should be updated properly', () => {
+      expect(wrapper.state()).toEqual(expect.objectContaining({
+        showCardNumberError: true,
+        showExpiryDateError: true,
+        showCVVError: true,
+        isStartSubscriptionSubmitted: true,
+      }))
+    })
+  })
 })

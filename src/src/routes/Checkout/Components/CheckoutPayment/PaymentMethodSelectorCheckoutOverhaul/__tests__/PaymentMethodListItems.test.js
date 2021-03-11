@@ -16,7 +16,6 @@ describe('given PaymentMethodListItem', () => {
         className: 'className',
         fileName: 'payment-method-4-cards',
       },
-      renderContent: jest.fn(),
     },
     currentPaymentMethod: 'card',
     setCurrentPaymentMethod: jest.fn(),
@@ -29,6 +28,5 @@ describe('given PaymentMethodListItem', () => {
   test('should be rendered correctly', () => {
     expect(wrapper.find('li')).toHaveLength(1)
     expect(wrapper.find('PaymentMethodToggle').exists()).toBeTruthy()
-    expect(wrapper.find('.paymentMethodContent')).toHaveLength(1)
   })
 })

@@ -9,10 +9,20 @@ export const PaymentMethodSelectorCheckoutOverhaul = ({
   currentPaymentMethod,
   setCurrentPaymentMethod,
   isPayPalReady,
-  renderCardContent,
-  renderPaypalContent,
 }) => {
   const methodDescriptors = [
+    {
+      paymentMethod: PaymentMethod.Card,
+      leftItem: {
+        itemType: 'label',
+        text: 'Card payment',
+      },
+      rightItem: {
+        itemType: 'svg',
+        className: css.cardsIcon,
+        fileName: 'payment-method-4-cards',
+      },
+    },
     {
       paymentMethod: PaymentMethod.PayPal,
       leftItem: {
@@ -26,21 +36,6 @@ export const PaymentMethodSelectorCheckoutOverhaul = ({
         text: 'Connected',
         hide: !isPayPalReady,
       },
-      renderContent: renderPaypalContent,
-      hideContent: isPayPalReady,
-    },
-    {
-      paymentMethod: PaymentMethod.Card,
-      leftItem: {
-        itemType: 'label',
-        text: 'Card payment',
-      },
-      rightItem: {
-        itemType: 'svg',
-        className: css.cardsIcon,
-        fileName: 'payment-method-4-cards',
-      },
-      renderContent: renderCardContent,
     },
   ]
 
@@ -62,6 +57,4 @@ PaymentMethodSelectorCheckoutOverhaul.propTypes = {
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func.isRequired,
   isPayPalReady: PropTypes.bool.isRequired,
-  renderCardContent: PropTypes.func.isRequired,
-  renderPaypalContent: PropTypes.func.isRequired,
 }

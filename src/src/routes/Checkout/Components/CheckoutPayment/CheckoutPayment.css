@@ -47,38 +47,19 @@
 
 .paypalSetupBox {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.paypalSetupIcon {
-  width: 92px;
-  height: 50px;
+  composes: fontStyleBody from 'design-language/typography.css';
   margin-bottom: 1rem;
-}
-
-.paypalSetupInfo {
-  text-align: center;
-  composes: fontStyleS from 'design-language/typography.css';
-}
-
-.methodSeparatorContainer {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
 
   @media BreakpointFromMedium {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
 }
 
-.border {
-  border-bottom: 1px solid Oyster;
-  width: 100%;
+.paypalSetupInfo {
 }
 
-.content {
-  padding: 0 1rem;
-  composes: fontStyleSubHead from 'design-language/typography.css';
-  color: LightestAccessible;
+.padlockIcon {
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  margin-right: 0.5rem;
 }

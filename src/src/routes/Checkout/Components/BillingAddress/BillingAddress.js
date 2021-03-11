@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import CheckBox from 'Form/CheckBox'
 import { showAddress } from 'routes/Checkout/utils/delivery'
+import { onEnter } from 'utils/accessibility'
 import css from './BillingAddress.css'
 import redesignCss from '../../CheckoutRedesignContainer.css'
 
@@ -26,13 +27,12 @@ export class BillingAddress extends React.PureComponent {
       receiveRef,
       scrollToFirstMatchingRef,
       isCheckoutOverhaulEnabled,
-      isCheckoutVariationEnabled,
     } = this.props
     const isBillingAddressDifferent = formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
 
     if (isCheckoutOverhaulEnabled) {
       return (
-        <div className={classNames({ [css.variationContainer]: isCheckoutVariationEnabled })}>
+        <div className={classNames({ [css.variationContainer]: isCheckoutOverhaulEnabled })}>
           <div className={redesignCss.fieldHeader}>Billing address</div>
           <CheckBox
             checked={!isBillingAddressDifferent}
@@ -73,9 +73,12 @@ export class BillingAddress extends React.PureComponent {
           )}
           <p>
             <span
+              role="button"
+              tabIndex="0"
               data-testing="checkout_payment_toggle"
               className={css.link}
               onClick={this.toggleDeliveryAddress}
+              onKeyDown={onEnter(this.toggleDeliveryAddress)}
             >
               {toggleAddressText}
               &nbsp;
@@ -112,7 +115,6 @@ BillingAddress.propTypes = {
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
-  isCheckoutVariationEnabled: PropTypes.bool,
 }
 
 BillingAddress.defaultProps = {
@@ -120,5 +122,4 @@ BillingAddress.defaultProps = {
   receiveRef: () => {},
   scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
-  isCheckoutVariationEnabled: false,
 }

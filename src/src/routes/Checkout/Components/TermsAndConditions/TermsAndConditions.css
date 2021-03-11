@@ -1,4 +1,5 @@
 @value Blueberry, Bluecheese from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 
 .centeredSmallTextWithTopMargin {
   composes: textCenter textSM from 'styles/typography.css';
@@ -17,7 +18,11 @@
 
 .checkoutOverhaulTermsAndConditions {
   composes: fontStyleXS from 'design-language/typography.css';
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-top: 1.25rem;
+  }
 }
 
 .checkoutOverhaulLink {

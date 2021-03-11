@@ -4,7 +4,6 @@ import classNames from 'classnames'
 
 import { Loader } from 'goustouicomponents'
 
-import { PaymentMethod } from 'config/signup'
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
 import { PayPalConfirmation } from '../PayPalConfirmation'
 
@@ -99,15 +98,12 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderPayPalButton = () => {
-    const { firePayPalError, trackEvent, isCheckoutOverhaulEnabled, isPaymentMethodVariationEnabled, setCurrentPaymentMethod } = this.props
+    const { firePayPalError, trackEvent, isCheckoutOverhaulEnabled } = this.props
 
     const buttonsConfig = {
       fundingSource: paypal.FUNDING.PAYPAL,
       createBillingAgreement: () => {
         trackEvent(clickContinuePayPal)
-        if (isPaymentMethodVariationEnabled) {
-          setCurrentPaymentMethod(PaymentMethod.PayPal)
-        }
 
         return this.createPayment()
       },
@@ -125,12 +121,6 @@ class CheckoutPayPalDetails extends React.PureComponent {
     }
 
     if (isCheckoutOverhaulEnabled) {
-      buttonsConfig.style = {
-        height: 48,
-      }
-    }
-
-    if (isPaymentMethodVariationEnabled) {
       buttonsConfig.style = {
         height: 48,
         label: 'pay',
@@ -187,7 +177,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderCheckoutOverhaul() {
-    const { hide, isPayPalSetupDone, hasErrors, isPaymentMethodVariationEnabled } = this.props
+    const { hide, isPayPalSetupDone, hasErrors, isCheckoutOverhaulEnabled } = this.props
     const { isPayPalInitialized } = this.state
 
     const isLoading = !hasErrors && !isPayPalInitialized
@@ -195,7 +185,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
     return (
       <div className={classNames(css.checkoutOverhaul, {
         [css.hide]: hide || isPayPalSetupDone,
-        [css.payPalButtonVariation]: isPaymentMethodVariationEnabled,
+        [css.payPalButtonVariation]: isCheckoutOverhaulEnabled,
       })}
       >
         <div
@@ -236,8 +226,6 @@ CheckoutPayPalDetails.propTypes = {
   isPayPalSetupDone: PropTypes.bool,
   token: PropTypes.string,
   isCheckoutOverhaulEnabled: PropTypes.bool,
-  isPaymentMethodVariationEnabled: PropTypes.bool,
-  setCurrentPaymentMethod: PropTypes.func,
 }
 
 CheckoutPayPalDetails.defaultProps = {
@@ -252,8 +240,6 @@ CheckoutPayPalDetails.defaultProps = {
   isPayPalSetupDone: false,
   token: null,
   isCheckoutOverhaulEnabled: false,
-  isPaymentMethodVariationEnabled: false,
-  setCurrentPaymentMethod: () => {},
 }
 
 export { CheckoutPayPalDetails }
