@@ -182,7 +182,7 @@ describe('AddRecipeButton', () => {
           })
         })
 
-        describe('when mandatoryVariantFeatureEnabled is true', () => {
+        describe('when mandatoryVariantFeatureEnabled is true and hasBasketPostcode is true', () => {
           let recipeVariantDropdownExpanded
 
           beforeEach(() => {
@@ -190,6 +190,7 @@ describe('AddRecipeButton', () => {
 
             wrapper.setProps({
               mandatoryVariantFeatureEnabled: true,
+              hasBasketPostcode: true,
               recipeVariantDropdownExpanded
             })
           })
@@ -214,6 +215,36 @@ describe('AddRecipeButton', () => {
             })
 
             expect(buttonsProps.basketRecipeAddAttempt).not.toHaveBeenCalled()
+          })
+        })
+
+        describe('when mandatoryVariantFeatureEnabled is true and hasBasketPostcode is false', () => {
+          let recipeVariantDropdownExpanded
+
+          beforeEach(() => {
+            recipeVariantDropdownExpanded = jest.fn()
+
+            wrapper.setProps({
+              mandatoryVariantFeatureEnabled: true,
+              hasBasketPostcode: false,
+              recipeVariantDropdownExpanded
+            })
+          })
+
+          test('should not call recipeVariantDropdownExpanded', () => {
+            wrapper.find('.addButton').simulate('click', {
+              stopPropagation: () => { }
+            })
+
+            expect(recipeVariantDropdownExpanded).not.toHaveBeenCalled()
+          })
+
+          test('should call basketRecipeAddAttempt', () => {
+            wrapper.find('.addButton').simulate('click', {
+              stopPropagation: () => { }
+            })
+
+            expect(buttonsProps.basketRecipeAddAttempt).toHaveBeenCalledWith('1234')
           })
         })
 
