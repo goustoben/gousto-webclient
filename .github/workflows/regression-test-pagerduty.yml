@@ -1,9 +1,9 @@
 name: Raise Pager Duty Incident on Test Fail
 on:
   # temporary for debugging
-  push
+  # push
   # Triggered on webhook from circle CI job
-  # repository_dispatch:
+  repository_dispatch:
   #   types:
   #     - GET_WEBHOOK_NAME
 
