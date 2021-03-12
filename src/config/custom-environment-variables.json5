@@ -1,0 +1,21 @@
+// config/custom-environment-variables.json
+// Custom environment variables can override all files
+{
+  "build": 'NODE_ENV',
+  // These are pushed in via Docker as environment variables
+  "environment_name": "npm_config_gousto_webclient_environment_name",
+  "api_name": "npm_config_gousto_webclient_environment_name",
+  "domain": "npm_config_gousto_webclient_domain",
+  "client_protocol": "npm_config_gousto_webclient_client_protocol",
+  "cloudfront_url": "npm_config_gousto_webclient_cloudfront_url",
+  "checkout_pk": "npm_config_gousto_webclient_checkoutcom_pk",
+  // These secrets are loaded into the environment via the ecs_start.sh
+  // These sercrets are read from the S3 file.
+  "outbound_core_access_key": "outbound_core_access_key",
+  "outbound_productservice_access_key": "outbound_productservice_access_key",
+  "segment_api_key": "segment_api_key",
+  // These secrets are loaded into the env.js files and overwritten
+  "api_token": "api_token",
+  "auth_client_id": "auth_client_id",
+  "auth_client_secret": "auth_client_secret",
+}

@@ -8,12 +8,18 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
-const build = process.env.NODE_ENV || 'development'
-const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
-const domain = process.env.npm_config_gousto_webclient_domain || 'gousto.local'
-const clientProtocol = process.env.npm_config_gousto_webclient_client_protocol || 'http'
-const cloudfrontUrl = process.env.npm_config_gousto_webclient_cloudfront_url || ''
-const checkout_pk = process.env.npm_config_gousto_webclient_checkoutcom_pk || ''
+const nodeConfig = require("node-config");
+
+const apiName = nodeConfig.get('api_name')
+const apiToken = nodeConfig.get('api_token') 
+const authClientId = nodeConfig.get('auth_client_id')
+const authClientSecret = nodeConfig.get('auth_client_id')
+const build = nodeConfig.get('build')
+const checkout_pk = nodeConfig.get('checkout_pk')
+const clientProtocol = nodeConfig.get('client_protocol')
+const cloudfrontUrl = nodeConfig.get('cloudfront_url')
+const domain = nodeConfig.get('domain')
+const envName = nodeConfig.get('environment_name')
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 // eslint-disable-next-line no-console
@@ -115,11 +121,15 @@ const config = {
       __CLIENT__: false,
       __TEST__: false,
 
-      __ENV__: JSON.stringify(envName),
-      __DOMAIN__: JSON.stringify(domain),
+      __API_ENV__: JSON.stringify(apiName),
+      __API_TOKEN__: JSON.stringify(apiToken),
+      __AUTH_CLIENT_ID__: JSON.stringify(authClientId),
+      __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
+      __CHECKOUT_PK__: JSON.stringify(checkout_pk),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
       __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
-      __CHECKOUT_PK__: JSON.stringify(checkout_pk),
+      __DOMAIN__: JSON.stringify(domain),
+      __ENV__: JSON.stringify(envName),
       'process.env.NODE_ENV': JSON.stringify(build),
     }),
   ],

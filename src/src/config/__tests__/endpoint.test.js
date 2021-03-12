@@ -12,12 +12,12 @@ describe('endpoint', () => {
     describe('and being in the server side', () => {
       beforeEach(() => {
         global.__SERVER__ = true
-        global.__ENV__ = 'whateverenv'
+        global.__API_ENV__ = 'whateverenv'
       })
 
       test('an http address with the corresponding ENV, SERVICE and DOMAIN is returned', () => {
         const url = endpoint(service)
-        expect(url).toBe(`http://${__ENV__}-${service}.${__DOMAIN__}`)
+        expect(url).toBe(`http://${__API_ENV__}-${service}.${__DOMAIN__}`)
       })
     })
 
@@ -28,7 +28,7 @@ describe('endpoint', () => {
 
       describe('and the environment is production', () => {
         beforeEach(() => {
-          global.__ENV__ = 'production'
+          global.__API_ENV__ = 'production'
         })
 
         test('an https address with "www" and without the service, but with the DOMAIN is returned', () => {
@@ -39,12 +39,12 @@ describe('endpoint', () => {
 
       describe('and the environment is not production', () => {
         beforeEach(() => {
-          global.__ENV__ = 'haricots'
+          global.__API_ENV__ = 'haricots'
         })
 
         test('an https address with the corresponding ENV, SERVICE and DOMAIN is returned', () => {
           const url = endpoint(service)
-          expect(url).toBe(`https://${__ENV__}-${service}.${__DOMAIN__}`)
+          expect(url).toBe(`https://${__API_ENV__}-${service}.${__DOMAIN__}`)
         })
       })
     })
@@ -57,7 +57,7 @@ describe('endpoint', () => {
 
     describe('and the env is not "local"', () => {
       beforeEach(() => {
-        global.__ENV__ = 'haricots'
+        global.__API_ENV__ = 'haricots'
       })
 
       describe('and being in the server side', () => {
@@ -67,7 +67,7 @@ describe('endpoint', () => {
 
         test('an http address with the corresponding ENV, SERVICE and DOMAIN is returned', () => {
           const url = endpoint(service)
-          expect(url).toBe(`http://${__ENV__}-${service}.${__DOMAIN__}`)
+          expect(url).toBe(`http://${__API_ENV__}-${service}.${__DOMAIN__}`)
         })
       })
 
@@ -83,7 +83,7 @@ describe('endpoint', () => {
 
           test('an https API address with the corresponding ENV and DOMAIN is returned', () => {
             const url = endpoint(service)
-            expect(url).toBe(`https://${__ENV__}-api.${__DOMAIN__}`)
+            expect(url).toBe(`https://${__API_ENV__}-api.${__DOMAIN__}`)
           })
 
           describe('and a version was passed', () => {
@@ -91,7 +91,7 @@ describe('endpoint', () => {
               const version = 'v8'
               const url = endpoint(service, version)
               expect(url).toBe(
-                `https://${__ENV__}-api.${__DOMAIN__}/${version}`
+                `https://${__API_ENV__}-api.${__DOMAIN__}/${version}`
               )
             })
           })
@@ -102,7 +102,7 @@ describe('endpoint', () => {
             const version = 'v7'
             const url = endpoint(service, version)
             expect(url).toBe(
-              `https://${__ENV__}-api.${__DOMAIN__}/${service}/${version}`
+              `https://${__API_ENV__}-api.${__DOMAIN__}/${service}/${version}`
             )
           })
         })
@@ -110,7 +110,7 @@ describe('endpoint', () => {
         describe('and a version was not passed', () => {
           test('an https API address with the corresponding ENV, DOMAIN and SERVICE is returned', () => {
             const url = endpoint(service)
-            expect(url).toBe(`https://${__ENV__}-api.${__DOMAIN__}/${service}`)
+            expect(url).toBe(`https://${__API_ENV__}-api.${__DOMAIN__}/${service}`)
           })
         })
       })
@@ -118,7 +118,7 @@ describe('endpoint', () => {
 
     describe('and the env is "local"', () => {
       beforeEach(() => {
-        global.__ENV__ = 'local'
+        global.__API_ENV__ = 'local'
       })
 
       describe('and the service is core', () => {

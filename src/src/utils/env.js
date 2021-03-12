@@ -1,14 +1,19 @@
 import logger from 'utils/logger'
-
 let env // eslint-disable-line import/no-mutable-exports
 
 if (__SERVER__) {
   try {
-    const readFileSync = require('jsonfile').readFileSync // eslint-disable-line global-require
+    const { readFileSync } = require('jsonfile') // eslint-disable-line global-require
     const envPath = `${process.cwd()}/config/env.json`
-    env = readFileSync(envPath)
+    const configEnvFromFile = readFileSync(envPath)
+
+    env = {
+      apiToken: configEnvFromFile.apiToken || __API_TOKEN__,
+      authClientId: configEnvFromFile.authClientId || __AUTH_CLIENT_ID__,
+      authClientSecret: configEnvFromFile.authClientSecret || __AUTH_CLIENT_SECRET__,
+    }
   } catch (err) {
-    logger.critical({message: 'Reading config/env.json'})
+    logger.critical({ message: 'Reading config/env.json' })
   }
 }
 

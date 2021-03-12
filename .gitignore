@@ -20,6 +20,7 @@ src/coverage/
 yarn-error.log
 src/_coverage
 src/vendor
+src/config/*-local.json5
 # VSCode
 .vs
 .idea

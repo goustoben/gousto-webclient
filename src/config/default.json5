@@ -1,0 +1,16 @@
+// config/custom-environment-variables.json
+{
+  "build": 'development',
+  "environment_name": "local",
+  "api_name": "local",
+  "domain": "gousto.local",
+  "client_protocol": 'http',
+  "cloudfront_url": "",
+  "checkout_pk": "",
+  // These will get overwritten by the config/env.json
+  // file when used in src/utils/env.js. config/env.json
+  // variable are set by ecs_start.sh.
+  "api_token": "inbound_frontend_access_key_goes_here",
+  "auth_client_id": "6",
+  "auth_client_secret": "frontend_service_secret"
+}
