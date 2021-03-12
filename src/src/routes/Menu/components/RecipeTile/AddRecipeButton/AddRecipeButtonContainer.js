@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { recipeVariantDropdownExpanded } from 'actions/menu'
-import { getBasketTotalRecipes } from 'selectors/basket'
+import { getBasketTotalRecipes , getBasketPostcode } from 'selectors/basket'
 import { AddRecipeButton } from './AddRecipeButton'
 import { basketRecipeAddAttempt, basketRecipeRemove } from '../../../actions/basketRecipes'
 import { getRecipeIdInBasket } from '../../../selectors/recipe'
@@ -20,6 +20,7 @@ const mapStateToProps = (state, ownProps) => {
     lineClassName: 'removeButtonLine',
     buttonText: 'Remove recipe',
   }
+  const hasBasketPostcode = Boolean(getBasketPostcode(state))
 
   let formattedButtonProps = buttonProps
 
@@ -33,7 +34,8 @@ const mapStateToProps = (state, ownProps) => {
     buttonProps: formattedButtonProps,
     recipeVariants: getVariantsForRecipe(state, ownProps),
     hasSideAddedToBasket,
-    firstSideRecipeId
+    firstSideRecipeId,
+    hasBasketPostcode
   }
 }
 const mapDispatchToProps = {
