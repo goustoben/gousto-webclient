@@ -19,13 +19,15 @@ const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
 const ExitCodePlugin = require('./exitCode')
 const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias')
 
+const nodeConfig = require("node-config");
 
-const build = process.env.NODE_ENV || 'development'
-const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
-const domain = process.env.npm_config_gousto_webclient_domain || 'gousto.local'
-const clientProtocol = process.env.npm_config_gousto_webclient_client_protocol || 'http'
-const cloudfrontUrl = process.env.npm_config_gousto_webclient_cloudfront_url || ''
-const checkout_pk = process.env.npm_config_gousto_webclient_checkoutcom_pk || ''
+const apiName = nodeConfig.get('api_name')
+const build = nodeConfig.get('build')
+const checkout_pk = nodeConfig.get('checkout_pk')
+const clientProtocol = nodeConfig.get('client_protocol')
+const cloudfrontUrl = nodeConfig.get('cloudfront_url')
+const domain = nodeConfig.get('domain')
+const envName = nodeConfig.get('environment_name')
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 const devMode = process.env.NODE_ENV !== 'production'
@@ -181,6 +183,7 @@ const config = {
       __TEST__: false,
 
       __ENV__: JSON.stringify(envName),
+      __API_ENV__: JSON.stringify(apiName),
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
       __CHECKOUT_PK__: JSON.stringify(checkout_pk),

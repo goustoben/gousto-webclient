@@ -65,10 +65,10 @@ const getSubdomain = (service, isServerSide, environment) => {
 }
 
 function endpoint(service, version = '') {
-  const protocol = getProtocol(service, __SERVER__, __ENV__)
-  const subdomain = getSubdomain(service, __SERVER__, __ENV__)
-  const path = getPath(service, __SERVER__, __ENV__, version)
-  const port = getPort(service, __ENV__, __CLIENT__)
+  const protocol = getProtocol(service, __SERVER__, __API_ENV__)
+  const subdomain = getSubdomain(service, __SERVER__, __API_ENV__)
+  const path = getPath(service, __SERVER__, __API_ENV__, version)
+  const port = getPort(service, __API_ENV__, __CLIENT__)
 
   return `${protocol}://${subdomain}.${__DOMAIN__}${port}${path}`
 }

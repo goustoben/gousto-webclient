@@ -24,6 +24,58 @@ Because of a migration to prettier, there were several bulk formatting changes. 
 
 `git config blame.ignoreRevsFile .git-blame-ignore-revs`
 
+### Run application for development 
+
+Make sure you have dev-box running as well, `./run.sh dev` and then run
+
+```
+npm run watch
+```
+
+#### Run pointing to staging
+
+**Note:** VPN is required to connect to staging before running dev-box and web-client.
+
+Add a files called `config/staging-local.json5` and add the JSON below changing the values for the correct staging keys. This file will not be tracked as it is listed in our `.gitignore`.
+
+```json5
+{
+  "apiToken": "inbound_frontend_access_key_goes_here",
+  "authClientSecret": "frontend_service_secret",
+  "checkout_pk": "checkout_pk_test_token_goes_here" ,
+}
+```
+
+You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you change change `staging` in the url to the environment you need).
+
+We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack. `node-config` is a file based, and looks at files inside our `config` folder.
+
+We have two variable we can set for `node-config` to pick up specific files. The first being  `NODE_CONFIG_ENV` which we set to match the environment (e.g. `development`, `radishes`, `staging`, `production`) and the second is `NODE_APP_INSTANCE` which we set to the where the app is running (`local`, `live`).
+
+`node-config` will load each file, and if the keys match the later file to be loaded will overwrite the variable.
+
+These are file and the order of how they are called: 
+
+1. default environment variable. We keep all keys in here so its a singular place we can see all our variable. **Will always be loaded**.
+   * `config/default.json5`
+
+2. This is load based on the `NODE_CONFIG_ENV`, if not defined will not be loaded
+   * e.g. `config/staging.json5`
+   * `config/{NODE_CONFIG_ENV}.json5`
+
+3. this is load based on the `NODE_APP_INSTANCE`, if not defined will not be loaded
+   * e.g. `config/local.json5`
+   * `config/{NODE_APP_INSTANCE}.json5`
+
+4. This is load based on the `NODE_CONFIG_ENV` and `NODE_APP_INSTANCE`, if both are not defined will not be loaded
+  * `config/staging-local.json5`
+  * `config/{NODE_CONFIG_ENV}-{NODE_APP_INSTANCE}.json5`
+
+5. This file can/will load variable from shell that are defined, this file is the last called and if the environment variables exist/defined it will overwrite that variable in the JSON file. **Will always be loaded**.
+  * `config/custom-environment-variables.json5`
+
+See [`node-config`](https://github.com/lorenwest/node-config) for more information.
+
 ## Deployment
 ### Deployment without a new route
 1. Deploy into staging by raising a PR into `develop`
