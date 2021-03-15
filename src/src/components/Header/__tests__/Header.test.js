@@ -485,9 +485,12 @@ describe('Header', () => {
     })
   })
 
-  describe('Given isHelpPreloginOpen is true', () => {
+  describe('Given isHelpPreloginOpen changes from false to true', () => {
+    const trackHelpPreLoginModalDisplayed = jest.fn()
+    const trackContinueAsNewCustomer = jest.fn()
+
     beforeEach(() => {
-      wrapper.setProps({ isHelpPreLoginOpen: true })
+      wrapper.setProps({ isHelpPreLoginOpen: true, trackHelpPreLoginModalDisplayed, trackContinueAsNewCustomer })
     })
 
     test('renders the Login component with pre loging Help title', () => {
@@ -503,6 +506,15 @@ describe('Header', () => {
     test('renders the Continue as new customer link with client routed set to false', () => {
       expect(wrapper.find('.continueAsNewCustomerLink').prop('clientRouted'))
         .toBe(false)
+    })
+
+    test('tracks Continue as new customer link', () => {
+      expect(wrapper.find('.continueAsNewCustomerLink').prop('tracking'))
+        .toBe(trackContinueAsNewCustomer)
+    })
+
+    test('tracks Help Pre Login modal visibility', () => {
+      expect(trackHelpPreLoginModalDisplayed).toHaveBeenCalled()
     })
 
     describe('when the isHelpCentreActive is passed as true', () => {
@@ -585,4 +597,3 @@ describe('Header', () => {
     })
   })
 })
-
