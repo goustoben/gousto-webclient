@@ -85,6 +85,20 @@ export const trackConfirmationCTA = () => ({
   }
 })
 
+export const trackHelpPreLoginModalDisplayed = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.helpPreLoginModalDisplayed,
+  }
+})
+
+export const trackContinueAsNewCustomer = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.clickContinueAsNewCustomer,
+  }
+})
+
 export const applyDeliveryRefund = (
   userId,
   orderId,

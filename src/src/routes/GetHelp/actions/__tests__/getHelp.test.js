@@ -15,6 +15,8 @@ import {
   trackConfirmationCTA,
   trackDeliveryOther,
   trackDeliveryStatus,
+  trackContinueAsNewCustomer,
+  trackHelpPreLoginModalDisplayed,
   trackNextBoxTrackingClick,
   trackRejectRefund,
   validateDeliveryAction,
@@ -156,6 +158,28 @@ describe('GetHelp action generators and thunks', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'click_done_refund_accepted',
+        }
+      })
+    })
+  })
+
+  describe('trackHelpPreLoginModalDisplayed', () => {
+    test('creates the tracking action', () => {
+      expect(trackHelpPreLoginModalDisplayed()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'help_login_modal_displayed',
+        }
+      })
+    })
+  })
+
+  describe('trackContinueAsNewCustomer', () => {
+    test('creates the tracking action', () => {
+      expect(trackContinueAsNewCustomer()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'help_login_modal_click_continue_new',
         }
       })
     })

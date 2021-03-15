@@ -48,8 +48,10 @@ class Header extends React.PureComponent {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { loginPending, logoutPending } = this.state
+    const { isHelpPreLoginOpen, trackHelpPreLoginModalDisplayed } = this.props
+
     if (loginPending) {
       window.setTimeout(() => {
         this.setState({ loginPending: false })
@@ -59,6 +61,10 @@ class Header extends React.PureComponent {
       window.setTimeout(() => {
         this.setState({ logoutPending: false })
       }, 1000)
+    }
+
+    if (prevProps.isHelpPreLoginOpen === false && isHelpPreLoginOpen === true) {
+      trackHelpPreLoginModalDisplayed()
     }
   }
 
@@ -324,6 +330,7 @@ class Header extends React.PureComponent {
       isHelpCentreActive,
       showAppAwareness,
       isAppAwarenessEnabled,
+      trackContinueAsNewCustomer,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen } = this.state
@@ -425,6 +432,7 @@ class Header extends React.PureComponent {
                     data-optimizely="new-customer-help-link"
                     clientRouted={false}
                     className={css.continueAsNewCustomerLink}
+                    tracking={trackContinueAsNewCustomer}
                   >
                     Continue as new customer
                   </Link>
@@ -462,6 +470,8 @@ Header.propTypes = {
   serverError: PropTypes.bool,
   simple: PropTypes.bool,
   title: PropTypes.string,
+  trackContinueAsNewCustomer: PropTypes.func,
+  trackHelpPreLoginModalDisplayed: PropTypes.func,
   trackNavigationClick: PropTypes.func,
   isHelpCentreActive: PropTypes.bool,
   showAppAwareness: PropTypes.bool,
@@ -483,6 +493,8 @@ Header.defaultProps = {
   serverError: false,
   simple: false,
   title: '',
+  trackContinueAsNewCustomer: () => {},
+  trackHelpPreLoginModalDisplayed: () => {},
   trackNavigationClick: () => { },
   isHelpCentreActive: false,
   showAppAwareness: false,

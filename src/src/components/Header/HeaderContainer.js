@@ -12,6 +12,7 @@ import {
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
+import { trackContinueAsNewCustomer, trackHelpPreLoginModalDisplayed } from '../../routes/GetHelp/actions/getHelp'
 import { Header } from './Header'
 
 const mapStateToProps = (state) => ({
@@ -38,5 +39,7 @@ export const HeaderContainer = connect(mapStateToProps, {
   helpPreLoginVisibilityChange,
   logoutUser: actions.logoutUser,
   loginVisibilityChange: actions.loginVisibilityChange,
+  trackContinueAsNewCustomer,
+  trackHelpPreLoginModalDisplayed,
   trackNavigationClick,
 })(Header)
