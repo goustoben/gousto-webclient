@@ -1,0 +1,116 @@
+@value BreakpointFromMedium, BreakpointToLarge, BreakpointToMedium, BreakpointFromLarge, BreakpointFromLarge, BreakpointToXLarge, BreakpointFromXLarge from 'design-language/breakpoints.css';
+@value White from 'styles/colors.css';
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+/* Text frame. */
+
+.textFrame {
+  @media BreakpointToMedium {
+    padding: 2rem 0.75rem;
+    max-width: 29.5rem;
+  }
+
+  @media BreakpointFromMedium {
+    padding: 2.5rem 2rem;
+    width: 40rem;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 2.5rem 2rem;
+    flex: 0 0 27.25rem;
+    width: 27.25rem;
+  }
+}
+
+.heading {
+  composes: fontStyle3XL from 'design-language/typography.css';
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.list {
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin: 0;
+  padding: 0 0 0.5rem;
+  list-style: none;
+}
+
+.item {
+  margin: 0;
+  padding: 0 0 0 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.strong {
+  composes: fontSemiBold from 'design-language/typography.css';
+}
+
+.itemValue {
+  background: url('./assets/icon-value.svg') no-repeat;
+}
+
+.itemRecipes {
+  background: url('./assets/icon-recipes.svg') no-repeat;
+}
+
+.itemSkip {
+  background: url('./assets/icon-skip.svg') no-repeat;
+}
+
+.itemDietary {
+  background: url('./assets/icon-dietary.svg') no-repeat;
+}
+
+
+/* Mobile design. */
+
+.mobileContainer {
+  background: White;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileContainer {
+  @media BreakpointFromLarge {
+    display: none;
+  }
+}
+
+.bottomImage {
+  @media BreakpointToMedium {
+    display: none;
+  }
+}
+
+/* Desktop design. */
+
+.desktopContainer {
+  background: White;
+  flex: 1;
+  padding: 0 2rem;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  @media BreakpointToLarge {
+    display: none;
+  }
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 35.5rem;
+}

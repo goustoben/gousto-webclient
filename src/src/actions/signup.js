@@ -1,7 +1,9 @@
 import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
-import redirectAction from 'actions/redirect'
+import { redirect } from 'actions/redirect'
 import { stepByName } from 'utils/signup'
+import { getIsSellThePropositionEnabled } from 'selectors/features'
+import { signupConfig } from 'config/signup'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
 
@@ -74,14 +76,22 @@ export function signupNextStep(stepName) {
   return (dispatch, getState) => {
     const step = stepByName(stepName)
     if (step) {
-      const signupState = getState().signup
+      const state = getState()
+      const signupState = state.signup
       const isCurrentlyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
       const lastWizardStep = signupState.getIn(['wizard', 'steps']).last()
       const slug = step.get('slug')
       if (isCurrentlyTheLastStep && (step.get('name') === lastWizardStep || !slug)) {
         dispatch(signupTracking())
 
-        return dispatch(redirectAction.redirect(routes.client.menu))
+        const isSellThePropositionEnabled = getIsSellThePropositionEnabled(state)
+        if (isSellThePropositionEnabled) {
+          const path = `${routes.client.signup}/${signupConfig.sellThePropositionPagePath}`
+
+          return dispatch(redirect(path))
+        } else {
+          return dispatch(redirect(routes.client.menu))
+        }
       }
 
       try {
@@ -98,6 +108,12 @@ export function signupNextStep(stepName) {
   }
 }
 
+export function signupGoToMenu() {
+  return (dispatch) => {
+    dispatch(redirect(routes.client.menu))
+  }
+}
+
 export function signupChangePostcode(postcode, nextStepName) {
   return async (dispatch, getState) => {
     await dispatch(basketPostcodeChange(postcode))
@@ -106,4 +122,3 @@ export function signupChangePostcode(postcode, nextStepName) {
     }
   }
 }
-

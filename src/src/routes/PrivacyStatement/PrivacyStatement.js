@@ -274,7 +274,7 @@ const PrivacyStatement = () => (
             </li>
             <li className={css.itemList}>
               We hope our use of cookies is clear and please be aware you can set your browser to reject cookies or you can delete them yourself if you wish. For further information on cookies, including how to use your browser to block them and how to delete cookies already stored on your device, visit:&nbsp;
-              <a href="www.allaboutcookies.org" target="_blank" rel="noopener noreferrer">www.allaboutcookies.org</a>
+              <a href="https://www.allaboutcookies.org" target="_blank" rel="noopener noreferrer">www.allaboutcookies.org</a>
               .
             </li>
           </ol>

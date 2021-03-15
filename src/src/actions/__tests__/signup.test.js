@@ -13,6 +13,7 @@ import {
   signupTracking,
   signupNextStep,
   signupSetStep,
+  signupGoToMenu,
 } from 'actions/signup'
 
 jest.mock('actions/basket', () => ({
@@ -26,6 +27,7 @@ jest.mock('react-router-redux', () => ({
 jest.mock('config/routes', () => ({
   client: {
     signup: '/signup',
+    menu: '/menu',
   },
 }))
 
@@ -109,7 +111,6 @@ describe('signup actions', () => {
 
   describe('signupNextStep action', () => {
     beforeEach(() => {
-      stepByName.mockIme
       getState.mockReturnValue({
         signup: Immutable.fromJS({
           wizard: {
@@ -189,6 +190,34 @@ describe('signup actions', () => {
 
         expect(dispatch).toHaveBeenCalledTimes(2)
         expect(redirect).toHaveBeenCalled()
+      })
+    })
+
+    describe('and when the isSellThePropositionEnabled feature is enabled', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          signup: Immutable.fromJS({
+            wizard: {
+              steps: ['box-size', 'postcode', 'delivery'],
+              isLastStep: true,
+            },
+          }),
+          features: Immutable.fromJS({
+            isSellThePropositionEnabled: {
+              value: true
+            },
+          })
+        })
+        stepByName.mockReturnValue(Immutable.Map({
+          name: 'delivery',
+          slug: 'delivery',
+        }))
+      })
+
+      test('then it should redirect to the Sell the proposition page', () => {
+        signupNextStep('delivery')(dispatch, getState)
+
+        expect(redirect).toHaveBeenCalledWith('/signup/about')
       })
     })
   })
@@ -284,6 +313,19 @@ describe('signup actions', () => {
           stepName: 'stepName'
         },
       })
+    })
+  })
+
+  describe('given signupGoToMenu action is called', () => {
+    beforeEach(() => {
+      redirect.mockReturnValue('redirect action')
+    })
+
+    test('then it should redirect the user to the menu', async () => {
+      signupGoToMenu()(dispatch, getState)
+
+      expect(redirect).toHaveBeenCalledWith('/menu')
+      expect(dispatch).toHaveBeenCalledWith('redirect action')
     })
   })
 })
