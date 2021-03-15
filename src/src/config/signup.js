@@ -51,4 +51,5 @@ export const signupConfig = {
     title: 'Which delivery day would you like?'
   },
   discountAppliedText: 'View this when you reach the checkout.',
+  sellThePropositionPagePath: 'about',
 }

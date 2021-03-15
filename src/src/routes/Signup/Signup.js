@@ -16,6 +16,7 @@ import { BoxSizeStep } from './Steps/BoxSize'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
+import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
 import { updatePricePerServing } from '../../actions/boxPrices'
 
 const components = {
@@ -300,6 +301,11 @@ class Signup extends PureComponent {
       promoBannerState,
       trackDiscountVisibility,
     } = this.props
+
+    if (stepName === signupConfig.sellThePropositionPagePath) {
+      return <SellThePropositionPageContainer />
+    }
+
     const steps = this.getSteps()
     const stepNumber = this.getCurrentStepNumber(steps)
 

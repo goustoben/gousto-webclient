@@ -228,4 +228,16 @@ describe('Signup', () => {
       })
     })
   })
+
+  describe('when the step is "about" for sell the proposition experiment', () => {
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = shallow(<Signup {...props} stepName="about" />, { context })
+    })
+
+    test('then it should render the separate Sell the proposition page', () => {
+      expect(wrapper.find('Connect(SellThePropositionPage)').exists()).toBe(true)
+    })
+  })
 })
