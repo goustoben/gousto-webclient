@@ -1,8 +1,6 @@
 import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
 import { redirect } from 'actions/redirect'
-import { trackUTMAndPromoCode } from 'actions/tracking'
-import { clickSeeThisWeeksMenu } from 'actions/trackingKeys'
 import { stepByName } from 'utils/signup'
 import { getIsSellThePropositionEnabled } from 'selectors/features'
 import { signupConfig } from 'config/signup'
@@ -112,7 +110,6 @@ export function signupNextStep(stepName) {
 
 export function signupGoToMenu() {
   return (dispatch) => {
-    dispatch(trackUTMAndPromoCode(clickSeeThisWeeksMenu))
     dispatch(redirect(routes.client.menu))
   }
 }
