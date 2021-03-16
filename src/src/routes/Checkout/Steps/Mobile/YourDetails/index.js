@@ -1,1 +1,1 @@
-export default from './YourDetails'
+export { YourDetailsForm, YourDetailsStep } from './YourDetails'

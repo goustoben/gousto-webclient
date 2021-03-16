@@ -18,18 +18,18 @@ import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 import { loadCheckoutScript } from './loadCheckoutScript'
 import { loadPayPalScripts } from './loadPayPalScripts'
 
-import DesktopAboutYou from './Steps/Desktop/AboutYou'
-import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
-import DesktopDelivery from './Steps/Desktop/Delivery'
-import Summary from './Components/Summary'
+import { AboutYou as DesktopAboutYou } from './Steps/Desktop/AboutYou'
+import { BoxDetails as DesktopBoxDetails } from './Steps/Desktop/BoxDetails'
+import { Delivery as DesktopDelivery } from './Steps/Desktop/Delivery'
+import { Summary } from './Components/Summary'
 import { BoxDetailsContainer } from './Components/BoxDetails'
 import { ExpandableBoxSummary } from './Components/ExpandableBoxSummary'
 
-import MobileYourDetails from './Steps/Mobile/YourDetails'
-import MobileBoxDetails from './Steps/Mobile/BoxDetails'
+import { YourDetailsForm as MobileYourDetails } from './Steps/Mobile/YourDetails'
+import { BoxDetails as MobileBoxDetails } from './Steps/Mobile/BoxDetails'
 
 import { CheckoutPayment } from './Components/CheckoutPayment'
-import ProgressBar from './Components/ProgressBar'
+import { ProgressBar } from './Components/ProgressBar'
 import { Breadcrumbs } from './Components/Breadcrumbs'
 
 import css from './Checkout.css'
@@ -270,17 +270,6 @@ class Checkout extends PureComponent {
     trackCheckoutButtonPressed(type, property)
   }
 
-  loadPayPal() {
-    const { fetchPayPalClientToken } = this.props
-
-    loadPayPalScripts(() => {
-      this.setState({
-        paypalScriptsReady: true,
-      })
-    })
-    fetchPayPalClientToken()
-  }
-
   renderSteps = (stepMapping, steps, currentStep) => {
     const { browser, submitOrder, trackUTMAndPromoCode, isCheckoutOverhaulEnabled } = this.props
     const { checkoutScriptReady, paypalScriptsReady } = this.state
@@ -433,6 +422,17 @@ class Checkout extends PureComponent {
     if (isMobile) {
       trackCheckoutButtonPressed('LogInCTA Clicked')
     }
+  }
+
+  loadPayPal() {
+    const { fetchPayPalClientToken } = this.props
+
+    loadPayPalScripts(() => {
+      this.setState({
+        paypalScriptsReady: true,
+      })
+    })
+    fetchPayPalClientToken()
   }
 
   renderLoginModal = () => {

@@ -11,8 +11,8 @@ import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
 import { getSlotTimes } from 'utils/deliveries'
 
-import Subscription from 'routes/Checkout/Components/Subscription'
-import DeliveryDetails from './DeliveryDetails'
+import { SubscriptionContainer } from 'routes/Checkout/Components/Subscription'
+import { DeliveryDetails } from './DeliveryDetails'
 import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
 import { SectionHeader } from '../SectionHeader'
@@ -21,7 +21,7 @@ import redesignCss from '../../CheckoutRedesignContainer.css'
 import css from './Delivery.css'
 
 const propTypes = {
-  formValues: PropTypes.object,
+  formValues: PropTypes.objectOf(PropTypes.object),
   formName: PropTypes.string,
   sectionName: PropTypes.string,
   clearErrors: PropTypes.func,
@@ -58,7 +58,7 @@ export class Delivery extends React.PureComponent {
     clearErrors()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { formValues } = this.props
     if (globals.client && this.container && deliveryUtils.isAddressConfirmed(formValues) !== deliveryUtils.isAddressConfirmed(nextProps.formValues)) {
       scrollIntoView(this.container, {
@@ -134,7 +134,7 @@ export class Delivery extends React.PureComponent {
 
     return (
       <div ref={el => { this.container = el }}>
-        {!isCheckoutOverhaulEnabled && <Subscription sectionName={sectionName} />}
+        {!isCheckoutOverhaulEnabled && <SubscriptionContainer sectionName={sectionName} />}
         <div
           className={classNames({
             [css.deliveryContainer]: !isCheckoutOverhaulEnabled,

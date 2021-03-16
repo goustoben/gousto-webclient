@@ -7,17 +7,11 @@ import css from '../Delivery.css'
 import redesignCss from '../../../CheckoutRedesignContainer.css'
 
 class DeliveryPhoneNumber extends React.PureComponent {
-  static propTypes = {
-    receiveRef: PropTypes.func,
-    sectionName: PropTypes.string,
-    isCheckoutOverhaulEnabled: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    receiveRef: () => {},
-    sectionName: 'delivery',
-    isCheckoutOverhaulEnabled: false,
-  }
+  /**
+   * object containing pressed keys
+   * @type {{}}
+   */
+  keys = {};
 
   constructor(props) {
     super(props)
@@ -26,12 +20,6 @@ class DeliveryPhoneNumber extends React.PureComponent {
       addZero: false,
     }
   }
-
-  /**
-   * object containing pressed keys
-   * @type {{}}
-   */
-  keys = {};
 
   /**
    * except for 'a', 'c', 'v', 'x', 'y', 'z'
@@ -99,10 +87,11 @@ class DeliveryPhoneNumber extends React.PureComponent {
         <span className={css.phonePrefixRedesign}>+44(0)</span>
       )
     } else {
+      const { addZero } = this.state
       inputPrefix = (
         <div className={css.phonePrefix}>
           <span className={css.prefix} />
-          <span className={this.state.addZero ? css.withZero : css.withoutZero} />
+          <span className={addZero ? css.withZero : css.withoutZero} />
         </div>
       )
     }
@@ -136,4 +125,18 @@ class DeliveryPhoneNumber extends React.PureComponent {
   }
 }
 
-export default DeliveryPhoneNumber
+DeliveryPhoneNumber.propTypes = {
+  receiveRef: PropTypes.func,
+  sectionName: PropTypes.string,
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+}
+
+DeliveryPhoneNumber.defaultProps = {
+  receiveRef: () => {},
+  sectionName: 'delivery',
+  isCheckoutOverhaulEnabled: false,
+}
+
+export {
+  DeliveryPhoneNumber
+}

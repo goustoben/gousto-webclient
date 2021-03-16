@@ -3,7 +3,7 @@ import React from 'react'
 import delivery from 'validations/delivery'
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
-import CheckoutButton from '../../../Components/CheckoutButton'
+import { CheckoutButton } from '../../../Components/CheckoutButton'
 import DeliveryContainer, { addInitialValues, validationMessages } from '../../../Components/Delivery'
 
 const sectionName = 'delivery'
@@ -56,4 +56,8 @@ DeliveryStep.defaultProps = {
 
 const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), sectionName, validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
 
-export default addInitialValues(DeliveryYouForm, { sectionName })
+const Delivery = addInitialValues(DeliveryYouForm, { sectionName })
+
+export {
+  Delivery
+}

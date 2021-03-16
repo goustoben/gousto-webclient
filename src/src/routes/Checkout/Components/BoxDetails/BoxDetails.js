@@ -40,8 +40,7 @@ export const BoxDetails = ({
         )
         : (
           <h3 className={css.header}>In your box</h3>
-        )
-      }
+        )}
       <RecipeSummary showButton view="boxdetails" />
       {isCheckoutOverhaulEnabled && (
         <Fragment>

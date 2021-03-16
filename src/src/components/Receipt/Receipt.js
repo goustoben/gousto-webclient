@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
 
-import PromoCode from 'routes/Checkout/Components/PromoCode'
+import { PromoCode } from 'routes/Checkout/Components/PromoCode'
 import css from './Receipt.css'
 import ReceiptLine from './ReceiptLine'
 import DeliveryDetails from './DeliveryDetails'

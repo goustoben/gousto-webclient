@@ -7,8 +7,8 @@ import { addPrefix } from 'validations/util'
 import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
 
-import CheckoutButton from '../../../Components/CheckoutButton'
-import AboutYouContainer, { addInitialValues } from '../../../Components/AboutYou'
+import { CheckoutButton } from '../../../Components/CheckoutButton'
+import { AboutYouContainer, addInitialValues } from '../../../Components/AboutYou'
 
 const sectionName = 'aboutyou'
 
@@ -78,4 +78,6 @@ const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRule
 
 const AboutYou = addInitialValues(AboutYouForm, { sectionName })
 
-export default AboutYou
+export {
+  AboutYou
+}

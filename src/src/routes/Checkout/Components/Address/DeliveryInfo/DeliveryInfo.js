@@ -53,4 +53,6 @@ DeliveryInfo.defaultProps = {
   frequency: 'weekly',
 }
 
-export default DeliveryInfo
+export {
+  DeliveryInfo
+}

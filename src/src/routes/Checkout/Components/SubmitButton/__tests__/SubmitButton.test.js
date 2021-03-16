@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { SubmitButton } from '../SubmitButton'
-import CheckoutButton from '../../CheckoutButton'
+import { CheckoutButton } from '../../CheckoutButton'
 import { TermsAndConditions } from '../../TermsAndConditions'
 
 describe('SubmitButton', () => {

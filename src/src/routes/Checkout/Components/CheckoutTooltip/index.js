@@ -1,1 +1,1 @@
-export default from './CheckoutTooltip'
+export { CheckoutTooltip } from './CheckoutTooltip'

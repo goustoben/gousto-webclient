@@ -1,1 +1,1 @@
-export default from './PromoCodeContainer'
+export { PromoCodeContainer as PromoCode } from './PromoCodeContainer'

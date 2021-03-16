@@ -4,10 +4,9 @@ import classNames from 'classnames'
 import CheckBox from 'Form/CheckBox'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import { onEnter } from 'utils/accessibility'
+import { BillingAddressContainer } from './AddressContainer'
 import css from './BillingAddress.css'
 import redesignCss from '../../CheckoutRedesignContainer.css'
-
-import Address from './AddressContainer'
 
 export class BillingAddress extends React.PureComponent {
   toggleDeliveryAddress = () => {
@@ -43,7 +42,7 @@ export class BillingAddress extends React.PureComponent {
           />
           {isBillingAddressDifferent ? (
             <div className={css.addressContainer}>
-              <Address
+              <BillingAddressContainer
                 isDelivery={false}
                 asyncValidate={asyncValidate}
                 formName={form}
@@ -86,7 +85,7 @@ export class BillingAddress extends React.PureComponent {
             </span>
           </p>
           {isBillingAddressDifferent ? (
-            <Address
+            <BillingAddressContainer
               isDelivery={false}
               asyncValidate={asyncValidate}
               formName={form}

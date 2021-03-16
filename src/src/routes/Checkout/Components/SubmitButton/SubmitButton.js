@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import { CTA } from 'goustouicomponents'
-import CheckoutButton from '../CheckoutButton'
+import { CheckoutButton } from '../CheckoutButton'
 import { TermsAndConditions } from '../TermsAndConditions'
 import css from './SubmitButton.css'
 

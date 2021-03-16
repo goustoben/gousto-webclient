@@ -3,43 +3,33 @@ import PropTypes from 'prop-types'
 
 import React from 'react'
 import { isAddressConfirmed } from 'routes/Checkout/utils/delivery'
-import CheckoutButton from '../../CheckoutButton'
+import { CheckoutButton } from '../../CheckoutButton'
 import { ErrorMessage } from '../../ErrorMessage'
 
 class SubmitButton extends React.PureComponent {
-  static propTypes = {
-    checkoutInvalid: PropTypes.bool,
-    checkoutMobileInvalid: PropTypes.bool,
-    nextStepName: PropTypes.string,
-    browser: PropTypes.string,
-    onStepChange: PropTypes.func,
-    manualSubmit: PropTypes.func,
-    formValues: PropTypes.objectOf(PropTypes.shape({
-      confirmed: PropTypes.bool,
-    })),
-  }
-
   handleSubmit = () => {
-    this.props.manualSubmit('delivery')
-    if (this.props.browser === 'mobile') {
-      this.props.manualSubmit('yourdetails')
-      if (this.props.checkoutMobileInvalid) return Promise.resolve()
+    const { manualSubmit, browser, checkoutMobileInvalid, checkoutInvalid, onStepChange } = this.props
+    manualSubmit('delivery')
+    if (browser === 'mobile') {
+      manualSubmit('yourdetails')
+      if (checkoutMobileInvalid) return Promise.resolve()
     }
 
-    if (this.props.checkoutInvalid) return Promise.resolve()
+    if (checkoutInvalid) return Promise.resolve()
 
-    return this.props.onStepChange()
+    return onStepChange()
   }
 
   render() {
-    const confirmedAddress = isAddressConfirmed(this.props.formValues)
+    const { formValues, nextStepName } = this.props
+    const confirmedAddress = isAddressConfirmed(formValues)
 
     return (
       <div>
         <ErrorMessage />
         {confirmedAddress && (
           <CheckoutButton
-            stepName={this.props.nextStepName}
+            stepName={nextStepName}
             onClick={this.handleSubmit}
           />
         )}
@@ -48,4 +38,25 @@ class SubmitButton extends React.PureComponent {
   }
 }
 
-export default SubmitButton
+SubmitButton.propTypes = {
+  checkoutInvalid: PropTypes.bool,
+  checkoutMobileInvalid: PropTypes.bool,
+  nextStepName: PropTypes.string.isRequired,
+  browser: PropTypes.string,
+  onStepChange: PropTypes.func.isRequired,
+  manualSubmit: PropTypes.func.isRequired,
+  formValues: PropTypes.objectOf(PropTypes.shape({
+    confirmed: PropTypes.bool,
+  })),
+}
+
+SubmitButton.defaultProps = {
+  checkoutInvalid: false,
+  checkoutMobileInvalid: false,
+  browser: 'mobile',
+  formValues: {},
+}
+
+export {
+  SubmitButton
+}

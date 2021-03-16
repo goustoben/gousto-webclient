@@ -5,9 +5,10 @@ import { Field } from 'redux-form'
 import css from './SubscriptionOption.css'
 
 const SubscriptionOption = ({ name, id, title, description, checked, onClick }) => (
-  <label className={css.container}>
+  <label className={css.container} htmlFor={id}>
     <div>
       <Field
+        id={id}
         name={name}
         value={id}
         component="input"
@@ -20,22 +21,29 @@ const SubscriptionOption = ({ name, id, title, description, checked, onClick }) 
     </div>
     <div className={css.content}>
       <p className={css.title}>{title}</p>
-      {(description) ? description.map(descriptionOption => <p className={css.description}>{descriptionOption}</p>) : null}
+      {description
+        ? description.map(descriptionOption => <p key={descriptionOption} className={css.description}>{descriptionOption}</p>)
+        : null}
     </div>
   </label>
 )
 
 SubscriptionOption.defaultProps = {
-  name: ''
+  name: '',
+  onClick: () => {},
+  checked: false,
+  description: [],
 }
 
 SubscriptionOption.propTypes = {
   name: PropTypes.string,
-  id: PropTypes.number,
-  title: PropTypes.string,
+  id: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
   description: PropTypes.arrayOf(PropTypes.string),
   checked: PropTypes.bool,
   onClick: PropTypes.func,
 }
 
-export default SubscriptionOption
+export {
+  SubscriptionOption
+}

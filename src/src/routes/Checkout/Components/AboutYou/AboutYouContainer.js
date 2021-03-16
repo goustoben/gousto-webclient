@@ -32,7 +32,7 @@ const mapDispatchToProps = {
   trackUTMAndPromoCode,
 }
 
-export default sectionName => connectComponent(sectionName)
+export const AboutYouContainer = sectionName => connectComponent(sectionName)
 
 export function addInitialValues(Component, { sectionName }) {
   return connect(

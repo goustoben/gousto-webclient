@@ -25,4 +25,6 @@ const BillingAddressContainer = connect(mapStateToProps, {
   registerField,
 })(Address)
 
-export default BillingAddressContainer
+export {
+  BillingAddressContainer
+}

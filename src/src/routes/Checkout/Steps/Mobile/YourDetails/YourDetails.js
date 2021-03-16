@@ -4,12 +4,12 @@ import React from 'react'
 import userRules from 'validations/user'
 import { addPrefix } from 'validations/util'
 import delivery from 'validations/delivery'
-import { checkoutClickContinueToPayment } from '../../../../../actions/trackingKeys'
+import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
-import CheckoutButton from '../../../Components/CheckoutButton'
-import SectionContainer from '../SectionContainer'
+import { CheckoutButton } from '../../../Components/CheckoutButton'
+import { SectionContainer } from '../SectionContainer'
 
-import AboutYouContainer, { addInitialValues as aboutYouAddInitialValues } from '../../../Components/AboutYou'
+import { AboutYouContainer, addInitialValues as aboutYouAddInitialValues } from '../../../Components/AboutYou'
 import DeliveryContainer, { addInitialValues as deliveryAddInitialValues, validationMessages as deliveryValidationMessages } from '../../../Components/Delivery'
 
 const aboutYouSectionName = 'aboutyou'
@@ -99,4 +99,6 @@ let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'yourdetai
 YourDetailsForm = aboutYouAddInitialValues(YourDetailsForm, { sectionName: aboutYouSectionName })
 YourDetailsForm = deliveryAddInitialValues(YourDetailsForm, { sectionName: deliverySectionName })
 
-export default YourDetailsForm
+export {
+  YourDetailsForm
+}

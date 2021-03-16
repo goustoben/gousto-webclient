@@ -1,2 +1,1 @@
-export default from './AboutYouContainer'
-export * from './AboutYouContainer'
+export { AboutYouContainer, addInitialValues } from './AboutYouContainer'

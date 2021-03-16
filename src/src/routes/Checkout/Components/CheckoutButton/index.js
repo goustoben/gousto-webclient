@@ -1,1 +1,1 @@
-export default from './CheckoutButtonContainer'
+export { CheckoutButtonContainer as CheckoutButton } from './CheckoutButtonContainer'

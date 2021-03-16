@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import CheckoutButton from '../../../Components/CheckoutButton'
+import { CheckoutButton } from '../../../Components/CheckoutButton'
 
 import { BoxDetailsContainer } from '../../../Components/BoxDetails'
 
@@ -19,4 +19,6 @@ BoxDetails.propTypes = {
   onStepChange: PropTypes.func.isRequired,
 }
 
-export default BoxDetails
+export {
+  BoxDetails
+}

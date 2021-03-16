@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import CheckoutButton from '../../../Components/CheckoutButton'
-import Summary from '../../../Components/Summary'
-import SectionContainer from '../SectionContainer'
+import { CheckoutButton } from '../../../Components/CheckoutButton'
+import { Summary } from '../../../Components/Summary'
+import { SectionContainer } from '../SectionContainer'
 
 import { BoxDetailsContainer } from '../../../Components/BoxDetails'
 
@@ -45,4 +45,6 @@ BoxDetails.defaultProps = {
   trackUTMAndPromoCode: () => { },
 }
 
-export default BoxDetails
+export {
+  BoxDetails
+}

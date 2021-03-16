@@ -1,1 +1,1 @@
-export default from './SubscriptionContainer'
+export { SubscriptionContainer } from './SubscriptionContainer'

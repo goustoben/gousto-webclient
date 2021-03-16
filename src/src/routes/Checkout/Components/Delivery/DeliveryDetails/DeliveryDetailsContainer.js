@@ -17,4 +17,6 @@ const DeliveryDetailsContainer = connect(mapStateToProps, {
   untouch,
 })(DeliveryDetails)
 
-export default DeliveryDetailsContainer
+export {
+  DeliveryDetailsContainer
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import PromoCode from 'routes/Checkout/Components/PromoCode'
+import { PromoCode } from 'routes/Checkout/Components/PromoCode'
 import Receipt from '../Receipt'
 import ReceiptLine from '../ReceiptLine'
 import DeliveryDetails from '../DeliveryDetails'

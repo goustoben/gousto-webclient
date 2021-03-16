@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
-import CheckoutButton from '../CheckoutButton/CheckoutButton'
+import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
 import { transformAddresses } from '../../utils/delivery'
 
 import addressCss from './Address.css'
@@ -135,4 +135,6 @@ Postcode.defaultProps = {
   isAddressSelected: false,
 }
 
-export default Postcode
+export {
+  Postcode
+}

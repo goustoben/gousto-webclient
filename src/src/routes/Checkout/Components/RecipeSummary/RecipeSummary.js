@@ -6,30 +6,6 @@ import recipesActions from 'actions/recipes'
 import { OrderedRecipes } from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
-  static propTypes = {
-    menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
-    recipes: PropTypes.instanceOf(Immutable.Map),
-    menuRecipeStock: PropTypes.instanceOf(Immutable.Map),
-    numPortions: PropTypes.number,
-    menuBoxPrices: PropTypes.instanceOf(Immutable.Map),
-    view: PropTypes.oneOf(['summary', 'boxdetails']),
-    isCheckoutOverhaulEnabled: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    menuRecipesStore: Immutable.Map({}),
-    menuRecipeStock: Immutable.Map({}),
-    menuBoxPrices: Immutable.Map({}),
-    recipes: Immutable.Map({}),
-    numPortions: 2,
-    view: 'boxdetails',
-    isCheckoutOverhaulEnabled: false,
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
   static fetchData({ store, orderRecipeIds }) {
     store.dispatch(recipesActions.recipesLoadRecipesById(orderRecipeIds))
   }
@@ -77,6 +53,30 @@ class RecipeSummary extends React.PureComponent {
       </div>
     )
   }
+}
+
+RecipeSummary.propTypes = {
+  menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
+  recipes: PropTypes.instanceOf(Immutable.Map),
+  menuRecipeStock: PropTypes.instanceOf(Immutable.Map),
+  numPortions: PropTypes.number,
+  menuBoxPrices: PropTypes.instanceOf(Immutable.Map),
+  view: PropTypes.oneOf(['summary', 'boxdetails']),
+  isCheckoutOverhaulEnabled: PropTypes.bool,
+}
+
+RecipeSummary.defaultProps = {
+  menuRecipesStore: Immutable.Map({}),
+  menuRecipeStock: Immutable.Map({}),
+  menuBoxPrices: Immutable.Map({}),
+  recipes: Immutable.Map({}),
+  numPortions: 2,
+  view: 'boxdetails',
+  isCheckoutOverhaulEnabled: false,
+}
+
+RecipeSummary.contextTypes = {
+  store: PropTypes.objectOf(PropTypes.object).isRequired,
 }
 
 export {

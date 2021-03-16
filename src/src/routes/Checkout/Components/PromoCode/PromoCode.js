@@ -38,7 +38,8 @@ class PromoCode extends PureComponent {
     }
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
     const { promoCode, basketPromoCodeAppliedChange } = this.props
     if (promoCode) {
       basketPromoCodeAppliedChange(true)
@@ -252,4 +253,6 @@ class PromoCode extends PureComponent {
 PromoCode.defaultProps = defaultProps
 PromoCode.propTypes = propTypes
 
-export default PromoCode
+export {
+  PromoCode
+}

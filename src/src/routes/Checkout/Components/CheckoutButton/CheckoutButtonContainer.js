@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import * as stateUtils from 'routes/Checkout/utils/state'
 import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
-import CheckoutButton from './CheckoutButton'
+import { CheckoutButton } from './CheckoutButton'
 
 function mapStateToProps(state) {
   return {
@@ -10,6 +10,4 @@ function mapStateToProps(state) {
   }
 }
 
-const CheckoutContainer = connect(mapStateToProps, {})(CheckoutButton)
-
-export default CheckoutContainer
+export const CheckoutButtonContainer = connect(mapStateToProps, {})(CheckoutButton)

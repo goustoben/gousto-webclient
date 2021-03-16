@@ -1,1 +1,1 @@
-export default from './PartialContainer'
+export { PartialContainer } from './PartialContainer'

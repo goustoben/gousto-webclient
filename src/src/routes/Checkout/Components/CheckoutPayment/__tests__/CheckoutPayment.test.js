@@ -10,7 +10,7 @@ import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
 import { BoxDetailsContainer } from '../../BoxDetails'
 import { ErrorMessage } from '../../ErrorMessage'
-import Summary from '../../Summary'
+import { Summary } from '../../Summary'
 
 describe('CheckoutPayment', () => {
   let wrapper

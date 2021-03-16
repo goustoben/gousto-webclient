@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import Immutable from 'immutable'
 import config from 'config/menu'
 import GoustoImage from 'Image'
-import Button from '../Buttons'
+import { ButtonsContainer } from '../Buttons'
 import css from './OrderedRecipe.css'
 
 export const OrderedRecipes = ({
@@ -55,8 +55,8 @@ export const OrderedRecipes = ({
           </p>
         ) : null}
         {!isCheckoutOverhaulEnabled && <span className={css.textSM}>{`${serving} Servings`}</span>}
-        {(featureBtn) && (
-          <Button
+        {featureBtn && (
+          <ButtonsContainer
             view="checkout"
             recipeId={recipeId}
             outOfstock={stock <= config.stockThreshold && stock !== null}

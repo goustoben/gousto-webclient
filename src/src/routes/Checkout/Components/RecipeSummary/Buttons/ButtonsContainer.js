@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { basketRecipeAdd, basketRecipeRemove} from '../../../../Menu/actions/basketRecipes'
-import Buttons from './Buttons'
+import { Buttons } from './Buttons'
 
 function mapStateToProps(state, props) {
   return {
@@ -15,4 +15,6 @@ const ButtonsContainer = connect(mapStateToProps, {
   onRemove: basketRecipeRemove,
 })(Buttons)
 
-export default ButtonsContainer
+export {
+  ButtonsContainer
+}
