@@ -5,7 +5,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { push } from 'react-router-redux'
 import { stepByName } from 'utils/signup'
 import { redirect } from 'actions/redirect'
-
+import { trackUTMAndPromoCode } from 'actions/tracking'
 import {
   signupStepsReceive,
   signupCookForKidsChange,
@@ -18,6 +18,10 @@ import {
 
 jest.mock('actions/basket', () => ({
   basketPostcodeChange: jest.fn(),
+}))
+
+jest.mock('actions/tracking', () => ({
+  trackUTMAndPromoCode: jest.fn(),
 }))
 
 jest.mock('react-router-redux', () => ({
@@ -318,14 +322,18 @@ describe('signup actions', () => {
 
   describe('given signupGoToMenu action is called', () => {
     beforeEach(() => {
+      trackUTMAndPromoCode.mockReturnValue('track action')
       redirect.mockReturnValue('redirect action')
     })
 
     test('then it should redirect the user to the menu', async () => {
       signupGoToMenu()(dispatch, getState)
 
+      expect(trackUTMAndPromoCode).toHaveBeenCalledWith('click_see_this_weeks_menu')
+      expect(dispatch).toHaveBeenNthCalledWith(1, 'track action')
+
       expect(redirect).toHaveBeenCalledWith('/menu')
-      expect(dispatch).toHaveBeenCalledWith('redirect action')
+      expect(dispatch).toHaveBeenNthCalledWith(2, 'redirect action')
     })
   })
 })
