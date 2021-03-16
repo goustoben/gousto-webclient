@@ -17,7 +17,9 @@ import css from './Summary.css'
 
 const propTypes = {
   prices: PropTypes.instanceOf(Immutable.Map),
+  // eslint-disable-next-line react/forbid-prop-types
   basketRecipes: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
   routing: PropTypes.object,
   isLoading: PropTypes.bool,
   showNoDiscountCTA: PropTypes.bool,
@@ -30,10 +32,13 @@ const propTypes = {
 const defaultProps = {
   prices: Immutable.Map({}),
   basketRecipes: Immutable.Map({}),
-  showPromocode: false,
-  loadingPreviewOrder: false,
   showAddPromocode: true,
   isCheckoutOverhaulEnabled: false,
+  isLoading: false,
+  showNoDiscountCTA: false,
+  promoCode: '',
+  promoApplyCheckoutCode: () => {},
+  routing: {},
 }
 
 class Summary extends PureComponent {
@@ -137,4 +142,6 @@ class Summary extends PureComponent {
 Summary.defaultProps = defaultProps
 Summary.propTypes = propTypes
 
-export default Summary
+export {
+  Summary
+}

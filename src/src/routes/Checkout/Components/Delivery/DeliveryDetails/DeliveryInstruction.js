@@ -14,7 +14,8 @@ const LEAVE_BOX_OPTIONS = (isCheckoutOverhaulEnabled) => (
 )
 
 class DeliveryInstruction extends React.PureComponent {
-  componentWillReceiveProps(nextProps) {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { value, reset } = this.props
     if (this.shouldShowOtherInput(value) && !this.shouldShowOtherInput(nextProps.value)) {
       reset('deliveryInstructionsCustom')
@@ -75,7 +76,7 @@ class DeliveryInstruction extends React.PureComponent {
 }
 
 DeliveryInstruction.propTypes = {
-  value: PropTypes.any,
+  value: PropTypes.string,
   reset: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   sectionName: PropTypes.string,

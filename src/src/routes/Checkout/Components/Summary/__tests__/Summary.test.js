@@ -6,7 +6,7 @@ import { PricePerServingMessage } from 'PricePerServingMessage'
 import Loading from 'Loading'
 import Receipt from 'Receipt'
 import Link from 'Link'
-import Summary from '../Summary'
+import { Summary } from '../Summary'
 
 let wrapper
 const prices = Immutable.Map({

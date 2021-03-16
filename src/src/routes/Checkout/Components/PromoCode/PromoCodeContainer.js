@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
-import PromoCode from './PromoCode'
+import { PromoCode } from './PromoCode'
 
 function mapStateToProps(state) {
   return {
@@ -15,11 +15,13 @@ function mapStateToProps(state) {
   }
 }
 
-const CheckoutContainer = connect(mapStateToProps, {
+const PromoCodeContainer = connect(mapStateToProps, {
   basketPromoCodeChange: actions.basketPromoCodeChange,
   basketPromoCodeAppliedChange: actions.basketPromoCodeAppliedChange,
   loadPrices: actions.pricingRequest,
   trackPromocodeChange: actions.trackPromocodeChange,
 })(PromoCode)
 
-export default CheckoutContainer
+export {
+  PromoCodeContainer
+}

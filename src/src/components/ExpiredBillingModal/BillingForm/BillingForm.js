@@ -7,7 +7,7 @@ import config from 'config/checkout'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
-import CheckoutTooltip from 'routes/Checkout/Components/CheckoutTooltip/CheckoutTooltip'
+import { CheckoutTooltip } from 'routes/Checkout/Components/CheckoutTooltip/CheckoutTooltip'
 import css from './BillingForm.css'
 
 const CURRENT_YEAR = Number(moment().format('YYYY'))

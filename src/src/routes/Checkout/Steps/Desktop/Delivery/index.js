@@ -1,1 +1,1 @@
-export default from './Delivery'
+export { Delivery } from './Delivery'

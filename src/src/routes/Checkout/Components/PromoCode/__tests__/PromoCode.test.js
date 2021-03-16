@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import PromoCode from 'routes/Checkout/Components/PromoCode/PromoCode'
+import { PromoCode } from 'routes/Checkout/Components/PromoCode/PromoCode'
 import { Button, Segment } from 'goustouicomponents'
 
 describe('PromoCode', () => {

@@ -1,1 +1,1 @@
-export default from './SubscriptionOption'
+export { SubscriptionOption } from './SubscriptionOption'

@@ -96,7 +96,8 @@ const AddressInputs = ({ receiveRef, sectionName, isCheckoutOverhaulEnabled }) =
               refId={`${sectionName}.postcode`}
             />
           </div>
-        </Fragment>)}
+        </Fragment>
+      )}
     </div>
   )
 }
@@ -113,4 +114,6 @@ AddressInputs.defaultProps = {
   isCheckoutOverhaulEnabled: false,
 }
 
-export default AddressInputs
+export {
+  AddressInputs
+}

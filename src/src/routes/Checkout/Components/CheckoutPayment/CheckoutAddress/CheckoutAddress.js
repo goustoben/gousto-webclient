@@ -30,5 +30,9 @@ CheckoutAddress.propTypes = {
 }
 
 CheckoutAddress.defaultProps = {
+  receiveRef: () => {},
+  asyncValidate: () => {},
+  sectionName: '',
+  scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
 }

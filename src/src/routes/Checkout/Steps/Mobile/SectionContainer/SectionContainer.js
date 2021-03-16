@@ -8,7 +8,9 @@ const SectionContainer = ({ children }) => (
 )
 
 SectionContainer.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node.isRequired,
 }
 
-export default SectionContainer
+export {
+  SectionContainer
+}

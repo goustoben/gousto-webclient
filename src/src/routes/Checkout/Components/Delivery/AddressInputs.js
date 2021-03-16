@@ -85,4 +85,6 @@ AddressInputs.defaultProps = {
   onChangeHandler: () => {},
 }
 
-export default AddressInputs
+export {
+  AddressInputs
+}

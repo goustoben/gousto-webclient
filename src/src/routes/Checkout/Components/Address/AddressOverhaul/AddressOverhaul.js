@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import { onEnter } from 'utils/accessibility'
-import Postcode from '../Postcode'
-import AddressInputs from '../AddressInputs'
+import { Postcode } from '../Postcode'
+import { AddressInputs } from '../AddressInputs'
 import { DeliveryCard } from '../../Delivery/DeliveryCard'
 import css from '../Address.css'
 

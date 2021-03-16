@@ -2,10 +2,11 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { showAddress } from 'routes/Checkout/utils/delivery'
-import css from '../Delivery.css'
+import { onEnter } from 'utils/accessibility'
 import { DeliveryInstruction } from './DeliveryInstruction'
-import DeliveryPhoneNumber from './DeliveryPhoneNumber'
+import { DeliveryPhoneNumber } from './DeliveryPhoneNumber'
 import { DeliveryEducationBanner } from './DeliveryEducationBanner'
+import css from '../Delivery.css'
 
 class DeliveryDetails extends PureComponent {
   reset = (field, value = '') => {
@@ -27,6 +28,9 @@ class DeliveryDetails extends PureComponent {
             {showAddress(deliveryAddress)}
             &nbsp;
             <span
+              role="button"
+              tabIndex="0"
+              onKeyDown={onEnter(onAddressEdit)}
               onClick={onAddressEdit}
               className={css.linkBase}
               data-testing="checkoutDeliveryDetailsEditAddress"

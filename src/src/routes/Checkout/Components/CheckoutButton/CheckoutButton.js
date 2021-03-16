@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, CTA } from 'goustouicomponents'
-import { onEnter } from '../../../../utils/accessibility'
+import { onEnter } from 'utils/accessibility'
 import css from './CheckoutButton.css'
 
 const CheckoutButton = ({
@@ -77,4 +77,6 @@ CheckoutButton.defaultProps = {
   isFullWidth: true,
 }
 
-export default CheckoutButton
+export {
+  CheckoutButton
+}

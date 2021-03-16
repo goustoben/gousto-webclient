@@ -83,7 +83,9 @@ ProgressBar.propTypes = {
   currentId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ]),
+  ]).isRequired,
 }
 
-export default ProgressBar
+export {
+  ProgressBar
+}

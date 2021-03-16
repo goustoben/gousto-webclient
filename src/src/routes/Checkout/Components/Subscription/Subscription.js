@@ -4,7 +4,7 @@ import { FormSection } from 'redux-form'
 import Immutable from 'immutable'
 
 import css from './Subscription.css'
-import SubscriptionOption from './SubscriptionOption'
+import { SubscriptionOption } from './SubscriptionOption'
 
 const frequencyDescription = {
   1: [
@@ -24,7 +24,7 @@ const Subscription = ({ chosenIntervalId, options, optionName, sectionName, feat
       <p className={css.text}>Your plan, your rules. Choose two, three or four recipes a week. Skip a box when you don’t want one. Pause or cancel at any time.</p>
       <FormSection name={sectionName} className={css.options}>
         {options.map(option => {
-          if (option.get('id') == 1 || option.get('id') == 2) {
+          if (option.get('id') === 1 || option.get('id') === 2) {
             return (
               <SubscriptionOption
                 name={optionName}
@@ -47,7 +47,6 @@ Subscription.defaultProps = {
   chosenIntervalId: '1',
   optionName: 'interval_id',
   sectionName: '',
-  options: Immutable.List(),
   trackSubscriptionIntervalChanged: () => {},
 }
 
@@ -60,4 +59,6 @@ Subscription.propTypes = {
   trackSubscriptionIntervalChanged: PropTypes.func,
 }
 
-export default Subscription
+export {
+  Subscription
+}

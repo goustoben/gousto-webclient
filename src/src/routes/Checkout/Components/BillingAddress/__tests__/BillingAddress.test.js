@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import CheckBox from 'Form/CheckBox'
 import { BillingAddress } from '../BillingAddress'
-import Address from '../AddressContainer'
+import { BillingAddressContainer } from '../AddressContainer'
 
 describe('Billing Address', () => {
   let wrapper
@@ -86,8 +86,8 @@ describe('Billing Address', () => {
         )
       })
 
-      test('should render <Address>', () => {
-        expect(wrapper.find(Address)).toHaveLength(1)
+      test('should render <BillingAddressContainer>', () => {
+        expect(wrapper.find(BillingAddressContainer)).toHaveLength(1)
       })
 
       test('should render "Use Delivery address" as link text', () => {
@@ -116,8 +116,8 @@ describe('Billing Address', () => {
         )
       })
 
-      test('should not render <Address>', () => {
-        expect(wrapper.find(Address)).toHaveLength(0)
+      test('should not render <BillingAddressContainer>', () => {
+        expect(wrapper.find(BillingAddressContainer)).toHaveLength(0)
       })
 
       test('should render "Use Delivery address" as link text', () => {

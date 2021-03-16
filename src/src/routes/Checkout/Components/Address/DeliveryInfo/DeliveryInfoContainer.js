@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { getFormValues } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
 
-import DeliveryInfo from './DeliveryInfo'
+import { DeliveryInfo } from './DeliveryInfo'
 
 const mapStateToProps = (state) => {
   const formName = getDeliveryFormName(state)
@@ -25,4 +25,6 @@ const mapStateToProps = (state) => {
 
 const DeliveryInfoContainer = connect(mapStateToProps)(DeliveryInfo)
 
-export default DeliveryInfoContainer
+export {
+  DeliveryInfoContainer
+}

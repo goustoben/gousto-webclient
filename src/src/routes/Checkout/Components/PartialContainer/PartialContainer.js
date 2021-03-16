@@ -3,18 +3,22 @@ import React from 'react'
 import css from './Partial.css'
 
 class PartialContainer extends React.PureComponent {
-  static propTypes = {
-    visible: PropTypes.bool,
-    children: PropTypes.node,
-  }
-
   render() {
+    const { visible, children } = this.props
+
     return (
       <div className={css.container}>
-        {this.props.visible && this.props.children}
+        {visible && children}
       </div>
     )
   }
 }
 
-export default PartialContainer
+PartialContainer.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+}
+
+export {
+  PartialContainer
+}

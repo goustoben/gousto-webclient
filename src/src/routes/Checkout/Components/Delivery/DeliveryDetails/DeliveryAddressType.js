@@ -10,7 +10,7 @@ import css from '../Delivery.css'
 const DELIVER_TO_OPTIONS = configCheckout.deliverToOptions
 
 class DeliveryAddressType extends React.PureComponent {
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { value, reset } = this.props
     if (this.shouldShowOtherInput(value) && !this.shouldShowOtherInput(nextProps.value)) {
       reset('customAddressType')
@@ -67,7 +67,7 @@ class DeliveryAddressType extends React.PureComponent {
 }
 
 DeliveryAddressType.propTypes = {
-  value: PropTypes.any,
+  value: PropTypes.string,
   reset: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   sectionName: PropTypes.string,

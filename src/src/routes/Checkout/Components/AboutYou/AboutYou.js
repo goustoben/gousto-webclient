@@ -4,11 +4,11 @@ import { Field, FormSection } from 'redux-form'
 import classNames from 'classnames'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import { onEnter } from 'utils/accessibility'
+import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
-import CheckoutButton from '../CheckoutButton'
+import { CheckoutButton } from '../CheckoutButton'
 import { fieldsConfig } from './fieldsConfig'
-import { checkoutClickContinueToDelivery } from '../../../../actions/trackingKeys'
 import css from './AboutYou.css'
 import redesignCss from '../../CheckoutRedesignContainer.css'
 
@@ -45,8 +45,7 @@ class AboutYou extends PureComponent {
               Log in here&nbsp;
               <span className={css.arrowRight} />
             </Fragment>
-          )
-        }
+          )}
       </span>
     )
 

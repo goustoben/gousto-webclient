@@ -5,20 +5,6 @@ import config from 'config/checkout'
 import css from './Buttons.css'
 
 class Buttons extends React.Component {
-  static propTypes = {
-    onAdd: PropTypes.func.isRequired,
-    onRemove: PropTypes.func.isRequired,
-    limitReached: PropTypes.bool.isRequired,
-    recipeId: PropTypes.string.isRequired,
-    qty: PropTypes.number.isRequired,
-    numPortions: PropTypes.number.isRequired,
-    view: PropTypes.string,
-    outOfstock: PropTypes.bool,
-    disabled: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
-    stock: PropTypes.number,
-    showControl: PropTypes.bool,
-  }
-
   constructor() {
     super()
 
@@ -28,61 +14,69 @@ class Buttons extends React.Component {
     }
   }
 
-  getSegments = (tooltipMessage, tooltipWidth, canAdd, canRemove, segment) => ([
-    <Tooltip
-      key={0}
-      placement="topRight"
-      message="Return to the menu to select new recipes"
-      visible={this.state.tooltipVisibleRemove}
-      onVisibleChange={this.tooltipToggle(canRemove, 'Remove')}
-      style="button"
-      className={tooltipWidth}
-    >
-      <Segment
-        onClick={this.handleRemove}
-        disabledClick={this.disabledClick(canRemove, 'Remove')}
-        hover={this.tooltipHover(canRemove, 'Remove')}
-        disabled={canRemove}
-        size="shortSmall"
-        className={css.segmentSmall}
-        fill={false}
+  getSegments = (tooltipMessage, tooltipWidth, canAdd, canRemove, segment) => {
+    const { tooltipVisibleRemove, tooltipVisibleAdd } = this.state
+
+    return ([
+      <Tooltip
+        key={0}
+        placement="topRight"
+        message="Return to the menu to select new recipes"
+        visible={tooltipVisibleRemove}
+        onVisibleChange={this.tooltipToggle(canRemove, 'Remove')}
+        /* eslint-disable-next-line react/style-prop-object */
+        style="button"
+        className={tooltipWidth}
       >
-        <Control placement="left">-</Control>
-      </Segment>
-    </Tooltip>,
-    segment,
-    <Tooltip
-      key={2}
-      placement="topRight"
-      message={tooltipMessage}
-      visible={this.state.tooltipVisibleAdd}
-      onVisibleChange={this.tooltipToggle(canAdd, 'Add')}
-      style="button"
-      className={tooltipWidth}
-    >
-      <Segment
-        onClick={this.handleAdd}
-        hover={this.tooltipHover(canAdd, 'Add')}
-        disabledClick={this.disabledClick(canAdd, 'Add')}
-        size="shortSmall"
-        className={css.segmentSmall}
-        disabled={canAdd}
-        fill={false}
+        <Segment
+          onClick={this.handleRemove}
+          disabledClick={this.disabledClick(canRemove, 'Remove')}
+          hover={this.tooltipHover(canRemove, 'Remove')}
+          disabled={canRemove}
+          size="shortSmall"
+          className={css.segmentSmall}
+          fill={false}
+        >
+          <Control placement="left">-</Control>
+        </Segment>
+      </Tooltip>,
+      segment,
+      <Tooltip
+        key={2}
+        placement="topRight"
+        message={tooltipMessage}
+        visible={tooltipVisibleAdd}
+        onVisibleChange={this.tooltipToggle(canAdd, 'Add')}
+        /* eslint-disable-next-line react/style-prop-object */
+        style="button"
+        className={tooltipWidth}
       >
-        <Control>+</Control>
-      </Segment>
-    </Tooltip>,
-  ])
+        <Segment
+          onClick={this.handleAdd}
+          hover={this.tooltipHover(canAdd, 'Add')}
+          disabledClick={this.disabledClick(canAdd, 'Add')}
+          size="shortSmall"
+          className={css.segmentSmall}
+          disabled={canAdd}
+          fill={false}
+        >
+          <Control>+</Control>
+        </Segment>
+      </Tooltip>,
+    ])
+  }
 
   handleAdd = () => {
-    if (this.props.stock !== null) {
-      this.props.onAdd(this.props.recipeId, this.props.view)
+    const { stock, onAdd, recipeId, view } = this.props
+    if (stock !== null) {
+      onAdd(recipeId, view)
     }
   }
 
   handleRemove = () => {
-    if (this.props.qty > 1) {
-      this.props.onRemove(this.props.recipeId, this.props.view)
+    const { qty, view, recipeId, onRemove } = this.props
+    if (qty > 1) {
+      onRemove(recipeId, view)
     }
   }
 
@@ -109,7 +103,8 @@ class Buttons extends React.Component {
   disabledClick = (condition, stateName) => (
     () => {
       if (condition) {
-        if (this.state.visible) {
+        const { visible } = this.state
+        if (visible) {
           this.setState({ [`tooltipVisible${stateName}`]: false })
         } else {
           this.setState({ [`tooltipVisible${stateName}`]: true })
@@ -119,10 +114,11 @@ class Buttons extends React.Component {
   )
 
   render() {
+    const { outOfstock, limitReached, showControl, qty, numPortions } = this.props
     let tooltipMessage = ''
-    if (this.props.outOfstock) {
+    if (outOfstock) {
       tooltipMessage = config.tooltip.outOfstock
-    } else if (this.props.limitReached) {
+    } else if (limitReached) {
       tooltipMessage = config.tooltip.limitReached
     }
     const segment = (
@@ -131,9 +127,9 @@ class Buttons extends React.Component {
         size="shortLarge"
         fill={false}
         disabled
-        className={(this.props.showControl) ? css.parsley : css.noControl}
+        className={showControl ? css.parsley : css.noControl}
       >
-        {`${this.props.qty * this.props.numPortions} Servings`}
+        {`${qty * numPortions} Servings`}
       </Segment>
     )
 
@@ -142,11 +138,11 @@ class Buttons extends React.Component {
         className={css.btnCheckout}
         width="auto"
       >
-        {(this.props.showControl) ? this.getSegments(
+        {showControl ? this.getSegments(
           tooltipMessage,
           css.tooltipWidth,
-          this.props.outOfstock || this.props.limitReached,
-          this.props.qty === 1,
+          outOfstock || limitReached,
+          qty === 1,
           segment
         ) : segment}
       </Button>
@@ -154,4 +150,27 @@ class Buttons extends React.Component {
   }
 }
 
-export default Buttons
+Buttons.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  limitReached: PropTypes.bool.isRequired,
+  recipeId: PropTypes.string.isRequired,
+  qty: PropTypes.number.isRequired,
+  numPortions: PropTypes.number.isRequired,
+  view: PropTypes.string,
+  outOfstock: PropTypes.bool,
+  disabled: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
+  stock: PropTypes.number,
+  showControl: PropTypes.bool,
+}
+
+Buttons.defaultProps = {
+  view: '',
+  outOfstock: false,
+  stock: 0,
+  showControl: false,
+}
+
+export {
+  Buttons
+}

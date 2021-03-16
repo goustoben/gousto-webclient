@@ -1,1 +1,1 @@
-export default from './SummaryContainer'
+export { SummaryContainer as Summary } from './SummaryContainer'

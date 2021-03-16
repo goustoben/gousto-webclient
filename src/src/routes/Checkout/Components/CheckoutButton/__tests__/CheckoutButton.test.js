@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import CheckoutButton from '../CheckoutButton'
+import { CheckoutButton } from '../CheckoutButton'
 
 describe('CheckoutButton', () => {
   let wrapper

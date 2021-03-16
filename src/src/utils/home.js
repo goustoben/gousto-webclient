@@ -3,8 +3,8 @@ import {
   getPromoBannerCode,
   getIsSignupReductionEnabled,
 } from 'selectors/features'
-import home from 'config/home'
-import {actionTypes} from '../actions/actionTypes'
+import { promo } from 'config/home'
+import { actionTypes } from 'actions/actionTypes'
 
 export const promoApplicable = (isAuthenticated, criteria) => {
   switch (criteria) {
@@ -24,7 +24,7 @@ export const getPromoBannerState = (state, ownPromoCode, propsLocation) => {
   const currentPromo = state.promoCurrent || ''
   const basketPromo = getPromoCode(state) || ''
   const isAuthenticated = state.auth.get('isAuthenticated')
-  const promoCode = getPromoBannerCode(state) || ownPromoCode || home.promo.mayCode
+  const promoCode = getPromoBannerCode(state) || ownPromoCode || promo.mayCode
   const queryStringPromo = (propsLocation && propsLocation.query && propsLocation.query.promo_code) ? propsLocation.query.promo_code : ''
 
   const hasBasketPromo = basketPromo.length > 0
@@ -41,7 +41,7 @@ export const getPromoBannerState = (state, ownPromoCode, propsLocation) => {
     || !promoCode
     || isSignupReductionEnabled
 
-  const canApplyPromo = !(hasQueryStringPromo) && promoCode && promoApplicable(isAuthenticated, home.promo.applyIf)
+  const canApplyPromo = !(hasQueryStringPromo) && promoCode && promoApplicable(isAuthenticated, promo.applyIf)
 
   return {
     hide,

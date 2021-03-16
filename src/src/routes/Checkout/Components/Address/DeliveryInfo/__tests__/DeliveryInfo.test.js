@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import Svg from 'Svg'
 
-import DeliveryInfo from '../DeliveryInfo'
+import { DeliveryInfo } from '../DeliveryInfo'
 
 describe('DeliveryInfo', () => {
   let wrapper

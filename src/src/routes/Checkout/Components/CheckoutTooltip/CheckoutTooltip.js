@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import RCTooltip from 'rc-tooltip'
 import css from './CheckoutTooltip.css'
 
-const CheckoutTooltip = (props) => (
-  <div className={props.version ? css[`on${props.version}`] : ''}>
+const CheckoutTooltip = ({ version, placement, trigger, children }) => (
+  <div className={version ? css[`on${version}`] : ''}>
     <RCTooltip
-      placement={props.placement}
-      trigger={props.trigger}
-      overlay={<div className={css.tooltipContent}>{props.children}</div>}
-      overlayClassName={`checkoutTooltip-${props.placement}`}
+      placement={placement}
+      trigger={trigger}
+      overlay={<div className={css.tooltipContent}>{children}</div>}
+      overlayClassName={`checkoutTooltip-${placement}`}
     >
       <span className={css.tooltipTrigger} />
     </RCTooltip>
@@ -20,7 +20,7 @@ CheckoutTooltip.propTypes = {
   children: PropTypes.node.isRequired,
   placement: PropTypes.string,
   version: PropTypes.string,
-  trigger: PropTypes.array,
+  trigger: PropTypes.arrayOf(PropTypes.string),
 }
 
 CheckoutTooltip.defaultProps = {
@@ -29,4 +29,6 @@ CheckoutTooltip.defaultProps = {
   trigger: ['click'],
 }
 
-export default CheckoutTooltip
+export {
+  CheckoutTooltip
+}

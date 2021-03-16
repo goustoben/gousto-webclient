@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getFormValues, isInvalid, submit } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
 import { getBrowserType } from 'selectors/browser'
-import SubmitButton from './SubmitButton'
+import { SubmitButton } from './SubmitButton'
 
 function mapStateToProps(state, ownProps) {
   const form = getDeliveryFormName(state)
@@ -17,6 +17,6 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps, {
+export const SubmitButtonContainer = connect(mapStateToProps, {
   manualSubmit: submit,
 })(SubmitButton)
