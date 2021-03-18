@@ -15,3 +15,5 @@ RUN mkdir -p /root/.ssh/ &&\
     echo "StrictHostKeyChecking no" >> /etc/ssh/ssh_config &&\
     echo "PermitRootLogin yes" >> /etc/ssh/sshd_config &&\
     echo "IdentityFile ~/.ssh/id_rsa" >> /root/.ssh/config
+
+RUN npm i -g bower
