@@ -49,6 +49,10 @@ export const checkQueryParams = () => (dispatch, getState) => {
     dispatch(exports.showDetailRecipe(recipeId))
   }
 }
+export const initSelectedRecipeVariantAction = (selectedRecipeVariants) => ({
+  type: actionTypes.MENU_RECIPE_VARIANT_INIT,
+  payload: { selectedRecipeVariants },
+})
 
 export const selectRecipeVariantAction = (originalRecipeId, variantId, collectionId, variantOutOfStock, view = 'grid', close = true, hasSurcharge) => ({
   type: actionTypes.MENU_RECIPE_VARIANT_SELECTED,

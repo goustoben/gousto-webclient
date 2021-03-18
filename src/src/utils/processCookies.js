@@ -10,12 +10,16 @@ import { cookiePolicyAcceptanceChange } from 'actions/cookies'
 import { setAffiliateSource } from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
+import { initSelectedRecipeVariantAction } from 'routes/Menu/actions/menuRecipeDetails'
 import logger from 'utils/logger'
 import persist from 'actions/persist'
 import { get } from './cookieHelper2'
 
 const getCookieStoreValue = (cookies, key) => get(cookies, `${cookiePrefix}_${key}`)
 
+/**
+ * Warning this method is not tested, so be careful when modifying.
+ */
 const processCookies = (cookies, store) => {
   /* legacy cookies - need raw values */
   const promoCodeUrl = cookies.get('promo_url')
@@ -83,6 +87,16 @@ const processCookies = (cookies, store) => {
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
   const tutorialsViewed = get(cookies, 'tutorial_viewed')
+
+  const selectedRecipeVariants = getCookieStoreValue(cookies, 'menu_selectedRecipeVariants')
+
+  if (selectedRecipeVariants) {
+    try {
+      store.dispatch(initSelectedRecipeVariantAction(JSON.parse(selectedRecipeVariants)))
+    } catch (e) {
+      logger.error({ message: 'error parsing selected recipes variant cookie value', errors: [e] })
+    }
+  }
 
   if (cookiePolicy) {
     store.dispatch(cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
