@@ -13,7 +13,6 @@ import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
-  getIsFirstMonthPromoOffset,
   getIsCheckoutOverhaulEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
@@ -647,7 +646,6 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       }
 
       const reqData = {
-        ab_variant: getIsFirstMonthPromoOffset(state) ? 'promo_offset' : undefined,
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
         customer: {
