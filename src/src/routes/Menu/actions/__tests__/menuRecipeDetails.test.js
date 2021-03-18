@@ -12,6 +12,7 @@ jest.mock('react-router-redux', () => ({
 }))
 
 const {
+  initSelectedRecipeVariantAction,
   selectRecipeVariant,
   selectRecipeVariantAction,
   showDetailRecipe,
@@ -48,6 +49,21 @@ describe('selectRecipeVariant', () => {
         view,
         has_surcharge: false,
       }
+    })
+  })
+})
+
+describe('selectRecipeVariant', () => {
+  test('should dispatch a MENU_RECIPE_VARIANT_SELECTED action with correct payload and trackingData', async () => {
+    const selectedRecipeVariants = { 'ca8f71be-63ac-11e6-a693-068306404bab': { 2041: '3104', 2171: '3427' }}
+
+    const action = initSelectedRecipeVariantAction(selectedRecipeVariants)
+
+    expect(action).toEqual({
+      type: actionTypes.MENU_RECIPE_VARIANT_INIT,
+      payload: {
+        selectedRecipeVariants
+      },
     })
   })
 })

@@ -154,10 +154,6 @@ export const getIsMenuRedirectPageEnabled = ({ features }) => (
   features && features.getIn(['isMenuRedirectPageEnabled', 'value'], false)
 )
 
-export const getIsFirstMonthPromoOffset = ({ features }) => (
-  features && features.getIn(['isFirstMonthPromoOffset', 'value'], false)
-)
-
 export const getIsCheckoutOverhaulEnabled = ({ features }) => (
   features && features.getIn(['isCheckoutOverhaulEnabled', 'value'], false)
 )

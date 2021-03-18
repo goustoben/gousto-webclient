@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached } from 'utils/basket'
+import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, basketResetPersistent , naiveLimitReached } from 'utils/basket'
 import * as basketProductLimits from 'utils/basketProductLimits'
-import { naiveLimitReached } from '../basket'
+import * as cookieHelper2 from '../cookieHelper2'
 
 jest.mock('utils/basketProductLimits', () => ({
   getAllBasketProducts: jest.fn(),
@@ -367,6 +367,24 @@ describe('basket utils', () => {
       expect(getFirstProductCategoryAtLimitSpy).toHaveBeenCalledTimes(1)
       expect(getFirstProductCategoryAtLimitSpy.mock.calls[0]).toEqual(['product-3', basket, products, productsCategories])
       expect(result).toEqual({ type: 'category', value: 'category name' })
+    })
+  })
+
+  describe('basketResetPersistent', () => {
+    test('sum up the number of recipes', () => {
+      const cookie = {}
+      const unsetSpy = jest.spyOn(cookieHelper2, 'unset').mockImplementation()
+
+      basketResetPersistent(cookie)
+
+      expect(unsetSpy).toBeCalledTimes(7)
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_slotId')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_recipes')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_previewOrderId')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_postcode')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_numPortions')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_date')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_menu_selectedRecipeVariants')
     })
   })
 })

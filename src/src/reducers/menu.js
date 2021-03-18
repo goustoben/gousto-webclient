@@ -44,6 +44,12 @@ const menu = {
         .set('menuVariants', Immutable.fromJS(menuVariants))
     }
 
+    case actionTypes.MENU_RECIPE_VARIANT_INIT: {
+      const { selectedRecipeVariants } = action.payload
+
+      return state.set('selectedRecipeVariants', selectedRecipeVariants)
+    }
+
     case actionTypes.MENU_RECIPE_VARIANT_SELECTED: {
       const originalVariants = state.get('selectedRecipeVariants')
       const newVariants = switchSelectedVariants(originalVariants, action.payload)

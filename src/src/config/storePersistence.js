@@ -10,6 +10,8 @@ export default (store) => {
     promoAgeVerified: false,
     variants: false,
     basket: {
+    },
+    menu:{
     }
   }
 
@@ -30,6 +32,9 @@ export default (store) => {
         promoCode: true,
         subscriptionOption: true,
       },
+      menu: {
+        selectedRecipeVariants: false,
+      }
     })
   }
 
@@ -47,4 +52,5 @@ export const cookieExpiries = {
   basket_postcode: 7,
   basket_recipes: 7,
   basket_promoCode: 60,
+  menu_selectedRecipeVariants: 7
 }

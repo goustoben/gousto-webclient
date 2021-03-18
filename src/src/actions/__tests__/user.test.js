@@ -655,25 +655,6 @@ describe('user actions', () => {
           expect(payload.ab_variant).toBeUndefined()
         })
       })
-
-      describe('When first month discount expiry offset enabled', () => {
-        beforeEach(() => {
-          state = {
-            ...state,
-            features: Immutable.fromJS({
-              isFirstMonthPromoOffset: { value: true },
-            })
-          }
-          getState.mockReturnValue(state)
-        })
-
-        test('Signup payload has ab_variant of promo_offset', async () => {
-          await userSubscribe()(dispatch, getState)
-
-          const payload = getSignupPayload()
-          expect(payload.ab_variant).toBe('promo_offset')
-        })
-      })
     })
   })
 
