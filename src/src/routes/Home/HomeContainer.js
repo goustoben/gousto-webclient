@@ -4,7 +4,7 @@ import actions from 'actions/auth'
 import { updatePricePerServing } from 'actions/boxPrices'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getPricePerServing } from 'selectors/boxPrices'
-import { getIsSignupReductionEnabled } from 'selectors/features'
+import { getIsSignupReductionEnabled, getIsCarouselShiftEnabled } from 'selectors/features'
 
 import { Home } from './Home'
 
@@ -19,6 +19,7 @@ const mapStateToProps = (state, props) => ({
       : defaultVariant,
   isSignupReductionEnabled: getIsSignupReductionEnabled(state) && !getIsAuthenticated(state),
   pricePerServing: getPricePerServing(state),
+  isCarouselShiftEnabled: getIsCarouselShiftEnabled(state),
 })
 
 const mapDispatchToProps = {

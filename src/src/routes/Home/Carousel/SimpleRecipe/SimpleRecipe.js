@@ -1,24 +1,45 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import { TimeIndicator, Rating } from 'goustouicomponents'
 import sanitizeText from 'utils/sanitizeText'
 import css from './SimpleRecipe.css'
 
-const SimpleRecipe = ({ media, title, maxMediaSize, averageRating, ratingCount, cookingTime }) => {
+const SimpleRecipe = ({
+  media,
+  title,
+  maxMediaSize,
+  averageRating,
+  ratingCount,
+  cookingTime,
+  isCarouselShiftEnabled,
+}) => {
   const recipeTitle = sanitizeText.removeDiacritics(title)
 
   return (
-    <div className={css.recipeDetails}>
+    <div
+      className={classNames(css.recipeDetails, { [css.redesignDetails]: isCarouselShiftEnabled })}
+    >
       <div className={css.simple}>
         <GoustoImage media={media} title={title} maxMediaSize={maxMediaSize} lazy />
         <div className={css.cookingTime}>
           <TimeIndicator time={cookingTime} />
         </div>
       </div>
-      <div className={css.textContainer}>
-        <h2 className={css.recipeTitle}>{recipeTitle}</h2>
+      <div
+        className={classNames(css.textContainer, {
+          [css.redesignContainer]: isCarouselShiftEnabled,
+        })}
+      >
+        <h2
+          className={classNames(css.recipeTitle, {
+            [css.redesignTitle]: isCarouselShiftEnabled,
+          })}
+        >
+          {recipeTitle}
+        </h2>
         <div className={css.ratingContainer}>
           {ratingCount && averageRating ? (
             <Rating amountOfReviews={ratingCount} average={averageRating} size="Medium" />
@@ -36,6 +57,11 @@ SimpleRecipe.propTypes = {
   averageRating: PropTypes.number.isRequired,
   ratingCount: PropTypes.number.isRequired,
   cookingTime: PropTypes.number.isRequired,
+  isCarouselShiftEnabled: PropTypes.bool,
+}
+
+SimpleRecipe.defaultProps = {
+  isCarouselShiftEnabled: false,
 }
 
 export { SimpleRecipe }

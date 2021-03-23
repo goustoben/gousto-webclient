@@ -195,3 +195,7 @@ export const getIsCheckoutOverhaulV4Enabled = ({ features }) => (
 export const getIsSellThePropositionEnabled = ({ features }) => (
   features && features.getIn(['isSellThePropositionEnabled', 'value'], false)
 )
+
+export const getIsCarouselShiftEnabled = ({ features }) => (
+  features && features.getIn(['isCarouselShiftEnabled', 'value'], false)
+)
