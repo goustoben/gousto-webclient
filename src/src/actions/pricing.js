@@ -110,11 +110,11 @@ const pricingActions = {
         return undefined
       }
 
-      if (Object.keys(basketItems.recipes).length < 2) {
-        dispatch(this.pricingClear())
-
-        return undefined
-      }
+      // if (Object.keys(basketItems.recipes).length < 2) {
+      //   dispatch(this.pricingClear())
+      //
+      //   return undefined
+      // }
 
       try {
         dispatch(pricingPending())

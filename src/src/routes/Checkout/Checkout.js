@@ -156,21 +156,24 @@ class Checkout extends PureComponent {
       // error is handled below
     }
 
-    // If the preview order didn't create successfully, then we redirect the user
-    // back to the menu saying that he's basket is expired.
-    const previewOrderError = store
-      .getState()
-      .error.get(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false)
-    const errorName = getPreviewOrderErrorName(previewOrderError)
+    // Skip the check for the POC purposes.
+    if (false) {
+      // If the preview order didn't create successfully, then we redirect the user
+      // back to the menu saying that he's basket is expired.
+      const previewOrderError = store
+        .getState()
+        .error.get(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false)
+      const errorName = getPreviewOrderErrorName(previewOrderError)
 
-    if (previewOrderError || !store.getState().basket.get('previewOrderId')) {
-      logger.warning(
-        `Preview order id failed to create, persistent basket might be expired, error: ${errorName}`
-      )
+      if (previewOrderError || !store.getState().basket.get('previewOrderId')) {
+        logger.warning(
+          `Preview order id failed to create, persistent basket might be expired, error: ${errorName}`
+        )
 
-      return store.dispatch(
-        actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true)
-      )
+        return store.dispatch(
+          actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true)
+        )
+      }
     }
 
     if (!store.getState().menuCutoffUntil) {
