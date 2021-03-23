@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Helmet from 'react-helmet'
 import menuFetchData from 'routes/Menu/fetchData'
-import homeConfig from 'config/home'
+import { CTA, seo } from 'config/home'
 import routesConfig from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
 import { PromoBanner } from './PromoBanner'
@@ -19,6 +19,7 @@ const propTypes = {
   isSignupReductionEnabled: PropTypes.bool,
   pricePerServing: PropTypes.string,
   updatePricePerServing: PropTypes.func,
+  isCarouselShiftEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -28,6 +29,7 @@ const defaultProps = {
   isSignupReductionEnabled: false,
   pricePerServing: null,
   updatePricePerServing: () => {},
+  isCarouselShiftEnabled: false,
 }
 
 class Home extends Component {
@@ -48,21 +50,26 @@ class Home extends Component {
     }
   }
 
-  getModules = (isSignupReductionEnabled) =>
+  getModules = (isSignupReductionEnabled, isCarouselShiftEnabled) =>
     [
       isSignupReductionEnabled && 'emailForm',
       'hero',
       'trustPilot',
       'whyChooseGousto',
-      'joeWicks',
-      'recipes',
+      isCarouselShiftEnabled ? 'recipes' : 'joeWicks',
+      isCarouselShiftEnabled ? 'joeWicks' : 'recipes',
     ].filter(Boolean)
 
   render() {
-    const { isAuthenticated, variant, isSignupReductionEnabled, pricePerServing } = this.props
-    const modules = this.getModules(isSignupReductionEnabled)
+    const {
+      isAuthenticated,
+      variant,
+      isSignupReductionEnabled,
+      pricePerServing,
+      isCarouselShiftEnabled,
+    } = this.props
+    const modules = this.getModules(isSignupReductionEnabled, isCarouselShiftEnabled)
     const { menu, signup, home } = routesConfig.client
-    const { CTA, seo } = homeConfig
     let ctaUri = signup
     let ctaText = CTA.text
 
@@ -97,6 +104,7 @@ class Home extends Component {
           isAuthenticated={isAuthenticated}
           isSignupReductionEnabled={isSignupReductionEnabled}
           pricePerServing={pricePerServing}
+          isCarouselShiftEnabled={isCarouselShiftEnabled}
         />
       </div>
     )

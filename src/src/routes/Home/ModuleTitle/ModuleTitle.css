@@ -1,5 +1,5 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
-@value NewGrey from 'styles/colors.css';
+@value NewGrey, White from 'styles/colors.css';
 
 .title {
   margin-bottom: 1rem;
@@ -24,4 +24,8 @@
   margin: 0;
   color: NewGrey;
   composes: fontStyleBodyL from 'design-language/typography.css';
+}
+
+.whiteColor {
+  color: White;
 }

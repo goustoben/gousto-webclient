@@ -16,6 +16,7 @@ const propTypes = {
   pricePerServing: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   isSignupReductionEnabled: PropTypes.bool,
+  isCarouselShiftEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -25,11 +26,17 @@ const defaultProps = {
   isAuthenticated: false,
   isSignupReductionEnabled: false,
   pricePerServing: null,
+  isCarouselShiftEnabled: false,
 }
 
 class HomeSections extends Component {
   mapModules = () => {
-    const { isAuthenticated, isSignupReductionEnabled, pricePerServing } = this.props
+    const {
+      isAuthenticated,
+      isSignupReductionEnabled,
+      pricePerServing,
+      isCarouselShiftEnabled,
+    } = this.props
 
     return {
       hero: (props) => (
@@ -43,8 +50,14 @@ class HomeSections extends Component {
           pricePerServing={pricePerServing}
         />
       ),
-      joeWicks: () => <JoeWicks />,
-      recipes: (props) => <Carousel ctaText={props.ctaText} ctaUri={props.ctaUri} />,
+      joeWicks: () => <JoeWicks isCarouselShiftEnabled={isCarouselShiftEnabled} />,
+      recipes: (props) => (
+        <Carousel
+          ctaText={props.ctaText}
+          ctaUri={props.ctaUri}
+          isCarouselShiftEnabled={isCarouselShiftEnabled}
+        />
+      ),
       ...(isSignupReductionEnabled ? { emailForm: () => <EmailForm /> } : {}),
     }
   }

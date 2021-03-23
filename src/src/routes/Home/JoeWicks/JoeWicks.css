@@ -1,8 +1,17 @@
 @value BreakpointFromMedium, BreakpointFromXLarge from 'design-language/breakpoints.css';
-@value White, Blackberry, Duckegg from 'styles/colors.css';
+@value White, Blackberry, Duckegg, Bluecheese from 'styles/colors.css';
 
 .backgroundContainer {
   background: Blackberry;
+}
+
+.carouselShiftExperiment {
+  background: White;
+  padding-top: 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 0;
+  }
 }
 
 .container {
@@ -65,4 +74,17 @@
 .bodyCoach {
   composes: FontStyleBody from 'design-language/typography.module.css';
   color: White;
+}
+
+.redesignColor {
+  color: Blackberry;
+}
+
+.redesignSign {
+  color: Bluecheese;
+}
+
+.redesignCoach {
+  color: Blackberry;
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
 }
