@@ -9,14 +9,18 @@ import routes from 'config/routes'
 
 const version = routes.version.ordersV2
 
-export const createOrder = (accessToken, order, sessionId, userId) => {
+export const createOrder = async (accessToken, order, sessionId, userId) => {
   const headers = {
     'Content-Type': 'application/json',
     'x-gousto-device-id': sessionId,
     'x-gousto-user-id': userId
   }
 
-  return fetch(accessToken, `${endpoint('order', version)}/orders`, { data: order }, 'POST', cacheDefault, headers)
+  const response = await fetch(accessToken, `${endpoint('order', version)}/orders`, { data: order }, 'POST', cacheDefault, headers)
+
+  const { data: { data: orderResponse } } = response
+
+  return orderResponse
 }
 
 export const updateOrder = (accessToken, orderId, order, sessionId, userId) => {

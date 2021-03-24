@@ -17,7 +17,6 @@ const mapStateToProps = (state) => ({
   recipes: getBasketRecipes(state),
   showDetails: state.boxSummaryShow.get('show'),
   slotId: getBasketSlotId(state),
-  userOrders: state.user.get('orders'),
   deliveryDays: state.boxSummaryDeliveryDays,
   menuRecipes: state.menuRecipes,
   stock: state.menuRecipeStock,

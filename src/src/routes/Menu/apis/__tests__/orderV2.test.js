@@ -15,6 +15,31 @@ describe('orderApi', () => {
   })
 
   describe('createOrder', () => {
+    const order = {
+      type: 'order',
+      id: 'order-id-1',
+      relationships: {
+        components: [
+          { type: 'recipe', id: 'some-cool-recipe-guid-1' },
+          { type: 'recipe', id: 'another-cool-recipe-guid' },
+          { type: 'recipe', id: 'guid-guid-guid' }
+        ]
+      },
+      attributes: { state: 'pending' }
+    }
+
+    const fetchResponse = {
+      data: {
+        data: order,
+        included: []
+      },
+      meta: null
+    }
+
+    beforeEach(() => {
+      fetchSpy.mockReturnValue(fetchResponse)
+    })
+
     test('should fetch the correct url', async () => {
       await createOrder('token', { order: 'body' }, 'session-id', 'user-id')
 
@@ -34,12 +59,9 @@ describe('orderApi', () => {
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const apiResponse = { data: [1, 2, 3] }
-      fetchSpy.mockResolvedValue(apiResponse)
-
       const result = await createOrder('token', { order: 'body' })
 
-      expect(result).toEqual(apiResponse)
+      expect(result).toEqual(order)
     })
   })
 

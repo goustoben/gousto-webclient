@@ -3,6 +3,7 @@ export const ResourceType = {
   DeliverySlot: 'delivery-slot',
   DeliveryDay: 'delivery-day',
   DeliverySlotLeadTime: 'delivery-slot-lead-time',
+  DeliveryTariff: 'delivery-tariff',
   Ingredient: 'ingredient',
   Order: 'order',
   Product: 'product',
