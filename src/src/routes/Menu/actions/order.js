@@ -7,7 +7,7 @@ import { getAccessToken, getAuthUserId } from 'selectors/auth'
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
 import * as coreApi from '../apis/core'
 import { updateOrder } from '../apis/orderV2'
-import { getOrderDetails, getOrderForUpdateOrderV2, getOrderAction } from '../selectors/order'
+import { getOrderDetails, getOrderV2, getOrderAction } from '../selectors/order'
 import { getBasketOrderId } from '../../../selectors/basket'
 
 const handleErrorForOrder = (message) => (dispatch) => {
@@ -97,10 +97,11 @@ export const sendUpdateOrder = () => async (dispatch, getState) => {
   const state = getState()
   const accessToken = getAccessToken(state)
   const orderId = getBasketOrderId(state)
-  const orderPayload = getOrderForUpdateOrderV2(state)
+  const orderPayload = getOrderV2(state)
   const orderAction = getOrderAction(state)
 
   try {
+    // todo this needs userId, sessionId adding
     const { data: order } = await updateOrder(accessToken, orderId, orderPayload)
 
     if (order) {

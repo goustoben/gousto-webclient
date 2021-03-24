@@ -1,12 +1,13 @@
 import { actionTypes } from 'actions/actionTypes'
 import { basketCheckedOut, basketCheckoutClicked, basketProceedToCheckout } from 'actions/basket'
 import { boxSummaryVisibilityChange } from 'actions/boxSummary'
-import { checkoutTransactionalOrder } from 'actions/checkout'
+import { checkoutTransactionalOrder as checkoutTransactionalOrderV1 } from 'actions/checkout'
 import status from 'actions/status'
 import { orderUpdate } from 'actions/order'
 import { getIsAuthenticated } from 'selectors/auth'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { sendUpdateOrder } from 'routes/Menu/actions/order'
+import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 import { validateMenuLimitsForBasket } from '../selectors/menu'
 import { getBasketOrderId } from '../../../selectors/basket'
 
@@ -41,14 +42,20 @@ export const checkoutBasket = (section, view) => async (dispatch, getState) => {
   }
 
   if (!orderId) {
-    dispatch(checkoutTransactionalOrder('create'))
+    const isCreateV2Enabled = await isOrderApiCreateEnabled(dispatch, getState)
+
+    if (isCreateV2Enabled) {
+      dispatch(checkoutTransactionalOrder())
+    } else {
+      dispatch(checkoutTransactionalOrderV1('create'))
+    }
 
     return
   }
 
-  const isEnabled = await isOrderApiUpdateEnabled(dispatch, getState)
+  const isUpdateV2Enabled = await isOrderApiUpdateEnabled(dispatch, getState)
 
-  if (isEnabled) {
+  if (isUpdateV2Enabled) {
     dispatch(sendUpdateOrder())
   } else {
     dispatch(orderUpdate())

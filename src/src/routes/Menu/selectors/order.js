@@ -13,6 +13,7 @@ import { getNDDFeatureValue } from 'selectors/features'
 import { createSelector } from 'reselect'
 import { getBoxSummaryDeliveryDays } from 'selectors/root'
 import { getUserOrders } from 'selectors/user'
+import { ResourceType } from '../constants/resources'
 
 const getRecipesV1 = createSelector([
   getBasketRecipes,
@@ -52,10 +53,12 @@ const getOrderDetailsForBasket = createSelector([
   }
 })
 
+export const getUserDeliveryTariffId = (state) => getDeliveryTariffId(state.user, getNDDFeatureValue(state))
+
 export const getOrderDetails = createSelector([
   getOrderDetailsForBasket,
   getRecipesV1,
-  (state) => getDeliveryTariffId(state.user, getNDDFeatureValue(state)),
+  getUserDeliveryTariffId,
   getBasketOrderId,
   getPromoCode,
 ], (orderDetails, recipes, deliveryTariffId, orderId, promoCode) => {
@@ -133,10 +136,11 @@ const getRecipesV2 = createSelector([
   )
 ], []))
 
-export const getOrderForUpdateOrderV2 = createSelector([
+export const getOrderV2 = createSelector([
   getOrderDetailsForBasket,
-  getRecipesV2
-], (orderDetails, recipes) => {
+  getRecipesV2,
+  getUserDeliveryTariffId
+], (orderDetails, recipes, deliveryTariffId) => {
   const {
     deliveryDayId,
     deliverySlotId,
@@ -146,6 +150,7 @@ export const getOrderForUpdateOrderV2 = createSelector([
 
   let shippingAddress = {}
   let deliverySlotLeadTime = {}
+  let deliveryTariff = {}
 
   if (shippingAddressId) {
     shippingAddress = { shipping_address: {
@@ -165,7 +170,17 @@ export const getOrderForUpdateOrderV2 = createSelector([
     }}
   }
 
+  if (deliveryTariffId) {
+    deliveryTariff = { delivery_tariff: {
+      data: {
+        type: ResourceType.DeliveryTariff,
+        id: deliveryTariffId
+      }
+    }}
+  }
+
   return {
+    type: ResourceType.Order,
     relationships: {
       ...shippingAddress,
       delivery_slot: {
@@ -181,6 +196,7 @@ export const getOrderForUpdateOrderV2 = createSelector([
           id: deliveryDayId
         }
       },
+      ...deliveryTariff,
       components: {
         data: [
           ...recipes,

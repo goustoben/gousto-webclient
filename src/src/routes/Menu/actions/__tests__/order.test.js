@@ -256,11 +256,11 @@ describe('order actions', () => {
   })
 
   describe('sendUpdateOrder', () => {
-    let getOrderForUpdateOrderV2Spy
+    let getOrderV2Spy
     let getOrderActionSpy
 
     beforeEach(() => {
-      getOrderForUpdateOrderV2Spy = jest.spyOn(orderSelectors, 'getOrderForUpdateOrderV2').mockImplementation(jest.fn)
+      getOrderV2Spy = jest.spyOn(orderSelectors, 'getOrderV2').mockImplementation(jest.fn)
       getOrderActionSpy = jest.spyOn(orderSelectors, 'getOrderAction').mockImplementation(jest.fn)
     })
 
@@ -304,12 +304,12 @@ describe('order actions', () => {
         new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
       const getBasketOrderIdSpy = jest.spyOn(basketSelectors, 'getBasketOrderId').mockReturnValue('order-id')
-      getOrderForUpdateOrderV2Spy.mockReturnValue({ id: 'order_id' })
+      getOrderV2Spy.mockReturnValue({ id: 'order_id' })
 
       await sendUpdateOrder()(dispatch, getState)
 
-      expect(getOrderForUpdateOrderV2Spy).toBeCalledWith(getState())
-      expect(getOrderForUpdateOrderV2Spy).toHaveBeenCalledTimes(1)
+      expect(getOrderV2Spy).toBeCalledWith(getState())
+      expect(getOrderV2Spy).toHaveBeenCalledTimes(1)
       expect(getBasketOrderIdSpy).toBeCalledWith(getState())
       expect(getBasketOrderIdSpy).toHaveBeenCalledTimes(1)
       expect(updateOrderSpy).toHaveBeenCalledTimes(1)
@@ -318,7 +318,7 @@ describe('order actions', () => {
 
     test('should redirect the user to the order summary page if it succeeds', async () => {
       getOrderActionSpy.mockReturnValue('order_action')
-      getOrderForUpdateOrderV2Spy.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
+      getOrderV2Spy.mockReturnValue({ id: 'not_this_order_id', order_action: 'order_action' })
       jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve({ data: { id: 'order_id' } }) })
       ))
