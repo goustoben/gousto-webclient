@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Alert, InputCheck } from 'goustouicomponents'
 import { recipePropType } from '../../getHelpPropTypes'
@@ -54,17 +54,24 @@ const renderIneligibleIngredients = (ineligibleIngredients, recipe ) => (
     )
 )
 
-const RecipeIngredients = ({ ineligibleIngredientUuids, onChange, recipe, selectedIngredients }) => {
-  const eligible = []
-  const ineligible = []
+const RecipeIngredients = ({
+  ineligibleIngredientUuids,
+  onChange,
+  recipe,
+  selectedIngredients,
+  trackMassIssueAlertDisplayed,
+}) => {
+  const isEligible = (bool) => ({ uuid }) => ineligibleIngredientUuids.includes(uuid) !== bool
 
-  recipe.ingredients.forEach(ingredient => {
-    if (ineligibleIngredientUuids.includes(ingredient.uuid)) {
-      return ineligible.push(ingredient)
+  const eligible = recipe.ingredients.filter(isEligible(true))
+  const ineligible = recipe.ingredients.filter(isEligible(false))
+  const hasIneligibleIngredients = Boolean(ineligible.length)
+
+  useEffect(() => {
+    if (hasIneligibleIngredients) {
+      trackMassIssueAlertDisplayed()
     }
-
-    return eligible.push(ingredient)
-  })
+  }, [hasIneligibleIngredients]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -75,13 +82,15 @@ const RecipeIngredients = ({ ineligibleIngredientUuids, onChange, recipe, select
 }
 
 RecipeIngredients.propTypes = {
-  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string),
   recipe: recipePropType,
   onChange: PropTypes.func.isRequired,
   selectedIngredients: PropTypes.instanceOf(Map).isRequired,
+  trackMassIssueAlertDisplayed: PropTypes.func.isRequired,
 }
 
 RecipeIngredients.defaultProps = {
+  ineligibleIngredientUuids: [],
   recipe: { id: '', title: '', ingredients: [], url: '' }
 }
 

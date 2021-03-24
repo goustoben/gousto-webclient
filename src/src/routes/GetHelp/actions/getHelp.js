@@ -89,6 +89,7 @@ export const trackHelpPreLoginModalDisplayed = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.helpPreLoginModalDisplayed,
+    seCategory: 'help',
   }
 })
 
@@ -96,6 +97,15 @@ export const trackContinueAsNewCustomer = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.clickContinueAsNewCustomer,
+    seCategory: 'help',
+  }
+})
+
+export const trackMassIssueAlertDisplayed = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.helpMassIssueIngredientAlertDisplayed,
+    seCategory: 'help',
   }
 })
 
