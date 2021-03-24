@@ -2,6 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { Ingredients } from 'routes/GetHelp/Ingredients/Ingredients.logic'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 
 jest.mock('apis/getHelp')
 
@@ -29,26 +32,54 @@ describe('<Ingredients />', () => {
   const order = {
     id: '888',
   }
-  let wrapper
+
+  let continueButton
   let getHelpLayout
+  let store
+  let wrapper
+  const initialState = {}
+
+  const storeSelectedIngredients = jest.fn()
+  const trackUserCannotGetCompensation = jest.fn()
+  const validateSelectedIngredients = jest.fn()
+  const validateLatestOrder = jest.fn().mockResolvedValue(
+    { data: { valid: true } }
+  )
+  const originalBrowserHistory = browserHistory
+  const mockStore = configureStore([thunk])
+
+  const PROPS = {
+    ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS,
+    isOrderValidationError: false,
+    isValidateOrderLoading: false,
+    content,
+    order,
+    recipes,
+    user,
+    storeSelectedIngredients,
+    trackUserCannotGetCompensation,
+    validateLatestOrder,
+    validateSelectedIngredients,
+  }
+
+  beforeEach(() => {
+    browserHistory.push = jest.fn()
+    store = mockStore(initialState)
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+    browserHistory.push = originalBrowserHistory.push
+  })
 
   describe('rendering', () => {
-    beforeAll(() => {
+    beforeEach(() => {
       wrapper = mount(
-        <Ingredients
-          order={order}
-          user={user}
-          recipes={recipes}
-          content={content}
-          ineligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS}
-          isOrderValidationError={false}
-          isValidateOrderLoading={false}
-          storeSelectedIngredients={() => {}}
-          trackUserCannotGetCompensation={() => {}}
-          validateLatestOrder={() => {}}
-          validateSelectedIngredients={() => {}}
-        />
+        <Provider store={store}>
+          <Ingredients {...PROPS} />
+        </Provider>
       )
+      continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
       getHelpLayout = wrapper.find('GetHelpLayout')
     })
 
@@ -76,9 +107,9 @@ describe('<Ingredients />', () => {
 
     test('the Continue button is disable by default', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
-      const ContinueButton = BottomBar.find('Button')
+      continueButton = BottomBar.find('Button')
 
-      expect(ContinueButton.prop('disabled')).toBe(true)
+      expect(continueButton.prop('disabled')).toBe(true)
     })
 
     test('recipes are being displayed', () => {
@@ -104,37 +135,17 @@ describe('<Ingredients />', () => {
   })
 
   describe('behaviour', () => {
-    let validateSelectedIngredients
-    let storeSelectedIngredients
-    let ContinueButton
-    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
-      { data: { valid: true } }
-    )
-
-    beforeEach(() => {
-      storeSelectedIngredients = jest.fn()
-      validateSelectedIngredients = jest.fn()
-      browserHistory.push = jest.fn()
-      wrapper = mount(
-        <Ingredients
-          order={order}
-          user={user}
-          recipes={recipes}
-          content={content}
-          ineligibleIngredientUuids={[]}
-          isOrderValidationError={false}
-          isValidateOrderLoading={false}
-          storeSelectedIngredients={storeSelectedIngredients}
-          trackUserCannotGetCompensation={() => {}}
-          validateLatestOrder={validateLatestOrderSpy}
-          validateSelectedIngredients={validateSelectedIngredients}
-        />
-      )
-      getHelpLayout = wrapper.find('GetHelpLayout')
-      ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
-    })
-
     describe('ingredients', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Ingredients {...PROPS} />
+          </Provider>
+        )
+        continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
+        getHelpLayout = wrapper.find('GetHelpLayout')
+      })
+
       test('ingredients are unselected by default', () => {
         const secondRecipe = getHelpLayout.find('ItemExpandable').at(1)
         secondRecipe.find('Item').simulate('click')
@@ -163,6 +174,16 @@ describe('<Ingredients />', () => {
     })
 
     describe('Continue button', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Ingredients {...PROPS} />
+          </Provider>
+        )
+        continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
+        getHelpLayout = wrapper.find('GetHelpLayout')
+      })
+
       const selectIngredientAndGetCheckbox = (ingredientsWrapper) => {
         const recipe = ingredientsWrapper.find('ItemExpandable').at(1)
         recipe.find('Item').simulate('click')
@@ -177,18 +198,18 @@ describe('<Ingredients />', () => {
 
       test('the button is enabled only when one or more ingredients are selected', () => {
         const ingredientCheckbox = selectIngredientAndGetCheckbox(wrapper)
-        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
-        expect(ContinueButton.prop('disabled')).toBe(false)
+        continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
+        expect(continueButton.prop('disabled')).toBe(false)
 
         ingredientCheckbox.simulate('change')
-        ContinueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
+        continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
 
-        expect(ContinueButton.prop('disabled')).toBe(true)
+        expect(continueButton.prop('disabled')).toBe(true)
       })
 
       test('validateIngredients is called with the selected ingredients when clicking the button', () => {
         selectIngredientAndGetCheckbox(wrapper)
-        ContinueButton.prop('onClick')()
+        continueButton.prop('onClick')()
 
         expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
         expect(validateSelectedIngredients).toHaveBeenCalledWith({
@@ -207,7 +228,7 @@ describe('<Ingredients />', () => {
           }
         })
         selectIngredientAndGetCheckbox(wrapper)
-        await ContinueButton.prop('onClick')()
+        await continueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/ingredient-issues')
       })
@@ -215,7 +236,7 @@ describe('<Ingredients />', () => {
       test('redirection to the Contact Us page happens when validateIngredients errors', async () => {
         validateSelectedIngredients.mockImplementation(() => { throw new Error('error') })
         selectIngredientAndGetCheckbox(wrapper)
-        await ContinueButton.prop('onClick')()
+        await continueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
       })
@@ -229,7 +250,7 @@ describe('<Ingredients />', () => {
         })
 
         selectIngredientAndGetCheckbox(wrapper)
-        await ContinueButton.prop('onClick')()
+        await continueButton.prop('onClick')()
 
         expect(storeSelectedIngredients).toHaveBeenCalledWith([
           { ingredientUuid: '2222', recipeId: '2' }
@@ -238,44 +259,44 @@ describe('<Ingredients />', () => {
     })
 
     describe('when component mounts', () => {
-      test('calls validate order endpoint when order ID is present', () => {
-        expect(validateLatestOrderSpy).toHaveBeenCalledWith(
-          { accessToken: 'user-access-token', costumerId: '777', orderId: '888' }
-        )
+      describe('and order ID is present', () => {
+        beforeEach(() => {
+          wrapper = mount(
+            <Provider store={store}>
+              <Ingredients {...PROPS} />
+            </Provider>
+          )
+        })
+
+        test('calls validate order endpoint', () => {
+          expect(validateLatestOrder).toHaveBeenCalledWith(
+            { accessToken: 'user-access-token', costumerId: '777', orderId: '888' }
+          )
+        })
       })
 
       describe('and order validation errors', () => {
-        const trackUserCannotGetCompensation = jest.fn()
-
         beforeEach(() => {
-          browserHistory.push = jest.fn()
-
           wrapper = mount(
             <Ingredients
-              order={order}
-              user={user}
-              recipes={recipes}
-              content={content}
-              ineligibleIngredientUuids={[]}
-              isOrderValidationError={false}
-              isValidateOrderLoading={false}
-              storeSelectedIngredients={storeSelectedIngredients}
-              trackUserCannotGetCompensation={trackUserCannotGetCompensation}
-              validateLatestOrder={validateLatestOrderSpy}
-              validateSelectedIngredients={validateSelectedIngredients}
+              {...PROPS}
             />
           )
-          wrapper.setProps({ isOrderValidationError: true })
+          wrapper.setProps({isOrderValidationError: true})
         })
 
-        test('redirects to /contact if order validation request fails', () => {
+        test('redirects to /contact', () => {
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
         })
       })
 
       describe('and order validation is pending', () => {
         beforeEach(() => {
-          wrapper.setProps({ isValidateOrderLoading: true })
+          wrapper = mount(
+            <Provider store={store}>
+              <Ingredients {...PROPS} isValidateOrderLoading />
+            </Provider>
+          )
         })
 
         test('the <IngredientsPresentation /> is not rendered', () => {

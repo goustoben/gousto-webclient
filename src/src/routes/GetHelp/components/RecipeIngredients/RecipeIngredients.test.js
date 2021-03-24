@@ -1,6 +1,6 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { RecipeIngredients } from '.'
+import { mount } from 'enzyme'
+import { RecipeIngredients } from './RecipeIngredients'
 
 describe('the RecipeIngredients component', () => {
   let wrapper
@@ -16,45 +16,47 @@ describe('the RecipeIngredients component', () => {
     title: 'First test recipe',
     ingredients: TEST_INGREDIENTS,
   }
-
-  const NO_INELIGIBLE_INGREDIENTS = []
   const INELIGIBLE_INGREDIENT_UUIDS = ['2', '3']
-
   const testProps = {
-    ineligibleIngredientUuids: NO_INELIGIBLE_INGREDIENTS,
+    ineligibleIngredientUuids: [],
     recipe: TEST_RECIPE,
     selectedIngredients: new Map(),
     onChange: jest.fn(),
+    trackMassIssueAlertDisplayed: jest.fn(),
   }
-
-  beforeEach(() => {
-    wrapper = shallow(
-      <RecipeIngredients {...testProps} />
-    )
-  })
 
   afterEach(() => {
     jest.resetAllMocks()
   })
 
-  test('renders a list of ingredients for the given recipe',() => {
-    expect(wrapper.find('InputCheck').length).toBe(TEST_INGREDIENTS.length)
-  })
-
   describe('when ineligible ingredients uuids are not passed', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <RecipeIngredients {...testProps} />
+      )
+    })
+
+    test('renders a list of ingredients for the given recipe',() => {
+      expect(wrapper.find('InputCheck').length).toBe(TEST_INGREDIENTS.length)
+    })
+
     test('an Alert is not rendered', () => {
       expect(wrapper.find('Alert').exists()).toBe(false)
     })
 
     test('all of the ingredients have disabled prop set to false', () => {
-      const enabledFields = wrapper.find('InputCheck').findWhere(el => el.prop('disabled') === false)
+      const enabledFields = wrapper.find('InputCheck').getElements().filter(
+        el => el.props.disabled === false
+      )
       expect(enabledFields.length).toBe(TEST_INGREDIENTS.length)
     })
   })
 
   describe('when ineligible ingredients uuids are passed', () => {
     beforeEach(() => {
-      wrapper.setProps({ ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS })
+      wrapper = mount(
+        <RecipeIngredients {...testProps} ineligibleIngredientUuids={INELIGIBLE_INGREDIENT_UUIDS} />
+      )
     })
 
     test('an Alert is rendered', () => {
@@ -62,17 +64,21 @@ describe('the RecipeIngredients component', () => {
     })
 
     test('ineligible ingredients have disabled prop set to true', () => {
-      const disabledFields = wrapper.find('InputCheck').findWhere(el => el.prop('disabled') === true)
+      const disabledFields = wrapper.find('InputCheck').getElements().filter(el => el.props.disabled === true)
       disabledFields.forEach((disabledField, index) => {
-        const [, ingredientUuid] = disabledField.prop('id').split('&')
+        const [, ingredientUuid] = disabledField.props.id.split('&')
         expect(ingredientUuid).toBe(INELIGIBLE_INGREDIENT_UUIDS[index])
       })
     })
 
     test('correct number of eligible ingredients have disabled prop set to false', () => {
-      const enabledFields = wrapper.find('InputCheck').findWhere(el => el.prop('disabled') === false)
-      const [, ingredientUuid] = enabledFields.prop('id').split('&')
+      const enabledFields = wrapper.find('InputCheck').getElements().filter(el => el.props.disabled === false)
+      const [, ingredientUuid] = enabledFields[0].props.id.split('&')
       expect(ingredientUuid).toBe('1')
+    })
+
+    test('tracks mass issue Alert visibility', () => {
+      expect(testProps.trackMassIssueAlertDisplayed).toHaveBeenCalled()
     })
   })
 

@@ -17,6 +17,7 @@ import {
   trackDeliveryStatus,
   trackContinueAsNewCustomer,
   trackHelpPreLoginModalDisplayed,
+  trackMassIssueAlertDisplayed,
   trackNextBoxTrackingClick,
   trackRejectRefund,
   validateDeliveryAction,
@@ -169,6 +170,7 @@ describe('GetHelp action generators and thunks', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'help_login_modal_displayed',
+          seCategory: 'help',
         }
       })
     })
@@ -180,6 +182,19 @@ describe('GetHelp action generators and thunks', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'help_login_modal_click_continue_new',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackMassIssueAlertDisplayed', () => {
+    test('creates the tracking action', () => {
+      expect(trackMassIssueAlertDisplayed()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_ingredients_supply_issues_message_displayed',
+          seCategory: 'help',
         }
       })
     })

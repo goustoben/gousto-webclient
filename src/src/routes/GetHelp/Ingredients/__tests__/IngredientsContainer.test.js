@@ -4,6 +4,7 @@ import { mount } from 'enzyme'
 import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import { browserHistory } from 'react-router'
+import { Provider } from 'react-redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import status from 'reducers/status'
@@ -74,9 +75,9 @@ describe('<IngredientsContainer />', () => {
       validateOrder.mockResolvedValue({ valid: true })
 
       wrapper = mount(
-        <IngredientsContainer
-          store={store}
-        />
+        <Provider store={store}>
+          <IngredientsContainer />
+        </Provider>
       )
     })
 
