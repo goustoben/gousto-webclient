@@ -55,8 +55,7 @@ describe('given BurgerMobileMenu is called', () => {
         expect(wrapper.find(Link).find({ to: '/rate-my-recipes' })).toHaveLength(1)
       })
 
-      test('rate-my-recipes button should dispatch a tracking action', () => {
-        const trackClickRateRecipesSpy = jest.fn()
+      test('Links should dispatch a tracking action', () => {
         const trackNavigationClickSpy = jest.fn()
         wrapper = mount(
           <BurgerMobileMenu
@@ -67,8 +66,28 @@ describe('given BurgerMobileMenu is called', () => {
             logoutFunc={jest.fn()}
             hideNav={false}
             promoCodeUrl=""
-            trackClickRateRecipes={trackClickRateRecipesSpy}
             trackNavigationClick={trackNavigationClickSpy}
+            onLoginClick={jest.fn()}
+            onLogoutClick={jest.fn()}
+            helpPreLoginVisibilityChange={jest.fn()}
+          />
+        )
+        wrapper.find(Link).find({ to: '/menu' }).at(0).simulate('click')
+        expect(trackNavigationClickSpy).toHaveBeenCalled()
+      })
+
+      test('rate-my-recipes button should dispatch a tracking action', () => {
+        const trackClickRateRecipesSpy = jest.fn()
+        wrapper = mount(
+          <BurgerMobileMenu
+            show
+            menuItems={menuItems}
+            isAuthenticated={false}
+            loginFunc={jest.fn()}
+            logoutFunc={jest.fn()}
+            hideNav={false}
+            promoCodeUrl=""
+            trackClickRateRecipes={trackClickRateRecipesSpy}
             onLoginClick={jest.fn()}
             onLogoutClick={jest.fn()}
             helpPreLoginVisibilityChange={jest.fn()}
@@ -76,7 +95,6 @@ describe('given BurgerMobileMenu is called', () => {
         )
         wrapper.find(Link).find({ to: '/rate-my-recipes' }).at(0).simulate('click')
         expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('hamburger')
-        expect(trackNavigationClickSpy).toHaveBeenCalledWith('clickRateRecipes')
       })
 
       describe('and the feature isHelpCentreActive is true', () => {

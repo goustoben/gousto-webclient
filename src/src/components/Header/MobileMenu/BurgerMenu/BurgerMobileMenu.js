@@ -98,7 +98,6 @@ class BurgerMobileMenu extends React.PureComponent {
             clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
             tracking={() => {
               trackClickRateRecipes('hamburger')
-              trackNavigationClick(menuItem.tracking)
             }}
           >
             <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
