@@ -6,7 +6,6 @@ import statusActions from 'actions/status'
 import userActions from 'actions/user'
 import { cancelExistingOrders } from 'apis/orders'
 import customersApi from 'apis/customers'
-import subscriptionApi from 'apis/subscription'
 import redirectActions from 'actions/redirect'
 import config from 'config/subscription'
 import routesConfig from 'config/routes'
@@ -14,6 +13,7 @@ import * as subUtils from 'utils/subscription'
 import logger from 'utils/logger'
 import windowUtil from 'utils/window'
 import { flushPromises } from '../../_testing/utils'
+import { deactivateSubscription } from '../../routes/Account/apis/subscription'
 
 jest.mock('actions/status', () => ({
   error: jest.fn(),
@@ -32,7 +32,7 @@ jest.mock('actions/redirect', () => ({
 jest.mock('actions/onScreenRecovery', () => ({
   getPauseRecoveryContent: jest.fn(() => (() => { }))
 }))
-jest.mock('apis/subscription', () => ({
+jest.mock('../../routes/Account/apis/subscription', () => ({
   deactivateSubscription: jest.fn()
 }))
 jest.mock('apis/orders', () => ({
@@ -338,7 +338,7 @@ describe('Subscription action', () => {
         auth: Immutable.fromJS({ accessToken: 'token' }),
       })
       dispatch = jest.fn()
-      subscriptionApi.deactivateSubscription.mockReturnValue(Promise.resolve())
+      deactivateSubscription.mockReturnValue(Promise.resolve())
     })
 
     test('should handle pending state', async () => {
@@ -359,14 +359,14 @@ describe('Subscription action', () => {
       async () => {
         await subPauseActions.subscriptionDeactivate('passed in reason')(dispatch, getState)
 
-        expect(subscriptionApi.deactivateSubscription).toHaveBeenCalledTimes(1)
-        expect(subscriptionApi.deactivateSubscription).toHaveBeenCalledWith('token', { state_reason: 'passed in reason' })
+        expect(deactivateSubscription).toHaveBeenCalledTimes(1)
+        expect(deactivateSubscription).toHaveBeenCalledWith('token', { state_reason: 'passed in reason' })
       }
     )
 
     describe('when deactivation fails', () => {
       beforeEach(async () => {
-        subscriptionApi.deactivateSubscription.mockReturnValue(Promise.reject('error from deactivateSubscription'))
+        deactivateSubscription.mockReturnValue(Promise.reject('error from deactivateSubscription'))
 
         await subPauseActions.subscriptionDeactivate('passed in reason')(dispatch, getState)
       })

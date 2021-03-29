@@ -1,0 +1,34 @@
+{
+  "status": "ok",
+  "data": {
+    "userId": "string",
+    "subscription": {
+      "userId": "1234",
+      "authUserId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "boxType": "vegetarian",
+      "createdAt": "2021-03-23T16:33:51.101Z",
+      "deliverySlotDay": 2,
+      "deliverySlotEndTime": "string",
+      "deliverySlotStartTime": "string",
+      "interval": 0,
+      "intervalUnit": "week",
+      "lastChangeType": "deactivated",
+      "lastOrder": {
+        "createdAt": "2021-03-23T16:33:51.101Z",
+        "orderDate": "2021-03-23"
+      },
+      "numPortions": 0,
+      "numRecipes": 0,
+      "origin": "string",
+      "pauseDate": "2021-03-23",
+      "pauseReason": "string",
+      "skipDates": [
+        "2021-03-23"
+      ],
+      "status": "active",
+      "startDate": "2021-03-23",
+      "updatedAt": "2021-03-23T16:33:51.102Z",
+      "versionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  }
+}

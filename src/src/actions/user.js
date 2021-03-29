@@ -14,9 +14,10 @@ import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
   getIsCheckoutOverhaulEnabled,
+  getIsNewSubscriptionApiEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
-import { getUserRecentRecipesIds } from 'selectors/user'
+import { getUserId, getUserRecentRecipesIds } from 'selectors/user'
 
 import logger from 'utils/logger'
 import GoustoException from 'utils/GoustoException'
@@ -24,6 +25,7 @@ import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 
+import { skipDates } from '../routes/Account/apis/subscription'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -222,12 +224,14 @@ function userOrderSkipNextProjected() {
     const errorPrefix = 'Order skip projected error:'
 
     try {
-      let projectedOrders = getState().user.get('projectedDeliveries')
+      const state = getState()
+      const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
+      let projectedOrders = state.user.get('projectedDeliveries')
 
       if (!projectedOrders.size) {
         // eslint-disable-next-line no-use-before-define
         await dispatch(userActions.userLoadProjectedDeliveries())
-        projectedOrders = getState().user.get('projectedDeliveries')
+        projectedOrders = state.user.get('projectedDeliveries')
       }
 
       if (!projectedOrders.size) {
@@ -238,10 +242,18 @@ function userOrderSkipNextProjected() {
       }
 
       const orderToSkipId = projectedOrders.first().get('id')
+      const accessToken = state.auth.get('accessToken')
 
       try {
-        const accessToken = getState().auth.get('accessToken')
-        await userApi.skipDelivery(accessToken, orderToSkipId)
+        if (isNewSubscriptionApiEnabled) {
+          const orderToSkipDate = projectedOrders.first().get('deliveryDate').split(' ')[0]
+          const userId = getUserId(state)
+
+          await skipDates(accessToken, userId, [orderToSkipDate])
+        } else {
+          await userApi.skipDelivery(accessToken, orderToSkipId)
+        }
+
         dispatch({
           type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
           deliveryDayIds: [orderToSkipId]

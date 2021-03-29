@@ -30,6 +30,6 @@ export const multiSkipCloseModal = () => (dispatch) => {
   })
 }
 
-export const skipMultipleBoxes = (selectedOrders) => (dispatch, getState) => {
-  cancelMultipleBoxes(selectedOrders)(dispatch, getState)
+export const skipMultipleBoxes = (selectedOrders, userId) => (dispatch, getState) => {
+  cancelMultipleBoxes(selectedOrders, userId)(dispatch, getState)
 }

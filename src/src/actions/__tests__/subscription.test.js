@@ -1,13 +1,13 @@
 import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
-import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from 'actions/basket'
 import logger from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
+import { fetchSubscription } from '../../routes/Account/apis/subscription'
 
-jest.mock('apis/subscription', () => ({
+jest.mock('../../routes/Account/apis/subscription', () => ({
   fetchSubscription: jest.fn(),
 }))
 

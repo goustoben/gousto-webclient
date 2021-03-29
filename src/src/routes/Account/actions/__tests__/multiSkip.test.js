@@ -107,13 +107,13 @@ describe('Given I am interacting with the multi skip modal', () => {
         }
       ]
 
-      skipMultipleBoxes({ selectedOrders: mockSelectedOrders })(mockDispatch, mockGetState)
+      skipMultipleBoxes({ selectedOrders: mockSelectedOrders }, 'user-id')(mockDispatch, mockGetState)
 
       expect(cancelMultipleSpy).toHaveBeenCalledWith({
         selectedOrders: [
           { id: '123', isProjected: true },
-          { id: '456', isProjected: false }]
-      })
+          { id: '456', isProjected: false }],
+      }, 'user-id')
     })
   })
 })

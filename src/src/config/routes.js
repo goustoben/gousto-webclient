@@ -21,6 +21,7 @@ module.exports = {
     userFeedback: 'v1',
     clientMetrics: 'v1',
     workable: 'v1',
+    subscriptionCommand: 'v1',
   },
   address: {
     postcodeLookup: '/address/postcode-lookup',
@@ -186,6 +187,10 @@ module.exports = {
     recipes: '/recipes',
     recommendations: '/recommendations',
     steps: '/steps',
+  },
+  subscriptionCommand: {
+    skip: '/skip',
+    unSkip: '/unskip',
   },
   workable: {
     link: 'https://gousto.workable.com/',

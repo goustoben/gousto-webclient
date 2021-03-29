@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
 
+import * as deliveriesUtils from 'utils/deliveries'
+import * as menuOrderSelectors from 'routes/Menu/selectors/order'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import {
   saveOrder,
@@ -9,12 +11,11 @@ import {
 } from 'apis/orders'
 import actionStatus from 'actions/status'
 import { actionTypes } from 'actions/actionTypes'
-import * as deliveriesUtils from 'utils/deliveries'
 import { trackAffiliatePurchase } from 'actions/tracking'
-import { skipDelivery } from 'apis/user'
+import { restoreDelivery, skipDelivery } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
-import * as menuOrderSelectors from 'routes/Menu/selectors/order'
+import { getIsNewSubscriptionApiEnabled } from 'selectors/features'
 
 import {
   trackOrder,
@@ -25,9 +26,11 @@ import {
   clearUpdateDateErrorAndPending,
   orderAddressChange,
   cancelMultipleBoxes,
+  projectedOrderRestore,
   trackCancelMultipleBoxes
 } from 'actions/order'
 
+import { skipDates, unSkipDates } from '../../routes/Account/apis/subscription'
 import * as optimizelyUtils from '../../containers/OptimizelyRollouts/optimizelyUtils'
 import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
 import * as rocketsCoreApi from '../../routes/Menu/apis/rockets-core'
@@ -36,6 +39,7 @@ import { safeJestMock } from '../../_testing/mocks'
 
 import { flushPromises } from '../../_testing/utils'
 
+jest.mock('../../routes/Account/apis/subscription')
 jest.mock('apis/user')
 jest.mock('apis/orders')
 jest.mock('utils/basket')
@@ -66,6 +70,8 @@ jest.mock('apis/deliveries', () => ({
     ]
   })
 }))
+
+jest.mock('selectors/features')
 
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
 const cancelOrder = jest.spyOn(rocketsCoreApi, 'cancelOrder')
@@ -897,19 +903,22 @@ describe('order actions', () => {
     const mockSelectedOrder = {
       id: 'mock-id',
       isProjected: false,
-      deliveryDayId: 'mock-delivery-day-id'
+      deliveryDayId: 'mock-delivery-day-id',
+      deliveryDay: 'date time',
     }
 
     const mockProjectedSelectedOrder = {
       id: 'mock-id-2',
       isProjected: true,
-      deliveryDayId: 'mock-delivery-day-id-2'
+      deliveryDayId: 'mock-delivery-day-id-2',
+      deliveryDay: 'date time',
     }
 
     beforeEach(() => {
       cancelOrder.mockResolvedValue(null)
       deleteOrder.mockResolvedValue(null)
       skipDelivery.mockResolvedValue(null)
+      skipDates.mockResolvedValue(null)
       isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(false))
     })
 
@@ -988,6 +997,31 @@ describe('order actions', () => {
       expect(skipDelivery).toHaveBeenNthCalledWith(2,
         'access-token',
         'delivery-day-2'
+      )
+    })
+
+    test('for each projected selected orders, calls the skipDates day endpoint', async () => {
+      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+
+      await cancelMultipleBoxes({
+        selectedOrders: [
+          { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-1', deliveryDay: 'date1 time' },
+          { ...mockProjectedSelectedOrder, deliveryDayId: 'delivery-day-2', deliveryDay: 'date2 time' }
+        ]
+      }, 'user-id')(dispatch, getState)
+
+      await flushPromises()
+
+      expect(skipDates).toHaveBeenCalledTimes(2)
+      expect(skipDates).toHaveBeenNthCalledWith(1,
+        'access-token',
+        'user-id',
+        ['date1']
+      )
+      expect(skipDates).toHaveBeenNthCalledWith(2,
+        'access-token',
+        'user-id',
+        ['date2']
       )
     })
 
@@ -1188,6 +1222,46 @@ describe('order actions', () => {
       const [firstEvent] = queryDispatch(actionTypes.CANCEL_MULTIPLE_BOXES_ERROR)
       expect(firstEvent).toEqual({
         type: actionTypes.CANCEL_MULTIPLE_BOXES_ERROR,
+      })
+    })
+
+    describe('projectedOrderRestore', () => {
+      test('dispatches PROJECTED_ORDER_RESTORE and call unSkipDates', async () => {
+        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+        unSkipDates.mockResolvedValueOnce()
+        const dispatchSpy = jest.fn()
+        const getStateSpy = jest.fn().mockReturnValueOnce({
+          auth: Immutable.Map({
+            accessToken: 'access-token'
+          }),
+        })
+
+        await projectedOrderRestore('order-id', 'user-id', 'delivery-day-id', '2021-04-14 00:00:00')(dispatchSpy, getStateSpy)
+
+        expect(unSkipDates).toHaveBeenCalledWith('access-token', 'user-id', ['2021-04-14'])
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PROJECTED_ORDER_RESTORE,
+          orderId: 'order-id',
+        })
+      })
+
+      test('dispatches PROJECTED_ORDER_RESTORE and call restoreDelivery', async () => {
+        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(false)
+        restoreDelivery.mockResolvedValueOnce()
+        const dispatchSpy = jest.fn()
+        const getStateSpy = jest.fn().mockReturnValueOnce({
+          auth: Immutable.Map({
+            accessToken: 'access-token'
+          }),
+        })
+
+        await projectedOrderRestore('order-id', 'user-id', 'delivery-day-id', '2021-04-14 00:00:00')(dispatchSpy, getStateSpy)
+
+        expect(restoreDelivery).toHaveBeenCalledWith('access-token', 'user-id', 'delivery-day-id')
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PROJECTED_ORDER_RESTORE,
+          orderId: 'order-id',
+        })
       })
     })
   })

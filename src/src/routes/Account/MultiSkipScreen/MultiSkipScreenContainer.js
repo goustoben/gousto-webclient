@@ -6,6 +6,7 @@ import {
   trackViewMultiSkip
 } from 'routes/Account/actions/multiSkip'
 import {
+  getUserId,
   getUserNewOrdersForMultiSkip,
   getNextDeliveryDate,
   getIsMultiSkipSuccess,
@@ -26,7 +27,8 @@ const mapStateToProps = (state) => {
     isMultiSkipSuccess: getIsMultiSkipSuccess(state),
     isMultiSkipError: getIsMultiSkipError(state),
     multiSkippedBoxesCount: getSkippedBoxesCount(state),
-    isNewSubscriptionPageEnabled: getIsNewSubscriptionPageEnabled(state)
+    isNewSubscriptionPageEnabled: getIsNewSubscriptionPageEnabled(state),
+    userId: getUserId(state),
   }
 }
 

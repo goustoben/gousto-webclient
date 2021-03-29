@@ -279,6 +279,7 @@ describe('user selectors', () => {
           id: '1',
           canSkip: false,
           isProjected: false,
+          deliveryDay: '2020-06-13 00:00:00',
           deliveryDate: 'Saturday, 13th June 2020',
           deliveryDayId: '1111'
         },
@@ -286,6 +287,7 @@ describe('user selectors', () => {
           id: '2',
           canSkip: true,
           isProjected: true,
+          deliveryDay: '2020-06-20 00:00:00',
           deliveryDate: 'Saturday, 20th June 2020',
           deliveryDayId: '2222'
         },
@@ -293,6 +295,7 @@ describe('user selectors', () => {
           id: '4',
           canSkip: false,
           isProjected: true,
+          deliveryDay: '2020-07-27 00:00:00',
           deliveryDate: 'Saturday, 27th July 2020',
           deliveryDayId: '4444'
         },

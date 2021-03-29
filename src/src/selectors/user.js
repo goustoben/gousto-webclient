@@ -93,6 +93,7 @@ export const getUserNewOrdersForMultiSkip = createSelector(
           id,
           canSkip,
           isProjected,
+          deliveryDay: order.get('deliveryDay'),
           deliveryDate: order.get('humanDeliveryDay'),
           deliveryDayId: order.get(isProjected ? 'deliveryDayId' : 'coreDeliveryDayId')
         }

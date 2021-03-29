@@ -95,6 +95,7 @@ class Order extends React.PureComponent {
                       userId={userId}
                       orderId={orderId}
                       deliveryDayId={deliveryDayId}
+                      deliveryDay={deliveryDay}
                     />
                   ) : (
                     <OrderStatus

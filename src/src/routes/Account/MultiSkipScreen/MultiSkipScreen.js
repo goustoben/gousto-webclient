@@ -102,6 +102,7 @@ const newOrderShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   isProjected: PropTypes.bool.isRequired,
   canSkip: PropTypes.bool.isRequired,
+  deliveryDay: PropTypes.string.isRequired,
   deliveryDate: PropTypes.string.isRequired,
   deliveryDayId: PropTypes.string.isRequired
 })

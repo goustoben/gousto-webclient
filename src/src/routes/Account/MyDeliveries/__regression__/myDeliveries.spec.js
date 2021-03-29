@@ -19,6 +19,9 @@ describe('My Deliveries', () => {
     cy.fixture('user/userCurrentSubscriptionDelivery').as('userCurrentSubscriptionDelivery')
     cy.route('POST', /user\/current\/subscription\/delivery\/disable/, '@userCurrentSubscriptionDelivery').as('cancelProjectedDelivery')
     cy.route('POST', /user\/(.*)\/subscription\/delivery\/enable/, '@userCurrentSubscriptionDelivery').as('restoreProjectedDelivery')
+    cy.fixture('subscription/subscriptionUpdateResponse').as('subscriptionUpdateResponse')
+    cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/skip?/, '@subscriptionUpdateResponse').as('skipDates')
+    cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/unskip?/, '@subscriptionUpdateResponse').as('unSkipDates')
     cy.route('DELETE', /order/, {}).as('cancelPendingOrder')
     cy.route('GET', /delivery_day/, {})
 
@@ -45,37 +48,81 @@ describe('My Deliveries', () => {
   })
 
   describe('projected deliveries', () => {
-    it('should be cancellable and restorable', () => {
-      cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
-      cy.get('[data-testing="projectedDelivery"]').first().click()
-      cy.get('[data-testing="cancelButton"]').click()
-      cy.wait('@cancelProjectedDelivery')
-      cy.contains('Cancelled').should('be.visible')
-      cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Cancelled')
-      cy.get('[data-testing="restoreButton"]').click()
-      cy.wait('@restoreProjectedDelivery')
-      cy.contains('Scheduled').should('be.visible')
-      cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
-    })
-
-    describe('when all projected deliveries are cancelled', () => {
+    describe('projected deliveries with core subscription api', () => {
       beforeEach(() => {
-        cy.fixture('user/userCurrentProjectedDeliveries-one-delivery').as('userCurrentProjectedDeliveries')
-        cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
-
-        cy.login()
-        cy.visit('/my-deliveries')
-        cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
+        cy.setFeatures([{ feature: 'isNewSubscriptionApiEnabled', value: false }])
       })
-
-      it('should show the modal to prompt a user to pause', () => {
+      it('should be cancellable and restorable', () => {
         cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
         cy.get('[data-testing="projectedDelivery"]').first().click()
         cy.get('[data-testing="cancelButton"]').click()
         cy.wait('@cancelProjectedDelivery')
-        cy.contains('Cancelled').should('exist')
+        cy.contains('Cancelled').should('be.visible')
+        cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Cancelled')
+        cy.get('[data-testing="restoreButton"]').click()
+        cy.wait('@restoreProjectedDelivery')
+        cy.contains('Scheduled').should('be.visible')
+        cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
+      })
 
-        cy.get('[data-testing="cancelledAllBoxesModal"]').should('be.visible')
+      describe('when all projected deliveries are cancelled', () => {
+        beforeEach(() => {
+          cy.fixture('user/userCurrentProjectedDeliveries-one-delivery').as('userCurrentProjectedDeliveries')
+          cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
+
+          cy.login()
+          cy.visit('/my-deliveries')
+          cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
+        })
+
+        it('should show the modal to prompt a user to pause', () => {
+          cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
+          cy.get('[data-testing="projectedDelivery"]').first().click()
+          cy.get('[data-testing="cancelButton"]').click()
+          cy.wait('@cancelProjectedDelivery')
+          cy.contains('Cancelled').should('exist')
+
+          cy.get('[data-testing="cancelledAllBoxesModal"]').should('be.visible')
+        })
+      })
+    })
+
+    describe('projected deliveries with new subscription api', () => {
+      beforeEach(() => {
+        cy.setFeatures([{ feature: 'isNewSubscriptionApiEnabled', value: true }])
+      })
+      it('should be cancellable and restorable', () => {
+        cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
+        cy.get('[data-testing="projectedDelivery"]').first().click()
+        cy.get('[data-testing="cancelButton"]').click()
+        cy.wait('@skipDates')
+        cy.contains('Cancelled').should('be.visible')
+        cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Cancelled')
+        cy.get('[data-testing="restoreButton"]').click()
+        cy.wait('@unSkipDates')
+        cy.contains('Scheduled').should('be.visible')
+        cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
+      })
+
+      describe('when all projected deliveries are cancelled', () => {
+        beforeEach(() => {
+          cy.fixture('user/userCurrentProjectedDeliveries-one-delivery').as('userCurrentProjectedDeliveries')
+          cy.route('GET', /user\/current\/projected-deliveries/, '@userCurrentProjectedDeliveries').as('projectedDeliveries')
+
+          cy.login()
+          cy.visit('/my-deliveries')
+          cy.wait(['@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
+        })
+
+        it('should show the modal to prompt a user to pause', () => {
+          cy.get('[data-testing="projectedDelivery"]').first().get('[data-testing="orderState"]').contains('Scheduled')
+          cy.get('[data-testing="projectedDelivery"]').first().click()
+          cy.get('[data-testing="cancelButton"]').click()
+          cy.wait('@skipDates')
+          cy.contains('Cancelled').should('exist')
+
+          cy.get('[data-testing="cancelledAllBoxesModal"]').should('be.visible')
+        })
       })
     })
   })

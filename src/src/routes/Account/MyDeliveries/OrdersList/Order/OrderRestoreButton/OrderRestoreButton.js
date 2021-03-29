@@ -6,8 +6,8 @@ import css from './OrderRestoreButton.css'
 
 class OrderRestoreButton extends React.PureComponent {
   handleRestoreBox = () => {
-    const { orderId, userId, deliveryDayId, projectedOrderRestore } = this.props
-    projectedOrderRestore(orderId, userId, deliveryDayId)
+    const { orderId, userId, deliveryDayId, deliveryDay, projectedOrderRestore } = this.props
+    projectedOrderRestore(orderId, userId, deliveryDayId, deliveryDay)
   }
 
   render() {
@@ -37,6 +37,7 @@ OrderRestoreButton.propTypes = {
   userId: PropTypes.string,
   orderId: PropTypes.string,
   deliveryDayId: PropTypes.string,
+  deliveryDay: PropTypes.string,
   osrOrderId: PropTypes.string,
   projectedOrderRestore: PropTypes.func.isRequired,
   projectedOrderRestoreError: PropTypes.string,
@@ -47,6 +48,7 @@ OrderRestoreButton.defaultProps = {
   userId: '',
   orderId: '',
   deliveryDayId: '',
+  deliveryDay: '',
   osrOrderId: '',
   projectedOrderRestoreError: null,
   pending: false
