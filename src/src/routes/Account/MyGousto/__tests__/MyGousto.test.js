@@ -54,6 +54,10 @@ describe('MyGousto', () => {
       expect(wrapper.find(Cookbook).length).toEqual(1)
     })
 
+    test('should render a custom notice', () => {
+      expect(wrapper.find('CustomNotice').length).toEqual(1)
+    })
+
     test('should render the notification component', () => {
       expect(wrapper.find(Notification).length).toEqual(1)
     })
