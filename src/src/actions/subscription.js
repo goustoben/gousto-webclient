@@ -1,5 +1,5 @@
 import logger from 'utils/logger'
-import { fetchSubscription } from 'apis/subscription'
+import { fetchSubscription } from '../routes/Account/apis/subscription'
 import { basketNumPortionChange } from './basket'
 import { actionTypes } from './actionTypes'
 

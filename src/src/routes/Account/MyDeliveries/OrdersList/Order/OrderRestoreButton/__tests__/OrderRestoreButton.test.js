@@ -22,13 +22,14 @@ describe('<OrderRestoreButton />', () => {
         orderId: 'test-order-id',
         userId: 'test-user-id',
         deliveryDayId: 'test-delivery-day-id',
+        deliveryDay: 'date time',
       })
 
       wrapper.find('Button').simulate('click')
     })
 
     test('projectedOrderRestore is called', () => {
-      expect(projectedOrderRestore).toHaveBeenCalledWith('test-order-id', 'test-user-id', 'test-delivery-day-id')
+      expect(projectedOrderRestore).toHaveBeenCalledWith('test-order-id', 'test-user-id', 'test-delivery-day-id', 'date time')
     })
   })
 })

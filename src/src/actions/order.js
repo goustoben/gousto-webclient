@@ -6,8 +6,12 @@ import { trackAffiliatePurchase } from 'actions/tracking'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { redirect } from 'utils/window'
 import {
+  getIsNewSubscriptionApiEnabled,
   getNDDFeatureValue,
 } from 'selectors/features'
+import {
+  getUserId,
+} from 'selectors/user'
 import { orderTrackingActions } from 'config/order'
 import { osrOrdersSkipped } from 'actions/trackingKeys'
 import { getOrderForUpdateOrderV1 } from 'routes/Menu/selectors/order'
@@ -26,6 +30,7 @@ import {
 
 import { fetchDeliveryDays } from '../apis/deliveries'
 import * as userApi from '../apis/user'
+import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
 import { getAccessToken } from '../selectors/auth'
 import { getBasketOrderId } from '../selectors/basket'
 
@@ -260,14 +265,23 @@ export const orderCheckPossibleDuplicate = (orderId) => (
     }
   })
 
-export const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
+export const projectedOrderRestore = (orderId, userId, deliveryDayId, deliveryDay) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_RESTORE, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_RESTORE, true))
     dispatch(tempActions.temp('osrOrderId', orderId))
-    const accessToken = getState().auth.get('accessToken')
+    const state = getState()
+    const accessToken = state.auth.get('accessToken')
+    const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
+
     try {
-      await userApi.restoreDelivery(accessToken, userId, deliveryDayId)
+      if (isNewSubscriptionApiEnabled) {
+        const deliveryDayDate = deliveryDay.split(' ')[0]
+        await unSkipDates(accessToken, userId, [deliveryDayDate])
+      } else {
+        await userApi.restoreDelivery(accessToken, userId, deliveryDayId)
+      }
+
       dispatch({
         type: actionTypes.PROJECTED_ORDER_RESTORE,
         orderId,
@@ -429,8 +443,10 @@ export const orderCancel = (orderId, deliveryDayId, variation) => (
 export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
   async (dispatch, getState) => {
     const showAllCancelledModalIfNecessary = () => {
-      const orders = getState().user.get('newOrders')
-      if (checkAllScheduledCancelled(orders) && getState().subscription.getIn(['subscription', 'state']) === 'active') {
+      const state = getState()
+      const orders = state.user.get('newOrders')
+      const subscriptionState = state.subscription.getIn(['subscription', 'state'])
+      if (checkAllScheduledCancelled(orders) && subscriptionState === 'active') {
         const pendingOrdersDates = getPendingOrdersDates(orders)
         dispatch({
           type: actionTypes.CANCELLED_ALL_BOXES_MODAL_VISIBILITY_CHANGE,
@@ -442,12 +458,23 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
 
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, true))
-    const accessToken = getState().auth.get('accessToken')
-    const valueProposition = getState().onScreenRecovery.get('valueProposition')
-    const offer = getState().onScreenRecovery.get('offer')
+
+    const state = getState()
+    const accessToken = state.auth.get('accessToken')
+    const valueProposition = state.onScreenRecovery.get('valueProposition')
+    const offer = state.onScreenRecovery.get('offer')
+    const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
     try {
-      await userApi.skipDelivery(accessToken, deliveryDayId)
+      if (isNewSubscriptionApiEnabled) {
+        const orderDate = state.onScreenRecovery.get('orderDate').split(' ')[0]
+        const userId = getUserId(state)
+
+        await skipDates(accessToken, userId, [orderDate])
+      } else {
+        await userApi.skipDelivery(accessToken, deliveryDayId)
+      }
+
       dispatch({
         type: actionTypes.PROJECTED_ORDER_CANCEL,
         orderId,
@@ -488,7 +515,7 @@ export const trackCancelMultipleBoxes = (orderIds = []) => ({
   }
 })
 
-export const cancelMultipleBoxes = ({ selectedOrders }) => async (dispatch, getState) => {
+export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispatch, getState) => {
   const malformedOrders = selectedOrders.find(({ id, isProjected, deliveryDayId }) => anyUnset(id, isProjected, deliveryDayId))
 
   if (malformedOrders || !selectedOrders.length) {
@@ -503,19 +530,28 @@ export const cancelMultipleBoxes = ({ selectedOrders }) => async (dispatch, getS
     type: actionTypes.CANCEL_MULTIPLE_BOXES_START,
   })
 
+  const state = getState()
   const cancelledOrders = []
-  const accessToken = getState().auth.get('accessToken')
-  const valueProposition = getState().onScreenRecovery.get('valueProposition')
-  const offer = getState().onScreenRecovery.get('offer')
+  const accessToken = state.auth.get('accessToken')
+  const valueProposition = state.onScreenRecovery.get('valueProposition')
+  const offer = state.onScreenRecovery.get('offer')
+  const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
   try {
     const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')(dispatch, getState)
     const cancelOrderFn = useOrderApiV2 ? deleteOrder : cancelOrder
 
     const cancellations = selectedOrders.map((order) => {
-      const request = order.isProjected
-        ? userApi.skipDelivery(accessToken, order.deliveryDayId)
-        : cancelOrderFn(accessToken, order.id)
+      let request
+
+      if (order.isProjected && isNewSubscriptionApiEnabled) {
+        const deliveryDay = order.deliveryDay.split(' ')[0]
+        request = skipDates(accessToken, userId, [deliveryDay])
+      } else if (order.isProjected) {
+        request = userApi.skipDelivery(accessToken, order.deliveryDayId)
+      } else {
+        request = cancelOrderFn(accessToken, order.id)
+      }
 
       return request.then(() => cancelledOrders.push(order))
     })

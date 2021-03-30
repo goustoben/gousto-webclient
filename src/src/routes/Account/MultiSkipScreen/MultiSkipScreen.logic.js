@@ -15,7 +15,8 @@ export const MultiSkipScreenLogic = ({
   isMultiSkipError,
   multiSkippedBoxesCount,
   trackViewMultiSkip,
-  isNewSubscriptionPageEnabled
+  isNewSubscriptionPageEnabled,
+  userId,
 }) => {
   const [selectedOrderIds, setSelectedOrderIds] = useState([])
   const [isSkipBoxesClicked, setSkipBoxesClicked] = useState(false)
@@ -37,7 +38,7 @@ export const MultiSkipScreenLogic = ({
 
   const skipBoxes = () => {
     setSkipBoxesClicked(true)
-    handleSkipBoxes({ selectedOrders })
+    handleSkipBoxes({ selectedOrders }, userId)
   }
 
   const isSkipBoxesDisabled = !selectedOrderIds.length || isSkipBoxesClicked
@@ -70,6 +71,7 @@ const newOrderShape = PropTypes.shape({
   id: PropTypes.string.isRequired,
   isProjected: PropTypes.bool.isRequired,
   canSkip: PropTypes.bool.isRequired,
+  deliveryDay: PropTypes.string.isRequired,
   deliveryDate: PropTypes.string.isRequired,
   deliveryDayId: PropTypes.string.isRequired
 })
@@ -86,7 +88,8 @@ MultiSkipScreenLogic.propTypes = {
   isMultiSkipError: PropTypes.bool.isRequired,
   multiSkippedBoxesCount: PropTypes.number,
   trackViewMultiSkip: PropTypes.func.isRequired,
-  isNewSubscriptionPageEnabled: PropTypes.bool
+  isNewSubscriptionPageEnabled: PropTypes.bool,
+  userId: PropTypes.string.isRequired,
 }
 
 MultiSkipScreenLogic.defaultProps = {

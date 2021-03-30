@@ -150,6 +150,10 @@ export const getIsMultiSkipEnabled = ({ features }) => (
   features && features.getIn(['isMultiSkipEnabled', 'value'], false)
 )
 
+export const getIsNewSubscriptionApiEnabled = ({ features }) => (
+  features && features.getIn(['isNewSubscriptionApiEnabled', 'value'], false)
+)
+
 export const getIsMenuRedirectPageEnabled = ({ features }) => (
   features && features.getIn(['isMenuRedirectPageEnabled', 'value'], false)
 )

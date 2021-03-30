@@ -1,5 +1,4 @@
 import customersApi from 'apis/customers'
-import subscriptionApi from 'apis/subscription'
 import { cancelExistingOrders } from 'apis/orders'
 import config from 'config/subscription'
 import logger from 'utils/logger'
@@ -13,6 +12,7 @@ import Immutable from 'immutable'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
 import * as trackingKeys from 'actions/trackingKeys'
+import { fetchSubscription, deactivateSubscription } from '../routes/Account/apis/subscription'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 
@@ -67,7 +67,7 @@ const subPauseActions = {
 function subscriptionLoadData() {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
-    const { data = {} } = await subscriptionApi.fetchSubscription(accessToken)
+    const { data = {} } = await fetchSubscription(accessToken)
 
     dispatch({
       type: actionTypes.SUBSCRIPTION_LOAD_DATA,
@@ -299,7 +299,7 @@ function subscriptionDeactivate(reason) {
     const data = reason ? { state_reason: reason } : {}
 
     try {
-      await subscriptionApi.deactivateSubscription(accessToken, data)
+      await deactivateSubscription(accessToken, data)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.SUBSCRIPTION_DEACTIVATE, 'deactivate-fail'))
     } finally {

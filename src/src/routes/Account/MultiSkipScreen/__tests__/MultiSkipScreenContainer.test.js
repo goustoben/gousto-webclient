@@ -16,9 +16,11 @@ jest.mock('selectors/user', () => ({
     id: '123',
     isProjected: true,
     canSkip: true,
+    deliveryDay: '2020-09-23 00:00:00',
     deliveryDate: '23 September 2020',
     deliveryDayId: '456'
   }],
+  getUserId: () => 'user-id',
   getNextDeliveryDate: () => null,
   getIsMultiSkipSuccess: () => false,
   getIsMultiSkipError: () => false,

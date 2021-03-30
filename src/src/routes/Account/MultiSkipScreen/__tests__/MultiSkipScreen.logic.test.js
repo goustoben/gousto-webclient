@@ -12,6 +12,7 @@ const mockNewOrders = [
     id: 'mock-order-1',
     isProjected: true,
     canSkip: false,
+    deliveryDay: '2020-06-13 00:00:00',
     deliveryDate: 'Saturday, 13 June 2020',
     deliveryDayId: '10'
   },
@@ -19,6 +20,7 @@ const mockNewOrders = [
     id: 'mock-order-2',
     isProjected: true,
     canSkip: true,
+    deliveryDay: '2020-06-20 00:00:00',
     deliveryDate: 'Saturday, 20 June 2020',
     deliveryDayId: '11'
   },
@@ -26,6 +28,7 @@ const mockNewOrders = [
     id: 'mock-order-3',
     isProjected: false,
     canSkip: true,
+    deliveryDay: '2020-06-27 00:00:00',
     deliveryDate: 'Saturday, 27 June 2020',
     deliveryDayId: '12'
   },
@@ -48,6 +51,7 @@ const defaultProps = {
   isMultiSkipSuccess: false,
   isMultiSkipError: false,
   multiSkippedBoxesCount: null,
+  userId: 'user-id',
 }
 
 const shallowWithProps = (props = {}) => {
@@ -146,12 +150,13 @@ describe('MultiSkipScreenLogic', () => {
         expect(mockHandleSkipBoxes).toHaveBeenCalledWith({
           selectedOrders: [{
             canSkip: true,
+            deliveryDay: '2020-06-20 00:00:00',
             deliveryDate: 'Saturday, 20 June 2020',
             deliveryDayId: '11',
             id: 'mock-order-2',
             isProjected: true
           }]
-        })
+        }, 'user-id')
       })
 
       test('Then the skip boxes CTA is disabled', () => {
@@ -197,18 +202,20 @@ describe('MultiSkipScreenLogic', () => {
             selectedOrders: [
               {
                 canSkip: true,
+                deliveryDay: '2020-06-20 00:00:00',
                 deliveryDate: 'Saturday, 20 June 2020',
                 deliveryDayId: '11',
                 id: 'mock-order-2',
                 isProjected: true
               }, {
                 canSkip: true,
+                deliveryDay: '2020-06-27 00:00:00',
                 deliveryDate: 'Saturday, 27 June 2020',
                 deliveryDayId: '12',
                 id: 'mock-order-3',
                 isProjected: false
               }]
-          })
+          }, 'user-id')
         })
       })
     })

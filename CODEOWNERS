@@ -151,7 +151,6 @@
 /src/__tests__/reducers/subscriptionPause.test.js       @Gousto/squad-rockets
 /src/src/reducers/subscription.js       @Gousto/squad-rockets
 /src/__tests__/reducers/subscription.test.js       @Gousto/squad-rockets
-/src/src/apis/subscription.js       @Gousto/squad-rockets
 /src/src/apis/__tests__/subscription.test.js       @Gousto/squad-rockets
 /src/src/actions/__tests__/tastePreferences.test.js       @Gousto/squad-rockets
 /src/src/actions/tastePreferences.js       @Gousto/squad-rockets

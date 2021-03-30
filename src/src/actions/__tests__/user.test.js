@@ -1,10 +1,12 @@
 import Immutable from 'immutable'
 
-import { referAFriend, fetchUserCredit } from 'apis/user'
+import { skipDelivery, referAFriend, fetchUserCredit } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as prospectAPI from 'apis/prospect'
-
+import {
+  getIsNewSubscriptionApiEnabled,
+} from 'selectors/features'
 import { actionTypes } from 'actions/actionTypes'
 import { placeOrder } from 'actions/trackingKeys'
 import userActions, {
@@ -30,8 +32,12 @@ import { PaymentMethod, signupConfig } from 'config/signup'
 import logger from 'utils/logger'
 import { deliveryTariffTypes } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
+import { skipDates } from '../../routes/Account/apis/subscription'
+
+jest.mock('selectors/features')
 
 jest.mock('apis/user', () => ({
+  skipDelivery: jest.fn(),
   referAFriend: jest.fn(),
   fetchUserCredit: jest.fn(),
   referralDetails: jest.fn().mockImplementation(accessToken => {
@@ -71,6 +77,10 @@ jest.mock('actions/tracking', () => ({
 
 jest.mock('apis/prospect', () => ({
   storeProspect: jest.fn()
+}))
+
+jest.mock('../../routes/Account/apis/subscription', () => ({
+  skipDates: jest.fn()
 }))
 
 jest.mock('utils/logger', () => ({
@@ -1268,6 +1278,66 @@ describe('user actions', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.USER_REACTIVATE,
         user
+      })
+    })
+  })
+
+  describe('userOrderSkipNextProjected', () => {
+    test('should call skipDelivery if isNewSubscriptionApiEnabled experiment is false', async () => {
+      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(false)
+      skipDelivery.mockResolvedValueOnce()
+      const dispatchSpy = jest.fn()
+      const getStateSpy = jest.fn().mockReturnValueOnce({
+        auth: Immutable.Map({
+          accessToken: 'access-token'
+        }),
+        user: Immutable.fromJS({
+          id: 'user-id',
+          orders: {},
+          projectedDeliveries: {
+            2443: {
+              id: '2443',
+              deliveryDate: '2021-04-14 00:00:00'
+            }
+          }
+        })
+      })
+
+      await userActions.userOrderSkipNextProjected()(dispatchSpy, getStateSpy)
+
+      expect(skipDelivery).toHaveBeenCalledWith('access-token', '2443')
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
+        deliveryDayIds: ['2443'],
+      })
+    })
+
+    test('should call skipDates if isNewSubscriptionApiEnabled experiment is true', async () => {
+      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+      skipDates.mockResolvedValueOnce()
+      const dispatchSpy = jest.fn()
+      const getStateSpy = jest.fn().mockReturnValueOnce({
+        auth: Immutable.Map({
+          accessToken: 'access-token'
+        }),
+        user: Immutable.fromJS({
+          id: 'user-id',
+          orders: {},
+          projectedDeliveries: {
+            2443: {
+              id: '2443',
+              deliveryDate: '2021-04-14 00:00:00'
+            }
+          }
+        })
+      })
+
+      await userActions.userOrderSkipNextProjected()(dispatchSpy, getStateSpy)
+
+      expect(skipDates).toHaveBeenCalledWith('access-token', 'user-id', ['2021-04-14'])
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
+        deliveryDayIds: ['2443'],
       })
     })
   })
