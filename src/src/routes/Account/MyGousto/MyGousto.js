@@ -5,6 +5,7 @@ import Link from 'Link'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
 import { LimitedCapacityNotice } from './LimitedCapacityNotice'
+import { CustomNotice } from './CustomNotice'
 import { AppAwarenessBanner } from './AppAwarenessBanner'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
@@ -82,6 +83,7 @@ class MyGousto extends React.PureComponent {
           <div className={css.notificationContent}>
             {showAppAwarenessBanner && <AppAwarenessBanner />}
             {isCapacityLimited && !showAppAwarenessBanner && <LimitedCapacityNotice />}
+            <CustomNotice />
           </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />
