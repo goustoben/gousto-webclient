@@ -41,9 +41,7 @@ import {
   trackNewOrder,
   trackSubscriptionCreated,
 } from './tracking'
-import { cancelOrder } from '../routes/Menu/apis/rockets-core'
-import { deleteOrder } from '../routes/Menu/apis/rockets-orderV2'
-import { isOptimizelyFeatureEnabledFactory } from '../containers/OptimizelyRollouts/index'
+import { deleteOrder } from '../routes/Account/MyDeliveries/apis/orderV2'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -183,13 +181,8 @@ function userOrderCancelNext(afterBoxNum = 1) {
 
         try {
           const accessToken = getState().auth.get('accessToken')
-          const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')(dispatch, getState)
 
-          if (useOrderApiV2) {
-            await deleteOrder(accessToken, orderToCancelId)
-          } else {
-            await cancelOrder(accessToken, orderToCancelId)
-          }
+          await deleteOrder(accessToken, orderToCancelId)
 
           dispatch({
             type: actionTypes.USER_UNLOAD_ORDERS,

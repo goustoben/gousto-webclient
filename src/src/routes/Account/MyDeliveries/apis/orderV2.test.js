@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { deleteOrder } from '../rockets-orderV2'
+import { deleteOrder } from './orderV2'
 
 const mockFetchResult = { data: [1, 2, 3] }
 

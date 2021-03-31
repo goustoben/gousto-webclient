@@ -10,7 +10,6 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { trackOrder } from 'actions/order'
 import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
 import { actionTypes } from 'src/actions/actionTypes'
-import * as rocketsCoreApi from '../../apis/rockets-core'
 import * as orderV2 from '../../apis/orderV2'
 import { saveUserOrder, updateUserOrder } from '../../apis/core'
 import * as orderSelectors from '../../selectors/order'
@@ -51,7 +50,6 @@ jest.mock('apis/deliveries', () => ({
 }))
 
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
-const cancelOrder = jest.spyOn(rocketsCoreApi, 'cancelOrder')
 
 const { pending, error } = actionStatus
 
@@ -116,9 +114,6 @@ describe('order actions', () => {
       recipes = [1, 2, 3, 4, 5]
       jest.spyOn(orderV2, 'updateOrder').mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
-      ))
-      cancelOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve() })
       ))
       updateOrderAddress.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve() })

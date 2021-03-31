@@ -34,9 +34,7 @@ import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
 import { getAccessToken } from '../selectors/auth'
 import { getBasketOrderId } from '../selectors/basket'
 
-import { isOptimizelyFeatureEnabledFactory } from '../containers/OptimizelyRollouts/optimizelyUtils'
-import { deleteOrder } from '../routes/Menu/apis/rockets-orderV2'
-import { cancelOrder } from '../routes/Menu/apis/rockets-core'
+import { deleteOrder } from '../routes/Account/MyDeliveries/apis/orderV2'
 
 const getTrackingInformationForV1 = (order) => ({
   id: order.id,
@@ -409,13 +407,7 @@ export const orderCancel = (orderId, deliveryDayId, variation) => (
     const offer = getState().onScreenRecovery.get('offer')
 
     try {
-      const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')(dispatch, getState)
-
-      if (useOrderApiV2) {
-        await deleteOrder(accessToken, orderId)
-      } else {
-        await cancelOrder(accessToken, orderId)
-      }
+      await deleteOrder(accessToken, orderId)
 
       dispatch({
         type: actionTypes.ORDER_CANCEL,
@@ -538,9 +530,6 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
   const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
 
   try {
-    const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_cancel_web_enabled')(dispatch, getState)
-    const cancelOrderFn = useOrderApiV2 ? deleteOrder : cancelOrder
-
     const cancellations = selectedOrders.map((order) => {
       let request
 
@@ -550,7 +539,7 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
       } else if (order.isProjected) {
         request = userApi.skipDelivery(accessToken, order.deliveryDayId)
       } else {
-        request = cancelOrderFn(accessToken, order.id)
+        request = deleteOrder(accessToken, order.id)
       }
 
       return request.then(() => cancelledOrders.push(order))
