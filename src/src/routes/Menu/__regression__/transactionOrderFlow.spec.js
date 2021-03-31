@@ -27,7 +27,6 @@ describe('when the user is logged out', () => {
       cy.route('delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
       cy.route(/menu\/v1/, 'fixture:menu/twoWeeksDetails.json').as('getMenu')
       cy.route('/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
-      cy.route('POST', /order\/v2\/orders/, 'fixture:order/v2/create.json')
 
       cy.login()
 
@@ -142,6 +141,7 @@ describe('when the user is logged out', () => {
         // Mocks for creating a transactional order
         cy.route('POST', 'order/preview', 'fixture:order/preview.json').as('getPreviewOrder')
         cy.route('POST', /user\/current\/order/, 'fixture:user/userCurrentOrder').as('currentOrder')
+        cy.route('POST', /order\/v2\/orders/, 'fixture:order/v2/create.json').as('ordersV2')
       })
 
       it('should create an order and navigate to order confirmation page', () => {
