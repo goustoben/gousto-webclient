@@ -27,6 +27,7 @@ describe('when the user is logged out', () => {
       cy.route('delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
       cy.route(/menu\/v1/, 'fixture:menu/twoWeeksDetails.json').as('getMenu')
       cy.route('/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+      cy.route('POST', /order\/v2\/orders/, 'fixture:order/v2/create.json')
 
       cy.login()
 
