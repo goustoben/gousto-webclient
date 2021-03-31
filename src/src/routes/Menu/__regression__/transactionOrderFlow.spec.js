@@ -147,7 +147,10 @@ describe('when the user is logged out', () => {
       it('should create an order and navigate to order confirmation page', () => {
         cy.contains('Checkout').click({ force: true })
 
-        cy.wait(['@getPreviewOrder', '@currentOrder'])
+        // this explicit wait is required to cater for both flows of the order v2 a/b.
+        // when v1 is removed, the TODO below can be uncommented and the wait(1000) deleted
+        // TODO: cy.wait(['@ordersV2'])
+        cy.wait(1000)
 
         cy.location('pathname').should('eq', '/order-confirmation/13526239')
       })
