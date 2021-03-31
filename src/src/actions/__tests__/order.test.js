@@ -31,10 +31,8 @@ import {
 } from 'actions/order'
 
 import { skipDates, unSkipDates } from '../../routes/Account/apis/subscription'
-import * as optimizelyUtils from '../../containers/OptimizelyRollouts/optimizelyUtils'
 import * as clientMetrics from '../../routes/Menu/apis/clientMetrics'
-import * as rocketsCoreApi from '../../routes/Menu/apis/rockets-core'
-import * as rocketsOrderV2 from '../../routes/Menu/apis/rockets-orderV2'
+import * as rocketsOrderV2 from '../../routes/Account/MyDeliveries/apis/orderV2'
 import { safeJestMock } from '../../_testing/mocks'
 
 import { flushPromises } from '../../_testing/utils'
@@ -74,9 +72,7 @@ jest.mock('apis/deliveries', () => ({
 jest.mock('selectors/features')
 
 const sendClientMetricMock = safeJestMock(clientMetrics, 'sendClientMetric')
-const cancelOrder = jest.spyOn(rocketsCoreApi, 'cancelOrder')
 const deleteOrder = jest.spyOn(rocketsOrderV2, 'deleteOrder')
-const isOptimizelyFeatureEnabledFactory = jest.spyOn(optimizelyUtils, 'isOptimizelyFeatureEnabledFactory')
 
 const { pending, error } = actionStatus
 
@@ -915,11 +911,9 @@ describe('order actions', () => {
     }
 
     beforeEach(() => {
-      cancelOrder.mockResolvedValue(null)
       deleteOrder.mockResolvedValue(null)
       skipDelivery.mockResolvedValue(null)
       skipDates.mockResolvedValue(null)
-      isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(false))
     })
 
     afterEach(() => {
@@ -1025,7 +1019,7 @@ describe('order actions', () => {
       )
     })
 
-    test('for any pending selected orders, calls the cancel order endpoint', async () => {
+    test('for any pending selected orders, calls deleteOrder', async () => {
       await cancelMultipleBoxes({
         selectedOrders: [
           { ...mockSelectedOrder, id: 'order-id-1' },
@@ -1035,42 +1029,15 @@ describe('order actions', () => {
 
       await flushPromises()
 
-      expect(cancelOrder).toHaveBeenCalledTimes(2)
-      expect(cancelOrder).toHaveBeenNthCalledWith(1,
+      expect(deleteOrder).toHaveBeenCalledTimes(2)
+      expect(deleteOrder).toHaveBeenNthCalledWith(1,
         'access-token',
         'order-id-1'
       )
-      expect(cancelOrder).toHaveBeenNthCalledWith(2,
+      expect(deleteOrder).toHaveBeenNthCalledWith(2,
         'access-token',
         'order-id-2'
       )
-    })
-
-    describe('when feature flag is true', async () => {
-      beforeEach(() => {
-        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(true))
-      })
-
-      test('for any pending selected orders, calls the v2 delete order endpoint', async () => {
-        await cancelMultipleBoxes({
-          selectedOrders: [
-            { ...mockSelectedOrder, id: 'order-id-1' },
-            { ...mockSelectedOrder, id: 'order-id-2' }
-          ]
-        })(dispatch, getState)
-
-        await flushPromises()
-
-        expect(deleteOrder).toHaveBeenCalledTimes(2)
-        expect(deleteOrder).toHaveBeenNthCalledWith(1,
-          'access-token',
-          'order-id-1'
-        )
-        expect(deleteOrder).toHaveBeenNthCalledWith(2,
-          'access-token',
-          'order-id-2'
-        )
-      })
     })
 
     test('for each box successfully cancelled, dispatches a cancellation event', async () => {
@@ -1119,9 +1086,8 @@ describe('order actions', () => {
     describe('when some cancellations fail', () => {
       beforeEach(() => {
         // First should succeed, second should fail
-        cancelOrder.mockResolvedValueOnce(null)
+        deleteOrder.mockResolvedValueOnce(null)
         skipDelivery.mockRejectedValueOnce(null)
-        isOptimizelyFeatureEnabledFactory.mockReturnValue(() => Promise.resolve(false))
       })
 
       test('only dispatches cancellation action for successes', async () => {
@@ -1213,7 +1179,7 @@ describe('order actions', () => {
     })
 
     test('if any box fails to cancel, dispatches a multiskip error action', async () => {
-      cancelOrder.mockRejectedValueOnce()
+      deleteOrder.mockRejectedValueOnce()
 
       await cancelMultipleBoxes({ selectedOrders: [mockSelectedOrder] })(dispatch, getState)
 
