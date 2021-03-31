@@ -22,6 +22,7 @@ const propTypes = {
   referralDetails: PropTypes.instanceOf(Immutable.Map),
   redirect: PropTypes.func,
   isCapacityLimited: PropTypes.bool,
+  isCustomNoticeEnabled: PropTypes.bool,
   isMobileViewport: PropTypes.bool.isRequired,
   showAppAwareness: PropTypes.bool,
   rateRecipeCount: PropTypes.number,
@@ -41,6 +42,7 @@ const defaultProps = {
   referralDetails: Immutable.Map(),
   redirect: () => {},
   isCapacityLimited: false,
+  isCustomNoticeEnabled: false,
   showAppAwareness: false,
   rateRecipeCount: 0,
   showRatingsButtonFeature: false,
@@ -68,6 +70,7 @@ class MyGousto extends React.PureComponent {
       referralDetails,
       redirect,
       isCapacityLimited,
+      isCustomNoticeEnabled,
       isMobileViewport,
       showAppAwareness,
       rateRecipeCount,
@@ -83,7 +86,7 @@ class MyGousto extends React.PureComponent {
           <div className={css.notificationContent}>
             {showAppAwarenessBanner && <AppAwarenessBanner />}
             {isCapacityLimited && !showAppAwarenessBanner && <LimitedCapacityNotice />}
-            <CustomNotice />
+            {isCustomNoticeEnabled && <CustomNotice />}
           </div>
           <div className={css.notificationContent}>
             <Notification card={card} orders={orders} />

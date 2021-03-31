@@ -54,10 +54,6 @@ describe('MyGousto', () => {
       expect(wrapper.find(Cookbook).length).toEqual(1)
     })
 
-    test('should render a custom notice', () => {
-      expect(wrapper.find('CustomNotice').length).toEqual(1)
-    })
-
     test('should render the notification component', () => {
       expect(wrapper.find(Notification).length).toEqual(1)
     })
@@ -139,7 +135,27 @@ describe('MyGousto', () => {
       })
     })
 
-    describe('when showRatingsButtonFeature flag is true ', () => {
+    describe('when isCustomNoticeEnabled feature flag is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isCustomNoticeEnabled: false })
+      })
+
+      test('should not render a custom notice', () => {
+        expect(wrapper.find('CustomNotice').exists()).toBe(false)
+      })
+    })
+
+    describe('when isCustomNoticeEnabled feature flag is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isCustomNoticeEnabled: true })
+      })
+
+      test('should render a custom notice', () => {
+        expect(wrapper.find('CustomNotice').length).toBe(1)
+      })
+    })
+
+    describe('when showRatingsButtonFeature flag is true', () => {
       describe('when user has recipes to rate', () => {
         test('should render a Rate recipes link', () => {
           wrapper = shallow(

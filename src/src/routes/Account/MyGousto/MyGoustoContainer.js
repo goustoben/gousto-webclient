@@ -3,7 +3,12 @@ import actions from 'actions'
 import { userGetReferralDetails } from 'actions/user'
 import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
-import { getIsMyGoustoBannerAppAwarenessEnabled, getLimitedCapacity, getRatingsButtonFeature } from 'selectors/features'
+import {
+  getIsCustomNoticeEnabled,
+  getIsMyGoustoBannerAppAwarenessEnabled,
+  getLimitedCapacity,
+  getRatingsButtonFeature
+} from 'selectors/features'
 import { MyGousto } from './MyGousto'
 import { trackClickRateRecipes } from '../../Ratings/actions/feedback'
 
@@ -14,6 +19,7 @@ function mapStateToProps(state) {
     nameFirst: state.user.get('nameFirst'),
     referralDetails: state.user.get('referralDetails'),
     isCapacityLimited: getLimitedCapacity(state),
+    isCustomNoticeEnabled: getIsCustomNoticeEnabled(state),
     isMobileViewport: getBrowserType(state) === 'mobile',
     showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),
     rateRecipeCount: state.feedback.get('feedbackCount'),
