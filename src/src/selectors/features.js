@@ -134,6 +134,10 @@ export const getIsMobileMenuModalAppAwarenessEnabled = ({ features }) => (
   features && features.getIn(['isMobileMenuModalAppAwarenessEnabled', 'value'], false)
 )
 
+export const getIsCustomNoticeEnabled = ({ features }) => (
+  features && features.getIn(['isCustomNoticeEnabled', 'value'], false)
+)
+
 export const getIsMyGoustoBannerAppAwarenessEnabled = ({ features }) => (
   features && features.getIn(['isMyGoustoBannerAppAwarenessEnabled', 'value'], false)
 )
