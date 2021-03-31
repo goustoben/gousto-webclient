@@ -51,7 +51,6 @@ describe('<TileImageContainer />', () => {
   )
 
   test('should pass down correct props', () => {
-    expect(wrapper.prop('media')).toEqual(moodImageUrls)
     expect(wrapper.prop('isOutOfStock')).toEqual(false)
     expect(wrapper.prop('mouseEnter')).toEqual(mouseEnter)
     expect(wrapper.prop('mouseLeave')).toEqual(mouseLeave)

@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 import * as recipeContext from '../../../context/recipeContext'
 import { Title } from './Title'
 
@@ -8,14 +9,22 @@ describe('Recipe components > Title', () => {
   const titleText = 'Steak and Chips'
   let wrapper
 
+  const recipe = Immutable.fromJS({
+    id: '1234',
+    title: titleText
+  })
+  const useContextMock = jest.spyOn(React, 'useContext').mockImplementation(() => recipe)
+  jest.spyOn(recipeContext, 'useRecipeTitle')
+
   beforeEach(() => {
-    jest.spyOn(recipeContext, 'useRecipeField').mockReturnValue(titleText)
+    useContextMock.mockClear()
+    recipeContext.useRecipeTitle.mockClear()
 
     wrapper = mount(<Title className={className} />)
   })
 
-  test('should call useRecipeField with "title"', () => {
-    expect(recipeContext.useRecipeField).toHaveBeenCalledWith('title')
+  test('should call useRecipeTitle', () => {
+    expect(recipeContext.useRecipeTitle).toHaveBeenCalled()
   })
 
   test('should set correct className', () => {

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useRecipeField } from 'routes/Menu/context/recipeContext'
+import { useRecipeTitle } from 'routes/Menu/context/recipeContext'
 
 const Title = ({ className }) => {
-  const title = useRecipeField('title')
+  const title = useRecipeTitle()
 
   return <h2 className={className}>{title}</h2>
 }
