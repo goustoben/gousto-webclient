@@ -186,7 +186,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
     test('should call orderConfirmationRedirect with id from response', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
 
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(mockOrder.id)
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith(mockOrder.id, 'create')
     })
 
     test('should clear pending', async () => {

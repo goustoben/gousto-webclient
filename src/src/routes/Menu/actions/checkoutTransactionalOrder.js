@@ -46,7 +46,7 @@ export const checkoutTransactionalOrder = () => async (dispatch, getState) => {
     const order = await createOrder(accessToken, orderRequest, sessionId, userId)
 
     dispatch(trackOrder(undefined, order))
-    dispatch(orderConfirmationRedirect(order.id))
+    dispatch(orderConfirmationRedirect(order.id, 'create'))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
   } catch (e) {
     const { message, code } = e
