@@ -27,6 +27,8 @@ describe("Given I'm a logged out user", () => {
       cy.route('GET', '/prices**', 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
       cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
       cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
+      cy.route('POST', 'prospect', 'fixture:checkout/prospect/prospect.json')
+      cy.route('POST', /validate/, 'fixture:checkout/validate/validate.json')
       cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
       cy.route('GET', 'address/postcode-lookup**', 'fixture:address/postcodeLookup.json').as('getAddresses')
       cy.mockDate()
