@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
+import menu from 'config/menu'
 import css from './Allergens.css'
 
 const replaceGluten = (allergens) => allergens.map(a =>
@@ -28,7 +29,7 @@ const Allergens = ({ allergens, inset }) => (
         </span>
       </dl>
     ) : null}
-    <p>In addition to the recipe specific allergen information provided, due to production and packing methods Gousto boxes may also contain low levels of the following allergens: Fish; Eggs; Soya; Sesame; Sulphur Dioxide and Sulphites; Mustard; Nuts and Peanuts.</p>
+    <p>{menu.legal}</p>
   </div>
 )
 
