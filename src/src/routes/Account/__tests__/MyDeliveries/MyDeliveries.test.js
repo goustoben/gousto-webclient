@@ -79,7 +79,7 @@ describe('MyDeliveries', () => {
     test('should render 1 <Button> component to add more boxes', () => {
       const button = wrapper.find('Button')
       expect(button.length).toEqual(1)
-      expect(button.prop('children')).toEqual('Add box')
+      expect(button.prop('children')).toEqual('Order another box')
     })
 
     test('should render 1 <OrdersList> component(s) when neither fetching orders or addresses is pending', () => {

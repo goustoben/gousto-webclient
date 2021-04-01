@@ -73,7 +73,7 @@ class MyDeliveries extends React.PureComponent {
         <div className={css.button}>
           <Link to={routes.client.menu}>
             <Button color="secondary" noDecoration data-testing="addBoxButton">
-              Add box
+              Order another box
             </Button>
           </Link>
         </div>
