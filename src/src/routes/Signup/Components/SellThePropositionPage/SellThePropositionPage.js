@@ -8,7 +8,7 @@ import bottomImage from './assets/tablet-bottom.jpg'
 import css from './SellThePropositionPage.css'
 
 export const SellThePropositionPage = ({ signupGoToMenu }) => (
-  <div data-testing="sellThePropositionPage">
+  <div className={css.container} data-testing="sellThePropositionPage">
     <div className={css.mobileContainer}>
       <img className={css.image} src={topImage} alt="Sample dishes offered by Gousto" />
       <TextFrame
