@@ -225,7 +225,7 @@ export const getSkipRecoveryContent = () => (
   }
 )
 
-export const getPauseRecoveryContent = (enableOffer = false) => (
+export const getPauseRecoveryContent = (enableOffer = true) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const modalType = 'subscription'
