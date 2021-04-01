@@ -49,7 +49,6 @@ import {
   getIsCheckoutOverhaulV1Enabled,
   getIsCheckoutOverhaulV3Enabled,
   getIsCheckoutOverhaulV4Enabled,
-  getIsSellThePropositionEnabled,
   getIsCarouselShiftEnabled,
   getIsNewSubscriptionApiEnabled,
 } from 'selectors/features'
@@ -117,7 +116,6 @@ describe('when features are defined', () => {
     [getIsCheckoutOverhaulV1Enabled, 'isCheckoutOverhaulV1Enabled'],
     [getIsCheckoutOverhaulV3Enabled, 'isCheckoutOverhaulV3Enabled'],
     [getIsCheckoutOverhaulV4Enabled, 'isCheckoutOverhaulV4Enabled'],
-    [getIsSellThePropositionEnabled, 'isSellThePropositionEnabled'],
     [getIsCarouselShiftEnabled, 'isCarouselShiftEnabled'],
     [getIsNewSubscriptionApiEnabled, 'isNewSubscriptionApiEnabled'],
   ]

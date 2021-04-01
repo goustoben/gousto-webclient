@@ -1,6 +1,10 @@
 @value BreakpointFromMedium, BreakpointToLarge, BreakpointToMedium, BreakpointFromLarge, BreakpointFromLarge, BreakpointToXLarge, BreakpointFromXLarge from 'design-language/breakpoints.css';
 @value White from 'styles/colors.css';
 
+.container {
+  width: 100%;
+}
+
 .image {
   width: 100%;
   height: auto;

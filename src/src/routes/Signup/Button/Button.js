@@ -3,14 +3,12 @@ import React from 'react'
 import actual from 'actual'
 import { Button as GoustoButton } from 'goustouicomponents'
 
-const ctaText = (isLastStep, isTastePreferencesEnabled, isSellThePropositionEnabled) => {
+const ctaText = (isLastStep, isTastePreferencesEnabled) => {
   if (isLastStep) {
-    if (isSellThePropositionEnabled) {
-      return 'Confirm'
-    }
-
-    if (!isTastePreferencesEnabled) {
+    if (isTastePreferencesEnabled) {
       return 'Show me recipes'
+    } else {
+      return 'Confirm'
     }
   }
   if (actual('width', 'px') <= 767) {
@@ -20,16 +18,8 @@ const ctaText = (isLastStep, isTastePreferencesEnabled, isSellThePropositionEnab
   return 'Continue'
 }
 
-const Button = ({
-  children,
-  onClick,
-  isLastStep,
-  isTastePreferencesEnabled,
-  isSellThePropositionEnabled,
-  ...buttonProps
-}) => {
-  const buttonText =
-    children || ctaText(isLastStep, isTastePreferencesEnabled, isSellThePropositionEnabled)
+const Button = ({ children, onClick, isLastStep, isTastePreferencesEnabled, ...buttonProps }) => {
+  const buttonText = children || ctaText(isLastStep, isTastePreferencesEnabled)
 
   return (
     <GoustoButton
@@ -54,14 +44,12 @@ Button.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.node,
   isTastePreferencesEnabled: PropTypes.bool,
-  isSellThePropositionEnabled: PropTypes.bool,
 }
 
 Button.defaultProps = {
   onClick: () => {},
   children: undefined,
   isTastePreferencesEnabled: false,
-  isSellThePropositionEnabled: false,
 }
 
 export { Button }

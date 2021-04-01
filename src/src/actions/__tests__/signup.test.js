@@ -176,7 +176,7 @@ describe('signup actions', () => {
     })
 
     describe('when on the last step', () => {
-      test('should dispatch a tracking event with the correct properties', () => {
+      test('should dispatch a tracking event and redirect to sell the proposition page', () => {
         getState.mockReturnValue({
           signup: Immutable.fromJS({
             wizard: {
@@ -193,34 +193,6 @@ describe('signup actions', () => {
         signupNextStep('finish')(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalledTimes(2)
-        expect(redirect).toHaveBeenCalled()
-      })
-    })
-
-    describe('and when the isSellThePropositionEnabled feature is enabled', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          signup: Immutable.fromJS({
-            wizard: {
-              steps: ['box-size', 'postcode', 'delivery'],
-              isLastStep: true,
-            },
-          }),
-          features: Immutable.fromJS({
-            isSellThePropositionEnabled: {
-              value: true
-            },
-          })
-        })
-        stepByName.mockReturnValue(Immutable.Map({
-          name: 'delivery',
-          slug: 'delivery',
-        }))
-      })
-
-      test('then it should redirect to the Sell the proposition page', () => {
-        signupNextStep('delivery')(dispatch, getState)
-
         expect(redirect).toHaveBeenCalledWith('/signup/about')
       })
     })
