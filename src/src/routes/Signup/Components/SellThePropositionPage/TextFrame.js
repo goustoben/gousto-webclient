@@ -31,7 +31,7 @@ export const items = [
   },
 ]
 
-export const TextFrame = ({ signupGoToMenu, isFullWidth }) => (
+export const TextFrame = ({ signupGoToMenu, isFullWidth, ctaTestingSelector }) => (
   <div className={css.textFrame}>
     <h1 className={css.heading}>Get your taste buds ready...</h1>
     <ul className={css.list}>
@@ -41,7 +41,7 @@ export const TextFrame = ({ signupGoToMenu, isFullWidth }) => (
         </li>
       ))}
     </ul>
-    <CTA onClick={signupGoToMenu} isFullWidth={isFullWidth}>
+    <CTA onClick={signupGoToMenu} isFullWidth={isFullWidth} testingSelector={ctaTestingSelector}>
       See this week’s menu
     </CTA>
   </div>
@@ -50,4 +50,5 @@ export const TextFrame = ({ signupGoToMenu, isFullWidth }) => (
 TextFrame.propTypes = {
   signupGoToMenu: PropTypes.func.isRequired,
   isFullWidth: PropTypes.bool.isRequired,
+  ctaTestingSelector: PropTypes.string.isRequired,
 }

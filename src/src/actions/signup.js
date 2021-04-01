@@ -4,7 +4,6 @@ import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { clickSeeThisWeeksMenu } from 'actions/trackingKeys'
 import { stepByName } from 'utils/signup'
-import { getIsSellThePropositionEnabled } from 'selectors/features'
 import { signupConfig } from 'config/signup'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
@@ -86,14 +85,9 @@ export function signupNextStep(stepName) {
       if (isCurrentlyTheLastStep && (step.get('name') === lastWizardStep || !slug)) {
         dispatch(signupTracking())
 
-        const isSellThePropositionEnabled = getIsSellThePropositionEnabled(state)
-        if (isSellThePropositionEnabled) {
-          const path = `${routes.client.signup}/${signupConfig.sellThePropositionPagePath}`
+        const path = `${routes.client.signup}/${signupConfig.sellThePropositionPagePath}`
 
-          return dispatch(redirect(path))
-        } else {
-          return dispatch(redirect(routes.client.menu))
-        }
+        return dispatch(redirect(path))
       }
 
       try {

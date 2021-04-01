@@ -9,29 +9,21 @@ describe('Button', () => {
     wrapper = shallow(<Button isLastStep={false} />)
   })
 
-  describe('when the isSellThePropositionEnabled feature is enabled', () => {
+  describe('when it is not the last step', () => {
+    test('then the text should be Next', () => {
+      expect(wrapper.prop('children')).toBe('Next')
+    })
+  })
+
+  describe('when it is the last step', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isSellThePropositionEnabled: true,
+        isLastStep: true,
       })
     })
 
-    describe('and when it is not the last step', () => {
-      test('then the text should be Next', () => {
-        expect(wrapper.prop('children')).toBe('Next')
-      })
-    })
-
-    describe('and when it is the last step', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isLastStep: true,
-        })
-      })
-
-      test('then the text should be Confirm', () => {
-        expect(wrapper.prop('children')).toBe('Confirm')
-      })
+    test('then the text should be Confirm', () => {
+      expect(wrapper.prop('children')).toBe('Confirm')
     })
   })
 })

@@ -63,6 +63,11 @@ module.exports = {
       })
       .perform(function (done) {
         browser.pause(1000)
+        signup.section.sellThePropositionPage.goToNextStep()
+        done()
+      })
+      .perform(function (done) {
+        browser.pause(1000)
         menu.section.recipes.checkIfRecipesVisible()
         done()
       })
@@ -106,5 +111,5 @@ module.exports = {
         browser.pause(1000)
         done()
       })
-  }
+  },
 }

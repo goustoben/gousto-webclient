@@ -97,6 +97,19 @@ module.exports = {
       commands: [{
         goToNextStep,
       }],
+    },
+    sellThePropositionPage: {
+      selector: '*[data-testing="sellThePropositionPage"]',
+
+      elements: {
+        CTA: {
+          selector: '*[data-testing="sellThePropositionCTA_desktop"]'
+        },
+      },
+
+      commands: [{
+        goToNextStep
+      }],
     }
   }
 }

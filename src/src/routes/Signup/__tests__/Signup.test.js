@@ -229,7 +229,7 @@ describe('Signup', () => {
     })
   })
 
-  describe('when the step is "about" for sell the proposition experiment', () => {
+  describe('when the step is "about" for Sell the Proposition page', () => {
     let wrapper
 
     beforeEach(() => {
