@@ -29,6 +29,7 @@ describe('<IngredientReasons />', () => {
   let wrapper
   let getHelpLayout
   const storeSelectedIngredientIssueSpy = jest.fn()
+  const trackIngredientReasonsConfirmed = jest.fn()
 
   beforeAll(() => {
     wrapper = mount(
@@ -99,6 +100,7 @@ describe('<IngredientReasons />', () => {
           content={content}
           ingredientsAndIssues={ingredientsAndIssues}
           storeIngredientIssueDescriptions={storeSelectedIngredientIssueSpy}
+          trackIngredientReasonsConfirmed={trackIngredientReasonsConfirmed}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
@@ -141,47 +143,64 @@ describe('<IngredientReasons />', () => {
       expect(Button.prop('disabled')).toBe(true)
     })
 
-    test('action being called with issue ids and issue descriptions when submit button is clicked', () => {
-      const expectedIssueReasons = {
-        '1917-bbb': {
-          ingredientId: 'bbb',
-          issueDescription: 'This is my issue...',
-          issueId: '101',
-          issueName: 'Missing ingredients',
-          label: '1 can of chopped tomatoes (210g)',
-          recipeId: '1917'
-        },
-        '1494-bbb': {
-          ingredientId: 'bbb',
-          issueDescription: 'And this is my other issue...',
-          issueId: '104',
-          issueName: 'Fruit or Veg - Mouldy',
-          label: '1 can of chopped tomatoes (210g)',
-          recipeId: '1494'
+    describe('When submit details button is clicked', () => {
+      beforeEach(() => {
+        const issueDetails = getHelpLayout.find('div.issueDetails')
+        const textarea1 = issueDetails.at(0).find('textarea')
+        const textarea2 = issueDetails.at(1).find('textarea')
+        const Button = getHelpLayout.find('Button')
+
+        textarea1.simulate(
+          'change', { target: { value: 'This is my issue...' } }
+        )
+        textarea2.simulate(
+          'change', { target: { value: 'And this is my other issue...' } }
+        )
+
+        Button.props().onClick()
+      })
+
+      test('action being called with issue ids and issue descriptions', () => {
+        const expectedIssueReasons = {
+          '1917-bbb': {
+            ingredientId: 'bbb',
+            issueDescription: 'This is my issue...',
+            issueId: '101',
+            issueName: 'Missing ingredients',
+            label: '1 can of chopped tomatoes (210g)',
+            recipeId: '1917'
+          },
+          '1494-bbb': {
+            ingredientId: 'bbb',
+            issueDescription: 'And this is my other issue...',
+            issueId: '104',
+            issueName: 'Fruit or Veg - Mouldy',
+            label: '1 can of chopped tomatoes (210g)',
+            recipeId: '1494'
+          }
         }
-      }
-      const issueDetails = getHelpLayout.find('div.issueDetails')
-      const textarea1 = issueDetails.at(0).find('textarea')
-      const textarea2 = issueDetails.at(1).find('textarea')
-      const Button = getHelpLayout.find('Button')
 
-      textarea1.simulate(
-        'change', { target: { value: 'This is my issue...' } }
-      )
-      textarea2.simulate(
-        'change', { target: { value: 'And this is my other issue...' } }
-      )
+        expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(expectedIssueReasons)
+      })
 
-      Button.props().onClick()
+      test('trackIngredientReasonsConfirmed is called with the correct data', () => {
+        const INGREDIENTS_TRACKING_DATA = [
+          {
+            ingredient_name: '1 can of chopped tomatoes (210g)',
+            recipe_id: '1917'
+          },
+          {
+            ingredient_name: '1 can of chopped tomatoes (210g)',
+            recipe_id: '1494'
+          }
+        ]
 
-      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(expectedIssueReasons)
-    })
+        expect(trackIngredientReasonsConfirmed).toHaveBeenCalledWith(INGREDIENTS_TRACKING_DATA)
+      })
 
-    test('redirect happens when the Submit button is clicked', () => {
-      const Button = getHelpLayout.find('Button')
-      Button.props().onClick()
-
-      expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
+      test('I am redirected to the refund page', () => {
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
+      })
     })
   })
 })

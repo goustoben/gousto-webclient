@@ -38,6 +38,8 @@ const propTypes = {
     accessToken: PropTypes.string.isRequired,
   }),
   storeSelectedIngredients: PropTypes.func.isRequired,
+  trackDeselectIngredient: PropTypes.func.isRequired,
+  trackSelectIngredient: PropTypes.func.isRequired,
   trackUserCannotGetCompensation: PropTypes.func.isRequired,
   validateLatestOrder: PropTypes.func.isRequired,
   validateSelectedIngredients: PropTypes.func.isRequired,
@@ -78,14 +80,17 @@ class Ingredients extends PureComponent {
     }
   }
 
-  changeHandler = (checkboxId, isChecked) => {
+  changeHandler = (checkboxId, isChecked, ingredientName) => {
     const { selectedIngredients } = this.state
+    const { trackDeselectIngredient, trackSelectIngredient } = this.props
     const newSelectedIngredients = new Map(selectedIngredients)
 
     if (isChecked) {
       newSelectedIngredients.set(checkboxId, isChecked)
+      trackSelectIngredient(ingredientName)
     } else {
       newSelectedIngredients.delete(checkboxId)
+      trackDeselectIngredient(ingredientName)
     }
 
     this.setState({

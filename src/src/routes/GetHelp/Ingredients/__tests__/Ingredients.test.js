@@ -16,14 +16,14 @@ describe('<Ingredients />', () => {
   }
   const INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
   const recipes = [
-    { id: '1', title: 'test 1', ingredients: [{ uuid: '1', label: 'test' }] },
+    { id: '1', title: 'Fish Curry', ingredients: [{ uuid: '1', label: 'fish' }] },
     {
       id: '2',
-      title: 'test 2',
-      ingredients: [{ uuid: '1111', label: 'test' }, { uuid: '2222', label: 'test2' }]
+      title: 'Pasta Bake',
+      ingredients: [{ uuid: '1111', label: 'test' }, { uuid: '2222', label: 'pasta' }]
     },
-    { id: '3', title: 'test 3', ingredients: [{ uuid: '3', label: 'test' }] },
-    { id: '4', title: 'test 4', ingredients: [{ uuid: '4', label: 'test' }] },
+    { id: '3', title: 'Cottage Pie', ingredients: [{ uuid: '3', label: 'potato' }] },
+    { id: '4', title: 'Chicken Fajitas', ingredients: [{ uuid: '4', label: 'chicken' }] },
   ]
   const user = {
     id: '777',
@@ -40,6 +40,8 @@ describe('<Ingredients />', () => {
   const initialState = {}
 
   const storeSelectedIngredients = jest.fn()
+  const trackDeselectIngredient = jest.fn()
+  const trackSelectIngredient = jest.fn()
   const trackUserCannotGetCompensation = jest.fn()
   const validateSelectedIngredients = jest.fn()
   const validateLatestOrder = jest.fn().mockResolvedValue(
@@ -57,6 +59,8 @@ describe('<Ingredients />', () => {
     recipes,
     user,
     storeSelectedIngredients,
+    trackDeselectIngredient,
+    trackSelectIngredient,
     trackUserCannotGetCompensation,
     validateLatestOrder,
     validateSelectedIngredients,
@@ -117,10 +121,10 @@ describe('<Ingredients />', () => {
 
       expect(items).toHaveLength(4)
 
-      expect(items.at(0).text()).toBe('test 1')
-      expect(items.at(1).text()).toBe('test 2')
-      expect(items.at(2).text()).toBe('test 3')
-      expect(items.at(3).text()).toBe('test 4')
+      expect(items.at(0).text()).toBe('Fish Curry')
+      expect(items.at(1).text()).toBe('Pasta Bake')
+      expect(items.at(2).text()).toBe('Cottage Pie')
+      expect(items.at(3).text()).toBe('Chicken Fajitas')
     })
 
     test('recipe list is being rendered', () => {
@@ -170,6 +174,25 @@ describe('<Ingredients />', () => {
         ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
         expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+      })
+
+      test('when ingredient checkbox is selected, a trackSelectIngredient is called with correct data', () => {
+        const secondRecipe = wrapper.find('ItemExpandable').at(1)
+        secondRecipe.find('Item').simulate('click')
+        const ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+        ingredientsCheckboxes.at(1).simulate('change')
+
+        expect(trackSelectIngredient).toHaveBeenCalledWith('pasta')
+      })
+
+      test('when ingredient checkbox changes from selected to unselected, a trackDeselectIngredient is called with correct data', () => {
+        const secondRecipe = wrapper.find('ItemExpandable').at(1)
+        secondRecipe.find('Item').simulate('click')
+        const ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+        ingredientsCheckboxes.at(1).simulate('change')
+        ingredientsCheckboxes.at(1).simulate('change')
+
+        expect(trackDeselectIngredient).toHaveBeenCalledWith('pasta')
       })
     })
 
@@ -282,7 +305,7 @@ describe('<Ingredients />', () => {
               {...PROPS}
             />
           )
-          wrapper.setProps({isOrderValidationError: true})
+          wrapper.setProps({ isOrderValidationError: true })
         })
 
         test('redirects to /contact', () => {

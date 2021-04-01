@@ -5,7 +5,11 @@ import {
   trackUserCannotGetCompensation,
 } from 'actions/getHelp'
 import { getOrderValidationPendingState, getIsOrderValidationError } from 'selectors/getHelp'
-import { validateLatestOrder } from '../actions/getHelp'
+import {
+  trackDeselectIngredient,
+  trackSelectIngredient,
+  validateLatestOrder,
+} from '../actions/getHelp'
 import { getIneligibleIngredientUuids } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
@@ -30,10 +34,12 @@ const mapStateToProps = (state) => ({
 })
 
 const IngredientsContainer = connect(mapStateToProps, {
-  validateLatestOrder,
   storeSelectedIngredients,
-  validateSelectedIngredients,
+  trackDeselectIngredient,
+  trackSelectIngredient,
   trackUserCannotGetCompensation,
+  validateLatestOrder,
+  validateSelectedIngredients,
 })(Ingredients)
 
 export {
