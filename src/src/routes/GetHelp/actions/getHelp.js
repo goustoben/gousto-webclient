@@ -101,12 +101,39 @@ export const trackContinueAsNewCustomer = () => ({
   }
 })
 
+export const trackIngredientReasonsConfirmed = (selectedIngredients) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrIngredientsReasonsConfirmed,
+    selected_ingredients: selectedIngredients,
+    seCategory: 'help',
+  },
+})
+
 export const trackMassIssueAlertDisplayed = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.helpMassIssueIngredientAlertDisplayed,
     seCategory: 'help',
   }
+})
+
+export const trackSelectIngredient = (selectedIngredient) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrSelectIngredient,
+    ingredient_name: selectedIngredient,
+    seCategory: 'help',
+  },
+})
+
+export const trackDeselectIngredient = (selectedIngredient) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeselectIngredient,
+    ingredient_name: selectedIngredient,
+    seCategory: 'help',
+  },
 })
 
 export const applyDeliveryRefund = (

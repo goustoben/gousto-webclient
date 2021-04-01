@@ -161,7 +161,7 @@ module.exports = {
       "no-trailing-spaces": 1,
       "no-unneeded-ternary": 1,
       "no-unused-expressions": 1,
-      "no-unused-vars": 1,
+      "no-unused-vars": [1, { "argsIgnorePattern": "^_" }],
       "no-use-before-define": 1,
       "no-useless-escape": 1,
       "no-useless-return": 1,

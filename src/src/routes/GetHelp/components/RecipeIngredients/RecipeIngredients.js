@@ -8,14 +8,17 @@ const renderEligibleIngredients = (eligibleIngredients, onChange, recipe, select
   eligibleIngredients.map(ingredient => {
     const ingredientFullId = `${recipe.id}&${ingredient.uuid}`
     const isChecked = selectedIngredients.get(ingredientFullId) || false
+    const ingredientName = ingredient.label
 
     return (
       <div data-testing="getHelpIngredientInputCheck" key={ingredient.uuid}>
         <InputCheck
           id={ingredientFullId}
-          label={ingredient.label}
+          label={ingredientName}
           defaultValue={isChecked}
-          onChange={onChange}
+          onChange={(checkboxId, isIngredientChecked) => {
+            onChange(checkboxId, isIngredientChecked, ingredientName)
+          }}
         />
       </div>
     )

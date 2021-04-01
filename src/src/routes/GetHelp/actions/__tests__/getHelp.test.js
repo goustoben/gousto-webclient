@@ -16,10 +16,13 @@ import {
   trackDeliveryOther,
   trackDeliveryStatus,
   trackContinueAsNewCustomer,
+  trackDeselectIngredient,
+  trackIngredientReasonsConfirmed,
   trackHelpPreLoginModalDisplayed,
   trackMassIssueAlertDisplayed,
   trackNextBoxTrackingClick,
   trackRejectRefund,
+  trackSelectIngredient,
   validateDeliveryAction,
   validateLatestOrder,
 } from '../getHelp'
@@ -195,6 +198,60 @@ describe('GetHelp action generators and thunks', () => {
         trackingData: {
           actionType: 'ssr_ingredients_supply_issues_message_displayed',
           seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackIngredientReasonsConfirmed', () => {
+    const TRACKING_DATA = [
+      {
+        recipeId: '123',
+        ingredientName: 'onion',
+      },
+      {
+        recipeId: '456',
+        ingredientName: 'garlic',
+      },
+    ]
+
+    test('creates the tracking action', () => {
+      expect(trackIngredientReasonsConfirmed(TRACKING_DATA)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_ingredients_reasons_confirmed',
+          seCategory: 'help',
+          selected_ingredients: TRACKING_DATA,
+        }
+      })
+    })
+  })
+
+  describe('trackSelectIngredient', () => {
+    const SELECTED_INGREDIENT = 'onion'
+
+    test('creates the tracking action', () => {
+      expect(trackSelectIngredient(SELECTED_INGREDIENT)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_select_ingredient',
+          seCategory: 'help',
+          ingredient_name: SELECTED_INGREDIENT,
+        }
+      })
+    })
+  })
+
+  describe('trackDeselectIngredient', () => {
+    const DESELECTED_INGREDIENT = '1 carrot'
+
+    test('creates the tracking action', () => {
+      expect(trackDeselectIngredient(DESELECTED_INGREDIENT)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deselect_ingredient',
+          seCategory: 'help',
+          ingredient_name: DESELECTED_INGREDIENT,
         }
       })
     })

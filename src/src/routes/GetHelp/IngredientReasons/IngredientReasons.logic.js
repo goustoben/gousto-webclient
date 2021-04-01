@@ -20,6 +20,7 @@ const propTypes = {
     })
   ).isRequired,
   storeIngredientIssueDescriptions: PropTypes.func.isRequired,
+  trackIngredientReasonsConfirmed: PropTypes.func.isRequired,
 }
 
 class IngredientReasons extends PureComponent {
@@ -51,10 +52,18 @@ class IngredientReasons extends PureComponent {
   }
 
   submitHandler = () => {
-    const { storeIngredientIssueDescriptions } = this.props
+    const { storeIngredientIssueDescriptions, trackIngredientReasonsConfirmed } = this.props
     const { issueReasons } = this.state
 
+    const ingredientsTrackingData = Object.entries(issueReasons)
+      .map(([_key, selectedIngredient]) => ({
+        recipe_id: selectedIngredient.recipeId,
+        ingredient_name: selectedIngredient.label,
+      }))
+
     storeIngredientIssueDescriptions(issueReasons)
+    trackIngredientReasonsConfirmed(ingredientsTrackingData)
+
     browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
   }
 
