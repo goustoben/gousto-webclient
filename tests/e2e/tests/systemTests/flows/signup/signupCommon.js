@@ -63,7 +63,7 @@ module.exports = {
       })
       .perform(function (done) {
         browser.pause(1000)
-        signup.section.sellThePropositionPage.goToNextStep()
+        signup.section.sellThePropositionPage.goToNextStep(browser)
         done()
       })
       .perform(function (done) {
