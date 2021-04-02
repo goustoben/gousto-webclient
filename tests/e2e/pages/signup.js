@@ -102,13 +102,19 @@ module.exports = {
       selector: '*[data-testing="sellThePropositionPage"]',
 
       elements: {
-        CTA: {
+        CTA_mobile: {
+          selector: '*[data-testing="sellThePropositionCTA_mobile"]'
+        },
+        CTA_desktop: {
           selector: '*[data-testing="sellThePropositionCTA_desktop"]'
         },
       },
 
       commands: [{
-        goToNextStep
+        goToNextStep: function (browser) {
+          const cta = browser.globals.browser === 'mobile' ? '@CTA_mobile' : '@CTA_desktop'
+          clickElement.call(this, cta)
+        }
       }],
     }
   }
