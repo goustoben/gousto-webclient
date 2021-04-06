@@ -89,6 +89,25 @@ describe('LoginForm', () => {
         })
       })
     })
+
+    describe('when a login attempt errors', () => {
+      beforeEach(() => {
+        wrapper.instance().recaptchaElement = { reset: jest.fn() }
+        wrapper.instance().setState = jest.fn()
+        wrapper.setProps({ statusText: 'something not empty' })
+      })
+
+      test('the recaptcha token is set to null', () => {
+        expect(wrapper.instance().setState).toHaveBeenCalledWith({
+          recaptchaValue: null,
+          showValidationError: true,
+        })
+      })
+
+      test('recaptcha is reset', () => {
+        expect(wrapper.instance().recaptchaElement.reset).toHaveBeenCalled()
+      })
+    })
   })
 })
 

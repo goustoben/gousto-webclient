@@ -106,6 +106,7 @@
 /src/src/components/BottomBar/                                      @Gousto/squad-haricots
 /src/src/components/CardWithLink/                                   @Gousto/squad-haricots
 /src/src/components/CookieBanner/                                   @Gousto/squad-haricots
+/src/src/components/Login/                                          @Gousto/squad-haricots
 /src/src/config/jobs.js                                             @Gousto/squad-haricots
 /src/src/middlewares/tracking/snowplow/getHelp                      @Gousto/squad-haricots
 /src/src/reducers/__tests__/getHelp.test.js                         @Gousto/squad-haricots

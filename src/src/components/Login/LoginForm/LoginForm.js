@@ -54,7 +54,12 @@ class LoginForm extends React.PureComponent {
 
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.statusText) {
-      this.setState({ showValidationError: true })
+      this.setState({
+        showValidationError: true,
+        recaptchaValue: null,
+      })
+
+      this.recaptchaElement.reset()
     }
   }
 
