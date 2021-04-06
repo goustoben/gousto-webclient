@@ -155,130 +155,86 @@ describe('MyGousto', () => {
       })
     })
 
-    describe('when showRatingsButtonFeature flag is true', () => {
-      describe('when user has recipes to rate', () => {
-        test('should render a Rate recipes link', () => {
-          wrapper = shallow(
-            <MyGousto
-              rateRecipeCount={4}
-              showRatingsButtonFeature
-              isMobileViewport={false}
-              userLoadOrders={userLoadOrdersSpy}
-              userGetReferralDetails={userGetReferralDetails}
-              isCapacityLimited
-            />,
-            {
-              context: {
-                store: {
-                  dispatch: jest.fn(),
-                },
+    describe('when user has recipes to rate', () => {
+      test('should render a Rate recipes link', () => {
+        wrapper = shallow(
+          <MyGousto
+            rateRecipeCount={4}
+            isMobileViewport={false}
+            userLoadOrders={userLoadOrdersSpy}
+            userGetReferralDetails={userGetReferralDetails}
+            isCapacityLimited
+          />,
+          {
+            context: {
+              store: {
+                dispatch: jest.fn(),
               },
-            }
-          )
-          expect(wrapper.find(Link).find({ to: '/rate-my-recipes' }).exists()).toBe(true)
-        })
-
-        test('should dispatch a tracking event for the mobile  button', () => {
-          wrapper = shallow(
-            <MyGousto
-              trackClickRateRecipes={trackClickRateRecipesSpy}
-              rateRecipeCount={3}
-              showRatingsButtonFeature
-              isMobileViewport={false}
-              userLoadOrders={userLoadOrdersSpy}
-              userGetReferralDetails={userGetReferralDetails}
-              isCapacityLimited
-            />
-          )
-          const rateRecipeLink = wrapper.find(Link).find({ to: '/rate-my-recipes' }).at(0).simulate('click')
-          rateRecipeLink.prop('tracking')()
-          expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('mygousto_button')
-        })
-        test('should dispatch a tracking event for the desktop button', () => {
-          wrapper = shallow(
-            <MyGousto
-              trackClickRateRecipes={trackClickRateRecipesSpy}
-              rateRecipeCount={3}
-              showRatingsButtonFeature
-              isMobileViewport={false}
-              userLoadOrders={userLoadOrdersSpy}
-              userGetReferralDetails={userGetReferralDetails}
-              isCapacityLimited
-            />
-          )
-          const rateRecipeLink = wrapper.find(Link).find({ to: '/rate-my-recipes' }).at(1).simulate('click')
-          rateRecipeLink.prop('tracking')()
-          expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('mygousto_button')
-        })
+            },
+          }
+        )
+        expect(wrapper.find(Link).find({ to: '/rate-my-recipes' }).exists()).toBe(true)
       })
-      describe('when user does not have recipes to rate', () => {
-        test('should not render a Rate recipes button above the cookbook', () => {
-          wrapper = shallow(
-            <MyGousto
-              rateRecipeCount={0}
-              showRatingsButtonFeature
-              isMobileViewport={false}
-              userLoadOrders={userLoadOrdersSpy}
-              userGetReferralDetails={userGetReferralDetails}
-              isCapacityLimited
-            />,
-            {
-              context: {
-                store: {
-                  dispatch: jest.fn(),
-                },
-              },
-            }
-          )
-          expect(wrapper.find(Link).exists()).toBe(false)
-        })
+
+      test('should dispatch a tracking event for the mobile  button', () => {
+        wrapper = shallow(
+          <MyGousto
+            trackClickRateRecipes={trackClickRateRecipesSpy}
+            rateRecipeCount={3}
+            isMobileViewport={false}
+            userLoadOrders={userLoadOrdersSpy}
+            userGetReferralDetails={userGetReferralDetails}
+            isCapacityLimited
+          />
+        )
+        const rateRecipeLink = wrapper
+          .find(Link)
+          .find({ to: '/rate-my-recipes' })
+          .at(0)
+          .simulate('click')
+        rateRecipeLink.prop('tracking')()
+        expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('mygousto_button')
+      })
+      test('should dispatch a tracking event for the desktop button', () => {
+        wrapper = shallow(
+          <MyGousto
+            trackClickRateRecipes={trackClickRateRecipesSpy}
+            rateRecipeCount={3}
+            isMobileViewport={false}
+            userLoadOrders={userLoadOrdersSpy}
+            userGetReferralDetails={userGetReferralDetails}
+            isCapacityLimited
+          />
+        )
+        const rateRecipeLink = wrapper
+          .find(Link)
+          .find({ to: '/rate-my-recipes' })
+          .at(1)
+          .simulate('click')
+        rateRecipeLink.prop('tracking')()
+        expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('mygousto_button')
       })
     })
 
-    describe('when showRatingsButtonFeature flag is false ', () => {
-      describe('when user has recipes to rate', () => {
-        test('should not render a Rate recipes link', () => {
-          wrapper = shallow(
-            <MyGousto
-              rateRecipeCount={4}
-              showRatingsButtonFeature={false}
-              isMobileViewport={false}
-              userLoadOrders={userLoadOrdersSpy}
-              userGetReferralDetails={userGetReferralDetails}
-              isCapacityLimited
-            />,
-            {
-              context: {
-                store: {
-                  dispatch: jest.fn(),
-                },
+    describe('when user does not have recipes to rate', () => {
+      test('should not render a Rate recipes button above the cookbook', () => {
+        wrapper = shallow(
+          <MyGousto
+            rateRecipeCount={0}
+            isMobileViewport={false}
+            userLoadOrders={userLoadOrdersSpy}
+            userGetReferralDetails={userGetReferralDetails}
+            isCapacityLimited
+          />,
+          {
+            context: {
+              store: {
+                dispatch: jest.fn(),
               },
-            }
-          )
-          expect(wrapper.find(Link).exists()).toBe(false)
-        })
-      })
-      describe('when user does not have recipes to rate', () => {
-        test('should not render a Rate recipes button above the cookbook', () => {
-          wrapper = shallow(
-            <MyGousto
-              rateRecipeCount={0}
-              showRatingsButtonFeature={false}
-              isMobileViewport={false}
-              userLoadOrders={userLoadOrdersSpy}
-              userGetReferralDetails={userGetReferralDetails}
-              isCapacityLimited
-            />,
-            {
-              context: {
-                store: {
-                  dispatch: jest.fn(),
-                },
-              },
-            }
-          )
-          expect(wrapper.find(Link).exists()).toBe(false)
-        })
+            },
+          }
+        )
+        expect(wrapper.find(Link).exists()).toBe(false)
       })
     })
   })

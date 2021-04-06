@@ -81,9 +81,6 @@ const defaultFeatures = () => ({
   isMenuRedirectPageEnabled: {
     value: false
   },
-  showRatingsButtonFeature: {
-    value: false
-  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

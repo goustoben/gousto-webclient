@@ -7,7 +7,6 @@ import {
   getIsCustomNoticeEnabled,
   getIsMyGoustoBannerAppAwarenessEnabled,
   getLimitedCapacity,
-  getRatingsButtonFeature
 } from 'selectors/features'
 import { MyGousto } from './MyGousto'
 import { trackClickRateRecipes } from '../../Ratings/actions/feedback'
@@ -23,7 +22,6 @@ function mapStateToProps(state) {
     isMobileViewport: getBrowserType(state) === 'mobile',
     showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),
     rateRecipeCount: state.feedback.get('feedbackCount'),
-    showRatingsButtonFeature: getRatingsButtonFeature(state),
   }
 }
 
