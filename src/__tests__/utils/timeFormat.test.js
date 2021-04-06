@@ -4,10 +4,10 @@ import humanTimeFormat from 'utils/timeFormat'
 describe('time format util methods', () => {
   test('the method humanTimeFormat should work with the format "day"', () => {
     expect(humanTimeFormat('2017-09-04 00:00:00', 'day')).toEqual(
-      'Monday 4 September',
+      'Monday 4th September',
     )
     expect(humanTimeFormat('2017-06-30 23:59:59', 'day')).toEqual(
-      'Friday 30 June',
+      'Friday 30th June',
     )
   })
 

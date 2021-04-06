@@ -4,9 +4,7 @@ import { skipDelivery, referAFriend, fetchUserCredit } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as prospectAPI from 'apis/prospect'
-import {
-  getIsNewSubscriptionApiEnabled,
-} from 'selectors/features'
+
 import { actionTypes } from 'actions/actionTypes'
 import { placeOrder } from 'actions/trackingKeys'
 import userActions, {
@@ -18,6 +16,7 @@ import userActions, {
   userLoadCookbookRecipes,
   userGetReferralDetails,
   userLoadOrderTrackingInfo,
+  userLoadProjectedDeliveries,
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
 import {
@@ -31,7 +30,12 @@ import { PaymentMethod, signupConfig } from 'config/signup'
 
 import logger from 'utils/logger'
 import { deliveryTariffTypes } from 'utils/deliveries'
-import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
+import {
+  transformPendingOrders,
+  transformProjectedDeliveries,
+  transformProjectedDeliveriesNew,
+} from 'utils/myDeliveries'
+import { getIsNewSubscriptionApiEnabled } from 'selectors/features'
 import { skipDates } from '../../routes/Account/apis/subscription'
 
 jest.mock('selectors/features')
@@ -40,6 +44,9 @@ jest.mock('apis/user', () => ({
   skipDelivery: jest.fn(),
   referAFriend: jest.fn(),
   fetchUserCredit: jest.fn(),
+  fetchUserProjectedDeliveries: jest.fn().mockImplementation(
+    () => Promise.resolve({ data: {} })
+  ),
   referralDetails: jest.fn().mockImplementation(accessToken => {
     if (accessToken !== 'user-access-token') {
       return null
@@ -80,7 +87,14 @@ jest.mock('apis/prospect', () => ({
 }))
 
 jest.mock('../../routes/Account/apis/subscription', () => ({
-  skipDates: jest.fn()
+  skipDates: jest.fn(),
+  fetchProjectedDeliveries: () => Promise.resolve({
+    data: {
+      data: {
+        projectedDeliveries: {}
+      },
+    },
+  })
 }))
 
 jest.mock('utils/logger', () => ({
@@ -90,6 +104,7 @@ jest.mock('utils/logger', () => ({
 jest.mock('utils/myDeliveries', () => ({
   transformPendingOrders: jest.fn(),
   transformProjectedDeliveries: jest.fn(),
+  transformProjectedDeliveriesNew: jest.fn(),
 }))
 
 const formValues = {
@@ -150,25 +165,32 @@ describe('user actions', () => {
 
   describe('userLoadNewOrders', () => {
     const dispatchSpy = jest.fn()
-    const getStateSpy = jest.fn().mockReturnValue({
-      user: Immutable.fromJS({
-        orders: {},
-        projectedDeliveries: {}
+    let getStateSpy = jest.fn()
+
+    beforeEach(() => {
+      getStateSpy = jest.fn().mockReturnValue({
+        user: Immutable.fromJS({
+          orders: {},
+          projectedDeliveries: {},
+        }),
       })
     })
 
     const pendingOrders = Immutable.Map()
 
     userActions.userLoadOrders = jest.fn()
-    userActions.userLoadProjectedDeliveries = jest.fn()
+    // eslint-disable-next-line import/no-named-as-default-member
+    userActions.userLoadProjectedDeliveries = jest.fn().mockReturnValue(() => {})
     transformPendingOrders.mockReturnValue(Immutable.Map())
     transformProjectedDeliveries.mockReturnValue(Immutable.Map())
+    transformProjectedDeliveriesNew.mockReturnValue(Immutable.Map())
 
     test('should dispatch userLoadOrders and userLoadProjectedDeliveries actions', async () => {
       await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy.mock.calls.length).toEqual(3)
       expect(userActions.userLoadOrders).toHaveBeenCalled()
+      // eslint-disable-next-line import/no-named-as-default-member
       expect(userActions.userLoadProjectedDeliveries).toHaveBeenCalled()
     })
 
@@ -190,6 +212,16 @@ describe('user actions', () => {
       expect(dispatchSpy.mock.calls[2][0]).toEqual({
         type: actionTypes.MYDELIVERIES_ORDERS,
         orders: pendingOrders,
+      })
+    })
+
+    describe('when isNewSubscriptionApiEnabled is set to true', () => {
+      test('should call transformProjectedDeliveriesNew function with the correct params', async () => {
+        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+
+        await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
+
+        expect(transformProjectedDeliveriesNew).toHaveBeenCalledWith(getStateSpy().user.get('projectedDeliveries'))
       })
     })
   })
@@ -1338,6 +1370,30 @@ describe('user actions', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
         deliveryDayIds: ['2443'],
+      })
+    })
+  })
+
+  describe('userLoadProjectedDeliveries', () => {
+    const dispatchSpy = jest.fn()
+
+    const getStateSpy = () => ({
+      user: Immutable.fromJS({
+        projectedDeliveries: {},
+        id: 'mock-id',
+      }),
+      auth: Immutable.fromJS({ accessToken: 'access-token' }),
+    })
+
+    test('should dispatch action for USER_LOAD_PROJECTED_DELIVERIES', async () => {
+      getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+
+      await userLoadProjectedDeliveries()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
+        projectedDeliveries: {},
+        isNewSubscriptionApiEnabled: true
       })
     })
   })

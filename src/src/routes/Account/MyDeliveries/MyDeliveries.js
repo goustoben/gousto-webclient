@@ -55,13 +55,15 @@ class MyDeliveries extends React.PureComponent {
       didErrorFetchingPendingOrders,
       didErrorFetchingProjectedOrders,
       didErrorFetchingAddresses,
-      isFetchingOrders
+      isFetchingOrders,
+      userId
     } = this.props
+    if (isFetchingOrders || !userId) {
+      return MyDeliveries.renderLoading
+    }
+
     if (didErrorFetchingPendingOrders !== null || didErrorFetchingProjectedOrders !== null || didErrorFetchingAddresses !== null) {
       return MyDeliveries.renderFetchError(this.retryFetch)
-    }
-    if (isFetchingOrders) {
-      return MyDeliveries.renderLoading
     }
 
     return <OrdersList />

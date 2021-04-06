@@ -3,7 +3,7 @@ import moment from 'moment'
 export default function timeFormat(time, format) {
   switch (format) {
   case 'day':
-    return moment(time, 'YYYY-MM-DD').format('dddd D MMMM')
+    return moment(time, 'YYYY-MM-DD').format('dddd Do MMMM')
   case 'hour': {
     // Round up to the closest hour
     let m = moment(time, 'HH:mm:ss')

@@ -1,6 +1,12 @@
 // eslint-disable-next-line import/no-named-as-default
 import fetch from 'utils/fetch'
-import { deactivateSubscription, fetchSubscription, skipDates, unSkipDates } from '../subscription'
+import {
+  deactivateSubscription,
+  fetchSubscription,
+  skipDates,
+  unSkipDates,
+  fetchProjectedDeliveries,
+} from '../subscription'
 
 jest.mock('utils/fetch', () =>
   jest.fn().mockImplementation(() => {
@@ -11,13 +17,14 @@ jest.mock('utils/fetch', () =>
 )
 
 jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
+  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version && `/${version}`}`)
 )
 
 jest.mock('config/routes', () => ({
   version: {
     recipes: 'v2',
     subscriptionCommand: 'v1',
+    subscriptionQuery: 'v1',
   },
   core: {
     deactivateSub: '/deactivateSub',
@@ -26,6 +33,9 @@ jest.mock('config/routes', () => ({
   subscriptionCommand: {
     skip: '/skip',
     unSkip: '/unskip',
+  },
+  subscriptionQuery: {
+    projectedDeliveries: '/projected-deliveries',
   },
 }))
 
@@ -70,7 +80,7 @@ describe('subscription endpoints', () => {
         const reqData = ['2020-02-20']
         await skipDates('token', 'user-id', reqData)
 
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptioncommandv1/subscriptions/user-id/skip', {skipDates: reqData}, 'POST')
+        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptioncommand/v1/subscriptions/user-id/skip', {skipDates: reqData}, 'POST')
       })
     })
 
@@ -79,7 +89,25 @@ describe('subscription endpoints', () => {
         const reqData = ['2020-02-20']
         await unSkipDates('token', 'user-id', reqData)
 
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptioncommandv1/subscriptions/user-id/unskip', {unskipDates: reqData}, 'POST')
+        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptioncommand/v1/subscriptions/user-id/unskip', {unskipDates: reqData}, 'POST')
+      })
+    })
+
+    describe('fetchProjectedDeliveries', () => {
+      test('should fetch the correct url', async () => {
+        await fetchProjectedDeliveries('token', 'mock-id')
+        expect(fetch).toHaveBeenCalledTimes(1)
+        expect(fetch).toHaveBeenCalledWith(
+          'token',
+          'endpoint-subscriptionquery/v1/projected-deliveries/mock-id',
+          {},
+          'GET',
+        )
+      })
+
+      test('should return the results of the fetch unchanged', async () => {
+        const result = await fetchProjectedDeliveries('token', 'mock-id')
+        expect(result).toEqual(mockFetchResult)
       })
     })
   })
