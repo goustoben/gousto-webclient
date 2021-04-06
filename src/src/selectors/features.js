@@ -186,8 +186,6 @@ export const getIsMenuProgressBarHidden = ({ features }) => (
   features && features.getIn(['isMenuProgressBarHidden', 'value'], false)
 )
 
-export const getRatingsButtonFeature = ({ features }) => (features && features.getIn(['showRatingsButtonFeature', 'value'], false))
-
 export const getIsCheckoutOverhaulV1Enabled = ({ features }) => (
   features && features.getIn(['isCheckoutOverhaulV1Enabled', 'value'], false)
 )

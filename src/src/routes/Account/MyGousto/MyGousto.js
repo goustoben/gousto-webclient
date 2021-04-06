@@ -26,7 +26,6 @@ const propTypes = {
   isMobileViewport: PropTypes.bool.isRequired,
   showAppAwareness: PropTypes.bool,
   rateRecipeCount: PropTypes.number,
-  showRatingsButtonFeature: PropTypes.bool,
   trackClickRateRecipes: PropTypes.func,
 }
 
@@ -45,7 +44,6 @@ const defaultProps = {
   isCustomNoticeEnabled: false,
   showAppAwareness: false,
   rateRecipeCount: 0,
-  showRatingsButtonFeature: false,
   trackClickRateRecipes: () => {},
 }
 
@@ -74,7 +72,6 @@ class MyGousto extends React.PureComponent {
       isMobileViewport,
       showAppAwareness,
       rateRecipeCount,
-      showRatingsButtonFeature,
       trackClickRateRecipes,
     } = this.props
     const headerTitle = `Hello ${nameFirst},`
@@ -96,7 +93,7 @@ class MyGousto extends React.PureComponent {
           <HeaderContainer orders={orders} />
         </Section>
         <Section title="Your recent recipes" alternateColour>
-          {showRatingsButtonFeature && rateRecipeCount && rateRecipeCount > 0 ? (
+          {rateRecipeCount && rateRecipeCount > 0 ? (
             <div className={css.desktopHide}>
               <Link
                 className={css.rateRecipesButton}
@@ -115,7 +112,7 @@ class MyGousto extends React.PureComponent {
             </div>
           ) : null}
           <Cookbook />
-          {showRatingsButtonFeature && rateRecipeCount && rateRecipeCount > 0 ? (
+          {rateRecipeCount && rateRecipeCount > 0 ? (
             <div className={css.mobileHide}>
               <Link
                 className={css.rateRecipesButton}
