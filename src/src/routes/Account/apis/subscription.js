@@ -36,3 +36,15 @@ export function deactivateSubscription(accessToken, reqData = {}) {
 export function fetchSubscription(accessToken, reqData = {}) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.currentSubscription}`, reqData, 'GET')
 }
+
+export function fetchProjectedDeliveries(accessToken, userId) {
+  return fetch(
+    accessToken,
+    `${endpoint(
+      'subscriptionquery',
+      routes.version.subscriptionQuery,
+    )}${routes.subscriptionQuery.projectedDeliveries}/${userId}`,
+    {},
+    'GET',
+  )
+}

@@ -1,6 +1,8 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
+import timeFormat from 'utils/timeFormat'
+
 const getProjectedDeliveryDayRescheduledReason = (unavailableReason, humanWhenMenuLive) => {
   if (unavailableReason === 'holiday') {
     return "We've had to change your regular delivery day due to the bank holiday."
@@ -179,6 +181,31 @@ export const transformProjectedDeliveries = (projectedDeliveries) => projectedDe
       restorable,
       cancellable: true,
       deliveryDayId,
+    })
+  )
+}, new Immutable.Map())
+
+export const transformProjectedDeliveriesNew = (projectedDeliveries) => projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
+  const date = delivery.get('deliveryDate')
+  const whenMenuLive = delivery.get('menuOpenDate')
+  const skipped = delivery.get('skipped')
+  const humanDeliveryDay = timeFormat(date, 'day')
+
+  const orderState = skipped ? 'cancelled' : 'scheduled'
+  const restorable = skipped
+
+  return deliveryAccumulator.set(
+    date,
+    Immutable.Map({
+      id: date,
+      orderState,
+      deliveryDay: date,
+      humanDeliveryDay,
+      whenMenuOpen: whenMenuLive,
+      isProjected: true,
+      restorable,
+      cancellable: true,
+      deliveryDayId: date,
     })
   )
 }, new Immutable.Map())

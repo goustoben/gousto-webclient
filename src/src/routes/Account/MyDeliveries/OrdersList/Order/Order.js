@@ -46,7 +46,7 @@ class Order extends React.PureComponent {
       humanDeliveryDay, originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
       orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount, isProjected,
       cancellable, deliveryDay, shippingAddressId, addresses, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
-      phase,
+      phase, isNewSubscriptionApiEnabled,
     } = this.props
     const isOrderInteractive = orderState !== 'cancelled' && phase !== 'pre_menu'
 
@@ -83,10 +83,14 @@ class Order extends React.PureComponent {
                   <OrderDate
                     date={humanDeliveryDay}
                   />
-                  <OrderTime
-                    start={humanDeliveryTimeStart}
-                    end={humanDeliveryTimeEnd}
-                  />
+                  {
+                    isNewSubscriptionApiEnabled && isProjected ? null : (
+                      <OrderTime
+                        start={humanDeliveryTimeStart}
+                        end={humanDeliveryTimeEnd}
+                      />
+                    )
+                  }
                   <OrderState
                     orderState={orderState}
                   />
@@ -199,6 +203,7 @@ Order.propTypes = {
   userOpenCloseOrderCard: PropTypes.func.isRequired,
   userToggleEditDateSection: PropTypes.func.isRequired,
   phase: PropTypes.string,
+  isNewSubscriptionApiEnabled: PropTypes.bool,
 }
 
 Order.defaultProps = {
@@ -231,6 +236,7 @@ Order.defaultProps = {
   deliveryDay: '',
   portionsCount: '2',
   phase: '',
+  isNewSubscriptionApiEnabled: false,
 }
 
 export default Order

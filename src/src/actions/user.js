@@ -17,15 +17,15 @@ import {
   getIsNewSubscriptionApiEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
-import { getUserId, getUserRecentRecipesIds } from 'selectors/user'
+import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
 
 import logger from 'utils/logger'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
-import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
+import { transformPendingOrders, transformProjectedDeliveries, transformProjectedDeliveriesNew } from 'utils/myDeliveries'
 
-import { skipDates } from '../routes/Account/apis/subscription'
+import { skipDates, fetchProjectedDeliveries } from '../routes/Account/apis/subscription'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -111,19 +111,32 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
   }
 }
 
-function userLoadProjectedDeliveries(forceRefresh = false) {
+export function userLoadProjectedDeliveries(forceRefresh = false) {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, true))
     dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, null))
 
     try {
-      if (forceRefresh || !getState().user.get('projectedDeliveries').size) {
-        const accessToken = getState().auth.get('accessToken')
-        const { data: projectedDeliveries } = await userApi.fetchUserProjectedDeliveries(accessToken)
+      const state = getState()
+
+      if (forceRefresh || !state.user.get('projectedDeliveries').size) {
+        const accessToken = state.auth.get('accessToken')
+        const userId = getUserId(state)
+        const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
+        let projectedDeliveries
+
+        if (isNewSubscriptionApiEnabled) {
+          const { data } = await fetchProjectedDeliveries(accessToken, userId)
+          projectedDeliveries = data.data.projectedDeliveries
+        } else {
+          const { data } = await userApi.fetchUserProjectedDeliveries(accessToken)
+          projectedDeliveries = data
+        }
 
         dispatch({
           type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
-          projectedDeliveries
+          projectedDeliveries,
+          isNewSubscriptionApiEnabled
         })
       }
     } catch (err) {
@@ -349,8 +362,18 @@ function userLoadNewOrders() {
     // eslint-disable-next-line no-use-before-define
     await Promise.all([dispatch(userActions.userLoadOrders()), dispatch(userActions.userLoadProjectedDeliveries())])
 
-    const pendingOrders = transformPendingOrders(getState().user.get('orders'))
-    const projectedDeliveries = transformProjectedDeliveries(getState().user.get('projectedDeliveries'))
+    let projectedDeliveries
+    const state = getState()
+    const isNewSubscriptionApiEnabled = getIsNewSubscriptionApiEnabled(state)
+
+    const pendingOrders = transformPendingOrders(state.user.get('orders'))
+
+    if (isNewSubscriptionApiEnabled) {
+      projectedDeliveries = transformProjectedDeliveriesNew(state.user.get('projectedDeliveries'))
+    } else {
+      projectedDeliveries = transformProjectedDeliveries(state.user.get('projectedDeliveries'))
+    }
+
     const ordersCombined = pendingOrders.merge(projectedDeliveries)
 
     dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: ordersCombined })

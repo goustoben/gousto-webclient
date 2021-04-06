@@ -1,6 +1,13 @@
 import Immutable from 'immutable'
 import moment from 'moment'
-import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders, transformProjectedDeliveries } from '../myDeliveries'
+import {
+  filterOrders,
+  getOrderState,
+  getDeliveryDayRescheduledReason,
+  transformPendingOrders,
+  transformProjectedDeliveries,
+  transformProjectedDeliveriesNew,
+} from '../myDeliveries'
 
 jest.mock('moment')
 
@@ -546,6 +553,56 @@ describe('myDeliveries utils', () => {
           `Recipes available from ${dummyProjectedDeliveries.getIn(['1917', 'humanWhenMenuLive'])}`
         )
       })
+    })
+  })
+
+  describe('transformProjectedDeliveriesNew', () => {
+    beforeEach(() => {
+      moment.mockReturnValue({
+        format: () => 'mock-date'
+      })
+    })
+
+    const mockProjectedDeliveries = Immutable.fromJS([
+      {
+        deliveryDate: '2021-04-11',
+        menuOpenDate: '2021-03-30T12:00:00.000Z',
+        skipped: false,
+      },
+      {
+        deliveryDate: '2021-04-25',
+        menuOpenDate: '2021-04-13T12:00:00.000Z',
+        skipped: true,
+      }
+    ])
+
+    test('should transform projected deliveries as expected', () => {
+      expect(transformProjectedDeliveriesNew(mockProjectedDeliveries)).toEqual(
+        Immutable.fromJS({
+          '2021-04-11': {
+            id: '2021-04-11',
+            orderState: 'scheduled',
+            deliveryDay: '2021-04-11',
+            whenMenuOpen: '2021-03-30T12:00:00.000Z',
+            isProjected: true,
+            restorable: false,
+            cancellable: true,
+            deliveryDayId: '2021-04-11',
+            humanDeliveryDay: 'mock-date',
+          },
+          '2021-04-25': {
+            id: '2021-04-25',
+            orderState: 'cancelled',
+            deliveryDay: '2021-04-25',
+            whenMenuOpen: '2021-04-13T12:00:00.000Z',
+            isProjected: true,
+            restorable: true,
+            cancellable: true,
+            deliveryDayId: '2021-04-25',
+            humanDeliveryDay: 'mock-date',
+          }
+        })
+      )
     })
   })
 })

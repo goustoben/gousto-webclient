@@ -16,6 +16,7 @@ module.exports = {
     ssr: 'v1',
     ssrdeliveries: 'v1',
     ssrV2: 'v2',
+    subscriptionQuery: 'v1',
     tastePreferences: 'v1',
     userBucketing: 'v1',
     userFeedback: 'v1',
@@ -191,6 +192,9 @@ module.exports = {
   subscriptionCommand: {
     skip: '/skip',
     unSkip: '/unskip',
+  },
+  subscriptionQuery: {
+    projectedDeliveries: '/projected-deliveries',
   },
   workable: {
     link: 'https://gousto.workable.com/',

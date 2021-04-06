@@ -226,6 +226,36 @@ describe('user reducer', () => {
     })
   })
 
+  describe('USER_LOAD_PROJECTED_DELIVERIES action type with isNewSubscriptionApiEnabled', () => {
+    test('should set projected deliveries to Immutable map keyed by action.projectedDeliveries array ids, adding the fields deliveryDate and state', () => {
+      const result = user(defaultInitialState, {
+        type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
+        projectedDeliveries: [
+          { deliveryDate: 'date1', skipped: false },
+          { deliveryDate: 'date2', skipped: true },
+        ],
+        isNewSubscriptionApiEnabled: true,
+      })
+
+      const expected = defaultInitialState.merge(
+        Immutable.fromJS({
+          projectedDeliveries: {
+            date1: {
+              deliveryDate: 'date1',
+              skipped: false,
+            },
+            date2: {
+              deliveryDate: 'date2',
+              skipped: true,
+            },
+          },
+        }),
+      )
+
+      expect(Immutable.is(result, expected)).toBe(true)
+    })
+  })
+
   describe('USER_UNLOAD_ORDERS action type', () => {
     test('should remove orders from Immutable List of orders given array of ids orderIds', () => {
       const initialState = defaultInitialState.merge(
