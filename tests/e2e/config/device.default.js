@@ -1,7 +1,7 @@
 module.exports = ({ globalWaitTimeout }) => ({
   globals: {
     waitForConditionTimeout: globalWaitTimeout,
-    browser: 'mobile',
+    browser: 'desktop',
   },
   desiredCapabilities: {
     browserName: 'chrome',

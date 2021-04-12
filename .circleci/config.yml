@@ -151,24 +151,6 @@ jobs:
           webhook: $E2E_TEST_NOTIFIER_WEBHOOK
           failure_message: 'The web E2E tests are failing on develop, please could a volunteer investigate. Playbook: https://gousto.atlassian.net/wiki/spaces/TECH/pages/1571914197/Debug+e2e+test+selenium+failure'
 
-
-  test-e2e-selenium-mobile:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Install curl
-          command: apt-get -y update && apt-get -y install curl
-      - run:
-          name: Run e2e selenium tests mobile
-          command: source ~/.circlerc && scripts/validate-mobile.sh
-      - slack/status:
-          fail_only: true
-          only_for_branches: 'develop'
-          webhook: $E2E_TEST_NOTIFIER_WEBHOOK
-          failure_message: 'The mobile E2E tests are failing on develop, please could a volunteer investigate. Playbook: https://gousto.atlassian.net/wiki/spaces/TECH/pages/1571914197/Debug+e2e+test+selenium+failure'
-
   test-regression:
     docker: *gousto_build_image
     steps:
@@ -252,11 +234,7 @@ workflows:
           requires:
             - install-test-dependencies
             - build-application
-      - test-e2e-selenium-mobile:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-test-dependencies
-            - build-application
+
   e2e-manual:
     jobs:
       - setup-src:
@@ -290,15 +268,6 @@ workflows:
               only:
                 - e2e-manual
       - test-e2e-selenium:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-test-dependencies
-            - build-application
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - test-e2e-selenium-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-test-dependencies

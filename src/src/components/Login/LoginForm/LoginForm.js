@@ -59,7 +59,9 @@ class LoginForm extends React.PureComponent {
         recaptchaValue: null,
       })
 
-      this.recaptchaElement.reset()
+      if (this.recaptchaElement) {
+        this.recaptchaElement.reset()
+      }
     }
   }
 

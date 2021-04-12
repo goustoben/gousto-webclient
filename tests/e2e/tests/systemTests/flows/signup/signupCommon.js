@@ -80,27 +80,17 @@ module.exports = {
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
-    if (browser.globals.browser === 'mobile') {
-      browser
-        .perform(function (done) {
-          checkout.section.checkoutContainer.submitBoxDetailsSection()
-          done()
-        })
-        .perform(function (done) {
-          checkout.section.checkoutContainer.goToNextStep()
-          done()
-        })
-    }
+
     browser.perform(function (done) {
       checkout.section.checkoutContainer.submitAboutYouSection()
       done()
     })
-    if (browser.globals.browser !== 'mobile') {
-      browser.perform(function (done) {
-        checkout.section.checkoutContainer.goToNextStep()
-        done()
-      })
-    }
+
+    browser.perform(function (done) {
+      checkout.section.checkoutContainer.goToNextStep()
+      done()
+    })
+
     browser
       .perform(function (done) {
         checkout.section.checkoutContainer.submitDeliverySection()
