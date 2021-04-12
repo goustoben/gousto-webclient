@@ -219,16 +219,9 @@ module.exports = {
         },
 
         login: function (userName, password) {
-          const shared = this.api.page.shared()
+          this.waitForElementVisible('@loginButton')
+            .click('@loginButton')
 
-          if (this.api.globals.browser === 'mobile') {
-            shared.section.header
-              .openBurgerMenu()
-              .burgerMenuNavigateLogin()
-          } else {
-            this.waitForElementVisible('@loginButton')
-              .click('@loginButton')
-          }
           this.waitForElementVisible('@loginModal')
             .waitForElementVisible('@loginEmail')
             .clearValue('@loginEmail').setValue('@loginEmail', userName)
@@ -238,15 +231,8 @@ module.exports = {
           return this
         },
         logout: function () {
-          if (this.api.globals.browser === 'mobile') {
-            const shared = this.api.page.shared()
-            shared.section.header
-              .openBurgerMenu()
-              .burgerMenuNavigateLogout()
-          } else {
-            this.waitForElementVisible('@logoutButton')
-              .click('@logoutButton')
-          }
+          this.waitForElementVisible('@logoutButton')
+            .click('@logoutButton')
         },
         loginModalClosed: function () {
           this.waitForElementNotPresent('@loginModal')
@@ -270,15 +256,9 @@ module.exports = {
           return this
         },
         isRememberMeCheckboxVisible: function () {
-          if (this.api.globals.browser === 'mobile') {
-            const shared = this.api.page.shared()
-            shared.section.header
-              .openBurgerMenu()
-              .burgerMenuNavigateLogin()
-          } else {
-            this.waitForElementVisible('@loginButton')
-              .click('@loginButton')
-          }
+          this.waitForElementVisible('@loginButton')
+            .click('@loginButton')
+
           this.expect.element('@loginCheckbox').to.be.selected
         },
       }],
@@ -325,36 +305,16 @@ module.exports = {
             .click('@burgerMenuLogout')
           return this
         },
-        goToAccount: function () {
-          if (this.api.globals.browser === 'mobile') {
-            this.waitForElementVisible('@linkMenuAccount')
-              .click('@linkMenuAccount')
-          }
-        },
+        goToAccount: function () {},
         checkUserLoggedIn: function () {
-          if (this.api.globals.browser === 'mobile') {
-            const shared = this.api.page.shared()
-
-            shared.section.body.loginModalClosed()
-            this.waitForElementVisible('@linkMenuAccount')
-          } else {
-            this.waitForElementVisible('@myGoustoButtonLink')
-            this.expect.element('@myGoustoButtonLink').to.be.visible.before()
-          }
+          this.waitForElementVisible('@myGoustoButtonLink')
+          this.expect.element('@myGoustoButtonLink').to.be.visible.before()
 
           return this
         },
         checkUserLoggedOut: function () {
-          if (this.api.globals.browser === 'mobile') {
-            const shared = this.api.page.shared()
-
-            shared.section.body.loginModalClosed()
-            this.openBurgerMenu()
-              .waitForElementVisible('@burgerMenuLogin')
-          } else {
-            return this.waitForElementPresent('@loginButton')
-              .assert.elementPresent('@loginButton')
-          }
+          return this.waitForElementPresent('@loginButton')
+            .assert.elementPresent('@loginButton')
         }
       }],
     },

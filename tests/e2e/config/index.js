@@ -16,11 +16,8 @@ shape configs into groups:
 const settings = [
   'env.local',
   'env.staging',
-  'device.chrome',
-  'device.iphone5',
-  'device.iphone6'
+  'device.chrome'
 ].reduce((p, c) => {
-
   const [ group, key ] = c.split('.');
   const groupConfig = require('./' + group + '.default.js')(params);
   const keyConfig = require(`./${c}.js`)(params);

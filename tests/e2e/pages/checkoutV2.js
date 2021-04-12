@@ -120,7 +120,7 @@ module.exports = {
           commands: [{
             setAddress: function () {
               clickElement.call(this, '@addressDropdown')
-              clickElement.call(this, this.api.globals.browser === 'mobile' ? '@secondOptionNative' : '@secondOption')
+              clickElement.call(this, '@secondOption')
               clickElement.call(this, '@selectAddressCTA')
             },
             setPhoneNumber: function () {
