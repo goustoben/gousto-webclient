@@ -5,18 +5,26 @@ import { actionTypes } from 'actions/actionTypes'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getAboutYouFormName } from 'selectors/checkout'
-import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import { getIsCheckoutOverhaulEnabled, getIsPassStrengthEnabled } from 'selectors/features'
 import * as stateUtils from 'routes/Checkout/utils/state'
 import { AboutYou } from './AboutYou'
 
-function mapStateToProps(sectionName) {
-  return state => ({
-    sectionName,
-    loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
-    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
-    submitting: stateUtils.isSubmitting(state),
-    createAccountValues: state.form.aboutyou && state.form.aboutyou.values.aboutyou,
-  })
+export function mapStateToProps(sectionName) {
+  return state => {
+    const formName = state.form.aboutyou || state.form.yourdetails
+
+    return ({
+      sectionName,
+      loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
+      isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
+      submitting: stateUtils.isSubmitting(state),
+      createAccountValues: state.form.aboutyou && state.form.aboutyou.values.aboutyou,
+      isPassStrengthEnabled: getIsPassStrengthEnabled(state),
+      passwordErrors: formName && formName.syncErrors && formName.syncErrors.aboutyou && formName.syncErrors.aboutyou.password,
+      passwordValue: formName && formName.values.aboutyou && formName.values.aboutyou.password,
+      isMobile: state.request.get('browser') === 'mobile',
+    })
+  }
 }
 
 function connectComponent(sectionName) {

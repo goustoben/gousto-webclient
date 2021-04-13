@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import userRules from 'validations/user'
-import { addPrefix } from 'validations/util'
+import { userRules } from 'validations/user'
+import userAsyncValidation from 'validations/userAsync'
 import delivery from 'validations/delivery'
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
@@ -58,6 +58,7 @@ export const YourDetailsStep = ({
           <CheckoutButton
             onClick={handleSubmit('top')}
             stepName={`Next: ${nextStepName}`}
+            valid={checkoutValid}
           />
         </SectionContainer>
       )}
@@ -91,11 +92,11 @@ YourDetailsStep.defaultProps = {
 }
 
 const validationRules = [
-  addPrefix(aboutYouSectionName, userRules),
+  userRules(aboutYouSectionName),
   delivery(deliverySectionName),
 ]
 
-let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'yourdetails', deliveryValidationMessages(deliverySectionName)) // eslint-disable-line import/no-mutable-exports
+let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'yourdetails', deliveryValidationMessages(deliverySectionName), {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
 YourDetailsForm = aboutYouAddInitialValues(YourDetailsForm, { sectionName: aboutYouSectionName })
 YourDetailsForm = deliveryAddInitialValues(YourDetailsForm, { sectionName: deliverySectionName })
 

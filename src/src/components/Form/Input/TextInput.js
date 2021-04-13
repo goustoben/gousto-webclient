@@ -33,6 +33,11 @@ const propTypes = {
   error: PropTypes.bool,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   inputPrefix: PropTypes.node,
+  passwordErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  isPassStrengthEnabled: PropTypes.bool,
+  onFocus: PropTypes.func,
+  onCustomPasswordBlur: PropTypes.func,
+  isMobile: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -52,9 +57,21 @@ const defaultProps = {
   error: false,
   isCheckoutOverhaulEnabled: false,
   inputPrefix: null,
+  passwordErrors: [],
+  isPassStrengthEnabled: false,
+  onFocus: () => {},
+  onCustomPasswordBlur: () => {},
+  isMobile: true,
 }
 
 export class TextInput extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      invertPasswordError: true
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     const { autoFocus } = this.props
 
@@ -92,8 +109,15 @@ export class TextInput extends Component {
   }
 
   handleBlur = (e) => {
-    const { onBlur, isFixed, validator } = this.props
+    const { onBlur, isFixed, validator, isPassStrengthEnabled, onCustomPasswordBlur, passwordErrors } = this.props
     const { target: { value: newValue }} = e
+
+    if (isPassStrengthEnabled && passwordErrors.length > 0) {
+      onCustomPasswordBlur()
+      this.setState({
+        invertPasswordError: false
+      })
+    }
 
     if (isFixed) {
       this.scrollEnable()
@@ -122,8 +146,27 @@ export class TextInput extends Component {
     }
   }
 
+  handleFocus = () => {
+    const { isFixed, isPassStrengthEnabled, onFocus, isMobile } = this.props
+    if (isPassStrengthEnabled) {
+      onFocus()
+      if (isMobile) {
+        window.scrollTo({
+          top: this.input.getBoundingClientRect().top,
+          left: 0,
+          behavior: 'smooth'
+        })
+      }
+    }
+
+    if (isFixed) {
+      this.scrollDisable()
+    }
+  }
+
   render = () => {
-    const { additionalProps, autocompleteOff, color, className, disabled, error, isFixed, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isCheckoutOverhaulEnabled, inputPrefix } = this.props
+    const { additionalProps, autocompleteOff, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isCheckoutOverhaulEnabled, inputPrefix, passwordErrors, isPassStrengthEnabled } = this.props
+    const { invertPasswordError } = this.state
 
     return (
       <div className={classNames({ [redesignCss.relative]: isCheckoutOverhaulEnabled && inputPrefix })}>
@@ -140,6 +183,9 @@ export class TextInput extends Component {
               [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled,
               [redesignCss.inputErrorRedesign]: error && isCheckoutOverhaulEnabled,
               [redesignCss.prefixPadding]: isCheckoutOverhaulEnabled && inputPrefix,
+              [redesignCss.validPassword]: isPassStrengthEnabled && passwordErrors.length === 0,
+              [redesignCss.password]: isPassStrengthEnabled,
+              [redesignCss.disableInvalid]: isPassStrengthEnabled && passwordErrors.length > 0 && invertPasswordError,
             },
           )}
           placeholder={placeholder}
@@ -154,7 +200,7 @@ export class TextInput extends Component {
           type={type}
           pattern={pattern || null}
           autoComplete={(autocompleteOff) ? 'off' : 'on'}
-          onFocus={(isFixed) ? this.scrollDisable : () => {}}
+          onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           ref={input => { this.input = input }}
           data-testing={dataTesting}

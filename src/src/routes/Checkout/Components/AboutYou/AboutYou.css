@@ -116,3 +116,20 @@
 .infoSection {
 	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
 }
+
+.eyeIcon {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.showPassword {
+  background: url('media/svgs/icon-show-password.svg') center center / contain no-repeat;
+}
+
+.hidePassword {
+  background: url('media/svgs/icon-hide-password.svg') center center / contain no-repeat;
+}

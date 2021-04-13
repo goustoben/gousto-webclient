@@ -35,6 +35,7 @@ const propTypes = {
   date: PropTypes.string.isRequired,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   submit: PropTypes.func,
+  aboutYouErrors: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -49,6 +50,7 @@ const defaultProps = {
   scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
   submit: () => {},
+  aboutYouErrors: false,
 }
 
 export class Delivery extends React.PureComponent {
@@ -75,7 +77,7 @@ export class Delivery extends React.PureComponent {
   }
 
   renderAddress = () => {
-    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef, isCheckoutOverhaulEnabled, submit } = this.props
+    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef, isCheckoutOverhaulEnabled, submit, aboutYouErrors } = this.props
 
     return (
       <div>
@@ -90,6 +92,7 @@ export class Delivery extends React.PureComponent {
           scrollToFirstMatchingRef={scrollToFirstMatchingRef}
           isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
           submit={submit}
+          aboutYouErrors={aboutYouErrors}
         />
       </div>
     )

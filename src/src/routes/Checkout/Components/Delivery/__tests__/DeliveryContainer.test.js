@@ -63,6 +63,11 @@ describe('Given mapStateToProps', () => {
       pending: Immutable.Map({
         CHECKOUT_ADDRESSES_RECEIVE: false,
       }),
+      form: Immutable.fromJS({
+        yourdetails: {
+          syncErrors: ['error']
+        }
+      })
     }
 
     beforeEach(() => {

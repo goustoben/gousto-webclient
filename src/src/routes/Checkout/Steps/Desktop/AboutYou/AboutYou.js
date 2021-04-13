@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import userRules from 'validations/user'
+import { userRules } from 'validations/user'
 import userAsyncValidation from 'validations/userAsync'
-import { addPrefix } from 'validations/util'
 import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
 
@@ -74,7 +73,7 @@ AboutYouStep.defaultProps = {
   onLoginClick: () => {},
 }
 
-const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
+const AboutYouForm = formContainer(AboutYouStep, userRules(sectionName), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
 
 const AboutYou = addInitialValues(AboutYouForm, { sectionName })
 

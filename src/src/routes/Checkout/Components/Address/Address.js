@@ -43,6 +43,7 @@ const propTypes = {
   trackUTMAndPromoCode: PropTypes.func,
   isCheckoutOverhaulEnabled: PropTypes.bool,
   submit: PropTypes.func,
+  aboutYouErrors: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -72,6 +73,7 @@ const defaultProps = {
   menuCutoffUntil: '',
   isCheckoutOverhaulEnabled: false,
   submit: () => { },
+  aboutYouErrors: false,
 }
 
 export class Address extends React.PureComponent {
@@ -446,7 +448,7 @@ export class Address extends React.PureComponent {
   }
 
   renderControlVersion = () => {
-    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef } = this.props
+    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef, aboutYouErrors } = this.props
     const { addresses, postcodeTemp, showDropdown, isAddressSelected } = this.getAddressProps()
 
     return (
@@ -485,7 +487,7 @@ export class Address extends React.PureComponent {
             <br />
             <Button
               data-testing="checkoutSelectAddressCTA"
-              disabled={false}
+              disabled={aboutYouErrors}
               onClick={this.handleAddressConfirm}
               pending={addressesPending}
               width="full"

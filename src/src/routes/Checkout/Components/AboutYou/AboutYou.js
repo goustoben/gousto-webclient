@@ -8,11 +8,20 @@ import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
 import { CheckoutButton } from '../CheckoutButton'
+import { PasswordCriteria } from '../PasswordCriteria'
 import { fieldsConfig } from './fieldsConfig'
 import css from './AboutYou.css'
 import redesignCss from '../../CheckoutRedesignContainer.css'
 
 class AboutYou extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isPassVisible: false,
+      isPassCriteriaVisible: false,
+    }
+  }
+
   componentDidMount() {
     const { clearErrors } = this.props
     clearErrors()
@@ -71,37 +80,77 @@ class AboutYou extends PureComponent {
     )
   }
 
-  renderFields = () => {
-    const { isCheckoutOverhaulEnabled, sectionName, receiveRef } = this.props
-    const fields = fieldsConfig({ isCheckoutOverhaulEnabled, loginCTA: this.renderLoginButton, sectionName })
+  togglePasswordVisibility = () => {
+    this.setState((prevStatus) => ({
+      isPassVisible: !prevStatus.isPassVisible
+    }))
+  }
 
-    return fields.map(item => (
-      <div
-        key={item.name}
-        className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}
-      >
-        <div className={classNames(css.colHalf, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
-          <Field
-            name={item.name}
-            component={ReduxFormInput}
-            inputType={item.inputType}
-            type={item.type || null}
-            label={item.label || null}
-            subLabel={item.subLabel || null}
-            mask
-            withRef
-            ref={receiveRef || null}
-            refId={item.refId || null}
-            dataTesting={item.dataTesting}
-            validate={item.validate || null}
-            childLabel={item.childLabel || null}
-            childLabelClassName={item.childLabelClassName || null}
-            style={item.style || null}
-            isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
-          />
+  toggleCriteria = () => {
+    this.setState({
+      isPassCriteriaVisible: true,
+    })
+  }
+
+  toggleFailedCriteria = () => {
+    this.setState({
+      showFailedCriteria: true,
+    })
+  }
+
+  renderFields = () => {
+    const { isCheckoutOverhaulEnabled, sectionName, receiveRef, isPassStrengthEnabled, passwordErrors, passwordValue, isMobile } = this.props
+    const { isPassVisible, isPassCriteriaVisible, showFailedCriteria } = this.state
+    const passState = {
+      isPassStrengthEnabled,
+      isPassVisible,
+      togglePasswordVisibility: this.togglePasswordVisibility
+    }
+    const fields = fieldsConfig({ isCheckoutOverhaulEnabled, loginCTA: this.renderLoginButton, sectionName, passState })
+
+    return fields.map(item => {
+      const isPasswordField = isPassStrengthEnabled && item.name === 'password'
+
+      return (
+        <div
+          key={item.name}
+          className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}
+        >
+          <div className={classNames(css.colHalf, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
+            <Field
+              name={item.name}
+              component={ReduxFormInput}
+              inputType={item.inputType}
+              type={item.type || null}
+              label={item.label || null}
+              subLabel={item.subLabel || null}
+              mask
+              withRef
+              ref={receiveRef || null}
+              refId={item.refId || null}
+              dataTesting={item.dataTesting}
+              validate={item.validate || null}
+              childLabel={item.childLabel || null}
+              childLabelClassName={item.childLabelClassName || null}
+              style={item.style || null}
+              isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
+              isPassStrengthEnabled={isPasswordField}
+              inputSuffix={item.inputSuffix || null}
+              onFocus={isPasswordField ? this.toggleCriteria : () => {}}
+              onCustomPasswordBlur={isPasswordField ? this.toggleFailedCriteria : () => {}}
+              isMobile={isMobile}
+            />
+          </div>
+          {isPassCriteriaVisible && isPasswordField && (
+            <PasswordCriteria
+              password={passwordValue}
+              passwordErrors={passwordErrors}
+              showFailedCriteria={showFailedCriteria}
+            />
+          )}
         </div>
-      </div>
-    ))
+      )
+    })
   }
 
   render() {
@@ -195,6 +244,10 @@ AboutYou.propTypes = {
     password: PropTypes.string,
   }),
   onLoginClick: PropTypes.func,
+  isPassStrengthEnabled: PropTypes.bool,
+  passwordErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  passwordValue: PropTypes.string,
+  isMobile: PropTypes.bool,
 }
 
 AboutYou.defaultProps = {
@@ -208,6 +261,10 @@ AboutYou.defaultProps = {
   submitting: false,
   createAccountValues: {},
   onLoginClick: () => {},
+  isPassStrengthEnabled: false,
+  passwordErrors: '',
+  passwordValue: '',
+  isMobile: true,
 }
 
 export { AboutYou }

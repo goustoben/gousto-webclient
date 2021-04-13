@@ -1,6 +1,6 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value FontFamilyAxiformaBook from 'design-language/typography.css';
-@value Mackerel, White, Oyster, Bluecheese, Radish from 'styles/colors.css';
+@value Mackerel, White, Oyster, Bluecheese, Radish, DarkHaricot, Blackberry, DarkHaricot05 from 'styles/colors.css';
 
 .sectionRedesignContainer {
   border-bottom: 1px solid Mackerel;
@@ -68,4 +68,25 @@
 .fieldHeader {
   composes: fontStyleSubHead from 'design-language/typography.css';
   margin-bottom: 0.5rem;
+}
+
+.validPassword {
+  border: 1px solid DarkHaricot !important;
+  color: Blackberry;
+  background: DarkHaricot05 !important;
+}
+
+.password {
+  padding-right: 2.5rem;
+}
+
+.disableInvalid {
+  background: none;
+  border-color: Mackerel;
+  color: Blackberry;
+
+  &:hover,
+  &:focus {
+    border-color: Mackerel;
+  }
 }

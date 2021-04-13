@@ -20,7 +20,9 @@ export const formContainer = (Component, rules, formName, messages = {}, opts = 
       validationRules.forEach(rule => {
         let validationRule = rule
         if (typeof rule === 'function') {
-          validationRule = rule(data, props.isCheckoutOverhaulEnabled)
+          const { isCheckoutOverhaulEnabled, isPassStrengthEnabled } = props
+          const isFirstCheckoutStepForms = formName === 'aboutyou' || formName === 'yourdetails'
+          validationRule = isFirstCheckoutStepForms ? rule(isPassStrengthEnabled) : rule(data, isCheckoutOverhaulEnabled)
         }
         combinedRules = { ...combinedRules, ...validationRule }
       })
