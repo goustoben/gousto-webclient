@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta, change } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
-import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import { getIsCheckoutOverhaulEnabled, getIsPassStrengthEnabled } from 'selectors/features'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
@@ -25,6 +25,10 @@ export function mapStateToProps(sectionName) {
     deliveryDays: state.boxSummaryDeliveryDays,
     date: state.basket.get('date'),
     slotId: state.basket.get('slotId'),
+    aboutYouErrors: state.form.yourdetails
+      && state.form.yourdetails.syncErrors.aboutyou
+      && state.request.get('browser') === 'mobile'
+      && getIsPassStrengthEnabled(state),
   })
 }
 

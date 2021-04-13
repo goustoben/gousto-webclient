@@ -74,4 +74,37 @@ describe('Given AboutYou component', () => {
       })
     })
   })
+
+  describe('when togglePasswordVisibility is called', () => {
+    beforeEach(() => {
+      const instance = wrapper.instance()
+      instance.togglePasswordVisibility()
+    })
+
+    test('then state should be changed', () => {
+      expect(wrapper.state('isPassVisible')).toBeTruthy()
+    })
+  })
+
+  describe('when toggleCriteria is called', () => {
+    beforeEach(() => {
+      const instance = wrapper.instance()
+      instance.toggleCriteria()
+    })
+
+    test('then state should be changed', () => {
+      expect(wrapper.state('isPassCriteriaVisible')).toBeTruthy()
+    })
+  })
+
+  describe('when toggleFailedCriteria is called', () => {
+    beforeEach(() => {
+      const instance = wrapper.instance()
+      instance.toggleFailedCriteria()
+    })
+
+    test('then state should be changed', () => {
+      expect(wrapper.state('showFailedCriteria')).toBeTruthy()
+    })
+  })
 })

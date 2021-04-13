@@ -51,6 +51,7 @@ import {
   getIsCheckoutOverhaulV4Enabled,
   getIsCarouselShiftEnabled,
   getIsNewSubscriptionApiEnabled,
+  getIsPassStrengthEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -118,6 +119,7 @@ describe('when features are defined', () => {
     [getIsCheckoutOverhaulV4Enabled, 'isCheckoutOverhaulV4Enabled'],
     [getIsCarouselShiftEnabled, 'isCarouselShiftEnabled'],
     [getIsNewSubscriptionApiEnabled, 'isNewSubscriptionApiEnabled'],
+    [getIsPassStrengthEnabled, 'isPassStrengthEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

@@ -1,14 +1,8 @@
 import configAuth from 'config/auth'
+import { addPrefix } from 'validations/util'
 import regExp from './regularExpressions'
 
-export default {
-  title: {
-    field: 'title',
-    rules: [
-
-    ],
-  },
-
+const rules = (isPassStrengthEnabled) => ({
   firstName: {
     field: 'first name',
     rules: [
@@ -27,10 +21,18 @@ export default {
     ],
   },
 
-  password: {
-    field: 'password',
-    rules: [
-      { name: 'isLength', options: { min: configAuth.PASSWORD_MIN_LENGTH } },
-    ],
-  },
-}
+  ...(!isPassStrengthEnabled && {
+    password: {
+      field: 'password',
+      rules: [
+        { name: 'isLength', options: { min: configAuth.PASSWORD_MIN_LENGTH } },
+      ],
+    }
+  }),
+})
+
+export const userRules = (userSectionName) => (isPassStrengthEnabled) => (
+  addPrefix(userSectionName,{
+    ...rules(isPassStrengthEnabled)
+  })
+)

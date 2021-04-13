@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { touch } from 'redux-form'
+import classNames from 'classnames'
 
 import Input from 'Form/Input'
 import DropdownInput from 'Form/Dropdown'
@@ -23,6 +24,10 @@ class ReduxFormInput extends React.PureComponent {
     'data-testing': PropTypes.string,
     className: PropTypes.string,
     isCheckoutOverhaulEnabled: PropTypes.bool,
+    isPassStrengthEnabled: PropTypes.bool,
+    onFocus: PropTypes.func,
+    onCustomPasswordBlur: PropTypes.func,
+    isMobile: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -32,6 +37,10 @@ class ReduxFormInput extends React.PureComponent {
     subLabel: '',
     className: '',
     isCheckoutOverhaulEnabled: false,
+    isPassStrengthEnabled: false,
+    onFocus: () => {},
+    onCustomPasswordBlur: () => {},
+    isMobile: true,
   }
 
   debounceTouch(dispatch, formName, field) {
@@ -52,7 +61,7 @@ class ReduxFormInput extends React.PureComponent {
   }
 
   render() {
-    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, isCheckoutOverhaulEnabled, ...inputProps } = this.props
+    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, isCheckoutOverhaulEnabled, isPassStrengthEnabled, onFocus, onCustomPasswordBlur, isMobile, ...inputProps } = this.props
     const dataTesting = this.props.dataTesting || this.props['data-testing']
 
     let Component
@@ -85,12 +94,19 @@ class ReduxFormInput extends React.PureComponent {
       onChange: this.onChange,
       isCheckoutOverhaulEnabled,
       inputPrefix,
+      isPassStrengthEnabled,
+      ...(isPassStrengthEnabled && {
+        passwordErrors: meta.error,
+        [input.onFocus]: onFocus,
+        onCustomPasswordBlur,
+        isMobile,
+      }),
     })
 
     return (
       <div>
         {label && <Label label={label} subLabel={subLabel} isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled} />}
-        <div className={css.flexRow}>
+        <div className={classNames(css.flexRow, { [css.passStrengthWrapper]: isPassStrengthEnabled && input.name === 'aboutyou.password' })}>
           {React.isValidElement(inputPrefix) && !isCheckoutOverhaulEnabled && inputPrefix}
           {inputEl && (
             <div className={css.flexItem}>
@@ -100,7 +116,7 @@ class ReduxFormInput extends React.PureComponent {
           {React.isValidElement(inputSuffix) && inputSuffix}
         </div>
         <div data-testing={`${dataTesting}Error`}>
-          {error && (<InputError isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{meta.error}</InputError>)}
+          {error && !isPassStrengthEnabled && <InputError isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}>{meta.error}</InputError>}
         </div>
       </div>
     )
