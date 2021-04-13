@@ -39,7 +39,6 @@ describe('<Refund />', () => {
     },
   }
   const trackAcceptRefundSpy = jest.fn()
-  const trackUserCannotGetCompensationSpy = jest.fn()
   const PROPS = {
     content,
     featureShorterCompensationPeriod: false,
@@ -48,7 +47,6 @@ describe('<Refund />', () => {
     selectedIngredients,
     trackAcceptRefund: trackAcceptRefundSpy,
     trackRejectRefund: () => {},
-    trackUserCannotGetCompensation: trackUserCannotGetCompensationSpy,
   }
 
   describe('rendering', () => {
@@ -242,8 +240,6 @@ describe('<Refund />', () => {
 
           describe('and when setComplaint errors', () => {
             beforeEach(async () => {
-              trackUserCannotGetCompensationSpy.mockClear()
-
               setComplaint.mockRejectedValueOnce()
 
               await Button.props().onClick()
@@ -251,10 +247,6 @@ describe('<Refund />', () => {
 
             test('redirect is not called', async () => {
               expect(browserHistory.push).toHaveBeenCalledTimes(0)
-            })
-
-            test('the tracking is being called correctly', async () => {
-              expect(trackUserCannotGetCompensationSpy).toHaveBeenCalledTimes(1)
             })
           })
         })

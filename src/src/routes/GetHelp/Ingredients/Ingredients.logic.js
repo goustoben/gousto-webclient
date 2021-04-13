@@ -40,7 +40,6 @@ const propTypes = {
   storeSelectedIngredients: PropTypes.func.isRequired,
   trackDeselectIngredient: PropTypes.func.isRequired,
   trackSelectIngredient: PropTypes.func.isRequired,
-  trackUserCannotGetCompensation: PropTypes.func.isRequired,
   validateLatestOrder: PropTypes.func.isRequired,
   validateSelectedIngredients: PropTypes.func.isRequired,
 }
@@ -71,11 +70,9 @@ class Ingredients extends PureComponent {
   }
 
   componentDidUpdate() {
-    const { isOrderValidationError, trackUserCannotGetCompensation } = this.props
+    const { isOrderValidationError } = this.props
 
     if (isOrderValidationError) {
-      trackUserCannotGetCompensation()
-
       this.redirectToContactPage()
     }
   }

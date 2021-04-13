@@ -12,6 +12,8 @@ import { getFeatureShorterCompensationPeriod } from '../../../selectors/features
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 
+const SE_CATEGORY_HELP = 'help'
+
 export const trackDeliveryOther = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
@@ -85,11 +87,20 @@ export const trackConfirmationCTA = () => ({
   }
 })
 
+export const trackClickGetHelpWithThisBox = (orderId) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.clickGetHelpWithThisBox,
+    order_id: orderId,
+    seCategory: SE_CATEGORY_HELP,
+  }
+})
+
 export const trackHelpPreLoginModalDisplayed = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.helpPreLoginModalDisplayed,
-    seCategory: 'help',
+    seCategory: SE_CATEGORY_HELP,
   }
 })
 
@@ -97,7 +108,7 @@ export const trackContinueAsNewCustomer = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.clickContinueAsNewCustomer,
-    seCategory: 'help',
+    seCategory: SE_CATEGORY_HELP,
   }
 })
 
@@ -106,7 +117,7 @@ export const trackIngredientReasonsConfirmed = (selectedIngredients) => ({
   trackingData: {
     actionType: trackingKeys.ssrIngredientsReasonsConfirmed,
     selected_ingredients: selectedIngredients,
-    seCategory: 'help',
+    seCategory: SE_CATEGORY_HELP,
   },
 })
 
@@ -114,7 +125,7 @@ export const trackMassIssueAlertDisplayed = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.helpMassIssueIngredientAlertDisplayed,
-    seCategory: 'help',
+    seCategory: SE_CATEGORY_HELP,
   }
 })
 
@@ -123,7 +134,7 @@ export const trackSelectIngredient = (selectedIngredient) => ({
   trackingData: {
     actionType: trackingKeys.ssrSelectIngredient,
     ingredient_name: selectedIngredient,
-    seCategory: 'help',
+    seCategory: SE_CATEGORY_HELP,
   },
 })
 
@@ -132,7 +143,7 @@ export const trackDeselectIngredient = (selectedIngredient) => ({
   trackingData: {
     actionType: trackingKeys.ssrDeselectIngredient,
     ingredient_name: selectedIngredient,
-    seCategory: 'help',
+    seCategory: SE_CATEGORY_HELP,
   },
 })
 

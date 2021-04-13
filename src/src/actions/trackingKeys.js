@@ -94,3 +94,4 @@ export const helpMassIssueIngredientAlertDisplayed = 'ssr_ingredients_supply_iss
 export const ssrIngredientsReasonsConfirmed = 'ssr_ingredients_reasons_confirmed'
 export const ssrSelectIngredient = 'ssr_select_ingredient'
 export const ssrDeselectIngredient = 'ssr_deselect_ingredient'
+export const clickGetHelpWithThisBox = 'click_get_help_with_this_box'

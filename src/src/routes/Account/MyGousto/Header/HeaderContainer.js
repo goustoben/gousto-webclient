@@ -2,13 +2,8 @@ import { connect } from 'react-redux'
 import { userLoadOrderTrackingInfo } from 'actions/user'
 import { getIsMyGoustoBannerSubscriberPricingEnabled } from 'selectors/features'
 import { getUserSubscriptionState } from 'selectors/user'
-import {
-  trackNextBoxTrackingClick,
-} from 'actions/myGousto'
-import {
-  trackOrderNotEligibleForSelfServiceResolutionClick,
-  trackOrderEligibleForSelfServiceResolutionClick,
-} from '../actions/tracking'
+import { trackNextBoxTrackingClick } from 'actions/myGousto'
+import { trackClickGetHelpWithThisBox } from '../../../GetHelp/actions/getHelp'
 import { Header } from './Header.logic'
 
 const mapStateToProps = state => ({
@@ -20,7 +15,6 @@ const mapStateToProps = state => ({
 
 export const HeaderContainer = connect(mapStateToProps, {
   loadOrderTrackingInfo: userLoadOrderTrackingInfo,
+  trackClickGetHelpWithThisBox,
   trackNextBoxTrackingClick,
-  trackOrderNotEligibleForSelfServiceResolutionClick,
-  trackOrderEligibleForSelfServiceResolutionClick,
 })(Header)
