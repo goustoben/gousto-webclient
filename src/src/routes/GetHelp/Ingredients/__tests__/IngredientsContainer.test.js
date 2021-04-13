@@ -116,10 +116,8 @@ describe('<IngredientsContainer />', () => {
 
   describe('order validation fails', () => {
     let store
-    let trackUserCannotGetCompensation
 
     beforeAll(() => {
-      trackUserCannotGetCompensation = jest.fn()
       store = createStore(
         combineReducers({
           ...authReducer,
@@ -145,7 +143,6 @@ describe('<IngredientsContainer />', () => {
       mount(
         <IngredientsContainer
           store={store}
-          trackUserCannotGetCompensation={trackUserCannotGetCompensation}
         />
       )
     })

@@ -10,8 +10,6 @@ import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
-const SE_CATEGORY_HELP = 'help'
-
 /* action creators */
 const selectOrderIssue = (issue) => ({
   type: actionTypes.GET_HELP_ORDER_ISSUE_SELECT,
@@ -60,14 +58,6 @@ const trackRecipeCardClick = recipeId => ({
   trackingData: {
     actionType: 'GetHelpRecipeCard Clicked',
     recipeId,
-  }
-})
-
-const trackUserCannotGetCompensation = () => ({
-  type: actionTypes.TRACKING,
-  trackingData: {
-    seCategory: SE_CATEGORY_HELP,
-    actionType: 'ssr_ingredients_user_not_eligible_for_compensation',
   }
 })
 
@@ -188,5 +178,4 @@ export {
   trackAcceptRefund,
   trackIngredientIssues,
   trackRecipeCardClick,
-  trackUserCannotGetCompensation,
 }

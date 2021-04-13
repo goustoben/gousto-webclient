@@ -9,15 +9,17 @@ import { SubscriberPricingBanner } from './SubscriberPricingBanner'
 import css from './Header.css'
 
 const HeaderPresentation = ({
+  hasDeliveryToday,
   nextOrderId,
   nextOrderMessage,
   nextOrderTracking,
   hasTooltipForNextOrder,
   hasTooltipForPreviousOrder,
+  previosOrderId,
   previousOrderMessage,
   getHelpQueryParam,
+  trackClickGetHelpWithThisBox,
   trackNextBoxTrackingClick,
-  onPreviousBoxGetHelpClick,
   showSubscriberPricingBanner,
   subscriptionStatus,
 }) => {
@@ -38,6 +40,7 @@ const HeaderPresentation = ({
         testingSelector="nextBoxDeliveryHelp"
         tooltipContent={hasTooltipForNextOrder
           && 'Any issues with this box? Let us know and we\'ll sort it out.'}
+        trackClick={hasDeliveryToday ? () => trackClickGetHelpWithThisBox(nextOrderId) : null}
       >
         <OrderDetails heading="Your next box delivery">
           <div className={css.nextOrder}>
@@ -81,9 +84,9 @@ const HeaderPresentation = ({
     <CardWithLink
       linkLabel="Get help with this box"
       linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+      trackClick={() => trackClickGetHelpWithThisBox(previosOrderId)}
       tooltipContent={hasTooltipForPreviousOrder
         && 'Any issues with this box? Let us know and we\'ll sort it out.'}
-      trackClick={onPreviousBoxGetHelpClick}
     >
       <OrderDetails heading="Your most recent box delivery">
         <div className={css.orderDetailsItem}>
@@ -105,6 +108,7 @@ const HeaderPresentation = ({
 }
 
 HeaderPresentation.propTypes = {
+  hasDeliveryToday: PropTypes.bool,
   nextOrderId: PropTypes.string,
   nextOrderMessage: PropTypes.shape({
     linkLabel: PropTypes.string,
@@ -115,15 +119,17 @@ HeaderPresentation.propTypes = {
   hasTooltipForNextOrder: PropTypes.bool,
   nextOrderTracking: PropTypes.string,
   hasTooltipForPreviousOrder: PropTypes.bool,
+  previosOrderId: PropTypes.string,
   previousOrderMessage: PropTypes.string,
   getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  trackClickGetHelpWithThisBox: PropTypes.func,
   trackNextBoxTrackingClick: PropTypes.func,
-  onPreviousBoxGetHelpClick: PropTypes.func,
   showSubscriberPricingBanner: PropTypes.bool.isRequired,
   subscriptionStatus: PropTypes.string,
 }
 
 HeaderPresentation.defaultProps = {
+  hasDeliveryToday: false,
   nextOrderId: null,
   nextOrderMessage: {
     linkLabel: null,
@@ -134,10 +140,11 @@ HeaderPresentation.defaultProps = {
   hasTooltipForNextOrder: false,
   nextOrderTracking: null,
   hasTooltipForPreviousOrder: false,
+  previosOrderId: null,
   previousOrderMessage: null,
   getHelpQueryParam: false,
+  trackClickGetHelpWithThisBox: () => {},
   trackNextBoxTrackingClick: () => {},
-  onPreviousBoxGetHelpClick: () => {},
   subscriptionStatus: 'inactive',
 }
 

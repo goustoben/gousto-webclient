@@ -40,7 +40,6 @@ const propTypes = {
   })).isRequired,
   trackAcceptRefund: PropTypes.func.isRequired,
   trackRejectRefund: PropTypes.func.isRequired,
-  trackUserCannotGetCompensation: PropTypes.func.isRequired,
 }
 
 class Refund extends PureComponent {
@@ -102,7 +101,6 @@ class Refund extends PureComponent {
       order,
       selectedIngredients,
       trackAcceptRefund,
-      trackUserCannotGetCompensation,
     } = this.props
 
     const issues = Object.keys(selectedIngredients).map(key => {
@@ -143,8 +141,6 @@ class Refund extends PureComponent {
 
       return response
     } catch (err) {
-      trackUserCannotGetCompensation()
-
       return this.requestFailure()
     }
   }

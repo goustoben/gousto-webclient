@@ -118,9 +118,8 @@ class Header extends PureComponent {
     const {
       orders,
       nextOrderTracking,
+      trackClickGetHelpWithThisBox,
       trackNextBoxTrackingClick,
-      trackOrderNotEligibleForSelfServiceResolutionClick,
-      trackOrderEligibleForSelfServiceResolutionClick,
       showSubscriberPricingBanner,
       subscriptionStatus,
     } = this.props
@@ -132,8 +131,6 @@ class Header extends PureComponent {
     const nextOrder = findNewestOrder(orders, true)
     const previousOrder = findNewestOrder(orders, false)
     const nextOrderMessage = this.formatNextOrderCopy(nextOrder, now)
-    const numberOfDaysSincePreviousOrder = previousOrder
-      && now.diff(moment(previousOrder.get('deliveryDate')), 'days', true)
     const previousOrderMessage = this.formatPreviousBoxDate(previousOrder, now)
     const isOrderEligible = isOrderEligibleForSelfRefundResolution(
       previousOrder
@@ -141,37 +138,23 @@ class Header extends PureComponent {
     const getHelpQueryParam = isOrderEligible
       && `?orderId=${previousOrder.get('id')}`
     const loaded = nextOrder || previousOrder
-    const onPreviousBoxGetHelpClick = isOrderEligible
-      ? () => {
-        trackOrderEligibleForSelfServiceResolutionClick(previousOrder.get('id'))
-      }
-      : () => {
-        const parsedNumberOfDaysSincePreviousOrder = parseInt(
-          numberOfDaysSincePreviousOrder,
-          0
-        )
-
-        if (parsedNumberOfDaysSincePreviousOrder >= 0) {
-          trackOrderNotEligibleForSelfServiceResolutionClick(
-            parsedNumberOfDaysSincePreviousOrder
-          )
-        }
-      }
+    const hasDeliveryToday = nextOrder && isOrderBeingDeliveredToday(nextOrder.get('deliveryDate'))
 
     return (
       (loaded)
         ? (
           <HeaderPresentation
+            hasDeliveryToday={hasDeliveryToday}
             nextOrderMessage={nextOrderMessage}
             nextOrderId={nextOrder ? nextOrder.get('id') : null}
             hasTooltipForNextOrder={hasTooltipForNextOrder}
             nextOrderTracking={nextOrderTracking}
-            numberOfDaysSincePreviousOrder={numberOfDaysSincePreviousOrder}
             hasTooltipForPreviousOrder={hasTooltipForPreviousOrder}
+            previosOrderId={previousOrder ? previousOrder.get('id') : null}
             previousOrderMessage={previousOrderMessage}
             getHelpQueryParam={getHelpQueryParam}
+            trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
             trackNextBoxTrackingClick={trackNextBoxTrackingClick}
-            onPreviousBoxGetHelpClick={onPreviousBoxGetHelpClick}
             showSubscriberPricingBanner={showSubscriberPricingBanner}
             subscriptionStatus={subscriptionStatus}
           />
@@ -186,9 +169,8 @@ Header.propTypes = {
   orders: PropTypes.instanceOf(Immutable.Map),
   loadOrderTrackingInfo: PropTypes.func,
   nextOrderTracking: PropTypes.string,
+  trackClickGetHelpWithThisBox: PropTypes.func,
   trackNextBoxTrackingClick: PropTypes.func,
-  trackOrderNotEligibleForSelfServiceResolutionClick: PropTypes.func,
-  trackOrderEligibleForSelfServiceResolutionClick: PropTypes.func,
   showSubscriberPricingBanner: PropTypes.bool,
   subscriptionStatus: PropTypes.string,
 }
@@ -197,9 +179,8 @@ Header.defaultProps = {
   orders: Immutable.Map({}),
   loadOrderTrackingInfo: () => {},
   nextOrderTracking: null,
+  trackClickGetHelpWithThisBox: () => {},
   trackNextBoxTrackingClick: () => {},
-  trackOrderNotEligibleForSelfServiceResolutionClick: () => {},
-  trackOrderEligibleForSelfServiceResolutionClick: () => {},
   showSubscriberPricingBanner: false,
   subscriptionStatus: 'inactive',
 }

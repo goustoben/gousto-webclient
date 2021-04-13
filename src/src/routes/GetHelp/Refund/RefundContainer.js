@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {
   selectOrderIssue,
   trackAcceptRefund,
-  trackUserCannotGetCompensation,
 } from 'actions/getHelp'
 import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 import { trackRejectRefund } from '../actions/getHelp'
@@ -45,7 +44,6 @@ const RefundContainer = connect(mapStateToProps, {
   selectOrderIssue,
   trackAcceptRefund,
   trackRejectRefund,
-  trackUserCannotGetCompensation,
 })(Refund)
 
 export {

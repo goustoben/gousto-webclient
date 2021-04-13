@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import {
   validateSelectedIngredients,
   storeSelectedIngredients,
-  trackUserCannotGetCompensation,
 } from 'actions/getHelp'
 import { getOrderValidationPendingState, getIsOrderValidationError } from 'selectors/getHelp'
 import {
@@ -37,7 +36,6 @@ const IngredientsContainer = connect(mapStateToProps, {
   storeSelectedIngredients,
   trackDeselectIngredient,
   trackSelectIngredient,
-  trackUserCannotGetCompensation,
   validateLatestOrder,
   validateSelectedIngredients,
 })(Ingredients)

@@ -12,10 +12,11 @@ import {
   applyDeliveryRefund,
   loadTrackingUrl,
   getUserOrders,
+  trackClickGetHelpWithThisBox,
   trackConfirmationCTA,
+  trackContinueAsNewCustomer,
   trackDeliveryOther,
   trackDeliveryStatus,
-  trackContinueAsNewCustomer,
   trackDeselectIngredient,
   trackIngredientReasonsConfirmed,
   trackHelpPreLoginModalDisplayed,
@@ -173,6 +174,21 @@ describe('GetHelp action generators and thunks', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'help_login_modal_displayed',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackClickGetHelpWithThisBox', () => {
+    const ORDER_ID = '789'
+
+    test('creates the tracking action', () => {
+      expect(trackClickGetHelpWithThisBox(ORDER_ID)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'click_get_help_with_this_box',
+          order_id: ORDER_ID,
           seCategory: 'help',
         }
       })

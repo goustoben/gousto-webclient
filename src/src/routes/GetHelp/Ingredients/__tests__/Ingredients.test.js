@@ -42,7 +42,6 @@ describe('<Ingredients />', () => {
   const storeSelectedIngredients = jest.fn()
   const trackDeselectIngredient = jest.fn()
   const trackSelectIngredient = jest.fn()
-  const trackUserCannotGetCompensation = jest.fn()
   const validateSelectedIngredients = jest.fn()
   const validateLatestOrder = jest.fn().mockResolvedValue(
     { data: { valid: true } }
@@ -61,7 +60,6 @@ describe('<Ingredients />', () => {
     storeSelectedIngredients,
     trackDeselectIngredient,
     trackSelectIngredient,
-    trackUserCannotGetCompensation,
     validateLatestOrder,
     validateSelectedIngredients,
   }
