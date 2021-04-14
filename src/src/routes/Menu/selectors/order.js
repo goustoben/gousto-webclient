@@ -139,8 +139,9 @@ const getRecipesV2 = createSelector([
 export const getOrderV2 = createSelector([
   getOrderDetailsForBasket,
   getRecipesV2,
-  getUserDeliveryTariffId
-], (orderDetails, recipes, deliveryTariffId) => {
+  getUserDeliveryTariffId,
+  getPromoCode
+], (orderDetails, recipes, deliveryTariffId, promoCode) => {
   const {
     deliveryDayId,
     deliverySlotId,
@@ -151,32 +152,49 @@ export const getOrderV2 = createSelector([
   let shippingAddress = {}
   let deliverySlotLeadTime = {}
   let deliveryTariff = {}
+  let attributesBlock = {}
 
   if (shippingAddressId) {
-    shippingAddress = { shipping_address: {
-      data: {
-        type: 'shipping-address',
-        id: shippingAddressId
+    shippingAddress = {
+      shipping_address: {
+        data: {
+          type: 'shipping-address',
+          id: shippingAddressId
+        }
       }
-    }}
+    }
   }
 
   if (deliverySlotLeadTimeId) {
-    deliverySlotLeadTime = { delivery_slot_lead_time: {
-      data: {
-        type: 'delivery-slot-lead-time',
-        id: deliverySlotLeadTimeId
+    deliverySlotLeadTime = {
+      delivery_slot_lead_time: {
+        data: {
+          type: 'delivery-slot-lead-time',
+          id: deliverySlotLeadTimeId
+        }
       }
-    }}
+    }
   }
 
   if (deliveryTariffId) {
-    deliveryTariff = { delivery_tariff: {
-      data: {
-        type: ResourceType.DeliveryTariff,
-        id: deliveryTariffId
+    deliveryTariff = {
+      delivery_tariff: {
+        data: {
+          type: ResourceType.DeliveryTariff,
+          id: deliveryTariffId
+        }
       }
-    }}
+    }
+  }
+
+  if (promoCode) {
+    attributesBlock = {
+      attributes: {
+        prices: {
+          promo_code: promoCode
+        }
+      }
+    }
   }
 
   return {
@@ -202,7 +220,8 @@ export const getOrderV2 = createSelector([
           ...recipes,
         ]
       }
-    }
+    },
+    ...attributesBlock
   }
 })
 
