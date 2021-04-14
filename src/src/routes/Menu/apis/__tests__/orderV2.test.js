@@ -1,5 +1,6 @@
 import * as fetch from 'utils/fetch'
 import * as endpoint from 'config/endpoint'
+import * as cookieHelper2 from 'utils/cookieHelper2'
 import { updateOrder, createOrder, getOrder, getUserOrders } from '../orderV2'
 
 describe('orderApi', () => {
@@ -8,6 +9,14 @@ describe('orderApi', () => {
   beforeEach(() => {
     fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
     jest.spyOn(endpoint, 'default').mockImplementation((service, version) => `endpoint-${service}/${version}`)
+
+    jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPrefix, shouldDecode) => {
+      if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
+        return 'session-id'
+      }
+
+      return null
+    })
   })
 
   afterEach(() => {
@@ -41,7 +50,7 @@ describe('orderApi', () => {
     })
 
     test('should fetch the correct url', async () => {
-      await createOrder('token', { order: 'body' }, 'session-id', 'user-id')
+      await createOrder('token', { order: 'body' }, 'user-id')
 
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
@@ -67,7 +76,7 @@ describe('orderApi', () => {
 
   describe('updateOrder', () => {
     test('should fetch the correct url', async () => {
-      await updateOrder('token', 'order-id', { order: 'body' }, 'session-id', 'user-id')
+      await updateOrder('token', 'order-id', { order: 'body' }, 'user-id')
 
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
@@ -102,7 +111,7 @@ describe('orderApi', () => {
     test('should fetch the correct url', async () => {
       const expectedHeaders = {
         'Content-Type': 'application/json',
-        'x-gousto-device-id': undefined,
+        'x-gousto-device-id': 'session-id',
         'x-gousto-user-id': undefined
       }
 
@@ -137,7 +146,7 @@ describe('orderApi', () => {
       test('should fetch the correct url', async () => {
         const expectedHeaders = {
           'Content-Type': 'application/json',
-          'x-gousto-device-id': undefined,
+          'x-gousto-device-id': 'session-id',
           'x-gousto-user-id': undefined
         }
         const orderId = '123'
@@ -163,15 +172,14 @@ describe('orderApi', () => {
         sort: 'deliveryDate'
       }
 
+      const userId = '1234'
       const expectedHeaders = {
         'Content-Type': 'application/json',
-        'x-gousto-device-id': '5678',
-        'x-gousto-user-id': '1234'
+        'x-gousto-device-id': 'session-id',
+        'x-gousto-user-id': userId
       }
-      const userId = '1234'
-      const deviceId = '5678'
 
-      await getUserOrders('token', userId, deviceId, 'delivery', ['data'])
+      await getUserOrders('token', userId, 'delivery', ['data'])
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
         'token',
@@ -201,15 +209,14 @@ describe('orderApi', () => {
           sort: 'deliveryDate'
         }
 
+        const userId = '1234'
         const expectedHeaders = {
           'Content-Type': 'application/json',
-          'x-gousto-device-id': '5678',
-          'x-gousto-user-id': '1234'
+          'x-gousto-device-id': 'session-id',
+          'x-gousto-user-id': userId
         }
-        const userId = '1234'
-        const sessionId = '5678'
 
-        await getUserOrders('token', userId, sessionId)
+        await getUserOrders('token', userId)
 
         expect(fetchSpy).toHaveBeenCalledTimes(1)
         expect(fetchSpy).toHaveBeenCalledWith(
