@@ -596,6 +596,23 @@ describe('order selectors', () => {
         })
       })
     })
+
+    describe('when customer has a promo code', () => {
+      const promoCode = 'ABC-XX-30M'
+      const state = createState({
+        basket: {
+          promoCode
+        }
+      })
+
+      test('order details contains promo code', () => {
+        const orderDetails = getOrderV2(state)
+
+        expect(orderDetails.attributes.prices).toEqual({
+          promo_code: promoCode
+        })
+      })
+    })
   })
 })
 
