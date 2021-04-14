@@ -1,4 +1,5 @@
 module.exports = {
+  '@tags': ['unstable'],
   'Order transaction box': function (browser) {
     const shared = browser.page.shared()
     const menu = browser.page.menu()
