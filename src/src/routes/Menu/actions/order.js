@@ -96,13 +96,13 @@ export const sendUpdateOrder = () => async (dispatch, getState) => {
 
   const state = getState()
   const accessToken = getAccessToken(state)
+  const userId = getAuthUserId(state)
   const orderId = getBasketOrderId(state)
   const orderPayload = getOrderV2(state)
   const orderAction = getOrderAction(state)
 
   try {
-    // todo this needs userId, sessionId adding
-    const { data: order } = await updateOrder(accessToken, orderId, orderPayload)
+    const { data: order } = await updateOrder(accessToken, orderId, orderPayload, userId)
 
     if (order) {
       dispatch(trackOrder(

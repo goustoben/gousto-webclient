@@ -1025,18 +1025,20 @@ describe('order actions', () => {
           { ...mockSelectedOrder, id: 'order-id-1' },
           { ...mockSelectedOrder, id: 'order-id-2' }
         ]
-      })(dispatch, getState)
+      }, 'user-id')(dispatch, getState)
 
       await flushPromises()
 
       expect(deleteOrder).toHaveBeenCalledTimes(2)
       expect(deleteOrder).toHaveBeenNthCalledWith(1,
         'access-token',
-        'order-id-1'
+        'order-id-1',
+        'user-id'
       )
       expect(deleteOrder).toHaveBeenNthCalledWith(2,
         'access-token',
-        'order-id-2'
+        'order-id-2',
+        'user-id'
       )
     })
 

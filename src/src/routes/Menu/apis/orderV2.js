@@ -4,17 +4,22 @@ import fetch, {
   includeCookiesDefault,
   useMenuServiceDefault,
 } from 'utils/fetch'
+import Cookies from 'utils/GoustoCookies'
+import { get } from 'utils/cookieHelper2'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
 const version = routes.version.ordersV2
 
-export const createOrder = async (accessToken, order, sessionId, userId) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'x-gousto-device-id': sessionId,
-    'x-gousto-user-id': userId
-  }
+const getSessionId = () => get(Cookies, 'gousto_session_id', false, false)
+const getRequestHeaders = (userId) => ({
+  'Content-Type': 'application/json',
+  'x-gousto-device-id': getSessionId(),
+  'x-gousto-user-id': userId
+})
+
+export const createOrder = async (accessToken, order, userId) => {
+  const headers = getRequestHeaders(userId)
 
   const response = await fetch(accessToken, `${endpoint('order', version)}/orders`, { data: order }, 'POST', cacheDefault, headers)
 
@@ -23,12 +28,8 @@ export const createOrder = async (accessToken, order, sessionId, userId) => {
   return orderResponse
 }
 
-export const updateOrder = (accessToken, orderId, order, sessionId, userId) => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'x-gousto-device-id': sessionId,
-    'x-gousto-user-id': userId
-  }
+export const updateOrder = (accessToken, orderId, order, userId) => {
+  const headers = getRequestHeaders(userId)
   const useOverwriteRequestMethod = false
 
   return fetch(
@@ -46,26 +47,18 @@ export const updateOrder = (accessToken, orderId, order, sessionId, userId) => {
   )
 }
 
-export const getOrder = (accessToken, orderId, include, sessionId, userId) => {
+export const getOrder = (accessToken, orderId, userId, include) => {
   const reqData = {
     include
   }
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'x-gousto-device-id': sessionId,
-    'x-gousto-user-id': userId,
-  }
+  const headers = getRequestHeaders(userId)
 
   return fetch(accessToken, `${endpoint('order', version)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
 }
 
-export const getUserOrders = (accessToken, userId, sessionId, phases, include, limit = 15, sort = 'deliveryDate') => {
-  const headers = {
-    'Content-Type': 'application/json',
-    'x-gousto-device-id': sessionId,
-    'x-gousto-user-id': userId,
-  }
+export const getUserOrders = (accessToken, userId, phases, include, limit = 15, sort = 'deliveryDate') => {
+  const headers = getRequestHeaders(userId)
 
   const reqData = {
     'filter[phase]': phases,
