@@ -3,20 +3,20 @@ import * as endpoint from 'config/endpoint'
 import * as cookieHelper2 from 'utils/cookieHelper2'
 import { updateOrder, createOrder, getOrder, getUserOrders } from '../orderV2'
 
+jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPrefix, shouldDecode) => {
+  if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
+    return 'session-id'
+  }
+
+  return null
+})
+
 describe('orderApi', () => {
   let fetchSpy
 
   beforeEach(() => {
     fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
     jest.spyOn(endpoint, 'default').mockImplementation((service, version) => `endpoint-${service}/${version}`)
-
-    jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPrefix, shouldDecode) => {
-      if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
-        return 'session-id'
-      }
-
-      return null
-    })
   })
 
   afterEach(() => {
@@ -68,7 +68,7 @@ describe('orderApi', () => {
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await createOrder('token', { order: 'body' })
+      const result = await createOrder('token', { order: 'body' }, 'user-id')
 
       expect(result).toEqual(order)
     })
@@ -101,18 +101,20 @@ describe('orderApi', () => {
       const apiResponse = { data: [1, 2, 3] }
       fetchSpy.mockResolvedValue(apiResponse)
 
-      const result = await updateOrder('token', 'order-id', { order: 'body' })
+      const result = await updateOrder('token', 'order-id', { order: 'body' }, 'user-id')
 
       expect(result).toEqual(apiResponse)
     })
   })
 
   describe('getOrder', () => {
+    const userId = 'my-cool-user'
+
     test('should fetch the correct url', async () => {
       const expectedHeaders = {
         'Content-Type': 'application/json',
         'x-gousto-device-id': 'session-id',
-        'x-gousto-user-id': undefined
+        'x-gousto-user-id': userId
       }
 
       const expectedReqData = {
@@ -121,7 +123,7 @@ describe('orderApi', () => {
       const orderId = 123
       const include = ['data']
 
-      await getOrder('token', orderId, include)
+      await getOrder('token', orderId, userId, include)
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
         'token',
@@ -137,7 +139,7 @@ describe('orderApi', () => {
       const apiResponse = { data: [1, 2, 3] }
       fetchSpy.mockResolvedValue(apiResponse)
 
-      const result = await getOrder('token', '123', {})
+      const result = await getOrder('token', '123', userId, {})
 
       expect(result).toEqual(apiResponse)
     })
@@ -147,10 +149,10 @@ describe('orderApi', () => {
         const expectedHeaders = {
           'Content-Type': 'application/json',
           'x-gousto-device-id': 'session-id',
-          'x-gousto-user-id': undefined
+          'x-gousto-user-id': userId
         }
         const orderId = '123'
-        await getOrder('token', orderId)
+        await getOrder('token', orderId, userId)
         expect(fetchSpy).toHaveBeenCalledTimes(1)
         expect(fetchSpy).toHaveBeenCalledWith(
           'token',

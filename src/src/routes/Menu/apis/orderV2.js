@@ -47,7 +47,7 @@ export const updateOrder = (accessToken, orderId, order, userId) => {
   )
 }
 
-export const getOrder = (accessToken, orderId, include, userId) => {
+export const getOrder = (accessToken, orderId, userId, include) => {
   const reqData = {
     include
   }

@@ -31,7 +31,7 @@ import {
 import { fetchDeliveryDays } from '../apis/deliveries'
 import * as userApi from '../apis/user'
 import { unSkipDates, skipDates } from '../routes/Account/apis/subscription'
-import { getAccessToken } from '../selectors/auth'
+import { getAccessToken, getAuthUserId } from '../selectors/auth'
 import { getBasketOrderId } from '../selectors/basket'
 
 import { deleteOrder } from '../routes/Account/MyDeliveries/apis/orderV2'
@@ -402,12 +402,14 @@ export const orderCancel = (orderId, deliveryDayId, variation) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
-    const accessToken = getState().auth.get('accessToken')
-    const valueProposition = getState().onScreenRecovery.get('valueProposition')
-    const offer = getState().onScreenRecovery.get('offer')
+    const state = getState()
+    const accessToken = state.auth.get('accessToken')
+    const valueProposition = state.onScreenRecovery.get('valueProposition')
+    const offer = state.onScreenRecovery.get('offer')
+    const userId = getAuthUserId(state)
 
     try {
-      await deleteOrder(accessToken, orderId)
+      await deleteOrder(accessToken, orderId, userId)
 
       dispatch({
         type: actionTypes.ORDER_CANCEL,
@@ -539,7 +541,7 @@ export const cancelMultipleBoxes = ({ selectedOrders }, userId) => async (dispat
       } else if (order.isProjected) {
         request = userApi.skipDelivery(accessToken, order.deliveryDayId)
       } else {
-        request = deleteOrder(accessToken, order.id)
+        request = deleteOrder(accessToken, order.id, userId)
       }
 
       return request.then(() => cancelledOrders.push(order))

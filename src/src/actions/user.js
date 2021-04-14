@@ -24,6 +24,7 @@ import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries, transformProjectedDeliveriesNew } from 'utils/myDeliveries'
+import { getAuthUserId } from 'selectors/auth'
 
 import { skipDates, fetchProjectedDeliveries } from '../routes/Account/apis/subscription'
 import { actionTypes } from './actionTypes'
@@ -182,8 +183,10 @@ function userOrderCancelNext(afterBoxNum = 1) {
 
     try {
       await dispatch(userLoadOrders())
-      const cancellableOrder = getState()
-        .user.get('orders')
+
+      const state = getState()
+
+      const cancellableOrder = state.user.get('orders')
         .filter(order => cancellablePhases.includes(order.get('phase')) && order.get('number') > afterBoxNum)
 
       if (cancellableOrder.size) {
@@ -193,9 +196,10 @@ function userOrderCancelNext(afterBoxNum = 1) {
           .get('id')
 
         try {
-          const accessToken = getState().auth.get('accessToken')
+          const accessToken = state.auth.get('accessToken')
+          const userId = getAuthUserId(state)
 
-          await deleteOrder(accessToken, orderToCancelId)
+          await deleteOrder(accessToken, orderToCancelId, userId)
 
           dispatch({
             type: actionTypes.USER_UNLOAD_ORDERS,

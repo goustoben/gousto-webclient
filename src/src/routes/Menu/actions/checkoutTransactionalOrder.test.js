@@ -174,7 +174,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
         }
       }
 
-      expect(createOrder).toHaveBeenCalledWith('auth-access-token', expectedRequest, undefined, 'auth-user-id')
+      expect(createOrder).toHaveBeenCalledWith('auth-access-token', expectedRequest, 'auth-user-id')
     })
 
     test('should call trackOrder with response', async () => {

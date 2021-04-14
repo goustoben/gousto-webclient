@@ -71,7 +71,10 @@ describe('order actions', () => {
 
     fetchOrder.mockClear()
     getState.mockReturnValue({
-      auth: Immutable.Map({ accessToken: 'access-token' }),
+      auth: Immutable.Map({
+        accessToken: 'access-token',
+        id: 'user-id'
+      }),
       features: Immutable.Map({
         orderConfirmation: Immutable.Map({
           value: false,
@@ -308,7 +311,7 @@ describe('order actions', () => {
       expect(getBasketOrderIdSpy).toBeCalledWith(getState())
       expect(getBasketOrderIdSpy).toHaveBeenCalledTimes(1)
       expect(updateOrderSpy).toHaveBeenCalledTimes(1)
-      expect(updateOrderSpy).toHaveBeenCalledWith('access-token', 'order-id', { id: 'order_id' })
+      expect(updateOrderSpy).toHaveBeenCalledWith('access-token', 'order-id', { id: 'order_id' }, 'user-id')
     })
 
     test('should redirect the user to the order summary page if it succeeds', async () => {

@@ -34,16 +34,10 @@ export const checkoutTransactionalOrder = () => async (dispatch, getState) => {
   // const couldBasketBeExpired = getCouldBasketBeExpired(getState())
 
   const accessToken = getAccessToken(state)
-
-  // todo what do we do with promo code?
-
   const orderRequest = getOrderV2(state)
 
-  // todo this needs sessionId adding
-  const sessionId = undefined
-
   try {
-    const order = await createOrder(accessToken, orderRequest, sessionId, userId)
+    const order = await createOrder(accessToken, orderRequest, userId)
 
     dispatch(trackOrder(undefined, order))
     dispatch(orderConfirmationRedirect(order.id, 'create'))
