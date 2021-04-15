@@ -158,6 +158,9 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, f
 
   cy.route('PUT', /user\/current\/subscription\/activate/, 'fixture:user/userCurrentActivateSubscription.json').as('currentActivateSubscription')
 
+  cy.fixture('subscription/subscriptionUpdateResponse').as('subscriptionUpdateResponse')
+  cy.route('POST', /subscriptioncommand\/v1\/subscriptions\/(.*)\/activate/, '@subscriptionUpdateResponse').as('activateSubscription')
+
   cy.visit('/subscription-settings')
 
   cy.setFeatures(features)

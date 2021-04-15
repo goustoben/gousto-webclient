@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getAccessToken } from 'selectors/auth'
 import { getBrowserType } from 'selectors/browser'
-import { getIsSubscriberPricingEnabled } from 'selectors/features'
+import { getIsNewSubscriptionApiEnabled, getIsSubscriberPricingEnabled } from 'selectors/features'
 import { isMobile } from 'utils/view'
 import { startOnScreenRecoverySubscriptionFlow } from 'actions/onScreenRecovery'
 
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
   accessToken: getAccessToken(state),
   isMobile: isMobile(getBrowserType(state)),
   isSubscriberPricingEnabled: getIsSubscriberPricingEnabled(state),
+  isNewSubscriptionApiEnabled: getIsNewSubscriptionApiEnabled(state),
 })
 
 const SubscriptionContainer = connect(mapStateToProps, {

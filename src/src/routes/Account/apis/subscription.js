@@ -48,3 +48,14 @@ export function fetchProjectedDeliveries(accessToken, userId) {
     'GET',
   )
 }
+
+export function deactivateSubscriptionV2(accessToken, pauseDate, userId) {
+  return fetch(
+    accessToken,
+    `${buildSubscriptionCommandUrl(userId)}${routes.subscriptionCommand.deactivate}`,
+    { pauseDate },
+    'POST',
+    'default',
+    {'Content-Type': 'application/json'}
+  )
+}
