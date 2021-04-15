@@ -6,6 +6,7 @@ describe('given Delivery is rendered', () => {
   const userLoadOrders = jest.fn()
   const trackDeliveryOther = jest.fn()
   const trackDeliveryStatus = jest.fn()
+  const trackSelectDeliveryCategory = jest.fn()
 
   let wrapper
 
@@ -19,6 +20,7 @@ describe('given Delivery is rendered', () => {
     trackDeliveryOther,
     trackDeliveryStatus,
     trackNextBoxTrackingClick: () => {},
+    trackSelectDeliveryCategory,
     loadOrderTrackingInfo: () => {},
     userLoadOrders,
   }
@@ -77,16 +79,18 @@ describe('given Delivery is rendered', () => {
       })
     })
 
-    describe('and "I had another issue" button is clicked', () => {
-      let ItemLink
+    test('clicks on each deliveries category item is tracked with correct data', () => {
+      const DELIVERY_CATEGORIES = [
+        'i_dont_know_when_my_box_will_arrive',
+        'my_box_didnt_arrive',
+        'i_had_another_issue',
+      ]
+      const items = wrapper.find('ItemLink')
 
-      beforeEach(() => {
-        ItemLink = wrapper.find('ItemLink').last()
-        ItemLink.find('Item').simulate('click')
-      })
+      items.forEach((item, index) => {
+        item.find('Item').simulate('click')
 
-      test('the button is calling the tracking function correctly', () => {
-        expect(trackDeliveryOther).toHaveBeenCalledTimes(1)
+        expect(trackSelectDeliveryCategory).toHaveBeenCalledWith(DELIVERY_CATEGORIES[index])
       })
     })
   })

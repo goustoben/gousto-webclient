@@ -9,14 +9,23 @@ const propTypes = {
   recipes: PropTypes.arrayOf(recipePropType).isRequired,
   title: PropTypes.string.isRequired,
   trackRecipeCardClick: PropTypes.func.isRequired,
+  trackRecipeCardGetInTouchClick: PropTypes.func.isRequired,
 }
 
-const RecipeCards = ({ recipes, title, trackRecipeCardClick }) => (
+const RecipeCards = ({
+  recipes,
+  title,
+  trackRecipeCardClick,
+  trackRecipeCardGetInTouchClick
+}) => (
   <RecipeCardsPresentation
     title={title}
   >
     <RecipeList recipes={recipes}>
-      <RecipeCardContent trackRecipeCardClick={trackRecipeCardClick} />
+      <RecipeCardContent
+        trackRecipeCardClick={trackRecipeCardClick}
+        trackRecipeCardGetInTouchClick={trackRecipeCardGetInTouchClick}
+      />
     </RecipeList>
   </RecipeCardsPresentation>
 )

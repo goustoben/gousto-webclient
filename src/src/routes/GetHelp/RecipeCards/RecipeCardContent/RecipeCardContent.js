@@ -10,6 +10,7 @@ import { recipePropType } from '../../getHelpPropTypes'
 const propTypes = {
   recipe: recipePropType,
   trackRecipeCardClick: PropTypes.func.isRequired,
+  trackRecipeCardGetInTouchClick: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -20,7 +21,7 @@ const redirectToContactPage = () => {
   browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
 }
 
-const RecipeCardContent = ({ recipe, trackRecipeCardClick }) => {
+const RecipeCardContent = ({ recipe, trackRecipeCardClick, trackRecipeCardGetInTouchClick }) => {
   const { id, url } = recipe
 
   const redirectToCookbook = () => {
@@ -47,7 +48,10 @@ const RecipeCardContent = ({ recipe, trackRecipeCardClick }) => {
         <p className={css.text}>If you want a replacement card, please get in touch.</p>
         <CTA
           size="small"
-          onClick={redirectToContactPage}
+          onClick={() => {
+            trackRecipeCardGetInTouchClick()
+            redirectToContactPage()
+          }}
           variant="secondary"
         >
           Get in touch

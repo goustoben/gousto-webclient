@@ -20,6 +20,7 @@ const propTypes = {
   trackDeliveryOther: PropTypes.func.isRequired,
   trackDeliveryStatus: PropTypes.func.isRequired,
   trackNextBoxTrackingClick: PropTypes.func.isRequired,
+  trackSelectDeliveryCategory: PropTypes.func.isRequired,
   userLoadOrders: PropTypes.func.isRequired,
 }
 const defaultProps = {
@@ -56,6 +57,7 @@ class Delivery extends PureComponent {
       trackDeliveryOther,
       trackDeliveryStatus,
       trackNextBoxTrackingClick,
+      trackSelectDeliveryCategory,
       userLoadOrders,
     } = this.props
 
@@ -81,19 +83,21 @@ class Delivery extends PureComponent {
             to={client.getHelp.deliveryDontKnowWhen(params)}
             clientRouted
             testingSelector="deliveryDontKnowWhen"
+            trackClick={() => trackSelectDeliveryCategory('i_dont_know_when_my_box_will_arrive')}
           />
           <ItemLink
             label="My box did not arrive"
             to={client.getHelp.deliveryDidntArrive(params)}
             clientRouted
             testingSelector="deliveryDidntArrive"
+            trackClick={() => trackSelectDeliveryCategory('my_box_didnt_arrive')}
           />
           <ItemLink
             label="I had another issue"
-            trackClick={trackDeliveryOther}
             to={`${client.getHelp.index}/${client.getHelp.contact}`}
             clientRouted
             testingSelector="deliveryOtherIssue"
+            trackClick={() => trackSelectDeliveryCategory('i_had_another_issue')}
           />
         </List>
       </GetHelpLayout2>
