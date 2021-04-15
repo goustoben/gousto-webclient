@@ -8,11 +8,13 @@ import * as subUtils from 'utils/subscription'
 import GoustoException from 'utils/GoustoException'
 import windowUtil from 'utils/window'
 import routesConfig from 'config/routes'
+import moment from 'moment'
 import Immutable from 'immutable'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
-import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
+import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled, getIsNewSubscriptionApiEnabled } from 'selectors/features'
 import * as trackingKeys from 'actions/trackingKeys'
-import { fetchSubscription, deactivateSubscription } from '../routes/Account/apis/subscription'
+import { getUserId } from 'selectors/user'
+import { fetchSubscription, deactivateSubscription, deactivateSubscriptionV2 } from '../routes/Account/apis/subscription'
 import statusActions from './status'
 import { actionTypes } from './actionTypes'
 
@@ -299,7 +301,15 @@ function subscriptionDeactivate(reason) {
     const data = reason ? { state_reason: reason } : {}
 
     try {
-      await deactivateSubscription(accessToken, data)
+      const state = getState()
+      if (getIsNewSubscriptionApiEnabled(state)) {
+        const pauseDate = moment().format('YYYY-MM-DD')
+        const userId = getUserId(state)
+
+        await deactivateSubscriptionV2(accessToken, pauseDate, userId)
+      } else {
+        await deactivateSubscription(accessToken, data)
+      }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.SUBSCRIPTION_DEACTIVATE, 'deactivate-fail'))
     } finally {

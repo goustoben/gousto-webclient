@@ -60,17 +60,40 @@ describe('Resubscribe', () => {
       wrapper.update()
     })
 
-    test('Then useFetch is invoked as expected', () => {
-      expect(useFetch).toHaveBeenCalledWith(
-        expect.objectContaining({
-          url: 'localhost/user/current/subscription/activate',
-          needsAuthorization: true,
-          accessToken: 'foo',
-          options: {
-            method: 'PUT',
-          },
-        })
-      )
+    describe('And the isNewSubscriptionApiEnabled flag is set to true', () => {
+      beforeEach(async () => {
+        mountWithPropsAndState({}, { currentUser: { id: '12345' }, isNewSubscriptionApiEnabled: true })
+      })
+      test('Then useFetch is invoked as expected', () => {
+        expect(useFetch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            url: 'localhost/subscriptions/12345/activate',
+            needsAuthorization: true,
+            accessToken: 'foo',
+            options: {
+              method: 'POST',
+            },
+          })
+        )
+      })
+    })
+
+    describe('And the isNewSubscriptionApiEnabled flag is set to false', () => {
+      beforeEach(async () => {
+        mountWithPropsAndState({}, { isNewSubscriptionApiEnabled: false })
+      })
+      test('Then useFetch is invoked as expected', () => {
+        expect(useFetch).toHaveBeenCalledWith(
+          expect.objectContaining({
+            url: 'localhost/user/current/subscription/activate',
+            needsAuthorization: true,
+            accessToken: 'foo',
+            options: {
+              method: 'PUT',
+            },
+          })
+        )
+      })
     })
 
     describe('And the request is successful', () => {

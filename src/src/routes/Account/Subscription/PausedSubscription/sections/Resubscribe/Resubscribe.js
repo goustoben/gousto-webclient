@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
+import { getCurrentUserId } from 'routes/Account/Subscription/context/selectors/currentUser'
 import { Section } from '../../../components/Section'
 import { resubscribeSection } from '../../../subscriptionsSectionsContent'
 import { useFetch } from '../../../../../../hooks/useFetch'
@@ -16,7 +17,8 @@ import { trackSubscriptionSettingsChange } from '../../../tracking'
 import css from './Resubscribe.css'
 
 export const Resubscribe = ({ accessToken }) => {
-  const { dispatch, state: { isSubscriberPricingEnabled } = {}} = useContext(SubscriptionContext)
+  const { dispatch, state = {}} = useContext(SubscriptionContext)
+  const { isSubscriberPricingEnabled, isNewSubscriptionApiEnabled } = state
 
   const [shouldResubscribe, setShouldResubscribe] = useState(false)
   const reactivateSubscription = () => {
@@ -27,7 +29,17 @@ export const Resubscribe = ({ accessToken }) => {
     setShouldResubscribe(true)
   }
 
-  const reactivateSubscriptionUrl = `${endpoint('core')}${routes.core.activateSub}`
+  const userId = getCurrentUserId(state)
+
+  let reactivateSubscriptionUrl
+  let method
+  if (isNewSubscriptionApiEnabled) {
+    reactivateSubscriptionUrl = `${endpoint('subscriptioncommand', routes.version.subscriptionCommand)}/subscriptions/${userId}${routes.subscriptionCommand.activate}`
+    method = 'POST'
+  } else {
+    reactivateSubscriptionUrl = `${endpoint('core')}${routes.core.activateSub}`
+    method = 'PUT'
+  }
 
   const [, resubscribeResponse] = useFetch({
     url: reactivateSubscriptionUrl,
@@ -38,17 +50,20 @@ export const Resubscribe = ({ accessToken }) => {
       setShouldRequest: setShouldResubscribe,
     },
     options: {
-      method: 'PUT',
+      method,
     },
   })
 
   const isSuccess = isCoreRequestSuccessful(resubscribeResponse)
 
   if (isSuccess) {
+    const data = isNewSubscriptionApiEnabled
+      ? resubscribeResponse.data
+      : resubscribeResponse.result.data
     setTimeout(() => {
       dispatch({
         type: actionTypes.SUBSCRIPTION_STATUS_UPDATE_RECEIVED,
-        data: resubscribeResponse.result.data
+        data
       })
     }, 0)
   }

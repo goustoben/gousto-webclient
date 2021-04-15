@@ -13,7 +13,7 @@ import * as subUtils from 'utils/subscription'
 import logger from 'utils/logger'
 import windowUtil from 'utils/window'
 import { flushPromises } from '../../_testing/utils'
-import { deactivateSubscription } from '../../routes/Account/apis/subscription'
+import { deactivateSubscription, deactivateSubscriptionV2 } from '../../routes/Account/apis/subscription'
 
 jest.mock('actions/status', () => ({
   error: jest.fn(),
@@ -33,7 +33,8 @@ jest.mock('actions/onScreenRecovery', () => ({
   getPauseRecoveryContent: jest.fn(() => (() => { }))
 }))
 jest.mock('../../routes/Account/apis/subscription', () => ({
-  deactivateSubscription: jest.fn()
+  deactivateSubscription: jest.fn(),
+  deactivateSubscriptionV2: jest.fn()
 }))
 jest.mock('apis/orders', () => ({
   cancelExistingOrders: jest.fn(),
@@ -363,6 +364,25 @@ describe('Subscription action', () => {
         expect(deactivateSubscription).toHaveBeenCalledWith('token', { state_reason: 'passed in reason' })
       }
     )
+
+    describe('when isNewSubscriptionApiEnabled is set to true', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          features: Immutable.fromJS({ isNewSubscriptionApiEnabled: { value: true } }),
+          auth: Immutable.fromJS({ accessToken: 'token' }),
+          user: Immutable.fromJS({ id: '123' }),
+        })
+        deactivateSubscriptionV2.mockReturnValue(Promise.resolve())
+      })
+
+      test('should call deactivateSubscriptionV2 once with accessToken & pauseDate', async () => {
+        jest.spyOn(Date, 'now').mockImplementation(() => '2021-03-24T14:48:00.000Z')
+        await subPauseActions.subscriptionDeactivate()(dispatch, getState)
+
+        expect(deactivateSubscriptionV2).toHaveBeenCalledTimes(1)
+        expect(deactivateSubscriptionV2).toHaveBeenCalledWith('token', '2021-03-24', '123')
+      })
+    })
 
     describe('when deactivation fails', () => {
       beforeEach(async () => {

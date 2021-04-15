@@ -6,6 +6,7 @@ import {
   skipDates,
   unSkipDates,
   fetchProjectedDeliveries,
+  deactivateSubscriptionV2
 } from '../subscription'
 
 jest.mock('utils/fetch', () =>
@@ -33,6 +34,7 @@ jest.mock('config/routes', () => ({
   subscriptionCommand: {
     skip: '/skip',
     unSkip: '/unskip',
+    deactivate: '/deactivate',
   },
   subscriptionQuery: {
     projectedDeliveries: '/projected-deliveries',
@@ -58,6 +60,21 @@ describe('subscription endpoints', () => {
       test('should return the results of the fetch unchanged', async () => {
         const result = await deactivateSubscription('token', {})
         expect(result).toEqual(mockFetchResult)
+      })
+    })
+
+    describe('deactivateSubscriptionV2', () => {
+      test('should fetch the correct url', async () => {
+        const pauseDate = { pauseDate: '2020-03-25' }
+        await deactivateSubscriptionV2('token', pauseDate, 'user-id')
+
+        expect(fetch).toHaveBeenCalledWith(
+          'token',
+          'endpoint-subscriptioncommand/v1/subscriptions/user-id/deactivate',
+          { pauseDate },
+          'POST',
+          'default',
+          {'Content-Type': 'application/json'})
       })
     })
 

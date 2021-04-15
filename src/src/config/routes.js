@@ -192,6 +192,8 @@ module.exports = {
   subscriptionCommand: {
     skip: '/skip',
     unSkip: '/unskip',
+    deactivate: '/deactivate',
+    activate: '/activate',
   },
   subscriptionQuery: {
     projectedDeliveries: '/projected-deliveries',
