@@ -22,7 +22,10 @@ import {
   trackHelpPreLoginModalDisplayed,
   trackMassIssueAlertDisplayed,
   trackNextBoxTrackingClick,
+  trackRecipeCardClick,
+  trackRecipeCardGetInTouchClick,
   trackRejectRefund,
+  trackSelectDeliveryCategory,
   trackSelectIngredient,
   validateDeliveryAction,
   validateLatestOrder,
@@ -162,7 +165,7 @@ describe('GetHelp action generators and thunks', () => {
       expect(trackConfirmationCTA()).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'click_done_refund_accepted',
+          actionType: 'ssr_click_done_refund_accepted',
         }
       })
     })
@@ -268,6 +271,48 @@ describe('GetHelp action generators and thunks', () => {
           actionType: 'ssr_deselect_ingredient',
           seCategory: 'help',
           ingredient_name: DESELECTED_INGREDIENT,
+        }
+      })
+    })
+  })
+
+  describe('trackRecipeCardClick', () => {
+    const RECIPE_ID = '12345'
+
+    test('creates the tracking action', () => {
+      expect(trackRecipeCardClick(RECIPE_ID)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_click_view_recipe',
+          seCategory: 'help',
+          recipe_id: RECIPE_ID,
+        }
+      })
+    })
+  })
+
+  describe('trackRecipeCardGetInTouchClick', () => {
+    test('creates the tracking action', () => {
+      expect(trackRecipeCardGetInTouchClick()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_recipes_click_get_in_touch',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackSelectDeliveryCategory', () => {
+    const DELIVERY_CATEGORY = 'my_box_didnt_arrive'
+
+    test('creates the tracking action', () => {
+      expect(trackSelectDeliveryCategory(DELIVERY_CATEGORY)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deliveries_select_category',
+          seCategory: 'help',
+          category_name: DELIVERY_CATEGORY
         }
       })
     })

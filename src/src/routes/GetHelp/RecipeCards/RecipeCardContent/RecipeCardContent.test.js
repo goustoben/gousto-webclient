@@ -15,11 +15,15 @@ describe('The RecipeCardContent component', () => {
     ingredients: [],
   }
 
+  const trackRecipeCardClick = jest.fn()
+  const trackRecipeCardGetInTouchClick = jest.fn()
+
   beforeEach(() => {
     wrapper = shallow(
       <RecipeCardContent
         recipe={TEST_RECIPE}
-        trackRecipeCardClick={jest.fn()}
+        trackRecipeCardClick={trackRecipeCardClick}
+        trackRecipeCardGetInTouchClick={trackRecipeCardGetInTouchClick}
       />
     )
   })
@@ -44,6 +48,10 @@ describe('The RecipeCardContent component', () => {
 
     test('Redirect to the Contact page', () => {
       expect(browserHistory.push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
+    })
+
+    test('Tracks the click on Get In Touch', () => {
+      expect(trackRecipeCardGetInTouchClick).toHaveBeenCalled()
     })
   })
 
@@ -107,4 +115,3 @@ describe('The RecipeCardContent component', () => {
     })
   })
 })
-

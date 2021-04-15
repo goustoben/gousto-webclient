@@ -83,7 +83,7 @@ export const trackRejectRefund = (amount) => ({
 export const trackConfirmationCTA = () => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
-    actionType: trackingKeys.clickDoneRefundAccepted,
+    actionType: trackingKeys.ssrClickDoneRefundAccepted,
   }
 })
 
@@ -143,6 +143,32 @@ export const trackDeselectIngredient = (selectedIngredient) => ({
   trackingData: {
     actionType: trackingKeys.ssrDeselectIngredient,
     ingredient_name: selectedIngredient,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackRecipeCardClick = recipeId => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrClickViewRecipe,
+    seCategory: SE_CATEGORY_HELP,
+    recipe_id: recipeId,
+  }
+})
+
+export const trackRecipeCardGetInTouchClick = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrRecipesClickGetInTouch,
+    seCategory: SE_CATEGORY_HELP,
+  }
+})
+
+export const trackSelectDeliveryCategory = (category) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeliveriesSelectCategory,
+    category_name: category,
     seCategory: SE_CATEGORY_HELP,
   },
 })

@@ -6,6 +6,7 @@ import {
   trackDeliveryOther,
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
+  trackSelectDeliveryCategory,
 } from '../actions/getHelp'
 import { Delivery } from './Delivery'
 
@@ -22,6 +23,7 @@ const DeliveryContainer = connect(mapStateToProps, {
   trackDeliveryOther,
   trackDeliveryStatus,
   trackNextBoxTrackingClick,
+  trackSelectDeliveryCategory,
   userLoadOrders: userActions.userLoadOrders,
 })(Delivery)
 
