@@ -6,7 +6,8 @@ import {
   skipDates,
   unSkipDates,
   fetchProjectedDeliveries,
-  deactivateSubscriptionV2
+  deactivateSubscriptionV2,
+  fetchSubscriptionV2,
 } from '../subscription'
 
 jest.mock('utils/fetch', () =>
@@ -37,6 +38,7 @@ jest.mock('config/routes', () => ({
     deactivate: '/deactivate',
   },
   subscriptionQuery: {
+    subscriptions: '/subscriptions',
     projectedDeliveries: '/projected-deliveries',
   },
 }))
@@ -97,7 +99,14 @@ describe('subscription endpoints', () => {
         const reqData = ['2020-02-20']
         await skipDates('token', 'user-id', reqData)
 
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptioncommand/v1/subscriptions/user-id/skip', {skipDates: reqData}, 'POST')
+        expect(fetch).toHaveBeenCalledWith(
+          'token',
+          'endpoint-subscriptioncommand/v1/subscriptions/user-id/skip',
+          {skipDates: reqData},
+          'POST',
+          'default',
+          {'Content-Type': 'application/json'}
+        )
       })
     })
 
@@ -106,7 +115,22 @@ describe('subscription endpoints', () => {
         const reqData = ['2020-02-20']
         await unSkipDates('token', 'user-id', reqData)
 
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptioncommand/v1/subscriptions/user-id/unskip', {unskipDates: reqData}, 'POST')
+        expect(fetch).toHaveBeenCalledWith(
+          'token',
+          'endpoint-subscriptioncommand/v1/subscriptions/user-id/unskip',
+          {unskipDates: reqData},
+          'POST',
+          'default',
+          {'Content-Type': 'application/json'}
+        )
+      })
+    })
+
+    describe('fetchSubscriptionV2', () => {
+      test('should fetch the correct url', async () => {
+        await fetchSubscriptionV2('token', 'user-id')
+
+        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptionquery/v1/subscriptions/user-id', {}, 'GET')
       })
     })
 

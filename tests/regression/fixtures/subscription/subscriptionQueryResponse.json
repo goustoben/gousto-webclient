@@ -1,0 +1,25 @@
+{
+  "status": "OK",
+  "data": {
+      "userId": "11737637",
+      "subscription": {
+          "origin": "core",
+          "deliverySlotStartTime": "08:00:00",
+          "interval": 4,
+          "deliverySlotEndTime": "19:00:00",
+          "status": "active",
+          "createdAt": "2018-05-11T09:27:06.000Z",
+          "numPortions": 4,
+          "updatedBy": "b57f9043-5c5c-41e6-a96d-7a1e6c7c73ac",
+          "authUserId": "b57f9043-5c5c-41e6-a96d-7a1e6c7c73ac",
+          "deliverySlotDay": 3,
+          "boxType": "vegetarian",
+          "updatedAt": "2021-04-09T11:14:43.000Z",
+          "userId": "11737637",
+          "numRecipes": 3,
+          "versionId": "1a3d4ac4-f6d2-4054-ac8b-a3048147f10e",
+          "intervalUnit": "weeks",
+          "lastChangeType": "updated"
+      }
+  }
+}

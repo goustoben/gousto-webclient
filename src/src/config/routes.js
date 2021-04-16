@@ -196,6 +196,7 @@ module.exports = {
     activate: '/activate',
   },
   subscriptionQuery: {
+    subscriptions: '/subscriptions',
     projectedDeliveries: '/projected-deliveries',
   },
   workable: {

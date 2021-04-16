@@ -3,29 +3,43 @@ import fetch from 'utils/fetch'
 import routes from 'config/routes'
 import endpoint from 'config/endpoint'
 
-function buildSubscriptionCommandUrl(userId) {
-  return `${endpoint('subscriptioncommand', routes.version.subscriptionCommand)}/subscriptions/${userId}`
+export function buildSubscriptionCommandUrl(userId, path) {
+  return `${endpoint(
+    'subscriptioncommand',
+    routes.version.subscriptionCommand
+  )}/subscriptions/${userId}${path}`
+}
+
+export function buildSubscriptionQueryUrl(userId, path) {
+  return `${endpoint(
+    'subscriptionquery',
+    routes.version.subscriptionQuery
+  )}${path}/${userId}`
 }
 
 export function skipDates(accessToken, userId, dates) {
   return fetch(
     accessToken,
-    `${buildSubscriptionCommandUrl(userId)}${routes.subscriptionCommand.skip}`,
+    `${buildSubscriptionCommandUrl(userId, routes.subscriptionCommand.skip)}`,
     {
       skipDates: dates,
     },
     'POST',
+    'default',
+    {'Content-Type': 'application/json'}
   )
 }
 
 export function unSkipDates(accessToken, userId, dates) {
   return fetch(
     accessToken,
-    `${buildSubscriptionCommandUrl(userId)}${routes.subscriptionCommand.unSkip}`,
+    `${buildSubscriptionCommandUrl(userId, routes.subscriptionCommand.unSkip)}`,
     {
       unskipDates: dates,
     },
     'POST',
+    'default',
+    {'Content-Type': 'application/json'}
   )
 }
 
@@ -37,13 +51,19 @@ export function fetchSubscription(accessToken, reqData = {}) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.currentSubscription}`, reqData, 'GET')
 }
 
+export function fetchSubscriptionV2(accessToken, userId) {
+  return fetch(
+    accessToken,
+    buildSubscriptionQueryUrl(userId, routes.subscriptionQuery.subscriptions),
+    {},
+    'GET',
+  )
+}
+
 export function fetchProjectedDeliveries(accessToken, userId) {
   return fetch(
     accessToken,
-    `${endpoint(
-      'subscriptionquery',
-      routes.version.subscriptionQuery,
-    )}${routes.subscriptionQuery.projectedDeliveries}/${userId}`,
+    `${buildSubscriptionQueryUrl(userId, routes.subscriptionQuery.projectedDeliveries)}`,
     {},
     'GET',
   )
@@ -52,7 +72,7 @@ export function fetchProjectedDeliveries(accessToken, userId) {
 export function deactivateSubscriptionV2(accessToken, pauseDate, userId) {
   return fetch(
     accessToken,
-    `${buildSubscriptionCommandUrl(userId)}${routes.subscriptionCommand.deactivate}`,
+    `${buildSubscriptionCommandUrl(userId, routes.subscriptionCommand.deactivate)}`,
     { pauseDate },
     'POST',
     'default',

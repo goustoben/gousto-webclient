@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { getIsNewSubscriptionPageEnabled } from 'selectors/features'
 import userActions from 'actions/user'
-import subscriptionActions from 'actions/subscriptionPause'
 import { userRecipeRatings } from '../../Ratings/actions/feedback'
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 import Account from './Account'
@@ -20,7 +19,6 @@ const AccountContainer = connect(
     loadMenuServiceDataIfDeepLinked,
     userLoadData: userActions.userLoadData,
     checkCardExpiry: userActions.checkCardExpiry,
-    subscriptionLoadData: subscriptionActions.subscriptionLoadData,
     userRecipeRatings,
   }
 )(Account)

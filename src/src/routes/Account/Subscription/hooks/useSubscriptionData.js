@@ -7,16 +7,29 @@ import moment from 'moment'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
+import { buildSubscriptionQueryUrl } from '../../apis/subscription'
 import { useFetch } from '../../../../hooks/useFetch'
 import {
 } from '../context'
-import { getCurrentUserPostcode, getCurrentUserDeliveryTariffId } from '../context/selectors/currentUser'
+import {
+  getCurrentUserId,
+  getCurrentUserPostcode,
+  getCurrentUserDeliveryTariffId
+} from '../context/selectors/currentUser'
 import { actionTypes } from '../context/reducers'
+import { mapSubscriptionV2Payload, mapSubscriptionAndDeliverySlots } from '../utils/mapping'
 
-export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
+export const useSubscriptionData = (
+  accessToken,
+  dispatch,
+  triggerDeliveryDays,
+  triggerSubscription,
+  state
+) => {
+  const userId = getCurrentUserId(state)
+  const { isNewSubscriptionApiEnabled } = state
   const postcode = getCurrentUserPostcode(state)
   const deliveryTariffId = getCurrentUserDeliveryTariffId(state)
-  const subscriptionUrl = `${endpoint('core')}${routes.core.currentSubscription}`
   const deliveriesUrl = `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.days}`
   const deliveryParams = useMemo(() => ({
     'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
@@ -29,26 +42,38 @@ export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
     direction: 'asc',
     delivery_tariff_id: deliveryTariffId
   }), [postcode, deliveryTariffId])
+  const subscriptionUrl = (isNewSubscriptionApiEnabled)
+    ? buildSubscriptionQueryUrl(userId, routes.subscriptionQuery.subscriptions)
+    : `${endpoint('core')}${routes.core.currentSubscription}`
+
+  useEffect(() => {
+    if (!isNewSubscriptionApiEnabled) {
+      triggerSubscription.setShouldRequest(true)
+    } else if (userId) {
+      triggerSubscription.setShouldRequest(true)
+    }
+  }, [userId, isNewSubscriptionApiEnabled, triggerSubscription])
+
+  useEffect(() => {
+    if (postcode) {
+      triggerDeliveryDays.setShouldRequest(true)
+    }
+  }, [postcode, triggerDeliveryDays])
 
   const [, subscriptionResponse, subscriptionError
   ] = useFetch({
     url: subscriptionUrl,
     needsAuthorization: true,
-    accessToken
+    accessToken,
+    trigger: triggerSubscription,
   })
-
-  useEffect(() => {
-    if (postcode) {
-      trigger.setShouldRequest(true)
-    }
-  }, [postcode, trigger])
 
   const [, deliveriesResponse, deliveriesError
   ] = useFetch({
     url: deliveriesUrl,
     parameters: deliveryParams,
     accessToken,
-    trigger,
+    trigger: triggerDeliveryDays,
   })
 
   useEffect(() => {
@@ -58,7 +83,12 @@ export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
     if (!hasAnyErrors && allRequestsComplete) {
       const data = {
         deliveries: deliveriesResponse.data,
-        subscription: subscriptionResponse.result.data
+        subscription: (isNewSubscriptionApiEnabled)
+          ? mapSubscriptionAndDeliverySlots(
+            mapSubscriptionV2Payload(subscriptionResponse.data.subscription),
+            deliveriesResponse.data,
+          )
+          : subscriptionResponse.result.data
       }
 
       dispatch({
@@ -71,6 +101,7 @@ export const useSubscriptionData = (accessToken, dispatch, trigger, state) => {
     subscriptionResponse,
     dispatch,
     deliveriesError,
-    subscriptionError
+    subscriptionError,
+    isNewSubscriptionApiEnabled
   ])
 }

@@ -10,8 +10,8 @@ import { Subscription } from './Subscription'
 const mapStateToProps = (state) => ({
   accessToken: getAccessToken(state),
   isMobile: isMobile(getBrowserType(state)),
-  isSubscriberPricingEnabled: getIsSubscriberPricingEnabled(state),
   isNewSubscriptionApiEnabled: getIsNewSubscriptionApiEnabled(state),
+  isSubscriberPricingEnabled: getIsSubscriberPricingEnabled(state),
 })
 
 const SubscriptionContainer = connect(mapStateToProps, {
