@@ -7,12 +7,7 @@ describe('CheckoutButton', () => {
   const onClick = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(
-      <CheckoutButton
-        stepName="go to delivery"
-        onClick={onClick}
-      />
-    )
+    wrapper = shallow(<CheckoutButton stepName="go to delivery" onClick={onClick} />)
   })
 
   test('Should render correctly', () => {
@@ -32,7 +27,7 @@ describe('CheckoutButton', () => {
   describe('When isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 

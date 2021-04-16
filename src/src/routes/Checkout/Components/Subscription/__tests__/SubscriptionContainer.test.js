@@ -21,7 +21,7 @@ const optionsList = [
     slug: 'monthly',
     title: 'Monthly',
     description: '',
-  }
+  },
 ]
 
 jest.mock('redux-form', () => ({
@@ -38,30 +38,28 @@ describe('SubscriptionContainer', () => {
   const initialState = {
     features: Immutable.Map({
       chooseSubscription: Immutable.Map({
-        value: false
+        value: false,
       }),
       isCheckoutOverhaulEnabled: Immutable.Map({
-        value: false
-      })
+        value: false,
+      }),
     }),
     checkout: Immutable.fromJS({
       options: optionsList,
     }),
     request: Immutable.fromJS({
       browser: 'mobile',
-    })
+    }),
   }
 
   const store = {
     getState: jest.fn(() => initialState),
     dispatch: jest.fn(),
-    subscribe: jest.fn()
+    subscribe: jest.fn(),
   }
 
   beforeEach(() => {
-    wrapper = shallow(
-      <SubscriptionContainer store={store} />,
-    )
+    wrapper = shallow(<SubscriptionContainer store={store} />)
   })
 
   describe('when Subscription is rendered', () => {
@@ -69,11 +67,11 @@ describe('SubscriptionContainer', () => {
       const expected = {
         features: Immutable.Map({
           chooseSubscription: Immutable.Map({
-            value: false
+            value: false,
           }),
           isCheckoutOverhaulEnabled: Immutable.Map({
-            value: false
-          })
+            value: false,
+          }),
         }),
       }
       expect(wrapper.props()).toEqual(expect.objectContaining(expected))

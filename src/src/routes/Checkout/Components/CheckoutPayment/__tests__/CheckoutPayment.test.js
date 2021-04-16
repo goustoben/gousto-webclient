@@ -150,7 +150,7 @@ describe('CheckoutPayment', () => {
         payment: {
           cardName: 'Card name is required',
           town: 'Town is required',
-        }
+        },
       }
       const sectionName = 'payment'
       const formName = 'payment'
@@ -179,7 +179,7 @@ describe('CheckoutPayment', () => {
     describe('when PayPal payment method selected', () => {
       beforeEach(() => {
         wrapper.setProps({
-          currentPaymentMethod: PaymentMethod.PayPal
+          currentPaymentMethod: PaymentMethod.PayPal,
         })
       })
 
@@ -218,11 +218,7 @@ describe('CheckoutPayment', () => {
   describe('when 3DS is enabled', () => {
     beforeEach(() => {
       wrapper = shallow(
-        <CheckoutPayment
-          is3DSEnabled
-          submit={submit}
-          currentPaymentMethod={PaymentMethod.Card}
-        />
+        <CheckoutPayment is3DSEnabled submit={submit} currentPaymentMethod={PaymentMethod.Card} />
       )
     })
 

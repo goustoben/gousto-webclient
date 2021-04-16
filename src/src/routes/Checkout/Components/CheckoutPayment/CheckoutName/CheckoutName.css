@@ -1,10 +1,10 @@
 .wrapper {
-	composes: flex rowWrap from 'styles/flex.css';
-	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+  composes: flex rowWrap from 'styles/flex.css';
+  composes: marginSMTop from 'sass-loader!styles/spacing.scss';
 }
 
 .cardDetails {
-	width: 100%;
+  width: 100%;
 }
 
 .checkoutOverhaulContainer {

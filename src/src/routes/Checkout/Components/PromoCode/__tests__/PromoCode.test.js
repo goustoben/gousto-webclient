@@ -16,7 +16,11 @@ describe('PromoCode', () => {
     basketPromoCodeChange = jest.fn()
     basketPromoCodeAppliedChange = jest.fn()
     trackPromocodeChange = jest.fn()
-    loadPrices = jest.fn().mockReturnValue(new Promise(resolve => { resolve() }))
+    loadPrices = jest.fn().mockReturnValue(
+      new Promise((resolve) => {
+        resolve()
+      })
+    )
     wrapper = shallow(
       <PromoCode
         promoCode={promoCode}
@@ -30,7 +34,7 @@ describe('PromoCode', () => {
     wrapper.setState({
       pending: false,
       errorMsg: '',
-      successMsg: ''
+      successMsg: '',
     })
   })
 
@@ -56,9 +60,7 @@ describe('PromoCode', () => {
     })
 
     it('should render a <div> with no props', () => {
-      wrapper = shallow(
-        <PromoCode />
-      )
+      wrapper = shallow(<PromoCode />)
       expect(wrapper.type()).toEqual('div')
     })
   })
@@ -100,7 +102,7 @@ describe('PromoCode', () => {
       expect(collection.length).toBe(1)
       collection.forEach((node) => {
         node.simulate('input', { target: { value: 'promo' } })
-        node.simulate('keyup', {keyCode: 13})
+        node.simulate('keyup', { keyCode: 13 })
         expect(basketPromoCodeChange).toHaveBeenCalledTimes(2)
         expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
       })
@@ -149,7 +151,7 @@ describe('PromoCode', () => {
         value = 'test'
       })
 
-      it('shouldn\'t run if no event target is passed', () => {
+      it("shouldn't run if no event target is passed", () => {
         wrapper.find('input').simulate('input')
 
         expect(basketPromoCodeChange).not.toHaveBeenCalled()
@@ -170,7 +172,7 @@ describe('PromoCode', () => {
 
       it('should call loadPrices and trackPromocodeChange when press enter', async () => {
         wrapper.find('input').simulate('input', { target: { value } })
-        wrapper.find('input').simulate('keyup', {keyCode: 13})
+        wrapper.find('input').simulate('keyup', { keyCode: 13 })
 
         await expect(loadPrices).toHaveBeenCalled()
         expect(trackPromocodeChange).toHaveBeenCalled()
@@ -178,7 +180,7 @@ describe('PromoCode', () => {
 
       it('should call loadPrices and trackPromocodeChange when press space', async () => {
         wrapper.find('input').simulate('input', { target: { value } })
-        wrapper.find('input').simulate('keyup', {keyCode: 32})
+        wrapper.find('input').simulate('keyup', { keyCode: 32 })
 
         await expect(loadPrices).toHaveBeenCalled()
         expect(trackPromocodeChange).toHaveBeenCalled()

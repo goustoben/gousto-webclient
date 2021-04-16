@@ -17,7 +17,12 @@ export const FrameField = ({
   <div className={css.fieldContainer}>
     <div className={redesignCss.fieldHeader}>{header}</div>
     <div className={hasLockIcon ? css.fieldWithIcon : null}>
-      <div data-frames={dataFrames} className={classNames(css.iframeContainer, 'frame--activated', { 'frame--invalid': showError })} />
+      <div
+        data-frames={dataFrames}
+        className={classNames(css.iframeContainer, 'frame--activated', {
+          'frame--invalid': showError,
+        })}
+      />
       {hasLockIcon && (
         <div className={css.lockIconContainer}>
           <Svg fileName="icon-checkout-lock" className={css.lockIcon} />

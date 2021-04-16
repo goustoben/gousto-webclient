@@ -46,16 +46,16 @@
     border-radius: RadiusSM;
   }
 
-  &[class~="frame--activated"] {
+  &[class~='frame--activated'] {
     visibility: visible;
   }
 
   &:hover,
-  &[class~="frame--focus"] {
+  &[class~='frame--focus'] {
     border-color: inputBorderColorFocus;
   }
 
-  &[class~="frame--invalid"] {
+  &[class~='frame--invalid'] {
     border-color: errorBorderColor;
   }
 }
@@ -71,7 +71,7 @@
     border-radius: 3px;
   }
 
-  &[class~="frame--activated"] {
+  &[class~='frame--activated'] {
     visibility: visible;
   }
 
@@ -79,12 +79,12 @@
     border-color: Bluecheese;
   }
 
-  &[class~="frame--focus"] {
+  &[class~='frame--focus'] {
     border-color: Bluecheese;
     border-width: 2px;
   }
 
-  &[class~="frame--invalid"] {
+  &[class~='frame--invalid'] {
     border-color: Radish;
     border-width: 2px;
   }

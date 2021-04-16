@@ -4,34 +4,30 @@ import { addPrefix } from 'validations/util'
 import addressRules from 'validations/address'
 import { validationRules } from 'validations/card-checkout'
 
-export const getValidationRules = (sectionName) => (
-  (formValues) => {
-    let rules = addPrefix(sectionName, validationRules)
-    if (formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent) {
-      rules = { ...rules, ...addressRules(sectionName)(formValues) }
-    }
-
-    return rules
+export const getValidationRules = (sectionName) => (formValues) => {
+  let rules = addPrefix(sectionName, validationRules)
+  if (formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent) {
+    rules = { ...rules, ...addressRules(sectionName)(formValues) }
   }
-)
 
-export const addInitialValues = (Component,{ sectionName }) => (
-  connect(
-    (state, ownProps) => {
-      const { payment } = state.form
-      const initialValues = payment && payment.initial ? payment.initial : {}
+  return rules
+}
 
-      return {
-        // needed for hacked custom validation in validation/address.js
-        sectionName,
-        initialValues: {
-          ...ownProps.initialValues,
-          ...initialValues,
-          [sectionName]: {
-            cardName: '',
-            isBillingAddressDifferent: false,
-          }
-        }
-      }
-    })(Component)
-)
+export const addInitialValues = (Component, { sectionName }) =>
+  connect((state, ownProps) => {
+    const { payment } = state.form
+    const initialValues = payment && payment.initial ? payment.initial : {}
+
+    return {
+      // needed for hacked custom validation in validation/address.js
+      sectionName,
+      initialValues: {
+        ...ownProps.initialValues,
+        ...initialValues,
+        [sectionName]: {
+          cardName: '',
+          isBillingAddressDifferent: false,
+        },
+      },
+    }
+  })(Component)

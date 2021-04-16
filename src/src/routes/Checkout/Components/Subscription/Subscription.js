@@ -12,18 +12,26 @@ const frequencyDescription = {
     'Personalised recipes as we learn what you love',
     'Surprise gifts!',
   ],
-  2: [
-    'Personalised recipes as we learn what you love',
-  ],
+  2: ['Personalised recipes as we learn what you love'],
 }
 
-const Subscription = ({ chosenIntervalId, options, optionName, sectionName, features, trackSubscriptionIntervalChanged }) => (
-  (options.size && features.getIn(['chooseSubscription', 'value'])) ? (
+const Subscription = ({
+  chosenIntervalId,
+  options,
+  optionName,
+  sectionName,
+  features,
+  trackSubscriptionIntervalChanged,
+}) =>
+  options.size && features.getIn(['chooseSubscription', 'value']) ? (
     <div className={css.container}>
       <h3 className={css.header}>Your Gousto Plan</h3>
-      <p className={css.text}>Your plan, your rules. Choose two, three or four recipes a week. Skip a box when you don’t want one. Pause or cancel at any time.</p>
+      <p className={css.text}>
+        Your plan, your rules. Choose two, three or four recipes a week. Skip a box when you don’t
+        want one. Pause or cancel at any time.
+      </p>
       <FormSection name={sectionName} className={css.options}>
-        {options.map(option => {
+        {options.map((option) => {
           if (option.get('id') === 1 || option.get('id') === 2) {
             return (
               <SubscriptionOption
@@ -41,7 +49,6 @@ const Subscription = ({ chosenIntervalId, options, optionName, sectionName, feat
       </FormSection>
     </div>
   ) : null
-)
 
 Subscription.defaultProps = {
   chosenIntervalId: '1',
@@ -59,6 +66,4 @@ Subscription.propTypes = {
   trackSubscriptionIntervalChanged: PropTypes.func,
 }
 
-export {
-  Subscription
-}
+export { Subscription }

@@ -41,10 +41,8 @@ BoxDetails.propTypes = {
 }
 
 BoxDetails.defaultProps = {
-  trackClick: () => { },
-  trackUTMAndPromoCode: () => { },
+  trackClick: () => {},
+  trackUTMAndPromoCode: () => {},
 }
 
-export {
-  BoxDetails
-}
+export { BoxDetails }

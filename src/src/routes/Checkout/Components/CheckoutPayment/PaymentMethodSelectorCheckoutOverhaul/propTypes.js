@@ -12,8 +12,8 @@ const itemType = {
   fileName: PropTypes.string,
 }
 
-export const methodDescriptorPropType = {
+export const methodDescriptorPropType = PropTypes.shape({
   paymentMethod: PropTypes.string.isRequired,
   leftItem: itemType.isRequired,
   rightItem: itemType.isRequired,
-}
+})

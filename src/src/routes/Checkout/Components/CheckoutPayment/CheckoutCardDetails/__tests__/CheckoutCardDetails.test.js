@@ -74,7 +74,7 @@ describe('given CheckoutCardDetails is rendered', () => {
   describe('when isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 

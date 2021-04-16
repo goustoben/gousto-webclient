@@ -36,9 +36,7 @@ describe('DeliveryInstruction', () => {
 
       test('then should show another input', () => {
         expect(inputFields).toHaveLength(2)
-        expect(lastInput.prop('label')).toEqual(
-          'More details about where to leave your box?',
-        )
+        expect(lastInput.prop('label')).toEqual('More details about where to leave your box?')
       })
 
       describe('and it is changed to "home"', () => {
@@ -63,9 +61,7 @@ describe('DeliveryInstruction', () => {
 
       test('then should show another input', () => {
         expect(wrapper.find(Field)).toHaveLength(2)
-        expect(lastInput.prop('label')).toEqual(
-          'Additional information, door number, etc:',
-        )
+        expect(lastInput.prop('label')).toEqual('Additional information, door number, etc:')
       })
 
       describe('and it is changed to "other"', () => {
@@ -87,12 +83,7 @@ describe('DeliveryInstruction', () => {
     })
 
     test('<Field /> component(s) should have prop "mask" when the value prop is "other"', () => {
-      expect(
-        wrapper
-          .find(Field)
-          .last()
-          .prop('mask'),
-      ).toBe(true)
+      expect(wrapper.find(Field).last().prop('mask')).toBe(true)
     })
   })
 })

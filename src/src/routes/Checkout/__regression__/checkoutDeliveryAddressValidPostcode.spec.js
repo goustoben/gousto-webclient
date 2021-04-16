@@ -15,7 +15,7 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         firstname: 'Joe',
         lastname: 'Tester',
         email: 'test@email.com',
-        password: '1234abcd'
+        password: '1234abcd',
       })
     })
 

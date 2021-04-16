@@ -7,11 +7,11 @@ import configCheckout from 'config/checkout'
 import css from '../Delivery.css'
 import redesignCss from '../../../CheckoutRedesignContainer.css'
 
-const LEAVE_BOX_OPTIONS = (isCheckoutOverhaulEnabled) => (
-  configCheckout.leaveBoxOptions(isCheckoutOverhaulEnabled)
-    .filter(option => option)
-    .map(option => ({ value: option, label: option }))
-)
+const LEAVE_BOX_OPTIONS = (isCheckoutOverhaulEnabled) =>
+  configCheckout
+    .leaveBoxOptions(isCheckoutOverhaulEnabled)
+    .filter((option) => option)
+    .map((option) => ({ value: option, label: option }))
 
 class DeliveryInstruction extends React.PureComponent {
   // eslint-disable-next-line camelcase
@@ -22,24 +22,35 @@ class DeliveryInstruction extends React.PureComponent {
     }
   }
 
-  shouldShowOtherInput = chosenValue =>
-    ['neighbour', 'other'].includes(chosenValue.toLowerCase())
+  shouldShowOtherInput = (chosenValue) => ['neighbour', 'other'].includes(chosenValue.toLowerCase())
 
   render() {
     const { value, sectionName, receiveRef, isCheckoutOverhaulEnabled } = this.props
     const showOtherInput = this.shouldShowOtherInput(value)
 
     return (
-      <div className={classNames(css.deliveryFieldWrapper, { [css.deliveryFieldWrapperRedesign]: isCheckoutOverhaulEnabled })}>
+      <div
+        className={classNames(css.deliveryFieldWrapper, {
+          [css.deliveryFieldWrapperRedesign]: isCheckoutOverhaulEnabled,
+        })}
+      >
         <div className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}>
-          <div className={classNames(css.colMD, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
+          <div
+            className={classNames(css.colMD, {
+              [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
+            })}
+          >
             <div className="deliveryDropdown" data-testing="checkoutDeliveryDetailsInstruction">
               <Field
                 name="deliveryInstruction"
                 component={ReduxFormInput}
                 options={LEAVE_BOX_OPTIONS(isCheckoutOverhaulEnabled)}
                 inputType="DropDown"
-                label={isCheckoutOverhaulEnabled ? 'Where can we leave your box if you\'re not in?' : 'Where should we leave your box if you aren\'t in?'}
+                label={
+                  isCheckoutOverhaulEnabled
+                    ? "Where can we leave your box if you're not in?"
+                    : "Where should we leave your box if you aren't in?"
+                }
                 mask
                 withRef
                 ref={receiveRef}
@@ -51,15 +62,25 @@ class DeliveryInstruction extends React.PureComponent {
           </div>
         </div>
         {showOtherInput && (
-          <div className={classNames(css.row, css.deliveryField, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}>
-            <div className={classNames(css.colMD, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
+          <div
+            className={classNames(css.row, css.deliveryField, {
+              [css.rowRedesign]: isCheckoutOverhaulEnabled,
+            })}
+          >
+            <div
+              className={classNames(css.colMD, {
+                [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
+              })}
+            >
               <Field
                 name="deliveryInstructionsCustom"
                 component={ReduxFormInput}
                 inputType="Input"
                 required
                 color="gray"
-                label={isCheckoutOverhaulEnabled ? '' : configCheckout.leaveBoxDesc[value.toLowerCase()]}
+                label={
+                  isCheckoutOverhaulEnabled ? '' : configCheckout.leaveBoxDesc[value.toLowerCase()]
+                }
                 mask
                 withRef
                 ref={receiveRef}
@@ -90,6 +111,4 @@ DeliveryInstruction.defaultProps = {
   isCheckoutOverhaulEnabled: false,
 }
 
-export {
-  DeliveryInstruction
-}
+export { DeliveryInstruction }

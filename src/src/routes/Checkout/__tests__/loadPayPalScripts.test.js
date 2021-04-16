@@ -12,11 +12,7 @@ import {
 describe('loadPayPalScripts', () => {
   let callback = null
   let document = null
-  const scriptNames = [
-    [BRAINTREE_CLIENT],
-    [BRAINTREE_PAYPAL_CHECKOUT],
-    [BRAINTREE_DATA_COLLECTOR],
-  ]
+  const scriptNames = [[BRAINTREE_CLIENT], [BRAINTREE_PAYPAL_CHECKOUT], [BRAINTREE_DATA_COLLECTOR]]
 
   const triggerLoadEvent = (element) => {
     const event = document.createEvent('Event')
@@ -54,10 +50,9 @@ describe('loadPayPalScripts', () => {
 
   describe('should use window.document by default', () => {
     afterEach(() => {
-      window.document.querySelectorAll('script')
-        .forEach((e) => {
-          e.parentElement.removeChild(e)
-        })
+      window.document.querySelectorAll('script').forEach((e) => {
+        e.parentElement.removeChild(e)
+      })
     })
 
     test('should load scripts', () => {

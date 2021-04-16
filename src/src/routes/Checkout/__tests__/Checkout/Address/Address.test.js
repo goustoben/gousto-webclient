@@ -11,17 +11,17 @@ import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from '
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
-    data: [{id: '4'}, {id: '5'}, {id: '6'}]
-  })
+    data: [{ id: '4' }, { id: '5' }, { id: '6' }],
+  }),
 }))
 
 jest.mock('utils/deliveries', () => ({
   transformDaySlotLeadTimesToMockSlots: jest.fn().mockReturnValue([
     { id: '4', daySlotLeadTimes: [] },
     { id: '5', daySlotLeadTimes: [] },
-    { id: '6', daySlotLeadTimes: [] }
+    { id: '6', daySlotLeadTimes: [] },
   ]),
-  getAvailableDeliveryDays: jest.fn()
+  getAvailableDeliveryDays: jest.fn(),
 }))
 
 describe('Address', () => {
@@ -29,11 +29,13 @@ describe('Address', () => {
 
   beforeEach(() => {
     const selectedAddresses = Immutable.Map({})
-    wrapper = shallow(<Address
-      selectedAddress={selectedAddresses}
-      registerField={jest.fn()}
-      isNDDExperiment={false}
-    />)
+    wrapper = shallow(
+      <Address
+        selectedAddress={selectedAddresses}
+        registerField={jest.fn()}
+        isNDDExperiment={false}
+      />
+    )
   })
 
   test('should return div', () => {
@@ -47,12 +49,14 @@ describe('Address', () => {
   describe('rendering', () => {
     beforeEach(() => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = shallow(<Address
-        selectedAddress={selectedAddresses}
-        registerField={jest.fn()}
-        isNDDExperiment={false}
-      />)
-      wrapper.setState({addressSaved: false})
+      wrapper = shallow(
+        <Address
+          selectedAddress={selectedAddresses}
+          registerField={jest.fn()}
+          isNDDExperiment={false}
+        />
+      )
+      wrapper.setState({ addressSaved: false })
     })
 
     test('should render 1 <Postcode> component(s)', () => {
@@ -71,22 +75,24 @@ describe('Address', () => {
   describe('with NDD prop', () => {
     beforeEach(() => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = shallow(<Address
-        selectedAddress={selectedAddresses}
-        registerField={jest.fn()}
-        checkoutAddressLookup={jest.fn()}
-        isNDDExperiment
-        initialPostcode="NW1 8RJ"
-        deliveryDate="2019-09-01"
-        isDelivery
-        deliveryTariffId="some-uuid"
-      />)
+      wrapper = shallow(
+        <Address
+          selectedAddress={selectedAddresses}
+          registerField={jest.fn()}
+          checkoutAddressLookup={jest.fn()}
+          isNDDExperiment
+          initialPostcode="NW1 8RJ"
+          deliveryDate="2019-09-01"
+          isDelivery
+          deliveryTariffId="some-uuid"
+        />
+      )
     })
 
     describe('rendering', () => {
       beforeEach(() => {
         fetchDeliveryDays.mockClear()
-        wrapper.setState({addressSaved: false})
+        wrapper.setState({ addressSaved: false })
       })
 
       test('should render 1 <Postcode> component(s)', () => {
@@ -103,7 +109,7 @@ describe('Address', () => {
     })
 
     test('should fetch next day delivery days)', () => {
-      getAvailableDeliveryDays.mockReturnValue([{id: '5'}, {id: '6'}])
+      getAvailableDeliveryDays.mockReturnValue([{ id: '5' }, { id: '6' }])
 
       const cutOfFrom = moment().startOf('day').toISOString()
       const cutOfUntil = moment().startOf('day').add(30, 'days').toISOString()
@@ -112,12 +118,20 @@ describe('Address', () => {
       const deliveryTariffId = 'some-uuid'
 
       expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
-      expect(fetchDeliveryDays).toHaveBeenNthCalledWith(1, null, cutOfFrom, cutOfUntil, ndd, deliveryTariffId, postcode)
+      expect(fetchDeliveryDays).toHaveBeenNthCalledWith(
+        1,
+        null,
+        cutOfFrom,
+        cutOfUntil,
+        ndd,
+        deliveryTariffId,
+        postcode
+      )
       expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
       expect(getAvailableDeliveryDays).toHaveBeenCalledWith([
         { id: '4', daySlotLeadTimes: [] },
         { id: '5', daySlotLeadTimes: [] },
-        { id: '6', daySlotLeadTimes: [] }
+        { id: '6', daySlotLeadTimes: [] },
       ])
     })
   })

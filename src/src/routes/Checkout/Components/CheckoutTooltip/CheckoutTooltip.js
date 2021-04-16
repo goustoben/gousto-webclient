@@ -29,6 +29,4 @@ CheckoutTooltip.defaultProps = {
   trigger: ['click'],
 }
 
-export {
-  CheckoutTooltip
-}
+export { CheckoutTooltip }

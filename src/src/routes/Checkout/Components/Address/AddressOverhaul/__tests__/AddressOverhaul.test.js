@@ -27,7 +27,7 @@ describe('Given AddressOverhaul', () => {
   describe('When address is selected', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isAddressSelected: true
+        isAddressSelected: true,
       })
     })
 
@@ -53,7 +53,7 @@ describe('Given AddressOverhaul', () => {
   describe('When isEditingManually prop is not set', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isEditingManually: false
+        isEditingManually: false,
       })
     })
 
@@ -64,7 +64,7 @@ describe('Given AddressOverhaul', () => {
     describe('And user clicks on "Enter address manually"', () => {
       beforeEach(() => {
         wrapper.setProps({
-          onEnterAddressManuallyClick
+          onEnterAddressManuallyClick,
         })
         wrapper.find('.editAddressLink').simulate('click')
       })
@@ -78,7 +78,7 @@ describe('Given AddressOverhaul', () => {
   describe('When isEditingManually prop is set', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isEditingManually: true
+        isEditingManually: true,
       })
     })
 

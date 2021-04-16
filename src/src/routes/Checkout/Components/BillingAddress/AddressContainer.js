@@ -1,5 +1,12 @@
 import { connect } from 'react-redux'
-import { getFormSyncErrors, getFormAsyncErrors, change, untouch, touch, registerField } from 'redux-form'
+import {
+  getFormSyncErrors,
+  getFormAsyncErrors,
+  change,
+  untouch,
+  touch,
+  registerField,
+} from 'redux-form'
 import { checkoutAddressLookup } from 'actions/checkout'
 import { Address } from '../Address'
 
@@ -10,7 +17,10 @@ function mapStateToProps(state, ownProps) {
     selectedAddress: state.checkout.get('selectedBillingAddress'),
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
-    formErrors: { ...getFormSyncErrors(ownProps.formName)(state), ...getFormAsyncErrors(ownProps.formName)(state)},
+    formErrors: {
+      ...getFormSyncErrors(ownProps.formName)(state),
+      ...getFormAsyncErrors(ownProps.formName)(state),
+    },
     sectionName: ownProps.sectionName,
     addressEdited: state.checkout.get('billingAddressEdited'),
     touchPostcode: false,
@@ -25,6 +35,4 @@ const BillingAddressContainer = connect(mapStateToProps, {
   registerField,
 })(Address)
 
-export {
-  BillingAddressContainer
-}
+export { BillingAddressContainer }

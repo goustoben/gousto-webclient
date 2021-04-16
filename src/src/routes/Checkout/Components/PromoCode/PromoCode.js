@@ -79,7 +79,7 @@ class PromoCode extends PureComponent {
   promoCodeAdded = () => {
     const { promoCode, promoCodeApplied } = this.props
 
-    return (promoCode && promoCodeApplied)
+    return promoCode && promoCodeApplied
   }
 
   promoCodeValidation = () => {
@@ -95,13 +95,14 @@ class PromoCode extends PureComponent {
   handlePromoCodeVerification() {
     const { promoCode, loadPrices, trackPromocodeChange } = this.props
 
-    loadPrices().then(() => {
-      this.setState({
-        pending: false,
+    loadPrices()
+      .then(() => {
+        this.setState({
+          pending: false,
+        })
+        this.promoCodeValidation()
+        trackPromocodeChange(promoCode, true)
       })
-      this.promoCodeValidation()
-      trackPromocodeChange(promoCode, true)
-    })
       .catch((err) => {
         this.setState({
           pending: false,
@@ -123,7 +124,13 @@ class PromoCode extends PureComponent {
   }
 
   removePromoCode = () => {
-    const { promoCode, basketPromoCodeChange, basketPromoCodeAppliedChange, trackPromocodeChange, loadPrices } = this.props
+    const {
+      promoCode,
+      basketPromoCodeChange,
+      basketPromoCodeAppliedChange,
+      trackPromocodeChange,
+      loadPrices,
+    } = this.props
     const { successMsg } = this.state
     this.setState({
       pending: true,
@@ -132,12 +139,13 @@ class PromoCode extends PureComponent {
     basketPromoCodeChange('')
     basketPromoCodeAppliedChange(false)
     if (successMsg) {
-      loadPrices().then(() => {
-        this.setState({
-          pending: false,
+      loadPrices()
+        .then(() => {
+          this.setState({
+            pending: false,
+          })
+          trackPromocodeChange(promocode, false)
         })
-        trackPromocodeChange(promocode, false)
-      })
         .catch(() => {
           this.setState({
             pending: false,
@@ -145,7 +153,7 @@ class PromoCode extends PureComponent {
         })
     } else {
       this.setState({
-        pending: false
+        pending: false,
       })
     }
     this.setState({
@@ -180,10 +188,12 @@ class PromoCode extends PureComponent {
   renderMessage = () => {
     const { errorMsg } = this.state
     const { isCheckoutOverhaulEnabled } = this.props
-    const checkoutOverhaulError = isCheckoutOverhaulEnabled && errorMsg.includes('promocode')
-      ? errorMsg.replace('promocode', 'discount code') : errorMsg
+    const checkoutOverhaulError =
+      isCheckoutOverhaulEnabled && errorMsg.includes('promocode')
+        ? errorMsg.replace('promocode', 'discount code')
+        : errorMsg
     if (errorMsg) {
-      return (<p className={css.errorMsg}>{checkoutOverhaulError}</p>)
+      return <p className={css.errorMsg}>{checkoutOverhaulError}</p>
     }
 
     return null
@@ -192,12 +202,18 @@ class PromoCode extends PureComponent {
   render() {
     const { promoCode, isCheckoutOverhaulEnabled } = this.props
     const { pending } = this.state
-    const inputIcon = this.getInputClassName() === css.inputErrorRedesign
-      ? css.inputIconError : css.inputIconSuccess
+    const inputIcon =
+      this.getInputClassName() === css.inputErrorRedesign
+        ? css.inputIconError
+        : css.inputIconSuccess
 
     return (
       <div>
-        <div className={classNames(css.inputGroup, { [css.inputGroupRedesign]: isCheckoutOverhaulEnabled })}>
+        <div
+          className={classNames(css.inputGroup, {
+            [css.inputGroupRedesign]: isCheckoutOverhaulEnabled,
+          })}
+        >
           <div className={css.inputContainer}>
             {isCheckoutOverhaulEnabled && <div className={css.discountLabel}>Discount code</div>}
             <div className={css.inputWrapper}>
@@ -210,9 +226,15 @@ class PromoCode extends PureComponent {
                 onInput={this.handleInput}
                 onKeyUp={this.handleKeyUp}
                 onChange={() => {}}
-                className={classNames(this.getInputClassName(), { [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled })}
+                className={classNames(this.getInputClassName(), {
+                  [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled,
+                })}
               />
-              {isCheckoutOverhaulEnabled && <span className={classNames(css.inputIcon, inputIcon, { [css.isHidden]: !promoCode })} />}
+              {isCheckoutOverhaulEnabled && (
+                <span
+                  className={classNames(css.inputIcon, inputIcon, { [css.isHidden]: !promoCode })}
+                />
+              )}
             </div>
           </div>
           <div className={classNames(css.inputAddon, { [css.hideCTA]: isCheckoutOverhaulEnabled })}>
@@ -230,21 +252,13 @@ class PromoCode extends PureComponent {
                 onClick={this.handleButtonClick}
                 className={this.promoCodeAdded() ? css.removeButton : css.applyButton}
               >
-                {(this.promoCodeAdded()) ? <span className={css.icon} /> : 'Apply'}
+                {this.promoCodeAdded() ? <span className={css.icon} /> : 'Apply'}
               </Segment>
             </Button>
           </div>
-          {(this.promoCodeAdded()) && isCheckoutOverhaulEnabled && (
-            <div>
-              {this.renderMessage()}
-            </div>
-          )}
+          {this.promoCodeAdded() && isCheckoutOverhaulEnabled && <div>{this.renderMessage()}</div>}
         </div>
-        {(this.promoCodeAdded()) && !isCheckoutOverhaulEnabled && (
-          <div>
-            {this.renderMessage()}
-          </div>
-        )}
+        {this.promoCodeAdded() && !isCheckoutOverhaulEnabled && <div>{this.renderMessage()}</div>}
       </div>
     )
   }
@@ -253,6 +267,4 @@ class PromoCode extends PureComponent {
 PromoCode.defaultProps = defaultProps
 PromoCode.propTypes = propTypes
 
-export {
-  PromoCode
-}
+export { PromoCode }

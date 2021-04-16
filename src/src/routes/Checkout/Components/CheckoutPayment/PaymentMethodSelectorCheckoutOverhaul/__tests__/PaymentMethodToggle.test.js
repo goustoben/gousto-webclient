@@ -61,7 +61,7 @@ describe('given PaymentMethodToggle', () => {
 
     beforeEach(() => {
       wrapper.setProps({
-        methodDescriptor: methodDescriptorWithoutItemType
+        methodDescriptor: methodDescriptorWithoutItemType,
       })
     })
 

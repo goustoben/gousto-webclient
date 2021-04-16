@@ -2,9 +2,7 @@ import { getFormState } from './checkoutGeneralUtils'
 
 const PLATFORM = Cypress.env().platform.toString().toUpperCase()
 
-const getCheckoutAddressDropdown = () => (
-  cy.get('[data-testing="checkoutAddressDropdown"]')
-)
+const getCheckoutAddressDropdown = () => cy.get('[data-testing="checkoutAddressDropdown"]')
 
 export const getAllowEmail = (win) => {
   if (PLATFORM === 'WEB') {
@@ -14,21 +12,15 @@ export const getAllowEmail = (win) => {
   }
 }
 
-export const getAboutYouSyncErrors = (win) => (
-  getFormState(win).yourdetails.syncErrors.aboutyou
-)
+export const getAboutYouSyncErrors = (win) => getFormState(win).yourdetails.syncErrors.aboutyou
 
-export const getSyncErrors = (win) => (
-  getFormState(win).yourdetails.syncErrors
-)
+export const getSyncErrors = (win) => getFormState(win).yourdetails.syncErrors
 
 export const goToCheckout = () => {
   if (Cypress.env().platform === 'mobile') {
     cy.visit('/check-out/boxdetails')
     cy.wait(['@getDeliveries', '@previewOrder'])
-    cy.get('[data-testing="checkoutCTA"]')
-      .eq(0)
-      .click()
+    cy.get('[data-testing="checkoutCTA"]').eq(0).click()
   } else {
     cy.visit('/check-out/aboutyou')
     cy.wait(['@getDeliveries'])
@@ -47,7 +39,7 @@ export const goToCheckoutDeliveryDetails = () => {
     firstname: 'Joe',
     lastname: 'Tester',
     email: 'test@email.com',
-    password: '1234abcd'
+    password: '1234abcd',
   })
 
   if (Cypress.env().platform === 'web') {

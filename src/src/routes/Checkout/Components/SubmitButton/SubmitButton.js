@@ -37,10 +37,7 @@ class SubmitButton extends React.PureComponent {
 
     return (
       <div>
-        <CheckoutButton
-          stepName="Start Your Subscription"
-          onClick={this.handleClick}
-        />
+        <CheckoutButton stepName="Start Your Subscription" onClick={this.handleClick} />
         <SubscriptionTransparencyText className={css.helperText} />
         <TermsAndConditions />
       </div>

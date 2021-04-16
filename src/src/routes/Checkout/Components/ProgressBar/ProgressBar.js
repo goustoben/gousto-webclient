@@ -7,24 +7,17 @@ import Icon from 'Icon'
 import css from './ProgressBar.css'
 
 const ProgressBar = ({ currentId, items }) => {
-  const activeIndex = items && items.findIndex(item => item.id === currentId)
+  const activeIndex = items && items.findIndex((item) => item.id === currentId)
 
   return items ? (
-    <Ul
-      className={css.list}
-      d-flex
-      flex-nowrap
-    >
+    <Ul className={css.list} d-flex flex-nowrap>
       {items.map(({ id, label } = {}, index) => (
         <Li
-          className={classNames(
-            css.listItem,
-            {
-              [css.activeItem]: index === activeIndex,
-              [css.pastItem]: index < activeIndex,
-              [css.futureItem]: index > activeIndex,
-            },
-          )}
+          className={classNames(css.listItem, {
+            [css.activeItem]: index === activeIndex,
+            [css.pastItem]: index < activeIndex,
+            [css.futureItem]: index > activeIndex,
+          })}
           d-block
           key={id}
           font-weight-bold
@@ -34,12 +27,7 @@ const ProgressBar = ({ currentId, items }) => {
           text-uppercase
           w-100
         >
-          <Div
-            className={css.content}
-            d-block
-            text-truncate
-            w-100
-          >
+          <Div className={css.content} d-block text-truncate w-100>
             <Span
               className={classNames(css.number, css.text)}
               padding={{
@@ -47,9 +35,7 @@ const ProgressBar = ({ currentId, items }) => {
                 right: 'XXS',
               }}
             >
-              {index < activeIndex
-                ? <Icon name="fa-check" />
-                : (index + 1)}
+              {index < activeIndex ? <Icon name="fa-check" /> : index + 1}
             </Span>
             <Span
               className={css.text}
@@ -62,10 +48,7 @@ const ProgressBar = ({ currentId, items }) => {
               {label}
             </Span>
           </Div>
-          <Div
-            absolute
-            className={css.arrow}
-          />
+          <Div absolute className={css.arrow} />
         </Li>
       ))}
     </Ul>
@@ -73,19 +56,13 @@ const ProgressBar = ({ currentId, items }) => {
 }
 
 ProgressBar.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  currentId: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  currentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 }
 
-export {
-  ProgressBar
-}
+export { ProgressBar }

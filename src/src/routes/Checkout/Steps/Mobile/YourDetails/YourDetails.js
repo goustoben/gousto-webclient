@@ -9,8 +9,14 @@ import { formContainer } from '../../../Components/formContainer'
 import { CheckoutButton } from '../../../Components/CheckoutButton'
 import { SectionContainer } from '../SectionContainer'
 
-import { AboutYouContainer, addInitialValues as aboutYouAddInitialValues } from '../../../Components/AboutYou'
-import DeliveryContainer, { addInitialValues as deliveryAddInitialValues, validationMessages as deliveryValidationMessages } from '../../../Components/Delivery'
+import {
+  AboutYouContainer,
+  addInitialValues as aboutYouAddInitialValues,
+} from '../../../Components/AboutYou'
+import DeliveryContainer, {
+  addInitialValues as deliveryAddInitialValues,
+  validationMessages as deliveryValidationMessages,
+} from '../../../Components/Delivery'
 
 const aboutYouSectionName = 'aboutyou'
 const AboutYouSection = AboutYouContainer(aboutYouSectionName)
@@ -30,7 +36,8 @@ export const YourDetailsStep = ({
   trackClick,
   trackUTMAndPromoCode,
 }) => {
-  const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
+  const isAddressConfirmed =
+    formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = (btnPosition) => () => {
     if (checkoutValid) {
       userProspect()
@@ -83,23 +90,27 @@ YourDetailsStep.defaultProps = {
   browser: '',
   formValues: {},
   nextStepName: '',
-  userProspect: () => { },
-  receiveRef: () => { },
-  scrollToFirstMatchingRef: () => { },
-  trackClick: () => { },
+  userProspect: () => {},
+  receiveRef: () => {},
+  scrollToFirstMatchingRef: () => {},
+  trackClick: () => {},
   checkoutValid: false,
-  trackUTMAndPromoCode: () => { },
+  trackUTMAndPromoCode: () => {},
 }
 
-const validationRules = [
-  userRules(aboutYouSectionName),
-  delivery(deliverySectionName),
-]
+const validationRules = [userRules(aboutYouSectionName), delivery(deliverySectionName)]
 
-let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'yourdetails', deliveryValidationMessages(deliverySectionName), {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
+// eslint-disable-next-line import/no-mutable-exports
+let YourDetailsForm = formContainer(
+  YourDetailsStep,
+  validationRules,
+  'yourdetails',
+  deliveryValidationMessages(deliverySectionName),
+  {},
+  userAsyncValidation,
+  ['aboutyou.password']
+)
 YourDetailsForm = aboutYouAddInitialValues(YourDetailsForm, { sectionName: aboutYouSectionName })
 YourDetailsForm = deliveryAddInitialValues(YourDetailsForm, { sectionName: deliverySectionName })
 
-export {
-  YourDetailsForm
-}
+export { YourDetailsForm }

@@ -47,14 +47,14 @@ class AboutYou extends PureComponent {
         onClick={onLoginClick}
         onKeyDown={onEnter(onLoginClick)}
       >
-        {isCheckoutOverhaulEnabled
-          ? 'Log in'
-          : (
-            <Fragment>
-              Log in here&nbsp;
-              <span className={css.arrowRight} />
-            </Fragment>
-          )}
+        {isCheckoutOverhaulEnabled ? (
+          'Log in'
+        ) : (
+          <Fragment>
+            Log in here&nbsp;
+            <span className={css.arrowRight} />
+          </Fragment>
+        )}
       </span>
     )
 
@@ -82,7 +82,7 @@ class AboutYou extends PureComponent {
 
   togglePasswordVisibility = () => {
     this.setState((prevStatus) => ({
-      isPassVisible: !prevStatus.isPassVisible
+      isPassVisible: !prevStatus.isPassVisible,
     }))
   }
 
@@ -99,16 +99,29 @@ class AboutYou extends PureComponent {
   }
 
   renderFields = () => {
-    const { isCheckoutOverhaulEnabled, sectionName, receiveRef, isPassStrengthEnabled, passwordErrors, passwordValue, isMobile } = this.props
+    const {
+      isCheckoutOverhaulEnabled,
+      sectionName,
+      receiveRef,
+      isPassStrengthEnabled,
+      passwordErrors,
+      passwordValue,
+      isMobile,
+    } = this.props
     const { isPassVisible, isPassCriteriaVisible, showFailedCriteria } = this.state
     const passState = {
       isPassStrengthEnabled,
       isPassVisible,
-      togglePasswordVisibility: this.togglePasswordVisibility
+      togglePasswordVisibility: this.togglePasswordVisibility,
     }
-    const fields = fieldsConfig({ isCheckoutOverhaulEnabled, loginCTA: this.renderLoginButton, sectionName, passState })
+    const fields = fieldsConfig({
+      isCheckoutOverhaulEnabled,
+      loginCTA: this.renderLoginButton,
+      sectionName,
+      passState,
+    })
 
-    return fields.map(item => {
+    return fields.map((item) => {
       const isPasswordField = isPassStrengthEnabled && item.name === 'password'
 
       return (
@@ -116,7 +129,11 @@ class AboutYou extends PureComponent {
           key={item.name}
           className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}
         >
-          <div className={classNames(css.colHalf, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
+          <div
+            className={classNames(css.colHalf, {
+              [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
+            })}
+          >
             <Field
               name={item.name}
               component={ReduxFormInput}
@@ -167,14 +184,16 @@ class AboutYou extends PureComponent {
       <FormSection name={sectionName}>
         <div
           className={classNames(css.aboutYouContainer, {
-            [redesignCss.sectionRedesignContainer]: isCheckoutOverhaulEnabled
+            [redesignCss.sectionRedesignContainer]: isCheckoutOverhaulEnabled,
           })}
           data-testing="checkoutAboutYouSection"
         >
           <div>
-            {isCheckoutOverhaulEnabled
-              ? <SectionHeader title="Create account" />
-              : <h3 className={css.header}>About you</h3>}
+            {isCheckoutOverhaulEnabled ? (
+              <SectionHeader title="Create account" />
+            ) : (
+              <h3 className={css.header}>About you</h3>
+            )}
             {!isCheckoutOverhaulEnabled && (
               <Fragment>
                 <span className={css.boldInfo}>All fields are required</span>
@@ -219,7 +238,7 @@ class AboutYou extends PureComponent {
             <CheckoutButton
               onClick={this.handleSubmit}
               submitting={submitting}
-              isDisabled={(!email || !password)}
+              isDisabled={!email || !password}
               stepName="Continue to Delivery"
             />
           )}
@@ -251,13 +270,13 @@ AboutYou.propTypes = {
 }
 
 AboutYou.defaultProps = {
-  clearErrors: () => { },
+  clearErrors: () => {},
   sectionName: 'aboutyou',
-  receiveRef: () => { },
+  receiveRef: () => {},
   isCheckoutOverhaulEnabled: false,
-  submit: () => { },
-  userProspect: () => { },
-  trackUTMAndPromoCode: () => { },
+  submit: () => {},
+  userProspect: () => {},
+  trackUTMAndPromoCode: () => {},
   submitting: false,
   createAccountValues: {},
   onLoginClick: () => {},

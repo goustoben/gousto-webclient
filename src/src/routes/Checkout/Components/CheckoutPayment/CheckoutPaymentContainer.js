@@ -5,7 +5,7 @@ import {
   trackingOrderPlaceAttemptSucceeded,
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,
-  setCurrentPaymentMethod
+  setCurrentPaymentMethod,
 } from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
 import {
@@ -15,7 +15,11 @@ import {
   getIsCheckoutOverhaulV3Enabled,
   getIsCheckoutOverhaulV4Enabled,
 } from 'selectors/features'
-import { getCurrentPaymentMethod, getCanSubmitPaymentDetails, isPayPalReady } from 'selectors/payment'
+import {
+  getCurrentPaymentMethod,
+  getCanSubmitPaymentDetails,
+  isPayPalReady,
+} from 'selectors/payment'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
@@ -24,7 +28,7 @@ import { CheckoutPayment } from './CheckoutPayment'
 const mapStateToProps = (state) => ({
   formErrors: {
     ...getFormSyncErrors(sectionName)(state),
-    ...getFormAsyncErrors(sectionName)(state)
+    ...getFormAsyncErrors(sectionName)(state),
   },
   is3DSEnabled: getIs3DSForSignUpEnabled(state),
   isRecaptchaEnabled: getIsRecaptchaEnabled(state),

@@ -17,8 +17,7 @@ class DeliveryAddressType extends React.PureComponent {
     }
   }
 
-  shouldShowOtherInput = chosenValue =>
-    chosenValue.toLowerCase() === 'other'
+  shouldShowOtherInput = (chosenValue) => chosenValue.toLowerCase() === 'other'
 
   render() {
     const { value, receiveRef, sectionName } = this.props
@@ -79,6 +78,4 @@ DeliveryAddressType.defaultProps = {
   sectionName: 'delivery',
 }
 
-export {
-  DeliveryAddressType
-}
+export { DeliveryAddressType }

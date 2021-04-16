@@ -3,42 +3,42 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 
 .container {
-	composes: textBold from 'styles/typography.css';
-	position: relative;
-	padding: SpacingLG;
-	background-color: BluecheeseLight;
-	min-height: inherit;
+  composes: textBold from 'styles/typography.css';
+  position: relative;
+  padding: SpacingLG;
+  background-color: BluecheeseLight;
+  min-height: inherit;
 }
 
 .loading {
-	position: absolute;
-	display: flex;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	justify-content: center;
-	align-items: center;
-	background-color: #FFFFFFBB;
-	pointer-events: none;
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffffbb;
+  pointer-events: none;
 }
 
 .wrapper > div {
-	width: 50%;
+  width: 50%;
 }
 
 .row {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .recaptchaContainer {
-	display: inline-block;
+  display: inline-block;
 }
 
 .hide {
-	display: none;
+  display: none;
 }
 
 .checkoutOverhaulContainer {

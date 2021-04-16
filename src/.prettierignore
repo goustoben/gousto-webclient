@@ -8,6 +8,7 @@
 **/*.scss
 **/*.md
 
+!src/routes/Checkout/**/*
 !src/routes/Home/**/*
 !src/routes/Payment/**/*
 !src/routes/Signup/**/*

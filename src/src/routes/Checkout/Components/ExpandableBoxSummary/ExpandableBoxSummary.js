@@ -6,7 +6,13 @@ import { HeaderContent } from './HeaderContent/HeaderContent'
 
 import css from './ExpandableBoxSummary.css'
 
-export const ExpandableBoxSummary = ({ children, totalToPay, totalWithoutDiscount, trackUTMAndPromoCode, promoCodeValid }) => {
+export const ExpandableBoxSummary = ({
+  children,
+  totalToPay,
+  totalWithoutDiscount,
+  trackUTMAndPromoCode,
+  promoCodeValid,
+}) => {
   const sendSnowplowEvent = (isExpanded) => {
     trackUTMAndPromoCode(isExpanded ? checkoutClickHideOrderSummary : checkoutClickShowOrderSummary)
   }

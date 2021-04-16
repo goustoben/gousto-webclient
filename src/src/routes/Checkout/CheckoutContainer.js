@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { changeRecaptcha } from 'actions/auth'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
-import { fetchPayPalClientToken, trackCheckoutButtonPressed, clearPayPalClientToken } from 'actions/checkout'
+import {
+  fetchPayPalClientToken,
+  trackCheckoutButtonPressed,
+  clearPayPalClientToken,
+} from 'actions/checkout'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { Checkout } from './Checkout'

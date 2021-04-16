@@ -13,7 +13,7 @@ class RecipeSummary extends React.PureComponent {
   componentDidMount() {
     const { menuRecipesStore, recipes } = this.props
     if (menuRecipesStore && menuRecipesStore.size === 0) {
-      const {store} = this.context
+      const { store } = this.context
       const orderRecipeIds = recipes && recipes.size ? recipes.keySeq().toArray() : []
       RecipeSummary.fetchData({ store, orderRecipeIds })
     }
@@ -29,27 +29,35 @@ class RecipeSummary extends React.PureComponent {
       view,
       isCheckoutOverhaulEnabled,
     } = this.props
-    const prices = menuBoxPrices.getIn([numPortions.toString(), (basketSum(recipes).toString()), 'gourmet'], Immutable.Map({}))
+    const prices = menuBoxPrices.getIn(
+      [numPortions.toString(), basketSum(recipes).toString(), 'gourmet'],
+      Immutable.Map({})
+    )
 
     return (
       <div data-testing="checkoutRecipeSummary">
-        {recipes.map((serving, recipeId) => (
-          <OrderedRecipes
-            key={recipeId}
-            recipeId={recipeId}
-            view={view}
-            featureBtn={false}
-            serving={numPortions * recipes.get(recipeId, 0)}
-            title={menuRecipesStore.getIn([recipeId, 'title'], '')}
-            basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
-            stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
-            media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
-            isFineDineIn={menuRecipesStore.getIn([recipeId, 'isFineDineIn'], false)}
-            pricePerServing={Number(prices.get('pricePerPortion', 0))}
-            pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
-            isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
-          />
-        )).toArray()}
+        {recipes
+          .map((serving, recipeId) => (
+            <OrderedRecipes
+              key={recipeId}
+              recipeId={recipeId}
+              view={view}
+              featureBtn={false}
+              serving={numPortions * recipes.get(recipeId, 0)}
+              title={menuRecipesStore.getIn([recipeId, 'title'], '')}
+              basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
+              stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
+              media={menuRecipesStore.getIn(
+                [recipeId, 'media', 'images', 0, 'urls'],
+                Immutable.List([])
+              )}
+              isFineDineIn={menuRecipesStore.getIn([recipeId, 'isFineDineIn'], false)}
+              pricePerServing={Number(prices.get('pricePerPortion', 0))}
+              pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
+              isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
+            />
+          ))
+          .toArray()}
       </div>
     )
   }
@@ -79,6 +87,4 @@ RecipeSummary.contextTypes = {
   store: PropTypes.objectOf(PropTypes.object).isRequired,
 }
 
-export {
-  RecipeSummary
-}
+export { RecipeSummary }

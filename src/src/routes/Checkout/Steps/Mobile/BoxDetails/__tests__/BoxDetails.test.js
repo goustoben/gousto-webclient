@@ -11,7 +11,7 @@ describe('BoxDetails', () => {
   const props = {
     onStepChange,
     trackClick,
-    trackUTMAndPromoCode
+    trackUTMAndPromoCode,
   }
 
   beforeEach(() => {
@@ -34,7 +34,7 @@ describe('BoxDetails', () => {
 
     test('should dispatch trackUTMAndPromoCode actions with proper parameters', () => {
       expect(onStepChange).toBeCalled()
-      expect(trackClick).toHaveBeenCalledWith('NextCTA Clicked', {position: 'first'})
+      expect(trackClick).toHaveBeenCalledWith('NextCTA Clicked', { position: 'first' })
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith('clickCheckoutSecurely', 'top')
     })
   })

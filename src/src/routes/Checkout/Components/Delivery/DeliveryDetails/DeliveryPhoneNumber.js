@@ -11,7 +11,7 @@ class DeliveryPhoneNumber extends React.PureComponent {
    * object containing pressed keys
    * @type {{}}
    */
-  keys = {};
+  keys = {}
 
   constructor(props) {
     super(props)
@@ -25,34 +25,37 @@ class DeliveryPhoneNumber extends React.PureComponent {
    * except for 'a', 'c', 'v', 'x', 'y', 'z'
    * @param keyCode
    */
-  isForbiddenLetter = keyCode => (keyCode === 66 || (keyCode >= 68 && keyCode <= 85) || keyCode === 87)
+  isForbiddenLetter = (keyCode) =>
+    keyCode === 66 || (keyCode >= 68 && keyCode <= 85) || keyCode === 87
 
   /**
    * 'a', 'c', 'v', 'x', 'y', 'z'
    * @param keyCode
    */
-  isAllowedLetter = keyCode => (keyCode === 65 || keyCode === 67 || keyCode === 86 || (keyCode >= 88 && keyCode <= 90))
+  isAllowedLetter = (keyCode) =>
+    keyCode === 65 || keyCode === 67 || keyCode === 86 || (keyCode >= 88 && keyCode <= 90)
 
   /**
    * space, semi-colon, equal sign, comma, dash, period, forward slash, grave accent, open bracket, back slash, close bracket, single quote
    * @param keyCode
    */
-  isForbiddenCharacter = keyCode => (keyCode === 32 || (keyCode >= 186 && keyCode <= 192) || (keyCode >= 219 && keyCode <= 222))
+  isForbiddenCharacter = (keyCode) =>
+    keyCode === 32 || (keyCode >= 186 && keyCode <= 192) || (keyCode >= 219 && keyCode <= 222)
 
-  isDigit = keyCode => ((keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105))
+  isDigit = (keyCode) => (keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105)
 
-  isZero = keyCode => [48, 96].includes(keyCode)
+  isZero = (keyCode) => [48, 96].includes(keyCode)
 
-  isBackspace = keyCode => (keyCode === 8)
+  isBackspace = (keyCode) => keyCode === 8
 
-  isCtrlMeta = event => (event.ctrlKey || event.metaKey)
+  isCtrlMeta = (event) => event.ctrlKey || event.metaKey
 
-  isShiftAlt = event => (event.shiftKey || event.altKey)
+  isShiftAlt = (event) => event.shiftKey || event.altKey
 
   handleKeyDown = (event) => {
     if (!event || !event.target) return
     const input = event.target
-    const {keyCode} = event
+    const { keyCode } = event
 
     if (!this.keys[keyCode]) {
       this.keys[keyCode] = event
@@ -63,7 +66,7 @@ class DeliveryPhoneNumber extends React.PureComponent {
     /**
      * cursor at the beginning of the input
      */
-    if ((!event.target.selectionStart || !input.value)) {
+    if (!event.target.selectionStart || !input.value) {
       if (this.isZero(keyCode)) {
         this.setState({ addZero: true })
         event.preventDefault()
@@ -72,9 +75,12 @@ class DeliveryPhoneNumber extends React.PureComponent {
       }
     }
 
-    if ((this.isForbiddenLetter(keyCode) || this.isForbiddenCharacter(keyCode))
-      || (!keysArray.find(this.isCtrlMeta) && this.isAllowedLetter(keyCode))
-      || (keysArray.find(this.isShiftAlt) && this.isDigit(keyCode))) {
+    if (
+      this.isForbiddenLetter(keyCode) ||
+      this.isForbiddenCharacter(keyCode) ||
+      (!keysArray.find(this.isCtrlMeta) && this.isAllowedLetter(keyCode)) ||
+      (keysArray.find(this.isShiftAlt) && this.isDigit(keyCode))
+    ) {
       event.preventDefault()
     }
   }
@@ -83,9 +89,7 @@ class DeliveryPhoneNumber extends React.PureComponent {
     const { receiveRef, sectionName, isCheckoutOverhaulEnabled } = this.props
     let inputPrefix
     if (isCheckoutOverhaulEnabled) {
-      inputPrefix = (
-        <span className={css.phonePrefixRedesign}>+44(0)</span>
-      )
+      inputPrefix = <span className={css.phonePrefixRedesign}>+44(0)</span>
     } else {
       const { addZero } = this.state
       inputPrefix = (
@@ -97,9 +101,17 @@ class DeliveryPhoneNumber extends React.PureComponent {
     }
 
     return (
-      <div className={classNames(css.deliveryFieldWrapper, { [css.deliveryFieldWrapperRedesign]: isCheckoutOverhaulEnabled })}>
+      <div
+        className={classNames(css.deliveryFieldWrapper, {
+          [css.deliveryFieldWrapperRedesign]: isCheckoutOverhaulEnabled,
+        })}
+      >
         <div className={classNames(css.row, { [css.rowRedesign]: isCheckoutOverhaulEnabled })}>
-          <div className={classNames(css.colMDhalf, { [redesignCss.inputContainer]: isCheckoutOverhaulEnabled })}>
+          <div
+            className={classNames(css.colMDhalf, {
+              [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
+            })}
+          >
             <Field
               name="phone"
               component={ReduxFormInput}
@@ -109,7 +121,11 @@ class DeliveryPhoneNumber extends React.PureComponent {
               required
               onKeyDown={this.handleKeyDown}
               color="gray"
-              subLabel={isCheckoutOverhaulEnabled ? 'Used to update you on your delivery' : 'For account queries'}
+              subLabel={
+                isCheckoutOverhaulEnabled
+                  ? 'Used to update you on your delivery'
+                  : 'For account queries'
+              }
               label="Phone number"
               mask
               withRef
@@ -137,6 +153,4 @@ DeliveryPhoneNumber.defaultProps = {
   isCheckoutOverhaulEnabled: false,
 }
 
-export {
-  DeliveryPhoneNumber
-}
+export { DeliveryPhoneNumber }

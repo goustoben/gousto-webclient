@@ -22,10 +22,10 @@ describe('Billing Address', () => {
       form: {
         payment: {
           values: {
-            payment: {isBillingAddressDifferent: true}
-          }
-        }
-      }
+            payment: { isBillingAddressDifferent: true },
+          },
+        },
+      },
     }
 
     getState = jest.fn().mockReturnValue(store)
@@ -40,7 +40,7 @@ describe('Billing Address', () => {
       },
     }
 
-    deliveryAddress = {houseNo: '', street: '', town: '', postcode: ''}
+    deliveryAddress = { houseNo: '', street: '', town: '', postcode: '' }
     form = 'payment'
     sectionName = 'payment'
     change = jest.fn()
@@ -68,7 +68,7 @@ describe('Billing Address', () => {
     describe('when "isBillingAddressDifferent" is true', () => {
       beforeEach(() => {
         const formValues = {
-          payment: {isBillingAddressDifferent: true}
+          payment: { isBillingAddressDifferent: true },
         }
 
         wrapper = shallow(
@@ -98,7 +98,7 @@ describe('Billing Address', () => {
     describe('when "isBillingAddressDifferent" is false', () => {
       beforeEach(() => {
         const formValues = {
-          payment: {isBillingAddressDifferent: false}
+          payment: { isBillingAddressDifferent: false },
         }
 
         wrapper = shallow(
@@ -129,7 +129,7 @@ describe('Billing Address', () => {
   describe('toggle delivery address', () => {
     beforeEach(() => {
       const formValues = {
-        payment: {isBillingAddressDifferent: false}
+        payment: { isBillingAddressDifferent: false },
       }
 
       wrapper = shallow(
@@ -158,7 +158,7 @@ describe('Billing Address', () => {
       wrapper.setProps({
         isCheckoutOverhaulEnabled: true,
         formValues: {
-          payment: { isBillingAddressDifferent: false }
+          payment: { isBillingAddressDifferent: false },
         },
       })
     })

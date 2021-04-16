@@ -22,30 +22,10 @@ describe('AddressInputs', () => {
 
   describe('sensitive data masking', () => {
     test('all <TextInput /> component(s) should have prop "mask"', () => {
-      expect(
-        wrapper
-          .find(TextInput)
-          .at(0)
-          .prop('mask'),
-      ).toBe(true)
-      expect(
-        wrapper
-          .find(TextInput)
-          .at(1)
-          .prop('mask'),
-      ).toBe(true)
-      expect(
-        wrapper
-          .find(TextInput)
-          .at(2)
-          .prop('mask'),
-      ).toBe(true)
-      expect(
-        wrapper
-          .find(TextInput)
-          .at(3)
-          .prop('mask'),
-      ).toBe(true)
+      expect(wrapper.find(TextInput).at(0).prop('mask')).toBe(true)
+      expect(wrapper.find(TextInput).at(1).prop('mask')).toBe(true)
+      expect(wrapper.find(TextInput).at(2).prop('mask')).toBe(true)
+      expect(wrapper.find(TextInput).at(3).prop('mask')).toBe(true)
     })
   })
 })

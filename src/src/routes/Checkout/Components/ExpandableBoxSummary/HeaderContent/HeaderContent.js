@@ -8,7 +8,13 @@ import css from './HeaderContent.css'
 
 const poundSign = String.fromCharCode(163)
 
-export const HeaderContent = ({ isExpanded, handleClick, totalWithoutDiscount, totalToPay, promoCodeValid }) => (
+export const HeaderContent = ({
+  isExpanded,
+  handleClick,
+  totalWithoutDiscount,
+  totalToPay,
+  promoCodeValid,
+}) => (
   <div
     className={classNames(css.toggleHeader, { [css.hideBottomBorder]: isExpanded })}
     role="button"
@@ -55,4 +61,3 @@ HeaderContent.defaultProps = {
   totalWithoutDiscount: '',
   promoCodeValid: false,
 }
-

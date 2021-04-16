@@ -10,20 +10,24 @@ import * as stateUtils from 'routes/Checkout/utils/state'
 import { AboutYou } from './AboutYou'
 
 export function mapStateToProps(sectionName) {
-  return state => {
+  return (state) => {
     const formName = state.form.aboutyou || state.form.yourdetails
 
-    return ({
+    return {
       sectionName,
       loginPending: state.pending && state.pending.get(actionTypes.USER_LOGIN),
       isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
       submitting: stateUtils.isSubmitting(state),
       createAccountValues: state.form.aboutyou && state.form.aboutyou.values.aboutyou,
       isPassStrengthEnabled: getIsPassStrengthEnabled(state),
-      passwordErrors: formName && formName.syncErrors && formName.syncErrors.aboutyou && formName.syncErrors.aboutyou.password,
+      passwordErrors:
+        formName &&
+        formName.syncErrors &&
+        formName.syncErrors.aboutyou &&
+        formName.syncErrors.aboutyou.password,
       passwordValue: formName && formName.values.aboutyou && formName.values.aboutyou.password,
       isMobile: state.request.get('browser') === 'mobile',
-    })
+    }
   }
 }
 
@@ -40,26 +44,24 @@ const mapDispatchToProps = {
   trackUTMAndPromoCode,
 }
 
-export const AboutYouContainer = sectionName => connectComponent(sectionName)
+export const AboutYouContainer = (sectionName) => connectComponent(sectionName)
 
 export function addInitialValues(Component, { sectionName }) {
-  return connect(
-    (state, ownProps) => {
-      const formName = getAboutYouFormName(state)
-      const aboutyou = state.form[formName]
-      const initialValues = aboutyou && aboutyou.initial ? aboutyou.initial : {}
+  return connect((state, ownProps) => {
+    const formName = getAboutYouFormName(state)
+    const aboutyou = state.form[formName]
+    const initialValues = aboutyou && aboutyou.initial ? aboutyou.initial : {}
 
-      return {
-        checkoutValid: isValid(formName)(state),
-        initialValues: {
-          ...ownProps.initialValues,
-          ...initialValues,
-          [sectionName]: {
-            title: 'miss',
-            allowEmail: true,
-          },
+    return {
+      checkoutValid: isValid(formName)(state),
+      initialValues: {
+        ...ownProps.initialValues,
+        ...initialValues,
+        [sectionName]: {
+          title: 'miss',
+          allowEmail: true,
         },
-      }
-    },
-    mapDispatchToProps)(Component)
+      },
+    }
+  }, mapDispatchToProps)(Component)
 }

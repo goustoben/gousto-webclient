@@ -53,8 +53,8 @@ class CheckoutFrame extends React.Component {
       }
 
       if (
-        hasPropUpdated(cardName, prevProps.cardName)
-        || hasPropUpdated(billingAddress, prevProps.billingAddress)
+        hasPropUpdated(cardName, prevProps.cardName) ||
+        hasPropUpdated(billingAddress, prevProps.billingAddress)
       ) {
         Frames.cardholder = this.getCardholderDetails()
       }
@@ -71,7 +71,14 @@ class CheckoutFrame extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { isStartSubscriptionSubmitted } = nextProps
-    const { showCardNumberError, showCVVError, showExpiryDateError, isCardNumberEmpty, isExpiryEmpty, isCVVEmpty } = prevState
+    const {
+      showCardNumberError,
+      showCVVError,
+      showExpiryDateError,
+      isCardNumberEmpty,
+      isExpiryEmpty,
+      isCVVEmpty,
+    } = prevState
     if (prevState.isStartSubscriptionSubmitted !== isStartSubscriptionSubmitted) {
       return {
         showCardNumberError: isCardNumberEmpty || showCardNumberError,
@@ -118,16 +125,16 @@ class CheckoutFrame extends React.Component {
     const { element, isValid, isEmpty } = event
 
     switch (element) {
-    case 'card-number':
-      newState = { showCardNumberError: !isValid, isCardNumberEmpty: isEmpty }
-      break
-    case 'expiry-date':
-      newState = { showExpiryDateError: !isValid, isExpiryEmpty: isEmpty }
-      break
-    case 'cvv':
-      newState = { showCVVError: !isValid, isCVVEmpty: isEmpty }
-      break
-    default:
+      case 'card-number':
+        newState = { showCardNumberError: !isValid, isCardNumberEmpty: isEmpty }
+        break
+      case 'expiry-date':
+        newState = { showExpiryDateError: !isValid, isExpiryEmpty: isEmpty }
+        break
+      case 'cvv':
+        newState = { showCVVError: !isValid, isCVVEmpty: isEmpty }
+        break
+      default:
     }
 
     this.setState(newState)
@@ -261,14 +268,12 @@ class CheckoutFrame extends React.Component {
           </div>
           <div className={css.row}>
             <FrameField
-              header={(
+              header={
                 <div>
                   Expiry
-                  <br className={css.forceLineBreakOnSmallScreens} />
-                  {' '}
-                  (MM/YY)
+                  <br className={css.forceLineBreakOnSmallScreens} /> (MM/YY)
                 </div>
-              )}
+              }
               dataFrames="expiryDate"
               errorDataTesting="checkoutFrameExpiryError"
               showError={showExpiryDateError}

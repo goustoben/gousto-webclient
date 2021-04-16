@@ -41,12 +41,20 @@ class Checkout3DSModal extends PureComponent {
           disableOverlay
           showCloseButton={false}
         >
-          <h4 className={css.heading}>
-            Card verification
-          </h4>
+          <h4 className={css.heading}>Card verification</h4>
           <div className={css.modalContent}>
-            <p>You&apos;re almost there, Your bank will now verify your card details. If you&apos;re experiencing difficulties, please contact your bank.</p>
-            {showIframe && <iframe src={challengeURL} onLoad={this.onIframeLoad} className={css.frame} title="3DS frame" />}
+            <p>
+              You&apos;re almost there, Your bank will now verify your card details. If you&apos;re
+              experiencing difficulties, please contact your bank.
+            </p>
+            {showIframe && (
+              <iframe
+                src={challengeURL}
+                onLoad={this.onIframeLoad}
+                className={css.frame}
+                title="3DS frame"
+              />
+            )}
           </div>
         </ModalPanel>
       </Overlay>

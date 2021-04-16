@@ -10,10 +10,7 @@ describe('Postcode', () => {
   const postcodeTemp = 'W3 7UP'
 
   beforeEach(() => {
-    wrapper = shallow(<Postcode
-      onPostcodeLookup={onPostcodeLookup}
-      postcodeTemp={postcodeTemp}
-    />)
+    wrapper = shallow(<Postcode onPostcodeLookup={onPostcodeLookup} postcodeTemp={postcodeTemp} />)
   })
 
   describe('When Postcode component is mounted', () => {
@@ -44,14 +41,9 @@ describe('Postcode', () => {
             { id: 1, labels: [] },
             { id: 2, labels: [] },
           ])}
-        />,
+        />
       )
-      expect(
-        wrapper
-          .find(Field)
-          .at(0)
-          .prop('mask'),
-      ).toEqual(true)
+      expect(wrapper.find(Field).at(0).prop('mask')).toEqual(true)
     })
   })
 })

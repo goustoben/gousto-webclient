@@ -1,18 +1,23 @@
-import {
-  goToPayment,
-  fillAllIframe
-} from './pageUtils/checkout/checkoutPayment'
+import { goToPayment, fillAllIframe } from './pageUtils/checkout/checkoutPayment'
 
 describe("Given I'm a logged out user who has made a mistake in the first steps of checkout", () => {
   before(() => {
     cy.setCookie('v1_goustoStateStore_basket_postcode', '"W37UP"')
     cy.server()
     cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
-    cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+    cy.route(
+      'GET',
+      '/userbucketing/v1/user/experiments',
+      'fixture:userbucketing/userbucketing.json'
+    ).as('getExperiments')
     cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
     cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
-    cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
-    cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as('getIntervals')
+    cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as(
+      'getDeliveries'
+    )
+    cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as(
+      'getIntervals'
+    )
     cy.route('GET', '/customers/v1/customers/reference', 'fixture:customers/reference.json')
     cy.route('GET', '/customers/v1/customers/promocode', 'fixture:customers/promocode.json')
     cy.route('POST', '/customers/v2/signup', 'fixture:customers/signupError.json').as('signupError')
@@ -22,7 +27,9 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
     cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
     cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
     cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
-    cy.route('GET', 'address/postcode-lookup**', 'fixture:address/postcodeLookup.json').as('getAddresses')
+    cy.route('GET', 'address/postcode-lookup**', 'fixture:address/postcodeLookup.json').as(
+      'getAddresses'
+    )
     cy.mockDate()
     goToPayment()
   })
@@ -34,10 +41,9 @@ describe("Given I'm a logged out user who has made a mistake in the first steps 
         fillAllIframe({
           number: '4485 0403 7153 6584',
           expiry: '0550',
-          cvv: '100'
+          cvv: '100',
         })
-        cy.get('[data-testing="checkoutCTA"]')
-          .click()
+        cy.get('[data-testing="checkoutCTA"]').click()
       })
 
       it('Then the button will be disabled and I will see the correct error', () => {

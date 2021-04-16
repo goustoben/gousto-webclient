@@ -6,13 +6,13 @@
 @value inputHeight: 41px;
 
 .inputContainer {
-	composes: flex column flexGrow center from 'styles/flex.css';
+  composes: flex column flexGrow center from 'styles/flex.css';
 }
 
 .inputGroup {
-	composes: flex from 'styles/flex.css';
-	composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
-	width: 100%;
+  composes: flex from 'styles/flex.css';
+  composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
+  width: 100%;
 }
 
 .inputGroupRedesign {
@@ -25,7 +25,7 @@
 }
 
 .inputAddon {
-	composes: flex column from 'styles/flex.css';
+  composes: flex column from 'styles/flex.css';
 }
 
 .hideCTA {
@@ -33,14 +33,14 @@
 }
 
 .inputBase {
-	composes: input from 'styles/forms.css';
-	height: inputHeight;
+  composes: input from 'styles/forms.css';
+  height: inputHeight;
 }
 
 .input {
-	composes: inputBase;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
+  composes: inputBase;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .inputRedesign {
@@ -53,8 +53,8 @@
 }
 
 .inputError {
-	composes: inputBase;
-	composes: inputError from 'styles/forms.css';
+  composes: inputBase;
+  composes: inputError from 'styles/forms.css';
 }
 
 .inputErrorRedesign {
@@ -67,9 +67,9 @@
 }
 
 .inputSuccess {
-	composes: inputBase;
-	color: successColor !important;
-	composes: inputSuccess from 'styles/forms.css';
+  composes: inputBase;
+  color: successColor !important;
+  composes: inputSuccess from 'styles/forms.css';
 }
 
 .inputSuccessRedesign {
@@ -97,11 +97,13 @@
 }
 
 .inputIconSuccess {
-  background: url('routes/Checkout/Components/PromoCode/icon-success-tick.svg') center center / contain no-repeat;
+  background: url('routes/Checkout/Components/PromoCode/icon-success-tick.svg') center center /
+    contain no-repeat;
 }
 
 .inputIconError {
-  background: url('routes/Checkout/Components/PromoCode/icon-error-red.svg') center center / contain no-repeat;
+  background: url('routes/Checkout/Components/PromoCode/icon-error-red.svg') center center / contain
+    no-repeat;
 }
 
 .isHidden {
@@ -109,37 +111,37 @@
 }
 
 .applyButton {
-	cursor: pointer;
-	composes: paddingXSTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	border-top-right-radius: RadiusSM;
-	border-bottom-right-radius: RadiusSM;
-	border-bottom-width: 0;
-	max-height: none;
-	height: inputHeight;
-	line-height: inputHeight;
+  cursor: pointer;
+  composes: paddingXSTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  border-top-right-radius: RadiusSM;
+  border-bottom-right-radius: RadiusSM;
+  border-bottom-width: 0;
+  max-height: none;
+  height: inputHeight;
+  line-height: inputHeight;
 }
 
 .buttonContainer {
-	border: 0;
+  border: 0;
 }
 
 .removeButton {
-	composes: applyButton;
-	font-size: sizeXL;
+  composes: applyButton;
+  font-size: sizeXL;
 }
 
 .buttonRemove {
-	border-width: 0;
+  border-width: 0;
 }
 
 .icon {
-	composes:fa-basic-class  fa-times from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
 }
 
 .successMsg {
-	composes: msg from 'styles/forms.css'
+  composes: msg from 'styles/forms.css';
 }
 
 .errorMsg {
-	composes: errorMsg from 'styles/forms.css'
+  composes: errorMsg from 'styles/forms.css';
 }

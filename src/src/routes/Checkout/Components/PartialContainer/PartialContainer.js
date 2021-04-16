@@ -6,11 +6,7 @@ class PartialContainer extends React.PureComponent {
   render() {
     const { visible, children } = this.props
 
-    return (
-      <div className={css.container}>
-        {visible && children}
-      </div>
-    )
+    return <div className={css.container}>{visible && children}</div>
   }
 }
 
@@ -19,6 +15,4 @@ PartialContainer.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export {
-  PartialContainer
-}
+export { PartialContainer }

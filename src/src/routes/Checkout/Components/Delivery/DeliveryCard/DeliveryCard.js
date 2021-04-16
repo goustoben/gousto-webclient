@@ -13,10 +13,7 @@ const DeliveryCard = ({ iconName, children }) => (
 
 DeliveryCard.propTypes = {
   iconName: PropTypes.string.isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.node,
-  ]).isRequired
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 }
 
 export { DeliveryCard }

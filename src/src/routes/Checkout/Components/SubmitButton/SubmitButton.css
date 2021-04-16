@@ -2,20 +2,20 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.module.css';
 
 .helperText {
-	text-align: center;
-	padding: 1rem 0.625rem 0.625rem;
-	font-size: 1rem;
+  text-align: center;
+  padding: 1rem 0.625rem 0.625rem;
+  font-size: 1rem;
 }
 
 .helperHighlighted {
-	color: Haricot;
-	font-weight: bold;
+  color: Haricot;
+  font-weight: bold;
 }
 
 .tick {
-	composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
-	color: HaricotMedium;
-	font-size: 1.25rem;
+  composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+  color: HaricotMedium;
+  font-size: 1.25rem;
 }
 
 .checkoutOverhaulContainer {

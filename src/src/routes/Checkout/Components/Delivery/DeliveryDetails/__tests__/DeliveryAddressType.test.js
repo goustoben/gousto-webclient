@@ -27,12 +27,7 @@ describe('DeliveryAddressType', () => {
 
       test('should show an extra input with prop "mask"', () => {
         expect(wrapper.find(Field)).toHaveLength(2)
-        expect(
-          wrapper
-            .find(Field)
-            .at(1)
-            .prop('mask'),
-        ).toBe(true)
+        expect(wrapper.find(Field).at(1).prop('mask')).toBe(true)
       })
     })
 

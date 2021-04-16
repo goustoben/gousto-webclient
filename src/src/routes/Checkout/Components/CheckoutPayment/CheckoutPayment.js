@@ -70,13 +70,13 @@ class CheckoutPayment extends React.Component {
 
   enableCardSubmission = () => {
     this.setState({
-      isSubmitCardEnabled: true
+      isSubmitCardEnabled: true,
     })
   }
 
   disableCardSubmission = () => {
     this.setState({
-      isSubmitCardEnabled: false
+      isSubmitCardEnabled: false,
     })
   }
 
@@ -184,10 +184,7 @@ class CheckoutPayment extends React.Component {
 
     return (
       <div className={prerender ? css.hide : ''}>
-        <div
-          className={css.container}
-          data-testing="checkoutPaymentSection"
-        >
+        <div className={css.container} data-testing="checkoutPaymentSection">
           <PaymentMethodSelector
             currentPaymentMethod={currentPaymentMethod}
             onPaymentMethodChanged={setCurrentPaymentMethod}
@@ -284,10 +281,11 @@ class CheckoutPayment extends React.Component {
     const isCard = currentPaymentMethod === PaymentMethod.Card
 
     return (
-      <div className={classNames({
-        [css.hide]: isCard || isPayPalReady,
-        [css.paypalSetupBox]: !isCard && !isPayPalReady,
-      })}
+      <div
+        className={classNames({
+          [css.hide]: isCard || isPayPalReady,
+          [css.paypalSetupBox]: !isCard && !isPayPalReady,
+        })}
       >
         <Svg fileName="icon-checkout-lock" className={css.padlockIcon} />
         <div className={css.paypalSetupInfo}>
@@ -299,14 +297,13 @@ class CheckoutPayment extends React.Component {
 
   renderStartYourSubscriptionButton = () => {
     const { isPayPalReady, currentPaymentMethod } = this.props
-    const isDisabled = currentPaymentMethod === PaymentMethod.PayPal ? !isPayPalReady : this.getSubmitButtonIsDisabledForCardPayment()
+    const isDisabled =
+      currentPaymentMethod === PaymentMethod.PayPal
+        ? !isPayPalReady
+        : this.getSubmitButtonIsDisabledForCardPayment()
 
     return (
-      <SubmitButton
-        onClick={this.handleClick}
-        isCheckoutOverhaulEnabled
-        isDisabled={isDisabled}
-      />
+      <SubmitButton onClick={this.handleClick} isCheckoutOverhaulEnabled isDisabled={isDisabled} />
     )
   }
 
@@ -323,15 +320,9 @@ class CheckoutPayment extends React.Component {
   }
 
   renderOuterContent() {
-    const {
-      currentPaymentMethod,
-      isPayPalReady,
-      prerender,
-    } = this.props
+    const { currentPaymentMethod, isPayPalReady, prerender } = this.props
 
-    const showSubmitButton = currentPaymentMethod === PaymentMethod.Card
-      ? true
-      : isPayPalReady
+    const showSubmitButton = currentPaymentMethod === PaymentMethod.Card ? true : isPayPalReady
 
     return (
       <div className={classNames({ [css.hide]: prerender })}>
@@ -355,7 +346,15 @@ class CheckoutPayment extends React.Component {
   }
 
   renderExperimentVariation = () => {
-    const { prerender, isPayPalReady, is3DSEnabled, currentPaymentMethod, setCurrentPaymentMethod, isV1Enabled, isV3Enabled } = this.props
+    const {
+      prerender,
+      isPayPalReady,
+      is3DSEnabled,
+      currentPaymentMethod,
+      setCurrentPaymentMethod,
+      isV1Enabled,
+      isV3Enabled,
+    } = this.props
     const isNoLockInVisible = isV1Enabled || isV3Enabled
 
     return (

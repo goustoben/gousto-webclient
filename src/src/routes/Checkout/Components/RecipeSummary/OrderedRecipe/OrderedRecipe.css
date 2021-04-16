@@ -21,13 +21,13 @@
 }
 
 p {
-	margin-bottom: SpacingXS;
+  margin-bottom: SpacingXS;
 }
 
 .boxdetailsImg {
-	width: imgLarge;
-	height: imgLarge;
-	border-radius: 100%;
+  width: imgLarge;
+  height: imgLarge;
+  border-radius: 100%;
 }
 
 .redesignImg {
@@ -42,56 +42,56 @@ p {
 }
 
 .summaryImg {
-	width: imgSmall;
-	height: imgSmall;
-	border-radius: 100%;
+  width: imgSmall;
+  height: imgSmall;
+  border-radius: 100%;
 }
 
 .heading {
-	color: Parsley;
+  color: Parsley;
 }
 
 .link {
-	color: Bluecheese;
+  color: Bluecheese;
 
-	&:hover {
-		color: Blueberry;
-		cursor: pointer;
-		text-decoration: underline;
-	}
+  &:hover {
+    color: Blueberry;
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .basics {
-	composes: textSM from 'styles/typography.css';
+  composes: textSM from 'styles/typography.css';
 }
 
 .arrowRight {
-	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 }
 
 .detailsRow {
-	width: 100%;
+  width: 100%;
 }
 
-.fineDineIn{
-	background: Bronze;
-	color: Blackberry;
-	font-size: 12px;
-	display: inline-block;
-	border-radius: 4px;
-	padding: 2px 5px;
-	line-height: 18px;
-	margin: 2px 0;
-	vertical-align: middle;
+.fineDineIn {
+  background: Bronze;
+  color: Blackberry;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 4px;
+  padding: 2px 5px;
+  line-height: 18px;
+  margin: 2px 0;
+  vertical-align: middle;
 }
 
 .recipeContainer {
-	composes: flex rowWrap from 'styles/flex.css';
-	composes: marginLGLeft from 'sass-loader!styles/spacing.scss';
-	width: calc(100% - 90px);
-	@media ScreenSMMin {
-		flex-flow: row;
-	}
+  composes: flex rowWrap from 'styles/flex.css';
+  composes: marginLGLeft from 'sass-loader!styles/spacing.scss';
+  width: calc(100% - 90px);
+  @media ScreenSMMin {
+    flex-flow: row;
+  }
 }
 
 .redesignRecipeContainer {
@@ -99,28 +99,29 @@ p {
 }
 
 .boxdetailsFlex {
-	composes: row spaceBetween from 'styles/flex.css';
+  composes: row spaceBetween from 'styles/flex.css';
 }
 
 .summaryFlex {
-	composes: column flexStart from 'styles/flex.css';
-	margin-top: 0;
+  composes: column flexStart from 'styles/flex.css';
+  margin-top: 0;
 }
 
-.recipeSubContainer, .receipeName {
-	composes: flex from 'styles/flex.css';
-	flex: 1 100%;
+.recipeSubContainer,
+.receipeName {
+  composes: flex from 'styles/flex.css';
+  flex: 1 100%;
 }
 
 .staplesContainer {
-	@media ScreenSMMin {
-		flex: 1 100%;
-	}
+  @media ScreenSMMin {
+    flex: 1 100%;
+  }
 }
 
 .details {
-	composes: noMargin from 'sass-loader!styles/spacing.scss';
-	flex: 1 100%;
+  composes: noMargin from 'sass-loader!styles/spacing.scss';
+  flex: 1 100%;
 }
 
 .detailsRedesign {
@@ -128,16 +129,16 @@ p {
 }
 
 .recipeName {
-	composes: column from 'styles/flex.css';
-	align-content: flex-start;
+  composes: column from 'styles/flex.css';
+  align-content: flex-start;
   display: flex;
-	@media ScreenSMMin {
-		flex: 3 0;
-	}
+  @media ScreenSMMin {
+    flex: 3 0;
+  }
 }
 
 .textBold {
-	composes: textBold from 'styles/typography.css';
+  composes: textBold from 'styles/typography.css';
 }
 
 .redesignRecipeName {
@@ -145,16 +146,16 @@ p {
 }
 
 .textSM {
-	composes: textSM from 'styles/typography.css';
+  composes: textSM from 'styles/typography.css';
 }
 
 .container {
-	composes: row from 'sass-loader!styles/bootstrap.scss';
-	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	composes: noWrap from 'styles/flex.css';
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  composes: noWrap from 'styles/flex.css';
 }
 
 .strike {
-	composes: textStrike from 'styles/typography.css';
-	composes: paddingSMRight paddingSMRight from 'sass-loader!styles/spacing.scss';
+  composes: textStrike from 'styles/typography.css';
+  composes: paddingSMRight paddingSMRight from 'sass-loader!styles/spacing.scss';
 }

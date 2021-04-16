@@ -25,12 +25,12 @@ describe('CheckoutFrame', () => {
       init: jest.fn(),
       submitCard: jest.fn(() => Promise.resolve({})),
       addCardToken: jest.fn(),
-      enableSubmitForm: jest.fn()
+      enableSubmitForm: jest.fn(),
     }
 
     Object.defineProperty(Frames, 'cardholder', {
       get: cardholderGetter,
-      set: cardholderSetter
+      set: cardholderSetter,
     })
 
     global.Frames = Frames
@@ -102,7 +102,7 @@ describe('CheckoutFrame', () => {
                 addressLine2: expect.any(String),
                 city: expect.any(String),
                 zip: expect.any(String),
-              }
+              },
             },
           }
 
@@ -255,9 +255,7 @@ describe('CheckoutFrame', () => {
       const reloadCheckoutScript = jest.fn()
 
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame
-          reloadCheckoutScript={reloadCheckoutScript}
-        />)
+        wrapper = mount(<CheckoutFrame reloadCheckoutScript={reloadCheckoutScript} />)
         wrapper.unmount()
       })
 
@@ -373,9 +371,7 @@ describe('CheckoutFrame', () => {
       const checkoutClearErrors = jest.fn()
 
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame
-          checkoutClearErrors={checkoutClearErrors}
-        />)
+        wrapper = mount(<CheckoutFrame checkoutClearErrors={checkoutClearErrors} />)
       })
 
       it('should clear checkout.com errors', () => {
@@ -389,17 +385,19 @@ describe('CheckoutFrame', () => {
   describe('card tokenized', () => {
     describe('when card token is ready', () => {
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame
-          change={change}
-          formName="payment"
-          sectionName="payment"
-          cardTokenReady={cardTokenReady}
-          trackingCardTokenizationSuccessfully={trackingCardTokenizationSuccessfully}
-          fireCheckoutPendingEvent={fireCheckoutPendingEvent}
-        />)
+        wrapper = mount(
+          <CheckoutFrame
+            change={change}
+            formName="payment"
+            sectionName="payment"
+            cardTokenReady={cardTokenReady}
+            trackingCardTokenizationSuccessfully={trackingCardTokenizationSuccessfully}
+            fireCheckoutPendingEvent={fireCheckoutPendingEvent}
+          />
+        )
 
         const mockEvent = {
-          token: 'test-token'
+          token: 'test-token',
         }
         wrapper.instance().cardTokenized(mockEvent)
       })
@@ -407,12 +405,15 @@ describe('CheckoutFrame', () => {
       it('should call Frames.addCardToken', () => {
         expect(Frames.addCardToken).toHaveBeenCalledWith(
           wrapper.instance().paymentForm,
-          'test-token',
+          'test-token'
         )
       })
 
       it('should call fireCheckoutPendingEvent', () => {
-        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_CARD_SUBMIT,
+          false
+        )
       })
 
       it('should call change with the correct parameters', () => {
@@ -431,11 +432,13 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenizationFailed', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame
-        fireCheckoutError={fireCheckoutError}
-        trackingCardTokenizationFailed={trackingCardTokenizationFailed}
-        fireCheckoutPendingEvent={fireCheckoutPendingEvent}
-      />)
+      wrapper = mount(
+        <CheckoutFrame
+          fireCheckoutError={fireCheckoutError}
+          trackingCardTokenizationFailed={trackingCardTokenizationFailed}
+          fireCheckoutPendingEvent={fireCheckoutPendingEvent}
+        />
+      )
     })
 
     describe('when no error code in the event', () => {
@@ -443,7 +446,7 @@ describe('CheckoutFrame', () => {
         data: {
           errorCode: '',
           message: '',
-        }
+        },
       }
 
       beforeEach(() => {
@@ -455,7 +458,10 @@ describe('CheckoutFrame', () => {
       })
 
       it('should call fireCheckoutPendingEvent', () => {
-        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_CARD_SUBMIT,
+          false
+        )
       })
 
       it('should call trackingCardTokenizationFailed with correct error message', () => {
@@ -468,7 +474,7 @@ describe('CheckoutFrame', () => {
         data: {
           errorCode: '82031',
           message: 'card tokenization failure',
-        }
+        },
       }
 
       beforeEach(() => {
@@ -480,7 +486,10 @@ describe('CheckoutFrame', () => {
       })
 
       it('should call fireCheckoutPendingEvent', () => {
-        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_CARD_SUBMIT,
+          false
+        )
       })
 
       it('should call trackingCardTokenizationFailed with correct error message', () => {
@@ -514,7 +523,10 @@ describe('CheckoutFrame', () => {
       })
 
       it('should call fireCheckoutPendingEvent once', () => {
-        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, true)
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_CARD_SUBMIT,
+          true
+        )
       })
 
       it('should call disableCardSubmission', () => {
@@ -539,8 +551,14 @@ describe('CheckoutFrame', () => {
       })
 
       it('should call fireCheckoutPendingEvent twice', () => {
-        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, true)
-        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_CARD_SUBMIT,
+          true
+        )
+        expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
+          actionTypes.CHECKOUT_CARD_SUBMIT,
+          false
+        )
       })
 
       it('should call disableCardSubmission', () => {
@@ -584,7 +602,7 @@ describe('CheckoutFrame', () => {
       wrapper = mount(<CheckoutFrame checkoutScriptReady={false} />)
       wrapper.instance().initFrames = initFrames
       wrapper.setProps({
-        checkoutScriptReady: true
+        checkoutScriptReady: true,
       })
     })
 
@@ -599,12 +617,14 @@ describe('CheckoutFrame', () => {
     })
 
     test('then wrapper state should be updated properly', () => {
-      expect(wrapper.state()).toEqual(expect.objectContaining({
-        showCardNumberError: true,
-        showExpiryDateError: true,
-        showCVVError: true,
-        isStartSubscriptionSubmitted: true,
-      }))
+      expect(wrapper.state()).toEqual(
+        expect.objectContaining({
+          showCardNumberError: true,
+          showExpiryDateError: true,
+          showCVVError: true,
+          isStartSubscriptionSubmitted: true,
+        })
+      )
     })
   })
 })

@@ -21,11 +21,19 @@ export const PasswordCriteria = ({ passwordErrors, password, showFailedCriteria 
   <div className={css.criteriaContainer}>
     <div className={css.criteriaTitle}>Password requirements:</div>
     <ul className={css.errorsList}>
-      {passwordCriteria(password).map(error => {
-        const className = typeof passwordErrors === 'string' && passwordErrors ? css.defaultMessage : getCriteriaClass(error.type, passwordErrors)
-        const errorClassName = showFailedCriteria && className === css.defaultMessage ? css.error : ''
+      {passwordCriteria(password).map((error) => {
+        const className =
+          typeof passwordErrors === 'string' && passwordErrors
+            ? css.defaultMessage
+            : getCriteriaClass(error.type, passwordErrors)
+        const errorClassName =
+          showFailedCriteria && className === css.defaultMessage ? css.error : ''
 
-        return <li key={error.type} className={classNames(css.message, className, errorClassName)}>{error.text}</li>
+        return (
+          <li key={error.type} className={classNames(css.message, className, errorClassName)}>
+            {error.text}
+          </li>
+        )
       })}
     </ul>
   </div>

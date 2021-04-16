@@ -24,7 +24,7 @@ describe('PaymentFooter', () => {
   describe('when isNoLockInVisible is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isNoLockInVisible: true
+        isNoLockInVisible: true,
       })
     })
 

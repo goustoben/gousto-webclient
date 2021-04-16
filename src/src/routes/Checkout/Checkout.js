@@ -59,7 +59,7 @@ const checkoutOverhaulStepMapping = {
 
 const propTypes = {
   params: PropTypes.shape({
-    stepName: PropTypes.string
+    stepName: PropTypes.string,
   }),
   browser: PropTypes.string,
   redirect: PropTypes.func,
@@ -69,7 +69,7 @@ const propTypes = {
   query: PropTypes.shape({
     // Not sure how to fix it, so suppressing for now to have clean output.
     // eslint-disable-next-line react/forbid-prop-types
-    steps: PropTypes.array
+    steps: PropTypes.array,
   }),
   loadPrices: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
@@ -90,13 +90,13 @@ const propTypes = {
 const defaultProps = {
   params: {},
   browser: 'desktop',
-  redirect: () => { },
+  redirect: () => {},
   changeRecaptcha: () => {},
   submitOrder: () => {},
   trackSignupStep: () => {},
   tariffId: '',
   query: {
-    steps: []
+    steps: [],
   },
   loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
@@ -115,7 +115,7 @@ const defaultProps = {
 
 const contextTypes = {
   store: PropTypes.shape({
-    getState: PropTypes.func.isRequired
+    getState: PropTypes.func.isRequired,
   }),
 }
 
@@ -137,7 +137,11 @@ class Checkout extends PureComponent {
     // defensive code to ensure menu load days works below for deeplinks
     await store.dispatch(loadMenuServiceDataIfDeepLinked())
 
-    if (!store.getState().boxSummaryDeliveryDays || (typeof store.getState().boxSummaryDeliveryDays === 'object' && store.getState().boxSummaryDeliveryDays.size === 0)) {
+    if (
+      !store.getState().boxSummaryDeliveryDays ||
+      (typeof store.getState().boxSummaryDeliveryDays === 'object' &&
+        store.getState().boxSummaryDeliveryDays.size === 0)
+    ) {
       await store.dispatch(actions.menuLoadDays())
       await store.dispatch(boxSummaryDeliveryDaysLoad())
     }
@@ -154,26 +158,31 @@ class Checkout extends PureComponent {
 
     // If the preview order didn't create successfully, then we redirect the user
     // back to the menu saying that he's basket is expired.
-    const previewOrderError = store.getState().error.get(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false)
+    const previewOrderError = store
+      .getState()
+      .error.get(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false)
     const errorName = getPreviewOrderErrorName(previewOrderError)
 
     if (previewOrderError || !store.getState().basket.get('previewOrderId')) {
-      logger.warning(`Preview order id failed to create, persistent basket might be expired, error: ${errorName}`)
+      logger.warning(
+        `Preview order id failed to create, persistent basket might be expired, error: ${errorName}`
+      )
 
-      return store.dispatch(actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true))
+      return store.dispatch(
+        actions.redirect(`${routesConfig.client.menu}?from=newcheckout&error=${errorName}`, true)
+      )
     }
 
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())
     }
 
-    return store.dispatch(actions.pricingRequest())
-      .catch((err) => {
-        if (__SERVER__) {
-          logger.error({ message: 'Failed to fetch prices.', errors: [err] })
-          store.dispatch(actions.redirect(routesConfig.client.menu, true))
-        }
-      })
+    return store.dispatch(actions.pricingRequest()).catch((err) => {
+      if (__SERVER__) {
+        logger.error({ message: 'Failed to fetch prices.', errors: [err] })
+        store.dispatch(actions.redirect(routesConfig.client.menu, true))
+      }
+    })
   }
 
   constructor(state, props) {
@@ -187,16 +196,25 @@ class Checkout extends PureComponent {
 
   componentDidMount() {
     const { store } = this.context
-    const { query = {}, params = {}, browser, trackSignupStep, changeRecaptcha, isCheckoutOverhaulEnabled } = this.props
+    const {
+      query = {},
+      params = {},
+      browser,
+      trackSignupStep,
+      changeRecaptcha,
+      isCheckoutOverhaulEnabled,
+    } = this.props
     const { paypalScriptsReady } = this.state
 
-    Checkout.fetchData({ store, query, params, browser, isCheckoutOverhaulEnabled }).then(() => {
-      trackSignupStep(1)
-    }).then(() => {
-      this.setState({
-        isCreatingPreviewOrder: false,
+    Checkout.fetchData({ store, query, params, browser, isCheckoutOverhaulEnabled })
+      .then(() => {
+        trackSignupStep(1)
       })
-    })
+      .then(() => {
+        this.setState({
+          isCreatingPreviewOrder: false,
+        })
+      })
     loadCheckoutScript(() => {
       this.setState({
         checkoutScriptReady: true,
@@ -235,7 +253,7 @@ class Checkout extends PureComponent {
     })
   }
 
-  isLastStep = (steps, currentStep) => Boolean(steps.indexOf(currentStep) === (steps.length - 1))
+  isLastStep = (steps, currentStep) => Boolean(steps.indexOf(currentStep) === steps.length - 1)
 
   getNextStep = (steps, currentStep) => {
     const index = steps.indexOf(currentStep)
@@ -274,7 +292,7 @@ class Checkout extends PureComponent {
     const { browser, submitOrder, trackUTMAndPromoCode, isCheckoutOverhaulEnabled } = this.props
     const { checkoutScriptReady, paypalScriptsReady } = this.state
     const step = stepMapping[currentStep]
-    const isCheckoutPaymentStep = (currentStep === 'payment')
+    const isCheckoutPaymentStep = currentStep === 'payment'
     const props = {
       trackClick: this.trackClick,
       onStepChange: this.onStepChange(steps, currentStep),
@@ -292,7 +310,7 @@ class Checkout extends PureComponent {
 
     let element = <div />
 
-    if (step && (!isCheckoutPaymentStep)) {
+    if (step && !isCheckoutPaymentStep) {
       element = React.createElement(step.component, props)
     }
 
@@ -301,7 +319,7 @@ class Checkout extends PureComponent {
 
   renderStaticPayment = (stepMapping, steps, currentStep) => {
     const { browser, submitOrder } = this.props
-    const onPaymentStep = (currentStep === 'payment')
+    const onPaymentStep = currentStep === 'payment'
     const { checkoutScriptReady, paypalScriptsReady } = this.state
 
     return (
@@ -320,7 +338,9 @@ class Checkout extends PureComponent {
   }
 
   renderMobileSteps = () => {
-    const { params: { stepName } } = this.props
+    const {
+      params: { stepName },
+    } = this.props
 
     return (
       <Div>
@@ -346,17 +366,22 @@ class Checkout extends PureComponent {
   }
 
   renderDesktopSteps = () => {
-    const { params: { stepName }, isCheckoutOverhaulEnabled } = this.props
+    const {
+      params: { stepName },
+      isCheckoutOverhaulEnabled,
+    } = this.props
     const stepMapping = isCheckoutOverhaulEnabled ? checkoutOverhaulStepMapping : desktopStepMapping
     const steps = isCheckoutOverhaulEnabled ? checkoutOverhaulSteps : defaultDesktop
 
     return (
-      <Div className={classNames(
-        css.rowCheckout,
-        { [css.rowCheckoutRedesign]: isCheckoutOverhaulEnabled }
-      )}
+      <Div
+        className={classNames(css.rowCheckout, {
+          [css.rowCheckoutRedesign]: isCheckoutOverhaulEnabled,
+        })}
       >
-        <Div className={classNames(css.section, { [css.sectionRedesign]: isCheckoutOverhaulEnabled })}>
+        <Div
+          className={classNames(css.section, { [css.sectionRedesign]: isCheckoutOverhaulEnabled })}
+        >
           {!isCheckoutOverhaulEnabled && this.renderProgressBar(stepMapping, steps, stepName)}
           {this.renderSteps(stepMapping, steps, stepName)}
           {this.renderStaticPayment(stepMapping, steps, stepName)}
@@ -382,20 +407,15 @@ class Checkout extends PureComponent {
 
     return (
       <Div margin={{ bottom: isCheckoutOverhaulEnabled ? 0 : 'MD' }}>
-        {isCheckoutOverhaulEnabled
-          ? (
-            <Breadcrumbs
-              currentId={currentStep || 'account'}
-              items={progressSteps}
-              trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
-            />
-          )
-          : (
-            <ProgressBar
-              currentId={currentStep}
-              items={progressSteps}
-            />
-          )}
+        {isCheckoutOverhaulEnabled ? (
+          <Breadcrumbs
+            currentId={currentStep || 'account'}
+            items={progressSteps}
+            trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
+          />
+        ) : (
+          <ProgressBar currentId={currentStep} items={progressSteps} />
+        )}
       </Div>
     )
   }
@@ -439,11 +459,7 @@ class Checkout extends PureComponent {
     const { isLoginOpen } = this.props
 
     return (
-      <Overlay
-        open={isLoginOpen}
-        contentClassName={css.modalOverlay}
-        from="top"
-      >
+      <Overlay open={isLoginOpen} contentClassName={css.modalOverlay} from="top">
         <ModalPanel
           closePortal={this.handleLoginClose}
           className={css.modal}
@@ -458,15 +474,24 @@ class Checkout extends PureComponent {
   }
 
   render() {
-    const { browser, isCheckoutOverhaulEnabled, params: { stepName }, prices, trackUTMAndPromoCode } = this.props
-    const renderSteps = browser === 'mobile' && !isCheckoutOverhaulEnabled ? this.renderMobileSteps : this.renderDesktopSteps
+    const {
+      browser,
+      isCheckoutOverhaulEnabled,
+      params: { stepName },
+      prices,
+      trackUTMAndPromoCode,
+    } = this.props
+    const renderSteps =
+      browser === 'mobile' && !isCheckoutOverhaulEnabled
+        ? this.renderMobileSteps
+        : this.renderDesktopSteps
 
     return (
       <Div data-testing="checkoutContainer">
-        <Div className={classNames(
-          css.checkoutContent,
-          { [css.checkoutContentRedesign]: isCheckoutOverhaulEnabled }
-        )}
+        <Div
+          className={classNames(css.checkoutContent, {
+            [css.checkoutContentRedesign]: isCheckoutOverhaulEnabled,
+          })}
         >
           {isCheckoutOverhaulEnabled && (
             <Fragment>

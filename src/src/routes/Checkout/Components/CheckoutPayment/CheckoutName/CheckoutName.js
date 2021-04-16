@@ -10,9 +10,7 @@ export const CheckoutName = ({ sectionName, receiveRef, isCheckoutOverhaulEnable
   if (isCheckoutOverhaulEnabled) {
     return (
       <FormSection name={sectionName}>
-        <div
-          className={css.checkoutOverhaulContainer}
-        >
+        <div className={css.checkoutOverhaulContainer}>
           <Field
             name="cardName"
             component={ReduxFormInput}
@@ -31,9 +29,7 @@ export const CheckoutName = ({ sectionName, receiveRef, isCheckoutOverhaulEnable
   } else {
     return (
       <FormSection name={sectionName}>
-        <div
-          className={css.wrapper}
-        >
+        <div className={css.wrapper}>
           <p className={css.cardDetails}>Card details</p>
           <Field
             name="cardName"
@@ -59,6 +55,6 @@ CheckoutName.propTypes = {
   isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
-CheckoutName.propTypes = {
+CheckoutName.defaultProps = {
   isCheckoutOverhaulEnabled: false,
 }

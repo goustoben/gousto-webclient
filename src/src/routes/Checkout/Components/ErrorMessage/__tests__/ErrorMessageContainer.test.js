@@ -10,27 +10,27 @@ describe('ErrorMessageContainer', () => {
     features: Immutable.Map({
       isCheckoutOverhaulEnabled: Immutable.Map({
         value: true,
-      })
+      }),
     }),
   }
 
   const store = {
     getState: jest.fn(() => initialState),
     dispatch: jest.fn(),
-    subscribe: jest.fn()
+    subscribe: jest.fn(),
   }
 
   beforeEach(() => {
-    wrapper = shallow(
-      <ErrorMessageContainer store={store} errorType="user-exists" />,
-    )
+    wrapper = shallow(<ErrorMessageContainer store={store} errorType="user-exists" />)
   })
 
   describe('when ErrorMessageContainer is rendered with explicit errorType', () => {
     test('then should pass down this errorType', () => {
-      expect(wrapper.props()).toEqual(expect.objectContaining({
-        errorType: 'user-exists',
-      }))
+      expect(wrapper.props()).toEqual(
+        expect.objectContaining({
+          errorType: 'user-exists',
+        })
+      )
     })
   })
 })

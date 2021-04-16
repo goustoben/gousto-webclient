@@ -19,16 +19,16 @@ describe('Given mapStateToProps', () => {
         aboutyou: {
           syncErrors: {
             aboutyou: {
-              password: ['error']
-            }
+              password: ['error'],
+            },
           },
           values: {
             aboutyou: {
-              password: 'qwerty'
-            }
-          }
-        }
-      })
+              password: 'qwerty',
+            },
+          },
+        },
+      }),
     }
 
     beforeEach(() => {

@@ -15,25 +15,10 @@ const DeliveryInfo = ({ deliveryDate, cutOffDate, frequency }) => {
         <Svg fileName="icon-frequency" className={css.iconFrequency} />
         <div className={css.iconFrequencyDescription}>
           <p className={css.iconFrequencyText}>
-            Your
-            {' '}
-            {frequency}
-            {' '}
-            Gousto box will arrive on
-            {' '}
-            {deliveryDay}
-            s. You can edit your orders until midday on
-            {' '}
-            {cutOffDay}
-            {' '}
-            each
-            {' '}
-            {frequency.replace('ly', '')}
-            , and make changes to your
-            {' '}
-            {frequency}
-            {' '}
-            subscription at any time.
+            Your {frequency} Gousto box will arrive on {deliveryDay}
+            s. You can edit your orders until midday on {cutOffDay} each{' '}
+            {frequency.replace('ly', '')}, and make changes to your {frequency} subscription at any
+            time.
           </p>
         </div>
       </div>
@@ -53,6 +38,4 @@ DeliveryInfo.defaultProps = {
   frequency: 'weekly',
 }
 
-export {
-  DeliveryInfo
-}
+export { DeliveryInfo }

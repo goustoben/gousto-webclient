@@ -6,9 +6,7 @@ describe('SectionHeader', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = mount(
-      <SectionHeader title="title" />
-    )
+    wrapper = mount(<SectionHeader title="title" />)
   })
 
   test('should render correctly', () => {

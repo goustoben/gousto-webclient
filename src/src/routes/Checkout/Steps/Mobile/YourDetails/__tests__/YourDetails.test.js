@@ -18,9 +18,9 @@ describe('YourDetailsStep', () => {
     stepName: '',
     formValues: {
       delivery: {
-        confirmed: true
-      }
-    }
+        confirmed: true,
+      },
+    },
   }
 
   beforeEach(() => {

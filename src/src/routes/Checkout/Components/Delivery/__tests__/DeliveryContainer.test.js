@@ -11,13 +11,13 @@ jest.mock('redux-form', () => ({
       addressId: 'placeholder',
       addressType: 'home',
       addressesFetched: false,
-    }
+    },
   })),
   submit: jest.fn(),
   getFormMeta: jest.fn(() => () => ({
     delivery: {
       postcodeTemp: { touched: true },
-    }
+    },
   })),
   change: jest.fn(),
 }))
@@ -55,7 +55,7 @@ describe('Given mapStateToProps', () => {
         slotId: '',
       }),
       features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: false }
+        isCheckoutOverhaulEnabled: { value: false },
       }),
       error: Immutable.Map({
         BOXSUMMARY_DELIVERY_DAYS_RECEIVE: false,
@@ -65,9 +65,9 @@ describe('Given mapStateToProps', () => {
       }),
       form: Immutable.fromJS({
         yourdetails: {
-          syncErrors: ['error']
-        }
-      })
+          syncErrors: ['error'],
+        },
+      }),
     }
 
     beforeEach(() => {
@@ -77,7 +77,7 @@ describe('Given mapStateToProps', () => {
     test('Then should return proper values', () => {
       const expected = {
         sectionName: 'delivery',
-        isCheckoutOverhaulEnabled: false
+        isCheckoutOverhaulEnabled: false,
       }
       expect(output).toEqual(expect.objectContaining(expected))
     })
@@ -100,7 +100,7 @@ describe('Given getInitialValues', () => {
         phone: '',
       }),
       features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: false }
+        isCheckoutOverhaulEnabled: { value: false },
       }),
     }
 
@@ -114,7 +114,7 @@ describe('Given getInitialValues', () => {
           ...commonProps,
           deliveryInstruction: 'Front Porch',
           phone: '',
-        }
+        },
       }
       expect(output).toEqual(expect.objectContaining(expected))
     })
@@ -127,7 +127,7 @@ describe('Given getInitialValues', () => {
         phone: '123',
       }),
       features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: true }
+        isCheckoutOverhaulEnabled: { value: true },
       }),
     }
 
@@ -143,7 +143,7 @@ describe('Given getInitialValues', () => {
           phone: '123',
           firstName: '',
           lastName: '',
-        }
+        },
       }
       expect(output).toEqual(expect.objectContaining(expected))
     })

@@ -62,7 +62,12 @@ export class Delivery extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { formValues } = this.props
-    if (globals.client && this.container && deliveryUtils.isAddressConfirmed(formValues) !== deliveryUtils.isAddressConfirmed(nextProps.formValues)) {
+    if (
+      globals.client &&
+      this.container &&
+      deliveryUtils.isAddressConfirmed(formValues) !==
+        deliveryUtils.isAddressConfirmed(nextProps.formValues)
+    ) {
       scrollIntoView(this.container, {
         align: {
           topOffset: 30,
@@ -77,7 +82,18 @@ export class Delivery extends React.PureComponent {
   }
 
   renderAddress = () => {
-    const { asyncValidate, formName, sectionName, formValues, triggerSubmit, receiveRef, scrollToFirstMatchingRef, isCheckoutOverhaulEnabled, submit, aboutYouErrors } = this.props
+    const {
+      asyncValidate,
+      formName,
+      sectionName,
+      formValues,
+      triggerSubmit,
+      receiveRef,
+      scrollToFirstMatchingRef,
+      isCheckoutOverhaulEnabled,
+      submit,
+      aboutYouErrors,
+    } = this.props
 
     return (
       <div>
@@ -122,11 +138,7 @@ export class Delivery extends React.PureComponent {
 
     return (
       <div>
-        Your selected delivery day is
-        {' '}
-        <span className={css.boldDeliveryDate}>{deliveryDate}</span>
-        ,
-        {' '}
+        Your selected delivery day is <span className={css.boldDeliveryDate}>{deliveryDate}</span>,{' '}
         <span className={css.upperCase}>{deliveryTime}</span>
       </div>
     )
@@ -136,7 +148,11 @@ export class Delivery extends React.PureComponent {
     const { sectionName, formValues, isCheckoutOverhaulEnabled } = this.props
 
     return (
-      <div ref={el => { this.container = el }}>
+      <div
+        ref={(el) => {
+          this.container = el
+        }}
+      >
         {!isCheckoutOverhaulEnabled && <SubscriptionContainer sectionName={sectionName} />}
         <div
           className={classNames({
@@ -145,16 +161,14 @@ export class Delivery extends React.PureComponent {
           })}
           data-testing="checkoutDeliverySection"
         >
-          {isCheckoutOverhaulEnabled
-            ? (
-              <Fragment>
-                <SectionHeader title="Delivery details" />
-                <DeliveryCard iconName="icon-calendar">
-                  {this.renderDeliveryDay()}
-                </DeliveryCard>
-              </Fragment>
-            )
-            : <h3 className={css.header}>Delivery details</h3>}
+          {isCheckoutOverhaulEnabled ? (
+            <Fragment>
+              <SectionHeader title="Delivery details" />
+              <DeliveryCard iconName="icon-calendar">{this.renderDeliveryDay()}</DeliveryCard>
+            </Fragment>
+          ) : (
+            <h3 className={css.header}>Delivery details</h3>
+          )}
           <FormSection name={sectionName}>
             {isCheckoutOverhaulEnabled && (
               <div className={css.namesContainer}>
@@ -182,7 +196,9 @@ export class Delivery extends React.PureComponent {
                 </div>
               </div>
             )}
-            {deliveryUtils.isAddressConfirmed(formValues) && !isCheckoutOverhaulEnabled ? this.renderDetails() : this.renderAddress()}
+            {deliveryUtils.isAddressConfirmed(formValues) && !isCheckoutOverhaulEnabled
+              ? this.renderDetails()
+              : this.renderAddress()}
           </FormSection>
         </div>
       </div>

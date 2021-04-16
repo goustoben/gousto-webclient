@@ -20,38 +20,45 @@ export const OrderedRecipes = ({
   isFineDineIn,
   isCheckoutOverhaulEnabled,
 }) => (
-  <div className={classnames(css.container, { [css.redesignContainer]: isCheckoutOverhaulEnabled })}>
-    <GoustoImage media={media} title={title} className={classnames(css[`${view}Img`], { [css.redesignImg]: isCheckoutOverhaulEnabled })} />
-    <div className={classnames(
-      css.recipeContainer,
-      css[`${view}Flex`],
-      { [css.redesignRecipeContainer]: isCheckoutOverhaulEnabled }
-    )}
+  <div
+    className={classnames(css.container, { [css.redesignContainer]: isCheckoutOverhaulEnabled })}
+  >
+    <GoustoImage
+      media={media}
+      title={title}
+      className={classnames(css[`${view}Img`], { [css.redesignImg]: isCheckoutOverhaulEnabled })}
+    />
+    <div
+      className={classnames(css.recipeContainer, css[`${view}Flex`], {
+        [css.redesignRecipeContainer]: isCheckoutOverhaulEnabled,
+      })}
     >
       <div className={css.recipeName}>
-        <span className={classnames({
-          [css.link]: featureLink,
-          [css.details]: !featureLink,
-          [css.detailsRedesign]: isCheckoutOverhaulEnabled,
-        })}
-        >
-          <span className={classnames({
-            [css.textBold]: !isCheckoutOverhaulEnabled,
-            [css.redesignRecipeName]: isCheckoutOverhaulEnabled,
+        <span
+          className={classnames({
+            [css.link]: featureLink,
+            [css.details]: !featureLink,
+            [css.detailsRedesign]: isCheckoutOverhaulEnabled,
           })}
+        >
+          <span
+            className={classnames({
+              [css.textBold]: !isCheckoutOverhaulEnabled,
+              [css.redesignRecipeName]: isCheckoutOverhaulEnabled,
+            })}
           >
             {title}
           </span>
-          {(featureLink) ? <span className={css.arrowRight} /> : null}
+          {featureLink ? <span className={css.arrowRight} /> : null}
         </span>
-        {isFineDineIn ? <span className={css.detailsRow}><span className={css.fineDineIn}>Fine Dine In</span></span> : null}
-        {(basics.size > 0 && view === 'boxdetails' && !isCheckoutOverhaulEnabled) ? (
+        {isFineDineIn ? (
+          <span className={css.detailsRow}>
+            <span className={css.fineDineIn}>Fine Dine In</span>
+          </span>
+        ) : null}
+        {basics.size > 0 && view === 'boxdetails' && !isCheckoutOverhaulEnabled ? (
           <p className={css.details}>
-            <span className={css.basics}>
-              You&apos;ll need:
-              {' '}
-              {basics.toJS().join(', ')}
-            </span>
+            <span className={css.basics}>You&apos;ll need: {basics.toJS().join(', ')}</span>
           </p>
         ) : null}
         {!isCheckoutOverhaulEnabled && <span className={css.textSM}>{`${serving} Servings`}</span>}

@@ -10,8 +10,7 @@ exports[`PaymentHeader will match snapshot 1`] = `
     <h3
       className="header"
     >
-      Payment details
-       
+      Payment details 
       <span
         className="padlockIcon"
       />

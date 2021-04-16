@@ -9,8 +9,8 @@ describe('delivery utils', () => {
       beforeEach(() => {
         formValues = {
           delivery: {
-            confirmed: true
-          }
+            confirmed: true,
+          },
         }
         output = isAddressConfirmed(formValues)
       })
@@ -24,8 +24,8 @@ describe('delivery utils', () => {
       beforeEach(() => {
         formValues = {
           delivery: {
-            confirmed: false
-          }
+            confirmed: false,
+          },
         }
         output = isAddressConfirmed(formValues)
       })
@@ -47,8 +47,8 @@ describe('delivery utils', () => {
           const addresses = [
             {
               id: 'placeholder',
-              labels: ['text, hello', 'text', 'text', 'text']
-            }
+              labels: ['text, hello', 'text', 'text', 'text'],
+            },
           ]
           output = transformAddresses(addresses, isCheckoutOverhaulEnabled)
         })
@@ -57,8 +57,8 @@ describe('delivery utils', () => {
           const expected = [
             {
               value: 'placeholder',
-              label: 'Please select your address'
-            }
+              label: 'Please select your address',
+            },
           ]
           expect(output).toEqual(expected)
         })
@@ -72,8 +72,8 @@ describe('delivery utils', () => {
           const addresses = [
             {
               id: 1,
-              labels: ['text1', 'text2', 'text3', 'text4']
-            }
+              labels: ['text1', 'text2', 'text3', 'text4'],
+            },
           ]
           output = transformAddresses(addresses, isCheckoutOverhaulEnabled)
         })
@@ -82,8 +82,8 @@ describe('delivery utils', () => {
           const expected = [
             {
               value: 1,
-              label: 'text4, text3, text2, text1'
-            }
+              label: 'text4, text3, text2, text1',
+            },
           ]
           expect(output).toEqual(expected)
         })
@@ -126,6 +126,24 @@ describe('delivery utils', () => {
 
         test('then should return proper values', () => {
           const expected = '10, Street, Town, County, postcode'
+          expect(output).toEqual(expected)
+        })
+      })
+
+      describe('and when an address field contains a comma', () => {
+        beforeEach(() => {
+          const commaAddresses = {
+            houseNo: '10',
+            street: 'street',
+            town: 'town, with, a, comma',
+            county: 'county',
+            postcode: 'postcode',
+          }
+          output = showAddress(commaAddresses, true)
+        })
+
+        test('then it should return proper values', () => {
+          const expected = '10, Street, Town, With, A, Comma, County, postcode'
           expect(output).toEqual(expected)
         })
       })

@@ -27,17 +27,23 @@ describe('Promo Code', () => {
         cy.get('[data-testing="totalPrice"]').contains('12.50')
       }
 
-      withPlatformTags(WEB).it('should be able to add a promo code in the checkout flow on web', () => {
-        cy.proceedToCheckout({ platform: 'WEB' })
+      withPlatformTags(WEB).it(
+        'should be able to add a promo code in the checkout flow on web',
+        () => {
+          cy.proceedToCheckout({ platform: 'WEB' })
 
-        checkPricesOnCheckout()
-      })
+          checkPricesOnCheckout()
+        }
+      )
 
-      withPlatformTags(MOBILE).it('should be able to add a promo code in the checkout flow on mobile', () => {
-        cy.proceedToCheckout({ platform: 'MOBILE' })
+      withPlatformTags(MOBILE).it(
+        'should be able to add a promo code in the checkout flow on mobile',
+        () => {
+          cy.proceedToCheckout({ platform: 'MOBILE' })
 
-        checkPricesOnCheckout()
-      })
+          checkPricesOnCheckout()
+        }
+      )
     })
   })
 })
