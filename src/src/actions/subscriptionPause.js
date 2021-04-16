@@ -35,7 +35,6 @@ function getModalType(getState) {
 }
 
 const subPauseActions = {
-  subscriptionLoadData,
   subscriptionTrackPauseAttempt,
   subscriptionTrackCategoriesViewed,
   subscriptionDeactivate,
@@ -64,18 +63,6 @@ const subPauseActions = {
   subscriptionPauseVisibilityChange,
   subscriptionPauseLoadStartScreen,
   subscriptionPauseLoadInitReasons,
-}
-
-function subscriptionLoadData() {
-  return async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    const { data = {} } = await fetchSubscription(accessToken)
-
-    dispatch({
-      type: actionTypes.SUBSCRIPTION_LOAD_DATA,
-      data,
-    })
-  }
 }
 
 function subscriptionTrackPauseAttempt(metaData) {

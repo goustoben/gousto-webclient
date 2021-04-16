@@ -2,13 +2,17 @@ import Immutable from 'immutable'
 
 import { actionTypes } from 'actions/actionTypes'
 import { basketNumPortionChange } from 'actions/basket'
+import {
+  getIsNewSubscriptionApiEnabled
+} from 'selectors/features'
 import logger from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
-import { fetchSubscription } from '../../routes/Account/apis/subscription'
+import { fetchSubscription, fetchSubscriptionV2 } from '../../routes/Account/apis/subscription'
 
 jest.mock('../../routes/Account/apis/subscription', () => ({
   fetchSubscription: jest.fn(),
+  fetchSubscriptionV2: jest.fn(),
 }))
 
 jest.mock('actions/basket', () => ({
@@ -19,9 +23,21 @@ jest.mock('utils/logger', () => ({
   notice: jest.fn(),
 }))
 
+jest.mock('selectors/features', () => ({
+  getIsNewSubscriptionApiEnabled: jest.fn().mockReturnValue(false),
+}))
+
 describe('subscription actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
+  const state = {
+    auth: Immutable.Map({
+      accessToken: 'subscription-load-data'
+    }),
+    user: Immutable.Map({
+      id: 'user-id',
+    }),
+  }
   let data
 
   afterEach(() => {
@@ -30,11 +46,7 @@ describe('subscription actions', () => {
 
   describe('subscriptionLoadData', () => {
     beforeEach(() => {
-      getState.mockReturnValueOnce({
-        auth: Immutable.Map({
-          accessToken: 'subscription-load-data'
-        })
-      })
+      getState.mockReturnValueOnce(state)
     })
 
     test('should dispatch a fetchSubscription call', () => {
@@ -117,6 +129,46 @@ describe('subscription actions', () => {
         await subscriptionLoadData()(dispatch, getState)
 
         expect(basketNumPortionChange).toHaveBeenCalledWith(numPortions)
+      })
+    })
+
+    describe('when isNewSubscriptionApiEnabled is true', () => {
+      const mockSubscriptionRepsonse = {
+        data: {
+          subscription: {
+            interval: 2,
+            deliverySlotStartTime: '08:00:00',
+            deliverySlotEndTime: '19:00:00',
+            status: 'active',
+            numPortions: 4,
+            authUserId: 'auth-user-id',
+            deliverySlotDay: 3,
+            boxType: 'vegetarian',
+            userId: '1233',
+            numRecipes: 4,
+          },
+        },
+      }
+
+      beforeEach(() => {
+        getIsNewSubscriptionApiEnabled.mockReturnValueOnce(true)
+        fetchSubscriptionV2.mockResolvedValueOnce({
+          data: mockSubscriptionRepsonse,
+        })
+      })
+
+      test('should dispatch a fetchSubscriptionV2 call', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(fetchSubscriptionV2).toHaveBeenCalledWith('subscription-load-data', 'user-id')
+      })
+
+      test('should call basketNumPortionChange', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(basketNumPortionChange).toHaveBeenCalledWith(
+          mockSubscriptionRepsonse.data.subscription.numPortions
+        )
       })
     })
   })

@@ -11,8 +11,6 @@ const mockBoxData = {
     box_type: 'gourmet',
     num_portions: 2,
     num_recipes: 3,
-    price: '29.99',
-    sku: 'SKU-GMT-3-2'
   },
 }
 

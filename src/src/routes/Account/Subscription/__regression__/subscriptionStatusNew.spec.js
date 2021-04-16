@@ -1,17 +1,17 @@
 describe('Given I am logged in', () => {
   beforeEach(() => {
     cy.login()
+    cy.visit('/')
+    cy.setFeatures([{ feature: 'isNewSubscriptionApiEnabled', value: true }])
   })
 
   describe('When I am on the /subscription-settings page', () => {
-    describe('And the core subscription API is in use', () => {
+    describe('And the new subscription API is in use', () => {
       describe('And I have subscription active', () => {
         beforeEach(() => {
           cy.visitSubscriptionSettingsPage({
             isSubscriptionActive: true,
-            features: [
-              { feature: 'isNewSubscriptionApiEnabled', value: false }
-            ]
+            isNewSubscriptionApiEnabled: true,
           })
         })
 
@@ -34,9 +34,7 @@ describe('Given I am logged in', () => {
         beforeEach(() => {
           cy.visitSubscriptionSettingsPage({
             isSubscriptionActive: false,
-            features: [
-              { feature: 'isNewSubscriptionApiEnabled', value: false }
-            ]
+            isNewSubscriptionApiEnabled: true,
           })
         })
 
@@ -47,8 +45,12 @@ describe('Given I am logged in', () => {
 
         describe('When I click the Resubscribe CTA', () => {
           beforeEach(() => {
+            cy.visitSubscriptionSettingsPage({
+              isSubscriptionActive: false,
+              isNewSubscriptionApiEnabled: true,
+            })
             cy.get('[data-testing="resubscribe-cta"]').click()
-            cy.wait('@currentActivateSubscription')
+            cy.wait('@activateSubscription')
           })
 
           it('Then I should see Active Subscription Settings page sections', () => {

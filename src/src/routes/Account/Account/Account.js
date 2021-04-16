@@ -14,7 +14,6 @@ const propTypes = {
   isNewSubscriptionPageEnabled: PropTypes.bool,
   userLoadData: PropTypes.func.isRequired,
   checkCardExpiry: PropTypes.func.isRequired,
-  subscriptionLoadData: PropTypes.func.isRequired,
   loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
   rateRecipeCount: PropTypes.number,
   userRecipeRatings: PropTypes.func.isRequired,
@@ -33,7 +32,6 @@ class Account extends React.PureComponent {
     const {
       loadMenuServiceDataIfDeepLinked,
       checkCardExpiry,
-      subscriptionLoadData,
       userLoadData,
       userRecipeRatings,
     } = this.props
@@ -42,7 +40,6 @@ class Account extends React.PureComponent {
       userLoadData(),
       userRecipeRatings(),
       loadMenuServiceDataIfDeepLinked(),
-      subscriptionLoadData(),
     ]).then(() => checkCardExpiry())
   }
 

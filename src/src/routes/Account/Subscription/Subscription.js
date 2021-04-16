@@ -23,24 +23,28 @@ const propTypes = {
   accessToken: PropTypes.string.isRequired,
   isMobile: PropTypes.bool.isRequired,
   startOnScreenRecoverySubscriptionFlow: PropTypes.func.isRequired,
-  isSubscriberPricingEnabled: PropTypes.bool,
   isNewSubscriptionApiEnabled: PropTypes.bool,
+  isSubscriberPricingEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
-  isSubscriberPricingEnabled: false,
   isNewSubscriptionApiEnabled: false,
+  isSubscriberPricingEnabled: false,
 }
 
 const Subscription = ({
   accessToken,
   isMobile,
   startOnScreenRecoverySubscriptionFlow,
-  isSubscriberPricingEnabled,
   isNewSubscriptionApiEnabled,
+  isSubscriberPricingEnabled,
 }) => {
+  const [shouldRequestSubscriptionsV2, setShouldRequestSubscriptionsV2] = useState(false)
   const [shouldRequestDeliveryDays, setShouldRequestDeliveryDays] = useState(false)
-  const [state, dispatch] = useReducer(SubscriptionReducer, { isSubscriberPricingEnabled, isNewSubscriptionApiEnabled })
+  const [state, dispatch] = useReducer(SubscriptionReducer, {
+    isSubscriberPricingEnabled,
+    isNewSubscriptionApiEnabled,
+  })
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
   const isSubscriptionActive = getIsSubscriptionActive(state)
   const isSubscriptionLoaded = getIsSubscriptionLoaded(state)
@@ -54,6 +58,10 @@ const Subscription = ({
     {
       shouldRequest: shouldRequestDeliveryDays,
       setShouldRequest: setShouldRequestDeliveryDays,
+    },
+    {
+      shouldRequest: shouldRequestSubscriptionsV2,
+      setShouldRequest: setShouldRequestSubscriptionsV2,
     },
     state,
   )
