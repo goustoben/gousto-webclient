@@ -22,12 +22,7 @@ describe('DeliveryPhoneNumber', () => {
 
   describe('sensitive data masking', () => {
     test('all <Field /> component(s) should have prop "mask"', () => {
-      expect(
-        wrapper
-          .find(Field)
-          .at(0)
-          .prop('mask'),
-      ).toBe(true)
+      expect(wrapper.find(Field).at(0).prop('mask')).toBe(true)
     })
   })
 })

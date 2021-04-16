@@ -16,7 +16,7 @@ const deliveryDays = Immutable.fromJS({
         deliveryPrice: '0.00',
         isDefault: true,
         deliveryStartTime: '08:00:00',
-        disabledSlotId: '2020-02-14_08-19'
+        disabledSlotId: '2020-02-14_08-19',
       },
       {
         id: '2',
@@ -25,9 +25,9 @@ const deliveryDays = Immutable.fromJS({
         deliveryPrice: '2.99',
         isDefault: false,
         deliveryStartTime: '08:00:00',
-        disabledSlotId: '2020-02-14_08-12'
-      }
-    ]
+        disabledSlotId: '2020-02-14_08-12',
+      },
+    ],
   },
   '2020-02-15': {
     date: '2020-02-15',
@@ -41,7 +41,7 @@ const deliveryDays = Immutable.fromJS({
         deliveryPrice: '0.00',
         isDefault: true,
         deliveryStartTime: '08:00:00',
-        disabledSlotId: '2020-02-15_08-19'
+        disabledSlotId: '2020-02-15_08-19',
       },
       {
         id: '4',
@@ -50,10 +50,10 @@ const deliveryDays = Immutable.fromJS({
         deliveryPrice: '2.99',
         isDefault: false,
         deliveryStartTime: '08:00:00',
-        disabledSlotId: '2020-02-15_08-12'
-      }
-    ]
-  }
+        disabledSlotId: '2020-02-15_08-12',
+      },
+    ],
+  },
 })
 
 describe('DeliveryAddressContainer', () => {
@@ -72,8 +72,8 @@ describe('DeliveryAddressContainer', () => {
     }),
     boxSummaryDeliveryDays: deliveryDays,
     features: Immutable.fromJS({
-      ndd: { value: false }
-    })
+      ndd: { value: false },
+    }),
   }
 
   const store = {
@@ -83,11 +83,7 @@ describe('DeliveryAddressContainer', () => {
   }
 
   beforeEach(() => {
-    wrapper = shallow(
-      <DeliveryAddressContainer
-        store={store}
-      />
-    )
+    wrapper = shallow(<DeliveryAddressContainer store={store} />)
   })
 
   test('should be rendered properly', () => {

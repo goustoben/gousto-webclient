@@ -53,26 +53,26 @@ const defaultProps = {
   formValues: {},
   isNDDExperiment: false,
 
-  change: () => { },
-  touch: () => { },
-  untouch: () => { },
+  change: () => {},
+  touch: () => {},
+  untouch: () => {},
 
   addressesPending: false,
   initialPostcode: '',
   isDelivery: true,
-  receiveRef: () => { },
-  scrollToFirstMatchingRef: () => { },
-  trackUTMAndPromoCode: () => { },
-  registerField: () => { },
-  checkoutAddressLookup: () => { },
-  onAddressConfirm: () => { },
-  trackCheckoutButtonPressed: () => { },
+  receiveRef: () => {},
+  scrollToFirstMatchingRef: () => {},
+  trackUTMAndPromoCode: () => {},
+  registerField: () => {},
+  checkoutAddressLookup: () => {},
+  onAddressConfirm: () => {},
+  trackCheckoutButtonPressed: () => {},
   isMobile: false,
   deliveryTariffId: '',
   deliveryDate: '',
   menuCutoffUntil: '',
   isCheckoutOverhaulEnabled: false,
-  submit: () => { },
+  submit: () => {},
   aboutYouErrors: false,
 }
 
@@ -101,15 +101,15 @@ export class Address extends React.PureComponent {
   getAddressObjectFromForm() {
     const { formValues, sectionName } = this.props
 
-    return (formValues && formValues[sectionName]) ? formValues[sectionName] : null
+    return formValues && formValues[sectionName] ? formValues[sectionName] : null
   }
 
-  getFormValue = inputName => {
+  getFormValue = (inputName) => {
     const { formValues, sectionName } = this.props
 
-    return (formValues
-      && formValues[sectionName]
-      && formValues[sectionName][inputName]) ? formValues[sectionName][inputName] : undefined
+    return formValues && formValues[sectionName] && formValues[sectionName][inputName]
+      ? formValues[sectionName][inputName]
+      : undefined
   }
 
   generateAddressLabel = (deliveryPoint) => {
@@ -120,13 +120,14 @@ export class Address extends React.PureComponent {
       deliveryPoint.line2,
     ]
 
-    return addressParts.filter(part => !!part).join(', ')
+    return addressParts.filter((part) => !!part).join(', ')
   }
 
   generateDropdownOptions = (addressData) => {
-    const addresses = addressData.deliveryPoints.map(deliveryPoint => (
-      { id: deliveryPoint.udprn, labels: [this.generateAddressLabel(deliveryPoint)] }
-    ))
+    const addresses = addressData.deliveryPoints.map((deliveryPoint) => ({
+      id: deliveryPoint.udprn,
+      labels: [this.generateAddressLabel(deliveryPoint)],
+    }))
 
     if (addresses.length > 1) {
       addresses.unshift({ id: 'placeholder', count: 1, labels: ['— Please select your address —'] })
@@ -150,20 +151,24 @@ export class Address extends React.PureComponent {
     touch(formName, `${sectionName}.addresses`)
   }
 
-  checkCanDeliver = async postcode => {
+  checkCanDeliver = async (postcode) => {
     const { deliveryDate, menuCutoffUntil, isNDDExperiment, deliveryTariffId } = this.props
     let deliverable = false
 
-    const menuCutoffUntilFallback = moment()
-      .startOf('day')
-      .add(30, 'days')
-      .toISOString()
+    const menuCutoffUntilFallback = moment().startOf('day').add(30, 'days').toISOString()
 
     if (deliveryDate) {
       try {
         const cutOfFrom = moment().startOf('day').toISOString()
         const cutOfUntil = menuCutoffUntil || menuCutoffUntilFallback
-        let { data: days } = await fetchDeliveryDays(null, cutOfFrom, cutOfUntil, isNDDExperiment, deliveryTariffId, postcode)
+        let { data: days } = await fetchDeliveryDays(
+          null,
+          cutOfFrom,
+          cutOfUntil,
+          isNDDExperiment,
+          deliveryTariffId,
+          postcode
+        )
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)
@@ -171,7 +176,11 @@ export class Address extends React.PureComponent {
 
         const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days)
 
-        if (availableDeliveryDays && availableDeliveryDays[deliveryDate] && !availableDeliveryDays[deliveryDate].alternateDeliveryDay) {
+        if (
+          availableDeliveryDays &&
+          availableDeliveryDays[deliveryDate] &&
+          !availableDeliveryDays[deliveryDate].alternateDeliveryDay
+        ) {
           deliverable = true
         }
       } catch (error) {
@@ -185,7 +194,7 @@ export class Address extends React.PureComponent {
     return deliverable
   }
 
-  loadAddresses = async postcode => {
+  loadAddresses = async (postcode) => {
     const { checkoutAddressLookup, isDelivery } = this.props
 
     const checks = [checkoutAddressLookup(postcode)]
@@ -200,10 +209,10 @@ export class Address extends React.PureComponent {
     const { formName, sectionName, change } = this.props
 
     let submitCount = this.getFormValue('submitCount') || 1
-    change(formName, `${sectionName}.submitCount`, submitCount += 1)
+    change(formName, `${sectionName}.submitCount`, (submitCount += 1))
   }
 
-  getAddresses = async postcode => {
+  getAddresses = async (postcode) => {
     const { formName, sectionName, change, untouch } = this.props
     const placeholder = [{ id: 'placeholder', count: 1, labels: ['— Loading addresses… —'] }]
 
@@ -241,9 +250,9 @@ export class Address extends React.PureComponent {
       // eslint-disable-next-line react/destructuring-assignment
       const addressData = !this.state ? addresses : this.state.addressData
       const { deliveryPoints, town, county, postcode } = addressData
-      const matchingDeliveryPoint = deliveryPoints.find(deliveryPoint => (
-        deliveryPoint.udprn === addressId
-      ))
+      const matchingDeliveryPoint = deliveryPoints.find(
+        (deliveryPoint) => deliveryPoint.udprn === addressId
+      )
 
       addressDetails = {
         line1: matchingDeliveryPoint.line1,
@@ -286,7 +295,16 @@ export class Address extends React.PureComponent {
     const { sectionName, formErrors } = this.props
     const errors = formErrors[sectionName] || {}
 
-    return errors.firstName || errors.lastName || errors.postcode || errors.houseNo || errors.street || errors.town || errors.phone || errors.deliveryInstruction
+    return (
+      errors.firstName ||
+      errors.lastName ||
+      errors.postcode ||
+      errors.houseNo ||
+      errors.street ||
+      errors.town ||
+      errors.phone ||
+      errors.deliveryInstruction
+    )
   }
 
   handleAddressConfirm = () => {
@@ -316,7 +334,7 @@ export class Address extends React.PureComponent {
     const errors = formErrors[sectionName] || {}
     const error = isCheckoutOverhaulEnabled
       ? this.validateRedesignFields()
-      : (errors.postcode || errors.houseNo || errors.street || errors.town || errors.county)
+      : errors.postcode || errors.houseNo || errors.street || errors.town || errors.county
 
     if (!error) {
       const postcode = this.getFormValue('postcode')
@@ -327,10 +345,15 @@ export class Address extends React.PureComponent {
         onAddressConfirm(postcode)
       }
 
-      trackUTMAndPromoCode(isCheckoutOverhaulEnabled ? checkoutClickContinueToPayment : clickUseThisAddress)
+      trackUTMAndPromoCode(
+        isCheckoutOverhaulEnabled ? checkoutClickContinueToPayment : clickUseThisAddress
+      )
 
       if (isMobile) {
-        trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: true, missing_field: null })
+        trackCheckoutButtonPressed('DeliveryAddress Confirmed', {
+          succeeded: true,
+          missing_field: null,
+        })
       }
 
       if (isCheckoutOverhaulEnabled) {
@@ -344,7 +367,10 @@ export class Address extends React.PureComponent {
       scrollToFirstMatchingRef([dottify(sectionErrors)])
 
       if (isMobile) {
-        trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: false, missing_field: Object.keys(errors) })
+        trackCheckoutButtonPressed('DeliveryAddress Confirmed', {
+          succeeded: false,
+          missing_field: Object.keys(errors),
+        })
       }
     }
   }
@@ -356,12 +382,7 @@ export class Address extends React.PureComponent {
   renderAddressInputs = () => {
     const { receiveRef, sectionName } = this.props
 
-    return (
-      <AddressInputs
-        receiveRef={receiveRef}
-        sectionName={sectionName}
-      />
-    )
+    return <AddressInputs receiveRef={receiveRef} sectionName={sectionName} />
   }
 
   reset = (field, value = '') => {
@@ -398,7 +419,14 @@ export class Address extends React.PureComponent {
 
   renderVariation = () => {
     const { isMobile, addressesPending, receiveRef, sectionName, isDelivery } = this.props
-    const { addresses, postcodeTemp, notFound, showDropdown, isAddressSelected, deliveryInstructions } = this.getAddressProps()
+    const {
+      addresses,
+      postcodeTemp,
+      notFound,
+      showDropdown,
+      isAddressSelected,
+      deliveryInstructions,
+    } = this.getAddressProps()
     const isCTADisabled = this.validateRedesignFields()
     const currentSelectedAddress = showAddress(this.getAddressObjectFromForm(), true)
 
@@ -448,7 +476,14 @@ export class Address extends React.PureComponent {
   }
 
   renderControlVersion = () => {
-    const { isDelivery, isMobile, trackCheckoutButtonPressed, addressesPending, receiveRef, aboutYouErrors } = this.props
+    const {
+      isDelivery,
+      isMobile,
+      trackCheckoutButtonPressed,
+      addressesPending,
+      receiveRef,
+      aboutYouErrors,
+    } = this.props
     const { addresses, postcodeTemp, showDropdown, isAddressSelected } = this.getAddressProps()
 
     return (

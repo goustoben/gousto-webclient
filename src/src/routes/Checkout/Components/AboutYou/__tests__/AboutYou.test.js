@@ -14,7 +14,7 @@ describe('Given AboutYou component', () => {
     nextStepName: '',
     receiveRef,
     checkoutValid: false,
-    trackUTMAndPromoCode
+    trackUTMAndPromoCode,
   }
 
   beforeEach(() => {
@@ -32,7 +32,7 @@ describe('Given AboutYou component', () => {
   describe('when isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 
@@ -57,7 +57,7 @@ describe('Given AboutYou component', () => {
             createAccountValues: {
               email: 'test@test.com',
               password: 'passworddddd',
-            }
+            },
           })
           jest.clearAllMocks()
         })

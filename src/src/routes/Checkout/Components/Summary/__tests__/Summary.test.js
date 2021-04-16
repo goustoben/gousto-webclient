@@ -15,7 +15,7 @@ const prices = Immutable.Map({
   total: '39.99',
 })
 
-const basketRecipes = Immutable.Map({1234: '4'})
+const basketRecipes = Immutable.Map({ 1234: '4' })
 
 describe('Summary Component', () => {
   beforeEach(() => {
@@ -48,12 +48,21 @@ describe('Summary Component', () => {
 
     describe('showNoDiscountCTA feature flag is on', () => {
       test('should render a promo discount CTA if the user has no promo code', () => {
-        wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} showNoDiscountCTA />)
+        wrapper = shallow(
+          <Summary prices={prices} basketRecipes={basketRecipes} showNoDiscountCTA />
+        )
         expect(wrapper.find('.noDiscountCTA').length).toEqual(1)
       })
 
       test('should render nothing if the user has a promo code', () => {
-        wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} showNoDiscountCTA promoCode="PROMO" />)
+        wrapper = shallow(
+          <Summary
+            prices={prices}
+            basketRecipes={basketRecipes}
+            showNoDiscountCTA
+            promoCode="PROMO"
+          />
+        )
         expect(wrapper.find('.noDiscountCTA').length).toEqual(0)
         expect(wrapper.find(Link).length).toEqual(0)
       })

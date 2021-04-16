@@ -12,19 +12,19 @@ export const PaymentMethodToggle = ({ methodDescriptor, isActive, setCurrentPaym
   const renderItem = (item) => {
     const { itemType } = item
     switch (itemType) {
-    case 'label': {
-      const { text, className, hide } = item
+      case 'label': {
+        const { text, className, hide } = item
 
-      return <div className={classNames(className, { [css.hide]: hide })}>{text}</div>
-    }
-    case 'svg': {
-      const { className, fileName } = item
+        return <div className={classNames(className, { [css.hide]: hide })}>{text}</div>
+      }
+      case 'svg': {
+        const { className, fileName } = item
 
-      return <Svg className={className} fileName={fileName} />
-    }
-    default: {
-      return null
-    }
+        return <Svg className={className} fileName={fileName} />
+      }
+      default: {
+        return null
+      }
     }
   }
 

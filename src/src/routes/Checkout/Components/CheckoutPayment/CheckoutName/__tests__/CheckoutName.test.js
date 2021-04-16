@@ -6,12 +6,7 @@ describe('given CheckoutName', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(
-      <CheckoutName
-        sectionName="payment"
-        receiveRef={jest.fn()}
-      />
-    )
+    wrapper = shallow(<CheckoutName sectionName="payment" receiveRef={jest.fn()} />)
   })
 
   test('should be rendered correctly', () => {
@@ -22,7 +17,7 @@ describe('given CheckoutName', () => {
   describe('when isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 

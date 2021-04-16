@@ -28,28 +28,28 @@ function mapStateToProps(state, ownProps) {
         } else if (errors.get(actionTypes.CHECKOUT_SIGNUP)) {
           const code = errors.get(actionTypes.CHECKOUT_SIGNUP)
           switch (code) {
-          case '422-registration-failed':
-          case '401-auth-error':
-            errorType = 'user-exists'
-            break
-          case '422-payment-failed':
-            errorType = 'payment-failure'
-            break
-          case '409-duplicate-details':
-            errorType = 'user-promo-invalid'
-            break
-          case '409-missing-preview-order':
-            errorType = 'out-of-stock'
-            break
-          case 'validation.phone.customer.phone_number':
-            errorType = 'user-phone-number-invalid'
-            break
-          case '3ds-challenge-failed':
-            errorType = '3ds-challenge-failed'
-            break
-          default:
-            errorType = 'generic'
-            break
+            case '422-registration-failed':
+            case '401-auth-error':
+              errorType = 'user-exists'
+              break
+            case '422-payment-failed':
+              errorType = 'payment-failure'
+              break
+            case '409-duplicate-details':
+              errorType = 'user-promo-invalid'
+              break
+            case '409-missing-preview-order':
+              errorType = 'out-of-stock'
+              break
+            case 'validation.phone.customer.phone_number':
+              errorType = 'user-phone-number-invalid'
+              break
+            case '3ds-challenge-failed':
+              errorType = '3ds-challenge-failed'
+              break
+            default:
+              errorType = 'generic'
+              break
           }
         } else if (errors.get(actionTypes.CARD_TOKENIZATION_FAILED)) {
           errorType = 'card-tokenization-failed'
@@ -59,7 +59,7 @@ function mapStateToProps(state, ownProps) {
           errorType = 'valid-card-details-not-provided'
         } else {
           // find last error that is truthy
-          errorType = errors.findLast(error => !!error)
+          errorType = errors.findLast((error) => !!error)
         }
       }
     }
@@ -67,7 +67,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     errorType,
-    goBack: ownProps.router.goBack
+    goBack: ownProps.router.goBack,
   }
 }
 

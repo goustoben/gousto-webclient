@@ -32,7 +32,7 @@ describe('Summary', () => {
             pathname: 'check-out/boxdetails',
           },
         }}
-      />,
+      />
     )
     expect(wrapper.find(Link).length).toBe(1)
   })
@@ -45,7 +45,7 @@ describe('Summary', () => {
             pathname: 'check-out/payment',
           },
         }}
-      />,
+      />
     )
     expect(wrapper.find(Link).length).toBe(0)
   })

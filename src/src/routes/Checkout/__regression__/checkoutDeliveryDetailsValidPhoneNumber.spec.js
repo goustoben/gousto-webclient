@@ -14,8 +14,7 @@ describe("Given I'm a logged out user", () => {
 
     describe('And I’ve entered a phone number with less than 10 numerical characters', () => {
       before(() => {
-        cy.get('[data-testing="checkoutPhoneNumberInput"]')
-          .type('7782382334')
+        cy.get('[data-testing="checkoutPhoneNumberInput"]').type('7782382334')
       })
 
       it('Then the “Next: Payment“ CTA is enabled', () => {

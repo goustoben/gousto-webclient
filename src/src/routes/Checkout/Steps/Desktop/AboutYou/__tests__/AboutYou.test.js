@@ -15,7 +15,7 @@ describe('AboutYouStep', () => {
     nextStepName: '',
     receiveRef,
     checkoutValid: false,
-    trackUTMAndPromoCode
+    trackUTMAndPromoCode,
   }
 
   beforeEach(() => {
@@ -62,7 +62,7 @@ describe('AboutYouStep', () => {
   describe('when isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 

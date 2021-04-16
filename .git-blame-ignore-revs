@@ -1,3 +1,5 @@
-
 # [TG-3200] Introduce prettier for routes/Home, routes/Payment (#3143)
 127888360ba437160187fee3b2b217d1bc397917
+
+# [TG-3344] reformat routes/Signup with prettier (#3186)
+05f654e1340b8647bf3203388b2b4a04bffd3cfa

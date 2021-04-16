@@ -231,8 +231,8 @@ This means that generally, you shouldn't configure your IDE to format every file
 If you'd like to introduce prettier inside an unmigrated-yet route, please follow these steps:
 
 1. Modify "files" section under "Make eslint rules agree with prettier" in
-   `devbox-platform/code/gousto-webclient/src/.eslintrc.js`
-2. Modify the end of devbox-platform/code/gousto-webclient/src/.prettierignore
+   `src/.eslintrc.js`
+2. Modify the end of `src/.prettierignore`
 3. In the top `src`, invoke `prettier -w src`
 4. Review changes to catch any weirdness (due to automatic semicolon insertion
    or a human-visible change in a React component output)

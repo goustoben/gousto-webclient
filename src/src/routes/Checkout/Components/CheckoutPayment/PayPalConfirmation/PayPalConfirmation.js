@@ -6,15 +6,25 @@ import { onEnter } from 'utils/accessibility'
 
 import css from './PayPalConfirmation.css'
 
-export const PayPalConfirmation = ({ resetPaymentMethod, isSubmitting, isCheckoutOverhaulEnabled }) => {
+export const PayPalConfirmation = ({
+  resetPaymentMethod,
+  isSubmitting,
+  isCheckoutOverhaulEnabled,
+}) => {
   const payPalIcon = <Svg className={css.paypalIcon} fileName="paypal" />
   const changePaymentMethodCTA = (
-    <div className={classNames(css.paypalAlternativeText, { [css.checkoutVariationText]: isCheckoutOverhaulEnabled })}>
+    <div
+      className={classNames(css.paypalAlternativeText, {
+        [css.checkoutVariationText]: isCheckoutOverhaulEnabled,
+      })}
+    >
       or&nbsp;
       <span
         role="button"
         tabIndex="0"
-        className={classNames(css.resetPaymentMethod, { [css.checkoutVariationLink]: isCheckoutOverhaulEnabled })}
+        className={classNames(css.resetPaymentMethod, {
+          [css.checkoutVariationLink]: isCheckoutOverhaulEnabled,
+        })}
         onClick={resetPaymentMethod}
         onKeyDown={onEnter(resetPaymentMethod)}
       >

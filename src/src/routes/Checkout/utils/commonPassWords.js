@@ -9998,5 +9998,5 @@ export const commonWords = [
   'c2h5oh',
   'bubbles1',
   'brook',
-  'brady'
+  'brady',
 ]

@@ -8,12 +8,12 @@ describe('Breadcrumbs', () => {
   const items = [
     {
       id: 'account',
-      label: 'Account'
+      label: 'Account',
     },
     {
       id: 'delivery',
-      label: 'Delivery'
-    }
+      label: 'Delivery',
+    },
   ]
   const currentId = 'account'
 

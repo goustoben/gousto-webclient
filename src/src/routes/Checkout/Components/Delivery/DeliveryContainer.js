@@ -9,7 +9,7 @@ import { trackUTMAndPromoCode } from 'actions/tracking'
 import { Delivery } from './Delivery'
 
 export function mapStateToProps(sectionName) {
-  return state => ({
+  return (state) => ({
     formName: getDeliveryFormName(state),
     sectionName,
     addressDetail: state.checkout.get('selectedAddress'),
@@ -25,27 +25,29 @@ export function mapStateToProps(sectionName) {
     deliveryDays: state.boxSummaryDeliveryDays,
     date: state.basket.get('date'),
     slotId: state.basket.get('slotId'),
-    aboutYouErrors: state.form.yourdetails
-      && state.form.yourdetails.syncErrors.aboutyou
-      && state.request.get('browser') === 'mobile'
-      && getIsPassStrengthEnabled(state),
+    aboutYouErrors:
+      state.form.yourdetails &&
+      state.form.yourdetails.syncErrors.aboutyou &&
+      state.request.get('browser') === 'mobile' &&
+      getIsPassStrengthEnabled(state),
   })
 }
 
-const connectComponent = sectionName => connect(mapStateToProps(sectionName), {
-  manualSubmit: submit,
-  clearErrors: actions.checkoutClearErrors,
-  change,
-  trackUTMAndPromoCode,
-})(Delivery)
+const connectComponent = (sectionName) =>
+  connect(mapStateToProps(sectionName), {
+    manualSubmit: submit,
+    clearErrors: actions.checkoutClearErrors,
+    change,
+    trackUTMAndPromoCode,
+  })(Delivery)
 
-export default sectionName => connectComponent(sectionName)
+export default (sectionName) => connectComponent(sectionName)
 
 export function validationMessages(sectionName) {
-  return ({
+  return {
     [`${sectionName}.phone`]: 'Please provide a valid UK phone number',
     [`${sectionName}.addressId`]: 'Please select an address',
-  })
+  }
 }
 
 export const getInitialValues = (state, sectionName) => {
@@ -84,9 +86,10 @@ export function addInitialValues(Component, { sectionName }) {
         initialValues: {
           ...ownProps.initialValues,
           ...initialValues,
-          ...getInitialValues(state, sectionName)
-        }
+          ...getInitialValues(state, sectionName),
+        },
       }
     },
-    { trackUTMAndPromoCode })(Component)
+    { trackUTMAndPromoCode }
+  )(Component)
 }

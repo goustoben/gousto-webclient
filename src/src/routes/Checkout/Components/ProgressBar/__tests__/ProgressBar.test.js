@@ -18,7 +18,7 @@ describe('ProgressBar', () => {
           { id: 'item-2', label: 'Item 2 Label' },
           { id: 'item-3', label: 'Item 3 Label' },
         ]}
-      />,
+      />
     )
   })
 
@@ -47,24 +47,12 @@ describe('ProgressBar', () => {
       const content = wrapper.children(Li)
 
       content.forEach((contentItem) => {
-        expect(
-          contentItem
-            .children(Div)
-            .at(0)
-            .children(Span),
-        ).toHaveLength(2)
+        expect(contentItem.children(Div).at(0).children(Span)).toHaveLength(2)
       })
     })
 
     test('should contain 1 check mark <Icon> instead of number for past items', () => {
-      const content = wrapper
-        .children(Li)
-        .at(0)
-        .children(Div)
-        .at(0)
-        .children(Span)
-        .at(0)
-        .children()
+      const content = wrapper.children(Li).at(0).children(Div).at(0).children(Span).at(0).children()
 
       expect(content).toHaveLength(1)
       expect(content.type()).toBe(Icon)
@@ -74,76 +62,32 @@ describe('ProgressBar', () => {
     test('should display item number in 1st <Span> for each non-past item', () => {
       const content = wrapper.children(Li)
 
-      expect(
-        content
-          .at(1)
-          .children(Div)
-          .at(0)
-          .children(Span)
-          .at(0)
-          .children()
-          .text(),
-      ).toBe('2')
+      expect(content.at(1).children(Div).at(0).children(Span).at(0).children().text()).toBe('2')
 
-      expect(
-        content
-          .at(2)
-          .children(Div)
-          .at(0)
-          .children(Span)
-          .at(0)
-          .children()
-          .text(),
-      ).toBe('3')
+      expect(content.at(2).children(Div).at(0).children(Span).at(0).children().text()).toBe('3')
     })
 
     test('should display item label in 2nd <Span> for each item', () => {
       const content = wrapper.children(Li)
 
-      expect(
-        content
-          .at(0)
-          .children(Div)
-          .at(0)
-          .children(Span)
-          .at(1)
-          .children()
-          .text(),
-      ).toBe('Item 1 Label')
+      expect(content.at(0).children(Div).at(0).children(Span).at(1).children().text()).toBe(
+        'Item 1 Label'
+      )
 
-      expect(
-        content
-          .at(1)
-          .children(Div)
-          .at(0)
-          .children(Span)
-          .at(1)
-          .children()
-          .text(),
-      ).toBe('Item 2 Label')
+      expect(content.at(1).children(Div).at(0).children(Span).at(1).children().text()).toBe(
+        'Item 2 Label'
+      )
 
-      expect(
-        content
-          .at(2)
-          .children(Div)
-          .at(0)
-          .children(Span)
-          .at(1)
-          .children()
-          .text(),
-      ).toBe('Item 3 Label')
+      expect(content.at(2).children(Div).at(0).children(Span).at(1).children().text()).toBe(
+        'Item 3 Label'
+      )
     })
 
     test('should contain className arrow in 2nd <Div> for each item ', () => {
       const content = wrapper.children(Li)
 
       content.forEach((contentItem) => {
-        expect(
-          contentItem
-            .children(Div)
-            .at(1)
-            .prop('className'),
-        ).toContain(css.arrow)
+        expect(contentItem.children(Div).at(1).prop('className')).toContain(css.arrow)
       })
     })
   })

@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
   const formValues = getFormValues(formName)(state)
 
   return {
-    chosenIntervalId: (formValues.delivery) ? formValues.delivery.interval_id : '1',
+    chosenIntervalId: formValues.delivery ? formValues.delivery.interval_id : '1',
     features: state.features,
     options: state.checkout.get('intervals'),
   }
@@ -21,11 +21,6 @@ const mapDispatchToProps = {
   trackSubscriptionIntervalChanged,
 }
 
-const SubscriptionContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Subscription)
+const SubscriptionContainer = connect(mapStateToProps, mapDispatchToProps)(Subscription)
 
-export {
-  SubscriptionContainer
-}
+export { SubscriptionContainer }

@@ -15,7 +15,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 const mapDispatchToProps = {
-  trackSubmitOrderEvent
+  trackSubmitOrderEvent,
 }
 
 export const SubmitButtonContainer = connect(mapStateToProps, mapDispatchToProps)(SubmitButton)

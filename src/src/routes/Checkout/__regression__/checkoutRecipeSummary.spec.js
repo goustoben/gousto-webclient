@@ -1,7 +1,7 @@
 import {
   setMocks,
   visitCheckout,
-  addRecipeDispatch
+  addRecipeDispatch,
 } from './pageUtils/checkout/checkoutRecipeSummary'
 
 describe('Given I’m a gousto logged-out website visitor', () => {
@@ -13,8 +13,10 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       addRecipeDispatch()
     })
     it('Then the recipe summary should be visible', () => {
-      cy.get('[data-testing="checkoutRecipeSummary"]')
-        .should('contain', 'Creamy Chicken Potato-Topped Pie')
+      cy.get('[data-testing="checkoutRecipeSummary"]').should(
+        'contain',
+        'Creamy Chicken Potato-Topped Pie'
+      )
     })
   })
 })

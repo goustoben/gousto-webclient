@@ -4,9 +4,9 @@
 @value Mackerel from 'styles/colors.css';
 
 .rowCheckout {
-	composes: row from 'sass-loader!styles/bootstrap.scss';
-	width: 100%;
-	margin: 0 auto;
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  width: 100%;
+  margin: 0 auto;
 }
 
 .rowCheckoutRedesign {
@@ -24,12 +24,12 @@
 }
 
 .col {
-	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+  composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
 }
 
 .section {
-	composes: col;
-	composes: col-md-7 from 'sass-loader!styles/bootstrap.scss';
+  composes: col;
+  composes: col-md-7 from 'sass-loader!styles/bootstrap.scss';
 }
 
 .sectionRedesign {
@@ -45,11 +45,11 @@
 }
 
 .aside {
-	composes: col;
-	composes: col-md-5 from 'sass-loader!styles/bootstrap.scss';
-	@media ScreenXSMax {
-		margin-top: SpacingMD;
-	}
+  composes: col;
+  composes: col-md-5 from 'sass-loader!styles/bootstrap.scss';
+  @media ScreenXSMax {
+    margin-top: SpacingMD;
+  }
 }
 
 .asideRedesign {
@@ -68,11 +68,11 @@
 }
 
 .checkoutContent {
-	composes: rowCheckout;
-	composes: pageContainerLG from 'styles/layout.css';
-	composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
-	padding-top: 20px;
-	padding-bottom: 15px;
+  composes: rowCheckout;
+  composes: pageContainerLG from 'styles/layout.css';
+  composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
+  padding-top: 20px;
+  padding-bottom: 15px;
 }
 
 .checkoutContentRedesign {
@@ -90,32 +90,32 @@
 }
 
 .menuTitle {
-	composes: headerXXL from 'styles/typography.css';
-	composes: noMargin noPadding from 'sass-loader!styles/spacing.scss';
+  composes: headerXXL from 'styles/typography.css';
+  composes: noMargin noPadding from 'sass-loader!styles/spacing.scss';
 }
 
 .subHeader {
-	composes: relative from 'styles/position.css';
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-	background: White;
-	z-index: 1;
+  composes: relative from 'styles/position.css';
+  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+  background: White;
+  z-index: 1;
 }
 
 .subHeaderContent {
-	composes: pageContainer from 'styles/layout.css';
-	composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
+  composes: pageContainer from 'styles/layout.css';
+  composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .mobileButton {
-	composes: fixed from 'styles/position.css';
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	border-radius: 0;
+  composes: fixed from 'styles/position.css';
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
 }
 
 .errorContainer {
-	margin-top: 10px;
+  margin-top: 10px;
 }
 
 .modal {

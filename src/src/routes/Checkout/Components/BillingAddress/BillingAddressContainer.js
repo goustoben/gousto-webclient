@@ -29,7 +29,4 @@ const mapDispatchToProps = {
   change,
 }
 
-export const BillingAddressContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(BillingAddress)
+export const BillingAddressContainer = connect(mapStateToProps, mapDispatchToProps)(BillingAddress)

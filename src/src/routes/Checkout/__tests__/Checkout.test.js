@@ -11,8 +11,18 @@ import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
 import { BoxDetailsContainer } from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
-// eslint-disable-next-line import/named
-import { menuLoadDays, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
+/* eslint-disable import/named */
+import {
+  menuLoadDays,
+  checkoutCreatePreviewOrder,
+  basketStepsOrderReceive,
+  basketProceedToCheckout,
+  menuLoadBoxPrices,
+  pricingRequest,
+  redirect,
+  replace,
+} from 'actions'
+/* eslint-enable import/named */
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
 import logger from 'utils/logger'
@@ -39,7 +49,7 @@ jest.mock('actions/boxSummary', () => ({
 }))
 
 jest.mock('routes/Checkout/loadCheckoutScript', () => ({
-  loadCheckoutScript: jest.fn()
+  loadCheckoutScript: jest.fn(),
 }))
 
 jest.mock('routes/Checkout/loadPayPalScripts', () => ({
@@ -52,7 +62,7 @@ jest.mock('../../Menu/fetchData/menuService')
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
-  warning: jest.fn()
+  warning: jest.fn(),
 }))
 
 describe('Checkout', () => {
@@ -96,7 +106,7 @@ describe('Checkout', () => {
       params: { stepName: 'aboutyou' },
       pending: Immutable.Map({}),
       payment: Immutable.Map({
-        currentPaymentMethod: PaymentMethod.Card
+        currentPaymentMethod: PaymentMethod.Card,
       }),
       stepsOrder: Immutable.List(['boxdetails', 'summary', 'aboutyou', 'payment', 'delivery']),
       recipes: Immutable.Map({}),
@@ -104,9 +114,7 @@ describe('Checkout', () => {
         browser: 'mobile',
       }),
       error: Immutable.Map({}),
-      form: {
-
-      }
+      form: {},
     }
 
     getState = jest.fn().mockReturnValue(store)
@@ -153,8 +161,7 @@ describe('Checkout', () => {
 
   describe('rendering', () => {
     beforeEach(() => {
-      wrapper = shallow(<Checkout trackSignupStep={jest.fn()} />,
-        { context })
+      wrapper = shallow(<Checkout trackSignupStep={jest.fn()} />, { context })
     })
 
     test('should render a <Div> with no props', () => {
@@ -278,8 +285,7 @@ describe('Checkout', () => {
         error: Immutable.Map({
           BASKET_PREVIEW_ORDER_CHANGE: {
             code: 'out-of-stock',
-            message:
-              'Item(s) out of stock: {"3":"Umbrian Wild Boar Salami Ragu with Ling"}',
+            message: 'Item(s) out of stock: {"3":"Umbrian Wild Boar Salami Ragu with Ling"}',
             errors: {},
           },
         }),
@@ -299,10 +305,7 @@ describe('Checkout', () => {
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
-      expect(redirect).toHaveBeenCalledWith(
-        '/menu?from=newcheckout&error=no-stock',
-        true,
-      )
+      expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=no-stock', true)
     })
 
     test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, redirect to menu with error=basket-expired', async () => {
@@ -339,11 +342,10 @@ describe('Checkout', () => {
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
-      expect(redirect).toHaveBeenCalledWith(
-        '/menu?from=newcheckout&error=basket-expired',
-        true,
+      expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=basket-expired', true)
+      expect(logger.warning).toHaveBeenCalledWith(
+        'Preview order id failed to create, persistent basket might be expired, error: basket-expired'
       )
-      expect(logger.warning).toHaveBeenCalledWith('Preview order id failed to create, persistent basket might be expired, error: basket-expired')
     })
 
     test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, redirect to menu with error=undefined-error', async () => {
@@ -376,10 +378,7 @@ describe('Checkout', () => {
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
-      expect(redirect).toHaveBeenCalledWith(
-        '/menu?from=newcheckout&error=undefined-error',
-        true,
-      )
+      expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=undefined-error', true)
     })
   })
 
@@ -398,7 +397,7 @@ describe('Checkout', () => {
           fetchPayPalClientToken={fetchPayPalClientToken}
           changeRecaptcha={changeRecaptcha}
         />,
-        { context },
+        { context }
       )
     })
 
@@ -463,7 +462,7 @@ describe('Checkout', () => {
     beforeEach(() => {
       clearPayPalClientToken = jest.fn()
       wrapper.setProps({
-        clearPayPalClientToken
+        clearPayPalClientToken,
       })
     })
 
@@ -480,11 +479,7 @@ describe('Checkout', () => {
 
       beforeEach(() => {
         wrapper = shallow(
-          <Checkout
-            params={{ stepName: 'payment' }}
-            browser="mobile"
-            checkoutPaymentFeature
-          />
+          <Checkout params={{ stepName: 'payment' }} browser="mobile" checkoutPaymentFeature />
         )
       })
 
@@ -567,7 +562,7 @@ describe('Checkout', () => {
     beforeEach(() => {
       instance = wrapper.instance()
       wrapper.setProps({
-        browser: 'mobile'
+        browser: 'mobile',
       })
     })
 
@@ -640,7 +635,7 @@ describe('Checkout', () => {
   describe('when isCheckoutOverhaulEnabled is enabled', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 
@@ -697,7 +692,7 @@ describe('Checkout', () => {
         wrapper.setProps({
           isMobile: false,
           isAuthenticated: true,
-          trackCheckoutButtonPressed
+          trackCheckoutButtonPressed,
         })
       })
 
@@ -713,7 +708,7 @@ describe('Checkout', () => {
         wrapper.setProps({
           isMobile: true,
           isAuthenticated: true,
-          trackCheckoutButtonPressed
+          trackCheckoutButtonPressed,
         })
       })
 
@@ -728,7 +723,7 @@ describe('Checkout', () => {
       beforeEach(() => {
         wrapper.setProps({
           isAuthenticated: true,
-          loginVisibilityChange
+          loginVisibilityChange,
         })
       })
 
@@ -743,7 +738,7 @@ describe('Checkout', () => {
       beforeEach(() => {
         wrapper.setProps({
           isAuthenticated: false,
-          loginVisibilityChange
+          loginVisibilityChange,
         })
       })
 

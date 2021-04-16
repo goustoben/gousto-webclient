@@ -3,7 +3,7 @@ import { checkPaymentAuth } from 'actions/checkout'
 import { getChallengeUrl, isModalOpen } from 'selectors/payment'
 import { Checkout3DSModal } from './Checkout3DSModal'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOpen: isModalOpen(state),
   challengeURL: getChallengeUrl(state),
 })
@@ -14,5 +14,5 @@ const mapDispatchToProps = {
 
 export const Checkout3DSModalContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Checkout3DSModal)

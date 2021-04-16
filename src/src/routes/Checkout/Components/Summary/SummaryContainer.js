@@ -1,5 +1,9 @@
 import { connect } from 'react-redux'
-import { isShowNoDiscountCTAFeatureEnabled, isChoosePlanEnabled, getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import {
+  isShowNoDiscountCTAFeatureEnabled,
+  isChoosePlanEnabled,
+  getIsCheckoutOverhaulEnabled,
+} from 'selectors/features'
 import { getPromoCode } from 'selectors/basket'
 import promoActions from 'actions/promos'
 import { Summary } from './Summary'
@@ -24,6 +28,4 @@ const SummaryContainer = connect(mapStateToProps, {
   promoApplyCheckoutCode: promoActions.promoApplyCheckoutCode,
 })(Summary)
 
-export {
-  SummaryContainer
-}
+export { SummaryContainer }

@@ -6,7 +6,7 @@ import Svg from 'Svg'
 import css from './Breadcrumbs.css'
 
 const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks }) => {
-  const activeIndex = items && items.findIndex(item => item.id === currentId)
+  const activeIndex = items && items.findIndex((item) => item.id === currentId)
   const trackNavigation = (label) => () => trackCheckoutNavigationLinks(label)
 
   return (
@@ -14,27 +14,26 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks }) => {
       <ul className={css.breadcrumbsList}>
         {items.map(({ id, label }, index) => (
           <li key={id} className={css.listItem}>
-            {index > activeIndex
-              ? <span className={css.futureItem}>{label}</span>
-              : (
-                <Link
-                  clientRouted
-                  to={`/check-out/${id}`}
-                  tracking={trackNavigation(label)}
-                  className={classNames({
-                    [css.activeItem]: index === activeIndex || index < activeIndex,
-                    [css.futureItem]: index > activeIndex,
-                  })}
-                >
-                  {label}
-                </Link>
-              )}
+            {index > activeIndex ? (
+              <span className={css.futureItem}>{label}</span>
+            ) : (
+              <Link
+                clientRouted
+                to={`/check-out/${id}`}
+                tracking={trackNavigation(label)}
+                className={classNames({
+                  [css.activeItem]: index === activeIndex || index < activeIndex,
+                  [css.futureItem]: index > activeIndex,
+                })}
+              >
+                {label}
+              </Link>
+            )}
             <Svg
               fileName="icon-chevron-small-right"
-              className={classNames(
-                css.breadcrumbsSeparator,
-                { [css.hidden]: index === items.length - 1 }
-              )}
+              className={classNames(css.breadcrumbsSeparator, {
+                [css.hidden]: index === items.length - 1,
+              })}
             />
           </li>
         ))}
@@ -44,20 +43,14 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks }) => {
 }
 
 Breadcrumbs.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
-    label: PropTypes.string.isRequired,
-  })).isRequired,
-  currentId: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  currentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   trackCheckoutNavigationLinks: PropTypes.func.isRequired,
 }
 
-export {
-  Breadcrumbs,
-}
+export { Breadcrumbs }

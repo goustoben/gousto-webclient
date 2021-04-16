@@ -6,13 +6,7 @@ describe('Given OrderedRecipe', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(
-      <OrderedRecipes
-        title="recipe title"
-        recipeId="101"
-        isFineDineIn={false}
-      />
-    )
+    wrapper = shallow(<OrderedRecipes title="recipe title" recipeId="101" isFineDineIn={false} />)
   })
 
   describe('When component renders', () => {
@@ -25,7 +19,7 @@ describe('Given OrderedRecipe', () => {
     describe('And isFineDineIn is true', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isFineDineIn: true
+          isFineDineIn: true,
         })
       })
 
@@ -37,7 +31,7 @@ describe('Given OrderedRecipe', () => {
     describe('And isCheckoutOverhaulEnabled is true', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isCheckoutOverhaulEnabled: true
+          isCheckoutOverhaulEnabled: true,
         })
       })
 

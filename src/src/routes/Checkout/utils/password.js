@@ -18,23 +18,20 @@ schema
   .symbols(1) // Must have at least 1 symbol
 
 const commonWordsSchema = new PasswordValidator()
-commonWordsSchema
-  .is()
-  .not()
-  .oneOf(commonWords) // Must not have common words
+commonWordsSchema.is().not().oneOf(commonWords) // Must not have common words
 
 export const validator = (value) => {
   let errors = [
     ...schema.validate(value, { list: true }),
-    ...commonWordsSchema.validate(value && value.toLowerCase(), { list: true })
+    ...commonWordsSchema.validate(value && value.toLowerCase(), { list: true }),
   ]
 
   if (!errors.includes('digits')) {
-    errors = errors.filter(error => error !== 'symbols')
+    errors = errors.filter((error) => error !== 'symbols')
   }
 
   if (!errors.includes('symbols')) {
-    errors = errors.filter(error => error !== 'digits')
+    errors = errors.filter((error) => error !== 'digits')
   }
 
   return value && errors.length > 0 ? errors : undefined

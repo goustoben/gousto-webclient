@@ -17,7 +17,7 @@ class Buttons extends React.Component {
   getSegments = (tooltipMessage, tooltipWidth, canAdd, canRemove, segment) => {
     const { tooltipVisibleRemove, tooltipVisibleAdd } = this.state
 
-    return ([
+    return [
       <Tooltip
         key={0}
         placement="topRight"
@@ -63,7 +63,7 @@ class Buttons extends React.Component {
           <Control>+</Control>
         </Segment>
       </Tooltip>,
-    ])
+    ]
   }
 
   handleAdd = () => {
@@ -80,38 +80,32 @@ class Buttons extends React.Component {
     }
   }
 
-  tooltipToggle = (condition, stateName) => (
-    (visible) => {
-      if (condition) {
-        this.setState({ [`tooltipVisible${stateName}`]: visible })
-      }
+  tooltipToggle = (condition, stateName) => (visible) => {
+    if (condition) {
+      this.setState({ [`tooltipVisible${stateName}`]: visible })
     }
-  )
+  }
 
-  tooltipHover = (condition, stateName) => (
-    (event) => {
-      if (condition) {
-        if (event.type === 'mouseenter') {
-          this.setState({ [`tooltipVisible${stateName}`]: true })
-        } else if (event.type === 'mouseleave') {
-          this.setState({ [`tooltipVisible${stateName}`]: false })
-        }
+  tooltipHover = (condition, stateName) => (event) => {
+    if (condition) {
+      if (event.type === 'mouseenter') {
+        this.setState({ [`tooltipVisible${stateName}`]: true })
+      } else if (event.type === 'mouseleave') {
+        this.setState({ [`tooltipVisible${stateName}`]: false })
       }
     }
-  )
+  }
 
-  disabledClick = (condition, stateName) => (
-    () => {
-      if (condition) {
-        const { visible } = this.state
-        if (visible) {
-          this.setState({ [`tooltipVisible${stateName}`]: false })
-        } else {
-          this.setState({ [`tooltipVisible${stateName}`]: true })
-        }
+  disabledClick = (condition, stateName) => () => {
+    if (condition) {
+      const { visible } = this.state
+      if (visible) {
+        this.setState({ [`tooltipVisible${stateName}`]: false })
+      } else {
+        this.setState({ [`tooltipVisible${stateName}`]: true })
       }
     }
-  )
+  }
 
   render() {
     const { outOfstock, limitReached, showControl, qty, numPortions } = this.props
@@ -134,17 +128,16 @@ class Buttons extends React.Component {
     )
 
     return (
-      <Button
-        className={css.btnCheckout}
-        width="auto"
-      >
-        {showControl ? this.getSegments(
-          tooltipMessage,
-          css.tooltipWidth,
-          outOfstock || limitReached,
-          qty === 1,
-          segment
-        ) : segment}
+      <Button className={css.btnCheckout} width="auto">
+        {showControl
+          ? this.getSegments(
+              tooltipMessage,
+              css.tooltipWidth,
+              outOfstock || limitReached,
+              qty === 1,
+              segment
+            )
+          : segment}
       </Button>
     )
   }
@@ -171,6 +164,4 @@ Buttons.defaultProps = {
   showControl: false,
 }
 
-export {
-  Buttons
-}
+export { Buttons }

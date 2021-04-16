@@ -8,7 +8,7 @@ export const PaymentMethodSelectorListItem = ({
   paymentMethod,
   currentPaymentMethod,
   onPaymentMethodChanged,
-  children
+  children,
 }) => {
   const isActive = paymentMethod === currentPaymentMethod
 
@@ -34,5 +34,5 @@ PaymentMethodSelectorListItem.propTypes = {
   paymentMethod: PropTypes.string.isRequired,
   currentPaymentMethod: PropTypes.string.isRequired,
   onPaymentMethodChanged: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 }

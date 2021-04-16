@@ -8,7 +8,13 @@ import { ErrorMessage } from '../../ErrorMessage'
 
 class SubmitButton extends React.PureComponent {
   handleSubmit = () => {
-    const { manualSubmit, browser, checkoutMobileInvalid, checkoutInvalid, onStepChange } = this.props
+    const {
+      manualSubmit,
+      browser,
+      checkoutMobileInvalid,
+      checkoutInvalid,
+      onStepChange,
+    } = this.props
     manualSubmit('delivery')
     if (browser === 'mobile') {
       manualSubmit('yourdetails')
@@ -27,12 +33,7 @@ class SubmitButton extends React.PureComponent {
     return (
       <div>
         <ErrorMessage />
-        {confirmedAddress && (
-          <CheckoutButton
-            stepName={nextStepName}
-            onClick={this.handleSubmit}
-          />
-        )}
+        {confirmedAddress && <CheckoutButton stepName={nextStepName} onClick={this.handleSubmit} />}
       </div>
     )
   }
@@ -45,9 +46,11 @@ SubmitButton.propTypes = {
   browser: PropTypes.string,
   onStepChange: PropTypes.func.isRequired,
   manualSubmit: PropTypes.func.isRequired,
-  formValues: PropTypes.objectOf(PropTypes.shape({
-    confirmed: PropTypes.bool,
-  })),
+  formValues: PropTypes.objectOf(
+    PropTypes.shape({
+      confirmed: PropTypes.bool,
+    })
+  ),
 }
 
 SubmitButton.defaultProps = {
@@ -57,6 +60,4 @@ SubmitButton.defaultProps = {
   formValues: {},
 }
 
-export {
-  SubmitButton
-}
+export { SubmitButton }

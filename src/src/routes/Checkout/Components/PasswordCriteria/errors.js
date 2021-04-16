@@ -1,14 +1,13 @@
 export const passwordCriteria = (password) => [
-  ...((password && password.length > 255)
+  ...(password && password.length > 255
     ? {
-      text: 'too long',
-      type: 'max',
-    }
+        text: 'too long',
+        type: 'max',
+      }
     : {
-      text: '8 characters or more',
-      type: 'min',
-    }
-  ),
+        text: '8 characters or more',
+        type: 'min',
+      }),
   {
     text: 'at least one lower case letter (a-z)',
     type: 'lowercase',

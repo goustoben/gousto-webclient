@@ -22,7 +22,11 @@ const SubscriptionOption = ({ name, id, title, description, checked, onClick }) 
     <div className={css.content}>
       <p className={css.title}>{title}</p>
       {description
-        ? description.map(descriptionOption => <p key={descriptionOption} className={css.description}>{descriptionOption}</p>)
+        ? description.map((descriptionOption) => (
+            <p key={descriptionOption} className={css.description}>
+              {descriptionOption}
+            </p>
+          ))
         : null}
     </div>
   </label>
@@ -44,6 +48,4 @@ SubscriptionOption.propTypes = {
   onClick: PropTypes.func,
 }
 
-export {
-  SubscriptionOption
-}
+export { SubscriptionOption }

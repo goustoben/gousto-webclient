@@ -26,7 +26,7 @@ describe('CheckoutPayPalDetails', () => {
     describe('and isPayPalSetupDone is true', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isPayPalSetupDone: true
+          isPayPalSetupDone: true,
         })
       })
 
@@ -42,7 +42,7 @@ describe('CheckoutPayPalDetails', () => {
     describe('and isPayPalSetupDone is false', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isPayPalSetupDone: false
+          isPayPalSetupDone: false,
         })
       })
 
@@ -54,7 +54,7 @@ describe('CheckoutPayPalDetails', () => {
     describe('when isCheckoutOverhaulEnabled is true', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isCheckoutOverhaulEnabled: true
+          isCheckoutOverhaulEnabled: true,
         })
       })
 
@@ -134,7 +134,7 @@ describe('CheckoutPayPalDetails', () => {
 
     beforeEach(() => {
       clientInstance = {
-        teardown: jest.fn()
+        teardown: jest.fn(),
       }
       wrapper.instance().clientInstance = clientInstance
     })
@@ -154,20 +154,20 @@ describe('CheckoutPayPalDetails', () => {
     let braintree
     let paypal
     const clientInstance = {
-      name: 'client-instance'
+      name: 'client-instance',
     }
     const dataCollectorInstance = {
       name: 'data-collector-instance',
-      deviceData: JSON.stringify({ correlationId: 'dsfgsdfg' })
+      deviceData: JSON.stringify({ correlationId: 'dsfgsdfg' }),
     }
     let paypalButtonsInstance = {
       name: 'data-collector-instance',
-      render: jest.fn(() => Promise.resolve())
+      render: jest.fn(() => Promise.resolve()),
     }
     let paypalCheckoutInstance = {
       loadPayPalSDK: jest.fn(() => Promise.resolve()),
       createPayment: jest.fn(() => Promise.resolve()),
-      tokenizePayment: jest.fn(() => Promise.resolve({ nonce: 'fake-nonce' }))
+      tokenizePayment: jest.fn(() => Promise.resolve({ nonce: 'fake-nonce' })),
     }
 
     beforeEach(() => {
@@ -176,23 +176,23 @@ describe('CheckoutPayPalDetails', () => {
       setPayPalNonce = jest.fn()
       trackEvent = jest.fn()
       paypalButtonsInstance = {
-        render: jest.fn(() => Promise.resolve())
+        render: jest.fn(() => Promise.resolve()),
       }
       paypalCheckoutInstance = {
         loadPayPalSDK: jest.fn(() => Promise.resolve()),
         createPayment: jest.fn(() => Promise.resolve()),
-        tokenizePayment: jest.fn(() => Promise.resolve({ nonce: 'fake-nonce' }))
+        tokenizePayment: jest.fn(() => Promise.resolve({ nonce: 'fake-nonce' })),
       }
 
       braintree = {
         client: {
-          create: jest.fn(() => Promise.resolve(clientInstance))
+          create: jest.fn(() => Promise.resolve(clientInstance)),
         },
         dataCollector: {
-          create: jest.fn(() => Promise.resolve(dataCollectorInstance))
+          create: jest.fn(() => Promise.resolve(dataCollectorInstance)),
         },
         paypalCheckout: {
-          create: jest.fn(() => Promise.resolve(paypalCheckoutInstance))
+          create: jest.fn(() => Promise.resolve(paypalCheckoutInstance)),
         },
       }
 
@@ -220,7 +220,7 @@ describe('CheckoutPayPalDetails', () => {
         await wrapper.instance().initPayPal()
 
         expect(braintree.client.create).toHaveBeenCalledWith({
-          authorization: 'fake-client-token'
+          authorization: 'fake-client-token',
         })
       })
 
@@ -238,7 +238,7 @@ describe('CheckoutPayPalDetails', () => {
         await wrapper.instance().initPayPal()
 
         expect(braintree.paypalCheckout.create).toHaveBeenCalledWith({
-          client: clientInstance
+          client: clientInstance,
         })
       })
 
@@ -261,7 +261,7 @@ describe('CheckoutPayPalDetails', () => {
           createBillingAgreement: expect.any(Function),
           onApprove: expect.any(Function),
           onCancel: expect.any(Function),
-          onError: expect.any(Function)
+          onError: expect.any(Function),
         })
         expect(paypalButtonsInstance.render).toHaveBeenCalledWith('#paypal-container')
       })
@@ -323,7 +323,7 @@ describe('CheckoutPayPalDetails', () => {
 
       describe('when onApprove is called', () => {
         const approveData = {
-          name: 'test-approve-data'
+          name: 'test-approve-data',
         }
 
         test('should trigger clickConfirmPayPal event', () => {
@@ -388,7 +388,7 @@ describe('CheckoutPayPalDetails', () => {
   describe('when isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 
@@ -399,7 +399,7 @@ describe('CheckoutPayPalDetails', () => {
     describe('and renderPayPalButton is called', () => {
       const paypalButtonsInstance = {
         name: 'data-collector-instance',
-        render: jest.fn(() => Promise.resolve())
+        render: jest.fn(() => Promise.resolve()),
       }
       const paypalObj = {
         FUNDING: {
@@ -414,14 +414,16 @@ describe('CheckoutPayPalDetails', () => {
       })
 
       test('then should have style', () => {
-        expect(paypalObj.Buttons).toHaveBeenCalledWith(expect.objectContaining({
-          fundingSource: 'PAYPAL',
-          style: {
-            height: 48,
-            label: 'pay',
-            tagline: false,
-          }
-        }))
+        expect(paypalObj.Buttons).toHaveBeenCalledWith(
+          expect.objectContaining({
+            fundingSource: 'PAYPAL',
+            style: {
+              height: 48,
+              label: 'pay',
+              tagline: false,
+            },
+          })
+        )
       })
     })
   })

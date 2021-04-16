@@ -4,7 +4,7 @@ export const BRAINTREE_CLIENT = 'client'
 export const BRAINTREE_PAYPAL_CHECKOUT = 'paypal-checkout'
 export const BRAINTREE_DATA_COLLECTOR = 'data-collector'
 
-const loadScript = (name, document) => (
+const loadScript = (name, document) =>
   new Promise((resolve, reject) => {
     if (document) {
       const scriptId = `braintree-${name}-script`
@@ -24,15 +24,13 @@ const loadScript = (name, document) => (
       reject()
     }
   })
-)
 
 export const loadPayPalScripts = (callback, document = window.document) => {
-  Promise
-    .all([
-      loadScript(BRAINTREE_CLIENT, document),
-      loadScript(BRAINTREE_PAYPAL_CHECKOUT, document),
-      loadScript(BRAINTREE_DATA_COLLECTOR, document),
-    ])
+  Promise.all([
+    loadScript(BRAINTREE_CLIENT, document),
+    loadScript(BRAINTREE_PAYPAL_CHECKOUT, document),
+    loadScript(BRAINTREE_DATA_COLLECTOR, document),
+  ])
     .then(callback)
     .catch(() => {})
 }

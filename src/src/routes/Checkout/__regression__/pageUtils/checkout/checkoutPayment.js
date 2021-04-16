@@ -1,7 +1,4 @@
-import {
-  goToCheckout,
-  clearAndFillCheckoutForm
-} from './checkoutAboutYou'
+import { goToCheckout, clearAndFillCheckoutForm } from './checkoutAboutYou'
 import { getFormState, getStore } from './checkoutGeneralUtils'
 import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 
@@ -36,24 +33,17 @@ export const goToPayment = () => {
     firstname: 'John',
     lastname: 'Smith',
     email: '123@456.com',
-    password: '1234abcd'
+    password: '1234abcd',
   })
   selectAddress()
   phoneNoStep()
 }
 
-const getIframeDocument = (element) => (
-  cy
-    .get('iframe')
-    .eq(element)
-    .its('0.contentDocument').should('exist')
-)
+const getIframeDocument = (element) =>
+  cy.get('iframe').eq(element).its('0.contentDocument').should('exist')
 
-const getIframeBody = (element) => (
-  getIframeDocument(element)
-    .its('body').should('not.be.undefined')
-    .then(cy.wrap)
-)
+const getIframeBody = (element) =>
+  getIframeDocument(element).its('body').should('not.be.undefined').then(cy.wrap)
 
 export const getHouseNo = (win) => {
   if (Cypress.env().platform === 'mobile') {
@@ -63,19 +53,20 @@ export const getHouseNo = (win) => {
   }
 }
 
-export const getPaymentSyncErrors = (win) => (
-  getFormState(win).payment.syncErrors.payment
-)
+export const getPaymentSyncErrors = (win) => getFormState(win).payment.syncErrors.payment
 
-export const fillAllIframe = ({number, expiry, cvv}) => {
-  getIframeBody(0).find('#checkout-frames-card-number').click().type(number, {force: true})
-  getIframeBody(1).find('#checkout-frames-expiry-date').click().type(expiry, {force: true})
-  getIframeBody(2).find('#checkout-frames-cvv').click().type(cvv, {force: true})
+export const fillAllIframe = ({ number, expiry, cvv }) => {
+  getIframeBody(0).find('#checkout-frames-card-number').click().type(number, { force: true })
+  getIframeBody(1).find('#checkout-frames-expiry-date').click().type(expiry, { force: true })
+  getIframeBody(2).find('#checkout-frames-cvv').click().type(cvv, { force: true })
 }
 
-export const clearAndFillNumberIframe = ({number}) => {
-  getIframeBody(0).find('#checkout-frames-card-number').click().clear({force: true})
-    .type(number, {force: true})
+export const clearAndFillNumberIframe = ({ number }) => {
+  getIframeBody(0)
+    .find('#checkout-frames-card-number')
+    .click()
+    .clear({ force: true })
+    .type(number, { force: true })
 }
 
 export const cyGetIsRecaptchaEnabled = (win) => getIsRecaptchaEnabled(getStore(win).getState())

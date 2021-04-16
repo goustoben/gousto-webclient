@@ -77,6 +77,4 @@ CheckoutButton.defaultProps = {
   isFullWidth: true,
 }
 
-export {
-  CheckoutButton
-}
+export { CheckoutButton }

@@ -8,7 +8,7 @@ describe('Address', () => {
   let wrapper
   const props = {
     registerField: jest.fn(),
-    trackUTMAndPromoCode: jest.fn()
+    trackUTMAndPromoCode: jest.fn(),
   }
 
   beforeEach(() => {
@@ -49,7 +49,7 @@ describe('Address', () => {
             notFound: false,
             postcode: '',
             addressId: '',
-          }
+          },
         },
       })
     })
@@ -75,7 +75,9 @@ describe('Address', () => {
 
     describe('when handleEditAddressManually is invoked from a child component', () => {
       beforeEach(() => {
-        const onEnterAddressManuallyClick = wrapper.find('AddressOverhaul').prop('onEnterAddressManuallyClick')
+        const onEnterAddressManuallyClick = wrapper
+          .find('AddressOverhaul')
+          .prop('onEnterAddressManuallyClick')
         onEnterAddressManuallyClick()
       })
 

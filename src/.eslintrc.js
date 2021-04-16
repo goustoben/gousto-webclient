@@ -267,6 +267,7 @@ module.exports = {
     {
       // Make eslint rules agree with prettier.
       "files": [
+        "src/routes/Checkout/**/*.js",
         "src/routes/Home/**/*.js",
         "src/routes/Payment/**/*.js",
         "src/routes/Signup/**/*.js"
@@ -281,12 +282,12 @@ module.exports = {
             }
           }
         ],
-        "indent": [2, 2, {
-          "ignoredNodes": ["JSXElement"],
-          "ObjectExpression": "off"
-        }],
+        "indent": 0,
+        "newline-per-chained-call": 0,
         "no-confusing-arrow": 0,
-        "react/jsx-one-expression-per-line": 0
+        "react/jsx-indent": 0,
+        "react/jsx-one-expression-per-line": 0,
+        "react/jsx-wrap-multilines": 0
       }
     }
   ]

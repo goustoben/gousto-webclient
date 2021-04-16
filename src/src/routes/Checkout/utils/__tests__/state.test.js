@@ -10,13 +10,13 @@ describe('Checkout state selectors', () => {
       state = {
         pending: Immutable.Map({
           [actionTypes.CHECKOUT_CARD_SUBMIT]: false,
-          [actionTypes.CHECKOUT_SIGNUP]: false
+          [actionTypes.CHECKOUT_SIGNUP]: false,
         }),
         form: {
           checkout: {
-            submitting: false
-          }
-        }
+            submitting: false,
+          },
+        },
       }
     })
 

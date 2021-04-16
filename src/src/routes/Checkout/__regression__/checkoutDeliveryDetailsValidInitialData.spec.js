@@ -14,8 +14,9 @@ describe("Given I'm a logged out user", () => {
     })
 
     it('Then my address has persisted based on what I’ve entered on the delivery address step', () => {
-      cy.get('[data-testing="checkoutDeliveryDetailsAddress"]')
-        .contains('THE SHEPHERDS BUILDING, CHARECROFT WAY, LONDON, MIDDLESEX, W14 0EE')
+      cy.get('[data-testing="checkoutDeliveryDetailsAddress"]').contains(
+        'THE SHEPHERDS BUILDING, CHARECROFT WAY, LONDON, MIDDLESEX, W14 0EE'
+      )
     })
 
     it('And there is an “Edit address“ link I can click on to go back to edit it', () => {

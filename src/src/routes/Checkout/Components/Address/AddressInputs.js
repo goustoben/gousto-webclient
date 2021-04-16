@@ -114,6 +114,4 @@ AddressInputs.defaultProps = {
   isCheckoutOverhaulEnabled: false,
 }
 
-export {
-  AddressInputs
-}
+export { AddressInputs }

@@ -75,7 +75,7 @@ export class AddressOverhaul extends PureComponent {
           />
         )}
 
-        {(!(isEditingManually || isAddressSelected)) && (
+        {!(isEditingManually || isAddressSelected) && (
           <div className={css.enterAddressManually}>
             <span
               role="button"

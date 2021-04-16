@@ -21,7 +21,7 @@ export const AboutYouStep = ({
   checkoutValid,
   trackUTMAndPromoCode,
   isCheckoutOverhaulEnabled,
-  onLoginClick
+  onLoginClick,
 }) => {
   const handleSubmit = () => {
     if (checkoutValid) {
@@ -73,10 +73,16 @@ AboutYouStep.defaultProps = {
   onLoginClick: () => {},
 }
 
-const AboutYouForm = formContainer(AboutYouStep, userRules(sectionName), sectionName, {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
+const AboutYouForm = formContainer(
+  AboutYouStep,
+  userRules(sectionName),
+  sectionName,
+  {},
+  {},
+  userAsyncValidation,
+  ['aboutyou.password']
+) // eslint-disable-line import/no-mutable-exports
 
 const AboutYou = addInitialValues(AboutYouForm, { sectionName })
 
-export {
-  AboutYou
-}
+export { AboutYou }

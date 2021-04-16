@@ -15,7 +15,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
     super()
 
     this.state = {
-      isPayPalInitialized: false
+      isPayPalInitialized: false,
     }
   }
 
@@ -42,55 +42,48 @@ class CheckoutPayPalDetails extends React.PureComponent {
   createBraintreeClient = async () => {
     const { token } = this.props
 
-    this.clientInstance = await braintree.client
-      .create({
-        authorization: token
-      })
+    this.clientInstance = await braintree.client.create({
+      authorization: token,
+    })
   }
 
   fetchDeviceData = async () => {
     const { setPayPalDeviceData } = this.props
 
-    const dataCollectorInstance = await braintree.dataCollector
-      .create({
-        client: this.clientInstance,
-        paypal: true,
-      })
+    const dataCollectorInstance = await braintree.dataCollector.create({
+      client: this.clientInstance,
+      paypal: true,
+    })
     setPayPalDeviceData(dataCollectorInstance.deviceData)
   }
 
   createPayPalCheckout = async () => {
-    this.paypalCheckoutInstance = await braintree.paypalCheckout
-      .create({
-        client: this.clientInstance
-      })
+    this.paypalCheckoutInstance = await braintree.paypalCheckout.create({
+      client: this.clientInstance,
+    })
   }
 
   loadPayPalSDK = async () => {
-    await this.paypalCheckoutInstance
-      .loadPayPalSDK({
-        vault: true,
-        commit: false,
-        currency: 'GBP',
-        intent: 'capture',
-      })
+    await this.paypalCheckoutInstance.loadPayPalSDK({
+      vault: true,
+      commit: false,
+      currency: 'GBP',
+      intent: 'capture',
+    })
   }
 
-  createPayment = () => (
-    this.paypalCheckoutInstance
-      .createPayment({
-        flow: 'vault',
-        locale: 'en_GB',
-        billingAgreementDescription: 'Gousto recipe box subscription',
-      })
-  )
+  createPayment = () =>
+    this.paypalCheckoutInstance.createPayment({
+      flow: 'vault',
+      locale: 'en_GB',
+      billingAgreementDescription: 'Gousto recipe box subscription',
+    })
 
   fetchPayPalNonce = async (approveData) => {
     const { setPayPalNonce, firePayPalError } = this.props
 
     try {
-      const payload = await this.paypalCheckoutInstance
-        .tokenizePayment(approveData)
+      const payload = await this.paypalCheckoutInstance.tokenizePayment(approveData)
       setPayPalNonce(payload.nonce)
     } catch (e) {
       firePayPalError(e)
@@ -128,9 +121,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
       }
     }
 
-    return paypal
-      .Buttons(buttonsConfig)
-      .render('#paypal-container')
+    return paypal.Buttons(buttonsConfig).render('#paypal-container')
   }
 
   async initPayPal() {
@@ -138,7 +129,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
 
     clearPayPalErrors()
     this.setState({
-      isPayPalInitialized: false
+      isPayPalInitialized: false,
     })
 
     try {
@@ -149,7 +140,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
       await this.renderPayPalButton()
 
       this.setState({
-        isPayPalInitialized: true
+        isPayPalInitialized: true,
       })
     } catch (e) {
       firePayPalError(e)
@@ -168,7 +159,10 @@ class CheckoutPayPalDetails extends React.PureComponent {
             You will be prompted by PayPal for payment details to securely setup your subscription.
           </p>
           {!hasErrors && !isPayPalInitialized && <p className={css.text}>PayPal is loading...</p>}
-          <div id="paypal-container" className={classNames(css.paypalContainer, {[css.transparent]: !isPayPalInitialized})} />
+          <div
+            id="paypal-container"
+            className={classNames(css.paypalContainer, { [css.transparent]: !isPayPalInitialized })}
+          />
         </div>
 
         {isPayPalSetupDone && <PayPalConfirmation />}
@@ -183,10 +177,11 @@ class CheckoutPayPalDetails extends React.PureComponent {
     const isLoading = !hasErrors && !isPayPalInitialized
 
     return (
-      <div className={classNames(css.checkoutOverhaul, {
-        [css.hide]: hide || isPayPalSetupDone,
-        [css.payPalButtonVariation]: isCheckoutOverhaulEnabled,
-      })}
+      <div
+        className={classNames(css.checkoutOverhaul, {
+          [css.hide]: hide || isPayPalSetupDone,
+          [css.payPalButtonVariation]: isCheckoutOverhaulEnabled,
+        })}
       >
         <div
           id="paypal-container"

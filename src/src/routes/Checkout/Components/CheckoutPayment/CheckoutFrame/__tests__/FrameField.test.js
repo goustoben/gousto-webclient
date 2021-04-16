@@ -25,7 +25,7 @@ describe('given FrameField', () => {
   describe('when showError is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        showError: true
+        showError: true,
       })
     })
 
@@ -37,7 +37,7 @@ describe('given FrameField', () => {
   describe('when hasLockIcon is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        hasLockIcon: true
+        hasLockIcon: true,
       })
     })
 

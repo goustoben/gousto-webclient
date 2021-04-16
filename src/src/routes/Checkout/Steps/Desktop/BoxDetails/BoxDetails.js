@@ -8,10 +8,7 @@ import { BoxDetailsContainer } from '../../../Components/BoxDetails'
 const BoxDetails = ({ onStepChange }) => (
   <div>
     <BoxDetailsContainer />
-    <CheckoutButton
-      onClick={onStepChange}
-      stepName="Checkout Securely"
-    />
+    <CheckoutButton onClick={onStepChange} stepName="Checkout Securely" />
   </div>
 )
 
@@ -19,6 +16,4 @@ BoxDetails.propTypes = {
   onStepChange: PropTypes.func.isRequired,
 }
 
-export {
-  BoxDetails
-}
+export { BoxDetails }

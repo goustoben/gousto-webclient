@@ -43,21 +43,26 @@ const defaultProps = {
 
 class Summary extends PureComponent {
   renderLink() {
-    const { showNoDiscountCTA, promoCode , promoApplyCheckoutCode} = this.props
+    const { showNoDiscountCTA, promoCode, promoApplyCheckoutCode } = this.props
     const classes = classNames(css.link, css.noDiscountCTA)
 
     if (showNoDiscountCTA) {
-      return !promoCode && (
-      <div
-        className={classes}
-        role="button"
-        tabIndex="0"
-        onClick={() => { promoApplyCheckoutCode() }}
-        onKeyDown={onEnter(promoApplyCheckoutCode)}
-      >
-        Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;
-        <span className={css.arrowRight} />
-      </div>
+      return (
+        !promoCode && (
+          <div
+            className={classes}
+            role="button"
+            tabIndex="0"
+            onClick={() => {
+              promoApplyCheckoutCode()
+            }}
+            onKeyDown={onEnter(promoApplyCheckoutCode)}
+          >
+            Enter your discount code above, or click here to get 30% off all boxes in your first
+            month&nbsp;
+            <span className={css.arrowRight} />
+          </div>
+        )
       )
     }
 
@@ -70,7 +75,14 @@ class Summary extends PureComponent {
   }
 
   render() {
-    const { prices, basketRecipes, isLoading, routing, showAddPromocode, isCheckoutOverhaulEnabled } = this.props
+    const {
+      prices,
+      basketRecipes,
+      isLoading,
+      routing,
+      showAddPromocode,
+      isCheckoutOverhaulEnabled,
+    } = this.props
     const numRecipes = basketSum(basketRecipes)
 
     let currentStep
@@ -84,9 +96,9 @@ class Summary extends PureComponent {
 
     return (
       <div
-        className={classNames(css.summaryContainer,
-          { [css.summaryContainerRedesign]: isCheckoutOverhaulEnabled }
-        )}
+        className={classNames(css.summaryContainer, {
+          [css.summaryContainerRedesign]: isCheckoutOverhaulEnabled,
+        })}
         data-testing="checkoutOrderSummary"
       >
         {!isLoading && !isCheckoutOverhaulEnabled && (
@@ -94,11 +106,17 @@ class Summary extends PureComponent {
             <PricePerServingMessage />
           </Alert>
         )}
-        {isCheckoutOverhaulEnabled
-          ? <SectionHeader title="Order total" />
-          : <H3 headlineFont>Order total</H3>}
+        {isCheckoutOverhaulEnabled ? (
+          <SectionHeader title="Order total" />
+        ) : (
+          <H3 headlineFont>Order total</H3>
+        )}
         {isLoading ? (
-          <div className={classNames(css.loaderContainer, { [css.loaderContainerRedesign]: isCheckoutOverhaulEnabled })}>
+          <div
+            className={classNames(css.loaderContainer, {
+              [css.loaderContainerRedesign]: isCheckoutOverhaulEnabled,
+            })}
+          >
             <Loading className={css.loadingImage} />
           </div>
         ) : (
@@ -109,7 +127,11 @@ class Summary extends PureComponent {
                 <PricePerServingMessage isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled} />
               </div>
             )}
-            <div className={classNames(css.details, { [css.detailsRedesign]: isCheckoutOverhaulEnabled })}>
+            <div
+              className={classNames(css.details, {
+                [css.detailsRedesign]: isCheckoutOverhaulEnabled,
+              })}
+            >
               <Receipt
                 numRecipes={numRecipes}
                 prices={prices}
@@ -126,10 +148,7 @@ class Summary extends PureComponent {
                 isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
               />
               {!isCheckoutOverhaulEnabled && (
-                <div>
-                  {(currentStep !== 'payment')
-                  && this.renderLink()}
-                </div>
+                <div>{currentStep !== 'payment' && this.renderLink()}</div>
               )}
             </div>
           </Fragment>
@@ -142,6 +161,4 @@ class Summary extends PureComponent {
 Summary.defaultProps = defaultProps
 Summary.propTypes = propTypes
 
-export {
-  Summary
-}
+export { Summary }

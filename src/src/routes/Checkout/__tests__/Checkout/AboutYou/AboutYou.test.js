@@ -12,9 +12,7 @@ describe('AboutYou', () => {
 
   beforeEach(() => {
     checkoutStepValidation = sinon.spy()
-    wrapper = shallow(
-      <AboutYou checkoutStepValidation={checkoutStepValidation} />,
-    )
+    wrapper = shallow(<AboutYou checkoutStepValidation={checkoutStepValidation} />)
   })
 
   describe('rendering', () => {
@@ -32,12 +30,7 @@ describe('AboutYou', () => {
       test('should be true for "mask" for first name, last name, email, password, and marketing checkboxes', () => {
         const fields = Array.from(5)
         fields.forEach((index) => {
-          expect(
-            wrapper
-              .find(Field)
-              .at(index)
-              .prop('mask'),
-          ).toBeTruthy()
+          expect(wrapper.find(Field).at(index).prop('mask')).toBeTruthy()
         })
       })
     })

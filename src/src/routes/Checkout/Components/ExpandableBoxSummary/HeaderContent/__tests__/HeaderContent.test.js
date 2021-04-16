@@ -24,7 +24,7 @@ describe('HeaderContent', () => {
   describe('when isExpanded props is false', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isExpanded: false
+        isExpanded: false,
       })
     })
 

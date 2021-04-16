@@ -4,8 +4,8 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .summaryContainer {
-	padding: SpacingLG;
-	background-color: White;
+  padding: SpacingLG;
+  background-color: White;
 }
 
 .summaryContainerRedesign {
@@ -17,11 +17,11 @@
 }
 
 .loaderContainer {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding-top: 50px;
-	padding-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .loaderContainerRedesign {
@@ -30,13 +30,13 @@
 }
 
 .loadingImage {
-	width: 50px;
-	height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .details {
-	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
-	font-weight: normal;
+  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  font-weight: normal;
 }
 
 .detailsRedesign {
@@ -44,18 +44,18 @@
 }
 
 .link {
-	font-size: sizeSM;
-	cursor: pointer;
-	color: BlueBase;
+  font-size: sizeSM;
+  cursor: pointer;
+  color: BlueBase;
 
-	&:hover {
-		text-decoration: underline;
-	}
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .arrowRight {
-	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
-	font-size: sizeXXS;
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: sizeXXS;
 }
 
 .pricePerServingBlock {

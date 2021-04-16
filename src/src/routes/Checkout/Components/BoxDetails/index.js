@@ -1,2 +1,1 @@
 export { BoxDetailsContainer } from './BoxDetailsContainer'
-

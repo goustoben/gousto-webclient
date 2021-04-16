@@ -24,23 +24,26 @@ export const BoxDetails = ({
   const deliveryTime = getSlotTimes({ date, deliveryDays, slotId })
 
   return (
-    <div className={classNames(css.boxDetailsContainer, { [css.redesignContainer]: isCheckoutOverhaulEnabled })} data-testing="checkoutBoxDetailsSection">
-      {isCheckoutOverhaulEnabled
-        ? (
-          <div className={css.headerWrapper}>
-            <h3 className={css.redesignHeader}>
-              {isCheckoutOverhaulEnabled ? `Your box (${numPortions} people)` : 'In your box'}
-            </h3>
-            <span className={css.editOrder}>
-              <Link to={routes.client.menu} clientRouted>
-                Edit order
-              </Link>
-            </span>
-          </div>
-        )
-        : (
-          <h3 className={css.header}>In your box</h3>
-        )}
+    <div
+      className={classNames(css.boxDetailsContainer, {
+        [css.redesignContainer]: isCheckoutOverhaulEnabled,
+      })}
+      data-testing="checkoutBoxDetailsSection"
+    >
+      {isCheckoutOverhaulEnabled ? (
+        <div className={css.headerWrapper}>
+          <h3 className={css.redesignHeader}>
+            {isCheckoutOverhaulEnabled ? `Your box (${numPortions} people)` : 'In your box'}
+          </h3>
+          <span className={css.editOrder}>
+            <Link to={routes.client.menu} clientRouted>
+              Edit order
+            </Link>
+          </span>
+        </div>
+      ) : (
+        <h3 className={css.header}>In your box</h3>
+      )}
       <RecipeSummary showButton view="boxdetails" />
       {isCheckoutOverhaulEnabled && (
         <Fragment>
@@ -52,13 +55,9 @@ export const BoxDetails = ({
           <p className={css.deliveryTime}>{deliveryTime}</p>
         </Fragment>
       )}
-      {(basketSum(recipes) < maxRecipesNum && !isCheckoutOverhaulEnabled) ? (
+      {basketSum(recipes) < maxRecipesNum && !isCheckoutOverhaulEnabled ? (
         <div className={css.text}>
-          You get the best value when your box is full with
-          {' '}
-          {maxRecipesNum}
-          {' '}
-          recipes.&nbsp;
+          You get the best value when your box is full with {maxRecipesNum} recipes.&nbsp;
           <Link to={routes.client.menu} clientRouted>
             Add another recipe&nbsp;
             <span className={css.arrowRight} />
@@ -76,7 +75,7 @@ BoxDetails.propTypes = {
   isCheckoutOverhaulEnabled: PropTypes.bool,
   deliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
   slotId: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired
+  date: PropTypes.string.isRequired,
 }
 
 BoxDetails.defaultProps = {

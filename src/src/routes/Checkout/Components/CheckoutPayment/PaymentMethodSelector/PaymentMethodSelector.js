@@ -5,9 +5,18 @@ import { PaymentMethod } from 'config/signup'
 import { PaymentMethodSelectorListItem } from './PaymentMethodSelectorListItem'
 import css from './PaymentMethodSelector.css'
 
-export const PaymentMethodSelector = ({ currentPaymentMethod, onPaymentMethodChanged, showSelector }) => {
+export const PaymentMethodSelector = ({
+  currentPaymentMethod,
+  onPaymentMethodChanged,
+  showSelector,
+}) => {
   const methods = [
-    { method: PaymentMethod.Card, label: 'Card Payment', icon: css.visaMastercardIcon, filename: 'payment-method-visa-mastercard' },
+    {
+      method: PaymentMethod.Card,
+      label: 'Card Payment',
+      icon: css.visaMastercardIcon,
+      filename: 'payment-method-visa-mastercard',
+    },
     { method: PaymentMethod.PayPal, icon: css.paypalIcon, filename: 'payment-method-paypal' },
   ]
 
@@ -16,7 +25,7 @@ export const PaymentMethodSelector = ({ currentPaymentMethod, onPaymentMethodCha
       <p className={css.header}>Payment method</p>
       {showSelector && (
         <ul className={css.list}>
-          {methods.map(({method, label, icon, filename}) => (
+          {methods.map(({ method, label, icon, filename }) => (
             <PaymentMethodSelectorListItem
               paymentMethod={method}
               currentPaymentMethod={currentPaymentMethod}

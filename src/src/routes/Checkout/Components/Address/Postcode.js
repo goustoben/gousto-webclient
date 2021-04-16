@@ -32,23 +32,22 @@ const Postcode = ({
     }
   }
 
-  const addressOptions = addresses.length > 0 ? transformAddresses(addresses, isCheckoutOverhaulEnabled) : []
+  const addressOptions =
+    addresses.length > 0 ? transformAddresses(addresses, isCheckoutOverhaulEnabled) : []
 
   return (
     <Fragment>
-      <div className={classNames({
-        [addressCss.flex]: !isCheckoutOverhaulEnabled,
-        [postcodeCss.postcodeContainer]: isCheckoutOverhaulEnabled
-      })}
+      <div
+        className={classNames({
+          [addressCss.flex]: !isCheckoutOverhaulEnabled,
+          [postcodeCss.postcodeContainer]: isCheckoutOverhaulEnabled,
+        })}
       >
         <div
-          className={classNames(
-            postcodeCss.postCodeField,
-            {
-              [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
-              [postcodeCss.postCodeFieldRedesign]: isCheckoutOverhaulEnabled,
-            }
-          )}
+          className={classNames(postcodeCss.postCodeField, {
+            [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
+            [postcodeCss.postCodeFieldRedesign]: isCheckoutOverhaulEnabled,
+          })}
         >
           <Field
             name="postcodeTemp"
@@ -65,7 +64,11 @@ const Postcode = ({
             autocompleteOff
           />
         </div>
-        <div className={classNames(postcodeCss.findAddressButton, { [postcodeCss.searchCTA]: isCheckoutOverhaulEnabled })}>
+        <div
+          className={classNames(postcodeCss.findAddressButton, {
+            [postcodeCss.searchCTA]: isCheckoutOverhaulEnabled,
+          })}
+        >
           <CheckoutButton
             testingSelector="checkoutFindAddressButton"
             color="secondary"
@@ -79,10 +82,14 @@ const Postcode = ({
           />
         </div>
       </div>
-      {((addresses.length > 0 && showDropdown && !isCheckoutOverhaulEnabled) || (isCheckoutOverhaulEnabled && !isAddressSelected)) ? (
+      {(addresses.length > 0 && showDropdown && !isCheckoutOverhaulEnabled) ||
+      (isCheckoutOverhaulEnabled && !isAddressSelected) ? (
         <div>
           {!isCheckoutOverhaulEnabled && <br />}
-          <div className={classNames({ [postcodeCss.deliveryDropdown]: isCheckoutOverhaulEnabled })} data-testing="checkoutAddressDropdown">
+          <div
+            className={classNames({ [postcodeCss.deliveryDropdown]: isCheckoutOverhaulEnabled })}
+            data-testing="checkoutAddressDropdown"
+          >
             <Field
               name="addressId"
               component={ReduxFormInput}
@@ -123,18 +130,16 @@ Postcode.propTypes = {
 
 Postcode.defaultProps = {
   postcodePending: false,
-  onPostcodeLookup: () => { },
+  onPostcodeLookup: () => {},
   postcodeTemp: '',
   addresses: Immutable.List(),
-  onSelectedAddressChange: () => { },
+  onSelectedAddressChange: () => {},
   showDropdown: false,
-  receiveRef: () => { },
-  trackClick: () => { },
+  receiveRef: () => {},
+  trackClick: () => {},
   isMobile: false,
   isCheckoutOverhaulEnabled: false,
   isAddressSelected: false,
 }
 
-export {
-  Postcode
-}
+export { Postcode }

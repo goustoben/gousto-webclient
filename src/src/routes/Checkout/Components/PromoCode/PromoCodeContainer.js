@@ -22,6 +22,4 @@ const PromoCodeContainer = connect(mapStateToProps, {
   trackPromocodeChange: actions.trackPromocodeChange,
 })(PromoCode)
 
-export {
-  PromoCodeContainer
-}
+export { PromoCodeContainer }

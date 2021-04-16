@@ -4,14 +4,26 @@ import delivery from 'validations/delivery'
 import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
 import { formContainer } from '../../../Components/formContainer'
 import { CheckoutButton } from '../../../Components/CheckoutButton'
-import DeliveryContainer, { addInitialValues, validationMessages } from '../../../Components/Delivery'
+import DeliveryContainer, {
+  addInitialValues,
+  validationMessages,
+} from '../../../Components/Delivery'
 
 const sectionName = 'delivery'
 
 const DeliverySection = DeliveryContainer(sectionName)
 
-export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef, trackUTMAndPromoCode, isCheckoutOverhaulEnabled }) => {
-  const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
+export const DeliveryStep = ({
+  submit,
+  nextStepName,
+  formValues,
+  receiveRef,
+  scrollToFirstMatchingRef,
+  trackUTMAndPromoCode,
+  isCheckoutOverhaulEnabled,
+}) => {
+  const isAddressConfirmed =
+    formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   const handleClick = () => {
     trackUTMAndPromoCode(checkoutClickContinueToPayment, 'desktop')
@@ -26,10 +38,7 @@ export const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scr
         submit={submit}
       />
       {isAddressConfirmed && !isCheckoutOverhaulEnabled && (
-        <CheckoutButton
-          onClick={handleClick}
-          stepName={`Next: ${nextStepName}`}
-        />
+        <CheckoutButton onClick={handleClick} stepName={`Next: ${nextStepName}`} />
       )}
     </div>
   )
@@ -49,15 +58,18 @@ DeliveryStep.defaultProps = {
   trackUTMAndPromoCode: () => {},
   nextStepName: '',
   formValues: {},
-  receiveRef: () => { },
-  scrollToFirstMatchingRef: () => { },
+  receiveRef: () => {},
+  scrollToFirstMatchingRef: () => {},
   isCheckoutOverhaulEnabled: false,
 }
 
-const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), sectionName, validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
+const DeliveryYouForm = formContainer(
+  DeliveryStep,
+  delivery(sectionName),
+  sectionName,
+  validationMessages(sectionName)
+) // eslint-disable-line import/no-mutable-exports
 
 const Delivery = addInitialValues(DeliveryYouForm, { sectionName })
 
-export {
-  Delivery
-}
+export { Delivery }

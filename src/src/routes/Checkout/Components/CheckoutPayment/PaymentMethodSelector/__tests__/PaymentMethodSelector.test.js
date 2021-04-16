@@ -27,8 +27,12 @@ describe('PaymentMethodSelector', () => {
 
     test('should render payment options', () => {
       expect(wrapper.find(PaymentMethodSelectorListItem)).toHaveLength(2)
-      expect(wrapper.find(PaymentMethodSelectorListItem).at(0).prop('paymentMethod')).toBe(PaymentMethod.Card)
-      expect(wrapper.find(PaymentMethodSelectorListItem).at(1).prop('paymentMethod')).toBe(PaymentMethod.PayPal)
+      expect(wrapper.find(PaymentMethodSelectorListItem).at(0).prop('paymentMethod')).toBe(
+        PaymentMethod.Card
+      )
+      expect(wrapper.find(PaymentMethodSelectorListItem).at(1).prop('paymentMethod')).toBe(
+        PaymentMethod.PayPal
+      )
     })
   })
 

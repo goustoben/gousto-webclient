@@ -12,7 +12,9 @@ describe('Promo Code', () => {
       it('should display the promo modal', () => {
         cy.visit('/?promo_code=RET-REACTFEB19EMOB')
         cy.wait(['@promoCodeDetails'])
-        cy.get('[data-testing="promoModal"]').contains('You\'ve got 20% off all boxes for a month.').should('exist')
+        cy.get('[data-testing="promoModal"]')
+          .contains("You've got 20% off all boxes for a month.")
+          .should('exist')
       })
     })
 
@@ -28,26 +30,38 @@ describe('Promo Code', () => {
 
       describe('and eligible for the promotion', () => {
         beforeEach(() => {
-          cy.route('POST', /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/, '@succeedInApply').as('succeedInApply')
+          cy.route(
+            'POST',
+            /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/,
+            '@succeedInApply'
+          ).as('succeedInApply')
         })
 
         it('should show the success promo modal', () => {
           cy.visit('/?promo_code=RET-REACTFEB19EMOB')
           cy.wait(['@promoCodeDetails', '@succeedInApply'])
           cy.get('[data-testing="promoModal"]').contains('Hooray!').should('exist')
-          cy.get('[data-testing="promoModal"]').contains('You\'ve got 20% off all boxes for a month.').should('exist')
+          cy.get('[data-testing="promoModal"]')
+            .contains("You've got 20% off all boxes for a month.")
+            .should('exist')
         })
       })
 
       describe('and not eligible for the promotion', () => {
         beforeEach(() => {
-          cy.route('POST', /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/, '@failToApply').as('failToApply')
+          cy.route(
+            'POST',
+            /user\/current\/applyPromotionCode\/RET-REACTFEB19EMOB/,
+            '@failToApply'
+          ).as('failToApply')
         })
 
         const checkFailedPromoCode = () => {
           cy.visit('/?promo_code=RET-REACTFEB19EMOB')
           cy.wait(['@promoCodeDetails', '@failToApply'])
-          cy.get('[data-testing="promoModal"]').contains('Something went wrong and we couldn\'t apply this promotion to your account.').should('exist')
+          cy.get('[data-testing="promoModal"]')
+            .contains("Something went wrong and we couldn't apply this promotion to your account.")
+            .should('exist')
           cy.get('[data-testing="promoModalButton"]').click()
         }
 

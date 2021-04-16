@@ -5,9 +5,7 @@ import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
 
 describe('PaymentHeader', () => {
   test('will match snapshot', () => {
-    const tree = renderer
-      .create(<PaymentHeader />)
-      .toJSON()
+    const tree = renderer.create(<PaymentHeader />).toJSON()
 
     expect(tree).toMatchSnapshot()
   })

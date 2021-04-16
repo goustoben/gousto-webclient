@@ -15,7 +15,7 @@ const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHand
         type="text"
         placeholder="House number or name"
         required
-        onChange={houseNo => onChangeHandler({ houseNo })}
+        onChange={(houseNo) => onChangeHandler({ houseNo })}
         value={houseNoVal}
         mask
       />
@@ -30,7 +30,7 @@ const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHand
         type="text"
         placeholder="Enter Street name"
         required
-        onChange={street => onChangeHandler({ street })}
+        onChange={(street) => onChangeHandler({ street })}
         value={streetVal}
         mask
       />
@@ -45,7 +45,7 @@ const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHand
         type="text"
         placeholder="Enter Town"
         required
-        onChange={town => onChangeHandler({ town })}
+        onChange={(town) => onChangeHandler({ town })}
         value={townVal}
         mask
       />
@@ -60,7 +60,7 @@ const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHand
         type="text"
         placeholder="Enter County"
         required
-        onChange={county => onChangeHandler({ county })}
+        onChange={(county) => onChangeHandler({ county })}
         value={countyVal}
         mask
       />
@@ -85,6 +85,4 @@ AddressInputs.defaultProps = {
   onChangeHandler: () => {},
 }
 
-export {
-  AddressInputs
-}
+export { AddressInputs }

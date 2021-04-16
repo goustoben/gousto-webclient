@@ -6,9 +6,7 @@ export const PaymentHeader = () => (
   <div className={css.paymentHeader}>
     <div className={css.headerContainer}>
       <h3 className={css.header}>
-        Payment details
-        {' '}
-        <span className={css.padlockIcon} />
+        Payment details <span className={css.padlockIcon} />
       </h3>
       <span className={css.boldInfo}>All fields are required</span>
     </div>

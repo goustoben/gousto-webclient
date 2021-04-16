@@ -18,7 +18,8 @@ export const ErrorMessage = ({ errorType, goBack, isCheckoutOverhaulEnabled, onL
 
   if (isCheckoutOverhaulEnabled) {
     const { errorMessagesForCheckoutOverhaul } = config
-    const messageObject = errorMessagesForCheckoutOverhaul[errorType] || errorMessagesForCheckoutOverhaul.generic
+    const messageObject =
+      errorMessagesForCheckoutOverhaul[errorType] || errorMessagesForCheckoutOverhaul.generic
     const {
       header,
       message,

@@ -47,10 +47,7 @@ class DeliveryDetails extends PureComponent {
           sectionName={sectionName}
         />
         <DeliveryEducationBanner />
-        <DeliveryPhoneNumber
-          receiveRef={receiveRef}
-          sectionName={sectionName}
-        />
+        <DeliveryPhoneNumber receiveRef={receiveRef} sectionName={sectionName} />
       </div>
     )
   }
@@ -70,10 +67,8 @@ DeliveryDetails.propTypes = {
 DeliveryDetails.defaultProps = {
   deliveryAddress: {},
   formValues: {},
-  receiveRef: () => { },
+  receiveRef: () => {},
   sectionName: 'delivery',
 }
 
-export {
-  DeliveryDetails
-}
+export { DeliveryDetails }

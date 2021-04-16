@@ -14,7 +14,7 @@ describe('Given I’m a gousto logged-out website visitor', () => {
         firstname: 'Joe',
         lastname: 'Tester',
         email: 'test@email.com',
-        password: '1234abcd'
+        password: '1234abcd',
       })
     })
 
@@ -24,7 +24,9 @@ describe('Given I’m a gousto logged-out website visitor', () => {
       })
 
       it('Then I don’t have any address to choose from and I’m acknowledged I need to input a valid postcode', () => {
-        cy.get('[data-testing="checkoutPostcodeError"] p').contains('postcode must be at least 5 characters')
+        cy.get('[data-testing="checkoutPostcodeError"] p').contains(
+          'postcode must be at least 5 characters'
+        )
 
         cy.get('[data-testing="checkoutAddressDropdown"]')
           .find('.Select')
@@ -37,7 +39,9 @@ describe('Given I’m a gousto logged-out website visitor', () => {
 
     withPlatformTags(MOBILE).describe('And entered an invalid postcode on mobile', () => {
       it('Then I don’t have any address to choose from and I’m acknowledged I need to input a valid postcode', () => {
-        cy.get('[data-testing="checkoutPostcodeError"] p').contains('postcode must be at least 5 characters')
+        cy.get('[data-testing="checkoutPostcodeError"] p').contains(
+          'postcode must be at least 5 characters'
+        )
 
         cy.get('select[data-testing="houseNo"] option').eq(1).should('not.exist')
       })

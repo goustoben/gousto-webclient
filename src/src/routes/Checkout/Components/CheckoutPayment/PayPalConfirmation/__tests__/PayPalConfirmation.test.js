@@ -29,7 +29,7 @@ describe('Given PayPalConfirmation', () => {
   describe('When isCheckoutOverhaulEnabled is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true
+        isCheckoutOverhaulEnabled: true,
       })
     })
 

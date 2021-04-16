@@ -11,7 +11,8 @@ import redesignCss from '../../CheckoutRedesignContainer.css'
 export class BillingAddress extends React.PureComponent {
   toggleDeliveryAddress = () => {
     const { formValues, sectionName, form, change } = this.props
-    const isBillingAddressDifferent = formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
+    const isBillingAddressDifferent =
+      formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
 
     change(form, `${sectionName}.isBillingAddressDifferent`, !isBillingAddressDifferent)
   }
@@ -27,7 +28,8 @@ export class BillingAddress extends React.PureComponent {
       scrollToFirstMatchingRef,
       isCheckoutOverhaulEnabled,
     } = this.props
-    const isBillingAddressDifferent = formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
+    const isBillingAddressDifferent =
+      formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
 
     if (isCheckoutOverhaulEnabled) {
       return (

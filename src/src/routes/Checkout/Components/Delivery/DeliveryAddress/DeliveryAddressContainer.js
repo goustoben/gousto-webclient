@@ -7,7 +7,7 @@ import {
   getFormSyncErrors,
   registerField,
   touch,
-  untouch
+  untouch,
 } from 'redux-form'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
 import { trackUTMAndPromoCode } from 'actions/tracking'
@@ -20,7 +20,7 @@ function getCutoffDate(state) {
   const date = state.basket.get('date')
   const slotId = state.basket.get('slotId')
   const slots = state.boxSummaryDeliveryDays.getIn([date, 'slots'])
-  const deliverySlot = slots.find(slot => slot.get('id') === slotId) || Map()
+  const deliverySlot = slots.find((slot) => slot.get('id') === slotId) || Map()
 
   return deliverySlot.get('whenCutoff', '')
 }
@@ -30,7 +30,10 @@ function mapStateToProps(state, ownProps) {
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
     formFields: getFormMeta(ownProps.formName)(state),
-    formErrors: { ...getFormSyncErrors(ownProps.formName)(state), ...getFormAsyncErrors(ownProps.formName)(state)},
+    formErrors: {
+      ...getFormSyncErrors(ownProps.formName)(state),
+      ...getFormAsyncErrors(ownProps.formName)(state),
+    },
     sectionName: ownProps.sectionName,
     initialPostcode: state.basket.get('postcode'),
     deliveryDate: state.basket.get('date'),
@@ -50,5 +53,5 @@ export const DeliveryAddressContainer = connect(mapStateToProps, {
   touch,
   registerField,
   trackCheckoutButtonPressed,
-  trackUTMAndPromoCode
+  trackUTMAndPromoCode,
 })(Address)
