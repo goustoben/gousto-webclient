@@ -17,34 +17,37 @@ const EMAIL_ERROR = { email: 'Please provide a valid email address' }
 const PASSWORD_ERROR = { password: 'password must be at least 8 characters' }
 
 describe("Given I'm a logged out user", () => {
-  describe('When I land on the first step of checkout ', () => {
+  describe('When I land on the first step of checkout', () => {
     before(() => {
-      cy.server()
-      cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
-      cy.route(
-        'GET',
-        '/userbucketing/v1/user/experiments',
-        'fixture:userbucketing/userbucketing.json'
-      ).as('getExperiments')
-      cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
-      cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
-      cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as(
-        'getDeliveries'
-      )
-      cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as(
+      cy.intercept('POST', /order\/preview/, { fixture: 'order/preview.json' })
+      cy.intercept('GET', 'deliveries/v1.0/**', { fixture: 'deliveries/deliveryDays.json' })
+      cy.intercept('GET', '/menu/v1/**', { fixture: 'menu/twoWeeksDetails.json' }).as('getMenu')
+      cy.intercept('GET', '/userbucketing/v1/user/experiments', {
+        fixture: 'userbucketing/userbucketing.json',
+      }).as('getExperiments')
+      cy.intercept('GET', 'address/postcode-lookup**', {
+        fixture: 'address/postcodeLookup.json',
+      }).as('getAddresses')
+      cy.intercept('GET', 'brand/v1/theme', { fixture: 'brand/brand.json' }).as('getBrand')
+      cy.intercept('GET', 'brand/v1/menu-headers', { fixture: 'brand/brandHeaders.json' })
+      cy.intercept('GET', '/customers/v1/intervals', { fixture: 'customers/intervals.json' }).as(
         'getIntervals'
       )
-      cy.route('GET', '/prices**', 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')
-      cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
-      cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
-      cy.route('POST', 'prospect', 'fixture:checkout/prospect/prospect.json')
-      cy.route('POST', /validate/, 'fixture:checkout/validate/validate.json')
-      cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
-      cy.route('GET', 'address/postcode-lookup**', 'fixture:address/postcodeLookup.json').as(
-        'getAddresses'
+      cy.intercept('GET', '/prices**', { fixture: 'prices/2person2portionNoDiscount.json' }).as(
+        'getPrices'
       )
-      cy.mockDate()
+      cy.intercept('GET', 'boxPrices', { fixture: 'boxPrices/priceNoPromocode.json' }).as(
+        'getBoxPrice'
+      )
+      cy.intercept('GET', 'delivery_day/**/stock', { fixture: 'stock/deliveryDayStock.json' }).as(
+        'getStock'
+      )
       goToCheckout()
+    })
+
+    beforeEach(() => {
+      cy.intercept('POST', /validate/, { fixture: 'checkout/validate/validate.json' })
+      cy.intercept('POST', '/prospect', { fixture: 'checkout/prospect/prospect.json' })
     })
 
     describe('And I have not filled in my first and last name correctly', () => {

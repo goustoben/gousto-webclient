@@ -17,13 +17,12 @@ export const getAboutYouSyncErrors = (win) => getFormState(win).yourdetails.sync
 export const getSyncErrors = (win) => getFormState(win).yourdetails.syncErrors
 
 export const goToCheckout = () => {
+  cy.mockDate()
   if (Cypress.env().platform === 'mobile') {
     cy.visit('/check-out/boxdetails')
-    cy.wait(['@getDeliveries', '@previewOrder'])
     cy.get('[data-testing="checkoutCTA"]').eq(0).click()
   } else {
     cy.visit('/check-out/aboutyou')
-    cy.wait(['@getDeliveries'])
   }
 }
 
