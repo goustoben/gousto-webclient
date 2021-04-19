@@ -26,13 +26,7 @@ Because of a migration to prettier, there were several bulk formatting changes. 
 
 ### Run application for development
 
-Make sure you have dev-box running as well, `./run.sh dev` and then run
-
-```
-npm run watch
-```
-
-#### Run pointing to staging
+#### Step 1: Add Secret file for staging environment
 
 **Note:** VPN is required to connect to staging before running dev-box and web-client.
 
@@ -43,13 +37,15 @@ Add a file called `config/development-local.json5` and add the JSON below changi
   "api_name": "staging", //could be production if you wanted to point to production apis
   "domain": "gousto.local", //this is used in only one place currently, the help centre links
   "running_env": "local", //always local as you are not running on AWS
-  "apiToken": "inbound_frontend_access_key_goes_here",
-  "authClientSecret": "frontend_service_secret",
+  "api_token": "inbound_frontend_access_key_goes_here",
+  "auth_client_secret": "frontend_service_secret_goes_here",
   "checkout_pk": "checkout_pk_test_token_goes_here" ,
 }
 ```
 
 You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you change change `staging` in the url to the environment you need).
+
+##### Quick guide to `node-config`
 
 We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack. `node-config` is a file based, and looks at files inside our `config` folder.
 
@@ -78,6 +74,16 @@ These are the files, and the order of execution:
   * `config/custom-environment-variables.json5`
 
 See [`node-config`](https://github.com/lorenwest/node-config) for more information.
+
+#### Step 2. Run development environment
+
+**Note:** VPN is required to connect to staging before running dev-box and web-client.
+
+Make sure you have dev-box running as well, `./run.sh dev` and then run
+
+```
+npm run watch
+```
 
 ## Adding a new API endpoint
 API endpoints are now statically defined in config for each environment, that are loaded by node-config as detailed above.
