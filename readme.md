@@ -24,7 +24,7 @@ Because of a migration to prettier, there were several bulk formatting changes. 
 
 `git config blame.ignoreRevsFile .git-blame-ignore-revs`
 
-### Run application for development 
+### Run application for development
 
 Make sure you have dev-box running as well, `./run.sh dev` and then run
 
@@ -36,10 +36,13 @@ npm run watch
 
 **Note:** VPN is required to connect to staging before running dev-box and web-client.
 
-Add a files called `config/staging-local.json5` and add the JSON below changing the values for the correct staging keys. This file will not be tracked as it is listed in our `.gitignore`.
+Add a file called `config/development-local.json5` and add the JSON below changing the values for the correct staging keys. This file will not be tracked as it is listed in our `.gitignore`.
 
 ```json5
 {
+  "api_name": "staging", //could be production if you wanted to point to production apis
+  "domain": "gousto.local", //this is used in only one place currently, the help centre links
+  "running_env": "local", //always local as you are not running on AWS
   "apiToken": "inbound_frontend_access_key_goes_here",
   "authClientSecret": "frontend_service_secret",
   "checkout_pk": "checkout_pk_test_token_goes_here" ,
@@ -54,9 +57,9 @@ We have two variable we can set for `node-config` to pick up specific files. The
 
 `node-config` will load each file, and if the keys match the later file to be loaded will overwrite the variable.
 
-These are file and the order of how they are called: 
+These are the files, and the order of execution:
 
-1. default environment variable. We keep all keys in here so its a singular place we can see all our variable. **Will always be loaded**.
+1. default environment variable. We keep all keys in here, so it's a singular place we can see all our variable. **Will always be loaded**.
    * `config/default.json5`
 
 2. This is load based on the `NODE_CONFIG_ENV`, if not defined will not be loaded
@@ -67,7 +70,7 @@ These are file and the order of how they are called:
    * e.g. `config/local.json5`
    * `config/{NODE_APP_INSTANCE}.json5`
 
-4. This is load based on the `NODE_CONFIG_ENV` and `NODE_APP_INSTANCE`, if both are not defined will not be loaded
+4. This is load based on the `NODE_CONFIG_ENV` and `NODE_APP_INSTANCE`, if neither are defined will not be loaded
   * `config/staging-local.json5`
   * `config/{NODE_CONFIG_ENV}-{NODE_APP_INSTANCE}.json5`
 
@@ -75,6 +78,36 @@ These are file and the order of how they are called:
   * `config/custom-environment-variables.json5`
 
 See [`node-config`](https://github.com/lorenwest/node-config) for more information.
+
+## Adding a new API endpoint
+API endpoints are now statically defined in config for each environment, that are loaded by node-config as detailed above.
+
+Modify the environments block in these files `config/default.json5` and each of the team envs e.g. (`config/rockets.json5`)
+This block is structured in the following way:
+```json5
+{
+  "endpoints": {
+    "<apiEnvironmentToPointTo>": {
+      "services": {
+        "<serviceName>": {
+          "<versionAsInteger>": {
+            clientSide: { //These are the urls used by a browser, they are identical as the browser is always accessing from outside of AWS
+              "live": "https://<apiEnvironmentToPointTo>-api.<domainName>/<serviceName>/<versionString>",
+              "local": "https://<apiEnvironmentToPointTo>-api.<domainName>/<serviceName>/<versionString>",
+            },
+            serverSide: { //These are the urls used by the server side call
+              "live": "http://<apiEnvironmentToPointTo>-<serviceName>.<domainName>", //Used by a server deployed in AWS
+              "local": "https://<apiEnvironmentToPointTo>-api.<domainName>/<serviceName>/<versionString>" //Used by a server running locally
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Unless you specifically know that the new endpoint is an exception to the rule, such as `core`, `loggingmanager` and `webclient`, please use the above format / follow the structure of other APIs in the block.
 
 ## Deployment
 ### Deployment without a new route

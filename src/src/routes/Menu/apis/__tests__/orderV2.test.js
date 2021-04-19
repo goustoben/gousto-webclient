@@ -1,5 +1,4 @@
 import * as fetch from 'utils/fetch'
-import * as endpoint from 'config/endpoint'
 import * as cookieHelper2 from 'utils/cookieHelper2'
 import { updateOrder, createOrder, getOrder, getUserOrders } from '../orderV2'
 
@@ -16,7 +15,6 @@ describe('orderApi', () => {
 
   beforeEach(() => {
     fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
-    jest.spyOn(endpoint, 'default').mockImplementation((service, version) => `endpoint-${service}/${version}`)
   })
 
   afterEach(() => {
@@ -55,7 +53,7 @@ describe('orderApi', () => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
         'token',
-        'endpoint-order/v2/orders',
+        'https://production-api.gousto.co.uk/order/v2/orders',
         { data: { order: 'body' } },
         'POST',
         'default',
@@ -81,7 +79,7 @@ describe('orderApi', () => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
         'token',
-        'endpoint-order/v2/orders/order-id',
+        'https://production-api.gousto.co.uk/order/v2/orders/order-id',
         { data: { order: 'body' } },
         'PUT',
         'default',
@@ -127,7 +125,7 @@ describe('orderApi', () => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
         'token',
-        `endpoint-order/v2/orders/${orderId}`,
+        `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`,
         expectedReqData,
         'GET',
         'default',
@@ -156,7 +154,7 @@ describe('orderApi', () => {
         expect(fetchSpy).toHaveBeenCalledTimes(1)
         expect(fetchSpy).toHaveBeenCalledWith(
           'token',
-          `endpoint-order/v2/orders/${orderId}`,
+          `https://production-api.gousto.co.uk/order/v2/orders/${orderId}`,
           {},
           'GET',
           'default',
@@ -185,7 +183,7 @@ describe('orderApi', () => {
       expect(fetchSpy).toHaveBeenCalledTimes(1)
       expect(fetchSpy).toHaveBeenCalledWith(
         'token',
-        `endpoint-order/v2/users/${userId}/orders`,
+        `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
         expectedReqData,
         'GET',
         'default',
@@ -223,7 +221,7 @@ describe('orderApi', () => {
         expect(fetchSpy).toHaveBeenCalledTimes(1)
         expect(fetchSpy).toHaveBeenCalledWith(
           'token',
-          `endpoint-order/v2/users/${userId}/orders`,
+          `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
           expectedReqData,
           'GET',
           'default',

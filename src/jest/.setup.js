@@ -1,4 +1,7 @@
 // setup file
+import fs from "fs";
+import JSON5 from "json5"
+
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('enzyme-adapter-react-16');
 import Modal from 'react-modal'
@@ -34,3 +37,6 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 jest
   .spyOn(Modal, "setAppElement")
   .mockImplementation(() => {});
+
+const config = JSON5.parse(fs.readFileSync('config/default.json5'))
+global.__ENDPOINTS__ = config.endpoints

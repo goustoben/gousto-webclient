@@ -11,14 +11,7 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 jest.mock('config/routes', () => ({
-  version: {
-    products: 'v2',
-  },
   products: {
     categories: '/categories',
     getProducts: '/getProducts'
@@ -49,7 +42,7 @@ describe('products api', () => {
     test('should fetch the correct url', async () => {
       await fetchProduct('token', 'product-id', userId, menuId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/products/product-id', expectedReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/products/product-id', expectedReqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -62,7 +55,7 @@ describe('products api', () => {
     test('should fetch the correct url', async () => {
       await fetchProductCategories('token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/categories', { includes: config.categoryFetchIncludes }, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/categories', { includes: config.categoryFetchIncludes }, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -87,7 +80,7 @@ describe('products api', () => {
 
         await fetchProducts('token', cutoffDate, productData, userId, menuId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')
+        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/getProducts', expectedReqData, 'GET')
       })
     })
 
@@ -105,7 +98,7 @@ describe('products api', () => {
 
         await fetchProducts('token', cutoffDate, productData, userId, menuId)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')
+        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/getProducts', expectedReqData, 'GET')
       })
     })
 
@@ -129,7 +122,7 @@ describe('products api', () => {
 
       await fetchRandomProducts('token', limit, imageSizes, userId, menuId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-productsv2/getProducts', expectedReqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/products/v2.0/getProducts', expectedReqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -142,7 +135,7 @@ describe('products api', () => {
     test('should fetch the correct url', async () => {
       await fetchProductStock('token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/productStock', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/productStock', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {

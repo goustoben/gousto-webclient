@@ -56,10 +56,6 @@ jest.mock('utils/fetch', () => (
   })
 ))
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `/${service}/${version}`)
-)
-
 describe('Payments API', () => {
   const expectedHeaders = { 'Content-Type': 'application/json'}
 
@@ -81,7 +77,7 @@ describe('Payments API', () => {
       await authPayment(request)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, '/payments/v1/payments/payment-auth', request, 'POST', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/payment-auth', request, 'POST', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -98,7 +94,7 @@ describe('Payments API', () => {
       await checkPayment(sessionId)
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, `/payments/v1/payments/payments/${sessionId}`, null, 'GET', undefined, expectedHeaders)
+      expect(fetch).toHaveBeenCalledWith(null, `https://production-api.gousto.co.uk/payments/v1/payments/payments/${sessionId}`, null, 'GET', undefined, expectedHeaders)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -110,7 +106,7 @@ describe('Payments API', () => {
 
   describe('fetchPayPalToken', () => {
     test('should fetch PayPal client token', async () => {
-      const expectedUrl = '/payments/v1/payments/token'
+      const expectedUrl = 'https://production-api.gousto.co.uk/payments/v1/payments/token'
       const expectedQueryParams = { provider: 'paypal' }
 
       await fetchPayPalToken()

@@ -1,8 +1,5 @@
 import { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
-import routes from 'config/routes'
-
-const version = routes.version.menu
 
 const options = {
   method: 'GET',
@@ -49,7 +46,7 @@ export function fetchMenus(accessToken, query) {
     requestQueryParams.tasteProfileId = tasteProfileId
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
+  return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)
 }
 
 export function fetchMenusWithUserId(accessToken, query, userId) {
@@ -70,7 +67,7 @@ export function fetchMenusWithUserId(accessToken, query, userId) {
     requestQueryParams.tasteProfileId = tasteProfileId
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
+  return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)
 }
 
 export function fetchSimpleMenu(accessToken, userId) {
@@ -84,5 +81,5 @@ export function fetchSimpleMenu(accessToken, userId) {
     userId
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, requestQueryParams, fetchOptions)
+  return fetchRaw(`${endpoint('menu')}/menus`, requestQueryParams, fetchOptions)
 }

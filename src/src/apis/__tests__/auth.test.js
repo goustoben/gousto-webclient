@@ -24,16 +24,9 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 jest.mock('isomorphic-fetch')
 
 jest.mock('config/routes', () => ({
-  version: {
-    auth: 'v2',
-  },
   auth: {
     userToken: '/userToken',
     refreshToken: '/refreshToken',
@@ -78,7 +71,7 @@ describe('auth api', () => {
 
       await getUserToken({ email, password, clientId, clientSecret, headers })
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/userToken', expectedReqData, 'POST', 'no-cache', headers)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/auth/v1.0.0/userToken', expectedReqData, 'POST', 'no-cache', headers)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -101,7 +94,7 @@ describe('auth api', () => {
     test('should fetch the correct url', async () => {
       await identifyUser('token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-authv2/identifyUser', {}, 'GET', 'no-cache')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/auth/v1.0.0/identifyUser', {}, 'GET', 'no-cache')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -126,7 +119,7 @@ describe('auth api', () => {
       }
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/refreshToken', expectedReqData, 'POST', 'no-cache', {}, false)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/auth/v1.0.0/refreshToken', expectedReqData, 'POST', 'no-cache', {}, false)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -151,7 +144,7 @@ describe('auth api', () => {
       }
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/refreshToken', expectedReqData, 'POST', 'no-cache', {}, false)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/auth/v1.0.0/refreshToken', expectedReqData, 'POST', 'no-cache', {}, false)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -164,7 +157,7 @@ describe('auth api', () => {
     test('should fetch the correct url', async () => {
       await forgetUserToken('token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-authv2/userToken', {}, 'DELETE', 'no-cache')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/auth/v1.0.0/userToken', {}, 'DELETE', 'no-cache')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -178,7 +171,7 @@ describe('auth api', () => {
       const password = 'password'
       await validateUserPassword(password)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/validateUserPassword', { password }, 'POST', 'no-cache')
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/auth/v1.0.0/validateUserPassword', { password }, 'POST', 'no-cache')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -200,7 +193,7 @@ describe('auth api', () => {
       }
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-authv2/resetUserPassword', expectedReqData, 'POST', 'no-cache')
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/auth/v1.0.0/resetUserPassword', expectedReqData, 'POST', 'no-cache')
     })
 
     test('should return the results of the fetch unchanged', async () => {

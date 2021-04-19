@@ -2,9 +2,6 @@ import fetch from 'utils/fetch'
 import { getUserExperiments, updateUserExperiment } from '../userBucketing'
 
 jest.mock('utils/fetch')
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
 
 describe('userBucketing', () => {
   beforeEach(() => {
@@ -20,7 +17,7 @@ describe('userBucketing', () => {
       await getUserExperiments('session-id', 'user-id')
 
       const expectedAccessToken = null
-      const expectedUrl = 'endpoint-userbucketing/v1/user/experiments'
+      const expectedUrl = 'https://production-api.gousto.co.uk/userbucketing/v1/user/experiments'
       const expectedReqParams = {}
       const expectedMethod = 'GET'
       const expectedCache = 'default'
@@ -48,7 +45,7 @@ describe('userBucketing', () => {
       await updateUserExperiment('mock-user-experiment', 'session-id', 'user-id')
 
       const expectedAccessToken = null
-      const expectedUrl = 'endpoint-userbucketing/v1/user/experiments/mock-user-experiment'
+      const expectedUrl = 'https://production-api.gousto.co.uk/userbucketing/v1/user/experiments/mock-user-experiment'
       const expectedReqParams = {}
       const expectedMethod = 'POST'
       const expectedCache = 'default'

@@ -3,10 +3,6 @@ import { fetchMenus, fetchMenusWithUserId, fetchSimpleMenu } from '../menuApi'
 
 const mockFetchResult = { data: [1, 2, 3] }
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint/${service}/${version}`)
-)
-
 jest.mock('config/routes', () => ({
   version: {
     menu: 'v1',
@@ -40,7 +36,7 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchMenus('token', query)
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+      expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients' },
         {
           accessToken: 'token',
@@ -117,7 +113,7 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchMenusWithUserId('token', query, 'e34rder')
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+      expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
         { addAlternatives: true, include: 'ingredients', userId: 'e34rder' },
         {
           accessToken: 'token',
@@ -160,7 +156,7 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchSimpleMenu('token', 'user-id')
       expect(fetchRawSpy).toHaveBeenCalledTimes(1)
-      expect(fetchRawSpy).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+      expect(fetchRawSpy).toHaveBeenCalledWith('https://production-api.gousto.co.uk/menu/v1/menus',
         {
           includeMenuRelationships: false,
           userId: 'user-id', },

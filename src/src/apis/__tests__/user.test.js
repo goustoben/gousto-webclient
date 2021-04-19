@@ -29,15 +29,7 @@ jest.mock('utils/fetch', () => ({
   })
 }))
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 jest.mock('config/routes', () => ({
-  version: {
-    orders: 'v2',
-    customers: 'v2'
-  },
   core: {
     userPromo: '/userPromo',
     currentUser: '/currentUser',
@@ -61,7 +53,7 @@ describe('user api', () => {
 
       await fetchUserCredit(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/user/current/balance', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/user/current/balance', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -76,7 +68,7 @@ describe('user api', () => {
       const promoCode = 'FREEFOODPLS'
       await applyPromo(accessToken, promoCode)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
+      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -90,7 +82,7 @@ describe('user api', () => {
       const accessToken = 'token'
       await fetchReferralOffer(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/user/current/raf-campaign-details', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/user/current/raf-campaign-details', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -104,7 +96,7 @@ describe('user api', () => {
       const accessToken = 'token'
       await fetchPromo(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userPromo', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userPromo', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -118,7 +110,7 @@ describe('user api', () => {
       const accessToken = 'token'
       await fetchUser(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/currentUser', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/currentUser', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -132,7 +124,7 @@ describe('user api', () => {
       const accessToken = 'token'
       await fetchShippingAddresses(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userAddress', { type: 'shipping' }, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userAddress', { type: 'shipping' }, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -147,7 +139,7 @@ describe('user api', () => {
       const reqData = { a: 1, b: 2 }
       await fetchUserOrders(accessToken, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userOrders', reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userOrders', reqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -161,7 +153,7 @@ describe('user api', () => {
       const accessToken = 'token'
       await fetchUserProjectedDeliveries(accessToken)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userProjectedDeliveries', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userProjectedDeliveries', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -176,7 +168,7 @@ describe('user api', () => {
       const deliveryDayId = '1'
       await skipDelivery(accessToken, deliveryDayId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/userDelivery/disable', { delivery_day_id: deliveryDayId }, 'PUT')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/userDelivery/disable', { delivery_day_id: deliveryDayId }, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -192,7 +184,7 @@ describe('user api', () => {
       const deliveryDayId = '1'
       await restoreDelivery(accessToken, userId, deliveryDayId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/${userId}/subscription/delivery/enable`, { delivery_day_id: deliveryDayId }, 'PUT')
+      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/user/${userId}/subscription/delivery/enable`, { delivery_day_id: deliveryDayId }, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -208,7 +200,7 @@ describe('user api', () => {
       const reqData = { userId, a: 1, b: 2 }
       await reactivate(accessToken, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/${userId}/restore`, { }, 'PUT')
+      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/user/${userId}/restore`, { }, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -223,7 +215,7 @@ describe('user api', () => {
       const userId = '123'
       await verifyAge(accessToken, userId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/${userId}`, { age_verified: 1 }, 'PUT')
+      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/user/${userId}`, { age_verified: 1 }, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -237,7 +229,7 @@ describe('user api', () => {
       const reqData = { a: 1, b: 2 }
       await checkDuplicateUser(reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-core/user/check-duplicate', reqData, 'POST')
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/user/check-duplicate', reqData, 'POST')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -252,7 +244,7 @@ describe('user api', () => {
       const reqData = { a: 1, b: 2 }
       await referralDetails(accessToken, reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/user/current/referralDetails', reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/user/current/referralDetails', reqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -267,7 +259,7 @@ describe('user api', () => {
       const email = 'foo@example.com'
       await referAFriend(accessToken, email)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/user/current/referral', { emails: [ email ] }, 'POST')
+      expect(fetch).toHaveBeenCalledWith(accessToken, 'https://production-api.gousto.co.uk/user/current/referral', { emails: [ email ] }, 'POST')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -283,7 +275,7 @@ describe('user api', () => {
       const userId = '123'
       await addPaymentMethod(accessToken, reqData, userId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/${userId}/paymentMethod`, reqData, 'PUT')
+      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/user/${userId}/paymentMethod`, reqData, 'PUT')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -298,7 +290,7 @@ describe('user api', () => {
       const userId = '123'
       await fetchUserAddresses(accessToken, userId)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-customersv2/customers/${userId}/addresses`, {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith(accessToken, `https://production-api.gousto.co.uk/customers/v1/customers/${userId}/addresses`, {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -316,7 +308,7 @@ describe('user api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         null,
-        `endpoint-core/user/${userId}/marketing/${marketingType}`,
+        `https://production-api.gousto.co.uk/user/${userId}/marketing/${marketingType}`,
         { marketing_unsubscribe_token: marketingUnsubscribeToken },
         'DELETE'
       )

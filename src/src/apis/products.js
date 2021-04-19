@@ -3,8 +3,6 @@ import endpoint from 'config/endpoint'
 import config from 'config/products'
 import routes from 'config/routes'
 
-const version = routes.version.products
-
 const reqData = {
   image_sizes: config.fetchImageSizes,
   includes: config.fetchIncludes,
@@ -17,11 +15,11 @@ export function fetchProduct(accessToken, productId, userId, menuId) {
     menuId,
   }
 
-  return fetch(accessToken, `${endpoint('products', version)}/products/${productId}`, data, 'GET')
+  return fetch(accessToken, `${endpoint('products', 2)}/products/${productId}`, data, 'GET')
 }
 
 export function fetchProductCategories(accessToken) {
-  return fetch(accessToken, `${endpoint('products', version)}${routes.products.categories}`, { includes: config.categoryFetchIncludes }, 'GET')
+  return fetch(accessToken, `${endpoint('products', 2)}${routes.products.categories}`, { includes: config.categoryFetchIncludes }, 'GET')
 }
 
 export function fetchProducts(accessToken, cutoffDate, productsData, userId, menuId) {
@@ -36,7 +34,7 @@ export function fetchProducts(accessToken, cutoffDate, productsData, userId, men
     data.date = cutoffDate
   }
 
-  return fetch(accessToken, `${endpoint('products', version)}${routes.products.getProducts}`, data, 'GET')
+  return fetch(accessToken, `${endpoint('products', 2)}${routes.products.getProducts}`, data, 'GET')
 }
 
 export function fetchRandomProducts(accessToken, limit, imageSizes, userId, menuId) {
@@ -48,7 +46,7 @@ export function fetchRandomProducts(accessToken, limit, imageSizes, userId, menu
     menuId,
   }
 
-  return fetch(accessToken, `${endpoint('products', version)}${routes.products.getProducts}`, data, 'GET')
+  return fetch(accessToken, `${endpoint('products', 2)}${routes.products.getProducts}`, data, 'GET')
 }
 
 export function fetchProductStock(accessToken) {

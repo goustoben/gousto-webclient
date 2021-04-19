@@ -15,19 +15,6 @@ const COMPLAINT_CATEGORY_ID = '13578'
 jest.mock('utils/fetch')
 fetch.mockResolvedValue(MOCK_RESPONSE)
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation(
-    (service, version = '') => `endpoint-${service}/${version}`
-  )
-)
-
-jest.mock('config/routes', () => ({
-  version: {
-    ssr: 'vX',
-    ssrdeliveries: 'vY',
-  },
-}))
-
 describe('getHelp API', () => {
   let response
   beforeEach(() => {
@@ -41,7 +28,7 @@ describe('getHelp API', () => {
     test('the fetch function is called with the right parameters', () => {
       expect(fetch).toHaveBeenCalledWith(
         ACCESS_TOKEN,
-        'endpoint-ssr/vX/ssr/show-tooltip',
+        'https://production-api.gousto.co.uk/ssr/v1/ssr/show-tooltip',
         { delivery_date: ORDER_DELIVERY_DATE },
         'GET'
       )
@@ -61,7 +48,7 @@ describe('getHelp API', () => {
     test('the fetch function is called with the right parameters', () => {
       expect(fetchRaw).toHaveBeenCalledTimes(1)
       expect(fetchRaw).toHaveBeenCalledWith(
-        'endpoint-ssrdeliveries/vY/ssrdeliveries/refund',
+        'https://production-api.gousto.co.uk/ssrdeliveries/v1/ssrdeliveries/refund',
         { customer_id: USER_ID, order_id: ORDER_ID, category_id: COMPLAINT_CATEGORY_ID },
         { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
       )
@@ -85,7 +72,7 @@ describe('getHelp API', () => {
     test('the fetch function is called with the right parameters', () => {
       expect(fetchRaw).toHaveBeenCalledTimes(1)
       expect(fetchRaw).toHaveBeenCalledWith(
-        'endpoint-ssrdeliveries/vY/ssrdeliveries/validate',
+        'https://production-api.gousto.co.uk/ssrdeliveries/v1/ssrdeliveries/validate',
         { customer_id: USER_ID, order_id: ORDER_ID},
         { accessToken: ACCESS_TOKEN, method: 'POST', headers: { 'Content-Type': 'application/json' } }
       )

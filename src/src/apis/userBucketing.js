@@ -8,7 +8,7 @@ export function getUserExperiments(sessionId, userId) {
     'x-gousto-user-id': userId,
   }
 
-  const url = `${endpoint('userbucketing', routes.version.userBucketing)}${routes.userBucketing.experiments}`
+  const url = `${endpoint('userbucketing')}${routes.userBucketing.experiments}`
 
   return fetch(null, url, {}, 'GET', 'default', headers)
 }
@@ -19,7 +19,7 @@ export function updateUserExperiment(experimentName, sessionId, userId) {
     'x-gousto-user-id': userId,
   }
 
-  const url = `${endpoint('userbucketing', routes.version.userBucketing)}${routes.userBucketing.experiments}/${experimentName}`
+  const url = `${endpoint('userbucketing')}${routes.userBucketing.experiments}/${experimentName}`
 
   return fetch(null, url, {}, 'POST', 'default', headers)
 }

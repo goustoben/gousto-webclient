@@ -8,10 +8,6 @@ jest.mock('utils/fetch', () =>
   jest.fn().mockResolvedValue({ data: [1, 2, 3] })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
-
 jest.mock('config/routes', () => ({
   version: {
     clientMetrics: 'v1',
@@ -48,7 +44,7 @@ describe('clientMetrics', () => {
       await sendClientMetric('menu-load-complete', 1.0, 'Count')
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/clientmetrics/v1/metric', expectedReqData, 'POST', 'default', headers)
     })
 
     describe('when fetch errors', () => {

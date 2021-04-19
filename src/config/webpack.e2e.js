@@ -22,6 +22,8 @@ if (process.env.NODE_ENV === 'local') {
 }
 
 // eslint-disable-next-line no-console
+console.log(`Printing relevant command line envs, NODE_APP_INSTANCE=${process.env.NODE_APP_INSTANCE}, NODE_CONFIG_ENV=${process.env.NODE_CONFIG_ENV}`)
+// eslint-disable-next-line no-console
 console.log(`================\nE2E BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
 
 const config = {

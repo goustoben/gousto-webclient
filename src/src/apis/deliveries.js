@@ -16,7 +16,7 @@ export function fetchDeliveryDays(accessToken, cutoffDatetimeFrom, menuCutoffUnt
     reqData.postcode = getFirstPartPostcode(postcode)
   }
 
-  return fetch(accessToken, `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.days}`, reqData, 'GET')
+  return fetch(accessToken, `${endpoint('deliveries')}${routes.deliveries.days}`, reqData, 'GET')
 }
 
 export function fetchDeliveryConsignment(accessToken, orderId) {
@@ -24,7 +24,7 @@ export function fetchDeliveryConsignment(accessToken, orderId) {
     'filters[order_id]': orderId,
   }
 
-  const url = `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.consignments}`
+  const url = `${endpoint('deliveries')}${routes.deliveries.consignments}`
 
   return fetch(accessToken, url, reqData, 'GET')
 }

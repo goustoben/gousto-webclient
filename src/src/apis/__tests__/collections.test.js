@@ -10,14 +10,7 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 jest.mock('config/routes', () => ({
-  version: {
-    collections: 'v1'
-  },
   collections: {
     recipes: '/recipes'
   }
@@ -33,7 +26,7 @@ describe('collections api', () => {
       const reqData = { a: 1, b: 2 }
       await fetchCollections('token', 'path', reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-collectionsv1/collections/path', reqData, 'GET', 'default', {}, null, false)
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/collections/v1/collections/path', reqData, 'GET', 'default', {}, null, false)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -47,7 +40,7 @@ describe('collections api', () => {
       const reqData = { c: 3, d: 4 }
       await fetchCollectionRecipes('token', 'collection-id', reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-collectionsv1/collections/collection-id/recipes', reqData, 'GET', 'default', {}, null, false)
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/collections/v1/collections/collection-id/recipes', reqData, 'GET', 'default', {}, null, false)
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -60,7 +53,7 @@ describe('collections api', () => {
     test('should fetch the correct url', async () => {
       await fetchCollectionBySlug('slug')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-collectionsv1/collections/slug', undefined, 'GET', 'default', {}, null, false)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/collections/v1/collections/slug', undefined, 'GET', 'default', {}, null, false)
     })
 
     test('should return the results of the fetch unchanged', async () => {
