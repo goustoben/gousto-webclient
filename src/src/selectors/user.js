@@ -17,10 +17,17 @@ export const getUserCredit = ({ user }) => user.get('credit', null)
 export const getUserOrders = ({ user }) => user.get('orders', Immutable.List([]))
 export const getUserNewOrders = ({ user }) => user.get('newOrders')
 export const getUserSubscriptionState = ({ user }) => user.getIn(['subscription', 'state'])
+
 export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   const recipeIds = new Set()
   const userOrders = user.get('orders')
-  const sortedOrders = userOrders && userOrders.sort((a, b) => parseInt(b.get('id')) - parseInt(a.get('id')))
+  const sortedOrders = userOrders && userOrders
+    .sort((order1, order2) => {
+      const orderDate1 = order1.get('deliveryDay')
+      const orderDate2 = order2.get('deliveryDay')
+
+      return moment(orderDate2) - moment(orderDate1)
+    })
 
   sortedOrders.forEach(order => {
     if (recipeIds.size < number) {

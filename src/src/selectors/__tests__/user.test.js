@@ -321,6 +321,7 @@ describe('getUserRecentRecipesIds', () => {
     user: Immutable.fromJS({
       orders: {
         1: {
+          deliveryDay: '2020-05-19 00:00:00',
           recipeItems: [
             { itemableType: 'Recipe', recipeId: '1' },
             { itemableType: 'Recipe', recipeId: '2' },
@@ -329,11 +330,21 @@ describe('getUserRecentRecipesIds', () => {
           ]
         },
         2: {
+          deliveryDay: '2020-07-13 00:00:00',
           recipeItems: [
             { itemableType: 'Recipe', recipeId: '5' },
             { itemableType: 'Recipe', recipeId: '5' },
             { itemableType: 'Recipe', recipeId: '6' },
             { itemableType: 'Recipe', recipeId: '6' }
+          ]
+        },
+        3: {
+          deliveryDay: '2020-06-10 00:00:00',
+          recipeItems: [
+            { itemableType: 'Recipe', recipeId: '7' },
+            { itemableType: 'Recipe', recipeId: '8' },
+            { itemableType: 'Recipe', recipeId: '9' },
+            { itemableType: 'Recipe', recipeId: '10' }
           ]
         }
       }
@@ -349,8 +360,13 @@ describe('getUserRecentRecipesIds', () => {
   })
 
   test('should return no duplicates', () => {
-    expect(getUserRecentRecipesIds(state)).not.toEqual(['1', '2', '3', '4', '5', '5'])
-    expect(getUserRecentRecipesIds(state)).toEqual(['1', '2', '3', '4', '5', '6'])
+    expect(getUserRecentRecipesIds(state)).not.toEqual(['5', '5', '6', '6', '7', '8'])
+    expect(getUserRecentRecipesIds(state)).toEqual(['5', '6', '7', '8', '9', '10'])
+  })
+
+  test('should return the most recent orders first', () => {
+    expect(getUserRecentRecipesIds(state)).not.toEqual(['1', '2', '3', '4', '5', '6'])
+    expect(getUserRecentRecipesIds(state)).toEqual(['5', '6', '7', '8', '9', '10'])
   })
 })
 
