@@ -207,7 +207,7 @@ module.exports = {
               userData.subscription.delivery_slot_id = slot.get('id')
               userData.payment_method.card.card_token = values[2].id
 
-              return webclient.fetch('', `${webclient.endpoint('customers', 'v2')}/signup`, userData, 'POST')
+              return webclient.fetch('', `${webclient.endpoint('customers', 2)}/signup`, userData, 'POST')
             }).then(function ({ data: user }) {
               user.customer.password = pwd
 
