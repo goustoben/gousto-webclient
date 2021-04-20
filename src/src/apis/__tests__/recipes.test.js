@@ -76,7 +76,7 @@ describe('recipes', () => {
       const reqData = { a: 1, b: 2 }
       await fetchRecipesStockByDate(reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/orders/v2/recipe-stock', reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/orders/v1/recipe-stock', reqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {

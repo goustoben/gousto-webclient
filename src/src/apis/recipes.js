@@ -21,6 +21,6 @@ export function fetchRecipeStock(accessToken, deliveryDayId) {
 }
 
 export function fetchRecipesStockByDate(reqData) {
-  return fetch(null, `${endpoint('orders', 2)}${routes.orders.recipesStock}`, reqData, 'GET')
+  return fetch(null, `${endpoint('orders')}${routes.orders.recipesStock}`, reqData, 'GET')
 }
 
