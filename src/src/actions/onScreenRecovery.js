@@ -1,7 +1,6 @@
 import { client as clientRoutes } from 'config/routes'
 import logger from 'utils/logger'
 import seActions from 'middlewares/tracking/snowplow/pauseSubscription/seActions'
-import { getIsNewSubscriptionPageEnabled } from 'selectors/features'
 import * as windowUtils from 'utils/window'
 import { actionTypes } from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
@@ -290,12 +289,11 @@ export const pauseSubscription = () => (
   async (dispatch, getState) => {
     await dispatch(subPauseActions.subscriptionDeactivate())
 
-    const { user, onScreenRecovery, features } = getState()
+    const { user, onScreenRecovery } = getState()
     const userId = user.get('id')
     const offer = onScreenRecovery.get('offer')
     const promoCode = offer ? offer.promoCode : null
-    const isNewSubscriptionPageEnabled = getIsNewSubscriptionPageEnabled({ features })
-    const subscriptionPageURL = isNewSubscriptionPageEnabled ? clientRoutes.mySubscription2 : clientRoutes.mySubscription
+    const subscriptionPageURL = clientRoutes.mySubscription
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,

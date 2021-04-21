@@ -13,13 +13,12 @@ import css from './CancelledAllBoxesModal.css'
 const CancelledAllBoxesModal = ({
   isModalOpen,
   pendingOrdersDates,
-  toggleModalVisibility,
-  isNewSubscriptionPageEnabled
+  toggleModalVisibility
 }) => {
   const closeModal = () => {
     toggleModalVisibility(false)
   }
-  const subscriptionPageURL = isNewSubscriptionPageEnabled ? clientRoutes.mySubscription2 : clientRoutes.mySubscription
+  const subscriptionPageURL = clientRoutes.mySubscription
 
   return (
     <Overlay open={Boolean(isModalOpen)} from="top">
@@ -59,14 +58,12 @@ CancelledAllBoxesModal.propTypes = {
   isModalOpen: PropTypes.bool,
   pendingOrdersDates: ImmutablePropTypes.mapOf(PropTypes.string),
   toggleModalVisibility: PropTypes.func,
-  isNewSubscriptionPageEnabled: PropTypes.bool
 }
 
 CancelledAllBoxesModal.defaultProps = {
   isModalOpen: false,
   pendingOrdersDates: Immutable.Map({}),
   toggleModalVisibility: () => {},
-  isNewSubscriptionPageEnabled: false
 }
 
 export default CancelledAllBoxesModal

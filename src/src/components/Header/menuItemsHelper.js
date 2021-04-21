@@ -16,24 +16,20 @@ export const defaultMenuItems = {
   referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: true, tracking: 'ReferAFriendNavigation Clicked' },
   rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipes Clicked' },
   deliveries: { name: 'Upcoming Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
-  subscription: { name: 'Subscription Settings', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
+  subscription: { name: 'Subscription Settings', url: clientRoutes.mySubscription, clientRouted: true, tracking: 'SubscriptionSettingsNavigation Clicked' },
   details: { name: 'Account Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
   sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
 }
 
 export const newSubscription = {
   name: 'Subscription Settings',
-  url: clientRoutes.mySubscription2,
+  url: clientRoutes.mySubscription,
   clientRouted: true,
   tracking: 'SubscriptionSettingsNavigation Clicked'
 }
 
-export const getMenuItemsForFeatureFlag = (isNewSubscriptionPageEnabled) => {
+export const getDeepClonedMenuItems = () => {
   const menuItems = deepCloneObject(defaultMenuItems)
-
-  if (isNewSubscriptionPageEnabled) {
-    menuItems.subscription = newSubscription
-  }
 
   return menuItems
 }

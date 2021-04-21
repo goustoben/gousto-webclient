@@ -44,8 +44,7 @@ export const MultiSkipResultScreen = ({
   closeModal,
   nextDeliveryDate,
   isSuccess,
-  skippedBoxesCount,
-  isNewSubscriptionPageEnabled
+  skippedBoxesCount
 }) => (
   <Modal
     isOpen
@@ -57,7 +56,7 @@ export const MultiSkipResultScreen = ({
   >
     <div className={classnames(
       cssCommon.headerWrapper,
-      { [cssCommon.headerPaddingReset]: isNewSubscriptionPageEnabled }
+      cssCommon.headerPaddingReset
     )}
     >
       <ModalHeader
@@ -72,7 +71,7 @@ export const MultiSkipResultScreen = ({
 
     <div className={classnames(
       cssCommon.container,
-      { [cssCommon.containerPaddingReset]: isNewSubscriptionPageEnabled }
+      cssCommon.containerPaddingReset
     )}
     >
       {isSuccess
@@ -83,7 +82,7 @@ export const MultiSkipResultScreen = ({
 
       <div className={classnames(
         css.ctaContainer,
-        { [css.ctaContainerPaddingReset]: isNewSubscriptionPageEnabled }
+        css.ctaContainerPaddingReset
       )}
       >
         <CTA
@@ -111,12 +110,10 @@ MultiSkipResultScreen.propTypes = {
   closeModal: PropTypes.func.isRequired,
   nextDeliveryDate: PropTypes.string,
   isSuccess: PropTypes.bool.isRequired,
-  skippedBoxesCount: PropTypes.number,
-  isNewSubscriptionPageEnabled: PropTypes.bool
+  skippedBoxesCount: PropTypes.number
 }
 
 MultiSkipResultScreen.defaultProps = {
   skippedBoxesCount: null,
-  nextDeliveryDate: null,
-  isNewSubscriptionPageEnabled: false
+  nextDeliveryDate: null
 }

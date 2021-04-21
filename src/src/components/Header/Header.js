@@ -22,7 +22,7 @@ import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScree
 import { onEnter } from 'utils/accessibility'
 import { getLinkURL } from 'utils/header'
 import { MobileMenu } from './MobileMenu'
-import { getMenuItemsForFeatureFlag } from './menuItemsHelper'
+import { getDeepClonedMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 class Header extends React.PureComponent {
@@ -95,8 +95,8 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin, isNewSubscriptionPageEnabled } = this.props
-    const menuItems = getMenuItemsForFeatureFlag(isNewSubscriptionPageEnabled)
+    const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
+    const menuItems = getDeepClonedMenuItems()
     let pathLocal = path
     if (path.indexOf('/') === -1) {
       pathLocal = `/${pathLocal}`
@@ -477,7 +477,6 @@ Header.propTypes = {
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
   isMenuRedirectPageEnabled: PropTypes.bool,
-  isNewSubscriptionPageEnabled: PropTypes.bool,
   postCode: PropTypes.string,
 }
 
@@ -500,7 +499,6 @@ Header.defaultProps = {
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
   isMenuRedirectPageEnabled: false,
-  isNewSubscriptionPageEnabled: false,
   postCode: ''
 }
 

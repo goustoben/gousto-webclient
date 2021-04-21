@@ -6,10 +6,7 @@ import css from './NavBar.css'
 import NavBarItem from './NavBarItem/NavBarItem'
 
 const NavBar = (props) => {
-  const { isNewSubscriptionPageEnabled, rateRecipeCount, trackClickRateRecipes } = props
-  const subscriptionUrl = isNewSubscriptionPageEnabled
-    ? config.client.mySubscription2
-    : config.client.mySubscription
+  const { rateRecipeCount, trackClickRateRecipes } = props
 
   const menuTitles = {
     myGousto: 'My Gousto',
@@ -39,8 +36,8 @@ const NavBar = (props) => {
       ),
     },
     {
-      pathName: subscriptionUrl,
-      clientRouted: isNewSubscriptionPageEnabled,
+      pathName: config.client.mySubscription,
+      clientRouted: true,
       item: (
         <span className={css.linkContainer}>
           <span className={css.link}>{menuTitles.mySubscription}</span>
@@ -108,14 +105,12 @@ const NavBar = (props) => {
 
 NavBar.propTypes = {
   currentPath: PropTypes.string,
-  isNewSubscriptionPageEnabled: PropTypes.bool,
   rateRecipeCount: PropTypes.number,
   trackClickRateRecipes: PropTypes.func
 }
 
 NavBar.defaultProps = {
   currentPath: config.client.myGousto,
-  isNewSubscriptionPageEnabled: false,
   rateRecipeCount: 0,
   trackClickRateRecipes: () => {}
 }

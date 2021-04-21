@@ -27,10 +27,6 @@ jest.mock('selectors/user', () => ({
   getSkippedBoxesCount: () => null
 }))
 
-jest.mock('selectors/features', () => ({
-  getIsNewSubscriptionPageEnabled: () => null,
-}))
-
 const mockDispatch = jest.fn()
 
 const mockReduxContext = {

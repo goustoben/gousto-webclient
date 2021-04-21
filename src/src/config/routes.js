@@ -24,7 +24,7 @@ module.exports = {
     choosePlan: '/choose-subscription-plan',
     cookbook: '/cookbook',
 
-    mySubscription2: '/subscription-settings',
+    mySubscription: '/subscription-settings',
     myDetails2: '/mydetails',
     myReferral2: '/myreferrals',
     rateRecipes2: '/rate-recipes',
@@ -63,7 +63,6 @@ module.exports = {
 
     myGousto: '/my-gousto',
     myDeliveries: '/my-deliveries',
-    mySubscription: '/my-subscription',
     myDetails: '/my-details',
     myReferral: '/my-referrals',
     rateMyRecipes: '/rate-my-recipes',

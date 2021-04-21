@@ -13,7 +13,6 @@ import {
   getIsMultiSkipError,
   getSkippedBoxesCount
 } from 'selectors/user'
-import { getIsNewSubscriptionPageEnabled } from 'selectors/features'
 import { MultiSkipScreenLogic } from './MultiSkipScreen.logic'
 
 const mapStateToProps = (state) => {
@@ -27,7 +26,6 @@ const mapStateToProps = (state) => {
     isMultiSkipSuccess: getIsMultiSkipSuccess(state),
     isMultiSkipError: getIsMultiSkipError(state),
     multiSkippedBoxesCount: getSkippedBoxesCount(state),
-    isNewSubscriptionPageEnabled: getIsNewSubscriptionPageEnabled(state),
     userId: getUserId(state),
   }
 }

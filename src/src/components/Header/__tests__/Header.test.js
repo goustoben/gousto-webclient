@@ -215,30 +215,6 @@ describe('Header', () => {
     })
   })
 
-  describe('isNewSubscriptionPageEnabled', () => {
-    beforeEach(() => {
-      wrapper.setProps({ isAuthenticated: true })
-    })
-
-    describe('when isNewSubscriptionPageEnabled is set to true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isNewSubscriptionPageEnabled: true })
-      })
-
-      test('then the menu items should include "Subscription Settings" url', () => {
-        const result = wrapper.instance().getMenuItems('mobile', '/')
-        expect(result[2].url).toEqual('/subscription-settings')
-      })
-    })
-
-    describe('when isNewSubscriptionPageEnabled is set to false', () => {
-      test('then the menu items should include "My Subscription" url', () => {
-        const result = wrapper.instance().getMenuItems('mobile', '/')
-        expect(result[2].url).toEqual('/my-subscription')
-      })
-    })
-  })
-
   describe('when existing menu path is passed as prop', () => {
     beforeEach(() => {
       wrapper.setProps({ path: 'box-prices' })
@@ -324,10 +300,10 @@ describe('Header', () => {
           tracking: 'DeliveriesNavigation Clicked',
         },
         {
-          clientRouted: false,
+          clientRouted: true,
           name: 'Subscription Settings',
           url: routesConfig.client.mySubscription,
-          tracking: 'SubscriptionNavigation Clicked',
+          tracking: 'SubscriptionSettingsNavigation Clicked',
         },
         {
           clientRouted: false,

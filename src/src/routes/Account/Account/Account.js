@@ -11,7 +11,6 @@ const propTypes = {
     pathname: PropTypes.string,
   }).isRequired,
   cardExpiryDate: PropTypes.string,
-  isNewSubscriptionPageEnabled: PropTypes.bool,
   userLoadData: PropTypes.func.isRequired,
   checkCardExpiry: PropTypes.func.isRequired,
   loadMenuServiceDataIfDeepLinked: PropTypes.func.isRequired,
@@ -23,7 +22,6 @@ const defaultProps = {
   children: null,
   renderChildren: false,
   cardExpiryDate: '',
-  isNewSubscriptionPageEnabled: false,
   rateRecipeCount: 0,
 }
 
@@ -49,7 +47,6 @@ class Account extends React.PureComponent {
       renderChildren,
       children,
       location,
-      isNewSubscriptionPageEnabled,
       rateRecipeCount,
     } = this.props
     const pageTitles = {
@@ -64,7 +61,6 @@ class Account extends React.PureComponent {
         <NavBar
           currentPath={location.pathname}
           cardExpiryDate={cardExpiryDate}
-          isNewSubscriptionPageEnabled={isNewSubscriptionPageEnabled}
           rateRecipeCount={rateRecipeCount}
         />
         {!renderChildren ? children : <div />}
