@@ -468,13 +468,11 @@ function userToggleEditDateSection(orderId, editDeliveryMode) {
 function userTrackToggleEditDateSection(orderId) {
   return (dispatch, getState) => {
     const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
 
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType: 'OrderDeliverySlot Edit',
-        isCurrentPeriod,
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
       }
@@ -485,13 +483,11 @@ function userTrackToggleEditDateSection(orderId) {
 function userTrackToggleEditAddressSection(orderId) {
   return (dispatch, getState) => {
     const originalAddressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
 
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType: 'OrderDeliveryAddress Edit',
-        is_current_period: isCurrentPeriod,
         order_id: orderId,
         original_deliveryaddress_id: originalAddressId,
       }
@@ -500,13 +496,11 @@ function userTrackToggleEditAddressSection(orderId) {
 }
 
 function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
-  return (dispatch, getState) => {
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+  return dispatch => {
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType: 'OrderDeliveryDate Selected',
-        isCurrentPeriod,
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
         new_deliveryslot_id: newSlotId,
@@ -516,13 +510,11 @@ function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
 }
 
 function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
-  return (dispatch, getState) => {
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+  return dispatch => {
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType: 'OrderDeliverySlot Selected',
-        isCurrentPeriod,
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
         new_deliveryslot_id: newSlotId,
@@ -532,13 +524,11 @@ function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
 }
 
 function userTrackAddressSelected(orderId, originalAddressId, newAddressId) {
-  return (dispatch, getState) => {
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+  return dispatch => {
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType: 'OrderDeliveryAddress Selected',
-        is_current_period: isCurrentPeriod,
         order_id: orderId,
         original_deliveryaddress_id: originalAddressId,
         new_deliveryaddress_id: newAddressId,
