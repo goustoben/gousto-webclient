@@ -135,6 +135,14 @@ module.exports = {
     },
     generic: 'An error occurred, please try again or contact customer service.',
     'payment-failure': 'Payment Failed: Please check your Card Number, Expiry Date, Security Number and Billing Address are all correct',
+    '422-insufficient-funds': {
+      header: 'Insufficient funds',
+      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
+    '422-declined-do-not-honour': {
+      header: 'Bank declined payment',
+      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
     'user-exists': 'An account with that e-mail address already exists',
     'user-promo-invalid': 'This discount code is only available for new customers. It looks like you or someone in your household already has a Gousto account.',
     'card-tokenization-failed': 'Sorry, we don’t accept that type of card. Please try another one.',

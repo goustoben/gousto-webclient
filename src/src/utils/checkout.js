@@ -62,6 +62,12 @@ export const translateCheckoutErrorToMessageCode = (errorName, errorValue) => {
     case '3ds-challenge-failed': {
       return '3ds-challenge-failed'
     }
+    case '422-insufficient-funds': {
+      return '422-insufficient-funds'
+    }
+    case '422-declined-do-not-honour': {
+      return '422-declined-do-not-honour'
+    }
     default: {
       return 'generic'
     }
