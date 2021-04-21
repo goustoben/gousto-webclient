@@ -15,6 +15,7 @@ import {
   getNDDFeatureValue,
   getIsCheckoutOverhaulEnabled,
   getIsNewSubscriptionApiEnabled,
+  getIsAdditionalCheckoutErrorsEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
@@ -726,6 +727,10 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         && basket.get('subscriptionOption') === signupConfig.subscriptionOptions.transactional
       ) {
         reqData.subscription.paused = 1
+      }
+
+      if (getIsAdditionalCheckoutErrorsEnabled(state)) {
+        reqData.payment_show_soft_decline = true
       }
 
       const { data } = await customerSignup(null, reqData)

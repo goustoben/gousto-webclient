@@ -16,6 +16,8 @@ const cases = [
     'user-phone-number-invalid',
   ],
   [actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed', '3ds-challenge-failed'],
+  [actionTypes.CHECKOUT_SIGNUP, '422-declined-do-not-honour', '422-declined-do-not-honour'],
+  [actionTypes.CHECKOUT_SIGNUP, '422-insufficient-funds', '422-insufficient-funds'],
   [actionTypes.CHECKOUT_SIGNUP, '*something-unrecognized*', 'generic'],
   [actionTypes.CARD_TOKENIZATION_FAILED, true, 'card-tokenization-failed'],
   [actionTypes.NETWORK_FAILURE, true, 'network-failure'],

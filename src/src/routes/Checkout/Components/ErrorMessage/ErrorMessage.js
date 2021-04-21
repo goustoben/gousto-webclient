@@ -45,10 +45,24 @@ export const ErrorMessage = ({ errorType, goBack, isCheckoutOverhaulEnabled, onL
       </div>
     )
   } else {
+    const { errorMessage } = config
+    const messageStringOrObject = errorMessage[errorType] || errorMessage.generic
+    let header
+    let message
+    if (typeof messageStringOrObject === 'string') {
+      header = null
+      message = messageStringOrObject
+    } else {
+      const messageObject = messageStringOrObject
+      header = messageObject.header
+      message = messageObject.message
+    }
+
     return (
       <div data-testing={`${errorType}`} className={css.container}>
         <Alert type="danger">
-          {config.errorMessage[errorType] || config.errorMessage.generic}
+          {header ? <div className={css.header}>{header}</div> : null}
+          {message}
           {config.errorsRequireGoBack.includes(errorType) && (
             <button className={css.goBackButton} type="button" onClick={() => goBack()}>
               Back to Delivery

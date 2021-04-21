@@ -2,7 +2,12 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
+import { isSubmitting } from 'routes/Checkout/utils/state'
 import { ErrorMessageContainer } from '../ErrorMessageContainer'
+
+jest.mock('routes/Checkout/utils/state', () => ({
+  isSubmitting: jest.fn(),
+}))
 
 const expectErrorType = (wrapper, expectedErrorType) => {
   const errorMessageComponent = wrapper.find('ErrorMessage')
@@ -75,11 +80,27 @@ describe('ErrorMessageContainer', () => {
     })
   })
 
+  describe('when the form is submitting', () => {
+    beforeEach(() => {
+      const store = makeStore({ errors: {} })
+      isSubmitting.mockReturnValue(true)
+      wrapper = mount(<ErrorMessageContainer store={store} router={router} />)
+    })
+
+    test('then should not set the errorType', () => {
+      expectErrorType(wrapper, null)
+    })
+  })
+
   describe.each(cases)(
     'when %p contains %p: %p',
     (stateKey, errorName, errorValue, expectedErrorType, options = {}) => {
       const { showPayPalErrors } = options
       describe(`and when showPayPalErrors is ${showPayPalErrors}`, () => {
+        beforeEach(() => {
+          isSubmitting.mockReturnValue(false)
+        })
+
         test(`then should set a proper errorType: ${expectedErrorType}`, () => {
           const store = makeStore({
             [stateKey]: {
