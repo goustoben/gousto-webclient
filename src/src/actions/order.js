@@ -132,10 +132,8 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
     const slot = getSlot(availableDeliveryDays, slotDate, slotId)
 
     const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
     const trackingData = {
       order_id: orderId,
-      isCurrentPeriod,
       original_deliveryslot_id: originalSlotId,
       new_deliveryslot_id: slotId,
     }
@@ -295,10 +293,8 @@ export const projectedOrderRestore = (orderId, userId, deliveryDayId, deliveryDa
 export const orderAddressChange = (orderId, addressId) => (
   async (dispatch, getState) => {
     const originalAddressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
-    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
     const trackingData = {
       order_id: orderId,
-      is_current_period: isCurrentPeriod,
       original_deliveryaddress_id: originalAddressId,
       new_deliveryaddress_id: addressId,
     }

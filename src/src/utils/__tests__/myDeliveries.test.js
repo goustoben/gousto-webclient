@@ -74,7 +74,6 @@ describe('myDeliveries utils', () => {
       },
       shouldCutoffAt: '2019-02-16 11:59:59',
       whenLive: '2019-02-05 12:00:00',
-      isCurrentPeriod: false,
       shippingAddress: {
         id: '34820671',
       },
@@ -157,7 +156,6 @@ describe('myDeliveries utils', () => {
       },
       shouldCutoffAt: '2019-10-23 11:59:59',
       whenLive: '2019-10-15 12:00:00',
-      isCurrentPeriod: true,
       originalDeliveryDay: {
         date: '2019-10-15 12:00:00',
         humanDate: 'Tuesday 15th October',
@@ -310,7 +308,6 @@ describe('myDeliveries utils', () => {
           orderState: 'recipes chosen',
           whenMenuOpen: '2019-10-15 12:00:00',
           shouldCutoffAt: '2019-10-23 11:59:59',
-          isCurrentPeriod: true,
           shippingAddressId: '34820671',
           coreDeliveryDayId: '1903',
           deliveryDay: '2019-10-26 00:00:00',

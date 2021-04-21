@@ -487,7 +487,6 @@ describe('order actions', () => {
           newOrders: Immutable.Map({
             12345: Immutable.Map({
               shippingAddressId: '100',
-              isCurrentPeriod: true
             })
           })
         })
@@ -521,7 +520,6 @@ describe('order actions', () => {
         trackingData: {
           actionType: 'OrderDeliveryAddress Saved',
           order_id: '12345',
-          is_current_period: true,
           original_deliveryaddress_id: '100',
           new_deliveryaddress_id: '101'
         }
@@ -552,7 +550,6 @@ describe('order actions', () => {
             actionType: 'OrderDeliveryAddress SaveAttemptFailed',
             error: 'error message',
             order_id: '12345',
-            is_current_period: true,
             original_deliveryaddress_id: '100',
             new_deliveryaddress_id: '101'
           }
@@ -741,7 +738,6 @@ describe('order actions', () => {
           newOrders: Immutable.Map({
             12345: Immutable.Map({
               deliverySlotId: 'deliverySlotId',
-              isCurrentPeriod: true
             })
           })
         }),
@@ -821,7 +817,6 @@ describe('order actions', () => {
         trackingData: {
           actionType: 'OrderDeliverySlot Saved',
           order_id: '12345',
-          isCurrentPeriod: true,
           original_deliveryslot_id: 'deliverySlotId',
           new_deliveryslot_id: 'slotid123'
         }
@@ -843,7 +838,6 @@ describe('order actions', () => {
           actionType: 'OrderDeliverySlot SaveAttemptFailed',
           error: 'error message',
           order_id: '12345',
-          isCurrentPeriod: true,
           original_deliveryslot_id: 'deliverySlotId',
           new_deliveryslot_id: 'slotid123'
         }

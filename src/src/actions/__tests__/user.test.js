@@ -973,7 +973,6 @@ describe('user actions', () => {
           newOrders: Immutable.Map({
             12345: Immutable.Map({
               deliverySlotId: 'slotid123',
-              isCurrentPeriod: true
             })
           })
         })
@@ -986,7 +985,6 @@ describe('user actions', () => {
         trackingData: {
           actionType: 'OrderDeliverySlot Edit',
           order_id: '12345',
-          isCurrentPeriod: true,
           original_deliveryslot_id: 'slotid123',
         }
       })
@@ -1003,7 +1001,6 @@ describe('user actions', () => {
           newOrders: Immutable.Map({
             12345: Immutable.Map({
               shippingAddressId: 'addressid123',
-              isCurrentPeriod: true
             })
           })
         })
@@ -1016,7 +1013,6 @@ describe('user actions', () => {
         trackingData: {
           actionType: 'OrderDeliveryAddress Edit',
           order_id: '12345',
-          is_current_period: true,
           original_deliveryaddress_id: 'addressid123',
         }
       })
@@ -1034,7 +1030,6 @@ describe('user actions', () => {
         user: Immutable.Map({
           newOrders: Immutable.Map({
             12345: Immutable.Map({
-              isCurrentPeriod: true
             })
           })
         })
@@ -1047,7 +1042,6 @@ describe('user actions', () => {
         trackingData: {
           actionType: 'OrderDeliveryDate Selected',
           order_id: '12345',
-          isCurrentPeriod: true,
           original_deliveryslot_id: 'slotid123',
           new_deliveryslot_id: 'slotid456'
         }
@@ -1066,7 +1060,6 @@ describe('user actions', () => {
         user: Immutable.Map({
           newOrders: Immutable.Map({
             12345: Immutable.Map({
-              isCurrentPeriod: true
             })
           })
         })
@@ -1079,7 +1072,6 @@ describe('user actions', () => {
         trackingData: {
           actionType: 'OrderDeliverySlot Selected',
           order_id: '12345',
-          isCurrentPeriod: true,
           original_deliveryslot_id: 'slotid123',
           new_deliveryslot_id: 'slotid456'
         }
@@ -1174,7 +1166,6 @@ describe('user actions', () => {
         user: Immutable.Map({
           newOrders: Immutable.Map({
             12345: Immutable.Map({
-              isCurrentPeriod: true
             })
           })
         })
@@ -1187,7 +1178,6 @@ describe('user actions', () => {
         trackingData: {
           actionType: 'OrderDeliveryAddress Selected',
           order_id: '12345',
-          is_current_period: true,
           original_deliveryaddress_id: 'addressid123',
           new_deliveryaddress_id: 'addressid456'
         }
