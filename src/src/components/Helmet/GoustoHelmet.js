@@ -11,7 +11,7 @@ import Twitter from './Twitter'
 
 export const generateHref = url => {
   const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-frontend.`}${globals.domain}`
-  const resultURL = url === client.menu2 ? client.menu : url
+  const resultURL = url && (url.includes('/menu?promo_code') || url === client.menu2) ? client.menu : url
 
   return `${globals.protocol}://${hostname}${resultURL || '/'}`
 }
