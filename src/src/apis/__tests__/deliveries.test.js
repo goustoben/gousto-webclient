@@ -10,14 +10,7 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 jest.mock('config/routes', () => ({
-  version: {
-    deliveries: 'v2',
-  },
   deliveries: {
     days: '/days',
     consignments: '/consignments',
@@ -47,7 +40,7 @@ describe('deliveries api', () => {
 
           test('then fetch the correct url with a GET request', () => {
             expect(fetch).toHaveBeenCalledTimes(1)
-            expect(fetch).toHaveBeenNthCalledWith(1, expect.anything(), 'endpoint-deliveriesv2/days', expect.anything(), 'GET')
+            expect(fetch).toHaveBeenNthCalledWith(1, expect.anything(), 'https://production-api.gousto.co.uk/deliveries/v1.0/days', expect.anything(), 'GET')
           })
 
           test('then the access token should have been provided', () => {
@@ -86,7 +79,7 @@ describe('deliveries api', () => {
 
           test('then fetch the correct url with a GET request', () => {
             expect(fetch).toHaveBeenCalledTimes(1)
-            expect(fetch).toHaveBeenNthCalledWith(1, expect.anything(), 'endpoint-deliveriesv2/days', expect.anything(), 'GET')
+            expect(fetch).toHaveBeenNthCalledWith(1, expect.anything(), 'https://production-api.gousto.co.uk/deliveries/v1.0/days', expect.anything(), 'GET')
           })
 
           test('then the access token should have been provided', () => {
@@ -125,7 +118,7 @@ describe('deliveries api', () => {
 
           test('then fetch the correct url with a GET request', () => {
             expect(fetch).toHaveBeenCalledTimes(1)
-            expect(fetch).toHaveBeenNthCalledWith(1, expect.anything(), 'endpoint-deliveriesv2/days', expect.anything(), 'GET')
+            expect(fetch).toHaveBeenNthCalledWith(1, expect.anything(), 'https://production-api.gousto.co.uk/deliveries/v1.0/days', expect.anything(), 'GET')
           })
 
           test('then the access token should have been provided', () => {
@@ -164,7 +157,7 @@ describe('deliveries api', () => {
 
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
-        accessToken, 'endpoint-deliveriesv2/consignments', {'filters[order_id]': '12345'}, 'GET'
+        accessToken, 'https://production-api.gousto.co.uk/deliveries/v1.0/consignments', {'filters[order_id]': '12345'}, 'GET'
       )
     })
 

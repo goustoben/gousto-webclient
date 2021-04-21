@@ -1,0 +1,431 @@
+{
+  "api_name": "carrots",
+  "domain": "gousto.info",
+  "running_env": "live",
+  "endpoints": {
+    "carrots": {
+      "envDomain": "gousto.info",
+      "services": {
+        "auth": {
+          "1": {
+            "versionString": "v1.0.0",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/auth/v1.0.0",
+              "local": "https://carrots-api.gousto.info/auth/v1.0.0"
+            },
+            "serverSide": {
+              "live": "http://carrots-auth.gousto.info",
+              "local": "https://carrots-api.gousto.info/auth/v1.0.0"
+            }
+          }
+        },
+        "brand": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/brand/v1",
+              "local": "https://carrots-api.gousto.info/brand/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-brand.gousto.info",
+              "local": "https://carrots-api.gousto.info/brand/v1"
+            }
+          }
+        },
+        "clientmetrics": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/clientmetrics/v1",
+              "local": "https://carrots-api.gousto.info/clientmetrics/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-clientmetrics.gousto.info",
+              "local": "https://carrots-api.gousto.info/clientmetrics/v1"
+            }
+          }
+        },
+        "collections": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/collections/v1",
+              "local": "https://carrots-api.gousto.info/collections/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-collections.gousto.info",
+              "local": "https://carrots-api.gousto.info/collections/v1"
+            }
+          }
+        },
+        "complaints": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/complaints/v1",
+              "local": "https://carrots-api.gousto.info/complaints/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-complaints.gousto.info",
+              "local": "https://carrots-api.gousto.info/complaints/v1"
+            }
+          }
+        },
+        "content": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/content/v1",
+              "local": "https://carrots-api.gousto.info/content/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-content.gousto.info",
+              "local": "https://carrots-api.gousto.info/content/v1"
+            }
+          }
+        },
+        "core": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info",
+              "local": "https://carrots-api.gousto.info"
+            },
+            "serverSide": {
+              "live": "http://carrots-core.gousto.info",
+              "local": "https://carrots-api.gousto.info"
+            }
+          }
+        },
+        "customers": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/customers/v1",
+              "local": "https://carrots-api.gousto.info/customers/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-customers.gousto.info",
+              "local": "https://carrots-api.gousto.info/customers/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/customers/v2",
+              "local": "https://carrots-api.gousto.info/customers/v2"
+            },
+            "serverSide": {
+              "live": "http://carrots-customers.gousto.info",
+              "local": "https://carrots-api.gousto.info/customers/v2"
+            }
+          }
+        },
+        "deliveries": {
+          "1": {
+            "versionString": "v1.0",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/deliveries/v1.0",
+              "local": "https://carrots-api.gousto.info/deliveries/v1.0"
+            },
+            "serverSide": {
+              "live": "http://carrots-deliveries.gousto.info",
+              "local": "https://carrots-api.gousto.info/deliveries/v1.0"
+            }
+          }
+        },
+        "graphql": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/graphql/v1",
+              "local": "https://carrots-api.gousto.info/graphql/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-graphql.gousto.info",
+              "local": "https://carrots-api.gousto.info/graphql/v1"
+            }
+          }
+        },
+        "loggingmanager": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/loggingmanager",
+              "local": "https://carrots-api.gousto.info/loggingmanager"
+            },
+            "serverSide": {
+              "live": "https://carrots-api.gousto.info/loggingmanager",
+              "local": "https://carrots-api.gousto.info/loggingmanager"
+            }
+          }
+        },
+        "menu": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/menu/v1",
+              "local": "https://carrots-api.gousto.info/menu/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-menu.gousto.info",
+              "local": "https://carrots-api.gousto.info/menu/v1"
+            }
+          }
+        },
+        "order": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/order/v1",
+              "local": "https://carrots-api.gousto.info/order/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-order.gousto.info",
+              "local": "https://carrots-api.gousto.info/order/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/order/v2",
+              "local": "https://carrots-api.gousto.info/order/v2"
+            },
+            "serverSide": {
+              "live": "http://carrots-order.gousto.info",
+              "local": "https://carrots-api.gousto.info/order/v2"
+            }
+          }
+        },
+        "orders": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/orders/v1",
+              "local": "https://carrots-api.gousto.info/orders/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-orders.gousto.info",
+              "local": "https://carrots-api.gousto.info/orders/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/orders/v2",
+              "local": "https://carrots-api.gousto.info/orders/v2"
+            },
+            "serverSide": {
+              "live": "http://carrots-orders.gousto.info",
+              "local": "https://carrots-api.gousto.info/orders/v2"
+            }
+          }
+        },
+        "orderskiprecovery": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/orderskiprecovery/v1",
+              "local": "https://carrots-api.gousto.info/orderskiprecovery/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-orderskiprecovery.gousto.info",
+              "local": "https://carrots-api.gousto.info/orderskiprecovery/v1"
+            }
+          }
+        },
+        "payments": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/payments/v1",
+              "local": "https://carrots-api.gousto.info/payments/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-payments.gousto.info",
+              "local": "https://carrots-api.gousto.info/payments/v1"
+            }
+          }
+        },
+        "products": {
+          "1": {
+            "versionString": "v1.0",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/products/v1.0",
+              "local": "https://carrots-api.gousto.info/products/v1.0"
+            },
+            "serverSide": {
+              "live": "http://carrots-products.gousto.info",
+              "local": "https://carrots-api.gousto.info/products/v1.0"
+            }
+          },
+          "2": {
+            "versionString": "v2.0",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/products/v2.0",
+              "local": "https://carrots-api.gousto.info/products/v2.0"
+            },
+            "serverSide": {
+              "live": "http://carrots-products.gousto.info",
+              "local": "https://carrots-api.gousto.info/products/v2.0"
+            }
+          }
+        },
+        "recipes": {
+          "1": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/recipes/v2",
+              "local": "https://carrots-api.gousto.info/recipes/v2"
+            },
+            "serverSide": {
+              "live": "http://carrots-recipes.gousto.info",
+              "local": "https://carrots-api.gousto.info/recipes/v2"
+            }
+          }
+        },
+        "ssr": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/ssr/v1",
+              "local": "https://carrots-api.gousto.info/ssr/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-ssr.gousto.info",
+              "local": "https://carrots-api.gousto.info/ssr/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/ssr/v2",
+              "local": "https://carrots-api.gousto.info/ssr/v2"
+            },
+            "serverSide": {
+              "live": "http://carrots-ssr.gousto.info",
+              "local": "https://carrots-api.gousto.info/ssr/v2"
+            }
+          }
+        },
+        "ssrdeliveries": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/ssrdeliveries/v1",
+              "local": "https://carrots-api.gousto.info/ssrdeliveries/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-ssrdeliveries.gousto.info",
+              "local": "https://carrots-api.gousto.info/ssrdeliveries/v1"
+            }
+          }
+        },
+        "subpauseosr": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/subpauseosr/v1",
+              "local": "https://carrots-api.gousto.info/subpauseosr/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-subpauseosr.gousto.info",
+              "local": "https://carrots-api.gousto.info/subpauseosr/v1"
+            }
+          }
+        },
+        "subscriptioncommand": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/subscriptioncommand/v1",
+              "local": "https://carrots-api.gousto.info/subscriptioncommand/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-subscriptioncommand.gousto.info",
+              "local": "https://carrots-api.gousto.info/subscriptioncommand/v1"
+            }
+          }
+        },
+        "subscriptionquery": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/subscriptionquery/v1",
+              "local": "https://carrots-api.gousto.info/subscriptionquery/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-subscriptionquery.gousto.info",
+              "local": "https://carrots-api.gousto.info/subscriptionquery/v1"
+            }
+          }
+        },
+        "tastepreferences": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/tastepreferences/v1",
+              "local": "https://carrots-api.gousto.info/tastepreferences/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-tastepreferences.gousto.info",
+              "local": "https://carrots-api.gousto.info/tastepreferences/v1"
+            }
+          }
+        },
+        "userbucketing": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/userbucketing/v1",
+              "local": "https://carrots-api.gousto.info/userbucketing/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-userbucketing.gousto.info",
+              "local": "https://carrots-api.gousto.info/userbucketing/v1"
+            }
+          }
+        },
+        "userfeedback": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/userfeedback/v1",
+              "local": "https://carrots-api.gousto.info/userfeedback/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-userfeedback.gousto.info",
+              "local": "https://carrots-api.gousto.info/userfeedback/v1"
+            }
+          }
+        },
+        "webclient": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info",
+              "local": "https://carrots-api.gousto.info"
+            },
+            "serverSide": {
+              "live": "http://carrots-webclient.gousto.info",
+              "local": "https://carrots-api.gousto.info"
+            }
+          }
+        },
+        "workable": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://carrots-api.gousto.info/workable/v1",
+              "local": "https://carrots-api.gousto.info/workable/v1"
+            },
+            "serverSide": {
+              "live": "http://carrots-workable.gousto.info",
+              "local": "https://carrots-api.gousto.info/workable/v1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

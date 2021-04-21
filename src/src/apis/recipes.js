@@ -3,15 +3,12 @@ import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
-const version = routes.version.recipes
-const versionMenu = routes.version.menu
-
 export function fetchRecipes(accessToken, path, reqData) {
-  return fetch(accessToken, `${endpoint('recipes', version)}/recipes/${path}`, reqData, 'GET')
+  return fetch(accessToken, `${endpoint('recipes', 2)}/recipes/${path}`, reqData, 'GET')
 }
 
 export function fetchRecipesFromMenu(accessToken, reqData) {
-  const path = `${endpoint('menu', versionMenu)}/recipes`
+  const path = `${endpoint('menu')}/recipes`
   const uri = reqData
     ? `${path}?${qs.stringify(reqData, { encode: false })}`
     : path
@@ -24,6 +21,6 @@ export function fetchRecipeStock(accessToken, deliveryDayId) {
 }
 
 export function fetchRecipesStockByDate(reqData) {
-  return fetch(null, `${endpoint('orders', routes.version.orders)}${routes.orders.recipesStock}`, reqData, 'GET')
+  return fetch(null, `${endpoint('orders')}${routes.orders.recipesStock}`, reqData, 'GET')
 }
 

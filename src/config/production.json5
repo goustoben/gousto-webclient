@@ -1,0 +1,5 @@
+{
+  "api_name": "production",
+  "domain": "gousto.co.uk",
+  "running_env": "live",
+}

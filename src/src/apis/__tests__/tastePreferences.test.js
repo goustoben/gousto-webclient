@@ -8,9 +8,6 @@ jest.mock('utils/fetch', () =>
     return getData()
   })
 )
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
 
 describe('updateTastePreferences', () => {
   test('should fetch the correct url', async () => {
@@ -21,6 +18,6 @@ describe('updateTastePreferences', () => {
     }
     await updateTastePreferences('access-token', 'session_id')
     expect(fetch).toHaveBeenCalledTimes(1)
-    expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-tastepreferences/v1/preferences/profile', expectedReqData, 'POST', 'default', headers)
+    expect(fetch).toHaveBeenCalledWith('access-token', 'https://production-api.gousto.co.uk/tastepreferences/v1/preferences/profile', expectedReqData, 'POST', 'default', headers)
   })
 })

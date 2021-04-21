@@ -3,33 +3,31 @@ import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
-const version = routes.version.auth
-
 export function getUserToken({ email, password, clientId, clientSecret, headers }) {
-  return fetch(null, `${endpoint('auth', version)}${routes.auth.userToken}`, { grant_type: 'password', username: email, password, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', {
+  return fetch(null, `${endpoint('auth')}${routes.auth.userToken}`, { grant_type: 'password', username: email, password, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', {
     'x-forwarded-for': headers['x-forwarded-for'],
     'user-agent': headers['user-agent']
   })
 }
 
 export function identifyUser(accessToken) {
-  return fetch(accessToken, `${endpoint('auth', version)}${routes.auth.identifyUser}`, {}, 'GET', 'no-cache')
+  return fetch(accessToken, `${endpoint('auth')}${routes.auth.identifyUser}`, {}, 'GET', 'no-cache')
 }
 
 export function refreshUserToken(refreshToken, clientId, clientSecret) {
-  return fetch(null, `${endpoint('auth', version)}${routes.auth.refreshToken}`, { grant_type: 'refresh_token', refresh_token: refreshToken, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', {}, false)
+  return fetch(null, `${endpoint('auth')}${routes.auth.refreshToken}`, { grant_type: 'refresh_token', refresh_token: refreshToken, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', {}, false)
 }
 
 export function forgetUserToken(accessToken) {
-  return fetch(accessToken, `${endpoint('auth', version)}${routes.auth.userToken}`, {}, 'DELETE', 'no-cache')
+  return fetch(accessToken, `${endpoint('auth')}${routes.auth.userToken}`, {}, 'DELETE', 'no-cache')
 }
 
 export function validateUserPassword(password) {
-  return fetch(null, `${endpoint('auth', version)}${routes.auth.validateUserPassword}`, { password }, 'POST', 'no-cache')
+  return fetch(null, `${endpoint('auth')}${routes.auth.validateUserPassword}`, { password }, 'POST', 'no-cache')
 }
 
 export function resetUserPassword(password, passwordToken) {
-  return fetch(null, `${endpoint('auth', version)}${routes.auth.resetUserPassword}`, {
+  return fetch(null, `${endpoint('auth')}${routes.auth.resetUserPassword}`, {
     password,
     password_token: passwordToken,
   }, 'POST', 'no-cache')

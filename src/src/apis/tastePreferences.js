@@ -8,5 +8,5 @@ export function updateTastePreferences(accessToken, sessionId) {
     'Content-Type': 'application/json',
   }
 
-  return fetch(accessToken, `${endpoint('tastepreferences', routes.version.tastePreferences)}${routes.tastePreferences.profile}`, {}, 'POST', 'default', headers)
+  return fetch(accessToken, `${endpoint('tastepreferences')}${routes.tastePreferences.profile}`, {}, 'POST', 'default', headers)
 }

@@ -4,16 +4,12 @@ import routes from 'config/routes'
 import endpoint from 'config/endpoint'
 
 export function buildSubscriptionCommandUrl(userId, path) {
-  return `${endpoint(
-    'subscriptioncommand',
-    routes.version.subscriptionCommand
-  )}/subscriptions/${userId}${path}`
+  return `${endpoint('subscriptioncommand')}/subscriptions/${userId}${path}`
 }
 
 export function buildSubscriptionQueryUrl(userId, path) {
   return `${endpoint(
-    'subscriptionquery',
-    routes.version.subscriptionQuery
+    'subscriptionquery'
   )}${path}/${userId}`
 }
 

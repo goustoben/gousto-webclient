@@ -3,26 +3,23 @@ const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin")
 const ExitCodePlugin = require('./exitCode')
+const nodeConfig = require("node-config");
 
-// let build = 'production'
-let build = 'development'
-let envName = 'staging'
-let domain = 'gousto.info'
-let clientProtocol = 'https'
-let cloudfrontUrl = '/'
-let publicPath = '/'
-
-if (process.env.NODE_ENV === 'local') {
-  build = 'development'
-  envName = 'local'
-  domain = 'gousto.local'
-  clientProtocol = 'http'
-  cloudfrontUrl = ''
-  publicPath = '/nsassets/'
-}
+const apiName = nodeConfig.get('api_name')
+const build = 'development'
+const clientProtocol = nodeConfig.get('client_protocol')
+const cloudfrontUrl = nodeConfig.get('cloudfront_url')
+const domain = nodeConfig.get('domain')
+const envName = nodeConfig.get('environment_name')
+const runningEnv = nodeConfig.get('running_env')
+const endpoints = nodeConfig.get('endpoints')
+// This probably isn't used considering e2e.js imports a very limited subset of webclient to help it form api request urls. But this can be confirmed and tidied up later.
+const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 
 // eslint-disable-next-line no-console
-console.log(`================\nE2E BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
+console.log(`Printing relevant command line envs, NODE_APP_INSTANCE=${process.env.NODE_APP_INSTANCE}, NODE_CONFIG_ENV=${process.env.NODE_CONFIG_ENV}`)
+// eslint-disable-next-line no-console
+console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, POINTING TO API ENVIRONMENT: ${apiName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}, RUNNING ENVIRONMENT: "${runningEnv}"\n================`)
 
 const config = {
   mode: build,
@@ -110,9 +107,11 @@ const config = {
 
       __ENV__: JSON.stringify(envName),
       __API_ENV__: JSON.stringify(envName),
+      __RUNNING_ENV__: JSON.stringify(runningEnv),
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
       __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
+      __ENDPOINTS__: JSON.stringify(endpoints),
       'process.env.NODE_ENV': JSON.stringify(build),
     }),
     // new webpack.BannerPlugin('require("source-map-support").install();', { raw: true, entryOnly: false }),

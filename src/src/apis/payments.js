@@ -1,7 +1,7 @@
 import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 
-const PAYMENTS_API = `${endpoint('payments', 'v1')}/payments`
+const PAYMENTS_API = `${endpoint('payments')}/payments`
 const HEADERS = {
   'Content-Type': 'application/json',
 }

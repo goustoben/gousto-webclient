@@ -1,0 +1,431 @@
+{
+  "api_name": "beetroots",
+  "domain": "gousto.info",
+  "running_env": "live",
+  "endpoints": {
+    "beetroots": {
+      "envDomain": "gousto.info",
+      "services": {
+        "auth": {
+          "1": {
+            "versionString": "v1.0.0",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/auth/v1.0.0",
+              "local": "https://beetroots-api.gousto.info/auth/v1.0.0"
+            },
+            "serverSide": {
+              "live": "http://beetroots-auth.gousto.info",
+              "local": "https://beetroots-api.gousto.info/auth/v1.0.0"
+            }
+          }
+        },
+        "brand": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/brand/v1",
+              "local": "https://beetroots-api.gousto.info/brand/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-brand.gousto.info",
+              "local": "https://beetroots-api.gousto.info/brand/v1"
+            }
+          }
+        },
+        "clientmetrics": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/clientmetrics/v1",
+              "local": "https://beetroots-api.gousto.info/clientmetrics/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-clientmetrics.gousto.info",
+              "local": "https://beetroots-api.gousto.info/clientmetrics/v1"
+            }
+          }
+        },
+        "collections": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/collections/v1",
+              "local": "https://beetroots-api.gousto.info/collections/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-collections.gousto.info",
+              "local": "https://beetroots-api.gousto.info/collections/v1"
+            }
+          }
+        },
+        "complaints": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/complaints/v1",
+              "local": "https://beetroots-api.gousto.info/complaints/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-complaints.gousto.info",
+              "local": "https://beetroots-api.gousto.info/complaints/v1"
+            }
+          }
+        },
+        "content": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/content/v1",
+              "local": "https://beetroots-api.gousto.info/content/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-content.gousto.info",
+              "local": "https://beetroots-api.gousto.info/content/v1"
+            }
+          }
+        },
+        "core": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info",
+              "local": "https://beetroots-api.gousto.info"
+            },
+            "serverSide": {
+              "live": "http://beetroots-core.gousto.info",
+              "local": "https://beetroots-api.gousto.info"
+            }
+          }
+        },
+        "customers": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/customers/v1",
+              "local": "https://beetroots-api.gousto.info/customers/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-customers.gousto.info",
+              "local": "https://beetroots-api.gousto.info/customers/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/customers/v2",
+              "local": "https://beetroots-api.gousto.info/customers/v2"
+            },
+            "serverSide": {
+              "live": "http://beetroots-customers.gousto.info",
+              "local": "https://beetroots-api.gousto.info/customers/v2"
+            }
+          }
+        },
+        "deliveries": {
+          "1": {
+            "versionString": "v1.0",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/deliveries/v1.0",
+              "local": "https://beetroots-api.gousto.info/deliveries/v1.0"
+            },
+            "serverSide": {
+              "live": "http://beetroots-deliveries.gousto.info",
+              "local": "https://beetroots-api.gousto.info/deliveries/v1.0"
+            }
+          }
+        },
+        "graphql": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/graphql/v1",
+              "local": "https://beetroots-api.gousto.info/graphql/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-graphql.gousto.info",
+              "local": "https://beetroots-api.gousto.info/graphql/v1"
+            }
+          }
+        },
+        "loggingmanager": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/loggingmanager",
+              "local": "https://beetroots-api.gousto.info/loggingmanager"
+            },
+            "serverSide": {
+              "live": "https://beetroots-api.gousto.info/loggingmanager",
+              "local": "https://beetroots-api.gousto.info/loggingmanager"
+            }
+          }
+        },
+        "menu": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/menu/v1",
+              "local": "https://beetroots-api.gousto.info/menu/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-menu.gousto.info",
+              "local": "https://beetroots-api.gousto.info/menu/v1"
+            }
+          }
+        },
+        "order": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/order/v1",
+              "local": "https://beetroots-api.gousto.info/order/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-order.gousto.info",
+              "local": "https://beetroots-api.gousto.info/order/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/order/v2",
+              "local": "https://beetroots-api.gousto.info/order/v2"
+            },
+            "serverSide": {
+              "live": "http://beetroots-order.gousto.info",
+              "local": "https://beetroots-api.gousto.info/order/v2"
+            }
+          }
+        },
+        "orders": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/orders/v1",
+              "local": "https://beetroots-api.gousto.info/orders/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-orders.gousto.info",
+              "local": "https://beetroots-api.gousto.info/orders/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/orders/v2",
+              "local": "https://beetroots-api.gousto.info/orders/v2"
+            },
+            "serverSide": {
+              "live": "http://beetroots-orders.gousto.info",
+              "local": "https://beetroots-api.gousto.info/orders/v2"
+            }
+          }
+        },
+        "orderskiprecovery": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/orderskiprecovery/v1",
+              "local": "https://beetroots-api.gousto.info/orderskiprecovery/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-orderskiprecovery.gousto.info",
+              "local": "https://beetroots-api.gousto.info/orderskiprecovery/v1"
+            }
+          }
+        },
+        "payments": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/payments/v1",
+              "local": "https://beetroots-api.gousto.info/payments/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-payments.gousto.info",
+              "local": "https://beetroots-api.gousto.info/payments/v1"
+            }
+          }
+        },
+        "products": {
+          "1": {
+            "versionString": "v1.0",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/products/v1.0",
+              "local": "https://beetroots-api.gousto.info/products/v1.0"
+            },
+            "serverSide": {
+              "live": "http://beetroots-products.gousto.info",
+              "local": "https://beetroots-api.gousto.info/products/v1.0"
+            }
+          },
+          "2": {
+            "versionString": "v2.0",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/products/v2.0",
+              "local": "https://beetroots-api.gousto.info/products/v2.0"
+            },
+            "serverSide": {
+              "live": "http://beetroots-products.gousto.info",
+              "local": "https://beetroots-api.gousto.info/products/v2.0"
+            }
+          }
+        },
+        "recipes": {
+          "1": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/recipes/v2",
+              "local": "https://beetroots-api.gousto.info/recipes/v2"
+            },
+            "serverSide": {
+              "live": "http://beetroots-recipes.gousto.info",
+              "local": "https://beetroots-api.gousto.info/recipes/v2"
+            }
+          }
+        },
+        "ssr": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/ssr/v1",
+              "local": "https://beetroots-api.gousto.info/ssr/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-ssr.gousto.info",
+              "local": "https://beetroots-api.gousto.info/ssr/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/ssr/v2",
+              "local": "https://beetroots-api.gousto.info/ssr/v2"
+            },
+            "serverSide": {
+              "live": "http://beetroots-ssr.gousto.info",
+              "local": "https://beetroots-api.gousto.info/ssr/v2"
+            }
+          }
+        },
+        "ssrdeliveries": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/ssrdeliveries/v1",
+              "local": "https://beetroots-api.gousto.info/ssrdeliveries/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-ssrdeliveries.gousto.info",
+              "local": "https://beetroots-api.gousto.info/ssrdeliveries/v1"
+            }
+          }
+        },
+        "subpauseosr": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/subpauseosr/v1",
+              "local": "https://beetroots-api.gousto.info/subpauseosr/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-subpauseosr.gousto.info",
+              "local": "https://beetroots-api.gousto.info/subpauseosr/v1"
+            }
+          }
+        },
+        "subscriptioncommand": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/subscriptioncommand/v1",
+              "local": "https://beetroots-api.gousto.info/subscriptioncommand/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-subscriptioncommand.gousto.info",
+              "local": "https://beetroots-api.gousto.info/subscriptioncommand/v1"
+            }
+          }
+        },
+        "subscriptionquery": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/subscriptionquery/v1",
+              "local": "https://beetroots-api.gousto.info/subscriptionquery/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-subscriptionquery.gousto.info",
+              "local": "https://beetroots-api.gousto.info/subscriptionquery/v1"
+            }
+          }
+        },
+        "tastepreferences": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/tastepreferences/v1",
+              "local": "https://beetroots-api.gousto.info/tastepreferences/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-tastepreferences.gousto.info",
+              "local": "https://beetroots-api.gousto.info/tastepreferences/v1"
+            }
+          }
+        },
+        "userbucketing": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/userbucketing/v1",
+              "local": "https://beetroots-api.gousto.info/userbucketing/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-userbucketing.gousto.info",
+              "local": "https://beetroots-api.gousto.info/userbucketing/v1"
+            }
+          }
+        },
+        "userfeedback": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/userfeedback/v1",
+              "local": "https://beetroots-api.gousto.info/userfeedback/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-userfeedback.gousto.info",
+              "local": "https://beetroots-api.gousto.info/userfeedback/v1"
+            }
+          }
+        },
+        "webclient": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info",
+              "local": "https://beetroots-api.gousto.info"
+            },
+            "serverSide": {
+              "live": "http://beetroots-webclient.gousto.info",
+              "local": "https://beetroots-api.gousto.info"
+            }
+          }
+        },
+        "workable": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/workable/v1",
+              "local": "https://beetroots-api.gousto.info/workable/v1"
+            },
+            "serverSide": {
+              "live": "http://beetroots-workable.gousto.info",
+              "local": "https://beetroots-api.gousto.info/workable/v1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

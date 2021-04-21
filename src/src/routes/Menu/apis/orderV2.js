@@ -7,9 +7,6 @@ import fetch, {
 import Cookies from 'utils/GoustoCookies'
 import { get } from 'utils/cookieHelper2'
 import endpoint from 'config/endpoint'
-import routes from 'config/routes'
-
-const version = routes.version.ordersV2
 
 const getSessionId = () => get(Cookies, 'gousto_session_id', false, false)
 const getRequestHeaders = (userId) => ({
@@ -21,7 +18,7 @@ const getRequestHeaders = (userId) => ({
 export const createOrder = async (accessToken, order, userId) => {
   const headers = getRequestHeaders(userId)
 
-  const response = await fetch(accessToken, `${endpoint('order', version)}/orders`, { data: order }, 'POST', cacheDefault, headers)
+  const response = await fetch(accessToken, `${endpoint('order', 2)}/orders`, { data: order }, 'POST', cacheDefault, headers)
 
   const { data: { data: orderResponse } } = response
 
@@ -34,7 +31,7 @@ export const updateOrder = (accessToken, orderId, order, userId) => {
 
   return fetch(
     accessToken,
-    `${endpoint('order', version)}/orders/${orderId}`,
+    `${endpoint('order', 2)}/orders/${orderId}`,
     { data: order },
     'PUT',
     cacheDefault,
@@ -54,7 +51,7 @@ export const getOrder = (accessToken, orderId, userId, include) => {
 
   const headers = getRequestHeaders(userId)
 
-  return fetch(accessToken, `${endpoint('order', version)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
+  return fetch(accessToken, `${endpoint('order', 2)}/orders/${orderId}`, reqData, 'GET', cacheDefault, headers)
 }
 
 export const getUserOrders = (accessToken, userId, phases, include, limit = 15, sort = 'deliveryDate') => {
@@ -67,5 +64,5 @@ export const getUserOrders = (accessToken, userId, phases, include, limit = 15, 
     sort,
   }
 
-  return fetch(accessToken, `${endpoint('order', version)}/users/${userId}/orders`, reqData, 'GET', cacheDefault, headers)
+  return fetch(accessToken, `${endpoint('order', 2)}/users/${userId}/orders`, reqData, 'GET', cacheDefault, headers)
 }

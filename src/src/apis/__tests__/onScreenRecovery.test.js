@@ -10,10 +10,6 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 describe('onScreenRecovery api', () => {
   beforeEach(() => {
     fetch.mockClear()
@@ -29,7 +25,7 @@ describe('onScreenRecovery api', () => {
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          'endpoint-orderskiprecoveryv1/orderskiprecovery',
+          'https://production-api.gousto.co.uk/orderskiprecovery/v1/orderskiprecovery',
           { order_id: orderId, order_date: orderDate },
           'GET'
         )
@@ -44,7 +40,7 @@ describe('onScreenRecovery api', () => {
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          'endpoint-orderskiprecoveryv1/orderskiprecovery',
+          'https://production-api.gousto.co.uk/orderskiprecovery/v1/orderskiprecovery',
           { order_date: orderDate },
           'GET'
         )
@@ -62,14 +58,14 @@ describe('onScreenRecovery api', () => {
       const token = 'token'
       await fetchSubscriptionPauseContent(token)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subpauseosrv1/subscriptionpauserecovery/1', {enableOffer: undefined}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/subpauseosr/v1/subscriptionpauserecovery/1', {enableOffer: undefined}, 'GET')
     })
 
     test('should fetch the correct url with enableOffer flag', async () => {
       const token = 'token'
       await fetchSubscriptionPauseContent(token, true)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subpauseosrv1/subscriptionpauserecovery/1', {enableOffer: true}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/subpauseosr/v1/subscriptionpauserecovery/1', {enableOffer: true}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {

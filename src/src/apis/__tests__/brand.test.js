@@ -9,16 +9,6 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
-
-jest.mock('config/routes', () => ({
-  version: {
-    brand: 'v2',
-  },
-}))
-
 describe('brand api', () => {
   beforeEach(() => {
     fetch.mockClear()
@@ -30,7 +20,7 @@ describe('brand api', () => {
 
       await fetchBrandInfo('access-token', 'session-id', 'user-id')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/theme', expectedReqData, 'GET', 'default', { 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'user-id' })
+      expect(fetch).toHaveBeenCalledWith('access-token', 'https://production-api.gousto.co.uk/brand/v1/theme', expectedReqData, 'GET', 'default', { 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'user-id' })
     })
   })
 
@@ -40,7 +30,7 @@ describe('brand api', () => {
 
       await fetchBrandMenuHeaders('access-token', 'session-id', 'user-id')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('access-token', 'endpoint-brand/v2/menu-headers', expectedReqData, 'GET', 'default', { 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'user-id' })
+      expect(fetch).toHaveBeenCalledWith('access-token', 'https://production-api.gousto.co.uk/brand/v1/menu-headers', expectedReqData, 'GET', 'default', { 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'user-id' })
     })
   })
 })

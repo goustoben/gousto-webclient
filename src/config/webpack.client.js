@@ -28,14 +28,19 @@ const clientProtocol = nodeConfig.get('client_protocol')
 const cloudfrontUrl = nodeConfig.get('cloudfront_url')
 const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
+const runningEnv = nodeConfig.get('running_env')
+const endpoints = nodeConfig.get('endpoints')
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 const devMode = process.env.NODE_ENV !== 'production'
 
 const GIT_HASH = `${childProcess.execSync("git rev-parse --short HEAD | tr -d '\n'").toString()}`
 const debug = false
+
 // eslint-disable-next-line no-console
-console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
+console.log(`Printing relevant command line envs, NODE_APP_INSTANCE=${process.env.NODE_APP_INSTANCE}, NODE_CONFIG_ENV=${process.env.NODE_CONFIG_ENV}`)
+// eslint-disable-next-line no-console
+console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, POINTING TO API ENVIRONMENT: ${apiName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}, RUNNING ENVIRONMENT: "${runningEnv}"\n================`)
 
 const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
 const cssLoaders = [
@@ -184,11 +189,13 @@ const config = {
 
       __ENV__: JSON.stringify(envName),
       __API_ENV__: JSON.stringify(apiName),
+      __RUNNING_ENV__: JSON.stringify(runningEnv),
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
       __CHECKOUT_PK__: JSON.stringify(checkout_pk),
       'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
-      __GIT_HASH__: JSON.stringify(GIT_HASH)
+      __GIT_HASH__: JSON.stringify(GIT_HASH),
+      __ENDPOINTS__: JSON.stringify(endpoints)
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
   ],

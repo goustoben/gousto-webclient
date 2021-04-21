@@ -18,16 +18,7 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version && `/${version}`}`)
-)
-
 jest.mock('config/routes', () => ({
-  version: {
-    recipes: 'v2',
-    subscriptionCommand: 'v1',
-    subscriptionQuery: 'v1',
-  },
   core: {
     deactivateSub: '/deactivateSub',
     currentSubscription: '/currentSubscription'
@@ -56,7 +47,7 @@ describe('subscription endpoints', () => {
         const reqData = { a: 1, b: 2 }
         await deactivateSubscription('token', reqData)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/deactivateSub', reqData, 'PUT')
+        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/deactivateSub', reqData, 'PUT')
       })
 
       test('should return the results of the fetch unchanged', async () => {
@@ -72,7 +63,7 @@ describe('subscription endpoints', () => {
 
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          'endpoint-subscriptioncommand/v1/subscriptions/user-id/deactivate',
+          'https://production-api.gousto.co.uk/subscriptioncommand/v1/subscriptions/user-id/deactivate',
           { pauseDate },
           'POST',
           'default',
@@ -85,7 +76,7 @@ describe('subscription endpoints', () => {
         const reqData = { c: 3, d: 4 }
         await fetchSubscription('token', reqData)
         expect(fetch).toHaveBeenCalledTimes(1)
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/currentSubscription', reqData, 'GET')
+        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/currentSubscription', reqData, 'GET')
       })
 
       test('should return the results of the fetch unchanged', async () => {
@@ -101,7 +92,7 @@ describe('subscription endpoints', () => {
 
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          'endpoint-subscriptioncommand/v1/subscriptions/user-id/skip',
+          'https://production-api.gousto.co.uk/subscriptioncommand/v1/subscriptions/user-id/skip',
           {skipDates: reqData},
           'POST',
           'default',
@@ -117,7 +108,7 @@ describe('subscription endpoints', () => {
 
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          'endpoint-subscriptioncommand/v1/subscriptions/user-id/unskip',
+          'https://production-api.gousto.co.uk/subscriptioncommand/v1/subscriptions/user-id/unskip',
           {unskipDates: reqData},
           'POST',
           'default',
@@ -130,7 +121,7 @@ describe('subscription endpoints', () => {
       test('should fetch the correct url', async () => {
         await fetchSubscriptionV2('token', 'user-id')
 
-        expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subscriptionquery/v1/subscriptions/user-id', {}, 'GET')
+        expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/subscriptionquery/v1/subscriptions/user-id', {}, 'GET')
       })
     })
 
@@ -140,7 +131,7 @@ describe('subscription endpoints', () => {
         expect(fetch).toHaveBeenCalledTimes(1)
         expect(fetch).toHaveBeenCalledWith(
           'token',
-          'endpoint-subscriptionquery/v1/projected-deliveries/mock-id',
+          'https://production-api.gousto.co.uk/subscriptionquery/v1/projected-deliveries/mock-id',
           {},
           'GET',
         )

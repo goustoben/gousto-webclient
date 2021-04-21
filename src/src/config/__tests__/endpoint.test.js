@@ -1,185 +1,61 @@
 import endpoint from 'config/endpoint'
 
-describe('endpoint', () => {
-  global.__DOMAIN__ = 'gousto.local'
-  let service
+describe('endpoint finder', () => {
+  beforeEach(() => {
+    global.__SERVER__ = false
+    global.__RUNNING_ENV__ = 'local'
+    global.__API_ENV__ = 'production'
+  })
 
-  describe('when the service is "webclient"', () => {
-    beforeEach(() => {
-      service = 'webclient'
+  describe('defaulting', () => {
+    it('should return the correct endpoint when an un-versioned service endpoint is requested with no other parameters', () =>{
+      expect(endpoint('core')).toEqual("https://production-api.gousto.co.uk")
     })
 
-    describe('and being in the server side', () => {
-      beforeEach(() => {
-        global.__SERVER__ = true
-        global.__API_ENV__ = 'whateverenv'
-      })
-
-      test('an http address with the corresponding ENV, SERVICE and DOMAIN is returned', () => {
-        const url = endpoint(service)
-        expect(url).toBe(`http://${__API_ENV__}-${service}.${__DOMAIN__}`)
-      })
+    it('should return the first version endpoint when a service endpoint is requested with a version that does not exist', ()=>{
+      expect(endpoint('auth', 2)).toEqual("https://production-api.gousto.co.uk/auth/v1.0.0")
     })
 
-    describe('and not being in the server side', () => {
-      beforeEach(() => {
-        global.__SERVER__ = false
-      })
+    it('should return the first version endpoint when a service endpoint is requested and no version is specified', ()=>{
+      expect(endpoint('customers')).toEqual("https://production-api.gousto.co.uk/customers/v1")
+    })
 
-      describe('and the environment is production', () => {
-        beforeEach(() => {
-          global.__API_ENV__ = 'production'
-        })
+    it('should throw an error if a non existent service is requested', () => {
+      expect(() => endpoint()).toThrow("Please specify a valid service.")
+    })
 
-        test('an https address with "www" and without the service, but with the DOMAIN is returned', () => {
-          const url = endpoint(service)
-          expect(url).toBe(`https://www.${__DOMAIN__}`)
-        })
-      })
+    it("should throw an error if the requested endpoint isn't specified as either server or client", () => {
+      global.__SERVER__ = undefined;
+      expect(() => endpoint('auth', 1)).toThrow("Please specify whether this call is coming from the server or client browser for routing purposes.")
+    })
 
-      describe('and the environment is not production', () => {
-        beforeEach(() => {
-          global.__API_ENV__ = 'haricots'
-        })
+    it("should throw an error if the requested endpoint target API environment is missing", () => {
+      global.__API_ENV__ = undefined;
+      expect(() => endpoint('auth', 1)).toThrow("Please specify which environment to point this call to.")
+    })
 
-        test('an https address with the corresponding ENV, SERVICE and DOMAIN is returned', () => {
-          const url = endpoint(service)
-          expect(url).toBe(`https://${__API_ENV__}-${service}.${__DOMAIN__}`)
-        })
-      })
+    it("should throw an error if the running environment of the app (live/local) is not specified", () => {
+      global.__RUNNING_ENV__ = undefined;
+      expect(() => endpoint('auth', 1)).toThrow("Please specify whether this app is hosted 'locally' or 'live' on AWS.")
     })
   })
 
-  describe('when the service is not "webclient"', () => {
-    beforeEach(() => {
-      service = 'customers'
-    })
-
-    describe('and the env is not "local"', () => {
-      beforeEach(() => {
-        global.__API_ENV__ = 'haricots'
-      })
-
-      describe('and being in the server side', () => {
-        beforeEach(() => {
-          global.__SERVER__ = true
-        })
-
-        test('an http address with the corresponding ENV, SERVICE and DOMAIN is returned', () => {
-          const url = endpoint(service)
-          expect(url).toBe(`http://${__API_ENV__}-${service}.${__DOMAIN__}`)
-        })
-      })
-
-      describe('and not being in the server side', () => {
-        beforeEach(() => {
-          global.__SERVER__ = false
-        })
-
-        describe('and the service is core', () => {
-          beforeEach(() => {
-            service = 'core'
-          })
-
-          test('an https API address with the corresponding ENV and DOMAIN is returned', () => {
-            const url = endpoint(service)
-            expect(url).toBe(`https://${__API_ENV__}-api.${__DOMAIN__}`)
-          })
-
-          describe('and a version was passed', () => {
-            test('an https API address with the corresponding ENV, DOMAIN, SERVICE and VERSION is returned', () => {
-              const version = 'v8'
-              const url = endpoint(service, version)
-              expect(url).toBe(
-                `https://${__API_ENV__}-api.${__DOMAIN__}/${version}`
-              )
-            })
-          })
-        })
-
-        describe('and a version was passed', () => {
-          test('an https API address with the corresponding ENV, DOMAIN, SERVICE and VERSION is returned', () => {
-            const version = 'v7'
-            const url = endpoint(service, version)
-            expect(url).toBe(
-              `https://${__API_ENV__}-api.${__DOMAIN__}/${service}/${version}`
-            )
-          })
-        })
-
-        describe('and a version was not passed', () => {
-          test('an https API address with the corresponding ENV, DOMAIN and SERVICE is returned', () => {
-            const url = endpoint(service)
-            expect(url).toBe(`https://${__API_ENV__}-api.${__DOMAIN__}/${service}`)
-          })
-        })
-      })
-    })
-
-    describe('and the env is "local"', () => {
-      beforeEach(() => {
-        global.__API_ENV__ = 'local'
-      })
-
-      describe('and the service is core', () => {
-        beforeEach(() => {
-          service = 'core'
-        })
-
-        describe('and being in the client side', () => {
-          beforeEach(() => {
-            global.__CLIENT__ = true
-          })
-
-          test('an http API address with the corresponding DOMAIN is returned', () => {
-            const url = endpoint(service)
-            expect(url).toBe(`http://api.${__DOMAIN__}`)
-          })
-        })
-
-        describe('and not being in the client side', () => {
-          beforeEach(() => {
-            global.__CLIENT__ = false
-          })
-
-          test('an http API address with the corresponding DOMAIN and port 80 is returned', () => {
-            const url = endpoint(service)
-            expect(url).toBe(`http://api.${__DOMAIN__}:80`)
-          })
-        })
-      })
-
-      describe('and the service is not core', () => {
-        beforeEach(() => {
-          service = 'recipes'
-        })
-
-        describe('and being in the client side', () => {
-          beforeEach(() => {
-            global.__CLIENT__ = true
-          })
-
-          test('an http API address with the corresponding DOMAIN, SERVICE and VERSION is returned', () => {
-            const version = 'v6'
-            const url = endpoint(service, version)
-            expect(url).toBe(`http://api.${__DOMAIN__}/${service}/${version}`)
-          })
-        })
-
-        describe('and not being in the client side', () => {
-          beforeEach(() => {
-            global.__CLIENT__ = false
-          })
-
-          test('an http API address with the corresponding DOMAIN, port 80, SERVICE and VERSION is returned', () => {
-            const version = 'v6'
-            const url = endpoint(service, version)
-            expect(url).toBe(
-              `http://api.${__DOMAIN__}:80/${service}/${version}`
-            )
-          })
-        })
-      })
-    })
+  it('should return the correct endpoint if the call is made from the client', () => {
+    expect(endpoint('auth', 1, {isCallFromServer: false} )).toEqual("https://production-api.gousto.co.uk/auth/v1.0.0")
+  })
+  it('should return the correct endpoint if the call is made from the server and the app is running on a live environment', () => {
+    /* A live environment was chosen for this test to illustrate how generally calls made from a local environment
+    appear like client side calls and calls made from a live environment on the server are behind AWS' routing and hence
+     have a different path structure. */
+    expect(endpoint('auth', 1, {isCallFromServer: true, appInstanceEnvironment: 'live'} )).toEqual("http://production-auth.gousto.co.uk")
+  })
+  it('should return the correct endpoint targeting a specific deployed API environment', () => {
+    expect(endpoint('auth', 1, {apiEnvironmentToPointTo: 'staging'} )).toEqual("https://staging-api.gousto.info/auth/v1.0.0")
+  })
+  it('should return the correct endpoint for a call made from a locally ran environment', () => {
+    expect(endpoint('auth', 1, {appInstanceEnvironment: 'local'} )).toEqual("https://production-api.gousto.co.uk/auth/v1.0.0")
+  })
+  it('should return the correct endpoint for a call made from a live environment hosted on AWS', () => {
+    expect(endpoint('auth', 1, {appInstanceEnvironment: 'live'} )).toEqual("https://production-api.gousto.co.uk/auth/v1.0.0")
   })
 })

@@ -11,7 +11,7 @@ const UIComponentsAlias = require('../libs/goustouicomponents/setup/webpackAlias
 const nodeConfig = require("node-config");
 
 const apiName = nodeConfig.get('api_name')
-const apiToken = nodeConfig.get('api_token') 
+const apiToken = nodeConfig.get('api_token')
 const authClientId = nodeConfig.get('auth_client_id')
 const authClientSecret = nodeConfig.get('auth_client_secret')
 const build = nodeConfig.get('build')
@@ -20,10 +20,14 @@ const clientProtocol = nodeConfig.get('client_protocol')
 const cloudfrontUrl = nodeConfig.get('cloudfront_url')
 const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
+const runningEnv = nodeConfig.get('running_env')
+const endpoints = nodeConfig.get('endpoints')
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 // eslint-disable-next-line no-console
-console.log(`================\nSERVER BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
+console.log(`Printing relevant command line envs, NODE_APP_INSTANCE=${process.env.NODE_APP_INSTANCE}, NODE_CONFIG_ENV=${process.env.NODE_CONFIG_ENV}`)
+// eslint-disable-next-line no-console
+console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, POINTING TO API ENVIRONMENT: ${apiName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}, RUNNING ENVIRONMENT: "${runningEnv}"\n================`)
 
 const debug = false
 
@@ -122,6 +126,7 @@ const config = {
       __TEST__: false,
 
       __API_ENV__: JSON.stringify(apiName),
+      __RUNNING_ENV__: JSON.stringify(runningEnv),
       __API_TOKEN__: JSON.stringify(apiToken),
       __AUTH_CLIENT_ID__: JSON.stringify(authClientId),
       __AUTH_CLIENT_SECRET__: JSON.stringify(authClientSecret),
@@ -130,6 +135,7 @@ const config = {
       __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
       __DOMAIN__: JSON.stringify(domain),
       __ENV__: JSON.stringify(envName),
+      __ENDPOINTS__: JSON.stringify(endpoints),
       'process.env.NODE_ENV': JSON.stringify(build),
     }),
   ],

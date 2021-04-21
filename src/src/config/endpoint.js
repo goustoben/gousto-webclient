@@ -1,76 +1,30 @@
-const getProtocol = (service, isServerSide, environment) => {
-  if (isServerSide && service !== 'loggingmanager') {
-    return 'http'
-  }
+function endpoint(service, version = 1, { isCallFromServer = __SERVER__, apiEnvironmentToPointTo = __API_ENV__, appInstanceEnvironment = __RUNNING_ENV__ } = {}) {
+  if(service === undefined) throw new Error("Please specify a valid service.")
+  if(isCallFromServer === undefined) throw new Error("Please specify whether this call is coming from the server or client browser for routing purposes.")
+  if(apiEnvironmentToPointTo === undefined) throw new Error("Please specify which environment to point this call to.")
+  if(appInstanceEnvironment === undefined) throw new Error("Please specify whether this app is hosted 'locally' or 'live' on AWS.")
 
-  if (service === 'webclient' || environment !== 'local') {
-    return 'https'
-  }
+  const clientOrServerSide = isCallFromServer ? 'serverSide' : 'clientSide'
 
-  return 'http'
-}
-
-const getPath = (service, isServerSide, environment, version) => {
-  const isCore = service === 'core'
-
-  if (service === 'webclient') {
-    return ''
-  }
-
-  if (environment === 'local' && !isCore) {
-    return `/${service}/${version}`
-  }
-
-  if (isServerSide && service !== 'loggingmanager') {
-    return ''
-  }
-
-  let path = ''
-  if (!isCore) {
-    path += `/${service}`
-  }
-  if (version) {
-    path += `/${version}`
-  }
-
-  return path
-}
-
-const getPort = (service, environment, isClientSide) => {
-  if (service === 'webclient' || environment !== 'local' || isClientSide) {
-    return ''
-  }
-
-  return ':80'
-}
-
-const getSubdomain = (service, isServerSide, environment) => {
-  if (service === 'webclient') {
-    if (!isServerSide && environment === 'production') {
-      return 'www'
+  const {
+    [apiEnvironmentToPointTo]: {
+      services: {
+        [service]: serviceVersions
+      }
     }
+  } = __ENDPOINTS__
 
-    return `${environment}-${service}`
-  }
+  let checkedVersion = serviceVersions[version] ? version : 1
 
-  if (environment === 'local') {
-    return 'api'
-  }
+  const {
+    [checkedVersion]: {
+      [clientOrServerSide]: {
+        [appInstanceEnvironment]: endpoint
+      }
+    }
+  } = serviceVersions
 
-  if (isServerSide && service !== 'loggingmanager') {
-    return `${environment}-${service}`
-  }
-
-  return `${environment}-api`
-}
-
-function endpoint(service, version = '') {
-  const protocol = getProtocol(service, __SERVER__, __API_ENV__)
-  const subdomain = getSubdomain(service, __SERVER__, __API_ENV__)
-  const path = getPath(service, __SERVER__, __API_ENV__, version)
-  const port = getPort(service, __API_ENV__, __CLIENT__)
-
-  return `${protocol}://${subdomain}.${__DOMAIN__}${port}${path}`
+  return endpoint
 }
 
 export default endpoint

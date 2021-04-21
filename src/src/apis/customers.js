@@ -15,7 +15,7 @@ export function fetchPauseReasons(accessToken, userId = null) {
 
   return fetch(
     accessToken,
-    `${endpoint('customers', routes.version.customers)}/customers/${userId}/subscription/pause-reasons`,
+    `${endpoint('customers')}/customers/${userId}/subscription/pause-reasons`,
     args,
     'GET'
   )
@@ -24,23 +24,23 @@ export function fetchPauseReasons(accessToken, userId = null) {
 export function customerSignup(accessToken, reqData) {
   const TIMEOUT = 50000
 
-  return fetch(accessToken, `${endpoint('customers', routes.version.customersV2)}${routes.customers.signup}`, reqData, 'POST', 'default', {}, TIMEOUT)
+  return fetch(accessToken, `${endpoint('customers', 2)}${routes.customers.signup}`, reqData, 'POST', 'default', {}, TIMEOUT)
 }
 
 export function newsletterSubscribe(email) {
-  return fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.newsletterSubscribers}`, { email }, 'POST')
+  return fetch(null, `${endpoint('customers')}${routes.customers.newsletterSubscribers}`, { email }, 'POST')
 }
 
 export const fetchIntervals = () => (
-  fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.intervals}`, {}, 'GET')
+  fetch(null, `${endpoint('customers')}${routes.customers.intervals}`, {}, 'GET')
 )
 
 export const fetchReference = () => (
-  fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.reference}`, {}, 'GET')
+  fetch(null, `${endpoint('customers')}${routes.customers.reference}`, {}, 'GET')
 )
 
 export const fetchPromoCodeValidity = (params) => (
-  fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.promocode}`, params, 'GET')
+  fetch(null, `${endpoint('customers')}${routes.customers.promocode}`, params, 'GET')
 )
 
 export default customersApi

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export NODE_CONFIG_ENV=${ENVIRONMENT}
+export NODE_APP_INSTANCE="live"
+
 cd src
 
 # isomorphic: build

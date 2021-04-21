@@ -2,9 +2,6 @@ import { fetch } from 'utils/fetch'
 import { getUserFeedbackCount } from '../feedback'
 
 jest.mock('utils/fetch')
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
 
 describe('feedback', () => {
   beforeEach(() => {
@@ -19,7 +16,7 @@ describe('feedback', () => {
     test('calls fetch with the correct arguments', async () => {
       const expectedAccessToken = 'token'
       const reqData = { totalCount: 5 }
-      const expectedUrl = 'endpoint-userfeedback/v1/feedback'
+      const expectedUrl = 'https://production-api.gousto.co.uk/userfeedback/v1/feedback'
       const expectedMethod = 'GET'
 
       await getUserFeedbackCount(expectedAccessToken, reqData)

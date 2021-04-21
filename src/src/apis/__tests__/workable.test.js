@@ -10,16 +10,6 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}/${version}`)
-)
-
-jest.mock('config/routes', () => ({
-  version: {
-    workable: 'v2',
-  }
-}))
-
 describe('workable api', () => {
   beforeEach(() => {
     fetch.mockClear()
@@ -29,7 +19,7 @@ describe('workable api', () => {
     test('should fetch the correct url', async () => {
       await fetchJobs()
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-workable/v2/workable/jobs', null, 'GET')
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/workable/v1/workable/jobs', null, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {

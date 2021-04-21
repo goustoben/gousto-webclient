@@ -3,6 +3,7 @@ import moment from 'moment'
 import { actionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import globals from 'config/globals'
+import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
 import logger from 'utils/logger'
 import { getUserOrderById } from 'utils/user'
 import { getUTM } from 'utils/utm'
@@ -467,6 +468,26 @@ export const trackCheckoutNavigationLinks = (checkoutStep) => (dispatch, getStat
       actionType: type,
       ...UTM,
       promoCode
+    }
+  })
+}
+
+export const trackCheckoutError = (errorName, errorValue, initiator) => (dispatch, getState) => {
+  const { UTM, promoCode } = getUTMAndPromoCode(getState())
+  const actionType = trackingKeys.checkoutError
+
+  const messageCode = translateCheckoutErrorToMessageCode(errorName, errorValue)
+
+  dispatch({
+    type: actionType,
+    trackingData: {
+      actionType,
+      ...UTM,
+      promoCode,
+      initiator,
+      errorName,
+      errorValue,
+      messageCode,
     }
   })
 }

@@ -1,11 +1,10 @@
 import fetch, { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
-import routes from 'config/routes'
 
 const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
 
 const fetchRefundAmount = (accessToken, body) => {
-  const url = `${endpoint('ssr', routes.version.ssrV2)}/value`
+  const url = `${endpoint('ssr',2)}/value`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -13,7 +12,7 @@ const fetchRefundAmount = (accessToken, body) => {
 }
 
 const setComplaint = (accessToken, body) => {
-  const url = `${endpoint('ssr', routes.version.ssrV2)}/refund`
+  const url = `${endpoint('ssr', 2)}/refund`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -21,7 +20,7 @@ const setComplaint = (accessToken, body) => {
 }
 
 const validateIngredients = (accessToken, body) => {
-  const url = `${endpoint('ssr', routes.version.ssrV2)}/validate-ingredients`
+  const url = `${endpoint('ssr', 2)}/validate-ingredients`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -31,7 +30,7 @@ const validateIngredients = (accessToken, body) => {
 const validateOrder = (accessToken, body) => {
   const url = (__ENV__ === 'local')
     ? `${SSR_URL_LOCAL}/ssr/validate`
-    : `${endpoint('ssr', routes.version.ssr)}/ssr/validate`
+    : `${endpoint('ssr')}/ssr/validate`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -41,7 +40,7 @@ const validateOrder = (accessToken, body) => {
 const fetchOrderIssues = (accessToken) => {
   const url = (__ENV__ === 'local')
     ? `${SSR_URL_LOCAL}/ssr/categories`
-    : `${endpoint('ssr', routes.version.ssr)}/ssr/categories`
+    : `${endpoint('ssr')}/ssr/categories`
 
   return fetch(accessToken, url, null, 'GET')
 }
@@ -49,14 +48,14 @@ const fetchOrderIssues = (accessToken) => {
 const shouldShowEntryPointTooltip = (accessToken, orderDeliveryDate) => (
   fetch(
     accessToken,
-    `${endpoint('ssr', routes.version.ssr)}/ssr/show-tooltip`,
+    `${endpoint('ssr')}/ssr/show-tooltip`,
     { delivery_date: orderDeliveryDate },
     'GET'
   )
 )
 
 const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCategoryId ) => {
-  const url = `${endpoint('ssrdeliveries', routes.version.ssrdeliveries)}/ssrdeliveries/refund`
+  const url = `${endpoint('ssrdeliveries')}/ssrdeliveries/refund`
 
   return fetchRaw(
     url,
@@ -76,7 +75,7 @@ const applyDeliveryCompensation = (accessToken, customerId, orderId, complaintCa
 }
 
 const validateDelivery = (accessToken, customerId, orderId) => {
-  const url = `${endpoint('ssrdeliveries', routes.version.ssrdeliveries)}/ssrdeliveries/validate`
+  const url = `${endpoint('ssrdeliveries')}/ssrdeliveries/validate`
 
   return fetchRaw(
     url,

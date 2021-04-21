@@ -10,15 +10,7 @@ jest.mock('utils/fetch', () =>
   })
 )
 
-jest.mock('config/endpoint', () =>
-  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
-)
-
 jest.mock('config/routes', () => ({
-  version: {
-    customers: 'v1',
-    customersV2: 'v2'
-  },
   customers: {
     signup: '/signup',
     newsletterSubscribers: '/newsletterSubscribers',
@@ -39,7 +31,7 @@ describe('customers api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         'token',
-        'endpoint-customersv1/customers/user-id/subscription/pause-reasons',
+        'https://production-api.gousto.co.uk/customers/v1/customers/user-id/subscription/pause-reasons',
         { includes: ['steps'] },
         'GET'
       )
@@ -59,7 +51,7 @@ describe('customers api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         'token',
-        'endpoint-customersv2/signup',
+        'https://production-api.gousto.co.uk/customers/v2/signup',
         reqData,
         'POST',
         'default',
@@ -80,7 +72,7 @@ describe('customers api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         null,
-        'endpoint-customersv1/newsletterSubscribers',
+        'https://production-api.gousto.co.uk/customers/v1/newsletterSubscribers',
         { email: 'foo@example.com' },
         'POST'
       )
@@ -98,7 +90,7 @@ describe('customers api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         null,
-        'endpoint-customersv1/intervals',
+        'https://production-api.gousto.co.uk/customers/v1/intervals',
         {},
         'GET'
       )
@@ -117,7 +109,7 @@ describe('customers api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         null,
-        'endpoint-customersv1/reference',
+        'https://production-api.gousto.co.uk/customers/v1/reference',
         {},
         'GET'
       )
@@ -144,7 +136,7 @@ describe('customers api', () => {
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
         null,
-        'endpoint-customersv1/promocode',
+        'https://production-api.gousto.co.uk/customers/v1/promocode',
         params,
         'GET'
       )

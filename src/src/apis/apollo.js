@@ -41,7 +41,7 @@ const apolloApi = (store) => {
   }
 
   const httpLink = createHttpLink({
-    uri: `${endpoint('graphql', 'v1')}/graphql`,
+    uri: `${endpoint('graphql')}/graphql`,
   })
 
   const link = ApolloLink.from([

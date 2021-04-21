@@ -34,7 +34,7 @@ export const Resubscribe = ({ accessToken }) => {
   let reactivateSubscriptionUrl
   let method
   if (isNewSubscriptionApiEnabled) {
-    reactivateSubscriptionUrl = `${endpoint('subscriptioncommand', routes.version.subscriptionCommand)}/subscriptions/${userId}${routes.subscriptionCommand.activate}`
+    reactivateSubscriptionUrl = `${endpoint('subscriptioncommand')}/subscriptions/${userId}${routes.subscriptionCommand.activate}`
     method = 'POST'
   } else {
     reactivateSubscriptionUrl = `${endpoint('core')}${routes.core.activateSub}`

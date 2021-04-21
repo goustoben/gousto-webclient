@@ -30,7 +30,7 @@ export const useSubscriptionData = (
   const { isNewSubscriptionApiEnabled } = state
   const postcode = getCurrentUserPostcode(state)
   const deliveryTariffId = getCurrentUserDeliveryTariffId(state)
-  const deliveriesUrl = `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.days}`
+  const deliveriesUrl = `${endpoint('deliveries')}${routes.deliveries.days}`
   const deliveryParams = useMemo(() => ({
     'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
     'filters[cutoff_datetime_until]': moment()
