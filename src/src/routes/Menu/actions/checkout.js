@@ -34,8 +34,16 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     return
   }
 
-  const orderDetails = getOrderDetails(getState())
+  let orderDetails = getOrderDetails(getState())
   const couldBasketBeExpired = getCouldBasketBeExpired(getState())
+
+  orderDetails = {
+    ...orderDetails,
+    'get_order_without_recipes': true,
+    'number_of_recipes': 2,
+    'number_of_portions': 2,
+    'box_type': 'gourmet',
+  }
 
   if (couldBasketBeExpired) {
     const { router: { locationBeforeTransitions: { pathName: path } = {} } = {} } = getState()
