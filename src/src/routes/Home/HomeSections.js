@@ -17,6 +17,7 @@ const propTypes = {
   isAuthenticated: PropTypes.bool,
   isSignupReductionEnabled: PropTypes.bool,
   isCarouselShiftEnabled: PropTypes.bool,
+  isHomePageFlexibilityMessageEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -27,6 +28,7 @@ const defaultProps = {
   isSignupReductionEnabled: false,
   pricePerServing: null,
   isCarouselShiftEnabled: false,
+  isHomePageFlexibilityMessageEnabled: false,
 }
 
 class HomeSections extends Component {
@@ -36,11 +38,17 @@ class HomeSections extends Component {
       isSignupReductionEnabled,
       pricePerServing,
       isCarouselShiftEnabled,
+      isHomePageFlexibilityMessageEnabled,
     } = this.props
 
     return {
       hero: (props) => (
-        <Hero ctaText={props.ctaText} ctaUri={props.ctaUri} isAuthenticated={isAuthenticated} />
+        <Hero
+          ctaText={props.ctaText}
+          ctaUri={props.ctaUri}
+          isAuthenticated={isAuthenticated}
+          isHomePageFlexibilityMessageEnabled={isHomePageFlexibilityMessageEnabled}
+        />
       ),
       trustPilot: () => <TrustPilot />,
       whyChooseGousto: (props) => (

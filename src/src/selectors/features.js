@@ -205,3 +205,7 @@ export const getIsPassStrengthEnabled = ({ features }) => (
 export const getIsAdditionalCheckoutErrorsEnabled = ({ features }) => (
   features && features.getIn(['isAdditionalCheckoutErrorsEnabled', 'value'], false)
 )
+
+export const getIsHomePageFlexibilityMessageEnabled = ({ features }) => (
+  features && features.getIn(['isHomePageFlexibilityMessageEnabled', 'value'], false)
+)
