@@ -8,7 +8,6 @@ import {
   getIsHelpCentreActive,
   getIsMobileTopBannerAppAwarenessEnabled,
   getIsMenuRedirectPageEnabled,
-  getIsNewSubscriptionPageEnabled
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
@@ -31,7 +30,6 @@ const mapStateToProps = (state) => ({
   isAppAwarenessEnabled: getIsMobileTopBannerAppAwarenessEnabled(state),
   isMenuRedirectPageEnabled: getIsMenuRedirectPageEnabled(state),
   postCode: state.basket.get('postcode'),
-  isNewSubscriptionPageEnabled: getIsNewSubscriptionPageEnabled(state)
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

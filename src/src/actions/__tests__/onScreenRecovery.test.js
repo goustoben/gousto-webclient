@@ -332,6 +332,16 @@ describe('onScreenRecovery', () => {
       }))
     })
 
+    test('should log if an error occur', async () => {
+      const error = new Error('error')
+
+      dispatchSpy.mockRejectedValueOnce(error)
+
+      await cancelPendingOrder()(dispatchSpy, getStateSpy)
+
+      expect(logger.error).toHaveBeenCalledWith(error)
+    })
+
     describe('when forceRefresh = true', () => {
       beforeEach(() => {
         state.onScreenRecovery = Immutable.Map({
@@ -402,6 +412,16 @@ describe('onScreenRecovery', () => {
       await cancelProjectedOrder()(dispatchSpy, getStateSpy)
       expect(redirect).not.toHaveBeenCalled()
     })
+
+    test('should log if an error occur', async () => {
+      const error = new Error('error')
+
+      dispatchSpy.mockRejectedValueOnce(error)
+
+      await cancelProjectedOrder()(dispatchSpy, getStateSpy)
+
+      expect(logger.error).toHaveBeenCalledWith(error)
+    })
   })
 
   describe('pauseSubscription', () => {
@@ -462,29 +482,6 @@ describe('onScreenRecovery', () => {
           }))
         })
 
-        test('then the user should be redirected to my-subscription', async () => {
-          expect(windowUtils.redirect).toHaveBeenCalledWith('/my-subscription')
-        })
-      })
-    })
-    describe('when isNewSubscriptionPageEnabled is true', () => {
-      beforeEach(() => {
-        jest.resetAllMocks()
-        const newState = {...initialState(),
-          features: Immutable.fromJS({
-            subscriptionPauseOsr: {
-              experiment: false,
-              value: true
-            },
-            isNewSubscriptionPageEnabled: {
-              value: true
-            }
-          }),
-        }
-        getStateSpy.mockReturnValue(newState)
-        pauseSubscription()(dispatchSpy, getStateSpy)
-      })
-      describe('and a user pauses their subscription', () => {
         test('then the user should be redirected to subscription-settings', async () => {
           expect(windowUtils.redirect).toHaveBeenCalledWith('/subscription-settings')
         })
