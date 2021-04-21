@@ -7,9 +7,9 @@ import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
 import { actionTypes } from 'actions/actionTypes'
 import pricingActions from 'actions/pricing'
 import { basketPromoCodeAppliedChange, basketPromoCodeChange } from 'actions/basket'
-import { trackAffiliatePurchase, trackUTMAndPromoCode } from 'actions/tracking'
+import { trackAffiliatePurchase, trackUTMAndPromoCode, trackCheckoutError } from 'actions/tracking'
 import * as trackingKeys from 'actions/trackingKeys'
-import status from 'actions/status'
+import statusActions from 'actions/status'
 import { userSubscribe } from 'actions/user'
 
 import routes from 'config/routes'
@@ -47,76 +47,9 @@ jest.mock('utils/deliveries')
 jest.mock('actions/login')
 jest.mock('actions/menu')
 jest.mock('actions/pricing')
+
 jest.mock('actions/user', () => ({
-  userSubscribe: jest.fn(() => Promise.resolve({
-    status: 'ok',
-    data: {
-      orderId: '18057148',
-      customer: {
-        id: '41892653',
-        authUserId: '1bc752cc-98d0-4937-a2a6-6e9cad21749d',
-        email: 'john.doe@test.com',
-        nameFirst: 'John',
-        nameLast: 'Doe',
-        phone: '07503075906',
-        goustoReference: 2007339011,
-        cancelled: false,
-        createdAt: '2020-07-20T15:59:27+01:00',
-        vip: false,
-        marketingDoAllowThirdparty: false,
-        marketingDoAllowEmail: false,
-        marketingDoAllowSms: false,
-        marketingDoAllowPost: false,
-        marketingDoAllowPhone: false,
-        shippingAddressId: '84350206',
-        billingAddressId: '84350207',
-        deliveryTariffId: '9037a447-e11a-4960-ae69-d89a029569af',
-        salutation: {id: 1, label: 'Miss.', slug: 'miss'}
-      },
-      addresses: {
-        billingAddress: {
-          id: '84350207',
-          customerId: '41892653',
-          name: 'My Address',
-          companyName: '',
-          line1: 'FLAT 15, MORRIS HOUSE',
-          line2: 'SWAINSON ROAD',
-          line3: '',
-          town: 'LONDON',
-          county: 'MIDDLESEX',
-          postcode: 'W3 7UP',
-          deliveryInstructions: '',
-          state: 'unset',
-          type: 'billing',
-          deleted: false
-        },
-        shippingAddress: {
-          id: '84350206',
-          customerId: '41892653',
-          name: 'My Address',
-          companyName: '',
-          line1: 'FLAT 15, MORRIS HOUSE',
-          line2: 'SWAINSON ROAD',
-          line3: '',
-          town: 'LONDON',
-          county: 'MIDDLESEX',
-          postcode: 'W3 7UP',
-          deliveryInstructions: 'Front Porch',
-          state: 'unset',
-          type: 'shipping',
-          deleted: false
-        }
-      },
-      subscription: {
-        id: '36613038',
-        stateReason: null,
-        interval: {id: '1', slug: 'weekly', title: 'Weekly', description: 'Our most popular option!'},
-        status: {id: 1, slug: 'active'},
-        box: {id: '18', portions: 2, recipes: 4},
-        slot: null
-      }
-    }
-  }))
+  userSubscribe: jest.fn()
 }))
 jest.mock('actions/basket')
 jest.mock('actions/redirect', () => ({
@@ -128,7 +61,8 @@ jest.mock('actions/status', () => ({
 }))
 jest.mock('actions/tracking', () => ({
   trackAffiliatePurchase: jest.fn(() => ({ type: 'trackAffiliatePurchase' })),
-  trackUTMAndPromoCode: jest.fn(() => ({ type: 'trackUTMAndPromoCode' }))
+  trackUTMAndPromoCode: jest.fn(() => ({ type: 'trackUTMAndPromoCode' })),
+  trackCheckoutError: jest.fn(() => ({ type: 'trackCheckoutError' }))
 }))
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
@@ -388,6 +322,76 @@ describe('checkout actions', () => {
       }),
     )
     getDeliveryTariffId.mockReturnValue('')
+
+    userSubscribe.mockReturnValue(() => Promise.resolve({
+      status: 'ok',
+      data: {
+        orderId: '18057148',
+        customer: {
+          id: '41892653',
+          authUserId: '1bc752cc-98d0-4937-a2a6-6e9cad21749d',
+          email: 'john.doe@test.com',
+          nameFirst: 'John',
+          nameLast: 'Doe',
+          phone: '07503075906',
+          goustoReference: 2007339011,
+          cancelled: false,
+          createdAt: '2020-07-20T15:59:27+01:00',
+          vip: false,
+          marketingDoAllowThirdparty: false,
+          marketingDoAllowEmail: false,
+          marketingDoAllowSms: false,
+          marketingDoAllowPost: false,
+          marketingDoAllowPhone: false,
+          shippingAddressId: '84350206',
+          billingAddressId: '84350207',
+          deliveryTariffId: '9037a447-e11a-4960-ae69-d89a029569af',
+          salutation: {id: 1, label: 'Miss.', slug: 'miss'}
+        },
+        addresses: {
+          billingAddress: {
+            id: '84350207',
+            customerId: '41892653',
+            name: 'My Address',
+            companyName: '',
+            line1: 'FLAT 15, MORRIS HOUSE',
+            line2: 'SWAINSON ROAD',
+            line3: '',
+            town: 'LONDON',
+            county: 'MIDDLESEX',
+            postcode: 'W3 7UP',
+            deliveryInstructions: '',
+            state: 'unset',
+            type: 'billing',
+            deleted: false
+          },
+          shippingAddress: {
+            id: '84350206',
+            customerId: '41892653',
+            name: 'My Address',
+            companyName: '',
+            line1: 'FLAT 15, MORRIS HOUSE',
+            line2: 'SWAINSON ROAD',
+            line3: '',
+            town: 'LONDON',
+            county: 'MIDDLESEX',
+            postcode: 'W3 7UP',
+            deliveryInstructions: 'Front Porch',
+            state: 'unset',
+            type: 'shipping',
+            deleted: false
+          }
+        },
+        subscription: {
+          id: '36613038',
+          stateReason: null,
+          interval: {id: '1', slug: 'weekly', title: 'Weekly', description: 'Our most popular option!'},
+          status: {id: 1, slug: 'active'},
+          box: {id: '18', portions: 2, recipes: 4},
+          slot: null
+        }
+      }
+    }))
   })
 
   afterEach(() => {
@@ -408,7 +412,7 @@ describe('checkout actions', () => {
 
       await checkoutAddressLookup(postcode)(dispatch)
 
-      expect(status.pending).toHaveBeenCalledWith(
+      expect(statusActions.pending).toHaveBeenCalledWith(
         actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
         true,
       )
@@ -421,7 +425,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED')(dispatch, getState)
 
-      expect(status.error).toHaveBeenCalledWith(
+      expect(statusActions.error).toHaveBeenCalledWith(
         'CARD_TOKENIZATION_FAILED',
         true,
       )
@@ -433,7 +437,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutError('CARD_TOKENIZATION_FAILED', errorText)(dispatch, getState)
 
-      expect(status.error).toHaveBeenCalledWith(
+      expect(statusActions.error).toHaveBeenCalledWith(
         'CARD_TOKENIZATION_FAILED',
         errorText,
       )
@@ -448,7 +452,7 @@ describe('checkout actions', () => {
 
       await fireCheckoutPendingEvent(pendingName)(dispatch, getState)
 
-      expect(status.pending).toHaveBeenCalledWith(pendingName, checkoutValue)
+      expect(statusActions.pending).toHaveBeenCalledWith(pendingName, checkoutValue)
     })
   })
 
@@ -576,6 +580,26 @@ describe('checkout actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId: '100004' })
     })
+
+    describe('when there is an error', () => {
+      beforeEach(() => {
+        userSubscribe.mockImplementation( () => {
+          throw new Error('test error')
+        })
+      })
+
+      test('then it should instead track and set an error', async () => {
+        await checkoutNon3DSSignup()(dispatch, getState)
+
+        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId: '100004' })
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'trackCheckoutError' })
+        expect(trackCheckoutError).toHaveBeenCalledWith('CHECKOUT_SIGNUP', undefined, 'checkoutNon3DSSignup')
+
+        expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
+        expect(statusActions.error).toHaveBeenCalledWith('CHECKOUT_SIGNUP', null)
+      })
+    })
   })
 
   describe('checkout3DSSignup', () => {
@@ -634,8 +658,8 @@ describe('checkout actions', () => {
       test('should show duplicated promo code error', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith(status.error(actionTypes.CHECKOUT_SIGNUP, '409-duplicate-details'))
-        expect(dispatch).toHaveBeenCalledWith(status.error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+        expect(dispatch).toHaveBeenCalledWith(statusActions.error(actionTypes.CHECKOUT_SIGNUP, '409-duplicate-details'))
+        expect(dispatch).toHaveBeenCalledWith(statusActions.error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
       })
 
       test('should update pricing', async () => {
@@ -647,7 +671,7 @@ describe('checkout actions', () => {
       test('should discard pending signup', async () => {
         await checkout3DSSignup()(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledWith(status.pending(actionTypes.CHECKOUT_SIGNUP, false))
+        expect(dispatch).toHaveBeenCalledWith(statusActions.pending(actionTypes.CHECKOUT_SIGNUP, false))
       })
 
       test('should prevent signup process', async () => {
@@ -800,7 +824,7 @@ describe('checkout actions', () => {
       test('should trigger signup error', async () => {
         await checkPaymentAuth(failedSessionId)(dispatch, getState)
 
-        expect(status.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
+        expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_SIGNUP, '3ds-challenge-failed')
       })
 
       test('should not trigger 3ds_success event', async () => {
@@ -1112,7 +1136,7 @@ describe('checkout actions', () => {
         firePayPalError(err)(dispatch)
 
         expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
-        expect(status.error).toHaveBeenCalledWith(actionTypes.PAYPAL_ERROR, true)
+        expect(statusActions.error).toHaveBeenCalledWith(actionTypes.PAYPAL_ERROR, true)
       })
     })
   })

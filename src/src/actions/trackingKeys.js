@@ -95,6 +95,7 @@ export const ssrIngredientsReasonsConfirmed = 'ssr_ingredients_reasons_confirmed
 export const ssrSelectIngredient = 'ssr_select_ingredient'
 export const ssrDeselectIngredient = 'ssr_deselect_ingredient'
 export const clickGetHelpWithThisBox = 'click_get_help_with_this_box'
+export const checkoutError = 'checkout_validation_error'
 export const ssrClickViewRecipe = 'ssr_click_view_recipe'
 export const ssrRecipesClickGetInTouch = 'ssr_recipes_click_get_in_touch'
 export const ssrDeliveriesSelectCategory = 'ssr_deliveries_select_category'

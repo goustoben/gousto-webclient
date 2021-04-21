@@ -19,6 +19,7 @@ import {
   trackLoginClickOnHungryPage,
   trackDiscountVisibilityBannerAppearance,
   trackCheckoutNavigationLinks,
+  trackCheckoutError,
 } from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import {
@@ -1109,6 +1110,39 @@ describe('tracking actions', () => {
       const { type, trackingData } = dispatch.mock.calls[0][0]
       expect(type).toEqual(clickAccountBreadcrumb)
       expect(trackingData.actionType).toEqual(clickAccountBreadcrumb)
+    })
+  })
+
+  describe('trackCheckoutError', () => {
+    beforeEach(() => {
+      const state = {
+        tracking: Immutable.fromJS({
+          utmSource: {},
+        }),
+        basket: Immutable.fromJS({
+          promoCode: 'DTI-20M',
+        }),
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('should dispatch the correct tracking action', () => {
+      trackCheckoutError(
+        'CHECKOUT_SIGNUP',
+        '409-duplicate-details',
+        'testInitiator'
+      )(dispatch, getState)
+      const { type, trackingData } = dispatch.mock.calls[0][0]
+      expect(type).toEqual('checkout_validation_error')
+      expect(trackingData).toMatchObject({
+        actionType: 'checkout_validation_error',
+        errorName: 'CHECKOUT_SIGNUP',
+        errorValue: '409-duplicate-details',
+        initiator: 'testInitiator',
+        messageCode: 'user-promo-invalid',
+        promoCode: 'DTI-20M',
+      })
     })
   })
 })

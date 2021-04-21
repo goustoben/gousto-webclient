@@ -27,7 +27,7 @@ import {
   basketReset
 } from './basket'
 import { userSubscribe } from './user'
-import { trackAffiliatePurchase, trackUTMAndPromoCode } from './tracking'
+import { trackAffiliatePurchase, trackUTMAndPromoCode, trackCheckoutError } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
 import pricingActions from './pricing'
@@ -99,6 +99,7 @@ export function checkoutAddressLookup(postcode) {
       addresses.postcode = lookupResults.data.postcode || postcode
       addresses.county = lookupResults.data.traditionalCounty || ''
     } catch (err) {
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, err.message, 'checkoutAddressLookup'))
       dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, err.message))
       logger.error({ message: 'Unable to look-up address' })
     } finally {
@@ -123,6 +124,7 @@ export function checkoutFetchIntervals() {
     } catch (error) {
       const { message, code } = error
       logger.warning(message)
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_INTERVALS_RECEIVE, message, 'checkoutFetchIntervals'))
       dispatch(error(actionTypes.CHECKOUT_INTERVALS_RECEIVE, { message, code }))
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECEIVE, false))
@@ -130,12 +132,13 @@ export function checkoutFetchIntervals() {
   }
 }
 
-export const fireCheckoutError = (errorName, errorValue = true) => dispatch => {
-  dispatch(error(errorName, errorValue))
-}
-
 export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => dispatch => {
   dispatch(pending(pendingName, checkoutValue))
+}
+
+export const fireCheckoutError = (errorName, errorValue = true) => dispatch => {
+  dispatch(trackCheckoutError(errorName, errorValue, 'fireCheckoutError'))
+  dispatch(error(errorName, errorValue))
 }
 
 export function checkoutSignup() {
@@ -170,6 +173,8 @@ export function checkoutNon3DSSignup() {
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkoutNon3DSSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === errorCodes.duplicateDetails) {
         dispatch(basketPromoCodeChange(''))
@@ -196,6 +201,7 @@ export function checkout3DSSignup() {
         const validationResult = await fetchPromoCodeValidity(promoCodeValidityDetails)
 
         if (!validationResult.data.valid) {
+          dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails, 'checkout3DSSignup'))
           dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails))
           dispatch(basketPromoCodeChange(''))
           dispatch(basketPromoCodeAppliedChange(false))
@@ -243,6 +249,7 @@ export function checkout3DSSignup() {
       dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkout3DSSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
     }
@@ -270,10 +277,12 @@ export const checkPaymentAuth = (sessionId) => (
         dispatch({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       } else {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
+        dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed, 'checkPaymentAuth'))
         dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))
       }
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkPaymentAuth'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === errorCodes.duplicateDetails) {
         dispatch(basketPromoCodeChange(''))
@@ -340,6 +349,7 @@ export function checkoutPostSignup(recaptchaValue) {
       dispatch(trackPurchase())
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, true, 'checkoutPostSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
@@ -488,6 +498,7 @@ export function fetchPayPalClientToken() {
       })
     } catch (err) {
       logger.error({ message: `${actionTypes.PAYPAL_TOKEN_FETCH_FAILED} - ${err.message}`, errors: [err] })
+      dispatch(trackCheckoutError(actionTypes.PAYPAL_TOKEN_FETCH_FAILED, true, 'fetchPayPalClientToken'))
       dispatch(error(actionTypes.PAYPAL_TOKEN_FETCH_FAILED, true))
     }
   }
@@ -550,6 +561,7 @@ export function setPayPalNonce(nonce) {
 export function firePayPalError(err) {
   return (dispatch) => {
     logger.error({ message: `${actionTypes.PAYPAL_ERROR} - ${err.message}`, errors: [err] })
+    dispatch(trackCheckoutError(actionTypes.PAYPAL_ERROR, true, 'firePayPalError'))
     dispatch(error(actionTypes.PAYPAL_ERROR, true))
   }
 }
