@@ -20,6 +20,7 @@ const propTypes = {
   pricePerServing: PropTypes.string,
   updatePricePerServing: PropTypes.func,
   isCarouselShiftEnabled: PropTypes.bool,
+  isHomePageFlexibilityMessageEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -30,6 +31,7 @@ const defaultProps = {
   pricePerServing: null,
   updatePricePerServing: () => {},
   isCarouselShiftEnabled: false,
+  isHomePageFlexibilityMessageEnabled: false,
 }
 
 class Home extends Component {
@@ -67,6 +69,7 @@ class Home extends Component {
       isSignupReductionEnabled,
       pricePerServing,
       isCarouselShiftEnabled,
+      isHomePageFlexibilityMessageEnabled,
     } = this.props
     const modules = this.getModules(isSignupReductionEnabled, isCarouselShiftEnabled)
     const { menu, signup, home } = routesConfig.client
@@ -105,6 +108,7 @@ class Home extends Component {
           isSignupReductionEnabled={isSignupReductionEnabled}
           pricePerServing={pricePerServing}
           isCarouselShiftEnabled={isCarouselShiftEnabled}
+          isHomePageFlexibilityMessageEnabled={isHomePageFlexibilityMessageEnabled}
         />
       </div>
     )

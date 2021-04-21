@@ -53,6 +53,7 @@ import {
   getIsNewSubscriptionApiEnabled,
   getIsPassStrengthEnabled,
   getIsAdditionalCheckoutErrorsEnabled,
+  getIsHomePageFlexibilityMessageEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -122,6 +123,7 @@ describe('when features are defined', () => {
     [getIsNewSubscriptionApiEnabled, 'isNewSubscriptionApiEnabled'],
     [getIsPassStrengthEnabled, 'isPassStrengthEnabled'],
     [getIsAdditionalCheckoutErrorsEnabled, 'isAdditionalCheckoutErrorsEnabled'],
+    [getIsHomePageFlexibilityMessageEnabled, 'isHomePageFlexibilityMessageEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

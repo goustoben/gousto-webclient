@@ -5,6 +5,7 @@ import home from 'config/home'
 import { Heading } from 'goustouicomponents'
 import { CTAHomepageContainer } from '../CTA'
 import { NoLockIn } from '../NoLockIn'
+import { FlexibilityMessage } from '../FlexibilityMessage'
 import css from './Hero.css'
 
 class Hero extends Component {
@@ -56,7 +57,7 @@ class Hero extends Component {
   }
 
   renderGetStarted = (isHeroCTA) => {
-    const { ctaUri, ctaText, isAuthenticated } = this.props
+    const { ctaUri, ctaText, isAuthenticated, isHomePageFlexibilityMessageEnabled } = this.props
     const { isSticky, maxHeight } = this.state
     const className = isHeroCTA
       ? css.stickyContainer
@@ -79,7 +80,7 @@ class Hero extends Component {
         >
           {isSticky && !isHeroCTA && !isAuthenticated ? home.CTA.stickyCTA : ctaText}
         </CTAHomepageContainer>
-        <NoLockIn />
+        {isHomePageFlexibilityMessageEnabled ? <FlexibilityMessage /> : <NoLockIn />}
       </div>
     )
   }
@@ -115,11 +116,13 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
+  isHomePageFlexibilityMessageEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   dataTesting: 'hero',
   isAuthenticated: false,
+  isHomePageFlexibilityMessageEnabled: false,
 }
 
 export { Hero }
