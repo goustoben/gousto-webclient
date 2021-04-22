@@ -224,7 +224,6 @@ describe('orderConfirmation actions', () => {
         basket: Immutable.fromJS({
           orderId: '123',
           orderDetails: {
-            number: '1',
             prices: {
               total: '25.5',
               promoCode: false,
@@ -249,8 +248,7 @@ describe('orderConfirmation actions', () => {
           order_total: '25.5',
           promo_code: false,
           signup: false,
-          subscription_active: true,
-          subscription_order: '1'
+          subscription_active: true
         }
       })
     })

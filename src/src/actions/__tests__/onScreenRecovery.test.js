@@ -634,15 +634,12 @@ describe('onScreenRecovery', () => {
             id: '12345',
             orders: Immutable.Map({
               1: Immutable.Map({
-                number: 10,
                 state: 'committed',
               }),
               2: Immutable.Map({
-                number: 11,
                 state: 'committed',
               }),
               5: Immutable.Map({
-                number: 12,
                 state: 'pending',
               }),
             })
@@ -659,7 +656,6 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            orderCount: 11,
             hasPendingPromo: null,
             hasPendingPromoWithSubCondition: null,
           })
@@ -697,7 +693,6 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            orderCount: 0,
             hasPendingPromo: null,
             hasPendingPromoWithSubCondition: null,
           })
@@ -748,7 +743,6 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'pause_subscription_attempt',
-            orderCount: 0,
             hasPendingPromo: '1%',
             hasPendingPromoWithSubCondition: true,
           })
