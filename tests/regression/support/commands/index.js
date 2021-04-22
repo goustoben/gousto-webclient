@@ -182,3 +182,19 @@ Cypress.Commands.add('visitSubscriptionSettingsPage', ({ isSubscriptionActive, i
 
   cy.wait('@deliveryDays')
 })
+
+Cypress.Commands.add('interceptThirdPartyJS', (url, fixturePath, _as) => {
+  return cy.readFile(
+    `fixtures/${fixturePath}`,
+    'utf8'
+  ).then((stubResponse) => {
+    return cy.intercept(url, (req) => {
+      req.reply(stubResponse)
+    });
+  })
+})
+
+Cypress.Commands.add('interceptOptimizelyJavascript', () => cy.interceptThirdPartyJS(
+  'https://cdn.optimizely.com/js/*.js', 
+  '3rd-party-scripts/optimizely/js/base_features_toggles.js')
+)
