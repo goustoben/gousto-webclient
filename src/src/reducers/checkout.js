@@ -42,7 +42,6 @@ const initialState = () => Immutable.fromJS({
     postcode: '',
     county: '',
   },
-  intervals: [],
   goustoRef: null,
   errors: {},
   paypalErrors: {},
@@ -77,12 +76,6 @@ const checkout = {
       })
 
       return state.set('deliveryAddresses', Immutable.fromJS(addressList))
-    }
-
-    case actionTypes.CHECKOUT_INTERVALS_RECEIVE: {
-      const { intervals } = action
-
-      return state.set('intervals', Immutable.fromJS(intervals))
     }
 
     case actionTypes.CHECKOUT_SET_GOUSTO_REF: {

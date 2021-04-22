@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchIntervals, fetchReference, fetchPromoCodeValidity } from '../customers'
+import { fetchPauseReasons, customerSignup, newsletterSubscribe, fetchReference, fetchPromoCodeValidity } from '../customers'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -14,7 +14,6 @@ jest.mock('config/routes', () => ({
   customers: {
     signup: '/signup',
     newsletterSubscribers: '/newsletterSubscribers',
-    intervals: '/intervals',
     reference: '/reference',
     promocode: '/promocode',
   }
@@ -80,24 +79,6 @@ describe('customers api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await newsletterSubscribe('foo@example.com')
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
-  describe('fetchIntervals', () => {
-    test('should fetch the correct url', async () => {
-      await fetchIntervals()
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(
-        null,
-        'https://production-api.gousto.co.uk/customers/v1/intervals',
-        {},
-        'GET'
-      )
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await fetchIntervals()
       expect(result).toEqual(mockFetchResult)
     })
   })

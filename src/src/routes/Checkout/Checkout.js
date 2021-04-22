@@ -146,10 +146,6 @@ class Checkout extends PureComponent {
       await store.dispatch(boxSummaryDeliveryDaysLoad())
     }
 
-    if (!store.getState().checkout.get('intervals', Immutable.List()).size) {
-      await store.dispatch(actions.checkoutFetchIntervals())
-    }
-
     try {
       await store.dispatch(actions.checkoutCreatePreviewOrder())
     } catch (e) {

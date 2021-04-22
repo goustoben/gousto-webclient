@@ -39,7 +39,6 @@ Cypress.Commands.add('checkoutLoggedOut', ({ withDiscount }) => {
   cy.server()
   cy.clearCookies()
   cy.route('GET', /boxPrices|prices/, `fixture:${pricesFixtureFile}.json`).as('getPrices')
-  cy.route('GET', /intervals/, 'fixture:customers/intervals.json').as('getIntervals')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
   cy.route('GET', /promo_code=DTI-SB-5030/, 'fixture:prices/2person2portionDiscount.json').as('pricesDiscount')
   cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')
@@ -114,7 +113,7 @@ Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
     cy.get('[data-testing="boxSummaryButton"]').first().click()
   }
 
-  cy.wait(['@getIntervals', '@getStock', '@getPrices', '@previewOrder'])
+  cy.wait(['@getStock', '@getPrices', '@previewOrder'])
 })
 
 Cypress.Commands.add('setFeatures', (features) => {

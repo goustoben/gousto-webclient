@@ -11,7 +11,6 @@ export const setMocks = ({ validPostcode }) => {
   cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
   cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
   cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
-  cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json')
   cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
   cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')
   cy.route('GET', /address\/postcode-lookup/, `fixture:checkout/postcode/${postCodeMock}.json`)
