@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import {
   selectOrderIssue,
-  trackAcceptRefund,
+  trackAcceptIngredientsRefund,
 } from 'actions/getHelp'
 import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 import { trackRejectRefund } from '../actions/getHelp'
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
 
 const RefundContainer = connect(mapStateToProps, {
   selectOrderIssue,
-  trackAcceptRefund,
+  trackAcceptIngredientsRefund,
   trackRejectRefund,
 })(Refund)
 

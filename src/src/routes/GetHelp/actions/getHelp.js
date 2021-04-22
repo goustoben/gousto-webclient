@@ -75,8 +75,9 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, delivery
 export const trackRejectRefund = (amount) => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
-    actionType: trackingKeys.clickDeclinedRefund,
+    actionType: trackingKeys.ssrIngredientDeclineRefund,
     amount,
+    seCategory: SE_CATEGORY_HELP,
   }
 })
 

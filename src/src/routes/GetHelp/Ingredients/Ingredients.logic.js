@@ -95,6 +95,15 @@ class Ingredients extends PureComponent {
     })
   }
 
+  getIngredientName = (recipeId, ingredientUuid) => {
+    const { recipes } = this.props
+    const ERROR_NOT_FOUND = 'error, ingredient not found, this should not happen'
+    const { label = ERROR_NOT_FOUND } = recipes.find(recipe => recipe.id === recipeId)
+      .ingredients.find(ingredient => ingredient.uuid === ingredientUuid)
+
+    return label
+  }
+
   continueClickHandler = async () => {
     const {
       order,
@@ -104,12 +113,13 @@ class Ingredients extends PureComponent {
     } = this.props
     const { selectedIngredients } = this.state
     const ingredientUuids = []
-    const recipeAndIngredientIds = []
+    const selectedIngredientsInfo = []
 
     selectedIngredients.forEach((value, checkboxId) => {
       const [recipeId, ingredientUuid] = checkboxId.split('&')
+      const label = this.getIngredientName(recipeId, ingredientUuid)
       ingredientUuids.push(ingredientUuid)
-      recipeAndIngredientIds.push({ recipeId, ingredientUuid })
+      selectedIngredientsInfo.push({ recipeId, ingredientUuid, label })
     })
 
     try {
@@ -120,7 +130,7 @@ class Ingredients extends PureComponent {
         ingredientUuids,
       })
 
-      storeSelectedIngredients(recipeAndIngredientIds)
+      storeSelectedIngredients(selectedIngredientsInfo)
 
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientIssues}`)
     } catch (error) {

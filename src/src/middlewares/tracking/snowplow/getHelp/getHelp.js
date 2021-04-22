@@ -1,8 +1,8 @@
 import { seActions } from './seActions'
 
-const seCategory = 'Order Get Help'
+const seCategory = 'help'
 
-const acceptRefund = (action) => ({
+const acceptIngredientRefund = (action) => ({
   type: seActions[action.type],
   data: { amount: action.amount },
   seCategory,
@@ -11,29 +11,32 @@ const acceptRefund = (action) => ({
 const selectContactChannel = (action) => ({
   type: seActions[action.type],
   data: { channel: action.channel },
-  seCategory: 'help',
+  seCategory,
 })
 
 const selectIngredients = (action) => ({
   type: seActions[action.type],
-  data: action.selectedIngredientAndRecipeIds,
+  data: action.selectedIngredientsInfo.map(({ recipeId, label }) => ({
+    recipeId,
+    ingredientName: label,
+  })),
   seCategory,
 })
 
 const selectIngredientIssues = (action) => ({
   type: seActions[action.type],
-  data: action.ingredientAndRecipeIdsWithIssueName,
+  data: action.ingredientIssuesInfo,
   seCategory,
 })
 
 const selectOrderIssue = (action) => ({
   type: seActions[action.type],
   data: { order_issue: action.issue },
-  seCategory: 'help',
+  seCategory,
 })
 
 export {
-  acceptRefund,
+  acceptIngredientRefund,
   selectContactChannel,
   selectIngredients,
   selectIngredientIssues,

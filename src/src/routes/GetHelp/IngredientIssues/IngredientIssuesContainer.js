@@ -12,7 +12,6 @@ const mapStateToProps = (state) => {
   const ingredients = getHelp.get('selectedIngredients').toJS()
   const issues = getHelp.get('ingredientIssues').toJS()
   const subIssues = getHelp.get('ingredientSubIssues').toJS()
-  const selectedIngredients = getHelp.get('selectedIngredients').toJS()
 
   return {
     content: {
@@ -26,7 +25,6 @@ const mapStateToProps = (state) => {
     ingredients,
     issues,
     subIssues,
-    selectedIngredients,
   }
 }
 

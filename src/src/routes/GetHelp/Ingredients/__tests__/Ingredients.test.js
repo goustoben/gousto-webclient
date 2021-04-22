@@ -274,7 +274,7 @@ describe('<Ingredients />', () => {
         await continueButton.prop('onClick')()
 
         expect(storeSelectedIngredients).toHaveBeenCalledWith([
-          { ingredientUuid: '2222', recipeId: '2' }
+          { ingredientUuid: '2222', label: 'pasta', recipeId: '2' }
         ])
       })
     })
