@@ -36,7 +36,7 @@ describe('Resubscribe', () => {
   beforeEach(() => {
     jest.resetAllMocks()
 
-    trackSubscriptionSettingsChange.mockReturnValue(() => {})
+    trackSubscriptionSettingsChange.mockReturnValue(() => { })
     useFetch.mockReturnValue([])
     mountWithPropsAndState()
   })
@@ -190,7 +190,7 @@ describe('Resubscribe', () => {
     test('Then sectionSubTitle has the correct values', () => {
       const content = wrapper.find('.sectionSubTitle').text()
 
-      expect(content).toEqual('Want to easily recieve Weekly, Fortnightly or Monthly boxes, bursting full of flavourful recipes? Reactivate below.')
+      expect(content).toEqual('Want to easily receive Weekly, Fortnightly or Monthly boxes, bursting full of flavourful recipes? Reactivate below.')
     })
 
     test('Then the CTA has the correct values', () => {

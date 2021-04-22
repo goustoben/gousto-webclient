@@ -1,6 +1,6 @@
 export const resubscribeSection = {
   title: 'Resubscribe',
-  subTitle: 'Want to easily recieve Weekly, Fortnightly or Monthly boxes, bursting full of flavourful recipes? Reactivate below.',
+  subTitle: 'Want to easily receive Weekly, Fortnightly or Monthly boxes, bursting full of flavourful recipes? Reactivate below.',
   pricingTitle: 'Subscribe and save',
   pricingSubTitle: 'Restart your subscription today!',
   pricingParagraph: 'And you can edit your settings any time after you\'ve restarted.',
