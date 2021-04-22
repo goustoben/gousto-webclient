@@ -4,16 +4,23 @@ import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
 import { ErrorMessage } from './ErrorMessage'
 import { isSubmitting } from '../../utils/state'
 
+const getErrorFromCollection = (errorsMap) => errorsMap.findEntry((value) => !!value)
+
 const getErrorType = (state, ownProps) => {
   if (isSubmitting(state)) {
     return null
   }
 
-  const errors = ownProps.showPayPalErrors
-    ? state.checkout.get('paypalErrors')
-    : state.checkout.get('errors')
+  let entry
 
-  const entry = errors.findEntry((value) => !!value)
+  if (ownProps.showPayPalErrors) {
+    entry =
+      getErrorFromCollection(state.checkout.get('paypalErrors')) ||
+      getErrorFromCollection(state.checkout.get('errors'))
+  } else {
+    entry = getErrorFromCollection(state.checkout.get('errors'))
+  }
+
   if (!entry) {
     return null
   }

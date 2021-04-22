@@ -120,4 +120,19 @@ describe('ErrorMessageContainer', () => {
       })
     }
   )
+
+  describe('when showPayPalErrors is on and there is non-paypal error', () => {
+    test('then it should show the non-paypal error', () => {
+      const store = makeStore({
+        errors: {
+          [actionTypes.CHECKOUT_SIGNUP]: '401-auth-error',
+        },
+        paypalErrors: {},
+      })
+
+      wrapper = mount(<ErrorMessageContainer store={store} router={router} showPayPalErrors />)
+
+      expectErrorType(wrapper, 'user-exists')
+    })
+  })
 })
