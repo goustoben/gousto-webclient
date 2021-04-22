@@ -10,7 +10,7 @@ import {
 import { redirect } from 'actions/redirect'
 import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
-import { getPreviewOrderId } from 'selectors/basket'
+import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import { getUserStatus } from 'selectors/user'
 import { getSlotForBoxSummaryDeliveryDays, getCouldBasketBeExpired , getOrderDetails } from '../selectors/order'
 
@@ -43,6 +43,7 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     'number_of_recipes': 2,
     'number_of_portions': 2,
     'box_type': 'gourmet',
+    'promocode': getPromoCode(getState()),
   }
 
   if (couldBasketBeExpired) {
