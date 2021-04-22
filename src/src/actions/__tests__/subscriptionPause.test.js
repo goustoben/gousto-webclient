@@ -1872,8 +1872,8 @@ describe('Subscription action', () => {
           }),
           user: Immutable.fromJS({
             orders: [
-              { id: 'o1', phase: 'open', number: '1' },
-              { id: 'o2', phase: 'open', number: '2' },
+              { id: 'o1', phase: 'open' },
+              { id: 'o2', phase: 'open' },
             ],
           }),
         })
@@ -1900,7 +1900,7 @@ describe('Subscription action', () => {
         test(
           'should call subscriptionPauseLoadStaticScreen with "pausedPendingBoxes"',
           async () => {
-            expect(subscriptionPauseLoadStaticScreenSpy.mock.calls[0][0]).toEqual('pausedPendingBoxes')
+            expect(subscriptionPauseLoadStaticScreenSpy).toHaveBeenCalledWith('pausedPendingBoxes')
           }
         )
 
@@ -1910,7 +1910,7 @@ describe('Subscription action', () => {
         })
       })
 
-      describe('when first box only order found in state user orders state', () => {
+      describe('when only one order found in state user orders state', () => {
         beforeEach(async () => {
           getState = jest.fn().mockReturnValue({
             features: Immutable.fromJS({}),
@@ -1949,7 +1949,7 @@ describe('Subscription action', () => {
             }),
             user: Immutable.fromJS({
               orders: [
-                { id: 'o1', phase: 'open', number: '1' },
+                { id: 'o1', phase: 'open' },
               ],
             }),
           })
@@ -1958,10 +1958,9 @@ describe('Subscription action', () => {
         })
 
         test(
-          'should call subscriptionPauseProceed once with "pause" and "paused"',
+          'should call subscriptionPauseLoadStaticScreen with "pausedPendingBoxes"',
           async () => {
-            expect(subscriptionPauseProceedSpy).toHaveBeenCalledTimes(1)
-            expect(subscriptionPauseProceedSpy).toHaveBeenCalledWith('pause', 'paused')
+            expect(subscriptionPauseLoadStaticScreenSpy).toHaveBeenCalledWith('pausedPendingBoxes')
           }
         )
       })
@@ -2005,7 +2004,7 @@ describe('Subscription action', () => {
             }),
             user: Immutable.fromJS({
               orders: [
-                { id: 'o1', phase: 'closed', number: '2' },
+                { id: 'o1', phase: 'closed' },
               ],
             }),
           })

@@ -498,10 +498,9 @@ function subscriptionPauseReasonSubmit(freeText) {
 
       const orderState = getState().user.get('orders')
       const pendingOrderIds = orderState.filter(o => o.get('phase') === 'open')
-      const firstBox = pendingOrderIds.find(o => parseInt(o.get('number'), 10) === 1)
       const committedOrderIds = orderState.filter(o => ['cutoff', 'delivery', 'packing', 'picking'].indexOf(o.get('phase')) >= 0)
 
-      if ((firstBox && pendingOrderIds.size === 1) || !(pendingOrderIds.size || committedOrderIds.size)) {
+      if (!(pendingOrderIds.size || committedOrderIds.size)) {
         dispatch(subPauseActions.subscriptionPauseProceed('pause', 'paused'))
       } else {
         dispatch(subPauseActions.subscriptionPauseLoadStaticScreen('pausedPendingBoxes'))
