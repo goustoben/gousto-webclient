@@ -135,7 +135,6 @@ module.exports = {
     pauseReasons: '/subscription/pause-reasons',
     signup: '/signup',
     addresses: '/addresses',
-    intervals: '/intervals',
     newsletterSubscribers: '/newsletter-subscribers',
     reference: '/customers/reference',
     promocode: '/customers/promocode',

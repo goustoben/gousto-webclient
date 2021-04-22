@@ -11,7 +11,6 @@ import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
 import { getSlotTimes } from 'utils/deliveries'
 
-import { SubscriptionContainer } from 'routes/Checkout/Components/Subscription'
 import { DeliveryDetails } from './DeliveryDetails'
 import { DeliveryAddressContainer } from './DeliveryAddress'
 import { DeliveryCard } from './DeliveryCard'
@@ -153,7 +152,6 @@ export class Delivery extends React.PureComponent {
           this.container = el
         }}
       >
-        {!isCheckoutOverhaulEnabled && <SubscriptionContainer sectionName={sectionName} />}
         <div
           className={classNames({
             [css.deliveryContainer]: !isCheckoutOverhaulEnabled,

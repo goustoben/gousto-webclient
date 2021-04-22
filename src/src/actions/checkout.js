@@ -12,7 +12,7 @@ import { basketResetPersistent } from 'utils/basket'
 import { isValidPromoCode } from 'utils/order'
 
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchIntervals, fetchPromoCodeValidity, fetchReference } from 'apis/customers'
+import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
 
 import { getAboutYouFormName, getDeliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
@@ -47,7 +47,6 @@ const checkoutActions = {
   checkout3DSSignup,
   resetDuplicateCheck,
   trackSignupPageChange,
-  checkoutFetchIntervals,
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
@@ -107,28 +106,6 @@ export function checkoutAddressLookup(postcode) {
     }
 
     return addresses
-  }
-}
-
-export function checkoutFetchIntervals() {
-  return async (dispatch) => {
-    dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECEIVE, true))
-
-    try {
-      const { data: intervals } = await fetchIntervals()
-
-      dispatch({
-        type: actionTypes.CHECKOUT_INTERVALS_RECEIVE,
-        intervals,
-      })
-    } catch (error) {
-      const { message, code } = error
-      logger.warning(message)
-      dispatch(trackCheckoutError(actionTypes.CHECKOUT_INTERVALS_RECEIVE, message, 'checkoutFetchIntervals'))
-      dispatch(error(actionTypes.CHECKOUT_INTERVALS_RECEIVE, { message, code }))
-    } finally {
-      dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECEIVE, false))
-    }
   }
 }
 
@@ -456,26 +433,6 @@ export function trackingCardTokenizationSuccessfully() {
     })
   }
 }
-
-export const trackSubscriptionIntervalChanged = () => (
-  (dispatch, getState) => {
-    try {
-      const deliveryFormName = getDeliveryFormName(getState())
-      const checkoutInputs = Immutable.fromJS(getState().form[deliveryFormName].values)
-      const intervalId = checkoutInputs.getIn(['delivery', 'interval_id'], '1')
-
-      dispatch({
-        type: actionTypes.TRACKING,
-        trackingData: {
-          actionType: 'SubscriptionFrequency Changed',
-          interval_id: intervalId,
-        }
-      })
-    } catch (e) {
-      logger.notice(e.message)
-    }
-  }
-)
 
 export function trackPromocodeChange(promocode, added) {
   return (dispatch) => dispatch({

@@ -26,9 +26,6 @@ describe("Given I'm a logged out user who has passed the first steps of checkout
     cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as(
       'getDeliveries'
     )
-    cy.route('GET', '/customers/v1/intervals', 'fixture:customers/intervals.json').as(
-      'getIntervals'
-    )
     cy.route('POST', '/payments/v1/payments/payment-auth', 'fixture:payments/paymentAuth.json')
     cy.route('GET', '/payments/v1/payments/payments/**', 'fixture:payments/payment.json')
     cy.route('GET', '/prices**', 'fixture:prices/2person2portionNoDiscount.json').as('getPrices')

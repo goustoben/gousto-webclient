@@ -5,7 +5,6 @@ import routes from 'config/routes'
 const customersApi = {
   fetchPauseReasons,
   customerSignup,
-  fetchIntervals,
 }
 
 export function fetchPauseReasons(accessToken, userId = null) {
@@ -30,10 +29,6 @@ export function customerSignup(accessToken, reqData) {
 export function newsletterSubscribe(email) {
   return fetch(null, `${endpoint('customers')}${routes.customers.newsletterSubscribers}`, { email }, 'POST')
 }
-
-export const fetchIntervals = () => (
-  fetch(null, `${endpoint('customers')}${routes.customers.intervals}`, {}, 'GET')
-)
 
 export const fetchReference = () => (
   fetch(null, `${endpoint('customers')}${routes.customers.reference}`, {}, 'GET')

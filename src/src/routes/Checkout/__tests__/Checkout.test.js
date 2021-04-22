@@ -38,7 +38,6 @@ jest.mock('actions', () => ({
   menuLoadDays: jest.fn().mockReturnValue(Promise.resolve()),
   pricingRequest: jest.fn().mockReturnValue(Promise.resolve()),
   menuLoadBoxPrices: jest.fn().mockReturnValue(Promise.resolve()),
-  checkoutFetchIntervals: jest.fn().mockReturnValue(Promise.resolve()),
   basketStepsOrderReceive: jest.fn().mockReturnValue(Promise.resolve()),
   basketProceedToCheckout: jest.fn().mockReturnValue(Promise.resolve()),
   checkoutCreatePreviewOrder: jest.fn().mockReturnValue(Promise.resolve()),
@@ -246,9 +245,6 @@ describe('Checkout', () => {
           stepsOrder: Immutable.List(),
           previewOrderId: '',
         }),
-        checkout: Immutable.fromJS({
-          intervals: [],
-        }),
         menuBoxPrices: Immutable.Map({ 2: {} }),
         menuCutoffUntil: '2019-02-22T11:59:59+00:00',
         error: Immutable.Map({}),
@@ -276,9 +272,6 @@ describe('Checkout', () => {
         basket: Immutable.Map({
           stepsOrder: Immutable.List(),
           previewOrderId: '',
-        }),
-        checkout: Immutable.fromJS({
-          intervals: [],
         }),
         menuBoxPrices: Immutable.Map({ 2: {} }),
         menuCutoffUntil: '2019-02-22T11:59:59+00:00',
@@ -313,9 +306,6 @@ describe('Checkout', () => {
         basket: Immutable.Map({
           stepsOrder: Immutable.List(),
           previewOrderId: '',
-        }),
-        checkout: Immutable.fromJS({
-          intervals: [],
         }),
         menuBoxPrices: Immutable.Map({ 2: {} }),
         menuCutoffUntil: '2019-02-22T11:59:59+00:00',
@@ -354,9 +344,6 @@ describe('Checkout', () => {
           stepsOrder: Immutable.List(),
           previewOrderId: '',
         }),
-        checkout: Immutable.fromJS({
-          intervals: [],
-        }),
         menuBoxPrices: Immutable.Map({ 2: {} }),
         menuCutoffUntil: '2019-02-22T11:59:59+00:00',
         error: Immutable.Map({
@@ -379,6 +366,20 @@ describe('Checkout', () => {
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
       expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
       expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=undefined-error', true)
+    })
+
+    test('should redirect to /account when isCheckoutOverhaulEnabled is enabled', async () => {
+      await Checkout.fetchData({
+        isCheckoutOverhaulEnabled: true,
+        store: {
+          dispatch,
+          getState,
+        },
+        query: {},
+        params: {},
+      })
+
+      expect(replace).toHaveBeenCalledWith('/check-out/account')
     })
   })
 
