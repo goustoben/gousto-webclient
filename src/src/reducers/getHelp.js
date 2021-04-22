@@ -56,24 +56,17 @@ const getHelp = (state, action) => {
   }
   case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
     const orderRecipeItems = state.getIn(['order', 'recipeDetailedItems']).toJS()
-    const selectedIngredients = action.selectedIngredientAndRecipeIds
-      .reduce((accumulator, selectedIngredientAndRecipeId) => {
-        const { recipeId, ingredientUuid } = selectedIngredientAndRecipeId
+    const selectedIngredients = {}
+    action.selectedIngredientsInfo.forEach(({ recipeId, ingredientUuid, label }) => {
+      selectedIngredients[`${recipeId}&${ingredientUuid}`] = {
+        recipeId,
+        ingredientUuid,
+        label,
+        recipeGoustoReference: orderRecipeItems[recipeId],
+      }
+    })
 
-        const currentRecipe = state.get('recipes')
-          .find(recipe => recipe.get('id') === recipeId)
-
-        const currentIngredient = currentRecipe && currentRecipe.get('ingredients')
-          .find(ingredient => ingredient.get('uuid') === ingredientUuid)
-
-        return accumulator.set(`${recipeId}&${ingredientUuid}`, fromJS({
-          ...selectedIngredientAndRecipeId,
-          label: currentIngredient.get('label'),
-          recipeGoustoReference: orderRecipeItems[recipeId],
-        }))
-      }, Map())
-
-    return state.set('selectedIngredients', selectedIngredients)
+    return state.set('selectedIngredients', fromJS(selectedIngredients))
   }
   case webClientActionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE: {
     const { ingredientAndRecipeId, issueName } = action

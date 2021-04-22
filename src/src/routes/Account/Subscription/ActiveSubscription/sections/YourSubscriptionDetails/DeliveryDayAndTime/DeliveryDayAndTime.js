@@ -108,7 +108,7 @@ export const DeliveryDayAndTime = ({ accessToken, isMobile }) => {
     >
       { isMobile ? (
         <p data-testing="expanded-text">
-          Please select what day you would like to recieve your box on and when.
+          Please select what day you would like to receive your box on and when.
         </p>
       ) : null}
 

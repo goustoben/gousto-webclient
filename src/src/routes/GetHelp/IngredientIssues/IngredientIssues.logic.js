@@ -27,11 +27,6 @@ const propTypes = {
       requireDescription: PropTypes.bool,
     })
   ).isRequired,
-  selectedIngredients: PropTypes.objectOf(PropTypes.shape({
-    ingredientUuid: PropTypes.string,
-    issueName: PropTypes.string,
-    recipeId: PropTypes.string,
-  })),
   storeSelectedIngredientIssue: PropTypes.func.isRequired,
   subIssues: PropTypes.arrayOf(
     PropTypes.shape({
@@ -43,9 +38,6 @@ const propTypes = {
   ).isRequired,
   trackIngredientIssues: PropTypes.func.isRequired,
 }
-const defaultProps = {
-  selectedIngredients: {}
-}
 
 class IngredientIssues extends PureComponent {
   componentDidMount() {
@@ -53,15 +45,11 @@ class IngredientIssues extends PureComponent {
   }
 
   continueHandler = () => {
-    const { selectedIngredients, trackIngredientIssues } = this.props
-    const ingredientAndRecipeIdsWithIssueName = Object.keys(selectedIngredients)
-      .map(key => ({
-        recipeId: selectedIngredients[key].recipeId,
-        ingredientUuid: selectedIngredients[key].ingredientUuid,
-        issueName: selectedIngredients[key].issueName
-      }))
+    const { ingredients, trackIngredientIssues } = this.props
+    const ingredientIssuesInfo = Object.values(ingredients)
+      .map(({ recipeId, label, issueName }) => ({ recipeId, ingredientName: label, issueName }))
 
-    trackIngredientIssues(ingredientAndRecipeIdsWithIssueName)
+    trackIngredientIssues(ingredientIssuesInfo)
     browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientReasons}`)
   }
 
@@ -96,7 +84,6 @@ class IngredientIssues extends PureComponent {
   }
 }
 
-IngredientIssues.defaultProps = defaultProps
 IngredientIssues.propTypes = propTypes
 
 export {

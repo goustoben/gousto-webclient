@@ -12,11 +12,15 @@ describe('<IngredientIssues />', () => {
   const ingredients = {
     'recipId1&ingId1': {
       recipeId: 'recipId1',
+      issueId: 'issueId1',
+      issueName: 'issue name 1',
       ingredientUuid: 'ingId1',
       label: 'ingLabel1'
     },
     'recipId2&ingId1': {
       recipeId: 'recipId2',
+      issueId: 'issueId2',
+      issueName: 'issue name 2',
       ingredientUuid: 'ingId1',
       label: 'ingLabel2'
     },
@@ -53,18 +57,6 @@ describe('<IngredientIssues />', () => {
       requireDescription: true,
     },
   ]
-  const selectedIngredients = {
-    '1010&1234': {
-      recipeId: '1010',
-      ingredientUuid: '1234',
-      issueName: 'issue name 1',
-    },
-    '2020&1234': {
-      recipeId: '2020',
-      ingredientUuid: '1234',
-      issueName: 'issue name 2',
-    },
-  }
 
   describe('render', () => {
     const wrapper = mount(
@@ -74,7 +66,6 @@ describe('<IngredientIssues />', () => {
         fetchIngredientIssues={() => {}}
         issues={issues}
         storeSelectedIngredientIssue={() => {}}
-        selectedIngredients={selectedIngredients}
         trackIngredientIssues={() => {}}
         subIssues={subIssues}
       />
@@ -174,7 +165,6 @@ describe('<IngredientIssues />', () => {
           fetchIngredientIssues={() => {}}
           issues={issues}
           storeSelectedIngredientIssue={storeSelectedIngredientIssueSpy}
-          selectedIngredients={selectedIngredients}
           trackIngredientIssues={trackIngredientIssuesSpy}
           subIssues={subIssues}
         />
@@ -195,8 +185,8 @@ describe('<IngredientIssues />', () => {
       Button.props().onClick()
 
       expect(trackIngredientIssuesSpy).toHaveBeenCalledWith([
-        { ingredientUuid: '1234', issueName: 'issue name 1', recipeId: '1010' },
-        { ingredientUuid: '1234', issueName: 'issue name 2', recipeId: '2020' }
+        { ingredientName: 'ingLabel1', issueName: 'issue name 1', recipeId: 'recipId1' },
+        { ingredientName: 'ingLabel2', issueName: 'issue name 2', recipeId: 'recipId2' }
       ])
       expect(browserHistory.push).toHaveBeenCalledTimes(1)
     })

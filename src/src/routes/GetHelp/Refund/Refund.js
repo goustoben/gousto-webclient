@@ -38,7 +38,7 @@ const propTypes = {
     recipeGoustoReference: PropTypes.string.isRequired,
     recipeId: PropTypes.string.isRequired,
   })).isRequired,
-  trackAcceptRefund: PropTypes.func.isRequired,
+  trackAcceptIngredientsRefund: PropTypes.func.isRequired,
   trackRejectRefund: PropTypes.func.isRequired,
 }
 
@@ -100,7 +100,7 @@ class Refund extends PureComponent {
       user,
       order,
       selectedIngredients,
-      trackAcceptRefund,
+      trackAcceptIngredientsRefund,
     } = this.props
 
     const issues = Object.keys(selectedIngredients).map(key => {
@@ -136,7 +136,7 @@ class Refund extends PureComponent {
     try {
       const response = await setComplaint(...setComplaintParams)
 
-      trackAcceptRefund(refund.value)
+      trackAcceptIngredientsRefund(refund.value)
       browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
 
       return response

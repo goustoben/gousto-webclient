@@ -3,7 +3,7 @@ import { actionTypes } from 'actions/actionTypes'
 
 describe('snowplow get help tracking events', () => {
   const {
-    acceptRefund,
+    acceptIngredientRefund,
     selectOrderIssue,
     selectContactChannel,
     selectIngredients,
@@ -41,51 +41,47 @@ describe('snowplow get help tracking events', () => {
   })
 
   test('selectIngredients works correctly', () => {
-    const action = {
+    const ACTION = {
       type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
-      selectedIngredientAndRecipeIds: [{ recipeId: '1234', ingredientId: '4567890' }]
+      selectedIngredientsInfo: [{ recipeId: '1234', label: '4567890' }]
     }
 
-    expect(selectIngredients(action)).toEqual({
-      data: [{ ingredientId: '4567890', recipeId: '1234' }],
-      seCategory: 'Order Get Help',
-      type: 'IngredientsSelection Confirmed'
+    expect(selectIngredients(ACTION)).toEqual({
+      data: [{ recipeId: '1234', ingredientName: '4567890' }],
+      seCategory: 'help',
+      type: 'ssr_ingredients_selection_confirmed'
     })
   })
 
   test('selectIngredientIssues works correctly', () => {
-    const action = {
+    const ACTION = {
       type: actionTypes.GET_HELP_INGREDIENT_ISSUES_SELECT,
-      ingredientAndRecipeIdsWithIssueName: [{
-        ingredientId: '3023a6f7d7133ac88089a2fc416954a8',
+      ingredientIssuesInfo: [{
+        ingredientName: '3023a6f7d7133ac88089a2fc416954a8',
         issueName: 'Missing ingredients',
         recipeId: '1494'
       }]
     }
 
-    expect(selectIngredientIssues(action)).toEqual({
-      data: [{
-        ingredientId: '3023a6f7d7133ac88089a2fc416954a8',
-        issueName: 'Missing ingredients',
-        recipeId: '1494'
-      }],
-      seCategory: 'Order Get Help',
-      type: 'IngredientsIssues Confirmed'
+    expect(selectIngredientIssues(ACTION)).toEqual({
+      data: ACTION.ingredientIssuesInfo,
+      seCategory: 'help',
+      type: 'ssr_ingredients_issues_confirmed'
     })
   })
 
-  test('acceptRefund works correctly', () => {
+  test('acceptIngredientRefund works correctly', () => {
     const action = {
-      type: actionTypes.GET_HELP_ACCEPT_REFUND,
+      type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
       amount: 2
     }
 
-    expect(acceptRefund(action)).toEqual({
+    expect(acceptIngredientRefund(action)).toEqual({
       data: {
         amount: 2
       },
-      seCategory: 'Order Get Help',
-      type: 'Refund Accepted'
+      seCategory: 'help',
+      type: 'ssr_ingredients_accept_refund'
     })
   })
 })

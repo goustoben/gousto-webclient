@@ -38,14 +38,14 @@ describe('<Refund />', () => {
         + 'CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">'
     },
   }
-  const trackAcceptRefundSpy = jest.fn()
+  const trackAcceptIngredientsRefundSpy = jest.fn()
   const PROPS = {
     content,
     featureShorterCompensationPeriod: false,
     user: { id: '999', accessToken: '123' },
     order: { id: '888' },
     selectedIngredients,
-    trackAcceptRefund: trackAcceptRefundSpy,
+    trackAcceptIngredientsRefund: trackAcceptIngredientsRefundSpy,
     trackRejectRefund: () => {},
   }
 
@@ -235,7 +235,7 @@ describe('<Refund />', () => {
           test('tracking action is being called when Accept offer button is clicked', async () => {
             await Button.props().onClick()
 
-            expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
+            expect(trackAcceptIngredientsRefundSpy).toHaveBeenCalledWith(7.77)
           })
 
           describe('and when setComplaint errors', () => {

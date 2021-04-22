@@ -16,13 +16,13 @@ const selectOrderIssue = (issue) => ({
   issue,
 })
 
-const trackIngredientIssues = (ingredientAndRecipeIdsWithIssueName) => ({
+const trackIngredientIssues = (ingredientIssuesInfo) => ({
   type: actionTypes.GET_HELP_INGREDIENT_ISSUES_SELECT,
-  ingredientAndRecipeIdsWithIssueName
+  ingredientIssuesInfo
 })
 
-const trackAcceptRefund = (amount) => ({
-  type: actionTypes.GET_HELP_ACCEPT_REFUND,
+const trackAcceptIngredientsRefund = (amount) => ({
+  type: actionTypes.GET_HELP_INGREDIENTS_ACCEPT_REFUND,
   amount
 })
 
@@ -36,9 +36,9 @@ const storeGetHelpOrderId = (id) => ({
   id,
 })
 
-const storeSelectedIngredients = (selectedIngredientAndRecipeIds) => ({
+const storeSelectedIngredients = (selectedIngredientsInfo) => ({
   type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
-  selectedIngredientAndRecipeIds,
+  selectedIngredientsInfo,
 })
 
 const storeSelectedIngredientIssue = (ingredientAndRecipeId, issueId, issueName) => ({
@@ -175,7 +175,7 @@ export {
   storeSelectedIngredientIssue,
   validateSelectedIngredients,
   fetchIngredientIssues,
-  trackAcceptRefund,
+  trackAcceptIngredientsRefund,
   trackIngredientIssues,
   trackRecipeCardClick,
 }

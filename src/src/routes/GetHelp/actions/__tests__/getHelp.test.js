@@ -153,8 +153,9 @@ describe('GetHelp action generators and thunks', () => {
       expect(trackRejectRefund(amount)).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'click_declined_refund',
+          actionType: 'ssr_ingredients_decline_refund',
           amount,
+          seCategory: 'help',
         }
       })
     })

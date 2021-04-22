@@ -82,7 +82,7 @@ export const Frequency = ({ accessToken, isMobile }) => {
     >
       {isMobile ? (
         <p data-testing="box-frequency-instruction-text">
-          Please select the how often you’d like to recieve your box.
+          Please select the how often you’d like to receive your box.
         </p>
       ) : null}
 
