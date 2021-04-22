@@ -239,15 +239,6 @@ export const getPauseRecoveryContent = (enableOffer = true) => (
           modalType
         }))
 
-        const orders = getState().user.get('orders')
-        const orderCount = Math.max(
-          ...(orders.toArray().filter(
-            (o) => o.get('state') === 'committed'
-          ).map(
-            (o) => Number(o.get('number'))
-          )),
-          0
-        )
         const offer = getState().onScreenRecovery.get('offer')
         const promoCode = offer ? offer.promoCode : null
         const hasPendingPromo = offer === null ? null : offer.formattedValue
@@ -256,7 +247,6 @@ export const getPauseRecoveryContent = (enableOffer = true) => (
           type: actionTypes.TRACKING,
           trackingData: {
             actionType: seActions.SUBSCRIPTION_PAUSE_ATTEMPT,
-            orderCount,
             hasPendingPromo,
             hasPendingPromoWithSubCondition,
             osrDiscount: promoCode,
