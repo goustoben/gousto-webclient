@@ -1,4 +1,4 @@
-import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload, getIsSubscriptionActive, getShowResubscriptionModal } from '../subscription'
+import { getIsSubscriptionLoaded, getSubscriptionUpdatePayload, getSubscriptionUpdateV2Payload, getIsSubscriptionActive, getShowResubscriptionModal } from '../subscription'
 
 describe('subscription selectors', () => {
   let contextState
@@ -41,6 +41,35 @@ describe('subscription selectors', () => {
       }
       expect(getSubscriptionUpdatePayload.resultFunc(numPortions, numRecipes, dietaryPreference, currentDeliverySlot, deliveryFrequency))
         .toEqual(expectedResult)
+    })
+  })
+
+  describe('getSubscriptionUpdateV2Payload', () => {
+    const numPortions = 2
+    const numRecipes = 3
+    const dietaryPreference = 'vegetarian'
+    const deliveryFrequency = 2
+    const currentDeliverySlot = { deliveryStartTime: '1', deliveryEndTime: '2', defaultDay: '3' }
+    test('should return formatted payload', () => {
+      const expectedResult = {
+        numRecipes: 2,
+        numPortions: 3,
+        boxType: 'vegetarian',
+        interval: 2,
+        intervalUnit: 'weeks',
+        deliverySlotStartTime: '1',
+        deliverySlotEndTime: '2',
+        deliverySlotDay: '3',
+      }
+      expect(
+        getSubscriptionUpdateV2Payload.resultFunc(
+          numRecipes,
+          numPortions,
+          dietaryPreference,
+          deliveryFrequency,
+          currentDeliverySlot
+        )
+      ).toEqual(expectedResult)
     })
   })
 
