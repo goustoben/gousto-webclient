@@ -297,6 +297,20 @@ export function doesDayHaveSlotsWithoutDeliveryFees(day) {
   return slotsWithoutDeliveryFess.size > 0
 }
 
+/**
+ * A comparison function for two moment.js values suitable for passing to
+ * Array.prototype.sort in order to put the earlier dates first.
+ */
+export const compareMoments = (moment1, moment2) => {
+  if (moment1.isBefore(moment2)) {
+    return -1
+  } else if (moment1.isAfter(moment2)) {
+    return 1
+  } else {
+    return 0
+  }
+}
+
 export function getLandingDay(state, options = {}) {
   const { useCurrentSlot = false, cantLandOnOrderDate = false, useBasketDate = true } = options
   const date = useBasketDate ? getBasketDate(state) : null
@@ -366,14 +380,22 @@ export function getLandingDay(state, options = {}) {
         })
         .sort(
           (comparisonDay1, comparisonDay2) => {
-            const diffToD1 = moment(comparisonDay1.get('date')).diff(Date.now(), 'days')
-            const diffToD2 = moment(comparisonDay2.get('date')).diff(Date.now(), 'days')
+            const moment1 = moment(comparisonDay1.get('date'))
+            const moment2 = moment(comparisonDay2.get('date'))
+            const diffToD1 = moment1.diff(Date.now(), 'days')
+            const diffToD2 = moment2.diff(Date.now(), 'days')
 
-            // we want to order all free slot to the beginning and the rest at the end
+            // we want to order all free slots to the beginning and the rest at the end
             const day1 = diffToD1 + (doesDayHaveSlotsWithoutDeliveryFees(comparisonDay1) ? 0 : 9999)
             const day2 = diffToD2 + (doesDayHaveSlotsWithoutDeliveryFees(comparisonDay2) ? 0 : 9999)
 
-            return day1 > day2 ? 1 : -1
+            if (day1 < day2) {
+              return -1
+            } else if (day1 > day2) {
+              return 1
+            } else {
+              return compareMoments(moment1, moment2)
+            }
           }
         ).first()
     }
