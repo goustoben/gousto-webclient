@@ -6,6 +6,7 @@ import {
   getAvailableDeliveryDays,
   getCutoffDateTime,
   getCutoffs,
+  compareMoments,
   getLandingDay,
   getSlot,
   getSlotTimes,
@@ -357,6 +358,19 @@ describe('utils/deliveries', () => {
 
         expect(result).toEqual(true)
       })
+    })
+  })
+
+  describe('compareMoments', () => {
+    const earlier = moment('2021-04-15')
+    const middle = moment('2021-04-16')
+    const same = moment('2021-04-16')
+    const later = moment('2021-04-17')
+
+    test('should return -1, 0 or 1 for dates that compare earlier, same, or later', () => {
+      expect(compareMoments(earlier, middle)).toBe(-1)
+      expect(compareMoments(same, middle)).toBe(0)
+      expect(compareMoments(later, middle)).toBe(1)
     })
   })
 
@@ -2769,7 +2783,7 @@ describe('utils/deliveries', () => {
             ],
           },
           '2020-02-13': {
-            date: '20202-02-13',
+            date: '2020-02-13',
             isDefault: false,
             slots: [
               {
@@ -3048,6 +3062,40 @@ describe('utils/deliveries', () => {
             ],
           },
         })
+      })
+    })
+
+    describe('when days is null', () => {
+      test('then it should throw an exception', () => {
+        expect(() => {
+          getAvailableDeliveryDays(null)
+        }).toThrow(GoustoException)
+      })
+    })
+
+    describe('when days do not contain slots', () => {
+      const daysWithEmptySlots = [
+        {
+          id: 'day1',
+          date: '2016-06-26',
+          slots: [],
+        },
+        {
+          id: 'day2',
+          date: '2016-06-30',
+          slots: [],
+        },
+        {
+          id: 'day3',
+          date: '2016-07-04',
+          slots: [],
+        },
+      ]
+
+      test('then it should throw an exception', () => {
+        expect(() => {
+          getAvailableDeliveryDays(daysWithEmptySlots)
+        }).toThrow(GoustoException)
       })
     })
   })
