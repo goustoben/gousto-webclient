@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-const getDeliveries = ({ deliveries }) => (deliveries || {})
+export const getDeliveries = ({ deliveries }) => (deliveries || {})
 
 export const getAreDeliveriesLoaded = createSelector(
   getDeliveries,

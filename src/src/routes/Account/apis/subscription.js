@@ -3,7 +3,7 @@ import fetch from 'utils/fetch'
 import routes from 'config/routes'
 import endpoint from 'config/endpoint'
 
-export function buildSubscriptionCommandUrl(userId, path) {
+export function buildSubscriptionCommandUrl(userId, path = '') {
   return `${endpoint('subscriptioncommand')}/subscriptions/${userId}${path}`
 }
 

@@ -17,7 +17,34 @@ jest.mock('../../context/selectors/subscription', () => ({
     box_type: 'vegetarian',
     delivery_slot_id: '11',
     interval: 1
-  })
+  }),
+  getSubscriptionUpdateV2Payload: () => ({
+    numRecipes: 2,
+    numPortions: 2,
+    boxType: 'vegetarian',
+    interval: 1,
+    intervalUnit: 'weeks',
+    deliverySlotStartTime: '08:00:00',
+    deliverySlotEndTime: '18:59:59',
+    deliverySlotDay: 2,
+  }),
+}))
+
+jest.mock('../../context/selectors/deliveries', () => ({
+  getDeliverySlots: () => [
+    {
+      coreSlotId: 'mock-delivery-slot-id',
+      deliveryStartTime: '08:00:00',
+      deliveryEndTime: '19:00:00',
+      defaultDay: 2,
+    },
+    {
+      coreSlotId: 'mock-delivery-slot-id-2',
+      deliveryStartTime: '08:00:00',
+      deliveryEndTime: '18:59:59',
+      defaultDay: 1,
+    },
+  ],
 }))
 
 const mockTrackingFn = jest.fn()
@@ -267,6 +294,65 @@ describe('useUpdateSubscription', () => {
       }
 
       expect(warningSpy).toHaveBeenCalledWith(`Update subscription payload not valid: ${JSON.stringify(payload)}`)
+    })
+  })
+
+  describe('when new subscription api is enabled', () => {
+    beforeEach(() => {
+      React.useContext = jest.fn().mockImplementation(() => ({
+        state: {currentUser: {id: 3}, isNewSubscriptionApiEnabled: true},
+        dispatch: mockDispatch
+      }))
+      const subscriptionFunctionResponse = {
+        data: {
+          subscription: {
+            numRecipes: 3,
+            numPortions: 2,
+            boxType: 'vegetarian',
+            interval: 1,
+            intervalUnit: 'week',
+            deliverySlotStartTime: '08:00:00',
+            deliverySlotEndTime: '18:59:59',
+            deliverySlotDay: 1,
+          }
+        }
+      }
+      mockFetchData = [isLoading, subscriptionFunctionResponse, error]
+      useFetch.mockReturnValue(mockFetchData)
+    })
+    test('should call useFetch with expected arguments', async () => {
+      renderHook(
+        () => useUpdateSubscription({
+          accessToken,
+          data,
+          trigger,
+          settingName
+        }),
+        fetchWrapper,
+      )
+
+      const useFetchArgs = {
+        url: 'localhost/subscriptions/3',
+        trigger,
+        needsAuthorization: true,
+        accessToken,
+        options: {
+          method: 'PUT',
+          body: JSON.stringify({
+            numRecipes: 2,
+            numPortions: 2,
+            boxType: 'vegetarian',
+            interval: 1,
+            intervalUnit: 'weeks',
+            deliverySlotStartTime: '08:00:00',
+            deliverySlotEndTime: '18:59:59',
+            deliverySlotDay: 2,
+            ...data
+          })
+        },
+      }
+
+      expect(useFetch).toHaveBeenCalledWith(useFetchArgs)
     })
   })
 })

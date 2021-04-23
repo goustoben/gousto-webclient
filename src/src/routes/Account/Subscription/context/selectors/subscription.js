@@ -35,3 +35,23 @@ export const getSubscriptionUpdatePayload = createSelector(
     interval: deliveryFrequency
   })
 )
+
+export const getSubscriptionUpdateV2Payload = createSelector(
+  [
+    getNumPortions,
+    getMealsPerBox,
+    getDietaryPreference,
+    getDeliveryFrequency,
+    getCurrentDeliverySlot,
+  ],
+  (numPortions, mealsPerBox, dietaryPreference, deliveryFrequency, currentDeliverySlot) => ({
+    numRecipes: Number.parseInt(mealsPerBox, 10),
+    numPortions: Number.parseInt(numPortions, 10),
+    boxType: dietaryPreference,
+    interval: Number.parseInt(deliveryFrequency, 10),
+    intervalUnit: 'weeks',
+    deliverySlotStartTime: currentDeliverySlot.deliveryStartTime,
+    deliverySlotEndTime: currentDeliverySlot.deliveryEndTime,
+    deliverySlotDay: currentDeliverySlot.defaultDay,
+  })
+)
