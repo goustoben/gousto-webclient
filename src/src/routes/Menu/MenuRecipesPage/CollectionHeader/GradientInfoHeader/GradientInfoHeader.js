@@ -29,7 +29,7 @@ const GradientInfoHeader = ({ headerAttributes }) => {
         <div
           className={classnames(css.gradientBackground, css.hideDesktop)}
           style={{
-            backgroundImage: `linear-gradient(270deg, rgba(0, 83, 199, 0) 26.58%, ${gradientColor} 65.45%)`,
+            backgroundImage: `linear-gradient(270deg, rgba(0, 83, 199, 0) 26.58%, ${gradientColor} 55%)`,
           }}
         />
         <div
