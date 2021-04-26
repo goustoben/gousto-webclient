@@ -32,7 +32,7 @@ export const  subscription = {
 
 export const CTA = {
   text: 'Get started',
-  stickyCTA: 'Get started with 30% off',
+  stickyCTA: 'Get started with 50% off',
   join: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
   loggedIn: {
     text: 'See Menu',
@@ -46,7 +46,7 @@ export const promo = {
   mayCode: ACTIVE_PROMO_CODE,
   banner: {
     text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-    mayText: 'Get 30% off all boxes for 1 month',
+    mayText: 'Get 50% off your first box and 30% off your first month',
   },
 }
 export const emailForm = {
