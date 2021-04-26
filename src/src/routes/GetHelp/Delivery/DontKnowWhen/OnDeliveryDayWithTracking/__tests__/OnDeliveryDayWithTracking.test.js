@@ -8,15 +8,21 @@ describe('OnDeliveryDayWithTracking', () => {
   const TRACK_MY_BOX_LINK = 'https://courier.com/trackbox/order=1234'
   let wrapper
   browserHistory.push = jest.fn()
+  const trackClickGetInTouchInSSRDeliveries = jest.fn()
+  const trackClickMyGoustoInSSRDeliveries = jest.fn()
+  const trackClickTrackMyBoxInSSRDeliveries = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
       <OnDeliveryDayWithTracking
-        trackMyBoxLink={TRACK_MY_BOX_LINK}
         deliverySlot={{
           deliveryStart: '08:00:00',
           deliveryEnd: '18:59:59',
         }}
+        trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+        trackClickMyGoustoInSSRDeliveries={trackClickMyGoustoInSSRDeliveries}
+        trackClickTrackMyBoxInSSRDeliveries={trackClickTrackMyBoxInSSRDeliveries}
+        trackMyBoxLink={TRACK_MY_BOX_LINK}
       />
     )
   })
@@ -66,6 +72,11 @@ describe('OnDeliveryDayWithTracking', () => {
       .toBe(`${index}/${contact}`)
   })
 
+  test('the link to Contact page has correct tracking', () => {
+    expect(wrapper.find('GoustoLink').prop('tracking'))
+      .toBe(trackClickGetInTouchInSSRDeliveries)
+  })
+
   test('renders a secondary CTA inside BottomFixedContent', () => {
     const ctas = wrapper.find('BottomFixedContent').find('CTA')
     expect(ctas.at(0).prop('variant')).toBe('secondary')
@@ -85,6 +96,10 @@ describe('OnDeliveryDayWithTracking', () => {
     test('redirects to My Gousto page', () => {
       expect(browserHistory.push).toHaveBeenCalledWith(client.myGousto)
     })
+
+    test('trackClickMyGoustoInSSRDeliveries is called correctly', () => {
+      expect(trackClickMyGoustoInSSRDeliveries).toHaveBeenCalled()
+    })
   })
 
   describe('when the primary CTA is clicked', () => {
@@ -103,8 +118,12 @@ describe('OnDeliveryDayWithTracking', () => {
       window.location.assign = originalAssign
     })
 
-    test('redirects to the tracking link passed as a prop', () => {
+    test('redirects to the box tracking link passed as a prop', () => {
       expect(window.location.assign).toHaveBeenCalledWith(TRACK_MY_BOX_LINK)
+    })
+
+    test('trackClickTrackMyBoxInSSRDeliveries is called correctly', () => {
+      expect(trackClickTrackMyBoxInSSRDeliveries).toHaveBeenCalled()
     })
   })
 })

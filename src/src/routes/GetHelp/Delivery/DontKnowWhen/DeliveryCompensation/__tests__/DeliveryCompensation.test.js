@@ -12,6 +12,9 @@ describe('DeliveryCompensation', () => {
   const ERROR_MESSAGE_REGEX = /.*credit.*Customer Care/
   const applyDeliveryRefundMock = jest.fn()
   const setErrorStatusMock = jest.fn()
+  const trackAcceptRefundInSSRDeliveries = jest.fn()
+  const trackDeclineRefundInSSRDeliveries = jest.fn()
+  const trackClickGetInTouchInSSRDeliveries = jest.fn()
   browserHistory.push = jest.fn()
   let wrapper
 
@@ -25,6 +28,9 @@ describe('DeliveryCompensation', () => {
         isApplyCompensationPending={false}
         orderId={ORDER_ID}
         setErrorStatus={setErrorStatusMock}
+        trackAcceptRefundInSSRDeliveries={trackAcceptRefundInSSRDeliveries}
+        trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+        trackDeclineRefundInSSRDeliveries={trackDeclineRefundInSSRDeliveries}
         userId={USER_ID}
       />
     )
@@ -86,6 +92,10 @@ describe('DeliveryCompensation', () => {
 
         expect(browserHistory.push).toHaveBeenCalledWith(`${index}/${contact}`)
       })
+
+      test('trackDeclineRefundInSSRDeliveries is called', () => {
+        expect(trackDeclineRefundInSSRDeliveries).toHaveBeenCalled()
+      })
     })
 
     describe('when the primary CTA is clicked', () => {
@@ -102,6 +112,10 @@ describe('DeliveryCompensation', () => {
           ORDER_ID,
           DELIVERY_COMPLAINT_CATEGORY_ID,
         )
+      })
+
+      test('trackAcceptRefundInSSRDeliveries is called', () => {
+        expect(trackAcceptRefundInSSRDeliveries).toHaveBeenCalled()
       })
     })
   })
@@ -131,6 +145,10 @@ describe('DeliveryCompensation', () => {
         const { index, contact } = client.getHelp
 
         expect(browserHistory.push).toHaveBeenCalledWith(`${index}/${contact}`)
+      })
+
+      test('trackClickGetInTouchInSSRDeliveries is called', () => {
+        expect(trackClickGetInTouchInSSRDeliveries).toHaveBeenCalled()
       })
     })
   })

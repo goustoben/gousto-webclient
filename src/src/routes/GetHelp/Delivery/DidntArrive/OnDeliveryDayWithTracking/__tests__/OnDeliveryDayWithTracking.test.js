@@ -8,15 +8,19 @@ describe('OnDeliveryDayWithTracking', () => {
   const TRACK_MY_BOX_LINK = 'https://courier.com/trackbox/order=1234'
   let wrapper
   browserHistory.push = jest.fn()
+  const trackClickGetInTouchInSSRDeliveries = jest.fn()
+  const trackClickTrackMyBoxInSSRDeliveries = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
       <OnDeliveryDayWithTracking
-        trackMyBoxLink={TRACK_MY_BOX_LINK}
         deliverySlot={{
           deliveryStart: '08:00:00',
           deliveryEnd: '18:59:59',
         }}
+        trackMyBoxLink={TRACK_MY_BOX_LINK}
+        trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+        trackClickTrackMyBoxInSSRDeliveries={trackClickTrackMyBoxInSSRDeliveries}
       />
     )
   })
@@ -76,6 +80,10 @@ describe('OnDeliveryDayWithTracking', () => {
 
       expect(browserHistory.push).toHaveBeenCalledWith(`${index}/${contact}`)
     })
+
+    test('trackClickGetInTouchInSSRDeliveries is called correctly', () => {
+      expect(trackClickGetInTouchInSSRDeliveries).toHaveBeenCalled()
+    })
   })
 
   describe('when the primary CTA is clicked', () => {
@@ -94,8 +102,12 @@ describe('OnDeliveryDayWithTracking', () => {
       window.location.assign = originalAssign
     })
 
-    test('redirects to the tracking link passed as a prop', () => {
+    test('redirects to the box tracking link passed as a prop', () => {
       expect(window.location.assign).toHaveBeenCalledWith(TRACK_MY_BOX_LINK)
+    })
+
+    test('trackClickTrackMyBoxInSSRDeliveries is called correctly', () => {
+      expect(trackClickTrackMyBoxInSSRDeliveries).toHaveBeenCalled()
     })
   })
 })

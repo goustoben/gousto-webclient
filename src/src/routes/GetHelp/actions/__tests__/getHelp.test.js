@@ -12,9 +12,14 @@ import {
   applyDeliveryRefund,
   loadTrackingUrl,
   getUserOrders,
+  trackAcceptRefundInSSRDeliveries,
   trackClickGetHelpWithThisBox,
+  trackClickGetInTouchInSSRDeliveries,
+  trackClickMyGoustoInSSRDeliveries,
+  trackClickTrackMyBoxInSSRDeliveries,
   trackConfirmationCTA,
   trackContinueAsNewCustomer,
+  trackDeclineRefundInSSRDeliveries,
   trackDeliveryOther,
   trackDeliveryStatus,
   trackDeselectIngredient,
@@ -314,6 +319,66 @@ describe('GetHelp action generators and thunks', () => {
           actionType: 'ssr_deliveries_select_category',
           seCategory: 'help',
           category_name: DELIVERY_CATEGORY
+        }
+      })
+    })
+  })
+
+  describe('trackClickMyGoustoInSSRDeliveries', () => {
+    test('creates the tracking action', () => {
+      expect(trackClickMyGoustoInSSRDeliveries()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deliveries_click_view_my_gousto',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackClickTrackMyBoxInSSRDeliveries', () => {
+    test('creates the tracking action', () => {
+      expect(trackClickTrackMyBoxInSSRDeliveries()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deliveries_click_track_my_box',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackClickGetInTouchInSSRDeliveries', () => {
+    test('creates the tracking action', () => {
+      expect(trackClickGetInTouchInSSRDeliveries()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deliveries_click_get_in_touch',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackAcceptRefundInSSRDeliveries', () => {
+    test('creates the tracking action', () => {
+      expect(trackAcceptRefundInSSRDeliveries()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deliveries_accept_refund',
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackDeclineRefundInSSRDeliveries', () => {
+    test('creates the tracking action', () => {
+      expect(trackDeclineRefundInSSRDeliveries()).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_deliveries_decline_refund',
+          seCategory: 'help',
         }
       })
     })

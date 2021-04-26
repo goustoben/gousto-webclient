@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
 import { loadOrderById } from 'actions/getHelp'
-import { loadTrackingUrl } from '../../actions/getHelp'
+import {
+  loadTrackingUrl,
+  trackClickGetInTouchInSSRDeliveries,
+  trackClickMyGoustoInSSRDeliveries,
+  trackClickTrackMyBoxInSSRDeliveries,
+} from '../../actions/getHelp'
 import { DidntArrive } from './DidntArrive'
 
 import {
@@ -26,6 +31,9 @@ const mapStateToProps = (state) => ({
 const DidntArriveContainer = connect(mapStateToProps, {
   loadOrderById,
   loadTrackingUrl,
+  trackClickGetInTouchInSSRDeliveries,
+  trackClickMyGoustoInSSRDeliveries,
+  trackClickTrackMyBoxInSSRDeliveries,
 })(DidntArrive)
 
 export { DidntArriveContainer }

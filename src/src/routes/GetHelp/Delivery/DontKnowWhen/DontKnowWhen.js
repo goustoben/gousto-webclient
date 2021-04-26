@@ -40,6 +40,9 @@ class DontKnowWhen extends PureComponent {
         orderId,
         userId,
       },
+      trackClickGetInTouchInSSRDeliveries,
+      trackClickMyGoustoInSSRDeliveries,
+      trackClickTrackMyBoxInSSRDeliveries,
       trackingUrl,
     } = this.props
     const { deliveryDidntArriveValidation } = client.getHelp
@@ -56,15 +59,25 @@ class DontKnowWhen extends PureComponent {
       const whenString = compareTodayToDeliveryDate(deliveryDate)
       switch (whenString) {
       case 'before':
-        return <BeforeDeliveryDay />
+        return (
+          <BeforeDeliveryDay
+            trackClickMyGoustoInSSRDeliveries={trackClickMyGoustoInSSRDeliveries}
+          />
+        )
       case 'on':
         return trackingUrl ? (
           <OnDeliveryDayWithTracking
             deliverySlot={deliverySlot}
             trackMyBoxLink={trackingUrl}
+            trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+            trackClickMyGoustoInSSRDeliveries={trackClickMyGoustoInSSRDeliveries}
+            trackClickTrackMyBoxInSSRDeliveries={trackClickTrackMyBoxInSSRDeliveries}
           />
         ) : (
-          <OnDeliveryDayWithoutTracking deliverySlot={deliverySlot} />
+          <OnDeliveryDayWithoutTracking
+            deliverySlot={deliverySlot}
+            trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+          />
         )
       default:
         browserHistory.push(
@@ -93,6 +106,9 @@ DontKnowWhen.propTypes = {
     orderId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
   }).isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
+  trackClickMyGoustoInSSRDeliveries: PropTypes.func.isRequired,
+  trackClickTrackMyBoxInSSRDeliveries: PropTypes.func.isRequired,
   trackingUrl: PropTypes.string.isRequired,
 }
 
