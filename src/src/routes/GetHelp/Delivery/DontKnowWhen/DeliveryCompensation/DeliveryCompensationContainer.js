@@ -1,7 +1,11 @@
 import { connect } from 'react-redux'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
-import { applyDeliveryRefund } from '../../../actions/getHelp'
+import {
+  applyDeliveryRefund,
+  trackAcceptRefundInSSRDeliveries,
+  trackDeclineRefundInSSRDeliveries,
+} from '../../../actions/getHelp'
 import { DeliveryCompensation } from './DeliveryCompensation'
 
 const mapStateToProps = (state) => ({
@@ -14,6 +18,8 @@ const mapStateToProps = (state) => ({
 const DeliveryCompensationContainer = connect(mapStateToProps, {
   applyDeliveryRefund,
   setErrorStatus: webClientStatusActions.error,
+  trackAcceptRefundInSSRDeliveries,
+  trackDeclineRefundInSSRDeliveries,
 })(DeliveryCompensation)
 
 export {

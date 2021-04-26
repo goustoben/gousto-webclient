@@ -8,15 +8,21 @@ import { BottomFixedContent, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import css from './OnDeliveryDayWithTracking.css'
 
-const redirectToInternal = (link) => () => {
+const redirectToInternal = (link) => {
   browserHistory.push(link)
 }
 
-const redirectToExternal = (link) => () => {
+const redirectToExternal = (link) => {
   window.location.assign(link)
 }
 
-const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
+const OnDeliveryDayWithTracking = ({
+  deliverySlot,
+  trackMyBoxLink,
+  trackClickGetInTouchInSSRDeliveries,
+  trackClickMyGoustoInSSRDeliveries,
+  trackClickTrackMyBoxInSSRDeliveries,
+}) => {
   const { deliveryStart, deliveryEnd } = deliverySlot
   const humanFriendlyStart = humanTimeFormat(deliveryStart, 'hour')
   const humanFriendlyEnd = humanTimeFormat(deliveryEnd, 'hour')
@@ -44,7 +50,11 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
         <p>
           If you&apos;re still experiencing a problem with your delivery, please get in touch.
         </p>
-        <Link className={css.link} to={`${index}/${contact}`}>
+        <Link
+          className={css.link}
+          to={`${index}/${contact}`}
+          tracking={trackClickGetInTouchInSSRDeliveries}
+        >
           Get in touch
         </Link>
       </div>
@@ -56,7 +66,10 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
               size="small"
               testingSelector="viewMyGoustoCTA"
               variant="secondary"
-              onClick={redirectToInternal(client.myGousto)}
+              onClick={() => {
+                trackClickMyGoustoInSSRDeliveries()
+                redirectToInternal(client.myGousto)
+              }}
             >
               View My Gousto
             </CTA>
@@ -66,7 +79,10 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
               isFullWidth
               size="small"
               testingSelector="trackMyBoxCTA"
-              onClick={redirectToExternal(trackMyBoxLink)}
+              onClick={() => {
+                trackClickTrackMyBoxInSSRDeliveries()
+                redirectToExternal(trackMyBoxLink)
+              }}
             >
               Track my box
             </CTA>
@@ -78,11 +94,14 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
 }
 
 OnDeliveryDayWithTracking.propTypes = {
-  trackMyBoxLink: PropTypes.string.isRequired,
   deliverySlot: PropTypes.shape({
     deliveryStart: PropTypes.string.isRequired,
     deliveryEnd: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
+  trackClickMyGoustoInSSRDeliveries: PropTypes.func.isRequired,
+  trackClickTrackMyBoxInSSRDeliveries: PropTypes.func.isRequired,
+  trackMyBoxLink: PropTypes.string.isRequired,
 }
 
 export { OnDeliveryDayWithTracking }

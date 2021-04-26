@@ -7,7 +7,10 @@ import { Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import css from './OnDeliveryDayWithoutTracking.css'
 
-const OnDeliveryDayWithoutTracking = ({ deliverySlot }) => {
+const OnDeliveryDayWithoutTracking = ({
+  deliverySlot,
+  trackClickGetInTouchInSSRDeliveries,
+}) => {
   const { deliveryStart, deliveryEnd } = deliverySlot
   const humanFriendlyStart = humanTimeFormat(deliveryStart, 'hour')
   const humanFriendlyEnd = humanTimeFormat(deliveryEnd, 'hour')
@@ -32,7 +35,11 @@ const OnDeliveryDayWithoutTracking = ({ deliverySlot }) => {
         <p>
           If you&apos;re still experiencing a problem with your delivery, please get in touch.
         </p>
-        <Link className={css.link} to={`${index}/${contact}`}>
+        <Link
+          className={css.link}
+          to={`${index}/${contact}`}
+          tracking={trackClickGetInTouchInSSRDeliveries}
+        >
           Get in touch
         </Link>
       </div>
@@ -44,7 +51,8 @@ OnDeliveryDayWithoutTracking.propTypes = {
   deliverySlot: PropTypes.shape({
     deliveryStart: PropTypes.string.isRequired,
     deliveryEnd: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
 }
 
 export { OnDeliveryDayWithoutTracking }

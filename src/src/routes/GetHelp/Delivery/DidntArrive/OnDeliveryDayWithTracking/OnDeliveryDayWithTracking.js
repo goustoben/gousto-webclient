@@ -7,15 +7,20 @@ import { BottomFixedContent, CTA, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import css from './OnDeliveryDayWithTracking.css'
 
-const redirectToInternal = (link) => () => {
+const redirectToInternal = (link) => {
   browserHistory.push(link)
 }
 
-const redirectToExternal = (link) => () => {
+const redirectToExternal = (link) => {
   window.location.assign(link)
 }
 
-const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
+const OnDeliveryDayWithTracking = ({
+  deliverySlot,
+  trackMyBoxLink,
+  trackClickGetInTouchInSSRDeliveries,
+  trackClickTrackMyBoxInSSRDeliveries,
+}) => {
   const { deliveryStart, deliveryEnd } = deliverySlot
   const humanFriendlyStart = humanTimeFormat(deliveryStart, 'hour')
   const humanFriendlyEnd = humanTimeFormat(deliveryEnd, 'hour')
@@ -49,7 +54,10 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
               size="small"
               testingSelector="getInTouchCTA"
               variant="secondary"
-              onClick={redirectToInternal(`${index}/${contact}`)}
+              onClick={() => {
+                trackClickGetInTouchInSSRDeliveries()
+                redirectToInternal(`${index}/${contact}`)
+              }}
             >
               Get in touch
             </CTA>
@@ -59,7 +67,10 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
               isFullWidth
               size="small"
               testingSelector="trackMyBoxCTA"
-              onClick={redirectToExternal(trackMyBoxLink)}
+              onClick={() => {
+                trackClickTrackMyBoxInSSRDeliveries()
+                redirectToExternal(trackMyBoxLink)
+              }}
             >
               Track my box
             </CTA>
@@ -71,11 +82,13 @@ const OnDeliveryDayWithTracking = ({ trackMyBoxLink, deliverySlot }) => {
 }
 
 OnDeliveryDayWithTracking.propTypes = {
-  trackMyBoxLink: PropTypes.string.isRequired,
   deliverySlot: PropTypes.shape({
     deliveryStart: PropTypes.string.isRequired,
     deliveryEnd: PropTypes.string.isRequired,
-  }).isRequired
+  }).isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
+  trackClickTrackMyBoxInSSRDeliveries: PropTypes.func.isRequired,
+  trackMyBoxLink: PropTypes.string.isRequired,
 }
 
 export { OnDeliveryDayWithTracking }

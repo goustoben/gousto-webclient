@@ -7,6 +7,7 @@ import { OnDeliveryDayWithoutTracking } from '..'
 describe('OnDeliveryDayWithoutTracking', () => {
   let wrapper
   browserHistory.push = jest.fn()
+  const trackClickGetInTouchInSSRDeliveries = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
@@ -15,6 +16,7 @@ describe('OnDeliveryDayWithoutTracking', () => {
           deliveryStart: '08:00:00',
           deliveryEnd: '18:59:59',
         }}
+        trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
       />
     )
   })
@@ -62,5 +64,10 @@ describe('OnDeliveryDayWithoutTracking', () => {
 
     expect(wrapper.find('GoustoLink').prop('to'))
       .toBe(`${index}/${contact}`)
+  })
+
+  test('the link to Contact page has correct tracking', () => {
+    expect(wrapper.find('GoustoLink').prop('tracking'))
+      .toBe(trackClickGetInTouchInSSRDeliveries)
   })
 })

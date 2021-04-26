@@ -7,10 +7,14 @@ import { DeliveryPreContact } from '..'
 describe('DeliveryPreContact', () => {
   const BACK_URL = 'get-help/userId/123/orderId/111/delivery'
   let wrapper
+  const trackClickGetInTouchInSSRDeliveries = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
-      <DeliveryPreContact backUrl={BACK_URL} />
+      <DeliveryPreContact
+        backUrl={BACK_URL}
+        trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+      />
     )
   })
 
@@ -42,6 +46,10 @@ describe('DeliveryPreContact', () => {
 
     test('the CTA points to Contact page', () => {
       expect(browserHistory.push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
+    })
+
+    test('tracking is called correctly', () => {
+      expect(trackClickGetInTouchInSSRDeliveries).toHaveBeenCalled()
     })
   })
 })

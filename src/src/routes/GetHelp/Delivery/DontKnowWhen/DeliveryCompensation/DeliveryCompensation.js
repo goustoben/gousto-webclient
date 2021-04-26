@@ -10,9 +10,7 @@ import css from './DeliveryCompensation.css'
 
 class DeliveryCompensation extends PureComponent {
   static redirectTo(link) {
-    return () => {
-      browserHistory.push(link)
-    }
+    browserHistory.push(link)
   }
 
   componentWillUnmount() {
@@ -31,6 +29,9 @@ class DeliveryCompensation extends PureComponent {
       isApplyCompensationError,
       isApplyCompensationPending,
       orderId,
+      trackAcceptRefundInSSRDeliveries,
+      trackClickGetInTouchInSSRDeliveries,
+      trackDeclineRefundInSSRDeliveries,
       userId,
     } = this.props
     const { index, contact } = client.getHelp
@@ -69,7 +70,14 @@ class DeliveryCompensation extends PureComponent {
                 testingSelector="contactUsCTA"
                 variant={isApplyCompensationError ? 'primary' : 'secondary'}
                 isDisabled={isApplyCompensationPending}
-                onClick={DeliveryCompensation.redirectTo(`${index}/${contact}`)}
+                onClick={() => {
+                  if (isApplyCompensationError) {
+                    trackClickGetInTouchInSSRDeliveries()
+                  } else {
+                    trackDeclineRefundInSSRDeliveries()
+                  }
+                  DeliveryCompensation.redirectTo(`${index}/${contact}`)
+                }}
               >
                 Contact us
               </CTA>
@@ -83,6 +91,7 @@ class DeliveryCompensation extends PureComponent {
                     testingSelector="acceptCreditCTA"
                     isLoading={isApplyCompensationPending}
                     onClick={() => {
+                      trackAcceptRefundInSSRDeliveries()
                       applyDeliveryRefund(
                         userId,
                         orderId,
@@ -109,6 +118,9 @@ DeliveryCompensation.propTypes = {
   isApplyCompensationPending: PropTypes.bool.isRequired,
   orderId: PropTypes.string.isRequired,
   setErrorStatus: PropTypes.func.isRequired,
+  trackAcceptRefundInSSRDeliveries: PropTypes.func.isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
+  trackDeclineRefundInSSRDeliveries: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
 }
 

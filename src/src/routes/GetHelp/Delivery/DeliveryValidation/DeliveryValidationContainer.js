@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-import { validateDeliveryAction } from '../../actions/getHelp'
+import {
+  trackClickGetInTouchInSSRDeliveries,
+  validateDeliveryAction,
+} from '../../actions/getHelp'
 import { DeliveryValidation } from './DeliveryValidation'
 
 const mapStateToProps = (state) => ({
@@ -9,6 +12,7 @@ const mapStateToProps = (state) => ({
 })
 
 const DeliveryValidationContainer = connect(mapStateToProps, {
+  trackClickGetInTouchInSSRDeliveries,
   validateDeliveryAction,
 })(DeliveryValidation)
 

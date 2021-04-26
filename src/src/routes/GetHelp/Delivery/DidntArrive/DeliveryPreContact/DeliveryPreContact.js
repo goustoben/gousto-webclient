@@ -10,7 +10,7 @@ const redirectToContactPage = () => {
   browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
 }
 
-const DeliveryPreContact = ({ backUrl }) => (
+const DeliveryPreContact = ({ backUrl, trackClickGetInTouchInSSRDeliveries }) => (
   <GetHelpLayout2 backUrl={backUrl} headingText="Get help with your box">
     <Heading size="fontStyleM" type="h2">
       We&apos;re sorry to hear your box did not arrive
@@ -20,7 +20,14 @@ const DeliveryPreContact = ({ backUrl }) => (
       Please get in touch with one of our Customer Care team below so we can help sort this out.
     </p>
     <BottomFixedContent>
-      <CTA size="small" isFullWidth onClick={redirectToContactPage}>
+      <CTA
+        size="small"
+        isFullWidth
+        onClick={() => {
+          trackClickGetInTouchInSSRDeliveries()
+          redirectToContactPage()
+        }}
+      >
         Get in touch
       </CTA>
     </BottomFixedContent>
@@ -28,7 +35,8 @@ const DeliveryPreContact = ({ backUrl }) => (
 )
 
 DeliveryPreContact.propTypes = {
-  backUrl: PropTypes.string.isRequired
+  backUrl: PropTypes.string.isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
 }
 
 export { DeliveryPreContact }

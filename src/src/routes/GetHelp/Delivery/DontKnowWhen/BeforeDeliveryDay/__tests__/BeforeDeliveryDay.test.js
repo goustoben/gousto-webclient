@@ -6,10 +6,11 @@ import { BeforeDeliveryDay } from '..'
 
 describe('BeforeDeliveryDay', () => {
   let wrapper
+  const trackClickMyGoustoInSSRDeliveries = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
-      <BeforeDeliveryDay />
+      <BeforeDeliveryDay trackClickMyGoustoInSSRDeliveries={trackClickMyGoustoInSSRDeliveries} />
     )
   })
 
@@ -41,6 +42,10 @@ describe('BeforeDeliveryDay', () => {
 
     test('the CTA points to My Gousto page', () => {
       expect(browserHistory.push).toHaveBeenCalledWith(client.myGousto)
+    })
+
+    test('tracking is called correctly', () => {
+      expect(trackClickMyGoustoInSSRDeliveries).toHaveBeenCalled()
     })
   })
 })

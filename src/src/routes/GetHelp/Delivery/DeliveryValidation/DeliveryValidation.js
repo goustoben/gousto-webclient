@@ -36,6 +36,7 @@ class DeliveryValidation extends PureComponent {
       compensationAmount,
       hasPassedDeliveryValidation,
       params: { userId, orderId },
+      trackClickGetInTouchInSSRDeliveries,
     } = this.props
     const backUrl = client.getHelp.delivery({ orderId, userId })
 
@@ -51,12 +52,18 @@ class DeliveryValidation extends PureComponent {
           backUrl={backUrl}
           compensationAmount={compensationAmount}
           orderId={orderId}
+          trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
           userId={userId}
         />
       )
     }
 
-    return <DeliveryPreContact backUrl={backUrl} />
+    return (
+      <DeliveryPreContact
+        backUrl={backUrl}
+        trackClickGetInTouchInSSRDeliveries={trackClickGetInTouchInSSRDeliveries}
+      />
+    )
   }
 }
 
@@ -68,6 +75,7 @@ DeliveryValidation.propTypes = {
     orderId: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
   }).isRequired,
+  trackClickGetInTouchInSSRDeliveries: PropTypes.func.isRequired,
   validateDeliveryAction: PropTypes.func.isRequired,
 }
 

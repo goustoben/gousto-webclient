@@ -174,6 +174,46 @@ export const trackSelectDeliveryCategory = (category) => ({
   },
 })
 
+export const trackClickMyGoustoInSSRDeliveries = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeliveriesClickViewMyGousto,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackClickTrackMyBoxInSSRDeliveries = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeliveriesClickTrackMyBox,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackClickGetInTouchInSSRDeliveries = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeliveriesClickGetInTouch,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackAcceptRefundInSSRDeliveries = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeliveriesAcceptRefund,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
+export const trackDeclineRefundInSSRDeliveries = () => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrDeliveriesDeclineRefund,
+    seCategory: SE_CATEGORY_HELP,
+  },
+})
+
 export const applyDeliveryRefund = (
   userId,
   orderId,
