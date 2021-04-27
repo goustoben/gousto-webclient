@@ -21,6 +21,7 @@ import {
   pricingRequest,
   redirect,
   replace,
+  checkoutStepIndexReached,
 } from 'actions'
 /* eslint-enable import/named */
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
@@ -41,6 +42,7 @@ jest.mock('actions', () => ({
   basketStepsOrderReceive: jest.fn().mockReturnValue(Promise.resolve()),
   basketProceedToCheckout: jest.fn().mockReturnValue(Promise.resolve()),
   checkoutCreatePreviewOrder: jest.fn().mockReturnValue(Promise.resolve()),
+  checkoutStepIndexReached: jest.fn(),
 }))
 
 jest.mock('actions/boxSummary', () => ({
@@ -599,17 +601,18 @@ describe('Checkout', () => {
           checkoutPaymentFeature
           redirect={redirectAction}
           trackSignupStep={trackSignupStep}
+          checkoutStepIndexReached={checkoutStepIndexReached}
         />
       )
 
       wrapper.find('BoxDetails').props().onStepChange()
     })
 
-    test('trackSignupStep is called with the next step', () => {
+    test('then the correct sequence of actions is dispatched', () => {
       expect(trackSignupStep).toHaveBeenCalledWith('yourdetails')
-    })
 
-    test('redirect is called with the next step', () => {
+      expect(checkoutStepIndexReached).toHaveBeenCalledWith(1)
+
       expect(redirectAction).toHaveBeenCalledWith('/check-out/yourdetails')
     })
   })

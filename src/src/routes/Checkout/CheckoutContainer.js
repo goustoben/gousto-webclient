@@ -7,9 +7,11 @@ import {
   fetchPayPalClientToken,
   trackCheckoutButtonPressed,
   clearPayPalClientToken,
+  checkoutStepIndexReached,
 } from 'actions/checkout'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -26,6 +28,7 @@ function mapStateToProps(state, ownProps) {
     isLoginOpen: state.loginVisibility.get('login'),
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     isMobile: state.request.get('browser') === 'mobile',
+    lastReachedStepIndex: getCheckoutLastReachedStepIndex(state),
   }
 }
 
@@ -44,4 +47,5 @@ export const CheckoutContainer = connect(mapStateToProps, {
   clearPayPalClientToken,
   trackCheckoutNavigationLinks,
   loginVisibilityChange: actions.loginVisibilityChange,
+  checkoutStepIndexReached,
 })(Checkout)

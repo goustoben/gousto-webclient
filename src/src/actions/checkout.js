@@ -523,4 +523,11 @@ export function firePayPalError(err) {
   }
 }
 
+export const checkoutStepIndexReached = (stepIndex) => dispatch => {
+  dispatch({
+    type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
+    stepIndex
+  })
+}
+
 export default checkoutActions

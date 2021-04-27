@@ -37,21 +37,30 @@
   display: none;
 }
 
-.activeItem {
+.linkItem {
   color: Bluecheese;
   border-bottom: 1px solid Oyster;
   text-decoration: none;
   padding-top: 0.25rem;
-  composes: fontBold from 'design-language/typography.css';
+  composes: fontStyleSmall from 'design-language/typography.css';
 }
 
-a.activeItem:hover,
-a.activeItem:focus {
+a.linkItem:hover,
+a.linkItem:focus {
   text-decoration: none;
 }
 
+.isActive {
+  composes: fontBold from 'design-language/typography.css';
+  /* Hack: AxiformaBook and AxiformaBold have mismatching baselines, which looks
+     off when they're layed out in a line.  This aligns them visually. */
+  padding-bottom: 1px;
+  position: relative;
+  top: -0.5px;
+}
+
 .futureItem {
-  color: Blackberry;
+  color: #516272;
   pointer-events: none;
   cursor: default;
   border-bottom: 1px solid transparent;

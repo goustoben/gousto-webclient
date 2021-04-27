@@ -45,6 +45,7 @@ const initialState = () => Immutable.fromJS({
   goustoRef: null,
   errors: {},
   paypalErrors: {},
+  lastReachedStepIndex: 0,
 })
 
 const checkout = {
@@ -109,6 +110,17 @@ const checkout = {
 
           return state.setIn([errors, action.key], value)
         }
+      }
+
+      return state
+    }
+
+    case actionTypes.CHECKOUT_STEP_INDEX_REACHED: {
+      const { stepIndex } = action
+
+      const lastReachedStepIndex = state.get('lastReachedStepIndex')
+      if (stepIndex > lastReachedStepIndex) {
+        return state.set('lastReachedStepIndex', stepIndex)
       }
 
       return state
