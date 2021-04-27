@@ -142,9 +142,19 @@ module.exports = {
         menuBrowseCTAButton: {
           selector: '*[data-testing="menuBrowseCTAButton"]',
         },
+        boxSummaryButtonSpinner: {
+          selector: '*[data-testing="boxSummaryButtonSpinner"]',
+        },
       },
 
       commands: [{
+        checkIfCheckoutButtonClickable: function () {
+          this
+            .waitForElementNotVisible('@boxSummaryButtonSpinner')
+            .expect.element('@boxSummaryButtonSpinner').to.have.css('display').which.equals('none')
+
+          return this
+        },
         clickBrowseCTA: function () { clickElement.call(this, '@menuBrowseCTAButton') },
       }],
     },
