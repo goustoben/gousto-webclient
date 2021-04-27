@@ -5,8 +5,7 @@ import classNames from 'classnames'
 import Svg from 'Svg'
 import css from './Breadcrumbs.css'
 
-const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks }) => {
-  const activeIndex = items && items.findIndex((item) => item.id === currentId)
+const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks, lastReachedStepIndex }) => {
   const trackNavigation = (label) => () => trackCheckoutNavigationLinks(label)
 
   return (
@@ -14,17 +13,14 @@ const Breadcrumbs = ({ currentId, items, trackCheckoutNavigationLinks }) => {
       <ul className={css.breadcrumbsList}>
         {items.map(({ id, label }, index) => (
           <li key={id} className={css.listItem}>
-            {index > activeIndex ? (
+            {index > lastReachedStepIndex ? (
               <span className={css.futureItem}>{label}</span>
             ) : (
               <Link
                 clientRouted
                 to={`/check-out/${id}`}
                 tracking={trackNavigation(label)}
-                className={classNames({
-                  [css.activeItem]: index === activeIndex || index < activeIndex,
-                  [css.futureItem]: index > activeIndex,
-                })}
+                className={classNames(css.linkItem, { [css.isActive]: id === currentId })}
               >
                 {label}
               </Link>
@@ -51,6 +47,7 @@ Breadcrumbs.propTypes = {
   ).isRequired,
   currentId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   trackCheckoutNavigationLinks: PropTypes.func.isRequired,
+  lastReachedStepIndex: PropTypes.number.isRequired,
 }
 
 export { Breadcrumbs }

@@ -37,6 +37,7 @@ import checkoutActions, {
   setPayPalDeviceData,
   setPayPalNonce,
   firePayPalError,
+  checkoutStepIndexReached,
 } from 'actions/checkout'
 
 jest.mock('utils/basket', () => ({
@@ -1137,6 +1138,17 @@ describe('checkout actions', () => {
 
         expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
         expect(statusActions.error).toHaveBeenCalledWith(actionTypes.PAYPAL_ERROR, true)
+      })
+    })
+  })
+
+  describe('given checkoutStepIndexReached is dispatched', () => {
+    test('then it should dispatch the correct action data structure', () => {
+      checkoutStepIndexReached(1)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
+        stepIndex: 1
       })
     })
   })

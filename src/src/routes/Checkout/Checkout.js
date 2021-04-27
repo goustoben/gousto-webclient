@@ -85,6 +85,8 @@ const propTypes = {
   isAuthenticated: PropTypes.bool,
   loginVisibilityChange: PropTypes.func,
   isMobile: PropTypes.bool,
+  checkoutStepIndexReached: PropTypes.func,
+  lastReachedStepIndex: PropTypes.number,
 }
 
 const defaultProps = {
@@ -111,6 +113,8 @@ const defaultProps = {
   isAuthenticated: false,
   loginVisibilityChange: () => {},
   isMobile: false,
+  checkoutStepIndexReached: () => {},
+  lastReachedStepIndex: 0,
 }
 
 const contextTypes = {
@@ -269,11 +273,17 @@ class Checkout extends PureComponent {
   }
 
   onStepChange = (steps, currentStep) => () => {
+    const { checkoutStepIndexReached } = this.props
+
     const nextStep = this.getNextStep(steps, currentStep)
     const { trackSignupStep, redirect } = this.props
 
     if (nextStep) {
       trackSignupStep(nextStep)
+
+      const nextStepIndex = steps.indexOf(nextStep)
+      checkoutStepIndexReached(nextStepIndex)
+
       redirect(`${routesConfig.client['check-out']}/${nextStep}`)
     }
   }
@@ -391,7 +401,11 @@ class Checkout extends PureComponent {
   }
 
   renderProgressBar = (stepMapping, steps, currentStep) => {
-    const { isCheckoutOverhaulEnabled, trackCheckoutNavigationLinks } = this.props
+    const {
+      isCheckoutOverhaulEnabled,
+      trackCheckoutNavigationLinks,
+      lastReachedStepIndex,
+    } = this.props
     const progressSteps = steps.reduce((accumulatedSteps, stepName) => {
       accumulatedSteps.push({
         id: stepName,
@@ -408,6 +422,7 @@ class Checkout extends PureComponent {
             currentId={currentStep || 'account'}
             items={progressSteps}
             trackCheckoutNavigationLinks={trackCheckoutNavigationLinks}
+            lastReachedStepIndex={lastReachedStepIndex}
           />
         ) : (
           <ProgressBar currentId={currentStep} items={progressSteps} />

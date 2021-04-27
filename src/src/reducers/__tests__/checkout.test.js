@@ -106,4 +106,36 @@ describe('checkout reducer', () => {
       expect(errors).toEqual({})
     })
   })
+
+  describe('given CHECKOUT_STEP_INDEX_REACHED action type', () => {
+    const state = Immutable.fromJS({
+      lastReachedStepIndex: 1
+    })
+
+    let action = {
+      type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
+      stepIndex: 2
+    }
+
+    describe('when the step is further than the lastReachedStepIndex', () => {
+      test('then it should update the lastReachedStepIndex', () => {
+        const nextState = checkoutReducer.checkout(state, action)
+        expect(nextState.get('lastReachedStepIndex')).toBe(2)
+      })
+    })
+
+    describe('when the step is earlier than the lastReachedStepIndex', () => {
+      beforeEach(() => {
+        action = {
+          ...action,
+          stepIndex: 0,
+        }
+      })
+
+      test('then it should not update the lastReachedStepIndex', () => {
+        const nextState = checkoutReducer.checkout(state, action)
+        expect(nextState.get('lastReachedStepIndex')).toBe(1)
+      })
+    })
+  })
 })

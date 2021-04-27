@@ -36,3 +36,5 @@ export const getPromoCodeValidationDetails = state => {
     line1: delivery.get('houseNo', '')
   }
 }
+
+export const getCheckoutLastReachedStepIndex = state => state.checkout.get('lastReachedStepIndex')
