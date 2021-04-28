@@ -179,7 +179,7 @@ function userVerifyAge(verified, hardSave) {
   }
 }
 
-function userOrderCancelNext(afterBoxNum = 1) {
+function userOrderCancelNext() {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_ORDER_CANCEL_NEXT, true))
     dispatch(statusActions.error(actionTypes.USER_ORDER_CANCEL_NEXT, false))
@@ -192,11 +192,16 @@ function userOrderCancelNext(afterBoxNum = 1) {
       const state = getState()
 
       const cancellableOrder = state.user.get('orders')
-        .filter(order => cancellablePhases.includes(order.get('phase')) && order.get('number') > afterBoxNum)
+        .filter(order => cancellablePhases.includes(order.get('phase')))
 
       if (cancellableOrder.size) {
         const orderToCancelId = cancellableOrder
-          .sort((a, b) => a.get('number') - b.get('number'))
+          .sort((orderA, orderB) => {
+            const orderDateA = orderA.get('deliveryDay')
+            const orderDateB = orderB.get('deliveryDay')
+
+            return moment(orderDateA) - moment(orderDateB)
+          })
           .first()
           .get('id')
 

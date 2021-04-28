@@ -37,6 +37,7 @@ import {
 } from 'utils/myDeliveries'
 import { getIsNewSubscriptionApiEnabled, getIsAdditionalCheckoutErrorsEnabled } from 'selectors/features'
 import { skipDates } from '../../routes/Account/apis/subscription'
+import * as orderV2Apis from '../../routes/Account/MyDeliveries/apis/orderV2'
 
 jest.mock('selectors/features')
 
@@ -180,7 +181,7 @@ describe('user actions', () => {
 
     userActions.userLoadOrders = jest.fn()
     // eslint-disable-next-line import/no-named-as-default-member
-    userActions.userLoadProjectedDeliveries = jest.fn().mockReturnValue(() => {})
+    userActions.userLoadProjectedDeliveries = jest.fn().mockReturnValue(() => { })
     transformPendingOrders.mockReturnValue(Immutable.Map())
     transformProjectedDeliveries.mockReturnValue(Immutable.Map())
     transformProjectedDeliveriesNew.mockReturnValue(Immutable.Map())
@@ -1400,6 +1401,79 @@ describe('user actions', () => {
         type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
         projectedDeliveries: {},
         isNewSubscriptionApiEnabled: true
+      })
+    })
+  })
+
+  describe('userOrderCancelNext', () => {
+    const dispatchSpy = jest.fn()
+
+    beforeEach(() => {
+      dispatchSpy.mockReset()
+
+      jest.spyOn(orderV2Apis, 'deleteOrder').mockImplementation()
+    })
+
+    const getStateSpy = () => ({
+      user: Immutable.fromJS({
+        orders: {
+          1234: {
+            id: '1234',
+            phase: 'open',
+            deliveryDay: '2021-02-01 00:00:00',
+            recipeItems: [
+              { itemableType: 'Recipe', recipeId: '1' },
+              { itemableType: 'Recipe', recipeId: '2' },
+              { itemableType: 'Recipe', recipeId: '3' },
+              { itemableType: 'Recipe', recipeId: '4' }
+            ]
+          },
+          5678: {
+            id: '5678',
+            phase: 'awaiting_choices',
+            deliveryDay: '2021-01-01 00:00:00',
+            recipeItems: [
+              { itemableType: 'Recipe', recipeId: '5' },
+              { itemableType: 'Recipe', recipeId: '5' },
+              { itemableType: 'Recipe', recipeId: '6' },
+              { itemableType: 'Recipe', recipeId: '6' }
+            ]
+          },
+          9101: {
+            id: '9101',
+            phase: 'closed',
+            deliveryDay: '2020-12-22 00:00:00',
+            recipeItems: [
+              { itemableType: 'Recipe', recipeId: '5' },
+              { itemableType: 'Recipe', recipeId: '5' },
+              { itemableType: 'Recipe', recipeId: '6' },
+              { itemableType: 'Recipe', recipeId: '6' }
+            ]
+          }
+        }
+      }),
+      auth: Immutable.fromJS({
+        id: 'auth-user-id',
+        accessToken: 'access-token'
+      })
+    })
+
+    describe('for first order, in valid phase, sorted by date', () => {
+      const expectedOrderId = '5678'
+
+      test('should call deleteOrder', async () => {
+        await userActions.userOrderCancelNext()(dispatchSpy, getStateSpy)
+
+        expect(orderV2Apis.deleteOrder).toHaveBeenCalledWith('access-token', expectedOrderId, 'auth-user-id')
+      })
+
+      test('should dispatch USER_UNLOAD_ORDERS', async () => {
+        await userActions.userOrderCancelNext()(dispatchSpy, getStateSpy)
+
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.USER_UNLOAD_ORDERS,
+          orderIds: [expectedOrderId]
+        })
       })
     })
   })
