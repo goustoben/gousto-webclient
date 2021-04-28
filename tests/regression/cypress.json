@@ -7,6 +7,5 @@
   "supportFile" : "support/index.js",
   "pluginsFile": false,
   "video": false,
-  "chromeWebSecurity": false,
-  "experimentalFetchPolyfill": true
+  "chromeWebSecurity": false
 }
