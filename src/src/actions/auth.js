@@ -2,10 +2,10 @@ import {
   serverAuthenticate,
   serverLogout,
   serverRefresh,
-  serverIdentify,
+  identifyUserViaServer,
   serverForget,
   resetUserPassword,
-  identifyUser,
+  identifyUserUsingOAuth,
 } from 'apis/auth'
 import { isActive } from 'utils/auth'
 import config from 'config/auth'
@@ -108,10 +108,11 @@ const refresh = () => (
 const identify = (accessToken) => (
   async (dispatch) => {
     let data = {}
+
     if (__SERVER__) {
-      data = await identifyUser(accessToken)
+      data = await identifyUserUsingOAuth(accessToken)
     } else {
-      data = await serverIdentify()
+      data = await identifyUserViaServer()
     }
 
     const user = data.data

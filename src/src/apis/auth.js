@@ -10,7 +10,7 @@ export function getUserToken({ email, password, clientId, clientSecret, headers 
   })
 }
 
-export function identifyUser(accessToken) {
+export function identifyUserUsingOAuth(accessToken) {
   return fetch(accessToken, `${endpoint('auth')}${routes.auth.identifyUser}`, {}, 'GET', 'no-cache')
 }
 
@@ -45,7 +45,7 @@ export function serverRefresh(rememberMe) {
   return fetch(null, `${routes.auth.refresh}`, { rememberMe }, 'POST', 'no-cache', {}, null, true)
 }
 
-export function serverIdentify() {
+export function identifyUserViaServer() {
   return fetch(null, `${routes.auth.identify}`, {}, 'POST', 'no-cache', {}, null, true)
 }
 
