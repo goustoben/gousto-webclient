@@ -21,6 +21,7 @@ import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import { getLinkURL } from 'utils/header'
+import * as trackingKeys from 'actions/trackingKeys'
 import { MobileMenu } from './MobileMenu'
 import { getDeepClonedMenuItems } from './menuItemsHelper'
 import css from './Header.css'
@@ -257,6 +258,12 @@ class Header extends React.PureComponent {
       return null
     }
 
+    const helpNavTrackingData = {
+      actionType: trackingKeys.clickHelpNavigation,
+      seCategory: 'help',
+      logged_in: isAuthenticated,
+    }
+
     return menu.map(menuItem => {
       if (menuItem.disabled) {
         return (
@@ -279,7 +286,10 @@ class Header extends React.PureComponent {
             data-test="help-link"
             role="button"
             tabIndex="0"
-            onClick={this.showHelpPreLogin}
+            onClick={() => {
+              this.showHelpPreLogin()
+              trackNavigationClick(helpNavTrackingData)
+            }}
             onKeyDown={onEnter(this.showHelpPreLogin)}
           >
             {menuItem.name}
@@ -289,6 +299,7 @@ class Header extends React.PureComponent {
 
       const isHelpLink = menuItem.name === 'Help'
       const url = getLinkURL({ isHelpCentreActive, menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
+      const trackingData = isHelpLink ? helpNavTrackingData : { actionType: menuItem.tracking }
 
       return (
         <Link
@@ -297,7 +308,7 @@ class Header extends React.PureComponent {
           to={url}
           className={css.linkDesktop}
           clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
-          tracking={() => trackNavigationClick(menuItem.tracking)}
+          tracking={() => trackNavigationClick(trackingData)}
         >
           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
           {menuItem.name}
@@ -308,7 +319,7 @@ class Header extends React.PureComponent {
 
   onUseAppClick = () => {
     const { trackNavigationClick } = this.props
-    trackNavigationClick('UseAppHeaderCta Clicked')
+    trackNavigationClick({ actionType: 'UseAppHeaderCta Clicked' })
     window.location.assign('/apps')
   }
 
@@ -397,8 +408,8 @@ class Header extends React.PureComponent {
                     hideNav={hideNav}
                     isAuthenticated={isAuthenticated}
                     promoCodeUrl={promoCodeUrl}
-                    trackNavigationClick={(param) => {
-                      trackNavigationClick(param)
+                    trackNavigationClick={(trackingData) => {
+                      trackNavigationClick(trackingData)
                       this.hideMobileMenu()
                     }}
                     serverError={serverError}

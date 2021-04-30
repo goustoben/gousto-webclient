@@ -36,7 +36,11 @@ const renderHelpLink = (
           title="Help"
           clientRouted={false}
           secondary
-          tracking={() => trackNavigationClick(trackingKeys.clickHelpFooter)}
+          tracking={() => trackNavigationClick({
+            actionType: trackingKeys.clickHelpFooter,
+            seCategory: 'help',
+            logged_in: true,
+          })}
         >
           Help
         </Link>
@@ -48,7 +52,11 @@ const renderHelpLink = (
           tabIndex="0"
           onClick={() => {
             showHelpPreLogin(helpPreLoginVisibilityChange)
-            trackNavigationClick(trackingKeys.clickHelpFooter)
+            trackNavigationClick({
+              actionType: trackingKeys.clickHelpFooter,
+              seCategory: 'help',
+              logged_in: false,
+            })
           }}
           onKeyDown={onEnter(() => showHelpPreLogin(helpPreLoginVisibilityChange))}
         >
@@ -105,7 +113,7 @@ const Footer = ({
   )
 
   const isRedirectToNewMenu = !isAuthenticated && !postCode && isMenuRedirectPageEnabled
-  const trackWeeklyRecipesClick = () => trackNavigationClick(trackingKeys.clickRecipeNavigationFooter)
+  const trackWeeklyRecipesClick = () => trackNavigationClick({ actionType: trackingKeys.clickRecipeNavigationFooter })
   const renderFullList = () => (
     <ul className={css.menuList}>
       <li className={classNames(css.mobileHide, css.menuItem)}>

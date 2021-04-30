@@ -39,6 +39,7 @@ describe('Header', () => {
   }
 
   let wrapper
+  const trackNavigationClick = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
@@ -47,6 +48,7 @@ describe('Header', () => {
         helpPreLoginVisibilityChange={helpPreLoginVisibilityChange}
         closeBoxModalVisibilityChange={() => {}}
         logoutUser={() => {}}
+        trackNavigationClick={trackNavigationClick}
       />,
       { context: { store } }
     )
@@ -180,7 +182,7 @@ describe('Header', () => {
       })
 
       test('then trackNavigationClick should be called', () => {
-        expect(trackNavigationClickSpy).toHaveBeenCalledWith('UseAppHeaderCta Clicked')
+        expect(trackNavigationClickSpy).toHaveBeenCalledWith({ actionType: 'UseAppHeaderCta Clicked' })
       })
 
       test('then the user should be redirected to /apps', () => {
@@ -344,7 +346,7 @@ describe('Header', () => {
           clientRouted: true,
           name: 'Help',
           url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
-          tracking: 'FAQNavigation Clicked',
+          tracking: 'click_help_navigation',
         }
       ]
 
@@ -365,6 +367,18 @@ describe('Header', () => {
         .pop()
 
       expect(helpMenuItem.url).toContain('get-help/eligibility-check')
+    })
+
+    test('help link dispatches a tracking action with correct data', () => {
+      const TRACKING_DATA = {
+        actionType: 'click_help_navigation',
+        seCategory: 'help',
+        logged_in: true,
+      }
+      const helpLink = wrapper.find('GoustoLink').at(4)
+      helpLink.prop('tracking')()
+
+      expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
     })
 
     describe('when the isHelpCentreActive prop is passed as true', () => {
@@ -427,7 +441,7 @@ describe('Header', () => {
           clientRouted: true,
           name: 'Help',
           url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
-          tracking: 'FAQNavigation Clicked',
+          tracking: 'click_help_navigation',
         }
       ]
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
@@ -446,6 +460,16 @@ describe('Header', () => {
 
       test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
         expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+      })
+
+      test('tracking action is dispatched with correct data', () => {
+        const TRACKING_DATA = {
+          actionType: 'click_help_navigation',
+          seCategory: 'help',
+          logged_in: false,
+        }
+
+        expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
       })
     })
 

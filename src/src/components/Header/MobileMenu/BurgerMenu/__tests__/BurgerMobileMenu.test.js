@@ -20,81 +20,58 @@ describe('given BurgerMobileMenu is called', () => {
 
   describe('when the menu is rendered', () => {
     let wrapper
-
-    beforeEach(() => {
-      const trackClickRateRecipesSpy = jest.fn()
-      const trackNavigationClickSpy = jest.fn()
-      wrapper = shallow(
-        <BurgerMobileMenu
-          show
-          menuItems={menuItems}
-          isAuthenticated={false}
-          loginFunc={jest.fn()}
-          logoutFunc={jest.fn()}
-          hideNav={false}
-          promoCodeUrl=""
-          trackClickRateRecipes={trackClickRateRecipesSpy}
-          trackNavigationClick={trackNavigationClickSpy}
-          onLoginClick={jest.fn()}
-          onLogoutClick={jest.fn()}
-          helpPreLoginVisibilityChange={jest.fn()}
-        />
-      )
-    })
+    const trackClickRateRecipesSpy = jest.fn()
+    const trackNavigationClick = jest.fn()
 
     describe('and customer is authenticated', () => {
       beforeEach(() => {
-        wrapper.setProps({ isAuthenticated: true })
-      })
-
-      test('should render all menu items provided as links', () => {
-        expect(wrapper.find(Link)).toHaveLength(4)
-        expect(wrapper.find(Link).find({ to: '/home' })).toHaveLength(1)
-        expect(wrapper.find(Link).find({ to: '/menu' })).toHaveLength(1)
-        expect(wrapper.find(Link).find({ to: '/help' })).toHaveLength(1)
-        expect(wrapper.find(Link).find({ to: '/rate-my-recipes' })).toHaveLength(1)
-      })
-
-      test('Links should dispatch a tracking action', () => {
-        const trackNavigationClickSpy = jest.fn()
         wrapper = mount(
           <BurgerMobileMenu
             show
             menuItems={menuItems}
-            isAuthenticated={false}
-            loginFunc={jest.fn()}
-            logoutFunc={jest.fn()}
-            hideNav={false}
-            promoCodeUrl=""
-            trackNavigationClick={trackNavigationClickSpy}
-            onLoginClick={jest.fn()}
-            onLogoutClick={jest.fn()}
-            helpPreLoginVisibilityChange={jest.fn()}
-          />
-        )
-        wrapper.find(Link).find({ to: '/menu' }).at(0).simulate('click')
-        expect(trackNavigationClickSpy).toHaveBeenCalled()
-      })
-
-      test('rate-my-recipes button should dispatch a tracking action', () => {
-        const trackClickRateRecipesSpy = jest.fn()
-        wrapper = mount(
-          <BurgerMobileMenu
-            show
-            menuItems={menuItems}
-            isAuthenticated={false}
+            isAuthenticated
             loginFunc={jest.fn()}
             logoutFunc={jest.fn()}
             hideNav={false}
             promoCodeUrl=""
             trackClickRateRecipes={trackClickRateRecipesSpy}
+            trackNavigationClick={trackNavigationClick}
             onLoginClick={jest.fn()}
             onLogoutClick={jest.fn()}
             helpPreLoginVisibilityChange={jest.fn()}
           />
         )
+      })
+
+      test('should render all menu items provided as links', () => {
+        expect(wrapper.find(Link)).toHaveLength(4)
+        expect(wrapper.find(Link).at(0).prop('to')).toEqual('/home')
+        expect(wrapper.find(Link).at(1).prop('to')).toEqual('/menu')
+        expect(wrapper.find(Link).at(2).prop('to')).toEqual('/help')
+        expect(wrapper.find(Link).at(3).prop('to')).toEqual('/rate-my-recipes')
+      })
+
+      test('Links should dispatch a tracking action', () => {
+        wrapper.find(Link).find({ to: '/menu' }).at(0).simulate('click')
+        expect(trackNavigationClick).toHaveBeenCalled()
+      })
+
+      test('rate-my-recipes button should dispatch a tracking action', () => {
         wrapper.find(Link).find({ to: '/rate-my-recipes' }).at(0).simulate('click')
         expect(trackClickRateRecipesSpy).toHaveBeenCalledWith('hamburger')
+      })
+
+      test('Help link should dispatch a tracking action with correct data', () => {
+        const TRACKING_DATA = {
+          actionType: 'click_help_navigation',
+          seCategory: 'help',
+          logged_in: true,
+        }
+        const helpLink = wrapper
+          .find(Link)
+          .filterWhere((link) => link.prop('to') === '/help')
+        helpLink.simulate('click')
+        expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
       })
 
       describe('and the feature isHelpCentreActive is true', () => {
@@ -160,6 +137,7 @@ describe('given BurgerMobileMenu is called', () => {
         wrapper.setProps({
           isAuthenticated: false,
           helpPreLoginVisibilityChange,
+          trackNavigationClick,
         })
         helpLink = wrapper.find('[data-test="help-link"]')
       })
@@ -175,6 +153,16 @@ describe('given BurgerMobileMenu is called', () => {
 
         test('helpPreLoginVisibilityChange action generator is called with visibility true', () => {
           expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
+        })
+
+        test('Help link should dispatch a tracking action with correct data', () => {
+          const TRACKING_DATA = {
+            actionType: 'click_help_navigation',
+            seCategory: 'help',
+            logged_in: false,
+          }
+
+          expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
         })
       })
 

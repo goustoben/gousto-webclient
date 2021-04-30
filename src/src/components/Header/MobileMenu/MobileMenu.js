@@ -67,7 +67,7 @@ class MobileMenu extends React.PureComponent {
 
   onLoginClick = (e) => {
     const { onLoginClick, trackNavigationClick } = this.props
-    trackNavigationClick('New Login Clicked')
+    trackNavigationClick({ actionType: 'New Login Clicked' })
     onLoginClick(e)
   }
 
