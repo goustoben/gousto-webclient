@@ -1,5 +1,4 @@
 module.exports = {
-  '@tags': ['unstable'],
   'Order transaction box': function (browser) {
     const shared = browser.page.shared()
     const menu = browser.page.menu()
@@ -51,7 +50,11 @@ module.exports = {
         done()
       })
       .perform(done => {
-        browser.pause(3000)
+        browser.pause(8000)
+        menu.section.bottomBar.checkIfCheckoutButtonClickable()
+        done()
+      })
+      .perform(done => {
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
