@@ -123,13 +123,11 @@ export const trackCTAToAllRecipesClicked = () => (
   }
 )
 
-export const trackNavigationClick = (actionType) => (
+export const trackNavigationClick = (trackingData) => (
   (dispatch) => {
     dispatch({
       type: actionTypes.TRACKING,
-      trackingData: {
-        actionType
-      }
+      trackingData
     })
   }
 )

@@ -10,7 +10,7 @@ export const defaultMenuItems = {
     name: 'Help',
     url: `${clientRoutes.getHelp.index}/${clientRoutes.getHelp.eligibilityCheck}`,
     clientRouted: true,
-    tracking: 'FAQNavigation Clicked'
+    tracking: trackingKeys.clickHelpNavigation,
   },
   myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true, tracking: 'MyGoustoNavigation Clicked' },
   referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: true, tracking: 'ReferAFriendNavigation Clicked' },

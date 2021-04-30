@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { onEnter } from 'utils/accessibility'
 import { getLinkURL } from 'utils/header'
 import Link from 'Link'
+import * as trackingKeys from 'actions/trackingKeys'
 import css from '../MobileMenu.css'
 
 const getCssClassForMenuItem = (homeMenuItem, myGoustoMenuItem, isAuthenticated) => {
@@ -27,14 +28,20 @@ class BurgerMobileMenu extends React.PureComponent {
       menuItems,
       promoCodeUrl,
       trackNavigationClick,
+      isAuthenticated,
       isHelpCentreActive,
       isMenuRedirectPageEnabled,
       postCode,
       trackClickRateRecipes
     } = this.props
 
+    const helpNavTrackingData = {
+      actionType: trackingKeys.clickHelpNavigation,
+      seCategory: 'help',
+      logged_in: isAuthenticated,
+    }
+
     return menuItems.map(menuItem => {
-      const { isAuthenticated } = this.props
       const myGoustoMenuItem = menuItem.name === 'My Gousto'
       const homeMenuItem = menuItem.name === 'Home'
       const isHelpPreloginNeeded = menuItem.name.toLowerCase() === 'help'
@@ -48,7 +55,10 @@ class BurgerMobileMenu extends React.PureComponent {
             data-test="help-link"
             role="button"
             tabIndex="0"
-            onClick={this.showHelpPreLogin}
+            onClick={() => {
+              this.showHelpPreLogin()
+              trackNavigationClick(helpNavTrackingData)
+            }}
             onKeyDown={onEnter(this.showHelpPreLogin)}
           >
             <li className={css.childListElement}>
@@ -107,6 +117,8 @@ class BurgerMobileMenu extends React.PureComponent {
         )
       }
 
+      const trackingData = isHelpLink ? helpNavTrackingData : { actionType: menuItem.tracking }
+
       return (
         <Link
           to={url}
@@ -115,7 +127,7 @@ class BurgerMobileMenu extends React.PureComponent {
           key={menuItem.name}
           clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
           tracking={() => {
-            trackNavigationClick(menuItem.tracking)
+            trackNavigationClick(trackingData)
           }}
         >
           <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>

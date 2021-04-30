@@ -14,7 +14,7 @@ const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick })
         to={defaultMenuItems.myGousto.url}
         className={cssMobile.accountMenuItem}
         clientRouted={defaultMenuItems.myGousto.clientRouted}
-        tracking={() => trackNavigationClick(`New ${defaultMenuItems.myGousto.tracking}`)}
+        tracking={() => trackNavigationClick({ actionType: `New ${defaultMenuItems.myGousto.tracking}` })}
       >
         Account
       </Link>
@@ -25,7 +25,7 @@ const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick })
       to={defaultMenuItems.faq.url}
       className={cssMobile.helpMenuItem}
       clientRouted={defaultMenuItems.faq.clientRouted}
-      tracking={() => trackNavigationClick(`New ${defaultMenuItems.faq.tracking}`)}
+      tracking={() => trackNavigationClick({ actionType: `New ${defaultMenuItems.faq.tracking}` })}
     >
       {defaultMenuItems.faq.name}
     </Link>

@@ -145,31 +145,47 @@ describe('<Footer />', () => {
 
   describe('given the user is logged in', () => {
     let wrapper
+    let helpLink
 
-    beforeEach(() => {
-      wrapper = shallow(
-        <Footer
-          copyright={false}
-          isAuthenticated
-          trackNavigationClick={trackNavigationClick}
-        />
-      )
-    })
-
-    test('the help links to eligibility check page', () => {
-      const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
-
-      expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
-    })
-
-    describe('when the isHelpCentreActive prop is passed as true', () => {
+    describe('when Help is clicked', () => {
       beforeEach(() => {
-        wrapper.setProps({ isHelpCentreActive: true })
+        wrapper = shallow(
+          <Footer
+            copyright={false}
+            isAuthenticated
+            trackNavigationClick={trackNavigationClick}
+          />
+        )
+
+        helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
       })
 
-      test('the help links to the help center page', () => {
-        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
-        expect(helpLink.prop('to')).toContain('/help-centre')
+      test('tracking event is dispatched correctly', () => {
+        const TRACKING_DATA = {
+          actionType: trackingKeys.clickHelpFooter,
+          logged_in: true,
+          seCategory: 'help',
+        }
+        helpLink.prop('tracking')()
+
+        expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
+      })
+
+      describe('when the isHelpCentreActive prop is passed as false', () => {
+        test('redirects to eligibility check page', () => {
+          expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
+        })
+      })
+
+      describe('when the isHelpCentreActive prop is passed as true', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isHelpCentreActive: true })
+        })
+
+        test('the help links to the help center page', () => {
+          const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+          expect(helpLink.prop('to')).toContain('/help-centre')
+        })
       })
     })
   })
@@ -202,8 +218,14 @@ describe('<Footer />', () => {
         expect(helpPreLoginVisibilityChange).toHaveBeenCalledWith(true)
       })
 
-      test('trackNavigationClick action generator is called with the clickHelpFooter variable', () => {
-        expect(trackNavigationClick).toHaveBeenCalledWith(trackingKeys.clickHelpFooter)
+      test('tracking event is dispatched correctly', () => {
+        const TRACKING_DATA = {
+          actionType: trackingKeys.clickHelpFooter,
+          logged_in: false,
+          seCategory: 'help',
+        }
+
+        expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
       })
     })
 
@@ -291,7 +313,7 @@ describe('<Footer />', () => {
       })
 
       test('then trackNavigationClick should be called with proper prop', () => {
-        expect(trackNavigationClick).toHaveBeenCalledWith(trackingKeys.clickRecipeNavigationFooter)
+        expect(trackNavigationClick).toHaveBeenCalledWith({ actionType: trackingKeys.clickRecipeNavigationFooter })
       })
     })
   })
