@@ -1,7 +1,6 @@
 const { performSignUpFlowUpToPaymentStep } = require('./signupCommon')
 
 module.exports = {
-  '@tags': ['unstable'],
   'Sign-up with PayPal from /': function (browser) {
     const home = browser.page.home()
     const checkout = browser.page.checkoutV2()

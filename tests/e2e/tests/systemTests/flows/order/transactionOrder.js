@@ -48,6 +48,7 @@ module.exports = {
         done()
       })
       .perform(done => {
+        browser.pause(8000)
         menu.section.bottomBar.checkIfCheckoutButtonClickable()
         done()
       })
