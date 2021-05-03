@@ -209,3 +209,7 @@ export const getIsAdditionalCheckoutErrorsEnabled = ({ features }) => (
 export const getIsHomePageFlexibilityMessageEnabled = ({ features }) => (
   features && features.getIn(['isHomePageFlexibilityMessageEnabled', 'value'], false)
 )
+
+export const getIsWizardBoxSizeEnabled = ({ features }) => (
+  features && features.getIn(['isWizardBoxSizeEnabled', 'value'], false)
+)

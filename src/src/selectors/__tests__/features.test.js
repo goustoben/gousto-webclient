@@ -54,6 +54,7 @@ import {
   getIsPassStrengthEnabled,
   getIsAdditionalCheckoutErrorsEnabled,
   getIsHomePageFlexibilityMessageEnabled,
+  getIsWizardBoxSizeEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -124,6 +125,7 @@ describe('when features are defined', () => {
     [getIsPassStrengthEnabled, 'isPassStrengthEnabled'],
     [getIsAdditionalCheckoutErrorsEnabled, 'isAdditionalCheckoutErrorsEnabled'],
     [getIsHomePageFlexibilityMessageEnabled, 'isHomePageFlexibilityMessageEnabled'],
+    [getIsWizardBoxSizeEnabled, 'isWizardBoxSizeEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

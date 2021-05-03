@@ -29,7 +29,9 @@ export const signupConfig = {
   },
   boxSizeStep: {
     title: 'How many people do you cook for?',
+    titleForChoose: 'Choose your box size',
     subtitle: 'You can always plan for some tasty leftovers.',
+    subtitleForChoose: 'You can choose 2, 3 or 4 recipes per box.',
     pricingClaritySubtitle: 'You can choose 2, 3 or 4 recipes per box. Our 4-person box works for 2 adults and 2-3 children.',
     cta: 'Select',
     boxSize: {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { getIsWizardPricePerServingEnabled } from 'selectors/features'
+import { getIsWizardPricePerServingEnabled, getIsWizardBoxSizeEnabled } from 'selectors/features'
 import { BoxSizeStep } from './BoxSizeStep'
 
 const BoxSizeStepContainer = connect(
@@ -8,6 +8,7 @@ const BoxSizeStepContainer = connect(
     menuBoxPrices: state.menuBoxPrices,
     isWizardPricePerServingEnabled: getIsWizardPricePerServingEnabled(state),
     lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
+    isWizardBoxSizeEnabled: getIsWizardBoxSizeEnabled(state),
   }),
   {
     numPortionChange: actions.basketNumPortionChange,

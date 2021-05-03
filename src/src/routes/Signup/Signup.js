@@ -63,6 +63,7 @@ const propTypes = {
       price: PropTypes.string.isRequired,
     }),
   }),
+  isWizardBoxSizeEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -88,6 +89,7 @@ const defaultProps = {
   trackDiscountVisibility: () => {},
   isWizardPricePerServingEnabled: false,
   lowestPricePerPortion: {},
+  isWizardBoxSizeEnabled: false,
 }
 
 const contextTypes = {
@@ -254,7 +256,7 @@ class Signup extends PureComponent {
   }
 
   renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
-    const { goToStep, stepName, isPricingClarityEnabled } = this.props
+    const { goToStep, stepName, isPricingClarityEnabled, isWizardBoxSizeEnabled } = this.props
     const Component = components[name]
 
     return (
@@ -266,6 +268,7 @@ class Signup extends PureComponent {
         isLastStep={isLastStep}
         active={stepName === name}
         isPricingClarityEnabled={isPricingClarityEnabled}
+        isWizardBoxSizeEnabled={isWizardBoxSizeEnabled}
       />
     )
   }

@@ -1,7 +1,7 @@
-@value ScreenXSMax, HeightMDMax, ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, HeightMDMax from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingXS, SpacingSM, SpacingMD from 'sass-loader!styles/spacing.scss';
 @value Medium, Small, FontFamilyAxiformaBook from 'design-language/typography.css';
-@value NewGrey from 'styles/colors.css';
+@value NewGrey, White, Mackerel, Radish from 'styles/colors.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
@@ -59,18 +59,63 @@
   }
 }
 
-.pricePerServingRow {
+.boxSizeCarouselInner {
   display: flex;
   margin: 2rem -0.75rem 0;
+  justify-content: center;
+
   @media ScreenXSMax {
     width: 34rem;
-    margin: 2rem 0 3rem;
+    margin: 0.5rem 0 1rem;
   }
 }
 
-.pricePerServingRowWrapper {
+.boxSizeCarousel {
   @media ScreenXSMax {
     overflow-x: scroll;
-    padding-bottom: 1rem;
   }
+}
+
+.carouselItem {
+  background: White;
+  border: 1px solid Mackerel;
+  flex-grow: 1;
+  margin: 0 0.75rem;
+  max-width: 16.57rem;
+  padding: 1rem 0.75rem;
+
+  @media ScreenXSMax {
+    margin: 0 0.85rem;
+    max-width: 16rem;
+    &:first-child {
+     margin-right: 0;
+    }
+  }
+
+  ul {
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+    }
+
+    li::before {
+      content: '';
+      margin-right: 0.44rem;
+      width: 1.1rem;
+      height: 1.1rem;
+      background: url('media/svgs/icon-success-tick.svg') center center / contain no-repeat;
+    }
+  }
+
+  button {
+    line-height: 1.25;
+  }
+}
+
+.itemHeading {
+  composes: fontStyleL from 'design-language/typography.module.css';
+  margin: 0 0 0.75rem 0;
 }
