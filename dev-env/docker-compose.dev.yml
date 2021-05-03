@@ -1,0 +1,5 @@
+version: "3"
+services:
+  webclient:
+    volumes:
+      - ../src:/usr/src/service

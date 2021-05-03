@@ -11,7 +11,7 @@
     "start": "node dist/server.js",
     "start:with-static": "withStatic=true npm run start",
     "start:dev:inspect": "nodemon --inspect=0.0.0.0 dist/server.js -L",
-    "start:dev": "nodemon dist/server.js -L",
+    "start:dev": "mkdir -p dist && touch ./dist/server.js && nodemon dist/server.js -L",
     "start:devlocal": "nodemon dist/server.js",
     "start:hmr": "NODE_ENV=hmr npm run build:server && npm run start",
     "watch:client": "webpack --watch --config config/webpack.client.js",
