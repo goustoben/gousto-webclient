@@ -1,5 +1,4 @@
 import React from 'react'
-import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { signupConfig } from 'config/signup'
 import { BoxSizeStep } from '../BoxSize/BoxSizeStep'
@@ -55,88 +54,37 @@ describe('given the user is at the Box Size Step', () => {
     })
   })
 
-  describe('and the pricing clarity experiment is on', () => {
-    const menuBoxPrices = Immutable.fromJS({})
-
+  describe('Wizard box size experiment', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isPricingClarityEnabled: true,
-        menuBoxPrices,
+        isWizardBoxSizeEnabled: true,
       })
     })
 
-    test('then alternate representation of box sizes is rendered', () => {
-      expect(wrapper.find('Heading').childAt(0).text()).toBe(signupConfig.boxSizeStep.title)
+    test('renders carousel items properly', () => {
+      expect(wrapper.find('Heading').first().contains('Choose your box size')).toBeTruthy()
+      expect(wrapper.find('p').first().text()).toBe('You can choose 2, 3 or 4 recipes per box.')
+      expect(wrapper.find('CTA')).toHaveLength(2)
 
-      expect(wrapper.find('SignupImage')).toHaveLength(0)
+      expect(wrapper.find('CTA').first().prop('testingSelector')).toBe('signupBoxSize2Portions')
+      expect(wrapper.find('CTA').first().contains('Choose regular box')).toBeTruthy()
 
-      expect(wrapper.find('BoxSizeBox')).toHaveLength(2)
-    })
-  })
-
-  describe('given wizard price per serving is enabled', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isWizardPricePerServingEnabled: true,
-        lowestPricePerPortion: {
-          forTwo: {
-            price: '2',
-            priceDiscounted: '2',
-          },
-          forFour: {
-            price: '4',
-            priceDiscounted: '4',
-          },
-        },
-      })
+      expect(wrapper.find('CTA').last().prop('testingSelector')).toBe('signupBoxSize4Portions')
+      expect(wrapper.find('CTA').last().contains('Choose large box')).toBeTruthy()
     })
 
-    test('then should render PricePerServing properly', () => {
-      expect(wrapper.find('PricePerServing')).toHaveLength(2)
-      expect(wrapper.find('PricePerServing').first().props()).toEqual(
-        expect.objectContaining({
-          portion: 2,
-          image: 'per-two-people',
-          cost: {
-            price: '2',
-            priceDiscounted: '2',
-          },
-        })
-      )
-      expect(wrapper.find('PricePerServing').at(1).props()).toEqual(
-        expect.objectContaining({
-          portion: 4,
-          image: 'per-four-people',
-          cost: {
-            price: '4',
-            priceDiscounted: '4',
-          },
-        })
-      )
+    test('should trigger onClick for 2 portions', () => {
+      wrapper.find('CTA').first().simulate('click')
+      expect(numPortionChange).toHaveBeenCalledWith(2)
+      expect(numPortionChangeTracking).toHaveBeenCalledWith(2)
+      expect(next).toHaveBeenCalledWith()
     })
 
-    describe('when the PricePerServing button is clicked', () => {
-      let sections
-
-      beforeEach(() => {
-        sections = wrapper.find('PricePerServing')
-      })
-
-      test('for 2 people - then the portions are set to 2', () => {
-        sections.at(0).prop('onClick')()
-
-        expect(numPortionChange).toHaveBeenCalledWith(2)
-        expect(numPortionChangeTracking).toHaveBeenCalledWith(2)
-        expect(next).toHaveBeenCalledWith()
-      })
-
-      test('for 4 people - then the portions are set to 4', () => {
-        sections.at(1).prop('onClick')()
-
-        expect(numPortionChange).toHaveBeenCalledWith(4)
-        expect(numPortionChangeTracking).toHaveBeenCalledWith(4)
-        expect(next).toHaveBeenCalledWith()
-      })
+    test('should trigger onClick for 4 portions', () => {
+      wrapper.find('CTA').last().simulate('click')
+      expect(numPortionChange).toHaveBeenCalledWith(4)
+      expect(numPortionChangeTracking).toHaveBeenCalledWith(4)
+      expect(next).toHaveBeenCalledWith()
     })
   })
 })

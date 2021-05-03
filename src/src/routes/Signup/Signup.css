@@ -97,12 +97,14 @@
 .header {
   composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
 
-  @media HeightMDMin and ScreenXSMax {
-    min-height: calc((minHeight - 10px) * 0.5);
-  }
+  &:not(.autoHeight) {
+    @media HeightMDMin and ScreenXSMax {
+      min-height: calc((minHeight - 10px) * 0.5);
+    }
 
-  @media ScreenSMMin {
-    min-height: 285px;
+    @media ScreenSMMin {
+      min-height: 285px;
+    }
   }
 }
 
