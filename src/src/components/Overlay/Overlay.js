@@ -14,7 +14,7 @@ if (!__SERVER__) {
 const customStyles = {
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    zIndex: 1001,
+    zIndex: 2001,
     overflow: 'auto',
     top: 0,
     left: 0,
