@@ -11,7 +11,7 @@ describe('given ErrorMessage', () => {
     wrapper = shallow(<ErrorMessage onLoginClick={onLoginClick} />)
   })
 
-  describe('when error-type is user-exists - simple message', () => {
+  describe('when error-type is user-exists', () => {
     beforeEach(() => {
       wrapper.setProps({
         errorType: 'user-exists',
@@ -20,7 +20,16 @@ describe('given ErrorMessage', () => {
 
     test('then it should render correctly', () => {
       expect(wrapper.find('Alert').exists()).toBe(true)
-      expect(wrapper.contains(checkoutConfig.errorMessage['user-exists'])).toBe(true)
+    })
+
+    describe('and when the Log in link is clicked', () => {
+      beforeEach(() => {
+        wrapper.find('a').simulate('click', { preventDefault: jest.fn() })
+      })
+
+      test('then the onLoginClick callback should be invoked', () => {
+        expect(onLoginClick).toBeCalled()
+      })
     })
   })
 
@@ -41,34 +50,26 @@ describe('given ErrorMessage', () => {
     })
   })
 
-  describe('when isCheckoutOverhaulEnabled is enabled', () => {
+  describe('when errorType is user-exists', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
+        errorType: 'user-exists',
       })
     })
 
-    describe('when errorType is user-exists', () => {
+    test('then it should render correctly', () => {
+      expect(wrapper.find('CustomerCareDetails').exists()).toBeFalsy()
+      expect(wrapper.find('a').exists()).toBeTruthy()
+      expect(wrapper.find('a').prop('children')).toBe('Log in')
+    })
+
+    describe('and when the Log in link is clicked', () => {
       beforeEach(() => {
-        wrapper.setProps({
-          errorType: 'user-exists',
-        })
+        wrapper.find('a').simulate('click', { preventDefault: jest.fn() })
       })
 
-      test('then it should render correctly', () => {
-        expect(wrapper.find('CustomerCareDetails').exists()).toBeFalsy()
-        expect(wrapper.find('a').exists()).toBeTruthy()
-        expect(wrapper.find('a').prop('children')).toBe('Log in')
-      })
-
-      describe('and when the Log in link is clicked', () => {
-        beforeEach(() => {
-          wrapper.find('a').simulate('click', { preventDefault: jest.fn() })
-        })
-
-        test('then the onLoginClick callback should be invoked', () => {
-          expect(onLoginClick).toBeCalled()
-        })
+      test('then the onLoginClick callback should be invoked', () => {
+        expect(onLoginClick).toBeCalled()
       })
     })
   })

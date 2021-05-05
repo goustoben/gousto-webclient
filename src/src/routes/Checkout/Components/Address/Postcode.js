@@ -7,48 +7,31 @@ import ReduxFormInput from 'Form/ReduxFormInput'
 import { CheckoutButton } from '../CheckoutButton/CheckoutButton'
 import { transformAddresses } from '../../utils/delivery'
 
-import addressCss from './Address.css'
 import postcodeCss from './Postcode.css'
-import redesignCss from '../../CheckoutRedesignContainer.css'
+import checkoutCss from '../../Checkout.css'
 
 const Postcode = ({
-  postcodePending,
   onPostcodeLookup,
   postcodeTemp,
   addresses,
   onSelectedAddressChange,
-  showDropdown,
   receiveRef,
   trackClick,
   isMobile,
-  isCheckoutOverhaulEnabled,
   isAddressSelected,
 }) => {
   const [isFindAddressDisabled, setIsFindAddressDisabled] = useState(true)
   const handlePostCodeSearch = () => {
     onPostcodeLookup(postcodeTemp)
-    if (isCheckoutOverhaulEnabled) {
-      setIsFindAddressDisabled(true)
-    }
+    setIsFindAddressDisabled(true)
   }
 
-  const addressOptions =
-    addresses.length > 0 ? transformAddresses(addresses, isCheckoutOverhaulEnabled) : []
+  const addressOptions = addresses.length > 0 ? transformAddresses(addresses) : []
 
   return (
     <Fragment>
-      <div
-        className={classNames({
-          [addressCss.flex]: !isCheckoutOverhaulEnabled,
-          [postcodeCss.postcodeContainer]: isCheckoutOverhaulEnabled,
-        })}
-      >
-        <div
-          className={classNames(postcodeCss.postCodeField, {
-            [redesignCss.inputContainer]: isCheckoutOverhaulEnabled,
-            [postcodeCss.postCodeFieldRedesign]: isCheckoutOverhaulEnabled,
-          })}
-        >
+      <div className={postcodeCss.postcodeContainer}>
+        <div className={classNames(postcodeCss.postCodeField, checkoutCss.inputContainer)}>
           <Field
             name="postcodeTemp"
             component={ReduxFormInput}
@@ -59,55 +42,41 @@ const Postcode = ({
             withRef
             ref={receiveRef}
             data-testing="checkoutPostcode"
-            isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
             onChange={() => setIsFindAddressDisabled(false)}
             autocompleteOff
           />
         </div>
-        <div
-          className={classNames(postcodeCss.findAddressButton, {
-            [postcodeCss.searchCTA]: isCheckoutOverhaulEnabled,
-          })}
-        >
+        <div className={classNames(postcodeCss.findAddressButton, postcodeCss.searchCTA)}>
           <CheckoutButton
             testingSelector="checkoutFindAddressButton"
             color="secondary"
             onClick={handlePostCodeSearch}
-            pending={isCheckoutOverhaulEnabled ? false : postcodePending}
-            isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
-            isDisabled={isCheckoutOverhaulEnabled && isFindAddressDisabled}
+            pending={false}
+            isDisabled={isFindAddressDisabled}
             width="auto"
             isFullWidth={false}
-            stepName={isCheckoutOverhaulEnabled ? 'Search' : 'Find Address'}
+            stepName="Search"
           />
         </div>
       </div>
-      {(addresses.length > 0 && showDropdown && !isCheckoutOverhaulEnabled) ||
-      (isCheckoutOverhaulEnabled && !isAddressSelected) ? (
-        <div>
-          {!isCheckoutOverhaulEnabled && <br />}
-          <div
-            className={classNames({ [postcodeCss.deliveryDropdown]: isCheckoutOverhaulEnabled })}
-            data-testing="checkoutAddressDropdown"
-          >
-            <Field
-              name="addressId"
-              component={ReduxFormInput}
-              options={addressOptions}
-              onChange={(event, addressId) => {
-                if (isMobile) trackClick('DeliveryAddress Selected')
-                onSelectedAddressChange(event, addressId)
-              }}
-              inputType="DropDown"
-              label={isCheckoutOverhaulEnabled ? '' : 'Select your address'}
-              color="secondary"
-              mask
-              withRef
-              ref={receiveRef}
-              dataTesting="houseNo"
-              isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
-            />
-          </div>
+      {!isAddressSelected ? (
+        <div className={postcodeCss.deliveryDropdown} data-testing="checkoutAddressDropdown">
+          <Field
+            name="addressId"
+            component={ReduxFormInput}
+            options={addressOptions}
+            onChange={(event, addressId) => {
+              if (isMobile) trackClick('DeliveryAddress Selected')
+              onSelectedAddressChange(event, addressId)
+            }}
+            inputType="DropDown"
+            color="secondary"
+            mask
+            withRef
+            ref={receiveRef}
+            dataTesting="houseNo"
+            isMobile={isMobile}
+          />
         </div>
       ) : null}
     </Fragment>
@@ -115,30 +84,24 @@ const Postcode = ({
 }
 
 Postcode.propTypes = {
-  postcodePending: PropTypes.bool,
   onPostcodeLookup: PropTypes.func,
   postcodeTemp: PropTypes.string,
   addresses: PropTypes.instanceOf(Immutable.List),
   onSelectedAddressChange: PropTypes.func,
-  showDropdown: PropTypes.bool,
   receiveRef: PropTypes.func,
   isMobile: PropTypes.bool,
   trackClick: PropTypes.func,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
   isAddressSelected: PropTypes.bool,
 }
 
 Postcode.defaultProps = {
-  postcodePending: false,
   onPostcodeLookup: () => {},
   postcodeTemp: '',
   addresses: Immutable.List(),
   onSelectedAddressChange: () => {},
-  showDropdown: false,
   receiveRef: () => {},
   trackClick: () => {},
   isMobile: false,
-  isCheckoutOverhaulEnabled: false,
   isAddressSelected: false,
 }
 

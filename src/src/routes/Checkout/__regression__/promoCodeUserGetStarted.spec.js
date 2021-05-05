@@ -1,5 +1,3 @@
-import { ACTIVE_PROMO_CODE } from '../../../config/promoCode'
-
 describe('Promo Code', () => {
   after(() => {
     cy.clock().then((clock) => {
@@ -11,7 +9,8 @@ describe('Promo Code', () => {
     before(() => {
       cy.checkoutLoggedOut({ withDiscount: false })
       cy.fixture('promoCode/promoCodeDetails').as('promoCodeDetails')
-      cy.route('GET', `/promocode/${ACTIVE_PROMO_CODE}`, '@promoCodeDetails').as('promoCodeDetails')
+      cy.route('GET', '/promocode/**', '@promoCodeDetails').as('promoCodeDetails')
+      cy.mockDate()
     })
 
     describe('and promo code is not applied', () => {

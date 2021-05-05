@@ -1,11 +1,4 @@
 import { connect } from 'react-redux'
-import {
-  isShowNoDiscountCTAFeatureEnabled,
-  isChoosePlanEnabled,
-  getIsCheckoutOverhaulEnabled,
-} from 'selectors/features'
-import { getPromoCode } from 'selectors/basket'
-import promoActions from 'actions/promos'
 import { Summary } from './Summary'
 
 function mapStateToProps(state) {
@@ -15,17 +8,9 @@ function mapStateToProps(state) {
     basketRecipes: state.basket.get('recipes'),
     deliveryDate: state.basket.get('date'),
     slotId: state.basket.get('slotId'),
-    browser: state.request.get('browser'),
-    routing: state.routing,
-    showNoDiscountCTA: isShowNoDiscountCTAFeatureEnabled(state),
-    showAddPromocode: !isChoosePlanEnabled(state),
-    promoCode: getPromoCode(state),
-    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
   }
 }
 
-const SummaryContainer = connect(mapStateToProps, {
-  promoApplyCheckoutCode: promoActions.promoApplyCheckoutCode,
-})(Summary)
+const SummaryContainer = connect(mapStateToProps, null)(Summary)
 
 export { SummaryContainer }

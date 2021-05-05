@@ -4,8 +4,6 @@ import Immutable from 'immutable'
 
 import config from 'config/routes'
 import { PaymentMethod } from 'config/signup'
-import { Div } from 'Page/Elements'
-import { ProgressBar } from 'routes/Checkout/Components/ProgressBar'
 import { Summary } from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import { loadPayPalScripts } from 'routes/Checkout/loadPayPalScripts'
@@ -22,13 +20,13 @@ import {
   redirect,
   replace,
   checkoutStepIndexReached,
+  trackSignupStep,
 } from 'actions'
 /* eslint-enable import/named */
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
 import { Checkout } from 'routes/Checkout/Checkout'
 import logger from 'utils/logger'
 import Overlay from 'Overlay'
-import ModalPanel from 'Modal/ModalPanel'
 import { Login } from 'Login'
 
 import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
@@ -43,6 +41,7 @@ jest.mock('actions', () => ({
   basketProceedToCheckout: jest.fn().mockReturnValue(Promise.resolve()),
   checkoutCreatePreviewOrder: jest.fn().mockReturnValue(Promise.resolve()),
   checkoutStepIndexReached: jest.fn(),
+  trackSignupStep: jest.fn(),
 }))
 
 jest.mock('actions/boxSummary', () => ({
@@ -59,14 +58,16 @@ jest.mock('routes/Checkout/loadPayPalScripts', () => ({
   }),
 }))
 
-jest.mock('../../Menu/fetchData/menuService')
+jest.mock('routes/Menu/fetchData/menuService', () => ({
+  loadMenuServiceDataIfDeepLinked: jest.fn(),
+}))
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
   warning: jest.fn(),
 }))
 
-describe('Checkout', () => {
+describe('Given Checkout component', () => {
   let wrapper
   let store
   let context
@@ -96,20 +97,21 @@ describe('Checkout', () => {
       checkout: Immutable.fromJS({
         validations: {
           summary: true,
-          aboutyou: true,
+          account: true,
           payment: true,
           delivery: true,
         },
+        errors: {},
       }),
       pricing: Immutable.fromJS({
         prices: {},
       }),
-      params: { stepName: 'aboutyou' },
+      params: { stepName: 'account' },
       pending: Immutable.Map({}),
       payment: Immutable.Map({
         currentPaymentMethod: PaymentMethod.Card,
       }),
-      stepsOrder: Immutable.List(['boxdetails', 'summary', 'aboutyou', 'payment', 'delivery']),
+      stepsOrder: Immutable.List(['account', 'payment', 'delivery']),
       recipes: Immutable.Map({}),
       request: Immutable.Map({
         browser: 'mobile',
@@ -135,9 +137,10 @@ describe('Checkout', () => {
 
     wrapper = shallow(
       <Checkout
-        params={{ stepName: 'aboutyou' }}
+        params={{ stepName: 'account' }}
         checkoutLanding={onCheckoutSpy}
-        trackSignupStep={jest.fn()}
+        trackSignupStep={trackSignupStep}
+        redirect={redirect}
       />,
       { context }
     )
@@ -160,63 +163,51 @@ describe('Checkout', () => {
     fetchPayPalClientToken.mockClear()
   })
 
-  describe('rendering', () => {
+  describe('when component is mounted', () => {
     beforeEach(() => {
       wrapper = shallow(<Checkout trackSignupStep={jest.fn()} />, { context })
     })
 
-    test('should render a <Div> with no props', () => {
-      expect(wrapper.type()).toEqual(Div)
+    test('then should render Breadcrumbs component', () => {
+      expect(wrapper.find('Breadcrumbs').exists()).toBeTruthy()
     })
 
-    test('should render 1 <ProgressBar> component(s)', () => {
-      const mobileWrapper = shallow(
-        <Checkout
-          browser="mobile"
-          params={{ stepName: 'boxdetails' }}
-          trackSignupStep={jest.fn()}
-        />,
-        { context }
-      )
-      expect(mobileWrapper.find(ProgressBar)).toHaveLength(1)
-
-      const desktopWrapper = shallow(
-        <Checkout
-          browser="desktop"
-          params={{ stepName: 'boxdetails' }}
-          trackSignupStep={jest.fn()}
-        />,
-        { context }
-      )
-      expect(desktopWrapper.find(ProgressBar)).toHaveLength(1)
+    describe('when isMobile is set to false', () => {
+      test('then should render proper components', () => {
+        expect(wrapper.find('ExpandableBoxSummary').exists()).toBeTruthy()
+        expect(wrapper.find(Summary).exists()).toBeTruthy()
+        expect(wrapper.find(BoxDetailsContainer).exists()).toBeTruthy()
+      })
     })
 
-    test('should render 1 <Summary> component(s)', () => {
-      expect(wrapper.find(Summary)).toHaveLength(1)
+    describe('when isMobile is set to true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isMobile: true,
+        })
+      })
+
+      test('then should render ExpandableBoxSummary component', () => {
+        expect(wrapper.find('ExpandableBoxSummary').exists()).toBeTruthy()
+      })
+
+      test('then should render Summary and BoxDetails components', () => {
+        expect(wrapper.find(Summary).exists()).toBeTruthy()
+        expect(wrapper.find(BoxDetailsContainer).exists()).toBeTruthy()
+      })
     })
 
-    test('should render 1 <Div> component(s)', () => {
-      expect(wrapper.children(Div)).toHaveLength(1)
-    })
-
-    test('should render 1 <BoxDetailsContainer> component(s)', () => {
-      expect(wrapper.find(BoxDetailsContainer)).toHaveLength(1)
-    })
-
-    test('should render 1 Overlay', () => {
-      expect(wrapper.find(Overlay).length).toEqual(1)
-    })
-
-    test('should render 1 ModalPanel', () => {
-      expect(wrapper.find(ModalPanel).length).toEqual(1)
-    })
-
-    test('should render 1 Login', () => {
-      expect(wrapper.find(Login).length).toEqual(1)
+    test('then should render Login component', () => {
+      expect(wrapper.find(Login).exists()).toBeTruthy()
     })
   })
 
   describe('fetchData', () => {
+    afterEach(() => {
+      // eslint-disable-next-line no-underscore-dangle
+      global.__SERVER__ = false
+    })
+
     test('should redirect to the first checkout step', async () => {
       await Checkout.fetchData({
         store: context.store,
@@ -224,13 +215,13 @@ describe('Checkout', () => {
         params: {},
       })
       expect(dispatch).toHaveBeenCalled()
-      expect(replace).toHaveBeenCalledWith('/check-out/aboutyou')
+      expect(replace).toHaveBeenCalledWith('/check-out/account')
     })
 
     test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, pricingRequest', async () => {
       await Checkout.fetchData({
         store: context.store,
-        query: { steps: 'boxdetails,aboutyou,payment,delivery' },
+        query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
       expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
@@ -257,7 +248,7 @@ describe('Checkout', () => {
           dispatch,
           getState,
         },
-        query: { steps: 'boxdetails,aboutyou,payment,delivery' },
+        query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
@@ -291,7 +282,7 @@ describe('Checkout', () => {
           dispatch,
           getState,
         },
-        query: { steps: 'boxdetails,aboutyou,payment,delivery' },
+        query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
@@ -325,7 +316,7 @@ describe('Checkout', () => {
           dispatch,
           getState,
         },
-        query: { steps: 'boxdetails,aboutyou,payment,delivery' },
+        query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
@@ -358,7 +349,7 @@ describe('Checkout', () => {
           dispatch,
           getState,
         },
-        query: { steps: 'boxdetails,aboutyou,payment,delivery' },
+        query: { steps: 'account,payment,delivery' },
         params: { stepName: '' },
       })
 
@@ -370,18 +361,36 @@ describe('Checkout', () => {
       expect(redirect).toHaveBeenCalledWith('/menu?from=newcheckout&error=undefined-error', true)
     })
 
-    test('should redirect to /account when isCheckoutOverhaulEnabled is enabled', async () => {
+    test('should redirect to /menu and log error when dispatch is rejected', async () => {
+      // eslint-disable-next-line no-underscore-dangle
+      global.__SERVER__ = true
+      store = {
+        basket: Immutable.Map({
+          stepsOrder: Immutable.List(),
+          previewOrderId: '1056',
+        }),
+        menuBoxPrices: Immutable.Map({ 2: {} }),
+        menuCutoffUntil: '2019-02-22T11:59:59+00:00',
+        error: Immutable.Map({
+          BASKET_PREVIEW_ORDER_CHANGE: false,
+        }),
+        boxSummaryDeliveryDays: {},
+      }
+      getState = jest.fn().mockReturnValue(store)
+      dispatch.mockImplementationOnce(() => Promise.resolve())
+      dispatch.mockImplementation(() => Promise.reject(new Error('something went wrong')))
+
       await Checkout.fetchData({
-        isCheckoutOverhaulEnabled: true,
         store: {
           dispatch,
           getState,
         },
-        query: {},
-        params: {},
+        query: { steps: 'account,payment,delivery' },
+        params: { stepName: '' },
       })
 
-      expect(replace).toHaveBeenCalledWith('/check-out/account')
+      expect(logger.error).toHaveBeenCalled()
+      expect(redirect).toHaveBeenCalledWith('/menu', true)
     })
   })
 
@@ -409,11 +418,9 @@ describe('Checkout', () => {
 
       expect(fetchData).toHaveBeenCalled()
       expect(fetchData).toHaveBeenCalledWith({
-        browser: 'desktop',
         store: context.store,
         query: { query: true },
         params: { params: true },
-        isCheckoutOverhaulEnabled: false,
       })
     })
 
@@ -504,7 +511,7 @@ describe('Checkout', () => {
 
         describe('when stepName is not "payment"', () => {
           beforeEach(() => {
-            wrapper.setProps({ params: { stepName: 'aboutyou' } })
+            wrapper.setProps({ params: { stepName: 'account' } })
           })
 
           test('then should return prerender = true', () => {
@@ -560,7 +567,7 @@ describe('Checkout', () => {
   describe('getNextStep', () => {
     let instance
     let currentStep
-    const steps = ['boxdetails', 'yourdetails', 'payment']
+    const steps = ['account', 'delivery', 'payment']
 
     beforeEach(() => {
       instance = wrapper.instance()
@@ -571,10 +578,10 @@ describe('Checkout', () => {
 
     describe('when current step is not the last one', () => {
       test('then should return next step', () => {
-        currentStep = 'yourdetails'
+        currentStep = 'account'
+        expect(instance.getNextStep(steps, currentStep)).toEqual('delivery')
+        currentStep = 'delivery'
         expect(instance.getNextStep(steps, currentStep)).toEqual('payment')
-        currentStep = 'boxdetails'
-        expect(instance.getNextStep(steps, currentStep)).toEqual('yourdetails')
       })
     })
 
@@ -587,33 +594,24 @@ describe('Checkout', () => {
   })
 
   describe('when onStepChange is called', () => {
-    let trackSignupStep
-    let redirectAction
+    const currentStep = 'account'
+    const steps = ['account', 'delivery', 'payment']
 
     beforeEach(() => {
-      trackSignupStep = jest.fn()
-      redirectAction = jest.fn()
+      wrapper.setProps({
+        checkoutStepIndexReached,
+        trackSignupStep,
+      })
 
-      wrapper = shallow(
-        <Checkout
-          params={{ stepName: 'boxdetails' }}
-          browser="mobile"
-          checkoutPaymentFeature
-          redirect={redirectAction}
-          trackSignupStep={trackSignupStep}
-          checkoutStepIndexReached={checkoutStepIndexReached}
-        />
-      )
-
-      wrapper.find('BoxDetails').props().onStepChange()
+      wrapper.instance().onStepChange(steps, currentStep)()
     })
 
     test('then the correct sequence of actions is dispatched', () => {
-      expect(trackSignupStep).toHaveBeenCalledWith('yourdetails')
+      expect(trackSignupStep).toHaveBeenCalledWith('delivery')
 
       expect(checkoutStepIndexReached).toHaveBeenCalledWith(1)
 
-      expect(redirectAction).toHaveBeenCalledWith('/check-out/yourdetails')
+      expect(redirect).toHaveBeenCalledWith('/check-out/delivery')
     })
   })
 
@@ -633,26 +631,6 @@ describe('Checkout', () => {
     test('then loadCheckoutScript should be called', () => {
       expect(loadCheckoutScript).toBeCalled()
       expect(wrapper.state('checkoutScriptReady')).toBeTruthy()
-    })
-  })
-
-  describe('when isCheckoutOverhaulEnabled is enabled', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
-      })
-    })
-
-    test('then should render Breadcrumbs component', () => {
-      expect(wrapper.find('Breadcrumbs').exists()).toBeTruthy()
-      expect(wrapper.find('ProgressBar').exists()).toBeFalsy()
-    })
-
-    test('then should add redesign classes to desktop component wrappers', () => {
-      expect(wrapper.find('.checkoutContent').hasClass('checkoutContentRedesign')).toBeTruthy()
-      expect(wrapper.find('.rowCheckout').hasClass('rowCheckoutRedesign')).toBeTruthy()
-      expect(wrapper.find('.section').hasClass('sectionRedesign')).toBeTruthy()
-      expect(wrapper.find('.aside').hasClass('asideRedesign')).toBeTruthy()
     })
   })
 

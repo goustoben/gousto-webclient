@@ -1,19 +1,39 @@
-export const setMocks = ({ validPostcode }) => {
-  const postCodeMock = validPostcode ? 'valid' : 'invalid'
+const PLATFORM = Cypress.env().platform.toString().toUpperCase()
 
-  cy.server()
-  cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
-  cy.route(
-    'GET',
-    '/userbucketing/v1/user/experiments',
-    'fixture:userbucketing/userbucketing.json'
-  ).as('getExperiments')
-  cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json')
-  cy.route('GET', 'brand/v1/menu-headers', 'fixture:brand/brandHeaders.json')
-  cy.route('GET', 'deliveries/v1.0/**', 'fixture:deliveries/deliveryDays.json').as('getDeliveries')
-  cy.route('POST', /order\/preview/, 'fixture:order/preview.json').as('previewOrder')
-  cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json')
-  cy.route('GET', /address\/postcode-lookup/, `fixture:checkout/postcode/${postCodeMock}.json`)
-  cy.route('POST', 'prospect', 'fixture:checkout/prospect/prospect.json')
-  cy.route('POST', /validate/, 'fixture:checkout/validate/validate.json')
+export const clearAndFillFirstAndLastNames = ({ firstname, lastname }) => {
+  cy.get('[data-testing="checkoutFirstNameInput"]').click().clear().type(firstname)
+  cy.get('[data-testing="checkoutLastNameInput"]').click().clear().type(lastname)
+}
+
+export const clearAndFillPhoneNumber = (phoneNumber) => {
+  cy.get('[data-testing="checkoutPhoneNumberInput"]').click().clear().type(phoneNumber)
+}
+
+export const selectAddress = () => {
+  if (PLATFORM === 'WEB') {
+    cy.get('[data-testing="checkoutAddressDropdown"]')
+      .find('.Select')
+      .click()
+      .get('.Select-menu-outer .Select-menu .Select-option')
+      .eq(1)
+      .click()
+  } else {
+    cy.get('select[data-testing="houseNo"]').select('"25953315"')
+  }
+}
+
+export const selectDeliveryOption = (option) => {
+  if (PLATFORM === 'WEB') {
+    cy.get('[data-testing="checkoutDeliveryDetailsInstruction"]')
+      .find('.Select')
+      .click()
+      .get('.Select-menu-outer .Select-menu .Select-option')
+      .eq(option)
+      .click()
+  } else {
+    const optionToSelect = ['Please select an option', 'Back Porch', '', '', '', '', '', 'Other']
+    cy.get('[data-testing="checkoutDeliveryDetailsInstruction"]')
+      .eq(0)
+      .select(optionToSelect[option])
+  }
 }

@@ -9,14 +9,12 @@ export const CheckoutAddress = ({
   asyncValidate,
   receiveRef,
   scrollToFirstMatchingRef,
-  isCheckoutOverhaulEnabled,
 }) => (
   <FormSection name={sectionName}>
     <BillingAddress
       asyncValidate={asyncValidate}
       receiveRef={receiveRef}
       scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-      isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
     />
   </FormSection>
 )
@@ -26,7 +24,6 @@ CheckoutAddress.propTypes = {
   asyncValidate: PropTypes.func,
   sectionName: PropTypes.string,
   scrollToFirstMatchingRef: PropTypes.func,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 CheckoutAddress.defaultProps = {
@@ -34,5 +31,4 @@ CheckoutAddress.defaultProps = {
   asyncValidate: () => {},
   sectionName: '',
   scrollToFirstMatchingRef: () => {},
-  isCheckoutOverhaulEnabled: false,
 }

@@ -69,7 +69,7 @@
 }
 
 .deliveryAddress {
-  text-transform: none;
+  text-transform: capitalize;
   margin-bottom: 0.5rem;
 }
 
@@ -86,8 +86,4 @@
   @media BreakpointFromMedium {
     margin-bottom: 1.5rem;
   }
-}
-
-.fieldContainer {
-  margin: 0.5rem 0;
 }

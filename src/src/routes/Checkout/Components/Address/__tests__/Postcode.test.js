@@ -15,7 +15,7 @@ describe('Postcode', () => {
 
   describe('When Postcode component is mounted', () => {
     test('Then should render input for postcode', () => {
-      expect(wrapper.find(Field)).toHaveLength(1)
+      expect(wrapper.find(Field)).toHaveLength(2)
     })
 
     test('Then should render Find Address CTA', () => {

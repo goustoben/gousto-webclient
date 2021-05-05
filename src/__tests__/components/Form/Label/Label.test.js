@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { shallow } from 'enzyme'
-import Label from 'Form/Label'
+import { Label } from 'Form/Label'
 
 describe('Label', () => {
   let wrapper
@@ -13,14 +13,14 @@ describe('Label', () => {
 
   test('should show the label, sublabel and children props', () => {
     wrapper = shallow(
-      <Label label="my label" subLabel="my subLabel">
+      <Label label="my label" subLabel="my sublabel">
         Input...
       </Label>,
     )
 
     const text = wrapper.text()
     expect(text).toContain('my label')
-    expect(text).toContain('my subLabel')
+    expect(text).toContain('my sublabel')
     expect(text).toContain('Input...')
   })
 })

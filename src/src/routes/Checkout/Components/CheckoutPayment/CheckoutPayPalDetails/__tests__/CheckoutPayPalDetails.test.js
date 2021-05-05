@@ -33,10 +33,6 @@ describe('CheckoutPayPalDetails', () => {
       test('then should be rendered correctly', () => {
         expect(wrapper.find('div.hide').exists()).toBeTruthy()
       })
-
-      test('then should render PayPalConfirmation', () => {
-        expect(wrapper.find(PayPalConfirmation).exists()).toBeTruthy()
-      })
     })
 
     describe('and isPayPalSetupDone is false', () => {
@@ -51,30 +47,17 @@ describe('CheckoutPayPalDetails', () => {
       })
     })
 
-    describe('when isCheckoutOverhaulEnabled is true', () => {
+    describe('when paypal is initialized and there are errors', () => {
       beforeEach(() => {
         wrapper.setProps({
-          isCheckoutOverhaulEnabled: true,
+          isPayPalInitialized: true,
+          hasErrors: true,
         })
       })
 
-      test('then should be rendered correctly', () => {
-        expect(wrapper.find('.checkoutOverhaul').exists()).toBeTruthy()
-        expect(wrapper.find('.checkoutOverhaulPaypalContainer').exists()).toBeTruthy()
-      })
-
-      describe('and paypal is initialized and there are errors', () => {
-        beforeEach(() => {
-          wrapper.setProps({
-            isPayPalInitialized: true,
-            hasErrors: true,
-          })
-        })
-
-        test('then should not render .loaderContainer section and Loader component', () => {
-          expect(wrapper.find('.loaderContainer').exists()).toBeFalsy()
-          expect(wrapper.find('Loader').exists()).toBeFalsy()
-        })
+      test('then should not render .loaderContainer section and Loader component', () => {
+        expect(wrapper.find('.loaderContainer').exists()).toBeFalsy()
+        expect(wrapper.find('Loader').exists()).toBeFalsy()
       })
     })
   })
@@ -262,6 +245,11 @@ describe('CheckoutPayPalDetails', () => {
           onApprove: expect.any(Function),
           onCancel: expect.any(Function),
           onError: expect.any(Function),
+          style: {
+            height: 48,
+            label: 'pay',
+            tagline: false,
+          },
         })
         expect(paypalButtonsInstance.render).toHaveBeenCalledWith('#paypal-container')
       })
@@ -381,49 +369,6 @@ describe('CheckoutPayPalDetails', () => {
 
           expect(firePayPalError).toHaveBeenCalledWith(error)
         })
-      })
-    })
-  })
-
-  describe('when isCheckoutOverhaulEnabled is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
-      })
-    })
-
-    test('then should be rendered correctly', () => {
-      expect(wrapper.find('.checkoutOverhaul')).toHaveLength(1)
-    })
-
-    describe('and renderPayPalButton is called', () => {
-      const paypalButtonsInstance = {
-        name: 'data-collector-instance',
-        render: jest.fn(() => Promise.resolve()),
-      }
-      const paypalObj = {
-        FUNDING: {
-          PAYPAL: 'PAYPAL',
-        },
-        Buttons: jest.fn(() => paypalButtonsInstance),
-      }
-
-      beforeEach(() => {
-        global.paypal = paypalObj
-        wrapper.instance().renderPayPalButton()
-      })
-
-      test('then should have style', () => {
-        expect(paypalObj.Buttons).toHaveBeenCalledWith(
-          expect.objectContaining({
-            fundingSource: 'PAYPAL',
-            style: {
-              height: 48,
-              label: 'pay',
-              tagline: false,
-            },
-          })
-        )
       })
     })
   })

@@ -1,22 +1,22 @@
 const separator = `${String.fromCharCode(44)}${String.fromCharCode(32)}`
 
 export function transformAddressParts(address) {
-  return address.toLowerCase().replace(/^\w/, (c) => c.toUpperCase())
+  return address.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())
 }
 
-export function showAddress(address, isCheckoutOverhaulRedesign) {
+export function showAddress(address) {
   if (!address) {
     return ''
   }
 
-  const addressPieces = []
+  let addressPieces = []
 
   const fields = ['houseNo', 'street', 'town', 'county', 'postcode']
   fields.forEach((field) => {
     let addressPiece
     if (address[field]) {
       addressPiece = address[field]
-      if (isCheckoutOverhaulRedesign && field !== 'postcode') {
+      if (field !== 'postcode') {
         const addressParts = address[field].includes(separator)
           ? address[field].split(separator)
           : address[field]
@@ -26,6 +26,7 @@ export function showAddress(address, isCheckoutOverhaulRedesign) {
       }
     }
     addressPieces.push(addressPiece)
+    addressPieces = addressPieces.filter((item) => item)
   })
 
   return addressPieces.join(separator)
@@ -39,19 +40,13 @@ export function isAddressConfirmed(formValues) {
     : false
 }
 
-export function transformAddresses(addresses, isCheckoutOverhaulEnabled) {
+export function transformAddresses(addresses) {
   return addresses.map((address) => {
-    const label =
-      isCheckoutOverhaulEnabled && [...address.labels][0].includes(separator)
-        ? [...address.labels][0].split(separator).map((part) => transformAddressParts(part))
-        : [...address.labels].reverse()
+    const label = [...address.labels][0].split(separator).map((part) => transformAddressParts(part))
 
     return {
       value: address.id,
-      label:
-        address.id === 'placeholder' && isCheckoutOverhaulEnabled
-          ? 'Please select your address'
-          : label.join(separator),
+      label: address.id === 'placeholder' ? 'Please select your address' : label.join(separator),
     }
   })
 }

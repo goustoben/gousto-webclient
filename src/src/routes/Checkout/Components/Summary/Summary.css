@@ -1,14 +1,10 @@
-@value SpacingLG from 'sass-loader!styles/spacing.scss';
-@value White, Pepper30, BlueBase, HaricotLight from 'styles/colors.css';
-@value sizeXXS, sizeSM from 'styles/typography.css';
+@value White from 'styles/colors.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
-
-.summaryContainer {
-  padding: SpacingLG;
-  background-color: White;
-}
+@value FS200 #9CDC9E;
+@value FS50 #E6F7E7;
 
 .summaryContainerRedesign {
+  background-color: White;
   padding: 1rem 0.75rem 0;
 
   @media BreakpointFromMedium {
@@ -20,51 +16,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-.loaderContainerRedesign {
   min-height: 18.75rem;
   padding: 0;
 }
 
 .loadingImage {
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
 }
 
 .details {
-  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  margin: 0;
   font-weight: normal;
 }
 
-.detailsRedesign {
-  margin: 0;
-}
-
-.link {
-  font-size: sizeSM;
-  cursor: pointer;
-  color: BlueBase;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.arrowRight {
-  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
-  font-size: sizeXXS;
-}
-
 .pricePerServingBlock {
-  background: HaricotLight;
-  padding: 0.75rem 0.25rem;
+  background: FS50;
+  padding: 1rem 0.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem;
+  border: 1px solid FS200;
+  border-radius: 3px;
 
   @media BreakpointFromMedium {
     margin-bottom: 1.5rem;

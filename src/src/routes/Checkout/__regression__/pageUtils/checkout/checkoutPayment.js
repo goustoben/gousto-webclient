@@ -1,42 +1,28 @@
-import { goToCheckout, clearAndFillCheckoutForm } from './checkoutAboutYou'
+import { goToCheckout, clearAndFillAccountForm } from './checkoutCreateAccount'
+import {
+  selectAddress,
+  selectDeliveryOption,
+  clearAndFillFirstAndLastNames,
+  clearAndFillPhoneNumber,
+} from './checkoutDelivery'
 import { getFormState, getStore } from './checkoutGeneralUtils'
 import { getIsRecaptchaEnabled } from '../../../../../selectors/auth'
 
-const selectAddress = () => {
-  if (Cypress.env().platform === 'mobile') {
-    cy.get('[data-testing="checkoutAddressDropdown"]')
-      .click()
-      .get('select')
-      .eq(0)
-      .select('FLAT 10, MORRIS HOUSE, SWAINSON ROAD')
-    cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
-  } else {
-    cy.get('[data-testing="checkoutCTA"]').click()
-    cy.get('[data-testing="checkoutAddressDropdown"]')
-      .find('.Select')
-      .click()
-      .get('.Select-option')
-      .eq(1)
-      .click()
-    cy.get('[data-testing="checkoutSelectAddressCTA"]').click()
-  }
-}
-
-const phoneNoStep = () => {
-  cy.get('[data-testing="checkoutPhoneNumberInput"]').click().type('7700900077 ')
-  cy.get('[data-testing="checkoutCTA"]').click()
-}
-
 export const goToPayment = () => {
   goToCheckout()
-  clearAndFillCheckoutForm({
-    firstname: 'John',
-    lastname: 'Smith',
+  clearAndFillAccountForm({
     email: '123@456.com',
     password: '1234abcd',
   })
+  cy.get('[data-testing="checkoutCTA"]').eq(0).click()
+  clearAndFillFirstAndLastNames({
+    firstname: 'John',
+    lastname: 'Smith',
+  })
   selectAddress()
-  phoneNoStep()
+  clearAndFillPhoneNumber(1234567890)
+  selectDeliveryOption(1)
+  cy.get('[data-testing="checkoutCTA"]').eq(0).click()
 }
 
 const getIframeDocument = (element) =>

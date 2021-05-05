@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { RecipeSummary } from './RecipeSummary'
 
 function mapStateToProps(state) {
@@ -9,7 +8,6 @@ function mapStateToProps(state) {
     menuRecipesStore: state.recipes,
     menuRecipeStock: state.menuRecipeStock,
     menuBoxPrices: state.menuBoxPrices,
-    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
   }
 }
 

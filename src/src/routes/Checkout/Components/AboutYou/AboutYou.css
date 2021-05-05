@@ -3,19 +3,8 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value FontFamilyAxiformaBook from 'design-language/typography.css';
 
-.aboutYouContainer {
-  background-color: White;
-  composes: textBold from 'styles/typography.css';
-  composes: paddingLG from 'sass-loader!styles/spacing.scss';
-}
-
 .row {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
-}
-
-.rowRedesign {
   margin: 0;
-  font-family: FontFamilyAxiformaBook;
 }
 
 .col {
@@ -32,21 +21,7 @@
   composes: col-md-4 col-xs-6 from 'sass-loader!styles/bootstrap.scss';
 }
 
-.colHalf {
-  composes: col;
-  composes: col-lg-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
-}
-
 .link {
-  color: Bluecheese;
-
-  &:hover {
-    text-decoration: underline;
-    cursor: pointer;
-  }
-}
-
-.linkRedesign {
   color: Bluecheese;
   border-bottom: 1px solid Oyster;
   text-decoration: none;
@@ -107,10 +82,6 @@
 
 .account {
   composes: fontStyleS from 'design-language/typography.css';
-}
-
-.aboutYouContainer :global .Select-value {
-  text-transform: none;
 }
 
 .infoSection {

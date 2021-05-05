@@ -7,17 +7,12 @@
 }
 
 .postCodeField {
-  composes: paddingMDRight from 'sass-loader!styles/spacing.scss';
-  flex: 1 0;
-  min-width: 144px;
-  max-width: 180px;
+  max-width: 15.25rem;
+  flex: 1 1 100%;
+  margin: 0 0.5rem 0.5rem 0;
 
-  input {
-    text-transform: uppercase;
-  }
-
-  @media (min-width: 321px) {
-    min-width: 170px;
+  @media BreakpointFromMedium {
+    margin: 0 1rem 1rem 0;
   }
 }
 
@@ -33,16 +28,6 @@
 .postcodeContainer {
   display: flex;
   flex-wrap: nowrap;
-}
-
-.postCodeFieldRedesign {
-  max-width: 15.25rem;
-  flex: 1 1 100%;
-  margin: 0 0.5rem 0.5rem 0;
-
-  @media BreakpointFromMedium {
-    margin: 0 1rem 1rem 0;
-  }
 }
 
 .searchCTA {

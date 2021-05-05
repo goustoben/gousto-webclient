@@ -1,10 +1,6 @@
 import Immutable from 'immutable'
 import { validationMessages, mapStateToProps, getInitialValues } from '../DeliveryContainer'
 
-jest.mock('selectors/checkout', () => ({
-  getDeliveryFormName: jest.fn(),
-}))
-
 jest.mock('redux-form', () => ({
   getFormValues: jest.fn(() => () => ({
     delivery: {
@@ -54,9 +50,6 @@ describe('Given mapStateToProps', () => {
         date: '2020-02-15',
         slotId: '',
       }),
-      features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: false },
-      }),
       error: Immutable.Map({
         BOXSUMMARY_DELIVERY_DAYS_RECEIVE: false,
       }),
@@ -77,7 +70,6 @@ describe('Given mapStateToProps', () => {
     test('Then should return proper values', () => {
       const expected = {
         sectionName: 'delivery',
-        isCheckoutOverhaulEnabled: false,
       }
       expect(output).toEqual(expect.objectContaining(expected))
     })
@@ -93,41 +85,12 @@ describe('Given getInitialValues', () => {
     addresses: [],
     confirmed: false,
   }
-  describe('When isCheckoutOverhaulEnabled is false and getInitialValues is called', () => {
-    let output
-    const initialState = {
-      basket: Immutable.Map({
-        phone: '',
-      }),
-      features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: false },
-      }),
-    }
 
-    beforeEach(() => {
-      output = getInitialValues(initialState, sectionName)
-    })
-
-    test('Then should return proper values', () => {
-      const expected = {
-        delivery: {
-          ...commonProps,
-          deliveryInstruction: 'Front Porch',
-          phone: '',
-        },
-      }
-      expect(output).toEqual(expect.objectContaining(expected))
-    })
-  })
-
-  describe('When isCheckoutOverhaulEnabled is true and getInitialValues is called', () => {
+  describe('When getInitialValues is called', () => {
     let output
     const initialState = {
       basket: Immutable.Map({
         phone: '123',
-      }),
-      features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: true },
       }),
     }
 

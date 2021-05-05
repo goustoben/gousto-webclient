@@ -1,8 +1,7 @@
-@value Haricot, Blackberry from 'styles/colors.css';
+@value Haricot, Blackberry, Pepper30 from 'styles/colors.css';
 @value sizeMD, sizeXL, avenirHeavyFontStack from 'styles/typography.css';
-@value Pepper30 from 'styles/colors.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
-@value FontBodySize from 'design-language/typography.css';
+@value FS800 #008610;
 
 .receiptLine {
 	composes: paragraphMD from 'styles/typography.css';
@@ -27,8 +26,8 @@
 	font-weight: normal;
 }
 
-.normalRedesign {
-  font-size: FontBodySize;
+.checkoutNormal {
+  font-size: 15px;
   margin-bottom: 0;
 }
 
@@ -38,9 +37,10 @@
 	color: Haricot;
 }
 
-.primaryRedesign {
+.checkoutPrimary {
   composes: fontStyleSubHead from 'design-language/typography.css';
   margin-bottom: 0;
+  color: FS800;
 }
 
 .bold {
@@ -48,7 +48,7 @@
 	font-family: avenirHeavyFontStack;
 }
 
-.boldRedesign {
+.checkoutBold {
   composes: fontStyleBodyL from 'design-language/typography.css';
   composes: fontBold from 'design-language/typography.css';
   margin-bottom: 1rem;
@@ -77,6 +77,6 @@
 	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
-.redesignLine {
+.checkoutLine {
   margin: 0.5rem 0;
 }

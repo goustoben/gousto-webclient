@@ -41,8 +41,8 @@
   display: none;
 }
 
-.checkoutOverhaulContainer {
-  composes: sectionRedesignContainer from '../../CheckoutRedesignContainer.css';
+.paymentContainer {
+  composes: sectionContainer from '../../Checkout.css';
 }
 
 .paypalSetupBox {

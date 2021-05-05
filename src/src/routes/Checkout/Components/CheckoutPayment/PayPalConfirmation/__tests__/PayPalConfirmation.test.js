@@ -11,7 +11,6 @@ describe('Given PayPalConfirmation', () => {
   })
 
   test('should be rendered correctly', () => {
-    expect(wrapper.find('.text')).toHaveLength(1)
     expect(wrapper.find('Svg').exists()).toBeTruthy()
     expect(wrapper.find('.paypalAlternativeText')).toHaveLength(1)
   })
@@ -23,20 +22,6 @@ describe('Given PayPalConfirmation', () => {
 
     test('Then resetPaymentMethod should be called', () => {
       expect(resetPaymentMethod).toHaveBeenCalled()
-    })
-  })
-
-  describe('When isCheckoutOverhaulEnabled is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
-      })
-    })
-
-    test('Then should be rendered correctly', () => {
-      expect(wrapper.find('.checkoutVariationContainer')).toHaveLength(1)
-      expect(wrapper.find('Svg').exists()).toBeTruthy()
-      expect(wrapper.find('.paypalAlternativeText')).toHaveLength(1)
     })
   })
 })

@@ -82,7 +82,7 @@ module.exports = {
       })
 
     browser.perform(function (done) {
-      checkout.section.checkoutContainer.submitAboutYouSection()
+      checkout.section.checkoutContainer.submitAccountSection(browser)
       done()
     })
 

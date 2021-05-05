@@ -1,17 +1,8 @@
-.wrapper {
-  composes: flex rowWrap from 'styles/flex.css';
-  composes: marginSMTop from 'sass-loader!styles/spacing.scss';
-}
-
-.cardDetails {
+.container {
   width: 100%;
 }
 
-.checkoutOverhaulContainer {
-  width: 100%;
-}
-
-.checkoutNameInputCheckoutOverhaul {
+.nameInput {
   /* Consistent with checkout.com's inputs whose font cannot be set to Axiforma
      because of the iframe resource restrictions. */
   font-family: Avenir, Roboto, sans-serif;

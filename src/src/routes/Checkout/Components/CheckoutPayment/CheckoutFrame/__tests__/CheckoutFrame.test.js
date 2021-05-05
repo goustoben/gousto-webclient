@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
 
@@ -53,7 +53,7 @@ describe('CheckoutFrame', () => {
   describe('checkout.com script is not ready', () => {
     describe('when component mounted', () => {
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame />)
+        wrapper = shallow(<CheckoutFrame />)
       })
 
       it('then Frames should not be initialized', () => {
@@ -65,7 +65,7 @@ describe('CheckoutFrame', () => {
   describe('checkout.com script loaded', () => {
     describe('when component mounted', () => {
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
       })
 
       describe('then checkout.com Frames should be initialized', () => {
@@ -139,7 +139,7 @@ describe('CheckoutFrame', () => {
           },
         }
 
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setProps({ cardName: testName })
 
         expect(cardholderSetter).toHaveBeenCalledWith(expected)
@@ -148,7 +148,7 @@ describe('CheckoutFrame', () => {
 
     describe('when not changed', () => {
       it('cardholder data should not be updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady cardName={testName} />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady cardName={testName} />)
         wrapper.setProps({ cardName: testName })
 
         expect(cardholderSetter).not.toHaveBeenCalled()
@@ -176,7 +176,7 @@ describe('CheckoutFrame', () => {
           },
         }
 
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setProps({ billingAddress: testAddress })
 
         expect(cardholderSetter).toHaveBeenCalledWith(expected)
@@ -185,7 +185,7 @@ describe('CheckoutFrame', () => {
 
     describe('when not changed', () => {
       it('cardholder data should not be updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady billingAddress={testAddress} />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady billingAddress={testAddress} />)
         wrapper.setProps({ billingAddress: testAddress })
 
         expect(cardholderSetter).not.toHaveBeenCalled()
@@ -198,7 +198,7 @@ describe('CheckoutFrame', () => {
 
     describe('when value is true', () => {
       it('should call Frames.enableSubmitForm()', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setProps({ hasCheckoutError })
 
         expect(Frames.enableSubmitForm).toHaveBeenCalled()
@@ -207,7 +207,7 @@ describe('CheckoutFrame', () => {
 
     describe('when value is false', () => {
       it('should not call Frames.enableSubmitForm()', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setProps({ hasCheckoutError: false })
 
         expect(Frames.enableSubmitForm).not.toHaveBeenCalled()
@@ -216,7 +216,7 @@ describe('CheckoutFrame', () => {
 
     describe('when value is true and not changed', () => {
       it('should not call Frames.enableSubmitForm()', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
         wrapper.setProps({ hasCheckoutError })
 
         expect(Frames.enableSubmitForm).not.toHaveBeenCalled()
@@ -228,7 +228,7 @@ describe('CheckoutFrame', () => {
     describe('when changed', () => {
       it('should submit card details', () => {
         const submitCard = jest.fn()
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.instance().submitCard = submitCard
 
         wrapper.setProps({ isSubmitCardEnabled: true })
@@ -240,7 +240,7 @@ describe('CheckoutFrame', () => {
     describe('when not changed', () => {
       it('should not submit card details', () => {
         const submitCard = jest.fn()
-        wrapper = mount(<CheckoutFrame checkoutScriptReady isSubmitCardEnabled />)
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady isSubmitCardEnabled />)
         wrapper.instance().submitCard = submitCard
 
         wrapper.setProps({ isSubmitCardEnabled: true })
@@ -255,7 +255,7 @@ describe('CheckoutFrame', () => {
       const reloadCheckoutScript = jest.fn()
 
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame reloadCheckoutScript={reloadCheckoutScript} />)
+        wrapper = shallow(<CheckoutFrame reloadCheckoutScript={reloadCheckoutScript} />)
         wrapper.unmount()
       })
 
@@ -269,16 +269,6 @@ describe('CheckoutFrame', () => {
     })
   })
 
-  describe('component is rendered', () => {
-    beforeEach(() => {
-      wrapper = mount(<CheckoutFrame />)
-    })
-
-    it('should create 3 containers for checkout.com <iframe>s', () => {
-      expect(wrapper.find('.framesContainer')).toHaveLength(3)
-    })
-  })
-
   describe('card number frame validation changed', () => {
     describe('when card number is not valid', () => {
       it('should show card number error', () => {
@@ -286,7 +276,7 @@ describe('CheckoutFrame', () => {
           element: 'card-number',
           isValid: false,
         }
-
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.instance().frameValidationChanged(event)
 
         expect(wrapper.instance().state.showCardNumberError).toBe(true)
@@ -299,6 +289,7 @@ describe('CheckoutFrame', () => {
           element: 'card-number',
           isValid: true,
         }
+        wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setState({ showCardNumberError: true })
 
         wrapper.instance().frameValidationChanged(event)
@@ -371,7 +362,7 @@ describe('CheckoutFrame', () => {
       const checkoutClearErrors = jest.fn()
 
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame checkoutClearErrors={checkoutClearErrors} />)
+        wrapper = shallow(<CheckoutFrame checkoutClearErrors={checkoutClearErrors} />)
       })
 
       it('should clear checkout.com errors', () => {
@@ -385,7 +376,7 @@ describe('CheckoutFrame', () => {
   describe('card tokenized', () => {
     describe('when card token is ready', () => {
       beforeEach(() => {
-        wrapper = mount(
+        wrapper = shallow(
           <CheckoutFrame
             change={change}
             formName="payment"
@@ -432,7 +423,7 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenizationFailed', () => {
     beforeEach(() => {
-      wrapper = mount(
+      wrapper = shallow(
         <CheckoutFrame
           fireCheckoutError={fireCheckoutError}
           trackingCardTokenizationFailed={trackingCardTokenizationFailed}
@@ -500,7 +491,7 @@ describe('CheckoutFrame', () => {
 
   describe('submit card', () => {
     beforeEach(() => {
-      wrapper = mount(
+      wrapper = shallow(
         <CheckoutFrame
           disableCardSubmission={disableCardSubmission}
           fireCheckoutError={fireCheckoutError}
@@ -572,7 +563,7 @@ describe('CheckoutFrame', () => {
     const event = { preventDefault: () => {} }
 
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame onSubmitFromCardDetails={onSubmitFromCardDetails} />)
+      wrapper = shallow(<CheckoutFrame onSubmitFromCardDetails={onSubmitFromCardDetails} />)
       wrapper.instance().handleSubmit(event)
     })
 
@@ -586,7 +577,7 @@ describe('CheckoutFrame', () => {
     const event = { isValid: true }
 
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame onFramesValidationChanged={onFramesValidationChanged} />)
+      wrapper = shallow(<CheckoutFrame onFramesValidationChanged={onFramesValidationChanged} />)
       wrapper.instance().handleCardValidationChanged(event)
     })
 
@@ -599,7 +590,7 @@ describe('CheckoutFrame', () => {
     const initFrames = jest.fn()
 
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame checkoutScriptReady={false} />)
+      wrapper = shallow(<CheckoutFrame checkoutScriptReady={false} />)
       wrapper.instance().initFrames = initFrames
       wrapper.setProps({
         checkoutScriptReady: true,
@@ -613,7 +604,7 @@ describe('CheckoutFrame', () => {
 
   describe('when isStartSubscriptionSubmitted is true', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame isStartSubscriptionSubmitted />)
+      wrapper = shallow(<CheckoutFrame isStartSubscriptionSubmitted />)
     })
 
     test('then wrapper state should be updated properly', () => {

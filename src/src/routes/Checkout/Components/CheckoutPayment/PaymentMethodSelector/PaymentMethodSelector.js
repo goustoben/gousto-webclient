@@ -1,49 +1,60 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Svg from 'Svg'
+import classNames from 'classnames'
 import { PaymentMethod } from 'config/signup'
-import { PaymentMethodSelectorListItem } from './PaymentMethodSelectorListItem'
+import { PaymentMethodListItem } from './PaymentMethodListItem'
 import css from './PaymentMethodSelector.css'
 
 export const PaymentMethodSelector = ({
   currentPaymentMethod,
-  onPaymentMethodChanged,
-  showSelector,
+  setCurrentPaymentMethod,
+  isPayPalReady,
 }) => {
-  const methods = [
+  const methodDescriptors = [
     {
-      method: PaymentMethod.Card,
-      label: 'Card Payment',
-      icon: css.visaMastercardIcon,
-      filename: 'payment-method-visa-mastercard',
+      paymentMethod: PaymentMethod.Card,
+      leftItem: {
+        itemType: 'label',
+        text: 'Card payment',
+      },
+      rightItem: {
+        itemType: 'svg',
+        className: css.cardsIcon,
+        fileName: 'payment-method-4-cards',
+      },
     },
-    { method: PaymentMethod.PayPal, icon: css.paypalIcon, filename: 'payment-method-paypal' },
+    {
+      paymentMethod: PaymentMethod.PayPal,
+      leftItem: {
+        itemType: 'svg',
+        className: css.paypalIcon,
+        fileName: 'payment-method-paypal',
+      },
+      rightItem: {
+        itemType: 'label',
+        className: css.paypalConnectedLabel,
+        text: 'Connected',
+        hide: !isPayPalReady,
+      },
+    },
   ]
 
   return (
-    <div>
-      <p className={css.header}>Payment method</p>
-      {showSelector && (
-        <ul className={css.list}>
-          {methods.map(({ method, label, icon, filename }) => (
-            <PaymentMethodSelectorListItem
-              paymentMethod={method}
-              currentPaymentMethod={currentPaymentMethod}
-              onPaymentMethodChanged={onPaymentMethodChanged}
-              key={method}
-            >
-              {label && <span>{label}</span>}
-              <Svg className={icon} fileName={filename} />
-            </PaymentMethodSelectorListItem>
-          ))}
-        </ul>
-      )}
-    </div>
+    <ul className={classNames(css.paymentMethods, { [css.hide]: isPayPalReady })}>
+      {methodDescriptors.map((methodDescriptor) => (
+        <PaymentMethodListItem
+          key={methodDescriptor.paymentMethod}
+          methodDescriptor={methodDescriptor}
+          currentPaymentMethod={currentPaymentMethod}
+          setCurrentPaymentMethod={setCurrentPaymentMethod}
+        />
+      ))}
+    </ul>
   )
 }
 
 PaymentMethodSelector.propTypes = {
   currentPaymentMethod: PropTypes.string.isRequired,
-  onPaymentMethodChanged: PropTypes.func.isRequired,
-  showSelector: PropTypes.bool.isRequired,
+  setCurrentPaymentMethod: PropTypes.func.isRequired,
+  isPayPalReady: PropTypes.bool.isRequired,
 }

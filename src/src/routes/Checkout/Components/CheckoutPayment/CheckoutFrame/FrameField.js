@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import InputError from 'Form/InputError'
 import Svg from 'Svg'
 import css from './CheckoutFrame.css'
-import redesignCss from '../../../CheckoutRedesignContainer.css'
+import checkoutCss from '../../../Checkout.css'
 
 export const FrameField = ({
   header,
@@ -15,7 +15,7 @@ export const FrameField = ({
   showError,
 }) => (
   <div className={css.fieldContainer}>
-    <div className={redesignCss.fieldHeader}>{header}</div>
+    <div className={checkoutCss.fieldHeader}>{header}</div>
     <div className={hasLockIcon ? css.fieldWithIcon : null}>
       <div
         data-frames={dataFrames}
@@ -30,7 +30,7 @@ export const FrameField = ({
       )}
     </div>
     <div data-testing={errorDataTesting}>
-      {showError && <InputError isCheckoutOverhaulEnabled>{errorMessage}</InputError>}
+      {showError && <InputError>{errorMessage}</InputError>}
     </div>
   </div>
 )

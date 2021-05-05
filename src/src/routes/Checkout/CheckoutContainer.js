@@ -10,7 +10,6 @@ import {
   checkoutStepIndexReached,
 } from 'actions/checkout'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
-import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import { Checkout } from './Checkout'
 
@@ -20,11 +19,8 @@ function mapStateToProps(state, ownProps) {
     params: ownProps.params,
     stepsOrder: state.basket.get('stepsOrder'),
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
-    browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
-    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
     prices: state.pricing.get('prices'),
-
     isLoginOpen: state.loginVisibility.get('login'),
     isAuthenticated: state.auth && state.auth.get('isAuthenticated'),
     isMobile: state.request.get('browser') === 'mobile',

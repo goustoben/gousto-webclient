@@ -23,11 +23,11 @@ describe('BoxDetails', () => {
   })
 
   test('should return a h3', () => {
-    expect(wrapper.find('h3').length).toEqual(1)
+    expect(wrapper.find('h3').length).toEqual(2)
   })
 
-  test('should not return a <Link> when max recipes have been chosen', () => {
-    expect(wrapper.find(Link).length).toEqual(0)
+  test('should return <Link> components', () => {
+    expect(wrapper.find(Link).length).toEqual(1)
   })
 
   test('should return a <Link> when max recipes is not reached', () => {

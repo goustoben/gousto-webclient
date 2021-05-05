@@ -108,10 +108,6 @@
 	color: errorColor;
 }
 
-.errorMessageCheckoutOverhaul {
-  composes: fontStyleS from 'design-language/typography.module.css';
-}
-
 .successMsg {
 	composes: msg;
 	color: successColor;

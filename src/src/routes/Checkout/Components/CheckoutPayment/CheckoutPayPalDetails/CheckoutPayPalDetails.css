@@ -12,30 +12,18 @@
   visibility: hidden;
 }
 
-.padlockIcon {
-  composes: padlockIcon from 'styles/icons.css';
-  padding: 0;
-  margin-right: 0.25rem;
-}
+.paypalCtaContainer {
+  width: 100%;
+  height: 3rem;
+  position: relative;
+  margin-bottom: 1rem;
 
-.text {
-  composes: fontStyleBody from 'design-language/typography.css';
-  margin-bottom: SpacingMD;
+  @media BreakpointFromMedium {
+    margin-bottom: 1.25rem;
+  }
 }
 
 .paypalContainer {
-  width: 18rem;
-  max-width: 100%;
-}
-
-.checkoutOverhaul {
-  width: 100%;
-  height: 3rem;
-  margin-bottom: 1.5rem;
-  position: relative;
-}
-
-.checkoutOverhaulPaypalContainer {
   height: 100%;
 }
 
@@ -48,12 +36,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.payPalButtonVariation {
-  margin-bottom: 1rem;
-
-  @media BreakpointFromMedium {
-    margin-bottom: 1.25rem;
-  }
 }

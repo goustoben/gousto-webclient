@@ -25,7 +25,7 @@ export class DropdownInput extends React.Component {
     uppercase: PropTypes.bool,
     dataTesting: PropTypes.string,
     error: PropTypes.bool,
-    isCheckoutOverhaulEnabled: PropTypes.bool,
+    isInCheckout: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -37,7 +37,7 @@ export class DropdownInput extends React.Component {
     error: false,
     onOpen: () => { },
     onClose: () => { },
-    isCheckoutOverhaulEnabled: false,
+    isInCheckout: false,
   }
 
   handleChange = (obj) => {
@@ -85,14 +85,14 @@ export class DropdownInput extends React.Component {
   )
 
   renderNative = (options) => {
-    const { error, uppercase, additionalProps, value, required, dataTesting, color, onOpen, onClose, isCheckoutOverhaulEnabled } = this.props
+    const { error, uppercase, additionalProps, value, required, dataTesting, color, onOpen, onClose, isInCheckout } = this.props
 
     const className = classNames(css.native, {
       [css.primary]: !error && color === 'primary',
       [css.secondary]: !error && color === 'secondary',
       [formsCss.inputError]: error,
       [css.selectuppercase]: uppercase,
-      [css.checkoutRedesign]: isCheckoutOverhaulEnabled && color === 'secondary',
+      [css.inCheckoutMobile]: isInCheckout && color === 'secondary',
     })
 
     return (
@@ -153,18 +153,18 @@ export class DropdownInput extends React.Component {
   }
 
   renderSelect = (options) => {
-    const { error, uppercase, additionalProps, dataTesting, color, onOpen, onClose, isCheckoutOverhaulEnabled } = this.props
+    const { error, uppercase, additionalProps, dataTesting, color, onOpen, onClose, isInCheckout } = this.props
 
     const className = classNames(css.select, css.dropdown, {
       [css.primary]: !error && color === 'primary',
       [css.secondary]: !error && color === 'secondary',
       [css.error]: error,
       [css.selectuppercase]: uppercase,
-      [css.checkoutDesktopRedesign]: isCheckoutOverhaulEnabled && color === 'secondary',
+      [css.inCheckoutDesktop]: isInCheckout && color === 'secondary',
     })
 
     return (
-      <div>
+      <div data-testing={dataTesting}>
         <Select
           {...additionalProps}
           className={className}
@@ -175,14 +175,13 @@ export class DropdownInput extends React.Component {
           value={this.getValue()}
           {...this.getSelectProps()}
           menuShouldScrollIntoView
-          data-testing={dataTesting}
         />
       </div>
     )
   }
 
   render = () => {
-    const { options } = this.props
+    const { options} = this.props
     const defaultOptions = []
 
     return (

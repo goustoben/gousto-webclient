@@ -8,9 +8,7 @@ import { CheckoutPayment } from '../CheckoutPayment'
 import { CheckoutCardDetails } from '../CheckoutCardDetails'
 import { CheckoutPayPalDetails } from '../CheckoutPayPalDetails'
 import { PaymentMethodSelector } from '../PaymentMethodSelector'
-import { BoxDetailsContainer } from '../../BoxDetails'
 import { ErrorMessage } from '../../ErrorMessage'
-import { Summary } from '../../Summary'
 
 describe('CheckoutPayment', () => {
   let wrapper
@@ -60,10 +58,6 @@ describe('CheckoutPayment', () => {
     test('should render the component as hidden', () => {
       expect(wrapper.find('div').first().hasClass('hide')).toBe(true)
     })
-
-    test('should not render an <ErrorMessage>', () => {
-      expect(wrapper.find(ErrorMessage).exists()).toBeFalsy()
-    })
   })
 
   describe('rendering', () => {
@@ -83,38 +77,6 @@ describe('CheckoutPayment', () => {
 
     test('should render a SubmitButton', () => {
       expect(wrapper.find(SubmitButton)).toHaveLength(1)
-    })
-
-    test('should render BoxDetails and Summary if view is mobile', () => {
-      wrapper = shallow(
-        <CheckoutPayment
-          trackingOrderPlaceAttempt={trackingOrderPlaceAttempt}
-          trackingOrderPlaceAttemptFailed={trackingOrderPlaceAttemptFailed}
-          trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
-          touch={touch}
-          submit={submit}
-          browser="mobile"
-          currentPaymentMethod={PaymentMethod.Card}
-        />
-      )
-      expect(wrapper.find(BoxDetailsContainer)).toHaveLength(1)
-      expect(wrapper.find(Summary)).toHaveLength(1)
-    })
-
-    test('should NOT render BoxDetails and Summary if view is desktop', () => {
-      wrapper = shallow(
-        <CheckoutPayment
-          trackingOrderPlaceAttempt={trackingOrderPlaceAttempt}
-          trackingOrderPlaceAttemptFailed={trackingOrderPlaceAttemptFailed}
-          trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
-          touch={touch}
-          submit={submit}
-          browser="desktop"
-          currentPaymentMethod={PaymentMethod.Card}
-        />
-      )
-      expect(wrapper.find(BoxDetailsContainer)).toHaveLength(0)
-      expect(wrapper.find(Summary)).toHaveLength(0)
     })
   })
 
@@ -181,17 +143,14 @@ describe('CheckoutPayment', () => {
         wrapper.setProps({
           currentPaymentMethod: PaymentMethod.PayPal,
         })
+        wrapper.instance().handleClick()
       })
 
       test('should call trackingOrderPlaceAttemptSucceeded prop', () => {
-        wrapper.find(SubmitButton).simulate('click')
-
         expect(trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
       })
 
       test('should call submitOrder prop', () => {
-        wrapper.find(SubmitButton).simulate('click')
-
         expect(submitOrder).toHaveBeenCalled()
       })
     })
@@ -267,28 +226,13 @@ describe('CheckoutPayment', () => {
 
   describe('and when PaymentMethodSelector reports a new selected method', () => {
     test('to Card: then it should be set as current', () => {
-      wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.Card)
+      wrapper.find(PaymentMethodSelector).prop('setCurrentPaymentMethod')(PaymentMethod.Card)
       expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.Card)
     })
 
     test('to PayPal: then it should be set as current', () => {
-      wrapper.find(PaymentMethodSelector).prop('onPaymentMethodChanged')(PaymentMethod.PayPal)
+      wrapper.find(PaymentMethodSelector).prop('setCurrentPaymentMethod')(PaymentMethod.PayPal)
       expect(setCurrentPaymentMethod).toHaveBeenCalledWith(PaymentMethod.PayPal)
-    })
-  })
-
-  describe('when isCheckoutOverhaulEnabled is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
-        isPayPalReady: true,
-      })
-    })
-
-    test('then component should be rendered correctly', () => {
-      expect(wrapper.find('.checkoutOverhaulContainer')).toHaveLength(1)
-      expect(wrapper.find('SectionHeader').exists()).toBeTruthy()
-      expect(wrapper.find('PaymentFooter').exists()).toBeTruthy()
     })
   })
 
@@ -299,42 +243,6 @@ describe('CheckoutPayment', () => {
 
     test('then framesFieldsAreValid should be changed', () => {
       expect(wrapper.state().framesFieldsAreValid).toBeTruthy()
-    })
-  })
-
-  describe('when handleSubmitFromCardDetails is called', () => {
-    const handleClick = jest.fn()
-
-    afterEach(() => {
-      jest.clearAllMocks()
-    })
-
-    describe('and getSubmitButtonIsDisabledForCardPayment returns false', () => {
-      const getSubmitButtonIsDisabledForCardPayment = jest.fn(() => false)
-      beforeEach(() => {
-        const instance = wrapper.instance()
-        instance.getSubmitButtonIsDisabledForCardPayment = getSubmitButtonIsDisabledForCardPayment
-        instance.handleClick = handleClick
-        instance.handleSubmitFromCardDetails()
-      })
-
-      test('then getSubmitButtonIsDisabledForCardPayment and handleClick should be called', () => {
-        expect(getSubmitButtonIsDisabledForCardPayment).toHaveBeenCalled()
-        expect(handleClick).toHaveBeenCalled()
-      })
-    })
-
-    describe('and getSubmitButtonIsDisabledForCardPayment returns true', () => {
-      beforeEach(() => {
-        const instance = wrapper.instance()
-        instance.getSubmitButtonIsDisabledForCardPayment = jest.fn(() => true)
-        instance.handleClick = handleClick
-        instance.handleSubmitFromCardDetails()
-      })
-
-      test('then handleClick should not be called', () => {
-        expect(handleClick).not.toHaveBeenCalled()
-      })
     })
   })
 

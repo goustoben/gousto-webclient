@@ -1,4 +1,9 @@
-import { isAddressConfirmed, transformAddresses, showAddress } from '../delivery'
+import {
+  isAddressConfirmed,
+  transformAddresses,
+  showAddress,
+  transformAddressParts,
+} from '../delivery'
 
 describe('delivery utils', () => {
   describe('given isAddressConfirmed', () => {
@@ -37,56 +42,27 @@ describe('delivery utils', () => {
   })
 
   describe('given transformAddresses', () => {
-    let isCheckoutOverhaulEnabled
     let output
 
-    describe('when isCheckoutOverhaulEnabled is true', () => {
-      describe('and transformAddresses is called', () => {
-        beforeEach(() => {
-          isCheckoutOverhaulEnabled = true
-          const addresses = [
-            {
-              id: 'placeholder',
-              labels: ['text, hello', 'text', 'text', 'text'],
-            },
-          ]
-          output = transformAddresses(addresses, isCheckoutOverhaulEnabled)
-        })
-
-        test('then should return proper values', () => {
-          const expected = [
-            {
-              value: 'placeholder',
-              label: 'Please select your address',
-            },
-          ]
-          expect(output).toEqual(expected)
-        })
+    describe('when transformAddresses is called', () => {
+      beforeEach(() => {
+        const addresses = [
+          {
+            id: 'placeholder',
+            labels: ['text, hello', 'text', 'text', 'text'],
+          },
+        ]
+        output = transformAddresses(addresses)
       })
-    })
 
-    describe('when isCheckoutOverhaulEnabled is true', () => {
-      describe('and transformAddresses is called', () => {
-        beforeEach(() => {
-          isCheckoutOverhaulEnabled = false
-          const addresses = [
-            {
-              id: 1,
-              labels: ['text1', 'text2', 'text3', 'text4'],
-            },
-          ]
-          output = transformAddresses(addresses, isCheckoutOverhaulEnabled)
-        })
-
-        test('then should return proper values', () => {
-          const expected = [
-            {
-              value: 1,
-              label: 'text4, text3, text2, text1',
-            },
-          ]
-          expect(output).toEqual(expected)
-        })
+      test('then should return proper values', () => {
+        const expected = [
+          {
+            value: 'placeholder',
+            label: 'Please select your address',
+          },
+        ]
+        expect(output).toEqual(expected)
       })
     })
   })
@@ -107,27 +83,8 @@ describe('delivery utils', () => {
       })
 
       test('then should return proper values', () => {
-        const expected = '10, street, town, county, postcode'
+        const expected = '10, Street, Town, County, postcode'
         expect(output).toEqual(expected)
-      })
-    })
-
-    describe('when called with the empty address', () => {
-      test('then the result is the empty string', () => {
-        expect(showAddress(null)).toBe('')
-      })
-    })
-
-    describe('when isCheckoutOverhaulRedesign is true', () => {
-      describe('and showAddress is called', () => {
-        beforeEach(() => {
-          output = showAddress(addresses, true)
-        })
-
-        test('then should return proper values', () => {
-          const expected = '10, Street, Town, County, postcode'
-          expect(output).toEqual(expected)
-        })
       })
 
       describe('and when an address field contains a comma', () => {
@@ -139,13 +96,34 @@ describe('delivery utils', () => {
             county: 'county',
             postcode: 'postcode',
           }
-          output = showAddress(commaAddresses, true)
+          output = showAddress(commaAddresses)
         })
 
         test('then it should return proper values', () => {
           const expected = '10, Street, Town, With, A, Comma, County, postcode'
           expect(output).toEqual(expected)
         })
+      })
+    })
+
+    describe('when called with the empty address', () => {
+      test('then the result is the empty string', () => {
+        expect(showAddress(null)).toBe('')
+      })
+    })
+  })
+
+  describe('given transformAddressParts', () => {
+    let output
+
+    describe('when transformAddressParts is called', () => {
+      beforeEach(() => {
+        const address = '1ST BEAUTIFUL ROAD'
+        output = transformAddressParts(address)
+      })
+
+      test('then should return proper response', () => {
+        expect(output).toEqual('1st Beautiful Road')
       })
     })
   })

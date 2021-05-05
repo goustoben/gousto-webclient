@@ -27,19 +27,5 @@ describe('Given OrderedRecipe', () => {
         expect(wrapper.text()).toContain('Fine Dine In')
       })
     })
-
-    describe('And isCheckoutOverhaulEnabled is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          isCheckoutOverhaulEnabled: true,
-        })
-      })
-
-      test('Then container should have redesign classes', () => {
-        expect(wrapper.find('.container').hasClass('redesignContainer')).toBeTruthy()
-        expect(wrapper.find('Image').hasClass('redesignImg')).toBeTruthy()
-        expect(wrapper.find('.recipeContainer').hasClass('redesignRecipeContainer')).toBeTruthy()
-      })
-    })
   })
 })

@@ -1,18 +1,17 @@
-@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.module.css';
-@value SpacingXS, SpacingMD from 'sass-loader!styles/spacing.scss';
-@value Blueberry, Bluecheese, Parsley, Bronze, Blackberry from 'styles/colors.css';
-@value sizeXXS from 'styles/typography.css';
+@value Bluecheese, Parsley, Bronze, Blackberry from 'styles/colors.css';
 
 @value imgLarge 80px;
 @value imgSmall 60px;
 
-.redesignContainer {
+.container {
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  composes: noWrap from 'styles/flex.css';
   margin: 0 0 0.5rem 0;
   padding: 0;
 }
 
-.redesignContainer:last-child {
+.container:last-child {
   margin: 0 0 1rem 0;
 
   @media BreakpointFromMedium {
@@ -20,17 +19,7 @@
   }
 }
 
-p {
-  margin-bottom: SpacingXS;
-}
-
-.boxdetailsImg {
-  width: imgLarge;
-  height: imgLarge;
-  border-radius: 100%;
-}
-
-.redesignImg {
+.image {
   border-radius: 0;
   width: imgSmall;
   height: imgSmall;
@@ -41,32 +30,14 @@ p {
   }
 }
 
-.summaryImg {
-  width: imgSmall;
-  height: imgSmall;
-  border-radius: 100%;
+.recipeContainer {
+  display: flex;
+  margin-left: 1rem;
+  width: calc(100% - 90px);
 }
 
 .heading {
   color: Parsley;
-}
-
-.link {
-  color: Bluecheese;
-
-  &:hover {
-    color: Blueberry;
-    cursor: pointer;
-    text-decoration: underline;
-  }
-}
-
-.basics {
-  composes: textSM from 'styles/typography.css';
-}
-
-.arrowRight {
-  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 }
 
 .detailsRow {
@@ -85,77 +56,12 @@ p {
   vertical-align: middle;
 }
 
-.recipeContainer {
-  composes: flex rowWrap from 'styles/flex.css';
-  composes: marginLGLeft from 'sass-loader!styles/spacing.scss';
-  width: calc(100% - 90px);
-  @media ScreenSMMin {
-    flex-flow: row;
-  }
-}
-
-.redesignRecipeContainer {
-  margin-left: 1rem;
-}
-
-.boxdetailsFlex {
-  composes: row spaceBetween from 'styles/flex.css';
-}
-
-.summaryFlex {
-  composes: column flexStart from 'styles/flex.css';
-  margin-top: 0;
-}
-
-.recipeSubContainer,
-.receipeName {
-  composes: flex from 'styles/flex.css';
-  flex: 1 100%;
-}
-
-.staplesContainer {
-  @media ScreenSMMin {
-    flex: 1 100%;
-  }
-}
-
-.details {
-  composes: noMargin from 'sass-loader!styles/spacing.scss';
-  flex: 1 100%;
-}
-
-.detailsRedesign {
-  flex: 0 auto;
-}
-
 .recipeName {
-  composes: column from 'styles/flex.css';
-  align-content: flex-start;
+  flex: 1 100%;
   display: flex;
-  @media ScreenSMMin {
-    flex: 3 0;
-  }
+  flex-direction: column;
 }
 
-.textBold {
-  composes: textBold from 'styles/typography.css';
-}
-
-.redesignRecipeName {
+.recipeTitle {
   composes: fontStyleSubHead from 'design-language/typography.css';
-}
-
-.textSM {
-  composes: textSM from 'styles/typography.css';
-}
-
-.container {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
-  composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-  composes: noWrap from 'styles/flex.css';
-}
-
-.strike {
-  composes: textStrike from 'styles/typography.css';
-  composes: paddingSMRight paddingSMRight from 'sass-loader!styles/spacing.scss';
 }

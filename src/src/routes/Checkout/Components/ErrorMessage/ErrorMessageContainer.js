@@ -33,7 +33,6 @@ const getErrorType = (state, ownProps) => {
 function mapStateToProps(state, ownProps) {
   return {
     errorType: getErrorType(state, ownProps),
-    goBack: ownProps.router.goBack,
   }
 }
 

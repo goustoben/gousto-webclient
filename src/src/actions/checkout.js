@@ -15,8 +15,8 @@ import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
 
-import { getAboutYouFormName, getDeliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
-import { getIs3DSForSignUpEnabled, getIsCheckoutOverhaulEnabled } from 'selectors/features'
+import { accountFormName, deliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
+import { getIs3DSForSignUpEnabled } from 'selectors/features'
 import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
 
 import { actionTypes } from './actionTypes'
@@ -310,12 +310,10 @@ export function checkoutPostSignup(recaptchaValue) {
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
       const { form, pricing } = getState()
-      const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(getState())
-      const aboutYouFormName = getAboutYouFormName(getState(), isCheckoutOverhaulEnabled)
-      const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
-      const aboutYou = aboutYouValues.get('aboutyou')
-      const email = aboutYou.get('email')
-      const password = aboutYou.get('password')
+      const accountValues = Immutable.fromJS(form[accountFormName].values)
+      const account = accountValues.get('account')
+      const email = account.get('email')
+      const password = account.get('password')
       const orderId = getState().basket.get('previewOrderId')
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken: recaptchaValue }, orderId))
       const prices = pricing.get('prices')
@@ -393,7 +391,6 @@ export function trackingOrderPlaceAttemptSucceeded() {
   return (dispatch, getState) => {
     const { basket, pricing, form } = getState()
     const prices = pricing.get('prices')
-    const deliveryFormName = getDeliveryFormName(getState())
     const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
     const intervalId = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 

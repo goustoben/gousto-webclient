@@ -1,10 +1,5 @@
-@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
-@value White, Mushroom50, Parsley, Bluecheese, Oyster, Mackerel from 'styles/colors.css';
+@value White, Bluecheese, Oyster, Mackerel from 'styles/colors.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
-
-.header {
-  composes: headerMD headlineFont from 'styles/typography.css';
-}
 
 .headerWrapper {
   display: flex;
@@ -13,7 +8,7 @@
   margin-bottom: 1rem;
 }
 
-.redesignHeader {
+.header {
   composes: fontStyleM from 'design-language/typography.css';
   margin-bottom: 0;
 }
@@ -27,13 +22,10 @@
   white-space: nowrap;
 }
 
-.boxDetailsContainer {
-  composes: flex column stretch from 'styles/flex.css';
-  composes: paddingLG from 'sass-loader!styles/spacing.scss';
+.container {
+  display: flex;
+  flex-direction: column;
   background-color: White;
-}
-
-.redesignContainer {
   border-bottom: 1px solid Oyster;
   padding: 0 0.75rem 1rem;
 
@@ -41,29 +33,6 @@
     padding: 0 1.5rem 1.5rem;
     border: none;
   }
-}
-
-.col {
-  composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
-
-  @media ScreenXSMax {
-    margin: 0;
-  }
-}
-
-.colSM {
-  composes: col;
-  composes: col-lg-4 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
-}
-
-.arrowRight {
-  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
-  font-size: 10px;
-}
-
-.text {
-  composes: textSM from 'styles/typography.css';
-  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
 }
 
 .separator {

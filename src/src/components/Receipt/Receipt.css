@@ -12,7 +12,7 @@
 	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
 }
 
-.rowRedesign {
+.rowInCheckout {
   margin-bottom: 0;
   composes: fontStyleBody from 'design-language/typography.css';
 }

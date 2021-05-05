@@ -21,7 +21,7 @@ export const HeaderContent = ({
     tabIndex="0"
     onClick={handleClick}
     onKeyDown={onEnter(handleClick)}
-    data-testing={isExpanded ? 'collapse' : 'expand'}
+    data-testing="checkoutOrderSummary"
   >
     <span className={css.title}>{isExpanded ? 'Hide order summary' : 'Show order summary'}</span>
     <span className={css.poundsWrapper}>

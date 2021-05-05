@@ -1,16 +1,96 @@
-@value SpacingMD from 'sass-loader!styles/spacing.scss';
 @value ScreenXSMax from 'styles/screenSizes.css';
-@value BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
-@value Mackerel from 'styles/colors.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointToLarge, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value Mackerel, White, Oyster, Bluecheese, Radish, DarkHaricot, Blackberry, DarkHaricot05 from 'styles/colors.css';
 
-.rowCheckout {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
-  width: 100%;
-  margin: 0 auto;
+.sectionContainer {
+  border-bottom: 1px solid Mackerel;
+  border-top: 1px solid Mackerel;
+  padding: 1rem 0.75rem 1.5rem;
+  margin-bottom: 1rem;
+  background: White;
+
+  @media BreakpointFromMedium {
+    border: 1px solid Mackerel;
+    padding: 1.5rem 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
-.rowCheckoutRedesign {
+.inputContainer {
+  max-width: 100%;
+  flex: 0 0 100%;
+  margin: 0 0 1rem 0;
   padding: 0;
+  composes: fontStyleBody from 'design-language/typography.css';
+  border-radius: 3px;
+
+  @media BreakpointFromMedium {
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.checkoutInput {
+  composes: fontStyleBody from 'design-language/typography.css';
+  padding: 0 0.75rem;
+  border-color: Oyster;
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  height: 3rem;
+
+  &:hover {
+   border: 1px solid Bluecheese !important;
+  }
+
+  &:focus {
+    border: 2px solid Bluecheese !important;
+  }
+}
+
+.checkoutInputError {
+  background: White;
+  border: 2px solid Radish;
+  box-shadow: none;
+}
+
+.prefixPadding {
+  padding-left: 4rem;
+}
+
+.relative {
+  position: relative;
+}
+
+.fieldHeader {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin-bottom: 0.5rem;
+}
+
+.validPassword {
+  border: 1px solid DarkHaricot !important;
+  color: Blackberry;
+  background: DarkHaricot05 !important;
+}
+
+.password {
+  padding-right: 2.5rem;
+}
+
+.disableInvalid {
+  background: none;
+  border-color: Mackerel;
+  color: Blackberry;
+
+  &:hover,
+  &:focus {
+    border-color: Mackerel;
+  }
+}
+
+.rowCheckout {
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
 
   @media BreakpointFromMedium and BreakpointToLarge {
     max-width: 36rem;
@@ -20,19 +100,11 @@
 
   @media BreakpointFromLarge {
     padding: 0 2rem;
+    display: flex;
   }
 }
 
-.col {
-  composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
-}
-
 .section {
-  composes: col;
-  composes: col-md-7 from 'sass-loader!styles/bootstrap.scss';
-}
-
-.sectionRedesign {
   padding: 0;
 
   @media BreakpointFromMedium and BreakpointToLarge {
@@ -41,18 +113,11 @@
 
   @media BreakpointFromLarge {
     padding: 0 1.5rem 0 0;
+    width: 60%;
   }
 }
 
 .aside {
-  composes: col;
-  composes: col-md-5 from 'sass-loader!styles/bootstrap.scss';
-  @media ScreenXSMax {
-    margin-top: SpacingMD;
-  }
-}
-
-.asideRedesign {
   padding: 0;
   display: none;
 
@@ -65,17 +130,15 @@
   @media BreakpointFromMedium and BreakpointToLarge {
     max-width: 36rem;
   }
+
+  @media BreakpointFromLarge {
+    width: 35%;
+  }
 }
 
 .checkoutContent {
-  composes: rowCheckout;
+  width: 100%;
   composes: pageContainerLG from 'styles/layout.css';
-  composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
-  padding-top: 20px;
-  padding-bottom: 15px;
-}
-
-.checkoutContentRedesign {
   padding: 0 0 1rem 0;
   margin: 0 auto;
 
@@ -89,35 +152,6 @@
   }
 }
 
-.menuTitle {
-  composes: headerXXL from 'styles/typography.css';
-  composes: noMargin noPadding from 'sass-loader!styles/spacing.scss';
-}
-
-.subHeader {
-  composes: relative from 'styles/position.css';
-  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-  background: White;
-  z-index: 1;
-}
-
-.subHeaderContent {
-  composes: pageContainer from 'styles/layout.css';
-  composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
-}
-
-.mobileButton {
-  composes: fixed from 'styles/position.css';
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  border-radius: 0;
-}
-
-.errorContainer {
-  margin-top: 10px;
-}
-
 .modal {
   position: relative !important;
   left: inherit !important;
@@ -128,7 +162,7 @@
   margin: 0 auto !important;
   box-shadow: none !important;
   max-width: 650px !important;
-  border-radius: 0px !important;
+  border-radius: 0 !important;
   padding: 1rem !important;
   @media ScreenXSMax {
     width: 98% !important;
@@ -143,4 +177,23 @@
   display: flex;
   align-items: center;
   padding: 1rem;
+}
+
+.mobileOnly {
+  @media BreakpointFromMedium {
+    display: none;
+  }
+}
+
+.desktopOnly {
+  border: 1px solid Mackerel;
+  height: 100%;
+
+  @media BreakpointToMedium {
+    display: none;
+  }
+
+  @media BreakpointFromLarge {
+    width: 40%;
+  }
 }

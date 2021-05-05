@@ -1,6 +1,6 @@
 import { getFormValues } from 'redux-form'
 import localisationConfig from 'config/localisation'
-import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { accountFormName, deliveryFormName } from 'selectors/checkout'
 
 function formatString(value) {
   return typeof value === 'string' ? value.replace(/ /g, '').toLowerCase() : value
@@ -12,8 +12,7 @@ function formatPhone(value) {
 
 export function getAvailableUserData(action, state = {}) {
   let data
-  const aboutYouFormName = getAboutYouFormName(state)
-  const aboutYouValues = (getFormValues(aboutYouFormName)(state) || {}).aboutyou || {}
+  const aboutYouValues = (getFormValues(accountFormName)(state) || {}).aboutyou || {}
 
   if (aboutYouValues.email) {
     data = {
@@ -23,7 +22,6 @@ export function getAvailableUserData(action, state = {}) {
       zp: formatString(state.basket.get('postcode')),
     }
 
-    const deliveryFormName = getDeliveryFormName(state)
     const deliveryValues = (getFormValues(deliveryFormName)(state) || {}).delivery || {}
 
     if (deliveryValues.postcode) {

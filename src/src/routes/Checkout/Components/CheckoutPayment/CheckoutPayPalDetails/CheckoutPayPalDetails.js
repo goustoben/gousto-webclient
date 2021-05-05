@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { Loader } from 'goustouicomponents'
 
 import { clickCancelPayPal, clickConfirmPayPal, clickContinuePayPal } from 'actions/trackingKeys'
-import { PayPalConfirmation } from '../PayPalConfirmation'
 
 import css from './CheckoutPayPalDetails.css'
 
@@ -91,7 +90,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   renderPayPalButton = () => {
-    const { firePayPalError, trackEvent, isCheckoutOverhaulEnabled } = this.props
+    const { firePayPalError, trackEvent } = this.props
 
     const buttonsConfig = {
       fundingSource: paypal.FUNDING.PAYPAL,
@@ -113,12 +112,10 @@ class CheckoutPayPalDetails extends React.PureComponent {
       },
     }
 
-    if (isCheckoutOverhaulEnabled) {
-      buttonsConfig.style = {
-        height: 48,
-        label: 'pay',
-        tagline: false,
-      }
+    buttonsConfig.style = {
+      height: 48,
+      label: 'pay',
+      tagline: false,
     }
 
     return paypal.Buttons(buttonsConfig).render('#paypal-container')
@@ -147,45 +144,21 @@ class CheckoutPayPalDetails extends React.PureComponent {
     }
   }
 
-  renderBaseline() {
+  render() {
     const { hide, isPayPalSetupDone, hasErrors } = this.props
-    const { isPayPalInitialized } = this.state
-
-    return (
-      <div className={classNames({ [css.hide]: hide })}>
-        <div className={classNames({ [css.hide]: isPayPalSetupDone })}>
-          <p className={css.text}>
-            <span className={css.padlockIcon} />
-            You will be prompted by PayPal for payment details to securely setup your subscription.
-          </p>
-          {!hasErrors && !isPayPalInitialized && <p className={css.text}>PayPal is loading...</p>}
-          <div
-            id="paypal-container"
-            className={classNames(css.paypalContainer, { [css.transparent]: !isPayPalInitialized })}
-          />
-        </div>
-
-        {isPayPalSetupDone && <PayPalConfirmation />}
-      </div>
-    )
-  }
-
-  renderCheckoutOverhaul() {
-    const { hide, isPayPalSetupDone, hasErrors, isCheckoutOverhaulEnabled } = this.props
     const { isPayPalInitialized } = this.state
 
     const isLoading = !hasErrors && !isPayPalInitialized
 
     return (
       <div
-        className={classNames(css.checkoutOverhaul, {
+        className={classNames(css.paypalCtaContainer, {
           [css.hide]: hide || isPayPalSetupDone,
-          [css.payPalButtonVariation]: isCheckoutOverhaulEnabled,
         })}
       >
         <div
           id="paypal-container"
-          className={classNames(css.checkoutOverhaulPaypalContainer, {
+          className={classNames(css.paypalContainer, {
             [css.transparent]: !isPayPalInitialized,
           })}
         />
@@ -196,16 +169,6 @@ class CheckoutPayPalDetails extends React.PureComponent {
         )}
       </div>
     )
-  }
-
-  render() {
-    const { isCheckoutOverhaulEnabled } = this.props
-
-    if (isCheckoutOverhaulEnabled) {
-      return this.renderCheckoutOverhaul()
-    } else {
-      return this.renderBaseline()
-    }
   }
 }
 
@@ -220,7 +183,6 @@ CheckoutPayPalDetails.propTypes = {
   hide: PropTypes.bool,
   isPayPalSetupDone: PropTypes.bool,
   token: PropTypes.string,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 CheckoutPayPalDetails.defaultProps = {
@@ -234,7 +196,6 @@ CheckoutPayPalDetails.defaultProps = {
   hide: false,
   isPayPalSetupDone: false,
   token: null,
-  isCheckoutOverhaulEnabled: false,
 }
 
 export { CheckoutPayPalDetails }

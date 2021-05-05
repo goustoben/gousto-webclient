@@ -162,10 +162,6 @@ export const getIsMenuRedirectPageEnabled = ({ features }) => (
   features && features.getIn(['isMenuRedirectPageEnabled', 'value'], false)
 )
 
-export const getIsCheckoutOverhaulEnabled = ({ features }) => (
-  features && features.getIn(['isCheckoutOverhaulEnabled', 'value'], false)
-)
-
 export const getIsSubscriberPricingEnabled = ({ features }) => (
   features && features.getIn(['isSubscriberPricingEnabled', 'value'], false)
 )
@@ -180,18 +176,6 @@ export const getIsWizardPricePerServingEnabled = ({ features }) => (
 
 export const getIsMenuProgressBarHidden = ({ features }) => (
   features && features.getIn(['isMenuProgressBarHidden', 'value'], false)
-)
-
-export const getIsCheckoutOverhaulV1Enabled = ({ features }) => (
-  features && features.getIn(['isCheckoutOverhaulV1Enabled', 'value'], false)
-)
-
-export const getIsCheckoutOverhaulV3Enabled = ({ features }) => (
-  features && features.getIn(['isCheckoutOverhaulV3Enabled', 'value'], false)
-)
-
-export const getIsCheckoutOverhaulV4Enabled = ({ features }) => (
-  features && features.getIn(['isCheckoutOverhaulV4Enabled', 'value'], false)
 )
 
 export const getIsCarouselShiftEnabled = ({ features }) => (

@@ -1,22 +1,17 @@
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import moment from 'moment'
-import { Button } from 'goustouicomponents'
 import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import { fetchDeliveryDays } from 'apis/deliveries'
-import { onEnter } from 'utils/accessibility'
-import { clickUseThisAddress, checkoutClickContinueToPayment } from 'actions/trackingKeys'
-import { Postcode } from './Postcode'
-import { AddressInputs } from './AddressInputs'
-import { DeliveryPhoneNumber } from '../Delivery/DeliveryDetails/DeliveryPhoneNumber'
-import { DeliveryInstruction } from '../Delivery/DeliveryDetails/DeliveryInstruction'
-import { DeliveryEducationBanner } from '../Delivery/DeliveryDetails/DeliveryEducationBanner'
+import { checkoutClickContinueToPayment } from 'actions/trackingKeys'
+import { DeliveryPhoneNumber } from '../Delivery/DeliveryPhoneNumber'
+import { DeliveryInstruction } from '../Delivery/DeliveryInstruction'
+import { DeliveryEducationBanner } from '../Delivery/DeliveryEducationBanner'
 import { AddressOverhaul } from './AddressOverhaul/AddressOverhaul'
 import { CheckoutButton } from '../CheckoutButton'
-import css from './Address.css'
 
 const propTypes = {
   formName: PropTypes.string,
@@ -41,9 +36,8 @@ const propTypes = {
   isNDDExperiment: PropTypes.bool,
   isMobile: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
   submit: PropTypes.func,
-  aboutYouErrors: PropTypes.bool,
+  userProspect: PropTypes.func,
 }
 
 const defaultProps = {
@@ -52,11 +46,9 @@ const defaultProps = {
   formErrors: {},
   formValues: {},
   isNDDExperiment: false,
-
   change: () => {},
   touch: () => {},
   untouch: () => {},
-
   addressesPending: false,
   initialPostcode: '',
   isDelivery: true,
@@ -71,9 +63,8 @@ const defaultProps = {
   deliveryTariffId: '',
   deliveryDate: '',
   menuCutoffUntil: '',
-  isCheckoutOverhaulEnabled: false,
   submit: () => {},
-  aboutYouErrors: false,
+  userProspect: () => {},
 }
 
 export class Address extends React.PureComponent {
@@ -272,16 +263,6 @@ export class Address extends React.PureComponent {
     }
   }
 
-  handleCantFind = () => {
-    const { formName, sectionName, change } = this.props
-    const postcode = this.getFormValue('postcodeTemp')
-
-    this.handleSelectedAddressChange()
-    change(formName, `${sectionName}.notFound`, true)
-    change(formName, `${sectionName}.postcode`, postcode)
-    change(formName, `${sectionName}.addressId`, 'placeholder')
-  }
-
   handleEnterAddressManually = () => {
     const { formName, sectionName, change } = this.props
     const postcode = this.getFormValue('postcodeTemp')
@@ -291,7 +272,7 @@ export class Address extends React.PureComponent {
     change(formName, `${sectionName}.addressId`, 'placeholder')
   }
 
-  validateRedesignFields = () => {
+  validateFields = () => {
     const { sectionName, formErrors } = this.props
     const errors = formErrors[sectionName] || {}
 
@@ -303,7 +284,8 @@ export class Address extends React.PureComponent {
       errors.street ||
       errors.town ||
       errors.phone ||
-      errors.deliveryInstruction
+      errors.deliveryInstruction ||
+      errors.deliveryInstructionsCustom
     )
   }
 
@@ -318,8 +300,8 @@ export class Address extends React.PureComponent {
       trackCheckoutButtonPressed,
       isMobile,
       trackUTMAndPromoCode,
-      isCheckoutOverhaulEnabled,
       submit,
+      userProspect,
     } = this.props
 
     this.forceReValidation()
@@ -332,9 +314,7 @@ export class Address extends React.PureComponent {
     touch(formName, `${sectionName}.postcode`)
 
     const errors = formErrors[sectionName] || {}
-    const error = isCheckoutOverhaulEnabled
-      ? this.validateRedesignFields()
-      : errors.postcode || errors.houseNo || errors.street || errors.town || errors.county
+    const error = this.validateFields()
 
     if (!error) {
       const postcode = this.getFormValue('postcode')
@@ -345,9 +325,7 @@ export class Address extends React.PureComponent {
         onAddressConfirm(postcode)
       }
 
-      trackUTMAndPromoCode(
-        isCheckoutOverhaulEnabled ? checkoutClickContinueToPayment : clickUseThisAddress
-      )
+      trackUTMAndPromoCode(checkoutClickContinueToPayment)
 
       if (isMobile) {
         trackCheckoutButtonPressed('DeliveryAddress Confirmed', {
@@ -356,9 +334,8 @@ export class Address extends React.PureComponent {
         })
       }
 
-      if (isCheckoutOverhaulEnabled) {
-        submit()
-      }
+      userProspect()
+      submit()
     } else {
       const { scrollToFirstMatchingRef } = this.props
       const sectionErrors = {
@@ -373,16 +350,6 @@ export class Address extends React.PureComponent {
         })
       }
     }
-  }
-
-  /**
-   * Render address inputs
-   * @param selectedAddress
-   */
-  renderAddressInputs = () => {
-    const { receiveRef, sectionName } = this.props
-
-    return <AddressInputs receiveRef={receiveRef} sectionName={sectionName} />
   }
 
   reset = (field, value = '') => {
@@ -417,28 +384,25 @@ export class Address extends React.PureComponent {
     }
   }
 
-  renderVariation = () => {
+  render() {
     const { isMobile, addressesPending, receiveRef, sectionName, isDelivery } = this.props
     const {
       addresses,
       postcodeTemp,
       notFound,
-      showDropdown,
       isAddressSelected,
       deliveryInstructions,
     } = this.getAddressProps()
-    const isCTADisabled = this.validateRedesignFields()
-    const currentSelectedAddress = showAddress(this.getAddressObjectFromForm(), true)
+    const isCTADisabled = this.validateFields()
+    const currentSelectedAddress = showAddress(this.getAddressObjectFromForm())
 
     return (
       <Fragment>
         <AddressOverhaul
-          addressesPending={addressesPending}
           onPostcodeLookup={this.getAddresses}
           postcodeTemp={postcodeTemp}
           addresses={addresses}
           onSelectedAddressChange={this.handleSelectedAddressChange}
-          showDropdown={showDropdown}
           receiveRef={receiveRef}
           isMobile={isMobile}
           isAddressSelected={isAddressSelected}
@@ -450,17 +414,13 @@ export class Address extends React.PureComponent {
 
         {isDelivery && (
           <Fragment>
-            <DeliveryPhoneNumber
-              receiveRef={receiveRef}
-              sectionName={sectionName}
-              isCheckoutOverhaulEnabled
-            />
+            <DeliveryPhoneNumber receiveRef={receiveRef} sectionName={sectionName} />
             <DeliveryInstruction
               value={deliveryInstructions}
               reset={this.reset}
               receiveRef={receiveRef}
               sectionName={sectionName}
-              isCheckoutOverhaulEnabled
+              isMobile={isMobile}
             />
             <DeliveryEducationBanner />
             <CheckoutButton
@@ -473,76 +433,6 @@ export class Address extends React.PureComponent {
         )}
       </Fragment>
     )
-  }
-
-  renderControlVersion = () => {
-    const {
-      isDelivery,
-      isMobile,
-      trackCheckoutButtonPressed,
-      addressesPending,
-      receiveRef,
-      aboutYouErrors,
-    } = this.props
-    const { addresses, postcodeTemp, showDropdown, isAddressSelected } = this.getAddressProps()
-
-    return (
-      <div>
-        <Postcode
-          postcodePending={addressesPending}
-          onPostcodeLookup={this.getAddresses}
-          postcodeTemp={postcodeTemp}
-          addresses={addresses}
-          onSelectedAddressChange={this.handleSelectedAddressChange}
-          showDropdown={showDropdown}
-          receiveRef={receiveRef}
-          trackClick={trackCheckoutButtonPressed}
-          isMobile={isMobile}
-          isAddressSelected={isAddressSelected}
-        />
-
-        {showDropdown && addresses.length > 1 && !isAddressSelected && (
-          <p>
-            <span
-              data-testing="addressNotFound"
-              onClick={this.handleCantFind}
-              className={css.linkBase}
-              onKeyDown={onEnter(this.handleCantFind)}
-              role="button"
-              tabIndex="0"
-            >
-              Can’t find your address?
-            </span>
-          </p>
-        )}
-
-        {isAddressSelected && this.renderAddressInputs()}
-        {isDelivery && (
-          <Fragment>
-            <br />
-            <Button
-              data-testing="checkoutSelectAddressCTA"
-              disabled={aboutYouErrors}
-              onClick={this.handleAddressConfirm}
-              pending={addressesPending}
-              width="full"
-            >
-              Use This Address
-            </Button>
-          </Fragment>
-        )}
-      </div>
-    )
-  }
-
-  render() {
-    const { isCheckoutOverhaulEnabled } = this.props
-
-    if (isCheckoutOverhaulEnabled) {
-      return this.renderVariation()
-    }
-
-    return this.renderControlVersion()
   }
 }
 

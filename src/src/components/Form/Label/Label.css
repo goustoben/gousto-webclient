@@ -1,25 +1,16 @@
 @value NewGrey from 'styles/colors.css';
 
 .labelContainer {
-	margin: 0;
-	display: block;
+  display: block;
+  margin: 0;
 }
 
 .label {
-	composes: textMD textBold from 'styles/typography.css';
-}
-
-.subLabel {
-	composes: textXS from 'styles/typography.css';
-	margin-top: -8px;
-}
-
-.labelRedesign {
   composes: fontStyleSubHead from 'design-language/typography.css';
   margin-bottom: 0.5rem;
 }
 
-.subLabelRedesign {
+.sublabel {
   color: NewGrey;
   composes: fontStyleS from 'design-language/typography.css';
   margin-bottom: 0.5rem;
