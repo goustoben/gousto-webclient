@@ -2,7 +2,7 @@ import { fetchFeatures } from 'apis/fetchS3'
 import logger from 'utils/logger'
 import {
   getUserToken,
-  identifyUser,
+  identifyUserUsingOAuth,
   refreshUserToken,
   forgetUserToken,
   validateRecaptchaUserToken,
@@ -101,7 +101,7 @@ export async function identify(ctx) {
     accessToken = getCookieValue(ctx, 'oauth_token', 'access_token')
 
     if (accessToken) {
-      const identifyResponse = await identifyUser(accessToken)
+      const identifyResponse = await identifyUserUsingOAuth(accessToken)
       ctx.response.body = identifyResponse.data
     } else {
       throw new Error('Access token not present')

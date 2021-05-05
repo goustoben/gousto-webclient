@@ -1,6 +1,6 @@
 import { fetchFeatures } from 'apis/fetchS3'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
-import { getUserToken, refreshUserToken, validateUserPassword, identifyUser, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
+import { getUserToken, refreshUserToken, validateUserPassword, identifyUserUsingOAuth, forgetUserToken, validateRecaptchaUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
 import logger from 'utils/logger'
 import { RECAPTCHA_PRIVATE_KEY } from '../../../server/config/recaptcha'
@@ -19,7 +19,7 @@ jest.mock('apis/auth', () => ({
   refreshUserToken: jest.fn(),
   validateUserPassword: jest.fn(),
   forgetUserToken: jest.fn(),
-  identifyUser: jest.fn(),
+  identifyUserUsingOAuth: jest.fn(),
   validateRecaptchaUserToken: jest.fn(),
 }))
 
@@ -366,13 +366,13 @@ describe('auth', () => {
 
   describe('identify', () => {
     afterEach(() => {
-      identifyUser.mockReset()
+      identifyUserUsingOAuth.mockReset()
     })
 
     test('should identify the user based on the token', async () => {
       ctx = getCtx()
       const accessToken = 'eed4b4f4a3ed0091cb4b7af9c581350bdf9ea806'
-      identifyUser.mockReturnValueOnce({ data: 'test' })
+      identifyUserUsingOAuth.mockReturnValueOnce({ data: 'test' })
       getCookieValue.mockReturnValueOnce(accessToken)
       await identify(ctx)
       expect(ctx.response.body).toEqual('test')
@@ -381,14 +381,14 @@ describe('auth', () => {
     test('should return error message if access_token not present', async () => {
       ctx = getCtx()
       const accessToken = ''
-      identifyUser.mockReturnValueOnce({ data: 'test' })
+      identifyUserUsingOAuth.mockReturnValueOnce({ data: 'test' })
       getCookieValue.mockReturnValueOnce(accessToken)
       await identify(ctx)
       expect(ctx.response.body.error).toEqual(Error('Access token not present'))
     })
 
     test('should return 401 if not autorize', async () => {
-      identifyUser.mockReturnValueOnce(
+      identifyUserUsingOAuth.mockReturnValueOnce(
         new Promise((resolve, reject) => reject(new Error('error message!')))
       )
       ctx = getCtx()
