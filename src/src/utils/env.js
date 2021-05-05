@@ -11,6 +11,7 @@ if (__SERVER__) {
       apiToken: configEnvFromFile.apiToken || __API_TOKEN__,
       authClientId: configEnvFromFile.authClientId || __AUTH_CLIENT_ID__,
       authClientSecret: configEnvFromFile.authClientSecret || __AUTH_CLIENT_SECRET__,
+      recaptchaReferralPrivateKey: configEnvFromFile.recaptchaReferralPrivateKey || __RECAPTCHA_RAF_PVTK__,
     }
   } catch (err) {
     logger.critical({ message: 'Reading config/env.json' })

@@ -197,6 +197,10 @@ module.exports = {
     experiments: '/user/experiments'
   },
 
+  user: {
+    referAFriend: '/user/refer-a-friend'
+  },
+
   userFeedback: {
     feedback: '/feedback'
   }

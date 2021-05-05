@@ -92,6 +92,7 @@ ENV_VAR_LIST=(
     'api_token::inbound_frontend_access_key_goes_here'
     'auth_client_id::6'
     'auth_client_secret::frontend_service_secret'
+    'recaptcha_referral_private_key::private_key_goes_here'
 )
 
 SEDCMD="sed -r -i -e"
