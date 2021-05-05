@@ -16,9 +16,7 @@ export const formContainer = (
     reduxForm({
       form: formName,
       destroyOnUnmount: false,
-      forceUnregisterOnUnmount: false,
-      keepDirtyOnReinitialize: true,
-      enableReinitialize: true,
+      forceUnregisterOnUnmount: true,
       validate: (data, props) => {
         let combinedRules = {}
         let validationRules = rules
@@ -29,11 +27,9 @@ export const formContainer = (
         validationRules.forEach((rule) => {
           let validationRule = rule
           if (typeof rule === 'function') {
-            const { isCheckoutOverhaulEnabled, isPassStrengthEnabled } = props
-            const isFirstCheckoutStepForms = formName === 'aboutyou' || formName === 'yourdetails'
-            validationRule = isFirstCheckoutStepForms
-              ? rule(isPassStrengthEnabled)
-              : rule(data, isCheckoutOverhaulEnabled)
+            const { isPassStrengthEnabled } = props
+            const isFirstCheckoutStepForms = formName === 'account'
+            validationRule = isFirstCheckoutStepForms ? rule(isPassStrengthEnabled) : rule(data)
           }
           combinedRules = { ...combinedRules, ...validationRule }
         })

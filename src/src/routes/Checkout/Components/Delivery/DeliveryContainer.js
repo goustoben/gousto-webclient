@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { getFormValues, submit, getFormMeta, change } from 'redux-form'
-import { getDeliveryFormName } from 'selectors/checkout'
-import { getIsCheckoutOverhaulEnabled, getIsPassStrengthEnabled } from 'selectors/features'
+import { getFormValues, submit, getFormMeta } from 'redux-form'
+import { deliveryFormName } from 'selectors/checkout'
+import { getIsPassStrengthEnabled } from 'selectors/features'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
@@ -10,7 +10,7 @@ import { Delivery } from './Delivery'
 
 export function mapStateToProps(sectionName) {
   return (state) => ({
-    formName: getDeliveryFormName(state),
+    formName: deliveryFormName,
     sectionName,
     addressDetail: state.checkout.get('selectedAddress'),
     addresses: state.checkout.get('deliveryAddresses'),
@@ -19,15 +19,15 @@ export function mapStateToProps(sectionName) {
     deliveryAddress: state.checkout.get('deliveryAddress'),
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
 
-    formValues: getFormValues(getDeliveryFormName(state))(state),
-    formFields: getFormMeta(getDeliveryFormName(state))(state),
-    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
+    formValues: getFormValues(deliveryFormName)(state),
+    formFields: getFormMeta(deliveryFormName)(state),
     deliveryDays: state.boxSummaryDeliveryDays,
     date: state.basket.get('date'),
     slotId: state.basket.get('slotId'),
     aboutYouErrors:
-      state.form.yourdetails &&
-      state.form.yourdetails.syncErrors.aboutyou &&
+      state.form.account &&
+      state.form.account.syncErrors &&
+      state.form.account.syncErrors.account &&
       state.request.get('browser') === 'mobile' &&
       getIsPassStrengthEnabled(state),
   })
@@ -37,7 +37,6 @@ const connectComponent = (sectionName) =>
   connect(mapStateToProps(sectionName), {
     manualSubmit: submit,
     clearErrors: actions.checkoutClearErrors,
-    change,
     trackUTMAndPromoCode,
   })(Delivery)
 
@@ -50,37 +49,30 @@ export function validationMessages(sectionName) {
   }
 }
 
-export const getInitialValues = (state, sectionName) => {
-  const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
-
-  return {
-    [sectionName]: {
-      addressId: 'placeholder',
-      notFound: false,
-      addressType: 'home',
-      deliveryInstruction: isCheckoutOverhaulEnabled ? 'Please select an option' : 'Front Porch',
-      phone: state.basket.get('phone', ''),
-      addresses: [],
-      confirmed: false,
-      ...(isCheckoutOverhaulEnabled && {
-        firstName: '',
-        lastName: '',
-      }),
-    },
-  }
-}
+export const getInitialValues = (state, sectionName) => ({
+  [sectionName]: {
+    addressId: 'placeholder',
+    notFound: false,
+    addressType: 'home',
+    deliveryInstruction: 'Please select an option',
+    phone: state.basket.get('phone', ''),
+    addresses: [],
+    confirmed: false,
+    firstName: '',
+    lastName: '',
+  },
+})
 
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
-      const formName = getDeliveryFormName(state)
-      const delivery = state.form[formName]
+      const delivery = state.form[deliveryFormName]
       const initialValues = delivery && delivery.initial ? delivery.initial : {}
 
       return {
         // needed for hacked custom validation in validation/delivery.js
-        formValues: getFormValues(formName)(state),
-        formFields: getFormMeta(formName)(state),
+        formValues: getFormValues(deliveryFormName)(state),
+        formFields: getFormMeta(deliveryFormName)(state),
         sectionName,
 
         initialValues: {

@@ -54,4 +54,5 @@ export const DeliveryAddressContainer = connect(mapStateToProps, {
   registerField,
   trackCheckoutButtonPressed,
   trackUTMAndPromoCode,
+  userProspect: actions.userProspect,
 })(Address)

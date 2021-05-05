@@ -16,8 +16,8 @@ const validatePassword = async (password) => {
 }
 
 export default (values) =>
-  validatePassword(values.aboutyou.password).then(isValid => {
+  validatePassword(values.account.password).then(isValid => {
     if (!isValid) {
-      throw { aboutyou: { password: 'Your password is too easy to guess. Please choose another one.' } } // eslint-disable-line no-throw-literal
+      throw { account: { password: 'Your password is too easy to guess. Please choose another one.' } } // eslint-disable-line no-throw-literal
     }
   })

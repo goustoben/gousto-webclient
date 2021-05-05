@@ -1,22 +1,14 @@
-@value sizeXL from 'styles/typography.css';
-@value RadiusSM from 'styles/borders.css';
-@value successColor from 'styles/forms.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
 @value DarkHaricot, White, Blackberry, Radish from 'styles/colors.css';
-@value inputHeight: 41px;
 
 .inputContainer {
   composes: flex column flexGrow center from 'styles/flex.css';
 }
 
 .inputGroup {
-  composes: flex from 'styles/flex.css';
-  composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
   width: 100%;
-}
-
-.inputGroupRedesign {
   padding: 0 0 1rem;
+  display: flex;
   flex-direction: column;
 
   @media BreakpointFromMedium {
@@ -24,27 +16,8 @@
   }
 }
 
-.inputAddon {
-  composes: flex column from 'styles/flex.css';
-}
-
-.hideCTA {
-  display: none;
-}
-
-.inputBase {
-  composes: input from 'styles/forms.css';
-  height: inputHeight;
-}
-
 .input {
-  composes: inputBase;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.inputRedesign {
-  height: 3rem;
+  composes: input from 'styles/forms.css';
 }
 
 .discountLabel {
@@ -53,32 +26,23 @@
 }
 
 .inputError {
-  composes: inputBase;
+  composes: input;
   composes: inputError from 'styles/forms.css';
-}
-
-.inputErrorRedesign {
-  composes: inputError;
   border-color: Radish;
   border-width: 2px;
   background: White;
-  color: Blackberry !important;
+  color: Blackberry;
   composes: fontStyleBody from 'design-language/typography.css';
 }
 
 .inputSuccess {
-  composes: inputBase;
-  color: successColor !important;
+  composes: input;
   composes: inputSuccess from 'styles/forms.css';
-}
-
-.inputSuccessRedesign {
-  composes: inputSuccess;
   composes: fontStyleBody from 'design-language/typography.css';
   border-width: 2px;
   border-color: DarkHaricot;
   background: White;
-  color: Blackberry !important;
+  color: Blackberry;
   position: relative;
 }
 
@@ -110,38 +74,11 @@
   display: none;
 }
 
-.applyButton {
-  cursor: pointer;
-  composes: paddingXSTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-  border-top-right-radius: RadiusSM;
-  border-bottom-right-radius: RadiusSM;
-  border-bottom-width: 0;
-  max-height: none;
-  height: inputHeight;
-  line-height: inputHeight;
-}
-
-.buttonContainer {
-  border: 0;
-}
-
-.removeButton {
-  composes: applyButton;
-  font-size: sizeXL;
-}
-
-.buttonRemove {
-  border-width: 0;
-}
-
-.icon {
-  composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
-}
-
 .successMsg {
   composes: msg from 'styles/forms.css';
 }
 
 .errorMsg {
   composes: errorMsg from 'styles/forms.css';
+  composes: fontStyleS from 'design-language/typography.css';
 }

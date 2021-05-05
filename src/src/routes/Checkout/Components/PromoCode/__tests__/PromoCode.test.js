@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
+import Immutable from 'immutable'
 import { PromoCode } from 'routes/Checkout/Components/PromoCode/PromoCode'
-import { Button, Segment } from 'goustouicomponents'
 
 describe('PromoCode', () => {
   const promoCode = ''
@@ -51,14 +51,6 @@ describe('PromoCode', () => {
       expect(wrapper.find('input').length).toEqual(1)
     })
 
-    it('should have one Button', () => {
-      expect(wrapper.find(Button).length).toEqual(1)
-    })
-
-    it('should have one Segment', () => {
-      expect(wrapper.find(Segment).length).toEqual(1)
-    })
-
     it('should render a <div> with no props', () => {
       wrapper = shallow(<PromoCode />)
       expect(wrapper.type()).toEqual('div')
@@ -88,15 +80,6 @@ describe('PromoCode', () => {
       await expect(loadPrices).toHaveBeenCalledTimes(1)
     })
 
-    it('should remove exisiting promocode', async () => {
-      wrapper.setState({ successMsg: 'Promocode applied' })
-      wrapper.find(Segment).first().simulate('click')
-      expect(basketPromoCodeChange).toHaveBeenCalledTimes(1)
-      expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
-      await expect(loadPrices).toHaveBeenCalledTimes(1)
-      expect(trackPromocodeChange).toHaveBeenCalled()
-    })
-
     it('should handle promo code change, update promoCode in the store', () => {
       const collection = wrapper.find({ name: 'promoCode' })
       expect(collection.length).toBe(1)
@@ -106,43 +89,6 @@ describe('PromoCode', () => {
         expect(basketPromoCodeChange).toHaveBeenCalledTimes(2)
         expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
       })
-    })
-
-    it('should apply promocode if button clicked', async () => {
-      wrapper = shallow(
-        <PromoCode
-          promoCode="promo"
-          promoCodeApplied={false}
-          previewOrderId={previewOrderId}
-          basketPromoCodeChange={basketPromoCodeChange}
-          basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
-          loadPrices={loadPrices}
-          trackPromocodeChange={trackPromocodeChange}
-        />
-      )
-      wrapper.find(Segment).first().simulate('click')
-
-      await expect(loadPrices).toHaveBeenCalledTimes(1)
-      expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
-      expect(trackPromocodeChange).toHaveBeenCalled()
-    })
-
-    it('should set pending to false if promoCode is invalid', () => {
-      wrapper = shallow(
-        <PromoCode
-          promoCode="invalid"
-          promoCodeApplied
-          previewOrderId={previewOrderId}
-          basketPromoCodeChange={basketPromoCodeChange}
-          basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
-          loadPrices={loadPrices}
-          trackPromoCodeChange={trackPromocodeChange}
-        />
-      )
-
-      wrapper.find(Segment).first().simulate('click')
-
-      expect(wrapper.state('pending')).toEqual(false)
     })
 
     describe('handleInput', () => {
@@ -191,6 +137,37 @@ describe('PromoCode', () => {
         wrapper.find('input').simulate('keyUp', { keyCode: 16 })
         expect(loadPrices).not.toHaveBeenCalled()
         expect(trackPromocodeChange).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when promoCodeValid is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          prices: Immutable.fromJS({
+            promoCodeValid: true,
+          }),
+        })
+        wrapper.instance().promoCodeValidation()
+      })
+
+      test('then component state should be updated properly', () => {
+        expect(wrapper.state().errorMsg).toBe('')
+        expect(wrapper.state().successMsg).toBe('Promocode added')
+      })
+    })
+
+    describe('when promoCodeValid is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          prices: Immutable.fromJS({
+            promoCodeValid: false,
+          }),
+        })
+        wrapper.instance().promoCodeValidation()
+      })
+
+      test('then component state should be updated properly', () => {
+        expect(wrapper.state().errorMsg).toBe('This promocode is not valid')
       })
     })
   })

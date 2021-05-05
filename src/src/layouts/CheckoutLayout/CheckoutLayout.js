@@ -1,49 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from 'classnames'
 import { Header } from 'Header'
-import Footer from 'components/Footer/Footer'
 import Helmet from 'react-helmet'
 import css from './CheckoutLayout.css'
 
 class CheckoutLayout extends React.PureComponent {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    params: PropTypes.object,
-    isCheckoutOverhaulEnabled: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    params: {
-      stepName: '',
-    },
-    isCheckoutOverhaulEnabled: false,
-  }
-
-  getMobileTitle = () => {
-    const { params } = this.props
-    const currentStep = params.stepName
-    let title
-
-    switch (currentStep) {
-    case 'boxdetails':
-      title = 'Basket Summary'
-      break
-    case 'yourdetails':
-      title = 'Checkout'
-      break
-    case 'payment':
-      title = 'Payment'
-      break
-    default:
-      title = ''
-    }
-
-    return title
-  }
-
   render() {
-    const { isCheckoutOverhaulEnabled, children } = this.props
+    const { children } = this.props
 
     return (
       <span>
@@ -58,23 +21,19 @@ class CheckoutLayout extends React.PureComponent {
           }]}
         />
 
-        <div className={classNames(css.layoutContainer, { [css.layoutContainerRedesign]: isCheckoutOverhaulEnabled })}>
-          <div className={classNames(css.pageContainer, { [css.pageContainerRedesign]: isCheckoutOverhaulEnabled })}>
-            <Header simple title={isCheckoutOverhaulEnabled ? '' : this.getMobileTitle()} />
+        <div className={css.layoutContainer}>
+          <div className={css.pageContainer}>
+            <Header simple />
             {children}
           </div>
-          {!isCheckoutOverhaulEnabled && (
-            <Footer
-              type="checkout"
-              simple={false}
-              helpPreLoginVisibilityChange={() => {}}
-              trackNavigationClick={() => {}}
-            />
-          )}
         </div>
       </span>
     )
   }
+}
+
+CheckoutLayout.propTypes = {
+  children: PropTypes.node.isRequired,
 }
 
 export default CheckoutLayout

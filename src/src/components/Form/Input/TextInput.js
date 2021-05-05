@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import formsCss from 'styles/forms.css'
 import InputWrapper from 'Form/InputWrapper'
 import css from './input.css'
-import redesignCss from '../../../routes/Checkout/CheckoutRedesignContainer.css'
+import checkoutCss from '../../../routes/Checkout/Checkout.css'
 
 const propTypes = {
   additionalProps: PropTypes.shape({}),
@@ -31,7 +31,7 @@ const propTypes = {
   pattern: PropTypes.string,
   'data-testing': PropTypes.string,
   error: PropTypes.bool,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
+  isInCheckout: PropTypes.bool,
   inputPrefix: PropTypes.node,
   passwordErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   isPassStrengthEnabled: PropTypes.bool,
@@ -55,7 +55,7 @@ const defaultProps = {
   autocompleteOff: false,
   onKeyDown: () => {},
   error: false,
-  isCheckoutOverhaulEnabled: false,
+  isInCheckout: false,
   inputPrefix: null,
   passwordErrors: [],
   isPassStrengthEnabled: false,
@@ -165,11 +165,11 @@ export class TextInput extends Component {
   }
 
   render = () => {
-    const { additionalProps, autocompleteOff, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isCheckoutOverhaulEnabled, inputPrefix, passwordErrors, isPassStrengthEnabled } = this.props
+    const { additionalProps, autocompleteOff, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isInCheckout, inputPrefix, passwordErrors, isPassStrengthEnabled } = this.props
     const { invertPasswordError } = this.state
 
     return (
-      <div className={classNames({ [redesignCss.relative]: isCheckoutOverhaulEnabled && inputPrefix })}>
+      <div className={classNames({ [checkoutCss.relative]: isInCheckout && inputPrefix })}>
         <input
           { ...additionalProps }
           className={classNames(
@@ -180,12 +180,12 @@ export class TextInput extends Component {
               [formsCss.inputError]: error,
               [formsCss.disabled]: disabled,
               [css[textAlign]]: css[textAlign],
-              [redesignCss.inputRedesign]: isCheckoutOverhaulEnabled,
-              [redesignCss.inputErrorRedesign]: error && isCheckoutOverhaulEnabled,
-              [redesignCss.prefixPadding]: isCheckoutOverhaulEnabled && inputPrefix,
-              [redesignCss.validPassword]: isPassStrengthEnabled && passwordErrors.length === 0,
-              [redesignCss.password]: isPassStrengthEnabled,
-              [redesignCss.disableInvalid]: isPassStrengthEnabled && passwordErrors.length > 0 && invertPasswordError,
+              [checkoutCss.checkoutInput]: isInCheckout,
+              [checkoutCss.checkoutInputError]: error && isInCheckout,
+              [checkoutCss.prefixPadding]: isInCheckout && inputPrefix,
+              [checkoutCss.validPassword]: isPassStrengthEnabled && passwordErrors.length === 0,
+              [checkoutCss.password]: isPassStrengthEnabled,
+              [checkoutCss.disableInvalid]: isPassStrengthEnabled && passwordErrors.length > 0 && invertPasswordError,
             },
           )}
           placeholder={placeholder}
@@ -206,7 +206,7 @@ export class TextInput extends Component {
           data-testing={dataTesting}
           onChange={() => {}}
         />
-        {isCheckoutOverhaulEnabled && inputPrefix}
+        {isInCheckout && inputPrefix}
       </div>
     )
   }

@@ -47,16 +47,10 @@ module.exports = {
             },
           }],
         },
-        aboutyou: {
+        account: {
           selector: '*[data-testing="checkoutAboutYouSection"]',
 
           elements: {
-            firstNameInput: {
-              selector: '*[data-testing="checkoutFirstNameInput"]',
-            },
-            lastNameInput: {
-              selector: '*[data-testing="checkoutLastNameInput"]',
-            },
             emailInput: {
               selector: '*[data-testing="checkoutEmailInput"]',
             },
@@ -66,20 +60,6 @@ module.exports = {
           },
 
           commands: [{
-            setFirstName: function () {
-              this
-                .waitForElementVisible('@firstNameInput')
-                .setValue('@firstNameInput', faker.name.firstName())
-
-              return this
-            },
-            setLastName: function () {
-              this
-                .waitForElementVisible('@lastNameInput')
-                .setValue('@lastNameInput', faker.name.lastName())
-
-              return this
-            },
             setEmail: function () {
               this
                 .waitForElementVisible('@emailInput')
@@ -100,33 +80,54 @@ module.exports = {
           selector: '*[data-testing="checkoutDeliverySection"]',
 
           elements: {
+            firstNameInput: {
+              selector: '*[data-testing="checkoutFirstNameInput"]',
+            },
+            lastNameInput: {
+              selector: '*[data-testing="checkoutLastNameInput"]',
+            },
             addressDropdown: {
               selector: '*[data-testing=checkoutAddressDropdown]',
             },
             secondOption: {
               selector: '*[data-testing=checkoutAddressDropdown] .Select-option:nth-of-type(2) > span',
             },
-            secondOptionNative: {
-              selector: '*[data-testing=checkoutAddressDropdown] option:nth-of-type(2)',
-            },
-            selectAddressCTA: {
-              selector: '*[data-testing=checkoutSelectAddressCTA]',
-            },
             phoneNumberInput: {
               selector: '*[data-testing=checkoutPhoneNumberInput]',
             },
+            deliveryOptionsDropdown: {
+              selector: 'div[data-testing="checkoutDeliveryDetailsInstruction"]',
+            },
+            deliveryOption: {
+              selector: 'div[data-testing=checkoutDeliveryDetailsInstruction] .Select-option:nth-of-type(2) > span',
+            }
           },
 
           commands: [{
+            setFirstName: function () {
+              this
+                .waitForElementVisible('@firstNameInput')
+                .setValue('@firstNameInput', faker.name.firstName())
+
+              return this
+            },
+            setLastName: function () {
+              this
+                .waitForElementVisible('@lastNameInput')
+                .setValue('@lastNameInput', faker.name.lastName())
+
+              return this
+            },
             setAddress: function () {
               clickElement.call(this, '@addressDropdown')
               clickElement.call(this, '@secondOption')
-              clickElement.call(this, '@selectAddressCTA')
             },
             setPhoneNumber: function () {
-              this
-                .waitForElementVisible('@phoneNumberInput')
-                .setValue('@phoneNumberInput', '2030111002')
+              this.setValue('@phoneNumberInput', '2030111002')
+            },
+            selectDeliveryOption: function () {
+              clickElement.call(this, '@deliveryOptionsDropdown')
+              clickElement.call(this, '@deliveryOption')
             },
           }],
         },
@@ -134,57 +135,61 @@ module.exports = {
           selector: '*[data-testing="checkoutPaymentSection"]',
           elements: {
             cardNameInput: {
-              selector: '*[data-testing="checkoutCardNameInput"]',
+              selector: 'input[data-testing="checkoutCardNameInput"]',
             },
             cardNameInputError: {
               selector: '*[data-testing="checkoutCardNameInputError"]',
             },
-            billingAddressChange: {
-              selector: '*[data-testing="checkout_payment_toggle"]',
+            cardNumber: {
+              selector: '[data-frames="cardNumber"] iframe',
             },
-            postCodeAddress: {
-              selector: '*[name="payment.postcodeTemp"]',
+            cardNumberError: {
+              selector: '*[data-testing="checkoutFrameCardNoError"]',
             },
-            addressNotFound: {
-              selector: '*[data-testing="addressNotFound"]',
+            cardExpiryDate: {
+              selector: '[data-frames="expiryDate"] iframe',
             },
-            houseNoInvalid: {
-              selector: '*[data-testing="houseNoError"]',
+            cardExpiryDateError: {
+              selector: '*[data-testing="checkoutFrameExpiryError"]',
+            },
+            cardCvv: {
+              selector: '[data-frames="cvv"] iframe',
+            },
+            cardCvvError: {
+              selector: '*[data-testing="checkoutFrameCVVError"]',
             },
             paymentMethodPaypal: {
-              selector: '*[data-testing="paymentMethod_PayPal"]',
+              selector: '*[data-testing="checkoutPaymentMethodPayPal"]',
             },
             paypalSetupIframe: {
               selector: 'div#paypal-container iframe.component-frame'
+            },
+            CTA: {
+              selector: '*[data-testing="checkoutCTA"]',
             }
           },
 
           commands: [{
-            setCardName: function () {
+            setCardName: function (browser) {
               this
                 .waitForElementVisible('@cardNameInput')
                 .setValue('@cardNameInput', `${faker.name.firstName()} ${faker.name.lastName()}`)
+
+              browser.keys(browser.Keys.TAB)
             },
             setCardNumber: function (browser) {
               this
-                .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', '')
+                .waitForElementVisible('@cardNumber')
+                .setValue('@cardNumber', '4485040371536584')
 
-              browser.keys(browser.Keys.TAB)
-              browser.keys('4485040371536584')
               browser.keys(browser.Keys.TAB)
             },
             changeCardNumber: function (browser, cardNumber = '4485040371536584') {
               this
-                .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', ``)
+                .waitForElementVisible('@cardNumber')
+                .setValue('@cardNumber', '')
 
-              browser.keys(browser.Keys.TAB)
-              browser.keys(browser.Keys.BACK_SPACE.repeat(16))
               browser.keys(cardNumber)
-            },
-            changeCardNumberToEmpty: function (browser) {
-              this.changeCardNumber(browser, '')
             },
             setCardExpiryDate: function (browser) {
               browser.keys('01')
@@ -192,11 +197,9 @@ module.exports = {
             },
             changeCardExpiryDate: function (browser, month = '01', year = '25') {
               this
-                .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', ``)
+                .waitForElementVisible('@cardExpiryDate')
+                .setValue('@cardExpiryDate', '')
 
-              browser.keys(browser.Keys.TAB)
-              browser.keys(browser.Keys.TAB)
               browser.keys(browser.Keys.BACK_SPACE.repeat(4))
               browser.keys(month)
               browser.keys(year)
@@ -209,25 +212,13 @@ module.exports = {
             },
             changeCardSecurityCode: function (browser, cvv = '100') {
               this
-                .waitForElementVisible('@cardNameInput')
-                .setValue('@cardNameInput', ``)
+                .waitForElementVisible('@cardCvv')
+                .setValue('@cardCvv', ``)
 
-              browser.keys(browser.Keys.TAB)
-              browser.keys(browser.Keys.TAB)
-              browser.keys(browser.Keys.TAB)
               browser.keys(browser.Keys.BACK_SPACE.repeat(4))
               browser.keys(cvv)
             },
-            setInvalidBillingAddress: function (browser) {
-              this.waitForElementVisible('@billingAddressChange')
-              clickElement.call(this, '@billingAddressChange')
-              this.waitForElementVisible('@postCodeAddress', SMALL_DELAY)
-                .setValue('@postCodeAddress', `W140EE${browser.Keys.TAB}${browser.Keys.ENTER}`)
-              this.waitForElementVisible('@addressNotFound')
-              clickElement.call(this, '@addressNotFound')
-            },
             setInvalidCardDetails: function () {
-              this.waitForElementVisible('@billingAddressChange')
               clickElement.call(this, '@billingAddressChange')
             },
             checkIfErrorForName: function () {
@@ -235,10 +226,23 @@ module.exports = {
                 .waitForElementVisible('@cardNameInputError')
                 .expect.element('@cardNameInputError').to.be.present.before(SMALL_DELAY)
             },
-            checkIfErrorForBillingAddress: function () {
+            checkIfErrorForCardNumber: function () {
               this
-                .waitForElementVisible('@houseNoInvalid')
-                .expect.element('@houseNoInvalid').to.be.present.before(SMALL_DELAY)
+                .waitForElementVisible('@cardNumber')
+                .expect.element('@cardNumberError').to.be.present.before(SMALL_DELAY)
+            },
+            checkIfErrorForExpiry: function () {
+              this
+                .waitForElementVisible('@cardExpiryDate')
+                .expect.element('@cardExpiryDateError').to.be.present.before(SMALL_DELAY)
+            },
+            checkIfErrorForCVV: function () {
+              this
+                .waitForElementVisible('@cardCvv')
+                .expect.element('@cardCvvError').to.be.present.before(SMALL_DELAY)
+            },
+            startYourSubscription: function () {
+              clickElement.call(this, '@CTA')
             },
             selectPaypalPaymentMethod: function (browser) {
               clickElement.call(this, '@paymentMethodPaypal')
@@ -371,24 +375,27 @@ module.exports = {
 
           return this
         },
-        submitAboutYouSection: function () {
-          this.section.aboutyou.setFirstName()
-          this.section.aboutyou.setLastName()
-          this.section.aboutyou.setEmail()
-          this.section.aboutyou.setPassword()
+        submitAccountSection: function (browser) {
+          this.section.account.setEmail()
+          this.section.account.setPassword()
+
+          browser.pause(SMALL_DELAY)
 
           return this
         },
         submitDeliverySection: function () {
+          this.section.delivery.setFirstName()
+          this.section.delivery.setLastName()
           this.section.delivery.setAddress()
           this.section.delivery.setPhoneNumber()
+          this.section.delivery.selectDeliveryOption()
 
           return this
         },
         submitPaymentSection: function (browser) {
-          this.section.payment.setCardName()
-          browser.pause(SMALL_DELAY)
           this.section.payment.setCardNumber(browser)
+          browser.pause(SMALL_DELAY)
+          this.section.payment.setCardName(browser)
           browser.pause(SMALL_DELAY)
           this.section.payment.setCardExpiryDate(browser)
           browser.pause(SMALL_DELAY)
@@ -396,23 +403,25 @@ module.exports = {
 
           return this
         },
-        submitPaymentSectionWithoutCardName: function (browser) {
-          this.section.payment.changeCardNumber(browser)
+        checkIfErrorsAreVisible: function (browser) {
+          browser.pause(SMALL_DELAY)
+          this.section.payment.checkIfErrorForCardNumber()
+          this.section.payment.checkIfErrorForName()
+          this.section.payment.checkIfErrorForExpiry()
+          this.section.payment.checkIfErrorForCVV()
+          return this
+        },
+        signupWithoutPaymentInfo: function () {
+          this.section.payment.startYourSubscription()
+          return this
+        },
+        submitPaymentSectionWithoutCardNumber: function (browser) {
+          this.section.payment.setCardName(browser)
           browser.pause(SMALL_DELAY)
           this.section.payment.changeCardExpiryDate(browser)
           browser.pause(SMALL_DELAY)
           this.section.payment.changeCardSecurityCode(browser)
           return this
-        },
-        submitPaymentSectionWithoutBillingAddress: function (browser) {
-          this.section.payment.setCardName()
-          browser.pause(SMALL_DELAY)
-          this.section.payment.setInvalidBillingAddress(browser)
-        },
-        submitPaymentSectionWithoutCardDetails: function (browser) {
-          browser.pause(SMALL_DELAY)
-          this.section.payment.changeCardNumberToEmpty(browser)
-          this.section.payment.setInvalidCardDetails()
         },
         changeAndSubmitPaymentSection: function (browser) {
           browser.pause(SMALL_DELAY)
@@ -426,10 +435,6 @@ module.exports = {
         },
         checkIfErrorForNameVisible: function () {
           this.section.payment.checkIfErrorForName()
-          return this
-        },
-        checkIfErrorForBillingAddressVisible: function () {
-          this.section.payment.checkIfErrorForBillingAddress()
           return this
         },
         checkIfErrorForCardDetailsVisible: function (browser) {

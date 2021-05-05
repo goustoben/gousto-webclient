@@ -89,10 +89,6 @@ describe('Billing Address', () => {
       test('should render <BillingAddressContainer>', () => {
         expect(wrapper.find(BillingAddressContainer)).toHaveLength(1)
       })
-
-      test('should render "Use Delivery address" as link text', () => {
-        expect(wrapper.find('.link').text()).toContain('Use Delivery address')
-      })
     })
 
     describe('when "isBillingAddressDifferent" is false', () => {
@@ -118,10 +114,6 @@ describe('Billing Address', () => {
 
       test('should not render <BillingAddressContainer>', () => {
         expect(wrapper.find(BillingAddressContainer)).toHaveLength(0)
-      })
-
-      test('should render "Use Delivery address" as link text', () => {
-        expect(wrapper.find('.link').text()).toContain('Enter new billing address')
       })
     })
   })
@@ -153,10 +145,9 @@ describe('Billing Address', () => {
     })
   })
 
-  describe('when isCheckoutOverhaulEnabled is set', () => {
+  describe('when checkbox is checked', () => {
     beforeEach(() => {
       wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
         formValues: {
           payment: { isBillingAddressDifferent: false },
         },

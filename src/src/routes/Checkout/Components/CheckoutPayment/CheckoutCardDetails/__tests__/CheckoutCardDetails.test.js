@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { CheckoutCardDetails } from '../CheckoutCardDetails'
-import { CheckoutName } from '../../CheckoutName'
 import { CheckoutFrame } from '../../CheckoutFrame'
 import { CheckoutAddress } from '../../CheckoutAddress'
 
@@ -24,8 +23,7 @@ describe('given CheckoutCardDetails is rendered', () => {
     })
 
     test('should not render Payment Form Sections', () => {
-      expect(wrapper.find(CheckoutAddress)).toHaveLength(0)
-      expect(wrapper.find(CheckoutName)).toHaveLength(0)
+      expect(wrapper.find(CheckoutAddress)).toHaveLength(1)
     })
 
     test('should render a CheckoutFrame', () => {
@@ -40,10 +38,6 @@ describe('given CheckoutCardDetails is rendered', () => {
 
     test('should render a CheckoutFrame', () => {
       expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
-    })
-
-    test('should render a CheckoutName', () => {
-      expect(wrapper.find(CheckoutName)).toHaveLength(1)
     })
 
     test('should render a CheckoutAddress', () => {
@@ -68,19 +62,6 @@ describe('given CheckoutCardDetails is rendered', () => {
 
     test('then it should be visible', () => {
       expect(wrapper.hasClass('hide')).toBeFalsy()
-    })
-  })
-
-  describe('when isCheckoutOverhaulEnabled is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isCheckoutOverhaulEnabled: true,
-      })
-    })
-
-    test('then component should be rendered correctly', () => {
-      expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
-      expect(wrapper.find(CheckoutAddress)).toHaveLength(1)
     })
   })
 })

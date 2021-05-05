@@ -9,31 +9,15 @@ module.exports = {
 
     browser
       .perform(function (done) {
-        checkout.section.checkoutContainer.submitPaymentSectionWithoutCardName(browser)
+        checkout.section.checkoutContainer.signupWithoutPaymentInfo(browser)
         done()
       })
       .perform(function (done) {
-        checkout.section.checkoutContainer.goToNextStep()
+        checkout.section.checkoutContainer.checkIfErrorsAreVisible(browser)
         done()
       })
       .perform(function (done) {
-        checkout.section.checkoutContainer.checkIfErrorForNameVisible()
-        done()
-      })
-      .perform(function (done) {
-        checkout.section.checkoutContainer.submitPaymentSectionWithoutBillingAddress(browser)
-        done()
-      })
-      .perform(function (done) {
-        checkout.section.checkoutContainer.goToNextStep()
-        done()
-      })
-      .perform(function (done) {
-        checkout.section.checkoutContainer.checkIfErrorForBillingAddressVisible()
-        done()
-      })
-      .perform(function (done) {
-        checkout.section.checkoutContainer.submitPaymentSectionWithoutCardDetails(browser)
+        checkout.section.checkoutContainer.submitPaymentSectionWithoutCardNumber(browser)
         done()
       })
       .perform(function (done) {

@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { skipDelivery, referAFriend, fetchUserCredit } from 'apis/user'
+import { skipDelivery, referAFriend, fetchUserCredit, applyPromo } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as prospectAPI from 'apis/prospect'
@@ -45,6 +45,7 @@ jest.mock('apis/user', () => ({
   skipDelivery: jest.fn(),
   referAFriend: jest.fn(),
   fetchUserCredit: jest.fn(),
+  applyPromo: jest.fn(),
   fetchUserProjectedDeliveries: jest.fn().mockImplementation(
     () => Promise.resolve({ data: {} })
   ),
@@ -118,7 +119,9 @@ const formValues = {
         line3: '',
         town: '',
         county: '',
-        postcode: ''
+        postcode: '',
+        firstName: 'John',
+        lastName: 'Doe',
       }
     }
   },
@@ -295,11 +298,9 @@ describe('user actions', () => {
           browser: 'desktop'
         }),
         form: {
-          aboutyou: {
+          account: {
             values: {
-              aboutyou: {
-                firstName: 'Barack',
-                lastName: 'Obama',
+              account: {
                 email: 'test_email@test.com'
               }
             }
@@ -566,11 +567,9 @@ describe('user actions', () => {
           }
         }),
         form: {
-          aboutyou: {
+          account: {
             values: {
-              aboutyou: {
-                firstName: ' Barack ',
-                lastName: ' Obama ',
+              account: {
                 email: 'test_email@test.com'
               }
             }
@@ -590,8 +589,8 @@ describe('user actions', () => {
             tariff_id: '',
             phone_number: '',
             email: 'test_email@test.com',
-            name_first: 'Barack',
-            name_last: 'Obama',
+            name_first: 'John',
+            name_last: 'Doe',
             promo_code: '',
             password: undefined,
             age_verified: 0,
@@ -658,11 +657,9 @@ describe('user actions', () => {
         const secondTrimState = {
           ...trimState,
           form: {
-            aboutyou: {
+            account: {
               values: {
-                aboutyou: {
-                  firstName: ' Barack Chad ',
-                  lastName: ' Obama ',
+                account: {
                   email: 'test_email@test.com',
                   allowEmail: true,
                 }
@@ -676,7 +673,7 @@ describe('user actions', () => {
         })
 
         test('should allow a name to have a space in the middle', async () => {
-          expectedParam.customer.name_first = 'Barack Chad'
+          expectedParam.customer.name_first = 'John'
           expectedParam.customer.marketing_do_allow_email = 1
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
 
@@ -730,16 +727,15 @@ describe('user actions', () => {
         browser: 'desktop'
       }),
       form: {
-        aboutyou: {
+        account: {
           values: {
-            aboutyou: {
-              firstName: ' Barack ',
-              lastName: ' Obama ',
+            account: {
               email: 'test_email@test.com',
               allowEmail: true,
             }
           }
         },
+        ...formValues,
       }
     }
     beforeEach(() => {
@@ -751,8 +747,8 @@ describe('user actions', () => {
         test('should trim whitespace from before and after the user name', async () => {
           const expectedParam = {
             email: 'test_email@test.com',
-            user_name_first: 'Barack',
-            user_name_last: 'Obama',
+            user_name_first: 'John',
+            user_name_last: 'Doe',
             promocode: '',
             allow_marketing_email: true,
             preview_order_id: '',
@@ -768,16 +764,15 @@ describe('user actions', () => {
         const newState = {
           ...state,
           form: {
-            aboutyou: {
+            account: {
               values: {
-                aboutyou: {
-                  firstName: ' Barack Chad ',
-                  lastName: ' Obama ',
+                account: {
                   email: 'test_email@test.com',
                   allowEmail: true,
                 }
               }
             },
+            ...formValues,
           }
         }
         beforeEach(() => {
@@ -786,8 +781,8 @@ describe('user actions', () => {
         test('should allow a name to have a space in the middle', async () => {
           const expectedParam = {
             email: 'test_email@test.com',
-            user_name_first: 'Barack Chad',
-            user_name_last: 'Obama',
+            user_name_first: 'John',
+            user_name_last: 'Doe',
             promocode: '',
             allow_marketing_email: true,
             preview_order_id: '',
@@ -1473,6 +1468,36 @@ describe('user actions', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({
           type: actionTypes.USER_UNLOAD_ORDERS,
           orderIds: [expectedOrderId]
+        })
+      })
+    })
+  })
+
+  describe('userPromoApplyCode', () => {
+    const state = {
+      auth: Immutable.fromJS({
+        accessToken: 'token',
+      }),
+      promoAgeVerified: false,
+      user: {
+        ageVerified: false,
+      }
+    }
+
+    beforeEach(() => {
+      getState.mockReturnValue(state)
+    })
+
+    describe('when promoAgeVerified is false', () => {
+      describe('and userPromoApplyCode is called', () => {
+        const promoCode = 'DTI-PROMO-CODE'
+
+        beforeEach(async () => {
+          await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
+        })
+
+        test('then applyPromo should be called with proper parameters', () => {
+          expect(applyPromo).toHaveBeenCalledWith('token', promoCode)
         })
       })
     })

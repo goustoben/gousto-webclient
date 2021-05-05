@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import CheckoutLayout from 'layouts/CheckoutLayout/CheckoutLayout'
 import { Header } from 'Header'
-import Footer from 'components/Footer/Footer'
 
 describe('CheckoutLayout', () => {
   let wrapper
@@ -21,7 +20,4 @@ describe('CheckoutLayout', () => {
     expect(wrapper.find(Header).length).toBe(1)
   })
 
-  test('should return a <Footer>', () => {
-    expect(wrapper.find(Footer).length).toBe(1)
-  })
 })

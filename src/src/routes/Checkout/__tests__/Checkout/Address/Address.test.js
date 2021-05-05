@@ -3,11 +3,10 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import moment from 'moment'
 import { Address } from 'routes/Checkout/Components/Address/Address'
-import { Button } from 'goustouicomponents'
-import { Postcode } from 'routes/Checkout/Components/Address/Postcode'
 import { AddressInputs } from 'routes/Checkout/Components/Address/AddressInputs'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
+import { CheckoutButton } from 'routes/Checkout/Components/CheckoutButton'
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
@@ -38,10 +37,6 @@ describe('Address', () => {
     )
   })
 
-  test('should return div', () => {
-    expect(wrapper.type()).toBe('div')
-  })
-
   test('should not transform delivery days', () => {
     expect(transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
   })
@@ -54,13 +49,10 @@ describe('Address', () => {
           selectedAddress={selectedAddresses}
           registerField={jest.fn()}
           isNDDExperiment={false}
+          isDelivery
         />
       )
       wrapper.setState({ addressSaved: false })
-    })
-
-    test('should render 1 <Postcode> component(s)', () => {
-      expect(wrapper.find(Postcode).length).toBe(1)
     })
 
     test('should not render <AddressInputs> component(s)', () => {
@@ -68,7 +60,7 @@ describe('Address', () => {
     })
 
     test('should render 1 <Button> component(s)', () => {
-      expect(wrapper.find(Button)).toHaveLength(1)
+      expect(wrapper.find(CheckoutButton)).toHaveLength(1)
     })
   })
 
@@ -95,16 +87,8 @@ describe('Address', () => {
         wrapper.setState({ addressSaved: false })
       })
 
-      test('should render 1 <Postcode> component(s)', () => {
-        expect(wrapper.find(Postcode).length).toBe(1)
-      })
-
       test('should not render <AddressInputs> component(s)', () => {
         expect(wrapper.find(AddressInputs)).toHaveLength(0)
-      })
-
-      test('should render 1 <Button> component(s)', () => {
-        expect(wrapper.find(Button)).toHaveLength(1)
       })
     })
 

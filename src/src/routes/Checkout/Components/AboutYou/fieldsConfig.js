@@ -7,17 +7,10 @@ import css from './AboutYou.css'
 const passwordLabel = 'Password'
 const subLabelForPassword = 'Must be at least 8 characters'
 const checkboxLabel =
-  'I’d like to receive the latest news and offers from Gousto, and be contacted occasionally for Customer Success purposes. I can unsubscribe at any time.'
-const checkboxLabelRedesign =
   'I’d like to receive the latest news and offers from Gousto, and be contacted occasionally by our Customer Care team. I can unsubscribe anytime.'
 
-export const fieldsConfig = ({ isCheckoutOverhaulEnabled, loginCTA, sectionName, passState }) => {
+export const fieldsConfig = ({ loginCTA, sectionName, passState }) => {
   const { isPassStrengthEnabled, isPassVisible, togglePasswordVisibility } = passState
-  const emailAddressLabelNode = isCheckoutOverhaulEnabled ? loginCTA() : 'Email address'
-  const labelForCheckbox = isCheckoutOverhaulEnabled ? checkboxLabelRedesign : checkboxLabel
-  const emailSubLabel = !isCheckoutOverhaulEnabled
-    ? 'You’ll use this to log in to your account'
-    : ''
   const passwordSubLabel = isPassStrengthEnabled ? '' : subLabelForPassword
   const passwordSuffix = (
     <span
@@ -37,8 +30,8 @@ export const fieldsConfig = ({ isCheckoutOverhaulEnabled, loginCTA, sectionName,
       name: 'email',
       inputTyp: 'Input',
       type: 'email',
-      label: emailAddressLabelNode,
-      subLabel: emailSubLabel,
+      label: loginCTA(),
+      subLabel: '',
       refId: `${sectionName}.email`,
       dataTesting: 'checkoutEmailInput',
       validate: emailValidator,
@@ -57,7 +50,7 @@ export const fieldsConfig = ({ isCheckoutOverhaulEnabled, loginCTA, sectionName,
     {
       name: 'allowEmail',
       inputType: 'CheckBox',
-      childLabel: labelForCheckbox,
+      childLabel: checkboxLabel,
       childLabelClassName: css.checkboxLabel,
       style: 'disclaimer',
       dataTesting: 'checkoutAllowEmailCheckbox',

@@ -1,5 +1,7 @@
 @value Mackerel, White from 'styles/colors.css';
 @value borderRadius 3px;
+@value FI50 #DFF4FF;
+@value FI200 #73D1FC;
 
 .deliveryCardContainer {
   padding: 1rem;
@@ -10,6 +12,11 @@
   background: White;
   composes: fontStyleBody from 'design-language/typography.css';
   margin-bottom: 1rem;
+}
+
+.blue {
+  border: 1px solid FI200;
+  background: FI50;
 }
 
 .icon {

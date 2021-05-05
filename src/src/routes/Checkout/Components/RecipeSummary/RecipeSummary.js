@@ -20,15 +20,7 @@ class RecipeSummary extends React.PureComponent {
   }
 
   render() {
-    const {
-      recipes,
-      menuRecipesStore,
-      menuRecipeStock,
-      numPortions,
-      menuBoxPrices,
-      view,
-      isCheckoutOverhaulEnabled,
-    } = this.props
+    const { recipes, menuRecipesStore, menuRecipeStock, numPortions, menuBoxPrices } = this.props
     const prices = menuBoxPrices.getIn(
       [numPortions.toString(), basketSum(recipes).toString(), 'gourmet'],
       Immutable.Map({})
@@ -41,11 +33,8 @@ class RecipeSummary extends React.PureComponent {
             <OrderedRecipes
               key={recipeId}
               recipeId={recipeId}
-              view={view}
-              featureBtn={false}
               serving={numPortions * recipes.get(recipeId, 0)}
               title={menuRecipesStore.getIn([recipeId, 'title'], '')}
-              basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
               stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
               media={menuRecipesStore.getIn(
                 [recipeId, 'media', 'images', 0, 'urls'],
@@ -54,7 +43,6 @@ class RecipeSummary extends React.PureComponent {
               isFineDineIn={menuRecipesStore.getIn([recipeId, 'isFineDineIn'], false)}
               pricePerServing={Number(prices.get('pricePerPortion', 0))}
               pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
-              isCheckoutOverhaulEnabled={isCheckoutOverhaulEnabled}
             />
           ))
           .toArray()}
@@ -69,8 +57,6 @@ RecipeSummary.propTypes = {
   menuRecipeStock: PropTypes.instanceOf(Immutable.Map),
   numPortions: PropTypes.number,
   menuBoxPrices: PropTypes.instanceOf(Immutable.Map),
-  view: PropTypes.oneOf(['summary', 'boxdetails']),
-  isCheckoutOverhaulEnabled: PropTypes.bool,
 }
 
 RecipeSummary.defaultProps = {
@@ -79,8 +65,6 @@ RecipeSummary.defaultProps = {
   menuBoxPrices: Immutable.Map({}),
   recipes: Immutable.Map({}),
   numPortions: 2,
-  view: 'boxdetails',
-  isCheckoutOverhaulEnabled: false,
 }
 
 RecipeSummary.contextTypes = {

@@ -1,11 +1,12 @@
-@value SpacingLG, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value ScreenMDMin, ScreenSMMax from 'styles/screenSizes.css';
-@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White, BlueberryLight, Oyster, LightestAccessible from 'styles/colors.css';
+@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, LightestAccessible from 'styles/colors.css';
 @value avenirBookFontStack from 'styles/typography.css';
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value FI50 #DFF4FF;
+@value FI200 #73D1FC;
 
 .row {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
+  margin: 0;
 }
 
 .flex {
@@ -17,20 +18,12 @@
   composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
-.colMD {
-  composes: col-md-8 col-xs-10 from 'sass-loader!styles/bootstrap.scss';
-}
-
 .colLG {
   composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
 }
 
 .colOneThrice {
   composes: col-md-4 col-xs-6 from 'sass-loader!styles/bootstrap.scss';
-}
-
-.colMDhalf {
-  composes: col-md-6 col-xs-8 from 'sass-loader!styles/bootstrap.scss';
 }
 
 .colXS {
@@ -71,12 +64,6 @@
   composes: headerMD headlineFont from 'styles/typography.css';
 }
 
-.deliveryContainer {
-  background-color: White;
-  composes: textBold from 'styles/typography.css';
-  padding: SpacingLG;
-}
-
 .linkRight {
   composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
   font-size: 10px;
@@ -104,8 +91,7 @@
 }
 
 .deliveryFieldWrapper {
-  composes: marginLGTop from 'sass-loader!styles/spacing.scss';
-  margin-bottom: 1.5rem;
+  margin: 0;
 }
 
 .labelWithMargin {
@@ -163,31 +149,6 @@
   max-width: 180px;
 }
 
-.prefix:before {
-  font-weight: normal;
-  display: inline-block;
-  content: '+44';
-  width: 35px;
-  padding-right: SpacingSM;
-}
-
-.withZero:before,
-.withoutZero:before {
-  font-weight: normal;
-  display: inline-block;
-  content: '(0)';
-  width: 25px;
-  padding-right: SpacingSM;
-}
-
-.withoutZero {
-  color: Pepper60;
-}
-
-.phonePrefix {
-  min-width: 60px;
-}
-
 .phonePrefixRedesign {
   position: absolute;
   top: 0.75rem;
@@ -232,7 +193,9 @@
 .deliveryEducationBanner {
   padding: 1rem;
   margin-bottom: 1.5rem;
-  background-color: BlueberryLight;
+  background-color: FI50;
+  border: 1px solid FI200;
+  border-radius: 3px;
   composes: fontStyleBody from 'design-language/typography.module.css';
 
   @media BreakpointFromMedium {
@@ -260,7 +223,7 @@
 
 .deliverySlot {
   composes: iconSize;
-  background: url('media/svgs/icon-delivery-new.svg');
+  background: url('routes/Checkout/Components/Delivery/icons/icon-delivery.svg');
 
   p {
     margin-bottom: 0.25rem;
@@ -272,7 +235,7 @@
 }
 
 .insulatedPackaging {
-  background: url('media/svgs/icon-cool.svg');
+  background: url('routes/Checkout/Components/Delivery/icons/icon-cool.svg');
   composes: iconSize;
 }
 
@@ -280,12 +243,9 @@
   composes: fontBold from 'design-language/typography.module.css';
 }
 
-.rowRedesign {
-  margin: 0;
-}
-
-.deliveryFieldWrapperRedesign {
-  margin: 0;
+.dateContainer {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .namesContainer {
@@ -293,11 +253,21 @@
 
   @media BreakpointFromMedium {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+  }
+}
 
-    > div {
-      max-width: 16.75rem;
-    }
+.nameInput {
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    width: auto;
+    flex: 1 1;
+  }
+}
+
+.nameInput:first-child {
+  @media BreakpointFromMedium {
+    margin-right: 1rem;
   }
 }

@@ -6,7 +6,6 @@ describe('Given mapStateToProps', () => {
     let output
     const initialState = {
       features: Immutable.fromJS({
-        isCheckoutOverhaulEnabled: { value: false },
         isPassStrengthEnabled: { value: false },
       }),
       request: Immutable.Map({
@@ -16,14 +15,14 @@ describe('Given mapStateToProps', () => {
         USER_LOGIN: false,
       }),
       form: Immutable.fromJS({
-        aboutyou: {
+        account: {
           syncErrors: {
-            aboutyou: {
+            account: {
               password: ['error'],
             },
           },
           values: {
-            aboutyou: {
+            account: {
               password: 'qwerty',
             },
           },
@@ -32,13 +31,12 @@ describe('Given mapStateToProps', () => {
     }
 
     beforeEach(() => {
-      output = mapStateToProps('aboutyou')(initialState)
+      output = mapStateToProps('account')(initialState)
     })
 
     test('Then should return proper values', () => {
       const expected = {
-        sectionName: 'aboutyou',
-        isCheckoutOverhaulEnabled: false,
+        sectionName: 'account',
         isPassStrengthEnabled: false,
         isMobile: true,
       }

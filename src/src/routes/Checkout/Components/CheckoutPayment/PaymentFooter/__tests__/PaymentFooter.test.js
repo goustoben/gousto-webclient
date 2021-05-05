@@ -17,21 +17,6 @@ describe('PaymentFooter', () => {
 
   test('should render correctly', () => {
     expect(wrapper.find('SubscriptionTransparency').exists()).toBeTruthy()
-    expect(wrapper.find('NoLockIn').exists()).toBeFalsy()
     expect(wrapper.find('TermsAndConditions').exists()).toBeTruthy()
-  })
-
-  describe('when isNoLockInVisible is true', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isNoLockInVisible: true,
-      })
-    })
-
-    test('then should render correctly', () => {
-      expect(wrapper.find('SubscriptionTransparency').exists()).toBeFalsy()
-      expect(wrapper.find('NoLockIn').exists()).toBeTruthy()
-      expect(wrapper.find('TermsAndConditions').exists()).toBeTruthy()
-    })
   })
 })

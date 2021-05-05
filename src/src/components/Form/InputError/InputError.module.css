@@ -1,0 +1,12 @@
+@value Radish from 'styles/colors.css';
+
+.inputError {
+  composes: fontStyleS from 'design-language/typography.module.css';
+  padding-top: 0.25rem;
+  color: Radish;
+  margin: 0;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}

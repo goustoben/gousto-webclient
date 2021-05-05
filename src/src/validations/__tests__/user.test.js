@@ -4,7 +4,7 @@ describe('user utils', () => {
   describe('given userRules', () => {
     let output
     let isPassStrengthEnabled
-    const sectionName = 'aboutyou'
+    const sectionName = 'account'
 
     describe('when isPassStrengthEnabled is false', () => {
       beforeEach(() => {
@@ -13,7 +13,7 @@ describe('user utils', () => {
       })
 
       test('then should contain password rules', () => {
-        expect(output['aboutyou.password']).toBeTruthy()
+        expect(output['account.password']).toBeTruthy()
       })
     })
 
@@ -24,7 +24,7 @@ describe('user utils', () => {
       })
 
       test('then should not contain password rules', () => {
-        expect(output['aboutyou.password']).toBeFalsy()
+        expect(output['account.password']).toBeFalsy()
       })
     })
   })

@@ -1,23 +1,54 @@
-@value FieldWidth 18rem;
+@value Oyster, Mackerel, Bluecheese, Haricot from 'styles/colors.css';
 
-.header {
-  margin-bottom: 0.5rem;
+.hide {
+  display: none;
 }
 
-.list {
-  width: FieldWidth;
-  max-width: 100%;
+.paymentMethods {
   list-style: none;
   padding: 0;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1rem;
 }
 
-.visaMastercardIcon {
-  height: 16px;
-  width: 84px;
+.paymentMethodListItem {
+  border: 1px solid Mackerel;
+  border-radius: 3px;
+
+  &:hover {
+    border-color: Bluecheese;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.paymentMethodListItemIsActive {
+  border-width: 2px;
+  border-color: Bluecheese;
+}
+
+/* Override margin from InputRadio. */
+.paymentMethodToggle > label {
+  margin-bottom: 0;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardsIcon {
+  height: 24px;
+  width: 164px;
 }
 
 .paypalIcon {
   height: 24px;
   width: 99px;
+}
+
+.paypalConnectedLabel {
+  composes: fontBold from 'design-language/typography.css';
+  color: Haricot;
 }

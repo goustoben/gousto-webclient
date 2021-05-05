@@ -2,11 +2,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import { PromoCode } from 'routes/Checkout/Components/PromoCode'
 import Receipt from '../Receipt'
 import ReceiptLine from '../ReceiptLine'
 import DeliveryDetails from '../DeliveryDetails'
-import { FirstDeliveryDayContainer } from '../FirstDeliveryDay'
 
 describe('Receipt', () => {
   let wrapper
@@ -70,16 +68,6 @@ describe('Receipt', () => {
     expect(wrapper.contains(<div>Child</div>)).toBeTruthy()
   })
 
-  describe('add promocode', () => {
-    beforeEach(() => {
-      wrapper.setProps({ showAddPromocode: true })
-    })
-
-    test('should show Add PromoCode Component', () => {
-      expect(wrapper.contains(<PromoCode />)).toBeTruthy()
-    })
-  })
-
   describe('delivery and order number', () => {
     beforeEach(() => {
       wrapper.setProps({
@@ -129,9 +117,9 @@ describe('Receipt', () => {
   })
 
   describe('surcharges', () => {
-    describe('when surcharges total is undefined', () => {
+    describe('when surcharges total is 0.00', () => {
       beforeEach(() => {
-        wrapper.setProps({ surchargeTotal: undefined })
+        wrapper.setProps({ surchargeTotal: '0.00' })
       })
 
       describe('and surcharges array is empty', () => {
@@ -219,32 +207,6 @@ describe('Receipt', () => {
               .text(),
           ).toContain('£0.45')
         })
-      })
-    })
-  })
-
-  describe('first delivery', () => {
-    describe('when hasFirstDeliveryDay set to false', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          hasFirstDeliveryDay: false
-        })
-      })
-
-      test('should NOT render first delivery date/time slot', () => {
-        expect(wrapper.find(FirstDeliveryDayContainer).exists()).toBeFalsy()
-      })
-    })
-
-    describe('when hasFirstDeliveryDay set to true', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          hasFirstDeliveryDay: true
-        })
-      })
-
-      test('should render first delivery date/time slot', () => {
-        expect(wrapper.find(FirstDeliveryDayContainer).exists()).toBeTruthy()
       })
     })
   })

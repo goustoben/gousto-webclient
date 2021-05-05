@@ -1,13 +1,5 @@
 import Immutable from 'immutable'
-import { hasCheckoutError, getPromoCodeValidationDetails, getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-
-function setDefaultState(browser) {
-  return {
-    request: Immutable.Map({
-      browser
-    })
-  }
-}
+import { hasCheckoutError, getPromoCodeValidationDetails } from 'selectors/checkout'
 
 describe('checkout selectors', () => {
   describe('hasCheckoutError', () => {
@@ -98,68 +90,6 @@ describe('checkout selectors', () => {
       const result = getPromoCodeValidationDetails(state)
 
       expect(result).toEqual(expected)
-    })
-  })
-
-  describe('getAboutYouFormName', () => {
-    let aboutYouFormNameOutput
-    let state
-
-    describe('when browser is mobile', () => {
-      const expected = 'yourdetails'
-
-      beforeEach(() => {
-        state = setDefaultState('mobile')
-        aboutYouFormNameOutput = getAboutYouFormName(state)
-      })
-
-      test('then should return "yourdetails"', () => {
-        expect(aboutYouFormNameOutput).toBe(expected)
-      })
-    })
-
-    describe('and browser is not mobile', () => {
-      const expected = 'aboutyou'
-
-      beforeEach(() => {
-        state = setDefaultState('web')
-        aboutYouFormNameOutput = getAboutYouFormName(state)
-      })
-
-      test('then should return "aboutyou"', () => {
-        expect(aboutYouFormNameOutput).toBe(expected)
-      })
-    })
-  })
-
-  describe('getDeliveryFormName', () => {
-    let deliveryFormNameOutput
-    let state
-
-    describe('when browser param is mobile', () => {
-      const expected = 'yourdetails'
-
-      beforeEach(() => {
-        state = setDefaultState('mobile')
-        deliveryFormNameOutput = getDeliveryFormName(state)
-      })
-
-      test('then should return "yourdetails"', () => {
-        expect(deliveryFormNameOutput).toBe(expected)
-      })
-    })
-
-    describe('and browser param is not mobile', () => {
-      const expected = 'delivery'
-
-      beforeEach(() => {
-        state = setDefaultState('web')
-        deliveryFormNameOutput = getDeliveryFormName(state)
-      })
-
-      test('then should return "delivery"', () => {
-        expect(deliveryFormNameOutput).toBe(expected)
-      })
     })
   })
 })

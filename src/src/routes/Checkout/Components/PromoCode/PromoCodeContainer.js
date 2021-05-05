@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { getIsCheckoutOverhaulEnabled } from 'selectors/features'
 import { PromoCode } from './PromoCode'
 
 function mapStateToProps(state) {
@@ -11,7 +10,6 @@ function mapStateToProps(state) {
     numPortions: state.basket.get('numPortions'),
     prices: state.pricing.get('prices'),
     recipes: state.basket.get('recipes'),
-    isCheckoutOverhaulEnabled: getIsCheckoutOverhaulEnabled(state),
   }
 }
 

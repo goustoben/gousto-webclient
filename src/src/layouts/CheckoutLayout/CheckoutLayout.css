@@ -1,5 +1,4 @@
 @value Coconut from 'styles/colors.css';
-@value ScreenXSMax from 'styles/screenSizes.css';
 
 html, body {
 	height: 100%;
@@ -12,10 +11,6 @@ html, body {
 .layoutContainer {
 	height: 100%;
 	background: Coconut;
-
-	@media ScreenXSMax {
-		height: auto;
-	}
 }
 
 .pageContainer {
@@ -29,13 +24,5 @@ html, body {
 }
 
 .pageContainer:after {
-	height: 156px;
-}
-
-.pageContainerRedesign:after {
   height: auto;
-}
-
-.layoutContainerRedesign {
-  height: 100%;
 }

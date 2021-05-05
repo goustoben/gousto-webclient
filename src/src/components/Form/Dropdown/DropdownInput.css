@@ -242,12 +242,12 @@
   border-color: Oyster !important;
 }
 
-.checkoutRedesign {
+.inCheckoutMobile {
   padding: 0.625rem 0.75rem;
   composes: selectBorder;
 }
 
-.checkoutDesktopRedesign {
+.inCheckoutDesktop {
   & :global .Select-control {
     border-color: Oyster !important;
   }

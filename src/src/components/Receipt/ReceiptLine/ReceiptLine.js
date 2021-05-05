@@ -3,26 +3,33 @@ import React from 'react'
 import classnames from 'classnames'
 import css from './ReceiptLine.css'
 
-const ReceiptLine = ({ label, children, style, showLineAbove, dataTesting, isCheckoutOverhaulEnabled }) => (
+const ReceiptLine = ({
+  label,
+  children,
+  lineStyle,
+  showLineAbove,
+  dataTesting,
+  isReceiptInCheckout,
+}) => (
   <div>
     {
       showLineAbove
-        ? <div className={classnames(css.horizontalLineAbove, { [css.redesignLine]: isCheckoutOverhaulEnabled })} />
+        ? <div className={classnames(css.horizontalLineAbove, { [css.checkoutLine]: isReceiptInCheckout })} />
         : null
     }
     <p
       className={classnames(css.receiptLine,
-        { [css.small]: style === 'small' },
-        { [css.normal]: style === 'normal' },
-        { [css.bold]: style === 'bold' },
-        { [css.primary]: style === 'primary' },
-        { [css.highlighted]: style === 'highlighted' },
-        { [css.primaryRedesign]: style === 'primary' && isCheckoutOverhaulEnabled },
-        { [css.boldRedesign]: style === 'bold' && isCheckoutOverhaulEnabled },
-        { [css.normalRedesign]: style === 'normal' && isCheckoutOverhaulEnabled },
+        { [css.small]: lineStyle === 'small' },
+        { [css.normal]: lineStyle === 'normal' },
+        { [css.bold]: lineStyle === 'bold' },
+        { [css.primary]: lineStyle === 'primary' },
+        { [css.highlighted]: lineStyle === 'highlighted' },
+        { [css.checkoutPrimary]: lineStyle === 'checkoutPrimary' },
+        { [css.checkoutBold]: lineStyle === 'checkoutBold' },
+        { [css.checkoutNormal]: lineStyle === 'checkoutNormal' },
       )}
     >
-      <span className={classnames(css.label, { [css.truncateLabel]: style === 'truncateLabel' })}>{label}</span>
+      <span className={classnames(css.label, { [css.truncateLabel]: lineStyle === 'truncateLabel' })}>{label}</span>
       <span className={css.content} data-testing={dataTesting}>{children}</span>
     </p>
   </div>
@@ -31,16 +38,27 @@ const ReceiptLine = ({ label, children, style, showLineAbove, dataTesting, isChe
 ReceiptLine.propTypes = {
   label: PropTypes.string,
   children: PropTypes.node,
-  style: PropTypes.oneOf(['small', 'normal', 'bold', 'primary', 'highlighted', 'truncateLabel']),
+  lineStyle: PropTypes.oneOf([
+    'small',
+    'normal',
+    'bold',
+    'primary',
+    'highlighted',
+    'truncateLabel',
+    'checkoutPrimary',
+    'checkoutBold',
+    'checkoutNormal'
+  ]),
   showLineAbove: PropTypes.bool,
   dataTesting: PropTypes.string,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
+  isReceiptInCheckout: PropTypes.bool,
 }
 
 ReceiptLine.defaultProps = {
   showLineAbove: false,
   dataTesting: null,
-  isCheckoutOverhaulEnabled: false,
+  isReceiptInCheckout: false,
+  lineStyle: 'small',
 }
 
 export default ReceiptLine

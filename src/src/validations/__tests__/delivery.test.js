@@ -57,7 +57,7 @@ describe('When formSectionName is called', () => {
     })
   })
 
-  describe('And isCheckoutOverhaulEnabled is true', () => {
+  describe('And delivery instruction option is default', () => {
     const values = {
       delivery: {
         deliveryInstruction: 'Please select an option'
@@ -65,7 +65,7 @@ describe('When formSectionName is called', () => {
     }
 
     beforeEach(() => {
-      output = formSectionName('delivery')(values, true)
+      output = formSectionName('delivery')(values)
     })
 
     test('Then delivery.phone and delivery.deliveryInstruction should have expected rules', () => {

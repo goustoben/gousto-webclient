@@ -1,80 +1,58 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button, CTA } from 'goustouicomponents'
-import { onEnter } from 'utils/accessibility'
+import classNames from 'classnames'
+import { Loader } from 'goustouicomponents'
 import css from './CheckoutButton.css'
 
 const CheckoutButton = ({
-  color,
-  fill,
   onClick,
   stepName,
-  submitting,
-  valid,
-  isCheckoutOverhaulEnabled,
   isDisabled,
   testingSelector,
-  width,
   isFullWidth,
+  isLoading,
 }) => {
-  if (isCheckoutOverhaulEnabled) {
-    return (
-      <CTA
-        testingSelector={testingSelector}
-        onClick={onClick}
-        onKeyDown={onEnter(onClick)}
-        isLoading={submitting}
-        isFullWidth={isFullWidth}
-        isDisabled={isDisabled}
-        size="small"
-      >
-        {stepName}
-      </CTA>
-    )
-  }
+  const className = classNames(css.cta, {
+    [css.isDisabled]: isDisabled,
+    [css.isFullWidth]: isFullWidth,
+  })
 
   return (
-    <Button
-      color={color}
-      fill={fill}
-      width={width}
-      onClick={onClick}
-      pending={submitting}
-      className={css.marginTop}
-      disabled={!valid}
+    <button
+      className={className}
       data-testing={testingSelector}
+      disabled={isDisabled || isLoading}
+      onClick={onClick}
+      onKeyDown={onClick}
+      type="button"
     >
-      {stepName}
-    </Button>
+      {isLoading ? (
+        <span className={css.loaderContainer}>
+          <Loader color="White" />
+        </span>
+      ) : (
+        stepName
+      )}
+    </button>
   )
 }
 
 CheckoutButton.propTypes = {
-  fill: PropTypes.bool,
   stepName: PropTypes.string,
-  submitting: PropTypes.bool,
   onClick: PropTypes.func,
-  color: PropTypes.string,
-  valid: PropTypes.bool,
-  isCheckoutOverhaulEnabled: PropTypes.bool,
   isDisabled: PropTypes.bool,
   testingSelector: PropTypes.string,
-  width: PropTypes.string,
   isFullWidth: PropTypes.bool,
+  isLoading: PropTypes.bool,
 }
 
 CheckoutButton.defaultProps = {
-  color: 'primary',
   onClick: () => {},
-  fill: true,
   stepName: '',
-  submitting: false,
-  valid: true,
-  isCheckoutOverhaulEnabled: false,
   isDisabled: false,
   testingSelector: 'checkoutCTA',
-  width: 'full',
   isFullWidth: true,
+  isLoading: false,
 }
 
 export { CheckoutButton }

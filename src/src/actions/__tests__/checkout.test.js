@@ -230,9 +230,9 @@ const createState = (stateOverrides) => ({
     goustoRef: null,
   }),
   form: {
-    aboutyou: {
+    account: {
       values: {
-        aboutyou: {
+        account: {
           email: 'test@test.com',
         },
       }

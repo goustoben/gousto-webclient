@@ -71,8 +71,8 @@ module.exports = {
   },
   maxNameLen: 255,
   promoValidationTime: 500,
-  leaveBoxOptions: (isCheckoutOverhaulEnabled) => [
-    (isCheckoutOverhaulEnabled ? 'Please select an option' : ''),
+  leaveBoxOptions: [
+    'Please select an option',
     'Front Porch',
     'Back Porch',
     'Garage',
@@ -123,8 +123,6 @@ module.exports = {
     securityCodeLength: 'Please enter 3-digit security code',
     securityCodeType: 'Please enter 3 digit numerical security code',
     addressTypeLength: 'Please enter a valid address',
-    'out-of-stock': 'There\'s been an error creating your order, please go back to the menu and checkout again',
-    postcodeInvalid: 'Please enter a valid postcode',
     invalidPromocode: 'This promocode is not valid',
     promoCode: {
       empty: 'Please enter a promocode',
@@ -133,27 +131,8 @@ module.exports = {
       expired: 'This promocode has expired',
       forCustomers: 'This promocode is for existing customers',
     },
-    generic: 'An error occurred, please try again or contact customer service.',
-    'payment-failure': 'Payment Failed: Please check your Card Number, Expiry Date, Security Number and Billing Address are all correct',
-    '422-insufficient-funds': {
-      header: 'Insufficient funds',
-      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
-    },
-    '422-declined-do-not-honour': {
-      header: 'Bank declined payment',
-      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
-    },
-    'user-exists': 'An account with that e-mail address already exists',
-    'user-promo-invalid': 'This discount code is only available for new customers. It looks like you or someone in your household already has a Gousto account.',
     'card-tokenization-failed': 'Sorry, we don’t accept that type of card. Please try another one.',
-    'paypal-token-fetch-failed': 'Please try an alternative payment method. If you\'re experiencing difficulties, please contact PayPal',
-    'paypal-error': 'Please try an alternative payment method. If you\'re experiencing difficulties, please contact PayPal',
     'network-failure': 'Please check your network connection and try again.',
-    'valid-card-details-not-provided': 'Your Card Number, Expiry Date and Security Number are required',
-    'user-phone-number-invalid': 'Oh dear, it looks like there was a problem with the phone number you gave us. Please go back a step and try again.',
-    '3ds-challenge-failed': 'Please try again or try a different bank card. If you’re experiencing difficulties, please contact your bank.',
-  },
-  errorMessagesForCheckoutOverhaul: {
     'paypal-token-fetch-failed': {
       header: 'Cannot connect to PayPal',
       message: 'Click the PayPal button below to try again or select card payment above.',
@@ -196,10 +175,17 @@ module.exports = {
       header: 'Payment failed',
       message: 'Please check your card details and try again.'
     },
+    '422-insufficient-funds': {
+      header: 'Insufficient funds',
+      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
+    '422-declined-do-not-honour': {
+      header: 'Bank declined payment',
+      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
     'generic': {
-      header: 'Cannot create order',
-      message: 'Try again or get in touch our Customer Care team.',
-      displayCustomerCareDetails: true,
+      header: 'An error occurred',
+      message: 'Click "Start your subscription" to try again.',
     },
   },
   errorsRequireGoBack: ['user-phone-number-invalid'],

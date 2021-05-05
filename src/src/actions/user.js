@@ -9,11 +9,10 @@ import * as prospectApi from 'apis/prospect'
 
 import { PaymentMethod, signupConfig } from 'config/signup'
 
-import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { accountFormName, deliveryFormName } from 'selectors/checkout'
 import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
-  getIsCheckoutOverhaulEnabled,
   getIsNewSubscriptionApiEnabled,
   getIsAdditionalCheckoutErrorsEnabled,
 } from 'selectors/features'
@@ -421,18 +420,17 @@ function userPromoApplyCode(promoCode) {
 function userProspect() {
   return async (dispatch, getState) => {
     const { basket, routing } = getState()
-    const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(getState())
-    const aboutYouFormName = getAboutYouFormName(getState())
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
-      const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')
+      const account = Immutable.fromJS(getState().form[accountFormName].values).get('account')
+      const delivery = Immutable.fromJS(getState().form[deliveryFormName].values).get('delivery')
 
       const reqData = {
-        email: aboutyou.get('email'),
-        user_name_first: isCheckoutOverhaulEnabled ? 'test' : aboutyou.get('firstName').trim(),
-        user_name_last: isCheckoutOverhaulEnabled ? 'test' : aboutyou.get('lastName').trim(),
+        email: account.get('email'),
+        user_name_first: delivery.get('firstName').trim() || '',
+        user_name_last: delivery.get('lastName').trim() || '',
         promocode: basket.get('promoCode'),
-        allow_marketing_email: aboutyou.get('allowEmail'),
+        allow_marketing_email: account.get('allowEmail'),
         preview_order_id: basket.get('previewOrderId'),
         step
       }
@@ -640,13 +638,10 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
     const state = getState()
     const prices = state.pricing.get('prices')
-    const isCheckoutOverhaulEnabled = getIsCheckoutOverhaulEnabled(state)
     try {
       const { form, basket, promoAgeVerified } = state
-      const deliveryFormName = getDeliveryFormName(state)
-      const aboutYouFormName = getAboutYouFormName(state)
 
-      const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
+      const account = Immutable.fromJS(form[accountFormName].values).get('account')
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
       const payment = Immutable.fromJS(form.payment.values).get('payment')
 
@@ -683,14 +678,14 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         customer: {
           tariff_id: basket.get('tariffId', ''),
           phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
-          email: aboutYou.get('email'),
-          name_first: isCheckoutOverhaulEnabled ? delivery.get('firstName').trim() : aboutYou.get('firstName').trim(),
-          name_last: isCheckoutOverhaulEnabled ? delivery.get('lastName').trim() : aboutYou.get('lastName').trim(),
+          email: account.get('email'),
+          name_first: delivery.get('firstName').trim(),
+          name_last: delivery.get('lastName').trim(),
           promo_code: basket.get('promoCode', ''),
-          password: aboutYou.get('password'),
+          password: account.get('password'),
           age_verified: Number(promoAgeVerified || false),
-          marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
-          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
+          marketing_do_allow_email: Number(account.get('allowEmail') || false),
+          marketing_do_allow_thirdparty: Number(account.get('allowThirdPartyEmail') || false),
           delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
         },
         payment_method: paymentMethod,
