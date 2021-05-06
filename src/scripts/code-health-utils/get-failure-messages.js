@@ -1,4 +1,6 @@
 /* eslint-disable */
+const REGRESSION_THRESHOLD = 5;
+
 const getLintErrorFailureMessage = (benchmark, compare) => {
   // file not linted, skip
   if (compare.errorCount === null) {
@@ -47,20 +49,23 @@ const getCoverageFailureMessage = (benchmark, compare, filePath) => {
     return null
   }
 
+  const currentCoverage = (!benchmark || benchmark.coveragePercent === null) ? 0: benchmark.coveragePercent
+
   // set threshold at 100 if we can't get an appropriate benchmark
-  const threshold =
-    (!benchmark || benchmark.coveragePercent === null)
-    ? 100
-    : benchmark.coveragePercent
+  const targetThreshold = (currentCoverage === 0) 
+    ? 100 
+    : (currentCoverage > REGRESSION_THRESHOLD) 
+      ? currentCoverage - REGRESSION_THRESHOLD 
+      : 0
 
   if (
     compare.coveragePercent === 100
-    || compare.coveragePercent >= threshold
+    || compare.coveragePercent >= targetThreshold
   ) {
     return null
   }
-
-  return `[test coverage] ${compare.coveragePercent.toFixed(2)}% covered (min ${threshold.toFixed(2)}%)`
+ 
+  return `[test coverage] ${compare.coveragePercent.toFixed(2)}% covered (min ${targetThreshold.toFixed(2)}%, current ${currentCoverage.toFixed(2)}%)`
 }
 
 const getFailureMessages = (benchmark, compare, filePath) => {
