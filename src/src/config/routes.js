@@ -23,6 +23,7 @@ module.exports = {
     'check-out': '/check-out',
     choosePlan: '/choose-subscription-plan',
     cookbook: '/cookbook',
+    cookbookRecipeById: '/cookbook/recipe-by-id',
 
     mySubscription: '/subscription-settings',
     myDetails2: '/mydetails',

@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { Row } from 'Page/Grid'
-import { getRecipeTitle, getRecipeURL, getRecipeImages } from 'selectors/recipe'
+import { getRecipeTitle, getRecipeImages, getRecipeID } from 'selectors/recipe'
+import { client } from 'config/routes'
 import placeholderSrc from 'media/images/product-placeholder.png'
 import css from './Cookbook.css'
 import { RecipeCard } from './RecipeCard'
@@ -44,8 +45,9 @@ class Cookbook extends React.PureComponent {
 
     recipeCards = recipes.map(recipe => {
       const title = getRecipeTitle(recipe)
-      const url = getRecipeURL(recipe)
+      const id = getRecipeID(recipe)
       const images = getRecipeImages(recipe)
+      const url = `${client.cookbookRecipeById}/${id}`
 
       return <RecipeCard key={title} title={title} link={url} images={images} />
     }).toArray()

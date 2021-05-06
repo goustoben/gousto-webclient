@@ -22,15 +22,11 @@ const redirectToContactPage = () => {
 }
 
 const RecipeCardContent = ({ recipe, trackRecipeCardClick, trackRecipeCardGetInTouchClick }) => {
-  const { id, url } = recipe
+  const { id } = recipe
 
   const redirectToCookbook = () => {
     trackRecipeCardClick(id)
-    if (url.length) {
-      windowOpen(url)
-    } else {
-      redirectToContactPage()
-    }
+    windowOpen(`${client.cookbookRecipeById}/${id}`)
   }
 
   return (
