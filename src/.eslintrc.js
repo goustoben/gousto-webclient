@@ -231,6 +231,7 @@ module.exports = {
     "__CLIENT_PROTOCOL__": false,
     "__CLOUDFRONT_URL__": false,
     "__CHECKOUT_PK__": false,
+    "__RECAPTCHA_RAF_PUBK__": false,
     "__RECAPTCHA_RAF_PVTK__": false,
     "__TEST__": false,
     "__GIT_HASH__": false,

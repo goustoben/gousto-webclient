@@ -64,6 +64,10 @@ export function referAFriend(accessToken, email) {
   return fetch(accessToken, `${endpoint('core')}/user/current/referral`, { emails: [email] }, 'POST')
 }
 
+export function serverReferAFriend(email, recaptchaToken) {
+  return fetch(null, routes.user.referAFriend, { email, recaptchaToken }, 'POST')
+}
+
 export function addPaymentMethod(accessToken, reqData, userId) {
   return fetch(accessToken, `${endpoint('core')}/user/${userId}/paymentMethod`, reqData, 'PUT')
 }

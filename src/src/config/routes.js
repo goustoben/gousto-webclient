@@ -193,6 +193,10 @@ module.exports = {
     profile: '/preferences/profile'
   },
 
+  user: {
+    referAFriend: '/user/refer-a-friend'
+  },
+
   userBucketing: {
     experiments: '/user/experiments'
   },
@@ -203,5 +207,5 @@ module.exports = {
 
   userFeedback: {
     feedback: '/feedback'
-  }
+  },
 }

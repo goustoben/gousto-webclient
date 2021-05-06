@@ -109,5 +109,65 @@ describe('LoginForm', () => {
       })
     })
   })
+
+  describe('given recaptcha is enabled', () => {
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = mount(
+        <LoginForm
+          isRecaptchaEnabled
+          onSubmit={jest.fn()}
+        />
+      )
+    })
+
+    describe('when the email and password are valid', () => {
+      const STATE_CONFIG = {
+        EMAIL: 'test@test.test',
+        PASSWORD: 'password',
+        REMEMBER: false,
+      }
+
+      const onSubmitSpy = jest.fn()
+      const captchaExecuteSpy = jest.fn()
+
+      beforeEach(() => {
+        wrapper.setState({
+          email: STATE_CONFIG.EMAIL,
+          emailValid: true,
+          password: STATE_CONFIG.PASSWORD,
+          passwordValid: true,
+          recaptchaToken: null,
+          remember: STATE_CONFIG.REMEMBER
+        })
+
+        onSubmitSpy.mockClear()
+        captchaExecuteSpy.mockClear()
+      })
+
+      describe('and the submit button is clicked', () => {
+        const event = new global.Event('click')
+
+        beforeEach(() => {
+          wrapper.instance().setCaptchaRef({ execute: captchaExecuteSpy })
+          wrapper.setProps({ onSubmit: onSubmitSpy })
+          wrapper.instance().handleSubmit(event)
+        })
+
+        test('calls captcha execute', () => {
+          expect(captchaExecuteSpy).toHaveBeenCalledTimes(1)
+        })
+
+        test('updates recaptcha token state on captchaChanges', () => {
+          const recaptchaValue = 'recaptcha-token'
+
+          wrapper.instance().captchaChanges(recaptchaValue)
+
+          expect(wrapper.state('recaptchaValue')).toEqual(recaptchaValue)
+        })
+      })
+    })
+  })
 })
 
