@@ -22,6 +22,8 @@ const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
 const runningEnv = nodeConfig.get('running_env')
 const endpoints = nodeConfig.get('endpoints')
+const recaptchaReferralPublicKey = nodeConfig.get('recaptcha_referral_public_key')
+const recaptchaReferralPrivateKey = nodeConfig.get('recaptcha_referral_private_key')
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 // eslint-disable-next-line no-console
@@ -136,6 +138,8 @@ const config = {
       __DOMAIN__: JSON.stringify(domain),
       __ENV__: JSON.stringify(envName),
       __ENDPOINTS__: JSON.stringify(endpoints),
+      __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
+      __RECAPTCHA_RAF_PVTK__: JSON.stringify(recaptchaReferralPrivateKey),
       'process.env.NODE_ENV': JSON.stringify(build),
     }),
   ],

@@ -4,18 +4,33 @@ import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
 import InputError from 'Form/InputError'
+import ReCAPTCHA from 'components/Recaptcha'
+import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha-my-referral'
 import css from './ReferAFriend.css'
 
 const propTypes = {
-  isEmailSent: PropTypes.bool,
+  captchaChanges: PropTypes.func.isRequired,
+  isRecaptchaEnabled: PropTypes.bool.isRequired,
+  isEmailSent: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleEmailChange: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.string.isRequired,
+  refCaptcha: PropTypes.func.isRequired,
   showEmailReferralForm: PropTypes.func.isRequired,
 }
 
-const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange, email, errorMessage, showEmailReferralForm }) => (
+const ReferAFriendPresentation = ({
+  captchaChanges,
+  isEmailSent,
+  isRecaptchaEnabled,
+  handleSubmit,
+  handleEmailChange,
+  email,
+  errorMessage,
+  refCaptcha,
+  showEmailReferralForm,
+}) => (
   <div>
     {
       !isEmailSent ? (
@@ -34,6 +49,19 @@ const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange,
                 />
                 <InputError>{errorMessage}</InputError>
               </div>
+              {
+                isRecaptchaEnabled
+                && (
+                  <div>
+                    <ReCAPTCHA
+                      ref={refCaptcha}
+                      sitekey={RECAPTCHA_PUBLIC_KEY}
+                      size="invisible"
+                      onChange={captchaChanges}
+                    />
+                  </div>
+                )
+              }
               <div className={css.button}>
                 <Button
                   onClick={handleSubmit}

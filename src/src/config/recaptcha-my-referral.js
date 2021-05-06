@@ -1,0 +1,1 @@
+export const RECAPTCHA_PUBLIC_KEY = __RECAPTCHA_RAF_PUBK__

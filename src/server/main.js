@@ -113,6 +113,7 @@ app.use(addressLookupRoute)
  */
 app.use(bodyParser({ multipart: true }))
 routes.auth(app)
+routes.user(app)
 
 app.use(async (ctx, next) => {
   if (ctx.request.path === '/ping') {

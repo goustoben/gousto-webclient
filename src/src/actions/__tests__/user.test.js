@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { skipDelivery, referAFriend, fetchUserCredit, applyPromo } from 'apis/user'
+import { skipDelivery, serverReferAFriend, fetchUserCredit, applyPromo } from 'apis/user'
 import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import * as prospectAPI from 'apis/prospect'
@@ -43,7 +43,7 @@ jest.mock('selectors/features')
 
 jest.mock('apis/user', () => ({
   skipDelivery: jest.fn(),
-  referAFriend: jest.fn(),
+  serverReferAFriend: jest.fn(),
   fetchUserCredit: jest.fn(),
   applyPromo: jest.fn(),
   fetchUserProjectedDeliveries: jest.fn().mockImplementation(
@@ -232,41 +232,28 @@ describe('user actions', () => {
 
   describe('userReferAFriend action', () => {
     const email = 'test@test.com'
+    const recaptchaToken = 'recaptcha-token'
 
-    afterEach(() => {
-      referAFriend.mockClear()
+    beforeEach(() => {
+      serverReferAFriend.mockClear()
     })
 
-    describe('when an accessToken is not present in state', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          auth: Immutable.Map({
-            accessToken: ''
-          })
-        })
-      })
+    test('should dispatch a serverReferAFriend request with the given email and recaptchaToken', () => {
+      userReferAFriend(email, recaptchaToken)(dispatch, getState)
 
-      test('should not dispatch a referAFriend request', () => {
-        userReferAFriend(email)(dispatch, getState)
-
-        expect(referAFriend).not.toHaveBeenCalled()
-      })
+      expect(serverReferAFriend).toHaveBeenCalledWith(email, recaptchaToken)
     })
 
-    describe('when an accessToken is present in state', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          auth: Immutable.Map({
-            accessToken: 'user-access-token'
-          })
+    test('should log an error when the call fail', async () => {
+      serverReferAFriend.mockRejectedValueOnce()
+
+      await userReferAFriend(email, recaptchaToken)(dispatch, getState)
+
+      expect(logger.error).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: 'Failed to call refer a friend',
         })
-      })
-
-      test('should dispatch a referAFriend request with the given email and accessToken', () => {
-        userReferAFriend(email)(dispatch, getState)
-
-        expect(referAFriend).toHaveBeenCalledWith('user-access-token', email)
-      })
+      )
     })
   })
 

@@ -14,10 +14,11 @@ import {
   checkDuplicateUser,
   verifyAge,
   referralDetails,
-  referAFriend,
+  serverReferAFriend,
   addPaymentMethod,
   fetchUserAddresses,
-  deleteMarketingSubscription
+  deleteMarketingSubscription,
+  referAFriend
 } from '../user'
 
 const mockFetchResult = { data: [1, 2, 3] }
@@ -39,7 +40,10 @@ jest.mock('config/routes', () => ({
     userOrder: '/userOrder',
     userDelivery: '/userDelivery',
     user: '/user',
-  }
+  },
+  user: {
+    referAFriend: '/user/refer-a-friend'
+  },
 }))
 
 describe('user api', () => {
@@ -264,6 +268,21 @@ describe('user api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await referAFriend('token', 'foo@example.com')
+      expect(result).toEqual(mockFetchResult)
+    })
+  })
+
+  describe('serverReferAFriend', () => {
+    test('should fetch the correct url', async () => {
+      const email = 'foo@example.com'
+      const recaptchaToken = 'recaptcha-token'
+      await serverReferAFriend(email, recaptchaToken)
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, '/user/refer-a-friend', { email, recaptchaToken }, 'POST')
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await serverReferAFriend('foo@example.com', 'token')
       expect(result).toEqual(mockFetchResult)
     })
   })

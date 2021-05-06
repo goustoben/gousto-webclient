@@ -37,6 +37,7 @@ npm config set gousto_webclient_client_protocol "${CLIENT_PROTOCOL}"
 npm config set gousto_webclient_cloudfront_url "${CLOUDFRONT_URL}"
 
 npm config set gousto_webclient_checkoutcom_pk "${CHECKOUTCOM_PK}"
+npm config set gousto_webclient_recaptcha_raf_pubk "${RECAPTCHA_RAF_PUBK}"
 
 cd ../
 

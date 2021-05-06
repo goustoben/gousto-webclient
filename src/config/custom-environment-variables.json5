@@ -14,6 +14,8 @@
   "outbound_core_access_key": "outbound_core_access_key",
   "outbound_productservice_access_key": "outbound_productservice_access_key",
   "segment_api_key": "segment_api_key",
+  "recaptcha_referral_public_key": "npm_config_gousto_webclient_recaptcha_raf_pubk",
+  "recaptcha_referral_private_key": "recaptcha_referral_private_key",
   // These secrets are loaded into the env.js files and overwritten
   "api_token": "api_token",
   "auth_client_id": "auth_client_id",

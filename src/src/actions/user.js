@@ -786,11 +786,11 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
   }
 }
 
-export const userReferAFriend = email => (dispatch, getState) => {
-  const accessToken = getState().auth.get('accessToken')
-
-  if (accessToken) {
-    userApi.referAFriend(accessToken, email)
+export const userReferAFriend = (email, recaptchaToken = null) => async () => {
+  try {
+    await userApi.serverReferAFriend(email, recaptchaToken)
+  } catch (err) {
+    logger.error({ message: 'Failed to call refer a friend', errors: [err] })
   }
 }
 

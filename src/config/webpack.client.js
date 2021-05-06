@@ -30,6 +30,7 @@ const domain = nodeConfig.get('domain')
 const envName = nodeConfig.get('environment_name')
 const runningEnv = nodeConfig.get('running_env')
 const endpoints = nodeConfig.get('endpoints')
+const recaptchaReferralPublicKey = nodeConfig.get('recaptcha_referral_public_key')
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 const devMode = process.env.NODE_ENV !== 'production'
@@ -193,6 +194,7 @@ const config = {
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
       __CHECKOUT_PK__: JSON.stringify(checkout_pk),
+      __RECAPTCHA_RAF_PUBK__: JSON.stringify(recaptchaReferralPublicKey),
       'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
       __GIT_HASH__: JSON.stringify(GIT_HASH),
       __ENDPOINTS__: JSON.stringify(endpoints)

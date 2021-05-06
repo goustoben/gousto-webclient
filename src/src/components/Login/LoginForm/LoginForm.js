@@ -2,30 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ReCAPTCHA from 'components/Recaptcha'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
+import { isSecretPingdomEmail } from 'utils/recaptcha'
 import { CTA, InputField } from 'goustouicomponents'
 import CheckBox from 'Form/CheckBox'
 import Form from 'Form'
 import config from 'config'
 import classNames from 'classnames'
 import css from './LoginForm.css'
-
-const secretPingdomEmailLength = 31
-const secretPingdomEmailSuffix = '@gmail.com'
-const secretPingdomEmailQuickHash = 294722922
-
-// from StackOverflow [user: lordvlad] https://stackoverflow.com/a/15710692/1916362
-// so we disable eslint
-const quickStringHash = string => (
-  // eslint-disable-next-line
-  string.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)
-)
-
-const isSecretPingdomEmail = (email) => (
-  email
-  && email.length === secretPingdomEmailLength
-  && email.endsWith(secretPingdomEmailSuffix)
-  && quickStringHash(email) === secretPingdomEmailQuickHash
-)
 
 class LoginForm extends React.PureComponent {
   constructor() {
@@ -41,7 +24,8 @@ class LoginForm extends React.PureComponent {
     }
   }
 
-  componentWillMount() {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillMount() {
     const { rememberMeDefault } = this.props
 
     this.setState({ remember: rememberMeDefault })
@@ -52,7 +36,8 @@ class LoginForm extends React.PureComponent {
     await changeRecaptcha()
   }
 
-  componentWillReceiveProps = (nextProps) => {
+  // eslint-disable-next-line camelcase
+  UNSAFE_componentWillReceiveProps = (nextProps) => {
     if (nextProps.statusText) {
       this.setState({
         showValidationError: true,
@@ -150,6 +135,10 @@ class LoginForm extends React.PureComponent {
     return captchaIsEmpty
   }
 
+  setCaptchaRef = (el) => {
+    this.recaptchaElement = el
+  }
+
   renderLoginForm = () => {
     const { isAuthenticating, isRecaptchaEnabled, statusText, showAppAwareness } = this.props
     const { remember, showValidationError } = this.state
@@ -213,7 +202,7 @@ class LoginForm extends React.PureComponent {
             && (
               <div>
                 <ReCAPTCHA
-                  ref={el => { this.recaptchaElement = el }}
+                  ref={this.setCaptchaRef}
                   sitekey={RECAPTCHA_PUBLIC_KEY}
                   size="invisible"
                   onChange={this.captchaChanges}

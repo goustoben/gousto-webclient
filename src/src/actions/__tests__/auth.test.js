@@ -1,5 +1,5 @@
 import actions, { changeRecaptcha } from 'actions/auth'
-import { resetUserPassword, identifyUser } from 'apis/auth'
+import { resetUserPassword, identifyUserUsingOAuth } from 'apis/auth'
 import { fetchFeatures } from 'apis/fetchS3'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
@@ -262,7 +262,7 @@ describe('authIdentify', () => {
       dispatch = jest.fn()
       // eslint-disable-next-line no-global-assign
       __SERVER__ = true
-      identifyUser.mockResolvedValue({ data: { roles: ['user'] }})
+      identifyUserUsingOAuth.mockResolvedValue({ data: { roles: ['user'] }})
       actions.authIdentify('test-access-token')(dispatch)
     })
 

@@ -3,27 +3,50 @@ import { shallow } from 'enzyme'
 import { ReferAFriend } from '../ReferAFriend.logic'
 
 describe('Refer A Friend Logic', () => {
-  let wrapper
+  const changeRecaptcha = jest.fn()
   const userReferAFriend = jest.fn()
   const trackingReferFriendSocialSharing = jest.fn()
+  const buildReferAFriend = (props = {}) => {
+    const baseProps = {
+      changeRecaptcha,
+      userReferAFriend,
+      trackingReferFriendSocialSharing,
+      isRecaptchaEnabled: false,
+    }
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <ReferAFriend userReferAFriend={userReferAFriend} trackingReferFriendSocialSharing={trackingReferFriendSocialSharing} />
+    return shallow(
+      <ReferAFriend {...{...baseProps, ...props} } />
     )
-  })
+  }
 
   describe('Refer A Friend', () => {
+    let wrapper
+
+    beforeAll(() => {
+      wrapper = buildReferAFriend()
+    })
+
+    test('should fetch recaptcha', () => {
+      expect(changeRecaptcha).toHaveBeenCalled()
+    })
+
     test('should call userReferAFriend action with the email', () => {
       const email = 'test email'
-      wrapper.setState({ email })
+      const recaptchaToken = 'recaptcha-token'
+      wrapper.setState({ email, recaptchaToken })
       wrapper.instance().referAFriend()
 
-      expect(userReferAFriend).toHaveBeenCalledWith(email)
+      expect(userReferAFriend).toHaveBeenCalledWith(email, recaptchaToken)
     })
   })
 
   describe('Handle Email Change', () => {
+    let wrapper
+
+    beforeAll(() => {
+      wrapper = buildReferAFriend()
+    })
+
     test('should set email in state to value passed in', () => {
       const email = '123@email.com'
       wrapper.instance().handleEmailChange(email)
@@ -50,6 +73,12 @@ describe('Refer A Friend Logic', () => {
   })
 
   describe('Handle Submit', () => {
+    let wrapper
+
+    beforeAll(() => {
+      wrapper = buildReferAFriend({ isRecaptchaEnabled: true })
+    })
+
     test('should set isEmailSent to true & no error message if the email is valid', () => {
       wrapper.setState({ isEmailValid: true })
 
@@ -90,9 +119,61 @@ describe('Refer A Friend Logic', () => {
 
       expect(wrapper.state().errorMessage).toEqual('Please provide a valid email address.')
     })
+
+    describe('And captcha needs to prompt', () => {
+      test('should call captcha execute', () => {
+        const email = '123@email.com'
+        wrapper.instance().handleEmailChange(email)
+
+        const mockEvent = {
+          preventDefault: () => {}
+        }
+
+        const mockReferAFriend = jest.fn()
+        const mockCaptchaExecute = jest.fn()
+        wrapper.instance().setCaptchaRef({ execute: mockCaptchaExecute })
+        wrapper.instance().referAFriend = mockReferAFriend
+        wrapper.instance().handleSubmit(mockEvent)
+
+        expect(mockCaptchaExecute).toHaveBeenCalledTimes(1)
+      })
+
+      test('should set token once', () => {
+        const recaptchaToken = 'recaptcha-token'
+
+        wrapper.instance().captchaChanges(recaptchaToken)
+
+        expect(wrapper.state('recaptchaToken')).toEqual(recaptchaToken)
+      })
+    })
+
+    describe('And captcha does not needs to prompt', () => {
+      test('should not call captcha execute', () => {
+        const email = '123@email.com'
+        wrapper.instance().handleEmailChange(email)
+
+        const mockEvent = {
+          preventDefault: () => {}
+        }
+
+        const mockReferAFriend = jest.fn()
+        const mockCaptchaExecute = jest.fn()
+
+        wrapper.instance().referAFriend = mockReferAFriend
+        wrapper.instance().handleSubmit(mockEvent)
+
+        expect(mockCaptchaExecute).toHaveBeenCalledTimes(0)
+      })
+    })
   })
 
   describe('Show Email Referral Form', () => {
+    let wrapper
+
+    beforeAll(() => {
+      wrapper = buildReferAFriend()
+    })
+
     test('should reset the state to initial values', () => {
       wrapper.instance().showEmailReferralForm()
 

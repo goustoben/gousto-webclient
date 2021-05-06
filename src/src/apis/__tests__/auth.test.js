@@ -2,7 +2,7 @@ import fetch from 'utils/fetch'
 import isomorphicFetch from 'isomorphic-fetch'
 import {
   getUserToken,
-  identifyUser,
+  identifyUserUsingOAuth,
   refreshUserToken,
   forgetUserToken,
   validateUserPassword,
@@ -10,7 +10,7 @@ import {
   serverAuthenticate,
   serverLogout,
   serverRefresh,
-  serverIdentify,
+  identifyUserViaServer,
   serverForget,
   serverValidatePassword,
   validateRecaptchaUserToken,
@@ -92,13 +92,13 @@ describe('auth api', () => {
 
   describe('identifyUser', () => {
     test('should fetch the correct url', async () => {
-      await identifyUser('token')
+      await identifyUserUsingOAuth('token')
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith('token', 'https://production-api.gousto.co.uk/auth/v1.0.0/identifyUser', {}, 'GET', 'no-cache')
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await identifyUser('token')
+      const result = await identifyUserUsingOAuth('token')
       expect(result).toEqual(mockFetchResult)
     })
   })
@@ -258,14 +258,14 @@ describe('auth api', () => {
 
   describe('serverIdentify', () => {
     test('should fetch the correct url', async () => {
-      await serverIdentify()
+      await identifyUserViaServer()
 
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(null, '/identify', { }, 'POST', 'no-cache', {}, null, true)
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await serverIdentify()
+      const result = await identifyUserViaServer()
       expect(result).toEqual(mockFetchResult)
     })
   })
