@@ -2,6 +2,7 @@ import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
+
 import { routes } from 'routes'
 import AppContainer from 'containers/AppContainer'
 import transit from 'transit-immutable-js'
@@ -19,6 +20,12 @@ import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import { getIsAuthenticated } from 'selectors/auth'
 import { configureStore } from './store'
+
+if (__ENV__ !== 'production') {
+  // eslint-disable-next-line global-require
+  const axe = require('@axe-core/react')
+  axe(React, ReactDOM, 1000)
+}
 
 docReady('docReady', window)
 

@@ -42,6 +42,7 @@
     "codeowners:unowned": "node ./scripts/codeowners-report/codeowners-report.js --unowned"
   },
   "dependencies": {
+    "@axe-core/react": "^4.1.1",
     "@optimizely/optimizely-sdk": "^4.1.0",
     "actual": "0.4.0",
     "apollo-cache-inmemory": "1.3.8",
