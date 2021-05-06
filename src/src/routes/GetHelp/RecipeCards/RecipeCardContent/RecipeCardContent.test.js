@@ -10,7 +10,6 @@ describe('The RecipeCardContent component', () => {
 
   const TEST_RECIPE = {
     id: '12345',
-    url: 'https://test-url.com',
     title: '',
     ingredients: [],
   }
@@ -56,17 +55,11 @@ describe('The RecipeCardContent component', () => {
   })
 
   describe('Clicking the View recipe CTA', () => {
-    const mockTrackingFunction = jest.fn()
-
-    beforeEach(() => {
-      wrapper.setProps({ trackRecipeCardClick: mockTrackingFunction })
-    })
-
     afterEach(() => {
       jest.resetAllMocks()
     })
 
-    describe('When the cookbookUrl exists', () => {
+    describe('When the View recipe CTA is clicked', () => {
       let windowOpenSpy
 
       beforeEach(() => {
@@ -78,39 +71,12 @@ describe('The RecipeCardContent component', () => {
         jest.resetAllMocks()
       })
 
-      test('Opens the cookbook in a new tab or window', () => {
-        expect(windowOpenSpy).toHaveBeenCalledWith(TEST_RECIPE.url)
+      test('Then the cookbook is opened in a new tab', () => {
+        expect(windowOpenSpy).toHaveBeenCalledWith(`/cookbook/recipe-by-id/${TEST_RECIPE.id}`)
       })
 
-      test('Tracking function is called', () => {
-        expect(mockTrackingFunction).toHaveBeenCalledWith(TEST_RECIPE.id)
-      })
-    })
-
-    describe('When the cookbookUrl doesn\'t exist', () => {
-      const RECIPE_NO_URL = {
-        ...TEST_RECIPE,
-        url: '',
-      }
-      let browserHistorySpy
-
-      beforeEach(() => {
-        wrapper.setProps({ recipe: RECIPE_NO_URL })
-        browserHistorySpy = jest.spyOn(browserHistory, 'push')
-
-        wrapper.find('CTA').first().simulate('click')
-      })
-
-      afterEach(() => {
-        jest.resetAllMocks()
-      })
-
-      test('Redirect to the Contact page', () => {
-        expect(browserHistorySpy).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
-      })
-
-      test('Tracking function is called', () => {
-        expect(mockTrackingFunction).toHaveBeenCalledWith(TEST_RECIPE.id)
+      test('Then tracking function is called', () => {
+        expect(trackRecipeCardClick).toHaveBeenCalledWith(TEST_RECIPE.id)
       })
     })
   })

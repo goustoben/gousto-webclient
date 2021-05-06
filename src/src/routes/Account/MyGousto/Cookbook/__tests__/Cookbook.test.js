@@ -67,7 +67,7 @@ describe('MyGousto', () => {
           .find(RecipeCard)
           .first()
           .prop('link')
-      ).toEqual('www.recipe1.com')
+      ).toEqual('/cookbook/recipe-by-id/1')
 
       expect(
         wrapper
