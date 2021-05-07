@@ -15,6 +15,7 @@ Gousto Web Client
 * If running locally, install Node.js.
 
 We use nvm to control the version of node devs use and there is an .nvmrc in the repo root that should be picked up by nvm and states the current version of node we use. So using a node version manager such as nvm or fnm (if you use fish shell) to install node is advised.
+* Please see below the [Automatic Node Version Control](#automatic-node-version-control)
 
 ### Run application for development
 
@@ -64,9 +65,48 @@ A script in the repo root called `./run.sh` has been created to help with all of
 To rebuild the app when running in docker you can choose the following.
 Either
    * rebuild the image by doing `docker image rm webclient` and then re-executing `./run.sh build`
-   * if using bind mounts, enter the running container with `docker compose exec webclient bash`, navigate to the `src` directory and run `npm run watch` same as you would when running locally.
+   * if using bind mounts (`dev --docker`), do either of the following:
+     * `docker-compose exec webclient npm run watch`
+     * `docker compose exec webclient bash`, and run `npm run watch` same as you would when running locally.
+
+**If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
 
 All files that this script uses can be found under the folder `dev-env`.
+
+## Automatic Node Version Control
+### ZSH
+Sometimes NVM doesn’t set the correct default version, this is cause your terminal isn't looking for .nvm files and loading the correct version of node.
+
+You can fix this by adding a hook into your ~/.zshrc after nvm directory is setup.
+```shell
+export NVM_DIR=~/.nvm
+ [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+```
+
+###FNM
+Copy and paste the output of `fnm env --use-on-cd` into `~/.config/fish/conf.d/fnm.fish`. See more [here](https://github.com/Schniz/fnm).
 
 ## Ignore bulk-change revisions (optional)
 
@@ -140,9 +180,9 @@ Unless you specifically know that the new endpoint is an exception to the rule, 
 2. Once the staging deployment is successful, then deploy into production by raising a PR into `master`
 
 ### Deployment including a new route
-Routing is handled by the old-stack [Gousto2Frontend](https://github.com/Gousto/Gousto2-FrontEnd) application, meaning new (root-level) routes must be added to the nginx config here and this should be deployed too.
+Routing is handled by the old-stack [Gousto2-Frontend](https://github.com/Gousto/Gousto2-FrontEnd) application, meaning new (root-level) routes must be added to the nginx config here and this should be deployed too.
 
-See the G2FE readme for how to add a new route to the frontend.
+See the [G2FE readme](https://github.com/Gousto/Gousto2-FrontEnd) for how to add a new route to the frontend.
 
 ## Testing
 ### Running unit tests
