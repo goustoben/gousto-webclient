@@ -12,25 +12,19 @@ Gousto Web Client
 ## Getting Started
 
 * Your IDE is setup following the [Code editor setup](#code-editor-setup)
-* You development box is setup following the [devbox-platform](https://github.com/Gousto/devbox-platform) instructions, which include:
-  *  Setting client auth secrets and env variables
-  *  Building the containerised application
-  *  Running the application at http://frontend.gousto.local
-  *  Watching the application for local development
+* If running locally, install Node.js.
 
-### Ignore bulk-change revisions (optional)
-
-Because of a migration to prettier, there were several bulk formatting changes.  In order to make them not show up in your `git blame` invocations, you might want to invoke this command inside the repo, once only after cloning:
-
-`git config blame.ignoreRevsFile .git-blame-ignore-revs`
+We use nvm to control the version of node devs use and there is an .nvmrc in the repo root that should be picked up by nvm and states the current version of node we use. So using a node version manager such as nvm or fnm (if you use fish shell) to install node is advised.
+* Please see below the [Automatic Node Version Control](#automatic-node-version-control)
 
 ### Run application for development
 
-#### Step 1: Add Secret file for staging environment
+### Step 1: Add a secrets file to point to the staging environment
 
 **Note:** VPN is required to connect to staging before running dev-box and web-client.
 
-Add a file called `config/development-local.json5` and add the JSON below changing the values for the correct staging keys. This file will not be tracked as it is listed in our `.gitignore`.
+Add a file called `development-local.json5` in `/src/config` and add the JSON below changing the values for the correct staging keys. This file will not be tracked as it is listed in our `.gitignore`.
+This file is used by node-config (see below for more info).
 
 ```json5
 {
@@ -43,13 +37,87 @@ Add a file called `config/development-local.json5` and add the JSON below changi
 }
 ```
 
-You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you change change `staging` in the url to the environment you need).
+You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you can change `staging` in the url to the environment you need).
 
-##### Quick guide to `node-config`
+### Step 2: Add an entry to `/etc/hosts` file.
 
-We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack. `node-config` is a file based, and looks at files inside our `config` folder.
+Add the following entry to /etc/hosts to point `frontend.gousto.local` to localhost, if you haven't already done so as part of the G2FE setup.
 
-We have two variable we can set for `node-config` to pick up specific files. The first being  `NODE_CONFIG_ENV` which we set to match the environment (e.g. `development`, `radishes`, `staging`, `production`) and the second is `NODE_APP_INSTANCE` which we set to the where the app is running (`local`, `live`).
+`127.0.0.1 frontend.gousto.local`
+
+### Step 3: Run development environment
+
+**Note:** VPN is required to connect to staging before running dev-box and web-client.
+
+Webclient can either be run without G2FE as a standalone on port 8080, or as part of the whole FE stack with G2FE.
+
+To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
+
+The service can be run in docker, or run outside. Running outside is faster for sure.
+
+A script in the repo root called `./run.sh` has been created to help with all of these scenarios.
+
+* `./run.sh build` will build a Docker image using the checked out files to run the Webclient service.
+* `./run.sh run` will run that image in a Docker container.
+* `./run.sh dev --docker` will run the image in a Docker container, but bind mounts in your local repo over the top. You can use this to develop code without installing npm or node etc. It will be a little slower than native development.
+* `./run.sh dev --host` will build and run the service on the host. This will require node installed.
+
+To rebuild the app when running with `./run.sh run` do the following
+   * rebuild the image by doing `docker image rm webclient` and then re-execute `./run.sh build`.
+
+When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `npm run watch`.
+
+**If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
+**Alternatively just rm your node_modules folder, `dev --docker` will reinstall for you. With `dev --host` you'll have to run `npm install` yourself**
+
+All files that this script uses can be found under the folder `dev-env`.
+
+## Automatic Node Version Control
+### ZSH
+Sometimes NVM doesn’t set the correct default version, this is cause your terminal isn't looking for .nvm files and loading the correct version of node.
+
+You can fix this by adding a hook into your ~/.zshrc after nvm directory is setup.
+```shell
+export NVM_DIR=~/.nvm
+ [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# place this after nvm initialization!
+autoload -U add-zsh-hook
+load-nvmrc() {
+  local node_version="$(nvm version)"
+  local nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+```
+
+###FNM
+Copy and paste the output of `fnm env --use-on-cd` into `~/.config/fish/conf.d/fnm.fish`. See more [here](https://github.com/Schniz/fnm).
+
+## Ignore bulk-change revisions (optional)
+
+Because of a migration to prettier, there were several bulk formatting changes.  In order to make them not show up in your `git blame` invocations, you might want to invoke this command inside the repo, once only after cloning:
+
+`git config blame.ignoreRevsFile .git-blame-ignore-revs`
+
+## Quick guide to `node-config`
+
+We use [`node-config`](https://github.com/lorenwest/node-config) to handle passing environment variable into webpack. `node-config` is a file based, and looks at files inside our `src/config` folder.
+
+We have two variables we can set for `node-config` to pick up specific files. The first being  `NODE_CONFIG_ENV` which we set to match the environment (e.g. `development`, `radishes`, `staging`, `production`) and the second is `NODE_APP_INSTANCE` which we set to the where the app is running (`local`, `live`).
 
 `node-config` will load each file, and if the keys match the later file to be loaded will overwrite the variable.
 
@@ -74,16 +142,6 @@ These are the files, and the order of execution:
   * `config/custom-environment-variables.json5`
 
 See [`node-config`](https://github.com/lorenwest/node-config) for more information.
-
-#### Step 2. Run development environment
-
-**Note:** VPN is required to connect to staging before running dev-box and web-client.
-
-Make sure you have dev-box running as well, `./run.sh dev` and then run
-
-```
-npm run watch
-```
 
 ## Adding a new API endpoint
 API endpoints are now statically defined in config for each environment, that are loaded by node-config as detailed above.
@@ -121,30 +179,13 @@ Unless you specifically know that the new endpoint is an exception to the rule, 
 2. Once the staging deployment is successful, then deploy into production by raising a PR into `master`
 
 ### Deployment including a new route
-Routing is handled by the old-stack [Gousto2Frontend](https://github.com/Gousto/Gousto2-FrontEnd) application, meaning new (root-level) routes must be added to the nginx config here and this should be deployed too.
+Routing is handled by the old-stack [Gousto2-Frontend](https://github.com/Gousto/Gousto2-FrontEnd) application, meaning new (root-level) routes must be added to the nginx config here and this should be deployed too.
 
-1. Add the new route in the Gousto2-FrontEnd [redirect rules config](https://github.com/Gousto/Gousto2-FrontEnd/blob/develop/ansible/roles/frontend/templates/nginx/redirect_rules.conf.j2), for example:
-```
-location = /my-new-route {
-  include frontend-proxy.conf;
-  proxy_pass $webclient$1;
-}
-```
-2. Add the new route in the devbox-platform [frontend config](https://github.com/Gousto/devbox-platform/blob/master/config/nginx/config/configs/frontend-redirect.conf), for example:
-```
-location = /my-new-route {
-  include frontend-proxy.conf;
-  proxy_pass $webclient:8080$request_uri;
-}
-```
-3. To test the above locally you will have to rebuild the nginx docker image, more information can be found [here](https://github.com/Gousto/Gousto2-FrontEnd/blob/develop/readme.md)
-4. Deploy [Gousto2Frontend](https://github.com/Gousto/Gousto2-FrontEnd)
-5. Deploy Web Client following the steps above
+See the [G2FE readme](https://github.com/Gousto/Gousto2-FrontEnd) for how to add a new route to the frontend.
 
 ## Testing
 ### Running unit tests
 
-#### Jest
 ```shell
 cd ~/code/goustowebclient/src
 npm run test:jest
@@ -162,8 +203,9 @@ brew install watchman
 ```
 
 ### Running regression tests
+The regression tests have their own `package.json` which can be found under tests/regression. All commands assume you are within that directory.
+
 ```shell
-cd goustowebclient/tests/regression
 npm install
 ```
 
@@ -189,7 +231,6 @@ For web
 npm run test:debug:web
 ```
 
-
 All data should be mocked. Cypress has been configured to return a 404 for any real api calls.
 
 ### Running end-to-end tests
@@ -201,7 +242,7 @@ brew cask install java
 ```
 2. Nightwatch/Selenium:
 ```shell
-cd ~/code/goustowebclient/tests/e2e
+cd /tests/e2e
 npm ci
 node installLocal.js
 ```
@@ -211,10 +252,10 @@ First, have the application running and pointing to Staging
 
 Then build the e2e tests:
 ```shell
-cd ~/code/goustowebclient/src
+cd src
 npm run build:e2e:local
 ```
-(always build after changes have been made in your code and these have been rebuilt, for instance when `npm run watch` finishes to pick up your changes)
+Always build after changes have been made in your code.
 
 Then run the e2e tests:
 ```shell
@@ -224,9 +265,9 @@ npm test
 
 #### Staging environment (only for CircleCI)
 ```shell
-cd ~/code/goustowebclient/src
+cd src
 npm run build:e2e
-cd ~/code/goustowebclient/tests/e2e
+cd ../tests/e2e
 npm run test:staging
 ```
 
@@ -234,26 +275,6 @@ To run a specific tag (look at the end of the test files for the tags) use:
 `npm run test -- --tag gousto`
 
 Staging e2e tests run using a selenium server hosted on AWS. You may need to check the health of this server if the tests are not running properly - the `i-staging-selenium` EC2 instance.
-
-## Webpack bundle analyzer
-
-Your builds will generate now a file: public/stats.json (only in local)
-
-### Installation
-
-Only the first time: `npm install -g webpack-bundle-analyzer`
-
-### Usage
-
-Run
-`npm run bundle-analyzer`
-
-It will spin up a server that reads from the stats.json file.
-
-You can see the size of each part of your bundle and interact (zoom) with it by going to `http://127.0.0.1:8888/`
-
-You can see sizes for raw, parsed or gzip. Find out more here:
-https://www.npmjs.com/package/webpack-bundle-analyzer
 
 ## [Code editor setup](#code-editor-setup)
 Please install [EditorConfig](https://editorconfig.org/) for your text editor or IDE, it basically support most if not all commonly used editors (Sublime Text, VS Code, Vim, Brackets, Atom, all JetBrains products and etc). The purpose of this plugin is to ensure that everyone pushes code with the same code indentation, spacing and some other less common known configs such as ensure all file to have a final new line. It is super simple to use, just install the plugin then you won't need to do anything else. The plugin will automatically apply indentation rules from the .editorconfig file in the root of the repo.
