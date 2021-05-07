@@ -11,4 +11,4 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN --mount=type=ssh npm ci
 RUN --mount=type=ssh npm run postinstall
 RUN npm run build:dev
-ENTRYPOINT ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start:dev"]
