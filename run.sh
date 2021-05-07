@@ -21,7 +21,19 @@ fi
 if [ "$1" == "dev" ]; then
   if [ "$2" == "--docker" ]; then
     printf "\e[1;33;4;44mRunning Webclient in Docker with bind mounts to the host\e[0m\n"
-    docker compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml up
+    ssh-add -K
+
+    if [ ! -d src/node_modules ]; then
+      printf "\e[1;33;4;44mnode_modules missing, installing, this may take a loooooong time\e[0m\n"
+      docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run webclient npm install
+    fi
+
+    if [ ! -d src/libs/goustouicomponents ]; then
+      printf "\e[1;33;4;44mgoustouicomponents missing, installing\e[0m\n"
+      docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run webclient npm run postinstall
+    fi
+
+    docker-compose -f dev-env/docker-compose.yml -f dev-env/docker-compose.dev.yml run --service-ports webclient bash -c "npm run start:dev & npm run watch"
     exit 0
   elif [ "$2" == "--host" ]; then
     printf "\e[1;33;4;44mRunning Webclient on the host\e[0m\n"

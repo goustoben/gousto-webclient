@@ -1,6 +1,8 @@
 version: "3"
 services:
   webclient:
+    environment:
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
     volumes:
-      - ../src:/usr/src/service
-    command: npm run watch & npm run start:dev
+      - ../:/usr/src/service
+      - /run/host-services/ssh-auth.sock:/run/host-services/ssh-auth.sock
