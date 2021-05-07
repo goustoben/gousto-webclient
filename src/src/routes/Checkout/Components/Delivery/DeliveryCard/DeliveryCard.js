@@ -19,7 +19,7 @@ DeliveryCard.propTypes = {
   iconName: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
-  cardStyle: PropTypes.oneOfType(['default', 'blue']),
+  cardStyle: PropTypes.oneOf(['default', 'blue']),
 }
 
 DeliveryCard.defaultProps = {
