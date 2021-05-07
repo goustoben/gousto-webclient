@@ -2,7 +2,12 @@
 
 if [ "$1" == "build" ]; then
   ssh-add -K
-  printf "\e[1;33;4;44mBuilding images & installing dependencies\e[0m\n"
+  printf "\e[1;33;4;44mCleaning repo directory, building images and installing dependencies\e[0m\n"
+  rm -rf src/node_modules
+  rm -rf src/libs/goustouicomponents
+  rm -rf src/dist
+  rm -rf src/public
+  rm src/manifest.json
   docker build --progress=plain --ssh=default --file="dev-env/Dockerfile" -t webclient .
   exit 0
 fi
