@@ -62,14 +62,13 @@ A script in the repo root called `./run.sh` has been created to help with all of
 * `./run.sh dev --docker` will run the image in a Docker container, but bind mounts in your local repo over the top. You can use this to develop code without installing npm or node etc. It will be a little slower than native development.
 * `./run.sh dev --host` will build and run the service on the host. This will require node installed.
 
-To rebuild the app when running in docker you can choose the following.
-Either
-   * rebuild the image by doing `docker image rm webclient` and then re-executing `./run.sh build`
-   * if using bind mounts (`dev --docker`), do either of the following:
-     * `docker-compose exec webclient npm run watch`
-     * `docker compose exec webclient bash`, and run `npm run watch` same as you would when running locally.
+To rebuild the app when running with `./run.sh run` do the following
+   * rebuild the image by doing `docker image rm webclient` and then re-execute `./run.sh build`.
+
+When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `npm run watch`.
 
 **If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
+**Alternatively just rm your node_modules folder, `dev --docker` will reinstall for you. With `dev --host` you'll have to run `npm install` yourself**
 
 All files that this script uses can be found under the folder `dev-env`.
 
