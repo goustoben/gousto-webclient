@@ -15,12 +15,12 @@ const defaultProps = {
 }
 
 export default class ScrollToRefs extends PureComponent {
-  componentWillReceiveProps(nextProps) {
-    const { scrollToRef } = this.props
+  componentDidUpdate(prevProps) {
+    const { refKeys, scrollToRef } = this.props
 
-    if (!scrollToRef && nextProps.scrollToRef) {
-      if (nextProps.refKeys.length) {
-        this.scrollToFirstMatchingRef(nextProps.refKeys)
+    if (!prevProps.scrollToRef && scrollToRef) {
+      if (refKeys.length) {
+        this.scrollToFirstMatchingRef(refKeys)
       }
     }
   }

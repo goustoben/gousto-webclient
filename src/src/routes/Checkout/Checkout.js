@@ -42,13 +42,11 @@ const propTypes = {
   redirect: PropTypes.func,
   submitOrder: PropTypes.func,
   trackSignupStep: PropTypes.func,
-  tariffId: PropTypes.string,
   query: PropTypes.shape({
     // Not sure how to fix it, so suppressing for now to have clean output.
     // eslint-disable-next-line react/forbid-prop-types
     steps: PropTypes.array,
   }),
-  loadPrices: PropTypes.func,
   trackCheckoutButtonPressed: PropTypes.func,
   changeRecaptcha: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
@@ -71,11 +69,9 @@ const defaultProps = {
   changeRecaptcha: () => {},
   submitOrder: () => {},
   trackSignupStep: () => {},
-  tariffId: '',
   query: {
     steps: [],
   },
-  loadPrices: () => {},
   trackCheckoutButtonPressed: () => {},
   trackUTMAndPromoCode: () => {},
   fetchPayPalClientToken: () => {},
@@ -186,15 +182,6 @@ class Checkout extends PureComponent {
     }
 
     changeRecaptcha()
-  }
-
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { tariffId, loadPrices } = this.props
-
-    if (tariffId !== nextProps.tariffId) {
-      loadPrices()
-    }
   }
 
   componentWillUnmount() {

@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
-import { stepByName, stepBySlug, getPromocodeQueryParam } from 'utils/signup'
+import { stepByName, getPromocodeQueryParam } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
@@ -41,8 +41,6 @@ const propTypes = {
   params: PropTypes.shape({
     stepName: PropTypes.string,
   }),
-  currentStepName: PropTypes.string,
-  changeStep: PropTypes.func.isRequired,
   isTastePreferencesEnabled: PropTypes.bool,
   isPricingClarityEnabled: PropTypes.bool,
   orderDiscount: PropTypes.string,
@@ -79,7 +77,6 @@ const defaultProps = {
   params: {
     stepName: '',
   },
-  currentStepName: '',
   promoBannerState: {
     hide: true,
   },
@@ -219,15 +216,6 @@ class Signup extends PureComponent {
       orderDiscount,
     }
     Signup.fetchData({ store, query, params: signupParams, fetchProps })
-  }
-
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { changeStep } = this.props
-    const step = stepByName(nextProps.currentStepName)
-    if (nextProps.stepName !== step.get('slug')) {
-      changeStep(stepBySlug(nextProps.stepName))
-    }
   }
 
   getCurrentStepNumber(steps) {

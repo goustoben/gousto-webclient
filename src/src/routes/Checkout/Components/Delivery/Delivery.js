@@ -53,13 +53,14 @@ export class Delivery extends React.PureComponent {
     clearErrors()
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { formValues } = this.props
+
     if (
       globals.client &&
       this.container &&
-      deliveryUtils.isAddressConfirmed(formValues) !==
-        deliveryUtils.isAddressConfirmed(nextProps.formValues)
+      deliveryUtils.isAddressConfirmed(prevProps.formValues) !==
+        deliveryUtils.isAddressConfirmed(formValues)
     ) {
       scrollIntoView(this.container, {
         align: {

@@ -68,9 +68,9 @@ const defaultProps = {
 }
 
 export class Address extends React.PureComponent {
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillMount() {
-    const { initialPostcode, sectionName, formName, change, touch } = this.props
+  componentDidMount() {
+    const { initialPostcode, sectionName, formName, change, touch, registerField } = this.props
+
     const addresses = this.getFormValue('allAddresses') || []
     // use initial postcode
     if (initialPostcode && addresses.length === 0) {
@@ -78,10 +78,6 @@ export class Address extends React.PureComponent {
       touch(formName, `${sectionName}.postcodeTemp`)
       this.getAddresses(initialPostcode)
     }
-  }
-
-  componentDidMount() {
-    const { formName, sectionName, registerField } = this.props
 
     registerField(formName, `${sectionName}.addresses`, 'Field')
     registerField(formName, `${sectionName}.addressesFetched`, 'Field')

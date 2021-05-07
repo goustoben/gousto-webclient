@@ -17,7 +17,6 @@ const propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
   textAlign: PropTypes.oneOf(['left', 'center', 'right']),
-  autoFocus: PropTypes.bool,
   disabled: PropTypes.bool,
   placeholder: PropTypes.string,
   name: PropTypes.string,
@@ -50,7 +49,6 @@ const defaultProps = {
   pattern: '',
   required: false,
   textAlign: 'left',
-  autoFocus: false,
   isFixed: false,
   autocompleteOff: false,
   onKeyDown: () => {},
@@ -69,21 +67,6 @@ export class TextInput extends Component {
     super(props)
     this.state = {
       invertPasswordError: true
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { autoFocus } = this.props
-
-    if (nextProps.autoFocus && !autoFocus) {
-      if (this.focusTimer) {
-        clearTimeout(this.focusTimer)
-      }
-      this.focusTimer = setTimeout(() => {
-        if (this.input && this.input.focus) {
-          this.input.focus()
-        }
-      }, 100)
     }
   }
 

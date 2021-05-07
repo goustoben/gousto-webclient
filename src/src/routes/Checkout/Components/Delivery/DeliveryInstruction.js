@@ -12,10 +12,9 @@ const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions
   .map((option) => ({ value: option, label: option }))
 
 class DeliveryInstruction extends React.PureComponent {
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { value, reset } = this.props
-    if (this.shouldShowOtherInput(value) && !this.shouldShowOtherInput(nextProps.value)) {
+    if (this.shouldShowOtherInput(prevProps.value) && !this.shouldShowOtherInput(value)) {
       reset('deliveryInstructionsCustom')
     }
   }

@@ -8,7 +8,6 @@ const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHand
     <div>
       <label>House number or name</label>
       <TextInput
-        autoFocus
         name="houseNo"
         color="gray"
         textAlign="left"

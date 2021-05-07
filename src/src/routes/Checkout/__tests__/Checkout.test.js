@@ -445,27 +445,6 @@ describe('Given Checkout component', () => {
     })
   })
 
-  describe('componentWillReceiveProps', () => {
-    let loadPrices
-    beforeEach(() => {
-      loadPrices = jest.fn()
-      wrapper = shallow(
-        <Checkout
-          query={{ query: true }}
-          params={{ params: true }}
-          loadPrices={loadPrices}
-          trackSignupStep={jest.fn()}
-        />,
-        { context }
-      )
-    })
-
-    test('should call loadPrices if tariffId has changed', async () => {
-      await wrapper.instance().UNSAFE_componentWillReceiveProps({ tariffId: 2 })
-      expect(loadPrices).toHaveBeenCalledTimes(1)
-    })
-  })
-
   describe('when component unmounted', () => {
     let clearPayPalClientToken
 
