@@ -38,7 +38,7 @@ if [ "$1" == "dev" ]; then
   elif [ "$2" == "--host" ]; then
     printf "\e[1;33;4;44mRunning Webclient on the host\e[0m\n"
     cd src
-    npm run watch & npm run start:dev
+    npm run start:dev & npm run watch
     exit 0
   fi
 fi
