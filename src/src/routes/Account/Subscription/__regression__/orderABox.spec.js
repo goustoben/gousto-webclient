@@ -3,7 +3,7 @@ describe('Given I am logged in', () => {
     cy.login()
   })
 
-  describe('And I am on the /subscription-settings page', () => {
+  describe('And I am on the subscription-settings page', () => {
     beforeEach(() => {
       cy.visitSubscriptionSettingsPage({ isSubscriptionActive: false })
     })

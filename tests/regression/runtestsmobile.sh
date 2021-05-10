@@ -1,3 +1,3 @@
 #!/bin/bash
 
-npm run test:staging:mobile
+npm run ci:mobile
