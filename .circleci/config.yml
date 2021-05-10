@@ -153,7 +153,20 @@ jobs:
           name: Run regression tests
           command: source ~/.circlerc && scripts/validate-regression.sh
       - store_artifacts:
-          path: ~/project/tests/regression/screenshots
+          path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
+          destination: report.html
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/screenshots
+          destination: screenshots
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/assets/app.js
+          destination: assets/app.js
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/assets/app.css
+          destination: assets/app.css
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/assets/MaterialIcons-Regular.woff
+          destination: assets/MaterialIcons-Regular.woff
 
   test-regression-mobile:
     docker: *gousto_build_image
@@ -164,7 +177,20 @@ jobs:
           name: Run regression tests mobile
           command: source ~/.circlerc && scripts/validate-regression-mobile.sh
       - store_artifacts:
-          path: ~/project/tests/regression/screenshots
+          path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
+          destination: report.html
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/screenshots
+          destination: screenshots
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/assets/app.js
+          destination: assets/app.js
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/assets/app.css
+          destination: assets/app.css
+      - store_artifacts:
+          path: ~/project/tests/regression/reports/html/assets/MaterialIcons-Regular.woff
+          destination: assets/MaterialIcons-Regular.woff
 
   deploy-application:
     docker: *gousto_build_image
