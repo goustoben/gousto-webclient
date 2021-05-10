@@ -20,6 +20,7 @@ const CookieBanner = ({
       <div
         className={classnames(css.container, isPromoAppBannerEnabled && css.bottomPositioning)}
         data-testing="cookiePolicyBanner"
+        role="banner"
       >
         <div>
           <p className={css.description}>
