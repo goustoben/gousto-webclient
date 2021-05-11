@@ -1,5 +1,6 @@
 describe('Given I am logged in', () => {
   beforeEach(() => {
+    cy.stubAll3rdParties()
     cy.login()
   })
 

@@ -11,6 +11,7 @@ describe('Promo Code', () => {
   describe('when a user checks out for the first time', () => {
     describe('and has a promo code in their basket', () => {
       beforeEach(() => {
+        cy.stubAll3rdParties()
         cy.checkoutLoggedOut({ withDiscount: true })
       })
 

@@ -1,7 +1,8 @@
 describe('My Deliveries', () => {
   beforeEach(() => {
-    cy.server()
+    cy.stubAll3rdParties()
     cy.interceptOptimizelyJavascript().as('optimizelyJs')
+    cy.server()
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent')
     cy.fixture('user/userCurrentOrders').as('userCurrentOrders')
@@ -22,6 +23,7 @@ describe('My Deliveries', () => {
     cy.route('DELETE', /order/, {}).as('cancelPendingOrder')
     cy.route('GET', /delivery_day/, {})
     cy.login()
+
     cy.visit('/my-deliveries')
     cy.wait(['@optimizelyJs', '@currentOrders','@projectedDeliveries','@currentAddress', '@currentSubscription'])
   })
