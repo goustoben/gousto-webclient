@@ -4,6 +4,7 @@ region: eu-west-1
 exposure: private
 dns: webclient
 owner: squad-radishes
+amioptout: true
 rootVolumeSize: 16
 
 ami: ami-09f0b8b3e41191524
