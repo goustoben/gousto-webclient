@@ -8,7 +8,7 @@ import css from './OrderedRecipe.css'
 
 export const OrderedRecipes = ({ title, recipeId, stock, media, featureBtn, isFineDineIn }) => (
   <div className={css.container}>
-    <GoustoImage media={media.getIn([1, 'src'])} title={title} className={css.image} />
+    <GoustoImage media={media} title={title} className={css.image} />
     <div className={css.recipeContainer}>
       <div className={css.recipeName}>
         <span className={css.recipeTitle}>{title}</span>
