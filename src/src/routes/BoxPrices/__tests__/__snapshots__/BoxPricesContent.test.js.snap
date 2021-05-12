@@ -37,7 +37,9 @@ exports[`BoxPricesContent Will snap BoxPricesContent 1`] = `
       className="row centered"
     >
       <div
+        aria-label=""
         className="svg icon-hearts icon"
+        role="img"
         style={
           Object {
             "backgroundImage": "url(icon-hearts.svg)",

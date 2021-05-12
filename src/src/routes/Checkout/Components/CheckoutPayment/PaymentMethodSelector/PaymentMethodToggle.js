@@ -36,6 +36,7 @@ export const PaymentMethodToggle = ({ methodDescriptor, isActive, setCurrentPaym
         name="paymentMethod"
         isChecked={isActive}
         onChange={() => setCurrentPaymentMethod(paymentMethod)}
+        ariaLabel={`Payment Method ${paymentMethod}}`}
       >
         <div className={css.flex}>
           {renderItem(leftItem)}

@@ -384,7 +384,7 @@ class Header extends React.PureComponent {
             <div className={css.container}>
               <div className={css.mainBar}>
                 <div className={css.mainContent}>
-                  <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !promoCodeUrl} className={css.logoLink}>
+                  <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !promoCodeUrl} className={css.logoLink} aria-label="Gousto Home button">
                     <span>
                       <Svg fileName="gousto_logo" className={css.logoDesktop} />
                     </span>
