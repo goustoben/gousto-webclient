@@ -17,9 +17,9 @@ describe('<Footer />', () => {
     jest.clearAllMocks()
   })
 
-  test('should return a <div>', () => {
+  test('should return a <footer>', () => {
     const wrapper = shallow(<Footer />)
-    expect(wrapper.type()).toEqual('div')
+    expect(wrapper.type()).toEqual('footer')
   })
 
   test('should display the medium footer by default which conatains AppStoreLinks and full list', () => {

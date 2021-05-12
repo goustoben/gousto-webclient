@@ -102,9 +102,9 @@ class Hero extends Component {
             </Heading>
           </div>
           {this.renderGetStarted(true)}
-          <div className={css.processImage} />
+          <div role="img" aria-label="cooking image" className={css.processImage} />
         </div>
-        <div className={css.heroImage} />
+        <div role="img" aria-label="cooking image" className={css.heroImage} />
         {this.renderGetStarted(false)}
       </div>
     )

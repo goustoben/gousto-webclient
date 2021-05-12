@@ -120,6 +120,7 @@ const Footer = ({
         <Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
       </li>
       <li className={classNames(css.mobileHide, css.menuItem)}>
+        {/* eslint-disable-next-line */}
         <span data-test="week-recipes" onClick={trackWeeklyRecipesClick} role="button" tabIndex={0}>
           <Link
             to={isRedirectToNewMenu ? clientRoutes.menu2 : clientRoutes.menu}
@@ -160,16 +161,24 @@ const Footer = ({
     <div className={css.appLinks}>
       <ul className={css.links}>
         <li className={css.link}>
-          <Link to="http://www.facebook.com/goustocooking" data-selid="footer-facebook" clientRouted={false} secondary><span className={css.facebook} /></Link>
+          <Link to="http://www.facebook.com/goustocooking" data-selid="footer-facebook" clientRouted={false} secondary>
+            <span role="img" aria-label="facebook" className={css.facebook} />
+          </Link>
         </li>
         <li className={css.link}>
-          <Link to="https://twitter.com/goustocooking" data-selid="footer-twitter" clientRouted={false} secondary><span className={css.twitter} /></Link>
+          <Link to="https://twitter.com/goustocooking" data-selid="footer-twitter" clientRouted={false} secondary>
+            <span role="img" aria-label="twitter" className={css.twitter} />
+          </Link>
         </li>
         <li className={css.link}>
-          <Link to="https://www.youtube.com/UKGousto/" data-selid="footer-youtube" clientRouted={false} secondary><span className={css.youtube} /></Link>
+          <Link to="https://www.youtube.com/UKGousto/" data-selid="footer-youtube" clientRouted={false} secondary>
+            <span role="img" aria-label="youtube" className={css.youtube} />
+          </Link>
         </li>
         <li className={css.link}>
-          <Link to="http://instagram.com/goustocooking" data-selid="footer-instagram" clientRouted={false} secondary><span className={css.instagram} /></Link>
+          <Link to="http://instagram.com/goustocooking" data-selid="footer-instagram" clientRouted={false} secondary>
+            <span role="img" aria-label="instagram" className={css.instagram} />
+          </Link>
         </li>
       </ul>
       <AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
@@ -262,9 +271,9 @@ const Footer = ({
   }
 
   return (
-    <div className={css.footer}>
+    <footer className={css.footer}>
       {renderFooter()}
-    </div>
+    </footer>
   )
 }
 
@@ -290,4 +299,5 @@ Footer.defaultProps = {
   postCode: '',
 }
 
+// eslint-disable-next-line
 export default Footer

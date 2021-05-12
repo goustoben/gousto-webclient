@@ -11,7 +11,7 @@ export const JoeWicks = ({ isCarouselShiftEnabled }) => (
     })}
   >
     <div className={css.container}>
-      <div className={css.joeWicksImage} />
+      <div role="img" aria-label="joe wicks" className={css.joeWicksImage} />
       <div className={css.textContainer}>
         <p className={classNames(css.quote, { [css.redesignColor]: isCarouselShiftEnabled })}>
           {joeWicks}
