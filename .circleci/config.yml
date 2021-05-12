@@ -7,8 +7,8 @@ gousto_build_image: &gousto_build_image
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
-gousto_build_image_docker: &gousto_build_image_docker
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node12:latest
+gousto_platform_image: &gousto_platform_image
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
       aws_auth:
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
@@ -71,7 +71,7 @@ jobs:
             - project/service.yml
 
   setup-platform:
-    docker: *gousto_build_image_docker
+    docker: *gousto_platform_image
     steps:
       - checkout
       - run:
@@ -91,14 +91,26 @@ jobs:
             - project/images
             - .circlerc
 
-  build-application:
-    docker: *gousto_build_image
+  setup-build-application:
+    docker: *gousto_platform_image
     steps:
       - attach_workspace:
           at: ~/
       - run:
           name: Setup common
           command: source ~/.circlerc && setup/setup-common.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+            - .npmrc
+
+  build-application:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
       - run:
           name: Setup isomorphic
           command: source ~/.circlerc && setup/setup-isomorphic.sh
@@ -108,7 +120,7 @@ jobs:
             - project/src
 
   build-nginx-image:
-    docker: *gousto_build_image_docker
+    docker: *gousto_platform_image
     steps:
       - setup_remote_docker
       - attach_workspace:
@@ -119,7 +131,7 @@ jobs:
           no_output_timeout: 10m
 
   build-webclient-image:
-    docker: *gousto_build_image_docker
+    docker: *gousto_build_image
     steps:
       - setup_remote_docker
       - attach_workspace:
@@ -127,6 +139,21 @@ jobs:
       - run:
           name: Upload client to S3
           command: source ~/.circlerc && scripts/build-docker.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/setup
+            - project/scripts
+            - project/ci_scripts
+            - project/images
+            - .circlerc
+
+  deploy-webclient-image:
+    docker: *gousto_platform_image
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ~/
       - run:
           name: Create & deploy image
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
@@ -193,14 +220,14 @@ jobs:
           destination: assets/MaterialIcons-Regular.woff
 
   deploy-application:
-    docker: *gousto_build_image
+    docker: *gousto_platform_image
     steps:
       - attach_workspace:
           at: ~/
       - run: source ~/.circlerc && scripts/deploy.sh
 
   deploy-containers:
-    docker: *gousto_build_image
+    docker: *gousto_platform_image
     steps:
       - attach_workspace:
           at: ~/
@@ -297,11 +324,27 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - build-application:
+      - deploy-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient-image
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - setup-build-application:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
             - setup-platform
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - build-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-build-application
           filters:
             branches:
               only:
@@ -318,7 +361,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-nginx-image
-            - build-webclient-image
+            - deploy-webclient-image
           filters:
             branches:
               only:
@@ -391,11 +434,27 @@ workflows:
             branches:
               only:
                 - develop
-      - build-application:
+      - deploy-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient-image
+          filters:
+            branches:
+              only:
+                - develop
+      - setup-build-application:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
             - setup-platform
+          filters:
+            branches:
+              only:
+                - develop
+      - build-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-build-application
           filters:
             branches:
               only:
@@ -413,7 +472,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-nginx-image
-            - build-webclient-image
+            - deploy-webclient-image
             - publish-code-health
           filters:
             branches:
@@ -482,7 +541,7 @@ workflows:
             branches:
               only:
                 - master
-      - build-application:
+      - setup-build-application:
           context: gousto-prod-aws-app-circleci
           requires:
             - setup-src
@@ -491,10 +550,26 @@ workflows:
             branches:
               only:
                 - master
+      - build-application:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - setup-build-application
+          filters:
+            branches:
+              only:
+                - master
       - build-webclient-image:
           context: gousto-prod-aws-app-circleci
           requires:
             - build-application
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-webclient-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-webclient-image
           filters:
             branches:
               only:
@@ -511,7 +586,7 @@ workflows:
           context: gousto-prod-aws-app-circleci
           requires:
             - build-nginx-image
-            - build-webclient-image
+            - deploy-webclient-image
           filters:
             branches:
               only:

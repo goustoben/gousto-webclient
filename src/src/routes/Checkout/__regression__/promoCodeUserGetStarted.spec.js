@@ -7,6 +7,7 @@ describe('Promo Code', () => {
 
   describe('when a user clicks get started cta', () => {
     before(() => {
+      cy.stubAll3rdParties()
       cy.checkoutLoggedOut({ withDiscount: false })
       cy.fixture('promoCode/promoCodeDetails').as('promoCodeDetails')
       cy.route('GET', '/promocode/**', '@promoCodeDetails').as('promoCodeDetails')

@@ -5,6 +5,7 @@ import { setMocks } from './pageUtils/checkout/checkoutMocks'
 describe('Given I’m a gousto logged-out website visitor', () => {
   describe('When I land on the delivery step of the checkout', () => {
     before(() => {
+      cy.stubAll3rdParties()
       setMocks({ validPostcode: true })
       goToCheckout()
       addRecipeDispatch()
