@@ -5,6 +5,7 @@ import {
   getPricingClarityRedesign,
   getIsWizardPricePerServingEnabled,
   getIsWizardBoxSizeEnabled,
+  getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
@@ -25,6 +26,7 @@ const mapStateToProps = (state, ownProps) => ({
   isWizardPricePerServingEnabled: getIsWizardPricePerServingEnabled(state),
   lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
   isWizardBoxSizeEnabled: getIsWizardBoxSizeEnabled(state),
+  isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
 })
 
 const SignupContainer = connect(mapStateToProps, {

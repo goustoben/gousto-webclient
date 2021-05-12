@@ -120,6 +120,12 @@ const basket = {
       return state.set('numPortions', portionSize)
     }
 
+    case actionTypes.BASKET_SET_NUM_RECIPES: {
+      const { numRecipes } = action
+
+      return state.set('numRecipes', numRecipes)
+    }
+
     case actionTypes.BASKET_NUM_PEOPLE_CHANGE: {
       const { numAdults } = action.people
 

@@ -13,6 +13,7 @@ import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 import css from './Signup.css'
 
 import { BoxSizeStep } from './Steps/BoxSize'
+import { RecipesPerBoxStepContainer } from './Steps/RecipesPerBox'
 import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
@@ -21,6 +22,7 @@ import { updatePricePerServing } from '../../actions/boxPrices'
 
 const components = {
   boxSize: BoxSizeStep,
+  recipesPerBox: RecipesPerBoxStepContainer,
   postcode: PostcodeStep,
   delivery: DeliveryStep,
 }
@@ -62,6 +64,7 @@ const propTypes = {
     }),
   }),
   isWizardBoxSizeEnabled: PropTypes.bool,
+  isPaymentBeforeChoosingEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -87,6 +90,7 @@ const defaultProps = {
   isWizardPricePerServingEnabled: false,
   lowestPricePerPortion: {},
   isWizardBoxSizeEnabled: false,
+  isPaymentBeforeChoosingEnabled: false,
 }
 
 const contextTypes = {
@@ -109,9 +113,12 @@ class Signup extends PureComponent {
       isPricingClarityEnabled,
       isWizardPricePerServingEnabled,
       lowestPricePerPortion,
+      isPaymentBeforeChoosingEnabled,
     } = fetchProps
 
-    if (querySteps.length) {
+    if (isPaymentBeforeChoosingEnabled) {
+      steps = Immutable.List(signupConfig.paymentBeforeChoosingSteps)
+    } else if (querySteps.length) {
       steps = Immutable.List(querySteps)
     } else if (featureSteps.length) {
       steps = Immutable.List(featureSteps)
@@ -202,6 +209,7 @@ class Signup extends PureComponent {
       isPricingClarityEnabled,
       isWizardPricePerServingEnabled,
       lowestPricePerPortion,
+      isPaymentBeforeChoosingEnabled,
     } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
@@ -214,6 +222,7 @@ class Signup extends PureComponent {
       lowestPricePerPortion,
       menuLoadBoxPrices,
       orderDiscount,
+      isPaymentBeforeChoosingEnabled,
     }
     Signup.fetchData({ store, query, params: signupParams, fetchProps })
   }

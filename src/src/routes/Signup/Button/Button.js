@@ -3,9 +3,11 @@ import React from 'react'
 import actual from 'actual'
 import { Button as GoustoButton } from 'goustouicomponents'
 
-const ctaText = (isLastStep, isTastePreferencesEnabled) => {
+const ctaText = (isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled) => {
   if (isLastStep) {
-    if (isTastePreferencesEnabled) {
+    if (isPaymentBeforeChoosingEnabled) {
+      return 'See this week’s menu'
+    } else if (isTastePreferencesEnabled) {
       return 'Show me recipes'
     } else {
       return 'Confirm'
@@ -18,8 +20,16 @@ const ctaText = (isLastStep, isTastePreferencesEnabled) => {
   return 'Continue'
 }
 
-const Button = ({ children, onClick, isLastStep, isTastePreferencesEnabled, ...buttonProps }) => {
-  const buttonText = children || ctaText(isLastStep, isTastePreferencesEnabled)
+const Button = ({
+  children,
+  onClick,
+  isLastStep,
+  isTastePreferencesEnabled,
+  isPaymentBeforeChoosingEnabled,
+  ...buttonProps
+}) => {
+  const buttonText =
+    children || ctaText(isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled)
 
   return (
     <GoustoButton
@@ -44,12 +54,14 @@ Button.propTypes = {
   onClick: PropTypes.func,
   children: PropTypes.node,
   isTastePreferencesEnabled: PropTypes.bool,
+  isPaymentBeforeChoosingEnabled: PropTypes.bool,
 }
 
 Button.defaultProps = {
   onClick: () => {},
   children: undefined,
   isTastePreferencesEnabled: false,
+  isPaymentBeforeChoosingEnabled: false,
 }
 
 export { Button }
