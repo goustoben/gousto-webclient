@@ -7,7 +7,6 @@ const dateBoxDeliveryToday = new Date(2020, 4, 26)
 
 describe('Given I am logged in and visit the home page', () => {
   beforeEach(() => {
-    cy.stubAll3rdParties()
     cy.server()
     setMocksLoginHomePage()
   })

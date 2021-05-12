@@ -9,7 +9,6 @@ const getRecipes = (win) => (
 describe('Given I am a logged out user', () => {
   describe('When I land on the menu', () => {
     before(() => {
-      cy.stubAll3rdParties()
       cy.server()
       cy.mockDate()
       cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')

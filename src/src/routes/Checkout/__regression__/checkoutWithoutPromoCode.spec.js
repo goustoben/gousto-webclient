@@ -15,7 +15,6 @@ describe('Promo Code', () => {
       const promoCode = 'DTI-SB-5030'
 
       beforeEach(() => {
-        cy.stubAll3rdParties()
         cy.checkoutLoggedOut({ withDiscount: false })
       })
 

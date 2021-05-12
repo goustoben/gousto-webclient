@@ -4,7 +4,6 @@ describe('Promo Code', () => {
   describe('when the url contains a promoCode parameter', () => {
     describe('and the user is logged out ', () => {
       beforeEach(() => {
-        cy.stubAll3rdParties()
         cy.server()
         cy.fixture('promoCode/promoCodeDetails').as('promoCodeDetails')
         cy.route('GET', /promocode\/RET-REACTFEB19EMOB/, '@promoCodeDetails').as('promoCodeDetails')

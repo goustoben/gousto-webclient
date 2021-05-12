@@ -2,7 +2,6 @@ import { withPlatformTags, MOBILE, WEB } from '../../../utils/regression/tags'
 
 describe('Menu-BrowseCTA', () => {
   before(() => {
-    cy.stubAll3rdParties()
     cy.server()
     cy.mockDate()
     cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')

@@ -35,7 +35,6 @@ describe('Given the customer is logged in', () => {
 
   describe('When their order is eligible for ingredients refund and Help is clicked', () => {
     beforeEach(() => {
-      cy.stubAll3rdParties()
       cy.fixture('getHelp/user/userCurrentOrders').as('userCurrentOrders')
       cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('userCurrentOrdersRequest')
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')

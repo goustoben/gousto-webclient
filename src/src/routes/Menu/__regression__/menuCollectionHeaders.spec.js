@@ -9,7 +9,6 @@ describe('MenuCollectionHeaders', () => {
 
   describe('click on waveLinkHeader', () => {
     withPlatformTags(WEB).it('should change collection', () => {
-      cy.stubAll3rdParties()
       cy.server()
       cy.route('GET', 'boxPrices', 'fixture:boxPrices/priceNoPromocode.json').as('getBoxPrice')
       cy.route('GET', 'brand/v1/theme', 'fixture:brand/brand.json').as('getBrand')

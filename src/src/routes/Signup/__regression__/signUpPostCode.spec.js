@@ -9,7 +9,6 @@ describe('Given I land on postcode slide of the wizard', () => {
     win.__store__.getState().error.get('BOXSUMMARY_DELIVERY_DAYS_RECEIVE')
 
   before(() => {
-    cy.stubAll3rdParties()
     cy.server()
     cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json')
     cy.route(

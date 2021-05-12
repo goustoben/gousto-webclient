@@ -1,7 +1,6 @@
 
 describe('My Deliveries', () => {
   beforeEach(() => {
-    cy.stubAll3rdParties()
     cy.server()
     cy.fixture('user/userCurrent').as('userCurrent')
     cy.route('GET', /user\/current/, '@userCurrent').as('user')
