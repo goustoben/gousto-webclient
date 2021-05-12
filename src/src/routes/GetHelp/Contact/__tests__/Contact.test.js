@@ -4,7 +4,6 @@ import { mount } from 'enzyme'
 import { client, zendesk } from 'config/routes'
 
 import { Item, ItemExpandable } from 'goustouicomponents'
-import itemCSS from 'components/Item/Item.css'
 import { ItemLink } from '../../components/ItemLink'
 import { Contact } from '../Contact'
 
@@ -96,7 +95,7 @@ describe('<Contact />', () => {
   describe('behaviour', () => {
     test('live chat opens the chat when clicked', () => {
       const openLiveChatSpy = jest.fn()
-      const chatItemContent = wrapper.find(Item).at(0).find(`.${itemCSS.itemContent}`)
+      const chatItemContent = wrapper.find(Item).at(0)
       window.$zopim = {
         livechat: {
           window: {
