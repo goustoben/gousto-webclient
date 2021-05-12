@@ -194,6 +194,21 @@ Cypress.Commands.add('interceptThirdPartyJS', (url, fixturePath, _as) => {
 })
 
 Cypress.Commands.add('interceptOptimizelyJavascript', () => cy.interceptThirdPartyJS(
-  'https://cdn.optimizely.com/js/*.js', 
+  'https://cdn.optimizely.com/js/*.js',
   '3rd-party-scripts/optimizely/js/base_features_toggles.js')
 )
+
+Cypress.Commands.add('stubAll3rdParties', () => {
+  cy.intercept('http://www.googletagmanager.com/**', { statusCode: 200, body: '//Cypress forced no-op', }).as('gtmNoOp')
+  cy.intercept('https://logx.optimizely.com/**', { statusCode: 200, body: '//Cypress forced no-op', }).as('optimizelyLogNoOp')
+  cy.intercept('https://**.facebook.net/**', { statusCode: 200, body: '//Cypress forced no-op', }).as('facebookNoOp')
+  cy.intercept('http://widget.trustpilot.com/**', { statusCode: 200, body: '//Cypress forced no-op', }).as('trustpilotNoOp')
+  cy.intercept('https://js.braintreegateway.com/**', { statusCode: 200, body: '//Cypress forced no-op', }).as('braintreeGatewayNoOp')
+  cy.intercept('https://s3-gousto-staging-media.s3-eu-west-1.amazonaws.com/features.json**', {
+    isRecaptchaEnabled: false
+  }).as('disableRecaptcha')
+})
+
+Cypress.Commands.add('stubAllApis', () => {
+  cy.intercept('https://**-api.gousto.info/**', { statusCode: 404, body: 'Cypress forced 404', })
+})

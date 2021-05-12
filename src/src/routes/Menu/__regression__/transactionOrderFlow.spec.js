@@ -6,6 +6,7 @@ const getRecipes = (win) => win.__store__.getState().basket.get('recipes').toArr
 describe('when the user is logged out', () => {
   describe('when the user navigate to the menu page', () => {
     before(() => {
+      cy.stubAll3rdParties()
       cy.mockDate()
 
       cy.server()

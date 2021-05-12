@@ -11,6 +11,7 @@ const CARDNAME_ERROR = { cardName: 'Card name is required' }
 
 describe("Given I'm a logged out user who has made a mistake in the first steps of checkout", () => {
   before(() => {
+    cy.stubAll3rdParties()
     cy.setCookie('v1_goustoStateStore_basket_postcode', '"W140EE"')
     setMocks({ validPostcode: true })
     setPaymentSpecificMocks()

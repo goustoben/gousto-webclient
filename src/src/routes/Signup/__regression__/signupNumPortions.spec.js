@@ -7,6 +7,7 @@ const getNumPortions = (win) =>
 describe('Given I am a logged out user', () => {
   describe('When I land on the num portions code slide of the wizard', () => {
     before(() => {
+      cy.stubAll3rdParties()
       cy.server()
       cy.clearCookies()
       cy.clearLocalStorage()
