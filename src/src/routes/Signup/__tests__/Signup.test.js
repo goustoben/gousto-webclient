@@ -151,6 +151,24 @@ describe('Signup', () => {
         })
       })
     })
+
+    describe('when isPaymentBeforeChoosingEnabled is enabled', () => {
+      test('then it should initialize the four steps', async () => {
+        fetchDataProps.fetchProps = {
+          ...fetchDataProps.fetchProps,
+          isPaymentBeforeChoosingEnabled: true,
+        }
+
+        await Signup.fetchData({
+          ...fetchDataProps,
+          store: context.store,
+        })
+
+        expect(actions.signupStepsReceive).toHaveBeenCalledWith(
+          Immutable.List(['boxSize', 'recipesPerBox', 'postcode', 'delivery'])
+        )
+      })
+    })
   })
 
   describe('Step size on Signup', () => {

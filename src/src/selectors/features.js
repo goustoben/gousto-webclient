@@ -197,3 +197,7 @@ export const getIsHomePageFlexibilityMessageEnabled = ({ features }) => (
 export const getIsWizardBoxSizeEnabled = ({ features }) => (
   features && features.getIn(['isWizardBoxSizeEnabled', 'value'], false)
 )
+
+export const getIsPaymentBeforeChoosingEnabled = ({ features }) => (
+  features && features.getIn(['isPaymentBeforeChoosingEnabled', 'value'], false)
+)

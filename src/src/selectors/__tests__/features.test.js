@@ -51,6 +51,7 @@ import {
   getIsAdditionalCheckoutErrorsEnabled,
   getIsHomePageFlexibilityMessageEnabled,
   getIsWizardBoxSizeEnabled,
+  getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -118,6 +119,7 @@ describe('when features are defined', () => {
     [getIsAdditionalCheckoutErrorsEnabled, 'isAdditionalCheckoutErrorsEnabled'],
     [getIsHomePageFlexibilityMessageEnabled, 'isHomePageFlexibilityMessageEnabled'],
     [getIsWizardBoxSizeEnabled, 'isWizardBoxSizeEnabled'],
+    [getIsPaymentBeforeChoosingEnabled, 'isPaymentBeforeChoosingEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

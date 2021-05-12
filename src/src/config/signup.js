@@ -5,9 +5,11 @@ export const PaymentMethod = {
 
 export const signupConfig = {
   defaultSteps: ['boxSize', 'postcode', 'delivery'],
+  paymentBeforeChoosingSteps: ['boxSize', 'recipesPerBox', 'postcode', 'delivery'],
   steps: [
     { name: 'welcome', slug: 'welcome' },
     { name: 'boxSize', slug: 'box-size' },
+    { name: 'recipesPerBox', slug: 'recipes-per-box' },
     { name: 'kidsCookFor', slug: 'cook-for-children' },
     { name: 'postcode', slug: 'postcode' },
     { name: 'delivery', slug: 'delivery-options' },
@@ -45,6 +47,10 @@ export const signupConfig = {
       },
     },
     discountApplied: 'Discount applied'
+  },
+  recipesPerBoxStep: {
+    title: 'How many recipes do you want per box?',
+    recipesPerBoxPossibleValues: [2, 3, 4],
   },
   postCodeStep: {
     title: 'Where would you like your boxes delivered?'

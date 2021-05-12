@@ -602,4 +602,14 @@ describe('basket reducer', () => {
       expect(Immutable.is(result, expected)).toEqual(true)
     })
   })
+
+  describe('BASKET_SET_NUM_RECIPES action type', () => {
+    test('should set numRecipes', () => {
+      const state = Immutable.Map({})
+      const result = basket(state, { type: 'BASKET_SET_NUM_RECIPES', numRecipes: 2 })
+
+      const expected = Immutable.Map({ numRecipes: 2 })
+      expect(Immutable.is(result, expected)).toEqual(true)
+    })
+  })
 })
