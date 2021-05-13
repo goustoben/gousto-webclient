@@ -164,31 +164,132 @@ describe('orderApi', () => {
   })
 
   describe('getUserOrders', () => {
-    test('should fetch the correct url', async () => {
-      const expectedReqData = {
-        'filter[phase]': 'delivery',
-        include: ['data'],
-        'page[limit]': 15,
-        sort: 'deliveryDate'
-      }
+    describe('when given phase', () => {
+      const phase = 'delivery'
 
-      const userId = '1234'
-      const expectedHeaders = {
-        'Content-Type': 'application/json',
-        'x-gousto-device-id': 'session-id',
-        'x-gousto-user-id': userId
-      }
+      describe('when given include', () => {
+        const include = ['data']
 
-      await getUserOrders('token', userId, 'delivery', ['data'])
-      expect(fetchSpy).toHaveBeenCalledTimes(1)
-      expect(fetchSpy).toHaveBeenCalledWith(
-        'token',
-        `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
-        expectedReqData,
-        'GET',
-        'default',
-        expectedHeaders
-      )
+        test('should fetch the correct url', async () => {
+          const expectedReqData = {
+            'filter[phase]': phase,
+            include,
+            'page[limit]': 15,
+            sort: 'deliveryDate'
+          }
+
+          const userId = '1234'
+          const expectedHeaders = {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session-id',
+            'x-gousto-user-id': userId
+          }
+
+          await getUserOrders('token', userId, phase, include)
+          expect(fetchSpy).toHaveBeenCalledTimes(1)
+          expect(fetchSpy).toHaveBeenCalledWith(
+            'token',
+            `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
+            expectedReqData,
+            'GET',
+            'default',
+            expectedHeaders
+          )
+        })
+      })
+
+      describe('when not given include', () => {
+        const include = null
+
+        test('should fetch the correct url', async () => {
+          const expectedReqData = {
+            'filter[phase]': phase,
+            'page[limit]': 15,
+            sort: 'deliveryDate'
+          }
+
+          const userId = '1234'
+          const expectedHeaders = {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session-id',
+            'x-gousto-user-id': userId
+          }
+
+          await getUserOrders('token', userId, phase, include)
+          expect(fetchSpy).toHaveBeenCalledTimes(1)
+          expect(fetchSpy).toHaveBeenCalledWith(
+            'token',
+            `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
+            expectedReqData,
+            'GET',
+            'default',
+            expectedHeaders
+          )
+        })
+      })
+    })
+
+    describe('when not given phase', () => {
+      const phase = null
+
+      describe('when given include', () => {
+        const include = ['data']
+
+        test('should fetch the correct url', async () => {
+          const expectedReqData = {
+            include,
+            'page[limit]': 15,
+            sort: 'deliveryDate'
+          }
+
+          const userId = '1234'
+          const expectedHeaders = {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session-id',
+            'x-gousto-user-id': userId
+          }
+
+          await getUserOrders('token', userId, phase, include)
+          expect(fetchSpy).toHaveBeenCalledTimes(1)
+          expect(fetchSpy).toHaveBeenCalledWith(
+            'token',
+            `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
+            expectedReqData,
+            'GET',
+            'default',
+            expectedHeaders
+          )
+        })
+      })
+
+      describe('when not given include', () => {
+        const include = null
+
+        test('should fetch the correct url', async () => {
+          const expectedReqData = {
+            'page[limit]': 15,
+            sort: 'deliveryDate'
+          }
+
+          const userId = '1234'
+          const expectedHeaders = {
+            'Content-Type': 'application/json',
+            'x-gousto-device-id': 'session-id',
+            'x-gousto-user-id': userId
+          }
+
+          await getUserOrders('token', userId, phase, include)
+          expect(fetchSpy).toHaveBeenCalledTimes(1)
+          expect(fetchSpy).toHaveBeenCalledWith(
+            'token',
+            `https://production-api.gousto.co.uk/order/v2/users/${userId}/orders`,
+            expectedReqData,
+            'GET',
+            'default',
+            expectedHeaders
+          )
+        })
+      })
     })
 
     test('should return the results of the fetch unchanged', async () => {

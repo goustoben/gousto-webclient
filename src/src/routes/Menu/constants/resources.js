@@ -9,4 +9,5 @@ export const ResourceType = {
   Product: 'product',
   Recipe: 'recipe',
   ShippingAddress: 'shipping-address',
+  Period: 'period',
 }

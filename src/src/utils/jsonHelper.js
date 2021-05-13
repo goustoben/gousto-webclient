@@ -70,10 +70,36 @@ export function JSONParse(text, returnRawData) { // eslint-disable-line new-cap
   }
 }
 
+const isRequestSuccessful = (response, status) => {
+  /*
+   * Core returns 200 status for requests that have
+   * failed. So we have to check in the response if
+   * `.status` is `ok` to know if the request was successful
+   */
+  if (response.status === 'ok') {
+    return true
+  }
+
+  /*
+   * If we get a request from a new service we don't return `.status`
+   * so we need to check if `.status` is `undefined` and then we are
+   * safe to check the `status`.
+   *
+   * Example of these requests, is OrderAPI V2 GET request.
+   */
+  if (response.status === undefined && status === 200) {
+    return true
+  }
+
+  // If neither conditions is true we assume the request is a failed
+  // request.
+  return false
+}
+
 export function processJSON([response, status]) {
   return new Promise((resolve, reject) => {
     const meta = response.meta || null
-    if (response.status === 'ok') {
+    if (isRequestSuccessful(response, status)) {
       let cbData = response
       if (response.result) {
         cbData = response.result

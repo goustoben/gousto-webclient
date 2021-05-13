@@ -2,11 +2,13 @@ import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import { fetchUserOrders } from 'apis/user'
 import * as getHelpApi from 'apis/getHelp'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
+import * as optimizelyUtils from 'containers/OptimizelyRollouts/optimizelyUtils'
+import * as menuOrderActions from 'routes/Menu/actions/order'
+
 import * as getHelpActionsUtils from '../utils'
 import {
   applyDeliveryRefund,
@@ -38,6 +40,7 @@ import {
 
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
+  notice: jest.fn()
 }))
 jest.mock('apis/user')
 jest.mock('apis/deliveries')
@@ -48,6 +51,7 @@ const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
 
 const GET_STATE_PARAMS = {
   auth: Immutable.fromJS({ accessToken: 'access-token' }),
+  user: Immutable.fromJS({ id: 'user-id' }),
   features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
 }
 
@@ -110,29 +114,32 @@ describe('GetHelp action generators and thunks', () => {
   })
 
   describe('given getUserOrders is called', () => {
-    describe('when it succeeds', () => {
-      const userOrdersData = {
-        id: '1',
-        userId: 'u1',
-        deliveryDate: 'YYYY-MM-DD HH:mm:ss',
-        deliverySlot: {
-          deliveryEnd: '18:59:59',
-          deliveryStart: '08:00:00'
-        },
-      }
+    const userOrdersData = {
+      id: '1',
+      userId: 'u1',
+      deliveryDate: 'YYYY-MM-DD HH:mm:ss',
+      deliverySlot: {
+        deliveryEnd: '18:59:59',
+        deliveryStart: '08:00:00'
+      },
+    }
 
+    beforeEach(() => {
+      jest.spyOn(optimizelyUtils, 'isOptimizelyFeatureEnabledFactory')
+        .mockReturnValue(() => Promise.resolve(true))
+
+      jest.spyOn(menuOrderActions, 'fetchUserOrders')
+    })
+
+    describe('when it succeeds', () => {
       beforeEach(() => {
-        fetchUserOrders.mockResolvedValueOnce({
-          data: [
-            userOrdersData,
-          ]
-        })
+        menuOrderActions.fetchUserOrders.mockResolvedValueOnce([ userOrdersData ])
 
         getUserOrders()(dispatch, getState)
       })
 
       test('the user orders is being dispatched correctly', () => {
-        expect(dispatch.mock.calls[2][0]).toEqual({
+        expect(dispatch).toHaveBeenCalledWith({
           type: 'GET_HELP_LOAD_ORDERS',
           orders: [userOrdersData]
         })
@@ -141,7 +148,7 @@ describe('GetHelp action generators and thunks', () => {
 
     describe('when it fails', () => {
       beforeEach(() => {
-        fetchUserOrders.mockRejectedValueOnce('error')
+        menuOrderActions.fetchUserOrders.mockRejectedValueOnce('error')
         getUserOrders()(dispatch, getState)
       })
 

@@ -57,11 +57,23 @@ export const getOrder = (accessToken, orderId, userId, include) => {
 export const getUserOrders = (accessToken, userId, phases, include, limit = 15, sort = 'deliveryDate') => {
   const headers = getRequestHeaders(userId)
 
-  const reqData = {
-    'filter[phase]': phases,
-    include,
+  let reqData = {
     'page[limit]': limit,
     sort,
+  }
+
+  if (phases !== null) {
+    reqData = {
+      ...reqData,
+      'filter[phase]': phases
+    }
+  }
+
+  if (include !== null) {
+    reqData = {
+      ...reqData,
+      include
+    }
   }
 
   return fetch(accessToken, `${endpoint('order', 2)}/users/${userId}/orders`, reqData, 'GET', cacheDefault, headers)
