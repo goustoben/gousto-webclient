@@ -358,7 +358,8 @@ describe('myDeliveries utils', () => {
           }),
           portionsCount: '4',
           availableFrom: '2019-10-22T12:00:00+01:00',
-          availableTo: '2019-10-29T11:59:59+00:00'
+          availableTo: '2019-10-29T11:59:59+00:00',
+          number: '2',
         })
       })
 

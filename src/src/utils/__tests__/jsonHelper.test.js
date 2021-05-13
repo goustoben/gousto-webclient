@@ -1,45 +1,6 @@
 import { processJSON, parseObjectKeysToCamelCase } from '../jsonHelper'
 
 describe('processJSON', () => {
-  test('handle successful request from service with status on response', () => {
-    const serverResponse = {
-      data: {
-        id: 'id',
-        type: 'resource'
-      },
-      status: 'ok'
-    }
-
-    const response = processJSON([serverResponse, undefined])
-
-    expect(response).resolves.toEqual({
-      meta: null,
-      response: {
-        id: 'id',
-        type: 'resource'
-      },
-    })
-  })
-
-  test('handle successful request from service without status on response', () => {
-    const serverResponse = {
-      data: {
-        id: 'id',
-        type: 'resource'
-      }
-    }
-
-    const response = processJSON([serverResponse, 200])
-
-    expect(response).resolves.toEqual({
-      meta: null,
-      response: {
-        id: 'id',
-        type: 'resource'
-      }
-    })
-  })
-
   test('handle validation error response', () => {
     const serverResponse = {
       error: 'Validation error',
