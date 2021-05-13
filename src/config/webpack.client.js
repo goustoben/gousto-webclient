@@ -4,7 +4,8 @@ const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const { baseConfig } = require('./webpack/webpack.base')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { baseConfig, baseConfig: { module: webpackModuleRules, module: { rules } }, commonCSSLoader } = require('./webpack/webpack.base')
 const logInfo = require('./webpack/logInfo')
 
 logInfo({ mode: 'CLIENT' })
@@ -20,6 +21,7 @@ const {
   GIT_HASH,
   IS_DEV_MODE,
   IS_HMR_MODE,
+  IS_NON_PROD_MODE,
   IS_PROD_MODE,
   PUBLIC_PATH,
   RUNNING_ENV,
@@ -57,6 +59,27 @@ const config = {
         },
       },
     },
+  },
+  module: {
+    ...webpackModuleRules,
+    rules: [
+      ...rules,
+      {
+        test: /\.css$/,
+        use: [
+          IS_NON_PROD_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
+          ...commonCSSLoader,
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          IS_NON_PROD_MODE ? 'style-loader' : MiniCssExtractPlugin.loader,
+          ...commonCSSLoader,
+          { loader: 'sass-loader' }
+        ],
+      },
+    ]
   },
   node: {
     fs: 'empty',

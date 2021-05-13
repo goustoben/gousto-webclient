@@ -15,8 +15,7 @@ const {
 
 const ExitCodePlugin = require('../exitCode')
 
-const cssLoaders = [
-  (IS_NON_PROD_MODE ? 'style-loader' : MiniCssExtractPlugin.loader), //Don't think this is actually working and might not be necessary.
+const commonCSSLoader = [
   {
     loader: 'css-loader',
     options: {
@@ -45,17 +44,6 @@ const baseConfig = {
           path.resolve(__dirname, '../../src'),
           path.resolve(__dirname, '../../server'),
           path.resolve('./libs/goustouicomponents/src')
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: cssLoaders,
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          ...cssLoaders,
-          { loader: 'sass-loader' }
         ],
       },
       {
@@ -124,13 +112,13 @@ const baseConfig = {
 }
 
 if (IS_DEV_MODE) {
-  baseConfig.devtool = 'source-map'
+    baseConfig.devtool = 'source-map'
 
-  baseConfig.plugins.push(
-    new SimpleProgressWebpackPlugin({ // Default options
-      format: 'compact'
-    })
-  )
-}
+    baseConfig.plugins.push(
+      new SimpleProgressWebpackPlugin({ // Default options
+        format: 'compact'
+      })
+    )
+  }
 
-module.exports = { baseConfig }
+module.exports = { baseConfig, commonCSSLoader }

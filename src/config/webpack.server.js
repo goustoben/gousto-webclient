@@ -3,7 +3,7 @@ const path = require('path')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const nodeExternals = require('webpack-node-externals')
-const { baseConfig } = require('./webpack/webpack.base')
+const { baseConfig, baseConfig: { module: webpackModuleRules, module: { rules } }, commonCSSLoader } = require('./webpack/webpack.base')
 const logInfo = require('./webpack/logInfo')
 
 logInfo({ mode: 'SERVER' })
@@ -42,6 +42,25 @@ const config = {
     path: path.resolve('./dist'),
     filename: 'server.js',
     publicPath: PUBLIC_PATH,
+  },
+  module: {
+    ...webpackModuleRules,
+    rules: [
+      ...rules,
+      {
+        test: /\.css$/,
+        use: [
+          ...commonCSSLoader,
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          ...commonCSSLoader,
+          { loader: 'sass-loader' }
+        ],
+      },
+    ]
   },
   externals: [nodeExternals()],
 }
