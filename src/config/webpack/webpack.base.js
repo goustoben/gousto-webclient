@@ -5,15 +5,54 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const UIComponentsAlias = require('../../libs/goustouicomponents/setup/webpackAlias')
 
 const {
+  API_NAME,
+  API_TOKEN,
+  AUTH_CLIENT_ID,
+  AUTH_CLIENT_SECRET,
   BUILD,
+  CHECKOUT_PUBLIC_KEY,
+  CLIENT_PROTOCOL,
+  CLOUDFRONT_URL,
   CSS_HASH_PATTERN_DEV,
   CSS_HASH_PATTERN_PROD,
   DEBUG_CONFIG,
-  IS_NON_PROD_MODE,
+  DOMAIN,
+  ENDPOINTS,
+  ENV_NAME,
+  GIT_HASH,
   IS_DEV_MODE,
+  IS_HMR_MODE,
+  IS_NON_PROD_MODE,
+  IS_PROD_MODE,
+  RECAPTCHA_REFERRAL_PUBLIC_KEY,
+  RECAPTCHA_REFERRAL_PRIVATE_KEY,
+  RUNNING_ENV,
 } = require('./config')
 
 const ExitCodePlugin = require('../exitCode')
+
+const commonConstants = {
+  __DEV__: IS_DEV_MODE,
+  __PROD__: IS_PROD_MODE,
+  __HMR__: IS_HMR_MODE,
+  __TEST__: false,
+
+  __API_ENV__: JSON.stringify(API_NAME),
+  __RUNNING_ENV__: JSON.stringify(RUNNING_ENV),
+  __API_TOKEN__: JSON.stringify(API_TOKEN),
+  __AUTH_CLIENT_ID__: JSON.stringify(AUTH_CLIENT_ID),
+  __AUTH_CLIENT_SECRET__: JSON.stringify(AUTH_CLIENT_SECRET),
+  __ENDPOINTS__: JSON.stringify(ENDPOINTS),
+  __RECAPTCHA_RAF_PUBK__: JSON.stringify(RECAPTCHA_REFERRAL_PUBLIC_KEY),
+  __RECAPTCHA_RAF_PVTK__: JSON.stringify(RECAPTCHA_REFERRAL_PRIVATE_KEY),
+  __CHECKOUT_PK__: JSON.stringify(CHECKOUT_PUBLIC_KEY),
+  __CLIENT_PROTOCOL__: JSON.stringify(CLIENT_PROTOCOL),
+  __CLOUDFRONT_URL__: JSON.stringify(CLOUDFRONT_URL),
+  __DOMAIN__: JSON.stringify(DOMAIN),
+  __ENV__: JSON.stringify(ENV_NAME),
+  __GIT_HASH__: JSON.stringify(GIT_HASH),
+  'process.env.NODE_ENV': JSON.stringify(BUILD),
+}
 
 const commonCSSLoader = [
   {
@@ -121,4 +160,4 @@ if (IS_DEV_MODE) {
     )
   }
 
-module.exports = { baseConfig, commonCSSLoader }
+module.exports = { baseConfig, commonCSSLoader, commonConstants }

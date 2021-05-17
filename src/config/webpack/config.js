@@ -3,6 +3,7 @@ const nodeConfig = require('node-config')
 
 const {
   NODE_ENV,
+  MEASURE
 } = process.env
 
 const API_NAME = nodeConfig.get('api_name')
@@ -89,6 +90,7 @@ module.exports = {
   IS_HMR_MODE,
   IS_PROD_MODE,
   IS_NON_PROD_MODE,
+  MEASURE,
   PUBLIC_PATH,
   RUNNING_ENV,
   ENDPOINTS,

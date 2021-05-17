@@ -5,28 +5,19 @@ const ManifestPlugin = require('webpack-manifest-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { baseConfig, baseConfig: { module: webpackModuleRules, module: { rules } }, commonCSSLoader } = require('./webpack/webpack.base')
+const { baseConfig, baseConfig: { module: webpackModuleRules, module: { rules }, plugins }, commonConstants, commonCSSLoader } = require('./webpack/webpack.base')
 const logInfo = require('./webpack/logInfo')
 
 logInfo({ mode: 'CLIENT' })
 
-const { MEASURE } = process.env
 const {
-  API_NAME,
   BUILD,
-  CHECKOUT_PK,
-  CLIENT_PROTOCOL,
-  DOMAIN,
-  ENV_NAME,
-  GIT_HASH,
   IS_DEV_MODE,
   IS_HMR_MODE,
   IS_NON_PROD_MODE,
   IS_PROD_MODE,
+  MEASURE,
   PUBLIC_PATH,
-  RUNNING_ENV,
-  ENDPOINTS,
-  RECAPTCHA_REFERRAL_PUBLIC_KEY
 } = require('./webpack/config')
 
 const config = {
@@ -81,35 +72,21 @@ const config = {
       },
     ]
   },
+  plugins: [
+    ...plugins,
+    new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
+    new webpack.DefinePlugin({
+      ...commonConstants,
+      __SERVER__: false,
+      __CLIENT__: true,
+      'process.env.NODE_ENV': JSON.stringify(BUILD === 'legacy' ? 'production' : BUILD),
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
+  ],
   node: {
     fs: 'empty',
   },
 }
-
-config.plugins.push(
-  new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
-  new webpack.DefinePlugin({
-    __DEV__: IS_DEV_MODE,
-    __PROD__: IS_PROD_MODE,
-    __HMR__: BUILD === 'hmr',
-
-    __SERVER__: false,
-    __CLIENT__: true,
-    __TEST__: false,
-
-    __ENV__: JSON.stringify(ENV_NAME),
-    __API_ENV__: JSON.stringify(API_NAME),
-    __RUNNING_ENV__: JSON.stringify(RUNNING_ENV),
-    __DOMAIN__: JSON.stringify(DOMAIN),
-    __CLIENT_PROTOCOL__: JSON.stringify(CLIENT_PROTOCOL),
-    __CHECKOUT_PK__: JSON.stringify(CHECKOUT_PK),
-    __RECAPTCHA_RAF_PUBK__: JSON.stringify(RECAPTCHA_REFERRAL_PUBLIC_KEY),
-    'process.env.NODE_ENV': JSON.stringify(BUILD === 'legacy' ? 'production' : BUILD),
-    __GIT_HASH__: JSON.stringify(GIT_HASH),
-    __ENDPOINTS__: JSON.stringify(ENDPOINTS)
-  }),
-  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
-)
 
 if (IS_PROD_MODE) {
   config.output.filename = '[name].bundle.[chunkhash].js'
