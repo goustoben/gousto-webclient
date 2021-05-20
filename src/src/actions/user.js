@@ -634,9 +634,10 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
 
 export function userSubscribe(sca3ds = false, sourceId = null) {
   return async (dispatch, getState) => {
+    const state = getState()
+    if (state.user && state.user.get('id')) return
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
-    const state = getState()
     const prices = state.pricing.get('prices')
     try {
       const { form, basket, promoAgeVerified } = state
