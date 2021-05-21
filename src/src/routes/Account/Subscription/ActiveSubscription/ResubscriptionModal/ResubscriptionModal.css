@@ -13,7 +13,7 @@
 
 .backgroundHeader {
   grid-area: backgroundHeader;
-  background-image: url('media/images/resub-modal.svg');
+  background-image: url('media/images/pause-osr-modal-bg.jpg');
   background-size: contain;
   padding-bottom: 56.25%;
   width: 100%;
