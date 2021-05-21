@@ -24,6 +24,7 @@ describe('CollectionHeaderWrapper', () => {
     })
 
     test('should render image gradientImage and gradientTitleImage with src', () => {
+      expect(wrapper.find('.gradientImage').prop('alt')).toEqual('Campaign banner')
       expect(wrapper.find('.gradientImage').prop('src')).toEqual('gradientImage-url')
       expect(wrapper.find('.gradientTitleImage').prop('src')).toEqual('gradientTitleImage-url')
     })
@@ -40,12 +41,14 @@ describe('CollectionHeaderWrapper', () => {
           url: 'gradientImage-url'
         }],
         imageLocation: 'right',
+        altText: 'nice picture'
       }
 
       wrapper = shallow(<GradientInfoHeader headerAttributes={headerAttributes} />)
     })
 
     test('should render image gradientImage and gradientTitleImage with src', () => {
+      expect(wrapper.find('.gradientImage').prop('alt')).toEqual('nice picture')
       expect(wrapper.find('.gradientTitleImage').exists()).toBe(false)
     })
   })
@@ -67,6 +70,7 @@ describe('CollectionHeaderWrapper', () => {
     })
 
     test('should render image gradientImage and gradientTitleImage with src', () => {
+      expect(wrapper.find('.gradientImage').prop('alt')).toEqual('Campaign banner')
       expect(wrapper.find('.gradientImage').prop('src')).toEqual(null)
     })
   })

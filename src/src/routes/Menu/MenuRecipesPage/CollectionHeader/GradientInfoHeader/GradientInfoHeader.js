@@ -12,14 +12,14 @@ const getGradientImageSrc = (headerAttributes, property) => {
 }
 
 const GradientInfoHeader = ({ headerAttributes }) => {
-  const { gradientColor, color, headerImage, description } = headerAttributes
+  const { gradientColor, color, headerImage, description, altText = 'Campaign banner' } = headerAttributes
 
   return (
     <div
       className={css.gradientInfoHeader}
     >
       <div className={css.gradientImageBackground}>
-        <img className={css.gradientImage} src={getGradientImageSrc(headerAttributes, 'image')} alt="Joe Wicks" />
+        <img className={css.gradientImage} src={getGradientImageSrc(headerAttributes, 'image')} alt={altText} />
         <div
           className={classnames(css.gradientBackground, css.hideMobile)}
           style={{
@@ -43,7 +43,7 @@ const GradientInfoHeader = ({ headerAttributes }) => {
             && (
             <img
               src={getGradientImageSrc(headerAttributes, 'headerImage')}
-              alt="Joe Wicks Title"
+              alt={altText}
               style={{width: headerImage[0].width, height: headerImage[0].height}}
               className={css.gradientTitleImage}
             />
@@ -63,6 +63,7 @@ GradientInfoHeader.propTypes = {
     color: PropTypes.string,
     description: PropTypes.string,
     gradientColor: PropTypes.string,
+    altText: PropTypes.string,
     headerImage: PropTypes.arrayOf(PropTypes.shape({
       width: PropTypes.number,
       height: PropTypes.number,
