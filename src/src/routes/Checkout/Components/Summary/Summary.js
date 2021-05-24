@@ -16,17 +16,19 @@ const propTypes = {
   basketRecipes: PropTypes.object,
   // eslint-disable-next-line react/forbid-prop-types
   isLoading: PropTypes.bool,
+  showPromocode: PropTypes.bool,
 }
 
 const defaultProps = {
   prices: Immutable.Map({}),
   basketRecipes: Immutable.Map({}),
   isLoading: false,
+  showPromocode: true,
 }
 
 class Summary extends PureComponent {
   render() {
-    const { prices, basketRecipes, isLoading } = this.props
+    const { prices, basketRecipes, isLoading, showPromocode } = this.props
     const numRecipes = basketSum(basketRecipes)
 
     return (
@@ -56,7 +58,7 @@ class Summary extends PureComponent {
                 extrasTotalPrice={prices.get('productTotal')}
                 isReceiptInCheckout
               />
-              <PromoCode />
+              {showPromocode && <PromoCode />}
             </div>
           </Fragment>
         )}

@@ -1,5 +1,5 @@
 @value Bluecheese, Blackberry, Oyster from 'styles/colors.module.css';
-@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value BreakpointFromMedium, BreakpointFromLarge, BreakpointToMedium from 'design-language/breakpoints.css';
 
 .breadcrumbsContainer {
   composes: fontStyleS from 'design-language/typography.module.css';
@@ -31,6 +31,12 @@
   margin: 0 0.25rem;
   width: 1.5rem;
   height: 1.5rem;
+
+  @media BreakpointToMedium {
+    &.removeMargin {
+      margin: 0;
+    }
+  }
 }
 
 .hidden {

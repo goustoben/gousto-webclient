@@ -42,4 +42,30 @@ describe('Summary Component', () => {
       expect(wrapper.find('Loading').exists()).toBeFalsy()
     })
   })
+
+  describe('PromoCode', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        showPromocode: true,
+      })
+    })
+
+    test('should render PromoCode component', () => {
+      expect(wrapper.find(PromoCode)).toBeDefined()
+    })
+
+    describe('given showPromocode flag', () => {
+      describe('when showPromocode flag is false', () => {
+        beforeEach(() => {
+          wrapper.setProps({
+            showPromocode: false,
+          })
+        })
+
+        test('then should not render PromoCode', () => {
+          expect(wrapper.find(PromoCode).exists()).toBeFalsy()
+        })
+      })
+    })
+  })
 })
