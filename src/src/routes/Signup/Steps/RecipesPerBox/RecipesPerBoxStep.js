@@ -2,14 +2,18 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
+import { completeWizardRecipesPerBox } from 'actions/trackingKeys'
 import { Button } from '../../Button'
 import signupCss from '../../Signup.css'
 import { Image } from '../../Image'
 import css from './RecipesPerBoxStep.css'
 
-const RecipesPerBoxStep = ({ basketSetNumRecipes, next }) => {
+const RecipesPerBoxStep = ({ basketSetNumRecipes, trackSignupWizardAction, next }) => {
   const handleClick = (value) => {
     basketSetNumRecipes(value)
+    trackSignupWizardAction(completeWizardRecipesPerBox, {
+      recipes_per_box: value,
+    })
     next()
   }
 
@@ -51,6 +55,7 @@ const RecipesPerBoxStep = ({ basketSetNumRecipes, next }) => {
 RecipesPerBoxStep.propTypes = {
   next: PropTypes.func.isRequired,
   basketSetNumRecipes: PropTypes.func.isRequired,
+  trackSignupWizardAction: PropTypes.func.isRequired,
 }
 
 export { RecipesPerBoxStep }

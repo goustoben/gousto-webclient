@@ -2,9 +2,10 @@ import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { clickSeeThisWeeksMenu } from 'actions/trackingKeys'
+import { completeWizardPostcode, clickSeeThisWeeksMenu } from 'actions/trackingKeys'
 import { stepByName } from 'utils/signup'
 import { signupConfig } from 'config/signup'
+import { getUTMAndPromoCode } from 'selectors/tracking'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import { basketPostcodeChange } from './basket'
@@ -117,10 +118,25 @@ export function signupGoToMenu() {
   }
 }
 
+export const trackSignupWizardAction = (type, additionalData = {}) => (dispatch, getState) => {
+  const { promoCode, UTM } = getUTMAndPromoCode(getState())
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      ...UTM,
+      promoCode,
+      ...additionalData,
+    },
+  })
+}
+
 export function signupChangePostcode(postcode, nextStepName) {
   return async (dispatch, getState) => {
     await dispatch(basketPostcodeChange(postcode))
     if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
+      dispatch(trackSignupWizardAction(completeWizardPostcode, { postcode }))
       signupNextStep(nextStepName)(dispatch, getState)
     }
   }

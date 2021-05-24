@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import basket from 'actions/basket'
+import basket, { basketReset } from 'actions/basket'
 import pricingActions from 'actions/pricing'
 import { actionTypes } from 'actions/actionTypes'
 import * as menuActions from 'actions/menu'
@@ -11,7 +11,6 @@ import * as basketUtils from 'utils/basket'
 import * as trackingKeys from 'actions/trackingKeys'
 import * as basketRecipesActions from '../../routes/Menu/actions/basketRecipes'
 import * as trackingActions from '../tracking'
-import { basketReset, basketSetNumRecipes } from '../basket'
 
 jest.mock('utils/basket')
 
@@ -680,17 +679,6 @@ describe('basket actions', () => {
       expect(result).toEqual({
         date: '2020-05-02 00:00:00',
         type: 'BASKET_DATE_CHANGE'
-      })
-    })
-  })
-
-  describe('basketSetNumRecipes', () => {
-    test('should dispatch the correct action', async () => {
-      await basketSetNumRecipes(2)(dispatch, getStateSpy)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.BASKET_SET_NUM_RECIPES,
-        numRecipes: 2
       })
     })
   })

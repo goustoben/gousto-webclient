@@ -60,6 +60,7 @@ describe('Delivery Step', () => {
       ],
     },
   })
+  const trackSignupWizardAction = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
@@ -67,6 +68,7 @@ describe('Delivery Step', () => {
         boxSummaryDeliveryDays={boxSummaryDeliveryDays}
         tempDate="2020-02-14"
         tempSlotId="1"
+        trackSignupWizardAction={trackSignupWizardAction}
       />
     )
   })

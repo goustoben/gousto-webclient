@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import { CTA, Heading } from 'goustouicomponents'
 import typography from 'design-language/typography.module.css'
+import { completeWizardBoxSize } from 'actions/trackingKeys'
 import { Button } from '../../Button'
 import css from './BoxSizeStep.css'
 import signupCss from '../../Signup.css'
@@ -15,8 +16,18 @@ const BoxSizeStep = ({
   numPortionChangeTracking,
   next,
   isWizardBoxSizeEnabled,
+  trackSignupWizardAction,
 }) => {
   const portions = [2, 4]
+
+  const handleClick = (value) => {
+    numPortionChange(value)
+    numPortionChangeTracking(value)
+    trackSignupWizardAction(completeWizardBoxSize, {
+      box_size: value,
+    })
+    next()
+  }
 
   const renderButtons = () =>
     portions.map((value, index) => (
@@ -24,11 +35,7 @@ const BoxSizeStep = ({
         <Button
           data-testing={`signupBoxSize${value}Portions`}
           fill={false}
-          onClick={() => {
-            numPortionChange(value)
-            numPortionChangeTracking(value)
-            next()
-          }}
+          onClick={() => handleClick(value)}
           width="full"
         >
           {`${value} People`}
@@ -120,6 +127,7 @@ BoxSizeStep.propTypes = {
   numPortionChangeTracking: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   isWizardBoxSizeEnabled: PropTypes.bool,
+  trackSignupWizardAction: PropTypes.func.isRequired,
 }
 
 BoxSizeStep.defaultProps = {
