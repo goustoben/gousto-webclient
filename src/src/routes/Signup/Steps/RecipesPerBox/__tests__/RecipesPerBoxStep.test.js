@@ -7,9 +7,16 @@ describe('given RecipesPerBoxStep is rendered', () => {
   let wrapper
   const basketSetNumRecipes = jest.fn()
   const next = jest.fn()
+  const trackSignupWizardAction = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<RecipesPerBoxStep basketSetNumRecipes={basketSetNumRecipes} next={next} />)
+    wrapper = shallow(
+      <RecipesPerBoxStep
+        basketSetNumRecipes={basketSetNumRecipes}
+        next={next}
+        trackSignupWizardAction={trackSignupWizardAction}
+      />
+    )
   })
 
   test('then the component renders correctly', () => {
@@ -42,6 +49,9 @@ describe('given RecipesPerBoxStep is rendered', () => {
         buttons.at(index).simulate('click')
 
         expect(basketSetNumRecipes).toHaveBeenCalledWith(value)
+        expect(trackSignupWizardAction).toHaveBeenCalledWith('complete_wizard_recipes_per_box', {
+          recipes_per_box: value,
+        })
         expect(next).toHaveBeenCalledWith()
       })
     })

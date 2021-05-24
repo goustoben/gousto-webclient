@@ -7,6 +7,7 @@ describe('given the user is at the Box Size Step', () => {
   let wrapper
   const numPortionChange = jest.fn()
   const numPortionChangeTracking = jest.fn()
+  const trackSignupWizardAction = jest.fn()
   const next = jest.fn()
 
   beforeEach(() => {
@@ -15,6 +16,7 @@ describe('given the user is at the Box Size Step', () => {
         numPortionChange={numPortionChange}
         numPortionChangeTracking={numPortionChangeTracking}
         next={next}
+        trackSignupWizardAction={trackSignupWizardAction}
       />
     )
   })
@@ -42,6 +44,9 @@ describe('given the user is at the Box Size Step', () => {
 
       expect(numPortionChange).toHaveBeenCalledWith(2)
       expect(numPortionChangeTracking).toHaveBeenCalledWith(2)
+      expect(trackSignupWizardAction).toHaveBeenCalledWith('complete_wizard_box_size', {
+        box_size: 2,
+      })
       expect(next).toHaveBeenCalledWith()
     })
 
@@ -50,6 +55,9 @@ describe('given the user is at the Box Size Step', () => {
 
       expect(numPortionChange).toHaveBeenCalledWith(4)
       expect(numPortionChangeTracking).toHaveBeenCalledWith(4)
+      expect(trackSignupWizardAction).toHaveBeenCalledWith('complete_wizard_box_size', {
+        box_size: 4,
+      })
       expect(next).toHaveBeenCalledWith()
     })
   })

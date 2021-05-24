@@ -10,6 +10,7 @@ import {
   getIsTastePreferencesEnabled,
 } from 'selectors/features'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
+import { trackSignupWizardAction } from 'actions/signup'
 import { DeliveryStep } from './DeliveryStep'
 
 function mapStateToProps(state) {
@@ -46,6 +47,7 @@ const DeliveryStepContainer = connect(mapStateToProps, {
   trackDeliverySlotDropDownOpened: actions.trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited: actions.trackDeliveryDayEdited,
   trackDeliverySlotEdited: actions.trackDeliverySlotEdited,
+  trackSignupWizardAction,
 })(DeliveryStep)
 
 export { DeliveryStepContainer }

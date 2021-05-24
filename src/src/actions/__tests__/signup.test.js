@@ -14,6 +14,7 @@ import {
   signupNextStep,
   signupSetStep,
   signupGoToMenu,
+  trackSignupWizardAction,
 } from 'actions/signup'
 
 jest.mock('actions/basket', () => ({
@@ -334,6 +335,37 @@ describe('signup actions', () => {
 
       expect(redirect).toHaveBeenCalledWith('/menu')
       expect(dispatch).toHaveBeenNthCalledWith(2, 'redirect action')
+    })
+  })
+
+  describe('given trackSignupWizardAction action is called', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        signup: Immutable.fromJS({}),
+        error: Immutable.Map({}),
+        basket: Immutable.fromJS({
+          promoCode: 'promo1',
+        }),
+        tracking: Immutable.Map({
+          utmSource: {
+            referral: '123',
+          },
+        }),
+      })
+    })
+
+    test('then it should send correct tracking data', async () => {
+      trackSignupWizardAction('complete_wizard_box_size', { box_size: 2 })(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'complete_wizard_box_size',
+        trackingData: {
+          actionType: 'complete_wizard_box_size',
+          box_size: 2,
+          promoCode: 'promo1',
+          referral: '123',
+        },
+      })
     })
   })
 })

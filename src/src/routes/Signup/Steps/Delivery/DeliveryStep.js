@@ -15,6 +15,7 @@ import { redirect } from 'utils/window'
 import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
 import { signupConfig } from 'config/signup'
+import { completeWizardDeliveryDay } from 'actions/trackingKeys'
 import { Button } from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -92,6 +93,7 @@ const DeliveryStep = ({
   userHasAvailableSlots,
   isTastePreferencesEnabled,
   isPricingClarityEnabled,
+  trackSignupWizardAction,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -123,7 +125,7 @@ const DeliveryStep = ({
 
   const onShowRecipe = () => {
     const nextStep = isTastePreferencesEnabled ? () => redirect('/taste-preferences') : next
-
+    trackSignupWizardAction(completeWizardDeliveryDay)
     boxSummaryDeliverySlotChosen({
       date: tempDate,
       slotId: tempSlotId,
@@ -263,6 +265,7 @@ DeliveryStep.propTypes = {
   userHasAvailableSlots: PropTypes.bool,
   isTastePreferencesEnabled: PropTypes.bool,
   isPricingClarityEnabled: PropTypes.bool,
+  trackSignupWizardAction: PropTypes.func.isRequired,
 }
 
 DeliveryStep.defaultProps = {

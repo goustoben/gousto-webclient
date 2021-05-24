@@ -128,15 +128,10 @@ export const basketNumPeopleChange = peopleObj => (
   }
 )
 
-export const basketSetNumRecipes = (numRecipes) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.BASKET_SET_NUM_RECIPES,
-      numRecipes,
-    })
-    // TODO tracking action
-  }
-)
+export const basketSetNumRecipes = (numRecipes) => ({
+  type: actionTypes.BASKET_SET_NUM_RECIPES,
+  numRecipes,
+})
 
 export const basketOrderLoad = (orderId, order = null) => (
   (dispatch, getState) => {
