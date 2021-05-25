@@ -4,28 +4,22 @@ import {
   fetchOrder,
   updateOrderAddress,
 } from 'apis/orders'
-import * as userApi from 'apis/user'
 import actionStatus from 'actions/status'
 import * as deliveriesUtils from 'utils/deliveries'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { trackOrder } from 'actions/order'
 import * as clientMetrics from 'routes/Menu/apis/clientMetrics'
-import { transformOrderV2ToOrderV1 } from 'routes/Menu/transformers/orderV2ToV1'
 import { actionTypes } from 'src/actions/actionTypes'
 import * as orderV2 from '../../apis/orderV2'
 import { saveUserOrder, updateUserOrder } from '../../apis/core'
-import { getUserOrders } from '../../apis/orderV2'
 import * as orderSelectors from '../../selectors/order'
-import { fetchUserOrders, orderAssignToUser, sendUpdateOrder } from '../order'
+import { orderAssignToUser, sendUpdateOrder } from '../order'
 import * as basketSelectors from '../../../../selectors/basket'
 
 import { safeJestMock } from '../../../../_testing/mocks'
 
 jest.mock('../../apis/core')
-jest.mock('../../apis/orderV2')
-jest.mock('routes/Menu/transformers/orderV2ToV1')
 jest.mock('apis/orders')
-jest.mock('apis/user')
 jest.mock('actions/status')
 jest.mock('actions/tracking')
 jest.mock('actions/order')
@@ -343,74 +337,6 @@ describe('order actions', () => {
       await sendUpdateOrder()(dispatch, getState)
 
       expect(sendClientMetricMock).toHaveBeenCalledWith('menu-edit-complete-order-api-v2', 1, 'Count')
-    })
-  })
-
-  describe('fetchUserOrders', () => {
-    const accessToken = 'access-token'
-    const limit = 10
-    const userId = 'user-id'
-    const orderType = 'pending'
-
-    describe('when useOrderApiV2 is true', () => {
-      const useOrderApiV2 = true
-
-      beforeEach(() => {
-        getUserOrders.mockResolvedValue({
-          data: [
-            { id: 'a' }, { id: 'b' }
-          ],
-          included: []
-        })
-
-        transformOrderV2ToOrderV1.mockImplementation((order) => `transformed-order-${order.id}`)
-      })
-
-      test('should call getUserOrders with correct parameters', async () => {
-        await fetchUserOrders(accessToken, limit, userId, orderType, useOrderApiV2)
-
-        expect(getUserOrders).toHaveBeenCalledWith(accessToken, userId, null, null, limit)
-      })
-
-      test('should return transformed orders', async () => {
-        const result = await fetchUserOrders(accessToken, limit, userId, orderType, useOrderApiV2)
-
-        expect(result).toEqual([
-          'transformed-order-a',
-          'transformed-order-b'
-        ])
-      })
-    })
-
-    describe('when useOrderApiV2 is false', () => {
-      const useOrderApiV2 = false
-
-      beforeEach(() => {
-        userApi.fetchUserOrders.mockResolvedValue({
-          data: [
-            { id: 'a' }, { id: 'b' }
-          ]
-        })
-      })
-
-      test('should call core (userApi.fetchUserOrders) with correct parameters', async () => {
-        await fetchUserOrders(accessToken, limit, userId, orderType, useOrderApiV2)
-
-        expect(userApi.fetchUserOrders).toHaveBeenCalledWith(accessToken, {
-          limit,
-          sort_order: 'desc',
-          state: orderType,
-          includes: ['shipping_address']
-        })
-      })
-
-      test('should return orders from core', async () => {
-        const result = await fetchUserOrders(accessToken, limit, userId, orderType, useOrderApiV2)
-
-        expect(result).toEqual([
-          { id: 'a' }, { id: 'b' }
-        ])
-      })
     })
   })
 })

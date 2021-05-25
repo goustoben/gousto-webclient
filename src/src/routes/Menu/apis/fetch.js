@@ -20,7 +20,7 @@ const getHeadersToSend = (accessToken, sessionId, userId, customHeaders = {}) =>
  * @param {Object} [data] - request data; put into the querystring of a GET request, otherwise in the body
  * @param {Object} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link authOptions}
  *
- * @returns {Promise<[TResponse | null, TError | null, number]>} a 3-length tuple containing:
+ * @returns {[response | null, error | null, status]} a 3-length tuple containing:
  *                                            the response from server, if successful,
  *                                            the response from server, if a failure,
  *                                            the response status code
@@ -67,13 +67,7 @@ const fetch = async (
 }
 
 /**
- * Make a GET request.
- *
- * @param {{ accessToken: string, sessionId: string, userId: string}} auth - authentication options
- * @param {string} url - the request URL
- * @param {{}} [data] - request data; put into the querystring of a GET request, otherwise in the body
- * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
- * <br />
+ * Make a GET request. See {@link fetch} for details of the parameters.
  *
  * note: If provided, `data` will be stringified and added to the query string.
  */
@@ -82,9 +76,6 @@ export const get = (auth, url, data, headers) => fetch('GET', auth, url, data, h
 /**
  * Make a POST request.
  *
- * @param {{ accessToken: string, sessionId: string, userId: string}} auth - authentication options
- * @param {string} url - the request URL
- * @param {{}} [data] - request data; put into the querystring of a GET request, otherwise in the body
- * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
+ * note: If provided, `data` will be stringified and added to the query string.
  */
 export const post = (auth, url, data, headers) => fetch('POST', auth, url, data, headers)

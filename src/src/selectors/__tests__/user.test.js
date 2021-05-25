@@ -1,8 +1,6 @@
 import Immutable from 'immutable'
 import {
   getUserId,
-  getUserOrders,
-  getUserHasOrders,
   getUserPhoneNumber,
   getUserStatus,
   getUserPhoneWithoutLeadingZero,
@@ -74,25 +72,13 @@ describe('user selectors', () => {
       lastSkippedCount: 3
     }
 
-    const orders = [
-      {
-        id: 'id-1',
-        type: 'order'
-      },
-      {
-        id: 'id-1',
-        type: 'order'
-      }
-    ]
-
     let state
 
     const createUserState = (userState = {}) => {
       state = {
         user: Immutable.fromJS({
           newOrders: userState.newOrders || newOrders,
-          multiSkip: userState.multiSkip || multiSkip,
-          orders: userState.orders || orders
+          multiSkip: userState.multiSkip || multiSkip
         })
       }
     }
@@ -104,28 +90,6 @@ describe('user selectors', () => {
     describe('createMultiSkipSelector', () => {
       test('should select the multi-skip field passed as a param', () => {
         expect(createMultiSkipSelector('isPending')(state)).toEqual(false)
-      })
-    })
-
-    describe('getUserOrders', () => {
-      test('should return a list of orders', () => {
-        expect(getUserOrders(state).toJS()).toEqual(orders)
-      })
-    })
-
-    describe('getUserHasOrders', () => {
-      describe('when user has no orders', () => {
-        it('should return false', () => {
-          const stateWithoutOrders = { user: Immutable.fromJS({}) }
-
-          expect(getUserHasOrders(stateWithoutOrders)).toEqual(false)
-        })
-      })
-
-      describe('when user has orders', () => {
-        it('should return true', () => {
-          expect(getUserHasOrders(state)).toEqual(true)
-        })
       })
     })
 

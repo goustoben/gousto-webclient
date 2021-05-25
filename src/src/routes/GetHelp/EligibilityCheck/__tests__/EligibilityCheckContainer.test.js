@@ -10,7 +10,7 @@ import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import statusReducer from 'reducers/status'
 import { mount } from 'enzyme'
-import * as menuOrderActions from 'routes/Menu/actions/order'
+import { fetchUserOrders } from 'apis/user'
 import { EligibilityCheckContainer } from '../EligibilityCheckContainer'
 
 jest.mock('apis/user')
@@ -60,7 +60,7 @@ describe('given EligibilityCheckContainer is rendered', () => {
   })
 
   describe('when customer is eligible', () => {
-    const eligibleOrder = {
+    const eligibleOrder = [{
       deliveryDate: moment().subtract(8, 'days').format(DELIVERY_DATE_FORMAT),
       deliverySlot: {
         deliveryEnd: '18:59:59',
@@ -72,13 +72,14 @@ describe('given EligibilityCheckContainer is rendered', () => {
         { id: 'nobody-cares', recipeId: '20' },
         { id: 'nobody-cares', recipeId: '30' },
       ],
-    }
+    }]
 
     beforeEach(() => {
       browserHistory.push = jest.fn()
 
-      jest.spyOn(menuOrderActions, 'fetchUserOrders')
-        .mockResolvedValueOnce([eligibleOrder])
+      fetchUserOrders.mockResolvedValueOnce({
+        data: eligibleOrder
+      })
 
       mount(
         <EligibilityCheckContainer store={getStore()} />
@@ -91,7 +92,7 @@ describe('given EligibilityCheckContainer is rendered', () => {
   })
 
   describe('when customer is not eligible', () => {
-    const notEligibleOrder = {
+    const notEligibleOrder = [{
       deliveryDate: moment().subtract(12, 'days').format(DELIVERY_DATE_FORMAT),
       deliverySlot: {
         deliveryEnd: '18:59:59',
@@ -103,11 +104,12 @@ describe('given EligibilityCheckContainer is rendered', () => {
         { id: 'nobody-cares', recipeId: '20' },
         { id: 'nobody-cares', recipeId: '30' },
       ],
-    }
+    }]
 
     beforeEach(() => {
-      jest.spyOn(menuOrderActions, 'fetchUserOrders')
-        .mockResolvedValueOnce([notEligibleOrder])
+      fetchUserOrders.mockResolvedValueOnce({
+        data: notEligibleOrder
+      })
     })
 
     describe('and customer is authenticated', () => {

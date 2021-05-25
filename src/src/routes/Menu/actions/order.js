@@ -5,10 +5,8 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { actionTypes } from 'actions/actionTypes'
 import { getAccessToken, getAuthUserId } from 'selectors/auth'
 import { sendClientMetric } from 'routes/Menu/apis/clientMetrics'
-import * as userApi from 'apis/user'
-import { transformOrderV2ToOrderV1 } from 'routes/Menu/transformers/orderV2ToV1'
 import * as coreApi from '../apis/core'
-import { updateOrder, getUserOrders } from '../apis/orderV2'
+import { updateOrder } from '../apis/orderV2'
 import { getOrderDetails, getOrderV2, getOrderAction } from '../selectors/order'
 import { getBasketOrderId } from '../../../selectors/basket'
 
@@ -124,24 +122,4 @@ export const sendUpdateOrder = () => async (dispatch, getState) => {
   }
 
   dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
-}
-
-export const fetchUserOrders = async (accessToken, limit, userId, orderType, useOrderApiV2) => {
-  if (useOrderApiV2) {
-    const phases = null
-    const include = null
-    const { data: orders, included } = await getUserOrders(accessToken, userId, phases, include, limit)
-    const transformedOrders = orders.map((order) => transformOrderV2ToOrderV1(order, included))
-
-    return transformedOrders
-  } else {
-    const { data: orders } = await userApi.fetchUserOrders(accessToken, {
-      limit,
-      sort_order: 'desc',
-      state: orderType,
-      includes: ['shipping_address']
-    })
-
-    return orders
-  }
 }

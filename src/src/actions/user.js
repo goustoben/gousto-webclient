@@ -17,17 +17,15 @@ import {
   getIsAdditionalCheckoutErrorsEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
-import { getUserHasOrders, getUserId, getUserRecentRecipesIds } from 'selectors/user'
+import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
 
 import logger from 'utils/logger'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries, transformProjectedDeliveriesNew } from 'utils/myDeliveries'
-import { getAuthUserId, getAccessToken } from 'selectors/auth'
+import { getAuthUserId } from 'selectors/auth'
 
-import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
-import { fetchUserOrders } from 'routes/Menu/actions/order'
 import { skipDates, fetchProjectedDeliveries } from '../routes/Account/apis/subscription'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
@@ -88,39 +86,31 @@ function userFetchCredit() {
   }
 }
 
-const userLoadOrders = (forceRefresh = false, orderType = 'pending', limit = 10) => (
-  async (dispatch, getState) => {
-    const state = getState()
-    const accessToken = getAccessToken(state)
-    const hasOrders = getUserHasOrders(state)
-    const userId = getUserId(state)
-
-    if (!userId) {
-      return
-    }
-
-    if (!forceRefresh && hasOrders) {
-      return
-    }
-
+function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10) {
+  return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
-    dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
-
     try {
-      const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_getuserorders_web_enabled')(dispatch, getState)
-      const orders = await fetchUserOrders(accessToken, limit, userId, orderType, useOrderApiV2)
+      if (forceRefresh || !getState().user.get('orders').size) {
+        const accessToken = getState().auth.get('accessToken')
+        const { data: orders } = await userApi.fetchUserOrders(accessToken, {
+          limit: number,
+          sort_order: 'desc',
+          state: orderType,
+          includes: ['shipping_address']
+        })
 
-      dispatch({
-        type: actionTypes.USER_LOAD_ORDERS,
-        orders
-      })
+        dispatch({
+          type: actionTypes.USER_LOAD_ORDERS,
+          orders
+        })
+      }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
       logger.error({ message: err.message })
     }
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
   }
-)
+}
 
 export function userLoadProjectedDeliveries(forceRefresh = false) {
   return async (dispatch, getState) => {
@@ -850,10 +840,8 @@ export const trackingReferFriendSocialSharing = (actionType, trackingType, chann
     })
   }
 }
-
 export const userLoadCookbookRecipes = () => (dispatch, getState) => {
-  const state = getState()
-  const userRecipeIds = getUserRecentRecipesIds(state, 6)
+  const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
   dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds, true))
 }
 
