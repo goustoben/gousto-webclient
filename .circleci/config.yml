@@ -30,6 +30,8 @@ jobs:
 
   publish-code-health:
     docker: *gousto_build_image
+    environment:
+      TZ: "Europe/London"
     steps:
       - attach_workspace:
           at: ~/
