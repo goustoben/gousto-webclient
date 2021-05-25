@@ -79,7 +79,6 @@ export const transformPendingOrders = (orders) => {
     const unavailableReason = order.getIn(['originalDeliveryDay', 'unavailableReason'], '')
     const period = order.get('period')
     const shippingAddress = order.get('shippingAddress')
-    const number = order.get('number')
 
     const cancellable = phase === 'awaiting_choices' || phase === 'open'
     const orderState = getOrderState(state, deliveryDate, recipeItems, phase, cancellable)
@@ -130,8 +129,7 @@ export const transformPendingOrders = (orders) => {
         }),
         portionsCount: box.get('numPortions'),
         availableFrom: period.get('whenStart'),
-        availableTo: period.get('whenCutoff'),
-        number
+        availableTo: period.get('whenCutoff')
       })
     )
   }, new Immutable.Map())

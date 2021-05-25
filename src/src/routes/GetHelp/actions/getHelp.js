@@ -2,11 +2,14 @@ import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
-import * as userApi from 'apis/user'
+import { fetchUserOrders } from 'routes/Menu/actions/order'
 import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
+import { getAccessToken } from 'selectors/auth'
+import { getUserId } from 'selectors/user'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { getFeatureShorterCompensationPeriod } from '../../../selectors/features'
 import { actionTypes } from './actionTypes'
@@ -36,19 +39,22 @@ export const trackNextBoxTrackingClick = orderId => ({
   }
 })
 
-export const getUserOrders = (orderType = 'pending', number = 10) => (
+export const getUserOrders = (orderType = 'pending', limit = 10) => (
   async (dispatch, getState) => {
+    const state = getState()
+    const accessToken = getAccessToken(state)
+    const userId = getUserId(state)
+
+    if (!userId) {
+      return
+    }
+
     dispatch(webClientStatusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS, true))
     dispatch(webClientStatusActions.error(actionTypes.GET_HELP_LOAD_ORDERS, null))
 
     try {
-      const accessToken = getState().auth.get('accessToken')
-      const { data: orders } = await userApi.fetchUserOrders(accessToken, {
-        limit: number,
-        sort_order: 'desc',
-        state: orderType,
-        includes: ['shipping_address']
-      })
+      const useOrderApiV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_getuserorders_web_enabled')(dispatch, getState)
+      const orders = await fetchUserOrders(accessToken, limit, userId, orderType, useOrderApiV2)
 
       dispatch({
         type: actionTypes.GET_HELP_LOAD_ORDERS,
@@ -56,6 +62,7 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
       })
     } catch (err) {
       dispatch(webClientStatusActions.error(actionTypes.GET_HELP_LOAD_ORDERS, err.message))
+
       logger.error(err)
     }
     dispatch(webClientStatusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS, false))

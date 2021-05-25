@@ -17,6 +17,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '10.x'
+    - name: Set Timezone to Europe/London
+      uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: "Europe/London"
     - uses: pioug/la-cle@v1.0.0 # set up a git ssh key so npm can install our private git repo dependencies (gousto-gulp and gousto-lumberjack-js)
       with:
         GH_SSH_KEY: ${{ secrets.GH_SSH_KEY }}
