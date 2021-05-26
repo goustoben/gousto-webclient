@@ -8,9 +8,9 @@ import css from './DiscountAppliedBar.css'
 class DiscountAppliedBar extends Component {
   constructor(props) {
     super(props)
-    const { promoModalVisible, isPromoBarHidden } = props
+    const { promoModalVisible, isPromoBarHidden, isDiscountAppliedBarDismissed } = props
     this.state = {
-      isHidden: promoModalVisible || !isPromoBarHidden,
+      isHidden: isDiscountAppliedBarDismissed || promoModalVisible || !isPromoBarHidden,
     }
   }
 
@@ -30,16 +30,25 @@ class DiscountAppliedBar extends Component {
   }
 
   onClose = () => {
+    const { signupDismissDiscountAppliedBar } = this.props
+    signupDismissDiscountAppliedBar()
+
     this.setState({
       isHidden: true,
     })
   }
 
   render() {
+    const { page } = this.props
     const { isHidden } = this.state
 
     return (
-      <div className={classNames(css.container, { [css.isHidden]: isHidden })}>
+      <div
+        className={classNames(css.container, {
+          [css.isHidden]: isHidden,
+          [css.containerOnShowcaseMenu]: page === 'showcaseMenu',
+        })}
+      >
         <div className={css.successIcon} />
         <span className={css.discountText}>
           <span className={css.discountApplied}>{signupConfig.boxSizeStep.discountApplied}!</span>{' '}
@@ -62,6 +71,15 @@ DiscountAppliedBar.propTypes = {
   isPromoBarHidden: PropTypes.bool.isRequired,
   trackDiscountVisibility: PropTypes.func.isRequired,
   wizardStep: PropTypes.string.isRequired,
+  page: PropTypes.string,
+  isDiscountAppliedBarDismissed: PropTypes.bool,
+  signupDismissDiscountAppliedBar: PropTypes.func,
+}
+
+DiscountAppliedBar.defaultProps = {
+  page: 'signup',
+  isDiscountAppliedBarDismissed: false,
+  signupDismissDiscountAppliedBar: () => {},
 }
 
 export { DiscountAppliedBar }

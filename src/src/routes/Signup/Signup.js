@@ -65,6 +65,8 @@ const propTypes = {
   }),
   isWizardBoxSizeEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
+  isDiscountAppliedBarDismissed: PropTypes.bool,
+  signupDismissDiscountAppliedBar: PropTypes.func,
 }
 
 const defaultProps = {
@@ -91,6 +93,8 @@ const defaultProps = {
   lowestPricePerPortion: {},
   isWizardBoxSizeEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
+  isDiscountAppliedBarDismissed: false,
+  signupDismissDiscountAppliedBar: () => {},
 }
 
 const contextTypes = {
@@ -300,6 +304,8 @@ class Signup extends PureComponent {
       promoModalVisible,
       promoBannerState,
       trackDiscountVisibility,
+      isDiscountAppliedBarDismissed,
+      signupDismissDiscountAppliedBar,
     } = this.props
 
     if (stepName === signupConfig.sellThePropositionPagePath) {
@@ -343,6 +349,8 @@ class Signup extends PureComponent {
           isPromoBarHidden={promoBannerState.hide}
           trackDiscountVisibility={trackDiscountVisibility}
           wizardStep={currentStepName}
+          signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}
+          isDiscountAppliedBarDismissed={isDiscountAppliedBarDismissed}
         />
         <div
           className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}

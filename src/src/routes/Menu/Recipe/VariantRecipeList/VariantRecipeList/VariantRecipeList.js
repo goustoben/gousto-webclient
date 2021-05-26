@@ -45,6 +45,7 @@ class VariantRecipeList extends React.PureComponent {
       recipeVariants,
       recipeVariantsArray,
       isOnDetailScreen,
+      isFromShowcaseMenu
     } = this.props
     if (!recipeVariants || recipeVariantsArray.length === 0) {
       return null
@@ -65,6 +66,7 @@ class VariantRecipeList extends React.PureComponent {
               changeCheckedRecipe={this.changeCheckedRecipe}
               isChecked={selectedRecipeId === coreRecipeId}
               isOnDetailScreen={isOnDetailScreen}
+              isFromShowcaseMenu={isFromShowcaseMenu}
             />
           )
           )}
@@ -94,12 +96,14 @@ VariantRecipeList.propTypes = {
   menuRecipeDetailVisibilityChange: PropTypes.func.isRequired,
   trackVariantListDisplay: PropTypes.func.isRequired,
   closeOnSelection: PropTypes.bool,
+  isFromShowcaseMenu: PropTypes.bool,
 }
 
 VariantRecipeList.defaultProps = {
   recipeVariants: null,
   selectedRecipe: {},
   isOnDetailScreen: false,
-  closeOnSelection: true
+  closeOnSelection: true,
+  isFromShowcaseMenu: false,
 }
 export { VariantRecipeList }

@@ -141,3 +141,7 @@ export function signupChangePostcode(postcode, nextStepName) {
     }
   }
 }
+
+export const signupDismissDiscountAppliedBar = () => ({
+  type: actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR,
+})

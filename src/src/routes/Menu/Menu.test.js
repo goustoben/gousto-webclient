@@ -141,6 +141,30 @@ describe('Menu', () => {
           expect(recipesInBasketProgress.prop('isAuthenticated')).toBe(requiredProps.isAuthenticated)
         })
       })
+
+      describe('when isPaymentBeforeChoosingEnabled is on', () => {
+        beforeEach(() => {
+          wrapper.setProps({
+            isPaymentBeforeChoosingEnabled: true,
+          })
+        })
+
+        test('then it should render ShowcaseMenu instead', () => {
+          expect(wrapper.find('Connect(ShowcaseMenu)').exists()).toBe(true)
+        })
+
+        describe('and when the user is authenticated', () => {
+          beforeEach(() => {
+            wrapper.setProps({
+              isAuthenticated: true,
+            })
+          })
+
+          test('then it should render the regular menu', () => {
+            expect(wrapper.type()).toBe('MainLayout')
+          })
+        })
+      })
     })
   })
 
@@ -343,4 +367,3 @@ describe('Menu', () => {
     })
   })
 })
-

@@ -17,6 +17,15 @@
   }
 }
 
+.containerOnShowcaseMenu {
+  width: 100%;
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2.5rem;
+  }
+}
+
 .isHidden {
   opacity: 0;
   padding: 0;

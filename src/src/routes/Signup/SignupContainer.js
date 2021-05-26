@@ -7,6 +7,7 @@ import {
   getIsWizardBoxSizeEnabled,
   getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
+import { signupDismissDiscountAppliedBar } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
 import { Signup } from './Signup'
@@ -27,6 +28,7 @@ const mapStateToProps = (state, ownProps) => ({
   lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
   isWizardBoxSizeEnabled: getIsWizardBoxSizeEnabled(state),
   isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
+  isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
 })
 
 const SignupContainer = connect(mapStateToProps, {
@@ -34,6 +36,7 @@ const SignupContainer = connect(mapStateToProps, {
   signupStepsReceive: actions.signupStepsReceive,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
   trackDiscountVisibility: trackDiscountVisibilityBannerAppearance,
+  signupDismissDiscountAppliedBar,
 })(Signup)
 
 export { SignupContainer }

@@ -1,0 +1,1 @@
+export { HotjarTrigger } from './HotjarTrigger'

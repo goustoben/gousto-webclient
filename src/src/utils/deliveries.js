@@ -559,3 +559,13 @@ export function getNDDFeatureFlagVal(state) {
 
   return (deliveryTariffId !== deliveryTariffTypes.NON_NDD)
 }
+
+export const getCutoffForFirstAvailableDate = (state) => {
+  const { boxSummaryDeliveryDays } = state
+  const firstAvailableDate = boxSummaryDeliveryDays.keySeq().sort().first()
+  const firstAvailableSlotId = boxSummaryDeliveryDays.getIn([firstAvailableDate, 'slots']).first().get('id')
+
+  const cutoffDateTime = getCutoffForDateAndSlot(firstAvailableDate, firstAvailableSlotId, boxSummaryDeliveryDays)
+
+  return cutoffDateTime
+}

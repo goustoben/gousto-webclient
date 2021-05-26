@@ -272,7 +272,8 @@ module.exports = {
         "src/routes/Checkout/**/*.js",
         "src/routes/Home/**/*.js",
         "src/routes/Payment/**/*.js",
-        "src/routes/Signup/**/*.js"
+        "src/routes/Signup/**/*.js",
+        "src/routes/ShowcaseMenu/**/*.js"
       ],
       "rules": {
         "prettier/prettier": "error",

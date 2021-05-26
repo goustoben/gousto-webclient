@@ -11,7 +11,8 @@ const VariantRecipeListItem = ({
   isChecked,
   isOnDetailScreen,
   isOutOfStock,
-  surcharge
+  surcharge,
+  isFromShowcaseMenu
 }) => {
   const getInputContent = () => (
     <div className={css.labelContainer}>
@@ -19,7 +20,7 @@ const VariantRecipeListItem = ({
         <span className={css.titleText}>{recipeName}</span>
       </div>
       {
-        (surcharge && !isOutOfStock)
+        (surcharge && !isOutOfStock && !isFromShowcaseMenu)
         && (
           <div className={
             classnames(
@@ -68,11 +69,13 @@ VariantRecipeListItem.propTypes = {
   surcharge: PropTypes.number,
   allergenInfo: PropTypes.shape({
     containsGlutenOrDairy: PropTypes.bool
-  }).isRequired
+  }).isRequired,
+  isFromShowcaseMenu: PropTypes.bool,
 }
 
 VariantRecipeListItem.defaultProps = {
   surcharge: null,
+  isFromShowcaseMenu: false,
 }
 
 export { VariantRecipeListItem }

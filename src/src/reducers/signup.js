@@ -8,6 +8,7 @@ const initialState = Immutable.fromJS({
     currentStepNumber: 0,
     isLastStep: false,
   },
+  isDiscountAppliedBarDismissed: false,
 })
 
 const signup = {
@@ -24,6 +25,10 @@ const signup = {
         .setIn(['wizard', 'isLastStep'], action.isLastStep)
 
       return newState
+    }
+
+    case actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR: {
+      return state.set('isDiscountAppliedBarDismissed', true)
     }
 
     default: {

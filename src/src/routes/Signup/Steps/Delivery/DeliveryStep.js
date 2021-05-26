@@ -93,6 +93,7 @@ const DeliveryStep = ({
   userHasAvailableSlots,
   isTastePreferencesEnabled,
   isPricingClarityEnabled,
+  isPaymentBeforeChoosingEnabled,
   trackSignupWizardAction,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
@@ -129,6 +130,7 @@ const DeliveryStep = ({
     boxSummaryDeliverySlotChosen({
       date: tempDate,
       slotId: tempSlotId,
+      displayMenuForFirstWeekOnly: isPaymentBeforeChoosingEnabled,
     }).then(nextStep)
   }
 
@@ -265,6 +267,7 @@ DeliveryStep.propTypes = {
   userHasAvailableSlots: PropTypes.bool,
   isTastePreferencesEnabled: PropTypes.bool,
   isPricingClarityEnabled: PropTypes.bool,
+  isPaymentBeforeChoosingEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
 }
 
@@ -287,6 +290,7 @@ DeliveryStep.defaultProps = {
   userHasAvailableSlots: true,
   isTastePreferencesEnabled: false,
   isPricingClarityEnabled: false,
+  isPaymentBeforeChoosingEnabled: false,
 }
 
 export { DeliveryStep }
