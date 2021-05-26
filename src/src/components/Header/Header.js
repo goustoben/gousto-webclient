@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { client, zendesk } from 'config/routes'
@@ -23,7 +23,7 @@ import { onEnter } from 'utils/accessibility'
 import { getLinkURL } from 'utils/header'
 import * as trackingKeys from 'actions/trackingKeys'
 import { MobileMenu } from './MobileMenu'
-import { getDeepClonedMenuItems } from './menuItemsHelper'
+import { getDeepClonedMenuItems, showcaseMenuItem } from './menuItemsHelper'
 import css from './Header.css'
 
 class Header extends React.PureComponent {
@@ -96,7 +96,7 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
+    const { isAuthenticated, promoCodeUrl, fromJoin, isPaymentBeforeChoosingEnabled } = this.props
     const menuItems = getDeepClonedMenuItems()
     let pathLocal = path
     if (path.indexOf('/') === -1) {
@@ -120,9 +120,12 @@ class Header extends React.PureComponent {
       homeMenuItem.url = client.join
     }
 
+    const isShowcaseMenu = isPaymentBeforeChoosingEnabled && !isAuthenticated
+    const menu = isShowcaseMenu ? showcaseMenuItem : menuItems.menu
+
     const desktopItems = [
       !isAuthenticated && menuItems.boxPrices,
-      menuItems.menu,
+      menu,
       isAuthenticated && menuItems.referFriend,
       menuItems.sustainability,
       menuItems.faq,
@@ -130,7 +133,7 @@ class Header extends React.PureComponent {
 
     const mobileItems = [
       !isAuthenticated && menuItems.boxPrices,
-      menuItems.menu,
+      menu,
       menuItems.sustainability,
       menuItems.faq,
     ].filter(item => item)
@@ -323,6 +326,51 @@ class Header extends React.PureComponent {
     window.location.assign('/apps')
   }
 
+  renderLoginModal = () => {
+    const {
+      isHelpPreLoginOpen,
+      isLoginOpen,
+      isHelpCentreActive,
+      showAppAwareness,
+      trackContinueAsNewCustomer,
+    } = this.props
+
+    return (
+      <Overlay
+        open={Boolean(isLoginOpen || isHelpPreLoginOpen)}
+        contentClassName={css.modalOverlay}
+        from="top"
+      >
+        <ModalPanel
+          closePortal={this.onClose}
+          className={classNames(css.modal, { [css.appAwarenessModal]: showAppAwareness })}
+          containerClassName={css.modalContainer}
+          disableOverlay
+          isNarrow
+        >
+          <Login
+            title={isHelpPreLoginOpen
+              ? 'We can help you faster if you\'re logged in'
+              : 'Login' }
+          />
+          {isHelpPreLoginOpen
+            ? (
+              <Link
+                to={isHelpCentreActive ? client.helpCentre : zendesk.faqs}
+                data-optimizely="new-customer-help-link"
+                clientRouted={false}
+                className={css.continueAsNewCustomerLink}
+                tracking={trackContinueAsNewCustomer}
+              >
+                Continue as new customer
+              </Link>
+            )
+            : null}
+        </ModalPanel>
+      </Overlay>
+    )
+  }
+
   render() {
     const {
       fromJoin,
@@ -332,16 +380,12 @@ class Header extends React.PureComponent {
       serverError,
       title,
       promoCodeUrl,
-      isHelpPreLoginOpen,
-      isLoginOpen,
       path,
       trackNavigationClick,
       abandonBasketFeature,
       routing,
-      isHelpCentreActive,
-      showAppAwareness,
       isAppAwarenessEnabled,
-      trackContinueAsNewCustomer,
+      showLoginCTA,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen } = this.state
@@ -359,12 +403,17 @@ class Header extends React.PureComponent {
 
     if (simple && !isAuthenticated) {
       return (
-        <SimpleHeader
-          serverError={serverError}
-          className={mobileMenuOpen ? css.overlayOpen : css.overlay}
-          homeUrl={mobileMenuItems[0].url}
-          title={title}
-        />
+        <Fragment>
+          <SimpleHeader
+            serverError={serverError}
+            className={mobileMenuOpen ? css.overlayOpen : css.overlay}
+            homeUrl={mobileMenuItems[0].url}
+            title={title}
+            showLoginCTA={showLoginCTA}
+            onLoginClick={this.onLoginClick}
+          />
+          {this.renderLoginModal()}
+        </Fragment>
       )
     }
 
@@ -419,38 +468,7 @@ class Header extends React.PureComponent {
               </div>
             </div>
           </header>
-          <Overlay
-            open={Boolean(isLoginOpen || isHelpPreLoginOpen)}
-            contentClassName={css.modalOverlay}
-            from="top"
-          >
-            <ModalPanel
-              closePortal={this.onClose}
-              className={classNames(css.modal, { [css.appAwarenessModal]: showAppAwareness })}
-              containerClassName={css.modalContainer}
-              disableOverlay
-              isNarrow
-            >
-              <Login
-                title={isHelpPreLoginOpen
-                  ? 'We can help you faster if you\'re logged in'
-                  : 'Login' }
-              />
-              {isHelpPreLoginOpen
-                ? (
-                  <Link
-                    to={isHelpCentreActive ? client.helpCentre : zendesk.faqs}
-                    data-optimizely="new-customer-help-link"
-                    clientRouted={false}
-                    className={css.continueAsNewCustomerLink}
-                    tracking={trackContinueAsNewCustomer}
-                  >
-                    Continue as new customer
-                  </Link>
-                )
-                : null}
-            </ModalPanel>
-          </Overlay>
+          {this.renderLoginModal()}
           <CancelOrderModal close={this.onCloseCancelBoxModal} />
           <PromoModal />
           <DuplicateOrderModal />
@@ -489,6 +507,8 @@ Header.propTypes = {
   isAppAwarenessEnabled: PropTypes.bool,
   isMenuRedirectPageEnabled: PropTypes.bool,
   postCode: PropTypes.string,
+  showLoginCTA: PropTypes.bool,
+  isPaymentBeforeChoosingEnabled: PropTypes.bool,
 }
 
 Header.defaultProps = {
@@ -510,7 +530,9 @@ Header.defaultProps = {
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
   isMenuRedirectPageEnabled: false,
-  postCode: ''
+  postCode: '',
+  showLoginCTA: false,
+  isPaymentBeforeChoosingEnabled: false,
 }
 
 export { Header }

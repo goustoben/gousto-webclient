@@ -6,14 +6,14 @@ import css from './SignupLayout.css'
 
 class SignupLayout extends React.PureComponent {
   render() {
-    const { hasWhiteBackground, children } = this.props
+    const { hasWhiteBackground, children, showLoginCTA } = this.props
 
     return (
       <div
         className={classNames(css.pageContainer, { [css.hasWhiteBackground]: hasWhiteBackground })}
       >
         <div className={css.headerContainer}>
-          <Header simple />
+          <Header simple showLoginCTA={showLoginCTA} />
         </div>
         {children}
       </div>
@@ -23,11 +23,13 @@ class SignupLayout extends React.PureComponent {
 
 SignupLayout.propTypes = {
   hasWhiteBackground: PropTypes.bool,
+  showLoginCTA: PropTypes.bool,
   children: PropTypes.node.isRequired,
 }
 
 SignupLayout.defaultProps = {
   hasWhiteBackground: false,
+  showLoginCTA: false,
 }
 
 export default SignupLayout

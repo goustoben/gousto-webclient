@@ -19,4 +19,21 @@ describe('signup reducer', () => {
       expect(result.get('isDiscountAppliedBarDismissed')).toBe(true)
     })
   })
+
+  describe('given SHOWCASE_MENU_SEEN is dispatched', () => {
+    const action = {
+      type: actionTypes.SHOWCASE_MENU_SEEN,
+    }
+    let initialState
+
+    beforeEach(() => {
+      initialState = Immutable.fromJS({})
+    })
+
+    test('should remember the fact of dismissal', () => {
+      const result = signup.signup(initialState, action)
+
+      expect(result.get('showcaseMenuSeen')).toBe(true)
+    })
+  })
 })

@@ -3,10 +3,15 @@ import React from 'react'
 import actual from 'actual'
 import { Button as GoustoButton } from 'goustouicomponents'
 
-const ctaText = (isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled) => {
+const ctaText = (
+  isLastStep,
+  isTastePreferencesEnabled,
+  isPaymentBeforeChoosingEnabled,
+  showcaseMenuSeen
+) => {
   if (isLastStep) {
     if (isPaymentBeforeChoosingEnabled) {
-      return 'See this week’s menu'
+      return showcaseMenuSeen ? 'Continue to sign up' : 'See this week’s menu'
     } else if (isTastePreferencesEnabled) {
       return 'Show me recipes'
     } else {
@@ -26,10 +31,12 @@ const Button = ({
   isLastStep,
   isTastePreferencesEnabled,
   isPaymentBeforeChoosingEnabled,
+  showcaseMenuSeen,
   ...buttonProps
 }) => {
   const buttonText =
-    children || ctaText(isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled)
+    children ||
+    ctaText(isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled, showcaseMenuSeen)
 
   return (
     <GoustoButton
@@ -55,6 +62,7 @@ Button.propTypes = {
   children: PropTypes.node,
   isTastePreferencesEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
+  showcaseMenuSeen: PropTypes.bool,
 }
 
 Button.defaultProps = {
@@ -62,6 +70,7 @@ Button.defaultProps = {
   children: undefined,
   isTastePreferencesEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
+  showcaseMenuSeen: false,
 }
 
 export { Button }
