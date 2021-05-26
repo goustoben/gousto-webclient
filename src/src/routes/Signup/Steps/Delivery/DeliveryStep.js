@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import classNames from 'classnames'
+import { browserHistory } from 'react-router'
 import DropdownInput from 'Form/Dropdown'
 
 import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
@@ -95,6 +96,7 @@ const DeliveryStep = ({
   isPricingClarityEnabled,
   isPaymentBeforeChoosingEnabled,
   trackSignupWizardAction,
+  showcaseMenuSeen,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -125,7 +127,14 @@ const DeliveryStep = ({
   }
 
   const onShowRecipe = () => {
-    const nextStep = isTastePreferencesEnabled ? () => redirect('/taste-preferences') : next
+    let nextStep
+    if (isPaymentBeforeChoosingEnabled && showcaseMenuSeen) {
+      nextStep = () => browserHistory.push('/check-out')
+    } else if (isTastePreferencesEnabled) {
+      nextStep = () => redirect('/taste-preferences')
+    } else {
+      nextStep = next
+    }
     trackSignupWizardAction(completeWizardDeliveryDay)
     boxSummaryDeliverySlotChosen({
       date: tempDate,
@@ -269,6 +278,7 @@ DeliveryStep.propTypes = {
   isPricingClarityEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
+  showcaseMenuSeen: PropTypes.bool,
 }
 
 DeliveryStep.defaultProps = {
@@ -291,6 +301,7 @@ DeliveryStep.defaultProps = {
   isTastePreferencesEnabled: false,
   isPricingClarityEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
+  showcaseMenuSeen: false,
 }
 
 export { DeliveryStep }

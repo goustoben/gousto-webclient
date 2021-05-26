@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux'
+import { actionTypes } from 'actions/actionTypes'
 import { trackShowcaseMenuAction } from 'actions/tracking'
 import {
   showcaseMenuProceed,
@@ -11,6 +12,10 @@ import routesConfig from 'config/routes'
 import { getNumPortions, getNumRecipes } from 'selectors/basket'
 import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
 
+export const setShowcaseMenuSeen = () => ({
+  type: actionTypes.SHOWCASE_MENU_SEEN,
+})
+
 export const proceed = () => (dispatch, getState) => {
   const state = getState()
   const basketDataAvailable = !!getNumPortions(state) && !!getNumRecipes(state)
@@ -19,6 +24,7 @@ export const proceed = () => (dispatch, getState) => {
     dispatch(trackShowcaseMenuAction(showcaseMenuProceed))
     dispatch(push(routesConfig.client['check-out']))
   } else {
+    dispatch(setShowcaseMenuSeen())
     dispatch(trackShowcaseMenuAction(showcaseMenuProceed))
     dispatch(push(routesConfig.client.signup))
   }

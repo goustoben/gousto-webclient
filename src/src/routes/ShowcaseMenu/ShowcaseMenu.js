@@ -25,7 +25,7 @@ export const ShowcaseMenu = ({
   openRecipeDetails,
   trackScrollOneStep,
 }) => (
-  <SignupLayout hasWhiteBackground>
+  <SignupLayout hasWhiteBackground showLoginCTA>
     <HotjarTrigger name="showcase_menu" />
     <DiscountAppliedBarContainer wizardStep="showcase_menu" page="showcaseMenu" />
     <div className={css.showcaseMenuContainer}>

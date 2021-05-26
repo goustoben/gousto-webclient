@@ -8,6 +8,7 @@ import {
   getIsHelpCentreActive,
   getIsMobileTopBannerAppAwarenessEnabled,
   getIsMenuRedirectPageEnabled,
+  getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { getIsAppAwarenessLoginEnabled } from 'selectors/appLoginModal'
@@ -29,6 +30,7 @@ const mapStateToProps = (state) => ({
   showAppAwareness: getIsAppAwarenessLoginEnabled(state),
   isAppAwarenessEnabled: getIsMobileTopBannerAppAwarenessEnabled(state),
   isMenuRedirectPageEnabled: getIsMenuRedirectPageEnabled(state),
+  isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   postCode: state.basket.get('postcode'),
 })
 

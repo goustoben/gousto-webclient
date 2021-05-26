@@ -37,6 +37,7 @@ function mapStateToProps(state) {
     userHasAvailableSlots: userHasAvailableSlots(state),
     isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
+    showcaseMenuSeen: state.signup.get('showcaseMenuSeen'),
   }
 }
 

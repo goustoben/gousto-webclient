@@ -9,6 +9,7 @@ const initialState = Immutable.fromJS({
     isLastStep: false,
   },
   isDiscountAppliedBarDismissed: false,
+  showcaseMenuSeen: false,
 })
 
 const signup = {
@@ -29,6 +30,10 @@ const signup = {
 
     case actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR: {
       return state.set('isDiscountAppliedBarDismissed', true)
+    }
+
+    case actionTypes.SHOWCASE_MENU_SEEN: {
+      return state.set('showcaseMenuSeen', true)
     }
 
     default: {
