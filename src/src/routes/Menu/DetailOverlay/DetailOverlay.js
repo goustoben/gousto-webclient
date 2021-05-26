@@ -21,6 +21,7 @@ const propTypes = {
   browserType: PropTypes.string.isRequired,
   isOutOfStock: PropTypes.bool.isRequired,
   onCloseOverlay: PropTypes.func.isRequired,
+  isFromShowcaseMenu: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -28,6 +29,7 @@ const defaultProps = {
   menuRecipeDetailShow: '',
   chosenSideRecipeId: null,
   position: null,
+  isFromShowcaseMenu: false,
 }
 
 class DetailOverlay extends PureComponent {
@@ -78,7 +80,7 @@ class DetailOverlay extends PureComponent {
   }
 
   render() {
-    const { showOverlay, menuRecipeDetailShow, chosenSideRecipeId, recipesStore, numPortions, position, browserType, isOutOfStock } = this.props
+    const { showOverlay, menuRecipeDetailShow, chosenSideRecipeId, recipesStore, numPortions, position, browserType, isOutOfStock, isFromShowcaseMenu } = this.props
     const recipeId = menuRecipeDetailShow
     const detailRecipe = recipesStore.get(recipeId)
 
@@ -115,6 +117,7 @@ class DetailOverlay extends PureComponent {
             position={position}
             isChefPrepared={isChefPrepared}
             isFineDineIn={isFineDineIn}
+            isFromShowcaseMenu={isFromShowcaseMenu}
           />
         </RecipeContextProvider>
       </Modal>

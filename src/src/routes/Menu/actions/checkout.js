@@ -12,7 +12,13 @@ import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
 import { getPreviewOrderId } from 'selectors/basket'
 import { getUserStatus } from 'selectors/user'
-import { getSlotForBoxSummaryDeliveryDays, getCouldBasketBeExpired , getOrderDetails } from '../selectors/order'
+import {
+  getSlotForBoxSummaryDeliveryDays,
+  getCouldBasketBeExpired,
+  getOrderDetails,
+  getDetailsForOrderWithoutRecipes,
+  getIsOrderWithoutRecipes,
+} from '../selectors/order'
 
 import { orderAssignToUser } from './order'
 
@@ -34,10 +40,15 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     return
   }
 
-  const orderDetails = getOrderDetails(getState())
+  const state = getState()
+
+  const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
+
+  const orderDetails = isOrderWithoutRecipes ? getDetailsForOrderWithoutRecipes(state) : getOrderDetails(state)
+
   const couldBasketBeExpired = getCouldBasketBeExpired(getState())
 
-  if (couldBasketBeExpired) {
+  if (couldBasketBeExpired && !isOrderWithoutRecipes) {
     const { router: { locationBeforeTransitions: { pathName: path } = {} } = {} } = getState()
 
     logger.warning({

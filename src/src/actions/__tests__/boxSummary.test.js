@@ -1,7 +1,8 @@
 import Immutable from 'immutable'
 import * as reactRouterPush from 'react-router-redux'
 import basketActions from 'actions/basket'
-import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive, trackingUnavailableRecipeList } from 'actions/boxSummary'
+import { boxSummaryDeliveryDaysLoad, boxSummaryNext, basketDeliveryDaysReceive, trackingUnavailableRecipeList, boxSummaryDeliverySlotChosen } from 'actions/boxSummary'
+import { menuLoadMenu } from 'actions/menu'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
 
@@ -18,7 +19,14 @@ jest.mock('react-router-redux', () => ({
 jest.mock('actions/basket', () => ({
   basketAddressChange: jest.fn(),
   basketPostcodeChange: jest.fn(),
-  portionSizeSelectedTracking: jest.fn()
+  portionSizeSelectedTracking: jest.fn(),
+  basketDateChange: jest.fn(),
+  basketSlotChange: jest.fn()
+}))
+
+jest.mock('actions/menu', () => ({
+  menuLoadMenu: jest.fn(),
+  menuLoadStock: jest.fn()
 }))
 
 describe('boxSummary actions', () => {
@@ -344,6 +352,74 @@ describe('boxSummary actions', () => {
           actionType: 'unavailable_recipe_list',
           unavailableRecipeList: unavailableRecipeArray
         }
+      })
+    })
+  })
+
+  describe('boxSummaryDeliverySlotChosen', () => {
+    const defaultProps = {
+      auth: Immutable.Map(),
+      basket: Immutable.Map({
+        postcode: 'w3',
+        slotId: '',
+        recipes: Immutable.Map(),
+      }),
+      temp: Immutable.Map({}),
+      user: Immutable.Map({
+        orders: Immutable.List([]),
+      }),
+      features: Immutable.Map({}),
+      error: Immutable.Map({}),
+      boxSummaryDeliveryDays: Immutable.fromJS({
+        '2021-05-20': {
+          slots: [
+            {
+              id: 'dg015db8',
+              coreSlotId: '001',
+              whenCutoff: '2021-05-13',
+            },
+          ],
+        },
+        '2021-05-21': {
+          slots: [
+            {
+              id: 'zk984as1',
+              coreSlotId: '002',
+              whenCutoff: '2021-05-14',
+            },
+          ],
+        },
+      }),
+    }
+
+    const getStateSpy = jest.fn()
+    const dispatchSpy = jest.fn()
+
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        ...defaultProps,
+      })
+    })
+
+    describe('when displayMenuForFirstWeekOnly is false by default', () => {
+      test('then it should load menu with default cutoff date', async () => {
+        await boxSummaryDeliverySlotChosen({ date: '2021-05-21', slotId: 'zk984as1' })(
+          dispatchSpy,
+          getStateSpy
+        )
+        expect(menuLoadMenu).toHaveBeenCalledWith(null)
+      })
+    })
+
+    describe('when displayMenuForFirstWeekOnly is true', () => {
+      test('then it should instead use the first available date', async () => {
+        await boxSummaryDeliverySlotChosen({
+          date: '2021-05-21',
+          slotId: 'zk984as1',
+          displayMenuForFirstWeekOnly: true,
+        })(dispatchSpy, getStateSpy)
+
+        expect(menuLoadMenu).toHaveBeenCalledWith('2021-05-13')
       })
     })
   })

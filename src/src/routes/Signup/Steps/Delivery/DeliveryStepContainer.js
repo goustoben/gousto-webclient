@@ -8,6 +8,7 @@ import { getDisabledSlotDates, userHasAvailableSlots } from 'routes/Menu/selecto
 import {
   isNextDayDeliveryPaintedDoorFeatureEnabled,
   getIsTastePreferencesEnabled,
+  getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import { trackSignupWizardAction } from 'actions/signup'
@@ -35,6 +36,7 @@ function mapStateToProps(state) {
     disabledSlots,
     userHasAvailableSlots: userHasAvailableSlots(state),
     isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
+    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   }
 }
 

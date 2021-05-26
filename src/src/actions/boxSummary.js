@@ -6,7 +6,7 @@ import moment from 'moment'
 import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
-import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
+import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal, getCutoffForFirstAvailableDate } from 'utils/deliveries'
 import * as trackingKeys from 'actions/trackingKeys'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
@@ -24,13 +24,16 @@ export const basketDeliveryDaysReceive = (days) => ({
   days,
 })
 
-export const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
-  async (dispatch) => {
+export const boxSummaryDeliverySlotChosen = ({ date, slotId, displayMenuForFirstWeekOnly }) => (
+  async (dispatch, getState) => {
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, true))
     dispatch(basketDateChange(date))
     dispatch(basketSlotChange(slotId))
+
+    const cutoffDateTime = displayMenuForFirstWeekOnly ? getCutoffForFirstAvailableDate(getState()) : null
+
     await Promise.all([
-      dispatch(menuLoadMenu()),
+      dispatch(menuLoadMenu(cutoffDateTime)),
       dispatch(menuLoadStock()),
     ])
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, false))

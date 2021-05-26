@@ -4,6 +4,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 
 import Menu from './Menu'
 import { menuOverlayClick } from './actions/menuOverlayClick'
@@ -42,6 +43,7 @@ function mapStateToProps(state, ownProps) {
     forceLoad: state.menu.get('forceLoad', false),
     recipesCount: flattenRecipes(state.basket.get('recipes')).length,
     postcode: state.basket.get('postcode'),
+    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   }
 }
 

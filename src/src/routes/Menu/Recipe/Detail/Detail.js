@@ -33,7 +33,8 @@ export const Detail = (props) => {
     position, surcharge,
     isChefPrepared, isFineDineIn,
     menuWithSides,
-    brandAvailability
+    brandAvailability,
+    isFromShowcaseMenu
   } = props
 
   const recipeLegalDetailId = chosenSideRecipeId || id
@@ -87,7 +88,12 @@ export const Detail = (props) => {
         </div>
         <div className={css.sectionPanel}>
           <div className={css.variantsContainer}>
-            <VariantRecipeListContainer originalId={id} recipeId={menuWithSides ? chosenSideRecipeId : id} isOnDetailScreen />
+            <VariantRecipeListContainer
+              originalId={id}
+              recipeId={menuWithSides ? chosenSideRecipeId : id}
+              isOnDetailScreen
+              isFromShowcaseMenu={isFromShowcaseMenu}
+            />
           </div>
           <h2 className={css.infoBoxDescriptionTitle}>Recipe Details</h2>
           <p className={css.infoBoxText}>{description}</p>
@@ -120,17 +126,20 @@ export const Detail = (props) => {
         <div className={css.row}>
           <DetailAllergenIngredientsContainer recipeId={recipeLegalDetailId} />
         </div>
-
-        <div className={css.stickyContainer}>
-          <DetailAddRecipe
-            id={id}
-            isOutOfStock={isOutOfStock}
-            view={view}
-            surcharge={surcharge}
-            position={position}
-            buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
-          />
-        </div>
+        {
+          isFromShowcaseMenu ? null : (
+            <div className={css.stickyContainer}>
+              <DetailAddRecipe
+                id={id}
+                isOutOfStock={isOutOfStock}
+                view={view}
+                surcharge={surcharge}
+                position={position}
+                buttonText={isChefPrepared ? 'Add meal' : 'Add recipe'}
+              />
+            </div>
+          )
+        }
       </div>
     </div>
   )
@@ -159,6 +168,7 @@ Detail.propTypes = {
     text: PropTypes.string,
     theme: PropTypes.object,
   }),
+  isFromShowcaseMenu: PropTypes.bool,
 }
 
 Detail.defaultProps = {
@@ -169,4 +179,5 @@ Detail.defaultProps = {
   chosenSideRecipeId: null,
   menuWithSides: false,
   brandAvailability: {},
+  isFromShowcaseMenu: false,
 }

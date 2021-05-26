@@ -7,6 +7,7 @@ import menu from 'config/menu'
 import browserHelper from 'utils/browserHelper'
 
 import MainLayout from 'layouts/MainLayout'
+import { ShowcaseMenuContainer } from 'routes/ShowcaseMenu'
 import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
@@ -97,9 +98,14 @@ class Menu extends React.PureComponent {
       query,
       recipesCount,
       children,
+      isPaymentBeforeChoosingEnabled,
     } = this.props
-    const { isChrome } = this.state
 
+    if (isPaymentBeforeChoosingEnabled && !isAuthenticated) {
+      return <ShowcaseMenuContainer />
+    }
+
+    const { isChrome } = this.state
     const overlayShowCSS = (showOverlay && isChrome) ? css.blur : null
 
     return (

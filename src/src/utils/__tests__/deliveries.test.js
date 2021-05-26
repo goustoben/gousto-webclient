@@ -18,6 +18,7 @@ import {
   getNDDFeatureFlagVal,
   isDaySlotLeadTimeActive,
   doesDayHaveSlotsWithoutDeliveryFees,
+  getCutoffForFirstAvailableDate,
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable'
@@ -3391,6 +3392,35 @@ describe('utils/deliveries', () => {
       const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')
 
       expect(isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)).toBeFalsy()
+    })
+  })
+
+  describe('getCutoffForFirstAvailableDate', () => {
+    test('should return whenCutoff for the first available date', () => {
+      const state = {
+        boxSummaryDeliveryDays: Immutable.fromJS({
+          '2021-05-20': {
+            slots: [
+              {
+                id: 'dg015db8',
+                coreSlotId: '001',
+                whenCutoff: '2021-05-13',
+              },
+            ],
+          },
+          '2021-05-21': {
+            slots: [
+              {
+                id: 'zk984as1',
+                coreSlotId: '002',
+                whenCutoff: '2021-05-14',
+              },
+            ],
+          },
+        }),
+      }
+
+      expect(getCutoffForFirstAvailableDate(state)).toEqual('2021-05-13')
     })
   })
 })

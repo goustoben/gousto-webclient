@@ -1,0 +1,24 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import { CTA } from 'goustouicomponents'
+import { onEnter } from 'utils/accessibility'
+import css from './CTASection.css'
+
+export const CTASection = ({ onClick }) => (
+  <div className={css.ctaSection}>
+    <div className={css.buttonContainer}>
+      <CTA
+        testingSelector="showcaseMenuCTA"
+        onClick={onClick}
+        onKeyDown={onEnter(onClick)}
+        isFullWidth
+      >
+        Continue to sign up
+      </CTA>
+    </div>
+  </div>
+)
+
+CTASection.propTypes = {
+  onClick: PropTypes.func.isRequired,
+}
