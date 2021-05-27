@@ -35,9 +35,13 @@ import {
   transformProjectedDeliveries,
   transformProjectedDeliveriesNew,
 } from 'utils/myDeliveries'
-import { getIsNewSubscriptionApiEnabled, getIsAdditionalCheckoutErrorsEnabled } from 'selectors/features'
-import { skipDates } from '../../routes/Account/apis/subscription'
-import * as orderV2Apis from '../../routes/Account/MyDeliveries/apis/orderV2'
+import {
+  getIsNewSubscriptionApiEnabled,
+  getIsAdditionalCheckoutErrorsEnabled,
+  getIsDecoupledPaymentEnabled,
+} from 'selectors/features'
+import { skipDates } from 'routes/Account/apis/subscription'
+import * as orderV2Apis from 'routes/Account/MyDeliveries/apis/orderV2'
 
 jest.mock('selectors/features')
 
@@ -261,6 +265,7 @@ describe('user actions', () => {
     let state
 
     beforeEach(() => {
+      getIsDecoupledPaymentEnabled.mockReturnValue(false)
       customerSignup.mockClear()
       state = {
         basket: Immutable.fromJS({}),
@@ -622,6 +627,9 @@ describe('user actions', () => {
             interval_id: 1,
             delivery_slot_id: undefined,
             box_id: undefined
+          },
+          decoupled: {
+            payment: false,
           }
         }
       })
@@ -634,7 +642,7 @@ describe('user actions', () => {
         test('should trim whitespace from before and after the user name', async () => {
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
 
-          await userActions.userSubscribe()(dispatch, getState)
+          await userSubscribe()(dispatch, getState)
 
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
@@ -664,10 +672,112 @@ describe('user actions', () => {
           expectedParam.customer.marketing_do_allow_email = 1
           const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
 
-          await userActions.userSubscribe()(dispatch, getState)
+          await userSubscribe()(dispatch, getState)
 
           expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
         })
+      })
+    })
+
+    describe('isDecoupledPaymentEnabled is enabled', () => {
+      let expected
+
+      beforeEach(() => {
+        state = {
+          basket: Immutable.fromJS({}),
+          checkout: Immutable.fromJS({
+            goustoRef: '105979923',
+          }),
+          pricing: Immutable.fromJS({
+            prices: {
+              total: '24.55',
+              promoCode: false
+            }
+          }),
+          tracking: Immutable.fromJS({
+            asource: null
+          }),
+          request: Immutable.fromJS({
+            browser: 'desktop'
+          }),
+          features: Immutable.fromJS({
+            ndd: {
+              value: ''
+            }
+          }),
+          form: {
+            account: {
+              values: {
+                account: {
+                  email: 'test_email@test.com'
+                }
+              }
+            },
+            ...formValues,
+          },
+          payment: Immutable.fromJS({
+            paymentMethod: PaymentMethod.Card,
+          })
+        }
+        expected = {
+          order_id: undefined,
+          promocode: '',
+          customer: {
+            tariff_id: '',
+            phone_number: '',
+            email: 'test_email@test.com',
+            name_first: 'John',
+            name_last: 'Doe',
+            promo_code: '',
+            password: undefined,
+            age_verified: 0,
+            marketing_do_allow_email: 0,
+            marketing_do_allow_thirdparty: 0,
+            delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+          },
+          addresses: {
+            billing_address: {
+              county: '',
+              line1: '',
+              line2: '',
+              line3: '',
+              name: 'My Address',
+              postcode: '',
+              town: '',
+              type: 'billing',
+            },
+            shipping_address: {
+              county: '',
+              delivery_instructions: undefined,
+              line1: '',
+              line2: '',
+              line3: '',
+              name: 'My Address',
+              postcode: '',
+              town: '',
+              type: 'shipping',
+            },
+          },
+          subscription: {
+            interval_id: 1,
+            delivery_slot_id: undefined,
+            box_id: undefined
+          },
+          decoupled: {
+            payment: true,
+          }
+        }
+
+        getIsDecoupledPaymentEnabled.mockReturnValue(true)
+        getState.mockReturnValue(state)
+      })
+
+      test('should remove payment data from request', async () => {
+        const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
+
+        await userSubscribe()(dispatch, getState)
+
+        expect(customerSignupSpy).toHaveBeenCalledWith(null, expected)
       })
     })
 

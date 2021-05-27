@@ -3,6 +3,8 @@ import * as utilsDeliveries from 'utils/deliveries'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getOrderDetails,
+  getIsOrderWithoutRecipes,
+  getDetailsForOrderWithoutRecipes,
   getOrderAction,
   getCouldBasketBeExpired,
   getOrderForUpdateOrderV1,
@@ -69,11 +71,15 @@ describe('order selectors', () => {
       enable3DSForSignUp: {
         value: false
       },
+      ...(partialOverwrite.features || {})
     }),
     user: Immutable.fromJS({
       orders: Immutable.List([]),
       deliveryTariffId: utilsDeliveries.deliveryTariffTypes.NON_NDD,
       ...(partialOverwrite.user || {})
+    }),
+    auth: Immutable.fromJS({
+      ...(partialOverwrite.auth || {})
     })
   })
 
@@ -206,6 +212,59 @@ describe('order selectors', () => {
           address_id: null,
           promo_code: '1234'
         })
+      })
+    })
+  })
+
+  describe('getIsOrderWithoutRecipes', () => {
+    const cases = [
+      // isPaymentBeforeChoosingEnabled, isAuthenticated, expected
+      [ false, false, false ],
+      [ true, false, true ],
+      [ false, true, false ],
+      [ true, true, false ],
+    ]
+
+    describe.each(cases)('when isPaymentBeforeChoosingEnabled is %s and isAuthenticated is %s', (isPaymentBeforeChoosingEnabled, isAuthenticated, expected) => {
+      const state = createState({
+        features: {
+          isPaymentBeforeChoosingEnabled: { value: isPaymentBeforeChoosingEnabled },
+        },
+        auth: {
+          isAuthenticated
+        }
+      })
+
+      test(`then should return ${expected}`, () => {
+        expect(getIsOrderWithoutRecipes(state)).toBe(expected)
+      })
+    })
+  })
+
+  describe('getDetailsForOrderWithoutRecipes', () => {
+    test('returns an object like getOrderDetails but with feature flag and additional fields', () => {
+      const state = createState({
+        basket: {
+          numRecipes: 3,
+          promoCode: '1234'
+        }
+      })
+
+      const orderDetails = getDetailsForOrderWithoutRecipes(state)
+
+      expect(orderDetails).toEqual({
+        delivery_day_id: '5',
+        delivery_slot_id: '4',
+        recipe_choices: [],
+        promo_code: '1234',
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid',
+        delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+        address_id: null,
+        get_order_without_recipes: true,
+        number_of_recipes: 3,
+        number_of_portions: 2,
+        box_type: 'gourmet',
+        promocode: '1234'
       })
     })
   })

@@ -377,12 +377,13 @@ describe('basket utils', () => {
 
       basketResetPersistent(cookie)
 
-      expect(unsetSpy).toBeCalledTimes(7)
+      expect(unsetSpy).toBeCalledTimes(8)
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_slotId')
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_recipes')
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_previewOrderId')
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_postcode')
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_numPortions')
+      expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_numRecipes')
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_basket_date')
       expect(unsetSpy).toBeCalledWith(cookie, 'goustoStateStore_menu_selectedRecipeVariants')
     })

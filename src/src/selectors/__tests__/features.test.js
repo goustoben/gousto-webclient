@@ -52,6 +52,7 @@ import {
   getIsHomePageFlexibilityMessageEnabled,
   getIsWizardBoxSizeEnabled,
   getIsPaymentBeforeChoosingEnabled,
+  getIsDecoupledPaymentEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -120,6 +121,7 @@ describe('when features are defined', () => {
     [getIsHomePageFlexibilityMessageEnabled, 'isHomePageFlexibilityMessageEnabled'],
     [getIsWizardBoxSizeEnabled, 'isWizardBoxSizeEnabled'],
     [getIsPaymentBeforeChoosingEnabled, 'isPaymentBeforeChoosingEnabled'],
+    [getIsDecoupledPaymentEnabled, 'isDecoupledPaymentEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {

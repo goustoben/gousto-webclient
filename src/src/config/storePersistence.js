@@ -24,6 +24,7 @@ export default (store) => {
         date: true,
         address: false,
         numPortions: true,
+        numRecipes: true,
         slotId: true,
         recipes: false,
         previewOrderId: true,

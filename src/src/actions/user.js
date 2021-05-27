@@ -15,6 +15,7 @@ import {
   getNDDFeatureValue,
   getIsNewSubscriptionApiEnabled,
   getIsAdditionalCheckoutErrorsEnabled,
+  getIsDecoupledPaymentEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
@@ -25,8 +26,9 @@ import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries, transformProjectedDeliveriesNew } from 'utils/myDeliveries'
 import { getAuthUserId } from 'selectors/auth'
+import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscription'
+import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 
-import { skipDates, fetchProjectedDeliveries } from '../routes/Account/apis/subscription'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -42,7 +44,6 @@ import {
   trackNewOrder,
   trackSubscriptionCreated,
 } from './tracking'
-import { deleteOrder } from '../routes/Account/MyDeliveries/apis/orderV2'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -632,97 +633,114 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
   }
 }
 
+function buildSignupRequestData(state, sca3ds, sourceId) {
+  const { form, basket, promoAgeVerified } = state
+
+  const isDecoupledPaymentEnabled = getIsDecoupledPaymentEnabled(state)
+
+  const account = Immutable.fromJS(form[accountFormName].values).get('account')
+  const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
+  const payment = Immutable.fromJS(form.payment.values).get('payment')
+
+  const isCard = getCurrentPaymentMethod(state) === PaymentMethod.Card
+  const deliveryAddress = getAddress(delivery)
+
+  const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
+
+  const intervalId = delivery.get('interval_id', 1)
+
+  const reqData = {
+    order_id: basket.get('previewOrderId'),
+    promocode: basket.get('promoCode', ''),
+    customer: {
+      tariff_id: basket.get('tariffId', ''),
+      phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
+      email: account.get('email'),
+      name_first: delivery.get('firstName').trim(),
+      name_last: delivery.get('lastName').trim(),
+      promo_code: basket.get('promoCode', ''),
+      password: account.get('password'),
+      age_verified: Number(promoAgeVerified || false),
+      marketing_do_allow_email: Number(account.get('allowEmail') || false),
+      marketing_do_allow_thirdparty: Number(account.get('allowThirdPartyEmail') || false),
+      delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
+    },
+    addresses: {
+      shipping_address: {
+        type: signupConfig.address_types.shipping,
+        delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
+        ...deliveryAddress
+      },
+      billing_address: {
+        type: signupConfig.address_types.billing,
+        ...billingAddress
+      }
+    },
+    subscription: {
+      interval_id: intervalId,
+      delivery_slot_id: basket.get('slotId'),
+      box_id: basket.get('boxId')
+    },
+    decoupled: {
+      payment: isDecoupledPaymentEnabled
+    }
+  }
+
+  if (
+    isChoosePlanEnabled(state)
+    && basket.get('subscriptionOption') === signupConfig.subscriptionOptions.transactional
+  ) {
+    reqData.subscription.paused = 1
+  }
+
+  if (getIsAdditionalCheckoutErrorsEnabled(state)) {
+    reqData.payment_show_soft_decline = true
+  }
+
+  if (!isDecoupledPaymentEnabled) {
+    let paymentMethod
+    if (isCard) {
+      paymentMethod = {
+        is_default: 1,
+        type: signupConfig.payment_types.card,
+        name: 'My Card',
+        card: getPaymentDetails(state)
+      }
+      if (sca3ds) {
+        paymentMethod.card.card_token = sourceId
+      }
+    } else {
+      paymentMethod = {
+        is_default: 1,
+        type: signupConfig.payment_types.paypal,
+        name: 'My PayPal',
+        paypal: getPayPalPaymentDetails(state)
+      }
+    }
+
+    reqData.payment_method = paymentMethod
+
+    if (isCard && sca3ds) {
+      reqData['3ds'] = true
+      reqData.customer.gousto_ref = state.checkout.get('goustoRef')
+    }
+  }
+
+  return reqData
+}
+
 export function userSubscribe(sca3ds = false, sourceId = null) {
   return async (dispatch, getState) => {
     const state = getState()
-    if (state.user && state.user.get('id')) return
+    if (state.user && state.user.get('id')) {
+      return
+    }
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
+
     const prices = state.pricing.get('prices')
     try {
-      const { form, basket, promoAgeVerified } = state
-
-      const account = Immutable.fromJS(form[accountFormName].values).get('account')
-      const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
-      const payment = Immutable.fromJS(form.payment.values).get('payment')
-
-      const isCard = getCurrentPaymentMethod(state) === PaymentMethod.Card
-      const deliveryAddress = getAddress(delivery)
-
-      const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
-
-      const intervalId = delivery.get('interval_id', 1)
-
-      let paymentMethod
-      if (isCard) {
-        paymentMethod = {
-          is_default: 1,
-          type: signupConfig.payment_types.card,
-          name: 'My Card',
-          card: getPaymentDetails(state)
-        }
-        if (sca3ds) {
-          paymentMethod.card.card_token = sourceId
-        }
-      } else {
-        paymentMethod = {
-          is_default: 1,
-          type: signupConfig.payment_types.paypal,
-          name: 'My PayPal',
-          paypal: getPayPalPaymentDetails(state)
-        }
-      }
-
-      const reqData = {
-        order_id: basket.get('previewOrderId'),
-        promocode: basket.get('promoCode', ''),
-        customer: {
-          tariff_id: basket.get('tariffId', ''),
-          phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
-          email: account.get('email'),
-          name_first: delivery.get('firstName').trim(),
-          name_last: delivery.get('lastName').trim(),
-          promo_code: basket.get('promoCode', ''),
-          password: account.get('password'),
-          age_verified: Number(promoAgeVerified || false),
-          marketing_do_allow_email: Number(account.get('allowEmail') || false),
-          marketing_do_allow_thirdparty: Number(account.get('allowThirdPartyEmail') || false),
-          delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
-        },
-        payment_method: paymentMethod,
-        addresses: {
-          shipping_address: {
-            type: signupConfig.address_types.shipping,
-            delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
-            ...deliveryAddress
-          },
-          billing_address: {
-            type: signupConfig.address_types.billing,
-            ...billingAddress
-          }
-        },
-        subscription: {
-          interval_id: intervalId,
-          delivery_slot_id: basket.get('slotId'),
-          box_id: basket.get('boxId')
-        },
-      }
-
-      if (isCard && sca3ds) {
-        reqData['3ds'] = true
-        reqData.customer.gousto_ref = state.checkout.get('goustoRef')
-      }
-
-      if (
-        isChoosePlanEnabled(state)
-        && basket.get('subscriptionOption') === signupConfig.subscriptionOptions.transactional
-      ) {
-        reqData.subscription.paused = 1
-      }
-
-      if (getIsAdditionalCheckoutErrorsEnabled(state)) {
-        reqData.payment_show_soft_decline = true
-      }
+      const reqData = buildSignupRequestData(state, sca3ds, sourceId)
 
       const { data } = await customerSignup(null, reqData)
 
@@ -747,7 +765,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
             promo_code: prices.get('promoCode'),
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
-            interval_id: intervalId
+            interval_id: reqData.subscription.interval_id,
           }
         })
 
