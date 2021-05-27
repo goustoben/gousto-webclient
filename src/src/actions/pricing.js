@@ -2,13 +2,14 @@ import pricingRequestApi from 'apis/pricing'
 import Immutable from 'immutable'
 import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
+import { getIsOrderWithoutRecipes } from 'routes/Menu/selectors/order'
 import { actionTypes } from './actionTypes'
 
 const pricingPending = () => ({
   type: actionTypes.PRICING_PENDING,
 })
 
-const pricingSuccess = (prices) => ({
+export const pricingSuccess = (prices) => ({
   type: actionTypes.PRICING_SUCCESS,
   prices,
 })
@@ -77,7 +78,9 @@ const getItems = (basket) => {
 const pricingActions = {
   pricingRequest() {
     return async (dispatch, getState) => {
-      const { basket, boxSummaryDeliveryDays, auth, user } = getState()
+      const state = getState()
+
+      const { basket, boxSummaryDeliveryDays, auth, user } = state
       const accessToken = auth.get('accessToken')
       const isAuthenticated = auth.get('isAuthenticated')
       const promoCode = basket.get('promoCode', false)
@@ -89,8 +92,9 @@ const pricingActions = {
       const items = basketItems.all
       const slot = getSlot(boxSummaryDeliveryDays, deliveryDate, deliverySlotId)
       const daySlotLeadTimeId = slot ? slot.get('daySlotLeadTimeId') : null
-      const nddFeatureValue = getNDDFeatureValue(getState())
+      const nddFeatureValue = getNDDFeatureValue(state)
       const deliveryTariffId = getDeliveryTariffId(user, nddFeatureValue)
+      const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
 
       const pricingRequestParams = [
         accessToken,
@@ -110,7 +114,7 @@ const pricingActions = {
         return undefined
       }
 
-      if (Object.keys(basketItems.recipes).length < 2) {
+      if (!isOrderWithoutRecipes && Object.keys(basketItems.recipes).length < 2) {
         dispatch(this.pricingClear())
 
         return undefined

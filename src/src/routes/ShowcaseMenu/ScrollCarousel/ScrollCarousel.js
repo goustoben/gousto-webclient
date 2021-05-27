@@ -7,7 +7,7 @@ import { useDebouncedCallback } from './useDebouncedCallback'
 import css from './ScrollCarousel.css'
 
 export const ScrollCarousel = ({ stepSizePx, children, trackScrollOneStep }) => {
-  const carouselRef = useRef()
+  const carouselRef = useRef(null)
 
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)

@@ -17,6 +17,7 @@ import { PaymentMethod } from 'config/signup'
 
 import { getSlot, getDeliveryTariffId, deliveryTariffTypes } from 'utils/deliveries'
 import { basketResetPersistent } from 'utils/basket'
+import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 
 import checkoutActions, {
   trackPurchase,
@@ -38,6 +39,7 @@ import checkoutActions, {
   setPayPalNonce,
   firePayPalError,
   checkoutStepIndexReached,
+  handlePromoCodeRemoved,
 } from 'actions/checkout'
 
 jest.mock('utils/basket', () => ({
@@ -67,6 +69,9 @@ jest.mock('actions/tracking', () => ({
 }))
 jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
+}))
+jest.mock('routes/Menu/actions/checkout', () => ({
+  checkoutCreatePreviewOrder: jest.fn(),
 }))
 jest.mock('apis/customers', () => ({
   fetchReference: jest.fn(() => Promise.resolve({
@@ -1149,6 +1154,43 @@ describe('checkout actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
         stepIndex: 1
+      })
+    })
+  })
+
+  describe('given handlePromoCodeRemoved helper method is called', () => {
+    beforeEach(() => {
+      getState.mockReturnValue(createState())
+    })
+
+    test('then it should clear the basket promo code, set error and fetch new prices', async () => {
+      await handlePromoCodeRemoved(dispatch, getState)
+
+      expect(basketPromoCodeChange).toHaveBeenCalledWith('')
+      expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(false)
+      expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_ERROR_DUPLICATE, true)
+      expect(pricingActions.pricingRequest).toHaveBeenCalledWith()
+    })
+
+    describe('when isPaymentBeforeChoosingEnabled is on', () => {
+      beforeEach(() => {
+        getState.mockReturnValue(createState({
+          features: Immutable.fromJS({
+            isPaymentBeforeChoosingEnabled: {
+              value: true
+            },
+          }),
+        }))
+      })
+
+      test('then it should create a new preview order instead', async () => {
+        await handlePromoCodeRemoved(dispatch, getState)
+
+        expect(basketPromoCodeChange).toHaveBeenCalledWith('')
+        expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(false)
+        expect(statusActions.error).toHaveBeenCalledWith(actionTypes.CHECKOUT_ERROR_DUPLICATE, true)
+        expect(pricingActions.pricingRequest).not.toHaveBeenCalledWith()
+        expect(checkoutCreatePreviewOrder).toHaveBeenCalledWith()
       })
     })
   })

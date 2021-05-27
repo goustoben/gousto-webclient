@@ -8,6 +8,7 @@ import {
   basketPreviewOrderChange,
 } from 'actions/basket'
 import { redirect } from 'actions/redirect'
+import { pricingSuccess } from 'actions/pricing'
 import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
 import { getPreviewOrderId } from 'selectors/basket'
@@ -70,6 +71,9 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     const { data: previewOrder = {} } = await createPreviewOrder(orderDetails)
     dispatch(basketPreviewOrderChange(String(previewOrder.order.id), previewOrder.order.boxId, previewOrder.surcharges))
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
+    if (isOrderWithoutRecipes) {
+      dispatch(pricingSuccess(previewOrder.prices))
+    }
   } catch (e) {
     const { message, code } = e
     logger.warning(message)

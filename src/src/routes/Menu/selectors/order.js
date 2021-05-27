@@ -86,13 +86,14 @@ export const getOrderDetails = createSelector([
 export const getIsOrderWithoutRecipes = createSelector(
   [getIsPaymentBeforeChoosingEnabled, getIsAuthenticated],
   (isPaymentBeforeChoosingEnabled, isAuthenticated) =>
-    isPaymentBeforeChoosingEnabled && isAuthenticated
+    isPaymentBeforeChoosingEnabled && !isAuthenticated
 )
 
 export const getDetailsForOrderWithoutRecipes = createSelector(
   [getOrderDetails, getNumRecipes, getNumPortions, getPromoCode],
   (orderDetails, numRecipes, numPortions, promoCode) => ({
     ...orderDetails,
+    recipe_choices: [],
     get_order_without_recipes: true,
     number_of_recipes: numRecipes,
     number_of_portions: numPortions,

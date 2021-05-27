@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
 import { appBannerDismiss } from 'actions/appBanner'
-import basketActions from 'actions/basket'
+import basketActions, { basketSetNumRecipes } from 'actions/basket'
 import { signupStepsReceive } from 'actions/signup'
 import { featuresSet } from 'actions/features'
 import promoActions from 'actions/promos'
@@ -74,6 +74,7 @@ const processCookies = (cookies, store) => {
   const previewOrderId = getCookieStoreValue(cookies, 'basket_previewOrderId')
   const boxId = getCookieStoreValue(cookies, 'basket_boxId')
   const numPortions = getCookieStoreValue(cookies, 'basket_numPortions')
+  const numRecipes = getCookieStoreValue(cookies, 'basket_numRecipes')
   let recipes = getCookieStoreValue(cookies, 'basket_recipes')
   const stepsOrder = getCookieStoreValue(cookies, 'basket_stepsOrder')
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
@@ -181,6 +182,9 @@ const processCookies = (cookies, store) => {
 
     if (numPortions) {
       store.dispatch(basketActions.basketNumPortionChange(numPortions))
+    }
+    if (numRecipes) {
+      store.dispatch(basketSetNumRecipes(numRecipes))
     }
 
     recipes = recipes ? JSON.parse(recipes) : {}

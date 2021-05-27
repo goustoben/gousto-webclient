@@ -16,7 +16,7 @@ import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
 
 import { accountFormName, deliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
-import { getIs3DSForSignUpEnabled } from 'selectors/features'
+import { getIs3DSForSignUpEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
 
 import { actionTypes } from './actionTypes'
@@ -118,6 +118,23 @@ export const fireCheckoutError = (errorName, errorValue = true) => dispatch => {
   dispatch(error(errorName, errorValue))
 }
 
+// Note: this is a helper method, not an action.  It should be called directly
+// instead of dispatched.
+export const handlePromoCodeRemoved = async (dispatch, getState) => {
+  const state = getState()
+  const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
+
+  dispatch(basketPromoCodeChange(''))
+  dispatch(basketPromoCodeAppliedChange(false))
+  dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+
+  if (isPaymentBeforeChoosingEnabled) {
+    await dispatch(checkoutCreatePreviewOrder())
+  } else {
+    dispatch(pricingActions.pricingRequest())
+  }
+}
+
 export function checkoutSignup() {
   return async (dispatch, getState) => {
     const state = getState()
@@ -154,10 +171,7 @@ export function checkoutNon3DSSignup() {
       dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkoutNon3DSSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === errorCodes.duplicateDetails) {
-        dispatch(basketPromoCodeChange(''))
-        dispatch(basketPromoCodeAppliedChange(false))
-        dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-        dispatch(pricingActions.pricingRequest())
+        await handlePromoCodeRemoved(dispatch, getState)
       }
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
@@ -180,10 +194,7 @@ export function checkout3DSSignup() {
         if (!validationResult.data.valid) {
           dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails, 'checkout3DSSignup'))
           dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.duplicateDetails))
-          dispatch(basketPromoCodeChange(''))
-          dispatch(basketPromoCodeAppliedChange(false))
-          dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-          dispatch(pricingActions.pricingRequest())
+          await handlePromoCodeRemoved(dispatch, getState)
           dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
 
           return
@@ -262,10 +273,7 @@ export const checkPaymentAuth = (sessionId) => (
       dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkPaymentAuth'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === errorCodes.duplicateDetails) {
-        dispatch(basketPromoCodeChange(''))
-        dispatch(basketPromoCodeAppliedChange(false))
-        dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-        dispatch(pricingActions.pricingRequest())
+        await handlePromoCodeRemoved(dispatch, getState)
       }
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
