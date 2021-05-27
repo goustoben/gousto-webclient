@@ -81,6 +81,9 @@ const defaultFeatures = () => ({
   isMenuRedirectPageEnabled: {
     value: false
   },
+  isDecoupledPaymentEnabled: {
+    value: false
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

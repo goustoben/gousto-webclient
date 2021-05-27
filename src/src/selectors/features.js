@@ -201,3 +201,7 @@ export const getIsWizardBoxSizeEnabled = ({ features }) => (
 export const getIsPaymentBeforeChoosingEnabled = ({ features }) => (
   features && features.getIn(['isPaymentBeforeChoosingEnabled', 'value'], false)
 )
+
+export const getIsDecoupledPaymentEnabled = ({ features }) => (
+  features && features.getIn(['isDecoupledPaymentEnabled', 'value'], false)
+)
