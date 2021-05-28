@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import authActions from 'actions/auth'
-import { checkValidSession, addTargetToRedirect } from '../routes'
+import { checkValidSession, addTargetToRedirect, checkGuest } from '../routes'
 
 jest.mock('actions/auth', () => ({
   authValidate: jest.fn(),
@@ -152,6 +152,31 @@ describe('routes', () => {
         test('then "/" is returned', () => {
           expect(url).toEqual('/')
         })
+      })
+    })
+  })
+
+  describe('checkGuest', () => {
+    let store = {}
+    const next = jest.fn()
+    const replace = jest.fn()
+    const redirectUrl = '/redirectUrl'
+
+    describe('when isPaymentBeforeChoosingEnabled is false and isAuthenticated is true', () => {
+      beforeEach(() => {
+        store = {
+          getState: () => ({
+            auth: Immutable.Map({
+              isAuthenticated: true,
+              isPaymentBeforeChoosingEnabled: false
+            })
+          })
+        }
+        checkGuest(store, redirectUrl)(null, replace, next)
+      })
+
+      test('then replace should be called with proper redirectUrl', () => {
+        expect(replace).toHaveBeenCalledWith(redirectUrl)
       })
     })
   })

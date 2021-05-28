@@ -1,0 +1,56 @@
+import React from 'react'
+import { browserHistory } from 'react-router'
+import { mount } from 'enzyme'
+import { WelcomeToGousto } from '../WelcomeToGousto'
+
+describe('given WelcomeToGousto component', () => {
+  let wrapper
+  const props = {
+    whenCutoff: '25-04-2021',
+    deliveryDate: '28-04-2021',
+    trackWelcomeToGoustoButton: jest.fn(),
+    orderId: 100,
+  }
+
+  beforeEach(() => {
+    wrapper = mount(<WelcomeToGousto {...props} />)
+  })
+
+  describe('when component is mounted', () => {
+    test('then should be rendered correctly', () => {
+      expect(wrapper.find('img')).toHaveLength(2)
+      expect(wrapper.find('CTA').exists()).toBeTruthy()
+      expect(wrapper.find('SubscriptionTransparency').exists()).toBeTruthy()
+      expect(wrapper.find('ScheduleTimeline').exists()).toBeTruthy()
+      expect(wrapper.find('Loader').exists()).toBeFalsy()
+    })
+  })
+
+  describe('when date is invalid', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        deliveryDate: '',
+      })
+    })
+
+    test('then component should be rendered correctly', () => {
+      expect(wrapper.find('ScheduleTimeline').exists()).toBeFalsy()
+      expect(wrapper.find('Loader').exists()).toBeTruthy()
+    })
+  })
+
+  describe('when trackAndgoToMenu is called', () => {
+    browserHistory.push = jest.fn()
+    beforeEach(() => {
+      wrapper.find('CTA').simulate('click')
+    })
+
+    test('then trackWelcomeToGoustoButton should be called with proper id', () => {
+      expect(props.trackWelcomeToGoustoButton).toHaveBeenCalledWith(props.orderId)
+    })
+
+    test('then push should be called with /menu', () => {
+      expect(browserHistory.push).toHaveBeenCalledWith('/menu')
+    })
+  })
+})
