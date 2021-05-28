@@ -50,7 +50,7 @@ describe('given WelcomeToGousto component', () => {
     })
 
     test('then push should be called with /menu', () => {
-      expect(browserHistory.push).toHaveBeenCalledWith('/menu')
+      expect(browserHistory.push).toHaveBeenCalledWith('/menu/100')
     })
   })
 })

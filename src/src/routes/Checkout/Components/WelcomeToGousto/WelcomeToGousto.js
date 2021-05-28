@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { client } from 'config/routes'
 import { CTA, Loader } from 'goustouicomponents'
 import typography from 'design-language/typography.module.css'
 import { browserHistory } from 'react-router'
@@ -19,7 +20,7 @@ export const WelcomeToGousto = ({
 }) => {
   const trackAndgoToMenu = () => {
     trackWelcomeToGoustoButton(orderId)
-    browserHistory.push('/menu')
+    browserHistory.push(`${client.menu}/${orderId}`)
   }
 
   return (
