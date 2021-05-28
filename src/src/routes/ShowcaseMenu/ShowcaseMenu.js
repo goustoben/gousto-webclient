@@ -13,6 +13,7 @@ import { CollectionPicker } from './CollectionPicker'
 import { Recipes } from './Recipes'
 import { InformationBox } from './InformationBox'
 import { CTASection } from './CTASection'
+import { PriceExplanationSection } from './PriceExplanationSection'
 import css from './ShowcaseMenu.css'
 
 export const ShowcaseMenu = ({
@@ -44,6 +45,7 @@ export const ShowcaseMenu = ({
       />
       <InformationBox />
       <CTASection onClick={proceed} />
+      <PriceExplanationSection />
       <DetailOverlayContainer showOverlay isFromShowcaseMenu />
     </div>
   </SignupLayout>
