@@ -418,6 +418,17 @@ class Header extends React.PureComponent {
       )
     }
 
+    if (pathName && pathName.includes(client.checkoutWelcome)) {
+      return (
+        <SimpleHeader
+          serverError={serverError}
+          className={mobileMenuOpen ? css.overlayOpen : css.overlay}
+          homeUrl={mobileMenuItems[0].url}
+          title={title}
+        />
+      )
+    }
+
     return (
       <div>
         <CookieBannerContainer />
