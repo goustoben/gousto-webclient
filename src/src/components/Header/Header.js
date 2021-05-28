@@ -386,6 +386,7 @@ class Header extends React.PureComponent {
       routing,
       isAppAwarenessEnabled,
       showLoginCTA,
+      isPaymentBeforeChoosingEnabled,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen } = this.state
@@ -444,7 +445,7 @@ class Header extends React.PureComponent {
                     {this.renderAuthLink()}
                   </span>
                   {
-                    (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled)
+                    (isAuthenticated && pathName !== client.menu && !isAppAwarenessEnabled && !isPaymentBeforeChoosingEnabled)
                     && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button>
                   }
                   <MobileMenu

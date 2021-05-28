@@ -10,7 +10,7 @@ import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import userActions from 'actions/user'
 import { getUserId } from 'selectors/user'
-import { getIsHelpCentreActive } from 'selectors/features'
+import { getIsHelpCentreActive, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import orderActions from './order'
 import pricingActions from './pricing'
@@ -189,7 +189,9 @@ export const loginRedirect = (location, userIsAdmin, features, userId) => {
 
 export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
   async (dispatch, getState) => {
-    const userId = getUserId(getState())
+    const state = getState()
+    const userId = getUserId(state)
+    const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
     const location = documentLocation()
     const onCheckout = location.pathname.includes('check-out')
     let destination = false
@@ -211,7 +213,8 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
-        dispatch(push(`${client.welcome}/${orderId}`))
+        const welcomePage = isPaymentBeforeChoosingEnabled ? client.checkoutWelcome : client.welcome
+        dispatch(push(`${welcomePage}/${orderId}`))
       } else {
         dispatch(orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
       }

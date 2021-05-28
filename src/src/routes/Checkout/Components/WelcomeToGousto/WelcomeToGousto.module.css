@@ -1,0 +1,112 @@
+@value BreakpointFromLarge, BreakpointToLarge, BreakpointFromXLarge, BreakpointFromMedium, BreakpointToXLarge, BreakpointToMedium from 'design-language/breakpoints.css';
+@value White  from 'styles/colors.css';
+
+.container {
+  background-color: White;
+}
+
+.contentWrapper {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 2rem 0.75rem 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 2.5rem 2rem 2rem;
+  }
+}
+
+.subtitle {
+  composes: fontStyleBodyL from 'design-language/typography.module.css';
+  margin: 0 0 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.title {
+  composes: fontStyle3XL from 'design-language/typography.module.css';
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 2rem;
+  }
+}
+
+.subHeading {
+  margin-bottom: 1rem;
+
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.footerImage {
+  composes: image;
+
+  @media BreakpointToLarge {
+    display: none;
+  }
+}
+
+.headerImage {
+  composes: image;
+
+  @media BreakpointFromLarge {
+    display: none;
+  }
+}
+
+.ctaSection {
+  text-align: center;
+  background-color: White;
+  padding: 0 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media BreakpointToLarge {
+    padding-top: 1rem;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.05);
+    position: fixed; /* to support IE */
+    position: sticky;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+
+    > div {
+      margin: 0 -0.75rem;
+    }
+  }
+
+  @media BreakpointFromMedium {
+    button {
+      width: 25.6rem;
+    }
+  }
+
+  @media BreakpointFromLarge {
+    padding-bottom: 2rem;
+  }
+
+  button {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.loaderWrapper {
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.boldDate {
+  composes: fontBold from 'design-language/typography.module.css';
+}

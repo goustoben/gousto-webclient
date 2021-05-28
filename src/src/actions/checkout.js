@@ -18,6 +18,7 @@ import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
 import { accountFormName, deliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
 import { getIs3DSForSignUpEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
+import { getUserId } from 'selectors/user'
 
 import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
@@ -532,6 +533,23 @@ export const checkoutStepIndexReached = (stepIndex) => dispatch => {
   dispatch({
     type: actionTypes.CHECKOUT_STEP_INDEX_REACHED,
     stepIndex
+  })
+}
+
+export const trackWelcomeToGoustoButton = (orderId) => (dispatch, getState) => {
+  const state = getState()
+  const type = trackingKeys.checkoutWelcomeToGousto
+  const promoCode = state.promoStore.keySeq().first()
+  const userId = getUserId(state)
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      promoCode,
+      orderId,
+      userId,
+    }
   })
 }
 

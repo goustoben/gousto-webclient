@@ -33,6 +33,7 @@ describe('ShowcaseMenu', () => {
       expect(wrapper.find('Recipes').exists()).toBe(true)
       expect(wrapper.find('InformationBox').exists()).toBe(true)
       expect(wrapper.find('CTASection').exists()).toBe(true)
+      expect(wrapper.find('PriceExplanationSection').exists()).toBe(true)
     })
 
     describe('when the CTA is clicked', () => {

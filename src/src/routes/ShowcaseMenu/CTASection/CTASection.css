@@ -5,11 +5,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   padding: 0 spacingS;
 
   @media BreakpointFromMedium {
     padding: 0 spacingM;
+    margin-bottom: 1.5rem;
   }
 }
 
