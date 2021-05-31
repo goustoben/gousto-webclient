@@ -6,6 +6,7 @@ import {
   showcaseMenuChangeCollection,
   showcaseMenuOpenRecipeDetails,
   showcaseMenuScrollCarousel,
+  showcaseMenuView,
 } from 'actions/trackingKeys'
 import { collectionFilterChange } from 'actions/filters'
 import routesConfig from 'config/routes'
@@ -42,4 +43,8 @@ export const openRecipeDetails = (recipeId, currentCollectionId, title) => (disp
 
 export const trackScrollOneStep = (direction) => (dispatch) => {
   dispatch(trackShowcaseMenuAction(showcaseMenuScrollCarousel, { direction }))
+}
+
+export const trackShowcaseMenuView = () => (dispatch) => {
+  dispatch(trackShowcaseMenuAction(showcaseMenuView))
 }

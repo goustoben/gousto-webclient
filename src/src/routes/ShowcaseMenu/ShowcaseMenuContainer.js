@@ -7,6 +7,7 @@ import {
   changeCollection,
   openRecipeDetails,
   trackScrollOneStep,
+  trackShowcaseMenuView,
 } from './showcaseMenuActions'
 import {
   getCollectionDescriptorsInLines,
@@ -30,6 +31,7 @@ const mapDispatchToProps = {
   changeCollection,
   openRecipeDetails,
   trackScrollOneStep,
+  trackShowcaseMenuView,
 }
 
 export const ShowcaseMenuContainer = connect(mapStateToProps, mapDispatchToProps)(ShowcaseMenu)
