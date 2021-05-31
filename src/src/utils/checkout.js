@@ -30,7 +30,7 @@ export function getAddress(form) {
   }
 }
 
-export const translateCheckoutErrorToMessageCode = (errorName, errorValue) => {
+export const translateCheckoutErrorToMessageCode = (errorName, errorValue, isPromoCodeValidationEnabled) => {
   switch (errorName) {
   case actionTypes.PAYPAL_TOKEN_FETCH_FAILED: {
     return 'paypal-token-fetch-failed'
@@ -51,7 +51,7 @@ export const translateCheckoutErrorToMessageCode = (errorName, errorValue) => {
       return 'payment-failure'
     }
     case '409-duplicate-details': {
-      return 'user-promo-invalid'
+      return isPromoCodeValidationEnabled ? 'invalid-promo-code-experiment' : 'user-promo-invalid'
     }
     case '409-missing-preview-order': {
       return 'out-of-stock'

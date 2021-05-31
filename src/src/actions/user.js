@@ -16,6 +16,7 @@ import {
   getIsNewSubscriptionApiEnabled,
   getIsAdditionalCheckoutErrorsEnabled,
   getIsDecoupledPaymentEnabled,
+  getIsPromoCodeValidationEnabled,
 } from 'selectors/features'
 import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
@@ -652,6 +653,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const reqData = {
     order_id: basket.get('previewOrderId'),
     promocode: basket.get('promoCode', ''),
+    check_last_name: getIsPromoCodeValidationEnabled(state),
     customer: {
       tariff_id: basket.get('tariffId', ''),
       phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',

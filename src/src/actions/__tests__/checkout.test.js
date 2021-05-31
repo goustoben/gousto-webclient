@@ -248,6 +248,7 @@ const createState = (stateOverrides) => ({
           phone: '01234567890',
           cardNumber: '1234567890',
           cardExpiryDate: '12/24',
+          lastName: 'Name',
         },
       },
     },
@@ -302,6 +303,9 @@ const createState = (stateOverrides) => ({
     enable3DSForSignUp: {
       value: false
     },
+    isPromoCodeValidationEnabled: {
+      value: false,
+    }
   }),
   ...stateOverrides,
 })

@@ -53,6 +53,7 @@ import {
   getIsWizardBoxSizeEnabled,
   getIsPaymentBeforeChoosingEnabled,
   getIsDecoupledPaymentEnabled,
+  getIsPromoCodeValidationEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -122,6 +123,7 @@ describe('when features are defined', () => {
     [getIsWizardBoxSizeEnabled, 'isWizardBoxSizeEnabled'],
     [getIsPaymentBeforeChoosingEnabled, 'isPaymentBeforeChoosingEnabled'],
     [getIsDecoupledPaymentEnabled, 'isDecoupledPaymentEnabled'],
+    [getIsPromoCodeValidationEnabled, 'isPromoCodeValidationEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
