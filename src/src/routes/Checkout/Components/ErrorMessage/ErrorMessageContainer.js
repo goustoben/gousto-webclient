@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
+import { getIsPromoCodeValidationEnabled } from 'selectors/features'
 import { ErrorMessage } from './ErrorMessage'
 import { isSubmitting } from '../../utils/state'
 
@@ -26,8 +27,9 @@ const getErrorType = (state, ownProps) => {
   }
 
   const [errorName, errorValue] = entry
+  const isPromoCodeValidationEnabled = getIsPromoCodeValidationEnabled(state)
 
-  return translateCheckoutErrorToMessageCode(errorName, errorValue)
+  return translateCheckoutErrorToMessageCode(errorName, errorValue, isPromoCodeValidationEnabled)
 }
 
 function mapStateToProps(state, ownProps) {

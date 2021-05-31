@@ -205,3 +205,7 @@ export const getIsPaymentBeforeChoosingEnabled = ({ features }) => (
 export const getIsDecoupledPaymentEnabled = ({ features }) => (
   features && features.getIn(['isDecoupledPaymentEnabled', 'value'], false)
 )
+
+export const getIsPromoCodeValidationEnabled = ({ features }) => (
+  features && features.getIn(['isPromoCodeValidationEnabled', 'value'], false)
+)

@@ -69,14 +69,19 @@ describe('checkout selectors', () => {
               phone: '7503075906',
               postcode: 'W3 7UP',
               houseNo: 'FLAT 12, MORRIS HOUSE',
+              lastName: 'Name'
             })
           }
         }
       },
       request: Immutable.fromJS({
         browser: 'desktop'
+      }),
+      features: Immutable.fromJS({
+        isPromoCodeValidationEnabled: {
+          value: true,
+        },
       })
-
     }
 
     test('should return promo code validation details', () => {
@@ -84,7 +89,9 @@ describe('checkout selectors', () => {
         promo_code: 'DTI-SB-P30M',
         phone_number: '07503075906',
         postcode: 'W3 7UP',
-        line1: 'FLAT 12, MORRIS HOUSE'
+        line1: 'FLAT 12, MORRIS HOUSE',
+        check_last_name: true,
+        name_last: 'Name',
       }
 
       const result = getPromoCodeValidationDetails(state)
