@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import SignupLayout from 'layouts/SignupLayout'
@@ -25,31 +25,38 @@ export const ShowcaseMenu = ({
   changeCollection,
   openRecipeDetails,
   trackScrollOneStep,
-}) => (
-  <SignupLayout hasWhiteBackground showLoginCTA>
-    <HotjarTrigger name="showcase_menu" />
-    <DiscountAppliedBarContainer wizardStep="showcase_menu" page="showcaseMenu" />
-    <div className={css.showcaseMenuContainer}>
-      <h1 className={css.heading}>Explore this week’s menu</h1>
-      <CollectionPicker
-        currentCollectionId={currentCollectionId}
-        collectionDescriptorsInLines={collectionDescriptorsInLines}
-        collectionDescriptorsSingleLine={collectionDescriptorsSingleLine}
-        changeCollection={changeCollection}
-      />
-      <Recipes
-        currentCollectionId={currentCollectionId}
-        recipes={recipes}
-        openRecipeDetails={openRecipeDetails}
-        trackScrollOneStep={trackScrollOneStep}
-      />
-      <InformationBox />
-      <CTASection onClick={proceed} />
-      <PriceExplanationSection />
-      <DetailOverlayContainer showOverlay isFromShowcaseMenu />
-    </div>
-  </SignupLayout>
-)
+  trackShowcaseMenuView,
+}) => {
+  useEffect(() => {
+    trackShowcaseMenuView()
+  }, [trackShowcaseMenuView])
+
+  return (
+    <SignupLayout hasWhiteBackground showLoginCTA>
+      <HotjarTrigger name="showcase_menu" />
+      <DiscountAppliedBarContainer wizardStep="showcase_menu" page="showcaseMenu" />
+      <div className={css.showcaseMenuContainer}>
+        <h1 className={css.heading}>Explore this week’s menu</h1>
+        <CollectionPicker
+          currentCollectionId={currentCollectionId}
+          collectionDescriptorsInLines={collectionDescriptorsInLines}
+          collectionDescriptorsSingleLine={collectionDescriptorsSingleLine}
+          changeCollection={changeCollection}
+        />
+        <Recipes
+          currentCollectionId={currentCollectionId}
+          recipes={recipes}
+          openRecipeDetails={openRecipeDetails}
+          trackScrollOneStep={trackScrollOneStep}
+        />
+        <InformationBox />
+        <CTASection onClick={proceed} />
+        <PriceExplanationSection />
+        <DetailOverlayContainer showOverlay isFromShowcaseMenu />
+      </div>
+    </SignupLayout>
+  )
+}
 
 ShowcaseMenu.propTypes = {
   proceed: PropTypes.func.isRequired,
@@ -60,6 +67,7 @@ ShowcaseMenu.propTypes = {
   changeCollection: PropTypes.func.isRequired,
   openRecipeDetails: PropTypes.func.isRequired,
   trackScrollOneStep: PropTypes.func.isRequired,
+  trackShowcaseMenuView: PropTypes.func.isRequired,
 }
 
 ShowcaseMenu.defaultProps = {
