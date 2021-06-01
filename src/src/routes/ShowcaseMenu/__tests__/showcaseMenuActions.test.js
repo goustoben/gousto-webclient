@@ -48,12 +48,14 @@ describe('given proceed is dispatched', () => {
     })
   })
 
-  describe('when signup wizard data is entered ', () => {
+  describe('when signup wizard data is entered', () => {
     beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
           numPortions: 2,
           numRecipes: 3,
+          postcode: 'w37up',
+          slotId: '123',
         }),
       })
     })

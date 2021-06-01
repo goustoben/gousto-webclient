@@ -65,7 +65,7 @@ describe('Signup', () => {
     const fetchDataProps = {
       query: {},
       params: {},
-      fetchProps: {
+      options: {
         menuLoadBoxPrices,
       },
     }
@@ -103,8 +103,8 @@ describe('Signup', () => {
     describe('when isPricingClarityEnabled is true', () => {
       describe('and promo code is not applied', () => {
         test('then should call menuLoadBoxPrices', async () => {
-          fetchDataProps.fetchProps = {
-            ...fetchDataProps.fetchProps,
+          fetchDataProps.options = {
+            ...fetchDataProps.options,
             orderDiscount: '',
             isPricingClarityEnabled: true,
           }
@@ -119,8 +119,8 @@ describe('Signup', () => {
 
       describe('and promo code is applied', () => {
         test('then menuLoadBoxPrices should not be called', async () => {
-          fetchDataProps.fetchProps = {
-            ...fetchDataProps.fetchProps,
+          fetchDataProps.options = {
+            ...fetchDataProps.options,
             orderDiscount: '50',
             isPricingClarityEnabled: true,
           }
@@ -137,8 +137,8 @@ describe('Signup', () => {
     describe('when wizard price per serving is enabled', () => {
       describe('and is not on box size step', () => {
         test('then should not call updatePricePerServing', async () => {
-          fetchDataProps.fetchProps = {
-            ...fetchDataProps.fetchProps,
+          fetchDataProps.options = {
+            ...fetchDataProps.options,
             isWizardPricePerServingEnabled: true,
             lowestPricePerPortion: {},
           }
@@ -154,8 +154,8 @@ describe('Signup', () => {
 
     describe('when isPaymentBeforeChoosingEnabled is enabled', () => {
       test('then it should initialize the four steps', async () => {
-        fetchDataProps.fetchProps = {
-          ...fetchDataProps.fetchProps,
+        fetchDataProps.options = {
+          ...fetchDataProps.options,
           isPaymentBeforeChoosingEnabled: true,
         }
 

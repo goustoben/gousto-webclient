@@ -12,9 +12,22 @@ export function stepByName(stepName) {
 /**
  * Get Step object by slug
  * @param stepSlug
+ * @deprecated please use findStepBySlug instead.
  */
 export function stepBySlug(stepSlug) {
   return Map(signupConfig.steps.find(step => step.slug === stepSlug) || {})
+}
+
+/**
+ * @return Immutable.Map with keys `slug` and `name`; or null if not found.
+ */
+export const findStepBySlug = stepSlug => {
+  const stepJs = signupConfig.steps.find(step => step.slug === stepSlug)
+  if (!stepJs) {
+    return null
+  }
+
+  return Map(stepJs)
 }
 
 /**
