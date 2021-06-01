@@ -1361,7 +1361,11 @@ describe('user actions', () => {
 
       describe('and expired is false', () => {
         test('should dispatch checkCardExpiry with proper params', () => {
-          userActions.checkCardExpiry()(dispatchSpy, getStateSpy(true, '2021-05'))
+          // Note: the app code uses current day to check the expired state.
+          // Hence this test will start failing in June 2023.  A better
+          // approach is to mock the moment library, but this required too much
+          // reorganization to be worth the time.
+          userActions.checkCardExpiry()(dispatchSpy, getStateSpy(true, '2023-05'))
 
           expect(dispatchSpy).toHaveBeenCalledWith({
             type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,

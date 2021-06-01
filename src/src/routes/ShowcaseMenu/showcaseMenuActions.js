@@ -10,7 +10,7 @@ import {
 } from 'actions/trackingKeys'
 import { collectionFilterChange } from 'actions/filters'
 import routesConfig from 'config/routes'
-import { getNumPortions, getNumRecipes } from 'selectors/basket'
+import { getNumPortions, getNumRecipes, getBasketPostcode, getBasketSlotId } from 'selectors/basket'
 import { showDetailRecipe } from 'routes/Menu/actions/menuRecipeDetails'
 
 export const setShowcaseMenuSeen = () => ({
@@ -19,7 +19,11 @@ export const setShowcaseMenuSeen = () => ({
 
 export const proceed = () => (dispatch, getState) => {
   const state = getState()
-  const basketDataAvailable = !!getNumPortions(state) && !!getNumRecipes(state)
+  const basketDataAvailable =
+    !!getNumPortions(state) &&
+    !!getNumRecipes(state) &&
+    !!getBasketPostcode(state) &&
+    !!getBasketSlotId(state)
 
   if (basketDataAvailable) {
     dispatch(trackShowcaseMenuAction(showcaseMenuProceed))

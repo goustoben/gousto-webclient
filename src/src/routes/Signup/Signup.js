@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
-import { stepByName, getPromocodeQueryParam } from 'utils/signup'
+import { stepByName, getPromocodeQueryParam, findStepBySlug } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
@@ -104,7 +104,7 @@ const contextTypes = {
 const postCodePath = '/signup/postcode'
 
 class Signup extends PureComponent {
-  static fetchData = async ({ store, params = {}, query = {}, fetchProps = {} }) => {
+  static fetchData = async ({ store, params = {}, query = {}, options = {} }) => {
     let steps = Immutable.List(signupConfig.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []
     const promoCode = query.promo_code
@@ -118,7 +118,8 @@ class Signup extends PureComponent {
       isWizardPricePerServingEnabled,
       lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
-    } = fetchProps
+      shouldSetStepFromParams,
+    } = options
 
     if (isPaymentBeforeChoosingEnabled) {
       steps = Immutable.List(signupConfig.paymentBeforeChoosingSteps)
@@ -145,7 +146,17 @@ class Signup extends PureComponent {
 
     store.dispatch(actions.signupStepsReceive(steps))
 
-    store.dispatch(actions.signupSetStep(firstStep))
+    let stepToSet = firstStep
+
+    if (shouldSetStepFromParams) {
+      const stepSlug = params.stepName
+      const requestedStep = findStepBySlug(stepSlug)
+      if (requestedStep) {
+        stepToSet = requestedStep
+      }
+    }
+
+    store.dispatch(actions.signupSetStep(stepToSet))
 
     if (isPricingClarityEnabled && isBoxSizeStep && !orderDiscount) {
       menuLoadBoxPrices()
@@ -189,7 +200,8 @@ class Signup extends PureComponent {
     if (
       params.stepName &&
       firstStep.get('slug') !== params.stepName &&
-      params.pathname !== postCodePath
+      params.pathname !== postCodePath &&
+      !shouldSetStepFromParams
     ) {
       return store.dispatch(
         actions.redirect(
@@ -217,18 +229,16 @@ class Signup extends PureComponent {
     } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
-    const boxPricesExperimentParams = { stepName: 'postcode', pathname: postCodePath }
-    const signupParams =
-      location.pathname === routes.client.signup ? params : boxPricesExperimentParams
-    const fetchProps = {
+    const options = {
       isWizardPricePerServingEnabled,
       isPricingClarityEnabled,
       lowestPricePerPortion,
       menuLoadBoxPrices,
       orderDiscount,
       isPaymentBeforeChoosingEnabled,
+      shouldSetStepFromParams: true,
     }
-    Signup.fetchData({ store, query, params: signupParams, fetchProps })
+    Signup.fetchData({ store, query, params, options })
   }
 
   getCurrentStepNumber(steps) {
