@@ -15,14 +15,10 @@ jest.mock('utils/window', () => ({
 const DELIVERY_DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 describe('given the EligibilityCheck is rendered', () => {
-  let getUserOrders
-  let storeGetHelpOrder
-
-  beforeEach(() => {
-    browserHistory.push = jest.fn()
-    getUserOrders = jest.fn()
-    storeGetHelpOrder = jest.fn()
-  })
+  browserHistory.push = jest.fn()
+  const getUserOrders = jest.fn()
+  const loadOrderAndRecipesByIds = jest.fn()
+  const storeGetHelpOrder = jest.fn()
 
   describe('when customer order has not been loaded', () => {
     let wrapper
@@ -33,9 +29,14 @@ describe('given the EligibilityCheck is rendered', () => {
           isAuthenticated
           userId="123"
           getUserOrders={getUserOrders}
+          loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
           storeGetHelpOrder={storeGetHelpOrder}
         />
       )
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
     })
 
     test('the getUserOrders is called', () => {
@@ -53,10 +54,11 @@ describe('given the EligibilityCheck is rendered', () => {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
     }
+    const DELIVERY_DATE = moment().subtract(8, 'days').format(DELIVERY_DATE_FORMAT)
 
     const eligibleOrder = Immutable.fromJS({
       100: {
-        deliveryDate: moment().subtract(8, 'days').format(DELIVERY_DATE_FORMAT),
+        deliveryDate: DELIVERY_DATE,
         deliverySlot: DELIVERY_SLOT,
         id: '100',
         recipeIds: RECIPE_IDS,
@@ -70,6 +72,7 @@ describe('given the EligibilityCheck is rendered', () => {
           userId="123"
           orders={eligibleOrder}
           getUserOrders={getUserOrders}
+          loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
           storeGetHelpOrder={storeGetHelpOrder}
         />
       )
@@ -88,7 +91,12 @@ describe('given the EligibilityCheck is rendered', () => {
         id: '100',
         recipeIds: Immutable.List(RECIPE_IDS),
         deliverySlot: Immutable.Map(DELIVERY_SLOT),
+        deliveryDate: DELIVERY_DATE,
       })
+    })
+
+    test('the loadOrderAndRecipesByIds is called correctly', () => {
+      expect(loadOrderAndRecipesByIds).toHaveBeenCalledWith('100')
     })
   })
 
@@ -112,6 +120,7 @@ describe('given the EligibilityCheck is rendered', () => {
           userId="123"
           orders={notEligibleOrder}
           getUserOrders={getUserOrders}
+          loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
           storeGetHelpOrder={storeGetHelpOrder}
         />
       )

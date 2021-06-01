@@ -91,6 +91,8 @@ describe('Given I am logged in and visit the home page', () => {
     beforeEach(() => {
       cy.fixture('getHelp/order/order26May20').as('currentOrder')
       cy.route('GET', /order\/16269494/, '@currentOrder')
+      cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
+      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients').as('recipesWithIngredientsRoute')
       cy.clock(dateBoxDeliveryToday.getTime(), ['Date'])
     })
 
@@ -103,7 +105,7 @@ describe('Given I am logged in and visit the home page', () => {
 
       describe('and I select Delivery issue', () => {
         beforeEach(() => {
-          cy.wait(['@userCurrentSubscriptionRequest', '@userCurrentOrdersRequest'])
+          cy.wait(['@userCurrentSubscriptionRequest', '@userCurrentOrdersRequest', '@recipesWithIngredientsRoute'])
           setFeatureFlag('isNewSSRDeliveriesEnabled')
           selectOrderIssue('delivery')
         })

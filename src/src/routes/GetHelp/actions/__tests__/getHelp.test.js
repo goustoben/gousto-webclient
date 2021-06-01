@@ -2,16 +2,20 @@ import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
+import { fetchOrder } from 'apis/orders'
 import { fetchUserOrders } from 'apis/user'
 import * as getHelpApi from 'apis/getHelp'
+import * as recipesAPI from 'apis/recipes'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import { client as clientRoutes } from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
 import * as getHelpActionsUtils from '../utils'
 import {
   applyDeliveryRefund,
-  loadTrackingUrl,
   getUserOrders,
+  loadOrderById,
+  loadOrderAndRecipesByIds,
+  loadTrackingUrl,
   trackAcceptRefundInSSRDeliveries,
   trackClickGetHelpWithThisBox,
   trackClickGetInTouchInSSRDeliveries,
@@ -39,15 +43,18 @@ import {
 jest.mock('utils/logger', () => ({
   error: jest.fn(),
 }))
-jest.mock('apis/user')
 jest.mock('apis/deliveries')
+jest.mock('apis/orders')
+jest.mock('apis/user')
 const applyDeliveryCompensation = safeJestMock(getHelpApi, 'applyDeliveryCompensation')
 const asyncAndDispatchSpy = jest.spyOn(getHelpActionsUtils, 'asyncAndDispatch')
+const fetchRecipes = safeJestMock(recipesAPI, 'fetchRecipes')
 const validateDelivery = safeJestMock(getHelpApi, 'validateDelivery')
 const validateOrder = safeJestMock(getHelpApi, 'validateOrder')
 
+const ACCESS_TOKEN = 'access-token'
 const GET_STATE_PARAMS = {
-  auth: Immutable.fromJS({ accessToken: 'access-token' }),
+  auth: Immutable.fromJS({ accessToken: ACCESS_TOKEN }),
   features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
 }
 
@@ -148,6 +155,216 @@ describe('GetHelp action generators and thunks', () => {
       test('logger is called correctly', () => {
         expect(logger.error).toHaveBeenCalledWith('error')
       })
+    })
+  })
+
+  describe('loadOrderAndRecipesByIds', () => {
+    const MOCK_RECIPES = [
+      {
+        id: '2871',
+        title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
+        url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
+        ingredients: [
+          { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0', label: '1 shallot' },
+          { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4', label: 'mozzarella' },
+        ],
+        goustoReference: '2145',
+      },
+      {
+        id: '1783',
+        title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
+        url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce',
+        ingredients: [
+          { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b', label: '1 spring onion' },
+          { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57', label: '1 carrot' },
+        ],
+        goustoReference: '5678',
+      },
+    ]
+    const FETCH_ORDER_RESPONSE = {
+      data: {
+        recipeItems: [
+          { recipeId: '2871', recipeGoustoReference: '2145' },
+          { recipeId: '1783', recipeGoustoReference: '5678' },
+        ],
+        deliveryDate: '2021-05-01 00:00:00',
+        deliverySlot: {
+          deliveryEnd: '18:59:59',
+          deliveryStart: '08:00:00',
+        },
+      }
+    }
+
+    const ORDER_PAYLOAD = {
+      recipeItems: ['2871', '1783'],
+      deliveryDate: '2021-05-01 00:00:00',
+      deliverySlot: {
+        deliveryEnd: '18:59:59',
+        deliveryStart: '08:00:00',
+      },
+    }
+
+    const FETCH_RECIPES_RESPONSE = {
+      data: MOCK_RECIPES,
+    }
+    const ORDER_ID = '12345'
+
+    describe('when the action is called and the order details are not in the store', () => {
+      beforeEach(async () => {
+        getState = jest.fn().mockReturnValue({
+          auth: Immutable.fromJS({ accessToken: ACCESS_TOKEN }),
+          features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
+          getHelp: Immutable.fromJS({
+            order: {
+              id: ORDER_ID,
+              recipeItems: [],
+            },
+            recipes: [],
+          })
+        })
+        fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
+        fetchRecipes.mockResolvedValueOnce(FETCH_RECIPES_RESPONSE)
+        await loadOrderAndRecipesByIds(ORDER_ID)(dispatch, getState)
+      })
+
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
+
+      test('fetchOrder is called', () => {
+        expect(fetchOrder).toHaveBeenCalled()
+      })
+
+      test('fetchRecipes is called', () => {
+        expect(fetchRecipes).toHaveBeenCalled()
+      })
+
+      test('dispatch is called with the right action type and payload', () => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS',
+          payload: { order: ORDER_PAYLOAD, recipes: FETCH_RECIPES_RESPONSE.data },
+        })
+      })
+
+      test('asyncAndDispatch is called with the correct parameters', () => {
+        expect(asyncAndDispatchSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dispatch,
+            actionType: 'GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS',
+            errorMessage: `Failed to loadOrderAndRecipesByIds for orderId: ${ORDER_ID}`,
+          })
+        )
+      })
+    })
+
+    describe('when the action is called and the order details are in the store', () => {
+      beforeEach(async () => {
+        getState = jest.fn().mockReturnValue({
+          auth: Immutable.fromJS({ accessToken: ACCESS_TOKEN }),
+          features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: false } }),
+          getHelp: Immutable.fromJS({
+            order: {
+              id: ORDER_ID,
+              recipeItems: ['2871', '1783'],
+            },
+            recipes: [ MOCK_RECIPES[0], MOCK_RECIPES[1] ]
+          })
+        })
+        await loadOrderAndRecipesByIds(ORDER_ID)(dispatch, getState)
+      })
+
+      afterEach(() => {
+        jest.clearAllMocks()
+      })
+
+      test('fetchOrder is not called ', () => {
+        expect(fetchOrder).not.toHaveBeenCalled()
+      })
+
+      test('fetchRecipes is not called', () => {
+        expect(fetchRecipes).not.toHaveBeenCalled()
+      })
+
+      test('dispatch is called with the right action type and payload', () => {
+        expect(dispatch).toHaveBeenCalledWith({
+          type: 'GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS',
+          payload: {
+            order: getState().getHelp.get('order').toJS(),
+            recipes: getState().getHelp.get('recipes').toJS(),
+          },
+        })
+      })
+
+      test('asyncAndDispatch is called with the correct parameters', () => {
+        expect(asyncAndDispatchSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dispatch,
+            actionType: 'GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS',
+            errorMessage: `Failed to loadOrderAndRecipesByIds for orderId: ${ORDER_ID}`,
+          })
+        )
+      })
+    })
+  })
+
+  describe('When the loadOrderById action is called and the API call succeeds', () => {
+    const FETCH_ORDER_RESPONSE = {
+      data: {
+        recipeItems: [{ recipeId: '2871', recipeGoustoReference: '2733' }],
+        deliveryDate: '2021-05-01 00:00:00',
+        deliverySlot: {
+          deliveryEnd: '18:59:59',
+          deliveryStart: '08:00:00',
+        },
+      }
+    }
+
+    const ORDER_ID = '12345'
+    const PARAMS = {
+      accessToken: ACCESS_TOKEN,
+      orderId: ORDER_ID,
+    }
+
+    beforeEach(() => {
+      fetchOrder.mockResolvedValueOnce(FETCH_ORDER_RESPONSE)
+      loadOrderById(PARAMS)(dispatch, getState)
+    })
+
+    test('the order fetched by fetchOrder is dispatched with the right action type', () => {
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'GET_HELP_LOAD_ORDERS_BY_ID',
+        payload: { order: FETCH_ORDER_RESPONSE.data },
+      })
+    })
+
+    test('asyncAndDispatch is called with the right parameters', () => {
+      expect(asyncAndDispatchSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          dispatch,
+          actionType: 'GET_HELP_LOAD_ORDERS_BY_ID',
+          errorMessage: `Failed to loadOrderById for orderId: ${ORDER_ID}`,
+        })
+      )
+    })
+  })
+
+  describe('When the loadOrderById action is called and the API call errors', () => {
+    const ORDER_ID = '12345'
+    const PARAMS = {
+      accessToken: ACCESS_TOKEN,
+      orderId: ORDER_ID,
+    }
+    const FETCH_ORDER_ERROR = {
+      status: 'error',
+      message: 'error order api',
+    }
+
+    beforeEach(() => {
+      fetchOrder.mockRejectedValueOnce(FETCH_ORDER_ERROR)
+    })
+
+    test('returns an expected error object', async () => {
+      await expect(loadOrderById(PARAMS)(dispatch, getState)).rejects.toBe(FETCH_ORDER_ERROR)
     })
   })
 
@@ -553,7 +770,7 @@ describe('GetHelp action generators and thunks', () => {
   describe('ValidateLatestOrder action', () => {
     describe('when it succeeds', () => {
       const params = {
-        accessToken: 'user-access-token',
+        accessToken: ACCESS_TOKEN,
         costumerId: '777',
         orderId: '888',
       }
@@ -562,7 +779,7 @@ describe('GetHelp action generators and thunks', () => {
         ineligibleIngredientUuids: ['a', 'b'],
       }
       const expectedParams = [
-        'user-access-token',
+        ACCESS_TOKEN,
         {
           customer_id: 777,
           order_id: 888,

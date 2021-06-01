@@ -20,6 +20,10 @@ jest.mock('apis/orders')
 describe('<GetHelpContainer />', () => {
   describe('behaviour', () => {
     let store
+    const RECIPES = [
+      { id: '3', ingredients: [{ uuid: '321', label: 'my-ingredient-label' }], title: 'a-title' },
+      { id: '4', ingredients: [{ uuid: '322', label: 'my-ingredient-label' }], title: 'b-title' }
+    ]
     beforeAll(() => {
       const initialState = {
         auth: authDefaultState(),
@@ -52,9 +56,7 @@ describe('<GetHelpContainer />', () => {
         }
       })
 
-      fetchRecipes.mockResolvedValue({
-        data: [{ id: 'recipeIdX', ingredients: [{ uuid: '321', label: 'my-ingredient-label' }], title: 'a-title' }]
-      })
+      fetchRecipes.mockResolvedValue({ data: RECIPES })
 
       mount(
         <GetHelpContainer
@@ -81,7 +83,7 @@ describe('<GetHelpContainer />', () => {
     test('fetched recipes ends up in the store', () => {
       expect(
         store.getState().getHelp.get('recipes').toJS()
-      ).toEqual([{ id: 'recipeIdX', ingredients: [{ uuid: '321', label: 'my-ingredient-label' }], title: 'a-title' }])
+      ).toEqual(RECIPES)
     })
   })
 })

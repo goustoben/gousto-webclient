@@ -18,11 +18,11 @@ export const asyncAndDispatch = async ({
       payload,
     })
   } catch (err) {
-    if (typeof handleError === 'function') {
-      handleError()
-    }
     dispatch(error(actionType, err.message))
     logger.error({ message: errorMessage, errors: [err] })
+    if (typeof handleError === 'function') {
+      handleError(err)
+    }
   } finally {
     dispatch(pending(actionType, false))
   }

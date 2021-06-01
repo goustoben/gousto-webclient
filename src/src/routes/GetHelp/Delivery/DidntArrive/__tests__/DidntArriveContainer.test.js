@@ -2,8 +2,7 @@ import React from 'react'
 import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
 import { createStore, compose, applyMiddleware } from 'redux'
-import { loadOrderById } from 'actions/getHelp'
-import { loadTrackingUrl } from '../../../actions/getHelp'
+import { loadOrderById, loadTrackingUrl } from '../../../actions/getHelp'
 import { DidntArriveContainer } from '../DidntArriveContainer'
 import {
   getAccessToken,
@@ -16,14 +15,12 @@ import {
 } from '../../../selectors/selectors'
 
 jest.mock('../../../selectors/selectors')
-jest.mock('actions/getHelp', () => ({
+jest.mock('../../../actions/getHelp', () => ({
   loadOrderById: jest.fn().mockImplementation(() => (dispatch) => {
     dispatch({
       type: 'IRRELEVANT_FOR_THE_TEST'
     })
-  })
-}))
-jest.mock('../../../actions/getHelp', () => ({
+  }),
   loadTrackingUrl: jest.fn().mockImplementation(() => (dispatch) => {
     dispatch({
       type: 'IRRELEVANT_FOR_THE_TEST'

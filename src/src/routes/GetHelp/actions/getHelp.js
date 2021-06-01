@@ -2,11 +2,14 @@ import { browserHistory } from 'react-router'
 import logger from 'utils/logger'
 import { client as clientRoutes } from 'config/routes'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
+import { fetchRecipes } from 'apis/recipes'
+import { fetchOrder } from 'apis/orders'
 import * as userApi from 'apis/user'
 import { applyDeliveryCompensation, validateDelivery, validateOrder } from 'apis/getHelp'
 import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
+import { getAccessToken } from 'selectors/auth'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { getFeatureShorterCompensationPeriod } from '../../../selectors/features'
 import { actionTypes } from './actionTypes'
@@ -62,13 +65,78 @@ export const getUserOrders = (orderType = 'pending', number = 10) => (
   }
 )
 
-export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, deliverySlot }) => ({
+export const loadOrderById = ({ accessToken, orderId }) => async (dispatch) => {
+  const getPayload = async () => {
+    const { data: order } = await fetchOrder(
+      accessToken,
+      orderId
+    )
+
+    return { order }
+  }
+
+  const handleError = (err) => {
+    throw err
+  }
+
+  await asyncAndDispatch({
+    dispatch,
+    actionType: webClientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
+    getPayload,
+    errorMessage: `Failed to loadOrderById for orderId: ${orderId}`,
+    handleError,
+  })
+}
+
+export const loadOrderAndRecipesByIds = (orderId) => (
+  async (dispatch, getState) => {
+    const state = getState()
+    const accessToken = getAccessToken(state)
+
+    const getPayload = async () => {
+      let order = state.getHelp.get('order').toJS()
+      let recipes = state.getHelp.get('recipes').toJS()
+      // recipeItems in the store is an array of recipe IDs
+      let recipeIds = order.recipeItems
+
+      if (recipeIds.length === 0) {
+        const response = await fetchOrder(accessToken, orderId)
+        // copying the object so we do not mutate test's mocked response
+        order = {...response.data}
+        recipeIds = order.recipeItems.map(item => item.recipeId)
+        order.recipeItems = recipeIds
+      }
+
+      const params = {
+        includes: ['ingredients'],
+        'filters[recipe_ids]': recipeIds,
+      }
+
+      if (!recipes.length) {
+        const response = await fetchRecipes(accessToken, '', params)
+        recipes = response.data
+      }
+
+      return { order, recipes }
+    }
+
+    await asyncAndDispatch({
+      dispatch,
+      actionType: actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS,
+      getPayload,
+      errorMessage: `Failed to loadOrderAndRecipesByIds for orderId: ${orderId}`,
+    })
+  }
+)
+
+export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, deliverySlot, deliveryDate }) => ({
   type: actionTypes.GET_HELP_STORE_ORDER,
   payload: {
     id,
     recipeIds,
     recipeDetailedItems,
     deliverySlot,
+    deliveryDate,
   },
 })
 

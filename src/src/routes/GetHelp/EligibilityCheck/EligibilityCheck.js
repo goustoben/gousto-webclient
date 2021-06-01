@@ -15,6 +15,7 @@ import { LoadingWrapper } from '../LoadingWrapper'
 const propTypes = {
   getUserOrders: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
+  loadOrderAndRecipesByIds: PropTypes.func.isRequired,
   orders: ImmutablePropTypes.mapOf(
     ImmutablePropTypes.mapContains({
       id: PropTypes.string,
@@ -49,18 +50,20 @@ class EligibilityCheck extends PureComponent {
   }
 
   checkOrderAndRedirect = () => {
-    const { userId, orders, storeGetHelpOrder } = this.props
+    const { loadOrderAndRecipesByIds, orders, storeGetHelpOrder, userId } = this.props
     const newestOrder = findNewestOrder(orders, false)
     const isOrderEligible = isOrderEligibleForSelfRefundResolution(newestOrder)
-
     if (isOrderEligible) {
+      const orderId = newestOrder.get('id')
       storeGetHelpOrder({
-        id: newestOrder.get('id'),
+        id: orderId,
         recipeIds: newestOrder.get('recipeIds'),
         recipeDetailedItems: newestOrder.get('recipeDetailedItems'),
         deliverySlot: newestOrder.get('deliverySlot'),
+        deliveryDate: newestOrder.get('deliveryDate'),
       })
-      browserHistory.push(`${clientRoutes.getHelp.index}?orderId=${newestOrder.get('id')}`)
+      loadOrderAndRecipesByIds(orderId)
+      browserHistory.push(`${clientRoutes.getHelp.index}?orderId=${orderId}`)
     } else {
       redirect(
         addUserIdToUrl(zendesk.faqs, userId)

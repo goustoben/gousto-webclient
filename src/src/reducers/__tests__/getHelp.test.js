@@ -65,6 +65,7 @@ describe('getHelp reducer', () => {
         deliveryEnd: '18:59:59',
         deliveryStart: '08:00:00',
       },
+      deliveryDate: '25-05-21',
     }
 
     beforeEach(() => {
@@ -76,7 +77,8 @@ describe('getHelp reducer', () => {
         id: ORDER.id,
         recipeItems: List(ORDER.recipeIds),
         recipeDetailedItems: Map(ORDER.recipeDetailedItems),
-        deliverySlot: Map(ORDER.deliverySlot)
+        deliverySlot: Map(ORDER.deliverySlot),
+        deliveryDate: ORDER.deliveryDate,
       }))
     })
   })
@@ -120,7 +122,7 @@ describe('getHelp reducer', () => {
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {
         type: webClientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
-        order: MOCK_ORDERS[0]
+        payload: { order: MOCK_ORDERS[0] },
       })
     })
 
@@ -139,6 +141,93 @@ describe('getHelp reducer', () => {
         deliveryCompensationAmount: null,
       })
       expect(newState.get('order')).toEqual(EXPECTED_REDUCED_ORDER)
+    })
+  })
+
+  describe('given an action with type GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS is received', () => {
+    const FETCH_ORDER_RESPONSE = {
+      data: {
+        recipeItems: ['2871', '1783'],
+        deliveryDate: '2021-05-01 00:00:00',
+        deliverySlot: {
+          deliveryEnd: '18:59:59',
+          deliveryStart: '08:00:00',
+        },
+      }
+    }
+    const FETCH_RECIPES_RESPONSE = {
+      data: [
+        {
+          id: '2871',
+          title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
+          url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
+          ingredients: [
+            { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0', label: '1 shallot' },
+            { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4', label: 'mozzarella' },
+          ],
+          goustoReference: '2145',
+        },
+        {
+          id: '1783',
+          title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
+          url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce',
+          ingredients: [
+            { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b', label: '1 spring onion' },
+            { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57', label: '1 carrot' },
+          ],
+          goustoReference: '5678',
+        },
+      ]
+    }
+
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS,
+        payload: { order: FETCH_ORDER_RESPONSE.data, recipes: FETCH_RECIPES_RESPONSE.data },
+      })
+    })
+
+    test('the new state.order has the order of the action stored', () => {
+      const EXPECTED_REDUCED_ORDER = fromJS({
+        deliverySlot: {
+          deliveryStart: '08:00:00',
+          deliveryEnd: '18:59:59',
+        },
+        id: '',
+        recipeDetailedItems: { 2871: '2145', 1783: '5678' },
+        recipeItems: ['2871', '1783'],
+        deliveryDate: '2021-05-01 00:00:00',
+        trackingUrl: '',
+        hasPassedDeliveryValidation: false,
+        deliveryCompensationAmount: null,
+      })
+      expect(newState.get('order')).toEqual(EXPECTED_REDUCED_ORDER)
+    })
+
+    test('the new state.recipes has the recipes of the action stored', () => {
+      const EXPECTED_REDUCED_RECIPES = fromJS([
+        {
+          id: '2871',
+          title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
+          ingredients: [
+            { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0', label: '1 shallot', url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad' },
+            { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4', label: 'mozzarella', url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad' },
+          ],
+          url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
+          goustoReference: '2145',
+        },
+        {
+          id: '1783',
+          title: 'Sesame Tofu Nuggets, Wedges & Spicy Dipping Sauce',
+          ingredients: [
+            { uuid: 'f0273bb0-bb2b-46e5-8ce4-7e09f413c97b', label: '1 spring onion', url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce' },
+            { uuid: '4cd305c4-d372-4d9f-8110-dae88209ce57', label: '1 carrot', url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce' },
+          ],
+          url: 'gousto.co.uk/cookbook/vegan-recipes/sesame-tofu-nuggets-wedges-spicy-dipping-sauce',
+          goustoReference: '5678',
+        },
+      ])
+      expect(newState.get('recipes')).toEqual(EXPECTED_REDUCED_RECIPES)
     })
   })
 
