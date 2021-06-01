@@ -629,7 +629,7 @@ describe('user actions', () => {
             box_id: undefined
           },
           decoupled: {
-            payment: false,
+            payment: 0,
           }
         }
       })
@@ -764,7 +764,7 @@ describe('user actions', () => {
             box_id: undefined
           },
           decoupled: {
-            payment: true,
+            payment: 1,
           }
         }
 

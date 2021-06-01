@@ -684,7 +684,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
       box_id: basket.get('boxId')
     },
     decoupled: {
-      payment: isDecoupledPaymentEnabled
+      payment: isDecoupledPaymentEnabled ? 1 : 0,
     }
   }
 
