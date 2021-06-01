@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { loadOrderById } from 'actions/getHelp'
 import {
+  loadOrderById,
   loadTrackingUrl,
   trackClickGetInTouchInSSRDeliveries,
   trackClickMyGoustoInSSRDeliveries,

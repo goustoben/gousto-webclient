@@ -103,8 +103,9 @@ describe('asyncAndDispatch', () => {
       })
     })
 
-    test('handleError is called', () => {
+    test('handleError is called with the ERROR from the catch', () => {
       expect(handleError).toHaveBeenCalledTimes(1)
+      expect(handleError).toHaveBeenCalledWith(ERROR_THROWN)
     })
 
     test('dispatches an action to set the error status of the action type passed to the message of the error thrown', () => {

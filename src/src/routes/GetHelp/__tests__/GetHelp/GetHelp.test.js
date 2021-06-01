@@ -1,31 +1,28 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Helmet from 'react-helmet'
 import { client } from 'config/routes'
 import { GetHelp } from 'routes/GetHelp/GetHelp'
 
 describe('<GetHelp />', () => {
-  describe('rendering', () => {
-    let wrapper
-    const storeGetHelpOrderIdSpy = jest.fn()
-    const loadOrderByIdSpy = jest.fn().mockResolvedValue({})
-    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
-      { data: { valid: true } }
-    )
-    const loadRecipesByIdSpy = jest.fn().mockResolvedValue({})
+  let wrapper
+  const storeGetHelpOrderIdSpy = jest.fn()
+  const validateLatestOrderSpy = jest.fn().mockResolvedValue(
+    { data: { valid: true } }
+  )
+  const loadOrderAndRecipesByIds = jest.fn()
 
+  describe('rendering', () => {
     beforeAll(() => {
       wrapper = mount(
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
+          loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
           orderId="7"
           order={{ id: '7', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
           location=""
         >
@@ -39,13 +36,12 @@ describe('<GetHelp />', () => {
         <GetHelp
           didRequestError
           isRequestPending={false}
+          loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
           orderId=""
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
           location=""
         >
@@ -62,13 +58,12 @@ describe('<GetHelp />', () => {
         wrapper = mount(
           <GetHelp
             didRequestError={false}
+            loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
             orderId="7"
             order={{ id: '', recipeItems: [] }}
             recipes={{}}
             user={{ id: '123', accessToken: 'test' }}
-            loadRecipesById={loadRecipesByIdSpy}
             storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-            loadOrderById={loadOrderByIdSpy}
             validateLatestOrder={validateLatestOrderSpy}
             isRequestPending
             location=""
@@ -94,13 +89,12 @@ describe('<GetHelp />', () => {
           <GetHelp
             didRequestError={false}
             isRequestPending={false}
+            loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
             orderId=""
             order={{ id: '', recipeItems: [] }}
             recipes={{}}
             user={{ id: '123', accessToken: 'test' }}
-            loadRecipesById={loadRecipesByIdSpy}
             storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-            loadOrderById={loadOrderByIdSpy}
             validateLatestOrder={validateLatestOrderSpy}
             location={{ pathname: `${client.getHelp.index}/${client.getHelp.contact}`}}
           >
@@ -111,10 +105,10 @@ describe('<GetHelp />', () => {
 
       test('data is not fetched', () => {
         storeGetHelpOrderIdSpy.mockReset()
-        loadOrderByIdSpy.mockReset()
+        loadOrderAndRecipesByIds.mockReset()
         validateLatestOrderSpy.mockReset()
         expect(storeGetHelpOrderIdSpy).not.toHaveBeenCalled()
-        expect(loadOrderByIdSpy).not.toHaveBeenCalled()
+        expect(loadOrderAndRecipesByIds).not.toHaveBeenCalled()
 
         expect(wrapper.contains(<div className="test" />)).toBe(true)
       })
@@ -122,25 +116,16 @@ describe('<GetHelp />', () => {
   })
 
   describe('behaviour', () => {
-    const storeGetHelpOrderIdSpy = jest.fn()
-    const loadOrderByIdSpy = jest.fn().mockResolvedValue({})
-    const loadRecipesByIdSpy = jest.fn().mockResolvedValue({})
-    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
-      { data: { valid: true } }
-    )
-
     beforeAll(() => {
       mount(
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
+          loadOrderAndRecipesByIds={loadOrderAndRecipesByIds}
           orderId="7"
-          order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
           location=""
         >
@@ -149,18 +134,12 @@ describe('<GetHelp />', () => {
       )
     })
 
-    test('calls customers order endpoint', () => {
-      expect(loadOrderByIdSpy).toHaveBeenCalledWith(
-        {accessToken: 'test', orderId: '7'}
-      )
+    test('calls loadOrderAndRecipesByIds action', () => {
+      expect(loadOrderAndRecipesByIds).toHaveBeenCalledWith('7')
     })
 
     test('store order ID', () => {
       expect(storeGetHelpOrderIdSpy).toHaveBeenCalledWith('7')
-    })
-
-    test('calls recipe API by order ID', () => {
-      expect(loadRecipesByIdSpy).toHaveBeenCalledWith(['123456'])
     })
   })
 })

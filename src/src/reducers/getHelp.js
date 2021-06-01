@@ -24,14 +24,14 @@ const getHelpInitialState = fromJS({
 const reduceRecipes = (recipes) => (
   Object.keys(recipes).map((recipeId) => {
     const recipe = recipes[recipeId]
-    const { id, title, url } = recipe
+    const { id, goustoReference, title, url } = recipe
     const ingredients = recipe.ingredients.map(
       ({ label: ingredientLabel, uuid: ingredientUuid }) => (
         { label: ingredientLabel, url, uuid: ingredientUuid }
       )
     )
 
-    return { id, title, ingredients, url }
+    return { id, title, ingredients, url, goustoReference }
   })
 )
 
@@ -42,13 +42,14 @@ const getHelp = (state, action) => {
 
   switch (action.type) {
   case actionTypes.GET_HELP_STORE_ORDER: {
-    const { id, recipeIds, recipeDetailedItems, deliverySlot } = action.payload
+    const { id, recipeIds, recipeDetailedItems, deliverySlot, deliveryDate } = action.payload
 
     return state.set('order', fromJS({
       id,
       recipeItems: recipeIds,
       recipeDetailedItems,
       deliverySlot,
+      deliveryDate,
     }))
   }
   case webClientActionTypes.GET_HELP_STORE_ORDER_ID: {
@@ -88,13 +89,8 @@ const getHelp = (state, action) => {
 
     return state.set('selectedIngredients', issueReasons)
   }
-  case webClientActionTypes.GET_HELP_RECIPES_RECEIVE: {
-    const recipes = fromJS(reduceRecipes(action.recipes))
-
-    return state.set('recipes', recipes)
-  }
   case webClientActionTypes.GET_HELP_LOAD_ORDERS_BY_ID: {
-    const { order } = action
+    const { order } = action.payload
 
     if (order) {
       const recipeItems = order.recipeItems.map((item) => (item.recipeId))
@@ -115,6 +111,27 @@ const getHelp = (state, action) => {
     }
 
     return state
+  }
+  case actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS: {
+    const { order, recipes } = action.payload
+    const { recipeItems } = order
+    const recipeDetailedItems = {}
+
+    recipeItems.forEach((recipeId) => {
+      const recipe = recipes.find(r => r.id === recipeId)
+
+      recipeDetailedItems[recipeId] = recipe.goustoReference
+    })
+
+    return state
+      .setIn(['order', 'recipeItems'], fromJS(recipeItems))
+      .setIn(['order', 'recipeDetailedItems'], fromJS(recipeDetailedItems))
+      .setIn(['order', 'deliverySlot'], fromJS({
+        deliveryEnd: order.deliverySlot.deliveryEnd,
+        deliveryStart: order.deliverySlot.deliveryStart,
+      }))
+      .setIn(['order', 'deliveryDate'], fromJS(order.deliveryDate))
+      .set('recipes', fromJS(reduceRecipes(recipes)))
   }
   case webClientActionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
     const formattedIssues = action.ingredientIssues.data

@@ -1,13 +1,15 @@
 import { connect } from 'react-redux'
 import {
-  loadOrderById,
-  loadRecipesById,
   storeGetHelpOrderId,
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
-import { actionTypes } from 'actions/actionTypes'
 import { getUserId } from 'selectors/user'
-import { validateLatestOrder } from './actions/getHelp'
+import { actionTypes } from './actions/actionTypes'
+import {
+  loadOrderById,
+  loadOrderAndRecipesByIds,
+  validateLatestOrder
+} from './actions/getHelp'
 import { GetHelp } from './GetHelp'
 
 const getContent = ({ content }) => ({
@@ -18,20 +20,6 @@ const getContent = ({ content }) => ({
   button1: content.get('get-help_default_pagecontent_button1')
     || 'Contact Us',
 })
-
-const getError = ({ error }) => {
-  const errorRequest = error.get(actionTypes.RECIPES_RECEIVE, null)
-    || error.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, null)
-
-  return errorRequest
-}
-
-const getPending = ({ pending }) => {
-  const pendingRequest = pending.get(actionTypes.RECIPES_RECEIVE, false)
-    || pending.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, false)
-
-  return pendingRequest
-}
 
 const skipErrorByRoute = ({ pathname, userId, orderId }) => {
   const {
@@ -67,9 +55,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const order = state.getHelp.get('order').toJS()
 
-  const error = getError(state)
-
-  const pending = getPending(state)
+  const error = state.error.get(actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS, null)
 
   const orderId = (location && location.query && location.query.orderId)
     ? location.query.orderId
@@ -83,7 +69,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const isRequestPending = (!orderId || skipErrorPage)
     ? false
-    : pending
+    : state.pending.get(actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS, false)
 
   return {
     didRequestError,
@@ -103,7 +89,7 @@ const GetHelpContainer = connect(mapStateToProps, {
   storeGetHelpOrderId,
   validateLatestOrder,
   loadOrderById,
-  loadRecipesById,
+  loadOrderAndRecipesByIds,
 })(GetHelp)
 
 export {

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getUserOrdersForGetHelp } from 'selectors/getHelp'
 import { getUserId } from 'selectors/user'
-import { getUserOrders, storeGetHelpOrder } from '../actions/getHelp'
+import { getUserOrders, loadOrderAndRecipesByIds, storeGetHelpOrder } from '../actions/getHelp'
 import { EligibilityCheck } from './EligibilityCheck'
 
 const mapStateToProps = (state) => ({
@@ -13,6 +13,7 @@ const mapStateToProps = (state) => ({
 
 const EligibilityCheckContainer = connect(mapStateToProps, {
   getUserOrders,
+  loadOrderAndRecipesByIds,
   storeGetHelpOrder,
 })(EligibilityCheck)
 

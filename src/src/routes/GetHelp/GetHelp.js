@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { browserHistory } from 'react-router'
-import { client } from 'config/routes'
 import { LoadingWrapper } from './LoadingWrapper'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
@@ -14,6 +12,7 @@ const propTypes = {
     infoBody: PropTypes.string,
     title: PropTypes.string,
   }),
+  loadOrderAndRecipesByIds: PropTypes.func.isRequired,
   order: PropTypes.shape({
     id: PropTypes.string.isRequired,
     recipeItems: PropTypes.arrayOf(PropTypes.string).isRequired
@@ -23,11 +22,9 @@ const propTypes = {
     accessToken: PropTypes.string.isRequired,
   }),
   orderId: PropTypes.string.isRequired,
-  loadRecipesById: PropTypes.func.isRequired,
   didRequestError: PropTypes.bool.isRequired,
   isRequestPending: PropTypes.bool.isRequired,
   storeGetHelpOrderId: PropTypes.func.isRequired,
-  loadOrderById: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -37,39 +34,13 @@ const defaultProps = {
 }
 
 class GetHelp extends PureComponent {
-  async componentDidMount() {
-    const { storeGetHelpOrderId, orderId, user, loadOrderById } = this.props
+  componentDidMount() {
+    const { loadOrderAndRecipesByIds, orderId, storeGetHelpOrderId } = this.props
 
-    if (orderId.length < 1) {
-      return null
+    if (orderId) {
+      storeGetHelpOrderId(orderId)
+      loadOrderAndRecipesByIds(orderId)
     }
-
-    storeGetHelpOrderId(orderId)
-
-    try {
-      await loadOrderById({
-        accessToken: user.accessToken,
-        orderId,
-      })
-
-      return this.orderLoadComplete()
-    } catch (error) {
-      return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    const { order } = this.props
-
-    if (order && order.id && prevProps.order.id !== order.id) {
-      this.orderLoadComplete()
-    }
-  }
-
-  orderLoadComplete = () => {
-    const { order, loadRecipesById } = this.props
-
-    loadRecipesById(order.recipeItems)
   }
 
   render() {
