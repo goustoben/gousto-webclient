@@ -5,6 +5,7 @@ import { CTA, Loader } from 'goustouicomponents'
 import typography from 'design-language/typography.module.css'
 import { browserHistory } from 'react-router'
 import { AwinPixel } from 'AwinPixel'
+import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { eventsList, isValidDate, transformSubHeadDate } from './utils'
 import { ScheduleTimeline } from '../ScheduleTimeline'
 import { SubscriptionTransparency } from '../SubscriptionTransparency'
@@ -53,6 +54,7 @@ export const WelcomeToGousto = ({
       </div>
       <img src={footerImage} alt="Sample dishes" className={css.footerImage} />
       <AwinPixel />
+      <RibbonTriggerContainer name="variant_welcome" />
     </Fragment>
   )
 }

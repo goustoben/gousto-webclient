@@ -1,4 +1,6 @@
 import React from 'react'
+import Immutable from 'immutable'
+import { Provider } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { mount } from 'enzyme'
 import { WelcomeToGousto } from '../WelcomeToGousto'
@@ -12,8 +14,21 @@ describe('given WelcomeToGousto component', () => {
     orderId: 100,
   }
 
+  const state = {
+    ribbon: Immutable.fromJS({}),
+  }
+
+  const store = {
+    getState: jest.fn().mockReturnValue(state),
+    dispatch: jest.fn(),
+    subscribe: jest.fn(),
+  }
+
   beforeEach(() => {
-    wrapper = mount(<WelcomeToGousto {...props} />)
+    wrapper = mount(<WelcomeToGousto {...props} />, {
+      // eslint-disable-next-line react/prop-types
+      wrappingComponent: ({ children }) => <Provider store={store}>{children}</Provider>,
+    })
   })
 
   describe('when component is mounted', () => {
@@ -22,6 +37,7 @@ describe('given WelcomeToGousto component', () => {
       expect(wrapper.find('CTA').exists()).toBeTruthy()
       expect(wrapper.find('SubscriptionTransparency').exists()).toBeTruthy()
       expect(wrapper.find('ScheduleTimeline').exists()).toBeTruthy()
+      expect(wrapper.find('RibbonTrigger').exists()).toBeTruthy()
       expect(wrapper.find('Loader').exists()).toBeFalsy()
     })
   })

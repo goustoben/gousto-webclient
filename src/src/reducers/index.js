@@ -42,6 +42,7 @@ import { brand } from './brand'
 import { experimentsReducer } from './experiments'
 import { loggingManager } from './loggingmanager'
 import { feedback } from './feedback'
+import { ribbonReducer } from './ribbonReducer'
 
 const reducers = {
   ...abandonBasket,
@@ -88,6 +89,7 @@ const reducers = {
   payment,
   getHelp,
   ...experimentsReducer,
+  ...ribbonReducer,
 }
 
 export default reducers

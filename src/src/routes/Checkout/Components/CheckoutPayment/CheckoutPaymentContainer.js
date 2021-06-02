@@ -8,25 +8,31 @@ import {
   setCurrentPaymentMethod,
 } from 'actions/checkout'
 import { getIsRecaptchaEnabled, getSignupRecaptchaToken } from 'selectors/auth'
-import { getIs3DSForSignUpEnabled } from 'selectors/features'
+import { getIs3DSForSignUpEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod, isPayPalReady } from 'selectors/payment'
 import { formContainer } from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
 import { CheckoutPayment } from './CheckoutPayment'
 
-const mapStateToProps = (state) => ({
-  formErrors: {
-    ...getFormSyncErrors(sectionName)(state),
-    ...getFormAsyncErrors(sectionName)(state),
-  },
-  is3DSEnabled: getIs3DSForSignUpEnabled(state),
-  isRecaptchaEnabled: getIsRecaptchaEnabled(state),
-  recaptchaValue: getSignupRecaptchaToken(state),
-  sectionName,
-  currentPaymentMethod: getCurrentPaymentMethod(state),
-  isPayPalReady: isPayPalReady(state),
-})
+const mapStateToProps = (state) => {
+  const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
+  const ribbonTriggerName = isPaymentBeforeChoosingEnabled ? 'variant_payment' : 'control_payment'
+
+  return {
+    formErrors: {
+      ...getFormSyncErrors(sectionName)(state),
+      ...getFormAsyncErrors(sectionName)(state),
+    },
+    is3DSEnabled: getIs3DSForSignUpEnabled(state),
+    isRecaptchaEnabled: getIsRecaptchaEnabled(state),
+    recaptchaValue: getSignupRecaptchaToken(state),
+    sectionName,
+    currentPaymentMethod: getCurrentPaymentMethod(state),
+    isPayPalReady: isPayPalReady(state),
+    ribbonTriggerName,
+  }
+}
 
 const mapDispatchToProps = {
   storeSignupRecaptchaToken,
