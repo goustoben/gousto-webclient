@@ -1,5 +1,6 @@
 import { gtm } from './gtm'
 import { trustpilot } from './trustpilot'
+import { ribbon } from './ribbon'
 
 const head = {
   gtm,
@@ -9,7 +10,8 @@ const head = {
   pingdom: require('./pingdom').default,
   favicon: require('./favicon').default,
   mobileMeta: require('./mobileMeta').default,
-  optimizely: require('./optimizely').default
+  optimizely: require('./optimizely').default,
+  ribbon
 }
 
 /* eslint-disable-next-line import/no-default-export */

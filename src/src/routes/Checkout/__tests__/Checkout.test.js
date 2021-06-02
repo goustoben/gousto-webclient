@@ -118,6 +118,7 @@ describe('Given Checkout component', () => {
       }),
       error: Immutable.Map({}),
       form: {},
+      ribbon: Immutable.Map({}),
     }
 
     getState = jest.fn().mockReturnValue(store)

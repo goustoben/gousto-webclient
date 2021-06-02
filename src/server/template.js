@@ -34,6 +34,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
       ${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}
       ${scripts.other ? head.pingdom() : ''}
       ${head.trustpilot ? head.trustpilot() : ''}
+      ${head.ribbon ? head.ribbon() : ''}
 
     </head>
     <body>

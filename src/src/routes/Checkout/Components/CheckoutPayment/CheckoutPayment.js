@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
+import { RibbonTriggerContainer } from 'RibbonTrigger'
 import Svg from 'Svg'
 import { SubmitButton } from '../SubmitButton'
 import { ErrorMessage } from '../ErrorMessage'
@@ -232,6 +233,7 @@ class CheckoutPayment extends React.Component {
       currentPaymentMethod,
       setCurrentPaymentMethod,
       isRecaptchaEnabled,
+      ribbonTriggerName,
     } = this.props
 
     return (
@@ -263,6 +265,7 @@ class CheckoutPayment extends React.Component {
         {this.renderOuterContent()}
         <PaymentFooter />
         {is3DSEnabled && <Checkout3DSModal />}
+        <RibbonTriggerContainer name={ribbonTriggerName} probabilityPercentage={50} />
       </div>
     )
   }
@@ -294,6 +297,7 @@ CheckoutPayment.propTypes = {
   currentPaymentMethod: PropTypes.string.isRequired,
   setCurrentPaymentMethod: PropTypes.func,
   onLoginClick: PropTypes.func,
+  ribbonTriggerName: PropTypes.string,
 }
 
 CheckoutPayment.defaultProps = {
@@ -318,6 +322,7 @@ CheckoutPayment.defaultProps = {
   storeSignupRecaptchaToken: () => {},
   setCurrentPaymentMethod: () => {},
   onLoginClick: () => {},
+  ribbonTriggerName: '',
 }
 
 export { CheckoutPayment }

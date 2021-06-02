@@ -8,6 +8,7 @@ import Content from 'containers/Content'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
+import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
 import ProductDetailOverlay from './ProductDetailOverlay'
 import { AwinPixel } from './AwinPixel'
@@ -126,6 +127,7 @@ class Welcome extends React.PureComponent {
           productId={productDetailId}
         />
         <AwinPixel />
+        <RibbonTriggerContainer name="control_welcome" />
       </section>
     )
   }
