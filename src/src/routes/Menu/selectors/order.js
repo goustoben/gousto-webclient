@@ -1,3 +1,4 @@
+import { Map } from 'immutable'
 import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import {
   getBasketDate,
@@ -35,7 +36,12 @@ export const getSlotForBoxSummaryDeliveryDays = createSelector([
   getBasketSlotId,
   getBasketDate,
   getBoxSummaryDeliveryDays,
-], (slotId, date, boxSummaryDeliveryDays) => [getSlot(boxSummaryDeliveryDays, date, slotId), slotId])
+], (slotId, date, boxSummaryDeliveryDays) => [
+  getSlot(boxSummaryDeliveryDays, date, slotId),
+  slotId
+])
+
+const emptyMap = new Map({})
 
 const getOrderDetailsForBasket = createSelector([
   getSlotForBoxSummaryDeliveryDays,
@@ -43,11 +49,15 @@ const getOrderDetailsForBasket = createSelector([
   getChosenAddressId,
   getBoxSummaryDeliveryDays,
 ], ([slot], date, shippingAddressId, boxSummaryDeliveryDays) => {
-  const deliverySlotId = slot.get('coreSlotId', '')
-  const deliveryDayId = boxSummaryDeliveryDays && boxSummaryDeliveryDays.getIn([date, 'coreDayId'])
-  const deliverySlotLeadTimeId = slot.get('daySlotLeadTimeId', '')
+  const safeSlot = slot || emptyMap
+  const safeBoxSummaryDeliveryDays = boxSummaryDeliveryDays || emptyMap
+  const deliverySlotUUID = safeSlot.get('id', '')
+  const deliverySlotId = safeSlot.get('coreSlotId', '')
+  const deliveryDayId = safeBoxSummaryDeliveryDays.getIn([date, 'coreDayId'])
+  const deliverySlotLeadTimeId = safeSlot.get('daySlotLeadTimeId', '')
 
   return {
+    deliverySlotUUID,
     deliveryDayId,
     deliverySlotId,
     deliverySlotLeadTimeId,
@@ -169,6 +179,7 @@ export const getOrderV2 = createSelector([
   const {
     deliveryDayId,
     deliverySlotId,
+    deliverySlotUUID,
     shippingAddressId,
     deliverySlotLeadTimeId,
   } = orderDetails
@@ -228,7 +239,10 @@ export const getOrderV2 = createSelector([
       delivery_slot: {
         data: {
           type: 'delivery-slot',
-          id: deliverySlotId
+          id: deliverySlotId,
+          meta: {
+            uuid: deliverySlotUUID
+          }
         }
       },
       ...deliverySlotLeadTime,

@@ -1,77 +1,19 @@
-import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import * as utilsDeliveries from 'utils/deliveries'
 import * as actionsOrder from 'actions/order'
 import * as actionsOrderConfirmation from 'actions/orderConfirmation'
 import { getBasketSlotId } from 'selectors/basket'
+import { createState as createOrderState } from 'routes/Menu/selectors/__tests__/order.test'
 import * as orderV2Api from '../apis/orderV2'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 
-const createState = (partialOverwrite = {}) => ({
-  auth: Immutable.Map({
+const createState = (partialOverwrite = {}) => createOrderState({
+  ...partialOverwrite,
+  auth: {
     id: 'auth-user-id',
     accessToken: 'auth-access-token',
     isAuthenticated: true,
     ...(partialOverwrite.auth || {})
-  }),
-  basket: Immutable.fromJS({
-    date: '2019-10-10',
-    slotId: '3e952522-a778-11e6-8197-080027596944',
-    recipes: {
-      'recipe-id-1': 1,
-      'recipe-id-2': 2,
-    },
-    numPortions: 2,
-    chosenAddress: {
-      id: '12345555'
-    },
-    ...(partialOverwrite.basket || {})
-  }),
-  menuService: {
-    recipe: {
-      'recipe-id-1': {
-        id: 'recipe-uuid-1'
-      },
-      'recipe-id-2': {
-        id: 'recipe-uuid-2'
-      },
-    },
-    ...(partialOverwrite.menuService || {})
-  },
-  boxSummaryDeliveryDays: Immutable.fromJS({
-    '2019-10-10': {
-      id: '3e9a2572-a778-11e6-bb0f-080027596944',
-      date: '2016-11-21',
-      coreDayId: '5',
-      slots: [
-        {
-          coreSlotId: '1',
-          id: '3e952522-a778-11e6-8197-080027596944',
-          daySlotLeadTimeId: 'day-slot-lead-time-id'
-        },
-      ],
-    },
-  }),
-  features: Immutable.fromJS({
-    ndd: {
-      value: utilsDeliveries.deliveryTariffTypes.NON_NDD
-    },
-    enable3DSForSignUp: {
-      value: false
-    },
-  }),
-  user: Immutable.fromJS({
-    orders: Immutable.List([]),
-    deliveryTariffId: utilsDeliveries.deliveryTariffTypes.NON_NDD,
-    ...(partialOverwrite.user || {})
-  })
-})
-
-const jsonApiSimpleObject = (resourceType, id) => ({ data: { type: resourceType, id } })
-const jsonApiRecipeObject = (id, numPortions) => ({
-  type: 'recipe',
-  id,
-  meta: { portion_for: numPortions }
+  }
 })
 
 describe('Menu > actions > checkoutTransactionalOrder', () => {
@@ -109,8 +51,10 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
   })
 
   describe('when no slot', () => {
-    const getState = () => ({
-      ...createState(),
+    const getState = () => createState({
+      basket: {
+        slotId: undefined
+      },
       boxSummaryDeliveryDays: undefined
     })
 
@@ -143,38 +87,27 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
   })
 
   describe('when in valid state', () => {
-    // these values come from the state set up in createState
-    const deliveryDayId = '5'
-    const deliverySlotId = '1'
-    const deliverySlotLeadTimeId = 'day-slot-lead-time-id'
-    const shippingAddressId = '12345555'
-    const deliveryTariffId = utilsDeliveries.deliveryTariffTypes.NON_NDD
-    const numPortions = 2
-
     const getState = () => createState()
 
     test('should call createOrder with correct order', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
 
-      const expectedRequest = {
-        type: 'order',
-        relationships: {
-          delivery_slot: jsonApiSimpleObject('delivery-slot', deliverySlotId),
-          delivery_slot_lead_time: jsonApiSimpleObject('delivery-slot-lead-time', deliverySlotLeadTimeId),
-          delivery_day: jsonApiSimpleObject('delivery-day', deliveryDayId),
-          shipping_address: jsonApiSimpleObject('shipping-address', shippingAddressId),
-          delivery_tariff: jsonApiSimpleObject('delivery-tariff', deliveryTariffId),
-          components: {
-            data: [
-              jsonApiRecipeObject('recipe-uuid-1', numPortions),
-              jsonApiRecipeObject('recipe-uuid-2', numPortions),
-              jsonApiRecipeObject('recipe-uuid-2', numPortions),
-            ]
-          }
-        }
-      }
-
-      expect(createOrder).toHaveBeenCalledWith('auth-access-token', expectedRequest, 'auth-user-id')
+      expect(createOrder).toHaveBeenCalledWith('auth-access-token',
+        {
+          relationships: {
+            components: {
+              data: [
+                {id: 'recipe-uuid-1', meta: { portion_for: 2 }, type: 'recipe'},
+                {id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe'},
+                {id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe'}]},
+            delivery_day: { data: { id: 'delivery-days-id', type: 'delivery-day'}},
+            delivery_slot: { data: { id: 'slot-core-id', meta: {uuid: 'slot-uuid' }, type: 'delivery-slot'}},
+            delivery_tariff: { data: { id: '9037a447-e11a-4960-ae69-d89a029569af', type: 'delivery-tariff'}},
+            delivery_slot_lead_time: { data: { id: 'day-slot-lead-time-uuid', type: 'delivery-slot-lead-time'}},
+          },
+          type: 'order'
+        },
+        'auth-user-id')
     })
 
     test('should call trackOrder with response', async () => {
