@@ -1,5 +1,10 @@
+import Immutable from 'immutable'
+
+const emptyList = Immutable.List([])
+
 export const getBasketOrderId = state => state.basket.get('orderId')
-export const getBasketRecipes = state => state.basket.get('recipes')
+export const getBasketRecipes = state => state.basket.get('recipes', emptyList)
+export const getBasketRecipesCount = state => state.basket.get('recipes', emptyList).reduce((sum ,recipeQuantity) => sum + recipeQuantity, 0)
 export const getBasketTotalRecipes = state => state.basket.get('recipes').reduce((acc, cur) => acc + cur)
 export const getNumPortions = state => state.basket.get('numPortions')
 export const getNumRecipes = state => state.basket.get('numRecipes')

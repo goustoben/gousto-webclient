@@ -1,6 +1,8 @@
 import * as fetch from 'utils/fetch'
 import * as cookieHelper2 from 'utils/cookieHelper2'
-import { updateOrder, createOrder, getOrder, getUserOrders } from '../orderV2'
+import { updateOrder, createOrder, getOrderPrice, getOrder, getUserOrders } from '../orderV2'
+import * as menuFetch from '../fetch'
+import { mockFetchResponse } from '../fetch.mock'
 
 jest.spyOn(cookieHelper2, 'get').mockImplementation((cookies, key, withVersionPrefix, shouldDecode) => {
   if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
@@ -15,6 +17,7 @@ describe('orderApi', () => {
 
   beforeEach(() => {
     fetchSpy = jest.spyOn(fetch, 'default').mockImplementation(jest.fn)
+    jest.spyOn(menuFetch, 'post').mockResolvedValue(mockFetchResponse({}))
   })
 
   afterEach(() => {
@@ -102,6 +105,27 @@ describe('orderApi', () => {
       const result = await updateOrder('token', 'order-id', { order: 'body' }, 'user-id')
 
       expect(result).toEqual(apiResponse)
+    })
+  })
+
+  describe('getOrderPrice', () => {
+    test('should fetch the correct url', async () => {
+      const userId = 'my-cool-user'
+      const data = { some: 'thing' }
+      const apiResponse = { data: [1, 2, 3] }
+
+      menuFetch.post.mockResolvedValue(apiResponse)
+
+      const response = await getOrderPrice('token', data, userId)
+
+      expect(menuFetch.post).toHaveBeenCalledTimes(1)
+      expect(menuFetch.post).toHaveBeenCalledWith(
+        'token',
+        'https://production-api.gousto.co.uk/order/v2/prices',
+        { data },
+        {'Content-Type': 'application/json', 'x-gousto-device-id': 'session-id', 'x-gousto-user-id': 'my-cool-user'}
+      )
+      expect(response).toEqual(apiResponse)
     })
   })
 

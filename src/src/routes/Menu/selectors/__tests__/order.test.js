@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import * as utilsDeliveries from 'utils/deliveries'
+import { deliveryTariffTypes } from 'utils/deliveries'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getOrderDetails,
@@ -13,32 +13,27 @@ import {
   getUserDeliveryTariffId,
 } from '../order'
 
-describe('order selectors', () => {
-  const getSlotMockedValue = Immutable.fromJS({
-    coreSlotId: '4',
-    id: 'deliveries-uuid',
-    daySlotLeadTimeId: 'day-slot-lead-time-uuid'
-  })
-  let getSlotSpy
+export const createState = (partialOverwrite = {}) => {
+  const {
+    basket = {},
+    menuService = {},
+    features = {},
+    slot = {},
+    user = {},
+    auth = {},
+    ...rest
+  } = partialOverwrite
 
-  beforeEach(() => {
-    getSlotSpy = jest.spyOn(utilsDeliveries, 'getSlot').mockReturnValue(getSlotMockedValue)
-  })
-
-  afterAll(() => {
-    jest.clearAllMocks()
-  })
-
-  const createState = (partialOverwrite = {}) => ({
+  return ({
     basket: Immutable.fromJS({
       date: '2019-10-10',
-      slotId: '4',
+      slotId: 'slot-uuid',
       recipes: {
         'recipe-id-1': 1,
         'recipe-id-2': 2,
       },
       numPortions: 2,
-      ...(partialOverwrite.basket || {})
+      ...basket
     }),
     menuService: {
       recipe: {
@@ -49,53 +44,62 @@ describe('order selectors', () => {
           id: 'recipe-uuid-2'
         },
       },
-      ...(partialOverwrite.menuService || {})
+      ...menuService
     },
     boxSummaryDeliveryDays: Immutable.fromJS({
       '2019-10-10': {
-        id: '3e9a2572-a778-11e6-bb0f-080027596944',
-        date: '2016-11-21',
-        coreDayId: '5',
+        id: 'delivery-days-uuid',
+        date: '2019-10-10',
+        coreDayId: 'delivery-days-id',
+        deliverySlotLeadTimeId: deliveryTariffTypes.NON_NDD,
         slots: [
           {
-            coreSlotId: '1',
-            id: '3e952522-a778-11e6-8197-080027596944',
+            id: 'slot-uuid',
+            coreSlotId: 'slot-core-id',
+            daySlotLeadTimeId: 'day-slot-lead-time-uuid',
+            ...slot
           },
         ],
       },
     }),
     features: Immutable.fromJS({
       ndd: {
-        value: utilsDeliveries.deliveryTariffTypes.NON_NDD
+        value: 'features-ndd-day-slot-lead-time-uuid'
       },
       enable3DSForSignUp: {
         value: false
       },
-      ...(partialOverwrite.features || {})
+      ...features
     }),
     user: Immutable.fromJS({
       orders: Immutable.List([]),
-      deliveryTariffId: utilsDeliveries.deliveryTariffTypes.NON_NDD,
-      ...(partialOverwrite.user || {})
+      deliveryTariffId: 'user-day-slot-lead-time-uuid',
+      ...user
     }),
     auth: Immutable.fromJS({
-      ...(partialOverwrite.auth || {})
-    })
+      ...auth
+    }),
+    ...rest,
   })
+}
 
+describe('order selectors', () => {
   describe('getSlotForBoxSummaryDeliveryDays', () => {
     test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
       const state = createState()
 
       const slotInformation = getSlotForBoxSummaryDeliveryDays(state)
 
-      expect(slotInformation).toEqual([getSlotMockedValue, '4'])
+      expect(slotInformation).toEqual([
+        new Immutable.Map({id: 'slot-uuid', coreSlotId: 'slot-core-id', daySlotLeadTimeId: 'day-slot-lead-time-uuid'}),
+        'slot-uuid'
+      ])
     })
   })
 
   describe('getUserDeliveryTariffId', () => {
     describe('when tariff is set', () => {
-      const tariff = utilsDeliveries.deliveryTariffTypes.FREE_NDD
+      const tariff = deliveryTariffTypes.FREE_NDD
       const state = createState({ user: { deliveryTariffId: tariff } })
 
       test('returns the user tariff id', () => {
@@ -111,7 +115,7 @@ describe('order selectors', () => {
       test('should return NON_NDD', () => {
         const tariffId = getUserDeliveryTariffId(state)
 
-        expect(tariffId).toEqual(utilsDeliveries.deliveryTariffTypes.NON_NDD)
+        expect(tariffId).toEqual(deliveryTariffTypes.NON_NDD)
       })
     })
   })
@@ -123,15 +127,15 @@ describe('order selectors', () => {
       const orderDetails = getOrderDetails(state)
 
       expect(orderDetails).toEqual({
-        delivery_day_id: '5',
-        delivery_slot_id: '4',
+        delivery_day_id: 'delivery-days-id',
+        delivery_slot_id: 'slot-core-id',
         recipe_choices: [
           { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
           { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
           { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
         ],
         day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-        delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+        delivery_tariff_id: deliveryTariffTypes.NON_NDD,
         address_id: null
       })
     })
@@ -149,15 +153,15 @@ describe('order selectors', () => {
         const orderDetails = getOrderDetails(state)
 
         expect(orderDetails).toEqual({
-          delivery_day_id: '5',
-          delivery_slot_id: '4',
+          delivery_day_id: 'delivery-days-id',
+          delivery_slot_id: 'slot-core-id',
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-          delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+          delivery_tariff_id: deliveryTariffTypes.NON_NDD,
           address_id: '1234'
         })
       })
@@ -174,15 +178,15 @@ describe('order selectors', () => {
         const orderDetails = getOrderDetails(state)
 
         expect(orderDetails).toEqual({
-          delivery_day_id: '5',
-          delivery_slot_id: '4',
+          delivery_day_id: 'delivery-days-id',
+          delivery_slot_id: 'slot-core-id',
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-          delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+          delivery_tariff_id: deliveryTariffTypes.NON_NDD,
           address_id: null,
           order_id: '1234'
         })
@@ -200,15 +204,15 @@ describe('order selectors', () => {
         const orderDetails = getOrderDetails(state)
 
         expect(orderDetails).toEqual({
-          delivery_day_id: '5',
-          delivery_slot_id: '4',
+          delivery_day_id: 'delivery-days-id',
+          delivery_slot_id: 'slot-core-id',
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
           ],
           day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-          delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+          delivery_tariff_id: deliveryTariffTypes.NON_NDD,
           address_id: null,
           promo_code: '1234'
         })
@@ -253,12 +257,12 @@ describe('order selectors', () => {
       const orderDetails = getDetailsForOrderWithoutRecipes(state)
 
       expect(orderDetails).toEqual({
-        delivery_day_id: '5',
-        delivery_slot_id: '4',
+        delivery_day_id: 'delivery-days-id',
+        delivery_slot_id: 'slot-core-id',
         recipe_choices: [],
         promo_code: '1234',
         day_slot_lead_time_id: 'day-slot-lead-time-uuid',
-        delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+        delivery_tariff_id: deliveryTariffTypes.NON_NDD,
         address_id: null,
         get_order_without_recipes: true,
         number_of_recipes: 3,
@@ -296,9 +300,12 @@ describe('order selectors', () => {
 
     describe("when customer hasn't have chosen delivery slot", () => {
       test('returns true', () => {
-        getSlotSpy.mockReturnValue(Immutable.fromJS({}))
-
-        const state = createState()
+        const state = createState({
+          basket: {
+            slotId: undefined
+          },
+          boxSummaryDeliveryDays: undefined
+        })
 
         const couldBasketBeExpired = getCouldBasketBeExpired(state)
 
@@ -381,22 +388,18 @@ describe('order selectors', () => {
   })
 
   describe('getOrderForUpdateOrderV1', () => {
-    beforeEach(() => {
-      getSlotSpy.mockReturnValue(Immutable.fromJS({
-        coreSlotId: '4',
-        id: 'deliveries-uuid',
-        daySlotLeadTimeId: null
-      }))
-    })
-
     test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
-      const state = createState()
+      const state = createState({
+        slot: {
+          daySlotLeadTimeId: null
+        }
+      })
 
       const orderDetails = getOrderForUpdateOrderV1(state)
 
       expect(orderDetails).toEqual({
-        delivery_day_id: '5',
-        delivery_slot_id: '4',
+        delivery_day_id: 'delivery-days-id',
+        delivery_slot_id: 'slot-core-id',
         recipe_choices: [
           { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
           { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
@@ -410,19 +413,13 @@ describe('order selectors', () => {
 
     describe('when customer does not have day slot lead time id', () => {
       test('returns an object containing the delivery_slot_lead_time for delivery slot lead time', () => {
-        getSlotSpy.mockReturnValue(Immutable.fromJS({
-          coreSlotId: '4',
-          id: 'deliveries-uuid',
-          daySlotLeadTimeId: 'day-slot-lead-time-uuid'
-        }))
-
         const state = createState()
 
         const orderDetails = getOrderForUpdateOrderV1(state)
 
         expect(orderDetails).toEqual({
-          delivery_day_id: '5',
-          delivery_slot_id: '4',
+          delivery_day_id: 'delivery-days-id',
+          delivery_slot_id: 'slot-core-id',
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
@@ -448,14 +445,14 @@ describe('order selectors', () => {
         const orderDetails = getOrderForUpdateOrderV1(state)
 
         expect(orderDetails).toEqual({
-          delivery_day_id: '5',
-          delivery_slot_id: '4',
+          delivery_day_id: 'delivery-days-id',
+          delivery_slot_id: 'slot-core-id',
           recipe_choices: [
             { id: 'recipe-id-1', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' },
             { id: 'recipe-id-2', quantity: 2, type: 'Recipe' }
           ],
-          day_slot_lead_time_id: null,
+          day_slot_lead_time_id: 'day-slot-lead-time-uuid',
           order_action: 'create',
           address_id: '1234'
         })
@@ -464,16 +461,12 @@ describe('order selectors', () => {
   })
 
   describe('getOrderV2', () => {
-    beforeEach(() => {
-      getSlotSpy.mockReturnValue(Immutable.fromJS({
-        coreSlotId: '4',
-        id: 'deliveries-uuid',
-        daySlotLeadTimeId: null
-      }))
-    })
-
     test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
-      const state = createState()
+      const state = createState({
+        slot: {
+          daySlotLeadTimeId: null
+        }
+      })
 
       const orderDetails = getOrderV2(state)
 
@@ -506,19 +499,22 @@ describe('order selectors', () => {
           },
           delivery_day: {
             data: {
-              id: '5',
+              id: 'delivery-days-id',
               type: 'delivery-day'
             }
           },
           delivery_slot: {
             data: {
-              id: '4',
-              type: 'delivery-slot'
+              id: 'slot-core-id',
+              type: 'delivery-slot',
+              meta: {
+                uuid: 'slot-uuid',
+              },
             }
           },
           delivery_tariff: {
             data: {
-              id: '9037a447-e11a-4960-ae69-d89a029569af',
+              id: deliveryTariffTypes.NON_NDD,
               type: 'delivery-tariff'
             }
           }
@@ -528,12 +524,6 @@ describe('order selectors', () => {
 
     describe('when customer does not have day slot lead time id', () => {
       test('returns an object containing the delivery_slot_lead_time for delivery slot lead time', () => {
-        getSlotSpy.mockReturnValue(Immutable.fromJS({
-          coreSlotId: '4',
-          id: 'deliveries-uuid',
-          daySlotLeadTimeId: 'day-slot-lead-time-uuid'
-        }))
-
         const state = createState()
 
         const orderDetails = getOrderV2(state)
@@ -564,25 +554,28 @@ describe('order selectors', () => {
             },
             delivery_day: {
               data: {
-                id: '5',
+                id: 'delivery-days-id',
                 type: 'delivery-day'
               }
             },
             delivery_slot: {
               data: {
-                id: '4',
-                type: 'delivery-slot'
+                id: 'slot-core-id',
+                type: 'delivery-slot',
+                meta: {
+                  uuid: 'slot-uuid',
+                },
               }
             },
             delivery_slot_lead_time: {
               data: {
                 id: 'day-slot-lead-time-uuid',
-                type: 'delivery-slot-lead-time'
-              }
+                type: 'delivery-slot-lead-time',
+              },
             },
             delivery_tariff: {
               data: {
-                id: '9037a447-e11a-4960-ae69-d89a029569af',
+                id: deliveryTariffTypes.NON_NDD,
                 type: 'delivery-tariff'
               }
             }
@@ -629,14 +622,17 @@ describe('order selectors', () => {
             },
             delivery_day: {
               data: {
-                id: '5',
+                id: 'delivery-days-id',
                 type: 'delivery-day'
               }
             },
             delivery_slot: {
               data: {
-                id: '4',
-                type: 'delivery-slot'
+                id: 'slot-core-id',
+                type: 'delivery-slot',
+                meta: {
+                  uuid: 'slot-uuid',
+                },
               }
             },
             shipping_address: {
@@ -645,9 +641,15 @@ describe('order selectors', () => {
                 type: 'shipping-address'
               }
             },
+            delivery_slot_lead_time: {
+              data: {
+                id: 'day-slot-lead-time-uuid',
+                type: 'delivery-slot-lead-time',
+              },
+            },
             delivery_tariff: {
               data: {
-                id: '9037a447-e11a-4960-ae69-d89a029569af',
+                id: deliveryTariffTypes.NON_NDD,
                 type: 'delivery-tariff'
               }
             }

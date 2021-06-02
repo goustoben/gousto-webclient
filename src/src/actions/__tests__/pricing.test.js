@@ -1,14 +1,29 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import pricing from 'apis/pricing'
+import * as orderV2 from 'routes/Menu/apis/orderV2'
 import actions from 'actions/pricing'
 import { deliveryTariffTypes } from 'utils/deliveries'
+import * as optimizelyUtils from 'containers/OptimizelyRollouts/optimizelyUtils'
+import { createState as createOrderState } from 'routes/Menu/selectors/__tests__/order.test'
+import { orderV2PricesFixture } from 'routes/Menu/transformers/orderPricesV2ToV1.test'
 
 jest.mock('apis/pricing')
+
+const createState = (partialOverwrite = {}) => createOrderState({
+  ...partialOverwrite,
+  auth: {
+    id: 'auth-user-id',
+    accessToken: 'auth-access-token',
+    isAuthenticated: true,
+    ...(partialOverwrite.auth || {})
+  }
+})
 
 describe('pricing actions', () => {
   let dispatchSpy
   let getStateSpy
+  let getOrderPriceSpy
 
   const pricingData = {
     status: 'ok',
@@ -53,6 +68,7 @@ describe('pricing actions', () => {
   beforeEach(() => {
     dispatchSpy = jest.fn()
     getStateSpy = jest.fn()
+    getOrderPriceSpy = jest.spyOn(orderV2, 'getOrderPrice')
   })
 
   beforeEach(() => {
@@ -79,6 +95,7 @@ describe('pricing actions', () => {
         prices: pricingData,
       })
       expect(pricing).not.toHaveBeenCalled()
+      expect(getOrderPriceSpy).not.toHaveBeenCalled()
     })
 
     it('will not request prices if the slotId is not set', async () => {
@@ -100,172 +117,262 @@ describe('pricing actions', () => {
         prices: pricingData,
       })
       expect(pricing).not.toHaveBeenCalled()
+      expect(getOrderPriceSpy).not.toHaveBeenCalled()
     })
 
-    it('will return with the PRICING_SUCCESS action and data when 2 recipes and the slotId are set', async () => {
-      getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
-        basket: Immutable.fromJS({ recipes: { 123: 2 }, slotId: 124 }),
-        features: getFeatures('a1b2c3d4')
+    describe('when feature flag `radishes_order_api_pricing_web_enabled` is disabled', () => {
+      it('will return with the PRICING_SUCCESS action and data when 2 recipes and the slotId are set', async () => {
+        getStateSpy.mockReturnValue({
+          auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
+          basket: Immutable.fromJS({ recipes: { 123: 2 }, slotId: 124 }),
+          features: getFeatures('a1b2c3d4')
+        })
+
+        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+
+        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+
+        expect(dispatchSpy).toHaveBeenCalledTimes(2)
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PRICING_PENDING,
+        })
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PRICING_SUCCESS,
+          prices: pricingData,
+        })
+        expect(pricing).toHaveBeenCalled()
       })
 
-      pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+      it('should return with the PRICING_SUCCESS action and data with store data set', async () => {
+        const accessToken = 'accessToken'
+        const date = '12-12-2029'
+        const slotId = 12
+        const promoCode = '1234'
+        const daySlotLeadTimeId = 987
+        const deliveryTariffId = deliveryTariffTypes.FREE_NDD
 
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        getStateSpy.mockReturnValue({
+          auth: Immutable.fromJS({
+            accessToken,
+            refreshToken: 'refreshToken'
+          }),
+          basket: Immutable.fromJS({
+            recipes: { 123: 1, 145: 1 },
+            promoCode,
+            date,
+            slotId,
+            numPortions: 2
+          }),
+          boxSummaryDeliveryDays: getBoxSummaryDeliveryDays(date, slotId, daySlotLeadTimeId),
+          features: getFeatures('a1b2c3d4'),
+          user: Immutable.fromJS({
+            deliveryTariffId
+          }),
+        })
 
-      expect(dispatchSpy).toHaveBeenCalledTimes(2)
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.PRICING_PENDING,
-      })
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.PRICING_SUCCESS,
-        prices: pricingData,
-      })
-      expect(pricing).toHaveBeenCalled()
-    })
+        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-    it('should return with the PRICING_SUCCESS action and data with store data set', async () => {
-      const accessToken = 'accessToken'
-      const date = '12-12-2029'
-      const slotId = 12
-      const promoCode = '1234'
-      const daySlotLeadTimeId = 987
-      const deliveryTariffId = deliveryTariffTypes.FREE_NDD
+        await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
-      getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({
+        expect(dispatchSpy).toHaveBeenCalledTimes(2)
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PRICING_PENDING,
+        })
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PRICING_SUCCESS,
+          prices: pricingData,
+        })
+        expect(pricing).toHaveBeenCalled()
+
+        const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
+        expect(pricing).toHaveBeenCalledWith(
           accessToken,
-          refreshToken: 'refreshToken'
-        }),
-        basket: Immutable.fromJS({
-          recipes: { 123: 1, 145: 1 },
-          promoCode,
+          recipeDataRequest,
           date,
           slotId,
-          numPortions: 2
-        }),
-        boxSummaryDeliveryDays: getBoxSummaryDeliveryDays(date, slotId, daySlotLeadTimeId),
-        features: getFeatures('a1b2c3d4'),
-        user: Immutable.fromJS({
+          promoCode,
+          daySlotLeadTimeId,
           deliveryTariffId
-        }),
+        )
       })
 
-      pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+      it('will be called with tariffId if id is provided and user is not authenticated', async () => {
+        const accessToken = 'accessToken'
+        const date = '12-12-2029'
+        const slotId = 12
+        const promoCode = '1234'
+        const tariffId = '12345678'
+        const daySlotLeadTimeId = 987
+        const deliveryTariffId = deliveryTariffTypes.PAID_NDD
 
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        getStateSpy.mockReturnValue({
+          auth: Immutable.fromJS({
+            accessToken,
+            refreshToken: 'refreshToken',
+            isAuthenticated: false
+          }),
+          basket: Immutable.fromJS({
+            recipes: { 123: 1, 145: 1 },
+            promoCode,
+            date,
+            slotId,
+            numPortions: 2,
+            tariffId
+          }),
+          boxSummaryDeliveryDays: getBoxSummaryDeliveryDays(date, slotId, daySlotLeadTimeId),
+          features: getFeatures(deliveryTariffId)
+        })
 
-      expect(dispatchSpy).toHaveBeenCalledTimes(2)
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.PRICING_PENDING,
-      })
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.PRICING_SUCCESS,
-        prices: pricingData,
-      })
-      expect(pricing).toHaveBeenCalled()
+        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-      const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
-      expect(pricing).toHaveBeenCalledWith(
-        accessToken,
-        recipeDataRequest,
-        date,
-        slotId,
-        promoCode,
-        daySlotLeadTimeId,
-        deliveryTariffId
-      )
-    })
+        await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
-    it('will be called with tariffId if id is provided and user is not authenticated', async () => {
-      const accessToken = 'accessToken'
-      const date = '12-12-2029'
-      const slotId = 12
-      const promoCode = '1234'
-      const tariffId = '12345678'
-      const daySlotLeadTimeId = 987
-      const deliveryTariffId = deliveryTariffTypes.PAID_NDD
-
-      getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({
+        const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
+        expect(pricing).toHaveBeenCalledWith(
           accessToken,
-          refreshToken: 'refreshToken',
-          isAuthenticated: false
-        }),
-        basket: Immutable.fromJS({
-          recipes: { 123: 1, 145: 1 },
-          promoCode,
+          recipeDataRequest,
           date,
           slotId,
-          numPortions: 2,
+          promoCode,
+          daySlotLeadTimeId,
+          deliveryTariffId,
           tariffId
-        }),
-        boxSummaryDeliveryDays: getBoxSummaryDeliveryDays(date, slotId, daySlotLeadTimeId),
-        features: getFeatures(deliveryTariffId)
+        )
       })
 
-      pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+      it('will request all basket items when recipes, products and the slotId are set', async () => {
+        getStateSpy.mockReturnValue({
+          auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
+          basket: Immutable.fromJS({
+            recipes: { 123: 2 },
+            products: { p1: 2, p2: 1 },
+            slotId: 124,
+            numPortions: 2,
+          }),
+          features: getFeatures('a1b2c3d4')
+        })
 
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
+        pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
 
-      const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
-      expect(pricing).toHaveBeenCalledWith(
-        accessToken,
-        recipeDataRequest,
-        date,
-        slotId,
-        promoCode,
-        daySlotLeadTimeId,
-        deliveryTariffId,
-        tariffId
-      )
+        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+
+        expect(pricing.mock.calls[0][1]).toEqual({
+          0: { id: '123', quantity: 2, type: 'Recipe' },
+          1: { id: '123', quantity: 2, type: 'Recipe' },
+          2: { id: 'p1', quantity: 1, type: 'Product' },
+          3: { id: 'p1', quantity: 1, type: 'Product' },
+          4: { id: 'p2', quantity: 1, type: 'Product' },
+        })
+      })
+
+      it('should return with the PRICING_FAILURE action and message', async () => {
+        getStateSpy.mockReturnValue({
+          auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
+          basket: Immutable.fromJS({ recipes: { 123: 1, 134: 1 }, slotId: 1 }),
+          features: getFeatures('a1b2c3d4')
+        })
+
+        pricing.mockReturnValue(Promise.reject('error from pricing endpoint'))
+
+        await actions.pricingRequest()(dispatchSpy, getStateSpy)
+
+        expect(dispatchSpy).toHaveBeenCalledTimes(2)
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PRICING_PENDING,
+        })
+        expect(dispatchSpy).toHaveBeenCalledWith({
+          type: actionTypes.PRICING_FAILURE,
+          message: 'error from pricing endpoint',
+        })
+        expect(pricing).toHaveBeenCalled()
+      })
     })
 
-    it('will request all basket items when recipes, products and the slotId are set', async () => {
-      getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
-        basket: Immutable.fromJS({
-          recipes: { 123: 2 },
-          products: { p1: 2, p2: 1 },
-          slotId: 124,
-          numPortions: 2,
-        }),
-        features: getFeatures('a1b2c3d4')
+    describe('when feature flag `radishes_order_api_pricing_web_enabled` is enabled', () => {
+      beforeEach(() => {
+        jest.spyOn(optimizelyUtils, 'isOptimizelyFeatureEnabledFactory')
+          .mockReturnValue(() => Promise.resolve(true))
       })
 
-      pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
+      describe('when pricing endpoint is successful', () => {
+        it('will return with the PRICING_SUCCESS action and data when 2 recipes and the slotId are set', async () => {
+          const getState = () => createState()
+          getOrderPriceSpy.mockResolvedValue([orderV2PricesFixture, null, 200])
 
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
+          await actions.pricingRequest()(dispatchSpy, getState)
 
-      expect(pricing.mock.calls[0][1]).toEqual({
-        0: { id: '123', quantity: 2, type: 'Recipe' },
-        1: { id: '123', quantity: 2, type: 'Recipe' },
-        2: { id: 'p1', quantity: 1, type: 'Product' },
-        3: { id: 'p1', quantity: 1, type: 'Product' },
-        4: { id: 'p2', quantity: 1, type: 'Product' },
+          expect(dispatchSpy).toHaveBeenCalledTimes(2)
+          expect(dispatchSpy).toHaveBeenCalledWith({
+            type: actionTypes.PRICING_PENDING,
+          })
+          expect(dispatchSpy).toHaveBeenCalledWith({
+            type: actionTypes.PRICING_SUCCESS,
+            prices: {
+              amountOff: '0.00',
+              deliveryTotal: '0.00',
+              flatDiscountApplied: false,
+              grossTotal: '24.99',
+              items: [
+                {
+                  type: 'Surcharge',
+                },
+                {
+                  type: 'Surcharge',
+                },
+              ],
+              percentageOff: '40.00',
+              pricePerPortion: '6.25',
+              pricePerPortionDiscounted: '3.75',
+              productTotal: '0.00',
+              promoCode: undefined,
+              promoCodeValid: false,
+              recipeDiscount: '9.99',
+              recipeTotal: '24.99',
+              recipeTotalDiscounted: '1.99',
+              surchargeTotal: '0.00',
+              total: '15.00',
+              totalDiscount: '9.99',
+              vatCharged: '0.00',
+            },
+          })
+          expect(getOrderPriceSpy).toHaveBeenCalledWith('auth-access-token',
+            {
+              relationships: {
+                components: {
+                  data: [
+                    {id: 'recipe-uuid-1', meta: { portion_for: 2 }, type: 'recipe'},
+                    {id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe'},
+                    {id: 'recipe-uuid-2', meta: { portion_for: 2 }, type: 'recipe'}]},
+                delivery_day: { data: { id: 'delivery-days-id', type: 'delivery-day'}},
+                delivery_slot: { data: { id: 'slot-core-id', meta: {uuid: 'slot-uuid' }, type: 'delivery-slot'}},
+                delivery_tariff: { data: { id: '9037a447-e11a-4960-ae69-d89a029569af', type: 'delivery-tariff'}},
+                delivery_slot_lead_time: { data: { id: 'day-slot-lead-time-uuid', type: 'delivery-slot-lead-time'}},
+              },
+              type: 'order'
+            },
+            'auth-user-id')
+        })
       })
-    })
 
-    it('should return with the PRICING_FAILURE action and message', async () => {
-      getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
-        basket: Immutable.fromJS({ recipes: { 123: 1, 134: 1 }, slotId: 1 }),
-        features: getFeatures('a1b2c3d4')
+      describe('when pricing endpoint fails', () => {
+        it('should return with the PRICING_FAILURE action and message', async () => {
+          const getState = () => createState({ auth: { accessToken: 'token', id: 'user-id' } })
+
+          getOrderPriceSpy.mockResolvedValue([null, 'error from pricing endpoint', 400])
+
+          await actions.pricingRequest()(dispatchSpy, getState)
+
+          expect(dispatchSpy).toHaveBeenCalledTimes(2)
+          expect(dispatchSpy).toHaveBeenCalledWith({
+            type: actionTypes.PRICING_PENDING,
+          })
+          expect(dispatchSpy).toHaveBeenCalledWith({
+            type: actionTypes.PRICING_FAILURE,
+            message: 'error from pricing endpoint',
+          })
+          expect(getOrderPriceSpy).toHaveBeenCalled()
+        })
       })
-
-      pricing.mockReturnValue(Promise.reject('error from pricing endpoint'))
-
-      await actions.pricingRequest()(dispatchSpy, getStateSpy)
-
-      expect(dispatchSpy).toHaveBeenCalledTimes(2)
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.PRICING_PENDING,
-      })
-      expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.PRICING_FAILURE,
-        message: 'error from pricing endpoint',
-      })
-      expect(pricing).toHaveBeenCalled()
     })
   })
 

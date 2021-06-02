@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import {
   getNumPortions,
   getBasketRecipes,
+  getBasketRecipesCount,
   getBasketTotalRecipes,
   getBasketOrderTotal,
   getBasketOrderPrices,
@@ -48,6 +49,16 @@ describe('the basket selectors', () => {
         100: 1,
         200: 1,
       }))
+    })
+  })
+
+  describe('getBasketRecipesCount', () => {
+    test('when no recipes it returns the number of recipes in the basket state', () => {
+      expect(getBasketRecipesCount({ basket: Immutable.fromJS({}) })).toEqual(0)
+    })
+
+    test('returns the number of recipes in the basket state', () => {
+      expect(getBasketRecipesCount(state)).toEqual(2)
     })
   })
 

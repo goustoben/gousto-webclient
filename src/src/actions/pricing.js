@@ -2,7 +2,12 @@ import pricingRequestApi from 'apis/pricing'
 import Immutable from 'immutable'
 import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
-import { getIsOrderWithoutRecipes } from 'routes/Menu/selectors/order'
+import { getIsOrderWithoutRecipes, getOrderV2 } from 'routes/Menu/selectors/order'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
+import { getAccessToken, getAuthUserId } from 'selectors/auth'
+import { transformOrderPricesV2ToOrderV1 } from 'routes/Menu/transformers/orderPricesV2ToV1'
+import { getOrderPrice } from 'routes/Menu/apis/orderV2'
+import { getBasketRecipesCount, getBasketSlotId } from 'selectors/basket'
 import { actionTypes } from './actionTypes'
 
 const pricingPending = () => ({
@@ -58,7 +63,8 @@ const mergeAllItems = (items) => (
   }, {})
 )
 
-const getItems = (basket) => {
+const getItems = (state) => {
+  const { basket } = state
   const recipeIds = basket.get('recipes', Immutable.List([])).toJS()
   const productsIds = basket.get('products', Immutable.List([])).toJS()
   const numPortions = basket.get('numPortions')
@@ -75,75 +81,103 @@ const getItems = (basket) => {
   }
 }
 
+const getPricingRequestParamsV1 = (state) => {
+  const { basket, boxSummaryDeliveryDays, auth, user } = state
+  const accessToken = auth.get('accessToken')
+  const isAuthenticated = auth.get('isAuthenticated')
+  const promoCode = basket.get('promoCode', false)
+  const deliveryDate = basket.get('date', false)
+  const deliverySlotId = basket.get('slotId', false)
+  const tariffId = basket.get('tariffId', false)
+  const shouldSendTariffId = !!tariffId && !isAuthenticated
+  const basketItems = getItems(state)
+  const items = basketItems.all
+  const slot = getSlot(boxSummaryDeliveryDays, deliveryDate, deliverySlotId)
+  const daySlotLeadTimeId = slot ? slot.get('daySlotLeadTimeId') : null
+  const nddFeatureValue = getNDDFeatureValue(state)
+  const deliveryTariffId = getDeliveryTariffId(user, nddFeatureValue)
+
+  const pricingRequestParams = [
+    accessToken,
+    items,
+    deliveryDate,
+    deliverySlotId,
+    promoCode,
+    daySlotLeadTimeId,
+    deliveryTariffId
+  ]
+
+  if (shouldSendTariffId) {
+    pricingRequestParams.push(tariffId)
+  }
+
+  return pricingRequestParams
+}
+
+const getPricing = async (dispatch, getState) => {
+  const useOrderPricingV2 = await isOptimizelyFeatureEnabledFactory('radishes_order_api_pricing_web_enabled')(dispatch, getState)
+  const state = getState()
+
+  if (useOrderPricingV2) {
+    const accessToken = getAccessToken(state)
+    const orderRequest = getOrderV2(state)
+    const userId = getAuthUserId(state)
+
+    const [pricing, error] = await getOrderPrice(accessToken, orderRequest, userId)
+
+    if (error) {
+      throw error
+    }
+
+    return transformOrderPricesV2ToOrderV1(pricing)
+  } else {
+    const pricingRequestParams = getPricingRequestParamsV1(state)
+
+    return pricingRequestApi(...pricingRequestParams)
+  }
+}
+
+const pricingClear = () => async (dispatch, getState) => {
+  const prices = getState().pricing.get('prices').toJS()
+
+  if (Object.keys(prices).length) {
+    dispatch(pricingReset())
+  }
+}
+
+const pricingRequest = () => async (dispatch, getState) => {
+  const state = getState()
+  const deliverySlotId = getBasketSlotId(state)
+  const recipesCount = getBasketRecipesCount(state)
+  const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
+
+  if (!deliverySlotId) return
+
+  if (!isOrderWithoutRecipes && recipesCount < 2) {
+    dispatch(pricingClear())
+
+    return
+  }
+
+  dispatch(pricingPending())
+
+  try {
+    const basketPrices = await getPricing(dispatch, getState)
+    dispatch(pricingSuccess(basketPrices.data))
+  } catch (error) {
+    if (typeof error !== 'string') {
+      dispatch(pricingFailure('Something\'s gone wrong signing you up, please try again or contact our customer care team.'))
+
+      return
+    }
+
+    dispatch(pricingFailure(error))
+  }
+}
+
 const pricingActions = {
-  pricingRequest() {
-    return async (dispatch, getState) => {
-      const state = getState()
-
-      const { basket, boxSummaryDeliveryDays, auth, user } = state
-      const accessToken = auth.get('accessToken')
-      const isAuthenticated = auth.get('isAuthenticated')
-      const promoCode = basket.get('promoCode', false)
-      const deliveryDate = basket.get('date', false)
-      const deliverySlotId = basket.get('slotId', false)
-      const tariffId = basket.get('tariffId', false)
-      const shouldSendTariffId = !!tariffId && !isAuthenticated
-      const basketItems = getItems(basket)
-      const items = basketItems.all
-      const slot = getSlot(boxSummaryDeliveryDays, deliveryDate, deliverySlotId)
-      const daySlotLeadTimeId = slot ? slot.get('daySlotLeadTimeId') : null
-      const nddFeatureValue = getNDDFeatureValue(state)
-      const deliveryTariffId = getDeliveryTariffId(user, nddFeatureValue)
-      const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
-
-      const pricingRequestParams = [
-        accessToken,
-        items,
-        deliveryDate,
-        deliverySlotId,
-        promoCode,
-        daySlotLeadTimeId,
-        deliveryTariffId
-      ]
-
-      if (shouldSendTariffId) {
-        pricingRequestParams.push(tariffId)
-      }
-
-      if (!deliverySlotId) {
-        return undefined
-      }
-
-      if (!isOrderWithoutRecipes && Object.keys(basketItems.recipes).length < 2) {
-        dispatch(this.pricingClear())
-
-        return undefined
-      }
-
-      try {
-        dispatch(pricingPending())
-        const basketPrices = await pricingRequestApi(...pricingRequestParams)
-        dispatch(pricingSuccess(basketPrices.data))
-      } catch (err) {
-        let error = err
-        if (typeof err !== 'string') {
-          error = 'Something\'s gone wrong signing you up, please try again or contact our customer care team.'
-        }
-        dispatch(pricingFailure(error))
-      }
-
-      return undefined
-    }
-  },
-  pricingClear: () => (
-    async (dispatch, getState) => {
-      const prices = getState().pricing.get('prices').toJS()
-
-      if (Object.keys(prices).length) {
-        dispatch(pricingReset())
-      }
-    }
-  ),
+  pricingRequest,
+  pricingClear,
 }
 
 export default pricingActions

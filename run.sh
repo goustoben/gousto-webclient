@@ -37,6 +37,7 @@ if [ "$1" == "dev" ]; then
     exit 0
   elif [ "$2" == "--host" ]; then
     printf "\e[1;33;4;44mRunning Webclient on the host\e[0m\n"
+    printf "\033[1m\033[37mURL:\033[0m \033[1m\033[35mhttp://frontend.gousto.local:8080/\033[0m\n"
     cd src
     npm run start:dev & npm run watch
     exit 0
