@@ -33,5 +33,5 @@ module.exports = {
       })
       .end()
   },
-  tags: ['logout', 'logout-success'],
+  tags: ['logout', 'logout-success', 'unstable'],
 };
