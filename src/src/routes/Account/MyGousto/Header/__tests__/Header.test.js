@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import moment from 'moment'
 import config from 'config'
 import { shouldShowEntryPointTooltip } from 'apis/getHelp'
-import * as windowUtils from 'utils/window'
 import logger from 'utils/logger'
 import { Header } from '../Header.logic'
 
@@ -91,6 +90,7 @@ const orderForToday = Immutable.fromJS({
 let wrapper
 const mockLoadOrderTrackingInfo = jest.fn()
 const trackClickGetHelpWithThisBox = jest.fn()
+const trackNextBoxTrackingClick = jest.fn()
 
 describe('MyGousto - Header', () => {
   afterEach(() => {
@@ -112,32 +112,31 @@ describe('MyGousto - Header', () => {
   })
 
   describe('when a user has upcoming orders', () => {
-    let nextDeliveryDetails
+    const NEXT_ORDER_TRACKING = 'www.courier.com/order/asdf'
 
     beforeEach(() => {
       wrapper = mount(
         <Header
           accessToken={ACCESS_TOKEN}
+          nextOrderTracking={NEXT_ORDER_TRACKING}
+          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
+          trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
         />
       )
 
       // Props changed so componentDidUpdate runs
       wrapper.setProps({ orders: upcomingOrders })
-
-      nextDeliveryDetails = wrapper.find('OrderDetails').first()
     })
 
-    test('should show the correct date of the next order to be delivered', () => {
+    test('should render the NextOrder component with the right props', () => {
+      const nextOrder = wrapper.find('NextOrder')
       const expectedDateString = moment().add(2, 'days').format('dddd Do MMMM')
-      expect(nextDeliveryDetails.find('.message').first().text()).toBe(expectedDateString)
-    })
-
-    test('should show the correct delivery times of the next order to be delivered', () => {
-      expect(nextDeliveryDetails.find('.message').last().text()).toBe('8am - 7pm')
-    })
-
-    test('does not render a tracking button if a tracking URL is not available', () => {
-      expect(wrapper.find('CardWithLink').first().find('Button').exists()).toBe(false)
+      expect(nextOrder.prop('boxTrackingUrl')).toBe(NEXT_ORDER_TRACKING)
+      expect(nextOrder.prop('orderId')).toBe('101')
+      expect(nextOrder.prop('primaryMessage')).toBe(expectedDateString)
+      expect(nextOrder.prop('secondaryMessage')).toBe('8am - 7pm')
+      expect(nextOrder.prop('trackButtonClick')).toBe(trackNextBoxTrackingClick)
+      expect(nextOrder.prop('trackLinkClick')).toBe(trackClickGetHelpWithThisBox)
     })
 
     test('GetHelp API shouldShowEntryPointTooltip is called with the right parameters', () => {
@@ -186,8 +185,7 @@ describe('MyGousto - Header', () => {
 
       test('shows a tooltip pointing to the Get Help link', () => {
         wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
-        expect(wrapper.find('CardWithLink').first().find('InfoTip'))
-          .toHaveLength(1)
+        expect(wrapper.find('NextOrder').prop('hasTooltip')).toBe(true)
       })
     })
 
@@ -204,8 +202,7 @@ describe('MyGousto - Header', () => {
 
       test('does not show any tooltip', () => {
         wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
-        expect(wrapper.find('CardWithLink').first().find('InfoTip').exists())
-          .toBe(false)
+        expect(wrapper.find('NextOrder').prop('hasTooltip')).toBe(false)
       })
     })
 
@@ -220,20 +217,16 @@ describe('MyGousto - Header', () => {
         )
       })
 
+      test('it passes hasDeliveryToday to NextOrder as false', () => {
+        expect(wrapper.find('NextOrder').prop('hasDeliveryToday')).toBe(false)
+      })
+
       test('shows a link that says "View my deliveries"', () => {
-        const linkLabel = wrapper.find('CardWithLink').first().prop('linkLabel')
-        expect(linkLabel).toBe('View my deliveries')
+        expect(wrapper.find('NextOrder').prop('linkLabel')).toBe('View my deliveries')
       })
 
       test('shows link to my deliveries', () => {
-        const linkUrl = wrapper.find('CardWithLink').first().prop('linkUrl')
-        expect(linkUrl).toContain('/my-deliveries')
-      })
-
-      test('shows a link that is not client routed', () => {
-        const clientRouted = wrapper.find('CardWithLink').first()
-          .find('GoustoLink').prop('clientRouted')
-        expect(clientRouted).toBe(false)
+        expect(wrapper.find('NextOrder').prop('linkUrl')).toBe('/my-deliveries')
       })
     })
 
@@ -246,113 +239,27 @@ describe('MyGousto - Header', () => {
             trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
           />
         )
-        nextDeliveryDetails = wrapper.find('OrderDetails').first()
+      })
+
+      test('it passes hasDeliveryToday to NextOrder as true', () => {
+        expect(wrapper.find('NextOrder').prop('hasDeliveryToday')).toBe(true)
       })
 
       test('explicitly shows that the order is arriving today', () => {
-        expect(nextDeliveryDetails.find('.message').first().text()).toBe('Today')
+        expect(wrapper.find('NextOrder').prop('primaryMessage')).toBe('Today')
       })
 
       test('shows a link that says "Get help with this box"', () => {
-        const linkLabel = wrapper.find('CardWithLink').first().prop('linkLabel')
-        expect(linkLabel).toBe('Get help with this box')
+        expect(wrapper.find('NextOrder').prop('linkLabel')).toBe('Get help with this box')
       })
 
       test('should link to getHelp page with order id', () => {
-        const linkUrl = wrapper.find('CardWithLink').first().prop('linkUrl')
-        expect(linkUrl.includes('/get-help?orderId=100')).toBe(true)
-      })
-
-      test('shows a link that is client routed', () => {
-        const clientRouted = wrapper.find('CardWithLink').first()
-          .find('GoustoLink').prop('clientRouted')
-        expect(clientRouted).toBe(true)
-      })
-
-      describe('when Get help with this box is clicked', () => {
-        test('trackClickGetHelpWithThisBox is called with correct data', () => {
-          const getHelpWithThisBoxLink = wrapper.find('CardWithLink').first().find('GoustoLink')
-          getHelpWithThisBoxLink.simulate('click')
-
-          expect(trackClickGetHelpWithThisBox).toHaveBeenCalledWith('100')
-        })
-      })
-    })
-
-    describe('and a tracking URL is available for the next order', () => {
-      const TRACKING_URL = 'https://test-tracking-url/order-id'
-      const mockTrackNextBoxTrackingClick = jest.fn()
-
-      beforeEach(() => {
-        wrapper = mount(
-          <Header
-            accessToken={ACCESS_TOKEN}
-            trackNextBoxTrackingClick={mockTrackNextBoxTrackingClick}
-            orders={upcomingOrders}
-            nextOrderTracking={TRACKING_URL}
-          />
-        )
-      })
-
-      test('renders a track my box button', () => {
-        expect(wrapper.find('CardWithLink').first().find('Button').text()).toBe('Track my box')
-      })
-
-      describe('and the tracking button is clicked', () => {
-        let windowOpenSpy
-
-        beforeEach(() => {
-          windowOpenSpy = jest.spyOn(windowUtils, 'windowOpen')
-          wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
-        })
-
-        afterEach(() => {
-          jest.clearAllMocks()
-        })
-
-        test('opens the tracking page in a new tab', () => {
-          expect(windowOpenSpy).toHaveBeenCalledWith(TRACKING_URL)
-        })
-
-        test('dispatches the tracking action', () => {
-          expect(mockTrackNextBoxTrackingClick).toHaveBeenCalledTimes(1)
-        })
+        expect(wrapper.find('NextOrder').prop('linkUrl')).toBe('/get-help?orderId=100')
       })
     })
   })
 
   describe('when a user has no upcoming orders', () => {
-    test('should show the no upcoming orders message', () => {
-      wrapper = mount(
-        <Header
-          accessToken={ACCESS_TOKEN}
-          orders={previousOrders}
-        />
-      )
-      const nextDeliveryDetails = wrapper.find('OrderDetails').first()
-      expect(nextDeliveryDetails.find('.message').first().text()).toBe('No boxes scheduled')
-    })
-
-    test('shows a link that says "View this week\'s menu"', () => {
-      const linkLabel = wrapper.find('CardWithLink').first().prop('linkLabel')
-      expect(linkLabel).toBe('View this week\'s menu')
-    })
-
-    test('shows link to the menu', () => {
-      const linkUrl = wrapper.find('CardWithLink').first().prop('linkUrl')
-      expect(linkUrl).toContain('/menu')
-    })
-
-    test('shows a link that is client routed', () => {
-      const clientRouted = wrapper.find('CardWithLink').first()
-        .find('GoustoLink').prop('clientRouted')
-      expect(clientRouted).toBe(true)
-    })
-  })
-
-  describe('when a user has previously delivered orders', () => {
-    let previousDeliveryDetails
-
     beforeEach(() => {
       wrapper = mount(
         <Header
@@ -360,12 +267,34 @@ describe('MyGousto - Header', () => {
           orders={previousOrders}
         />
       )
-      previousDeliveryDetails = wrapper.find('OrderDetails').at(1)
     })
 
-    test('should show the correct date of the next order to be delivered', () => {
+    test('should render the NoNextOrder component with the right props', () => {
+      const noNextOrder = wrapper.find('NoNextOrder')
+      expect(noNextOrder.prop('linkLabel')).toBe("View this week's menu")
+      expect(noNextOrder.prop('linkUrl')).toBe('/menu')
+      expect(noNextOrder.prop('primaryMessage')).toBe('No boxes scheduled')
+    })
+  })
+
+  describe('when a user has previously delivered orders', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Header
+          accessToken={ACCESS_TOKEN}
+          orders={previousOrders}
+          trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
+        />
+      )
+    })
+
+    test('should render the PreviousOrder component with the right props', () => {
       const expectedDateString = moment().subtract(2, 'days').format('dddd Do MMMM')
-      expect(previousDeliveryDetails.find('.message').first().text()).toContain(expectedDateString)
+      const previousOrder = wrapper.find('PreviousOrder')
+      expect(previousOrder.prop('linkUrl')).toBe('/get-help?orderId=101')
+      expect(previousOrder.prop('orderId')).toBe('101')
+      expect(previousOrder.prop('message')).toBe(expectedDateString)
+      expect(previousOrder.prop('trackClick')).toBe(trackClickGetHelpWithThisBox)
     })
 
     describe('and the call to GetHelp API shouldShowEntryPointTooltip errors', () => {
@@ -405,10 +334,9 @@ describe('MyGousto - Header', () => {
         wrapper.setProps({ orders: previousOrders })
       })
 
-      test('shows a tooltip pointing to the Get Help link', () => {
+      test('sets hasTooltip to true in PreviousOrder', () => {
         wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
-        expect(wrapper.find('CardWithLink').last().find('InfoTip'))
-          .toHaveLength(1)
+        expect(wrapper.find('PreviousOrder').prop('hasTooltip')).toBe(true)
       })
     })
 
@@ -423,10 +351,9 @@ describe('MyGousto - Header', () => {
         wrapper.setProps({ orders: previousOrders })
       })
 
-      test('does not show any tooltip', () => {
+      test('sets hasTooltip to false in PreviousOrder', () => {
         wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
-        expect(wrapper.find('CardWithLink').last().find('InfoTip').exists())
-          .toBe(false)
+        expect(wrapper.find('PreviousOrder').prop('hasTooltip')).toBe(false)
       })
     })
 
@@ -444,8 +371,9 @@ describe('MyGousto - Header', () => {
       })
 
       test('should link to general getHelp contact page', () => {
-        const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
-        expect(linkUrl.includes(config.routes.client.getHelp.contact)).toBe(true)
+        const previousOrder = wrapper.find('PreviousOrder')
+        expect(previousOrder.prop('linkUrl').includes(config.routes.client.getHelp.contact))
+          .toBe(true)
       })
     })
 
@@ -462,16 +390,9 @@ describe('MyGousto - Header', () => {
         wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
       })
 
-      test('should link to getHelp page with order id', () => {
-        const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
-        expect(linkUrl.includes('/get-help?orderId=101')).toBe(true)
-      })
-
-      test('trackClickGetHelpWithThisBox is called with correct data', () => {
-        const getHelpWithThisBoxLink = wrapper.find('CardWithLink').first().find('GoustoLink')
-        getHelpWithThisBoxLink.simulate('click')
-
-        expect(trackClickGetHelpWithThisBox).toHaveBeenCalledWith('101')
+      test('the PreviousOrder linkUrl prop is the getHelp page with order id', () => {
+        const previousOrder = wrapper.find('PreviousOrder')
+        expect(previousOrder.prop('linkUrl')).toBe('/get-help?orderId=101')
       })
     })
   })
@@ -484,7 +405,7 @@ describe('MyGousto - Header', () => {
           orders={upcomingOrders}
         />
       )
-      expect(wrapper.find('OrderDetails')).toHaveLength(1)
+      expect(wrapper.find('PreviousOrder').exists()).toBe(false)
     })
   })
 

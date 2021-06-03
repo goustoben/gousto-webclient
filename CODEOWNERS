@@ -136,6 +136,7 @@
 
 
 /src/src/routes/Account/       @Gousto/squad-rockets
+/src/src/routes/Account/MyGousto/Header       @Gousto/squad-haricots
 /src/src/routes/Welcome/       @Gousto/squad-rockets
 /src/src/routes/Join/       @Gousto/squad-rockets
 /src/src/actions/loggingmanager.js       @Gousto/squad-rockets
