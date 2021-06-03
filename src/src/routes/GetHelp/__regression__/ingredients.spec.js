@@ -19,12 +19,6 @@ describe('Given the customer is logged in', () => {
     cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('userCurrentSubscriptionRequest')
 
     cy.login()
-
-    // Make sure that we are authenticated when going to /get-help/eligibility-check
-    cy.visit('/')
-    cy.wait(['@identifyRequest', '@userCurrentRequest'])
-
-    cy.clock(new Date(2020, 4, 28).getTime(), ['Date'])
   })
 
   afterEach(() => {
@@ -35,6 +29,12 @@ describe('Given the customer is logged in', () => {
 
   describe('When their order is eligible for ingredients refund and Help is clicked', () => {
     beforeEach(() => {
+      // Make sure that we are authenticated when going to /get-help/eligibility-check
+      cy.visit('/')
+      cy.wait(['@identifyRequest', '@userCurrentRequest'])
+
+      cy.clock(new Date(2020, 4, 28).getTime(), ['Date'])
+
       cy.stubAll3rdParties()
       cy.fixture('getHelp/user/userCurrentOrders').as('userCurrentOrders')
       cy.route('GET', /user\/current\/orders/, '@userCurrentOrders').as('userCurrentOrdersRequest')
@@ -163,6 +163,26 @@ describe('Given the customer is logged in', () => {
           cy.contains('phone')
         })
       })
+    })
+  })
+
+  describe('When their order is eligible for ingredients refund and they visit the Ingredients URL directly', () => {
+    beforeEach(() => {
+      cy.fixture('getHelp/ssr/validate').as('validate')
+      cy.route('POST', /ssr\/v1\/ssr\/validate/, '@validate')
+      cy.fixture('getHelp/order/order26May20').as('urlOrder')
+      cy.route('GET', /order\/16269494/, '@urlOrder')
+      cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
+      cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients')
+
+      cy.visit('get-help/user/17247344/order/16269494/ingredients')
+    })
+
+    it('shows the Ingredients page with the recipes and ingredients loaded', () => {
+      expandRecipes([1])
+      cy.get('[data-testing="input-check"]').eq(0).contains('1 red chilli')
+      cy.get('[data-testing="input-check"]').eq(1).contains('2 garlic cloves')
+      cy.get('[data-testing="input-check"]').eq(2).contains('15g fresh root ginger')
     })
   })
 })

@@ -9,11 +9,6 @@ import thunk from 'redux-thunk'
 jest.mock('apis/getHelp')
 
 describe('<Ingredients />', () => {
-  const content = {
-    title: 'test title',
-    body: 'text...',
-    button1Copy: 'Done',
-  }
   const INELIGIBLE_INGREDIENT_UUIDS = ['4e949ce8-d92c-43fa-8c0d-110d903d6e60', '90ea17bd-204c-4ded-9dac-12df03f265d6']
   const recipes = [
     { id: '1', title: 'Fish Curry', ingredients: [{ uuid: '1', label: 'fish' }] },
@@ -53,7 +48,6 @@ describe('<Ingredients />', () => {
     ineligibleIngredientUuids: INELIGIBLE_INGREDIENT_UUIDS,
     isOrderValidationError: false,
     isValidateOrderLoading: false,
-    content,
     order,
     recipes,
     user,
@@ -82,7 +76,7 @@ describe('<Ingredients />', () => {
         </Provider>
       )
       continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
-      getHelpLayout = wrapper.find('GetHelpLayout')
+      getHelpLayout = wrapper.find('GetHelpLayout2')
     })
 
     test('layout is rendering correctly', () => {
@@ -94,17 +88,18 @@ describe('<Ingredients />', () => {
     })
 
     test('header is rendering correctly', () => {
-      expect(getHelpLayout.prop('title')).toBe(content.title)
+      expect(getHelpLayout.prop('headingText')).toBe('Get help with your box')
     })
 
     test('body description is redering correctly', () => {
-      expect(getHelpLayout.prop('body')).toBe(content.body)
+      expect(getHelpLayout.find('.copy').text())
+        .toBe('Which ingredient(s) had an issue? Select meal to see ingredients.')
     })
 
     test('bottom bar buttons is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomFixedContentWrapper')
 
-      expect(BottomBar.find('Button').text()).toContain(content.button1Copy)
+      expect(BottomBar.find('Button').text()).toContain('Continue')
     })
 
     test('the Continue button is disable by default', () => {
@@ -145,7 +140,7 @@ describe('<Ingredients />', () => {
           </Provider>
         )
         continueButton = wrapper.find('BottomFixedContentWrapper').find('Button')
-        getHelpLayout = wrapper.find('GetHelpLayout')
+        getHelpLayout = wrapper.find('GetHelpLayout2')
       })
 
       test('ingredients are unselected by default', () => {

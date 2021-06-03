@@ -13,14 +13,6 @@ import { getIneligibleIngredientUuids } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
-  content: {
-    title: state.content.get('get-help_contact_pageheader_header')
-      || 'Get help with your box',
-    body: state.content.get('get-help_contact_pagecontent_copy')
-      || 'Which ingredient(s) had an issue? Select meal to see ingredients.',
-    button1Copy: state.content.get('get-help_orderissues_pagecontent_button1copy')
-      || 'Continue',
-  },
   ineligibleIngredientUuids: getIneligibleIngredientUuids(state),
   isOrderValidationError: getIsOrderValidationError(state),
   isValidateOrderLoading: getOrderValidationPendingState(state),

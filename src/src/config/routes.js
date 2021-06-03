@@ -42,7 +42,7 @@ module.exports = {
       index: '/get-help',
       ingredientIssues: 'ingredient-issues',
       ingredientReasons: 'ingredient-reasons',
-      ingredients: 'ingredients',
+      ingredients: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/ingredients`,
       orderIssue: 'order-issue',
       recipeCards: 'recipe-cards',
       refund: 'refund',
