@@ -1,4 +1,4 @@
-@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value ScreenXXSMin from 'styles/screenSizes.css';
 @value sizeXXS, sizeXS from 'styles/typography.css';
 
 @value CardBreakpoint ScreenXXSMin;
@@ -27,20 +27,4 @@
   @media CardBreakpoint {
     width: calc(50% - 1rem)
   }
-}
-
-.nextOrder {
-  @media ScreenMDMin {
-    display: flex;
-    align-items: flex-start;
-  }
-}
-
-.orderDetailsItem {
-  padding-bottom: 0.75rem;
-  flex-grow: 1;
-}
-
-.message {
-  margin-bottom: 0;
 }

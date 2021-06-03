@@ -1,0 +1,17 @@
+@value ScreenMDMin from 'styles/screenSizes.css';
+
+.orderDetailsItem {
+  padding-bottom: 0.75rem;
+  flex-grow: 1;
+}
+
+.message {
+  margin-bottom: 0;
+}
+
+.nextOrder {
+  @media ScreenMDMin {
+    display: flex;
+    align-items: flex-start;
+  }
+}

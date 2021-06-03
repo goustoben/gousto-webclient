@@ -5,7 +5,7 @@ export const recipePropType = PropTypes.shape({
   title: PropTypes.string,
   ingredients: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
+      uuid: PropTypes.string,
       label: PropTypes.string,
     })
   ),

@@ -1,45 +1,52 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
-import { GetHelpLayout } from '../layouts/GetHelpLayout'
+import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
+import { RecipeList } from '../components/RecipeList'
+import { RecipeIngredientsContainer } from '../components/RecipeIngredients'
+import { recipePropType } from '../getHelpPropTypes'
+import css from './Ingredients.css'
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
-  content: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    button1Copy: PropTypes.string.isRequired,
-  }).isRequired,
-  cssButton: PropTypes.string.isRequired,
   cannotContinue: PropTypes.bool.isRequired,
+  changeHandler: PropTypes.func.isRequired,
   continueClick: PropTypes.func.isRequired,
+  ineligibleIngredientUuids: PropTypes.arrayOf(PropTypes.string).isRequired,
+  recipes: PropTypes.arrayOf(recipePropType).isRequired,
+  selectedIngredients: PropTypes.instanceOf(Map).isRequired,
 }
 
 const IngredientsPresentation = ({
-  children,
-  content: {
-    title,
-    body,
-    button1Copy,
-  },
-  cssButton,
   cannotContinue,
+  changeHandler,
   continueClick,
+  ineligibleIngredientUuids,
+  recipes,
+  selectedIngredients,
 }) => (
-  <GetHelpLayout title={title} body={body}>
-    {children}
+  <GetHelpLayout2 headingText="Get help with your box">
+    <p className={css.copy}>
+      Which ingredient(s) had an issue? Select meal to see ingredients.
+    </p>
+    <RecipeList recipes={recipes}>
+      <RecipeIngredientsContainer
+        ineligibleIngredientUuids={ineligibleIngredientUuids}
+        selectedIngredients={selectedIngredients}
+        onChange={changeHandler}
+      />
+    </RecipeList>
     <BottomFixedContentWrapper>
       <Button
-        className={cssButton}
+        className={css.button}
         color="primary"
         disabled={cannotContinue}
         onClick={(continueClick)}
       >
-        {button1Copy}
+        Continue
       </Button>
     </BottomFixedContentWrapper>
-  </GetHelpLayout>
+  </GetHelpLayout2>
 )
 
 IngredientsPresentation.propTypes = propTypes

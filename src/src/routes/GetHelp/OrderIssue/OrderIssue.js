@@ -28,7 +28,7 @@ const OrderIssue = ({
         <ItemLink
           label={ingredientsItem}
           trackClick={trackClick(selectOrderIssue, 'ingredients')}
-          to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
+          to={routes.getHelp.ingredients({ userId, orderId })}
           clientRouted
         />
       </div>

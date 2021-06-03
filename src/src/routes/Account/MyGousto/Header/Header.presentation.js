@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config'
-import { CardWithLink } from 'CardWithLink'
-import { Button } from 'goustouicomponents'
-import { windowOpen } from 'utils/window'
-import { OrderDetails } from './OrderDetails/OrderDetails'
+import { NextOrder } from './NextOrder'
+import { NoNextOrder } from './NoNextOrder'
+import { PreviousOrder } from './PreviousOrder'
 import { SubscriberPricingBanner } from './SubscriberPricingBanner'
 import css from './Header.css'
 
@@ -28,80 +27,44 @@ const HeaderPresentation = ({
 
   const { client } = config.routes
   const hasNextOrder = nextOrderMessage.secondary
-
-  const renderNextOrder = () => {
-    const { linkLabel, linkUrl } = nextOrderMessage
-
-    return (
-      <CardWithLink
-        linkLabel={linkLabel}
-        linkUrl={linkUrl}
-        clientRouted={!linkUrl.includes(client.myDeliveries)}
-        testingSelector="nextBoxDeliveryHelp"
-        tooltipContent={hasTooltipForNextOrder
-          && 'Any issues with this box? Let us know and we\'ll sort it out.'}
-        trackClick={hasDeliveryToday ? () => trackClickGetHelpWithThisBox(nextOrderId) : null}
-      >
-        <OrderDetails heading="Your next box delivery">
-          <div className={css.nextOrder}>
-            <div className={css.orderDetailsItem}>
-              <p className={css.message}><strong>{nextOrderMessage.primary}</strong></p>
-              <p className={css.message}>{nextOrderMessage.secondary}</p>
-            </div>
-            {nextOrderTracking && (
-              <div className={css.orderDetailsItem}>
-                <Button
-                  width="full"
-                  onClick={() => {
-                    trackNextBoxTrackingClick(nextOrderId)
-                    windowOpen(nextOrderTracking)
-                  }}
-                >
-                  Track my box
-                </Button>
-              </div>
-            )}
-          </div>
-        </OrderDetails>
-      </CardWithLink>
-    )
-  }
-
-  const renderNoNextOrder = () => (
-    <CardWithLink
-      linkLabel={nextOrderMessage.linkLabel}
-      linkUrl={nextOrderMessage.linkUrl}
-    >
-      <OrderDetails heading="Your next box delivery">
-        <div className={css.orderDetailsItem}>
-          <p className={css.message}><strong>{nextOrderMessage.primary}</strong></p>
-        </div>
-      </OrderDetails>
-    </CardWithLink>
-  )
-
-  const renderPreviousOrder = () => (
-    <CardWithLink
-      linkLabel="Get help with this box"
-      linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
-      trackClick={() => trackClickGetHelpWithThisBox(previosOrderId)}
-      tooltipContent={hasTooltipForPreviousOrder
-        && 'Any issues with this box? Let us know and we\'ll sort it out.'}
-    >
-      <OrderDetails heading="Your most recent box delivery">
-        <div className={css.orderDetailsItem}>
-          <p className={css.message}><strong>{previousOrderMessage}</strong></p>
-        </div>
-      </OrderDetails>
-    </CardWithLink>
-  )
+  const { linkLabel, linkUrl } = nextOrderMessage
 
   return (
     <div>
       {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
       <div className={css.cardsContainer}>
-        {hasNextOrder ? renderNextOrder() : renderNoNextOrder()}
-        {previousOrderMessage && renderPreviousOrder()}
+        {hasNextOrder
+          ? (
+            <NextOrder
+              boxTrackingUrl={nextOrderTracking}
+              hasDeliveryToday={hasDeliveryToday}
+              hasTooltip={hasTooltipForNextOrder}
+              linkLabel={linkLabel}
+              linkUrl={linkUrl}
+              orderId={nextOrderId}
+              primaryMessage={nextOrderMessage.primary}
+              secondaryMessage={nextOrderMessage.secondary}
+              trackButtonClick={trackNextBoxTrackingClick}
+              trackLinkClick={trackClickGetHelpWithThisBox}
+            />
+          )
+          : (
+            <NoNextOrder
+              linkLabel={nextOrderMessage.linkLabel}
+              linkUrl={nextOrderMessage.linkUrl}
+              primaryMessage={nextOrderMessage.primary}
+            />
+          )}
+        {previousOrderMessage
+          && (
+            <PreviousOrder
+              hasTooltip={hasTooltipForPreviousOrder}
+              linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+              orderId={previosOrderId}
+              message={previousOrderMessage}
+              trackClick={trackClickGetHelpWithThisBox}
+            />
+          )}
       </div>
     </div>
   )
