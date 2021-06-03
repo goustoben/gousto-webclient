@@ -4,6 +4,7 @@ import { getFormSyncErrors } from 'redux-form'
 import routes from 'config/routes'
 import gaID from 'config/head/gaTracking'
 import { PaymentMethod } from 'config/signup'
+import { errorsThatClearOrderPreview } from 'config/checkout'
 
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
@@ -136,6 +137,27 @@ export const handlePromoCodeRemoved = async (dispatch, getState) => {
   }
 }
 
+export const handleCheckoutError = async (err, initiator, dispatch, getState, options = {}) => {
+  const { code } = err
+
+  logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+
+  dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, code, initiator))
+  dispatch(error(actionTypes.CHECKOUT_SIGNUP, code))
+  if (code === errorCodes.duplicateDetails) {
+    if (options.skipPromoCodeRemovedCheck) {
+      return
+    }
+
+    await handlePromoCodeRemoved(dispatch, getState)
+  } else if (errorsThatClearOrderPreview.includes(code)) {
+    // Certain error scenarios trigger the rollback logic which removes the
+    // order preview, hence the preview order id stored at the client becomes
+    // invalid.  Regenerate the order preview when such an error is detected.
+    await dispatch(checkoutCreatePreviewOrder())
+  }
+}
+
 export function checkoutSignup() {
   return async (dispatch, getState) => {
     const state = getState()
@@ -167,13 +189,7 @@ export function checkoutNon3DSSignup() {
       await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
-      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
-
-      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkoutNon3DSSignup'))
-      dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
-      if (err.code === errorCodes.duplicateDetails) {
-        await handlePromoCodeRemoved(dispatch, getState)
-      }
+      await handleCheckoutError(err, 'checkoutNon3DSSignup', dispatch, getState)
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
     }
@@ -237,9 +253,7 @@ export function checkout3DSSignup() {
       })
       dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
     } catch (err) {
-      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
-      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkout3DSSignup'))
-      dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
+      await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck: true })
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
     }
   }
@@ -270,12 +284,7 @@ export const checkPaymentAuth = (sessionId) => (
         dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))
       }
     } catch (err) {
-      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
-      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, err.code, 'checkPaymentAuth'))
-      dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
-      if (err.code === errorCodes.duplicateDetails) {
-        await handlePromoCodeRemoved(dispatch, getState)
-      }
+      await handleCheckoutError(err, 'checkPaymentAuth', dispatch, getState)
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
     }
