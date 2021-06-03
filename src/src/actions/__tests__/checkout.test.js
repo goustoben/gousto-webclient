@@ -608,6 +608,26 @@ describe('checkout actions', () => {
 
         expect(dispatch).toHaveBeenCalledWith({ type: 'error_action' })
         expect(statusActions.error).toHaveBeenCalledWith('CHECKOUT_SIGNUP', null)
+
+        expect(checkoutCreatePreviewOrder).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when an error triggers removal of the order preview', () => {
+      beforeEach(() => {
+        userSubscribe.mockImplementation(() => {
+          // This simulates a throw in src/src/utils/fetch.js.
+          // eslint-disable-next-line no-throw-literal
+          throw {
+            code: '422-payment-failed'
+          }
+        })
+      })
+
+      test('then it should re-create the order preview', async () => {
+        await checkoutNon3DSSignup()(dispatch, getState)
+
+        expect(checkoutCreatePreviewOrder).toHaveBeenCalled()
       })
     })
   })
