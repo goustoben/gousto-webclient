@@ -666,6 +666,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
       marketing_do_allow_email: Number(account.get('allowEmail') || false),
       marketing_do_allow_thirdparty: Number(account.get('allowThirdPartyEmail') || false),
       delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
+      gousto_ref: state.checkout.get('goustoRef')
     },
     addresses: {
       shipping_address: {
@@ -684,7 +685,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
       box_id: basket.get('boxId')
     },
     decoupled: {
-      payment: isDecoupledPaymentEnabled ? 1 : 0,
+      payment: Number(isDecoupledPaymentEnabled || false),
     }
   }
 
@@ -721,11 +722,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     }
 
     reqData.payment_method = paymentMethod
-
-    if (isCard && sca3ds) {
-      reqData['3ds'] = true
-      reqData.customer.gousto_ref = state.checkout.get('goustoRef')
-    }
+    reqData['3ds'] = Number((isCard && sca3ds) || false)
   }
 
   return reqData

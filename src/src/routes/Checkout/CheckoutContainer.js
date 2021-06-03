@@ -8,6 +8,7 @@ import {
   trackCheckoutButtonPressed,
   clearPayPalClientToken,
   checkoutStepIndexReached,
+  fetchGoustoRef,
 } from 'actions/checkout'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
@@ -44,4 +45,5 @@ export const CheckoutContainer = connect(mapStateToProps, {
   trackCheckoutNavigationLinks,
   loginVisibilityChange: actions.loginVisibilityChange,
   checkoutStepIndexReached,
+  fetchGoustoRef,
 })(Checkout)

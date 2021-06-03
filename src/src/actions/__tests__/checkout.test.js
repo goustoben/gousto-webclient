@@ -40,6 +40,7 @@ import checkoutActions, {
   firePayPalError,
   checkoutStepIndexReached,
   handlePromoCodeRemoved,
+  fetchGoustoRef,
 } from 'actions/checkout'
 
 jest.mock('utils/basket', () => ({
@@ -632,9 +633,62 @@ describe('checkout actions', () => {
     })
   })
 
+  describe('fetchGoustoRef', () => {
+    describe('when gousto reference is not retrieved', () => {
+      beforeEach(() => {
+        const state = createState()
+        getState.mockReturnValue(state)
+      })
+
+      test('should retrieve gousto reference', async () => {
+        await fetchGoustoRef()(dispatch, getState)
+
+        expect(fetchReference).toHaveBeenCalled()
+      })
+
+      test('should store gousto reference', async () => {
+        await fetchGoustoRef()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+          goustoRef: '105979923'
+        })
+      })
+    })
+
+    describe('when gousto reference has been already retrieved', () => {
+      beforeEach(() => {
+        const checkoutState = createState()
+          .checkout.set('goustoRef', '105979923')
+        getState.mockReturnValue(createState({
+          checkout: checkoutState
+        }))
+      })
+
+      test('should not retrieve new reference', async () => {
+        await fetchGoustoRef()(dispatch, getState)
+
+        expect(fetchReference).not.toHaveBeenCalled()
+      })
+
+      test('should not store new reference', async () => {
+        await fetchGoustoRef()(dispatch, getState)
+
+        expect(dispatch).not.toHaveBeenCalledWith({
+          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+          goustoRef: expect.any(String)
+        })
+      })
+    })
+  })
+
   describe('checkout3DSSignup', () => {
     beforeEach(() => {
-      getState.mockReturnValue(createState())
+      const checkoutState = createState()
+        .checkout.set('goustoRef', '105979923')
+      getState.mockReturnValue(createState({
+        checkout: checkoutState
+      }))
     })
 
     describe('when promo code is not applied', () => {
@@ -708,48 +762,6 @@ describe('checkout actions', () => {
         await checkout3DSSignup()(dispatch, getState)
 
         expect(authPayment).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('when gousto reference is not retrieved', () => {
-      test('should retrieve gousto reference', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(fetchReference).toHaveBeenCalled()
-      })
-
-      test('should store gousto reference', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
-          goustoRef: '105979923'
-        })
-      })
-    })
-
-    describe('when gousto reference has been already retrieved', () => {
-      beforeEach(() => {
-        const checkoutState = createState()
-          .checkout.set('goustoRef', '105979923')
-        getState.mockReturnValue(createState({
-          checkout: checkoutState
-        }))
-      })
-
-      test('should not retrieve new reference', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(fetchReference).not.toHaveBeenCalled()
-      })
-
-      test('should not store new reference', async () => {
-        await checkout3DSSignup()(dispatch, getState)
-
-        expect(dispatch).not.toHaveBeenCalledWith({
-          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
-          goustoRef: expect.any(Number)
-        })
       })
     })
 

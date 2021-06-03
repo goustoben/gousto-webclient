@@ -382,7 +382,7 @@ describe('user actions', () => {
 
       test('should add "3ds=true" param to the user signup request', async () => {
         const expected = expect.objectContaining({
-          '3ds': true
+          '3ds': 1
         })
 
         await userSubscribe(sca3ds, sessionId)(dispatch, getState)
@@ -441,7 +441,7 @@ describe('user actions', () => {
       test('should not add "3ds=true" param to the user signup request', async () => {
         await userSubscribe(sca3ds, sessionId)(dispatch, getState)
 
-        expect(customerSignup.mock.calls[0][1]['3ds']).not.toBeDefined()
+        expect(customerSignup.mock.calls[0][1]['3ds']).toBe(0)
       })
 
       test('should have PayPal payment method', async () => {
@@ -576,6 +576,7 @@ describe('user actions', () => {
       beforeEach(() => {
         expectedParam = {
           order_id: undefined,
+          check_last_name: undefined,
           promocode: '',
           customer: {
             tariff_id: '',
@@ -589,6 +590,7 @@ describe('user actions', () => {
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
             delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+            gousto_ref: '105979923'
           },
           payment_method: {
             is_default: 1,
@@ -628,6 +630,7 @@ describe('user actions', () => {
             delivery_slot_id: undefined,
             box_id: undefined
           },
+          '3ds': 0,
           decoupled: {
             payment: 0,
           }
@@ -721,6 +724,7 @@ describe('user actions', () => {
         }
         expected = {
           order_id: undefined,
+          check_last_name: undefined,
           promocode: '',
           customer: {
             tariff_id: '',
@@ -734,6 +738,7 @@ describe('user actions', () => {
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
             delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+            gousto_ref: '105979923',
           },
           addresses: {
             billing_address: {

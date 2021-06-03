@@ -49,6 +49,7 @@ const propTypes = {
   }),
   trackCheckoutButtonPressed: PropTypes.func,
   changeRecaptcha: PropTypes.func,
+  fetchGoustoRef: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
   fetchPayPalClientToken: PropTypes.func,
   clearPayPalClientToken: PropTypes.func,
@@ -68,6 +69,7 @@ const defaultProps = {
   params: {},
   redirect: () => {},
   changeRecaptcha: () => {},
+  fetchGoustoRef: () => {},
   submitOrder: () => {},
   trackSignupStep: () => {},
   query: {
@@ -162,7 +164,7 @@ class Checkout extends PureComponent {
 
   componentDidMount() {
     const { store } = this.context
-    const { query = {}, params = {}, trackSignupStep, changeRecaptcha } = this.props
+    const { query = {}, params = {}, trackSignupStep, changeRecaptcha, fetchGoustoRef } = this.props
     const { paypalScriptsReady } = this.state
 
     Checkout.fetchData({ store, query, params })
@@ -184,6 +186,7 @@ class Checkout extends PureComponent {
     }
 
     changeRecaptcha()
+    fetchGoustoRef()
   }
 
   componentWillUnmount() {
