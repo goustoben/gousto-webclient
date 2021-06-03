@@ -113,6 +113,11 @@ const logout = () => (
   async dispatch => {
     await dispatch(authActions.authClear())
     dispatch(postLogoutSteps())
+
+    console.log('@@@--login.js--L113--Destroying braze user')
+    const appboy = require('@braze/web-sdk')
+
+    appboy.destroy()
   }
 )
 

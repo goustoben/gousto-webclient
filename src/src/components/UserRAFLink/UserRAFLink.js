@@ -4,6 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import { actionTypes } from 'actions/actionTypes'
 import { getReferralLink, SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
+// import appboy from '@braze/web-sdk'
 import css from './UserRAFLink.css'
 
 class UserRAFLink extends React.PureComponent {
@@ -37,6 +38,10 @@ class UserRAFLink extends React.PureComponent {
     this.timeout = setTimeout(() => {
       this.setState({ copiedMessageVisible: false })
     }, 2000)
+
+    console.log('@@@--UserRAFLink.js--L42--Firing braze custom event')
+    const appboy = require('@braze/web-sdk')
+    appboy.logCustomEvent('webclient_test_event')
   }
 
   render() {

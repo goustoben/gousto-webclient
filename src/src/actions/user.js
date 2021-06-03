@@ -310,6 +310,20 @@ function userLoadData() {
       dispatch(trackUserAttributes())
     }
 
+    if (typeof window !== 'undefined') {
+      const appboy = require('@braze/web-sdk')
+      // Get user
+      const brazeUser = appboy.getUser()
+
+      // If we've not already 'identified', do this now
+      if (!brazeUser) {
+        console.log('@@@--user.js--L321--No braze user identified, changing user now')
+        appboy.changeUser(user.id)
+      } else {
+        console.log('@@@--user.js--L324--Braze user already identified, skipping')
+      }
+    }
+
     dispatch(subscriptionLoadData())
   }
 }

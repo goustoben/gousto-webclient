@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "@axe-core/react": "^4.1.1",
+    "@braze/web-sdk": "^3.3.0",
     "@optimizely/optimizely-sdk": "^4.1.0",
     "actual": "0.4.0",
     "apollo-cache-inmemory": "1.3.8",
@@ -194,6 +195,7 @@
     "svg-url-loader": "^2.3.2",
     "terser": "3.14.1",
     "terser-webpack-plugin": "1.1.0",
+    "typescript": "^4.3.2",
     "url-loader": "1.1.2",
     "webpack": "4.27.1",
     "webpack-bundle-analyzer": "3.3.2",
