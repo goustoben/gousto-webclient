@@ -398,6 +398,7 @@ describe('Given Checkout component', () => {
   describe('componentDidMount', () => {
     const setStateSpy = jest.spyOn(Checkout.prototype, 'setState')
     const changeRecaptcha = jest.fn()
+    const fetchGoustoRef = jest.fn()
 
     beforeEach(() => {
       fetchData = jest.fn().mockReturnValue(Promise.resolve())
@@ -409,6 +410,7 @@ describe('Given Checkout component', () => {
           trackSignupStep={jest.fn()}
           fetchPayPalClientToken={fetchPayPalClientToken}
           changeRecaptcha={changeRecaptcha}
+          fetchGoustoRef={fetchGoustoRef}
         />,
         { context }
       )
@@ -443,6 +445,10 @@ describe('Given Checkout component', () => {
 
     test('should call changeRecaptcha', () => {
       expect(changeRecaptcha).toHaveBeenCalled()
+    })
+
+    test('should fetch gousto_ref', () => {
+      expect(fetchGoustoRef).toHaveBeenCalled()
     })
   })
 

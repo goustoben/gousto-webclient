@@ -218,19 +218,9 @@ export function checkout3DSSignup() {
         }
       }
 
-      let goustoRef = state.checkout.get('goustoRef')
-      if (!goustoRef) {
-        const { data } = await fetchReference()
-        goustoRef = data.goustoRef
-
-        dispatch({
-          type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
-          goustoRef,
-        })
-      }
-
       const { basket } = state
       const orderId = basket.get('previewOrderId')
+      const goustoRef = state.checkout.get('goustoRef')
       const cardToken = getCardToken(state)
       const prices = state.pricing.get('prices')
       const amountInPence = Math.round(prices.get('total', 0) * 100)
@@ -352,6 +342,21 @@ export function checkoutPostSignup(recaptchaValue) {
     }
   }
 }
+
+export const fetchGoustoRef = () => (
+  async (dispatch, getState) => {
+    let goustoRef = getState().checkout.get('goustoRef')
+    if (!goustoRef) {
+      const { data } = await fetchReference()
+      goustoRef = data.goustoRef
+
+      dispatch({
+        type: actionTypes.CHECKOUT_SET_GOUSTO_REF,
+        goustoRef,
+      })
+    }
+  }
+)
 
 export function trackSignupPageChange(step) {
   return (dispatch) => {
