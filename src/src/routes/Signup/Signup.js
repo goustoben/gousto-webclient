@@ -8,7 +8,6 @@ import routes from 'config/routes'
 import actions from 'actions'
 import { stepByName, getPromocodeQueryParam, findStepBySlug } from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
-import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
 import css from './Signup.css'
 
@@ -135,10 +134,6 @@ class Signup extends PureComponent {
 
     const firstStep = stepByName(steps.first())
     const isBoxSizeStep = firstStep.get('slug') === 'box-size'
-
-    // defensive code to ensure menu load days works below for deeplinks
-    const isSignUpPage = true
-    await store.dispatch(loadMenuServiceDataIfDeepLinked(isSignUpPage))
 
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())
