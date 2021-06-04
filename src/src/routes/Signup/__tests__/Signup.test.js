@@ -5,7 +5,6 @@ import actions from 'actions'
 import { StepIndicator } from 'goustouicomponents'
 import { Signup } from 'routes/Signup/Signup'
 import { DiscountAppliedBar } from '../Components/DiscountAppliedBar/DiscountAppliedBar'
-import { loadMenuServiceDataIfDeepLinked } from '../../Menu/fetchData/menuService'
 import css from '../Signup.css'
 
 jest.spyOn(actions, 'signupStepsReceive').mockResolvedValue()
@@ -56,7 +55,6 @@ describe('Signup', () => {
     redirect.mockClear()
     menuLoadDays.mockClear()
     menuLoadDays.mockReset()
-    loadMenuServiceDataIfDeepLinked.mockClear()
     menuLoadBoxPrices.mockClear()
     updatePricePerServing.mockClear()
   })
@@ -69,19 +67,6 @@ describe('Signup', () => {
         menuLoadBoxPrices,
       },
     }
-
-    test('loadMenuServiceDataIfDeepLinked', async () => {
-      await Signup.fetchData({
-        ...fetchDataProps,
-        store: context.store,
-      })
-
-      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
-      expect(dispatch).toHaveBeenCalled()
-      expect(menuLoadDays).toHaveBeenCalledTimes(1)
-      expect(menuLoadBoxPrices).not.toBeCalled()
-      expect(updatePricePerServing).not.toBeCalled()
-    })
 
     describe('when requested step is not the first one', () => {
       beforeEach(async () => {
