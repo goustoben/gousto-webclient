@@ -1,9 +1,9 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import config from 'config/boxprices'
+import { pricePerServing } from 'config/boxprices'
 
 const defaultState = Immutable.Map({
-  pricePerServing: config.pricePerServing,
+  pricePerServing,
   lowestPricePerPortion: {},
 })
 

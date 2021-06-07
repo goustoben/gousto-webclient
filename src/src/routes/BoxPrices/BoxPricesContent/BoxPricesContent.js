@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import classnames from 'classnames'
 
 import Svg from 'Svg'
-import config from 'config/boxprices'
+import { content, quotes } from 'config/boxprices'
 import css from './BoxPricesContent.css'
 
-const BoxPricesContent = () => (
-  <div>
+export const BoxPricesContent = () => (
+  <Fragment>
     <div className={css.container}>
       <div className={css.row}>
-        {config.content.map((content, index) => (
-          <div key={`box-prices-content-${index}`} className={css.content}>
-            <h3 className={css.title}>{content.title}</h3>
-            <p>{content.text}</p>
+        {content.map(contentItem => (
+          <div key={`box-prices-content-${contentItem.title}`} className={css.content}>
+            <h3 className={css.title}>{contentItem.title}</h3>
+            <p>{contentItem.text}</p>
           </div>
         ))}
       </div>
@@ -21,14 +21,12 @@ const BoxPricesContent = () => (
       </div>
     </div>
     <div className={classnames(css.quotes, css.column)}>
-      {config.quotes.map((quote, index) => (
-        <blockquote key={`box-prices-quote-${index}`} className={css.quote}>
+      {quotes.map(quote => (
+        <blockquote key={`box-prices-quote-${quote.source}`} className={css.quote}>
           <p>{quote.text}</p>
           <span className={css.source}>{quote.source}</span>
         </blockquote>
       ))}
     </div>
-  </div>
+  </Fragment>
 )
-
-export default BoxPricesContent

@@ -118,10 +118,6 @@ export const getIsTastePreferencesEnabled = ({ features }) => (
   features && features.getIn(['tastePreferences', 'value'], false)
 )
 
-export const getBoxPricesPageRedesign = ({ features }) => (
-  features && features.getIn(['isBoxPricesPageRedesignEnabled', 'value'], false)
-)
-
 export const getIsLoginModalAppAwarenessEnabled = ({ features }) => (
   features && features.getIn(['isLoginModalAppAwarenessEnabled', 'value'], false)
 )

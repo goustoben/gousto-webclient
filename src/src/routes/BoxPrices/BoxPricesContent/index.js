@@ -1,1 +1,1 @@
-export default from './BoxPricesContent'
+export { BoxPricesContent } from './BoxPricesContent'

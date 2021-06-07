@@ -1,1 +1,1 @@
-export default from './BoxPrice'
+export { BoxPriceBlock } from './BoxPrice'

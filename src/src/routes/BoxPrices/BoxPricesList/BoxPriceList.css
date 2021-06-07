@@ -1,25 +1,14 @@
 @value ScreenMDMin from 'styles/screenSizes.css';
-@value BreakpointFromLarge from 'design-language/breakpoints.css';
 
 .boxPriceList {
-    composes: accountContainer from 'styles/layout.css';
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 15px;
+  composes: accountContainer from 'styles/layout.css';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 15px;
 
-    @media ScreenMDMin {
-        flex-direction: row;
-    }
-
-  &.boxPriceRedesign {
-    flex-direction: column;
-     padding: 2rem 1rem;
-
-    @media BreakpointFromLarge {
-      flex-direction: row;
-      padding: 3rem 0 4rem;
-    }
+  @media ScreenMDMin {
+    flex-direction: row;
   }
 }

@@ -1,1 +1,1 @@
-export default from './BoxPricesList'
+export { BoxPricesListComponent as BoxPricesList } from './BoxPricesList'
