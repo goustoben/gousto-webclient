@@ -106,7 +106,7 @@ const config = {
       __TEST__: false,
 
       __ENV__: JSON.stringify(envName),
-      __API_ENV__: JSON.stringify(envName),
+      __API_ENV__: JSON.stringify(apiName),
       __RUNNING_ENV__: JSON.stringify(runningEnv),
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
