@@ -5,7 +5,7 @@ import config from 'config/routes'
 import MainLayout from 'layouts/MainLayout'
 import { BoxPricesContainer } from './BoxPricesContainer'
 
-export default (
+export const BoxPrices = (
   <Route component={MainLayout}>
     <Route path={config.client.boxPrices} component={BoxPricesContainer} />
   </Route>

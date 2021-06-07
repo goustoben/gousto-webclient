@@ -1,4 +1,4 @@
-import { groupBy } from '../BoxPricesList/boxPricesListUtils'
+import { groupBy } from '../boxPricesListUtils'
 
 const boxTypes = [
   {

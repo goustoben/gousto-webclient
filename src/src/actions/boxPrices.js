@@ -6,7 +6,7 @@ import { signupNextStep } from 'actions/signup'
 import { applyPromoCodeAndRedirect } from 'actions/home'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { fetchBoxPrices } from 'apis/boxPrices'
-import config from 'config/boxprices'
+import { pricePerServing } from 'config/boxprices'
 import { getBasketPostcode } from 'selectors/basket'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
@@ -43,7 +43,7 @@ export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getStat
 }
 
 export const updatePricePerServing = () => async (dispatch, getState) => {
-  let price = config.pricePerServing
+  let price = pricePerServing
   let lowestPricePerPortion = {}
 
   try {

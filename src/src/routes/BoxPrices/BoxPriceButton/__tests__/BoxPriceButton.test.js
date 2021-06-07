@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { BoxPriceButton } from '../BoxPriceButton/BoxPriceButton'
+import { BoxPriceButton } from '../BoxPriceButton'
 
 describe('given BoxPriceButton is rendered', () => {
   let wrapper

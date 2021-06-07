@@ -2,19 +2,19 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
 import Image from 'Image'
-import config from 'config/boxprices'
-import BoxInfo from '../BoxInfo'
+import { boxTypes, cta } from 'config/boxprices'
+import { BoxInfo } from '../BoxInfo'
 import { BoxPriceButton } from '../BoxPriceButton/BoxPriceButton'
 import css from './BoxPrice.css'
 
-class BoxType extends PureComponent {
+class BoxPriceBlock extends PureComponent {
   render() {
     const {
       boxInfo,
       numPersons,
       boxPricesBoxSizeSelected
     } = this.props
-    const boxType = config.boxTypes[numPersons]
+    const boxType = boxTypes[numPersons]
 
     return (
       <div className={css.container}>
@@ -40,13 +40,15 @@ class BoxType extends PureComponent {
 
         <div className={css.link}>
           <p>
-            Delivery is <strong className={css.uppercase}>Free</strong>
+            Delivery is
+            {' '}
+            <strong className={css.uppercase}>Free</strong>
           </p>
           <BoxPriceButton
             numPersons={numPersons}
             boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
           >
-            <span className={css.uppercase}>{config.cta}</span>
+            <span className={css.uppercase}>{cta}</span>
           </BoxPriceButton>
         </div>
       </div>
@@ -54,14 +56,22 @@ class BoxType extends PureComponent {
   }
 }
 
-BoxType.propTypes = {
-  boxInfo: PropTypes.array.isRequired,
+BoxPriceBlock.propTypes = {
+  boxInfo: PropTypes.arrayOf(
+    PropTypes.shape({
+      num_portions: PropTypes.number,
+      price_per_portion: PropTypes.string,
+      total: PropTypes.string,
+    })
+  ).isRequired,
   numPersons: PropTypes.number.isRequired,
-  boxPricesBoxSizeSelected: PropTypes.func
+  boxPricesBoxSizeSelected: PropTypes.func,
 }
 
-BoxType.defaultProps = {
-  boxPricesBoxSizeSelected: () => {}
+BoxPriceBlock.defaultProps = {
+  boxPricesBoxSizeSelected: () => {},
 }
 
-export default BoxType
+export {
+  BoxPriceBlock
+}

@@ -1,1 +1,1 @@
-export default from './BoxInfo'
+export { BoxInfo } from './BoxInfo'

@@ -1,18 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import config from 'config/boxprices'
+import { icons } from 'config/boxprices'
 import css from './BoxIcon.css'
 
 class BoxIcon extends React.PureComponent {
-  static propTypes = {
-    numPersons: PropTypes.number,
-    numPortions: PropTypes.number,
-  }
-
   render() {
     const { numPersons, numPortions } = this.props
-    const icon = config.icons.find((configIcon) =>
+    const icon = icons.find((configIcon) =>
       configIcon.numPersons === numPersons && configIcon.numPortions === numPortions
     )
 
@@ -24,4 +19,11 @@ class BoxIcon extends React.PureComponent {
   }
 }
 
-export default BoxIcon
+BoxIcon.propTypes = {
+  numPersons: PropTypes.number.isRequired,
+  numPortions: PropTypes.number.isRequired,
+}
+
+export {
+  BoxIcon
+}

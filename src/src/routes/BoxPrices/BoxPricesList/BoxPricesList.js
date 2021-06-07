@@ -1,29 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import withError from 'utils/withError'
-import classNames from 'classnames'
-import BoxPrice from '../BoxPrice'
-import { BoxType } from '../BoxType/BoxType'
+import { BoxPriceBlock } from '../BoxPrice'
 import { groupBy } from './boxPricesListUtils'
 import css from './BoxPriceList.css'
 
 const BoxPricesList = ({
   boxPrices,
   type,
-  isBoxPricesPageRedesignEnabled,
-  basketNumPortionChange,
-  goToStep,
-  boxPricesBoxSizeSelected
+  boxPricesBoxSizeSelected,
 }) => {
   const boxTypes = boxPrices[type]
-  const groupByNumPerson = groupBy(boxTypes, 'num_persons')
+  const groupByNumPerson = boxTypes && groupBy(boxTypes, 'num_persons')
 
   return (
-    <div
-      className={classNames(css.boxPriceList, {
-        [css.boxPriceRedesign]: isBoxPricesPageRedesignEnabled
-      })}
-    >
+    <div className={css.boxPriceList}>
       {Object.keys(groupByNumPerson)
         .filter((numPersons) => numPersons !== '8')
         .map((numPersonsStr) => {
@@ -31,16 +22,8 @@ const BoxPricesList = ({
           const numPersons = parseInt(numPersonsStr, 10)
           const boxInfo = groupByNumPerson[numPersonsStr]
 
-          return isBoxPricesPageRedesignEnabled ? (
-            <BoxType
-              key={key}
-              numPersons={numPersons}
-              boxInfo={boxInfo}
-              basketNumPortionChange={basketNumPortionChange}
-              goToStep={goToStep}
-            />
-          ) : (
-            <BoxPrice
+          return (
+            <BoxPriceBlock
               key={key}
               numPersons={numPersons}
               boxInfo={boxInfo}
@@ -53,21 +36,15 @@ const BoxPricesList = ({
 }
 
 BoxPricesList.propTypes = {
-  boxPrices: PropTypes.oneOfType([PropTypes.object]),
+  boxPrices: PropTypes.shape({}),
   type: PropTypes.oneOf(['gourmet', 'vegetarian']),
-  isBoxPricesPageRedesignEnabled: PropTypes.bool,
-  goToStep: PropTypes.func,
-  basketNumPortionChange: PropTypes.func,
-  boxPricesBoxSizeSelected: PropTypes.func
+  boxPricesBoxSizeSelected: PropTypes.func,
 }
 
 BoxPricesList.defaultProps = {
-  boxPrices: null,
+  boxPrices: {},
   type: 'gourmet',
-  isBoxPricesPageRedesignEnabled: false,
-  goToStep: () => {},
-  basketNumPortionChange: () => {},
-  boxPricesBoxSizeSelected: () => {}
+  boxPricesBoxSizeSelected: () => {},
 }
 
-export default withError(BoxPricesList)
+export const BoxPricesListComponent = withError(BoxPricesList)

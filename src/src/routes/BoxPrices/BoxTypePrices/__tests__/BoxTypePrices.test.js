@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { BoxTypePrices } from '../BoxTypePrices/BoxTypePrices'
+import { BoxTypePrices } from '../BoxTypePrices'
 
 describe('BoxTypePrices', () => {
   let wrapper
