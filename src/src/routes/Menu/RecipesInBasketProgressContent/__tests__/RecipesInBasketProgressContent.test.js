@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { mount } from 'enzyme'
 
-import { RecipesInBasketProgressContent} from '../RecipesInBasketProgressContent.logic'
+import { RecipesInBasketProgressContent} from '..'
 
 describe('RecipesInBasketProgressContent', () => {
   let wrapper
@@ -187,16 +187,6 @@ describe('RecipesInBasketProgressContent', () => {
       test('does not show the progress bar', () => {
         expect(layoutContentWrapper.find('ProgressBar')).toHaveLength(0)
       })
-    })
-  })
-
-  describe('when isVisible prop is false', () => {
-    beforeEach(() => {
-      wrapper.setProps({ isVisible: false })
-    })
-
-    test('then component should not be rendered', () => {
-      expect(wrapper.find('.cardContentWrapper').exists()).toBeFalsy()
     })
   })
 })

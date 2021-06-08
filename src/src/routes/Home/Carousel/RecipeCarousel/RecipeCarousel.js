@@ -8,7 +8,7 @@ import { Arrow } from '../CarouselArrow/CarouselArrow'
 import css from './RecipeCarousel.css'
 import { orderRecipes } from './orderRecipes'
 
-const RecipeCarousel = ({ homeCarouselRecipes, isCarouselShiftEnabled }) => (
+const RecipeCarousel = ({ homeCarouselRecipes }) => (
   <div className={`homepageSlider ${css.container}`}>
     <Carousel
       dots={false}
@@ -48,7 +48,6 @@ const RecipeCarousel = ({ homeCarouselRecipes, isCarouselShiftEnabled }) => (
                 ratingCount={recipe.getIn(['rating', 'count'])}
                 maxMediaSize={400}
                 cookingTime={recipe.get('cookingTime')}
-                isCarouselShiftEnabled={isCarouselShiftEnabled}
               />
             </div>
           </div>
@@ -60,11 +59,10 @@ const RecipeCarousel = ({ homeCarouselRecipes, isCarouselShiftEnabled }) => (
 
 RecipeCarousel.propTypes = {
   homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-  isCarouselShiftEnabled: PropTypes.bool,
 }
 
-RecipeCarousel.defaultProps = {
-  isCarouselShiftEnabled: false,
+Arrow.propTypes = {
+  side: PropTypes.string.isRequired,
 }
 
 export { RecipeCarousel }

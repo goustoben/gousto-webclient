@@ -1,1 +1,0 @@
-export { FlexibilityMessage } from './FlexibilityMessage'

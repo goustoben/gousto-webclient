@@ -26,19 +26,6 @@ describe('Hero', () => {
     })
   })
 
-  describe('when FlexibilityMessage feature flag enabled', () => {
-    beforeEach(() => {
-      wrapper.setProps({
-        isHomePageFlexibilityMessageEnabled: true,
-      })
-    })
-
-    test('should render FlexibilityMessage', () => {
-      expect(wrapper.find('NoLockIn')).toHaveLength(0)
-      expect(wrapper.find('FlexibilityMessage')).toBeDefined()
-    })
-  })
-
   describe('when isSticky is true', () => {
     beforeEach(() => {
       wrapper.setState({
