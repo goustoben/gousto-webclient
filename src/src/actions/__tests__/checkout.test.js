@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import Immutable from 'immutable'
 
 import { fetchAddressByPostcode } from 'apis/addressLookup'
@@ -471,21 +472,25 @@ describe('checkout actions', () => {
     let checkout3DSSignupOrig
     let checkoutNon3DSSignupOrig
     let trackSignupPageChangeOrig
+    let fetchGoustoRefOrig
 
     beforeEach(() => {
       checkout3DSSignupOrig = checkoutActions.checkout3DSSignup
       checkoutNon3DSSignupOrig = checkoutActions.checkoutNon3DSSignup
       trackSignupPageChangeOrig = checkoutActions.trackSignupPageChange
+      fetchGoustoRefOrig = checkoutActions.fetchGoustoRef
 
       checkoutActions.checkout3DSSignup = jest.fn()
       checkoutActions.checkoutNon3DSSignup = jest.fn()
       checkoutActions.trackSignupPageChange = jest.fn()
+      checkoutActions.fetchGoustoRef = jest.fn()
     })
 
     afterEach(() => {
       checkoutActions.checkout3DSSignup = checkout3DSSignupOrig
       checkoutActions.checkoutNon3DSSignup = checkoutNon3DSSignupOrig
       checkoutActions.trackSignupPageChange = trackSignupPageChangeOrig
+      checkoutActions.fetchGoustoRef = fetchGoustoRefOrig
     })
 
     describe('when 3DS enabled', () => {
@@ -497,6 +502,12 @@ describe('checkout actions', () => {
             }
           })
         }))
+      })
+
+      test('should fetch gousto reference', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
       })
 
       test('should send "Submit" tracking event', async () => {
@@ -525,6 +536,12 @@ describe('checkout actions', () => {
           }))
         })
 
+        test('should fetch gousto reference', async () => {
+          await checkoutActions.checkoutSignup()(dispatch, getState)
+
+          expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
+        })
+
         test('should init non 3DS signup flow', async () => {
           await checkoutActions.checkoutSignup()(dispatch, getState)
 
@@ -534,6 +551,12 @@ describe('checkout actions', () => {
     })
 
     describe('when 3DS disabled', () => {
+      test('should fetch gousto reference', async () => {
+        await checkoutActions.checkoutSignup()(dispatch, getState)
+
+        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
+      })
+
       test('should send "Submit" tracking event', async () => {
         await checkoutActions.checkoutSignup()(dispatch, getState)
 
@@ -589,6 +612,12 @@ describe('checkout actions', () => {
     test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
       await checkoutNon3DSSignup()(dispatch, getState)
 
+      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+    })
+
+    test('should clear gousto ref', async () => {
+      await checkoutNon3DSSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId: '100004' })
     })
 
@@ -611,6 +640,12 @@ describe('checkout actions', () => {
         expect(statusActions.error).toHaveBeenCalledWith('CHECKOUT_SIGNUP', null)
 
         expect(checkoutCreatePreviewOrder).not.toHaveBeenCalled()
+      })
+
+      test('should clear gousto reference', async () => {
+        await checkoutNon3DSSignup()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       })
     })
 
@@ -763,6 +798,12 @@ describe('checkout actions', () => {
 
         expect(authPayment).not.toHaveBeenCalled()
       })
+
+      test('should not clear gousto reference', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      })
     })
 
     test('should make payment auth request', async () => {
@@ -794,6 +835,24 @@ describe('checkout actions', () => {
       await checkout3DSSignup()(dispatch, getState)
 
       expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
+    })
+
+    test('should not clear gousto reference', async () => {
+      await checkout3DSSignup()(dispatch, getState)
+
+      expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+    })
+
+    describe('when auth payment request failed', () => {
+      beforeEach(() => {
+        authPayment.mockRejectedValueOnce(new Error('Failed request'))
+      })
+
+      test('should clear gousto reference', async () => {
+        await checkout3DSSignup()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      })
     })
   })
 
@@ -881,10 +940,10 @@ describe('checkout actions', () => {
         expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeFailed)
       })
 
-      test('should not clear gousto reference', async () => {
+      test('should clear gousto reference', async () => {
         await checkPaymentAuth(failedSessionId)(dispatch, getState)
 
-        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       })
     })
 
