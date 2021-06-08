@@ -39,6 +39,7 @@ export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
 
 const { pending, error } = statusActions
 
+/* eslint-disable no-use-before-define */
 const checkoutActions = {
   checkoutClearErrors,
   checkoutCreatePreviewOrder,
@@ -47,6 +48,8 @@ const checkoutActions = {
   checkoutSignup,
   checkoutNon3DSSignup,
   checkout3DSSignup,
+  fetchGoustoRef,
+  clearGoustoRef,
   resetDuplicateCheck,
   trackSignupPageChange,
   trackingOrderPlaceAttempt,
@@ -54,6 +57,7 @@ const checkoutActions = {
   trackingOrderPlaceAttemptSucceeded,
   trackPromocodeChange,
 }
+/* eslint-enable no-use-before-define */
 
 const errorCodes = {
   duplicateDetails: '409-duplicate-details',
@@ -162,6 +166,7 @@ export function checkoutSignup() {
   return async (dispatch, getState) => {
     const state = getState()
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
+    await dispatch(checkoutActions.fetchGoustoRef())
 
     const is3DSEnabled = getIs3DSForSignUpEnabled(state)
     const isCardPayment = getCurrentPaymentMethod(state) === PaymentMethod.Card
@@ -179,6 +184,7 @@ export function checkoutNon3DSSignup() {
     const { basket, auth } = getState()
     const orderId = basket.get('previewOrderId')
     const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
+    let needClearGoustoRef = true
 
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
@@ -189,9 +195,13 @@ export function checkoutNon3DSSignup() {
       await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
+      needClearGoustoRef = err.code !== errorCodes.duplicateDetails
       await handleCheckoutError(err, 'checkoutNon3DSSignup', dispatch, getState)
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      if (needClearGoustoRef) {
+        dispatch(checkoutActions.clearGoustoRef())
+      }
     }
   }
 }
@@ -245,6 +255,7 @@ export function checkout3DSSignup() {
     } catch (err) {
       await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck: true })
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      dispatch(checkoutActions.clearGoustoRef())
     }
   }
 }
@@ -267,7 +278,6 @@ export const checkPaymentAuth = (sessionId) => (
         await dispatch(userSubscribe(true, data.sourceId))
         await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
         dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
-        dispatch({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
       } else {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
         dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed, 'checkPaymentAuth'))
@@ -277,6 +287,7 @@ export const checkPaymentAuth = (sessionId) => (
       await handleCheckoutError(err, 'checkPaymentAuth', dispatch, getState)
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      dispatch(checkoutActions.clearGoustoRef())
     }
   }
 )
@@ -343,8 +354,8 @@ export function checkoutPostSignup(recaptchaValue) {
   }
 }
 
-export const fetchGoustoRef = () => (
-  async (dispatch, getState) => {
+export function fetchGoustoRef() {
+  return async (dispatch, getState) => {
     let goustoRef = getState().checkout.get('goustoRef')
     if (!goustoRef) {
       const { data } = await fetchReference()
@@ -356,7 +367,11 @@ export const fetchGoustoRef = () => (
       })
     }
   }
-)
+}
+
+export function clearGoustoRef() {
+  return { type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null }
+}
 
 export function trackSignupPageChange(step) {
   return (dispatch) => {
