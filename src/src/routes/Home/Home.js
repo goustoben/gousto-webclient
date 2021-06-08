@@ -19,8 +19,6 @@ const propTypes = {
   isSignupReductionEnabled: PropTypes.bool,
   pricePerServing: PropTypes.string,
   updatePricePerServing: PropTypes.func,
-  isCarouselShiftEnabled: PropTypes.bool,
-  isHomePageFlexibilityMessageEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -30,8 +28,6 @@ const defaultProps = {
   isSignupReductionEnabled: false,
   pricePerServing: null,
   updatePricePerServing: () => {},
-  isCarouselShiftEnabled: false,
-  isHomePageFlexibilityMessageEnabled: false,
 }
 
 class Home extends Component {
@@ -52,26 +48,19 @@ class Home extends Component {
     }
   }
 
-  getModules = (isSignupReductionEnabled, isCarouselShiftEnabled) =>
+  getModules = (isSignupReductionEnabled) =>
     [
       isSignupReductionEnabled && 'emailForm',
       'hero',
       'trustPilot',
       'whyChooseGousto',
-      isCarouselShiftEnabled ? 'recipes' : 'joeWicks',
-      isCarouselShiftEnabled ? 'joeWicks' : 'recipes',
+      'joeWicks',
+      'recipes',
     ].filter(Boolean)
 
   render() {
-    const {
-      isAuthenticated,
-      variant,
-      isSignupReductionEnabled,
-      pricePerServing,
-      isCarouselShiftEnabled,
-      isHomePageFlexibilityMessageEnabled,
-    } = this.props
-    const modules = this.getModules(isSignupReductionEnabled, isCarouselShiftEnabled)
+    const { isAuthenticated, variant, isSignupReductionEnabled, pricePerServing } = this.props
+    const modules = this.getModules(isSignupReductionEnabled)
     const { menu, signup, home } = routesConfig.client
     let ctaUri = signup
     let ctaText = CTA.text
@@ -107,8 +96,6 @@ class Home extends Component {
           isAuthenticated={isAuthenticated}
           isSignupReductionEnabled={isSignupReductionEnabled}
           pricePerServing={pricePerServing}
-          isCarouselShiftEnabled={isCarouselShiftEnabled}
-          isHomePageFlexibilityMessageEnabled={isHomePageFlexibilityMessageEnabled}
         />
       </div>
     )

@@ -1,4 +1,4 @@
-@value White, Blackberry, Basa, LightestAccessible from 'styles/colors.css';
+@value White, Blackberry, Basa from 'styles/colors.css';
 
 .recipeDetails {
   position: relative;
@@ -35,25 +35,4 @@
 
 .ratingContainer {
   height: 1.25rem;
-}
-
-.redesignDetails {
-  border: 1px solid LightestAccessible;
-}
-
-.redesignContainer {
-  background: Blackberry;
-}
-
-.redesignTitle {
-  color: White;
-}
-
-/* this change had been made only for the experiment and save us time without changing ui-components. In any case this experimental code will be removed */
-.ratingContainer {
-  > div {
-    > span:last-child {
-      color: White;
-    }
-  }
 }

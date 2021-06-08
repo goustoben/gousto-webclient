@@ -1,23 +1,10 @@
 @value BreakpointFromMedium from 'design-language/breakpoints.css';
-@value Blackberry from 'styles/colors.css';
 
 .carouselContainer {
-  padding: 2.5rem 0 0;
+  padding: 2.5rem 0.75rem 0;
 
   @media BreakpointFromMedium {
-    padding: 2.5rem 0 2rem;
-  }
-}
-
-.carouselShiftContainer {
-  background: Blackberry;
-}
-
-.titlePadding {
-  padding: 0 0.75rem;
-
-  @media BreakpointFromMedium {
-    padding: 0 2rem;
+    padding: 2.5rem 2rem 0;
   }
 }
 
@@ -27,6 +14,6 @@
   @media BreakpointFromMedium {
     display: block;
     max-width: 17.5rem;
-    margin: 0 auto;
+    margin: 0 auto 2.5rem;
   }
 }

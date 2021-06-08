@@ -102,10 +102,6 @@ export const getIsLimitedCapacityChristmas = ({ features }) => (
   features && features.getIn(['isLimitedCapacityChristmas', 'value'], false)
 )
 
-export const getHomePageRedesign = ({ features }) => (
-  features && features.getIn(['isHomePageRedesignEnabled', 'value'], false)
-)
-
 export const getIsHelpCentreActive = ({ features }) => (
   features && features.getIn(['isHelpCentreActive', 'value'], false)
 )
@@ -170,20 +166,12 @@ export const getIsWizardPricePerServingEnabled = ({ features }) => (
   features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
 )
 
-export const getIsCarouselShiftEnabled = ({ features }) => (
-  features && features.getIn(['isCarouselShiftEnabled', 'value'], false)
-)
-
 export const getIsPassStrengthEnabled = ({ features }) => (
   features && features.getIn(['isPassStrengthEnabled', 'value'], false)
 )
 
 export const getIsAdditionalCheckoutErrorsEnabled = ({ features }) => (
   features && features.getIn(['isAdditionalCheckoutErrorsEnabled', 'value'], false)
-)
-
-export const getIsHomePageFlexibilityMessageEnabled = ({ features }) => (
-  features && features.getIn(['isHomePageFlexibilityMessageEnabled', 'value'], false)
 )
 
 export const getIsWizardBoxSizeEnabled = ({ features }) => (
