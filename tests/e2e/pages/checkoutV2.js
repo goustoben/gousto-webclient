@@ -25,6 +25,9 @@ module.exports = {
         cardInfoMissing: {
           selector: '*[data-testing="valid-card-details-not-provided"]',
         },
+        paymentFailed: {
+          selector: '*[data-testing="payment-failure"]',
+        },
         promoCodeError: {
           selector: '*[data-testing="user-promo-invalid"]',
         },
@@ -189,6 +192,7 @@ module.exports = {
                 .waitForElementVisible('@cardNumber')
                 .setValue('@cardNumber', '')
 
+              browser.keys(browser.Keys.BACK_SPACE.repeat(16))
               browser.keys(cardNumber)
             },
             setCardExpiryDate: function (browser) {
@@ -423,6 +427,16 @@ module.exports = {
           this.section.payment.changeCardSecurityCode(browser)
           return this
         },
+        enterCardDetailsWithWrongCvv: function (browser) {
+          this.section.payment.setCardNumber(browser)
+          browser.pause(SMALL_DELAY)
+          this.section.payment.setCardName(browser)
+          browser.pause(SMALL_DELAY)
+          this.section.payment.changeCardExpiryDate(browser)
+          browser.pause(SMALL_DELAY)
+          this.section.payment.changeCardSecurityCode(browser, '101')
+          return this
+        },
         changeAndSubmitPaymentSection: function (browser) {
           browser.pause(SMALL_DELAY)
           this.section.payment.changeCardNumber(browser)
@@ -442,6 +456,46 @@ module.exports = {
             .expect.element('@cardInfoMissing').to.be.present.before(SMALL_DELAY)
           this.section.payment.changeCardExpiryDateToEmpty(browser)
           return this
+        },
+        asyncCheckPaymentFailed: function(browser, done) {
+          // "Promo code removed" error is reported earlier than payment
+          // failed; and it is shown only in certain cases (1st run: not shown,
+          // all subsequent runs: shown because of the address clash).  If we
+          // see this error, then resubmit the form.
+          const conditions = [
+            {
+              tag: 'promoCodeError',
+              checkFn: (callback) => {
+                const selector = this.elements.promoCodeError.selector
+                asyncIsElementBySelectorPresent(browser, selector, callback)
+              }
+            },
+            {
+              tag: 'paymentFailed',
+              checkFn: (callback) => {
+                const selector = this.elements.paymentFailed.selector
+                asyncIsElementBySelectorPresent(browser, selector, callback)
+              }
+            }
+          ]
+
+          const onPollDone = (pollResult, passedTag) => {
+            if (pollResult === 'timeRanOut') {
+              browser.assert.fail('Expected either promo code error or payment failed error to be visible')
+              done()
+            } else if (passedTag === 'promoCodeError') {
+              this.asyncResubmitAndExpectOnlyPaymentFailed(browser, done)
+            } else if (passedTag === 'paymentFailed') {
+              done()
+            }
+          }
+
+          pollRace(conditions, onPollDone)
+        },
+        asyncResubmitAndExpectOnlyPaymentFailed: function(browser, done) {
+          this.goToNextStep()
+          this.waitForElementVisible('@paymentFailed')
+          done()
         },
         asyncSkipPromoCodeErrorIfPresent: function (browser, done) {
           const goToNextStep = this.goToNextStep.bind(this)
