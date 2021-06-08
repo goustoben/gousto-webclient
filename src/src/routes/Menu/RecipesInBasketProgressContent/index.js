@@ -1,1 +1,1 @@
-export { RecipesInBasketProgressContentContainer as RecipesInBasketProgressContent } from './RecipesInBasketProgressContentContainer'
+export { RecipesInBasketProgressContent } from './RecipesInBasketProgressContent.logic'

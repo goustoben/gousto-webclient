@@ -14,23 +14,15 @@ import css from './RecipesInBasketProgressContent.css'
 
 const propTypes = {
   selectedRecipesCount: PropTypes.number.isRequired,
-  isVisible: PropTypes.bool,
-}
-
-const defaultProps = {
-  isVisible: true,
 }
 
 const recipeCountToPercentage = (selectedRecipesCount) => (
   Math.round((selectedRecipesCount / maxRecipesNum) * 100)
 )
 
-const RecipesInBasketProgressContent = ({ selectedRecipesCount, isVisible }) => {
-  if (!isVisible) {
-    return null
-  }
-
+const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
   const isBasketFull = selectedRecipesCount >= maxRecipesNum
+
   const cardClasses = classnames(
     css.cardContentWrapper,
     {
@@ -75,7 +67,6 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount, isVisible }) => 
 }
 
 RecipesInBasketProgressContent.propTypes = propTypes
-RecipesInBasketProgressContent.defaultProps = defaultProps
 
 export {
   RecipesInBasketProgressContent

@@ -1,7 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import { mount } from 'enzyme'
 
 import { RecipesInBasketProgress } from '..'
@@ -35,27 +33,8 @@ describe('RecipesInBasketProgress Component', () => {
   })
 
   describe('when more than one recipe is selected', () => {
-    const store = {
-      getState: () => ({
-        auth: Immutable.fromJS({
-          isAuthenticated: false
-        }),
-        features: Immutable.fromJS({
-          isMenuProgressBarHidden: {
-            value: false
-          }
-        })
-      }),
-      dispatch: () => {},
-      subscribe: () => {},
-    }
-
     beforeEach(() => {
-      wrapper = mount(
-        <RecipesInBasketProgress {...PROPS} selectedRecipesCount={1} />,
-        // eslint-disable-next-line react/forbid-prop-types
-        { context: { store }, childContextTypes: { store: PropTypes.object.isRequired } }
-      )
+      wrapper.setProps({ selectedRecipesCount: 1 })
     })
 
     describe('FloatCard renders correctly', () => {

@@ -170,10 +170,6 @@ export const getIsWizardPricePerServingEnabled = ({ features }) => (
   features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
 )
 
-export const getIsMenuProgressBarHidden = ({ features }) => (
-  features && features.getIn(['isMenuProgressBarHidden', 'value'], false)
-)
-
 export const getIsCarouselShiftEnabled = ({ features }) => (
   features && features.getIn(['isCarouselShiftEnabled', 'value'], false)
 )
