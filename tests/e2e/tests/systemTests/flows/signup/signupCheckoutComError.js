@@ -8,6 +8,7 @@ module.exports = {
     performSignUpFlowUpToPaymentStep(browser)
 
     browser
+      // 1: no fields entered at all
       .perform(function (done) {
         checkout.section.checkoutContainer.signupWithoutPaymentInfo(browser)
         done()
@@ -16,6 +17,7 @@ module.exports = {
         checkout.section.checkoutContainer.checkIfErrorsAreVisible(browser)
         done()
       })
+      // 2: no card number
       .perform(function (done) {
         checkout.section.checkoutContainer.submitPaymentSectionWithoutCardNumber(browser)
         done()
@@ -28,6 +30,19 @@ module.exports = {
         checkout.section.checkoutContainer.checkIfErrorForCardDetailsVisible(browser)
         done()
       })
+      // 3: wrong CVV
+      .perform(function (done) {
+        checkout.section.checkoutContainer.enterCardDetailsWithWrongCvv(browser)
+        done()
+      })
+      .perform(function (done) {
+        checkout.section.checkoutContainer.goToNextStep()
+        done()
+      })
+      .perform(function (done) {
+        checkout.section.checkoutContainer.asyncCheckPaymentFailed(browser, done)
+      })
+      // 4: proceed successfully
       .perform(function (done) {
         checkout.section.checkoutContainer.changeAndSubmitPaymentSection(browser)
         done()
@@ -48,4 +63,4 @@ module.exports = {
       .end()
   },
   tags: ['sign-up', 'menu', 'checkout', 'sign-up-error'],
-};
+}

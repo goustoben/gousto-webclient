@@ -3,7 +3,7 @@ module.exports = {
   // flows.
   '@disabled': true,
 
-  performSignUpFlowUpToPaymentStep: function (browser, url) {
+  performSignUpFlowUpToPaymentStep: function (browser) {
     const home = browser.page.home()
     const menu = browser.page.menu()
     const shared = browser.page.shared()
@@ -13,7 +13,7 @@ module.exports = {
     const cookiePolicy = browser.page.cookiePolicy()
 
     browser
-      .url(url || home.api.launchUrl)
+      .url(home.api.launchUrl)
       .perform(function (done) {
         cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerVisible()
         done()
