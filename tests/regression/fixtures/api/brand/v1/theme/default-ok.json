@@ -1,0 +1,867 @@
+{
+  "status": "ok",
+  "meta": {},
+  "data": {
+    "roundels": [
+      {
+        "slug": "gluten-free",
+        "name": "Gluten Free",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Gluten-Free-Icon-Bigger.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "good-to-freeze",
+        "name": "Good to freeze",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_freeze.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "high-in-omega-3s",
+        "name": "High in Omega 3s",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_omega3.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "25-a-day",
+        "name": "2/5 a day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_2aday.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "35-a-day",
+        "name": "3/5 a day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_3aday.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "1-pot",
+        "name": "1 pot",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_1pot_2.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "good-to-reheat",
+        "name": "Good to reheat",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_reheat.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "good-for-kids",
+        "name": "Good for kids",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_kids.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "good-for-lunch",
+        "name": "Good for lunch",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_lunch.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "wholegrain",
+        "name": "Wholegrain",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_wholegrain.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "low-carb",
+        "name": "Low Carb",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/2_Merchandising-Icons_lowcarb.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "plant-based",
+        "name": "Plant based",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_plantbased.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "super-speedy",
+        "name": "Super speedy",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/superspeedy.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "boost-balance",
+        "name": "Boost & Balance",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_BoostBalance-1.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "push-doctor-approved",
+        "name": "Push Doctor Approved",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_pushdoctor.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "45-a-day",
+        "name": "4/5 a day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_4aday.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "55-a-day",
+        "name": "5/5 a day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_5aday.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "10-min-meal-not-in-use",
+        "name": "10 min meal - not in use",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_10minmeal.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "15-min-prep",
+        "name": "15 min prep",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_15minprep.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "family-favourite",
+        "name": "Family Favourite",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_familyfavourite.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "fuss-free",
+        "name": "Fuss-free",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_fussfree.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "10-min-meal",
+        "name": "10 min meal",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/10MM-icon.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "",
+        "name": "-",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/fathers-day.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "fathers-day",
+        "name": "Father's Day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/fathers-day_3.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "good-to-bbq",
+        "name": "Good To BBQ",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_bbq-1.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "as-seen-on-tv",
+        "name": "As Seen On TV",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_TV.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "easy",
+        "name": "Easy",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_easy.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "tray-bake",
+        "name": "Tray Bake",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons_traybake.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "pizza-night",
+        "name": "Pizza Night",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Pizza-night-roundel-258pxD-01-2.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "taste-of-india",
+        "name": "Taste Of India",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/TOF-icon-test-on-menu-1.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "now-in-season",
+        "name": "Now in season",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Merchandising-Icons-SeasonalPick.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "festive-flavour",
+        "name": "Festive Flavour",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Christmas-Merch-Roundel.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "festive-finger-food",
+        "name": "Festive finger food",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Christmas-merchandising-roundels_FINAL_Resupply.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "joe-wicks",
+        "name": "Joe Wicks",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/JW-icon-on-menu-logo.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "valentines-day",
+        "name": "Valentine's Day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/v-day-2019-website-icon_2v2.jpg",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "mothers-day",
+        "name": "Mother's Day",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Mothers-Day.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "mothers-day-2020",
+        "name": "Mother’s Day 2020",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/MothersDay_MenuGel_AW-01.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "easter-2020",
+        "name": "Easter 2020",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/EasterPick_MenuGel_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "easter",
+        "name": "Easter",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/EasterPick_MenuGel_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "journey-through-italy",
+        "name": "Journey Through Italy",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/389_JTI_MenuGel_220x220_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "summer-2019",
+        "name": "Summer 2019",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Summer-Thematics-Menu-Gel---Al-Fresco-Hero.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "alfresco-hero",
+        "name": "Alfresco Hero",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Summer-Thematics-Menu-Gel---options-v2_Artboard-1.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "alfresco-heroes",
+        "name": "Alfresco Heroes",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Summer-Thematics-Menu-Gel_Artboard-1.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "limited-edition",
+        "name": "Limited Edition",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/502_LimitedEdition_MenuGel_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "gousto-x-wagamama",
+        "name": "Gousto x wagamama",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/502_Gousto-x-wagamama_MenuGel_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "christmas-inspired",
+        "name": "Christmas Inspired",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Christmas_MenuGel_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "christmas-delivery-dates",
+        "name": "Christmas Delivery Dates",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Christmas_Dinner_Info_MenuGel_AW-01.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-healthy-heart",
+        "name": "Health Kitchen - Healthy heart",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Health_Kitchen_Healthy_heart.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-healthy-immune-system",
+        "name": "Health Kitchen - Healthy immune system",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Health_Kitchen_Healthy_immune_system.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-energy-enhancing",
+        "name": "Health Kitchen - Energy enhancing",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Health_Kitchen_Energy_enhancing.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-healthy-skin-hair",
+        "name": "Health Kitchen - Healthy skin & hair",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Health_Kitchen_Healthy_skin_and_hair.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-good-mood-food",
+        "name": "Health Kitchen - Good mood food",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Health_Kitchen_Good_mood_food.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-good-for-your-gut",
+        "name": "Health Kitchen - Good for your gut",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/Health_Kitchen_Good_for_your_gut.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "janyouary",
+        "name": "JanYOUary",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/602_Jan2020_MenuGels_JanYOUary_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "febyouary",
+        "name": "FebYOUary",
+        "images": [
+          {
+            "url": "https://staging-media.gousto.info/cms/headshot-image/602_Jan2020_MenuGels_FebYOUary_AW.png",
+            "type": "headshot"
+          }
+        ]
+      }
+    ],
+    "foodBrandColours": [
+      {
+        "slug": "10-minute-meals",
+        "theme": {
+          "ribbonColor": "#FB6126",
+          "borderColor": "#BB481C",
+          "textColor": "#FFFFFF"
+        }
+      },
+      {
+        "slug": "everyday-favourites",
+        "theme": {
+          "ribbonColor": "#F4EFE9",
+          "borderColor": "#C6BEB4",
+          "textColor": "#F6323E"
+        }
+      },
+      {
+        "slug": "fine-dine-in",
+        "theme": {
+          "ribbonColor": "#333D47",
+          "borderColor": "#282B2F",
+          "textColor": "#FFFFFF"
+        }
+      },
+      {
+        "slug": "global-kitchen",
+        "theme": {
+          "ribbonColor": "#F6323E",
+          "borderColor": "#C51E29",
+          "textColor": "#FFFFFF"
+        }
+      },
+      {
+        "slug": "health-kitchen",
+        "theme": {
+          "ribbonColor": "#47AC6A",
+          "borderColor": "#1E743C",
+          "textColor": "#FFFFFF"
+        }
+      },
+      {
+        "slug": "modern-bistro",
+        "theme": {
+          "ribbonColor": "#1F4493",
+          "borderColor": "#132665",
+          "textColor": "#FFFFFF"
+        }
+      },
+      {
+        "slug": "takeaway-night",
+        "theme": {
+          "ribbonColor": "#17B7BF",
+          "borderColor": "#1A9298",
+          "textColor": "#FFFFFF"
+        }
+      },
+      {
+        "slug": "default",
+        "theme": {
+          "ribbonColor": "#333D47",
+          "borderColor": "#282B2F",
+          "textColor": "#FFFFFF"
+        }
+      }
+    ],
+    "tags": [
+      {
+        "type": "general",
+        "slug": "new",
+        "text": "New",
+        "themes": [
+          { "name": "light", "color": "#01A92B", "borderColor": "#01A92B" }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "oven-ready",
+        "text": "Oven ready",
+        "themes": [
+          { "name": "light", "backgroundColor": "#f2f6f9", "color": "#333d47" },
+          { "name": "dark", "backgroundColor": "#333d47", "color": "#d2d6d9" }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "available-weekly",
+        "text": "Available weekly",
+        "themes": [
+          { "name": "light", "backgroundColor": "#f2f6f9", "color": "#333d47" },
+          { "name": "dark", "backgroundColor": "#333d47", "color": "#d2d6d9" }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "surcharge",
+        "text": "£{} per serving",
+        "themes": [
+          { "name": "light", "backgroundColor": "#e8c575", "color": "#333d47" }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "new-eme",
+        "text": "NEW",
+        "themes": [
+          { "name": "light", "color": "#FFFFFF", "backgroundColor": "#01A92B" }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "limited-edition-eme",
+        "text": "NEW",
+        "themes": [
+          { "name": "light", "color": "#FFFFFF", "backgroundColor": "#01A92B" }
+        ]
+      },
+      {
+        "type": "general",
+        "slug": "available-weekly-eme",
+        "text": "EVERYDAY FAVOURITES",
+        "themes": [{ "name": "light", "color": "#C20026" }]
+      },
+      {
+        "type": "availability",
+        "slug": "new-availability",
+        "text": "NEW",
+        "themes": [
+          { "name": "light", "color": "#FFFFFF", "backgroundColor": "#01A92B" }
+        ]
+      },
+      {
+        "type": "availability",
+        "slug": "limited-range-availability",
+        "text": "LIMITED RANGE",
+        "themes": [
+          { "name": "light", "color": "#FFFFFF", "backgroundColor": "#333D47" }
+        ]
+      },
+      {
+        "type": "promotion",
+        "slug": "joe-wicks",
+        "text": "JOE WICKS",
+        "themes": [
+          { "name": "light", "color": "#FFFFFF", "backgroundColor": "#0053C7" },
+          { "name": "dark", "color": "#0053C7", "backgroundColor": "#F4F7FA" }
+        ]
+      },
+      {
+        "type": "promotion",
+        "slug": "joe-wicks-eme",
+        "text": "JOE WICKS",
+        "themes": [
+          { "name": "light", "color": "#0053C7" },
+          { "name": "dark", "color": "#1577FF" }
+        ]
+      },
+      {
+        "type": "promotion",
+        "slug": "fine-dine-in-eme",
+        "text": "FINE DINE IN",
+        "themes": [{ "name": "light", "color": "#F4D13D" }]
+      },
+      {
+        "type": "promotion",
+        "slug": "health-kitchen-eme",
+        "text": "HEALTH KITCHEN",
+        "themes": [
+          { "name": "light", "color": "#018F25" },
+          { "name": "dark", "color": "#01A92B" }
+        ]
+      },
+      {
+        "type": "tagline",
+        "slug": "joe-wicks-tagline",
+        "text": "JOE WICKS",
+        "themes": [
+          { "name": "light", "color": "#0053C7" },
+          { "name": "dark", "color": "#1577FF" }
+        ]
+      },
+      {
+        "type": "tagline",
+        "slug": "fine-dine-in-tagline",
+        "text": "FINE DINE IN",
+        "themes": [{ "name": "light", "color": "#F4D13D" }]
+      },
+      {
+        "type": "tagline",
+        "slug": "health-kitchen-tagline",
+        "text": "HEALTH KITCHEN",
+        "themes": [
+          { "name": "light", "color": "#018F25" },
+          { "name": "dark", "color": "#01A92B" }
+        ]
+      },
+      {
+        "type": "tagline",
+        "slug": "everyday-favourites-tagline",
+        "text": "EVERYDAY FAVOURITES",
+        "themes": [{ "name": "light", "color": "#C20026" }]
+      },
+      {
+        "type": "tagline",
+        "slug": "prepped-in-five",
+        "text": "PREPPED IN 5",
+        "themes": [
+          { "name": "light", "color": "#1A8087" },
+          { "name": "dark", "color": "#A1CFD3" }
+        ]
+      },
+      {
+        "type": "tagline",
+        "slug": "ten-minute-meals",
+        "text": "10-MINUTE",
+        "themes": [
+          { "name": "light", "color": "#CF4B01" },
+          { "name": "dark", "color": "#F86125" }
+        ]
+      },
+      {
+        "type": "tagline",
+        "slug": "cookstarter",
+        "text": "COOKSTARTER",
+        "themes": [{ "name": "light", "color": "#FFFFFF" }]
+      },
+      {
+        "type": "tagline",
+        "slug": "diy-pizza-base",
+        "text": "DIY Pizza",
+        "themes": [{ "name": "light", "color": "#ADB1B5" }]
+      },
+      {
+        "type": "tagline",
+        "slug": "all-chopped",
+        "text": "ALL CHOPPED",
+        "themes": [
+          { "name": "light", "color": "#9F4FC5" },
+          { "name": "dark", "color": "#B565DB" }
+        ]
+      },
+      {
+        "type": "tagline",
+        "slug": "healthy-choices",
+        "text": "HEALTHY CHOICES",
+        "themes": [{ "name": "light", "color": "#F25801" }]
+      },
+      {
+        "type": "health-claim",
+        "slug": "carb-refuel",
+        "text": "Carb refuel",
+        "icon": "arrow-up",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#333D47",
+            "backgroundColor": "#E2F9E9",
+            "iconColor": "#00B066"
+          },
+          {
+            "name": "dark",
+            "color": "#D3D6D9",
+            "backgroundColor": "#2A5032",
+            "iconColor": "#63AA70"
+          }
+        ]
+      },
+      {
+        "type": "health-claim",
+        "slug": "reduced-carbs",
+        "text": "Reduced carbs",
+        "icon": "arrow-down",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#333D47",
+            "backgroundColor": "#E2F9E9",
+            "iconColor": "#00B066"
+          },
+          {
+            "name": "dark",
+            "color": "#D3D6D9",
+            "backgroundColor": "#2A5032",
+            "iconColor": "#63AA70"
+          }
+        ]
+      },
+      {
+        "type": "health-claim",
+        "slug": "health-kitchen",
+        "text": "Good for you",
+        "icon": "health-kitchen-heart",
+        "themes": [
+          {
+            "name": "light",
+            "color": "#333D47",
+            "backgroundColor": "#E2F9E9",
+            "iconColor": "#00B066"
+          },
+          {
+            "name": "dark",
+            "color": "#D3D6D9",
+            "backgroundColor": "#2A5032",
+            "iconColor": "#63AA70"
+          }
+        ]
+      }
+    ],
+    "carousels": []
+  }
+}

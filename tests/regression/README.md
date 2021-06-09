@@ -1,5 +1,29 @@
 # Regression test suite
 
+The Gousto regression tests exist to help us:
+
+- Prove our code works as expected in any environment
+- Prove our code works as expected under controlled but varying conditions
+- Aid development without the need for access to external services
+
+The regression tests are currently run on any deploy to staging / merge into develop. 
+
+Currently the regression tests equate to a healthy amount of integration tests that live alongside the functional code. 
+
+Please refer to [INTEGRATION-TESTS.md](./integration/INTEGRATION-TESTS.md) for some examples of alternative ways to organise our integration tests that will aid development and long term maintenance. 
+
+> The Cypress tests are generally owned by squads and fit into the domain that the squad is responsible for. However, there should be a collective responsibility to keep our tests stable and address any erroneous test failures as and when they appear. 
+
+When running into any erroneously failing Cypress test that isn't obviously related to your changes:
+
+Ask
+- 1st: Is the test isolated from any external variability? (all API responses stubbed, 3rd parties mocked etc) 
+  - No: inform the squad of the issue and work to resolve it, stabilizing the test
+  - Yes: continue
+- 2nd: Have any new changes in this branch affected the test?  
+  - No: what external effects might be causing the test to fail? (timing, networks etc)
+  - Yes: adjust the code or test accordingly!
+
 ## Development
 
 ### Platform dependent tests

@@ -1,0 +1,203 @@
+{
+  "status": "ok",
+  "meta": {},
+  "data": [
+    {
+      "type": "menu",
+      "id": "421",
+      "relationships": {
+        "collections": {
+          "data": [
+            {
+              "type": "collection",
+              "id": "97270056-cd65-11e8-a2d2-067a72dd5dba",
+              "header": "a54b1c8b-fb0a-48a0-8170-8ec8c2147552"
+            },
+            {
+              "type": "collection",
+              "id": "ca8f71be-63ac-11e6-a693-068306404bab",
+              "header": "a54b1c8b-fb0a-48a0-8170-8ec8c2147552"
+            },
+            {
+              "type": "collection",
+              "id": "77207f7c-7c17-11eb-89ed-0240bf0d7de3",
+              "header": "1e894c65-293b-40c6-a086-2996c81e5244"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "menu",
+      "id": "422",
+      "relationships": {
+        "collections": {
+          "data": [
+            {
+              "type": "collection",
+              "id": "97270056-cd65-11e8-a2d2-067a72dd5dba",
+              "header": "a54b1c8b-fb0a-48a0-8170-8ec8c2147552"
+            },
+            {
+              "type": "collection",
+              "id": "ca8f71be-63ac-11e6-a693-068306404bab",
+              "header": "a54b1c8b-fb0a-48a0-8170-8ec8c2147552"
+            },
+            {
+              "type": "collection",
+              "id": "77207f7c-7c17-11eb-89ed-0240bf0d7de3",
+              "header": "1e894c65-293b-40c6-a086-2996c81e5244"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "menu",
+      "id": "423",
+      "relationships": {
+        "collections": {
+          "data": [
+            {
+              "type": "collection",
+              "id": "97270056-cd65-11e8-a2d2-067a72dd5dba",
+              "header": "9a64e902-f5f2-4fe8-9b90-b371e5aa2edf"
+            },
+            {
+              "type": "collection",
+              "id": "ca8f71be-63ac-11e6-a693-068306404bab",
+              "header": "9a64e902-f5f2-4fe8-9b90-b371e5aa2edf"
+            },
+            {
+              "type": "collection",
+              "id": "6067fb3e-afbe-11e8-8ee6-0645394f11ea",
+              "header": "3eb8caa2-cb42-4bf2-803e-ca009c693fb8"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "a54b1c8b-fb0a-48a0-8170-8ec8c2147552",
+      "type": "wave-link-header",
+      "attributes": {
+        "link": {
+          "collectionSlug": "all-chopped",
+          "collectionId": "77207f7c-7c17-11eb-89ed-0240bf0d7de3"
+        },
+        "headerImage": [
+          {
+            "width": 151,
+            "height": 26,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/all_chopped_header.png",
+            "altText": "all chopped"
+          }
+        ],
+        "description": "Cook irresistible dinners in a flash",
+        "color": "#333D47",
+        "backgroundColor": "#FFFFFF",
+        "waveColor": "#FFFFFF"
+      }
+    },
+    {
+      "id": "1e894c65-293b-40c6-a086-2996c81e5244",
+      "type": "gradient-info-header",
+      "attributes": {
+        "headerImage": [
+          {
+            "width": 151,
+            "height": 26,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/all_chopped_header.png",
+            "altText": "all chopped"
+          }
+        ],
+        "description": "Get straight to the sizzle. Ready, prepped, go.",
+        "color": "#333D47",
+        "gradientColor": "#FFFFFF",
+        "image": [
+          {
+            "width": 750,
+            "height": 431,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/all_chopped_header_small.png",
+            "altText": "all chopped"
+          },
+          {
+            "width": 1000,
+            "height": 575,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/all_chopped_header_medium.png",
+            "altText": "all chopped"
+          },
+          {
+            "width": 1500,
+            "height": 862,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/all_chopped_header_large.png",
+            "altText": "all chopped"
+          }
+        ],
+        "imageLocation": "right"
+      }
+    },
+    {
+      "id": "9a64e902-f5f2-4fe8-9b90-b371e5aa2edf",
+      "type": "wave-link-header",
+      "attributes": {
+        "link": {
+          "collectionSlug": "healthy-choices",
+          "collectionId": "6067fb3e-afbe-11e8-8ee6-0645394f11ea"
+        },
+        "headerImage": [
+          {
+            "width": 200,
+            "height": 18,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/healthy_choices_header.png",
+            "altText": "healthy choices"
+          }
+        ],
+        "description": "Here come the healthiest dinners under the sun",
+        "color": "#FFFFFF",
+        "backgroundColor": "#F25801",
+        "waveColor": "#F25801"
+      }
+    },
+    {
+      "id": "3eb8caa2-cb42-4bf2-803e-ca009c693fb8",
+      "type": "gradient-info-header",
+      "attributes": {
+        "headerImage": [
+          {
+            "width": 170,
+            "height": 22,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/healthy_choices_collection_header.png",
+            "altText": "healthy choices"
+          }
+        ],
+        "description": "Veg-packed goodness from our chef's healthiest ranges",
+        "color": "#FFFFFF",
+        "gradientColor": "#F25801",
+        "image": [
+          {
+            "width": 750,
+            "height": 431,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/healthy_choices_header_small.png",
+            "altText": "healthy choices"
+          },
+          {
+            "width": 1000,
+            "height": 575,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/healthy_choices_header_medium.png",
+            "altText": "healthy choices"
+          },
+          {
+            "width": 1500,
+            "height": 862,
+            "url": "https://production-media.gousto.co.uk/merchandising/header/healthy_choices_header_large.png",
+            "altText": "healthy choices"
+          }
+        ],
+        "imageLocation": "right"
+      }
+    }
+  ]
+}

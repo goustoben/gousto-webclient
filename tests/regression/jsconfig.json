@@ -1,0 +1,17 @@
+{
+  "compilerOptions":{
+     "target":"es6",
+     "module": "es6",
+     "moduleResolution": "node",
+     "jsx": "react",
+     "checkJs": true,
+     "baseUrl":"./",
+     "allowSyntheticDefaultImports": true,
+     "paths":{}
+  },
+  "exclude":[
+     "node_modules",
+     "dist",
+     "public"
+  ]
+}

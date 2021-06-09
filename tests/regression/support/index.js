@@ -1,8 +1,10 @@
+/// <reference types="cypress" />
+
 import 'cypress-pipe'
 import addContext from 'mochawesome/addContext'
-
 import './commands'
 import './overwrites'
+import { checkoutAccountBot, loginFormBot, menuBot } from '../bots'
 
 Cypress.on('test:after:run', (test, runnable) => {
   if (test.state === 'failed') {
@@ -29,3 +31,9 @@ Cypress.on('test:after:run', (test, runnable) => {
     addContext({ test }, imageUrl)
   }
 })
+
+cy.bots = {
+  checkoutAccountBot,
+  loginFormBot,
+  menuBot,
+}
