@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import SignupLayout from 'layouts/SignupLayout'
 import { HotjarTrigger } from 'HotjarTrigger'
+import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { DiscountAppliedBarContainer } from 'routes/Signup/Components/DiscountAppliedBar/DiscountAppliedBarContainer'
 import { DetailOverlayContainer } from 'routes/Menu/DetailOverlay'
 import {
@@ -34,6 +35,7 @@ export const ShowcaseMenu = ({
   return (
     <SignupLayout hasWhiteBackground showLoginCTA>
       <HotjarTrigger name="showcase_menu" />
+      <RibbonTriggerContainer name="variant_showcasemenu" probabilityPercentage={50} />
       <DiscountAppliedBarContainer wizardStep="showcase_menu" page="showcaseMenu" />
       <div className={css.showcaseMenuContainer}>
         <h1 className={css.heading}>Explore this week’s menu</h1>
