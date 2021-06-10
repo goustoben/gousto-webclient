@@ -10,7 +10,6 @@ import * as orders from './orders'
 import * as products from './products'
 import * as recipes from './recipes'
 import * as user from './user'
-import * as workable from './workable'
 
 import { fetchMenus } from '../routes/Menu/fetchData/menuApi'
 
@@ -27,7 +26,6 @@ const apis = {
   ...products,
   ...recipes,
   ...user,
-  ...workable,
   fetchMenus, // required for e2e tests
 }
 

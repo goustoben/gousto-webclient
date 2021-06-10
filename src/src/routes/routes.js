@@ -12,7 +12,6 @@ import Account from './Account'
 import { Signup } from './Signup'
 import Welcome from './Welcome'
 import Cookbook from './Cookbook'
-import { Jobs } from './Jobs'
 import ResetPassword from './ResetPassword'
 import { BoxPrices } from './BoxPrices'
 import Unsubscribe from './Unsubscribe'
@@ -32,7 +31,6 @@ const routes = (store) => (
     {ChoosePlan(store)}
     {BoxPrices}
     {Cookbook}
-    {Jobs}
     {ResetPassword}
     {Unsubscribe}
     {PrivacyStatement}

@@ -10,7 +10,6 @@ import content from './content'
 import { cookbookRecipes } from './cookbookRecipes'
 import features from './features'
 import filters from './filters'
-import jobs from './jobs'
 import login from './login'
 import menu from './menu'
 import newsletter from './newsletter'
@@ -62,7 +61,6 @@ const reducers = {
   ...feedback,
   ...features,
   ...filters,
-  ...jobs,
   ...login,
   logger,
   loggingManager,

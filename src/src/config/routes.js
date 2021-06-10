@@ -145,9 +145,6 @@ module.exports = {
     days: '/days',
     consignments: '/consignments',
   },
-  jobs: {
-    openings: '/jobs#openings',
-  },
   menu: {
     menus: '/menus',
   },
@@ -173,9 +170,6 @@ module.exports = {
   subscriptionQuery: {
     subscriptions: '/subscriptions',
     projectedDeliveries: '/projected-deliveries',
-  },
-  workable: {
-    link: 'https://gousto.workable.com/',
   },
   zendesk: {
     covid: 'https://gousto.zendesk.com/hc/en-gb/articles/360006713417--How-does-the-coronavirus-situation-affect-Gousto-',
