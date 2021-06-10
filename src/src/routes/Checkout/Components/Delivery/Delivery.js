@@ -6,6 +6,7 @@ import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
+import { HotjarTrigger } from 'HotjarTrigger'
 import * as deliveryUtils from 'routes/Checkout/utils/delivery'
 import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
@@ -32,6 +33,7 @@ const propTypes = {
   date: PropTypes.string.isRequired,
   submit: PropTypes.func,
   aboutYouErrors: PropTypes.bool,
+  isPaymentBeforeChoosingEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -45,6 +47,7 @@ const defaultProps = {
   scrollToFirstMatchingRef: () => {},
   submit: () => {},
   aboutYouErrors: false,
+  isPaymentBeforeChoosingEnabled: false,
 }
 
 export class Delivery extends React.PureComponent {
@@ -114,7 +117,7 @@ export class Delivery extends React.PureComponent {
   }
 
   render() {
-    const { sectionName } = this.props
+    const { sectionName, isPaymentBeforeChoosingEnabled } = this.props
 
     return (
       <div
@@ -152,6 +155,10 @@ export class Delivery extends React.PureComponent {
             </div>
             {this.renderAddress()}
           </FormSection>
+          <HotjarTrigger
+            name="pbc_delivery_and_payment"
+            shouldInvoke={isPaymentBeforeChoosingEnabled}
+          />
         </div>
       </div>
     )

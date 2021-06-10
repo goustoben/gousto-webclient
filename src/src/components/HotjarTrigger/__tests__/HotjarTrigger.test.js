@@ -23,8 +23,21 @@ describe('HotjarTrigger', () => {
     })
   })
 
+  describe('when mounted with shouldInvoke=false', () => {
+    beforeAll(() => {
+      jest.clearAllMocks()
+      global.hj = hj
+
+      wrapper = mount(<HotjarTrigger name="showcase_menu" shouldInvoke={false} />)
+    })
+
+    test('then it should not invoke the trigger', () => {
+      expect(hj).not.toHaveBeenCalled()
+    })
+  })
+
   describe('when mounted but hj is undefined', () => {
-    beforeEach(() => {
+    beforeAll(() => {
       jest.clearAllMocks()
       delete global.hj
 

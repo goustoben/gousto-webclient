@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     currentPaymentMethod: getCurrentPaymentMethod(state),
     isPayPalReady: isPayPalReady(state),
     ribbonTriggerName,
+    isPaymentBeforeChoosingEnabled,
   }
 }
 

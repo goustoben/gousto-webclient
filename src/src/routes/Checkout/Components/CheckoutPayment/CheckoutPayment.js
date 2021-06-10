@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { RECAPTCHA_PUBLIC_KEY } from 'config/recaptcha'
 import { PaymentMethod } from 'config/signup'
 import ReCAPTCHA from 'components/Recaptcha'
+import { HotjarTrigger } from 'HotjarTrigger'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import Svg from 'Svg'
 import { SubmitButton } from '../SubmitButton'
@@ -234,6 +235,7 @@ class CheckoutPayment extends React.Component {
       setCurrentPaymentMethod,
       isRecaptchaEnabled,
       ribbonTriggerName,
+      isPaymentBeforeChoosingEnabled,
     } = this.props
 
     return (
@@ -266,6 +268,10 @@ class CheckoutPayment extends React.Component {
         <PaymentFooter />
         {is3DSEnabled && <Checkout3DSModal />}
         <RibbonTriggerContainer name={ribbonTriggerName} probabilityPercentage={50} />
+        <HotjarTrigger
+          name="pbc_delivery_and_payment"
+          shouldInvoke={isPaymentBeforeChoosingEnabled && !prerender}
+        />
       </div>
     )
   }
@@ -298,6 +304,7 @@ CheckoutPayment.propTypes = {
   setCurrentPaymentMethod: PropTypes.func,
   onLoginClick: PropTypes.func,
   ribbonTriggerName: PropTypes.string,
+  isPaymentBeforeChoosingEnabled: PropTypes.bool,
 }
 
 CheckoutPayment.defaultProps = {
@@ -323,6 +330,7 @@ CheckoutPayment.defaultProps = {
   setCurrentPaymentMethod: () => {},
   onLoginClick: () => {},
   ribbonTriggerName: '',
+  isPaymentBeforeChoosingEnabled: false,
 }
 
 export { CheckoutPayment }

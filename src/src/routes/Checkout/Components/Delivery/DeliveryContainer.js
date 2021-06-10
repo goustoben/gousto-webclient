@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta } from 'redux-form'
 import { deliveryFormName } from 'selectors/checkout'
-import { getIsPassStrengthEnabled } from 'selectors/features'
+import { getIsPassStrengthEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
@@ -30,6 +30,7 @@ export function mapStateToProps(sectionName) {
       state.form.account.syncErrors.account &&
       state.request.get('browser') === 'mobile' &&
       getIsPassStrengthEnabled(state),
+    isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   })
 }
 
