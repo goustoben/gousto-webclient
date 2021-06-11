@@ -1,1 +1,1 @@
-export { RecipeCards } from './route'
+export { RecipeCardsContainer } from './RecipeCardsContainer'

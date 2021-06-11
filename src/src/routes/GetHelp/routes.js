@@ -17,7 +17,7 @@ import { IngredientsContainer } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
 import { IngredientIssues as EligibilityCheckIngredientIssues } from './EligibilityCheck/IngredientIssues'
-import { RecipeCards } from './RecipeCards'
+import { RecipeCardsContainer } from './RecipeCards'
 import { Refund } from './Refund'
 import { DidntArriveContainer } from './Delivery/DidntArrive'
 
@@ -47,6 +47,7 @@ const getHelpRoutes = (store) => {
     deliveryDidntArriveValidation,
     deliveryDontKnowWhen,
     ingredients,
+    recipeCards,
   } = configRoutes.client.getHelp
   const { login } = configRoutes.client
 
@@ -78,13 +79,16 @@ const getHelpRoutes = (store) => {
           path={ingredients({ userId: ':userId', orderId: ':orderId' })}
           component={IngredientsContainer}
         />
+        <Route
+          path={recipeCards({ userId: ':userId', orderId: ':orderId' })}
+          component={RecipeCardsContainer}
+        />
         {Confirmation}
         {Contact}
         {EligibilityCheck}
         {IngredientIssues}
         {IngredientReasons}
         {EligibilityCheckIngredientIssues}
-        {RecipeCards}
         {Refund}
         <Redirect to={login} />
       </Route>

@@ -1,0 +1,3 @@
+.copy {
+	composes: fontStyleSubHead from 'design-language/typography.module.css';
+}

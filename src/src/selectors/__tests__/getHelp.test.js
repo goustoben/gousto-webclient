@@ -1,31 +1,10 @@
-import { fromJS, Map } from 'immutable'
+import { Map } from 'immutable'
 import {
   getIsOrderValidationError,
   getOrderId,
-  getRecipesForGetHelp,
 } from '../getHelp'
 
 describe('getHelp selectors', () => {
-  describe('getRecipesForGetHelp', () => {
-    let state
-    const RECIPES = [
-      { id: '1', ingredients: [{ id: '1', label: 'First ingredient' }], title: 'First recipe' },
-      { id: '2', ingredients: [{ id: '2', label: 'Second ingredient' }], title: 'Second recipe' },
-    ]
-
-    beforeEach(() => {
-      state = {
-        getHelp: fromJS({
-          recipes: RECIPES
-        })
-      }
-    })
-
-    test('returns the recipes from the getHelp state as a JS array', () => {
-      expect(getRecipesForGetHelp(state)).toEqual(RECIPES)
-    })
-  })
-
   describe('getIsOrderValidationError', () => {
     let state
 

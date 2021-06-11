@@ -10,6 +10,7 @@ import webClientStatusActions from 'actions/status'
 import { actionTypes as webClientActionTypes } from 'actions/actionTypes'
 import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
+import { getOrder, getRecipes } from '../selectors/selectors'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { getFeatureShorterCompensationPeriod } from '../../../selectors/features'
 import { actionTypes } from './actionTypes'
@@ -94,8 +95,8 @@ export const loadOrderAndRecipesByIds = (orderId) => (
     const accessToken = getAccessToken(state)
 
     const getPayload = async () => {
-      let order = state.getHelp.get('order').toJS()
-      let recipes = state.getHelp.get('recipes').toJS()
+      let order = getOrder(state)
+      let recipes = getRecipes(state)
       // recipeItems in the store is an array of recipe IDs
       let recipeIds = order.recipeItems
 

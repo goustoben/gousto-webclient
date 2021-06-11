@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
-import { getRecipesForGetHelp } from 'selectors/getHelp'
+import { getRecipes } from '../selectors/selectors'
 import { trackRecipeCardClick, trackRecipeCardGetInTouchClick } from '../actions/getHelp'
 import { RecipeCards } from './RecipeCards.logic'
 
 const mapStateToProps = (state) => ({
-  recipes: getRecipesForGetHelp(state),
-  title: state.content.get('get-help_contact_pageheader_header')
-    || 'Get help with your box',
+  recipes: getRecipes(state),
 })
 
 const RecipeCardsContainer = connect(mapStateToProps, {

@@ -1,69 +1,73 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { RecipeCards } from '../RecipeCards.logic'
 import { RecipeCardContent } from '../RecipeCardContent'
 
 describe('<RecipeCards />', () => {
-  const TEST_TITLE = 'test title'
   const TEST_RECIPES = [
     {
       id: '1',
       title: 'test 1',
-      ingredients: [{ id: '1', label: 'test' }],
+      ingredients: [{ uuid: '1', label: 'test' }],
       url: 'https://test-1.com'
     },
     {
       id: '2',
       title: 'test 2',
-      ingredients: [{ id: '2', label: 'test' }, { id: '2222', label: 'test2' }],
+      ingredients: [{ uuid: '2', label: 'test' }, { uuid: '2222', label: 'test2' }],
       url: 'https://test-2.com',
     },
     {
       id: '3',
       title: 'test 3',
-      ingredients: [{ id: '3', label: 'test' }],
+      ingredients: [{ uuid: '3', label: 'test' }],
       url: 'https://test-3.com'
     },
     {
       id: '4',
       title: 'test 4',
-      ingredients: [{ id: '4', label: 'test' }],
+      ingredients: [{ uuid: '4', label: 'test' }],
       url: 'https://test-4.com'
     },
   ]
 
   let wrapper
-  let trackRecipeCardClickMock
+  const trackRecipeCardClick = jest.fn()
+  const trackRecipeCardGetInTouchClick = jest.fn()
 
   beforeEach(() => {
-    trackRecipeCardClickMock = jest.fn()
-
-    wrapper = shallow(
+    wrapper = mount(
       <RecipeCards
         recipes={TEST_RECIPES}
-        title={TEST_TITLE}
-        trackRecipeCardClick={trackRecipeCardClickMock}
+        trackRecipeCardClick={trackRecipeCardClick}
+        trackRecipeCardGetInTouchClick={trackRecipeCardGetInTouchClick}
       />
     )
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
-  test('renders a page title', () => {
-    expect(wrapper.find('RecipeCardsPresentation').prop('title')).toBe(TEST_TITLE)
+  test('renders the right page title', () => {
+    expect(wrapper.find('GetHelpLayout2').prop('headingText')).toBe('Get help with your box')
   })
 
-  test('passes the recipies to RecipeList component', () => {
+  test('passes the recipes to RecipeList component', () => {
     expect(wrapper.find('RecipeList').prop('recipes')).toEqual(TEST_RECIPES)
   })
 
   test('passes RecipeCardContent as child to RecipeList', () => {
-    expect(wrapper.find('RecipeList').children().type()).toBe(RecipeCardContent)
+    expect(wrapper.find('RecipeList').props().children.type).toBe(RecipeCardContent)
   })
 
   test('passes tracking function to RecipeCardContent', () => {
-    expect(wrapper.find('RecipeCardContent').prop('trackRecipeCardClick')).toEqual(trackRecipeCardClickMock)
+    expect(wrapper.find('RecipeList').props().children.props.trackRecipeCardClick)
+      .toEqual(trackRecipeCardClick)
+  })
+
+  test('passes tracking get in touch function to RecipeCardContent', () => {
+    expect(wrapper.find('RecipeList').props().children.props.trackRecipeCardGetInTouchClick)
+      .toEqual(trackRecipeCardGetInTouchClick)
   })
 })

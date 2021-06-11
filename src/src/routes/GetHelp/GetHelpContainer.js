@@ -4,6 +4,7 @@ import {
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import { getUserId } from 'selectors/user'
+import { getOrder } from './selectors/selectors'
 import { actionTypes } from './actions/actionTypes'
 import {
   loadOrderById,
@@ -53,7 +54,7 @@ const mapStateToProps = (state, ownProps) => {
 
   const userId = getUserId(state)
 
-  const order = state.getHelp.get('order').toJS()
+  const order = getOrder(state)
 
   const error = state.error.get(actionTypes.GET_HELP_LOAD_ORDER_AND_RECIPES_BY_IDS, null)
 

@@ -9,15 +9,15 @@ import {
   trackSelectIngredient,
   validateLatestOrder,
 } from '../actions/getHelp'
-import { getIneligibleIngredientUuids } from '../selectors/selectors'
+import { getIneligibleIngredientUuids, getOrder, getRecipes } from '../selectors/selectors'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
   ineligibleIngredientUuids: getIneligibleIngredientUuids(state),
   isOrderValidationError: getIsOrderValidationError(state),
   isValidateOrderLoading: getOrderValidationPendingState(state),
-  order: state.getHelp.get('order').toJS(),
-  recipes: state.getHelp.get('recipes').toJS(),
+  order: getOrder(state),
+  recipes: getRecipes(state),
   user: {
     id: state.user.get('id'),
     accessToken: state.auth.get('accessToken'),

@@ -4,8 +4,10 @@ import {
   getIsLoadOrderError,
   getIsOrderLoading,
   getIsTrackingUrlLoading,
+  getOrder,
   getOrderDeliveryDate,
   getOrderDeliverySlot,
+  getRecipes,
   getTrackingUrl,
   getIneligibleIngredientUuids,
 } from '../selectors'
@@ -21,6 +23,23 @@ const DELIVERY_SLOT = {
   deliveryStart: '08:00:00',
 }
 const TRACKING_URL = 'https://amazing-courier.com/order/1111'
+const ORDER = {
+  deliveryDate: DELIVERY_DATE,
+  deliverySlot: DELIVERY_SLOT,
+  trackingUrl: TRACKING_URL,
+}
+const RECIPES = [
+  {
+    id: '2871',
+    title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
+    url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
+    ingredients: [
+      { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0', label: '1 shallot' },
+      { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4', label: 'mozzarella' },
+    ],
+    goustoReference: '2145',
+  },
+]
 const STATE = {
   auth: fromJS({
     accessToken: ACCESS_TOKEN,
@@ -29,11 +48,8 @@ const STATE = {
     GET_HELP_LOAD_ORDERS_BY_ID: ERROR_MESSAGE,
   }),
   getHelp: fromJS({
-    order: {
-      deliveryDate: DELIVERY_DATE,
-      deliverySlot: DELIVERY_SLOT,
-      trackingUrl: TRACKING_URL,
-    },
+    order: ORDER,
+    recipes: RECIPES,
     ineligibleIngredientUuids: fromJS(INELIGIBLE_INGREDIENT_UUIDS),
   }),
   pending: fromJS({
@@ -49,8 +65,10 @@ describe('Get Help selectors', () => {
     ['getAccessToken', getAccessToken, ACCESS_TOKEN],
     ['getIsOrderLoading', getIsOrderLoading, ORDER_PENDING_VALUE],
     ['getIsTrackingUrlLoading', getIsTrackingUrlLoading, TRACKING_URL_PENDING_VALUE],
+    ['getOrder', getOrder, ORDER],
     ['getOrderDeliveryDate', getOrderDeliveryDate, DELIVERY_DATE],
     ['getOrderDeliverySlot', getOrderDeliverySlot, DELIVERY_SLOT],
+    ['getRecipes', getRecipes, RECIPES],
     ['getTrackingUrl', getTrackingUrl, TRACKING_URL],
     ['getIneligibleIngredientUuids', getIneligibleIngredientUuids, INELIGIBLE_INGREDIENT_UUIDS],
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {

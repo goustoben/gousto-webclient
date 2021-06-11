@@ -11,5 +11,5 @@
 }
 
 .copy {
-	font-weight: bold;
+	composes: fontStyleSubHead from 'design-language/typography.module.css';
 }

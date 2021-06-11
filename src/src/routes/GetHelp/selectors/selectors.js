@@ -15,12 +15,20 @@ export const getIsTrackingUrlLoading = (state) => (
   state.pending.get(actionTypes.GET_HELP_LOAD_TRACKING_URL)
 )
 
+export const getOrder = (state) => (
+  state.getHelp.get('order').toJS()
+)
+
 export const getOrderDeliveryDate = (state) => (
   state.getHelp.getIn(['order', 'deliveryDate'])
 )
 
 export const getOrderDeliverySlot = (state) => (
   state.getHelp.getIn(['order', 'deliverySlot']).toJS()
+)
+
+export const getRecipes = (state) => (
+  state.getHelp.get('recipes').toJS()
 )
 
 export const getTrackingUrl = (state) => (
