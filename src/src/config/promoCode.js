@@ -1,2 +1,0 @@
-export const ACTIVE_PROMO_CODE = 'DTI-SB-5030'
-export const DEFAULT_PROMO_CODE = 'DTI-SB-5030'

@@ -1,48 +1,39 @@
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
-import promoActions from 'actions/promos'
+import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 import { getPromoBannerState } from 'utils/home'
 import logger from 'utils/logger'
 
-export const applyPromoCodeAndRedirect = async (dispatch, state, ctaUri) => {
-  const { hide, promoCode, canApplyPromo } = getPromoBannerState(state)
+export const applyPromoCodeAndShowModal = () => async (dispatch, getState) => {
+  const state = getState()
+  const { promoCode, canApplyPromo } = getPromoBannerState(state)
 
-  if (hide || !canApplyPromo) {
-    return false
+  if (!canApplyPromo) {
+    return
   }
-
-  const { promoChange, promoToggleModalVisibility } = promoActions
 
   try {
     await dispatch(promoChange(promoCode))
   } catch (err) {
     logger.warning(`error fetching promo code ${promoCode} - ${err.message}`, err)
 
-    return false
+    return
   }
 
-  dispatch(redirect(ctaUri))
   dispatch(promoToggleModalVisibility(true))
-
-  return true
 }
 
-export const homeGetStarted = (ctaUri, sectionForTracking) => (
-  async (dispatch, getState) => {
-    const state = getState()
-    const success = await applyPromoCodeAndRedirect(dispatch, state, ctaUri)
+export const homeGetStarted = (ctaUri, sectionForTracking) => async (dispatch) => {
+  await dispatch(applyPromoCodeAndShowModal())
 
-    if (!success) {
-      dispatch(redirect(ctaUri))
-    }
+  dispatch(redirect(ctaUri))
 
-    if (sectionForTracking) {
-      dispatch(trackGetStarted(sectionForTracking))
-    }
+  if (sectionForTracking) {
+    dispatch(trackGetStarted(sectionForTracking))
   }
-)
+}
 
 export const homeActions = {
   homeGetStarted,
-  applyPromoCodeAndRedirect,
+  applyPromoCodeAndShowModal,
 }

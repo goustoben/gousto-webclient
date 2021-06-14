@@ -1,34 +1,26 @@
 import { connect } from 'react-redux'
-import promoActions from 'actions/promos'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { getPromoBannerText } from 'selectors/features'
 import { getPromoBannerState } from 'utils/home'
-
-import home from 'config/home'
-
+import { applyPromoCodeAndShowModal } from 'actions/home'
+import { promo } from 'config/home'
 import { PromoBanner } from './PromoBanner'
 
-const mapStateToProps = (state, ownProps) => {
-  const text = getPromoBannerText(state) || home.promo.banner.mayText
-  const { hide, promoCode, canApplyPromo } = getPromoBannerState(
-    state,
-    ownProps.promoCode,
-    ownProps.location
-  )
+const mapStateToProps = (state) => {
+  const text = getPromoBannerText(state) || promo.defaultBannerText
+  const { promoCode, canApplyPromo } = getPromoBannerState(state)
 
   return {
     text,
-    hide,
     promoCode,
     canApplyPromo,
   }
 }
 
 const mapDispatchToProps = {
+  applyPromoCodeAndShowModal,
   redirect,
-  promoChange: promoActions.promoChange,
-  promoToggleModalVisibility: promoActions.promoToggleModalVisibility,
   trackUTMAndPromoCode,
 }
 

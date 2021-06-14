@@ -8,6 +8,7 @@ module.exports = {
       .perform(done => {
         shared.section.body.createUser().then(user => {
           menu.navigate()
+          shared.section.body.submitPromo()
           shared.section.body.login(user.customer.email, user.customer.password)
           done()
         }).catch(error => {

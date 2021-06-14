@@ -67,7 +67,8 @@ describe('Menu', () => {
       recipesCount: 3,
       onOverlayClick: jest.fn(),
       fetchData: jest.fn(),
-      menuCalculateTimeToUsable: jest.fn()
+      menuCalculateTimeToUsable: jest.fn(),
+      applyPromoCodeAndShowModal: jest.fn(),
     }
   })
 

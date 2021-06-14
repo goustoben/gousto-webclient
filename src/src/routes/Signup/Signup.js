@@ -48,7 +48,7 @@ const propTypes = {
   menuLoadBoxPrices: PropTypes.func.isRequired,
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
-    hide: PropTypes.bool,
+    canApplyPromo: PropTypes.bool,
   }),
   trackDiscountVisibility: PropTypes.func,
   isWizardPricePerServingEnabled: PropTypes.bool,
@@ -82,7 +82,7 @@ const defaultProps = {
     stepName: '',
   },
   promoBannerState: {
-    hide: true,
+    canApplyPromo: false,
   },
   isTastePreferencesEnabled: false,
   isPricingClarityEnabled: false,
@@ -329,7 +329,10 @@ class Signup extends PureComponent {
 
     const pricingMinHeight = isPricingClarityEnabled && (isPostcodeStep || isDeliveryStep)
     const autosizeAnimationContainer = isPricingClarityEnabled && isBoxSizeStep
-    const isDiscountApplied = !promoModalVisible && promoBannerState.hide
+
+    const { canApplyPromo } = promoBannerState
+
+    const isDiscountApplied = !promoModalVisible && !canApplyPromo
 
     return (
       <div
@@ -351,7 +354,7 @@ class Signup extends PureComponent {
         />
         <DiscountAppliedBar
           promoModalVisible={promoModalVisible}
-          isPromoBarHidden={promoBannerState.hide}
+          isPromoBarHidden={!canApplyPromo}
           trackDiscountVisibility={trackDiscountVisibility}
           wizardStep={currentStepName}
           signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}

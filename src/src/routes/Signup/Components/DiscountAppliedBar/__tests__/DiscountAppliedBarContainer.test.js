@@ -29,12 +29,7 @@ describe('given DiscountAppliedBarContainer is rendered', () => {
   test('then it should pass the correct props', () => {
     expect(wrapper.props()).toMatchObject({
       promoModalVisible: false,
-      promoBannerState: {
-        canApplyPromo: true,
-        hide: undefined,
-        promoCode: expect.anything(),
-      },
-      isPromoBarHidden: undefined,
+      isPromoBarHidden: false,
       isDiscountAppliedBarDismissed: false,
       trackDiscountVisibility: expect.any(Function),
       signupDismissDiscountAppliedBar: expect.any(Function),

@@ -6,9 +6,7 @@ import { PromoBannerContainer } from '../PromoBannerContainer'
 
 jest.mock('config/home', () => ({
   promo: {
-    banner: {
-      mayText: 'promo banner text',
-    },
+    defaultBannerText: 'promo banner text',
   },
 }))
 
@@ -34,7 +32,6 @@ describe('PromoBannerContainer', () => {
 
   beforeEach(() => {
     getPromoBannerState.mockReturnValue({
-      hide: false,
       canApplyPromo: true,
       promoCode: '',
     })
@@ -44,7 +41,6 @@ describe('PromoBannerContainer', () => {
   test('should be rendered properly', () => {
     const expected = {
       text: 'promo banner text',
-      hide: false,
       promoCode: '',
       canApplyPromo: true,
     }

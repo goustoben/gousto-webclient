@@ -12,8 +12,10 @@ describe('Menu-BrowseCTA', () => {
     cy.route('GET', 'delivery_day/**/stock', 'fixture:stock/deliveryDayStock.json').as('getStock')
     cy.route('GET', '/menu/v1/**', 'fixture:menu/twoWeeksDetails.json').as('getMenu')
     cy.route('GET', '/userbucketing/v1/user/experiments', 'fixture:userbucketing/userbucketing.json').as('getExperiments')
+    cy.route('GET', '/promocode/**', 'fixture:promoCode/promoCodeDetails').as('promoCodeDetails')
     cy.visit('/menu')
     cy.wait(['@getMenu', '@getBrand', '@getStock', '@getDeliveries'])
+    cy.applyPromoCode()
   })
 
   after(() => {

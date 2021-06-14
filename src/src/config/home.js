@@ -1,6 +1,5 @@
 import React from 'react'
 import Icon from 'components/Icon'
-import { ACTIVE_PROMO_CODE, DEFAULT_PROMO_CODE } from './promoCode'
 
 import VarietyImg from 'routes/Home/WhyChooseGousto/variety.png'
 import QualityImg from 'routes/Home/WhyChooseGousto/quality.png'
@@ -40,14 +39,8 @@ export const CTA = {
   },
 }
 export const promo = {
-  // loggedIn|loggedOut|any
-  applyIf: 'loggedOut',
-  code: DEFAULT_PROMO_CODE,
-  mayCode: ACTIVE_PROMO_CODE,
-  banner: {
-    text: 'Click here to get 50% off your first box and 30% off all other boxes in your first month',
-    mayText: 'Get 50% off your first box and 30% off your first month',
-  },
+  defaultPromoCode: 'DTI-SB-5030',
+  defaultBannerText: 'Get 50% off your first box and 30% off your first month',
 }
 export const emailForm = {
   emailRequired: 'Please provide a valid email address.',

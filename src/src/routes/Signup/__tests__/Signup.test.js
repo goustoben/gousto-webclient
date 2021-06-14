@@ -28,7 +28,7 @@ describe('Signup', () => {
     menuLoadBoxPrices,
     promoModalVisible: false,
     promoBannerState: {
-      hide: false,
+      canApplyPromo: true,
     },
     updatePricePerServing,
   }
@@ -194,7 +194,11 @@ describe('Signup', () => {
     describe('when state is hidden', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <Signup {...props} promoModalVisible={false} promoBannerState={{ hide: true }} />,
+          <Signup
+            {...props}
+            promoModalVisible={false}
+            promoBannerState={{ canApplyPromo: false }}
+          />,
           {
             context,
           }
@@ -214,7 +218,7 @@ describe('Signup', () => {
     describe('when state is visible', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <Signup {...props} promoModalVisible promoBannerState={{ hide: false }} />,
+          <Signup {...props} promoModalVisible promoBannerState={{ canApplyPromo: true }} />,
           {
             context,
           }

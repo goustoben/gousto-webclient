@@ -1,147 +1,101 @@
-import { homeActions } from 'actions/home'
+import { homeGetStarted, applyPromoCodeAndShowModal } from 'actions/home'
 import { redirect } from 'actions/redirect'
 import { trackGetStarted } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
-import promoActions from 'actions/promos'
-
-const { promoChange, promoToggleModalVisibility } = promoActions
+import { promoChange, promoToggleModalVisibility } from 'actions/promos'
 
 jest.mock('actions/redirect', () => ({
-  redirect: jest.fn()
+  redirect: jest.fn(),
 }))
 
 jest.mock('actions/tracking', () => ({
-  trackGetStarted: jest.fn()
+  trackGetStarted: jest.fn(),
 }))
 
 jest.mock('actions/promos', () => ({
   promoChange: jest.fn(),
-  promoToggleModalVisibility: jest.fn()
+  promoToggleModalVisibility: jest.fn(),
 }))
 
 jest.mock('utils/home', () => ({
-  getPromoBannerState: jest.fn()
+  getPromoBannerState: jest.fn(),
 }))
 
 describe('home actions', () => {
   const getState = jest.fn()
   const dispatchSpy = jest.fn()
   const CTA_URI = '/ctaTest'
+  const promoCode = 'DTI-test-home-actions'
 
-  describe('Given homeGetStarted is dispatched', () => {
-    const { homeGetStarted } = homeActions
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
-    describe('When promo code is not applied', () => {
+  describe('given homeGetStarted is dispatched', () => {
+    test('then it should redirect to the specified UrI', async () => {
+      await homeGetStarted(CTA_URI)(dispatchSpy, getState)
+
+      expect(redirect).toHaveBeenCalledWith(CTA_URI)
+    })
+
+    test('If sectionForTracking is supplied, then also the tracking event is sent', async () => {
+      const sectionForTracking = 'testSection'
+
+      await homeGetStarted(CTA_URI, sectionForTracking)(dispatchSpy, getState)
+
+      expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
+    })
+  })
+
+  describe('given applyPromoCodeAndShowModal is dispatched', () => {
+    describe('when promo code is not applicable', () => {
       beforeEach(() => {
         getPromoBannerState.mockReturnValue({
-          hide: false,
-          canApplyPromo: true
+          canApplyPromo: false,
+          promoCode,
         })
       })
 
-      describe('And sectionForTracking is not supplied', () => {
-        test('Then redirect to the next step', async () => {
-          await homeGetStarted(CTA_URI)(dispatchSpy, getState)
+      test('then promo code is not applied', async () => {
+        await applyPromoCodeAndShowModal(CTA_URI)(dispatchSpy, getState)
 
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(trackGetStarted).not.toHaveBeenCalled()
-        })
-      })
-
-      describe('And sectionForTracking is supplied', () => {
-        test('Then redirect and send tracking event', async () => {
-          const sectionForTracking = 'testSection'
-
-          await homeGetStarted(CTA_URI, sectionForTracking)(dispatchSpy, getState)
-
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
-        })
+        expect(promoChange).not.toHaveBeenCalled()
+        expect(promoToggleModalVisibility).not.toHaveBeenCalled()
       })
     })
 
-    describe('When promo code is applied', () => {
-      const promoCode = 'DTI-test-home-actions'
-
-      describe('And promo banner is hidden', () => {
-        beforeEach(() => {
-          jest.clearAllMocks()
-          getPromoBannerState.mockReturnValue({
-            hide: true,
-            canApplyPromo: false,
-            promoCode
-          })
-        })
-
-        test('Then promo code is not applied', async () => {
-          await homeGetStarted(CTA_URI)(dispatchSpy, getState)
-
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(promoChange).not.toHaveBeenCalled()
-          expect(promoToggleModalVisibility).not.toHaveBeenCalled()
+    describe('when promo code is applicable', () => {
+      beforeEach(() => {
+        getPromoBannerState.mockReturnValue({
+          canApplyPromo: true,
+          promoCode,
         })
       })
 
-      describe('When promo code is not applicable', () => {
-        beforeEach(() => {
-          getPromoBannerState.mockReturnValue({
-            hide: false,
-            canApplyPromo: false,
-            promoCode
-          })
+      test('then promo code is applied and modal is shown', async () => {
+        await applyPromoCodeAndShowModal(CTA_URI)(dispatchSpy, getState)
+
+        expect(promoChange).toHaveBeenCalledWith(promoCode)
+        expect(promoToggleModalVisibility).toHaveBeenCalledWith(true)
+      })
+    })
+
+    describe('when promo code is applicable but promoChange raises an error', () => {
+      beforeEach(() => {
+        getPromoBannerState.mockReturnValue({
+          canApplyPromo: true,
+          promoCode,
         })
 
-        test('Then promo code is not applied', async () => {
-          await homeGetStarted(CTA_URI)(dispatchSpy, getState)
-
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(promoChange).not.toHaveBeenCalled()
-          expect(promoToggleModalVisibility).not.toHaveBeenCalled()
+        promoChange.mockImplementation(() => {
+          throw new Error('something went wrong')
         })
       })
 
-      describe('When promo banner is shown and promo code is applicable', () => {
-        beforeEach(() => {
-          jest.clearAllMocks()
+      test('then the modal is not shown', async () => {
+        await applyPromoCodeAndShowModal(CTA_URI)(dispatchSpy, getState)
 
-          getPromoBannerState.mockReturnValue({
-            hide: false,
-            canApplyPromo: true,
-            promoCode
-          })
-        })
-
-        test('Then promo code is applied and modal is shown', async () => {
-          await homeGetStarted(CTA_URI)(dispatchSpy, getState)
-
-          expect(promoChange).toHaveBeenCalledWith(promoCode)
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(promoToggleModalVisibility).toHaveBeenCalledWith(true)
-          expect(trackGetStarted).not.toHaveBeenCalled()
-        })
-
-        test('If sectionForTracking is supplied, then also the tracking event is sent', async () => {
-          const sectionForTracking = 'testSection'
-
-          await homeGetStarted(CTA_URI, sectionForTracking)(dispatchSpy, getState)
-
-          expect(promoChange).toHaveBeenCalledWith(promoCode)
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(promoToggleModalVisibility).toHaveBeenCalledWith(true)
-          expect(trackGetStarted).toHaveBeenCalledWith(sectionForTracking)
-        })
-
-        test('When promoChange fails, redirect without showing the modal', async () => {
-          promoChange.mockImplementation(() => {
-            throw new Error('something went wrong')
-          })
-
-          await homeGetStarted(CTA_URI)(dispatchSpy, getState)
-
-          expect(redirect).toHaveBeenCalledWith(CTA_URI)
-          expect(promoToggleModalVisibility).not.toHaveBeenCalled()
-          expect(trackGetStarted).not.toHaveBeenCalled()
-        })
+        expect(promoToggleModalVisibility).not.toHaveBeenCalled()
       })
     })
   })

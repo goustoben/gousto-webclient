@@ -102,7 +102,7 @@ const promoCurrentSet = code => ({
   code,
 })
 
-const promoChange = code => (
+export const promoChange = code => (
   async (dispatch, getState) => {
     if (!getState().promoStore.get(code, null)) {
       await dispatch(promoGet(code))

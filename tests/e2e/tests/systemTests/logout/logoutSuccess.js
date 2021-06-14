@@ -17,6 +17,7 @@ module.exports = {
       })
       .perform(function (browser, done) {
         menu.navigate()
+        shared.section.body.submitPromo()
         shared.section.body.login(user.customer.email, user.customer.password)
         shared.section.header.checkUserLoggedIn()
         browser.assert.urlContains("/menu")

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import logger from 'utils/logger'
 import { clickClaimDiscountBar } from 'actions/trackingKeys'
 import { DiscountBar } from './DiscountBar/DiscountBar'
 
@@ -33,38 +32,21 @@ export class PromoBanner extends Component {
   }
 
   applyDiscount = () => {
-    const { promoCode, trackUTMAndPromoCode } = this.props
-    this.applyPromoCode(promoCode)
+    const { applyPromoCodeAndShowModal, redirect, trackUTMAndPromoCode } = this.props
+    applyPromoCodeAndShowModal()
+    redirect('/signup/box-size')
     trackUTMAndPromoCode(clickClaimDiscountBar)
   }
 
-  async applyPromoCode(promoCode) {
-    const { promoChange, promoToggleModalVisibility, redirect, canApplyPromo } = this.props || {}
-
-    let error
-    if (canApplyPromo) {
-      try {
-        await promoChange(promoCode)
-      } catch (err) {
-        error = err
-        logger.warning(`error fetching promo code ${promoCode} - ${err.message}`, err)
-      }
-      if (!error) {
-        redirect('/signup/box-size', false)
-        promoToggleModalVisibility(true)
-      }
-    }
-  }
-
   render() {
-    const { hide, text } = this.props
+    const { canApplyPromo, text } = this.props
     const { isSticky } = this.state
 
     return (
       <div ref={this.stickyBarRef}>
         <DiscountBar
           applyDiscount={this.applyDiscount}
-          isHidden={hide}
+          isHidden={!canApplyPromo}
           isSticky={isSticky}
           text={text}
         />
@@ -74,15 +56,17 @@ export class PromoBanner extends Component {
 }
 
 PromoBanner.propTypes = {
-  hide: PropTypes.bool,
+  canApplyPromo: PropTypes.bool,
   text: PropTypes.string,
-  promoCode: PropTypes.string,
   trackUTMAndPromoCode: PropTypes.func,
+  applyPromoCodeAndShowModal: PropTypes.func,
+  redirect: PropTypes.func,
 }
 
 PromoBanner.defaultProps = {
-  hide: false,
+  canApplyPromo: true,
   text: '',
-  promoCode: '',
   trackUTMAndPromoCode: () => {},
+  applyPromoCodeAndShowModal: () => {},
+  redirect: () => {},
 }

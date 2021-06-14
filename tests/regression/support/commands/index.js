@@ -74,6 +74,10 @@ Cypress.Commands.add('setupMenu', ({ platform }) => {
   cy.get('[data-testing="boxSummaryContinueButton"]').click()
 })
 
+Cypress.Commands.add('applyPromoCode', () => {
+  cy.get('[data-testing="promoModalButton"]').click()
+})
+
 Cypress.Commands.add('proceedToCheckout', ({ platform }) => {
   const POSTCODE = 'W3 7UP'
 

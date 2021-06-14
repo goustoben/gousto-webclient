@@ -3,7 +3,7 @@ import { actionTypes } from 'actions/actionTypes'
 import { basketNumPortionChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { signupNextStep } from 'actions/signup'
-import { applyPromoCodeAndRedirect } from 'actions/home'
+import { applyPromoCodeAndShowModal } from 'actions/home'
 import { trackClickBuildMyBox } from 'actions/tracking'
 import { fetchBoxPrices } from 'apis/boxPrices'
 import { pricePerServing } from 'config/boxprices'
@@ -17,28 +17,23 @@ import { setLowestPricePerPortion } from './boxPricesPricePerPortion'
 export const boxPricesBoxSizeSelected = (numPersons) => async (dispatch, getState) => {
   const state = getState()
   const postcode = getBasketPostcode(state)
-  const { hide, canApplyPromo } = getPromoBannerState(state)
+  const { canApplyPromo } = getPromoBannerState(state)
   const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
-  const { menu, signup } = routesConfig.client
   const destination = postcode ? 'menu' : 'wizard'
 
   dispatch(trackClickBuildMyBox(`${numPersons} people`, destination))
   dispatch(basketNumPortionChange(numPersons))
 
   if (destination === 'menu') {
-    dispatch(redirect(menu))
+    dispatch(redirect(routesConfig.client.menu))
   } else {
-    let success = false
-
     const destinationStep = isPaymentBeforeChoosingEnabled ? findStepBySlug('recipes-per-box') : findStepBySlug('postcode')
 
-    if (!hide && canApplyPromo) {
-      success = await dispatch(applyPromoCodeAndRedirect(dispatch, state, `${signup}/${destinationStep.get('slug')}`))
+    if (canApplyPromo) {
+      await dispatch(applyPromoCodeAndShowModal())
     }
 
-    if (!success) {
-      dispatch(signupNextStep(destinationStep.get('name')))
-    }
+    dispatch(signupNextStep(destinationStep.get('name')))
   }
 }
 

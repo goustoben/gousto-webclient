@@ -41,7 +41,8 @@ class Menu extends React.PureComponent {
       menuLoadBoxPrices,
       shouldJfyTutorialBeVisible,
       menuCalculateTimeToUsable,
-      fetchData
+      fetchData,
+      applyPromoCodeAndShowModal
     } = this.props
 
     const forceDataLoad = Boolean(query.reload)
@@ -68,6 +69,9 @@ class Menu extends React.PureComponent {
     }
 
     promises.push(shouldJfyTutorialBeVisible())
+
+    promises.push(applyPromoCodeAndShowModal())
+
     await Promise.all(promises)
     menuCalculateTimeToUsable()
   }

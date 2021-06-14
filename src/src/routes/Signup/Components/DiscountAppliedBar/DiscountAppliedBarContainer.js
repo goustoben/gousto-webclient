@@ -9,8 +9,7 @@ const mapStateToProps = (state) => {
 
   return {
     promoModalVisible: state.promoModalVisible,
-    promoBannerState,
-    isPromoBarHidden: promoBannerState.hide,
+    isPromoBarHidden: !promoBannerState.canApplyPromo,
     isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
   }
 }

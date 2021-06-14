@@ -3,6 +3,8 @@ const webclient = require('../../../src/dist/webclient').default
 const Immutable = require('immutable')
 const RandExp = require('randexp')
 
+const ANIMATION_DELAY = 500
+
 const seed = Math.round(Math.random() * Math.pow(10, 17))
 faker.seed(seed)
 faker.locale = 'en_GB'
@@ -228,6 +230,8 @@ module.exports = {
             .clearValue('@loginPassword').setValue('@loginPassword', password)
             .click('@loginFormSubmit')
 
+          this.api.pause(ANIMATION_DELAY)
+
           return this
         },
         logout: function () {
@@ -252,6 +256,7 @@ module.exports = {
           this
             .waitForElementVisible('@promoModalButton')
             .click('@promoModalButton')
+          this.api.pause(ANIMATION_DELAY)
 
           return this
         },

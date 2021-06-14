@@ -5,7 +5,7 @@ import { basketNumPortionChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { signupNextStep } from 'actions/signup'
 import { trackClickBuildMyBox } from 'actions/tracking'
-import { applyPromoCodeAndRedirect } from 'actions/home'
+import { applyPromoCodeAndShowModal } from 'actions/home'
 import { fetchBoxPrices } from 'apis/boxPrices'
 import { getPromoBannerState } from 'utils/home'
 
@@ -30,7 +30,7 @@ jest.mock('utils/home', () => ({
 }))
 
 jest.mock('actions/home', () => ({
-  applyPromoCodeAndRedirect: jest.fn()
+  applyPromoCodeAndShowModal: jest.fn()
 }))
 
 jest.mock('apis/boxPrices', () => ({
@@ -49,7 +49,6 @@ describe('boxPrices actions', () => {
     })
   }
   getPromoBannerState.mockReturnValue({
-    hide: false,
     canApplyPromo: true
   })
 
@@ -59,25 +58,13 @@ describe('boxPrices actions', () => {
         getState.mockReturnValue(defaultState)
       })
 
-      test('then it should redirect to wizard', async () => {
+      test('then it should apply promo code and redirect to wizard', async () => {
         await boxPricesBoxSizeSelected(2)(dispatch, getState)
 
+        expect(applyPromoCodeAndShowModal).toHaveBeenCalled()
         expect(trackClickBuildMyBox).toHaveBeenCalledWith('2 people', 'wizard')
         expect(basketNumPortionChange).toHaveBeenCalledWith(2)
         expect(signupNextStep).toHaveBeenCalledWith('postcode')
-      })
-
-      describe('and applyPromoCodeAndRedirect returns an error', () => {
-        beforeEach(() => {
-          applyPromoCodeAndRedirect.mockReturnValue(false)
-        })
-
-        test('then should redirect to the next step', async () => {
-          await boxPricesBoxSizeSelected(2)(dispatch, getState)
-
-          expect(applyPromoCodeAndRedirect).toBeCalled()
-          expect(signupNextStep).toHaveBeenCalledWith('postcode')
-        })
       })
     })
 

@@ -4,6 +4,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { boxSummaryDeliveryDaysLoad } from 'actions/boxSummary'
+import { applyPromoCodeAndShowModal } from 'actions/home'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 
 import Menu from './Menu'
@@ -58,7 +59,8 @@ const mapDispatchToProps = {
   onOverlayClick: menuOverlayClick,
   boxSummaryDeliveryDaysLoad,
   menuCalculateTimeToUsable,
-  fetchData
+  fetchData,
+  applyPromoCodeAndShowModal
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
