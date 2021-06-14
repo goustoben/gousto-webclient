@@ -16,7 +16,6 @@ import { RecipeSidesModalContainer } from './RecipeSidesModal'
 import { VariantRecipeListModalContainer, VariantRecipeListDesktopModalContainer } from '../ElevatedMenuExperience/VariantRecipeListModal'
 import { MenuDateRangeContainer } from '../components/MenuDateRange'
 import css from './MenuRecipesPage.css'
-import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { SignpostingExperimentWrapper, isMandatoryBucket, SignpostingExperimentContext } from '../context/uiSignpostingContext'
 
@@ -130,11 +129,6 @@ export class MenuRecipesPage extends PureComponent {
         <SignpostingExperimentContext.Consumer>
           {bucket => isMandatoryBucket(bucket) && <VariantRecipeListDesktopModalContainer />}
         </SignpostingExperimentContext.Consumer>
-
-        <ExperimentsContainer experimentName="allocation-experiment-one" />
-        <ExperimentsContainer experimentName="allocation-experiment-two" />
-        <ExperimentsContainer experimentName="allocation-experiment-three" />
-        <ExperimentsContainer experimentName="allocation-experiment-four" />
       </div>
     )
   }

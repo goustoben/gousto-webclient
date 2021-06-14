@@ -1,25 +1,4 @@
 {
   "status": "ok",
-  "data": [
-    {
-      "name": "allocation-experiment-four",
-      "bucket": "control",
-      "withinExperiment": true
-    },
-    {
-      "name": "allocation-experiment-one",
-      "bucket": "variant",
-      "withinExperiment": true
-    },
-    {
-      "name": "allocation-experiment-three",
-      "bucket": "variant",
-      "withinExperiment": true
-    },
-    {
-      "name": "allocation-experiment-two",
-      "bucket": "control",
-      "withinExperiment": true
-    }
-  ]
+  "data": []
 }

@@ -7,7 +7,6 @@ import { CollectionsNavContainer } from '../../CollectionsNav'
 import { MenuRecipesPage as MenuRecipes } from '../MenuRecipesPage'
 import { CapacityInfo } from '../../components/CapacityInfo'
 import { BannerTastePreferencesContainer } from '../BannerTastePreferences'
-import { ExperimentsContainer } from '../../../../containers/Experiments'
 
 jest.mock('routes/Menu/SubHeader')
 jest.mock('../../CollectionsNav', () => ({ CollectionsNavContainer: 'CollectionsNav' }))
@@ -91,21 +90,6 @@ describe('initial render', () => {
 
       test('should render CommunicationPanel', () => {
         expect(wrapper.find('CommunicationPanel')).toHaveLength(1)
-      })
-    })
-
-    describe('Given the bucketing A/A test', () => {
-      it('should render 4 experiments containers', () => {
-        expect(wrapper.find(ExperimentsContainer)).toHaveLength(4)
-      })
-
-      it.each([
-        ['allocation-experiment-one', 0],
-        ['allocation-experiment-two', 1],
-        ['allocation-experiment-three', 2],
-        ['allocation-experiment-four', 3],
-      ])('renders experiment container with experiment name %s', (experimentName, index) => {
-        expect(wrapper.find(ExperimentsContainer).at(index).prop('experimentName')).toBe(experimentName)
       })
     })
   })
