@@ -219,15 +219,4 @@ describe('Delivery Step', () => {
       })
     })
   })
-
-  describe('when the pricing clarity experiment is on', () => {
-    beforeEach(() => {
-      wrapper.setProps({ isPricingClarityEnabled: true })
-    })
-
-    test('then it renders correctly', () => {
-      expect(wrapper.hasClass('pricingClarityRedesign')).toBeTruthy()
-      expect(wrapper.find('SignupImage')).toHaveLength(0)
-    })
-  })
 })

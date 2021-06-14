@@ -82,7 +82,6 @@ const DeliveryStep = ({
   tempSlotId,
   setTempSlotId,
   boxSummaryDeliverySlotChosen,
-  menuFetchDataPending,
   nextDayDeliveryPaintedDoorFeature,
   next,
   trackDeliveryDayDropDownOpened,
@@ -93,7 +92,6 @@ const DeliveryStep = ({
   disabledSlots,
   userHasAvailableSlots,
   isTastePreferencesEnabled,
-  isPricingClarityEnabled,
   isPaymentBeforeChoosingEnabled,
   trackSignupWizardAction,
   showcaseMenuSeen,
@@ -195,27 +193,21 @@ const DeliveryStep = ({
   }
 
   return (
-    <span
-      className={classNames(signupCss.stepContainer, {
-        [css.pricingClarityRedesign]: isPricingClarityEnabled,
-      })}
-      data-testing="signupDeliveryStep"
-    >
+    <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
         <div className={classNames(signupCss.header, signupCss.largerSpacing)}>
           <Heading type="h1" className={signupCss.heading}>
             {signupConfig.deliveryOptionsStep.title}
           </Heading>
-          {!isPricingClarityEnabled && <Image name="delivery-day" />}
+          <Image name="delivery-day" />
         </div>
         <div className={classNames(signupCss.body, css.body)}>
           <div className={css.container}>
             <div className={css.row}>
-              <div className={css.left} data-testing="signupDeliveryDay">
+              <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
                 <DropdownInput
                   color="secondary"
                   uppercase
-                  className={css.dropdown}
                   options={deliveryDays}
                   onChange={onTempDateChange}
                   value={tempDate}
@@ -223,7 +215,10 @@ const DeliveryStep = ({
                   onClose={onDayDropdownClose}
                 />
               </div>
-              <div className={css.right} data-testing="signupDeliveryTime">
+              <div
+                className={classNames(css.right, css.dropdown)}
+                data-testing="signupDeliveryTime"
+              >
                 <DropdownInput
                   color="secondary"
                   uppercase
@@ -239,18 +234,8 @@ const DeliveryStep = ({
         </div>
       </div>
       <div className={signupCss.footer}>
-        <div
-          className={classNames(signupCss.inputContainer, {
-            [css.pricingClarityButton]: isPricingClarityEnabled,
-          })}
-        >
-          <Button
-            data-testing="signupDeliveryCTA"
-            disabled={!tempDate || !tempSlotId}
-            width="full"
-            onClick={onShowRecipe}
-            pending={menuFetchDataPending}
-          />
+        <div className={signupCss.inputContainer}>
+          <Button data-testing="signupDeliveryCTA" width="full" onClick={onShowRecipe} />
         </div>
       </div>
     </span>
@@ -269,13 +254,11 @@ DeliveryStep.propTypes = {
   trackDeliverySlotDropDownOpened: PropTypes.func,
   trackDeliveryDayEdited: PropTypes.func,
   trackDeliverySlotEdited: PropTypes.func,
-  menuFetchDataPending: PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: PropTypes.bool,
   next: PropTypes.func,
   disabledSlots: PropTypes.arrayOf(PropTypes.string),
   userHasAvailableSlots: PropTypes.bool,
   isTastePreferencesEnabled: PropTypes.bool,
-  isPricingClarityEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
   showcaseMenuSeen: PropTypes.bool,
@@ -293,13 +276,11 @@ DeliveryStep.defaultProps = {
   trackDeliverySlotDropDownOpened: () => {},
   trackDeliveryDayEdited: () => {},
   trackDeliverySlotEdited: () => {},
-  menuFetchDataPending: false,
   nextDayDeliveryPaintedDoorFeature: false,
   next: () => {},
   disabledSlots: [],
   userHasAvailableSlots: true,
   isTastePreferencesEnabled: false,
-  isPricingClarityEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
   showcaseMenuSeen: false,
 }
