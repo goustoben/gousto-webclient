@@ -64,6 +64,7 @@ const propTypes = {
   }),
   isWizardBoxSizeEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
+  isPaymentBeforeChoosingV2Enabled: PropTypes.bool,
   isDiscountAppliedBarDismissed: PropTypes.bool,
   signupDismissDiscountAppliedBar: PropTypes.func,
 }
@@ -92,6 +93,7 @@ const defaultProps = {
   lowestPricePerPortion: {},
   isWizardBoxSizeEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
+  isPaymentBeforeChoosingV2Enabled: false,
   isDiscountAppliedBarDismissed: false,
   signupDismissDiscountAppliedBar: () => {},
 }
@@ -117,6 +119,7 @@ class Signup extends PureComponent {
       isWizardPricePerServingEnabled,
       lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
+      isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams,
     } = options
 
@@ -163,6 +166,12 @@ class Signup extends PureComponent {
       !Object.keys(lowestPricePerPortion).length
     ) {
       store.dispatch(updatePricePerServing())
+    }
+
+    if (isPaymentBeforeChoosingV2Enabled) {
+      return store.dispatch(
+        actions.redirect(`${routes.client.menu}${getPromocodeQueryParam(promoCode, '?')}`)
+      )
     }
 
     // No Step specified and no query string specified
@@ -221,6 +230,7 @@ class Signup extends PureComponent {
       isWizardPricePerServingEnabled,
       lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
+      isPaymentBeforeChoosingV2Enabled,
     } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
@@ -231,6 +241,7 @@ class Signup extends PureComponent {
       menuLoadBoxPrices,
       orderDiscount,
       isPaymentBeforeChoosingEnabled,
+      isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams: true,
     }
     Signup.fetchData({ store, query, params, options })

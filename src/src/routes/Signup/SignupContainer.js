@@ -6,6 +6,7 @@ import {
   getIsWizardPricePerServingEnabled,
   getIsWizardBoxSizeEnabled,
   getIsPaymentBeforeChoosingEnabled,
+  getIsPaymentBeforeChoosingV2Enabled,
 } from 'selectors/features'
 import { signupDismissDiscountAppliedBar } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
@@ -28,6 +29,7 @@ const mapStateToProps = (state, ownProps) => ({
   lowestPricePerPortion: state.boxPrices.toJS().lowestPricePerPortion,
   isWizardBoxSizeEnabled: getIsWizardBoxSizeEnabled(state),
   isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
+  isPaymentBeforeChoosingV2Enabled: getIsPaymentBeforeChoosingV2Enabled(state),
   isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
 })
 
