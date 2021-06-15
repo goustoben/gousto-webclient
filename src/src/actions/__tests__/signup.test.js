@@ -198,7 +198,7 @@ describe('signup actions', () => {
       })
     })
 
-    describe('and when the isPaymentBeforeChoosingEnabled feature is enabled', () => {
+    describe('and when isPaymentBeforeChoosingEnabled is on', () => {
       beforeEach(() => {
         getState.mockReturnValue({
           signup: Immutable.fromJS({
@@ -208,7 +208,7 @@ describe('signup actions', () => {
             },
           }),
           features: Immutable.fromJS({
-            isPaymentBeforeChoosingEnabled: {
+            isPaymentBeforeChoosingV1Enabled: {
               value: true
             },
           })

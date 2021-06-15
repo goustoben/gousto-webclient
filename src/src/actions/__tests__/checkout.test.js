@@ -1271,7 +1271,7 @@ describe('checkout actions', () => {
       beforeEach(() => {
         getState.mockReturnValue(createState({
           features: Immutable.fromJS({
-            isPaymentBeforeChoosingEnabled: {
+            isPaymentBeforeChoosingV1Enabled: {
               value: true
             },
           }),

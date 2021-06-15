@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect'
+
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
   features
     ? features.getIn(['nextDayDeliveryPaintedDoor', 'value'])
@@ -178,8 +180,18 @@ export const getIsWizardBoxSizeEnabled = ({ features }) => (
   features && features.getIn(['isWizardBoxSizeEnabled', 'value'], false)
 )
 
-export const getIsPaymentBeforeChoosingEnabled = ({ features }) => (
-  features && features.getIn(['isPaymentBeforeChoosingEnabled', 'value'], false)
+export const getIsPaymentBeforeChoosingV1Enabled = ({ features }) => (
+  features && features.getIn(['isPaymentBeforeChoosingV1Enabled', 'value'], false)
+)
+
+export const getIsPaymentBeforeChoosingV2Enabled = ({ features }) => (
+  features && features.getIn(['isPaymentBeforeChoosingV2Enabled', 'value'], false)
+)
+
+export const getIsPaymentBeforeChoosingEnabled = createSelector(
+  [getIsPaymentBeforeChoosingV1Enabled, getIsPaymentBeforeChoosingV2Enabled],
+  (isPaymentBeforeChoosingV1Enabled, isPaymentBeforeChoosingV2Enabled) =>
+    isPaymentBeforeChoosingV1Enabled || isPaymentBeforeChoosingV2Enabled
 )
 
 export const getIsDecoupledPaymentEnabled = ({ features }) => (

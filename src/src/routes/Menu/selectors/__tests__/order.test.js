@@ -232,7 +232,7 @@ describe('order selectors', () => {
     describe.each(cases)('when isPaymentBeforeChoosingEnabled is %s and isAuthenticated is %s', (isPaymentBeforeChoosingEnabled, isAuthenticated, expected) => {
       const state = createState({
         features: {
-          isPaymentBeforeChoosingEnabled: { value: isPaymentBeforeChoosingEnabled },
+          isPaymentBeforeChoosingV1Enabled: { value: isPaymentBeforeChoosingEnabled },
         },
         auth: {
           isAuthenticated
