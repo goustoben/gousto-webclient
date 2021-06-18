@@ -1,5 +1,8 @@
-*       @Gousto/guild-frontend
+# Global ownership
+/src/dangerfile.js @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
+/.github/workflows/danger.yml @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
 
+# frontend-foundations ownership
 /.dockerignore        @Gousto/frontend-foundations
 /service.yml        @Gousto/frontend-foundations
 /Dockerfile        @Gousto/frontend-foundations
@@ -28,6 +31,7 @@
 /src/src/store.js        @Gousto/frontend-foundations
 /tests/regression/cypress.json        @Gousto/frontend-foundations
 
+# squad-radishes ownership
 /src/src/routes/Menu/       @Gousto/squad-radishes
 /src/src/config/collections.js       @Gousto/squad-radishes
 /src/src/config/menu.js       @Gousto/squad-radishes
@@ -91,7 +95,7 @@
 /src/src/containers/OptimizelyRollouts/                 @Gousto/squad-radishes
 /src/src/routes/OrderConfirmation/                      @Gousto/squad-radishes
 
-
+# squad-haricots ownership
 /src/__tests__/actions/getHelp.test.js                              @Gousto/squad-haricots
 /src/__tests__/middlewares/tracking/snowplow/getHelp.test.js        @Gousto/squad-haricots
 /src/src/actions/__tests__/getHelp.test.js                          @Gousto/squad-haricots
@@ -112,7 +116,7 @@
 /src/src/selectors/getHelp.js                                       @Gousto/squad-haricots
 /tests/regression/fixtures/getHelp/                                 @Gousto/squad-haricots
 
-
+# squad-turnips ownership
 /src/src/containers/Experiments/                    @Gousto/squad-turnips
 /src/__tests__/router/Cookbook.test.js              @Gousto/squad-turnips
 /src/__tests__/utils/cookbook.test.js               @Gousto/squad-turnips
@@ -125,7 +129,7 @@
 /src/src/routes/Ratings/                            @Gousto/squad-turnips
 /src/src/utils/cookbook.js                          @Gousto/squad-turnips
 
-
+# squad-rockets ownership
 /src/src/routes/Account/       @Gousto/squad-rockets
 /src/src/routes/Account/MyGousto/Header       @Gousto/squad-haricots
 /src/src/routes/Welcome/       @Gousto/squad-rockets
@@ -160,7 +164,7 @@
 /src/src/apis/auth.js       @Gousto/squad-rockets
 /src/src/apis/__tests__/auth.test.js       @Gousto/squad-rockets
 
-
+# squad-beetroots ownership
 /src/src/routes/BoxPrices/                              @Gousto/squad-beetroots
 /src/src/routes/Checkout/                               @Gousto/squad-beetroots
 /src/src/routes/Signup/                                 @Gousto/squad-beetroots
@@ -229,3 +233,7 @@
 /tests/e2e/tests/systemTests/flows/signup/              @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                    @Gousto/squad-beetroots
+
+# Default ownership
+# This has to be last
+*       @Gousto/guild-frontend
