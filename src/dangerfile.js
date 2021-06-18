@@ -1,3 +1,7 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-var */
+/* eslint-disable vars-on-top */
 /* eslint-disable no-continue */
 /* eslint-disable no-bitwise */
 /* eslint-disable no-plusplus */
@@ -160,7 +164,7 @@ function globToRegex(glob, opts) {
 }
 
 function ownerMatcher(pathString) {
-  const regex = globToRegex(pathString)
+  const regex = globToRegex(pathString, { flags: 'g' })
 
   return (testPath) => regex.test(testPath)
 }
@@ -171,7 +175,7 @@ const createGetOwners = () => {
     .toString()
   const lines = file
     .split(/\r\n|\r|\n/)
-  const ownerEntries = []
+  let ownerEntries = []
 
   let line
   for (line of lines) {
@@ -191,6 +195,8 @@ const createGetOwners = () => {
       match: ownerMatcher(pathString),
     })
   }
+
+  ownerEntries = ownerEntries.reverse()
 
   const getOwner = (filePath) => {
     let entry

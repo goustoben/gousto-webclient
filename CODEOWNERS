@@ -1,3 +1,6 @@
+# Default ownership
+*       @Gousto/guild-frontend
+
 # Global ownership
 /src/dangerfile.js @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
 /.github/workflows/danger.yml @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
@@ -233,7 +236,3 @@
 /tests/e2e/tests/systemTests/flows/signup/              @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                    @Gousto/squad-beetroots
-
-# Default ownership
-# This has to be last
-*       @Gousto/guild-frontend
