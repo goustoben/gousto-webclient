@@ -5,7 +5,7 @@
   padding: 0.75rem 0.75rem 0;
   width: 100%;
   max-width: 75rem;
-  margin: 0 auto 2.25rem;
+  margin: 0 auto 2rem;
   display: flex;
   flex-direction: column-reverse;
 
@@ -40,6 +40,12 @@
     background: url('routes/Home/Hero/desktop-brand-dish.png') right top / cover no-repeat;
     max-width: 35rem;
     margin-bottom: 1.5rem;
+  }
+}
+
+.heroImageHomepageFreeDeliveryEnabled {
+  @media BreakpointFromMedium {
+    max-height: 32.75rem;
   }
 }
 

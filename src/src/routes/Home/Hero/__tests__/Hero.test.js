@@ -21,8 +21,8 @@ describe('Hero', () => {
       expect(wrapper.find(CTAHomepageContainer)).toHaveLength(2)
     })
 
-    test('should include 2 NoLockIn', () => {
-      expect(wrapper.find('NoLockIn')).toHaveLength(2)
+    test('should include 2 Benefits widgets', () => {
+      expect(wrapper.find('Benefits')).toHaveLength(2)
     })
   })
 

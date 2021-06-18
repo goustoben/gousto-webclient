@@ -8,7 +8,6 @@ describe('PaymentFooter', () => {
     onClick: jest.fn(),
     trackSubmitOrderEvent: jest.fn(),
     submitting: true,
-    isNoLockInVisible: false,
   }
 
   beforeEach(() => {

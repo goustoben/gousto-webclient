@@ -205,3 +205,7 @@ export const getIsPromoCodeValidationEnabled = ({ features }) => (
 export const getIsSSRVisibilityOnMyGoustoEnabled = ({ features }) => (
   features && features.getIn(['isSSRVisibilityOnMyGoustoEnabled', 'value'], false)
 )
+
+export const getIsHomepageFreeDeliveryEnabled = ({ features }) => (
+  features && features.getIn(['isHomepageFreeDeliveryEnabled', 'value'], false)
+)

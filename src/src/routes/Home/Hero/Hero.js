@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import home from 'config/home'
 import { Heading } from 'goustouicomponents'
 import { CTAHomepageContainer } from '../CTA'
-import { NoLockIn } from '../NoLockIn'
+import { Benefits } from '../Benefits'
 import css from './Hero.css'
 
 class Hero extends Component {
@@ -56,7 +56,7 @@ class Hero extends Component {
   }
 
   renderGetStarted = (isHeroCTA) => {
-    const { ctaUri, ctaText, isAuthenticated } = this.props
+    const { ctaUri, ctaText, isAuthenticated, isHomepageFreeDeliveryEnabled } = this.props
     const { isSticky, maxHeight } = this.state
     const className = isHeroCTA
       ? css.stickyContainer
@@ -79,13 +79,13 @@ class Hero extends Component {
         >
           {isSticky && !isHeroCTA && !isAuthenticated ? home.CTA.stickyCTA : ctaText}
         </CTAHomepageContainer>
-        <NoLockIn />
+        <Benefits isHomepageFreeDeliveryEnabled={isHomepageFreeDeliveryEnabled} />
       </div>
     )
   }
 
   render() {
-    const { dataTesting } = this.props
+    const { dataTesting, isHomepageFreeDeliveryEnabled } = this.props
 
     return (
       <div className={css.container} data-testing={dataTesting} ref={this.heroRef}>
@@ -103,7 +103,13 @@ class Hero extends Component {
           {this.renderGetStarted(true)}
           <div role="img" aria-label="cooking image" className={css.processImage} />
         </div>
-        <div role="img" aria-label="cooking image" className={css.heroImage} />
+        <div
+          role="img"
+          aria-label="cooking image"
+          className={classNames(css.heroImage, {
+            [css.heroImageHomepageFreeDeliveryEnabled]: isHomepageFreeDeliveryEnabled,
+          })}
+        />
         {this.renderGetStarted(false)}
       </div>
     )
@@ -115,11 +121,13 @@ Hero.propTypes = {
   ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   isAuthenticated: PropTypes.bool,
+  isHomepageFreeDeliveryEnabled: PropTypes.bool,
 }
 
 Hero.defaultProps = {
   dataTesting: 'hero',
   isAuthenticated: false,
+  isHomepageFreeDeliveryEnabled: false,
 }
 
 export { Hero }

@@ -1,0 +1,55 @@
+@value BreakpointFromMedium, BreakpointToMedium from 'design-language/breakpoints.css';
+@value FontStyleBody from 'design-language/typography.css';
+@value iconSize 1.5rem;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  composes: fontStyleXS from 'design-language/typography.css';
+
+  @media BreakpointToMedium {
+    align-items: center;
+  }
+}
+
+.isHomepageFreeDeliveryEnabled {
+  composes: fontStyleS from 'design-language/typography.css';
+
+  @media BreakpointFromMedium {
+    font: FontStyleBody !important;
+  }
+}
+
+.row {
+  display: flex;
+  min-height: iconSize;
+  line-height: iconSize;
+
+  &:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.highlight {
+  font-weight: 600;
+}
+
+.text {
+  margin-left: 0.5rem;
+  text-align: left;
+}
+
+.icon {
+  flex: 0 0 iconSize;
+  height: iconSize;
+  width: iconSize;
+}
+
+.lockInIcon {
+  background-image: url('media/svgs/icon-play-pause.svg');
+}
+
+.truckIcon {
+  background-image: url('media/svgs/icon-truck-right.svg');
+}

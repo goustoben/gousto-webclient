@@ -1,15 +1,27 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import { CTA as CTAButton } from 'goustouicomponents'
 import css from './CTA.css'
 
-const CTA = ({ homeGetStarted, ctaUri, sectionForTracking, children, dataTesting }) => {
+const CTA = ({
+  isHomepageFreeDeliveryEnabled,
+  homeGetStarted,
+  ctaUri,
+  sectionForTracking,
+  children,
+  dataTesting,
+}) => {
   const handleClick = () => {
     homeGetStarted(ctaUri, sectionForTracking)
   }
 
   return (
-    <div className={css.ctaContainer}>
+    <div
+      className={classNames(css.ctaContainer, {
+        [css.isHomepageFreeDeliveryEnabled]: isHomepageFreeDeliveryEnabled,
+      })}
+    >
       <CTAButton testingSelector={dataTesting} onClick={handleClick} isFullWidth>
         {children}
       </CTAButton>
@@ -18,6 +30,7 @@ const CTA = ({ homeGetStarted, ctaUri, sectionForTracking, children, dataTesting
 }
 
 CTA.propTypes = {
+  isHomepageFreeDeliveryEnabled: PropTypes.bool,
   homeGetStarted: PropTypes.func.isRequired,
   ctaUri: PropTypes.string.isRequired,
   sectionForTracking: PropTypes.string,
@@ -31,6 +44,7 @@ CTA.propTypes = {
 }
 
 CTA.defaultProps = {
+  isHomepageFreeDeliveryEnabled: false,
   sectionForTracking: null,
   dataTesting: '',
 }

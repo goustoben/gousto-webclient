@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { CTAHomepageContainer } from '../CTAHomepageContainer'
 
@@ -8,8 +9,16 @@ describe('CTAHomepageContainer', () => {
   const ctaUri = '/ctaTest'
   const homeGetStarted = jest.fn()
 
+  const state = {
+    features: Immutable.fromJS({
+      isHomepageFreeDeliveryEnabled: {
+        value: false,
+      },
+    }),
+  }
+
   const store = {
-    getState: jest.fn(),
+    getState: jest.fn(() => state),
     dispatch: jest.fn(),
     subscribe: jest.fn(),
   }

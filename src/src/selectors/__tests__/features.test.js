@@ -52,6 +52,7 @@ import {
   getIsDecoupledPaymentEnabled,
   getIsPromoCodeValidationEnabled,
   getIsSSRVisibilityOnMyGoustoEnabled,
+  getIsHomepageFreeDeliveryEnabled,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -119,6 +120,7 @@ describe('when features are defined', () => {
     [getIsDecoupledPaymentEnabled, 'isDecoupledPaymentEnabled'],
     [getIsPromoCodeValidationEnabled, 'isPromoCodeValidationEnabled'],
     [getIsSSRVisibilityOnMyGoustoEnabled, 'isSSRVisibilityOnMyGoustoEnabled'],
+    [getIsHomepageFreeDeliveryEnabled, 'isHomepageFreeDeliveryEnabled'],
   ]
 
   describe.each(cases)('Selector', (selector, featureFlagName, featureFlagValues = [[true], [false]]) => {
