@@ -30,11 +30,8 @@ export const signupConfig = {
     transactional: 'transactional'
   },
   boxSizeStep: {
-    title: 'How many people do you cook for?',
-    titleForChoose: 'Choose your box size',
-    subtitle: 'You can always plan for some tasty leftovers.',
-    subtitleForChoose: 'You can choose 2, 3 or 4 recipes per box.',
-    pricingClaritySubtitle: 'You can choose 2, 3 or 4 recipes per box. Our 4-person box works for 2 adults and 2-3 children.',
+    title: 'Choose your box size',
+    subtitle: 'You can choose 2, 3 or 4 recipes per box.',
     cta: 'Select',
     boxSize: {
       2: {
@@ -46,14 +43,29 @@ export const signupConfig = {
         image: require('media/images/box-prices/four-person-box.jpg'),
       },
     },
-    discountApplied: 'Discount applied'
+    discountApplied: 'Discount applied',
+    boxSizeTypes: [
+      {
+        heading: 'Regular box',
+        suitableFor: ['2 adults (or 1 + leftovers)', '1 adult and 1-2 children'],
+        ctaText: 'Choose regular box',
+        value: 2,
+      },
+      {
+        heading: 'Large box',
+        suitableFor: ['4 adults (or 2-3 + leftovers)', '2 adults and 2-3 children'],
+        ctaText: 'Choose large box',
+        value: 4,
+      },
+    ],
   },
   recipesPerBoxStep: {
     title: 'How many recipes do you want per box?',
     recipesPerBoxPossibleValues: [2, 3, 4],
   },
   postCodeStep: {
-    title: 'Where would you like your boxes delivered?'
+    title: 'Where would you like your boxes delivered?',
+    reminder: 'Free UK delivery, 7 days a week',
   },
   deliveryOptionsStep: {
     title: 'Which delivery day would you like?'

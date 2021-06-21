@@ -1,0 +1,28 @@
+@value Haricot from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
+
+.container {
+  padding: 0 0.75rem;
+  composes: fontStyleBody from 'design-language/typography.css';
+  margin: 1rem auto;
+  display: flex;
+
+  @media ScreenSMMin {
+    max-width: 25.6rem;
+    padding: 0;
+  }
+}
+
+.tick {
+  min-width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.text {
+  text-align: center;
+}
+
+.highlighted {
+  color: Haricot;
+}

@@ -1,7 +1,6 @@
-@value White, Chia, DarkChilli from 'styles/colors.css';
-@value ScreenXXSMax, ScreenSMMax, ScreenXSMax, HeightSMMax, HeightMDMin, HeightMDMax, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
-@value SpacingLG, SpacingMD, SpacingXS, ScreenXXSMin, SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
-@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value White, DarkChilli from 'styles/colors.css';
+@value ScreenXXSMax, ScreenXSMax, HeightSMMax, HeightMDMin, HeightMDMax, ScreenSMMin from 'styles/screenSizes.css';
+@value SpacingMD, SpacingXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 
 @value minHeight 485px;
 @value maxWidth 750px;
@@ -59,7 +58,7 @@
 .stepContainer,
 .step {
   composes: flex from 'styles/display.css';
-  min-height: 580px;
+  min-height: 37.5rem;
   height: 100%;
   width: 100%;
   float: left;
@@ -67,6 +66,7 @@
 
   @media ScreenXSMax {
     width: 380px;
+    min-height: 40rem;
   }
 
   @media ScreenXXSMax {
@@ -136,11 +136,13 @@
 }
 
 .basicInputContainer {
-  min-width: 150px;
-  width: 60%;
+  max-width: 22rem;
+  width: 100%;
   display: block;
+  composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+
   @media ScreenXSMax {
-    min-width: 200px;
+    max-width: 100%;
   }
 }
 
@@ -155,11 +157,6 @@
   left: 0;
   height: 100%;
   overflow: hidden;
-}
-
-.animationContainer.autosize {
-  position: relative;
-  padding-bottom: 2rem;
 }
 
 .animation {
@@ -208,67 +205,6 @@
   @media ScreenXSMax and HeightMDMax {
     margin-top: SpacingSM;
     padding: 0 SpacingSM;
-  }
-}
-
-.priceClarityRedesign {
-  .fullWidth {
-    padding: 0 1rem;
-
-    @media BreakpointFromMedium {
-      padding: 0 2rem;
-    }
-  }
-
-  .stepsContainer {
-    max-width: maxWidth;
-    width: calc(100% - 32px);
-  }
-
-  .step {
-    /* The formula is 100% / (steps.length + 1): now it will work only for 3 steps.
-       Since it's enabled in the experiment only, it's not possible
-       to move the formula to the js file for the time being. */
-    width: 25%;
-  }
-
-  .stepContainer {
-    width: 100%;
-  }
-
-  .stepsContainer,
-  .stepContainer,
-  .step {
-    min-height: 0;
-  }
-
-  .pricingMinHeight {
-    min-height: 370px;
-  }
-
-  .stepIndicatorContainer {
-    padding: 0 1rem;
-
-    @media BreakpointFromMedium {
-      padding: 0 2rem;
-    }
-  }
-
-  .header {
-    min-height: 0;
-    padding: 0;
-    margin-bottom: 1.5rem;
-  }
-
-  .largerSpacing {
-    margin-bottom: 1.5rem;
-    @media BreakpointFromMedium {
-      margin-bottom: 2rem;
-    }
-  }
-
-  .bodyText {
-    margin: 0;
   }
 }
 

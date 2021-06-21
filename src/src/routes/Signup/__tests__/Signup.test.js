@@ -11,9 +11,7 @@ jest.spyOn(actions, 'signupStepsReceive').mockResolvedValue()
 
 const redirect = jest.spyOn(actions, 'redirect').mockResolvedValue()
 const menuLoadDays = jest.spyOn(actions, 'menuLoadDays').mockResolvedValue()
-const menuLoadBoxPrices = jest.spyOn(actions, 'menuLoadBoxPrices').mockResolvedValue()
 const signupSetStep = jest.spyOn(actions, 'signupSetStep').mockResolvedValue()
-const updatePricePerServing = jest.spyOn(actions, 'updatePricePerServing').mockResolvedValue()
 
 jest.mock('../../Menu/fetchData/menuService')
 
@@ -25,12 +23,10 @@ describe('Signup', () => {
   let subscribe
   const props = {
     changeStep: signupSetStep,
-    menuLoadBoxPrices,
     promoModalVisible: false,
     promoBannerState: {
       canApplyPromo: true,
     },
-    updatePricePerServing,
   }
 
   beforeEach(() => {
@@ -55,17 +51,13 @@ describe('Signup', () => {
     redirect.mockClear()
     menuLoadDays.mockClear()
     menuLoadDays.mockReset()
-    menuLoadBoxPrices.mockClear()
-    updatePricePerServing.mockClear()
   })
 
   describe('fetchData', () => {
     const fetchDataProps = {
       query: {},
       params: {},
-      options: {
-        menuLoadBoxPrices,
-      },
+      options: {},
     }
 
     describe('when requested step is not the first one', () => {
@@ -82,58 +74,6 @@ describe('Signup', () => {
       test('then should redirect to the first step', async () => {
         expect(redirect).toHaveBeenCalledWith('/signup/box-size')
         expect(dispatch).toHaveBeenCalled()
-      })
-    })
-
-    describe('when isPricingClarityEnabled is true', () => {
-      describe('and promo code is not applied', () => {
-        test('then should call menuLoadBoxPrices', async () => {
-          fetchDataProps.options = {
-            ...fetchDataProps.options,
-            orderDiscount: '',
-            isPricingClarityEnabled: true,
-          }
-          await Signup.fetchData({
-            ...fetchDataProps,
-            store: context.store,
-          })
-
-          expect(menuLoadBoxPrices).toHaveBeenCalled()
-        })
-      })
-
-      describe('and promo code is applied', () => {
-        test('then menuLoadBoxPrices should not be called', async () => {
-          fetchDataProps.options = {
-            ...fetchDataProps.options,
-            orderDiscount: '50',
-            isPricingClarityEnabled: true,
-          }
-          await Signup.fetchData({
-            ...fetchDataProps,
-            store: context.store,
-          })
-
-          expect(menuLoadBoxPrices).not.toBeCalled()
-        })
-      })
-    })
-
-    describe('when wizard price per serving is enabled', () => {
-      describe('and is not on box size step', () => {
-        test('then should not call updatePricePerServing', async () => {
-          fetchDataProps.options = {
-            ...fetchDataProps.options,
-            isWizardPricePerServingEnabled: true,
-            lowestPricePerPortion: {},
-          }
-          await Signup.fetchData({
-            ...fetchDataProps,
-            store: context.store,
-          })
-
-          expect(updatePricePerServing).not.toHaveBeenCalled()
-        })
       })
     })
 

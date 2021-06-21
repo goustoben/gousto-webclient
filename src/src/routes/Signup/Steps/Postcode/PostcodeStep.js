@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import classNames from 'classnames'
 import TextInput from 'Form/Input'
-import { reminder } from 'config/freeDelivery'
+import Svg from 'Svg'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
@@ -19,22 +18,16 @@ class PostcodeStep extends PureComponent {
       changePostcode,
       deliveryDaysError,
       nextStepName,
-      isPricingClarityEnabled,
     } = this.props
 
     return (
-      <div
-        className={classNames(css.stepContainer, {
-          [postcodeCss.pricingClarityRedesign]: isPricingClarityEnabled,
-        })}
-        data-testing="signupPostcodeStep"
-      >
+      <div className={css.stepContainer} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
           <div className={css.header}>
             <Heading type="h1" className={css.heading}>
               {signupConfig.postCodeStep.title}
             </Heading>
-            {!isPricingClarityEnabled && <Image name="where-to-deliver" />}
+            <Image name="where-to-deliver" />
           </div>
           <div className={css.body}>
             <div className={postcodeCss.inputContainer}>
@@ -48,24 +41,40 @@ class PostcodeStep extends PureComponent {
                 action="#"
                 className={postcodeCss.row}
               >
-                <div className={postcodeCss.left}>
-                  <TextInput
-                    isFixed
-                    placeholder="e.g. W3 7UP"
-                    onChange={changeTempPostcode}
-                    color={deliveryDaysError ? 'primary' : 'secondary'}
-                    minLength={5}
-                    maxLength={8}
-                    textAlign="center"
-                    value={tempPostcode}
-                    mask
-                    data-testing="signupPostcodeInput"
-                  />
+                <div className={postcodeCss.container}>
+                  <div className={postcodeCss.postcodeContainer}>
+                    <div className={postcodeCss.postcodeLabel}>Postcode</div>
+                    <TextInput
+                      isFixed
+                      placeholder="e.g. W3 7UP"
+                      onChange={changeTempPostcode}
+                      minLength={5}
+                      maxLength={8}
+                      value={tempPostcode}
+                      mask
+                      data-testing="signupPostcodeInput"
+                      isInCheckout
+                      error={deliveryDaysError}
+                    />
+                  </div>
+                  <Button
+                    disabled={tempPostcode.length < 5}
+                    data-testing="signupPostcodeCTA"
+                    onClick={() => {
+                      changePostcode(tempPostcode, nextStepName)
+                    }}
+                    pending={postcodePending}
+                    width="full"
+                  >
+                    Continue
+                  </Button>
                 </div>
               </form>
             </div>
-            <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
-              {!deliveryDaysError && <span className={postcodeCss.tick} />}
+            <div className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
+              {!deliveryDaysError && (
+                <Svg className={postcodeCss.tick} fileName="icon-success-tick" />
+              )}
               {(() => {
                 let textMsg
 
@@ -76,25 +85,12 @@ class PostcodeStep extends PureComponent {
                     textMsg = 'Please enter a valid postcode'
                   }
                 } else {
-                  textMsg = reminder
+                  textMsg = signupConfig.postCodeStep.reminder
                 }
 
                 return textMsg
               })()}
-            </p>
-          </div>
-        </div>
-        <div className={css.footer}>
-          <div className={css.inputContainer}>
-            <Button
-              disabled={tempPostcode.length < 5}
-              data-testing="signupPostcodeCTA"
-              onClick={() => {
-                changePostcode(tempPostcode, nextStepName)
-              }}
-              pending={postcodePending}
-              width="full"
-            />
+            </div>
           </div>
         </div>
       </div>
@@ -109,7 +105,6 @@ PostcodeStep.propTypes = {
   changeTempPostcode: PropTypes.func,
   changePostcode: PropTypes.func,
   nextStepName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  isPricingClarityEnabled: PropTypes.bool,
 }
 
 PostcodeStep.defaultProps = {
@@ -119,7 +114,6 @@ PostcodeStep.defaultProps = {
   changeTempPostcode: () => {},
   changePostcode: () => {},
   nextStepName: '',
-  isPricingClarityEnabled: false,
 }
 
 export { PostcodeStep }

@@ -17,7 +17,6 @@ import { PostcodeStep } from './Steps/Postcode'
 import { DeliveryStep } from './Steps/Delivery'
 import { DiscountAppliedBar } from './Components/DiscountAppliedBar/DiscountAppliedBar'
 import { SellThePropositionPageContainer } from './Components/SellThePropositionPage/SellThePropositionPageContainer'
-import { updatePricePerServing } from '../../actions/boxPrices'
 
 const components = {
   boxSize: BoxSizeStep,
@@ -43,15 +42,12 @@ const propTypes = {
     stepName: PropTypes.string,
   }),
   isTastePreferencesEnabled: PropTypes.bool,
-  isPricingClarityEnabled: PropTypes.bool,
   orderDiscount: PropTypes.string,
-  menuLoadBoxPrices: PropTypes.func.isRequired,
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
     canApplyPromo: PropTypes.bool,
   }),
   trackDiscountVisibility: PropTypes.func,
-  isWizardPricePerServingEnabled: PropTypes.bool,
   lowestPricePerPortion: PropTypes.shape({
     forTwo: PropTypes.shape({
       priceDiscounted: PropTypes.string.isRequired,
@@ -62,7 +58,6 @@ const propTypes = {
       price: PropTypes.string.isRequired,
     }),
   }),
-  isWizardBoxSizeEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   isPaymentBeforeChoosingV2Enabled: PropTypes.bool,
   isDiscountAppliedBarDismissed: PropTypes.bool,
@@ -86,12 +81,9 @@ const defaultProps = {
     canApplyPromo: false,
   },
   isTastePreferencesEnabled: false,
-  isPricingClarityEnabled: false,
   orderDiscount: '',
   trackDiscountVisibility: () => {},
-  isWizardPricePerServingEnabled: false,
   lowestPricePerPortion: {},
-  isWizardBoxSizeEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
   isPaymentBeforeChoosingV2Enabled: false,
   isDiscountAppliedBarDismissed: false,
@@ -113,11 +105,6 @@ class Signup extends PureComponent {
     const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
     const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
     const {
-      menuLoadBoxPrices,
-      orderDiscount,
-      isPricingClarityEnabled,
-      isWizardPricePerServingEnabled,
-      lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
       shouldSetStepFromParams,
@@ -136,7 +123,6 @@ class Signup extends PureComponent {
     steps = steps.filter((step) => step && availableSteps.includes(step))
 
     const firstStep = stepByName(steps.first())
-    const isBoxSizeStep = firstStep.get('slug') === 'box-size'
 
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())
@@ -155,18 +141,6 @@ class Signup extends PureComponent {
     }
 
     store.dispatch(actions.signupSetStep(stepToSet))
-
-    if (isPricingClarityEnabled && isBoxSizeStep && !orderDiscount) {
-      menuLoadBoxPrices()
-    }
-
-    if (
-      isBoxSizeStep &&
-      isWizardPricePerServingEnabled &&
-      !Object.keys(lowestPricePerPortion).length
-    ) {
-      store.dispatch(updatePricePerServing())
-    }
 
     if (isPaymentBeforeChoosingV2Enabled) {
       return store.dispatch(
@@ -224,10 +198,7 @@ class Signup extends PureComponent {
     const {
       location,
       params,
-      menuLoadBoxPrices,
       orderDiscount,
-      isPricingClarityEnabled,
-      isWizardPricePerServingEnabled,
       lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
@@ -235,10 +206,7 @@ class Signup extends PureComponent {
     const { store } = this.context
     const query = location ? location.query : {}
     const options = {
-      isWizardPricePerServingEnabled,
-      isPricingClarityEnabled,
       lowestPricePerPortion,
-      menuLoadBoxPrices,
       orderDiscount,
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
@@ -273,7 +241,7 @@ class Signup extends PureComponent {
   }
 
   renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
-    const { goToStep, stepName, isPricingClarityEnabled, isWizardBoxSizeEnabled } = this.props
+    const { goToStep, stepName } = this.props
     const Component = components[name]
 
     return (
@@ -284,8 +252,6 @@ class Signup extends PureComponent {
         stepNumber={currentStepNumber}
         isLastStep={isLastStep}
         active={stepName === name}
-        isPricingClarityEnabled={isPricingClarityEnabled}
-        isWizardBoxSizeEnabled={isWizardBoxSizeEnabled}
       />
     )
   }
@@ -315,7 +281,6 @@ class Signup extends PureComponent {
 
   render() {
     const {
-      isPricingClarityEnabled,
       stepName,
       promoModalVisible,
       promoBannerState,
@@ -334,13 +299,6 @@ class Signup extends PureComponent {
     const currentStep = steps.find((step) => step.get('slug') === stepName) || steps.get(0)
     const currentStepName = currentStep.get('name')
 
-    const isBoxSizeStep = currentStepName === 'boxSize'
-    const isPostcodeStep = currentStepName === 'postcode'
-    const isDeliveryStep = currentStepName === 'delivery'
-
-    const pricingMinHeight = isPricingClarityEnabled && (isPostcodeStep || isDeliveryStep)
-    const autosizeAnimationContainer = isPricingClarityEnabled && isBoxSizeStep
-
     const { canApplyPromo } = promoBannerState
 
     const isDiscountApplied = !promoModalVisible && !canApplyPromo
@@ -348,7 +306,6 @@ class Signup extends PureComponent {
     return (
       <div
         className={classNames(css.signupContainer, {
-          [css.priceClarityRedesign]: isPricingClarityEnabled,
           [css.discountApplied]: isDiscountApplied,
         })}
       >
@@ -371,14 +328,8 @@ class Signup extends PureComponent {
           signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}
           isDiscountAppliedBarDismissed={isDiscountAppliedBarDismissed}
         />
-        <div
-          className={classNames(css.stepsContainer, { [css.pricingMinHeight]: pricingMinHeight })}
-        >
-          <div
-            className={classNames(css.animationContainer, {
-              [css.autosize]: autosizeAnimationContainer,
-            })}
-          >
+        <div className={css.stepsContainer}>
+          <div className={css.animationContainer}>
             <div className={css.stepIndicatorContainer}>
               <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />
             </div>

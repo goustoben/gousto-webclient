@@ -21,11 +21,6 @@ describe('BoxSizeStepContainer', () => {
 
   const initialState = {
     menuBoxPrices,
-    features: Immutable.Map({
-      isWizardPricePerServingEnabled: Immutable.Map({
-        value: true,
-      }),
-    }),
     boxPrices,
   }
 
@@ -42,7 +37,6 @@ describe('BoxSizeStepContainer', () => {
   test('should be rendered properly', () => {
     const expected = {
       menuBoxPrices,
-      isWizardPricePerServingEnabled: true,
       lowestPricePerPortion,
     }
     expect(wrapper.props()).toEqual(expect.objectContaining(expected))

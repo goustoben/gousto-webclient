@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classNames from 'classnames'
 import actual from 'actual'
-import { Button as GoustoButton } from 'goustouicomponents'
+import css from './Button.css'
 
 const ctaText = (
   isLastStep,
@@ -38,21 +39,22 @@ const Button = ({
     children ||
     ctaText(isLastStep, isTastePreferencesEnabled, isPaymentBeforeChoosingEnabled, showcaseMenuSeen)
 
+  const className = classNames(css.cta, {
+    [css.isDisabled]: buttonProps.disabled,
+    [css.isFullWidth]: buttonProps.width,
+  })
+
   return (
-    <GoustoButton
-      disabled={buttonProps.disabled}
-      pending={buttonProps.pending}
-      width={buttonProps.width}
+    <button
+      className={className}
       data-testing={buttonProps['data-testing']}
-      fill={buttonProps.fill}
-      onClick={(args) => {
-        if (typeof onClick === 'function') {
-          onClick(args)
-        }
-      }}
+      disabled={buttonProps.disabled}
+      onClick={onClick}
+      onKeyDown={onClick}
+      type="button"
     >
       {buttonText}
-    </GoustoButton>
+    </button>
   )
 }
 

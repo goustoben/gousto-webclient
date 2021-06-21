@@ -136,10 +136,6 @@ export const getIsMyGoustoBannerAppAwarenessEnabled = ({ features }) => (
   features && features.getIn(['isMyGoustoBannerAppAwarenessEnabled', 'value'], false)
 )
 
-export const getPricingClarityRedesign = ({ features }) => (
-  features && features.getIn(['isPricingClarityEnabled', 'value'], false)
-)
-
 export const getisNewSSRDeliveriesEnabled = ({ features }) => (
   features && features.getIn(['isNewSSRDeliveriesEnabled', 'value'], false)
 )
@@ -174,10 +170,6 @@ export const getIsPassStrengthEnabled = ({ features }) => (
 
 export const getIsAdditionalCheckoutErrorsEnabled = ({ features }) => (
   features && features.getIn(['isAdditionalCheckoutErrorsEnabled', 'value'], false)
-)
-
-export const getIsWizardBoxSizeEnabled = ({ features }) => (
-  features && features.getIn(['isWizardBoxSizeEnabled', 'value'], false)
 )
 
 export const getIsPaymentBeforeChoosingV1Enabled = ({ features }) => (

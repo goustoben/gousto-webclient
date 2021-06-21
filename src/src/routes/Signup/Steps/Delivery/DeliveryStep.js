@@ -6,7 +6,6 @@ import classNames from 'classnames'
 import { browserHistory } from 'react-router'
 import DropdownInput from 'Form/Dropdown'
 
-import { SubscriptionTransparencyText } from 'SubscriptionTransparencyText'
 import {
   createNextDayDeliveryDays,
   generateNextDayDeliverySlots,
@@ -17,6 +16,7 @@ import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
 import { signupConfig } from 'config/signup'
 import { completeWizardDeliveryDay } from 'actions/trackingKeys'
+import { SubscriptionTransparencyText } from '../../Components/SubscriptionTransparencyText'
 import { Button } from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -213,6 +213,7 @@ const DeliveryStep = ({
                   value={tempDate}
                   onOpen={onDayDropdownOpen}
                   onClose={onDayDropdownClose}
+                  isInCheckout
                 />
               </div>
               <div
@@ -226,6 +227,7 @@ const DeliveryStep = ({
                   onChange={onTempSlotChange}
                   value={tempSlotId}
                   onOpen={onSlotDropdownOpen}
+                  isInCheckout
                 />
               </div>
             </div>
