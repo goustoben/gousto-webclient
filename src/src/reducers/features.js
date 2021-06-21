@@ -84,9 +84,6 @@ const defaultFeatures = () => ({
   isDecoupledPaymentEnabled: {
     value: false
   },
-  isSSRVisibilityOnMyGoustoEnabled: {
-    value: false
-  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

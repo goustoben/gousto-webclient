@@ -116,7 +116,6 @@ class Header extends PureComponent {
 
   render() {
     const {
-      isSSRVisibilityOnMyGoustoEnabled,
       orders,
       nextOrderTracking,
       trackClickGetHelpWithThisBox,
@@ -146,7 +145,6 @@ class Header extends PureComponent {
         ? (
           <HeaderPresentation
             hasDeliveryToday={hasDeliveryToday}
-            isSSRVisibilityOnMyGoustoEnabled={isSSRVisibilityOnMyGoustoEnabled}
             nextOrderMessage={nextOrderMessage}
             nextOrderId={nextOrder ? nextOrder.get('id') : null}
             hasTooltipForNextOrder={hasTooltipForNextOrder}
@@ -168,25 +166,23 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   accessToken: PropTypes.string.isRequired,
-  isSSRVisibilityOnMyGoustoEnabled: PropTypes.bool,
+  orders: PropTypes.instanceOf(Immutable.Map),
   loadOrderTrackingInfo: PropTypes.func,
   nextOrderTracking: PropTypes.string,
-  orders: PropTypes.instanceOf(Immutable.Map),
-  showSubscriberPricingBanner: PropTypes.bool,
-  subscriptionStatus: PropTypes.string,
   trackClickGetHelpWithThisBox: PropTypes.func,
   trackNextBoxTrackingClick: PropTypes.func,
+  showSubscriberPricingBanner: PropTypes.bool,
+  subscriptionStatus: PropTypes.string,
 }
 
 Header.defaultProps = {
-  isSSRVisibilityOnMyGoustoEnabled: false,
+  orders: Immutable.Map({}),
   loadOrderTrackingInfo: () => {},
   nextOrderTracking: null,
-  orders: Immutable.Map({}),
-  showSubscriberPricingBanner: false,
-  subscriptionStatus: 'inactive',
   trackClickGetHelpWithThisBox: () => {},
   trackNextBoxTrackingClick: () => {},
+  showSubscriberPricingBanner: false,
+  subscriptionStatus: 'inactive',
 }
 
 export { Header }

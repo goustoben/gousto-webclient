@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config'
 import { NextOrder } from './NextOrder'
@@ -9,7 +9,6 @@ import css from './Header.css'
 
 const HeaderPresentation = ({
   hasDeliveryToday,
-  isSSRVisibilityOnMyGoustoEnabled,
   nextOrderId,
   nextOrderMessage,
   nextOrderTracking,
@@ -30,56 +29,41 @@ const HeaderPresentation = ({
   const hasNextOrder = nextOrderMessage.secondary
   const { linkLabel, linkUrl } = nextOrderMessage
 
-  const nextOrderCard = hasNextOrder
-    ? (
-      <NextOrder
-        boxTrackingUrl={nextOrderTracking}
-        hasDeliveryToday={hasDeliveryToday}
-        hasNextOrder={hasNextOrder}
-        hasTooltip={hasTooltipForNextOrder}
-        linkLabel={linkLabel}
-        linkUrl={linkUrl}
-        orderId={nextOrderId}
-        primaryMessage={nextOrderMessage.primary}
-        secondaryMessage={nextOrderMessage.secondary}
-        trackButtonClick={trackNextBoxTrackingClick}
-        trackLinkClick={trackClickGetHelpWithThisBox}
-      />
-    )
-    : (
-      <NoNextOrder
-        linkLabel={nextOrderMessage.linkLabel}
-        linkUrl={nextOrderMessage.linkUrl}
-        primaryMessage={nextOrderMessage.primary}
-      />
-    )
-
-  const previousOrderCard = previousOrderMessage && (
-    <PreviousOrder
-      hasTooltip={hasTooltipForPreviousOrder}
-      linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
-      orderId={previosOrderId}
-      message={previousOrderMessage}
-      trackClick={trackClickGetHelpWithThisBox}
-    />
-  )
-
   return (
     <div>
       {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
       <div className={css.cardsContainer}>
-        {isSSRVisibilityOnMyGoustoEnabled
+        {hasNextOrder
           ? (
-            <Fragment>
-              {previousOrderCard}
-              {nextOrderCard}
-            </Fragment>
+            <NextOrder
+              boxTrackingUrl={nextOrderTracking}
+              hasDeliveryToday={hasDeliveryToday}
+              hasTooltip={hasTooltipForNextOrder}
+              linkLabel={linkLabel}
+              linkUrl={linkUrl}
+              orderId={nextOrderId}
+              primaryMessage={nextOrderMessage.primary}
+              secondaryMessage={nextOrderMessage.secondary}
+              trackButtonClick={trackNextBoxTrackingClick}
+              trackLinkClick={trackClickGetHelpWithThisBox}
+            />
           )
           : (
-            <Fragment>
-              {nextOrderCard}
-              {previousOrderCard}
-            </Fragment>
+            <NoNextOrder
+              linkLabel={nextOrderMessage.linkLabel}
+              linkUrl={nextOrderMessage.linkUrl}
+              primaryMessage={nextOrderMessage.primary}
+            />
+          )}
+        {previousOrderMessage
+          && (
+            <PreviousOrder
+              hasTooltip={hasTooltipForPreviousOrder}
+              linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+              orderId={previosOrderId}
+              message={previousOrderMessage}
+              trackClick={trackClickGetHelpWithThisBox}
+            />
           )}
       </div>
     </div>
@@ -88,7 +72,6 @@ const HeaderPresentation = ({
 
 HeaderPresentation.propTypes = {
   hasDeliveryToday: PropTypes.bool,
-  isSSRVisibilityOnMyGoustoEnabled: PropTypes.bool,
   nextOrderId: PropTypes.string,
   nextOrderMessage: PropTypes.shape({
     linkLabel: PropTypes.string,
@@ -110,7 +93,6 @@ HeaderPresentation.propTypes = {
 
 HeaderPresentation.defaultProps = {
   hasDeliveryToday: false,
-  isSSRVisibilityOnMyGoustoEnabled: false,
   nextOrderId: null,
   nextOrderMessage: {
     linkLabel: null,

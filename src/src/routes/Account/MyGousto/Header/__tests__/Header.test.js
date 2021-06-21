@@ -444,22 +444,4 @@ describe('MyGousto - Header', () => {
       })
     })
   })
-
-  describe('when isSSRVisibilityOnMyGoustoEnabled flag is not passed', () => {
-    test('renders Get Help with Next box card on the left side, Last box - on the right', () => {
-      expect(wrapper.find('h2').at(0).text()).toBe('Your next box delivery')
-      expect(wrapper.find('h2').at(1).text()).toBe('Your most recent box delivery')
-    })
-  })
-
-  describe('when isSSRVisibilityOnMyGoustoEnabled flag is set to true', () => {
-    beforeEach(() => {
-      wrapper.setProps({ isSSRVisibilityOnMyGoustoEnabled: true })
-    })
-
-    test('renders Get Help with Last box card on the left side, Next box - on the right', () => {
-      expect(wrapper.find('h2').at(0).text()).toBe('Your most recent box delivery')
-      expect(wrapper.find('h2').at(1).text()).toBe('Your next box delivery')
-    })
-  })
 })
