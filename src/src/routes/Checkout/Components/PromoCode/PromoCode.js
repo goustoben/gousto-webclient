@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import logger from 'utils/logger'
-import Immutable from 'immutable'
 import classNames from 'classnames'
 import configCheckout from 'config/checkout'
 import css from './PromoCode.css'
@@ -10,27 +9,33 @@ import checkoutCss from '../../Checkout.css'
 const propTypes = {
   promoCode: PropTypes.string,
   promoCodeApplied: PropTypes.bool,
-  prices: PropTypes.instanceOf(Immutable.Map),
-  loadPrices: PropTypes.func.isRequired,
   basketPromoCodeChange: PropTypes.func.isRequired,
   basketPromoCodeAppliedChange: PropTypes.func.isRequired,
   trackPromocodeChange: PropTypes.func,
+  promoCodeValid: PropTypes.bool,
+  sendRequestToUpdateOrderSummaryPrices: PropTypes.func,
 }
 
 const defaultProps = {
   promoCode: '',
   promoCodeApplied: false,
-  prices: Immutable.Map({}),
   trackPromocodeChange: () => {},
+  promoCodeValid: false,
+  sendRequestToUpdateOrderSummaryPrices: () => {},
 }
+
+const DEBOUNCE_MS = 500
 
 class PromoCode extends PureComponent {
   constructor(props) {
     super(props)
 
+    const { promoCode } = props
+
     this.state = {
-      errorMsg: '',
-      successMsg: '',
+      value: promoCode,
+      hasError: false,
+      hasValidPromoCode: false,
     }
   }
 
@@ -38,39 +43,38 @@ class PromoCode extends PureComponent {
     const { promoCode, basketPromoCodeAppliedChange } = this.props
     if (promoCode) {
       basketPromoCodeAppliedChange(true)
-      this.promoCodeValidation()
+      this.setValidityState()
     }
   }
 
-  componentDidUpdate(prevProps) {
-    const { promoCode, basketPromoCodeAppliedChange } = this.props
-    if (promoCode && prevProps.promoCode !== promoCode) {
-      basketPromoCodeAppliedChange(true)
-      this.handlePromoCodeVerification()
-    }
-  }
+  handlePromoCodeVerification(currentPromoCode, previousPromoCode) {
+    const { sendRequestToUpdateOrderSummaryPrices, trackPromocodeChange } = this.props
 
-  handlePromoCodeVerification() {
-    const { promoCode, loadPrices, trackPromocodeChange } = this.props
-
-    loadPrices()
+    const hasPromoCode = !!currentPromoCode
+    sendRequestToUpdateOrderSummaryPrices()
       .then(() => {
-        this.promoCodeValidation()
-        trackPromocodeChange(promoCode, true)
+        this.setValidityState()
+
+        if (hasPromoCode) {
+          trackPromocodeChange(currentPromoCode, true)
+        } else {
+          trackPromocodeChange(previousPromoCode, false)
+        }
       })
       .catch((err) => {
-        this.setError(configCheckout.errorMessage.promoCode.invalid)
+        this.setError()
         logger.error(err)
       })
   }
 
-  promoCodeValidation = () => {
-    const { prices } = this.props
-    const promoCodeValid = prices.get('promoCodeValid', false)
-    if (promoCodeValid) {
-      this.setState({ errorMsg: '', successMsg: configCheckout.errorMessage.promoCode.valid })
+  setValidityState = () => {
+    const { promoCode, promoCodeValid } = this.props
+    if (promoCode && promoCodeValid) {
+      this.setState({ hasError: false, hasValidPromoCode: true })
+    } else if (promoCode && !promoCodeValid) {
+      this.setError()
     } else {
-      this.setError(configCheckout.errorMessage.promoCode.invalid)
+      this.setState({ hasError: false, hasValidPromoCode: false })
     }
   }
 
@@ -80,96 +84,85 @@ class PromoCode extends PureComponent {
     return promoCode && promoCodeApplied
   }
 
-  setError = (message) => {
-    if (message) {
-      this.setState({
-        errorMsg: message,
-      })
-    }
-  }
-
-  getInputClassName = () => {
-    const { promoCode } = this.props
-    const { errorMsg, successMsg } = this.state
-    let className = css.input
-    if (promoCode && errorMsg) {
-      className = css.inputError
-    } else if (this.promoCodeAdded() && successMsg) {
-      className = css.inputSuccess
-    }
-
-    return className
-  }
-
-  applyPromoCode = () => {
-    const { promoCode, basketPromoCodeAppliedChange } = this.props
-    if (promoCode) {
-      basketPromoCodeAppliedChange(true)
-      this.handlePromoCodeVerification()
-    }
-  }
-
-  removePromoCode = () => {
-    const {
-      promoCode,
-      basketPromoCodeChange,
-      basketPromoCodeAppliedChange,
-      trackPromocodeChange,
-      loadPrices,
-    } = this.props
-    const { successMsg } = this.state
-    const promocode = promoCode.valueOf()
-    basketPromoCodeChange('')
-    basketPromoCodeAppliedChange(false)
-    if (successMsg) {
-      loadPrices().then(() => {
-        trackPromocodeChange(promocode, false)
-      })
-    }
+  setError = () => {
     this.setState({
-      errorMsg: '',
-      successMsg: '',
+      hasError: true,
+      hasValidPromoCode: false,
     })
   }
 
-  handleInput = (event) => {
-    const { basketPromoCodeChange } = this.props
-    if (!event || !event.target) {
-      return
+  getDisplayOptions = () => {
+    const { promoCode } = this.props
+    const { hasError, hasValidPromoCode } = this.state
+
+    let result
+    if (promoCode && hasError) {
+      result = {
+        inputClassName: css.inputError,
+        iconClassName: css.inputIconError,
+      }
+    } else if (this.promoCodeAdded() && hasValidPromoCode) {
+      result = {
+        inputClassName: css.inputSuccess,
+        iconClassName: css.inputIconSuccess,
+      }
     } else {
-      this.removePromoCode()
+      result = {
+        inputClassName: css.input,
+        iconClassName: null,
+      }
     }
 
-    basketPromoCodeChange(event.target.value)
+    return result
   }
 
-  /**
-   * handle enter and space
-   * @param e
-   */
-  handleKeyUp = (e) => {
-    if (e.keyCode && (e.keyCode === 13 || e.keyCode === 32)) {
-      this.applyPromoCode()
+  handleChange = (e) => {
+    const { value } = e.target
+
+    const newPromoCode = value.toUpperCase()
+
+    this.setState({ value: newPromoCode }, () => {
+      this.debouncedUpdatePromoCode(newPromoCode)
+    })
+  }
+
+  debouncedUpdatePromoCode = (newPromoCode) => {
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout)
     }
+
+    this.debounceTimeout = setTimeout(() => {
+      this.updatePromoCode(newPromoCode)
+      this.debounceTimeout = null
+    }, DEBOUNCE_MS)
+  }
+
+  updatePromoCode = (newPromoCode) => {
+    const {
+      promoCode: previousPromoCode,
+      basketPromoCodeAppliedChange,
+      basketPromoCodeChange,
+    } = this.props
+
+    const hasPromoCode = !!newPromoCode
+    basketPromoCodeAppliedChange(hasPromoCode)
+    basketPromoCodeChange(newPromoCode)
+    this.handlePromoCodeVerification(newPromoCode, previousPromoCode)
   }
 
   renderMessage = () => {
-    const { errorMsg } = this.state
-    const error = errorMsg.includes('promocode')
-      ? errorMsg.replace('promocode', 'discount code')
-      : errorMsg
+    const { hasError } = this.state
 
-    if (errorMsg) {
-      return <p className={css.errorMsg}>{error}</p>
+    if (hasError) {
+      return <p className={css.errorMsg}>{configCheckout.errorMessage.invalidPromocode}</p>
     }
 
     return null
   }
 
   render() {
-    const { promoCode } = this.props
-    const inputIcon =
-      this.getInputClassName() === css.inputError ? css.inputIconError : css.inputIconSuccess
+    const { value } = this.state
+    const { inputClassName, iconClassName } = this.getDisplayOptions()
 
     return (
       <div className={css.inputGroup}>
@@ -180,18 +173,18 @@ class PromoCode extends PureComponent {
               type="text"
               name="promoCode"
               data-testing="promoCodeInput"
-              value={promoCode}
-              onInput={this.handleInput}
-              onKeyUp={this.handleKeyUp}
-              onChange={() => {}}
-              className={classNames(this.getInputClassName(), checkoutCss.checkoutInput)}
+              value={value}
+              onChange={this.handleChange}
+              className={classNames(inputClassName, checkoutCss.checkoutInput)}
             />
             <span
-              className={classNames(css.inputIcon, inputIcon, { [css.isHidden]: !promoCode })}
+              className={classNames(css.inputIcon, iconClassName, {
+                [css.isHidden]: !iconClassName,
+              })}
             />
           </div>
         </div>
-        {this.promoCodeAdded() && this.renderMessage()}
+        {this.renderMessage()}
       </div>
     )
   }

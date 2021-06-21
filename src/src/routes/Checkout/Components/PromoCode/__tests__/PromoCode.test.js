@@ -1,174 +1,129 @@
 import { shallow } from 'enzyme'
 import React from 'react'
-import Immutable from 'immutable'
 import { PromoCode } from 'routes/Checkout/Components/PromoCode/PromoCode'
 
+jest.useFakeTimers()
+
 describe('PromoCode', () => {
-  const promoCode = ''
-  let basketPromoCodeChange
-  let basketPromoCodeAppliedChange
-  let trackPromocodeChange
-  let loadPrices
+  const emptyPromoCode = ''
+  const validPromoCode = 'JOEWICKSGOUSTO'
+  const newPromoCode = 'NEW-PROMO-CODE'
+
+  const basketPromoCodeChange = jest.fn()
+  const basketPromoCodeAppliedChange = jest.fn()
+  const trackPromocodeChange = jest.fn()
+  const sendRequestToUpdateOrderSummaryPrices = jest.fn(() => Promise.resolve())
   let wrapper
-  const previewOrderId = '123'
 
   beforeEach(() => {
-    basketPromoCodeChange = jest.fn()
-    basketPromoCodeAppliedChange = jest.fn()
-    trackPromocodeChange = jest.fn()
-    loadPrices = jest.fn().mockReturnValue(
-      new Promise((resolve) => {
-        resolve()
-      })
-    )
     wrapper = shallow(
       <PromoCode
-        promoCode={promoCode}
-        previewOrderId={previewOrderId}
+        promoCode={emptyPromoCode}
+        promoCodeApplied={false}
         basketPromoCodeChange={basketPromoCodeChange}
         basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
-        loadPrices={loadPrices}
         trackPromocodeChange={trackPromocodeChange}
+        promoCodeValid={false}
+        sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
       />
     )
-    wrapper.setState({
-      pending: false,
-      errorMsg: '',
-      successMsg: '',
-    })
+
+    jest.clearAllMocks()
   })
 
-  afterEach(() => {
-    loadPrices.mockClear()
-  })
-
-  describe('rendering', () => {
-    it('should return a div', () => {
+  describe('when rendered', () => {
+    test('should render a div with an input and a hidden icon', () => {
       expect(wrapper.type()).toEqual('div')
-    })
-
-    it('should have one input', () => {
-      expect(wrapper.find('input').length).toEqual(1)
-    })
-
-    it('should render a <div> with no props', () => {
-      wrapper = shallow(<PromoCode />)
-      expect(wrapper.type()).toEqual('div')
+      expect(wrapper.find('input').exists()).toBe(true)
+      expect(wrapper.find('.inputIcon.isHidden').exists()).toBe(true)
     })
   })
 
-  describe('with promocode prop', () => {
+  describe('when promo code is non-empty and valid', () => {
     beforeEach(() => {
       wrapper = shallow(
         <PromoCode
-          promoCode="10perm"
+          promoCode={validPromoCode}
           promoCodeApplied
-          previewOrderId={previewOrderId}
           basketPromoCodeChange={basketPromoCodeChange}
           basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
-          loadPrices={loadPrices}
           trackPromocodeChange={trackPromocodeChange}
+          promoCodeValid
+          sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
         />
       )
     })
 
-    it('on update, should call loadPrices and revalidate the promocode', async () => {
-      jest.clearAllMocks()
-      wrapper.setProps({ promoCode: 'Promocode' })
-
-      expect(basketPromoCodeAppliedChange).toHaveBeenCalledTimes(1)
-      await expect(loadPrices).toHaveBeenCalledTimes(1)
+    test('should display the success icon', () => {
+      expect(wrapper.find('.inputIcon.inputIconSuccess').exists()).toBe(true)
     })
 
-    it('should handle promo code change, update promoCode in the store', () => {
-      const collection = wrapper.find({ name: 'promoCode' })
-      expect(collection.length).toBe(1)
-      collection.forEach((node) => {
-        node.simulate('input', { target: { value: 'promo' } })
-        node.simulate('keyup', { keyCode: 13 })
-        expect(basketPromoCodeChange).toHaveBeenCalledTimes(2)
-        expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
-      })
-    })
-
-    describe('handleInput', () => {
-      let value
+    describe('when edited', () => {
       beforeEach(() => {
-        value = 'test'
+        wrapper.find('input').simulate('change', { target: { value: newPromoCode } })
+
+        jest.runAllTimers()
       })
 
-      it("shouldn't run if no event target is passed", () => {
-        wrapper.find('input').simulate('input')
+      test('then it should schedule the update and verification', () => {
+        expect(basketPromoCodeAppliedChange).toHaveBeenCalledWith(true)
+        expect(basketPromoCodeChange).toHaveBeenCalledWith(newPromoCode)
+        expect(sendRequestToUpdateOrderSummaryPrices).toHaveBeenCalledWith()
 
-        expect(basketPromoCodeChange).not.toHaveBeenCalled()
-      })
-
-      it('should pass value to basketPromoCodeChange', () => {
-        wrapper.find('input').simulate('input', { target: { value } })
-
-        expect(basketPromoCodeChange).toHaveBeenCalledWith(value)
+        expect(trackPromocodeChange).toHaveBeenCalledWith(newPromoCode, true)
       })
     })
 
-    describe('handleKeyUp', () => {
-      let value
+    describe('when verification request fails', () => {
       beforeEach(() => {
-        value = 'test'
+        sendRequestToUpdateOrderSummaryPrices.mockImplementation(() => Promise.reject())
+
+        wrapper.find('input').simulate('change', { target: { value: newPromoCode } })
+
+        jest.runAllTimers()
       })
 
-      it('should call loadPrices and trackPromocodeChange when press enter', async () => {
-        wrapper.find('input').simulate('input', { target: { value } })
-        wrapper.find('input').simulate('keyup', { keyCode: 13 })
-
-        await expect(loadPrices).toHaveBeenCalled()
-        expect(trackPromocodeChange).toHaveBeenCalled()
+      afterEach(() => {
+        sendRequestToUpdateOrderSummaryPrices.mockImplementation(() => Promise.resolve())
       })
 
-      it('should call loadPrices and trackPromocodeChange when press space', async () => {
-        wrapper.find('input').simulate('input', { target: { value } })
-        wrapper.find('input').simulate('keyup', { keyCode: 32 })
-
-        await expect(loadPrices).toHaveBeenCalled()
-        expect(trackPromocodeChange).toHaveBeenCalled()
-      })
-
-      it('should NOT apply new promocode if shift pressed', () => {
-        wrapper.find('input').simulate('input', { target: { value } })
-        wrapper.find('input').simulate('keyUp', { keyCode: 16 })
-        expect(loadPrices).not.toHaveBeenCalled()
-        expect(trackPromocodeChange).not.toHaveBeenCalled()
+      test('then it should display error', () => {
+        expect(wrapper.find('.inputIcon.inputIconError').exists()).toBe(true)
+        expect(wrapper.find('.errorMsg').exists()).toBe(true)
       })
     })
 
-    describe('when promoCodeValid is true', () => {
+    describe('when edited to an empty value (i.e. removed)', () => {
       beforeEach(() => {
-        wrapper.setProps({
-          prices: Immutable.fromJS({
-            promoCodeValid: true,
-          }),
-        })
-        wrapper.instance().promoCodeValidation()
+        wrapper.find('input').simulate('change', { target: { value: emptyPromoCode } })
+
+        jest.runAllTimers()
       })
 
-      test('then component state should be updated properly', () => {
-        expect(wrapper.state().errorMsg).toBe('')
-        expect(wrapper.state().successMsg).toBe('Promocode added')
+      test('then it should track removal', () => {
+        expect(trackPromocodeChange).toHaveBeenCalledWith(validPromoCode, false)
       })
     })
+  })
 
-    describe('when promoCodeValid is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({
-          prices: Immutable.fromJS({
-            promoCodeValid: false,
-          }),
-        })
-        wrapper.instance().promoCodeValidation()
-      })
+  describe('when the promo code is non-empty and invalid', () => {
+    beforeEach(() => {
+      wrapper = shallow(
+        <PromoCode
+          promoCode="ZZZ"
+          promoCodeApplied
+          basketPromoCodeChange={basketPromoCodeChange}
+          basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
+          trackPromocodeChange={trackPromocodeChange}
+          promoCodeValid={false}
+          sendRequestToUpdateOrderSummaryPrices={sendRequestToUpdateOrderSummaryPrices}
+        />
+      )
+    })
 
-      test('then component state should be updated properly', () => {
-        expect(wrapper.state().errorMsg).toBe('This promocode is not valid')
-      })
+    test('should display the error icon and message', () => {
+      expect(wrapper.find('.inputIcon.inputIconError').exists()).toBe(true)
+      expect(wrapper.find('.errorMsg').exists()).toBe(true)
     })
   })
 })

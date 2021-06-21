@@ -123,14 +123,7 @@ module.exports = {
     securityCodeLength: 'Please enter 3-digit security code',
     securityCodeType: 'Please enter 3 digit numerical security code',
     addressTypeLength: 'Please enter a valid address',
-    invalidPromocode: 'This promocode is not valid',
-    promoCode: {
-      empty: 'Please enter a promocode',
-      valid: 'Promocode added',
-      invalid: 'This promocode is not valid',
-      expired: 'This promocode has expired',
-      forCustomers: 'This promocode is for existing customers',
-    },
+    invalidPromocode: 'This discount code is not valid',
     'card-tokenization-failed': 'Sorry, we don’t accept that type of card. Please try another one.',
     'network-failure': 'Please check your network connection and try again.',
     'paypal-token-fetch-failed': {

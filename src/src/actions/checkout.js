@@ -32,7 +32,7 @@ import { userSubscribe } from './user'
 import { trackAffiliatePurchase, trackUTMAndPromoCode, trackCheckoutError } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
-import pricingActions from './pricing'
+import { pricingRequest } from './pricing'
 import tempActions from './temp'
 import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
 export { checkoutTransactionalOrder } from '../routes/Menu/actions/checkout'
@@ -74,7 +74,7 @@ function resetDuplicateCheck() {
         dispatch(basketPromoCodeChange(''))
         dispatch(basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-        dispatch(pricingActions.pricingRequest())
+        dispatch(pricingRequest())
       }
     }
   }
@@ -137,7 +137,7 @@ export const handlePromoCodeRemoved = async (dispatch, getState) => {
   if (isPaymentBeforeChoosingEnabled) {
     await dispatch(checkoutCreatePreviewOrder())
   } else {
-    dispatch(pricingActions.pricingRequest())
+    dispatch(pricingRequest())
   }
 }
 
@@ -580,6 +580,17 @@ export const trackWelcomeToGoustoButton = (orderId) => (dispatch, getState) => {
       userId,
     }
   })
+}
+
+export const sendRequestToUpdateOrderSummaryPrices = () => async (dispatch, getState) => {
+  const state = getState()
+  const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
+
+  if (isPaymentBeforeChoosingEnabled) {
+    await dispatch(checkoutCreatePreviewOrder())
+  } else {
+    await dispatch(pricingRequest())
+  }
 }
 
 export default checkoutActions

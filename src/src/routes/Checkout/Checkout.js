@@ -306,10 +306,7 @@ class Checkout extends PureComponent {
 
     return (
       <Fragment>
-        <Summary
-          showPromocode={!isPaymentBeforeChoosingEnabled}
-          isLoading={isCreatingPreviewOrder}
-        />
+        <Summary isLoading={isCreatingPreviewOrder} />
         {isPaymentBeforeChoosingEnabled ? <YourBoxDetailsContainer /> : <BoxDetailsContainer />}
       </Fragment>
     )

@@ -23,16 +23,13 @@ describe('Promo Code', () => {
         cy.get('[data-testing="discountAmount"]').should('not.exist')
         cy.get('[data-testing="totalPrice"]').contains('24.99')
 
-        if (PLATFORM === 'WEB') {
-          cy.get('[data-testing="checkoutDesktopSummary"]')
-            .find('[data-testing="promoCodeInput"]')
-            .type(promoCode, { force: true })
-        } else {
-          cy.get('[data-testing="checkoutExpandableBoxSummary"]')
-            .find('[data-testing="promoCodeInput"]')
-            .type(promoCode, { force: true })
-        }
-        cy.get('[data-testing="promoCodeInput"]').should('have.value', promoCode)
+        const inputSelector =
+          PLATFORM === 'WEB'
+            ? '[data-testing="checkoutDesktopSummary"] [data-testing="promoCodeInput"]'
+            : '[data-testing="checkoutExpandableBoxSummary"] [data-testing="promoCodeInput"]'
+
+        cy.get(inputSelector).type(promoCode, { force: true })
+        cy.get(inputSelector).should('have.value', promoCode)
 
         cy.get('[data-testing="grossPrice"]').contains('24.99')
         cy.get('[data-testing="discountAmount"]').contains('12.49')

@@ -145,7 +145,7 @@ const pricingClear = () => async (dispatch, getState) => {
   }
 }
 
-const pricingRequest = () => async (dispatch, getState) => {
+export const pricingRequest = () => async (dispatch, getState) => {
   const state = getState()
   const deliverySlotId = getBasketSlotId(state)
   const recipesCount = getBasketRecipesCount(state)
