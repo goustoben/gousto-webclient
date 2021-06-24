@@ -90,7 +90,7 @@ describe('checkout selectors', () => {
         phone_number: '07503075906',
         postcode: 'W3 7UP',
         line1: 'FLAT 12, MORRIS HOUSE',
-        check_last_name: true,
+        check_last_name: 1,
         name_last: 'Name',
       }
 

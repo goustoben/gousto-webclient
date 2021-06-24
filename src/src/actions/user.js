@@ -638,6 +638,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const { form, basket, promoAgeVerified } = state
 
   const isDecoupledPaymentEnabled = getIsDecoupledPaymentEnabled(state)
+  const isPromoCodeValidationEnabled = getIsPromoCodeValidationEnabled(state)
 
   const account = Immutable.fromJS(form[accountFormName].values).get('account')
   const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
@@ -653,7 +654,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const reqData = {
     order_id: basket.get('previewOrderId'),
     promocode: basket.get('promoCode', ''),
-    check_last_name: getIsPromoCodeValidationEnabled(state),
+    check_last_name: Number(isPromoCodeValidationEnabled || false),
     customer: {
       tariff_id: basket.get('tariffId', ''),
       phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',

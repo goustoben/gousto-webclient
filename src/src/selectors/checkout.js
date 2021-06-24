@@ -23,8 +23,10 @@ export const getPromoCodeValidationDetails = state => {
     phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
     postcode: delivery.get('postcode'),
     line1: delivery.get('houseNo', ''),
-    check_last_name: isPromoCodeValidationEnabled,
-    name_last: delivery.get('lastName').trim(),
+    ...(isPromoCodeValidationEnabled && {
+      check_last_name: Number(isPromoCodeValidationEnabled || false),
+      name_last: delivery.get('lastName').trim(),
+    })
   }
 }
 

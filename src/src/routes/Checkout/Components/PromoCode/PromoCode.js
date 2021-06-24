@@ -47,6 +47,17 @@ class PromoCode extends PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { promoCode } = this.props
+    const { promoCode: previousPromoCode } = prevProps
+
+    if (promoCode !== previousPromoCode) {
+      this.setState({
+        value: promoCode,
+      })
+    }
+  }
+
   handlePromoCodeVerification(currentPromoCode, previousPromoCode) {
     const { sendRequestToUpdateOrderSummaryPrices, trackPromocodeChange } = this.props
 
