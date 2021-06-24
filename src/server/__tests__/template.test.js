@@ -10,7 +10,6 @@ describe('htmlTemplate', () => {
   let helmetHead
   let scripts
   let output
-  let host
 
   beforeEach(() => {
     helmetHead = {}
@@ -34,7 +33,7 @@ describe('htmlTemplate', () => {
 
     describe('when no htmlAttributes passed', () => {
       test('should have default lang attr w/o any addtional attributes', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).toContain(DEFAULT_HTML_TAG)
       })
     })
@@ -49,7 +48,7 @@ describe('htmlTemplate', () => {
       })
 
       test('should apply passed htmlAttributes to html tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).not.toContain(DEFAULT_HTML_TAG)
         expect(output).toContain(EXPECT_HTML_TAG)
       })
@@ -65,7 +64,7 @@ describe('htmlTemplate', () => {
 
     describe('when no title passed', () => {
       test('should not contain title tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).not.toContain(TITLE_TAG)
       })
     })
@@ -80,7 +79,7 @@ describe('htmlTemplate', () => {
       })
 
       test('should contain title tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).toContain(TITLE_TAG)
       })
     })
@@ -96,7 +95,7 @@ describe('htmlTemplate', () => {
 
     describe('when scripts has no optimizely key property', () => {
       test('should not contain cdn.optimizely script tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).not.toContain(CDN_OPTIMIZELY)
       })
     })
@@ -114,7 +113,7 @@ describe('htmlTemplate', () => {
         }
       })
       test('should contain cdn.optimizely script tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).toContain(CDN_OPTIMIZELY)
       })
     })
@@ -130,7 +129,7 @@ describe('htmlTemplate', () => {
 
     describe('when no link tags are passed', () => {
       test('should not contain mock.css link tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).not.toContain(LINK_TAG)
       })
     })
@@ -145,7 +144,7 @@ describe('htmlTemplate', () => {
       })
 
       test('should contain mock.css link tag', () => {
-        output = htmlTemplate('', initialState, {}, '', scripts, helmetHead, host)
+        output = htmlTemplate('', initialState, '', scripts, helmetHead)
         expect(output).toContain(LINK_TAG)
       })
     })

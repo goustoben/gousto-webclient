@@ -3,7 +3,7 @@ import { knownVariants, defaultVariant } from 'config/home'
 import actions from 'actions/auth'
 import { updatePricePerServing } from 'actions/boxPrices'
 import { getIsAuthenticated } from 'selectors/auth'
-import { getPricePerServing } from 'selectors/boxPrices'
+import { getPricePerServing } from 'routes/BoxPrices/boxPricesSelectors'
 import { getIsSignupReductionEnabled } from 'selectors/features'
 
 import { Home } from './Home'

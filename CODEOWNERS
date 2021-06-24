@@ -158,7 +158,6 @@
 /src/src/actions/welcome.js       @Gousto/squad-rockets
 /src/src/containers/welcome/       @Gousto/squad-rockets
 /src/src/apis/boxPrices.js       @Gousto/squad-rockets
-/src/src/config/boxprices.js       @Gousto/squad-rockets
 /src/src/apis/__tests__/boxPrices.test.js       @Gousto/squad-rockets
 /src/src/actions/auth.js       @Gousto/squad-rockets
 /src/src/actions/__tests__/auth.test.js       @Gousto/squad-rockets

@@ -2,18 +2,15 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
 import Image from 'Image'
-import { boxTypes, cta } from 'config/boxprices'
+import { boxTypes, cta } from 'routes/BoxPrices/boxPricesConfig'
 import { BoxInfo } from '../BoxInfo'
 import { BoxPriceButton } from '../BoxPriceButton/BoxPriceButton'
-import css from './BoxPrice.css'
+import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
+import css from './BoxPriceBlock.css'
 
 class BoxPriceBlock extends PureComponent {
   render() {
-    const {
-      boxInfo,
-      numPersons,
-      boxPricesBoxSizeSelected
-    } = this.props
+    const { boxInfo, numPersons, boxPricesBoxSizeSelected } = this.props
     const boxType = boxTypes[numPersons]
 
     return (
@@ -57,13 +54,7 @@ class BoxPriceBlock extends PureComponent {
 }
 
 BoxPriceBlock.propTypes = {
-  boxInfo: PropTypes.arrayOf(
-    PropTypes.shape({
-      num_portions: PropTypes.number,
-      price_per_portion: PropTypes.string,
-      total: PropTypes.string,
-    })
-  ).isRequired,
+  boxInfo: BoxDescriptorsPropType.isRequired,
   numPersons: PropTypes.number.isRequired,
   boxPricesBoxSizeSelected: PropTypes.func,
 }
@@ -72,6 +63,4 @@ BoxPriceBlock.defaultProps = {
   boxPricesBoxSizeSelected: () => {},
 }
 
-export {
-  BoxPriceBlock
-}
+export { BoxPriceBlock }

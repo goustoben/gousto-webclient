@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { icons } from 'config/boxprices'
+import { icons } from 'routes/BoxPrices/boxPricesConfig'
 import css from './BoxIcon.css'
 
 class BoxIcon extends React.PureComponent {

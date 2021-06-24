@@ -9,8 +9,6 @@ const { match, RouterContext, createMemoryHistory } = require('react-router')
 const { syncHistoryWithStore } = require('react-router-redux')
 const { routes } = require('routes')
 const { configureStore } = require('store')
-const { ApolloProvider, getDataFromTree } = require('react-apollo')
-const apolloClient = require('apis/apollo').default
 const { Provider } = require('react-redux')
 const promoActions = require('actions/promos').default
 const logger = require('utils/logger').default
@@ -76,12 +74,9 @@ const configureHistoryAndStore = (url, initialState) => {
 
 const renderHTML = (store, renderProps, url, userAgent, scripts) => {
   let startTime = new Date()
-  const apollo = apolloClient(store)
   const components = (
     <Provider store={store}>
-      <ApolloProvider client={apollo}>
-        <RouterContext {...renderProps} />
-      </ApolloProvider>
+      <RouterContext {...renderProps} />
     </Provider>
   )
 
@@ -93,21 +88,20 @@ const renderHTML = (store, renderProps, url, userAgent, scripts) => {
     />
   )
 
-  return getDataFromTree(components)
-    .then(() => {
-      const reactHTML = renderToString(components)
-      if (__CLIENT__) {
-        logger.notice({ message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime) })
-      }
-      startTime = new Date()
-      const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
-      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, scripts, helmetHead)
-      if (__CLIENT__) {
-        logger.notice({ message: 'renderHTML/template', elapsedTime: (new Date() - startTime) })
-      }
+  return new Promise(resolve => {
+    const reactHTML = renderToString(components)
+    if (__CLIENT__) {
+      logger.notice({ message: 'renderHTML/reactHTML', elapsedTime: (new Date() - startTime) })
+    }
+    startTime = new Date()
+    const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
+    const template = htmlTemplate(reactHTML, store.getState(), userAgent, scripts, helmetHead)
+    if (__CLIENT__) {
+      logger.notice({ message: 'renderHTML/template', elapsedTime: (new Date() - startTime) })
+    }
 
-      return template
-    })
+    resolve(template)
+  })
 }
 
 const createCookies = (ctx, store) => {
@@ -192,26 +186,19 @@ async function processRequest(ctx, next) {
       }
       processFeaturesQuery(ctx.request.query, store)
     }
-    const apollo = apolloClient(store)
     const reactHTML = (
       <Provider store={store}>
-        <ApolloProvider client={apollo}>
-          <Header isAuthenticated={authenticated} simple={simple} path={path} />
-        </ApolloProvider>
+        <Header isAuthenticated={authenticated} simple={simple} path={path} />
       </Provider>
     )
-    getDataFromTree(reactHTML)
-      .then(() => {
-        ctx.body = `
+    ctx.body = `
           <link rel="stylesheet" property="stylesheet" href="${newAssetPath('legacy.css')}">
           <script type="text/javascript" src="${newAssetPath('legacy.js')}"></script>
           <span id="nodeHeaderReactRoot">
             <script type="text/javascript">window.__initialState__ = ${encodeState(store.getState())}</script>
-            <script type="text/javascript">window.__APOLLO_STATE__ = ${encodeState(apollo.cache.extract())}</script>
             ${renderToString(reactHTML)}
           </span>
-        `
-      })
+    `
   } else {
     await new Promise((resolve, reject) => {
       if (ctx.request.query) {

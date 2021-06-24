@@ -2,7 +2,7 @@ const newAssetPath = require('utils/media').newAssetPath
 const head = require('./head').default
 const encodeState = require('./encodeState')
 
-const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', scripts, helmetHead) => (
+const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts, helmetHead) => (
   `<!doctype html>
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
@@ -24,7 +24,6 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
       ${head.favicon()}
       <script type="text/javascript">
         window.__initialState__ = ${encodeState(initialState)}
-        window.__APOLLO_STATE__ = ${encodeState(apolloState)}
       </script>
 
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700,300italic,400italic" rel="stylesheet" type="text/css">

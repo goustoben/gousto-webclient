@@ -1,0 +1,1 @@
+export { BoxPriceBlock } from './BoxPriceBlock'

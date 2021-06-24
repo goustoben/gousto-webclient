@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { routes } from 'routes'
-import AppContainer from 'containers/AppContainer'
+import { AppContainer } from 'containers/AppContainer'
 import transit from 'transit-immutable-js'
 import Cookies from 'utils/GoustoCookies'
 import { processCookies } from 'utils/processCookies'

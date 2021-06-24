@@ -9,27 +9,21 @@ export const pricePerServing = '2.87'
 export const cta = 'Build My Box'
 export const ctaRedesign = 'Get started'
 
+// Note: the existing (pre-TG-4359) page's design is not flexible to support 5
+// recipes, so when moving to 5 recipes, this page should be revisited.
+export const numPersonsValues = ['2', '4']
+export const numPortionsValues = ['2', '3', '4']
+
 export const boxTypes = {
   2: {
     type: '2-Person',
-      description: 'Delicious meals for two',
-      image: require('media/images/box-prices/couples-box.jpg'),
+    description: 'Delicious meals for two',
+    image: require('media/images/box-prices/couples-box.jpg'),
   },
   4: {
     type: 'Family',
-      description: 'Tasty meals for 2 adults and 2-3 children',
-      image: require('media/images/box-prices/family-box.jpg'),
-  },
-}
-
-export const boxTypesRedesign = {
-  2: {
-    description: 'This smaller box is packed with enough pre-measured ingredients for each recipe to feed 2 people.',
-      image: require('media/images/box-prices/two-person-box.jpg'),
-  },
-  4: {
-    description: 'This larger box is packed with enough pre-measured ingredients for each recipe to feed 4 people.',
-      image: require('media/images/box-prices/four-person-box.jpg'),
+    description: 'Tasty meals for 2 adults and 2-3 children',
+    image: require('media/images/box-prices/family-box.jpg'),
   },
 }
 

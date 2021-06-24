@@ -1,49 +1,35 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import withError from 'utils/withError'
-import { BoxPriceBlock } from '../BoxPrice'
-import { groupBy } from './boxPricesListUtils'
+import { BoxPriceBlock } from '../BoxPriceBlock'
+import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import css from './BoxPriceList.css'
 
-const BoxPricesList = ({
-  boxPrices,
-  type,
-  boxPricesBoxSizeSelected,
-}) => {
-  const boxTypes = boxPrices[type]
-  const groupByNumPerson = boxTypes && groupBy(boxTypes, 'num_persons')
+const BoxPricesList = ({ numPersonsToBoxDescriptors, boxPricesBoxSizeSelected }) => (
+  <div className={css.boxPriceList}>
+    {Object.entries(numPersonsToBoxDescriptors).map(([numPersonsStr, boxDescriptors]) => {
+      const key = `box-type-${numPersonsStr}`
+      const numPersons = parseInt(numPersonsStr, 10)
 
-  return (
-    <div className={css.boxPriceList}>
-      {Object.keys(groupByNumPerson)
-        .filter((numPersons) => numPersons !== '8')
-        .map((numPersonsStr) => {
-          const key = `box-type-${numPersonsStr}`
-          const numPersons = parseInt(numPersonsStr, 10)
-          const boxInfo = groupByNumPerson[numPersonsStr]
-
-          return (
-            <BoxPriceBlock
-              key={key}
-              numPersons={numPersons}
-              boxInfo={boxInfo}
-              boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
-            />
-          )
-        })}
-    </div>
-  )
-}
+      return (
+        <BoxPriceBlock
+          key={key}
+          numPersons={numPersons}
+          boxInfo={boxDescriptors}
+          boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+        />
+      )
+    })}
+  </div>
+)
 
 BoxPricesList.propTypes = {
-  boxPrices: PropTypes.shape({}),
-  type: PropTypes.oneOf(['gourmet', 'vegetarian']),
+  numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
   boxPricesBoxSizeSelected: PropTypes.func,
 }
 
 BoxPricesList.defaultProps = {
-  boxPrices: {},
-  type: 'gourmet',
+  numPersonsToBoxDescriptors: {},
   boxPricesBoxSizeSelected: () => {},
 }
 

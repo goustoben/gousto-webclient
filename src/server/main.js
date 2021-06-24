@@ -10,9 +10,7 @@ const { renderToString } = require('react-dom/server')
 const Footer = require('Footer').default
 const logger = require('utils/logger').default
 const app = new Koa()
-const apolloClient = require('apis/apollo').default
 const { Provider } = require('react-redux')
-const { ApolloProvider, getDataFromTree } = require('react-apollo')
 
 const globals = require('config/globals')
 const MainLayout = require('layouts/MainLayout').default
@@ -100,7 +98,7 @@ app.use(async (ctx, next) => {
       </Provider>
     )
     const helmetHead = __SERVER__ ? Helmet.renderStatic() : Helmet.peek
-    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.req.headers['user-agent'], scripts, helmetHead)
+    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), ctx.req.headers['user-agent'], scripts, helmetHead)
   }
 })
 
@@ -122,17 +120,10 @@ app.use(async (ctx, next) => {
     const { store } = configureHistoryAndStore(ctx.request.url)
     const reactHTML = (
       <Provider store={store}>
-        <ApolloProvider
-          client={apolloClient(store)}
-        >
-          <Footer simple={Boolean(ctx.request.query.simple)} />
-        </ApolloProvider>
+        <Footer simple={Boolean(ctx.request.query.simple)} />
       </Provider>
     )
-    getDataFromTree(reactHTML)
-      .then(() => {
-        ctx.body = renderToString(reactHTML)
-      })
+    ctx.body = renderToString(reactHTML)
   } else {
     await next()
   }

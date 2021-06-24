@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
-import { pricePerServing } from 'config/boxprices'
+import { pricePerServing } from 'routes/BoxPrices/boxPricesConfig'
 
 const defaultState = Immutable.Map({
   pricePerServing,

@@ -1,12 +1,14 @@
 import { connect } from 'react-redux'
-import { graphql } from 'react-apollo'
 import actions from 'actions'
+import { actionTypes } from 'actions/actionTypes'
 import { boxPricesBoxSizeSelected } from 'actions/boxPrices'
-import boxPricesQuery from './boxprices.gql'
+import { getNumPersonsToBoxDescriptors } from './boxPricesSelectors'
 import { BoxPrices } from './BoxPrices'
 
 const mapStateToProps = (state) => ({
-  tariffId: state.basket.get('tariffId', null),
+  numPersonsToBoxDescriptors: getNumPersonsToBoxDescriptors(state),
+  loading: state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE),
+  error: state.error.get(actionTypes.MENU_BOX_PRICES_RECEIVE),
 })
 
 const mapDispatchToProps = {
@@ -14,8 +16,4 @@ const mapDispatchToProps = {
   boxPricesBoxSizeSelected
 }
 
-const BoxPricesWithData = graphql(boxPricesQuery, {
-  options: ({ tariffId }) => (tariffId ? { variables: { tariff_id: tariffId } } : {})
-})(BoxPrices)
-
-export const BoxPricesContainer = connect(mapStateToProps, mapDispatchToProps)(BoxPricesWithData)
+export const BoxPricesContainer = connect(mapStateToProps, mapDispatchToProps)(BoxPrices)

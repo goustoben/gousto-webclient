@@ -1,20 +1,28 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
-import { propType } from 'graphql-anywhere'
-import { hero, seo } from 'config/boxprices'
+import { menuLoadBoxPrices } from 'actions/menu'
+import { hero, seo } from 'routes/BoxPrices/boxPricesConfig'
 import Loading from 'Loading'
 import Hero from 'Hero'
+import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 import css from './BoxPrices.css'
 
-import boxPriceQuery from './boxprices.gql'
 import { BoxPricesList } from './BoxPricesList'
 import { BoxPricesContent } from './BoxPricesContent'
 
 class BoxPrices extends React.PureComponent {
+  static fetchData = async ({ store }) => {
+    await store.dispatch(menuLoadBoxPrices())
+  }
+
+  componentDidMount() {
+    const { store } = this.context
+    BoxPrices.fetchData({ store })
+  }
+
   render() {
-    const { data, boxPricesBoxSizeSelected } = this.props
-    const { boxPrices, loading, error } = data
+    const { boxPricesBoxSizeSelected, numPersonsToBoxDescriptors, loading, error } = this.props
 
     return (
       <div>
@@ -32,8 +40,7 @@ class BoxPrices extends React.PureComponent {
           />
           {!loading && (
             <BoxPricesList
-              boxPrices={boxPrices || []}
-              type="gourmet"
+              numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
               error={error}
               boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
             />
@@ -46,18 +53,23 @@ class BoxPrices extends React.PureComponent {
 }
 
 BoxPrices.propTypes = {
-  data: PropTypes.shape({
-    ...propType(boxPriceQuery),
-    loading: PropTypes.bool,
-    error: PropTypes.string,
-    boxPrices: PropTypes.arrayOf(PropTypes.object)
-  }),
+  loading: PropTypes.bool,
+  error: PropTypes.string,
   boxPricesBoxSizeSelected: PropTypes.func,
+  numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
 }
 
 BoxPrices.defaultProps = {
-  data: {},
+  loading: false,
+  error: null,
   boxPricesBoxSizeSelected: () => {},
+  numPersonsToBoxDescriptors: null,
+}
+
+BoxPrices.contextTypes = {
+  store: PropTypes.shape({
+    dispatch: PropTypes.func,
+  }).isRequired,
 }
 
 export { BoxPrices }
