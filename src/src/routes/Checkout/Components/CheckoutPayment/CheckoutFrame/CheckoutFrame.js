@@ -38,13 +38,8 @@ class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      billingAddress,
-      cardName,
-      checkoutScriptReady,
-      isSubmitCardEnabled,
-      hasCheckoutError,
-    } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } =
+      this.props
 
     if (checkoutScriptReady) {
       if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
@@ -164,11 +159,8 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenizationFailed = (event) => {
-    const {
-      fireCheckoutError,
-      fireCheckoutPendingEvent,
-      trackingCardTokenizationFailed,
-    } = this.props
+    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenizationFailed } =
+      this.props
     const errorMessage = event ? event.data.message : ''
     const errorType = getErrorType(event.data.errorCode)
 

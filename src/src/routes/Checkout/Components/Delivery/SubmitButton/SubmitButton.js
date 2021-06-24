@@ -8,13 +8,8 @@ import { ErrorMessage } from '../../ErrorMessage'
 
 class SubmitButton extends React.PureComponent {
   handleSubmit = () => {
-    const {
-      manualSubmit,
-      browser,
-      checkoutMobileInvalid,
-      checkoutInvalid,
-      onStepChange,
-    } = this.props
+    const { manualSubmit, browser, checkoutMobileInvalid, checkoutInvalid, onStepChange } =
+      this.props
     manualSubmit('delivery')
     if (browser === 'mobile') {
       manualSubmit('yourdetails')

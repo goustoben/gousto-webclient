@@ -154,7 +154,7 @@ if (__HMR__) {
   const WebpackDevServer = require('webpack-dev-server')
   const webpack = require('webpack')
   // eslint-disable-next-line import/no-unresolved
-  const config = require('config/webpack.client.js')
+  const config = require('config/webpack.client')
   /* eslint-enable */
 
   new WebpackDevServer(webpack(config), {

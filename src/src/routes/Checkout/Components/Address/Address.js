@@ -382,13 +382,8 @@ export class Address extends React.PureComponent {
 
   render() {
     const { isMobile, addressesPending, receiveRef, sectionName, isDelivery } = this.props
-    const {
-      addresses,
-      postcodeTemp,
-      notFound,
-      isAddressSelected,
-      deliveryInstructions,
-    } = this.getAddressProps()
+    const { addresses, postcodeTemp, notFound, isAddressSelected, deliveryInstructions } =
+      this.getAddressProps()
     const isCTADisabled = this.validateFields()
     const currentSelectedAddress = showAddress(this.getAddressObjectFromForm())
 

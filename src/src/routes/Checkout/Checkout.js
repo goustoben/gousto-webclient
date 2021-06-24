@@ -313,11 +313,8 @@ class Checkout extends PureComponent {
   }
 
   renderProgressBar = (currentStep) => {
-    const {
-      isPaymentBeforeChoosingEnabled,
-      trackCheckoutNavigationLinks,
-      lastReachedStepIndex,
-    } = this.props
+    const { isPaymentBeforeChoosingEnabled, trackCheckoutNavigationLinks, lastReachedStepIndex } =
+      this.props
 
     const breadcrumbSteps = isPaymentBeforeChoosingEnabled
       ? [...checkoutSteps, 'recipes']

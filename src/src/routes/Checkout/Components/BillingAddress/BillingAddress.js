@@ -15,14 +15,8 @@ export class BillingAddress extends React.PureComponent {
   }
 
   render() {
-    const {
-      formValues,
-      sectionName,
-      asyncValidate,
-      form,
-      receiveRef,
-      scrollToFirstMatchingRef,
-    } = this.props
+    const { formValues, sectionName, asyncValidate, form, receiveRef, scrollToFirstMatchingRef } =
+      this.props
     const isBillingAddressDifferent =
       formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
 
