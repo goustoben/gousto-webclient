@@ -1,0 +1,431 @@
+{
+  "api_name": "jalapenos",
+  "domain": "gousto.info",
+  "running_env": "live",
+  "endpoints": {
+    "jalapenos": {
+      "envDomain": "gousto.info",
+      "services": {
+        "auth": {
+          "1": {
+            "versionString": "v1.0.0",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/auth/v1.0.0",
+              "local": "https://jalapenos-api.gousto.info/auth/v1.0.0"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-auth.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/auth/v1.0.0"
+            }
+          }
+        },
+        "brand": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/brand/v1",
+              "local": "https://jalapenos-api.gousto.info/brand/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-brand.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/brand/v1"
+            }
+          }
+        },
+        "clientmetrics": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/clientmetrics/v1",
+              "local": "https://jalapenos-api.gousto.info/clientmetrics/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-clientmetrics.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/clientmetrics/v1"
+            }
+          }
+        },
+        "collections": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/collections/v1",
+              "local": "https://jalapenos-api.gousto.info/collections/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-collections.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/collections/v1"
+            }
+          }
+        },
+        "complaints": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/complaints/v1",
+              "local": "https://jalapenos-api.gousto.info/complaints/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-complaints.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/complaints/v1"
+            }
+          }
+        },
+        "content": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/content/v1",
+              "local": "https://jalapenos-api.gousto.info/content/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-content.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/content/v1"
+            }
+          }
+        },
+        "core": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info",
+              "local": "https://jalapenos-api.gousto.info"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-core.gousto.info",
+              "local": "https://jalapenos-api.gousto.info"
+            }
+          }
+        },
+        "customers": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/customers/v1",
+              "local": "https://jalapenos-api.gousto.info/customers/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-customers.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/customers/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/customers/v2",
+              "local": "https://jalapenos-api.gousto.info/customers/v2"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-customers.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/customers/v2"
+            }
+          }
+        },
+        "deliveries": {
+          "1": {
+            "versionString": "v1.0",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/deliveries/v1.0",
+              "local": "https://jalapenos-api.gousto.info/deliveries/v1.0"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-deliveries.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/deliveries/v1.0"
+            }
+          }
+        },
+        "graphql": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/graphql/v1",
+              "local": "https://jalapenos-api.gousto.info/graphql/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-graphql.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/graphql/v1"
+            }
+          }
+        },
+        "loggingmanager": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/loggingmanager",
+              "local": "https://jalapenos-api.gousto.info/loggingmanager"
+            },
+            "serverSide": {
+              "live": "https://jalapenos-api.gousto.info/loggingmanager",
+              "local": "https://jalapenos-api.gousto.info/loggingmanager"
+            }
+          }
+        },
+        "menu": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/menu/v1",
+              "local": "https://jalapenos-api.gousto.info/menu/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-menu.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/menu/v1"
+            }
+          }
+        },
+        "order": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/order/v1",
+              "local": "https://jalapenos-api.gousto.info/order/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-order.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/order/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/order/v2",
+              "local": "https://jalapenos-api.gousto.info/order/v2"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-order.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/order/v2"
+            }
+          }
+        },
+        "orders": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/orders/v1",
+              "local": "https://jalapenos-api.gousto.info/orders/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-orders.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/orders/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/orders/v2",
+              "local": "https://jalapenos-api.gousto.info/orders/v2"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-orders.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/orders/v2"
+            }
+          }
+        },
+        "orderskiprecovery": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/orderskiprecovery/v1",
+              "local": "https://jalapenos-api.gousto.info/orderskiprecovery/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-orderskiprecovery.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/orderskiprecovery/v1"
+            }
+          }
+        },
+        "payments": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/payments/v1",
+              "local": "https://jalapenos-api.gousto.info/payments/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-payments.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/payments/v1"
+            }
+          }
+        },
+        "products": {
+          "1": {
+            "versionString": "v1.0",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/products/v1.0",
+              "local": "https://jalapenos-api.gousto.info/products/v1.0"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-products.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/products/v1.0"
+            }
+          },
+          "2": {
+            "versionString": "v2.0",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/products/v2.0",
+              "local": "https://jalapenos-api.gousto.info/products/v2.0"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-products.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/products/v2.0"
+            }
+          }
+        },
+        "recipes": {
+          "1": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/recipes/v2",
+              "local": "https://jalapenos-api.gousto.info/recipes/v2"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-recipes.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/recipes/v2"
+            }
+          }
+        },
+        "ssr": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/ssr/v1",
+              "local": "https://jalapenos-api.gousto.info/ssr/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-ssr.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/ssr/v1"
+            }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/ssr/v2",
+              "local": "https://jalapenos-api.gousto.info/ssr/v2"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-ssr.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/ssr/v2"
+            }
+          }
+        },
+        "ssrdeliveries": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/ssrdeliveries/v1",
+              "local": "https://jalapenos-api.gousto.info/ssrdeliveries/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-ssrdeliveries.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/ssrdeliveries/v1"
+            }
+          }
+        },
+        "subpauseosr": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/subpauseosr/v1",
+              "local": "https://jalapenos-api.gousto.info/subpauseosr/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-subpauseosr.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/subpauseosr/v1"
+            }
+          }
+        },
+        "subscriptioncommand": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/subscriptioncommand/v1",
+              "local": "https://jalapenos-api.gousto.info/subscriptioncommand/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-subscriptioncommand.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/subscriptioncommand/v1"
+            }
+          }
+        },
+        "subscriptionquery": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/subscriptionquery/v1",
+              "local": "https://jalapenos-api.gousto.info/subscriptionquery/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-subscriptionquery.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/subscriptionquery/v1"
+            }
+          }
+        },
+        "tastepreferences": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/tastepreferences/v1",
+              "local": "https://jalapenos-api.gousto.info/tastepreferences/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-tastepreferences.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/tastepreferences/v1"
+            }
+          }
+        },
+        "userbucketing": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/userbucketing/v1",
+              "local": "https://jalapenos-api.gousto.info/userbucketing/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-userbucketing.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/userbucketing/v1"
+            }
+          }
+        },
+        "userfeedback": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/userfeedback/v1",
+              "local": "https://jalapenos-api.gousto.info/userfeedback/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-userfeedback.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/userfeedback/v1"
+            }
+          }
+        },
+        "webclient": {
+          "1": {
+            "versionString": "",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info",
+              "local": "https://jalapenos-api.gousto.info"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-webclient.gousto.info",
+              "local": "https://jalapenos-api.gousto.info"
+            }
+          }
+        },
+        "workable": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://jalapenos-api.gousto.info/workable/v1",
+              "local": "https://jalapenos-api.gousto.info/workable/v1"
+            },
+            "serverSide": {
+              "live": "http://jalapenos-workable.gousto.info",
+              "local": "https://jalapenos-api.gousto.info/workable/v1"
+            }
+          }
+        }
+      }
+    }
+  }
+}

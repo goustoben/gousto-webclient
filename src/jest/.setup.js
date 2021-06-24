@@ -3,7 +3,8 @@ import fs from "fs";
 import JSON5 from "json5"
 
 const Enzyme = require('enzyme');
-const EnzymeAdapter = require('enzyme-adapter-react-16');
+const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
+
 import Modal from 'react-modal'
 
 require('jest-fetch-mock').enableMocks()
