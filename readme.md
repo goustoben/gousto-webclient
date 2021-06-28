@@ -39,33 +39,41 @@ This file is used by node-config (see below for more info).
 
 You can get these secrets from S3 for [`staging` from here](https://s3.console.aws.amazon.com/s3/object/s3-gousto-platform-beta?region=eu-west-1&prefix=staging/config/service/webclient.yml) (if you need another environment you can change `staging` in the url to the environment you need).
 
-### Step 2: Add an entry to `/etc/hosts` file.
+### Step 2: Add an entry to [your local host file](https://support.acquia.com/hc/en-us/articles/360004175973-Using-an-etc-hosts-file-for-custom-domains-during-development)
 
-Add the following entry to /etc/hosts to point `frontend.gousto.local` to localhost, if you haven't already done so as part of the G2FE setup.
+Append the following entry to your local host file if you don't already have it, you can open this file using `sudo code /etc/hosts` (VSCode), `sudo vim /etc/hosts` ([VIM](https://dev.to/jeremy/how-to-exit-vim-11dm)) or the editor of your choice.
+```
+127.0.0.1 frontend.gousto.local
+```
 
-`127.0.0.1 frontend.gousto.local`
 
 ### Step 3: Run development environment
 
-**Note:** VPN is required to connect to staging before running dev-box and web-client.
+**Note:** VPN is required to connect to staging before running web-client.
 
 Webclient can either be run without G2FE as a standalone on port 8080, or as part of the whole FE stack with G2FE.
 
 To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
 
-The service can be run in docker, or run outside. Running outside is faster for sure.
+There are three ways to run webclient. The service can be run in docker, or run outside which will be faster.
 
 A script in the repo root called `./run.sh` has been created to help with all of these scenarios.
 
+#### Option One
 * `./run.sh build` will build a Docker image using the checked out files to run the Webclient service.
 * `./run.sh run` will run that image in a Docker container.
-* `./run.sh dev --docker` will run the image in a Docker container, but bind mounts in your local repo over the top. You can use this to develop code without installing npm or node etc. It will be a little slower than native development.
-* `./run.sh dev --host` will build and run the service on the host. This will require node installed.
 
-To rebuild the app when running with `./run.sh run` do the following
-   * rebuild the image by doing `docker image rm webclient` and then re-execute `./run.sh build`.
+  To rebuild the app when running with `./run.sh run` do the following
+- rebuild the image by doing `docker image rm webclient` and then re-execute `./run.sh build`.
+#### Option Two
+* `./run.sh build` will build a Docker image using the checked out files to run the Webclient service.
+* `./run.sh dev --docker` will run the image in a Docker container, but bind mounts in your local repo over the top. You can use this to develop code without installing npm or node etc. It will be a little slower than native development.
 
 When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `npm run watch`.
+#### Option Three
+* `./run.sh dev --host` will build and run the service on the host. This will require node installed.
+
+
 
 **If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
 **Alternatively just rm your node_modules folder, `dev --docker` will reinstall for you. With `dev --host` you'll have to run `npm install` yourself**
