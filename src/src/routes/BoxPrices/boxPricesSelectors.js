@@ -11,15 +11,15 @@ export const getNumPersonsToBoxDescriptors = createSelector(getMenuBoxPrices, (m
   }
 
   const result = numPersonsValues.map((numPersons) => {
-    const boxDescriptors = numPortionsValues.map((numPortions) => ({
-      num_portions: numPortions,
+    const boxDescriptors = numPortionsValues.map((numPortionsStr) => ({
+      num_portions: Number.parseInt(numPortionsStr, 10),
       price_per_portion: menuBoxPrices.getIn([
         numPersons,
-        numPortions,
+        numPortionsStr,
         BOX_TYPE,
         'pricePerPortion',
       ]),
-      total: menuBoxPrices.getIn([numPersons, numPortions, BOX_TYPE, 'recipeTotal']),
+      total: menuBoxPrices.getIn([numPersons, numPortionsStr, BOX_TYPE, 'recipeTotal']),
     }))
 
     return [numPersons, boxDescriptors]

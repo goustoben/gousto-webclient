@@ -61,14 +61,14 @@ describe('boxPricesSelectors', () => {
 
         const expected = {
           2: [
-            { num_portions: '2', price_per_portion: '6.25', total: '24.99' },
-            { num_portions: '3', price_per_portion: '5.00', total: '29.99' },
-            { num_portions: '4', price_per_portion: '4.37', total: '34.99' },
+            { num_portions: 2, price_per_portion: '6.25', total: '24.99' },
+            { num_portions: 3, price_per_portion: '5.00', total: '29.99' },
+            { num_portions: 4, price_per_portion: '4.37', total: '34.99' },
           ],
           4: [
-            { num_portions: '2', price_per_portion: '3.97', total: '31.75' },
-            { num_portions: '3', price_per_portion: '3.56', total: '42.75' },
-            { num_portions: '4', price_per_portion: '2.98', total: '47.75' },
+            { num_portions: 2, price_per_portion: '3.97', total: '31.75' },
+            { num_portions: 3, price_per_portion: '3.56', total: '42.75' },
+            { num_portions: 4, price_per_portion: '2.98', total: '47.75' },
           ],
         }
         expect(result).toStrictEqual(expected)
