@@ -1,7 +1,7 @@
 ---
 serviceName: webclient
 region: eu-west-1
-exposure: private
+exposure: public
 dns: webclient
 owner: squad-radishes
 rootVolumeSize: 16
