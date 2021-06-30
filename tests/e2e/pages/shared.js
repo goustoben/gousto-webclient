@@ -150,7 +150,7 @@ module.exports = {
         createUser: function (userName, password) {
           const ukPostcode = 'WC2E9JT'
           const ukPhone = '7575757575'
-          const pwd = password ? password : 'ValidPassword1!'
+          const pwd = password ? password : faker.internet.password()
 
           const userData = {
             customer: {

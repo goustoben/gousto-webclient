@@ -206,11 +206,4 @@ module.exports = {
     { label: 'Visa Electron', value: 'UKE', icon: 'visa' },
     { label: 'Maestro', value: 'MAESTRO', icon: 'alt2' },
   ],
-  passwordRules: [
-    'validation.min.string.password',
-    'validation.one_uppercase_character.password',
-    'validation.one_lowercase_character.password',
-    'validation.one_symbol_or_number.password',
-    'validation.password_policy.password',
-  ]
 }

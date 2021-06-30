@@ -7,6 +7,7 @@ import {
 import { setMocks } from './pageUtils/checkout/checkoutMocks'
 
 const EMAIL_ERROR = { email: 'Please provide a valid email address' }
+const PASSWORD_ERROR = { password: 'password must be at least 8 characters' }
 
 describe("Given I'm a logged out user", () => {
   describe('When I land on the first step of checkout', () => {
@@ -24,7 +25,7 @@ describe("Given I'm a logged out user", () => {
       beforeEach(() => {
         clearAndFillAccountForm({
           email: '123456.com',
-          password: 'ValidPassword1!',
+          password: '1234abcd',
         })
       })
 
@@ -37,16 +38,16 @@ describe("Given I'm a logged out user", () => {
 
     describe('And I have not filled in my password correctly', () => {
       beforeEach(() => {
-        cy.intercept('POST', /validate/, { fixture: 'checkout/validate/validateFailed.json' })
         clearAndFillAccountForm({
           email: '123@456.com',
-          password: 'Valid',
+          password: '1234abc',
         })
       })
 
       it('Then the CTA should be disabled and I should not be able to proceed to the next page', () => {
         cy.get('[data-testing="checkoutCTA"]').eq(0).should('be.disabled')
         cy.url().should('include', 'check-out/account')
+        cy.window().then(getAccountSyncErrors).should('deep.equal', PASSWORD_ERROR)
       })
     })
 
@@ -70,7 +71,7 @@ describe("Given I'm a logged out user", () => {
       beforeEach(() => {
         clearAndFillAccountForm({
           email: '123@456.com',
-          password: 'ValidPassword1!',
+          password: '1234abcd',
         })
       })
 

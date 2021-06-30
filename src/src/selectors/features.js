@@ -164,6 +164,10 @@ export const getIsWizardPricePerServingEnabled = ({ features }) => (
   features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
 )
 
+export const getIsPassStrengthEnabled = ({ features }) => (
+  features && features.getIn(['isPassStrengthEnabled', 'value'], false)
+)
+
 export const getIsAdditionalCheckoutErrorsEnabled = ({ features }) => (
   features && features.getIn(['isAdditionalCheckoutErrorsEnabled', 'value'], false)
 )

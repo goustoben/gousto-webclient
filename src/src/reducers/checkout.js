@@ -46,10 +46,6 @@ const initialState = () => Immutable.fromJS({
   errors: {},
   paypalErrors: {},
   lastReachedStepIndex: 0,
-  passwordInfo: {
-    value: '',
-    errorCodes: [],
-  }
 })
 
 const checkout = {
@@ -128,15 +124,6 @@ const checkout = {
       }
 
       return state
-    }
-
-    case actionTypes.CHECKOUT_PASSWORD_VALIDATION_RULES_SET: {
-      const { errors, password } = action
-
-      let newState = state.setIn(['passwordInfo', 'errorCodes'], errors.map(item => item.error))
-      newState = newState.setIn(['passwordInfo', 'value'], password)
-
-      return newState
     }
 
     default: {

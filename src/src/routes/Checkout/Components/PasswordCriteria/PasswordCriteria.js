@@ -4,38 +4,43 @@ import classNames from 'classnames'
 import { passwordCriteria } from './errors'
 import css from './PasswordCriteria.css'
 
-const max = 'validation.max.string.password'
-const min = 'validation.min.string.password'
+const getCriteriaClass = (type, errors) => {
+  let className = css.defaultMessage
+  if (type === 'digits' && (!errors.includes(type) || !errors.includes('symbols'))) {
+    className = css.success
+  }
 
-export const PasswordCriteria = ({ password, passwordErrors, showFailedCriteria }) => {
-  const maxValue = passwordErrors.length > 0 && passwordErrors.includes(max)
-  const requirements = passwordCriteria.filter((item) =>
-    maxValue ? item.rule !== min : item.rule !== max
-  )
+  if (type !== 'digits' && !errors.includes(type)) {
+    className = css.success
+  }
 
-  return (
-    <div className={css.criteriaContainer}>
-      <div className={css.criteriaTitle}>Password requirements:</div>
-      <ul className={css.errorsList}>
-        {requirements.map(({ message, rule }) => {
-          const className =
-            !passwordErrors.includes(rule) && password ? css.success : css.defaultMessage
-          const errorClassName =
-            showFailedCriteria && className === css.defaultMessage ? css.error : ''
-
-          return (
-            <li key={rule} className={classNames(css.message, className, errorClassName)}>
-              {message}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
+  return className
 }
 
+export const PasswordCriteria = ({ passwordErrors, password, showFailedCriteria }) => (
+  <div className={css.criteriaContainer}>
+    <div className={css.criteriaTitle}>Password requirements:</div>
+    <ul className={css.errorsList}>
+      {passwordCriteria(password).map((error) => {
+        const className =
+          typeof passwordErrors === 'string' && passwordErrors
+            ? css.defaultMessage
+            : getCriteriaClass(error.type, passwordErrors)
+        const errorClassName =
+          showFailedCriteria && className === css.defaultMessage ? css.error : ''
+
+        return (
+          <li key={error.type} className={classNames(css.message, className, errorClassName)}>
+            {error.text}
+          </li>
+        )
+      })}
+    </ul>
+  </div>
+)
+
 PasswordCriteria.propTypes = {
-  passwordErrors: PropTypes.arrayOf(PropTypes.string),
+  passwordErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   password: PropTypes.string,
   showFailedCriteria: PropTypes.bool,
 }

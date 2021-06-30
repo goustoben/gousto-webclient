@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import { userRules } from 'validations/user'
+import userAsyncValidation from 'validations/userAsync'
 import { formContainer } from '../../Components/formContainer'
 
 import { AboutYouContainer, addInitialValues } from '../../Components/AboutYou'
@@ -44,7 +46,15 @@ CreateAccountStep.defaultProps = {
   onLoginClick: () => {},
 }
 
-const AccountForm = formContainer(CreateAccountStep, [], sectionName, {}, {}) // eslint-disable-line import/no-mutable-exports
+const AccountForm = formContainer(
+  CreateAccountStep,
+  userRules(sectionName),
+  sectionName,
+  {},
+  {},
+  userAsyncValidation,
+  ['account.password']
+) // eslint-disable-line import/no-mutable-exports
 
 const CreateAccount = addInitialValues(AccountForm, { sectionName })
 

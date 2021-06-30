@@ -22,8 +22,8 @@ export function forgetUserToken(accessToken) {
   return fetch(accessToken, `${endpoint('auth')}${routes.auth.userToken}`, {}, 'DELETE', 'no-cache')
 }
 
-export function validateUserPassword(password, version) {
-  return fetch(null, `${endpoint('auth', version)}${routes.auth.validateUserPassword}`, { password }, 'POST', 'no-cache')
+export function validateUserPassword(password) {
+  return fetch(null, `${endpoint('auth')}${routes.auth.validateUserPassword}`, { password }, 'POST', 'no-cache')
 }
 
 export function resetUserPassword(password, passwordToken) {

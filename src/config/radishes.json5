@@ -17,17 +17,6 @@
               "live": "http://radishes-auth.gousto.info",
               "local": "https://radishes-api.gousto.info/auth/v1.0.0"
             }
-          },
-          "2": {
-            "versionString": "v2",
-            "clientSide": {
-              "live": "https://radishes-api.gousto.info/auth/v2",
-              "local": "https://radishes-api.gousto.info/auth/v2"
-            },
-            "serverSide": {
-              "live": "http://radishes-auth.gousto.info",
-              "local": "https://radishes-api.gousto.info/auth/v2"
-            }
           }
         },
         "brand": {

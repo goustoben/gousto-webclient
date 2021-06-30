@@ -4,7 +4,7 @@ import { getFormSyncErrors } from 'redux-form'
 import routes from 'config/routes'
 import gaID from 'config/head/gaTracking'
 import { PaymentMethod } from 'config/signup'
-import { errorsThatClearOrderPreview, passwordRules } from 'config/checkout'
+import { errorsThatClearOrderPreview } from 'config/checkout'
 
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
@@ -15,9 +15,8 @@ import { isValidPromoCode } from 'utils/order'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
-import { validateUserPassword } from 'apis/auth'
 
-import { accountFormName, deliveryFormName, getPromoCodeValidationDetails, getPasswordValue } from 'selectors/checkout'
+import { accountFormName, deliveryFormName, getPromoCodeValidationDetails } from 'selectors/checkout'
 import { getIs3DSForSignUpEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
 import { getUserId } from 'selectors/user'
@@ -329,13 +328,12 @@ export function checkoutPostSignup(recaptchaValue) {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
-      const state = getState()
-      const { form, pricing, basket } = state
+      const { form, pricing } = getState()
       const accountValues = Immutable.fromJS(form[accountFormName].values)
       const account = accountValues.get('account')
       const email = account.get('email')
-      const password = getPasswordValue(state)
-      const orderId = basket.get('previewOrderId')
+      const password = account.get('password')
+      const orderId = getState().basket.get('previewOrderId')
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken: recaptchaValue }, orderId))
       const prices = pricing.get('prices')
       const grossTotal = prices && prices.get('grossTotal')
@@ -352,31 +350,6 @@ export function checkoutPostSignup(recaptchaValue) {
       basketResetPersistent(Cookies)
       dispatch(basketReset())
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, false))
-    }
-  }
-}
-
-export function validatePassword(password) {
-  return async (dispatch) => {
-    if (password) {
-      try {
-        await validateUserPassword(password, 2)
-
-        dispatch({ type: actionTypes.CHECKOUT_PASSWORD_VALIDATION_RULES_SET, password, errors: [] })
-      } catch (err) {
-        dispatch({
-          type: actionTypes.CHECKOUT_PASSWORD_VALIDATION_RULES_SET,
-          errors: err.errors,
-          password,
-        })
-        logger.error({ message: err.message, errors: err })
-      }
-    } else {
-      dispatch({
-        type: actionTypes.CHECKOUT_PASSWORD_VALIDATION_RULES_SET,
-        errors: passwordRules,
-        password,
-      })
     }
   }
 }
