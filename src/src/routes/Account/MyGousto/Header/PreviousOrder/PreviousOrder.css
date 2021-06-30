@@ -1,3 +1,7 @@
+.linkWrapper {
+  position: relative;
+}
+
 .orderDetailsItem {
   padding-bottom: 0.75rem;
   flex-grow: 1;

@@ -1,1 +1,1 @@
-export { PreviousOrder } from './PreviousOrder'
+export { PreviousOrderContainer } from './PreviousOrderContainer'

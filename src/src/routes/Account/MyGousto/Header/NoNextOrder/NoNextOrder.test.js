@@ -20,6 +20,10 @@ describe('the NoNextOrder component', () => {
 
   test('renders without crashing', () => {})
 
+  test('renders correct Heading', () => {
+    expect(wrapper.find('Heading').contains('Upcoming delivery')).toBe(true)
+  })
+
   test('should show the primary message', () => {
     expect(wrapper.find('OrderDetails').find('.message').text())
       .toBe(PRIMARY_MESSAGE)

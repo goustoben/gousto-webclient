@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import config from 'config'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import { NextOrder } from './NextOrder'
 import { NoNextOrder } from './NoNextOrder'
-import { PreviousOrder } from './PreviousOrder'
+import { PreviousOrderContainer } from './PreviousOrder'
 import { SubscriberPricingBanner } from './SubscriberPricingBanner'
 import css from './Header.css'
 
@@ -14,18 +14,12 @@ const HeaderPresentation = ({
   nextOrderTracking,
   hasTooltipForNextOrder,
   hasTooltipForPreviousOrder,
-  previosOrderId,
-  previousOrderMessage,
-  getHelpQueryParam,
+  previousOrder,
   trackClickGetHelpWithThisBox,
   trackNextBoxTrackingClick,
   showSubscriberPricingBanner,
   subscriptionStatus,
 }) => {
-  const getHelpUrlSuffix = getHelpQueryParam
-    || `/${config.routes.client.getHelp.contact}`
-
-  const { client } = config.routes
   const hasNextOrder = nextOrderMessage.secondary
   const { linkLabel, linkUrl } = nextOrderMessage
 
@@ -33,6 +27,14 @@ const HeaderPresentation = ({
     <div>
       {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
       <div className={css.cardsContainer}>
+        {previousOrder
+            && (
+              <PreviousOrderContainer
+                hasDeliveryToday={hasDeliveryToday}
+                hasTooltip={hasTooltipForPreviousOrder}
+                order={previousOrder}
+              />
+            )}
         {hasNextOrder
           ? (
             <NextOrder
@@ -55,16 +57,6 @@ const HeaderPresentation = ({
               primaryMessage={nextOrderMessage.primary}
             />
           )}
-        {previousOrderMessage
-          && (
-            <PreviousOrder
-              hasTooltip={hasTooltipForPreviousOrder}
-              linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
-              orderId={previosOrderId}
-              message={previousOrderMessage}
-              trackClick={trackClickGetHelpWithThisBox}
-            />
-          )}
       </div>
     </div>
   )
@@ -72,6 +64,8 @@ const HeaderPresentation = ({
 
 HeaderPresentation.propTypes = {
   hasDeliveryToday: PropTypes.bool,
+  hasTooltipForNextOrder: PropTypes.bool,
+  hasTooltipForPreviousOrder: PropTypes.bool,
   nextOrderId: PropTypes.string,
   nextOrderMessage: PropTypes.shape({
     linkLabel: PropTypes.string,
@@ -79,20 +73,27 @@ HeaderPresentation.propTypes = {
     primary: PropTypes.string,
     secondary: PropTypes.string,
   }),
-  hasTooltipForNextOrder: PropTypes.bool,
   nextOrderTracking: PropTypes.string,
-  hasTooltipForPreviousOrder: PropTypes.bool,
-  previosOrderId: PropTypes.string,
-  previousOrderMessage: PropTypes.string,
-  getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  trackClickGetHelpWithThisBox: PropTypes.func,
-  trackNextBoxTrackingClick: PropTypes.func,
+  previousOrder: ImmutablePropTypes.contains({
+    deliveryDate: PropTypes.string,
+    orderId: PropTypes.string,
+    orderState: PropTypes.string,
+    price: PropTypes.string,
+    recipeImages: ImmutablePropTypes.contains({
+      alt: PropTypes.string,
+      src: PropTypes.string,
+    }),
+  }),
   showSubscriberPricingBanner: PropTypes.bool.isRequired,
   subscriptionStatus: PropTypes.string,
+  trackClickGetHelpWithThisBox: PropTypes.func,
+  trackNextBoxTrackingClick: PropTypes.func,
 }
 
 HeaderPresentation.defaultProps = {
   hasDeliveryToday: false,
+  hasTooltipForNextOrder: false,
+  hasTooltipForPreviousOrder: false,
   nextOrderId: null,
   nextOrderMessage: {
     linkLabel: null,
@@ -100,15 +101,11 @@ HeaderPresentation.defaultProps = {
     primary: null,
     secondary: null,
   },
-  hasTooltipForNextOrder: false,
   nextOrderTracking: null,
-  hasTooltipForPreviousOrder: false,
-  previosOrderId: null,
-  previousOrderMessage: null,
-  getHelpQueryParam: false,
+  previousOrder: null,
+  subscriptionStatus: 'inactive',
   trackClickGetHelpWithThisBox: () => {},
   trackNextBoxTrackingClick: () => {},
-  subscriptionStatus: 'inactive',
 }
 
 export { HeaderPresentation }

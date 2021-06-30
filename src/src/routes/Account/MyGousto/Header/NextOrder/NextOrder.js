@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
+import { Button, Heading } from 'goustouicomponents'
 import { windowOpen } from 'utils/window'
 import { CardWithLink } from 'CardWithLink'
 import { OrderDetails } from '../OrderDetails/OrderDetails'
@@ -18,36 +18,42 @@ const NextOrder = ({
   trackButtonClick,
   trackLinkClick,
 }) => (
-  <CardWithLink
-    linkLabel={linkLabel}
-    linkUrl={linkUrl}
-    testingSelector="nextBoxDeliveryHelp"
-    tooltipContent={hasTooltip
-      && 'Any issues with this box? Let us know and we\'ll sort it out.'}
-    trackClick={hasDeliveryToday ? () => trackLinkClick(orderId) : null}
-  >
-    <OrderDetails heading="Your next box delivery">
-      <div className={css.nextOrder}>
-        <div className={css.orderDetailsItem}>
-          <p className={css.message}><strong>{primaryMessage}</strong></p>
-          <p className={css.message}>{secondaryMessage}</p>
-        </div>
-        {boxTrackingUrl && (
+  <div>
+    <Heading size="fontStyleM" type="h2">
+      {hasDeliveryToday ? 'Today\'s delivery' : 'Upcoming delivery'}
+    </Heading>
+    <CardWithLink
+      linkLabel={linkLabel}
+      linkUrl={linkUrl}
+      testingSelector="nextBoxDeliveryHelp"
+      tooltipContent={hasTooltip
+        && 'Any issues with this box? Let us know and we\'ll sort it out.'}
+      trackClick={hasDeliveryToday ? () => trackLinkClick(orderId) : null}
+    >
+      <OrderDetails heading="Your next box delivery">
+        <div className={css.nextOrder}>
           <div className={css.orderDetailsItem}>
-            <Button
-              width="full"
-              onClick={() => {
-                trackButtonClick(orderId)
-                windowOpen(boxTrackingUrl)
-              }}
-            >
-              Track my box
-            </Button>
+            <p className={css.message}><strong>{primaryMessage}</strong></p>
+            <p className={css.message}>{secondaryMessage}</p>
           </div>
-        )}
-      </div>
-    </OrderDetails>
-  </CardWithLink>
+          {boxTrackingUrl && (
+            <div className={css.orderDetailsItem}>
+              <Button
+                width="full"
+                onClick={() => {
+                  trackButtonClick(orderId)
+                  windowOpen(boxTrackingUrl)
+                }}
+              >
+                Track my box
+              </Button>
+            </div>
+          )}
+        </div>
+      </OrderDetails>
+    </CardWithLink>
+  </div>
+
 )
 
 NextOrder.propTypes = {

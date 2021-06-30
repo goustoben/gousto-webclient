@@ -8,7 +8,6 @@ import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import {
   findNewestOrder,
   isOrderBeingDeliveredToday,
-  isOrderEligibleForSelfRefundResolution
 } from 'utils/order'
 import { HeaderPresentation } from './Header.presentation'
 
@@ -84,14 +83,6 @@ class Header extends PureComponent {
     }
   }
 
-  formatPreviousBoxDate = order => {
-    if (!order) return null
-
-    const deliveryDate = moment(order.get('deliveryDate'))
-
-    return deliveryDate.format('dddd Do MMMM')
-  }
-
   checkShouldShowTooltip = async ({ orderDate, targetTime }) => {
     const { accessToken } = this.props
 
@@ -131,12 +122,6 @@ class Header extends PureComponent {
     const nextOrder = findNewestOrder(orders, true)
     const previousOrder = findNewestOrder(orders, false)
     const nextOrderMessage = this.formatNextOrderCopy(nextOrder, now)
-    const previousOrderMessage = this.formatPreviousBoxDate(previousOrder, now)
-    const isOrderEligible = isOrderEligibleForSelfRefundResolution(
-      previousOrder
-    )
-    const getHelpQueryParam = isOrderEligible
-      && `?orderId=${previousOrder.get('id')}`
     const loaded = nextOrder || previousOrder
     const hasDeliveryToday = nextOrder && isOrderBeingDeliveredToday(nextOrder.get('deliveryDate'))
 
@@ -150,9 +135,7 @@ class Header extends PureComponent {
             hasTooltipForNextOrder={hasTooltipForNextOrder}
             nextOrderTracking={nextOrderTracking}
             hasTooltipForPreviousOrder={hasTooltipForPreviousOrder}
-            previosOrderId={previousOrder ? previousOrder.get('id') : null}
-            previousOrderMessage={previousOrderMessage}
-            getHelpQueryParam={getHelpQueryParam}
+            previousOrder={previousOrder}
             trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
             trackNextBoxTrackingClick={trackNextBoxTrackingClick}
             showSubscriberPricingBanner={showSubscriberPricingBanner}
@@ -166,23 +149,23 @@ class Header extends PureComponent {
 
 Header.propTypes = {
   accessToken: PropTypes.string.isRequired,
-  orders: PropTypes.instanceOf(Immutable.Map),
   loadOrderTrackingInfo: PropTypes.func,
   nextOrderTracking: PropTypes.string,
-  trackClickGetHelpWithThisBox: PropTypes.func,
-  trackNextBoxTrackingClick: PropTypes.func,
+  orders: PropTypes.instanceOf(Immutable.Map),
   showSubscriberPricingBanner: PropTypes.bool,
   subscriptionStatus: PropTypes.string,
+  trackClickGetHelpWithThisBox: PropTypes.func,
+  trackNextBoxTrackingClick: PropTypes.func,
 }
 
 Header.defaultProps = {
-  orders: Immutable.Map({}),
   loadOrderTrackingInfo: () => {},
   nextOrderTracking: null,
-  trackClickGetHelpWithThisBox: () => {},
-  trackNextBoxTrackingClick: () => {},
+  orders: Immutable.Map({}),
   showSubscriberPricingBanner: false,
   subscriptionStatus: 'inactive',
+  trackClickGetHelpWithThisBox: () => {},
+  trackNextBoxTrackingClick: () => {},
 }
 
 export { Header }

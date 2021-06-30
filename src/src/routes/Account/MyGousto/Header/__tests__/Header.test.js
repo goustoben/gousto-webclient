@@ -2,9 +2,11 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import moment from 'moment'
-import config from 'config'
 import { shouldShowEntryPointTooltip } from 'apis/getHelp'
 import logger from 'utils/logger'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { Header } from '../Header.logic'
 
 jest.mock('apis/getHelp', () => ({
@@ -49,6 +51,10 @@ const previousOrders = Immutable.fromJS({
       deliveryStart: '08:00:00'
     },
     id: '100',
+    prices: {
+      total: '12'
+    },
+    recipeItems: []
   },
   101: {
     deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
@@ -57,6 +63,10 @@ const previousOrders = Immutable.fromJS({
       deliveryStart: '08:00:00'
     },
     id: '101',
+    prices: {
+      total: '12'
+    },
+    recipeItems: []
   },
   102: {
     deliveryDate: moment().subtract(5, 'days').format(deliveryDateFormat),
@@ -65,18 +75,13 @@ const previousOrders = Immutable.fromJS({
       deliveryStart: '08:00:00'
     },
     id: '102',
+    prices: {
+      total: '15'
+    },
+    recipeItems: []
   },
 })
-const onlyOldOrders = Immutable.fromJS({
-  100: {
-    deliveryDate: moment().subtract(12, 'days').format(deliveryDateFormat),
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '100',
-  }
-})
+
 const orderForToday = Immutable.fromJS({
   100: {
     deliveryDate: moment().format(deliveryDateFormat),
@@ -87,20 +92,69 @@ const orderForToday = Immutable.fromJS({
     id: '100',
   }
 })
+
+const previousOrdersWithOrderForToday = Immutable.fromJS({
+  123: {
+    deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '123',
+    prices: {
+      total: '12'
+    },
+    recipeItems: []
+  },
+  124: {
+    deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '124',
+    prices: {
+      total: '12'
+    },
+    recipeItems: []
+  },
+  125: {
+    deliveryDate: moment().format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '125',
+  }
+})
+
 let wrapper
+let store
 const mockLoadOrderTrackingInfo = jest.fn()
 const trackClickGetHelpWithThisBox = jest.fn()
 const trackNextBoxTrackingClick = jest.fn()
+const initialState = {}
+const mockStore = configureStore([thunk])
+
+const ProviderComponent = (props) => (
+  <Provider store={store}>
+    <Header {...props} />
+  </Provider>
+)
 
 describe('MyGousto - Header', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
 
+  beforeEach(() => {
+    store = mockStore(initialState)
+  })
+
   describe('when no orders are passed in', () => {
     beforeEach(() => {
       wrapper = mount(
-        <Header
+        <ProviderComponent
           accessToken={ACCESS_TOKEN}
         />
       )
@@ -116,7 +170,7 @@ describe('MyGousto - Header', () => {
 
     beforeEach(() => {
       wrapper = mount(
-        <Header
+        <ProviderComponent
           accessToken={ACCESS_TOKEN}
           nextOrderTracking={NEXT_ORDER_TRACKING}
           trackNextBoxTrackingClick={trackNextBoxTrackingClick}
@@ -155,7 +209,7 @@ describe('MyGousto - Header', () => {
         })
         logger.warning = jest.fn()
         wrapper = mount(
-          <Header
+          <ProviderComponent
             accessToken={ACCESS_TOKEN}
           />
         )
@@ -178,7 +232,12 @@ describe('MyGousto - Header', () => {
           data: { day: 'same_day_evening' }
         })
 
-        wrapper = mount(<Header accessToken={ACCESS_TOKEN} />)
+        wrapper = mount(
+          <ProviderComponent
+            accessToken={ACCESS_TOKEN}
+          />
+        )
+
         // Props changed so componentDidUpdate runs
         wrapper.setProps({ orders: orderForToday })
       })
@@ -195,7 +254,12 @@ describe('MyGousto - Header', () => {
           data: { day: 'no' }
         })
 
-        wrapper = mount(<Header accessToken={ACCESS_TOKEN} />)
+        wrapper = mount(
+          <ProviderComponent
+            accessToken={ACCESS_TOKEN}
+          />
+        )
+
         // Props changed so componentDidUpdate runs
         wrapper.setProps({ orders: orderForToday })
       })
@@ -262,7 +326,7 @@ describe('MyGousto - Header', () => {
   describe('when a user has no upcoming orders', () => {
     beforeEach(() => {
       wrapper = mount(
-        <Header
+        <ProviderComponent
           accessToken={ACCESS_TOKEN}
           orders={previousOrders}
         />
@@ -280,7 +344,7 @@ describe('MyGousto - Header', () => {
   describe('when a user has previously delivered orders', () => {
     beforeEach(() => {
       wrapper = mount(
-        <Header
+        <ProviderComponent
           accessToken={ACCESS_TOKEN}
           orders={previousOrders}
           trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
@@ -288,13 +352,13 @@ describe('MyGousto - Header', () => {
       )
     })
 
-    test('should render the PreviousOrder component with the right props', () => {
-      const expectedDateString = moment().subtract(2, 'days').format('dddd Do MMMM')
+    test('should render the PreviousOrder component with the order passed as a prop', () => {
       const previousOrder = wrapper.find('PreviousOrder')
-      expect(previousOrder.prop('linkUrl')).toBe('/get-help?orderId=101')
-      expect(previousOrder.prop('orderId')).toBe('101')
-      expect(previousOrder.prop('message')).toBe(expectedDateString)
-      expect(previousOrder.prop('trackClick')).toBe(trackClickGetHelpWithThisBox)
+      expect(previousOrder.prop('order')).toBe(previousOrders.get('101'))
+    })
+
+    test('should pass hasDeliveryToday to PreviousOrder as false', () => {
+      expect(wrapper.find('PreviousOrder').prop('hasDeliveryToday')).toBe(false)
     })
 
     describe('and the call to GetHelp API shouldShowEntryPointTooltip errors', () => {
@@ -306,7 +370,7 @@ describe('MyGousto - Header', () => {
         })
         logger.warning = jest.fn()
         wrapper = mount(
-          <Header
+          <ProviderComponent
             accessToken={ACCESS_TOKEN}
           />
         )
@@ -329,7 +393,12 @@ describe('MyGousto - Header', () => {
           data: { day: 'yesterday' }
         })
 
-        wrapper = mount(<Header accessToken={ACCESS_TOKEN} />)
+        wrapper = mount(
+          <ProviderComponent
+            accessToken={ACCESS_TOKEN}
+          />
+        )
+
         // Props changed so componentDidUpdate runs
         wrapper.setProps({ orders: previousOrders })
       })
@@ -346,7 +415,12 @@ describe('MyGousto - Header', () => {
           data: { day: 'no' }
         })
 
-        wrapper = mount(<Header accessToken={ACCESS_TOKEN} />)
+        wrapper = mount(
+          <ProviderComponent
+            accessToken={ACCESS_TOKEN}
+          />
+        )
+
         // Props changed so componentDidUpdate runs
         wrapper.setProps({ orders: previousOrders })
       })
@@ -357,42 +431,19 @@ describe('MyGousto - Header', () => {
       })
     })
 
-    describe('and the most recent order > 10 days ago', () => {
+    describe('and the next order is for today', () => {
       beforeEach(() => {
         wrapper = mount(
-          <Header
+          <ProviderComponent
             accessToken={ACCESS_TOKEN}
-            orders={onlyOldOrders}
-            trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
           />
         )
 
-        wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
+        wrapper.setProps({ orders: previousOrdersWithOrderForToday })
       })
 
-      test('should link to general getHelp contact page', () => {
-        const previousOrder = wrapper.find('PreviousOrder')
-        expect(previousOrder.prop('linkUrl').includes(config.routes.client.getHelp.contact))
-          .toBe(true)
-      })
-    })
-
-    describe('and the most recent order < 10 days ago', () => {
-      beforeEach(() => {
-        wrapper = mount(
-          <Header
-            accessToken={ACCESS_TOKEN}
-            orders={previousOrders}
-            trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
-          />
-        )
-
-        wrapper.find('CardWithLink').last().find('GoustoLink').simulate('click')
-      })
-
-      test('the PreviousOrder linkUrl prop is the getHelp page with order id', () => {
-        const previousOrder = wrapper.find('PreviousOrder')
-        expect(previousOrder.prop('linkUrl')).toBe('/get-help?orderId=101')
+      test('should pass hasDeliveryToday to PreviousOrder as true', () => {
+        expect(wrapper.find('PreviousOrder').prop('hasDeliveryToday')).toBe(true)
       })
     })
   })
@@ -400,7 +451,7 @@ describe('MyGousto - Header', () => {
   describe('when a user has no previously delivered orders', () => {
     test('does not show details of previous deliveries', () => {
       wrapper = mount(
-        <Header
+        <ProviderComponent
           accessToken={ACCESS_TOKEN}
           orders={upcomingOrders}
         />
@@ -412,10 +463,9 @@ describe('MyGousto - Header', () => {
   describe('fetching the tracking URL for an order', () => {
     beforeEach(() => {
       wrapper = mount(
-        <Header
+        <ProviderComponent
           accessToken={ACCESS_TOKEN}
           loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
-          orders={Immutable.Map({})}
         />
       )
     })

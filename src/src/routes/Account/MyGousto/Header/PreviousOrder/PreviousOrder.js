@@ -1,37 +1,81 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { CardWithLink } from 'CardWithLink'
-import { OrderDetails } from '../OrderDetails/OrderDetails'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+import { client } from 'config/routes'
+import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
+import Link from 'components/Link'
 import css from './PreviousOrder.css'
 
 const PreviousOrder = ({
+  hasDeliveryToday,
   hasTooltip,
-  linkUrl,
-  orderId,
-  message,
-  trackClick,
-}) => (
-  <CardWithLink
-    linkLabel="Get help with this box"
-    linkUrl={linkUrl}
-    tooltipContent={hasTooltip
-        && 'Any issues with this box? Let us know and we\'ll sort it out.'}
-    trackClick={() => trackClick(orderId)}
-  >
-    <OrderDetails heading="Your most recent box delivery">
-      <div className={css.orderDetailsItem}>
-        <p className={css.message}><strong>{message}</strong></p>
-      </div>
-    </OrderDetails>
-  </CardWithLink>
-)
+  order,
+  trackClickGetHelpWithThisBox,
+}) => {
+  const deliveryDate = order.get('humanDeliveryDate')
+  const orderId = order.get('id')
+  const orderState = order.get('phase')
+  const price = order.getIn(['prices', 'total'])
+  const recipeImages = order.get('recipeItems').map((item) => {
+    const recipeItemMedia = item.get('media').find(
+      (mediaItem) => (mediaItem.get('type') === 'mood-image')
+    )
+    const image = recipeItemMedia.getIn(['urls', '1'])
+
+    return ({
+      alt: item.get('title') || 'Recipe image',
+      src: image.get('src'),
+    })
+  })
+
+  return (
+    <div>
+      <Heading size="fontStyleM" type="h2">
+        Last delivery
+      </Heading>
+      <Card>
+        <OrderDetails
+          deliveryDate={deliveryDate}
+          orderState={orderState}
+          price={price}
+          recipeImages={recipeImages.toJS()}
+        />
+        <div className={css.linkWrapper}>
+          {hasTooltip && (
+            <InfoTip isCloseIconVisible>
+              Any issues with this box? Let us know and we&apos;ll sort it out.
+            </InfoTip>
+          )}
+          <Link to={`${client.getHelp.index}?orderId=${orderId}`}>
+            <CTA
+              isFullWidth
+              onClick={() => trackClickGetHelpWithThisBox(orderId)}
+              size="small"
+              variant={hasDeliveryToday ? 'secondary' : 'primary'}
+            >
+              Any issues with this box?
+            </CTA>
+          </Link>
+        </div>
+      </Card>
+    </div>
+  )
+}
 
 PreviousOrder.propTypes = {
+  hasDeliveryToday: PropTypes.bool.isRequired,
   hasTooltip: PropTypes.bool.isRequired,
-  linkUrl: PropTypes.string.isRequired,
-  orderId: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
-  trackClick: PropTypes.func.isRequired,
+  order: ImmutablePropTypes.contains({
+    deliveryDate: PropTypes.string,
+    orderId: PropTypes.string,
+    orderState: PropTypes.string,
+    price: PropTypes.string,
+    recipeImages: ImmutablePropTypes.contains({
+      alt: PropTypes.string,
+      src: PropTypes.string,
+    }),
+  }).isRequired,
+  trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
 }
 
 export { PreviousOrder }

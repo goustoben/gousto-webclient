@@ -114,6 +114,7 @@
 /src/src/reducers/__tests__/getHelp.test.js                         @Gousto/squad-haricots
 /src/src/reducers/getHelp.js                                        @Gousto/squad-haricots
 /src/src/routes/ResetPassword/                                      @Gousto/squad-haricots
+/src/src/routes/Account/MyGousto/Header                             @Gousto/squad-haricots
 /src/src/routes/GetHelp/                                            @Gousto/squad-haricots
 /src/src/selectors/__tests__/getHelp.test.js                        @Gousto/squad-haricots
 /src/src/selectors/getHelp.js                                       @Gousto/squad-haricots
@@ -134,7 +135,6 @@
 
 # squad-rockets ownership
 /src/src/routes/Account/       @Gousto/squad-rockets
-/src/src/routes/Account/MyGousto/Header       @Gousto/squad-haricots
 /src/src/routes/Welcome/       @Gousto/squad-rockets
 /src/src/routes/Join/       @Gousto/squad-rockets
 /src/src/actions/loggingmanager.js       @Gousto/squad-rockets

@@ -99,6 +99,10 @@ describe('the NextOrder component', () => {
       wrapper.setProps({ hasDeliveryToday: true })
     })
 
+    test('renders correct Heading', () => {
+      expect(wrapper.find('Heading').contains('Today\'s delivery')).toBe(true)
+    })
+
     describe('And CardWithLink prop "trackClick" is called', () => {
       beforeEach(() => {
         wrapper.find('CardWithLink').prop('trackClick')()
@@ -113,6 +117,10 @@ describe('the NextOrder component', () => {
   describe('When hasDeliveryToday is false', () => {
     beforeEach(() => {
       wrapper.setProps({ hasDeliveryToday: false })
+    })
+
+    test('renders correct Heading', () => {
+      expect(wrapper.find('Heading').contains('Upcoming delivery')).toBe(true)
     })
 
     test('trackLinkClick is not passed to CardWithLink', () => {
