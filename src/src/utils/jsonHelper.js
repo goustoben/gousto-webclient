@@ -8,6 +8,7 @@ export function formatErrorsWithCode(errors) {
   const errorObj = {
     code: 500,
     message: '',
+    errors,
   }
 
   errorObj.message = errors.reduce((str, error) => {

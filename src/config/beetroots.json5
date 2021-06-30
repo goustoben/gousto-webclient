@@ -17,6 +17,17 @@
               "live": "http://beetroots-auth.gousto.info",
               "local": "https://beetroots-api.gousto.info/auth/v1.0.0"
             }
+          },
+          "2": {
+            "versionString": "v2",
+            "clientSide": {
+              "live": "https://beetroots-api.gousto.info/auth/v2",
+              "local": "https://beetroots-api.gousto.info/auth/v2"
+            },
+            "serverSide": {
+              "live": "http://beetroots-auth.gousto.info",
+              "local": "https://beetroots-api.gousto.info/auth/v2"
+            }
           }
         },
         "brand": {

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { touch } from 'redux-form'
-import classNames from 'classnames'
 
 import Input from 'Form/Input'
 import DropdownInput from 'Form/Dropdown'
@@ -23,10 +22,7 @@ class ReduxFormInput extends React.PureComponent {
     dataTesting: PropTypes.string,
     'data-testing': PropTypes.string,
     className: PropTypes.string,
-    isPassStrengthEnabled: PropTypes.bool,
     onFocus: PropTypes.func,
-    onCustomPasswordBlur: PropTypes.func,
-    isMobile: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -35,10 +31,7 @@ class ReduxFormInput extends React.PureComponent {
     label: '',
     subLabel: '',
     className: '',
-    isPassStrengthEnabled: false,
     onFocus: () => {},
-    onCustomPasswordBlur: () => {},
-    isMobile: true,
   }
 
   debounceTouch(dispatch, formName, field) {
@@ -59,7 +52,7 @@ class ReduxFormInput extends React.PureComponent {
   }
 
   render() {
-    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, isPassStrengthEnabled, onFocus, onCustomPasswordBlur, isMobile, ...inputProps } = this.props
+    const { inputPrefix, input, inputType, inputSuffix, label, meta, subLabel, onFocus, ...inputProps } = this.props
     const dataTesting = this.props.dataTesting || this.props['data-testing']
 
     let Component
@@ -92,20 +85,13 @@ class ReduxFormInput extends React.PureComponent {
       onChange: this.onChange,
       isInCheckout: true,
       inputPrefix,
-      isMobile,
-      isPassStrengthEnabled,
-      ...(isPassStrengthEnabled && {
-        passwordErrors: meta.error,
-        [input.onFocus]: onFocus,
-        onCustomPasswordBlur,
-        isMobile,
-      }),
+      [input.onFocus]: onFocus,
     })
 
     return (
       <div>
         {label && <Label label={label} subLabel={subLabel} />}
-        <div className={classNames(css.flexRow, { [css.passStrengthWrapper]: isPassStrengthEnabled && input.name === 'account.password' })}>
+        <div className={css.flexRow}>
           {inputEl && (
             <div className={css.flexItem}>
               {inputEl}
@@ -114,7 +100,7 @@ class ReduxFormInput extends React.PureComponent {
           {React.isValidElement(inputSuffix) && inputSuffix}
         </div>
         <div data-testing={`${dataTesting}Error`}>
-          {error && !isPassStrengthEnabled && <InputError>{meta.error}</InputError>}
+          {error && <InputError>{meta.error}</InputError>}
         </div>
       </div>
     )

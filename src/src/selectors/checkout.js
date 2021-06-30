@@ -31,3 +31,4 @@ export const getPromoCodeValidationDetails = state => {
 }
 
 export const getCheckoutLastReachedStepIndex = state => state.checkout.get('lastReachedStepIndex')
+export const getPasswordValue = state => state.checkout.getIn(['passwordInfo', 'value'])

@@ -8,6 +8,7 @@ import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
 import { CheckoutButton } from '../CheckoutButton'
 import { PasswordCriteria } from '../PasswordCriteria'
+import { PasswordField } from './PasswordField'
 import { fieldsConfig } from './fieldsConfig'
 import css from './AboutYou.css'
 import checkoutCss from '../../Checkout.css'
@@ -75,17 +76,9 @@ class AboutYou extends PureComponent {
   }
 
   renderFields = () => {
-    const {
-      sectionName,
-      receiveRef,
-      isPassStrengthEnabled,
-      passwordErrors,
-      passwordValue,
-      isMobile,
-    } = this.props
+    const { sectionName, receiveRef, passwordErrors, isMobile, passwordValue } = this.props
     const { isPassVisible, isPassCriteriaVisible, showFailedCriteria } = this.state
     const passState = {
-      isPassStrengthEnabled,
       isPassVisible,
       togglePasswordVisibility: this.togglePasswordVisibility,
     }
@@ -96,7 +89,33 @@ class AboutYou extends PureComponent {
     })
 
     return fields.map((item) => {
-      const isPasswordField = isPassStrengthEnabled && item.name === 'password'
+      const isPasswordField = item.name === 'password'
+
+      if (isPasswordField) {
+        return (
+          <div key={item.name} className={css.row}>
+            <div className={checkoutCss.inputContainer}>
+              <PasswordField
+                name={item.name}
+                type={item.type}
+                label={item.label || null}
+                dataTesting={item.dataTesting}
+                inputSuffix={item.inputSuffix}
+                onFocus={this.toggleCriteria}
+                onCustomPasswordBlur={this.toggleFailedCriteria}
+                isMobile={isMobile}
+              />
+            </div>
+            {isPassCriteriaVisible && isPasswordField && (
+              <PasswordCriteria
+                password={passwordValue}
+                passwordErrors={passwordErrors}
+                showFailedCriteria={showFailedCriteria}
+              />
+            )}
+          </div>
+        )
+      }
 
       return (
         <div key={item.name} className={css.row}>
@@ -107,7 +126,6 @@ class AboutYou extends PureComponent {
               inputType={item.inputType}
               type={item.type || null}
               label={item.label || null}
-              subLabel={item.subLabel || null}
               mask
               withRef
               ref={receiveRef || null}
@@ -117,27 +135,17 @@ class AboutYou extends PureComponent {
               childLabel={item.childLabel || null}
               childLabelClassName={item.childLabelClassName || null}
               style={item.style || null}
-              isPassStrengthEnabled={isPasswordField}
-              inputSuffix={item.inputSuffix || null}
-              onFocus={isPasswordField ? this.toggleCriteria : () => {}}
-              onCustomPasswordBlur={isPasswordField ? this.toggleFailedCriteria : () => {}}
-              isMobile={isMobile}
             />
           </div>
-          {isPassCriteriaVisible && isPasswordField && (
-            <PasswordCriteria
-              password={passwordValue}
-              passwordErrors={passwordErrors}
-              showFailedCriteria={showFailedCriteria}
-            />
-          )}
         </div>
       )
     })
   }
 
   render() {
-    const { sectionName, submitting, checkoutValid } = this.props
+    const { sectionName, submitting, checkoutValid, passwordValue, passwordErrors } = this.props
+    const disableCTA =
+      !passwordValue || !checkoutValid || (passwordErrors.length !== 0 && passwordValue)
 
     return (
       <FormSection name={sectionName}>
@@ -147,7 +155,7 @@ class AboutYou extends PureComponent {
           <CheckoutButton
             onClick={this.handleSubmit}
             submitting={submitting}
-            isDisabled={!checkoutValid}
+            isDisabled={disableCTA}
             stepName="Continue to Delivery"
           />
         </div>
@@ -165,11 +173,10 @@ AboutYou.propTypes = {
   submitting: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   onLoginClick: PropTypes.func,
-  isPassStrengthEnabled: PropTypes.bool,
-  passwordErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  passwordValue: PropTypes.string,
+  passwordErrors: PropTypes.arrayOf(PropTypes.string),
   isMobile: PropTypes.bool,
   checkoutValid: PropTypes.bool,
+  passwordValue: PropTypes.string,
 }
 
 AboutYou.defaultProps = {
@@ -180,11 +187,10 @@ AboutYou.defaultProps = {
   trackUTMAndPromoCode: () => {},
   submitting: false,
   onLoginClick: () => {},
-  isPassStrengthEnabled: false,
-  passwordErrors: '',
-  passwordValue: '',
+  passwordErrors: [],
   isMobile: true,
   checkoutValid: false,
+  passwordValue: '',
 }
 
 export { AboutYou }

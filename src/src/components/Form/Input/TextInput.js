@@ -32,11 +32,7 @@ const propTypes = {
   error: PropTypes.bool,
   isInCheckout: PropTypes.bool,
   inputPrefix: PropTypes.node,
-  passwordErrors: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  isPassStrengthEnabled: PropTypes.bool,
   onFocus: PropTypes.func,
-  onCustomPasswordBlur: PropTypes.func,
-  isMobile: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -55,21 +51,10 @@ const defaultProps = {
   error: false,
   isInCheckout: false,
   inputPrefix: null,
-  passwordErrors: [],
-  isPassStrengthEnabled: false,
   onFocus: () => {},
-  onCustomPasswordBlur: () => {},
-  isMobile: true,
 }
 
 export class TextInput extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      invertPasswordError: true
-    }
-  }
-
   handleChange = (e) => {
     const { validator, onChange, onEnter } = this.props
     const { target: { value: newValue }, keyCode} = e
@@ -92,15 +77,8 @@ export class TextInput extends Component {
   }
 
   handleBlur = (e) => {
-    const { onBlur, isFixed, validator, isPassStrengthEnabled, onCustomPasswordBlur, passwordErrors } = this.props
+    const { onBlur, isFixed, validator } = this.props
     const { target: { value: newValue }} = e
-
-    if (isPassStrengthEnabled && passwordErrors.length > 0) {
-      onCustomPasswordBlur()
-      this.setState({
-        invertPasswordError: false
-      })
-    }
 
     if (isFixed) {
       this.scrollEnable()
@@ -130,17 +108,7 @@ export class TextInput extends Component {
   }
 
   handleFocus = () => {
-    const { isFixed, isPassStrengthEnabled, onFocus, isMobile } = this.props
-    if (isPassStrengthEnabled) {
-      onFocus()
-      if (isMobile) {
-        window.scrollTo({
-          top: this.input.getBoundingClientRect().top,
-          left: 0,
-          behavior: 'smooth'
-        })
-      }
-    }
+    const { isFixed } = this.props
 
     if (isFixed) {
       this.scrollDisable()
@@ -148,8 +116,7 @@ export class TextInput extends Component {
   }
 
   render = () => {
-    const { additionalProps, autocompleteOff, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isInCheckout, inputPrefix, passwordErrors, isPassStrengthEnabled } = this.props
-    const { invertPasswordError } = this.state
+    const { additionalProps, autocompleteOff, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isInCheckout, inputPrefix } = this.props
 
     return (
       <div className={classNames({ [checkoutCss.relative]: isInCheckout && inputPrefix })}>
@@ -166,9 +133,6 @@ export class TextInput extends Component {
               [checkoutCss.checkoutInput]: isInCheckout,
               [checkoutCss.checkoutInputError]: error && isInCheckout,
               [checkoutCss.prefixPadding]: isInCheckout && inputPrefix,
-              [checkoutCss.validPassword]: isPassStrengthEnabled && passwordErrors.length === 0,
-              [checkoutCss.password]: isPassStrengthEnabled,
-              [checkoutCss.disableInvalid]: isPassStrengthEnabled && passwordErrors.length > 0 && invertPasswordError,
             },
           )}
           placeholder={placeholder}

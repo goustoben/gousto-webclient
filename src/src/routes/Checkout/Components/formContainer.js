@@ -27,9 +27,7 @@ export const formContainer = (
         validationRules.forEach((rule) => {
           let validationRule = rule
           if (typeof rule === 'function') {
-            const { isPassStrengthEnabled } = props
-            const isFirstCheckoutStepForms = formName === 'account'
-            validationRule = isFirstCheckoutStepForms ? rule(isPassStrengthEnabled) : rule(data)
+            validationRule = rule(data)
           }
           combinedRules = { ...combinedRules, ...validationRule }
         })
