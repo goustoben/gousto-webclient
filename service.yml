@@ -15,6 +15,14 @@ alb:
           - field: host-header
             value: "[environment]-webclient.[cloudformation_output_domain]"
 
+  ecs:
+    - type: public
+      rules:
+        - priority: 93
+          conditions:
+            - field: host-header
+              value: "[environment]-webclient.[cloudformation_output_domain]"
+
 messages:
  publish:
  consume:
