@@ -212,6 +212,7 @@ const createGetOwners = () => {
   return getOwner
 }
 
+// eslint-disable-next-line no-unused-vars
 const checkCodeOwnersOfChangedFiles = () => {
   const getOwner = createGetOwners()
   const allFiles = danger.git.modified_files.concat(danger.git.created_files)
@@ -235,4 +236,7 @@ const checkCodeOwnersOfChangedFiles = () => {
 
 checkIfPackageJsonIsUpdated()
 checkDocumentationIsUpdate()
-checkCodeOwnersOfChangedFiles()
+// TODO:
+// This script keeps catching files that are owned,
+// we need to put sometime to fix it.
+// checkCodeOwnersOfChangedFiles()
