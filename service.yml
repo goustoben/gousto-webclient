@@ -7,21 +7,13 @@ owner: squad-radishes
 rootVolumeSize: 16
 
 alb:
-  ec2:
+  ecs:
     type: public
     rules:
-      - priority: 94
+      - priority: 93
         conditions:
           - field: host-header
             value: "[environment]-webclient.[cloudformation_output_domain]"
-
-  ecs:
-    - type: public
-      rules:
-        - priority: 93
-          conditions:
-            - field: host-header
-              value: "[environment]-webclient.[cloudformation_output_domain]"
 
 messages:
  publish:
