@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { Card } from 'goustouicomponents'
 import { client } from 'config/routes'
 import { findNewestOrder, isOrderBeingDeliveredToday } from 'utils/order'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
@@ -77,29 +78,31 @@ class Delivery extends PureComponent {
 
     return (
       <GetHelpLayout2 headingText="Get help with box issue?">
-        <List>
-          <ItemLink
-            label="I don't know when my box will arrive"
-            to={client.getHelp.deliveryDontKnowWhen(params)}
-            clientRouted
-            testingSelector="deliveryDontKnowWhen"
-            trackClick={() => trackSelectDeliveryCategory('i_dont_know_when_my_box_will_arrive')}
-          />
-          <ItemLink
-            label="My box did not arrive"
-            to={client.getHelp.deliveryDidntArrive(params)}
-            clientRouted
-            testingSelector="deliveryDidntArrive"
-            trackClick={() => trackSelectDeliveryCategory('my_box_didnt_arrive')}
-          />
-          <ItemLink
-            label="I had another issue"
-            to={`${client.getHelp.index}/${client.getHelp.contact}`}
-            clientRouted
-            testingSelector="deliveryOtherIssue"
-            trackClick={() => trackSelectDeliveryCategory('i_had_another_issue')}
-          />
-        </List>
+        <Card>
+          <List>
+            <ItemLink
+              label="I don't know when my box will arrive"
+              to={client.getHelp.deliveryDontKnowWhen(params)}
+              clientRouted
+              testingSelector="deliveryDontKnowWhen"
+              trackClick={() => trackSelectDeliveryCategory('i_dont_know_when_my_box_will_arrive')}
+            />
+            <ItemLink
+              label="My box did not arrive"
+              to={client.getHelp.deliveryDidntArrive(params)}
+              clientRouted
+              testingSelector="deliveryDidntArrive"
+              trackClick={() => trackSelectDeliveryCategory('my_box_didnt_arrive')}
+            />
+            <ItemLink
+              label="I had another issue"
+              to={`${client.getHelp.index}/${client.getHelp.contact}`}
+              clientRouted
+              testingSelector="deliveryOtherIssue"
+              trackClick={() => trackSelectDeliveryCategory('i_had_another_issue')}
+            />
+          </List>
+        </Card>
       </GetHelpLayout2>
     )
   }

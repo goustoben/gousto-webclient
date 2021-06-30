@@ -57,13 +57,9 @@ describe('GetHelpLayout2', () => {
     })
   })
 
-  test('renders a Card', () => {
-    expect(wrapper.find('Card').exists()).toBe(true)
-  })
-
-  test('renders the children inside the card', () => {
+  test('renders the children', () => {
     CHILDREN.map((child) => (
-      expect(wrapper.find('Card').contains(child)).toBe(true)
+      expect(wrapper.find('.wrapper').contains(child)).toBe(true)
     ))
   })
 })

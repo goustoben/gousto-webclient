@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { browserHistory } from 'react-router'
 import { windowOpen } from 'utils/window'
 import { client } from 'config/routes'
-import { CTA, ItemExpandable } from 'goustouicomponents'
+import { Card, CTA, ItemExpandable } from 'goustouicomponents'
 import { findNewestOrder, isOrderBeingDeliveredToday } from 'utils/order'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { List } from '../components/List'
@@ -71,25 +71,27 @@ class DeliverySimple extends PureComponent {
 
     return (
       <GetHelpLayout2 headingText="Get help with box issue?">
-        <List>
-          <ItemExpandable
-            label="Day of delivery tracking"
-            trackClick={trackDeliveryStatus}
-          >
-            <div className={css.deliveryStatusContent}>
-              <p>{deliveryDescription}</p>
-              <CTA size="small" onClick={this.trackMyBoxClick} variant="primary">
-                {ctaLabel}
-              </CTA>
-            </div>
-          </ItemExpandable>
-          <ItemLink
-            label="Other"
-            trackClick={trackDeliveryOther}
-            to={`${client.getHelp.index}/${client.getHelp.contact}`}
-            clientRouted
-          />
-        </List>
+        <Card>
+          <List>
+            <ItemExpandable
+              label="Day of delivery tracking"
+              trackClick={trackDeliveryStatus}
+            >
+              <div className={css.deliveryStatusContent}>
+                <p>{deliveryDescription}</p>
+                <CTA size="small" onClick={this.trackMyBoxClick} variant="primary">
+                  {ctaLabel}
+                </CTA>
+              </div>
+            </ItemExpandable>
+            <ItemLink
+              label="Other"
+              trackClick={trackDeliveryOther}
+              to={`${client.getHelp.index}/${client.getHelp.contact}`}
+              clientRouted
+            />
+          </List>
+        </Card>
       </GetHelpLayout2>
     )
   }

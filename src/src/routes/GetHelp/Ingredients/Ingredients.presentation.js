@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
+import { Button, Card } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { RecipeList } from '../components/RecipeList'
@@ -26,26 +26,28 @@ const IngredientsPresentation = ({
   selectedIngredients,
 }) => (
   <GetHelpLayout2 headingText="Get help with your box">
-    <p className={css.copy}>
-      Which ingredient(s) had an issue? Select meal to see ingredients.
-    </p>
-    <RecipeList recipes={recipes}>
-      <RecipeIngredientsContainer
-        ineligibleIngredientUuids={ineligibleIngredientUuids}
-        selectedIngredients={selectedIngredients}
-        onChange={changeHandler}
-      />
-    </RecipeList>
-    <BottomFixedContentWrapper>
-      <Button
-        className={css.button}
-        color="primary"
-        disabled={cannotContinue}
-        onClick={(continueClick)}
-      >
-        Continue
-      </Button>
-    </BottomFixedContentWrapper>
+    <Card>
+      <p className={css.copy}>
+        Which ingredient(s) had an issue? Select meal to see ingredients.
+      </p>
+      <RecipeList recipes={recipes}>
+        <RecipeIngredientsContainer
+          ineligibleIngredientUuids={ineligibleIngredientUuids}
+          selectedIngredients={selectedIngredients}
+          onChange={changeHandler}
+        />
+      </RecipeList>
+      <BottomFixedContentWrapper>
+        <Button
+          className={css.button}
+          color="primary"
+          disabled={cannotContinue}
+          onClick={(continueClick)}
+        >
+          Continue
+        </Button>
+      </BottomFixedContentWrapper>
+    </Card>
   </GetHelpLayout2>
 )
 

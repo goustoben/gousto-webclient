@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Heading, LayoutPageWrapper } from 'goustouicomponents'
+import classnames from 'classnames'
+import { Heading, LayoutPageWrapper } from 'goustouicomponents'
 import { CTABack } from 'zest/CTABack'
 import css from './GetHelpLayout2.css'
 
@@ -9,23 +10,23 @@ const GetHelpLayout2 = ({
   headingText,
   backUrl,
 }) => (
-  <LayoutPageWrapper>
-    <div className={css.wrapperWide}>
+  <div className={css.wrapperWide}>
+    <LayoutPageWrapper>
       <div className={css.wrapperBack}>
         <CTABack url={backUrl} testingSelector="CTABack" />
       </div>
-      <div className={css.wrapper}>
-        <div className={css.heading}>
-          <Heading size="fontStyleXL">
-            {headingText}
-          </Heading>
-        </div>
-        <Card>
-          {children}
-        </Card>
+      <div className={classnames(css.heading, css.wrapper)}>
+        <Heading size="fontStyleXL">
+          {headingText}
+        </Heading>
       </div>
-    </div>
-  </LayoutPageWrapper>
+    </LayoutPageWrapper>
+    <LayoutPageWrapper padding="large-screens-only">
+      <div className={classnames(css.wrapper, css.contentWrapper)}>
+        {children}
+      </div>
+    </LayoutPageWrapper>
+  </div>
 )
 
 GetHelpLayout2.propTypes = {

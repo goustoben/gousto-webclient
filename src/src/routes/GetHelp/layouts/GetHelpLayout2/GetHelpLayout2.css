@@ -17,7 +17,9 @@
 .wrapper {
   margin: 0 auto;
   max-width: 560px;
+}
 
+.contentWrapper {
   @media BreakpointToMedium {
     margin-bottom: 8rem;
   }

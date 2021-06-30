@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Link from 'components/Link'
 import { client } from 'config/routes'
 import humanTimeFormat from 'utils/timeFormat'
-import { Heading } from 'goustouicomponents'
+import { Card, Heading } from 'goustouicomponents'
 import { GetHelpLayout2 } from '../../../layouts/GetHelpLayout2'
 import css from './OnDeliveryDayWithoutTracking.css'
 
@@ -18,27 +18,29 @@ const OnDeliveryDayWithoutTracking = ({
 
   return (
     <GetHelpLayout2 headingText="Get help with your box">
-      <Heading size="fontStyleM" type="h2">
-        My box didn&apos;t arrive
-      </Heading>
-      <div className={css.mainText} data-testing="onDeliveryDayWithoutTrackingContent">
-        <p>
-          {`Your box's estimated arrival time is ${humanFriendlyStart} - ${humanFriendlyEnd}.`}
-        </p>
-        <p>
-          If it still has not arrived by then, it may still arrive today, just slightly delayed.
-        </p>
-        <p>
-          If you&apos;re still experiencing a problem with your delivery, please get in touch.
-        </p>
-        <Link
-          className={css.link}
-          to={`${index}/${contact}`}
-          tracking={trackClickGetInTouchInSSRDeliveries}
-        >
-          Get in touch
-        </Link>
-      </div>
+      <Card>
+        <Heading size="fontStyleM" type="h2">
+          My box didn&apos;t arrive
+        </Heading>
+        <div className={css.mainText} data-testing="onDeliveryDayWithoutTrackingContent">
+          <p>
+            {`Your box's estimated arrival time is ${humanFriendlyStart} - ${humanFriendlyEnd}.`}
+          </p>
+          <p>
+            If it still has not arrived by then, it may still arrive today, just slightly delayed.
+          </p>
+          <p>
+            If you&apos;re still experiencing a problem with your delivery, please get in touch.
+          </p>
+          <Link
+            className={css.link}
+            to={`${index}/${contact}`}
+            tracking={trackClickGetInTouchInSSRDeliveries}
+          >
+            Get in touch
+          </Link>
+        </div>
+      </Card>
     </GetHelpLayout2>
   )
 }
