@@ -8,7 +8,7 @@ rootVolumeSize: 16
 
 alb:
   ec2:
-    type: private
+    type: public
     rules:
       - priority: 94
         conditions:
@@ -16,27 +16,9 @@ alb:
             value: "[environment]-webclient.[cloudformation_output_domain]"
 
   ecs:
-    - type: private
+    - type: public
       rules:
         - priority: 91
-          conditions:
-            - field: host-header
-              value: "[environment]-webclient.[cloudformation_output_domain]"
-            - field: path-pattern
-              value: "/box-prices"
-
-    - type: private
-      rules:
-        - priority: 92
-          conditions:
-            - field: host-header
-              value: "[environment]-webclient.[cloudformation_output_domain]"
-            - field: path-pattern
-              value: "/my-referrals"
-
-    - type: private
-      rules:
-        - priority: 93
           conditions:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
