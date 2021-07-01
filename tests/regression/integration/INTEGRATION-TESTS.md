@@ -69,7 +69,7 @@ Some examples.
     menubot.api.delivery_day.$day.stock.fakeOK()
 ```
 
-More information on building and interacting with the Gousto Fake API can be found [here](../fixtures/api/GOUSTO_FAKE_API.md)
+More information on building and interacting with the Gousto Fake API can be found [here](../fixtures/api/GOUSTO-FAKE-API.md)
 
 ## Why all this abstraction?
 
