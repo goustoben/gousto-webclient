@@ -1,0 +1,13 @@
+{
+  "status": "error",
+  "errors": [
+    {
+      "error": "validation.min.string.password",
+      "message": "The password must be at least :min characters."
+    },
+    {
+      "error": "validation.one_symbol_or_number.password",
+      "message": "Your password must contain at least one symbol or number"
+    }
+  ]
+}

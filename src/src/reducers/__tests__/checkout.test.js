@@ -138,4 +138,28 @@ describe('checkout reducer', () => {
       })
     })
   })
+
+  describe('given CHECKOUT_PASSWORD_VALIDATION_RULES_SET action type', () => {
+    const password = 'ValidPassword!1'
+    const state = Immutable.fromJS({
+      passwordInfo: {
+        errorCodes: [],
+        value: password
+      }
+    })
+
+    const action = {
+      type: actionTypes.CHECKOUT_PASSWORD_VALIDATION_RULES_SET,
+      errors: [],
+      password,
+    }
+
+    describe('when validation rules are set', () => {
+      test('then it should update errors and password value', () => {
+        const nextState = checkoutReducer.checkout(state, action)
+        expect(nextState.getIn(['passwordInfo', 'errorCodes'])).toHaveLength(0)
+        expect(nextState.getIn(['passwordInfo', 'value'])).toBe(password)
+      })
+    })
+  })
 })

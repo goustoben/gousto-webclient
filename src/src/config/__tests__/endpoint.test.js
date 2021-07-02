@@ -13,7 +13,7 @@ describe('endpoint finder', () => {
     })
 
     it('should return the first version endpoint when a service endpoint is requested with a version that does not exist', ()=>{
-      expect(endpoint('auth', 2)).toEqual("https://production-api.gousto.co.uk/auth/v1.0.0")
+      expect(endpoint('auth')).toEqual("https://production-api.gousto.co.uk/auth/v1.0.0")
     })
 
     it('should return the first version endpoint when a service endpoint is requested and no version is specified', ()=>{

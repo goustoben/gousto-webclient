@@ -73,7 +73,7 @@ module.exports = {
             setPassword: function () {
               this
                 .waitForElementVisible('@passwordInput')
-                .setValue('@passwordInput', faker.internet.password())
+                .setValue('@passwordInput', 'ValidPassword1!')
 
               return this
             },

@@ -49,7 +49,7 @@
 
 .checkoutInputError {
   background: White;
-  border: 2px solid Radish;
+  border: 2px solid Radish !important;
   box-shadow: none;
 }
 
@@ -72,8 +72,22 @@
   background: DarkHaricot05 !important;
 }
 
+label {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.label {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin-bottom: 0.5rem;
+}
+
 .password {
   padding-right: 2.5rem;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid Mackerel;
+  outline: 0;
 }
 
 .disableInvalid {

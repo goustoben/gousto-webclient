@@ -1,27 +1,17 @@
-export const passwordCriteria = (password) => [
-  ...(password && password.length > 255
-    ? {
-        text: 'too long',
-        type: 'max',
-      }
-    : {
-        text: '8 characters or more',
-        type: 'min',
-      }),
+export const passwordCriteria = [
+  { rule: 'validation.min.string.password', message: '8 characters or more' },
+  { rule: 'validation.max.string.password', message: 'too long' },
   {
-    text: 'at least one lower case letter (a-z)',
-    type: 'lowercase',
+    rule: 'validation.one_uppercase_character.password',
+    message: 'at least one uppercase letter (A-Z)',
   },
   {
-    text: 'at least one upper case letter (A-Z)',
-    type: 'uppercase',
+    rule: 'validation.one_lowercase_character.password',
+    message: 'at least one lower case letter (a-z)',
   },
   {
-    text: 'at least one number (0-9) or symbol',
-    type: 'digits',
+    rule: 'validation.one_symbol_or_number.password',
+    message: 'at least one number (0-9) or symbol',
   },
-  {
-    text: 'not a common word',
-    type: 'oneOf',
-  },
+  { rule: 'validation.password_policy.password', message: 'not a common word' },
 ]

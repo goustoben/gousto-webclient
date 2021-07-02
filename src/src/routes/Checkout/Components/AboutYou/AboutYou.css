@@ -90,8 +90,8 @@
 
 .eyeIcon {
   position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
   width: 1.5rem;
   height: 1.5rem;
   cursor: pointer;
