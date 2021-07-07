@@ -20,6 +20,7 @@ describe('Product component', () => {
 
     test('should render image of product', () => {
       expect(wrapper.find('img').length).toBe(1)
+      expect(wrapper.find('img').prop('src')).toBe('https://production-media.gousto.co.uk/cms/product-image-landscape/YAddOns-WhiteWines-Borsao_013244-x400.jpg')
     })
 
     test('should render title of product', () => {
@@ -72,6 +73,36 @@ describe('Product component', () => {
       expect(
         wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth')
       ).toEqual(true)
+    })
+
+    describe('when product is missing image', () => {
+      beforeEach(() => {
+        const mockWithoutImages = {
+          ...mockProduct,
+          images: {
+            400: null
+          }
+        }
+
+        wrapper = mount(<Product product={mockWithoutImages} ageVerified />)
+      })
+
+      test('should render image of product', () => {
+        expect(wrapper.find('img').length).toBe(1)
+        expect(wrapper.find('img').prop('src')).toBe(null)
+      })
+
+      test('should render title of product', () => {
+        expect(wrapper.find('.productTitle').length).toBe(1)
+      })
+
+      test('should render price of product', () => {
+        expect(wrapper.find('.productPrice').length).toBe(1)
+      })
+
+      test('should render add button', () => {
+        expect(wrapper.find('Button').length).toBe(1)
+      })
     })
   })
 

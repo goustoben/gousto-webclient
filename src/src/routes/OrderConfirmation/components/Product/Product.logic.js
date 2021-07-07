@@ -112,7 +112,7 @@ class Product extends PureComponent {
     const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(id) ? basket.getIn(['products', id]) : 0
 
-    const imgSource = images && images['400'].src
+    const imgSource = images && images['400'] && images['400'].src
     const isAgeVerificationRequired = !ageVerified && ageRestricted
     const lowStock = (stock <= configProducts.lowStockThreshold)
     const outOfStock = stock <= 0
