@@ -3,6 +3,7 @@ import {
   authPayment,
   checkPayment,
   fetchPayPalToken,
+  signupPayment,
 } from '../payments'
 
 const mockPaymentAuthResponse = {
@@ -41,15 +42,30 @@ const mockPayPalTokenResponse = {
     clientToken: 'dashdasdfaskdfajs'
   }
 }
+const mockSignupPaymentResponse = {
+  status: 'ok',
+  data: {
+    amount: 2499,
+    status: 'authorized'
+  }
+}
 
 jest.mock('utils/fetch', () => (
   jest.fn().mockImplementation( (token, url) => {
     const getData = async () => {
       if (url.indexOf('/token') >= 0) {
         return mockPayPalTokenResponse
-      } else {
-        return url.indexOf('payment-auth') >= 0 ? mockPaymentAuthResponse : mockPaymentCheckResponse
       }
+
+      if (url.indexOf('/signup-payments') >= 0) {
+        return mockSignupPaymentResponse
+      }
+
+      if (url.indexOf('/payment-auth') >= 0) {
+        return mockPaymentAuthResponse
+      }
+
+      return mockPaymentCheckResponse
     }
 
     return getData()
@@ -119,6 +135,27 @@ describe('Payments API', () => {
       const result = await fetchPayPalToken()
 
       expect(result).toEqual(mockPayPalTokenResponse)
+    })
+  })
+
+  describe('signupPayment', () => {
+    const request = {
+      order_id: 12345,
+      card_token: 'tok_r6ypmsowikzutmdbmjevwo55ym',
+      amount: 3499,
+    }
+
+    test('should send payment auth request', async () => {
+      await signupPayment(request, 'paypal')
+
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/payments/v1/payments/signup-payments?provider=paypal', request, 'POST', undefined, expectedHeaders)
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await signupPayment(request)
+
+      expect(result).toEqual(mockSignupPaymentResponse)
     })
   })
 })

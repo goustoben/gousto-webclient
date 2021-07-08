@@ -26,6 +26,7 @@ function calculateBoxSize(adults = 0, kids = 0) {
 const initialState = () => Immutable.fromJS({
   address: null,
   addressTypeEdited: false,
+  boxId: null,
   collection: '',
   chosenAddress: null,
   currentMenuId: '',

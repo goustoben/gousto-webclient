@@ -7,9 +7,10 @@ import { translateCheckoutErrorToMessageCode } from 'utils/checkout'
 import logger from 'utils/logger'
 import { getUserOrderById } from 'utils/user'
 import { getUTM } from 'utils/utm'
+import { getPreviewOrderId } from 'selectors/basket'
+import { getIsDecoupledPaymentEnabled, getIsPromoCodeValidationEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode } from 'selectors/tracking'
-import { getIsPromoCodeValidationEnabled } from 'selectors/features'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -257,12 +258,17 @@ export const trackNewOrder = (orderId, userId) => (dispatch, getState) => {
   })
 }
 
-export const trackSubscriptionCreated = (orderId, userId, subscriptionId) => (dispatch, getState) => {
+export const trackSubscriptionCreated = () => (dispatch, getState) => {
   const state = getState()
   const { UTM } = getUTMAndPromoCode(state)
   const promoCode = state.pricing.get('prices').get('promoCode')
   const paymentMethod = getCurrentPaymentMethod(state)
-  const type = trackingKeys.subscriptionCreated
+  const orderId = getPreviewOrderId(state)
+  const userId = state.user.get('id')
+  const subscriptionId = state.user.get('subscription').get('id')
+  const type = getIsDecoupledPaymentEnabled(state)
+    ? trackingKeys.subscriptionCreatedDecoupling
+    : trackingKeys.subscriptionCreated
 
   dispatch({
     type,
@@ -502,6 +508,24 @@ export const trackShowcaseMenuAction = (type, additionalData = {}) => (dispatch,
       ...UTM,
       promoCode,
       ...additionalData
+    }
+  })
+}
+
+export const trackUnexpectedSignup = () => (dispatch, getState) => {
+  const state = getState()
+  const { user } = state
+  const { promoCode, UTM } = getUTMAndPromoCode(getState())
+  const type = trackingKeys.unexpectedSignup
+
+  dispatch({
+    type,
+    trackingData: {
+      actionType: type,
+      ...UTM,
+      promoCode,
+      orderId: getPreviewOrderId(state),
+      userId: user.get('id'),
     }
   })
 }

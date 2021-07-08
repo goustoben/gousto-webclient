@@ -30,6 +30,33 @@ export function getAddress(form) {
   }
 }
 
+const getCheckoutSignupMapping = (code, isPromoCodeValidationEnabled) => {
+  const maps = {
+    'validation.phone.customer.phone_number': 'user-phone-number-invalid',
+    '3ds-challenge-failed': '3ds-challenge-failed',
+    '401-auth-error': 'user-exists',
+    '409-duplicate-details': isPromoCodeValidationEnabled ? 'invalid-promo-code-experiment' : 'user-promo-invalid',
+    '409-missing-preview-order': 'out-of-stock',
+    '422-declined-do-not-honour': '422-declined-do-not-honour',
+    '422-insufficient-funds': '422-insufficient-funds',
+    '422-payment-failed': 'payment-failure',
+    '422-registration-failed': 'user-exists',
+  }
+
+  return maps[code] || 'generic'
+}
+
+const getSignupPaymentMappings = (code, isPromoCodeValidationEnabled) => {
+  const maps = {
+    '3ds-challenge-failed': 'signup-payments-challenge-failed',
+    '422-declined-do-not-honour': 'signup-payments-declined-do-not-honour',
+    '422-insufficient-funds': 'signup-payments-insufficient-funds',
+    '422-payment-failed': 'signup-payments-payment-failure',
+  }
+
+  return maps[code] || getCheckoutSignupMapping(isPromoCodeValidationEnabled)
+}
+
 export const translateCheckoutErrorToMessageCode = (errorName, errorValue, isPromoCodeValidationEnabled) => {
   switch (errorName) {
   case actionTypes.PAYPAL_TOKEN_FETCH_FAILED: {
@@ -42,36 +69,10 @@ export const translateCheckoutErrorToMessageCode = (errorName, errorValue, isPro
     return 'postcodeInvalid'
   }
   case actionTypes.CHECKOUT_SIGNUP: {
-    switch (errorValue) {
-    case '422-registration-failed':
-    case '401-auth-error': {
-      return 'user-exists'
-    }
-    case '422-payment-failed': {
-      return 'payment-failure'
-    }
-    case '409-duplicate-details': {
-      return isPromoCodeValidationEnabled ? 'invalid-promo-code-experiment' : 'user-promo-invalid'
-    }
-    case '409-missing-preview-order': {
-      return 'out-of-stock'
-    }
-    case 'validation.phone.customer.phone_number': {
-      return 'user-phone-number-invalid'
-    }
-    case '3ds-challenge-failed': {
-      return '3ds-challenge-failed'
-    }
-    case '422-insufficient-funds': {
-      return '422-insufficient-funds'
-    }
-    case '422-declined-do-not-honour': {
-      return '422-declined-do-not-honour'
-    }
-    default: {
-      return 'generic'
-    }
-    }
+    return getCheckoutSignupMapping(errorValue, isPromoCodeValidationEnabled)
+  }
+  case actionTypes.CHECKOUT_PAYMENT: {
+    return getSignupPaymentMappings(errorValue, isPromoCodeValidationEnabled)
   }
   case actionTypes.CARD_TOKENIZATION_FAILED: {
     return 'card-tokenization-failed'

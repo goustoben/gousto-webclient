@@ -20,8 +20,13 @@ function fetchPayPalToken() {
   return fetch(null, `${PAYMENTS_API}/token`, params, 'GET', undefined, HEADERS)
 }
 
+function signupPayment(reqData, provider) {
+  return fetch(null, `${PAYMENTS_API}/signup-payments?provider=${provider}`, reqData, 'POST', undefined, HEADERS)
+}
+
 export {
   authPayment,
   checkPayment,
   fetchPayPalToken,
+  signupPayment,
 }

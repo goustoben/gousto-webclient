@@ -1,10 +1,13 @@
 import Immutable from 'immutable'
 import { getFormSyncErrors } from 'redux-form'
 
-import routes from 'config/routes'
 import gaID from 'config/head/gaTracking'
 import { PaymentMethod } from 'config/signup'
-import { errorsThatClearOrderPreview, passwordRules } from 'config/checkout'
+import {
+  errorsThatClearOrderPreview,
+  errorsToHandleForDecoupledPayment,
+  passwordRules,
+} from 'config/checkout'
 
 import logger from 'utils/logger'
 import Cookies from 'utils/GoustoCookies'
@@ -12,14 +15,21 @@ import GoustoException from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
 import { isValidPromoCode } from 'utils/order'
 
+import { validateUserPassword } from 'apis/auth'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
-import { authPayment, checkPayment, fetchPayPalToken } from 'apis/payments'
-import { validateUserPassword } from 'apis/auth'
+import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
+import { getSignupRecaptchaToken } from 'selectors/auth'
+import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import { accountFormName, deliveryFormName, getPromoCodeValidationDetails, getPasswordValue } from 'selectors/checkout'
-import { getIs3DSForSignUpEnabled, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
-import { getCardToken, getCurrentPaymentMethod } from 'selectors/payment'
+import { getIsPaymentBeforeChoosingEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
+import {
+  getDecoupledPaymentData,
+  getPaymentAuthData,
+  getCardPaymentDetails,
+  getPayPalPaymentDetails, is3DSCardPayment, isCardPayment
+} from 'selectors/payment'
 import { getUserId } from 'selectors/user'
 
 import { actionTypes } from './actionTypes'
@@ -30,7 +40,12 @@ import {
   basketReset
 } from './basket'
 import { userSubscribe } from './user'
-import { trackAffiliatePurchase, trackUTMAndPromoCode, trackCheckoutError } from './tracking'
+import {
+  trackAffiliatePurchase,
+  trackUTMAndPromoCode,
+  trackCheckoutError,
+  trackSubscriptionCreated,
+} from './tracking'
 import loginActions from './login'
 import statusActions from './status'
 import { pricingRequest } from './pricing'
@@ -47,10 +62,12 @@ const checkoutActions = {
   checkoutPostSignup,
   checkoutAddressLookup,
   checkoutSignup,
+  checkoutDecoupledPaymentSignup,
   checkoutNon3DSSignup,
   checkout3DSSignup,
   fetchGoustoRef,
   clearGoustoRef,
+  checkoutSignupPayment,
   resetDuplicateCheck,
   trackSignupPageChange,
   trackingOrderPlaceAttempt,
@@ -67,9 +84,10 @@ const errorCodes = {
 
 function resetDuplicateCheck() {
   return (dispatch, getState) => {
+    const state = getState()
     dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, null))
-    if (getState().basket.get('promoCode')) {
-      const { pricing } = getState()
+    if (getPromoCode(state)) {
+      const { pricing } = state
 
       if (!isValidPromoCode(pricing.get('prices'))) {
         dispatch(basketPromoCodeChange(''))
@@ -144,11 +162,14 @@ export const handlePromoCodeRemoved = async (dispatch, getState) => {
 
 export const handleCheckoutError = async (err, initiator, dispatch, getState, options = {}) => {
   const { code } = err
+  const errorName = getIsDecoupledPaymentEnabled(getState()) && errorsToHandleForDecoupledPayment.includes(code)
+    ? actionTypes.CHECKOUT_PAYMENT
+    : actionTypes.CHECKOUT_SIGNUP
 
-  logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
+  logger.error({ message: `${errorName} - ${err.message}`, errors: [err] })
 
-  dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, code, initiator))
-  dispatch(error(actionTypes.CHECKOUT_SIGNUP, code))
+  dispatch(trackCheckoutError(errorName, code, initiator))
+  dispatch(error(errorName, code))
   if (code === errorCodes.duplicateDetails) {
     if (options.skipPromoCodeRemovedCheck) {
       return
@@ -169,22 +190,20 @@ export function checkoutSignup() {
     dispatch(checkoutActions.trackSignupPageChange('Submit'))
     await dispatch(checkoutActions.fetchGoustoRef())
 
-    const is3DSEnabled = getIs3DSForSignUpEnabled(state)
-    const isCardPayment = getCurrentPaymentMethod(state) === PaymentMethod.Card
-
-    if (is3DSEnabled && isCardPayment) {
-      await dispatch(checkoutActions.checkout3DSSignup())
-    } else {
-      await dispatch(checkoutActions.checkoutNon3DSSignup())
+    if (getIsDecoupledPaymentEnabled(state)) {
+      return dispatch(checkoutActions.checkoutDecoupledPaymentSignup())
     }
+
+    if (is3DSCardPayment(state)) {
+      return dispatch(checkoutActions.checkout3DSSignup())
+    }
+
+    return dispatch(checkoutActions.checkoutNon3DSSignup())
   }
 }
 
 export function checkoutNon3DSSignup() {
   return async (dispatch, getState) => {
-    const { basket, auth } = getState()
-    const orderId = basket.get('previewOrderId')
-    const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
     let needClearGoustoRef = true
 
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
@@ -193,8 +212,7 @@ export function checkoutNon3DSSignup() {
     try {
       dispatch(checkoutActions.resetDuplicateCheck())
       await dispatch(userSubscribe(false, null))
-      await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
+      await dispatch(checkoutActions.checkoutPostSignup())
     } catch (err) {
       needClearGoustoRef = err.code !== errorCodes.duplicateDetails
       await handleCheckoutError(err, 'checkoutNon3DSSignup', dispatch, getState)
@@ -229,23 +247,7 @@ export function checkout3DSSignup() {
         }
       }
 
-      const { basket } = state
-      const orderId = basket.get('previewOrderId')
-      const goustoRef = state.checkout.get('goustoRef')
-      const cardToken = getCardToken(state)
-      const prices = state.pricing.get('prices')
-      const amountInPence = Math.round(prices.get('total', 0) * 100)
-      const { success, failure } = routes.client.payment
-
-      const reqData = {
-        order_id: orderId,
-        card_token: cardToken,
-        amount: amountInPence,
-        gousto_ref: goustoRef,
-        '3ds': true,
-        success_url: window.location.origin + success,
-        failure_url: window.location.origin + failure,
-      }
+      const reqData = getPaymentAuthData(state)
 
       const { data } = await authPayment(reqData)
       dispatch({
@@ -255,6 +257,66 @@ export function checkout3DSSignup() {
       dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
     } catch (err) {
       await handleCheckoutError(err, 'checkout3DSSignup', dispatch, getState, { skipPromoCodeRemovedCheck: true })
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      dispatch(checkoutActions.clearGoustoRef())
+    }
+  }
+}
+
+export function checkoutDecoupledPaymentSignup() {
+  return async (dispatch, getState) => {
+    let needClearGoustoRef = false
+    const state = getState()
+
+    dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
+    dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
+
+    try {
+      dispatch(checkoutActions.resetDuplicateCheck())
+      await dispatch(userSubscribe(false, null))
+
+      if (is3DSCardPayment(state)) {
+        const reqData = getPaymentAuthData(state)
+
+        const { data } = await authPayment(reqData)
+        dispatch({
+          type: actionTypes.PAYMENT_SHOW_MODAL,
+          challengeUrl: data.responsePayload.redirectLink,
+        })
+        dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeModalDisplay))
+      } else {
+        await dispatch(checkoutActions.checkoutSignupPayment())
+      }
+    } catch (err) {
+      needClearGoustoRef = err.code !== errorCodes.duplicateDetails
+      await handleCheckoutError(err, 'checkoutDecoupledPaymentSignup', dispatch, getState)
+    } finally {
+      dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
+      if (needClearGoustoRef) {
+        dispatch(checkoutActions.clearGoustoRef())
+      }
+    }
+  }
+}
+
+export function checkoutSignupPayment(sourceId = null) {
+  return async (dispatch, getState) => {
+    try {
+      const state = getState()
+      const reqData = getDecoupledPaymentData(state)
+      const provider = isCardPayment(state)
+        ? getCardPaymentDetails(state)
+        : getPayPalPaymentDetails(state)
+
+      if (sourceId) {
+        reqData.card_token = sourceId
+      }
+
+      await signupPayment(reqData, provider.payment_provider)
+      await dispatch(checkoutActions.checkoutPostSignup())
+    } catch (err) {
+      await handleCheckoutError(err, 'checkoutSignupPayment', dispatch, getState)
+    } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))
       dispatch(checkoutActions.clearGoustoRef())
     }
@@ -271,18 +333,18 @@ export const checkPaymentAuth = (sessionId) => (
       if (data && data.approved) {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeSuccessful))
 
-        const { basket, auth } = getState()
-        const orderId = basket.get('previewOrderId')
-        const recaptchaValue = auth.getIn(['recaptcha', 'signupToken'])
-
-        dispatch(checkoutActions.resetDuplicateCheck())
-        await dispatch(userSubscribe(true, data.sourceId))
-        await dispatch(checkoutActions.checkoutPostSignup(recaptchaValue))
-        dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
+        if (getIsDecoupledPaymentEnabled(getState())) {
+          await dispatch(checkoutActions.checkoutSignupPayment(data.sourceId))
+        } else {
+          dispatch(checkoutActions.resetDuplicateCheck())
+          await dispatch(userSubscribe(true, data.sourceId))
+          await dispatch(checkoutActions.checkoutPostSignup())
+        }
       } else {
         dispatch(trackUTMAndPromoCode(trackingKeys.signupChallengeFailed))
         dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed, 'checkPaymentAuth'))
         dispatch(error(actionTypes.CHECKOUT_SIGNUP, errorCodes.challengeFailed))
+        await dispatch(checkoutCreatePreviewOrder())
       }
     } catch (err) {
       await handleCheckoutError(err, 'checkPaymentAuth', dispatch, getState)
@@ -295,10 +357,11 @@ export const checkPaymentAuth = (sessionId) => (
 
 export const trackPurchase = () => (
   (dispatch, getState) => {
-    const { basket, pricing } = getState()
+    const state = getState()
+    const { pricing } = state
+    const orderId = getPreviewOrderId(state)
+    const promoCode = getPromoCode(state)
     const prices = pricing.get('prices')
-    const orderId = basket.get('previewOrderId')
-    const promoCode = basket.get('promoCode')
     const totalPrice = prices.get('grossTotal')
     const shippingPrice = prices.get('deliveryTotal')
     const gaIDTracking = gaID[__ENV__]// eslint-disable-line no-underscore-dangle
@@ -324,28 +387,31 @@ export const trackPurchase = () => (
   }
 )
 
-export function checkoutPostSignup(recaptchaValue) {
+export function checkoutPostSignup() {
   return async (dispatch, getState) => {
+    dispatch(trackSubscriptionCreated())
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
       const state = getState()
-      const { form, pricing, basket } = state
+      const { form, pricing } = state
+      const recaptchaToken = getSignupRecaptchaToken(state)
       const accountValues = Immutable.fromJS(form[accountFormName].values)
       const account = accountValues.get('account')
       const email = account.get('email')
       const password = getPasswordValue(state)
-      const orderId = basket.get('previewOrderId')
-      await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken: recaptchaValue }, orderId))
+      const orderId = getPreviewOrderId(state)
       const prices = pricing.get('prices')
       const grossTotal = prices && prices.get('grossTotal')
       const netTotal = prices && prices.get('total')
+      await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
       dispatch(tempActions.temp('originalGrossTotal', grossTotal))
       dispatch(tempActions.temp('originalNetTotal', netTotal))
       dispatch(trackPurchase())
+      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
-      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, true, 'checkoutPostSignup'))
+      dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, err.code, 'checkoutPostSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
@@ -422,14 +488,15 @@ export const trackCheckoutButtonPressed = (type, property) => {
 
 export function trackingOrderPlaceAttempt() {
   return (dispatch, getState) => {
-    const { basket, pricing } = getState()
+    const state = getState()
+    const { pricing } = state
     const prices = pricing.get('prices')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT,
       trackingData: {
         actionType: trackingKeys.placeOrderAttempt,
-        order_id: basket.get('previewOrderId'),
+        order_id: getPreviewOrderId(state),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),
         payment_provider: 'checkout'
@@ -454,7 +521,8 @@ export function trackingOrderPlaceAttemptFailed() {
 
 export function trackingOrderPlaceAttemptSucceeded() {
   return (dispatch, getState) => {
-    const { basket, pricing, form } = getState()
+    const state = getState()
+    const { pricing, form } = state
     const prices = pricing.get('prices')
     const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
     const intervalId = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
@@ -463,7 +531,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT_SUCCEEDED,
       trackingData: {
         actionType: trackingKeys.placeOrderAttemptComplete,
-        order_id: basket.get('previewOrderId'),
+        order_id: getPreviewOrderId(state),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),
         interval_id: intervalId,

@@ -180,6 +180,22 @@ module.exports = {
       header: 'Bank declined payment',
       message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
     },
+    'signup-payments-payment-failure': {
+      header: 'Payment failed',
+      message: 'Check your card details and try again.',
+    },
+    'signup-payments-insufficient-funds': {
+      header: 'Insufficient funds',
+      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
+    'signup-payments-declined-do-not-honour': {
+      header: 'Bank declined payment',
+      message: 'Use a different card or PayPal. If you’re still experiencing difficulties, contact your bank or try again later.',
+    },
+    'signup-payments-challenge-failed': {
+      header: 'Payment failed',
+      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
+    },
     'generic': {
       header: 'An error occurred',
       message: 'Click "Start your subscription" to try again.',
@@ -192,6 +208,12 @@ module.exports = {
     '422-insufficient-funds',
     '422-declined-do-not-honour',
     '422-payment-function-error',
+    '3ds-challenge-failed',
+  ],
+  errorsToHandleForDecoupledPayment: [
+    '422-payment-failed',
+    '422-insufficient-funds',
+    '422-declined-do-not-honour',
     '3ds-challenge-failed',
   ],
   errorsRequireGoBack: ['user-phone-number-invalid'],

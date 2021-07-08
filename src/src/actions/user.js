@@ -7,7 +7,7 @@ import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 
-import { PaymentMethod, signupConfig } from 'config/signup'
+import { signupConfig } from 'config/signup'
 
 import { accountFormName, deliveryFormName, getPasswordValue } from 'selectors/checkout'
 import {
@@ -18,7 +18,7 @@ import {
   getIsDecoupledPaymentEnabled,
   getIsPromoCodeValidationEnabled,
 } from 'selectors/features'
-import { getPaymentDetails, getPayPalPaymentDetails, getCurrentPaymentMethod } from 'selectors/payment'
+import { getCardPaymentDetails, getPayPalPaymentDetails, isCardPayment } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
 
 import logger from 'utils/logger'
@@ -27,6 +27,7 @@ import { getAddress } from 'utils/checkout'
 import { getDeliveryTariffId } from 'utils/deliveries'
 import { transformPendingOrders, transformProjectedDeliveries, transformProjectedDeliveriesNew } from 'utils/myDeliveries'
 import { getAuthUserId } from 'selectors/auth'
+import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
 import { skipDates, fetchProjectedDeliveries } from 'routes/Account/apis/subscription'
 import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 
@@ -43,7 +44,7 @@ import {
   trackUserAttributes,
   trackNewUser,
   trackNewOrder,
-  trackSubscriptionCreated,
+  trackUnexpectedSignup,
 } from './tracking'
 
 const fetchShippingAddressesPending = pending => ({
@@ -421,7 +422,8 @@ function userPromoApplyCode(promoCode) {
 
 function userProspect() {
   return async (dispatch, getState) => {
-    const { basket, routing } = getState()
+    const state = getState()
+    const { routing } = state
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
       const account = Immutable.fromJS(getState().form[accountFormName].values).get('account')
@@ -431,9 +433,9 @@ function userProspect() {
         email: account.get('email'),
         user_name_first: delivery.get('firstName').trim() || '',
         user_name_last: delivery.get('lastName').trim() || '',
-        promocode: basket.get('promoCode'),
+        promocode: getPromoCode(state),
         allow_marketing_email: account.get('allowEmail'),
-        preview_order_id: basket.get('previewOrderId'),
+        preview_order_id: getPreviewOrderId(state),
         step
       }
       dispatch(statusActions.pending(actionTypes.USER_PROSPECT, true))
@@ -640,20 +642,23 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const isDecoupledPaymentEnabled = getIsDecoupledPaymentEnabled(state)
   const isPromoCodeValidationEnabled = getIsPromoCodeValidationEnabled(state)
 
+  const isCard = isCardPayment(state)
+
   const account = Immutable.fromJS(form[accountFormName].values).get('account')
   const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
   const payment = Immutable.fromJS(form.payment.values).get('payment')
 
-  const isCard = getCurrentPaymentMethod(state) === PaymentMethod.Card
   const deliveryAddress = getAddress(delivery)
-
-  const billingAddress = isCard && payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
+  const billingAddress = isCard && payment.get('isBillingAddressDifferent')
+    ? getAddress(payment)
+    : deliveryAddress
 
   const intervalId = delivery.get('interval_id', 1)
+  const promoCode = getPromoCode(state) || ''
 
   const reqData = {
-    order_id: basket.get('previewOrderId'),
-    promocode: basket.get('promoCode', ''),
+    order_id: getPreviewOrderId(state),
+    promocode: promoCode,
     check_last_name: Number(isPromoCodeValidationEnabled || false),
     customer: {
       tariff_id: basket.get('tariffId', ''),
@@ -661,7 +666,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
       email: account.get('email'),
       name_first: delivery.get('firstName').trim(),
       name_last: delivery.get('lastName').trim(),
-      promo_code: basket.get('promoCode', ''),
+      promo_code: promoCode,
       password: getPasswordValue(state),
       age_verified: Number(promoAgeVerified || false),
       marketing_do_allow_email: Number(account.get('allowEmail') || false),
@@ -708,7 +713,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
         is_default: 1,
         type: signupConfig.payment_types.card,
         name: 'My Card',
-        card: getPaymentDetails(state)
+        card: getCardPaymentDetails(state)
       }
       if (sca3ds) {
         paymentMethod.card.card_token = sourceId
@@ -732,7 +737,9 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
 export function userSubscribe(sca3ds = false, sourceId = null) {
   return async (dispatch, getState) => {
     const state = getState()
-    if (state.user && state.user.get('id')) {
+    if (!state.basket.get('boxId')) {
+      dispatch(trackUnexpectedSignup())
+
       return
     }
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
@@ -745,8 +752,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       const { data } = await customerSignup(null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
-        const { customer, addresses, subscription, orderId } = data
-        const { id: customerId } = customer
+        const { customer, addresses, subscription, orderId, customer: { id: customerId }} = data
         let user = Immutable.fromJS({
           ...customer,
           ...addresses,
@@ -762,7 +768,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
             actionType: placeOrder,
             order_id: orderId,
             order_total: prices.get('total'),
-            promo_code: prices.get('promoCode'),
+            promo_code: getPromoCode(state),
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             interval_id: reqData.subscription.interval_id,
@@ -771,12 +777,8 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
 
         dispatch(trackFirstPurchase(orderId, prices))
         dispatch(trackNewOrder(orderId, customerId))
-        dispatch(basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
+        dispatch(basketPreviewOrderChange(orderId, state.basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
-
-        const { id: subscriptionId } = subscription
-
-        dispatch(trackSubscriptionCreated(orderId, customerId, subscriptionId))
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
       }
@@ -784,14 +786,14 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
       dispatch(trackNewUser())
 
-      const previewOrderId = getState().basket.get('previewOrderId')
+      const previewOrderId = getPreviewOrderId(state)
 
       dispatch({
         type: actionTypes.CHECKOUT_ORDER_FAILED,
         trackingData: {
           actionType: 'Order Failed',
           order_id: previewOrderId,
-          promo_code: prices.get('promoCode'),
+          promo_code: getPromoCode(state),
           signup: true,
           error_reason: err.message
         }

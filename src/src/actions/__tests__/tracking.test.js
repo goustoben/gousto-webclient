@@ -21,6 +21,7 @@ import {
   trackCheckoutNavigationLinks,
   trackCheckoutError,
   trackShowcaseMenuAction,
+  trackUnexpectedSignup,
 } from 'actions/tracking'
 import { actionTypes } from 'actions/actionTypes'
 import {
@@ -30,6 +31,7 @@ import {
   placeOrder,
   clickSubmitOrder,
   subscriptionCreated,
+  subscriptionCreatedDecoupling,
   discountVisibilityBannerDisplayed,
   clickAccountBreadcrumb,
   checkoutClickContinueToPayment,
@@ -38,9 +40,17 @@ import {
 import globals from 'config/globals'
 import { PaymentMethod } from 'config/signup'
 import logger from 'utils/logger'
+import {
+  getIsDecoupledPaymentEnabled
+} from 'selectors/features'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
+}))
+
+jest.mock('selectors/features', () => ({
+  getIsPromoCodeValidationEnabled: jest.fn(() => false),
+  getIsDecoupledPaymentEnabled: jest.fn(() => false),
 }))
 
 describe('tracking actions', () => {
@@ -516,7 +526,7 @@ describe('tracking actions', () => {
     })
 
     describe('when fired', () => {
-      test('then should has correct event data', () => {
+      test('then should have correct event data', () => {
         const expected = {
           type: clickSubmitOrder,
           trackingData: {
@@ -717,7 +727,8 @@ describe('tracking actions', () => {
       beforeEach(() => {
         const state = {
           basket: Immutable.fromJS({
-            promoCode: 'promo1'
+            promoCode: 'promo1',
+            previewOrderId: 'order_123',
           }),
           tracking: Immutable.Map({
             utmSource: {
@@ -731,6 +742,12 @@ describe('tracking actions', () => {
             prices: {
               promoCode: 'promo2',
             }
+          }),
+          user: Immutable.fromJS({
+            id: 'user_234',
+            subscription: {
+              id: 'subscription_345'
+            }
           })
         }
         dispatch = jest.fn()
@@ -738,26 +755,46 @@ describe('tracking actions', () => {
       })
 
       describe('when fired', () => {
-        test('then should has correct event data', () => {
-          const orderId = 'order_123'
-          const userId = 'user_234'
-          const subscriptionId = 'subscription_345'
-          const expected = {
-            type: subscriptionCreated,
-            trackingData: {
-              actionType: subscriptionCreated,
-              referral: '123',
-              promoCode: 'promo2',
-              paymentMethod: PaymentMethod.Card,
-              userId,
-              orderId,
-              subscriptionId,
-            }
+        const orderId = 'order_123'
+        const userId = 'user_234'
+        const subscriptionId = 'subscription_345'
+        const expected = {
+          type: subscriptionCreated,
+          trackingData: {
+            actionType: subscriptionCreated,
+            referral: '123',
+            promoCode: 'promo2',
+            paymentMethod: PaymentMethod.Card,
+            userId,
+            orderId,
+            subscriptionId,
           }
+        }
 
-          trackSubscriptionCreated(orderId, userId, subscriptionId)(dispatch, getState)
+        describe('when decoupled payment is disabled', () => {
+          test('then should have correct event data', () => {
+            expected.type = subscriptionCreated
+            expected.trackingData.actionType = subscriptionCreated
 
-          expect(dispatch).toHaveBeenCalledWith(expected)
+            trackSubscriptionCreated()(dispatch, getState)
+
+            expect(dispatch).toHaveBeenCalledWith(expected)
+          })
+        })
+
+        describe('when decoupled payment is enabled', () => {
+          beforeEach(() => {
+            getIsDecoupledPaymentEnabled.mockReturnValueOnce(true)
+          })
+
+          test('then should have correct event data', () => {
+            expected.type = subscriptionCreatedDecoupling
+            expected.trackingData.actionType = subscriptionCreatedDecoupling
+
+            trackSubscriptionCreated()(dispatch, getState)
+
+            expect(dispatch).toHaveBeenCalledWith(expected)
+          })
         })
       })
     })
@@ -1178,6 +1215,44 @@ describe('tracking actions', () => {
           category: 'Fish',
           promoCode: 'promo1',
           referral: '123',
+        }),
+      })
+    })
+  })
+
+  describe('trackUnexpectedSignup', () => {
+    beforeEach(() => {
+      const state = {
+        basket: Immutable.fromJS({
+          promoCode: 'promo1',
+          previewOrderId: 1231231
+        }),
+        user: Immutable.fromJS({
+          id: 4564
+        }),
+        tracking: Immutable.Map({
+          utmSource: {
+            referral: '123',
+          },
+        }),
+      }
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+    })
+
+    test('it should track utm, promo code, orderId and userId', () => {
+      const type = 'unexpected_signup'
+
+      trackUnexpectedSignup()(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type,
+        trackingData: expect.objectContaining({
+          actionType: type,
+          promoCode: 'promo1',
+          referral: '123',
+          orderId: 1231231,
+          userId: 4564,
         }),
       })
     })

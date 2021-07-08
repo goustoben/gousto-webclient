@@ -7,10 +7,22 @@ import {
   getChallengeUrl,
   isModalOpen,
   isPayPalReady,
+  isCardPayment,
+  is3DSCardPayment,
   getCanSubmitPaymentDetails,
-  getPaymentDetails,
+  getCardPaymentDetails,
   getPayPalPaymentDetails,
+  getPaymentAuthData,
+  getDecoupledPaymentData,
 } from 'selectors/payment'
+
+import { getIs3DSForSignUpEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
+import routes from 'config/routes'
+
+jest.mock('selectors/features', () => ({
+  getIs3DSForSignUpEnabled: jest.fn(() => false),
+  getIsDecoupledPaymentEnabled: jest.fn(() => false),
+}))
 
 describe('payment selectors', () => {
   let state = {}
@@ -37,6 +49,17 @@ describe('payment selectors', () => {
         paypalNonce: 'test-nonce',
         paypalDeviceData: deviceData,
       }),
+      basket: Immutable.fromJS({
+        previewOrderId: 'fake-order-id'
+      }),
+      checkout: Immutable.fromJS({
+        goustoRef: 'fake-gousto-ref'
+      }),
+      pricing: Immutable.fromJS({
+        prices: Immutable.fromJS({
+          total: 24.99
+        })
+      })
     }
   })
 
@@ -126,6 +149,78 @@ describe('payment selectors', () => {
     })
   })
 
+  describe('given isCardPayment method', () => {
+    describe('when payment method is PayPal', () => {
+      test('then should return false', () => {
+        const result = isCardPayment(state)
+
+        expect(result).toBe(false)
+      })
+    })
+  })
+
+  describe('when payment method is Card', () => {
+    beforeEach(() => {
+      state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
+    })
+
+    test('then should return true', () => {
+      const result = isCardPayment(state)
+
+      expect(result).toBe(true)
+    })
+  })
+
+  describe('given is3DSCardPayment method', () => {
+    describe('when payment method is PayPal', () => {
+      describe('and 3DS is disabled', () => {
+        test('then should return false', () => {
+          const result = is3DSCardPayment(state)
+
+          expect(result).toBe(false)
+        })
+      })
+
+      describe('and 3DS is enabled', () => {
+        beforeEach(() => {
+          getIs3DSForSignUpEnabled.mockReturnValueOnce(true)
+        })
+
+        test('then should return false', () => {
+          const result = is3DSCardPayment(state)
+
+          expect(result).toBe(false)
+        })
+      })
+    })
+
+    describe('when payment method is Card', () => {
+      beforeEach(() => {
+        state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
+      })
+
+      describe('and 3DS is disabled', () => {
+        test('then should return false', () => {
+          const result = is3DSCardPayment(state)
+
+          expect(result).toBe(false)
+        })
+      })
+
+      describe('and 3DS is enabled', () => {
+        beforeEach(() => {
+          getIs3DSForSignUpEnabled.mockReturnValueOnce(true)
+        })
+
+        test('then should return true', () => {
+          const result = is3DSCardPayment(state)
+
+          expect(result).toBe(true)
+        })
+      })
+    })
+  })
+
   describe('given getCanSubmitPaymentDetails method', () => {
     describe('when payment method is PayPal', () => {
       describe('and PayPal nonce is defined', () => {
@@ -162,7 +257,7 @@ describe('payment selectors', () => {
     })
   })
 
-  describe('given getPaymentDetails method', () => {
+  describe('given getCardPaymentDetails method', () => {
     describe('when called', () => {
       test('then should return payment details for Checkout', () => {
         const expected = {
@@ -170,7 +265,7 @@ describe('payment selectors', () => {
           active: 1,
           card_token: 'test-token',
         }
-        const result = getPaymentDetails(state)
+        const result = getCardPaymentDetails(state)
 
         expect(result).toEqual(expected)
       })
@@ -188,6 +283,99 @@ describe('payment selectors', () => {
         }
 
         const result = getPayPalPaymentDetails(state)
+
+        expect(result).toEqual(expected)
+      })
+    })
+  })
+
+  describe('given getPaymentAuthData method', () => {
+    describe('when called', () => {
+      test('then should payment auth request data', () => {
+        const expected = {
+          order_id: 'fake-order-id',
+          gousto_ref: 'fake-gousto-ref',
+          card_token: 'test-token',
+          amount: 2499,
+          '3ds': true,
+          success_url: `http://localhost${routes.client.payment.success}`,
+          failure_url: `http://localhost${routes.client.payment.failure}`,
+          decoupled: false
+        }
+
+        const result = getPaymentAuthData(state)
+
+        expect(result).toEqual(expected)
+      })
+    })
+
+    describe('when payment decoupling enabled', () => {
+      beforeEach(() => {
+        getIsDecoupledPaymentEnabled.mockReturnValueOnce(true)
+      })
+
+      test('then should send decoupled param value true', () => {
+        const expected = {
+          decoupled: true
+        }
+
+        const result = getPaymentAuthData(state)
+
+        expect(result).toEqual(expect.objectContaining(expected))
+      })
+    })
+  })
+
+  describe('given getDecoupledPaymentData method', () => {
+    describe('when 3DSForSignUp is disabled', () => {
+      beforeEach(() => {
+        state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
+      })
+
+      test('then should return payment details for non 3ds card', () => {
+        const expected = {
+          order_id: 'fake-order-id',
+          gousto_ref: 'fake-gousto-ref',
+          card_token: 'test-token',
+          '3ds': false,
+        }
+
+        const result = getDecoupledPaymentData(state)
+
+        expect(result).toEqual(expected)
+      })
+    })
+
+    describe('when 3DSForSignUp is enabled', () => {
+      beforeEach(() => {
+        getIs3DSForSignUpEnabled.mockReturnValueOnce(true)
+        state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
+      })
+
+      test('then should return payment details for 3ds card', () => {
+        const expected = {
+          order_id: 'fake-order-id',
+          gousto_ref: 'fake-gousto-ref',
+          card_token: 'test-token',
+          '3ds': true,
+        }
+
+        const result = getDecoupledPaymentData(state)
+
+        expect(result).toEqual(expected)
+      })
+    })
+
+    describe('when PayPal method', () => {
+      test('then should return payment details for PayPal', () => {
+        const expected = {
+          order_id: 'fake-order-id',
+          gousto_ref: 'fake-gousto-ref',
+          card_token: 'test-nonce',
+          device_data: deviceData
+        }
+
+        const result = getDecoupledPaymentData(state)
 
         expect(result).toEqual(expected)
       })

@@ -22,6 +22,10 @@ const cases = [
   [actionTypes.CARD_TOKENIZATION_FAILED, true, 'card-tokenization-failed'],
   [actionTypes.NETWORK_FAILURE, true, 'network-failure'],
   [actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED, true, 'valid-card-details-not-provided'],
+  [actionTypes.CHECKOUT_PAYMENT, '422-payment-failed', 'signup-payments-payment-failure'],
+  [actionTypes.CHECKOUT_PAYMENT, '422-insufficient-funds', 'signup-payments-insufficient-funds'],
+  [actionTypes.CHECKOUT_PAYMENT, '422-declined-do-not-honour', 'signup-payments-declined-do-not-honour'],
+  [actionTypes.CHECKOUT_PAYMENT, '3ds-challenge-failed', 'signup-payments-challenge-failed'],
   ['*unrecognized-action-type*', true, 'generic'],
 ]
 

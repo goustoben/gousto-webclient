@@ -23,7 +23,7 @@ import {
   trackFirstPurchase,
   trackNewUser,
   trackNewOrder,
-  trackSubscriptionCreated,
+  trackUnexpectedSignup,
 } from 'actions/tracking'
 
 import { PaymentMethod, signupConfig } from 'config/signup'
@@ -86,6 +86,7 @@ jest.mock('actions/tracking', () => ({
   trackNewUser: jest.fn(() => ({ action: 'track_new_user' })),
   trackNewOrder: jest.fn(() => ({ action: 'track_new_order' })),
   trackSubscriptionCreated: jest.fn(() => ({ action: 'track_subscription_created' })),
+  trackUnexpectedSignup: jest.fn(() => ({ action: 'track_unexpected_signup' })),
 }))
 
 jest.mock('apis/prospect', () => ({
@@ -268,7 +269,9 @@ describe('user actions', () => {
       getIsDecoupledPaymentEnabled.mockReturnValue(false)
       customerSignup.mockClear()
       state = {
-        basket: Immutable.fromJS({}),
+        basket: Immutable.fromJS({
+          boxId: 123,
+        }),
         checkout: Immutable.fromJS({
           goustoRef: '105979923',
         }),
@@ -330,36 +333,6 @@ describe('user actions', () => {
           })
         }
         getState.mockReturnValue(localState)
-      })
-
-      describe('and subscription was successful', () => {
-        beforeEach(() => {
-          customerSignup.mockReturnValue(
-            new Promise(resolve => {
-              resolve({
-                data: {
-                  customer: {
-                    id: 111,
-                    goustoReference: '9999'
-                  },
-                  addresses: {
-                    billing_address: 'some address'
-                  },
-                  subscription: {
-                    id: 222
-                  },
-                  orderId: 333,
-                }
-              })
-            })
-          )
-        })
-
-        test('then should dispatch trackSubscriptionCreated action', async () => {
-          await userSubscribe()(dispatch, getState)
-
-          expect(trackSubscriptionCreated).toHaveBeenCalledWith(333, 111, 222)
-        })
       })
     })
 
@@ -511,7 +484,7 @@ describe('user actions', () => {
               type: actionTypes.CHECKOUT_ORDER_PLACED,
               trackingData: {
                 actionType: placeOrder,
-                order_id: 333,
+                order_id: '12345',
                 order_total: '24.55',
                 promo_code: false,
                 signup: true,
@@ -537,7 +510,9 @@ describe('user actions', () => {
     describe('trim function in reqdata', () => {
       let expectedParam
       const trimState = {
-        basket: Immutable.fromJS({}),
+        basket: Immutable.fromJS({
+          boxId: 123,
+        }),
         checkout: Immutable.fromJS({
           goustoRef: '105979923',
         }),
@@ -628,7 +603,7 @@ describe('user actions', () => {
           subscription: {
             interval_id: 1,
             delivery_slot_id: undefined,
-            box_id: undefined
+            box_id: 123
           },
           '3ds': 0,
           decoupled: {
@@ -687,7 +662,9 @@ describe('user actions', () => {
 
       beforeEach(() => {
         state = {
-          basket: Immutable.fromJS({}),
+          basket: Immutable.fromJS({
+            boxId: 123,
+          }),
           checkout: Immutable.fromJS({
             goustoRef: '105979923',
           }),
@@ -766,7 +743,7 @@ describe('user actions', () => {
           subscription: {
             interval_id: 1,
             delivery_slot_id: undefined,
-            box_id: undefined
+            box_id: 123
           },
           decoupled: {
             payment: 1,
@@ -810,6 +787,24 @@ describe('user actions', () => {
         expect(customerSignup).toHaveBeenCalledWith(null, expect.objectContaining({
           payment_show_soft_decline: true
         }))
+      })
+    })
+
+    describe('when boxId is missing', () => {
+      beforeEach(() => {
+        const localState = {
+          ...state,
+          basket: Immutable.fromJS({
+            boxId: null
+          })
+        }
+        getState.mockReturnValue(localState)
+      })
+
+      test('should track unexpected signup event', async () => {
+        await userSubscribe()(dispatch, getState)
+
+        expect(trackUnexpectedSignup).toHaveBeenCalled()
       })
     })
   })

@@ -17,6 +17,7 @@ describe('basket reducer', () => {
     initialState = Immutable.fromJS({
       address: null,
       addressTypeEdited: false,
+      boxId: null,
       collection: '',
       chosenAddress: null,
       currentMenuId: '',
