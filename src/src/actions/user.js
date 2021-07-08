@@ -5,6 +5,7 @@ import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
 import { fetchOrder } from 'apis/orders'
+import { get3DSCompliantToken } from 'apis/payments'
 import * as prospectApi from 'apis/prospect'
 
 import { signupConfig } from 'config/signup'
@@ -889,6 +890,20 @@ export const userLoadOrderTrackingInfo = (orderId) => (
     }
   }
 )
+
+export const userCheck3dsCompliantToken = () => async (dispatch, getState) => {
+  try {
+    const { user } = getState()
+    const goustoRef = user.get('goustoReference')
+    const { data } = await get3DSCompliantToken(goustoRef)
+    dispatch({
+      type: actionTypes.USER_GET_3DS_COMPLIANT_TOKEN,
+      isCardTokenNotCompliantFor3ds: data.displayModal,
+    })
+  } catch (err) {
+    logger.error({ message: 'Failed to fetch 3ds compliant token', errors: [err] })
+  }
+}
 
 const userActions = {
   checkCardExpiry,

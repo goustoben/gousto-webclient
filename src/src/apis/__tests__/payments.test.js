@@ -4,6 +4,7 @@ import {
   checkPayment,
   fetchPayPalToken,
   signupPayment,
+  get3DSCompliantToken,
 } from '../payments'
 
 const mockPaymentAuthResponse = {
@@ -47,6 +48,13 @@ const mockSignupPaymentResponse = {
   data: {
     amount: 2499,
     status: 'authorized'
+  }
+}
+
+const mock3dsCompliantTokenResponse = {
+  status: 'ok',
+  data: {
+    displayModal: true
   }
 }
 
@@ -156,6 +164,19 @@ describe('Payments API', () => {
       const result = await signupPayment(request)
 
       expect(result).toEqual(mockSignupPaymentResponse)
+    })
+  })
+
+  describe('get3DSCompliantToken', () => {
+    test('should get 3ds compliant token and receive proper response', async () => {
+      const goustoRef = 1000
+      const expectedUrl = `https://production-api.gousto.co.uk/payments/v1/payments/3ds-compliant/${goustoRef}`
+      fetch.mockImplementationOnce(() => mock3dsCompliantTokenResponse)
+      const response = await get3DSCompliantToken(goustoRef)
+
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(null, expectedUrl, {}, 'GET', undefined, expectedHeaders)
+      expect(response).toEqual(mock3dsCompliantTokenResponse)
     })
   })
 })

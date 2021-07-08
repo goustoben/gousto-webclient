@@ -172,4 +172,23 @@ describe('Payment state', () => {
       expect(result.get('paypalDeviceData')).toBe(deviceData)
     })
   })
+
+  describe('when action type is USER_GET_3DS_COMPLIANT_TOKEN', () => {
+    let state
+    let result
+    const isCardTokenNotCompliantFor3ds = true
+
+    beforeEach(() => {
+      state = initialState()
+
+      result = payment(state, {
+        type: actionTypes.USER_GET_3DS_COMPLIANT_TOKEN,
+        isCardTokenNotCompliantFor3ds,
+      })
+    })
+
+    test('should update isCardTokenNotCompliantFor3ds properly', () => {
+      expect(result.get('isCardTokenNotCompliantFor3ds')).toBeTruthy()
+    })
+  })
 })

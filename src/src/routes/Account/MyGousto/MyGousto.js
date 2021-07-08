@@ -27,6 +27,8 @@ const propTypes = {
   showAppAwareness: PropTypes.bool,
   rateRecipeCount: PropTypes.number,
   trackClickRateRecipes: PropTypes.func,
+  userCheck3dsCompliantToken: PropTypes.func,
+  goustoRef: PropTypes.string,
 }
 
 const contextTypes = {
@@ -45,6 +47,8 @@ const defaultProps = {
   showAppAwareness: false,
   rateRecipeCount: 0,
   trackClickRateRecipes: () => {},
+  userCheck3dsCompliantToken: () => {},
+  goustoRef: '',
 }
 
 class MyGousto extends React.PureComponent {
@@ -58,6 +62,15 @@ class MyGousto extends React.PureComponent {
     setTimeout(() => {
       store.dispatch(menuFetchData({ query: {}, params: {} }, false, true))
     }, 500)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { userCheck3dsCompliantToken, goustoRef } = this.props
+    const { goustoRef: previousGoustoRef } = prevProps
+
+    if (goustoRef !== previousGoustoRef) {
+      userCheck3dsCompliantToken()
+    }
   }
 
   render() {

@@ -9,6 +9,7 @@ export const initialState = () => Immutable.Map({
   paypalClientToken: null,
   paypalNonce: null,
   paypalDeviceData: null,
+  isCardTokenNotCompliantFor3ds: true,
 })
 
 export const payment = (state = initialState(), action) => {
@@ -47,6 +48,12 @@ export const payment = (state = initialState(), action) => {
     const { deviceData } = action
 
     return state.set('paypalDeviceData', deviceData)
+  }
+
+  case actionTypes.USER_GET_3DS_COMPLIANT_TOKEN: {
+    const { isCardTokenNotCompliantFor3ds } = action
+
+    return state.set('isCardTokenNotCompliantFor3ds', isCardTokenNotCompliantFor3ds)
   }
 
   default:

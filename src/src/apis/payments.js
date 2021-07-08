@@ -24,9 +24,14 @@ function signupPayment(reqData, provider) {
   return fetch(null, `${PAYMENTS_API}/signup-payments?provider=${provider}`, reqData, 'POST', undefined, HEADERS)
 }
 
+function get3DSCompliantToken(goustoRef) {
+  return fetch(null, `${PAYMENTS_API}/3ds-compliant/${goustoRef}`, {}, 'GET', undefined, HEADERS)
+}
+
 export {
   authPayment,
   checkPayment,
   fetchPayPalToken,
   signupPayment,
+  get3DSCompliantToken,
 }
