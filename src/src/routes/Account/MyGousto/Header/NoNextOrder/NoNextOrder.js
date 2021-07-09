@@ -1,33 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { Heading } from 'goustouicomponents'
-import { CardWithLink } from 'CardWithLink'
-import { OrderDetails } from '../OrderDetails/OrderDetails'
+import { Heading, Card, CTA } from 'goustouicomponents'
+import GoustoLink from 'Link'
 import css from './NoNextOrder.css'
 
-const NoNextOrder = ({ linkLabel, linkUrl, primaryMessage }) => (
+const NoNextOrder = () => (
   <div>
     <Heading size="fontStyleM" type="h2">
       Upcoming delivery
     </Heading>
-    <CardWithLink
-      linkLabel={linkLabel}
-      linkUrl={linkUrl}
-    >
-      <OrderDetails heading="Your next box delivery">
-        <div className={css.orderDetailsItem}>
-          <p className={css.message}><strong>{primaryMessage}</strong></p>
-        </div>
-      </OrderDetails>
-    </CardWithLink>
+    <Card>
+      <p className={css.subtitle}>No scheduled deliveries</p>
+      <GoustoLink to="/menu">
+        <CTA
+          isFullWidth
+          variant="secondary"
+          size="small"
+          onClick={() => {}}
+        >
+          View this week’s menu
+        </CTA>
+      </GoustoLink>
+    </Card>
   </div>
-
 )
-
-NoNextOrder.propTypes = {
-  linkLabel: PropTypes.string.isRequired,
-  linkUrl: PropTypes.string.isRequired,
-  primaryMessage: PropTypes.string.isRequired,
-}
-
 export { NoNextOrder }

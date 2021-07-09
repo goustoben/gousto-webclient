@@ -51,11 +51,7 @@ const HeaderPresentation = ({
             />
           )
           : (
-            <NoNextOrder
-              linkLabel={nextOrderMessage.linkLabel}
-              linkUrl={nextOrderMessage.linkUrl}
-              primaryMessage={nextOrderMessage.primary}
-            />
+            <NoNextOrder />
           )}
       </div>
     </div>

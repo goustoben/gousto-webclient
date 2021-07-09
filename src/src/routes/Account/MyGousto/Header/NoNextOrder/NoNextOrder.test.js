@@ -4,17 +4,10 @@ import { NoNextOrder } from '.'
 
 describe('the NoNextOrder component', () => {
   let wrapper
-  const LABEL = 'This is a label'
-  const URL = 'this/is/a/path'
-  const PRIMARY_MESSAGE = 'Please click here, I beg you'
 
   beforeEach(() => {
     wrapper = mount(
-      <NoNextOrder
-        linkLabel={LABEL}
-        linkUrl={URL}
-        primaryMessage={PRIMARY_MESSAGE}
-      />
+      <NoNextOrder />
     )
   })
 
@@ -24,26 +17,15 @@ describe('the NoNextOrder component', () => {
     expect(wrapper.find('Heading').contains('Upcoming delivery')).toBe(true)
   })
 
-  test('should show the primary message', () => {
-    expect(wrapper.find('OrderDetails').find('.message').text())
-      .toBe(PRIMARY_MESSAGE)
+  test('renders correct Subtitle', () => {
+    expect(wrapper.find('.subtitle').contains('No scheduled deliveries')).toBe(true)
   })
 
-  test('Passes the linkLabel prop down to CardWithLink"', () => {
-    const linkLabel = wrapper.find('CardWithLink').prop('linkLabel')
-    expect(linkLabel).toBe(LABEL)
+  test('that menu CTA text renders correctly', () => {
+    expect(wrapper.find('CTA').contains('View this week’s menu')).toBe(true)
   })
 
-  test('Passes the linkUrl prop down to CardWithLink', () => {
-    const linkUrl = wrapper.find('CardWithLink').prop('linkUrl')
-    expect(linkUrl).toBe(URL)
-  })
-
-  test('The clientRouted prop of CardWithLink is true', () => {
-    expect(wrapper.find('CardWithLink').prop('clientRouted')).toBe(true)
-  })
-
-  test('passes the correct heading to OrderDetails', () => {
-    expect(wrapper.find('OrderDetails').prop('heading')).toBe('Your next box delivery')
+  test('Menu link redirects to the correct url', () => {
+    expect(wrapper.find('GoustoLink').prop('to')).toBe('/menu')
   })
 })

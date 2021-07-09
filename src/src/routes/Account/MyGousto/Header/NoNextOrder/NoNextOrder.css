@@ -1,8 +1,4 @@
-.orderDetailsItem {
-  padding-bottom: 0.75rem;
-  flex-grow: 1;
-}
-
-.message {
-  margin-bottom: 0;
+.subtitle {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+  margin-bottom: 0.75rem;
 }

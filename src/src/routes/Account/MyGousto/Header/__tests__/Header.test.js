@@ -333,11 +333,8 @@ describe('MyGousto - Header', () => {
       )
     })
 
-    test('should render the NoNextOrder component with the right props', () => {
-      const noNextOrder = wrapper.find('NoNextOrder')
-      expect(noNextOrder.prop('linkLabel')).toBe("View this week's menu")
-      expect(noNextOrder.prop('linkUrl')).toBe('/menu')
-      expect(noNextOrder.prop('primaryMessage')).toBe('No boxes scheduled')
+    test('should render the NoNextOrder component without any props', () => {
+      expect(wrapper.find('NoNextOrder')).toHaveLength(1)
     })
   })
 
