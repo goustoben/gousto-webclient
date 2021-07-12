@@ -15,6 +15,17 @@ ecs:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
       containerPort: 5000
+
+  logs:
+    - name: webclientlog
+
+  containers:
+    gousto-webclient:
+      port: 80
+      logName: webclientlog
+      environment:
+        PORT: 80
+
   healthCheck:
     target: 'HTTP:80/health/health.html'
     healthyThreshold: 2
@@ -22,6 +33,13 @@ ecs:
     interval: 5
     timeout: 4
     gracePeriod: 30
+
+  alarms:
+    cpuAmber: 61
+    cpuRed: 80
+    elbLatencyAmber: 0.8
+    elbLatencyRed: 1.2
+
   taskRolePolicies:
     - name: task-role
       effect: Allow
