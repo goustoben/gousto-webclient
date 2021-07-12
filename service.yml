@@ -10,7 +10,7 @@ alb:
   ec2:
     type: public
     rules:
-      - priority: 92
+      - priority: 93
         conditions:
           - field: host-header
             value: "[environment]-webclient.[cloudformation_output_domain]"
@@ -18,7 +18,7 @@ alb:
   ecs:
     - type: public
       rules:
-        - priority: 93
+        - priority: 92
           conditions:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
