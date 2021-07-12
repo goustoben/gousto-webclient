@@ -6,22 +6,24 @@ dns: webclient
 owner: squad-radishes
 rootVolumeSize: 16
 
-alb:
-  ec2:
-    type: public
-    rules:
-      - priority: 93
-        conditions:
-          - field: host-header
-            value: "[environment]-webclient.[cloudformation_output_domain]"
-
-  ecs:
-    - type: public
+ecs:
+  alb:
+    - type: external
       rules:
         - priority: 92
           conditions:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
+      containerPort: 5000
+  taskRolePolicies:
+    - name: task-role
+      effect: Allow
+      actions:
+        - cloudformation:ListStacks
+        - elasticloadbalancing:DescribeTargetGroups
+        - elasticloadbalancing:DescribeTargetHealth
+      resources:
+        - "*"
 
 messages:
  publish:

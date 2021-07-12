@@ -235,7 +235,7 @@ jobs:
           at: ~/
       - run:
           name: Deploy containers to ECS
-          command: source ~/.circlerc && python ./ci_scripts/deploy_containers.py --service webclient
+          command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
           no_output_timeout: 20m
 
   install-test-dependencies:
