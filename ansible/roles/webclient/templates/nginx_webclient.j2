@@ -5,6 +5,11 @@ server {
   listen       {{ ngnix_port }};
   server_name  localhost;
 
+  ##Frontend Health check
+  location = /health/health.html {
+    return 200 'Frontend Health Check';
+  }
+
   location / {
     proxy_pass http://localhost:{{ node_server_port }};
     proxy_http_version 1.1;

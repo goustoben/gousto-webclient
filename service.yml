@@ -15,6 +15,13 @@ ecs:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
       containerPort: 5000
+  healthCheck:
+    target: 'HTTP:80/health/health.html'
+    healthyThreshold: 2
+    unhealthyThreshold: 10
+    interval: 5
+    timeout: 4
+    gracePeriod: 30
   taskRolePolicies:
     - name: task-role
       effect: Allow
