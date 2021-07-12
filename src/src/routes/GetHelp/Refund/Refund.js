@@ -11,6 +11,7 @@ import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
+import { orderPropType } from '../getHelpPropTypes'
 
 import css from './Refund.css'
 
@@ -28,9 +29,7 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
-  order: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-  }).isRequired,
+  order: orderPropType.isRequired,
   selectedIngredients: PropTypes.objectOf(PropTypes.shape({
     ingredientUuid: PropTypes.string.isRequired,
     issueDescription: PropTypes.string.isRequired,

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import { client } from 'config/routes'
 import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
 import Link from 'components/Link'
+import { userOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
 import css from './PreviousOrder.css'
 
 const PreviousOrder = ({
@@ -65,16 +65,7 @@ const PreviousOrder = ({
 PreviousOrder.propTypes = {
   hasDeliveryToday: PropTypes.bool.isRequired,
   hasTooltip: PropTypes.bool.isRequired,
-  order: ImmutablePropTypes.contains({
-    deliveryDate: PropTypes.string,
-    orderId: PropTypes.string,
-    orderState: PropTypes.string,
-    price: PropTypes.string,
-    recipeImages: ImmutablePropTypes.contains({
-      alt: PropTypes.string,
-      src: PropTypes.string,
-    }),
-  }).isRequired,
+  order: userOrderPropType.isRequired,
   trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
 }
 

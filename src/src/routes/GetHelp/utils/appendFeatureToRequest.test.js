@@ -1,4 +1,4 @@
-import { appendFeatureToRequest } from '../appendFeatureToRequest'
+import { appendFeatureToRequest } from './appendFeatureToRequest'
 
 describe('given appendFeatureToRequest is being called', () => {
   let request = null
@@ -20,7 +20,7 @@ describe('given appendFeatureToRequest is being called', () => {
     })
   })
 
-  describe('when featureShorterCompensationPeriod is true', () => {
+  describe('when featureShorterCompensationPeriod is false', () => {
     beforeEach(() => {
       request = appendFeatureToRequest({
         body: {

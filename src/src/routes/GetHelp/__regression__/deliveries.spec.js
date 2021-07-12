@@ -100,7 +100,7 @@ describe('Given I am logged in and visit the home page', () => {
       beforeEach(() => {
         clickMyGousto()
 
-        cy.get('[data-testing="nextBoxDeliveryHelp"] a').click()
+        cy.get('[data-testing="myGoustoNextBoxHelpCTA"]').click()
       })
 
       describe('and I select Delivery issue', () => {

@@ -1,72 +1,121 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Heading } from 'goustouicomponents'
+import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
+import Link from 'components/Link'
+import configRoutes from 'config/routes'
 import { windowOpen } from 'utils/window'
-import { CardWithLink } from 'CardWithLink'
-import { OrderDetails } from '../OrderDetails/OrderDetails'
+import { userOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
+import { getClientOrderState } from '../../../../GetHelp/utils/orders'
+
 import css from './NextOrder.css'
 
 const NextOrder = ({
   boxTrackingUrl,
   hasDeliveryToday,
   hasTooltip,
-  linkLabel,
-  linkUrl,
-  orderId,
-  primaryMessage,
-  secondaryMessage,
-  trackButtonClick,
-  trackLinkClick,
-}) => (
-  <div>
-    <Heading size="fontStyleM" type="h2">
-      {hasDeliveryToday ? 'Today\'s delivery' : 'Upcoming delivery'}
-    </Heading>
-    <CardWithLink
-      linkLabel={linkLabel}
-      linkUrl={linkUrl}
-      testingSelector="nextBoxDeliveryHelp"
-      tooltipContent={hasTooltip
-        && 'Any issues with this box? Let us know and we\'ll sort it out.'}
-      trackClick={hasDeliveryToday ? () => trackLinkClick(orderId) : null}
-    >
-      <OrderDetails heading="Your next box delivery">
-        <div className={css.nextOrder}>
-          <div className={css.orderDetailsItem}>
-            <p className={css.message}><strong>{primaryMessage}</strong></p>
-            <p className={css.message}>{secondaryMessage}</p>
-          </div>
+  order,
+  trackNextBoxTrackingClick,
+  trackClickGetHelpWithThisBox,
+}) => {
+  const deliveryDate = order.get('humanDeliveryDate')
+  const orderId = order.get('id')
+  const price = order.getIn(['prices', 'total'])
+  const orderClientState = getClientOrderState(
+    order.get('state'),
+    deliveryDate,
+    order.get('recipeItems'),
+    order.get('phase')
+  )
+  const recipeImages = order.get('recipeItems').map((item) => {
+    const image = item.get('media').find(
+      (mediaItem) => (mediaItem.get('type') === 'mood-image')
+    ).getIn(['urls', '1'])
+
+    return ({
+      alt: item.get('title', 'Recipe image'),
+      src: image.get('src'),
+    })
+  })
+
+  const CTALabel = hasDeliveryToday
+    ? 'Any issues with this box?'
+    : 'View my upcoming deliveries'
+  const CTALink = hasDeliveryToday
+    ? `${configRoutes.client.getHelp.index}?orderId=${order.get('id')}`
+    : configRoutes.client.myDeliveries
+
+  const onClick = () => {
+    if (hasDeliveryToday) {
+      trackClickGetHelpWithThisBox(orderId)
+    }
+  }
+
+  return (
+    <div>
+      <div className={css.headingWrapper}>
+        <Heading size="fontStyleM" type="h2">
+          {hasDeliveryToday ? 'Today\'s delivery' : 'Upcoming delivery'}
+        </Heading>
+        {hasDeliveryToday && (
+          <Link to={configRoutes.client.myDeliveries} className={css.headingLink}>
+            View deliveries
+          </Link>
+        )}
+      </div>
+      <Card>
+        <OrderDetails
+          deliveryDate={deliveryDate}
+          orderState={orderClientState}
+          price={price}
+          recipeImages={recipeImages.toJS()}
+        />
+        <div className={css.ctasWrapper}>
           {boxTrackingUrl && (
-            <div className={css.orderDetailsItem}>
-              <Button
-                width="full"
+            <div className={css.cta}>
+              <CTA
+                isFullWidth
                 onClick={() => {
-                  trackButtonClick(orderId)
+                  trackNextBoxTrackingClick(orderId)
                   windowOpen(boxTrackingUrl)
                 }}
+                size="small"
+                variant="primary"
               >
                 Track my box
-              </Button>
+              </CTA>
             </div>
           )}
+          <div className={css.cta}>
+            {hasTooltip && (
+              <InfoTip isCloseIconVisible>
+                Any issues with this box? Let us know and we&apos;ll sort it out.
+              </InfoTip>
+            )}
+            <Link to={CTALink}>
+              <CTA
+                isFullWidth
+                onClick={onClick}
+                size="small"
+                variant={boxTrackingUrl || !hasDeliveryToday ? 'secondary' : 'primary'}
+                testingSelector="myGoustoNextBoxHelpCTA"
+              >
+                {CTALabel}
+              </CTA>
+            </Link>
+          </div>
         </div>
-      </OrderDetails>
-    </CardWithLink>
-  </div>
-
-)
+      </Card>
+    </div>
+  )
+}
 
 NextOrder.propTypes = {
   boxTrackingUrl: PropTypes.string,
   hasDeliveryToday: PropTypes.bool.isRequired,
   hasTooltip: PropTypes.bool.isRequired,
-  linkLabel: PropTypes.string.isRequired,
-  linkUrl: PropTypes.string.isRequired,
-  orderId: PropTypes.string.isRequired,
-  primaryMessage: PropTypes.string.isRequired,
-  secondaryMessage: PropTypes.string.isRequired,
-  trackButtonClick: PropTypes.func.isRequired,
-  trackLinkClick: PropTypes.func.isRequired,
+  order: userOrderPropType.isRequired,
+  trackNextBoxTrackingClick: PropTypes.func.isRequired,
+  trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
 }
 
 NextOrder.defaultProps = {

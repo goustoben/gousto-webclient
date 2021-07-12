@@ -1,36 +1,96 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 import * as windowUtils from 'utils/window'
+import configRoutes from 'config/routes'
 import { safeJestMock } from '_testing/mocks'
-import { NextOrder } from '.'
+import { NextOrder } from './NextOrder'
 
 jest.mock('utils/window', () => ({
   windowOpen: jest.fn()
 }))
 
+jest.mock('../../../../GetHelp/utils/orders', () => ({
+  getClientOrderState: (state, deliveryDate, recipeItems, phase) => {
+    if (
+      state === 'pending'
+      && deliveryDate === 'Saturday 17th July'
+      && recipeItems.size === 2
+      && phase === 'open'
+    ) {
+      return 'recipes chosen'
+    }
+
+    return 'getClientOrderState was not called with the right params, make the the test fail'
+  }
+}))
+
 describe('the NextOrder component', () => {
   let wrapper
-  const LABEL = 'This is a label'
-  const URL = 'this/is/a/path'
-  const PRIMARY_MESSAGE = 'This is a message'
-  const SECONDARY_MESSAGE = 'This is another message'
   const ORDER_ID = '1234'
-  const trackButtonClick = jest.fn()
-  const trackLinkClick = jest.fn()
+  const ORDER_DATE = 'Saturday 17th July'
+  const ORDER_PHASE = 'open'
+  const ORDER_STATE = 'pending'
+  const ORDER_TOTAL_PRICE = '25.12'
+  const ORDER_IMAGE1_URL = 's3.image1.url'
+  const ORDER_IMAGE2_URL = 's3.image2.url'
+  const ORDER_IMAGE1_TITLE = 'Pineapple Pizza'
+  const ORDER_IMAGE2_TITLE = 'Paella with chorizo'
+  const ORDER = Immutable.fromJS({
+    id: ORDER_ID,
+    humanDeliveryDate: ORDER_DATE,
+    phase: ORDER_PHASE,
+    prices: {
+      total: ORDER_TOTAL_PRICE,
+    },
+    recipeItems: [
+      {
+        title: ORDER_IMAGE1_TITLE,
+        media: [
+          {
+            type: 'wrong-type',
+            urls: [],
+          },
+          {
+            type: 'mood-image',
+            urls: [
+              { src: 'Irrelevant, the first one is not selected' },
+              { src: ORDER_IMAGE1_URL }
+            ]
+          }
+        ],
+      },
+      {
+        title: ORDER_IMAGE2_TITLE,
+        media: [
+          {
+            type: 'wrong-type',
+            urls: [],
+          },
+          {
+            type: 'mood-image',
+            urls: [
+              { src: 'Irrelevant, the first one is not selected' },
+              { src: ORDER_IMAGE2_URL }
+            ]
+          }
+        ],
+      },
+    ],
+    state: ORDER_STATE,
+  })
+  const trackNextBoxTrackingClick = jest.fn()
+  const trackClickGetHelpWithThisBox = jest.fn()
 
   beforeEach(() => {
     wrapper = mount(
       <NextOrder
         boxTrackingUrl={null}
-        hasDeliveryToday
+        hasDeliveryToday={false}
         hasTooltip
-        linkLabel={LABEL}
-        linkUrl={URL}
-        orderId={ORDER_ID}
-        primaryMessage={PRIMARY_MESSAGE}
-        secondaryMessage={SECONDARY_MESSAGE}
-        trackButtonClick={trackButtonClick}
-        trackLinkClick={trackLinkClick}
+        order={ORDER}
+        trackNextBoxTrackingClick={trackNextBoxTrackingClick}
+        trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
       />
     )
   })
@@ -41,36 +101,22 @@ describe('the NextOrder component', () => {
 
   test('renders without crashing', () => {})
 
-  test('should show the primary message', () => {
-    expect(wrapper.find('OrderDetails').find('.message').at(0).text())
-      .toBe(PRIMARY_MESSAGE)
-  })
+  test('renders OrderDetails with the right props inside a Card', () => {
+    const orderDetails = wrapper.find('Card').find('OrderDetails')
 
-  test('should show the secondary message', () => {
-    expect(wrapper.find('OrderDetails').find('.message').at(1).text())
-      .toBe(SECONDARY_MESSAGE)
-  })
-
-  test('passes the linkLabel to CardWithLink"', () => {
-    const linkLabel = wrapper.find('CardWithLink').prop('linkLabel')
-    expect(linkLabel).toBe(LABEL)
-  })
-
-  test('passes the linkUrl to CardWithLink', () => {
-    const linkUrl = wrapper.find('CardWithLink').prop('linkUrl')
-    expect(linkUrl).toBe(URL)
-  })
-
-  test('passes the correct testingSelector to CardWithLink', () => {
-    expect(wrapper.find('CardWithLink').prop('testingSelector')).toBe('nextBoxDeliveryHelp')
-  })
-
-  test('the clientRouted prop of CardWithLink is true', () => {
-    expect(wrapper.find('CardWithLink').prop('clientRouted')).toBe(true)
-  })
-
-  test('passes the correct heading to OrderDetails', () => {
-    expect(wrapper.find('OrderDetails').prop('heading')).toBe('Your next box delivery')
+    expect(orderDetails.prop('deliveryDate')).toBe(ORDER_DATE)
+    expect(orderDetails.prop('orderState')).toBe('recipes chosen')
+    expect(orderDetails.prop('price')).toBe(ORDER_TOTAL_PRICE)
+    expect(orderDetails.prop('recipeImages')).toEqual([
+      {
+        alt: ORDER_IMAGE1_TITLE,
+        src: ORDER_IMAGE1_URL,
+      },
+      {
+        alt: ORDER_IMAGE2_TITLE,
+        src: ORDER_IMAGE2_URL,
+      },
+    ])
   })
 
   describe('When hasTooltip is true', () => {
@@ -78,9 +124,13 @@ describe('the NextOrder component', () => {
       wrapper.setProps({ hasTooltip: true })
     })
 
-    test('passes the correct tooltipContent to CardWithLink', () => {
-      expect(wrapper.find('CardWithLink').prop('tooltipContent'))
+    test('renders the tooltip', () => {
+      expect(wrapper.find('InfoTip').text())
         .toBe('Any issues with this box? Let us know and we\'ll sort it out.')
+    })
+
+    test('renders the close button in the tooltip', () => {
+      expect(wrapper.find('InfoTip').prop('isCloseIconVisible')).toBe(true)
     })
   })
 
@@ -89,8 +139,8 @@ describe('the NextOrder component', () => {
       wrapper.setProps({ hasTooltip: false })
     })
 
-    test('does not pass tooltipContent to CardWithLink', () => {
-      expect(wrapper.find('CardWithLink').prop('tooltipContent')).toBe(false)
+    test('does not render the tooltip', () => {
+      expect(wrapper.find('InfoTip').exists()).toBe(false)
     })
   })
 
@@ -103,13 +153,31 @@ describe('the NextOrder component', () => {
       expect(wrapper.find('Heading').contains('Today\'s delivery')).toBe(true)
     })
 
-    describe('And CardWithLink prop "trackClick" is called', () => {
+    test('renders the link to My deliveries next to the heading', () => {
+      const myDeliveriesLink = wrapper.find('.headingWrapper').find('GoustoLink')
+      expect(myDeliveriesLink.text()).toBe('View deliveries')
+    })
+
+    test('the link next to the Heading points to My Deliveries', () => {
+      const myDeliveriesLink = wrapper.find('.headingWrapper').find('GoustoLink')
+      expect(myDeliveriesLink.prop('to')).toBe(configRoutes.client.myDeliveries)
+    })
+
+    test('renders a Link pointing to Get Help', () => {
+      expect(wrapper.find('.cta').find('GoustoLink').prop('to')).toBe(`/get-help?orderId=${ORDER_ID}`)
+    })
+
+    test('renders a CTA with the correct copy, within the Link ', () => {
+      expect(wrapper.find('.cta').find('GoustoLink').find('CTA').text()).toBe('Any issues with this box?')
+    })
+
+    describe('And the Get Help CTA is clicked', () => {
       beforeEach(() => {
-        wrapper.find('CardWithLink').prop('trackClick')()
+        wrapper.find('CTA').simulate('click')
       })
 
-      test('calls trackLinkClick with orderId', () => {
-        expect(trackLinkClick).toHaveBeenCalledWith(ORDER_ID)
+      test('calls trackClickGetHelpWithThisBox with orderId', () => {
+        expect(trackClickGetHelpWithThisBox).toHaveBeenCalledWith(ORDER_ID)
       })
     })
   })
@@ -123,8 +191,26 @@ describe('the NextOrder component', () => {
       expect(wrapper.find('Heading').contains('Upcoming delivery')).toBe(true)
     })
 
-    test('trackLinkClick is not passed to CardWithLink', () => {
-      expect(wrapper.find('CardWithLink').prop('trackClick')).toBe(null)
+    test('does not render the link to My deliveries next to the heading', () => {
+      expect(wrapper.find('.headingWrapper').find('GoustoLink').exists()).toBe(false)
+    })
+
+    test('renders a Link pointing to My Deliveries', () => {
+      expect(wrapper.find('.cta').find('GoustoLink').prop('to')).toBe('/my-deliveries')
+    })
+
+    test('renders a CTA with the correct copy, within the Link ', () => {
+      expect(wrapper.find('.cta').find('GoustoLink').find('CTA').text()).toBe('View my upcoming deliveries')
+    })
+
+    describe('And the Get Help CTA is clicked', () => {
+      beforeEach(() => {
+        wrapper.find('CTA').simulate('click')
+      })
+
+      test('trackClickGetHelpWithThisBox is not called', () => {
+        expect(trackClickGetHelpWithThisBox).not.toHaveBeenCalled()
+      })
     })
   })
 
@@ -136,22 +222,60 @@ describe('the NextOrder component', () => {
     })
 
     test('renders the tracking button with the right copy', () => {
-      expect(wrapper.find('Button').text()).toBe('Track my box')
+      expect(wrapper.find('CTA').at(0).text()).toBe('Track my box')
+    })
+
+    test('renders the tracking button with primary style', () => {
+      expect(wrapper.find('CTA').at(0).prop('variant')).toBe('primary')
+    })
+
+    test('renders the non tracking button as secondary', () => {
+      expect(wrapper.find('CTA').at(1).prop('variant')).toBe('secondary')
     })
 
     describe('And the tracking button is clicked', () => {
       const windowOpen = safeJestMock(windowUtils, 'windowOpen')
 
       beforeEach(() => {
-        wrapper.find('Button').prop('onClick')()
+        wrapper.find('CTA').at(0).prop('onClick')()
       })
 
-      test('the trackButtonClick function is called with the orderId', () => {
-        expect(trackButtonClick).toHaveBeenCalledWith(ORDER_ID)
+      test('the trackNextBoxTrackingClick function is called with the orderId', () => {
+        expect(trackNextBoxTrackingClick).toHaveBeenCalledWith(ORDER_ID)
       })
 
       test('opens the boxTrackingUrl', () => {
         expect(windowOpen).toHaveBeenCalledWith(BOX_TRACKING_URL)
+      })
+    })
+  })
+
+  describe('When boxTrackingUrl is not passed', () => {
+    beforeEach(() => {
+      wrapper.setProps({ boxTrackingUrl: null })
+    })
+
+    test('does not render the tracking button', () => {
+      expect(wrapper.find('CTA')).toHaveLength(1)
+    })
+
+    describe('and the delivery is today', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasDeliveryToday: true })
+      })
+
+      test('renders the non tracking button as primary', () => {
+        expect(wrapper.find('CTA').prop('variant')).toBe('primary')
+      })
+    })
+
+    describe('and the delivery is not today', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasDeliveryToday: false })
+      })
+
+      test('renders the non tracking button as secondary', () => {
+        expect(wrapper.find('CTA').prop('variant')).toBe('secondary')
       })
     })
   })

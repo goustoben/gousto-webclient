@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
-import { NextOrder } from './NextOrder'
+import { userOrderPropType } from '../../../GetHelp/getHelpPropTypes'
+import { NextOrderContainer } from './NextOrder'
 import { NoNextOrder } from './NoNextOrder'
 import { PreviousOrderContainer } from './PreviousOrder'
 import { SubscriberPricingBanner } from './SubscriberPricingBanner'
@@ -9,99 +9,60 @@ import css from './Header.css'
 
 const HeaderPresentation = ({
   hasDeliveryToday,
-  nextOrderId,
-  nextOrderMessage,
+  nextOrder,
   nextOrderTracking,
   hasTooltipForNextOrder,
   hasTooltipForPreviousOrder,
   previousOrder,
-  trackClickGetHelpWithThisBox,
-  trackNextBoxTrackingClick,
   showSubscriberPricingBanner,
   subscriptionStatus,
-}) => {
-  const hasNextOrder = nextOrderMessage.secondary
-  const { linkLabel, linkUrl } = nextOrderMessage
-
-  return (
-    <div>
-      {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
-      <div className={css.cardsContainer}>
-        {previousOrder
-            && (
-              <PreviousOrderContainer
-                hasDeliveryToday={hasDeliveryToday}
-                hasTooltip={hasTooltipForPreviousOrder}
-                order={previousOrder}
-              />
-            )}
-        {hasNextOrder
-          ? (
-            <NextOrder
-              boxTrackingUrl={nextOrderTracking}
+}) => (
+  <div>
+    {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
+    <div className={css.cardsContainer}>
+      {previousOrder
+          && (
+            <PreviousOrderContainer
               hasDeliveryToday={hasDeliveryToday}
-              hasTooltip={hasTooltipForNextOrder}
-              linkLabel={linkLabel}
-              linkUrl={linkUrl}
-              orderId={nextOrderId}
-              primaryMessage={nextOrderMessage.primary}
-              secondaryMessage={nextOrderMessage.secondary}
-              trackButtonClick={trackNextBoxTrackingClick}
-              trackLinkClick={trackClickGetHelpWithThisBox}
+              hasTooltip={hasTooltipForPreviousOrder}
+              order={previousOrder}
             />
-          )
-          : (
-            <NoNextOrder />
           )}
-      </div>
+      {nextOrder
+        ? (
+          <NextOrderContainer
+            boxTrackingUrl={nextOrderTracking}
+            hasDeliveryToday={hasDeliveryToday}
+            hasTooltip={hasTooltipForNextOrder}
+            order={nextOrder}
+          />
+        )
+        : (
+          <NoNextOrder />
+        )}
     </div>
-  )
-}
+  </div>
+)
 
 HeaderPresentation.propTypes = {
   hasDeliveryToday: PropTypes.bool,
   hasTooltipForNextOrder: PropTypes.bool,
   hasTooltipForPreviousOrder: PropTypes.bool,
-  nextOrderId: PropTypes.string,
-  nextOrderMessage: PropTypes.shape({
-    linkLabel: PropTypes.string,
-    linkUrl: PropTypes.string,
-    primary: PropTypes.string,
-    secondary: PropTypes.string,
-  }),
+  nextOrder: userOrderPropType,
   nextOrderTracking: PropTypes.string,
-  previousOrder: ImmutablePropTypes.contains({
-    deliveryDate: PropTypes.string,
-    orderId: PropTypes.string,
-    orderState: PropTypes.string,
-    price: PropTypes.string,
-    recipeImages: ImmutablePropTypes.contains({
-      alt: PropTypes.string,
-      src: PropTypes.string,
-    }),
-  }),
+  previousOrder: userOrderPropType,
   showSubscriberPricingBanner: PropTypes.bool.isRequired,
   subscriptionStatus: PropTypes.string,
-  trackClickGetHelpWithThisBox: PropTypes.func,
-  trackNextBoxTrackingClick: PropTypes.func,
 }
 
 HeaderPresentation.defaultProps = {
   hasDeliveryToday: false,
   hasTooltipForNextOrder: false,
   hasTooltipForPreviousOrder: false,
-  nextOrderId: null,
-  nextOrderMessage: {
-    linkLabel: null,
-    linkUrl: null,
-    primary: null,
-    secondary: null,
-  },
+  nextOrder: null,
   nextOrderTracking: null,
   previousOrder: null,
   subscriptionStatus: 'inactive',
-  trackClickGetHelpWithThisBox: () => {},
-  trackNextBoxTrackingClick: () => {},
 }
 
 export { HeaderPresentation }

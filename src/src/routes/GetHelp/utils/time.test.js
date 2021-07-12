@@ -1,5 +1,5 @@
 import MockDate from 'mockdate'
-import { compareTodayToDeliveryDate } from '../time'
+import { compareTodayToDeliveryDate } from './time'
 
 describe('GetHelp time util', () => {
   describe('Given compareTodayToDeliveryDate', () => {

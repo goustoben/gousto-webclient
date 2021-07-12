@@ -15,27 +15,50 @@ jest.mock('apis/getHelp', () => ({
   }),
 }))
 
+jest.mock('../NextOrder', () => ({
+  NextOrderContainer: () => (<div>Next order mock!</div>)
+}))
+
 const deliveryDateFormat = 'YYYY-MM-DD HH:mm:ss'
 const ACCESS_TOKEN = 'shhhh-secret'
+const ORDER_101 = Immutable.fromJS({
+  deliveryDate: moment().add(2, 'days').format(deliveryDateFormat),
+  humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+  phase: 'delivered', // Just for proptypes, Not used in these tests
+  state: 'committed', // Just for proptypes, Not used in these tests
+  prices: {
+    total: '25.25 (not used in these tests)',
+  },
+  deliverySlot: {
+    deliveryEnd: '18:59:59',
+    deliveryStart: '08:00:00'
+  },
+  id: '101',
+})
 const upcomingOrders = Immutable.fromJS({
   100: {
     deliveryDate: moment().add(10, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
+    prices: {
+      total: '25.25 (not used in these tests)',
+    },
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
     },
     id: '100',
   },
-  101: {
-    deliveryDate: moment().add(2, 'days').format(deliveryDateFormat),
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '101',
-  },
+  101: ORDER_101,
   102: {
     deliveryDate: moment().add(5, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
+    prices: {
+      total: '25.25 (not used in these tests)',
+    },
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -46,6 +69,9 @@ const upcomingOrders = Immutable.fromJS({
 const previousOrders = Immutable.fromJS({
   100: {
     deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -58,6 +84,9 @@ const previousOrders = Immutable.fromJS({
   },
   101: {
     deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -70,6 +99,9 @@ const previousOrders = Immutable.fromJS({
   },
   102: {
     deliveryDate: moment().subtract(5, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -85,6 +117,12 @@ const previousOrders = Immutable.fromJS({
 const orderForToday = Immutable.fromJS({
   100: {
     deliveryDate: moment().format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
+    prices: {
+      total: '25.25 (not used in these tests)',
+    },
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -96,6 +134,9 @@ const orderForToday = Immutable.fromJS({
 const previousOrdersWithOrderForToday = Immutable.fromJS({
   123: {
     deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -108,6 +149,9 @@ const previousOrdersWithOrderForToday = Immutable.fromJS({
   },
   124: {
     deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -120,6 +164,12 @@ const previousOrdersWithOrderForToday = Immutable.fromJS({
   },
   125: {
     deliveryDate: moment().format(deliveryDateFormat),
+    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+    phase: 'delivered', // Just for proptypes, Not used in these tests
+    state: 'committed', // Just for proptypes, Not used in these tests
+    prices: {
+      total: '25.25 (not used in these tests)',
+    },
     deliverySlot: {
       deliveryEnd: '18:59:59',
       deliveryStart: '08:00:00'
@@ -131,8 +181,6 @@ const previousOrdersWithOrderForToday = Immutable.fromJS({
 let wrapper
 let store
 const mockLoadOrderTrackingInfo = jest.fn()
-const trackClickGetHelpWithThisBox = jest.fn()
-const trackNextBoxTrackingClick = jest.fn()
 const initialState = {}
 const mockStore = configureStore([thunk])
 
@@ -173,8 +221,6 @@ describe('MyGousto - Header', () => {
         <ProviderComponent
           accessToken={ACCESS_TOKEN}
           nextOrderTracking={NEXT_ORDER_TRACKING}
-          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
-          trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
         />
       )
 
@@ -183,14 +229,9 @@ describe('MyGousto - Header', () => {
     })
 
     test('should render the NextOrder component with the right props', () => {
-      const nextOrder = wrapper.find('NextOrder')
-      const expectedDateString = moment().add(2, 'days').format('dddd Do MMMM')
+      const nextOrder = wrapper.find('NextOrderContainer')
       expect(nextOrder.prop('boxTrackingUrl')).toBe(NEXT_ORDER_TRACKING)
-      expect(nextOrder.prop('orderId')).toBe('101')
-      expect(nextOrder.prop('primaryMessage')).toBe(expectedDateString)
-      expect(nextOrder.prop('secondaryMessage')).toBe('8am - 7pm')
-      expect(nextOrder.prop('trackButtonClick')).toBe(trackNextBoxTrackingClick)
-      expect(nextOrder.prop('trackLinkClick')).toBe(trackClickGetHelpWithThisBox)
+      expect(nextOrder.prop('order')).toBe(ORDER_101)
     })
 
     test('GetHelp API shouldShowEntryPointTooltip is called with the right parameters', () => {
@@ -244,7 +285,7 @@ describe('MyGousto - Header', () => {
 
       test('shows a tooltip pointing to the Get Help link', () => {
         wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
-        expect(wrapper.find('NextOrder').prop('hasTooltip')).toBe(true)
+        expect(wrapper.find('NextOrderContainer').prop('hasTooltip')).toBe(true)
       })
     })
 
@@ -266,7 +307,7 @@ describe('MyGousto - Header', () => {
 
       test('does not show any tooltip', () => {
         wrapper.update() // Without it, subcomponents don't get the prop based on state propagated
-        expect(wrapper.find('NextOrder').prop('hasTooltip')).toBe(false)
+        expect(wrapper.find('NextOrderContainer').prop('hasTooltip')).toBe(false)
       })
     })
 
@@ -276,21 +317,12 @@ describe('MyGousto - Header', () => {
           <Header
             accessToken={ACCESS_TOKEN}
             orders={upcomingOrders}
-            trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
           />
         )
       })
 
       test('it passes hasDeliveryToday to NextOrder as false', () => {
-        expect(wrapper.find('NextOrder').prop('hasDeliveryToday')).toBe(false)
-      })
-
-      test('shows a link that says "View my deliveries"', () => {
-        expect(wrapper.find('NextOrder').prop('linkLabel')).toBe('View my deliveries')
-      })
-
-      test('shows link to my deliveries', () => {
-        expect(wrapper.find('NextOrder').prop('linkUrl')).toBe('/my-deliveries')
+        expect(wrapper.find('NextOrderContainer').prop('hasDeliveryToday')).toBe(false)
       })
     })
 
@@ -300,25 +332,12 @@ describe('MyGousto - Header', () => {
           <Header
             accessToken={ACCESS_TOKEN}
             orders={orderForToday}
-            trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
           />
         )
       })
 
       test('it passes hasDeliveryToday to NextOrder as true', () => {
-        expect(wrapper.find('NextOrder').prop('hasDeliveryToday')).toBe(true)
-      })
-
-      test('explicitly shows that the order is arriving today', () => {
-        expect(wrapper.find('NextOrder').prop('primaryMessage')).toBe('Today')
-      })
-
-      test('shows a link that says "Get help with this box"', () => {
-        expect(wrapper.find('NextOrder').prop('linkLabel')).toBe('Get help with this box')
-      })
-
-      test('should link to getHelp page with order id', () => {
-        expect(wrapper.find('NextOrder').prop('linkUrl')).toBe('/get-help?orderId=100')
+        expect(wrapper.find('NextOrderContainer').prop('hasDeliveryToday')).toBe(true)
       })
     })
   })
@@ -344,7 +363,6 @@ describe('MyGousto - Header', () => {
         <ProviderComponent
           accessToken={ACCESS_TOKEN}
           orders={previousOrders}
-          trackClickGetHelpWithThisBox={trackClickGetHelpWithThisBox}
         />
       )
     })

@@ -1,1 +1,1 @@
-export { NextOrder } from './NextOrder'
+export { NextOrderContainer } from './NextOrderContainer'
