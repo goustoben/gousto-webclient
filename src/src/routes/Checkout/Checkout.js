@@ -18,6 +18,7 @@ import { loadPayPalScripts } from './loadPayPalScripts'
 
 import { CreateAccount } from './Steps/CreateAccount'
 import { Delivery } from './Steps/Delivery'
+import { OrderSummary } from './Steps/OrderSummary'
 import { CheckoutPayment } from './Components/CheckoutPayment'
 
 import { Breadcrumbs } from './Components/Breadcrumbs'
@@ -30,6 +31,7 @@ import css from './Checkout.css'
 const checkoutSteps = ['account', 'delivery', 'payment']
 
 const stepMapping = {
+  'order-summary': { component: OrderSummary, humanName: 'Summary' },
   account: { component: CreateAccount, humanName: 'Account' },
   delivery: { component: Delivery, humanName: 'Delivery' },
   payment: { component: CheckoutPayment, humanName: 'Payment' },
@@ -63,6 +65,7 @@ const propTypes = {
   checkoutStepIndexReached: PropTypes.func,
   lastReachedStepIndex: PropTypes.number,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
+  isPaymentBeforeChoosingV3Enabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -89,6 +92,7 @@ const defaultProps = {
   checkoutStepIndexReached: () => {},
   lastReachedStepIndex: 0,
   isPaymentBeforeChoosingEnabled: false,
+  isPaymentBeforeChoosingV3Enabled: false,
 }
 
 const contextTypes = {
@@ -164,8 +168,19 @@ class Checkout extends PureComponent {
 
   componentDidMount() {
     const { store } = this.context
-    const { query = {}, params = {}, trackSignupStep, changeRecaptcha, fetchGoustoRef } = this.props
+    const {
+      query = {},
+      params = {},
+      trackSignupStep,
+      changeRecaptcha,
+      fetchGoustoRef,
+      isPaymentBeforeChoosingV3Enabled,
+    } = this.props
     const { paypalScriptsReady } = this.state
+
+    if (isPaymentBeforeChoosingV3Enabled && !checkoutSteps.includes('order-summary')) {
+      checkoutSteps.unshift('order-summary')
+    }
 
     Checkout.fetchData({ store, query, params })
       .then(() => {
@@ -322,10 +337,12 @@ class Checkout extends PureComponent {
 
     const breadcrumbStep = this.getStepMapping()
     const progressSteps = breadcrumbSteps.reduce((accumulatedSteps, stepName) => {
-      accumulatedSteps.push({
-        id: stepName,
-        label: breadcrumbStep[stepName].humanName,
-      })
+      if (stepName !== 'order-summary') {
+        accumulatedSteps.push({
+          id: stepName,
+          label: breadcrumbStep[stepName].humanName,
+        })
+      }
 
       return accumulatedSteps
     }, [])
@@ -423,17 +440,19 @@ class Checkout extends PureComponent {
     return (
       <Div data-testing="checkoutContainer">
         <Div className={css.checkoutContent}>
-          <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
-            <ExpandableBoxSummary
-              totalToPay={prices.get('total')}
-              totalWithoutDiscount={prices.get('recipeTotal')}
-              trackUTMAndPromoCode={trackUTMAndPromoCode}
-              promoCodeValid={prices.get('promoCodeValid')}
-            >
-              {this.renderSummaryAndYourBox()}
-            </ExpandableBoxSummary>
-          </div>
-          {this.renderProgressBar(stepName)}
+          {stepName !== 'order-summary' && (
+            <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
+              <ExpandableBoxSummary
+                totalToPay={prices.get('total')}
+                totalWithoutDiscount={prices.get('recipeTotal')}
+                trackUTMAndPromoCode={trackUTMAndPromoCode}
+                promoCodeValid={prices.get('promoCodeValid')}
+              >
+                {this.renderSummaryAndYourBox()}
+              </ExpandableBoxSummary>
+            </div>
+          )}
+          {stepName !== 'order-summary' && this.renderProgressBar(stepName)}
           {this.renderCheckoutSteps()}
           {this.renderLoginModal()}
         </Div>

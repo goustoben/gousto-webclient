@@ -176,10 +176,14 @@ export const getIsPaymentBeforeChoosingV2Enabled = ({ features }) => (
   features && features.getIn(['isPaymentBeforeChoosingV2Enabled', 'value'], false)
 )
 
+export const getIsPaymentBeforeChoosingV3Enabled = ({ features }) => (
+  features && features.getIn(['isPaymentBeforeChoosingV3Enabled', 'value'], false)
+)
+
 export const getIsPaymentBeforeChoosingEnabled = createSelector(
-  [getIsPaymentBeforeChoosingV1Enabled, getIsPaymentBeforeChoosingV2Enabled],
-  (isPaymentBeforeChoosingV1Enabled, isPaymentBeforeChoosingV2Enabled) =>
-    isPaymentBeforeChoosingV1Enabled || isPaymentBeforeChoosingV2Enabled
+  [getIsPaymentBeforeChoosingV1Enabled, getIsPaymentBeforeChoosingV2Enabled, getIsPaymentBeforeChoosingV3Enabled],
+  (isPaymentBeforeChoosingV1Enabled, isPaymentBeforeChoosingV2Enabled, isPaymentBeforeChoosingV3Enabled) =>
+    isPaymentBeforeChoosingV1Enabled || isPaymentBeforeChoosingV2Enabled || isPaymentBeforeChoosingV3Enabled
 )
 
 export const getIsDecoupledPaymentEnabled = ({ features }) => (

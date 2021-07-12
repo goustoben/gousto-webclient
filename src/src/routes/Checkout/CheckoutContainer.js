@@ -12,7 +12,10 @@ import {
 } from 'actions/checkout'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
-import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import {
+  getIsPaymentBeforeChoosingEnabled,
+  getIsPaymentBeforeChoosingV3Enabled,
+} from 'selectors/features'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -27,6 +30,7 @@ function mapStateToProps(state, ownProps) {
     isMobile: state.request.get('browser') === 'mobile',
     lastReachedStepIndex: getCheckoutLastReachedStepIndex(state),
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
+    isPaymentBeforeChoosingV3Enabled: getIsPaymentBeforeChoosingV3Enabled(state),
   }
 }
 

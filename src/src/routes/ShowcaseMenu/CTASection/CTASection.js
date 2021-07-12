@@ -13,7 +13,7 @@ export const CTASection = ({ onClick }) => (
         onKeyDown={onEnter(onClick)}
         isFullWidth
       >
-        Continue to sign up
+        Build my box
       </CTA>
     </div>
   </div>
