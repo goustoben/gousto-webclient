@@ -47,4 +47,5 @@ rm -rf node_modules
 
 cd ..
 # build service
-python ./ci_scripts/deploy_service.py --service webclient
+# Commenting in favour of running in deploy-containers job
+# python ./ci_scripts/deploy_service.py --service webclient
