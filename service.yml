@@ -8,7 +8,7 @@ rootVolumeSize: 16
 
 ecs:
   alb:
-    - type: external
+    - type: public
       rules:
         - priority: 92
           conditions:
