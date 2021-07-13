@@ -14,7 +14,7 @@ jest.mock('../../../../GetHelp/utils/orders', () => ({
   getClientOrderState: (state, deliveryDate, recipeItems, phase) => {
     if (
       state === 'pending'
-      && deliveryDate === 'Saturday 17th July'
+      && deliveryDate === '2021-07-17 00:00:00'
       && recipeItems.size === 2
       && phase === 'open'
     ) {
@@ -28,7 +28,8 @@ jest.mock('../../../../GetHelp/utils/orders', () => ({
 describe('the NextOrder component', () => {
   let wrapper
   const ORDER_ID = '1234'
-  const ORDER_DATE = 'Saturday 17th July'
+  const ORDER_HUMAN_DELIVERY_DATE = 'Saturday 17th July'
+  const ORDER_DELIVERY_DATE = '2021-07-17 00:00:00'
   const ORDER_PHASE = 'open'
   const ORDER_STATE = 'pending'
   const ORDER_TOTAL_PRICE = '25.12'
@@ -38,7 +39,8 @@ describe('the NextOrder component', () => {
   const ORDER_IMAGE2_TITLE = 'Paella with chorizo'
   const ORDER = Immutable.fromJS({
     id: ORDER_ID,
-    humanDeliveryDate: ORDER_DATE,
+    deliveryDate: ORDER_DELIVERY_DATE,
+    humanDeliveryDate: ORDER_HUMAN_DELIVERY_DATE,
     phase: ORDER_PHASE,
     prices: {
       total: ORDER_TOTAL_PRICE,
@@ -104,7 +106,7 @@ describe('the NextOrder component', () => {
   test('renders OrderDetails with the right props inside a Card', () => {
     const orderDetails = wrapper.find('Card').find('OrderDetails')
 
-    expect(orderDetails.prop('deliveryDate')).toBe(ORDER_DATE)
+    expect(orderDetails.prop('deliveryDate')).toBe(ORDER_HUMAN_DELIVERY_DATE)
     expect(orderDetails.prop('orderState')).toBe('recipes chosen')
     expect(orderDetails.prop('price')).toBe(ORDER_TOTAL_PRICE)
     expect(orderDetails.prop('recipeImages')).toEqual([

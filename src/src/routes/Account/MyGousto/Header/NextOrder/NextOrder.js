@@ -17,12 +17,12 @@ const NextOrder = ({
   trackNextBoxTrackingClick,
   trackClickGetHelpWithThisBox,
 }) => {
-  const deliveryDate = order.get('humanDeliveryDate')
+  const humanDeliveryDate = order.get('humanDeliveryDate')
   const orderId = order.get('id')
   const price = order.getIn(['prices', 'total'])
   const orderClientState = getClientOrderState(
     order.get('state'),
-    deliveryDate,
+    order.get('deliveryDate'),
     order.get('recipeItems'),
     order.get('phase')
   )
@@ -64,7 +64,7 @@ const NextOrder = ({
       </div>
       <Card>
         <OrderDetails
-          deliveryDate={deliveryDate}
+          deliveryDate={humanDeliveryDate}
           orderState={orderClientState}
           price={price}
           recipeImages={recipeImages.toJS()}
