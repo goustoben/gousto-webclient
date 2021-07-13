@@ -17,21 +17,23 @@ import { CheckoutPayment } from './CheckoutPayment'
 
 const mapStateToProps = (state) => {
   const isPaymentBeforeChoosingEnabled = getIsPaymentBeforeChoosingEnabled(state)
+  const is3DSEnabled = getIs3DSForSignUpEnabled(state)
   const ribbonTriggerName = isPaymentBeforeChoosingEnabled ? 'variant_payment' : 'control_payment'
+  const hotjarTriggerName = is3DSEnabled ? 'psd2_modal' : 'pbc_delivery_and_payment'
 
   return {
     formErrors: {
       ...getFormSyncErrors(sectionName)(state),
       ...getFormAsyncErrors(sectionName)(state),
     },
-    is3DSEnabled: getIs3DSForSignUpEnabled(state),
+    is3DSEnabled,
     isRecaptchaEnabled: getIsRecaptchaEnabled(state),
     recaptchaValue: getSignupRecaptchaToken(state),
     sectionName,
     currentPaymentMethod: getCurrentPaymentMethod(state),
     isPayPalReady: isPayPalReady(state),
     ribbonTriggerName,
-    isPaymentBeforeChoosingEnabled,
+    hotjarTriggerName,
   }
 }
 

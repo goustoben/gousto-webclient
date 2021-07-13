@@ -235,8 +235,10 @@ class CheckoutPayment extends React.Component {
       setCurrentPaymentMethod,
       isRecaptchaEnabled,
       ribbonTriggerName,
+      hotjarTriggerName,
       isPaymentBeforeChoosingEnabled,
     } = this.props
+    const hotjarShouldInvoke = is3DSEnabled || (isPaymentBeforeChoosingEnabled && !prerender)
 
     return (
       <div
@@ -268,10 +270,7 @@ class CheckoutPayment extends React.Component {
         <PaymentFooter />
         {is3DSEnabled && <Checkout3DSModal />}
         <RibbonTriggerContainer name={ribbonTriggerName} probabilityPercentage={50} />
-        <HotjarTrigger
-          name="pbc_delivery_and_payment"
-          shouldInvoke={isPaymentBeforeChoosingEnabled && !prerender}
-        />
+        <HotjarTrigger name={hotjarTriggerName} shouldInvoke={hotjarShouldInvoke} />
       </div>
     )
   }
@@ -305,6 +304,7 @@ CheckoutPayment.propTypes = {
   onLoginClick: PropTypes.func,
   ribbonTriggerName: PropTypes.string,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
+  hotjarTriggerName: PropTypes.string,
 }
 
 CheckoutPayment.defaultProps = {
@@ -331,6 +331,7 @@ CheckoutPayment.defaultProps = {
   onLoginClick: () => {},
   ribbonTriggerName: '',
   isPaymentBeforeChoosingEnabled: false,
+  hotjarTriggerName: '',
 }
 
 export { CheckoutPayment }
