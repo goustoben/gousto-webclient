@@ -14,3 +14,10 @@ export const trackMyGoustoSubscriberPricingBannerClick = () => ({
     actionType: 'click_subscriber_pricing_banner',
   }
 })
+
+export const track3dsCompliantClick = (type) => ({
+  type,
+  trackingData: {
+    actionType: type,
+  }
+})

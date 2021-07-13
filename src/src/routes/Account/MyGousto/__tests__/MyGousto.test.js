@@ -15,6 +15,8 @@ describe('MyGousto', () => {
   const userLoadOrdersSpy = jest.fn()
   const userGetReferralDetails = jest.fn()
   const trackClickRateRecipesSpy = jest.fn()
+  const userCheck3dsCompliantToken = jest.fn()
+  const userReset3dsCompliantToken = jest.fn()
 
   beforeEach(() => {
     jest.useFakeTimers()
@@ -23,6 +25,8 @@ describe('MyGousto', () => {
         isMobileViewport={false}
         userLoadOrders={userLoadOrdersSpy}
         userGetReferralDetails={userGetReferralDetails}
+        userCheck3dsCompliantToken={userCheck3dsCompliantToken}
+        userReset3dsCompliantToken={userReset3dsCompliantToken}
       />,
       {
         context: {
@@ -46,6 +50,39 @@ describe('MyGousto', () => {
     test('should pre-fetch menu data', () => {
       jest.advanceTimersByTime(500)
       expect(menuFetchData).toHaveBeenCalled()
+    })
+  })
+
+  describe('componentDidUpdate', () => {
+    describe('when goustoRef has been changed', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isCardTokenNotCompliantFor3ds: false,
+          goustoRef: '100000',
+          pending: false,
+        })
+        jest.runAllTimers()
+      })
+
+      test('then should call userCheck3dsCompliantToken and state should be updated properly', () => {
+        expect(wrapper.state('is3dsTokenFetched')).toBeTruthy()
+        expect(userCheck3dsCompliantToken).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('componentWillUnmount', () => {
+    describe('when component is unmounted', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          isCardTokenNotCompliantFor3ds: true,
+        })
+      })
+
+      test('then should update state and call userReset3dsCompliantToken', async () => {
+        await wrapper.unmount()
+        expect(userReset3dsCompliantToken).toHaveBeenCalled()
+      })
     })
   })
 
@@ -91,6 +128,18 @@ describe('MyGousto', () => {
             },
           }
         )
+      })
+
+      describe('when isCardTokenNotCompliantFor3ds is true', () => {
+        beforeEach(() => {
+          wrapper.setProps({
+            isCardTokenNotCompliantFor3ds: true
+          })
+        })
+
+        test('then should render PaymentDetailsNotification', () => {
+          expect(wrapper.find('PaymentDetailsNotification').exists()).toBe(true)
+        })
       })
 
       test('the LimitedCapacityNotice is rendered', () => {

@@ -895,14 +895,23 @@ export const userCheck3dsCompliantToken = () => async (dispatch, getState) => {
   try {
     const { user } = getState()
     const goustoRef = user.get('goustoReference')
+    dispatch(statusActions.pending(actionTypes.USER_GET_3DS_COMPLIANT_TOKEN, true))
     const { data } = await get3DSCompliantToken(goustoRef)
     dispatch({
       type: actionTypes.USER_GET_3DS_COMPLIANT_TOKEN,
       isCardTokenNotCompliantFor3ds: data.displayModal,
     })
+    dispatch(statusActions.pending(actionTypes.USER_GET_3DS_COMPLIANT_TOKEN, false))
   } catch (err) {
     logger.error({ message: 'Failed to fetch 3ds compliant token', errors: [err] })
   }
+}
+
+export const userReset3dsCompliantToken = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.USER_GET_3DS_COMPLIANT_TOKEN,
+    isCardTokenNotCompliantFor3ds: false,
+  })
 }
 
 const userActions = {

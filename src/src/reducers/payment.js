@@ -9,7 +9,7 @@ export const initialState = () => Immutable.Map({
   paypalClientToken: null,
   paypalNonce: null,
   paypalDeviceData: null,
-  isCardTokenNotCompliantFor3ds: true,
+  isCardTokenNotCompliantFor3ds: false,
 })
 
 export const payment = (state = initialState(), action) => {

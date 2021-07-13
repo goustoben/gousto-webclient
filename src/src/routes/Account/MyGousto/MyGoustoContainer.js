@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { userGetReferralDetails, userCheck3dsCompliantToken } from 'actions/user'
+import { actionTypes } from 'actions/actionTypes'
+import { userGetReferralDetails, userCheck3dsCompliantToken, userReset3dsCompliantToken } from 'actions/user'
 import { redirect } from 'actions/redirect'
 import { getBrowserType } from 'selectors/browser'
 import {
@@ -8,6 +9,7 @@ import {
   getIsMyGoustoBannerAppAwarenessEnabled,
   getLimitedCapacity,
 } from 'selectors/features'
+import { track3dsCompliantClick } from './actions/tracking'
 import { MyGousto } from './MyGousto'
 import { trackClickRateRecipes } from '../../Ratings/actions/feedback'
 
@@ -23,6 +25,8 @@ function mapStateToProps(state) {
     showAppAwareness: getIsMyGoustoBannerAppAwarenessEnabled(state),
     rateRecipeCount: state.feedback.get('feedbackCount'),
     goustoRef: state.user.get('goustoReference'),
+    isCardTokenNotCompliantFor3ds: state.payment.get('isCardTokenNotCompliantFor3ds'),
+    pending: state.pending.get(actionTypes.USER_GET_3DS_COMPLIANT_TOKEN, false),
   }
 }
 
@@ -32,6 +36,8 @@ const MyGoustoContainer = connect(mapStateToProps, {
   redirect,
   trackClickRateRecipes,
   userCheck3dsCompliantToken,
+  userReset3dsCompliantToken,
+  track3dsCompliantClick,
 })(MyGousto)
 
 export { MyGoustoContainer }

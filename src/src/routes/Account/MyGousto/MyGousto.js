@@ -11,6 +11,7 @@ import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 import { HeaderContainer } from './Header'
 import { ReferAFriend } from './ReferAFriend'
+import { PaymentDetailsNotification } from './PaymentDetailsNotification'
 import css from './MyGousto.css'
 
 const propTypes = {
@@ -29,6 +30,10 @@ const propTypes = {
   trackClickRateRecipes: PropTypes.func,
   userCheck3dsCompliantToken: PropTypes.func,
   goustoRef: PropTypes.string,
+  isCardTokenNotCompliantFor3ds: PropTypes.bool,
+  track3dsCompliantClick: PropTypes.func,
+  userReset3dsCompliantToken: PropTypes.func,
+  pending: PropTypes.bool,
 }
 
 const contextTypes = {
@@ -49,9 +54,20 @@ const defaultProps = {
   trackClickRateRecipes: () => {},
   userCheck3dsCompliantToken: () => {},
   goustoRef: '',
+  isCardTokenNotCompliantFor3ds: false,
+  track3dsCompliantClick: () => {},
+  userReset3dsCompliantToken: () => {},
+  pending: false,
 }
 
 class MyGousto extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {
+      is3dsTokenFetched: false
+    }
+  }
+
   componentDidMount() {
     const { userLoadOrders, userGetReferralDetails } = this.props
     const { store } = this.context
@@ -64,12 +80,36 @@ class MyGousto extends React.PureComponent {
     }, 500)
   }
 
-  componentDidUpdate(prevProps) {
-    const { userCheck3dsCompliantToken, goustoRef } = this.props
-    const { goustoRef: previousGoustoRef } = prevProps
+  componentDidUpdate(_en, _prevProps, _prevState) {
+    const { userCheck3dsCompliantToken, goustoRef, pending, isCardTokenNotCompliantFor3ds } = this.props
+    const { is3dsTokenFetched } = this.state
 
-    if (goustoRef !== previousGoustoRef) {
-      userCheck3dsCompliantToken()
+    if (!isCardTokenNotCompliantFor3ds && goustoRef && !pending && !is3dsTokenFetched) {
+      this.setState({
+        is3dsTokenFetched: true
+      })
+
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout)
+      }
+
+      this.debounceTimeout = setTimeout(() => {
+        userCheck3dsCompliantToken()
+      }, 500)
+    }
+  }
+
+  componentWillUnmount() {
+    const { userReset3dsCompliantToken, isCardTokenNotCompliantFor3ds } = this.props
+    if (isCardTokenNotCompliantFor3ds) {
+      userReset3dsCompliantToken()
+      this.setState({
+        is3dsTokenFetched: false
+      })
+    }
+
+    if (this.debounceTimeout) {
+      clearTimeout(this.debounceTimeout)
     }
   }
 
@@ -86,6 +126,8 @@ class MyGousto extends React.PureComponent {
       showAppAwareness,
       rateRecipeCount,
       trackClickRateRecipes,
+      track3dsCompliantClick,
+      isCardTokenNotCompliantFor3ds,
     } = this.props
     const headerTitle = `Hello ${nameFirst},`
     const showAppAwarenessBanner = !isMobileViewport && showAppAwareness
@@ -93,6 +135,9 @@ class MyGousto extends React.PureComponent {
     return (
       <div>
         <div className={css.wrapper}>
+          {isCardTokenNotCompliantFor3ds && (
+            <PaymentDetailsNotification track3dsCompliantClick={track3dsCompliantClick} />
+          )}
           <div className={css.notificationContent}>
             {showAppAwarenessBanner && <AppAwarenessBanner />}
             {isCapacityLimited && !showAppAwarenessBanner && <LimitedCapacityNotice />}
