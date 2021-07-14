@@ -150,10 +150,6 @@ module.exports = {
     },
     'user-promo-invalid': {
       header: 'Discount removed',
-      message: 'A discount has already been used at this address.',
-    },
-    'invalid-promo-code-experiment': {
-      header: 'Discount removed',
       message: 'A discount has already been used by this account.',
     },
     'out-of-stock': {

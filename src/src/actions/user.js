@@ -17,7 +17,6 @@ import {
   getIsNewSubscriptionApiEnabled,
   getIsAdditionalCheckoutErrorsEnabled,
   getIsDecoupledPaymentEnabled,
-  getIsPromoCodeValidationEnabled,
 } from 'selectors/features'
 import { getCardPaymentDetails, getPayPalPaymentDetails, isCardPayment } from 'selectors/payment'
 import { getUserRecentRecipesIds, getUserId } from 'selectors/user'
@@ -641,7 +640,6 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const { form, basket, promoAgeVerified } = state
 
   const isDecoupledPaymentEnabled = getIsDecoupledPaymentEnabled(state)
-  const isPromoCodeValidationEnabled = getIsPromoCodeValidationEnabled(state)
 
   const isCard = isCardPayment(state)
 
@@ -660,7 +658,6 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
   const reqData = {
     order_id: getPreviewOrderId(state),
     promocode: promoCode,
-    check_last_name: Number(isPromoCodeValidationEnabled || false),
     customer: {
       tariff_id: basket.get('tariffId', ''),
       phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',

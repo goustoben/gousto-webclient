@@ -551,7 +551,6 @@ describe('user actions', () => {
       beforeEach(() => {
         expectedParam = {
           order_id: undefined,
-          check_last_name: 0,
           promocode: '',
           customer: {
             tariff_id: '',
@@ -701,7 +700,6 @@ describe('user actions', () => {
         }
         expected = {
           order_id: undefined,
-          check_last_name: 0,
           promocode: '',
           customer: {
             tariff_id: '',

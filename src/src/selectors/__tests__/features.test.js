@@ -47,7 +47,6 @@ import {
   getIsPaymentBeforeChoosingV2Enabled,
   getIsPaymentBeforeChoosingEnabled,
   getIsDecoupledPaymentEnabled,
-  getIsPromoCodeValidationEnabled,
   getIsHomepageFreeDeliveryEnabled,
 } from 'selectors/features'
 
@@ -111,7 +110,6 @@ describe('when features are defined', () => {
     [getIsPaymentBeforeChoosingV1Enabled, 'isPaymentBeforeChoosingV1Enabled'],
     [getIsPaymentBeforeChoosingV2Enabled, 'isPaymentBeforeChoosingV2Enabled'],
     [getIsDecoupledPaymentEnabled, 'isDecoupledPaymentEnabled'],
-    [getIsPromoCodeValidationEnabled, 'isPromoCodeValidationEnabled'],
     [getIsHomepageFreeDeliveryEnabled, 'isHomepageFreeDeliveryEnabled'],
   ]
 

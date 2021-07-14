@@ -30,12 +30,12 @@ export function getAddress(form) {
   }
 }
 
-const getCheckoutSignupMapping = (code, isPromoCodeValidationEnabled) => {
+const getCheckoutSignupMapping = (code) => {
   const maps = {
     'validation.phone.customer.phone_number': 'user-phone-number-invalid',
     '3ds-challenge-failed': '3ds-challenge-failed',
     '401-auth-error': 'user-exists',
-    '409-duplicate-details': isPromoCodeValidationEnabled ? 'invalid-promo-code-experiment' : 'user-promo-invalid',
+    '409-duplicate-details': 'user-promo-invalid',
     '409-missing-preview-order': 'out-of-stock',
     '422-declined-do-not-honour': '422-declined-do-not-honour',
     '422-insufficient-funds': '422-insufficient-funds',
@@ -46,7 +46,7 @@ const getCheckoutSignupMapping = (code, isPromoCodeValidationEnabled) => {
   return maps[code] || 'generic'
 }
 
-const getSignupPaymentMappings = (code, isPromoCodeValidationEnabled) => {
+const getSignupPaymentMappings = (code) => {
   const maps = {
     '3ds-challenge-failed': 'signup-payments-challenge-failed',
     '422-declined-do-not-honour': 'signup-payments-declined-do-not-honour',
@@ -54,10 +54,10 @@ const getSignupPaymentMappings = (code, isPromoCodeValidationEnabled) => {
     '422-payment-failed': 'signup-payments-payment-failure',
   }
 
-  return maps[code] || getCheckoutSignupMapping(isPromoCodeValidationEnabled)
+  return maps[code] || getCheckoutSignupMapping(code)
 }
 
-export const translateCheckoutErrorToMessageCode = (errorName, errorValue, isPromoCodeValidationEnabled) => {
+export const translateCheckoutErrorToMessageCode = (errorName, errorValue) => {
   switch (errorName) {
   case actionTypes.PAYPAL_TOKEN_FETCH_FAILED: {
     return 'paypal-token-fetch-failed'
@@ -69,10 +69,10 @@ export const translateCheckoutErrorToMessageCode = (errorName, errorValue, isPro
     return 'postcodeInvalid'
   }
   case actionTypes.CHECKOUT_SIGNUP: {
-    return getCheckoutSignupMapping(errorValue, isPromoCodeValidationEnabled)
+    return getCheckoutSignupMapping(errorValue)
   }
   case actionTypes.CHECKOUT_PAYMENT: {
-    return getSignupPaymentMappings(errorValue, isPromoCodeValidationEnabled)
+    return getSignupPaymentMappings(errorValue)
   }
   case actionTypes.CARD_TOKENIZATION_FAILED: {
     return 'card-tokenization-failed'

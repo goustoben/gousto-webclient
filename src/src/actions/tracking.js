@@ -8,7 +8,7 @@ import logger from 'utils/logger'
 import { getUserOrderById } from 'utils/user'
 import { getUTM } from 'utils/utm'
 import { getPreviewOrderId } from 'selectors/basket'
-import { getIsDecoupledPaymentEnabled, getIsPromoCodeValidationEnabled } from 'selectors/features'
+import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import { getCurrentPaymentMethod } from 'selectors/payment'
 import { getUTMAndPromoCode } from 'selectors/tracking'
 
@@ -479,10 +479,9 @@ export const trackCheckoutNavigationLinks = (checkoutStep) => (dispatch, getStat
 
 export const trackCheckoutError = (errorName, errorValue, initiator) => (dispatch, getState) => {
   const { UTM, promoCode } = getUTMAndPromoCode(getState())
-  const isPromoCodeValidationEnabled = getIsPromoCodeValidationEnabled(getState())
   const actionType = trackingKeys.checkoutError
 
-  const messageCode = translateCheckoutErrorToMessageCode(errorName, errorValue, isPromoCodeValidationEnabled)
+  const messageCode = translateCheckoutErrorToMessageCode(errorName, errorValue)
 
   dispatch({
     type: actionType,

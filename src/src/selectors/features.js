@@ -190,10 +190,6 @@ export const getIsDecoupledPaymentEnabled = ({ features }) => (
   features && features.getIn(['isDecoupledPaymentEnabled', 'value'], false)
 )
 
-export const getIsPromoCodeValidationEnabled = ({ features }) => (
-  features && features.getIn(['isPromoCodeValidationEnabled', 'value'], false)
-)
-
 export const getIsHomepageFreeDeliveryEnabled = ({ features }) => (
   features && features.getIn(['isHomepageFreeDeliveryEnabled', 'value'], false)
 )
