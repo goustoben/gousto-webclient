@@ -6,40 +6,7 @@ import { AgeVerificationCheckBox } from 'Product/AgeVerification'
 import css from './Buttons.css'
 
 class Buttons extends React.PureComponent {
-  static propTypes = {
-    ageVerificationPending: PropTypes.bool,
-    fullWidth: PropTypes.bool,
-    isAgeVerificationRequired: PropTypes.bool,
-    isAvailable: PropTypes.bool,
-    inProgress: PropTypes.bool,
-    limitReached: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.bool,
-    ]).isRequired,
-    onAdd: PropTypes.func,
-    onRemove: PropTypes.func,
-    onVerifyAge: PropTypes.func,
-    outOfStock: PropTypes.bool,
-    productId: PropTypes.string.isRequired,
-    qty: PropTypes.number,
-    showPopUp: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    ageVerificationPending: false,
-    fullWidth: false,
-    isAgeVerificationRequired: false,
-    isAvailable: true,
-    inProgress: false,
-    limitReached: false,
-    onAdd: () => { },
-    onRemove: () => { },
-    onVerifyAge: () => { },
-    outOfStock: false,
-    qty: 0,
-    showPopUp: false,
-  }
-
+  // eslint-disable-next-line react/state-in-constructor
   state = {
     ageVerifyShowError: false,
     ageVerifyTooltipVisible: false,
@@ -213,7 +180,7 @@ class Buttons extends React.PureComponent {
             hover={this.tooltipHover}
             disabledClick={this.disabledClick}
             disabled={!isAvailable}
-            fill={false}
+            fill={this.props.fill}
             width="auto"
             className={cssAddButton}
           >
@@ -249,6 +216,42 @@ class Buttons extends React.PureComponent {
       </div>
     )
   }
+}
+
+Buttons.propTypes = {
+  ageVerificationPending: PropTypes.bool,
+  fullWidth: PropTypes.bool,
+  isAgeVerificationRequired: PropTypes.bool,
+  isAvailable: PropTypes.bool,
+  inProgress: PropTypes.bool,
+  limitReached: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  onAdd: PropTypes.func,
+  onRemove: PropTypes.func,
+  onVerifyAge: PropTypes.func,
+  outOfStock: PropTypes.bool,
+  productId: PropTypes.string.isRequired,
+  qty: PropTypes.number,
+  showPopUp: PropTypes.bool,
+  fill: PropTypes.bool,
+}
+
+Buttons.defaultProps = {
+  ageVerificationPending: false,
+  fullWidth: false,
+  isAgeVerificationRequired: false,
+  isAvailable: true,
+  inProgress: false,
+  limitReached: false,
+  onAdd: () => { },
+  onRemove: () => { },
+  onVerifyAge: () => { },
+  outOfStock: false,
+  qty: 0,
+  showPopUp: false,
+  fill: false,
 }
 
 export default Buttons

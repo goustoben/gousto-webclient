@@ -95,6 +95,7 @@ class ModalPanel extends React.Component {
               onClick={closeModal}
               onKeyDown={onEnter(closeModal)}
               data-testing="modalClose"
+              data-testid="modalClose"
             >
               <span className={css.close} />
             </div>

@@ -7,6 +7,7 @@
   "license": "ISC",
   "sideEffects": "false",
   "scripts": {
+    "dev": "../run.sh dev --host",
     "postinstall": "bower install --force --allow-root",
     "start": "node dist/server.js",
     "start:with-static": "withStatic=true npm run start",
@@ -106,6 +107,9 @@
     "validator": "10.4.0"
   },
   "devDependencies": {
+    "@sheerun/mutationobserver-shim": "^0.3.3",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^3.4.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
     "babel-core": "6.26.3",
@@ -217,6 +221,7 @@
       "**/?(*.)(test).js?(x)"
     ],
     "moduleNameMapper": {
+      "fixtures/(.*)$": "<rootDir>/../tests/regression/fixtures/$1",
       "goustouicomponents": "<rootDir>/libs/goustouicomponents/src/main",
       "zest/(.*)$": "<rootDir>/libs/goustouicomponents/dist/$1",
       "gousto-config": "<rootDir>/libs/goustouicomponents/src/gousto-config",

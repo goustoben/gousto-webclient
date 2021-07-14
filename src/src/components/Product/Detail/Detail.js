@@ -48,9 +48,11 @@ const Detail = ({
               <Image media={media} title={title} className={css.image} />
             </div>
             <div className={css.detailContainer}>
-              <p className={css.productDetailsDescription}>
-                <SubIngredients subIngredients={description} allergens={allergens} />
-              </p>
+              <SubIngredients
+                className={css.productDetailsDescription}
+                subIngredients={description}
+                allergens={allergens}
+              />
 
               <div>
                 <span className={css.productDetailsPrice}>{formatPrice(listPrice)}</span>

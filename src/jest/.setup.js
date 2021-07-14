@@ -1,6 +1,8 @@
 // setup file
 import fs from "fs";
 import JSON5 from "json5"
+import '@testing-library/jest-dom/extend-expect'
+import MutationObserver from '@sheerun/mutationobserver-shim'
 
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
@@ -8,6 +10,8 @@ const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
 import Modal from 'react-modal'
 
 require('jest-fetch-mock').enableMocks()
+
+global.MutationObserver = global.MutationObserver || MutationObserver
 
 window.matchMedia =
   window.matchMedia ||

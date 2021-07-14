@@ -27,7 +27,11 @@ export const IngredientsList = ({ ingredients, allergens, inset }) => (
                 :
                 {' '}
               </span>
-              <SubIngredients subIngredients={subIngredients} allergens={allergens} />
+              <SubIngredients
+                className={css.paragraph}
+                subIngredients={subIngredients}
+                allergens={allergens}
+              />
             </dl>
           )
         })}

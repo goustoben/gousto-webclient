@@ -4,9 +4,10 @@ import React from 'react'
 import Immutable from 'immutable'
 import css from './SubIngredients.css'
 
+const newLineString = 'NEWLINE'
 const REGEX_TO_SPLIT_SENTENCES = /([A-Za-zÀ-ÖØ-öø-ÿ]+)|\s+|[^\sA-Za-zÀ-ÖØ-öø-ÿ]+/g
 
-export const splitSentences = (string) => string.match(REGEX_TO_SPLIT_SENTENCES)
+const splitSentences = (string) => string.replace(/\n/g, ` ${newLineString} `).match(REGEX_TO_SPLIT_SENTENCES)
 
 // We maintain these like this as this is how allergies are communicated to us
 const HARDCODED_ALLERGENS = [
@@ -59,32 +60,41 @@ const HARDCODED_ALLERGENS = [
 ].reduce((words, word) => [...words, ...word.split(' ')], [])
   .filter((v, i, a) => a.indexOf(v) === i)
 
-export const isAllergen = (allergens, subIngredient) => {
+const isAllergen = (allergens, subIngredient) => {
   const lowercaseIngredient = subIngredient.toLowerCase()
   const isInAllergensList = allergens.includes(lowercaseIngredient)
 
   return (isInAllergensList || HARDCODED_ALLERGENS.includes(lowercaseIngredient))
 }
 
-const SubIngredients = ({ subIngredients, allergens }) => {
-  const subIngredientsArray = splitSentences(subIngredients)
+const SubIngredients = ({ subIngredients, allergens, className }) => {
+  const subIngredientsArray = React.useMemo(() => splitSentences(subIngredients), [subIngredients])
 
   return (
-    <span>
+    <p className={className}>
       {subIngredientsArray.map((subIngredient, index) => {
         if (isAllergen(allergens, subIngredient)) {
           return <span key={subIngredient + index} className={css.bold}>{subIngredient}</span>
         }
 
-        return <span key={subIngredient + index}>{subIngredient}</span>
+        if (subIngredient === newLineString) {
+          return <br key={subIngredient + index} />
+        }
+
+        return subIngredient
       })}
-    </span>
+    </p>
   )
 }
 
 SubIngredients.propTypes = {
+  className: PropTypes.string,
   subIngredients: PropTypes.string.isRequired,
   allergens: PropTypes.instanceOf(Immutable.List).isRequired,
+}
+
+SubIngredients.defaultProps = {
+  className: '',
 }
 
 export { SubIngredients }
