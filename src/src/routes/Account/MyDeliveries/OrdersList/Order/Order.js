@@ -128,8 +128,7 @@ class Order extends React.PureComponent {
                   <div className={css.bottom}>
                     <OrderCollapseExpand
                       collapsed={collapsed}
-                      open={this.open}
-                      close={this.close}
+                      onClick={onClickFunction}
                     />
                   </div>
                 </div>

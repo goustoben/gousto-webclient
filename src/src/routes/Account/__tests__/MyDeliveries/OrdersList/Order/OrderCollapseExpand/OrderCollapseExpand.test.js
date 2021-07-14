@@ -30,5 +30,19 @@ describe('OrderCollapseExpand', () => {
       expect(wrapper.find(classNameArrowDown)).toHaveLength(0)
       expect(wrapper.find(classNameArrowUp)).toHaveLength(1)
     })
+
+    test('should call the onClick prop on mouse click', () => {
+      const onClickMock = jest.fn()
+      const wrapper = shallow(<OrderCollapseExpand onClick={onClickMock} collapsed={false} />)
+      wrapper.find(classNameArrowUp).simulate('click', { stopPropagation: () => {} })
+      expect(onClickMock).toHaveBeenCalledTimes(1)
+    })
+
+    test('should call the onClick prop on keyboard key press', () => {
+      const onClickMock = jest.fn()
+      const wrapper = shallow(<OrderCollapseExpand onClick={onClickMock} collapsed={false} />)
+      wrapper.find(classNameArrowUp).simulate('keypress', { key: 'Enter' })
+      expect(onClickMock).toHaveBeenCalledTimes(1)
+    })
   })
 })
