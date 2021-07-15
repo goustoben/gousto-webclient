@@ -4,17 +4,9 @@ import fetch, {
   includeCookiesDefault,
   useMenuServiceDefault,
 } from 'utils/fetch'
-import Cookies from 'utils/GoustoCookies'
-import { get } from 'utils/cookieHelper2'
 import endpoint from 'config/endpoint'
 import { post } from './fetch'
-
-const getSessionId = () => get(Cookies, 'gousto_session_id', false, false)
-const getRequestHeaders = (userId) => ({
-  'Content-Type': 'application/json',
-  'x-gousto-device-id': getSessionId(),
-  'x-gousto-user-id': userId
-})
+import { getRequestHeaders } from './_utils'
 
 export const createOrder = async (accessToken, order, userId) => {
   const headers = getRequestHeaders(userId)
