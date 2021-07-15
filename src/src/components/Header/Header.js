@@ -413,7 +413,7 @@ class Header extends React.PureComponent {
             showLoginCTA={showLoginCTA}
             onLoginClick={this.onLoginClick}
           />
-          {this.renderLoginModal()}
+          {showLoginCTA && this.renderLoginModal()}
         </Fragment>
       )
     }
