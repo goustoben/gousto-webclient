@@ -193,3 +193,7 @@ export const getIsDecoupledPaymentEnabled = ({ features }) => (
 export const getIsHomepageFreeDeliveryEnabled = ({ features }) => (
   features && features.getIn(['isHomepageFreeDeliveryEnabled', 'value'], false)
 )
+
+export const getIsNewPromoCodeModalEnabled = ({ features }) => (
+  features && features.getIn(['isNewPromoCodeModalEnabled', 'value'], false)
+)

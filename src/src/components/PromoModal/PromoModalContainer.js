@@ -3,6 +3,7 @@ import actions from 'actions'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { promoToggleModalVisibility } from 'actions/promos'
+import { getIsNewPromoCodeModalEnabled } from 'selectors/features'
 import Immutable from 'immutable'
 import { PromoModal } from './PromoModal'
 
@@ -72,6 +73,7 @@ const mapStateToProps = (state) => {
     isAgeVerified,
     pending,
     justApplied: state.promoStore.getIn([promoCode, 'justApplied'], false),
+    isNewPromoCodeModalEnabled: getIsNewPromoCodeModalEnabled(state),
   }
 }
 

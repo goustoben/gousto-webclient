@@ -6,9 +6,17 @@ import ModalPanel from 'Modal/ModalPanel'
 
 describe('PromoModal', () => {
   let wrapper
+  const props = {
+    buttonText: 'button',
+    closeModal: jest.fn(),
+    children: '<div>children</div>',
+    text: 'text',
+    title: 'title',
+    error: '',
+  }
 
   beforeEach(() => {
-    wrapper = shallow(<PromoModal />)
+    wrapper = shallow(<PromoModal {...props} />)
   })
 
   test('should return a ModalPanel with no props', () => {
@@ -130,6 +138,19 @@ describe('PromoModal', () => {
           expect(promoApply).not.toBeCalled()
         })
       })
+    })
+  })
+
+  describe('when isNewPromoCodeModalEnabled is true and promo code is in list', () => {
+    beforeEach(() => {
+      wrapper.setProps({
+        isNewPromoCodeModalEnabled: true,
+        promoCode: 'DTI-SB-5030',
+      })
+    })
+
+    test('then PromoModalRedesign component should be rendered', () => {
+      expect(wrapper.find('PromoModalRedesign').exists()).toBeTruthy()
     })
   })
 })

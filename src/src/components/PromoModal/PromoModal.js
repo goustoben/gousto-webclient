@@ -3,8 +3,10 @@ import React from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 import PromoModalBody from './PromoModalBody'
-import css from './PromoModal.css'
+import { PromoModalRedesign } from './PromoModalRedesign'
 import AgeVerify from './AgeVerify'
+import { promoCodes } from './promoCodeValues'
+import css from './PromoModal.css'
 
 class PromoModal extends React.Component {
   handleClick = () => {
@@ -14,7 +16,27 @@ class PromoModal extends React.Component {
   }
 
   render() {
-    const { text, title, error, buttonText, needsAgeVerification, isAgeVerified, pending, trackUTMAndPromoCode } = this.props
+    const {
+      text,
+      title,
+      error,
+      buttonText,
+      needsAgeVerification,
+      isAgeVerified,
+      pending,
+      trackUTMAndPromoCode,
+      isNewPromoCodeModalEnabled,
+      promoCode,
+    } = this.props
+
+    if (isNewPromoCodeModalEnabled && promoCodes.includes(promoCode)) {
+      return (
+        <PromoModalRedesign
+          onClick={this.handleClick}
+          trackUTMAndPromoCode={trackUTMAndPromoCode}
+        />
+      )
+    }
 
     return (
       <ModalPanel closePortal={() => this.handleClick()} closePortalFromButton={() => this.handleClick()} disableOverlay>
@@ -52,7 +74,9 @@ PromoModal.propTypes = {
   pending: PropTypes.bool,
   justApplied: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
-  closeModal: PropTypes.func.isRequired
+  closeModal: PropTypes.func.isRequired,
+  isNewPromoCodeModalEnabled: PropTypes.bool,
+  promoCode: PropTypes.string,
 }
 
 PromoModal.defaultProps = {
@@ -62,6 +86,8 @@ PromoModal.defaultProps = {
   pending: false,
   justApplied: false,
   trackUTMAndPromoCode: () => {},
+  isNewPromoCodeModalEnabled: false,
+  promoCode: '',
 }
 
 export { PromoModal }

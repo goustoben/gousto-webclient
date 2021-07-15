@@ -1,3 +1,5 @@
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+
 .body {
 	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
 }
@@ -14,4 +16,56 @@
 
 .buttonSegment {
 	font-size: 14px;
+}
+
+/* On Chrome */
+.hideScroll > div::-webkit-scrollbar {
+  display: none;
+}
+/* For Firefox and IE */
+.hideScroll > div {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.container {
+  text-align: left;
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    max-width: 25.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 35rem;
+  }
+}
+
+.header {
+  width: 100%;
+}
+
+.contentContainer {
+  padding: 1rem 1rem 1.5rem;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+}
+
+.subHeader {
+  composes: fontStyleL from 'design-language/typography.css';
+  margin-bottom: 1rem;
+}
+
+.firstMonthDiscount {
+  margin-bottom: 1rem;
+}
+
+.appliedDiscount {
+  margin-bottom: 2rem;
+}
+
+.bold {
+  composes: fontBold from 'design-language/typography.css';
 }
