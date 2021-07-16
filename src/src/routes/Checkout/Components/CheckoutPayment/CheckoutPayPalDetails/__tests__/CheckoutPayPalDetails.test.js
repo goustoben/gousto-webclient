@@ -7,9 +7,14 @@ import { PayPalConfirmation } from '../../PayPalConfirmation'
 
 describe('CheckoutPayPalDetails', () => {
   let wrapper
+  const trackFailedCheckoutFlow = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<CheckoutPayPalDetails />)
+    wrapper = shallow(<CheckoutPayPalDetails trackFailedCheckoutFlow={trackFailedCheckoutFlow} />)
+  })
+
+  afterEach(() => {
+    trackFailedCheckoutFlow.mockClear()
   })
 
   describe('when component is mounted', () => {
@@ -340,14 +345,23 @@ describe('CheckoutPayPalDetails', () => {
           })
 
           describe('and it is failed', () => {
-            test('should fire PayPal error event', async () => {
-              const error = new Error('PayPal error')
-              paypalCheckoutInstance.tokenizePayment = jest.fn(() => Promise.reject(error))
+            const error = new Error('PayPal error')
 
+            beforeEach(() => {
+              paypalCheckoutInstance.tokenizePayment = jest.fn(() => Promise.reject(error))
+            })
+
+            test('should fire PayPal error event', async () => {
               await wrapper.instance().fetchPayPalNonce(approveData)
 
               expect(setPayPalNonce).not.toHaveBeenCalled()
               expect(firePayPalError).toHaveBeenCalledWith(error)
+            })
+
+            test('should log event', async () => {
+              await wrapper.instance().fetchPayPalNonce(approveData)
+
+              expect(trackFailedCheckoutFlow).toHaveBeenCalled()
             })
           })
         })
@@ -368,6 +382,14 @@ describe('CheckoutPayPalDetails', () => {
           buttonConfig.onError(error)
 
           expect(firePayPalError).toHaveBeenCalledWith(error)
+        })
+
+        test('should log event', () => {
+          const error = new Error('PayPal error')
+
+          buttonConfig.onError(error)
+
+          expect(trackFailedCheckoutFlow).toHaveBeenCalled()
         })
       })
     })

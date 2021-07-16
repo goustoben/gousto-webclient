@@ -10,7 +10,6 @@ import {
 } from '../loadPayPalScripts'
 
 describe('loadPayPalScripts', () => {
-  let callback = null
   let document = null
   const scriptNames = [[BRAINTREE_CLIENT], [BRAINTREE_PAYPAL_CHECKOUT], [BRAINTREE_DATA_COLLECTOR]]
 
@@ -27,24 +26,24 @@ describe('loadPayPalScripts', () => {
   }
 
   beforeEach(() => {
-    callback = jest.fn()
     const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
     document = jsdom.window.document
   })
 
-  describe('when document is undefined', () => {
+  describe('when document is not defined', () => {
     test('should not load scripts', () => {
-      loadPayPalScripts(callback, null)
+      loadPayPalScripts(null).catch(() => {})
       const scripts = document.querySelectorAll('script')
 
       expect(scripts).toHaveLength(0)
     })
 
-    test('should not call callback', () => {
-      loadPayPalScripts(callback, null)
-      document.querySelectorAll('script').forEach(triggerLoadEvent)
+    test('should reject promise', (done) => {
+      loadPayPalScripts(null).catch(() => {
+        done()
+      })
 
-      expect(callback).not.toHaveBeenCalled()
+      document.querySelectorAll('script').forEach(triggerLoadEvent)
     })
   })
 
@@ -56,7 +55,7 @@ describe('loadPayPalScripts', () => {
     })
 
     test('should load scripts', () => {
-      loadPayPalScripts(callback)
+      loadPayPalScripts()
       const scripts = window.document.querySelectorAll('script')
 
       expect(scripts).toHaveLength(3)
@@ -64,36 +63,32 @@ describe('loadPayPalScripts', () => {
   })
 
   describe('when document is defined', () => {
+    test('should resolve once scripts have loaded', (done) => {
+      loadPayPalScripts(document).then(() => {
+        done()
+      })
+
+      document.querySelectorAll('script').forEach(triggerLoadEvent)
+    })
+
     describe.each(scriptNames)('"%s" script', (scriptName) => {
       describe('when script does not exist', () => {
         test('should create a new script element and append it to body', () => {
           const expected = `${BRAINTREE_CDN}/web/${BRAINTREE_VERSION}/js/${scriptName}.min.js`
 
-          loadPayPalScripts(callback, document)
+          loadPayPalScripts(document)
           const script = document.getElementById(`braintree-${scriptName}-script`)
 
           expect(script).not.toBeNull()
           expect(script.getAttribute('src')).toEqual(expected)
         })
 
-        test('should invoke callback once script has loaded', (done) => {
-          loadPayPalScripts(callback, document)
-          document.querySelectorAll('script').forEach(triggerLoadEvent)
-
-          setImmediate(() => {
-            expect(callback).toHaveBeenCalled()
+        test('should reject once script has failed to load', (done) => {
+          loadPayPalScripts(document).catch(() => {
             done()
           })
-        })
 
-        test('should not invoke callback once script has failed to load', (done) => {
-          loadPayPalScripts(callback, document)
           document.querySelectorAll('script').forEach(triggerErrorEvent)
-
-          setImmediate(() => {
-            expect(callback).not.toHaveBeenCalled()
-            done()
-          })
         })
       })
 
@@ -109,27 +104,25 @@ describe('loadPayPalScripts', () => {
         })
 
         test('should remove old script', () => {
-          loadPayPalScripts(callback, document)
+          loadPayPalScripts(document)
           const scripts = document.querySelectorAll(`.${initialClassName}`)
 
           expect(scripts).toHaveLength(0)
         })
 
         test('should create a new script element and append it to body', () => {
-          loadPayPalScripts(callback, document)
+          loadPayPalScripts(document)
           const script = document.getElementById(scriptId)
 
           expect(script).not.toBeNull()
         })
 
-        test('and should invoke callback once script has loaded', (done) => {
-          loadPayPalScripts(callback, document)
-          document.querySelectorAll('script').forEach(triggerLoadEvent)
-
-          setImmediate(() => {
-            expect(callback).toHaveBeenCalled()
+        test('and should resolve once scripts have loaded', (done) => {
+          loadPayPalScripts(document).then(() => {
             done()
           })
+
+          document.querySelectorAll('script').forEach(triggerLoadEvent)
         })
       })
     })

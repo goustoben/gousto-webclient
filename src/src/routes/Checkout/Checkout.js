@@ -50,6 +50,8 @@ const propTypes = {
     steps: PropTypes.array,
   }),
   trackCheckoutButtonPressed: PropTypes.func,
+  trackSuccessfulCheckoutFlow: PropTypes.func,
+  trackFailedCheckoutFlow: PropTypes.func,
   changeRecaptcha: PropTypes.func,
   fetchGoustoRef: PropTypes.func,
   trackUTMAndPromoCode: PropTypes.func,
@@ -83,6 +85,8 @@ const defaultProps = {
   fetchPayPalClientToken: () => {},
   clearPayPalClientToken: () => {},
   trackCheckoutNavigationLinks: () => {},
+  trackSuccessfulCheckoutFlow: () => {},
+  trackFailedCheckoutFlow: () => {},
   prices: Immutable.Map({}),
 
   isLoginOpen: false,
@@ -176,7 +180,6 @@ class Checkout extends PureComponent {
       fetchGoustoRef,
       isPaymentBeforeChoosingV3Enabled,
     } = this.props
-    const { paypalScriptsReady } = this.state
 
     if (isPaymentBeforeChoosingV3Enabled && !checkoutSteps.includes('order-summary')) {
       checkoutSteps.unshift('order-summary')
@@ -191,14 +194,9 @@ class Checkout extends PureComponent {
           isCreatingPreviewOrder: false,
         })
       })
-    loadCheckoutScript(() => {
-      this.setState({
-        checkoutScriptReady: true,
-      })
-    })
-    if (!paypalScriptsReady) {
-      this.loadPayPal()
-    }
+
+    this.loadCheckoutScript()
+    this.loadPayPalScripts()
 
     changeRecaptcha()
     fetchGoustoRef()
@@ -210,15 +208,23 @@ class Checkout extends PureComponent {
     clearPayPalClientToken()
   }
 
-  reloadCheckoutScript = () => {
+  loadCheckoutScript = () => {
+    const { trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } = this.props
+
     this.setState({
       checkoutScriptReady: false,
     })
-    loadCheckoutScript(() => {
-      this.setState({
-        checkoutScriptReady: true,
+
+    loadCheckoutScript()
+      .then(() => {
+        trackSuccessfulCheckoutFlow('Checkout script has been loaded')
+        this.setState({
+          checkoutScriptReady: true,
+        })
       })
-    })
+      .catch((error) => {
+        trackFailedCheckoutFlow('Checkout script has not been loaded', error)
+      })
   }
 
   isLastStep = (steps, currentStep) => Boolean(steps.indexOf(currentStep) === steps.length - 1)
@@ -279,7 +285,7 @@ class Checkout extends PureComponent {
       trackClick: this.trackClick,
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
-      reloadCheckoutScript: this.reloadCheckoutScript,
+      reloadCheckoutScript: this.loadCheckoutScript,
       onLoginClick: this.handleLoginClick,
       submitOrder,
       checkoutScriptReady,
@@ -382,14 +388,27 @@ class Checkout extends PureComponent {
     }
   }
 
-  loadPayPal() {
-    const { fetchPayPalClientToken } = this.props
+  loadPayPalScripts() {
+    const { fetchPayPalClientToken, trackSuccessfulCheckoutFlow, trackFailedCheckoutFlow } =
+      this.props
+    const { paypalScriptsReady } = this.state
 
-    loadPayPalScripts(() => {
-      this.setState({
-        paypalScriptsReady: true,
+    if (paypalScriptsReady) {
+      return
+    }
+
+    loadPayPalScripts()
+      .then(() => {
+        trackSuccessfulCheckoutFlow('PayPal scripts have been loaded')
+
+        this.setState({
+          paypalScriptsReady: true,
+        })
       })
-    })
+      .catch((error) => {
+        trackFailedCheckoutFlow('PayPal scripts have not been loaded', error)
+      })
+
     fetchPayPalClientToken()
   }
 

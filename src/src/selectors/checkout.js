@@ -1,4 +1,7 @@
 import Immutable from 'immutable'
+import Cookies from 'utils/GoustoCookies'
+// eslint-disable-next-line import/no-cycle
+import { get } from 'utils/cookieHelper2'
 
 export const hasCheckoutError = state => {
   const errors = state.checkout.get('errors')
@@ -27,3 +30,8 @@ export const getPromoCodeValidationDetails = state => {
 
 export const getCheckoutLastReachedStepIndex = state => state.checkout.get('lastReachedStepIndex')
 export const getPasswordValue = state => state.checkout.getIn(['passwordInfo', 'value'])
+
+export const getCheckoutLogData = state => ({
+  session_id: get(Cookies, 'gousto_session_id', false, false),
+  gousto_ref: state.checkout.get('goustoRef'),
+})

@@ -154,7 +154,7 @@ See [`node-config`](https://github.com/lorenwest/node-config) for more informati
 ## Adding a new API endpoint
 API endpoints are now statically defined in config for each environment, that are loaded by node-config as detailed above.
 
-Modify the environments block in these files `config/default.json5` and each of the team envs e.g. (`config/rockets.json5`)
+Modify the environments block in these files `config/default.json5` (`staging` and `production` sections) and each of the team envs e.g. (`config/rockets.json5`)
 This block is structured in the following way:
 ```json5
 {

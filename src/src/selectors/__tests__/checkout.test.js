@@ -1,5 +1,9 @@
 import Immutable from 'immutable'
-import { hasCheckoutError, getPromoCodeValidationDetails } from 'selectors/checkout'
+import { hasCheckoutError, getPromoCodeValidationDetails, getCheckoutLogData } from 'selectors/checkout'
+
+jest.mock('utils/cookieHelper2', () => ({
+  get: () => 'fake_session_id'
+}))
 
 describe('checkout selectors', () => {
   describe('hasCheckoutError', () => {
@@ -89,6 +93,25 @@ describe('checkout selectors', () => {
       }
 
       const result = getPromoCodeValidationDetails(state)
+
+      expect(result).toEqual(expected)
+    })
+  })
+
+  describe('getCheckoutLogData', () => {
+    const state = {
+      checkout: Immutable.fromJS({
+        goustoRef: '105979923'
+      }),
+    }
+
+    test('should return session id and gousto ref', () => {
+      const expected = {
+        session_id: 'fake_session_id',
+        gousto_ref: '105979923',
+      }
+
+      const result = getCheckoutLogData(state)
 
       expect(result).toEqual(expected)
     })

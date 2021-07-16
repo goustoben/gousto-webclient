@@ -159,12 +159,17 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenizationFailed = (event) => {
-    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenizationFailed } =
-      this.props
+    const {
+      fireCheckoutError,
+      fireCheckoutPendingEvent,
+      trackingCardTokenizationFailed,
+      trackFailedCheckoutFlow,
+    } = this.props
     const errorMessage = event ? event.data.message : ''
     const errorType = getErrorType(event.data.errorCode)
 
     logger.error('card tokenization failure')
+    trackFailedCheckoutFlow('Checkout card tokenization failed', new Error(errorMessage))
     fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
     fireCheckoutError(errorType)
     trackingCardTokenizationFailed(errorMessage)
@@ -286,6 +291,7 @@ CheckoutFrame.propTypes = {
   cardTokenReady: PropTypes.func,
   trackingCardTokenizationSuccessfully: PropTypes.func,
   trackingCardTokenizationFailed: PropTypes.func,
+  trackFailedCheckoutFlow: PropTypes.func,
   billingAddress: PropTypes.shape({
     addressLine1: PropTypes.string,
     addressLine2: PropTypes.string,
@@ -313,6 +319,7 @@ CheckoutFrame.defaultProps = {
   cardTokenReady: () => {},
   trackingCardTokenizationSuccessfully: () => {},
   trackingCardTokenizationFailed: () => {},
+  trackFailedCheckoutFlow: () => {},
   billingAddress: {
     addressLine1: '',
     addressLine2: '',

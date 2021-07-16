@@ -1,4 +1,4 @@
-import Cookies from 'cookies-js'
+import Cookies from 'utils/GoustoCookies'
 import { get, set } from 'utils/cookieHelper2'
 
 import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
@@ -18,6 +18,16 @@ const getResponse = ({ expiresIn, accessToken, refreshToken }) => ({
 
 describe('utils', () => {
   let ctx
+  let originalSecureValue
+
+  beforeEach(() => {
+    originalSecureValue = Cookies.defaults.secure
+    Cookies.defaults.secure = false
+  })
+
+  afterEach(() => {
+    Cookies.defaults.secure = originalSecureValue
+  })
 
   describe('routeMatches', () => {
     test('should return false if ctx does not match given method and path', () => {

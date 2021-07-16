@@ -145,6 +145,9 @@ module.exports = {
     days: '/days',
     consignments: '/consignments',
   },
+  logs: {
+    event: '/event',
+  },
   menu: {
     menus: '/menus',
   },
@@ -195,10 +198,6 @@ module.exports = {
 
   userBucketing: {
     experiments: '/user/experiments'
-  },
-
-  user: {
-    referAFriend: '/user/refer-a-friend'
   },
 
   userFeedback: {

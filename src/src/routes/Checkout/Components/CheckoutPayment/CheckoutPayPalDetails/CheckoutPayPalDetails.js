@@ -79,18 +79,19 @@ class CheckoutPayPalDetails extends React.PureComponent {
     })
 
   fetchPayPalNonce = async (approveData) => {
-    const { setPayPalNonce, firePayPalError } = this.props
+    const { setPayPalNonce, firePayPalError, trackFailedCheckoutFlow } = this.props
 
     try {
       const payload = await this.paypalCheckoutInstance.tokenizePayment(approveData)
       setPayPalNonce(payload.nonce)
-    } catch (e) {
-      firePayPalError(e)
+    } catch (error) {
+      trackFailedCheckoutFlow('Fetching PayPal nonce has been failed', error)
+      firePayPalError(error)
     }
   }
 
   renderPayPalButton = () => {
-    const { firePayPalError, trackEvent } = this.props
+    const { firePayPalError, trackEvent, trackFailedCheckoutFlow } = this.props
 
     const buttonsConfig = {
       fundingSource: paypal.FUNDING.PAYPAL,
@@ -107,8 +108,9 @@ class CheckoutPayPalDetails extends React.PureComponent {
       onCancel: () => {
         trackEvent(clickCancelPayPal)
       },
-      onError: (e) => {
-        firePayPalError(e)
+      onError: (error) => {
+        trackFailedCheckoutFlow('PayPal has been failed', error)
+        firePayPalError(error)
       },
     }
 
@@ -122,7 +124,7 @@ class CheckoutPayPalDetails extends React.PureComponent {
   }
 
   async initPayPal() {
-    const { firePayPalError, clearPayPalErrors } = this.props
+    const { firePayPalError, clearPayPalErrors, trackFailedCheckoutFlow } = this.props
 
     clearPayPalErrors()
     this.setState({
@@ -139,8 +141,9 @@ class CheckoutPayPalDetails extends React.PureComponent {
       this.setState({
         isPayPalInitialized: true,
       })
-    } catch (e) {
-      firePayPalError(e)
+    } catch (error) {
+      trackFailedCheckoutFlow('PayPal initialization has been failed', error)
+      firePayPalError(error)
     }
   }
 
@@ -183,6 +186,7 @@ CheckoutPayPalDetails.propTypes = {
   hide: PropTypes.bool,
   isPayPalSetupDone: PropTypes.bool,
   token: PropTypes.string,
+  trackFailedCheckoutFlow: PropTypes.func,
 }
 
 CheckoutPayPalDetails.defaultProps = {
@@ -196,6 +200,7 @@ CheckoutPayPalDetails.defaultProps = {
   hide: false,
   isPayPalSetupDone: false,
   token: null,
+  trackFailedCheckoutFlow: () => {},
 }
 
 export { CheckoutPayPalDetails }

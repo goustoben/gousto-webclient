@@ -10,6 +10,7 @@ import {
   checkoutStepIndexReached,
   fetchGoustoRef,
 } from 'actions/checkout'
+import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from 'actions/log'
 import { trackUTMAndPromoCode, trackCheckoutNavigationLinks } from 'actions/tracking'
 import { getCheckoutLastReachedStepIndex } from 'selectors/checkout'
 import {
@@ -34,20 +35,24 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-export const CheckoutContainer = connect(mapStateToProps, {
+const mapDispatchToProps = {
   menuLoadDays: actions.menuLoadDays,
   redirect: actions.redirect,
   submitOrder: actions.checkoutSignup,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
   trackSignupStep: actions.trackSignupPageChange,
+  loginVisibilityChange: actions.loginVisibilityChange,
   boxSummaryDeliveryDaysLoad,
   trackCheckoutButtonPressed,
+  trackSuccessfulCheckoutFlow,
+  trackFailedCheckoutFlow,
   changeRecaptcha,
   trackUTMAndPromoCode,
   fetchPayPalClientToken,
   clearPayPalClientToken,
   trackCheckoutNavigationLinks,
-  loginVisibilityChange: actions.loginVisibilityChange,
   checkoutStepIndexReached,
   fetchGoustoRef,
-})(Checkout)
+}
+
+export const CheckoutContainer = connect(mapStateToProps, mapDispatchToProps)(Checkout)

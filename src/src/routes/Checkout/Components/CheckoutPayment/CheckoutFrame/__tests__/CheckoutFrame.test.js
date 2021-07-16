@@ -1,7 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
+import { CheckoutFrameContainer } from '../CheckoutFrameContainer'
 
 jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
   publicKey: 'checkout-com-public-key',
@@ -19,6 +21,7 @@ describe('CheckoutFrame', () => {
   const disableCardSubmission = jest.fn()
   const cardholderGetter = jest.fn()
   const cardholderSetter = jest.fn()
+  const trackFailedCheckoutFlow = jest.fn()
 
   beforeEach(() => {
     Frames = {
@@ -46,6 +49,7 @@ describe('CheckoutFrame', () => {
     disableCardSubmission.mockClear()
     cardholderGetter.mockClear()
     cardholderSetter.mockClear()
+    trackFailedCheckoutFlow.mockClear()
 
     delete global.Frames
   })
@@ -56,7 +60,7 @@ describe('CheckoutFrame', () => {
         wrapper = shallow(<CheckoutFrame />)
       })
 
-      it('then Frames should not be initialized', () => {
+      test('then Frames should not be initialized', () => {
         expect(Frames.init).not.toHaveBeenCalled()
       })
     })
@@ -69,7 +73,7 @@ describe('CheckoutFrame', () => {
       })
 
       describe('then checkout.com Frames should be initialized', () => {
-        it('with the correct public key', () => {
+        test('with the correct public key', () => {
           const expected = {
             publicKey: 'checkout-com-public-key',
           }
@@ -77,7 +81,7 @@ describe('CheckoutFrame', () => {
           expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
         })
 
-        it('with the correct frames selectors', () => {
+        test('with the correct frames selectors', () => {
           const expected = {
             cardNumber: {
               frameSelector: '[data-frames="cardNumber"]',
@@ -93,7 +97,7 @@ describe('CheckoutFrame', () => {
           expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
         })
 
-        it('with the correct cardholder details', () => {
+        test('with the correct cardholder details', () => {
           const expected = {
             cardholder: {
               name: expect.any(String),
@@ -109,7 +113,7 @@ describe('CheckoutFrame', () => {
           expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining(expected))
         })
 
-        it('with the correct callbacks', () => {
+        test('with the correct callbacks', () => {
           const instance = wrapper.instance()
           const expected = {
             frameValidationChanged: instance.frameValidationChanged,
@@ -128,7 +132,7 @@ describe('CheckoutFrame', () => {
     const testName = 'test name'
 
     describe('when changed', () => {
-      it('then cardholder data should be updated', () => {
+      test('then cardholder data should be updated', () => {
         const expected = {
           name: testName,
           billingAddress: {
@@ -147,7 +151,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when not changed', () => {
-      it('cardholder data should not be updated', () => {
+      test('cardholder data should not be updated', () => {
         wrapper = shallow(<CheckoutFrame checkoutScriptReady cardName={testName} />)
         wrapper.setProps({ cardName: testName })
 
@@ -165,7 +169,7 @@ describe('CheckoutFrame', () => {
     }
 
     describe('when changed', () => {
-      it('cardholder data should be updated', () => {
+      test('cardholder data should be updated', () => {
         const expected = {
           name: expect.any(String),
           billingAddress: {
@@ -184,7 +188,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when not changed', () => {
-      it('cardholder data should not be updated', () => {
+      test('cardholder data should not be updated', () => {
         wrapper = shallow(<CheckoutFrame checkoutScriptReady billingAddress={testAddress} />)
         wrapper.setProps({ billingAddress: testAddress })
 
@@ -197,7 +201,7 @@ describe('CheckoutFrame', () => {
     const hasCheckoutError = true
 
     describe('when value is true', () => {
-      it('should call Frames.enableSubmitForm()', () => {
+      test('should call Frames.enableSubmitForm()', () => {
         wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setProps({ hasCheckoutError })
 
@@ -206,7 +210,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when value is false', () => {
-      it('should not call Frames.enableSubmitForm()', () => {
+      test('should not call Frames.enableSubmitForm()', () => {
         wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.setProps({ hasCheckoutError: false })
 
@@ -215,7 +219,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when value is true and not changed', () => {
-      it('should not call Frames.enableSubmitForm()', () => {
+      test('should not call Frames.enableSubmitForm()', () => {
         wrapper = shallow(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
         wrapper.setProps({ hasCheckoutError })
 
@@ -226,7 +230,7 @@ describe('CheckoutFrame', () => {
 
   describe('isSubmitCardEnabled prop is updated', () => {
     describe('when changed', () => {
-      it('should submit card details', () => {
+      test('should submit card details', () => {
         const submitCard = jest.fn()
         wrapper = shallow(<CheckoutFrame checkoutScriptReady />)
         wrapper.instance().submitCard = submitCard
@@ -238,7 +242,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when not changed', () => {
-      it('should not submit card details', () => {
+      test('should not submit card details', () => {
         const submitCard = jest.fn()
         wrapper = shallow(<CheckoutFrame checkoutScriptReady isSubmitCardEnabled />)
         wrapper.instance().submitCard = submitCard
@@ -259,11 +263,11 @@ describe('CheckoutFrame', () => {
         wrapper.unmount()
       })
 
-      it('should remove the global Frames reference', () => {
+      test('should remove the global Frames reference', () => {
         expect(global.Frames).not.toBeDefined()
       })
 
-      it('should call reloadCheckoutScript', () => {
+      test('should call reloadCheckoutScript', () => {
         expect(reloadCheckoutScript).toHaveBeenCalled()
       })
     })
@@ -271,7 +275,7 @@ describe('CheckoutFrame', () => {
 
   describe('card number frame validation changed', () => {
     describe('when card number is not valid', () => {
-      it('should show card number error', () => {
+      test('should show card number error', () => {
         const event = {
           element: 'card-number',
           isValid: false,
@@ -284,7 +288,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when card number is valid', () => {
-      it('should hide card number error', () => {
+      test('should hide card number error', () => {
         const event = {
           element: 'card-number',
           isValid: true,
@@ -301,7 +305,7 @@ describe('CheckoutFrame', () => {
 
   describe('card expiry date frame validation changed', () => {
     describe('when card expiry date is not valid', () => {
-      it('should show card expiry date error', () => {
+      test('should show card expiry date error', () => {
         const event = {
           element: 'expiry-date',
           isValid: false,
@@ -314,7 +318,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when card expiry date is not valid', () => {
-      it('should hide card expiry date error', () => {
+      test('should hide card expiry date error', () => {
         const event = {
           element: 'expiry-date',
           isValid: true,
@@ -330,7 +334,7 @@ describe('CheckoutFrame', () => {
 
   describe('cvv frame validation changed', () => {
     describe('when cvv is not valid', () => {
-      it('should show cvv error', () => {
+      test('should show cvv error', () => {
         const event = {
           element: 'cvv',
           isValid: false,
@@ -343,7 +347,7 @@ describe('CheckoutFrame', () => {
     })
 
     describe('when cvv is not valid', () => {
-      it('should hide cvv error', () => {
+      test('should hide cvv error', () => {
         const event = {
           element: 'cvv',
           isValid: true,
@@ -365,7 +369,7 @@ describe('CheckoutFrame', () => {
         wrapper = shallow(<CheckoutFrame checkoutClearErrors={checkoutClearErrors} />)
       })
 
-      it('should clear checkout.com errors', () => {
+      test('should clear checkout.com errors', () => {
         wrapper.instance().cardSubmitted()
 
         expect(checkoutClearErrors).toHaveBeenCalled()
@@ -393,29 +397,29 @@ describe('CheckoutFrame', () => {
         wrapper.instance().cardTokenized(mockEvent)
       })
 
-      it('should call Frames.addCardToken', () => {
+      test('should call Frames.addCardToken', () => {
         expect(Frames.addCardToken).toHaveBeenCalledWith(
           wrapper.instance().paymentForm,
           'test-token'
         )
       })
 
-      it('should call fireCheckoutPendingEvent', () => {
+      test('should call fireCheckoutPendingEvent', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
           false
         )
       })
 
-      it('should call change with the correct parameters', () => {
+      test('should call change with the correct parameters', () => {
         expect(change).toHaveBeenCalledWith('payment', 'payment.token', 'test-token')
       })
 
-      it('should call cardTokenReady', () => {
+      test('should call cardTokenReady', () => {
         expect(cardTokenReady).toHaveBeenCalled()
       })
 
-      it('should call trackingCardTokenizationSuccessfully', () => {
+      test('should call trackingCardTokenizationSuccessfully', () => {
         expect(trackingCardTokenizationSuccessfully).toHaveBeenCalled()
       })
     })
@@ -427,6 +431,7 @@ describe('CheckoutFrame', () => {
         <CheckoutFrame
           fireCheckoutError={fireCheckoutError}
           trackingCardTokenizationFailed={trackingCardTokenizationFailed}
+          trackFailedCheckoutFlow={trackFailedCheckoutFlow}
           fireCheckoutPendingEvent={fireCheckoutPendingEvent}
         />
       )
@@ -444,18 +449,18 @@ describe('CheckoutFrame', () => {
         wrapper.instance().cardTokenizationFailed(event)
       })
 
-      it('should call fireCheckoutError with correct action type', () => {
+      test('should call fireCheckoutError with correct action type', () => {
         expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.NETWORK_FAILURE)
       })
 
-      it('should call fireCheckoutPendingEvent', () => {
+      test('should call fireCheckoutPendingEvent', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
           false
         )
       })
 
-      it('should call trackingCardTokenizationFailed with correct error message', () => {
+      test('should call trackingCardTokenizationFailed with correct error message', () => {
         expect(trackingCardTokenizationFailed).toHaveBeenCalledWith(event.data.message)
       })
     })
@@ -472,19 +477,23 @@ describe('CheckoutFrame', () => {
         wrapper.instance().cardTokenizationFailed(event)
       })
 
-      it('should call the fireCheckoutError prop with correct action type', () => {
+      test('should call the fireCheckoutError prop with correct action type', () => {
         expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENIZATION_FAILED)
       })
 
-      it('should call fireCheckoutPendingEvent', () => {
+      test('should call fireCheckoutPendingEvent', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
           false
         )
       })
 
-      it('should call trackingCardTokenizationFailed with correct error message', () => {
+      test('should call trackingCardTokenizationFailed with correct error message', () => {
         expect(trackingCardTokenizationFailed).toHaveBeenCalledWith(event.data.message)
+      })
+
+      test('should log event', () => {
+        expect(trackFailedCheckoutFlow).toHaveBeenCalled()
       })
     })
   })
@@ -505,22 +514,22 @@ describe('CheckoutFrame', () => {
         await wrapper.instance().submitCard()
       })
 
-      it('should call Frames.submitCard', () => {
+      test('should call Frames.submitCard', () => {
         expect(Frames.submitCard).toHaveBeenCalled()
       })
 
-      it('should not call fireCheckoutError', () => {
+      test('should not call fireCheckoutError', () => {
         expect(fireCheckoutError).not.toHaveBeenCalled()
       })
 
-      it('should call fireCheckoutPendingEvent once', () => {
+      test('should call fireCheckoutPendingEvent once', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
           true
         )
       })
 
-      it('should call disableCardSubmission', () => {
+      test('should call disableCardSubmission', () => {
         expect(disableCardSubmission).toHaveBeenCalled()
       })
     })
@@ -533,15 +542,15 @@ describe('CheckoutFrame', () => {
         await wrapper.instance().submitCard()
       })
 
-      it('should call Frames.submitCard', () => {
+      test('should call Frames.submitCard', () => {
         expect(Frames.submitCard).toHaveBeenCalled()
       })
 
-      it('should call fireCheckoutError', () => {
+      test('should call fireCheckoutError', () => {
         expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
       })
 
-      it('should call fireCheckoutPendingEvent twice', () => {
+      test('should call fireCheckoutPendingEvent twice', () => {
         expect(fireCheckoutPendingEvent).toHaveBeenCalledWith(
           actionTypes.CHECKOUT_CARD_SUBMIT,
           true
@@ -552,7 +561,7 @@ describe('CheckoutFrame', () => {
         )
       })
 
-      it('should call disableCardSubmission', () => {
+      test('should call disableCardSubmission', () => {
         expect(disableCardSubmission).toHaveBeenCalled()
       })
     })
@@ -617,5 +626,45 @@ describe('CheckoutFrame', () => {
         })
       )
     })
+  })
+})
+
+describe('CheckoutFrameContainer', () => {
+  let wrapper
+  const initialState = {
+    checkout: Immutable.fromJS({
+      errors: [],
+    }),
+    form: Immutable.fromJS({
+      payment: {
+        values: {
+          payment: {
+            isBillingAddressDifferent: false,
+          },
+        },
+      },
+      delivery: {
+        values: {
+          delivery: {},
+        },
+      },
+    }),
+  }
+  const store = {
+    getState: jest.fn(() => initialState),
+    dispatch: jest.fn(),
+    subscribe: jest.fn(),
+  }
+  beforeEach(() => {
+    wrapper = shallow(<CheckoutFrameContainer store={store} next={jest.fn()} />)
+  })
+  test('should be rendered properly', () => {
+    const expected = {
+      sectionName: 'payment',
+      cardName: '',
+      hasCheckoutError: false,
+      billingAddress: {},
+    }
+    expect(wrapper.props()).toEqual(expect.objectContaining(expected))
   })
 })

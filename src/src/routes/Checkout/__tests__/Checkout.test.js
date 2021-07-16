@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import config from 'config/routes'
@@ -49,13 +49,11 @@ jest.mock('actions/boxSummary', () => ({
 }))
 
 jest.mock('routes/Checkout/loadCheckoutScript', () => ({
-  loadCheckoutScript: jest.fn(),
+  loadCheckoutScript: jest.fn(() => Promise.resolve()),
 }))
 
 jest.mock('routes/Checkout/loadPayPalScripts', () => ({
-  loadPayPalScripts: jest.fn((callback) => {
-    callback()
-  }),
+  loadPayPalScripts: jest.fn(() => Promise.resolve()),
 }))
 
 jest.mock('routes/Menu/fetchData/menuService', () => ({
@@ -74,9 +72,14 @@ describe('Given Checkout component', () => {
   let dispatch
   let getState
   let subscribe
+  let unsubscribe
   let onCheckoutSpy
   let fetchData
   let fetchPayPalClientToken
+  let trackSuccessfulCheckoutFlow
+  let trackFailedCheckoutFlow
+  let changeRecaptcha
+  let fetchGoustoRef
 
   beforeEach(() => {
     store = {
@@ -123,14 +126,20 @@ describe('Given Checkout component', () => {
 
     getState = jest.fn().mockReturnValue(store)
     subscribe = jest.fn().mockReturnValue(Promise.resolve())
+    unsubscribe = jest.fn().mockReturnValue(Promise.resolve())
     dispatch = jest.fn().mockReturnValue(Promise.resolve())
     fetchPayPalClientToken = jest.fn()
+    trackSuccessfulCheckoutFlow = jest.fn()
+    trackFailedCheckoutFlow = jest.fn()
+    changeRecaptcha = jest.fn()
+    fetchGoustoRef = jest.fn()
 
     context = {
       store: {
+        dispatch,
         getState,
         subscribe,
-        dispatch,
+        unsubscribe,
       },
     }
 
@@ -142,6 +151,11 @@ describe('Given Checkout component', () => {
         checkoutLanding={onCheckoutSpy}
         trackSignupStep={trackSignupStep}
         redirect={redirect}
+        fetchPayPalClientToken={fetchPayPalClientToken}
+        trackSuccessfulCheckoutFlow={trackSuccessfulCheckoutFlow}
+        trackFailedCheckoutFlow={trackFailedCheckoutFlow}
+        changeRecaptcha={changeRecaptcha}
+        fetchGoustoRef={fetchGoustoRef}
       />,
       { context }
     )
@@ -150,7 +164,6 @@ describe('Given Checkout component', () => {
   afterEach(() => {
     replace.mockClear()
     redirect.mockClear()
-    loadCheckoutScript.mockClear()
     menuLoadDays.mockClear()
     menuLoadDays.mockReset()
     pricingRequest.mockClear()
@@ -160,15 +173,14 @@ describe('Given Checkout component', () => {
     boxSummaryDeliveryDaysLoad.mockClear()
     checkoutCreatePreviewOrder.mockClear()
     loadMenuServiceDataIfDeepLinked.mockClear()
-    loadPayPalScripts.mockClear()
     fetchPayPalClientToken.mockClear()
+    trackSuccessfulCheckoutFlow.mockClear()
+    trackFailedCheckoutFlow.mockClear()
+    loadCheckoutScript.mockClear()
+    loadPayPalScripts.mockClear()
   })
 
   describe('when component is mounted', () => {
-    beforeEach(() => {
-      wrapper = shallow(<Checkout trackSignupStep={jest.fn()} />, { context })
-    })
-
     test('then should render Breadcrumbs component', () => {
       expect(wrapper.find('Breadcrumbs').exists()).toBeTruthy()
     })
@@ -396,24 +408,9 @@ describe('Given Checkout component', () => {
   })
 
   describe('componentDidMount', () => {
-    const setStateSpy = jest.spyOn(Checkout.prototype, 'setState')
-    const changeRecaptcha = jest.fn()
-    const fetchGoustoRef = jest.fn()
-
     beforeEach(() => {
       fetchData = jest.fn().mockReturnValue(Promise.resolve())
       Checkout.fetchData = fetchData
-      wrapper = mount(
-        <Checkout
-          query={{ query: true }}
-          params={{ params: true }}
-          trackSignupStep={jest.fn()}
-          fetchPayPalClientToken={fetchPayPalClientToken}
-          changeRecaptcha={changeRecaptcha}
-          fetchGoustoRef={fetchGoustoRef}
-        />,
-        { context }
-      )
     })
 
     test('should call fetchData', () => {
@@ -422,23 +419,22 @@ describe('Given Checkout component', () => {
       expect(fetchData).toHaveBeenCalled()
       expect(fetchData).toHaveBeenCalledWith({
         store: context.store,
-        query: { query: true },
-        params: { params: true },
+        query: { steps: [] },
+        params: { stepName: 'account' },
       })
     })
 
     test('should load PayPal and checkout data', () => {
       wrapper.instance().componentDidMount()
 
-      expect(loadPayPalScripts).toHaveBeenCalled()
       expect(loadCheckoutScript).toHaveBeenCalled()
+      expect(loadPayPalScripts).toHaveBeenCalled()
       expect(fetchPayPalClientToken).toHaveBeenCalled()
     })
 
     test('should call setState and update states', () => {
       wrapper.instance().componentDidMount()
 
-      expect(setStateSpy).toHaveBeenCalled()
       expect(wrapper.state().paypalScriptsReady).toBe(true)
       expect(wrapper.state().isCreatingPreviewOrder).toBe(false)
     })
@@ -470,55 +466,39 @@ describe('Given Checkout component', () => {
   })
 
   describe('payment component', () => {
-    describe('when the checkoutPaymentFeature flag is set', () => {
-      const setStateSpy = jest.spyOn(Checkout.prototype, 'setState')
+    test('should render a CheckoutPayment component', () => {
+      expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
+    })
 
-      beforeEach(() => {
-        wrapper = shallow(
-          <Checkout params={{ stepName: 'payment' }} browser="mobile" checkoutPaymentFeature />
-        )
-      })
-
-      test('should render a CheckoutPayment component', () => {
-        expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
-      })
-
-      describe('CheckoutPayment props', () => {
-        describe('when stepName is "payment"', () => {
-          test('then should return prerender = false', () => {
-            expect(wrapper.find(CheckoutPayment).props().prerender).toBeFalsy()
-          })
-
-          test('then should return isLastStep = true and nextStepName is empty', () => {
-            expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeTruthy()
-            expect(wrapper.find(CheckoutPayment).props().nextStepName).toEqual('')
-          })
+    describe('CheckoutPayment props', () => {
+      describe('when stepName is "payment"', () => {
+        beforeEach(() => {
+          wrapper.setProps({ params: { stepName: 'payment' } })
         })
 
-        describe('when stepName is not "payment"', () => {
-          beforeEach(() => {
-            wrapper.setProps({ params: { stepName: 'account' } })
-          })
+        test('then should return prerender = false', () => {
+          expect(wrapper.find(CheckoutPayment).props().prerender).toBeFalsy()
+        })
 
-          test('then should return prerender = true', () => {
-            expect(wrapper.find(CheckoutPayment).props().prerender).toBeTruthy()
-          })
-
-          test('then should return isLastStep = false and nextStepName is not empty', () => {
-            expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeFalsy()
-            expect(wrapper.find(CheckoutPayment).props().nextStepName).not.toEqual('')
-          })
+        test('then should return isLastStep = true and nextStepName is empty', () => {
+          expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeTruthy()
+          expect(wrapper.find(CheckoutPayment).props().nextStepName).toEqual('')
         })
       })
 
-      test('should call loadCheckoutScript', () => {
-        loadCheckoutScript.mockImplementationOnce((callback) => {
-          callback()
+      describe('when stepName is not "payment"', () => {
+        beforeEach(() => {
+          wrapper.setProps({ params: { stepName: 'account' } })
         })
-        wrapper.instance().componentDidMount()
-        expect(loadCheckoutScript).toHaveBeenCalled()
-        expect(setStateSpy).toHaveBeenCalled()
-        expect(wrapper.state('checkoutScriptReady')).toBeTruthy()
+
+        test('then should return prerender = true', () => {
+          expect(wrapper.find(CheckoutPayment).props().prerender).toBeTruthy()
+        })
+
+        test('then should return isLastStep = false and nextStepName is not empty', () => {
+          expect(wrapper.find(CheckoutPayment).props().isLastStep).toBeFalsy()
+          expect(wrapper.find(CheckoutPayment).props().nextStepName).not.toEqual('')
+        })
       })
     })
   })
@@ -601,22 +581,35 @@ describe('Given Checkout component', () => {
     })
   })
 
-  describe('when reloadCheckoutScript is called', () => {
+  describe('when loadCheckoutScript is called', () => {
     let instance
 
     beforeEach(() => {
       wrapper = shallow(<Checkout />)
       instance = wrapper.instance()
-      loadCheckoutScript.mockImplementationOnce((callback) => {
-        callback()
-      })
 
-      instance.reloadCheckoutScript()
+      instance.loadCheckoutScript()
     })
 
     test('then loadCheckoutScript should be called', () => {
       expect(loadCheckoutScript).toBeCalled()
       expect(wrapper.state('checkoutScriptReady')).toBeTruthy()
+    })
+  })
+
+  describe('when loadPayPalScripts is called', () => {
+    let instance
+
+    beforeEach(() => {
+      wrapper = shallow(<Checkout />)
+      instance = wrapper.instance()
+
+      instance.loadPayPalScripts()
+    })
+
+    test('then loadPayPalScripts should be called', () => {
+      expect(loadPayPalScripts).toBeCalled()
+      expect(wrapper.state('paypalScriptsReady')).toBeTruthy()
     })
   })
 

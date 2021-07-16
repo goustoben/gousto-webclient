@@ -9,6 +9,7 @@ import {
   trackingCardTokenizationSuccessfully,
   trackingCardTokenizationFailed,
 } from 'actions/checkout'
+import { trackFailedCheckoutFlow } from 'actions/log'
 import { sectionName, deliveryAddressSectionName } from '../config'
 import { getBillingAddress } from './utils'
 import { CheckoutFrame } from './CheckoutFrame'
@@ -37,6 +38,7 @@ const mapDispatchToProps = {
   fireCheckoutPendingEvent,
   trackingCardTokenizationSuccessfully,
   trackingCardTokenizationFailed,
+  trackFailedCheckoutFlow,
 }
 
 export const CheckoutFrameContainer = connect(mapStateToProps, mapDispatchToProps)(CheckoutFrame)

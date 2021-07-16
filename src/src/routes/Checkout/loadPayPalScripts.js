@@ -17,20 +17,21 @@ const loadScript = (name, document) =>
       const script = document.createElement('script')
       script.src = `${BRAINTREE_CDN}/web/${BRAINTREE_VERSION}/js/${name}.min.js`
       script.id = scriptId
-      script.onload = resolve
-      script.onerror = reject
+      script.onload = () => {
+        resolve()
+      }
+      script.onerror = () => {
+        reject(new Error(`Failed to load PayPal ${name} script`))
+      }
       document.body.appendChild(script)
     } else {
-      reject()
+      reject(new Error('No document provided'))
     }
   })
 
-export const loadPayPalScripts = (callback, document = window.document) => {
+export const loadPayPalScripts = (document = window.document) =>
   Promise.all([
     loadScript(BRAINTREE_CLIENT, document),
     loadScript(BRAINTREE_PAYPAL_CHECKOUT, document),
     loadScript(BRAINTREE_DATA_COLLECTOR, document),
   ])
-    .then(callback)
-    .catch(() => {})
-}

@@ -145,6 +145,19 @@
             }
           }
         },
+        "felogging": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://fef-api.gousto.info/felogging/v1",
+              "local": "https://fef-api.gousto.info/felogging/v1"
+            },
+            "serverSide": {
+              "live": "http://fef-felogging.gousto.info",
+              "local": "https://fef-api.gousto.info/felogging/v1"
+            }
+          }
+        },
         "graphql": {
           "1": {
             "versionString": "v1",

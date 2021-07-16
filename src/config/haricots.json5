@@ -145,6 +145,19 @@
             }
           }
         },
+        "felogging": {
+          "1": {
+            "versionString": "v1",
+            "clientSide": {
+              "live": "https://haricots-api.gousto.info/felogging/v1",
+              "local": "https://haricots-api.gousto.info/felogging/v1"
+            },
+            "serverSide": {
+              "live": "http://haricots-felogging.gousto.info",
+              "local": "https://haricots-api.gousto.info/felogging/v1"
+            }
+          }
+        },
         "graphql": {
           "1": {
             "versionString": "v1",
