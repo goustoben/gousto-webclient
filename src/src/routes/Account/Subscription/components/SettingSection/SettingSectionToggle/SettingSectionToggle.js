@@ -25,6 +25,7 @@ export const SettingSectionToggle = ({
           className={css.headerCta}
           type="button"
           onClick={handleClick}
+          onMouseDown={(e) => e.preventDefault()}
           tabIndex="0"
           data-testing={`${testingSelector}-cta`}
         >

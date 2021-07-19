@@ -44,6 +44,13 @@ describe('Given SettingSectionToggle is rendered', () => {
     test('Then handleClick is invoked', () => {
       expect(mockHandleClick).toHaveBeenCalledTimes(1)
     })
+    test('The mouse down event is prevened', () => {
+      const mockEvent = {
+        preventDefault: jest.fn()
+      }
+      wrapper.find('[data-testing="mock-cta"]').simulate('mousedown', mockEvent)
+      expect(mockEvent.preventDefault).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe('And isMobile is false', () => {

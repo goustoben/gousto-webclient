@@ -19,10 +19,6 @@
   color: Bluecheese;
   background: none;
   cursor: pointer;
-
-  &:focus {
-    outline: none;
-  }
 }
 
 .currentValue {
