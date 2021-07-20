@@ -94,8 +94,10 @@ class Referral extends Component {
                 trackingReferFriend={trackingReferFriend}
                 trackUserFreeFoodLinkShare={trackUserFreeFoodLinkShare}
               >
-                <div id="referral-code-box">
-                  <span className={`${css.displayedLink}`}>{displayLink}</span>
+                <div id="referral-code-box" aria-label="referral code">
+                  <textarea className={`${css.displayedLink}`} readOnly>
+                    {displayLink}
+                  </textarea>
                 </div>
               </UserRAFLink>
               <SocialShareButtons

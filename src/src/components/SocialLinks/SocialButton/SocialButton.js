@@ -22,8 +22,8 @@ const SocialButton = ({ text, type, onClick, elementType }) => {
     { [css.componentText]: isComponent })
 
   return (
-    <div className={socialButtonClasses} onClick={onClick}>
-      <Svg fileName={iconType} className={svgClasses} />
+    <div className={socialButtonClasses} onClick={onClick} onKeyPress={onClick} role="button" tabIndex="0">
+      <Svg fileName={iconType} className={svgClasses} hidden />
       <span className={spanClasses}>{text}</span>
     </div>
   )
