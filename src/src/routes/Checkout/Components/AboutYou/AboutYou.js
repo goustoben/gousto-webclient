@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import { onEnter } from 'utils/accessibility'
-import { checkoutClickContinueToDelivery } from 'actions/trackingKeys'
+import { checkoutClickContinueToDelivery, checkoutClickPrivacyPolicy } from 'actions/trackingKeys'
 import { ErrorMessage } from '../ErrorMessage'
 import { SectionHeader } from '../SectionHeader'
 import { CheckoutButton } from '../CheckoutButton'
@@ -76,7 +76,14 @@ class AboutYou extends PureComponent {
   }
 
   renderFields = () => {
-    const { sectionName, receiveRef, passwordErrors, isMobile, passwordValue } = this.props
+    const {
+      sectionName,
+      receiveRef,
+      passwordErrors,
+      isMobile,
+      passwordValue,
+      trackUTMAndPromoCode,
+    } = this.props
     const { isPassVisible, isPassCriteriaVisible, showFailedCriteria } = this.state
     const passState = {
       isPassVisible,
@@ -86,6 +93,7 @@ class AboutYou extends PureComponent {
       loginCTA: this.renderLoginButton,
       sectionName,
       passState,
+      trackPrivacyPolicyClick: () => trackUTMAndPromoCode(checkoutClickPrivacyPolicy),
     })
 
     return fields.map((item) => {

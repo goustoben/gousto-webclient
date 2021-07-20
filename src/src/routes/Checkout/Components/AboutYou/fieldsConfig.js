@@ -1,13 +1,27 @@
 import React from 'react'
 import classNames from 'classnames'
+import { client } from 'config/routes'
 import { emailValidator } from 'utils/forms'
 import css from './AboutYou.css'
 
 const passwordLabel = 'Password'
-const checkboxLabel =
-  'I’d like to receive the latest news and offers from Gousto, and be contacted occasionally by our Customer Care team. I can unsubscribe anytime.'
+const checkboxLabel = (trackPrivacyPolicyClick) => (
+  <span>
+    I’d like to receive news and offers from Gousto in line with the&nbsp;
+    <a
+      href={client.privacyPolicy}
+      className={css.privacyPolicyLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={trackPrivacyPolicyClick}
+    >
+      Privacy Policy
+    </a>
+    . I can unsubscribe anytime.
+  </span>
+)
 
-export const fieldsConfig = ({ loginCTA, sectionName, passState }) => {
+export const fieldsConfig = ({ loginCTA, sectionName, passState, trackPrivacyPolicyClick }) => {
   const { isPassVisible, togglePasswordVisibility } = passState
   const passwordSuffix = (
     <span
@@ -43,7 +57,7 @@ export const fieldsConfig = ({ loginCTA, sectionName, passState }) => {
     {
       name: 'allowEmail',
       inputType: 'CheckBox',
-      childLabel: checkboxLabel,
+      childLabel: checkboxLabel(trackPrivacyPolicyClick),
       childLabelClassName: css.checkboxLabel,
       style: 'disclaimer',
       dataTesting: 'checkoutAllowEmailCheckbox',

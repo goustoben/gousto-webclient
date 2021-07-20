@@ -21,13 +21,28 @@
   composes: col-md-4 col-xs-6 from 'sass-loader!styles/bootstrap.scss';
 }
 
-.link {
+.commonLink {
   color: Bluecheese;
   border-bottom: 1px solid Oyster;
   text-decoration: none;
-  composes: fontStyleS from 'design-language/typography.css';
   composes: fontBold from 'design-language/typography.css';
   white-space: nowrap;
+}
+
+.link {
+  composes: commonLink;
+  composes: fontStyleS from 'design-language/typography.css';
+}
+
+.privacyPolicyLink {
+  composes: commonLink;
+  composes: fontStyleXS from 'design-language/typography.css';
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+    color: Bluecheese;
+  }
 }
 
 .header {
