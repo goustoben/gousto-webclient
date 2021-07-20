@@ -89,7 +89,7 @@ describe('Given SettingSection is rendered', () => {
 
     test('Then the children are rendered', () => {
       expect(
-        wrapper.find('[data-testing="children"]').prop('aria-hidden')
+        wrapper.find('[data-testing="children"]').prop('hidden')
       ).toEqual(false)
     })
 
