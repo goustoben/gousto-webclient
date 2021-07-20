@@ -66,7 +66,7 @@ class PromoModal extends React.Component {
 PromoModal.propTypes = {
   text: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
   promoApply: PropTypes.func,
   needsAgeVerification: PropTypes.bool,
   isAgeVerified: PropTypes.bool,
@@ -88,6 +88,7 @@ PromoModal.defaultProps = {
   trackUTMAndPromoCode: () => {},
   isNewPromoCodeModalEnabled: false,
   promoCode: '',
+  error: '',
 }
 
 export { PromoModal }

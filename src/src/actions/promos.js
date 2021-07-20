@@ -6,6 +6,8 @@ import userActions from './user'
 import pricingActions from './pricing'
 import productActions from './products'
 import { trackPromocodeChange } from './checkout'
+import { trackUTMAndPromoCode } from './tracking'
+import { discountPopupDisplayed } from './trackingKeys'
 import { menuLoadBoxPrices } from './menu'
 import {
   basketPromoCodeChange,
@@ -137,10 +139,16 @@ const promoClear = () => ({
   code: '',
 })
 
-export const promoToggleModalVisibility = visible => ({
-  type: actionTypes.PROMO_MODAL_VISIBILITY_CHANGE,
-  visible,
-})
+export const promoToggleModalVisibility = visible => dispatch => {
+  if (visible) {
+    dispatch(trackUTMAndPromoCode(discountPopupDisplayed))
+  }
+
+  dispatch({
+    type: actionTypes.PROMO_MODAL_VISIBILITY_CHANGE,
+    visible,
+  })
+}
 
 const promoCloseModal = () => (
   dispatch => {
