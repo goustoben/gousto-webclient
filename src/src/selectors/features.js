@@ -164,10 +164,6 @@ export const getIsWizardPricePerServingEnabled = ({ features }) => (
   features && features.getIn(['isWizardPricePerServingEnabled', 'value'], false)
 )
 
-export const getIsAdditionalCheckoutErrorsEnabled = ({ features }) => (
-  features && features.getIn(['isAdditionalCheckoutErrorsEnabled', 'value'], false)
-)
-
 export const getIsPaymentBeforeChoosingV1Enabled = ({ features }) => (
   features && features.getIn(['isPaymentBeforeChoosingV1Enabled', 'value'], false)
 )

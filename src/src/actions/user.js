@@ -15,7 +15,6 @@ import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
   getIsNewSubscriptionApiEnabled,
-  getIsAdditionalCheckoutErrorsEnabled,
   getIsDecoupledPaymentEnabled,
 } from 'selectors/features'
 import { getCardPaymentDetails, getPayPalPaymentDetails, isCardPayment } from 'selectors/payment'
@@ -698,10 +697,6 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     && basket.get('subscriptionOption') === signupConfig.subscriptionOptions.transactional
   ) {
     reqData.subscription.paused = 1
-  }
-
-  if (getIsAdditionalCheckoutErrorsEnabled(state)) {
-    reqData.payment_show_soft_decline = true
   }
 
   if (!isDecoupledPaymentEnabled) {

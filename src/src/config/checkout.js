@@ -146,7 +146,7 @@ module.exports = {
     },
     'payment-failure': {
       header: 'Payment failed',
-      message: 'Check your card details and try again.',
+      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
     'user-promo-invalid': {
       header: 'Discount removed',
@@ -178,7 +178,7 @@ module.exports = {
     },
     'signup-payments-payment-failure': {
       header: 'Payment failed',
-      message: 'Check your card details and try again.',
+      message: 'Try again or use a different card or PayPal. If you’re still experiencing difficulties, contact your bank.',
     },
     'signup-payments-insufficient-funds': {
       header: 'Insufficient funds',

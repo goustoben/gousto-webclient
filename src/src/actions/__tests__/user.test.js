@@ -37,7 +37,6 @@ import {
 } from 'utils/myDeliveries'
 import {
   getIsNewSubscriptionApiEnabled,
-  getIsAdditionalCheckoutErrorsEnabled,
   getIsDecoupledPaymentEnabled,
 } from 'selectors/features'
 import { skipDates } from 'routes/Account/apis/subscription'
@@ -771,20 +770,6 @@ describe('user actions', () => {
           const payload = getSignupPayload()
           expect(payload.ab_variant).toBeUndefined()
         })
-      })
-    })
-
-    describe('when isAdditionalCheckoutErrorsEnabled is enabled', () => {
-      beforeEach(() => {
-        getIsAdditionalCheckoutErrorsEnabled.mockReturnValue(true)
-      })
-
-      test('then should add a flag to the request', async () => {
-        await userSubscribe()(dispatch, getState)
-
-        expect(customerSignup).toHaveBeenCalledWith(null, expect.objectContaining({
-          payment_show_soft_decline: true
-        }))
       })
     })
 
