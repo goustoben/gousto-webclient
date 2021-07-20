@@ -59,10 +59,7 @@ const NavBar = (props) => {
       clientRouted: true,
       item: (
         <span className={css.linkContainer}>
-          <span className={css.link}>
-            <i className={`fa fa-heart ${css.mobileHide}`} />
-            <span>{menuTitles.myReferral}</span>
-          </span>
+          <span className={css.link}>{menuTitles.myReferral}</span>
         </span>
       ),
     },
