@@ -5,7 +5,8 @@ cucumber({
   cucumberArgs: [
     '--require', 'features/step-definitions',
     '--format', 'node_modules/cucumber-pretty',
-    'features'
+    'features',
+    '--format', 'json:reports/cucumber.json'
   ]
 });
 
