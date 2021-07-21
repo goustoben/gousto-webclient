@@ -5,8 +5,7 @@ cucumber({
   cucumberArgs: [
     '--require', 'features/step-definitions',
     '--format', 'node_modules/cucumber-pretty',
-    'features',
-    '--format', 'json:reports/cucumber.json'
+    'features'
   ]
 });
 
@@ -26,8 +25,7 @@ module.exports = {
   },
   live_output: true,
   test_workers: {
-    enabled: true,
-    workers: 'auto'
+    enabled: true
   },
   test_settings: testSettings
 }
