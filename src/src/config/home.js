@@ -6,7 +6,7 @@ import QualityImg from 'routes/Home/WhyChooseGousto/quality.png'
 import SimplicityImg from 'routes/Home/WhyChooseGousto/simplicity.png'
 
 export const hero = {
-  header: 'Endless choice in a recipe box',
+  header: 'Endless choice in a recipe box HELLO',
   subheader: 'Over 50 recipes every week',
 }
 
