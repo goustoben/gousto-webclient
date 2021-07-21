@@ -7,7 +7,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, userAgent = '', scripts
    <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
       <!-- ********************************************************************
-        Well hello there! HELLOOOO You're a curious person, aren't you?
+        Well hello there! You're a curious person, aren't you?
         Are you also curious about React? Or maybe Python, NodeJS, PHP?
         Or are you more the AWS type?
         We're always looking for talented engineers. Email us!
