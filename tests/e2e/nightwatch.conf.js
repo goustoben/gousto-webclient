@@ -25,7 +25,7 @@ module.exports = {
   },
   live_output: true,
   test_workers: {
-    enabled: true
+    enabled: false
   },
   test_settings: testSettings
 }
