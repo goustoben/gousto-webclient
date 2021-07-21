@@ -1,19 +1,21 @@
-@value Blackberry from 'styles/colors.css';
-@value avenirHeavyFontStack from 'styles/typography.css';
-@value ScreenSMMin from 'styles/screenSizes.css';
+@value 7XLarge, 3XLarge, FontWeightBold, FontFamilyAxiformaBook from 'design-language/typography.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
+.title {
+  font: FontWeightBold 3XLarge FontFamilyAxiformaBook;
+  margin-bottom: 0;
+
+  @media BreakpointFromMedium {
+    font: FontWeightBold 7XLarge FontFamilyAxiformaBook;
+  }
+}
 
 .rafTitle {
-  color: Blackberry;
-  font-family: avenirHeavyFontStack;
-  font-weight: 900;
-  font-size: 24px;
   line-height: 34px;
   text-align: center;
   padding: 0 20px;
 
-  @media ScreenSMMin {
-    font-size: 40px;
-    line-height: 50px;
+  @media BreakpointFromMedium {
     padding-bottom: 77px;
   }
 }

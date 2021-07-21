@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import Helmet from 'react-helmet'
 import Loading from 'routes/Menu/Loading'
 import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
@@ -77,6 +78,7 @@ class Referral extends Component {
       )
       : (
         <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
+          <Helmet title="Gousto Referrals | Invite Your Friends To Try Gousto" />
           <div className={css.rafPageTitle}>
             <RAFTitle title={offerTitle} />
           </div>

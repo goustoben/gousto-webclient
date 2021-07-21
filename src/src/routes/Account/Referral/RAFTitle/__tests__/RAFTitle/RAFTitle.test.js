@@ -10,7 +10,7 @@ describe('RAFTitle', () => {
       expect(wrapper.find('.rafTitle').length).toEqual(1)
     })
     test('should have callback for RAF title', () => {
-      expect(wrapper.find('span').text()).toEqual('Invite your friends to try out Gousto!')
+      expect(wrapper.find('h1').text()).toEqual('Invite your friends to try out Gousto!')
     })
   })
 })

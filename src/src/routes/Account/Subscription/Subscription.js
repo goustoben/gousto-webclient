@@ -1,5 +1,6 @@
 import React, { useReducer, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import Helmet from 'react-helmet'
 import { LayoutPageWrapper, Grid, Column } from 'goustouicomponents'
 
 import LoadingComponent from 'Loading'
@@ -76,6 +77,7 @@ const Subscription = ({
 
   return (
     <SubscriptionContext.Provider value={contextValue}>
+      <Helmet title="Gousto Subscription | Manage Your Subscription Settings" />
       <ToastProvider>
         <LayoutPageWrapper size="medium" padding={false} testingSelector="subscriptionSettingsPage">
           <Grid>

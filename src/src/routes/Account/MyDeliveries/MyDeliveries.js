@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Helmet from 'react-helmet'
 import { Alert, Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
@@ -72,12 +73,19 @@ class MyDeliveries extends React.PureComponent {
   render() {
     return (
       <div className={accountCss.accountContainer} data-testing="myDeliveries">
-        <div className={css.button}>
-          <Link to={routes.client.menu}>
-            <Button color="secondary" noDecoration data-testing="addBoxButton">
-              Order another box
-            </Button>
-          </Link>
+        <Helmet title="Gousto Deliveries | Manage All Upcoming Deliveries" />
+        <div className={css.titleContainer}>
+          <h1 className={css.title}>Deliveries</h1>
+          <div className={css.subTitleContainer}>
+            <p className={css.subTitle}>
+              Here you can manage all of your upcoming deliveries, select recipes, skip or cancel boxes as you need.
+            </p>
+            <Link to={routes.client.menu}>
+              <Button color="secondary" noDecoration data-testing="addBoxButton">
+                Order another box
+              </Button>
+            </Link>
+          </div>
         </div>
         {this.renderOrders()}
       </div>

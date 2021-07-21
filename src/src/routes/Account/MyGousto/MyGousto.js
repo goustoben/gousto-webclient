@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Link from 'Link'
+import Helmet from 'react-helmet'
 import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
 import { LimitedCapacityNotice } from './LimitedCapacityNotice'
@@ -134,6 +135,7 @@ class MyGousto extends React.PureComponent {
 
     return (
       <div>
+        <Helmet title="My Gousto Account | View Your Most Recent Deliveries and Recipes" />
         <div className={css.wrapper}>
           {isCardTokenNotCompliantFor3ds && (
             <PaymentDetailsNotification track3dsCompliantClick={track3dsCompliantClick} />

@@ -6,7 +6,7 @@ import css from './RAFTitle.css'
 const RAFTitle = ({title}) => (
   <div className={css.rafTitle}>
     <Content contentKeys="rafPageTitle">
-      <span>{title}</span>
+      <h1 className={css.title}>{title}</h1>
     </Content>
   </div>
 )
