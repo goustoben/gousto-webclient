@@ -79,7 +79,7 @@ jobs:
       - run:
           name: Setup platform
           command: /gousto/platform-setup.sh
-      - setup_remote_docker
+      - setup_remote_docker:
         docker_layer_caching: true
       - run:
           name: Create & deploy image
@@ -125,7 +125,7 @@ jobs:
   build-nginx-image:
     docker: *gousto_platform_image
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
         docker_layer_caching: true
       - attach_workspace:
           at: ~/
@@ -137,7 +137,7 @@ jobs:
   build-webclient-image:
     docker: *gousto_build_image
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
         docker_layer_caching: true
       - attach_workspace:
           at: ~/
@@ -156,7 +156,7 @@ jobs:
   deploy-webclient-image:
     docker: *gousto_platform_image
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
         docker_layer_caching: true
       - attach_workspace:
           at: ~/
