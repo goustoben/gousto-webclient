@@ -8,16 +8,9 @@
     border-style: solid;
     border-radius: 3px;
     position: relative;
-}
-
-.themeBlue {
+    
     border-color: Bluecheese;
     color: Bluecheese;
-}
-
-.themeGrey {
-    border-color: Blackberry;
-    color: Blackberry;
 }
 
 .arrowDown {

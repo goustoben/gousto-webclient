@@ -1,17 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 
 import css from './DropdownArrow.css'
-import { isMandatoryBucket, isSignpostingBucket, SignpostingExperimentContext } from '../../../context/uiSignpostingContext'
-
-const getThemeForBucket = (bucket) => {
-  if (!isMandatoryBucket(bucket) && isSignpostingBucket(bucket)) {
-    return css.themeGrey
-  }
-
-  return css.themeBlue
-}
 
 const DropdownArrow = ({
   recipeId,
@@ -32,13 +22,9 @@ const DropdownArrow = ({
   }
 
   return (
-    <SignpostingExperimentContext.Consumer>
-      {bucket => (
-        <button className={classnames(css.arrowContainer, getThemeForBucket(bucket))} type="button" onClick={onClick}>
-          <span className={showDropdown ? css.arrowUp : css.arrowDown} />
-        </button>
-      )}
-    </SignpostingExperimentContext.Consumer>
+    <button className={css.arrowContainer} type="button" onClick={onClick}>
+      <span className={showDropdown ? css.arrowUp : css.arrowDown} />
+    </button>
   )
 }
 

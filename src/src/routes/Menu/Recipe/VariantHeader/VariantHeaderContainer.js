@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import { getBrowserType } from 'selectors/browser'
 import { getRecipeIdFromProps } from '../../selectors/recipe'
 import { getVariantsForRecipe } from '../../selectors/variants'
 import { VariantHeader } from './VariantHeader'
@@ -24,7 +23,6 @@ const getTextOverride = createSelector(
 )
 
 const mapStateToProps = (state, ownProps) => ({
-  browserType: getBrowserType(state),
   recipeVariants: getVariantsForRecipe(state, ownProps),
   textOverride: getTextOverride(state, ownProps)
 })

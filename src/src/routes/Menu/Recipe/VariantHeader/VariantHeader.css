@@ -1,38 +1,17 @@
 @value White, Bluecheese, NewGrey, Blackberry from 'styles/colors.css';
 
 .variantHeader {
+    position: absolute;
+    top: 0;
+
     padding: 0.25rem 0;
+    padding-left: 0.625rem;
+
     color: White;
     font-weight: bold;
     width: 100%;
     z-index: 100;
     text-align: left;
-}
 
-.textLeft {
-    padding-left: 0.625rem;
-    text-align: left;
-}
-
-.textRight {
-    padding-right: 0.75rem;
-    text-align: right;
-}
-
-.themeBlue {
     background: Bluecheese;
-}
-
-.themeGrey {
-    background: Blackberry;
-}
-
-.positionTop {
-    position: absolute;
-    top: 0;
-}
-
-.positionBottom {
-    position: absolute;
-    bottom: 0;
 }
