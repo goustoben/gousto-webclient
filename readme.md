@@ -71,8 +71,7 @@ A script in the repo root called `./run.sh` has been created to help with all of
 
 When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `npm run watch`.
 #### Option Three
-* `./run.sh dev --host` will build and run the service on the host. This will require node installed.
-
+* `./run.sh dev --host` will build and run the service on the host. This will require node installed. This command has npm script command if you are in the `src/` folder and you can use `npm run dev`.
 
 
 **If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**

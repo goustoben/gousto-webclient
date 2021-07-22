@@ -53,9 +53,9 @@ describe('Receipt', () => {
     expect(receiptLine.prop('children')).toEqual('£4.99')
   })
 
-  test('should show extras price if extrasPrice is passed in', () => {
+  test('should show "Sides and market items" price if extrasPrice is passed in', () => {
     const receiptLine = wrapper.find(ReceiptLine).at(3)
-    expect(receiptLine.prop('label')).toBe('Extras')
+    expect(receiptLine.prop('label')).toBe('Sides and market items')
     expect(receiptLine.prop('children')).toEqual('£2.00')
   })
 

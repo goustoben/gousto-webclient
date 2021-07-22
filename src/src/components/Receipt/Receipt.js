@@ -108,7 +108,7 @@ class Receipt extends React.Component {
         )}
         {showExtrasTotalPrice && (
           <ReceiptLine
-            label="Extras"
+            label="Sides and market items"
             showLineAbove
             lineStyle={isReceiptInCheckout ? 'checkoutNormal' : 'normal'}
             isReceiptInCheckout={isReceiptInCheckout}

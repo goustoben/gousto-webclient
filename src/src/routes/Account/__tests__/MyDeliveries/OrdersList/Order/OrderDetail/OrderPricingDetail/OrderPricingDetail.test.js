@@ -97,8 +97,8 @@ describe('OrderPricingDetail', () => {
       })
     })
 
-    describe('extras', () => {
-      test('should render "Extras" followed by "£" + the amount passed, provided a totalExtras prop that is not 0 is passed', () => {
+    describe('Sides and market items', () => {
+      test('should render "Sides and market items" followed by "£" + the amount passed, provided a totalExtras prop that is not 0 is passed', () => {
         expect(wrapper.text()).toContain('£10.02')
         expect(
           wrapper
@@ -110,12 +110,12 @@ describe('OrderPricingDetail', () => {
 
       test('should NOT render the "Extras" row when no totalExtras prop is passed', () => {
         wrapper = shallow(<OrderPricingDetail />)
-        expect(wrapper.text()).not.toContain('Extras')
+        expect(wrapper.text()).not.toContain('Sides and market items')
       })
 
-      test('should NOT render the "Extras" row when totalExtras prop is 0', () => {
+      test('should NOT render the "Sides and market items" row when totalExtras prop is 0', () => {
         wrapper = shallow(<OrderPricingDetail totalExtras={0} />)
-        expect(wrapper.text()).not.toContain('Extras')
+        expect(wrapper.text()).not.toContain('Sides and market items')
       })
     })
 

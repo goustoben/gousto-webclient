@@ -33,13 +33,13 @@ describe('ReceiptExtras', () => {
     expect(wrapper.find(ReceiptLine).length).toEqual(3)
   })
 
-  test('should render 1 ReceiptLine for "Extras"', () => {
+  test('should render 1 ReceiptLine for "Sides and market items"', () => {
     expect(
       wrapper
         .find(ReceiptLine)
         .at(0)
         .prop('label'),
-    ).toEqual('Extras')
+    ).toEqual('Sides and market items')
   })
 
   test('should add vatableDisclaimerKey & quantity before title is isVatable is true', () => {

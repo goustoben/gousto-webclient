@@ -32,13 +32,13 @@ describe('OrderItemSummary', () => {
       )
       expect(wrapper.text()).toContain('recipes')
     })
-    test('should render "extras" if there are extras', () => {
+    test('should render "sides and market items" if there are sides and market items', () => {
       wrapper = shallow(<OrderItemSummary numberOfProducts={1} />)
-      expect(wrapper.text()).toContain('extras')
+      expect(wrapper.text()).toContain('sides and market items')
     })
-    test('should not render "extras" there are not', () => {
+    test('should not render "sides and market items" there are not', () => {
       wrapper = shallow(<OrderItemSummary numberOfProducts={0} />)
-      expect(wrapper.text()).not.toContain('extras')
+      expect(wrapper.text()).not.toContain('sides and market items')
     })
     test('should render a comma if recipes and products present', () => {
       wrapper = shallow(

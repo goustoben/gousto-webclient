@@ -76,7 +76,7 @@ const OrderPricingDetail = ({
         <div className={`${css.row} ${css.separationBelow}`}>
           <span>
             <Content contentKeys="mydeliveriesOrderOrderpricingExtras">
-              <span>Extras</span>
+              <span>Sides and market items</span>
             </Content>
           </span>
           <span>

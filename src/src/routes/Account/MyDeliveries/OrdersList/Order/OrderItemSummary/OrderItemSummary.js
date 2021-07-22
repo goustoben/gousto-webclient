@@ -10,7 +10,7 @@ const OrderItemSummary = ({
   <div className={css.orderItemSummary}>
     {recipes.size ? `${recipes.size} recipes` : ''}
     {recipes.size && numberOfProducts ? ', ' : ''}
-    {numberOfProducts ? `${numberOfProducts} extras` : ''}
+    {numberOfProducts ? `${numberOfProducts} sides and market items` : ''}
   </div>
 )
 
