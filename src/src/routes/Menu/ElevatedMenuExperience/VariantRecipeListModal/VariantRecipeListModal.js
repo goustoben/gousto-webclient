@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ModalComponent, { ModalTitle, ModalContent } from 'ModalComponent'
 import css from './VariantRecipeListModal.css'
 import { VariantRecipeListModalContent } from './VariantRecipeListModalContent'
+import { isMandatoryBucket, SignpostingExperimentContext } from '../../context/uiSignpostingContext'
 
 export const VariantRecipeListModal = ({
   currentExpandedRecipeVariantsDropdown,
@@ -34,12 +35,16 @@ export const VariantRecipeListModal = ({
         {
           currentExpandedRecipeVariantsDropdown
           && (
-            <VariantRecipeListModalContent
-              originalId={currentExpandedRecipeVariantsDropdown.originalId}
-              recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
-              categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
-              closeOnSelection={false}
-            />
+            <SignpostingExperimentContext.Consumer>
+              {bucket => (
+                <VariantRecipeListModalContent
+                  originalId={currentExpandedRecipeVariantsDropdown.originalId}
+                  recipeId={currentExpandedRecipeVariantsDropdown.recipeId}
+                  categoryId={currentExpandedRecipeVariantsDropdown.categoryId}
+                  closeOnSelection={!isMandatoryBucket(bucket)}
+                />
+              )}
+            </SignpostingExperimentContext.Consumer>
           )
         }
       </ModalContent>

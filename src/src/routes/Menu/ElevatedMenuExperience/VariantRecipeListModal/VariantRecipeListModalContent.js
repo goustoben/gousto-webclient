@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { VariantRecipeListContainer } from '../../Recipe/VariantRecipeList/VariantRecipeList'
 import { DetailAddRecipe } from '../../Recipe/Detail/DetailAddRecipe/DetailAddRecipe'
+import { isMandatoryBucket, SignpostingExperimentContext } from '../../context/uiSignpostingContext'
 
 export const VariantRecipeListModalContent = ({ recipeId, originalId, categoryId, closeOnSelection = true }) => (
   <React.Fragment>
@@ -12,7 +13,9 @@ export const VariantRecipeListModalContent = ({ recipeId, originalId, categoryId
       closeOnSelection={closeOnSelection}
     />
 
-    <DetailAddRecipe id={recipeId} buttonText="Add recipe" closeOnAdd />
+    <SignpostingExperimentContext.Consumer>
+      {bucket => isMandatoryBucket(bucket) && <DetailAddRecipe id={recipeId} buttonText="Add recipe" closeOnAdd />}
+    </SignpostingExperimentContext.Consumer>
   </React.Fragment>
 )
 
