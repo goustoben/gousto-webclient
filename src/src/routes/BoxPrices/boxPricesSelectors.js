@@ -3,6 +3,10 @@ import { numPersonsValues, numPortionsValues } from './boxPricesConfig'
 
 export const getMenuBoxPrices = (state) => state.menuBoxPrices
 
+export const getIsBoxPricesRedesignEnabled = ({ features }) => (
+  features && features.getIn(['isBoxPricesRedesignEnabled', 'value'], false)
+)
+
 const BOX_TYPE = 'gourmet'
 
 export const getNumPersonsToBoxDescriptors = createSelector(getMenuBoxPrices, (menuBoxPrices) => {

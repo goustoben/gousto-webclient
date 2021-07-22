@@ -8,6 +8,7 @@ import Hero from 'Hero'
 import { BoxDescriptorsPropType } from './boxPricesPropTypes'
 import css from './BoxPrices.css'
 
+import { BoxPricesRedesign } from './BoxPricesRedesign'
 import { BoxPricesList } from './BoxPricesList'
 import { BoxPricesContent } from './BoxPricesContent'
 
@@ -22,9 +23,14 @@ class BoxPrices extends React.PureComponent {
   }
 
   render() {
-    const { boxPricesBoxSizeSelected, numPersonsToBoxDescriptors, loading, error } = this.props
+    const { isBoxPricesRedesignEnabled, boxPricesBoxSizeSelected, numPersonsToBoxDescriptors, loading, error } = this.props
 
-    return (
+    return isBoxPricesRedesignEnabled ? (
+      <div>
+        <Helmet title={seo.title} meta={seo.meta} />
+        <BoxPricesRedesign />
+      </div>
+    ) : (
       <div>
         <Helmet title={seo.title} meta={seo.meta} />
         {loading && (
@@ -55,6 +61,7 @@ class BoxPrices extends React.PureComponent {
 BoxPrices.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.string,
+  isBoxPricesRedesignEnabled: PropTypes.bool,
   boxPricesBoxSizeSelected: PropTypes.func,
   numPersonsToBoxDescriptors: PropTypes.objectOf(BoxDescriptorsPropType),
 }
@@ -62,6 +69,7 @@ BoxPrices.propTypes = {
 BoxPrices.defaultProps = {
   loading: false,
   error: null,
+  isBoxPricesRedesignEnabled: false,
   boxPricesBoxSizeSelected: () => {},
   numPersonsToBoxDescriptors: null,
 }
