@@ -89,8 +89,8 @@ describe('Given SettingSection is rendered', () => {
 
     test('Then the children are rendered', () => {
       expect(
-        wrapper.find('[data-testing="children"]').prop('aria-hidden')
-      ).toEqual(false)
+        wrapper.find('[data-testing="children"]').exists()
+      ).toBeTruthy()
     })
 
     test('Then the CTA is rendered as expected', () => {
