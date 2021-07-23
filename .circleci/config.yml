@@ -14,19 +14,6 @@ gousto_platform_image: &gousto_platform_image
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 jobs:
-  test-isomorphic-jest:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run isomoprhic jest tests
-          command: cd src && npm run test:jest:ci
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
 
   publish-code-health:
     docker: *gousto_build_image
@@ -523,7 +510,7 @@ workflows:
             branches:
               only:
                 - develop
-      
+
 
   production-environment:
     jobs:
