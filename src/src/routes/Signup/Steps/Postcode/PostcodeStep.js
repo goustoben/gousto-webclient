@@ -24,9 +24,7 @@ class PostcodeStep extends PureComponent {
       <div className={css.stepContainer} data-testing="signupPostcodeStep">
         <div className={css.fullWidth}>
           <div className={css.header}>
-            <Heading type="h1" className={css.heading}>
-              {signupConfig.postCodeStep.title}
-            </Heading>
+            <Heading type="h1">{signupConfig.postCodeStep.title}</Heading>
             <Image name="where-to-deliver" />
           </div>
           <div className={css.body}>

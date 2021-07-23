@@ -1,20 +1,13 @@
-@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 @value Radish, Haricot from 'styles/colors.css';
-
-.smMinHidden {
-  display: inherit;
-  @media ScreenSMMin {
-    display: none;
-  }
-}
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .inputContainer {
-  max-width: 22.25rem;
-  margin: 1.5rem auto 1rem;
+  margin: 0 auto 1rem;
+  min-width: 18.5rem;
 
-  @media ScreenXSMax {
-    margin: 1rem auto;
-    min-width: 18.5rem;
+  @media BreakpointFromMedium {
+    max-width: 22.25rem;
+    margin: 0 auto 1.5rem;
   }
 }
 
@@ -35,15 +28,15 @@
 .postcodeContainer {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  flex: auto;
-  max-width: 13.5rem;
-  width: 100%;
+  align-items: center;
+  flex: 0 0 50%;
   margin-right: 0.5rem;
 
-  @media ScreenXSMax {
-    align-items: center;
-    flex: 0 0 50%;
+  @media BreakpointFromMedium {
+    align-items: flex-start;
+    flex: auto;
+    max-width: 13.5rem;
+    width: 100%;
   }
 
   > div {
@@ -60,7 +53,6 @@
 .errorText {
   composes: fontStyleBody from 'design-language/typography.css';
   color: Radish;
-  composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
 }
 
 .tick {
@@ -71,16 +63,17 @@
 
 .bodyText {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: flex-start;
   composes: fontStyleBody from 'design-language/typography.css';
   color: Haricot;
-  margin: 0 auto 1.5rem;
+  margin: 0 auto 1rem;
   max-width: 19rem;
 
-  @media ScreenXSMax {
-    align-items: flex-start;
-    margin: 0 auto 1rem;
+  @media BreakpointFromMedium {
+    align-items: center;
+    color: Haricot;
+    margin: 0 auto 1.5rem;
     max-width: 19rem;
   }
 }

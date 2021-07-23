@@ -74,7 +74,8 @@
   composes: fontBold from 'design-language/typography.css';
 }
 
-.widget {
+.widget,
+.widget iframe {
   height: 3rem;
   width: 100%;
 

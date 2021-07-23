@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { completeWizardBoxSize } from 'actions/trackingKeys'
@@ -50,10 +49,8 @@ const BoxSizeStep = ({
   return (
     <div className={signupCss.stepContainer} data-testing="signupBoxSizeStep">
       <div className={signupCss.fullWidth}>
-        <div className={classNames(signupCss.header, signupCss.autoHeight)}>
-          <Heading type="h1" className={signupCss.heading}>
-            {title}
-          </Heading>
+        <div className={signupCss.header}>
+          <Heading type="h1">{title}</Heading>
           <p className={css.subtitle}>{subtitle}</p>
         </div>
         <div className={css.boxSizeCarousel}>

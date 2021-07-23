@@ -5,8 +5,8 @@
 @value imgSmall 60px;
 
 .container {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
-  composes: noWrap from 'styles/flex.css';
+  display: flex;
+  flex-wrap: nowrap;
   margin: 0 0 0.5rem 0;
   padding: 0;
 }

@@ -1,44 +1,45 @@
-@value White, DarkChilli from 'styles/colors.css';
-@value ScreenXXSMax, ScreenXSMax, HeightSMMax, HeightMDMin, HeightMDMax, ScreenSMMin from 'styles/screenSizes.css';
-@value SpacingMD, SpacingXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value White from 'styles/colors.css';
+@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
 
-@value minHeight 485px;
-@value maxWidth 750px;
-@value maxElWidth calc(maxWidth - 2px);
+@value CG100 #CED4D9;
 
 .signupContainer {
-  composes: flex from 'styles/display.css';
-  composes: column from 'styles/flex.css';
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-
-  padding-top: 40px;
-
-  @media ScreenXSMax {
-    padding-top: SpacingSM;
-  }
-}
-
-.signupWrapper {
-  width: 100%;
 }
 
 .stepsContainer {
-  composes: borderXS from 'styles/borders.css';
-  max-width: maxWidth;
-  margin: auto;
+  border-top: 1px solid CG100;
+  border-bottom: 1px solid CG100;
+  margin: 0 auto;
   position: relative;
-  border-radius: 0;
   background: White;
+
+  @media BreakpointFromMedium {
+    border: 1px solid CG100;
+    max-width: 36rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 46.75rem;
+  }
 }
 
 .stepContainer {
-  composes: flex from 'styles/display.css';
-  composes: column spaceBetween verticalCenter from 'styles/flex.css';
-  max-width: maxElWidth;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.75rem;
 
-  @media ScreenXXSMax {
-    justify-content: flex-start;
+  @media BreakpointFromMedium {
+    padding: 0 1.5rem;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 0 2rem;
   }
 }
 
@@ -47,102 +48,62 @@
 }
 
 .step {
-  composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
-  max-width: maxElWidth;
   flex-direction: column;
-  width: 100%;
   padding: 0;
+  max-width: 100vw;
+
+  @media BreakpointFromMedium {
+    max-width: 36rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 46.75rem;
+  }
 }
 
 .stepsContainer,
 .stepContainer,
 .step {
-  composes: flex from 'styles/display.css';
-  min-height: 37.5rem;
+  display: flex;
+  min-height: 38rem;
   height: 100%;
   width: 100%;
   float: left;
   justify-content: normal;
-
-  @media ScreenXSMax {
-    width: 380px;
-    min-height: 40rem;
-  }
-
-  @media ScreenXXSMax {
-    width: 345px;
-  }
-
-  @media HeightMDMax and ScreenXXSMax {
-    width: 350px;
-  }
-
-  @media HeightSMMax and ScreenXXSMax {
-    width: 315px;
-  }
+  margin: 0;
 }
 
-.stepIndicatorContainer {
-  composes: marginXXLTop from 'sass-loader!styles/spacing.scss';
-  composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+.stepsContainer {
+  @media BreakpointFromMedium {
+    margin: 0 auto;
+  }
 }
 
 .header,
-.regularHeader,
 .body,
 .footer {
   width: 100%;
 }
 
 .header {
-  composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+  margin-bottom: 1rem;
 
-  &:not(.autoHeight) {
-    @media HeightMDMin and ScreenXSMax {
-      min-height: calc((minHeight - 10px) * 0.5);
-    }
-
-    @media ScreenSMMin {
-      min-height: 285px;
-    }
+  @media BreakpointFromMedium {
+    margin-bottom: 1.5rem;
   }
-}
-
-.heading {
-  composes: headerLG headlineFont from 'styles/typography.css';
-  composes: marginLGTop from 'sass-loader!styles/spacing.scss';
-  composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
-  margin-bottom: 0;
-  -webkit-font-smoothing: antialiased;
-
-  @media ScreenXXSMax {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
-.headingHilight {
-  composes: headerXL from 'styles/typography.css';
-  color: DarkChilli;
 }
 
 .body {
-  composes: textCenter from 'styles/typography.css';
-}
-
-.bodyText {
-  composes: textRegular from 'styles/typography.css';
-  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  text-align: center;
 }
 
 .basicInputContainer {
-  max-width: 22rem;
+  max-width: 100%;
   width: 100%;
   display: block;
-  composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
 
-  @media ScreenXSMax {
-    max-width: 100%;
+  @media BreakpointFromMedium {
+    max-width: 22rem;
   }
 }
 
@@ -151,61 +112,41 @@
   margin: 0 auto;
 }
 
+.stepIndicatorContainer {
+  padding: 1rem 0.75rem 0;
+
+  @media BreakpointFromMedium {
+    padding: 1.5rem 1.5rem 0;
+  }
+
+  @media BreakpointFromLarge {
+    padding: 2rem 2rem 0;
+  }
+}
+
 .animationContainer {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
+  width: 100vw;
   overflow: hidden;
+
+  @media BreakpointFromMedium {
+    max-width: 36rem;
+  }
+
+  @media BreakpointFromLarge {
+    max-width: 46.75rem;
+  }
 }
 
 .animation {
-  composes: row from 'styles/flex.css';
+  display: flex;
   height: 100%;
   width: 100%;
   transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
   margin-left: 0;
-}
-
-.footer {
-  composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
-}
-
-.containerFluid {
-  composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
-}
-
-.row {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
-  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
-}
-
-.left,
-.right {
-  width: 50%;
-
-  @media ScreenXSMax and HeightMDMax {
-    width: 100%;
-  }
-}
-
-.left {
-  padding-left: SpacingMD;
-  padding-right: calc(SpacingXS * 0.5);
-
-  @media ScreenXSMax and HeightMDMax {
-    padding: 0 SpacingSM;
-  }
-}
-
-.right {
-  padding-left: calc(SpacingXS * 0.5);
-  padding-right: SpacingMD;
-
-  @media ScreenXSMax and HeightMDMax {
-    margin-top: SpacingSM;
-    padding: 0 SpacingSM;
-  }
 }
 
 .discountApplied {

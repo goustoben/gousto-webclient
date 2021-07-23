@@ -1,124 +1,47 @@
-@value ScreenXSMax, HeightSMMax from 'styles/screenSizes.css';
-@value SpacingXS, SpacingSM, SpacingMD from 'sass-loader!styles/spacing.scss';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .container {
-  composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
-}
+  display: flex;
+  flex-direction: column;
 
-.row {
-  composes: row from 'sass-loader!styles/bootstrap.scss';
-  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+  @media BreakpointFromMedium {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
 .left,
 .right {
-  width: 50%;
-  @media ScreenXSMax {
-    width: 100%;
+  width: 100%;
+  text-align: left;
+
+  @media BreakpointFromMedium {
+    width: 50%;
+    max-width: calc(50% - 0.5rem);
   }
 }
 
 .left {
-  padding-left: SpacingMD;
-  padding-right: calc(SpacingXS * 0.5);
+  margin-bottom: 0.5rem;
 
-  @media ScreenXSMax {
-    padding: 0 SpacingSM;
-    margin-right: SpacingSM;
-  }
-}
-
-.right {
-  padding-left: calc(SpacingXS * 0.5);
-  padding-right: SpacingMD;
-
-  @media ScreenXSMax {
-    margin: SpacingSM SpacingSM 0 0;
-    padding: 0 SpacingSM;
+  @media BreakpointFromMedium {
+    margin: 0;
   }
 }
 
 .dropdown :global .Select-menu-outer {
   max-height: 7.5rem;
-
-  @media HeightSMMax {
-    max-height: 92px;
-  }
 }
 
 .dropdown :global .Select-menu {
   max-height: 7.5rem;
   overflow-y: auto;
-
-  @media HeightSMMax {
-    max-height: 92px;
-  }
-}
-
-.radio {
-  margin-right: 7px;
-  margin-top: 1px;
-}
-
-.modal {
-  padding: 22px;
-  min-width: 342px;
-  max-width: 342px;
-  min-height: 610px;
-}
-
-.modalTitleDiv {
-  font-family: 'Avenir-Heavy', 'Avenir Heavy', 'Avenir Book', 'Avenir';
-  width: 260px;
-  margin-bottom: 100px;
-}
-
-.modalFirstTitle {
-  border-width: 0px;
-  position: absolute;
-  top: 34px;
-  left: 16px;
-  text-align: center;
-  white-space: nowrap;
-  span {
-    &::before {
-      content: '\A';
-      white-space: pre;
-    }
-  }
-}
-
-.modalSecondTitle {
-  border-width: 0px;
-  position: absolute;
-  top: 66px;
-  left: 80px;
-  white-space: nowrap;
-}
-
-.modalrow {
-  display: block;
-  composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
-}
-
-.label {
-  margin-bottom: 0px;
-}
-
-.iconDeliverySection {
-  height: 170px;
-  composes: flex rowWrap from 'styles/flex.css';
-  composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
-}
-
-.iconDelivery {
-  width: 250px;
-  height: 250px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -20%);
 }
 
 .centralize {
   justify-content: center;
+}
+
+.negativeMargin {
+  margin: 0 -0.75rem;
 }

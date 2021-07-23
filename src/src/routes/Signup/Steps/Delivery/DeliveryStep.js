@@ -18,10 +18,10 @@ import { signupConfig } from 'config/signup'
 import { completeWizardDeliveryDay } from 'actions/trackingKeys'
 import { SubscriptionTransparencyText } from '../../Components/SubscriptionTransparencyText'
 import { Button } from '../../Button'
+import { Image } from '../../Image'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
-import { Image } from '../../Image'
 
 const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => {
   if (!tempDate) {
@@ -167,12 +167,12 @@ const DeliveryStep = ({
       <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
         <div className={signupCss.fullWidth}>
           <div className={signupCss.header}>
+            <Heading type="h1">{signupConfig.deliveryOptionsStep.title}</Heading>
             <Image name="delivery-day" />
-            <h1 className={signupCss.heading}>{signupConfig.deliveryOptionsStep.title}</h1>
           </div>
           <div className={signupCss.body}>
             <div className={css.container}>
-              <div className={`${css.row} ${css.centralize}`}>
+              <div className={css.centralize}>
                 <Alert type="info">
                   <Heading type="h3" size="_legacy_medium">
                     Due to extremely high demand, we don’t have any available slots right now.
@@ -193,46 +193,41 @@ const DeliveryStep = ({
   }
 
   return (
-    <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
+    <div className={signupCss.stepContainer} data-testing="signupDeliveryStep">
       <div className={signupCss.fullWidth}>
-        <div className={classNames(signupCss.header, signupCss.largerSpacing)}>
-          <Heading type="h1" className={signupCss.heading}>
-            {signupConfig.deliveryOptionsStep.title}
-          </Heading>
+        <div className={signupCss.header}>
+          <Heading type="h1">{signupConfig.deliveryOptionsStep.title}</Heading>
           <Image name="delivery-day" />
         </div>
-        <div className={classNames(signupCss.body, css.body)}>
+        <div className={signupCss.body}>
           <div className={css.container}>
-            <div className={css.row}>
-              <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
-                <DropdownInput
-                  color="secondary"
-                  uppercase
-                  options={deliveryDays}
-                  onChange={onTempDateChange}
-                  value={tempDate}
-                  onOpen={onDayDropdownOpen}
-                  onClose={onDayDropdownClose}
-                  isInCheckout
-                />
-              </div>
-              <div
-                className={classNames(css.right, css.dropdown)}
-                data-testing="signupDeliveryTime"
-              >
-                <DropdownInput
-                  color="secondary"
-                  uppercase
-                  options={slots[tempDate] ? slots[tempDate] : []}
-                  onChange={onTempSlotChange}
-                  value={tempSlotId}
-                  onOpen={onSlotDropdownOpen}
-                  isInCheckout
-                />
-              </div>
+            <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
+              <DropdownInput
+                color="secondary"
+                uppercase
+                options={deliveryDays}
+                onChange={onTempDateChange}
+                value={tempDate}
+                onOpen={onDayDropdownOpen}
+                onClose={onDayDropdownClose}
+                isInCheckout
+              />
+            </div>
+            <div className={classNames(css.right, css.dropdown)} data-testing="signupDeliveryTime">
+              <DropdownInput
+                color="secondary"
+                uppercase
+                options={slots[tempDate] ? slots[tempDate] : []}
+                onChange={onTempSlotChange}
+                value={tempSlotId}
+                onOpen={onSlotDropdownOpen}
+                isInCheckout
+              />
             </div>
           </div>
-          <SubscriptionTransparencyText className={css.bodyText} />
+          <div className={css.negativeMargin}>
+            <SubscriptionTransparencyText />
+          </div>
         </div>
       </div>
       <div className={signupCss.footer}>
@@ -240,7 +235,7 @@ const DeliveryStep = ({
           <Button data-testing="signupDeliveryCTA" width="full" onClick={onShowRecipe} />
         </div>
       </div>
-    </span>
+    </div>
   )
 }
 

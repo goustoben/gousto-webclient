@@ -39,9 +39,7 @@ const RecipesPerBoxStep = ({ basketSetNumRecipes, trackSignupWizardAction, next 
     <div className={signupCss.stepContainer} data-testing="signupRecipesPerBoxStep">
       <div className={signupCss.fullWidth}>
         <div className={signupCss.header}>
-          <Heading type="h1" className={signupCss.heading}>
-            {signupConfig.recipesPerBoxStep.title}
-          </Heading>
+          <Heading type="h1">{signupConfig.recipesPerBoxStep.title}</Heading>
           <Image name="recipes-per-box" />
         </div>
         <div className={signupCss.body}>
