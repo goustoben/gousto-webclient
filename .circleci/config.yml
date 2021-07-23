@@ -17,19 +17,6 @@ orbs:
   browser-tools: circleci/browser-tools@1.1.3
 
 jobs:
-  test-isomorphic-jest:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run isomoprhic jest tests
-          command: cd src && npm run test:jest:ci
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
 
   jest-coverage-report:
     docker: *gousto_build_image
