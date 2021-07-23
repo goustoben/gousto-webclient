@@ -48,13 +48,13 @@ describe('MyDeliveries', () => {
   })
 
   describe('rendering', () => {
-    const expectAlertAndRetryButton = function(wrapper) {
+    const expectAlertAndRetryButton = function (wrapper) {
       const alert = wrapper.find('Alert')
       const buttons = wrapper.find('Button')
       expect(alert.length).toEqual(1)
       expect(alert.find('p').prop('children')).toEqual('We\'re not able to display your deliveries right now. Please try again later.')
-      expect(buttons.length).toEqual(2)
-      expect(buttons.at(1).childAt(0).text()).toEqual('Retry')
+      expect(buttons.length).toEqual(1)
+      expect(buttons.at(0).childAt(0).text()).toEqual('Retry')
     }
 
     let wrapper
@@ -76,10 +76,10 @@ describe('MyDeliveries', () => {
       expect(wrapper.type()).toEqual('div')
     })
 
-    test('should render 1 <Button> component to add more boxes', () => {
-      const button = wrapper.find('Button')
-      expect(button.length).toEqual(1)
-      expect(button.prop('children')).toEqual('Order another box')
+    test('should render 1 <CTA> component to add more boxes', () => {
+      const cta = wrapper.find('CTA')
+      expect(cta.length).toEqual(1)
+      expect(cta.prop('children')).toEqual('Order another box')
     })
 
     test('should render 1 <OrdersList> component(s) when neither fetching orders or addresses is pending', () => {
