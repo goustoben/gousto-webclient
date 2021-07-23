@@ -11,6 +11,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import { SubIngredients } from '../../Recipe/Detail/SubIngredients/SubIngredients'
 import css from './SidesModal.css'
 import { SidePropType } from './SidesPropTypes'
+import { useSides, useSidesBasket } from './SidesModal.hooks'
 
 const SidesContentFooter = ({
   toggleShowAllergenAndNutrition,
@@ -149,38 +150,16 @@ SidesAllergenAndNutritionContent.propTypes = {
   sides: PropTypes.arrayOf(SidePropType).isRequired,
 }
 
-// Note: this method should be replaced with `Object.fromEntries` when supported
-const fromEntriesReduce = (memo, [key, value]) => ({
-  ...memo,
-  [key]: value,
-})
-
-const useSidesBasket = (sides, modalOnSubmit) => {
-  const [selectedProducts, setSelectedProducts] = React.useState({})
-  const getQuantityForSide = (id) => selectedProducts[id] || 0
-  const incrementSide = (id, increment) => setSelectedProducts({
-    ...selectedProducts,
-    ...{ [id]: getQuantityForSide(id) + increment },
-  })
-  const addSide = (id) => incrementSide(id, 1)
-  const removeSide = (id) => incrementSide(id, -1)
-  const sideEntries = Object.entries(selectedProducts)
-  const getSidePrice = (id) => sides.find(side => side.id === id).list_price
-  const total = sideEntries.reduce((memo, [id, qnt]) => getSidePrice(id) * qnt + memo, 0)
-  const onSubmit = () => {
-    const cleanSelectedProducts = Object.entries(selectedProducts).filter(([, value]) => Boolean(value)).reduce(fromEntriesReduce, {})
-    modalOnSubmit(cleanSelectedProducts)
-  }
-
-  return { onSubmit, total, addSide, removeSide, getQuantityForSide }
-}
-
 export const SidesModal = ({
-  sides,
+  accessToken,
+  userId,
+  order,
   isOpen,
   onClose,
   onSubmit: modalOnSubmit,
+  onError
 }) => {
+  const sides = useSides(onError, accessToken, userId, order, isOpen)
   const {
     onSubmit,
     addSide,
@@ -190,6 +169,10 @@ export const SidesModal = ({
   } = useSidesBasket(sides, modalOnSubmit)
   const [showAllergenAndNutrition, setShowAllergenAndNutrition] = React.useState(false)
   const toggleShowAllergenAndNutrition = () => setShowAllergenAndNutrition(!showAllergenAndNutrition)
+
+  if (sides === null) {
+    return null
+  }
 
   return (
     <Overlay
@@ -207,7 +190,6 @@ export const SidesModal = ({
           total ? '' : css.sideModalForSidesSelectionsWithSides
         ])}
         >
-
           {showAllergenAndNutrition
             ? (
               <SidesAllergenAndNutritionContent
@@ -238,8 +220,11 @@ export const SidesModal = ({
 }
 
 SidesModal.propTypes = {
-  sides: PropTypes.arrayOf(SidePropType).isRequired,
+  accessToken: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
+  order: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired
 }
