@@ -1,22 +1,14 @@
 #!/usr/bin/env bash
 
-# check env and set variables
-export NODE_VERSION=10.14.2
-export PRODUCTS_VERSION="/products/v2.0"
-export DELIVERIES_VERSION="/deliveries/v1.0"
-
 if [[ $ENVIRONMENT = "production" ]]
 then
-	export PRODUCT_SERVICE_DOMAIN="https://api.gousto.co.uk"
-	export DELIVERY_SERVICE_DOMAIN="https://api.gousto.co.uk"
 	export DOMAIN="gousto.co.uk"
 	export CLIENT_PROTOCOL="https"
 	export CHECKOUTCOM_PK=$CHECKOUTCOM_PK_PRODUCTION
 else
 	export DOMAIN="gousto.info"
 	export CLIENT_PROTOCOL="https"
-	export PRODUCT_SERVICE_DOMAIN="https://${ENVIRONMENT}-api.gousto.info"
-	export DELIVERY_SERVICE_DOMAIN="https://${ENVIRONMENT}-api.gousto.info"
+
 	envNameUppercase=$(echo $ENVIRONMENT | tr [a-z] [A-Z])
 	checkoutComEnvName="CHECKOUTCOM_PK_$envNameUppercase"
 	export CHECKOUTCOM_PK=${!checkoutComEnvName}
