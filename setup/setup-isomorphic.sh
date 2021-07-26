@@ -5,6 +5,8 @@ export NODE_APP_INSTANCE="live"
 
 cd src
 
+npm ci
+npm run postinstall
 # isomorphic: build
 npm run build
 
@@ -13,6 +15,3 @@ then
   export SETUP_FAILURE=true
   exit 1
 fi
-
-# e2e build
-npm run build:e2e
