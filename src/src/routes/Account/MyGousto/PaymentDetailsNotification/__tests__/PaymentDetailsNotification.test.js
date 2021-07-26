@@ -22,7 +22,7 @@ describe('Given PaymentDetailsNotification', () => {
 
   describe('when primary cta is clicked', () => {
     beforeEach(() => {
-      wrapper.find('Button').at(0).simulate('click')
+      wrapper.find('CTA').at(0).simulate('click')
     })
 
     test('then track3dsCompliantClick should be called with proper parameter', () => {
@@ -32,7 +32,7 @@ describe('Given PaymentDetailsNotification', () => {
 
   describe('when secondary cta is clicked', () => {
     beforeEach(() => {
-      wrapper.find('Button').at(1).simulate('click')
+      wrapper.find('CTA').at(1).simulate('click')
     })
 
     test('then track3dsCompliantClick should be called with proper parameter', () => {

@@ -19,19 +19,25 @@ export const CardDetailsModal = ({ isOpen, toggleModal }) => (
         <ModalHeader withSeparator align="left">Update card details</ModalHeader>
         <div className={css.modalContent}>
           <p>
-            We need you to re-enter your current card details due to a European regulation for electronic payment services, called
+            We need you to
             {' '}
-            <span className={css.bold}>Payments Service Directive 2 (PSD2)</span>
-            .
+            <span className={css.bold}>re-enter your current card details due</span>
+            {' '}
+            to a European regulation for electronic payment services, called Payments Service Directive 2 (PSD2) .
           </p>
           <p>PSD2 is an evolution of existing regulation for payments and enhances customer protection and security.</p>
           <p>
-            In order to benefit from this, you need to
+            You may see a small charge to confirm your card, however your
             {' '}
-            <span className={css.bold}>re-enter your card details before 14 September 2021</span>
+            <span className={css.bold}>bank will refund it back within 10 working days</span>
             .
           </p>
-          <p>You only have to do this once. If you do not re-enter your card details by this date, we may be unable to take payment and send your Gousto box.</p>
+          <p>
+            You have to
+            {' '}
+            <span className={css.bold}>re-enter your card details before 14 September 2021</span>
+            , otherwise we may be unable to take payment and send your Gousto box. You only have to do this once.
+          </p>
         </div>
       </Modal>
     </div>

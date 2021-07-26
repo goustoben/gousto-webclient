@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
+import { CTA } from 'goustouicomponents'
 import Link from 'Link'
 import { client } from 'config/routes'
 import { Section } from 'routes/Account/MyGousto/Section'
@@ -35,9 +35,9 @@ export const PaymentDetailsNotification = ({
             </div>
             <div className={css.buttonsContainer}>
               <Link to={`${client.myDetails}?expand_payment_section=1`} clientRouted={false}>
-                <Button className={css.fullWidth} color="primary" onClick={handleCardDetailsClick(click3dsReenterCardDetails)}>Re-enter my card details</Button>
+                <CTA size="small" variant="primary" isFullWidth onClick={handleCardDetailsClick(click3dsReenterCardDetails)}>Re-enter my card details</CTA>
               </Link>
-              <Button color="secondary" onClick={toggleModal(click3dsUpdateInfo)}>Find out more</Button>
+              <CTA variant="secondary" size="small" onClick={toggleModal(click3dsUpdateInfo)}>Find out more</CTA>
             </div>
           </div>
         </Alert>

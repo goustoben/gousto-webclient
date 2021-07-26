@@ -24,7 +24,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-width: 13.75rem;
-  height: 5.5rem;
+  height: 6rem;
 
   @media ScreenXXSMax {
     margin-left: -2rem;
