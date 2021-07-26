@@ -8,7 +8,7 @@ import OrderRecipe from '../../../../AccountComponents/OrderRecipe'
 const SeeMenuSection = ({ recipes, boxType }) => {
   let slicedRecipes = recipes.toArray()
   if (boxType === 'vegetarian') {
-    slicedRecipes = recipes.filter(recipe => recipe.get('dietType') === 'vegetarian')
+    slicedRecipes = recipes.filter(recipe => recipe.get('dietType') === 'vegetarian').toArray()
   }
   slicedRecipes = slicedRecipes.slice(0, 6)
   const recipeSection = slicedRecipes.map((recipe) =>
