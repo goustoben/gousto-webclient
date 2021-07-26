@@ -3,35 +3,50 @@ import React from 'react'
 
 import Link from 'Link'
 import { Alert } from 'goustouicomponents'
-import Content from 'containers/Content'
-import config from 'config/resetPassword'
 import configRoutes from 'config/routes'
+import css from './FormAlert.css'
+
+const customTokenMessage = (
+  <span>
+    <br />
+    &nbsp;Please&nbsp;
+    <Link to={configRoutes.client.resetForm} clientRouted={false}>request a new link</Link>
+    &nbsp;to reset your password!
+  </span>
+)
 
 const FormAlert = ({ errorResetPassword }) => {
-  const errorMessage = config[errorResetPassword] || config.default
+  if (!errorResetPassword || !errorResetPassword.length) {
+    return null
+  }
 
-  return (errorResetPassword) ? (
+  return (
     <Alert type="danger">
-      <span>
-        <Content contentKeys={errorMessage.key}>
-          <span>{errorMessage.placeholder}</span>
-        </Content>
-        {errorResetPassword === 'password_token-invalid' ? (
-          <span>
-            &nbsp;Please&nbsp;
-            <Link to={configRoutes.client.resetForm} clientRouted={false}>
-              request a new link
-            </Link>
-            &nbsp;to reset your password!
-          </span>
-        ) : null}
-      </span>
+      <ul className={css.errorList}>
+        {errorResetPassword.map((errorItem) => {
+          const { error, message } = errorItem
+
+          if (!message || !error) {
+            return null
+          }
+
+          return (
+            <li className={css.errorListItem} key={error}>
+              {message}
+              {error === 'password_token-invalid' && customTokenMessage}
+            </li>
+          )
+        })}
+      </ul>
     </Alert>
-  ) : null
+  )
 }
 
 FormAlert.propTypes = {
-  errorResetPassword: PropTypes.string,
+  errorResetPassword: PropTypes.arrayOf(PropTypes.shape({
+    error: PropTypes.string,
+    message: PropTypes.string,
+  })).isRequired,
 }
 
-export default FormAlert
+export { FormAlert }

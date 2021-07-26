@@ -10,7 +10,7 @@ import Content from 'containers/Content'
 import InputError from 'Form/InputError'
 import { PageContent, PageHeader } from 'Page'
 import css from './ResetPassword.css'
-import FormAlert from './FormAlert'
+import { FormAlert } from './FormAlert'
 
 class ResetPassword extends React.PureComponent {
   static propTypes = {
@@ -101,7 +101,7 @@ class ResetPassword extends React.PureComponent {
     const { isPasswordLengthError, passwordValue } = this.state
 
     return (
-      <div>
+      <div className={css.wrapper}>
         <PageHeader title="Reset your Password" />
         <PageContent>
           <FormAlert errorResetPassword={errorResetPassword} />

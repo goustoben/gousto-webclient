@@ -184,16 +184,17 @@ describe('auth api', () => {
     test('should fetch the correct url', async () => {
       const password = 'password'
       const passwordToken = 'passwordToken'
+      const version = 2
 
-      await resetUserPassword(password, passwordToken)
+      await resetUserPassword(password, passwordToken, version)
 
       const expectedReqData = {
         password,
-        password_token: passwordToken
+        password_token: passwordToken,
       }
 
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'https://production-api.gousto.co.uk/auth/v1.0.0/resetUserPassword', expectedReqData, 'POST', 'no-cache')
+      expect(fetch).toHaveBeenCalledWith(null, `https://production-api.gousto.co.uk/auth/v${version}/resetUserPassword`, expectedReqData, 'POST', 'no-cache')
     })
 
     test('should return the results of the fetch unchanged', async () => {

@@ -209,9 +209,19 @@ describe('resetPassword', () => {
   })
 
   describe('when resetUserPassword response errors', () => {
+    const ERRORS = [
+      {
+        error: 'error.key',
+        message: 'error message'
+      },
+      {
+        error: 'error.key.2',
+        message: 'error message 2',
+      }
+    ]
     beforeEach(() => {
       dispatch = jest.fn()
-      resetUserPassword.mockRejectedValue({ code: 'test' })
+      resetUserPassword.mockRejectedValue({ errors: ERRORS })
       actions.authResetPassword()(dispatch)
     })
 
@@ -219,7 +229,7 @@ describe('resetPassword', () => {
       const callBeforeSettingToPending = dispatch.mock.calls.length - 2
 
       expect(dispatch.mock.calls[callBeforeSettingToPending][0]).toEqual(
-        { type: 'ERROR', key: 'AUTH_PASSWORD_RESET', value: 'test' }
+        { type: 'ERROR', key: 'AUTH_PASSWORD_RESET', value: ERRORS }
       )
     })
 

@@ -1,0 +1,7 @@
+.errorList {
+  padding-left: 1rem;
+}
+
+.errorListItem:only-child {
+  list-style: none;
+}

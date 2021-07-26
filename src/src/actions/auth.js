@@ -153,7 +153,7 @@ const validate = (accessToken, refreshToken, expiresAt) => (
   }
 )
 
-const resetPassword = (password, passwordToken, recaptchaToken = '') => (
+const authResetPassword = (password, passwordToken, recaptchaToken = '') => (
   async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.AUTH_PASSWORD_RESET, true))
     dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, null))
@@ -163,7 +163,7 @@ const resetPassword = (password, passwordToken, recaptchaToken = '') => (
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }))
       redirect(configRoutes.client.myDeliveries)
     } catch (err) {
-      dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, err.code))
+      dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, err.errors))
       logger.error(err)
     } finally {
       dispatch(statusActions.pending(actionTypes.AUTH_PASSWORD_RESET, false))
@@ -197,7 +197,7 @@ const authActions = {
   authIdentify: identify,
   authClear: clear,
   authValidate: validate,
-  authResetPassword: resetPassword,
+  authResetPassword,
   storeSignupRecaptchaToken,
   userRememberMe,
   userAuthenticated,

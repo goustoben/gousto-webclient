@@ -26,8 +26,8 @@ export function validateUserPassword(password, version) {
   return fetch(null, `${endpoint('auth', version)}${routes.auth.validateUserPassword}`, { password }, 'POST', 'no-cache')
 }
 
-export function resetUserPassword(password, passwordToken) {
-  return fetch(null, `${endpoint('auth')}${routes.auth.resetUserPassword}`, {
+export function resetUserPassword(password, passwordToken, version = 2) {
+  return fetch(null, `${endpoint('auth', version)}${routes.auth.resetUserPassword}`, {
     password,
     password_token: passwordToken,
   }, 'POST', 'no-cache')
