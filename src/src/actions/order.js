@@ -43,9 +43,9 @@ const getTrackingInformationForV1 = (order) => ({
 })
 
 const getTrackingInformationForV2 = (order) => ({
-  id: order.data.id,
-  promoCode: order.data.prices.has_promo_code,
-  total: order.data.prices.total,
+  id: order.id,
+  promoCode: order.attributes.prices.isPromoCodeValid,
+  total: order.attributes.prices.total,
 })
 
 export const trackOrder = (orderAction, order) => (
@@ -55,7 +55,7 @@ export const trackOrder = (orderAction, order) => (
 
       if (trackAffiliate) {
         const { basket } = getState()
-        const fn = order.data ? getTrackingInformationForV2 : getTrackingInformationForV1
+        const fn = order.attributes ? getTrackingInformationForV2 : getTrackingInformationForV1
         const { id, promoCode, total = '' } = fn(order)
 
         const affiliateTracking = {

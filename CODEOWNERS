@@ -234,3 +234,4 @@
 /tests/e2e/tests/systemTests/flows/signup/              @Gousto/squad-beetroots
 /tests/regression/fixtures/payments/                    @Gousto/squad-beetroots
 /tests/regression/fixtures/checkout/                    @Gousto/squad-beetroots
+/src/src/middlewares/tracking/dataLayerTracker/         @Gousto/squad-beetroots

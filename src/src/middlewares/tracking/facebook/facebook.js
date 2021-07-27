@@ -122,11 +122,11 @@ const getV1OrderAPIKeys = (order) => {
 }
 
 const getV2OrderAPIKeys = (order) => {
-  const recipes = order.data.relationships.components.data.filter((i) => i.type === ResourceType.Recipe)
+  const recipes = order.relationships.components.data.filter((i) => i.type === ResourceType.Recipe)
   const recipeIds = recipes.map(recipe => recipe.id)
   const recipeCount = recipes.length
-  const totalPrice = order.data.prices.total
-  const orderId = order.data.id.toString()
+  const totalPrice = order.attributes.prices.total
+  const orderId = order.id.toString()
 
   return {
     recipeIds,
@@ -141,7 +141,7 @@ const getV2OrderAPIKeys = (order) => {
  * @param action
  */
 export const customerPurchaseCompleted = ({ order }) => {
-  const fn = order.data && order.data.relationships ? getV2OrderAPIKeys : getV1OrderAPIKeys
+  const fn = order.relationships ? getV2OrderAPIKeys : getV1OrderAPIKeys
   const {
     recipeIds,
     recipeCount,

@@ -15,6 +15,7 @@ import snowplowV2 from 'middlewares/tracking/snowplow/V2'
 import { optimizelyTracker } from 'middlewares/tracking/optimizely'
 import { gtmMiddleware } from 'middlewares/tracking/gtm'
 import affiliateWindow from 'middlewares/tracking/affiliateWindow'
+import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
 import persistenceConfig from 'config/storePersistence'
 import globals from 'config/globals'
 
@@ -35,6 +36,7 @@ class GoustoStore {
       trackingMiddleware(pinterestPixel, 'v2'),
       trackingMiddleware(snowplowV2, 'v2'),
       trackingMiddleware(gtmMiddleware, 'v2'),
+      trackingMiddleware(dataLayerTracker, 'v2'),
       optimizelyTracker,
     ]
 

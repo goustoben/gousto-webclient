@@ -13,3 +13,4 @@
 !src/routes/Payment/**/*
 !src/routes/Signup/**/*
 !src/routes/ShowcaseMenu/**/*
+!src/middlewares/tracking/dataLayerTracker/**/*

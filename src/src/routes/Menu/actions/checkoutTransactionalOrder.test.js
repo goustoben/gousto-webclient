@@ -113,7 +113,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
     test('should call trackOrder with response', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
 
-      expect(trackOrder).toHaveBeenCalledWith(undefined, mockOrder)
+      expect(trackOrder).toHaveBeenCalledWith('create', mockOrder)
     })
 
     test('should call orderConfirmationRedirect with id from response', async () => {

@@ -194,18 +194,18 @@ describe('fbTracking', () => {
       Tracker({
         type: actionTypes.ORDER_CREATE_TRANSACTIONAL,
         order: {
-          data: {
-            id: 2,
+          id: 2,
+          attributes: {
             prices: {
               total: '19.99',
             },
-            relationships: {
-              components: {
-                data: [
-                  { id: '3', type: 'recipe' },
-                  { id: '4', type: 'recipe' },
-                ]
-              }
+          },
+          relationships: {
+            components: {
+              data: [
+                { id: '3', type: 'recipe' },
+                { id: '4', type: 'recipe' },
+              ]
             }
           }
         }

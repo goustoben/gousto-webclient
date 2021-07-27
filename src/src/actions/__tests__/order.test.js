@@ -208,8 +208,8 @@ describe('order actions', () => {
 
       describe('when order is OrderAPI V2', () => {
         const order = {
-          data: {
-            id: '735702932',
+          id: '735702932',
+          attributes: {
             prices: {
               total: 31.99,
               has_promo_code: false,

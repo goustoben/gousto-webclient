@@ -3,7 +3,10 @@ import { createSelector } from 'reselect'
 import moment from 'moment'
 
 export const getUserFirstName = state => state.user.get('nameFirst')
+export const getUserLastName = state => state.user.get('nameLast')
 export const getUserId = state => state.user.get('id', null)
+export const getUserEmail = state => state.user.get('email')
+export const getUserShippingAddress = state => state.user.get('shippingAddress')
 export const getUserPhoneNumber = state => state.user.get('phone')
 export const getReferralOffer = state => state.user.get('referralOffer')
 export const getUserStatus = state => state.user.get('status')

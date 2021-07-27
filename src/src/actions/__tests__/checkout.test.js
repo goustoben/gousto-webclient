@@ -1270,7 +1270,14 @@ describe('checkout actions', () => {
     test('should dispatch CHECKOUT_SIGNUP_SUCCESS event', async () => {
       await checkoutPostSignup()(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId: '100004' })
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.CHECKOUT_SIGNUP_SUCCESS,
+        orderId: '100004',
+        basketRecipes: Immutable.fromJS({
+          'recipe-id-1': 1,
+          'recipe-id-2': 2,
+        }),
+      })
     })
   })
 

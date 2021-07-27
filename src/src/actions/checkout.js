@@ -21,7 +21,7 @@ import { fetchPromoCodeValidity, fetchReference } from 'apis/customers'
 import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis/payments'
 
 import { getSignupRecaptchaToken } from 'selectors/auth'
-import { getPreviewOrderId, getPromoCode } from 'selectors/basket'
+import { getPreviewOrderId, getPromoCode, getBasketRecipes } from 'selectors/basket'
 import { accountFormName, deliveryFormName, getPromoCodeValidationDetails, getPasswordValue } from 'selectors/checkout'
 import { getIsPaymentBeforeChoosingEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
 import {
@@ -404,11 +404,12 @@ export function checkoutPostSignup() {
       const prices = pricing.get('prices')
       const grossTotal = prices && prices.get('grossTotal')
       const netTotal = prices && prices.get('total')
+      const basketRecipes = getBasketRecipes(state)
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
       dispatch(tempActions.temp('originalGrossTotal', grossTotal))
       dispatch(tempActions.temp('originalNetTotal', netTotal))
       dispatch(trackPurchase())
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
+      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes }) // used for data layer tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
       dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, err.code, 'checkoutPostSignup'))

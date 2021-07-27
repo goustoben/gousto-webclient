@@ -42,6 +42,7 @@ export const validBasketRecipeAdd = (recipeId, view, recipeInfo, maxRecipesNum, 
       type: actionTypes.BASKET_RECIPE_ADD,
       recipeId,
       ...recipeInfo,
+      orderId,
       trackingData: {
         actionType: trackingKeys.addRecipe,
         recipeId,

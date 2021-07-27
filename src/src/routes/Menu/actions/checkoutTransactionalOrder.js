@@ -38,13 +38,16 @@ export const checkoutTransactionalOrder = () => async (dispatch, getState) => {
 
   try {
     const order = await createOrder(accessToken, orderRequest, userId)
-
-    dispatch(trackOrder(undefined, order))
+    try {
+      dispatch(trackOrder('create', order))
+    } catch (e) {
+      logger.warning({ message: 'error in tracking new order', errors: [e] })
+    }
     dispatch(orderConfirmationRedirect(order.id, 'create'))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
   } catch (e) {
     const { message, code } = e
-    logger.error(e)
+    logger.error({ message: 'Error while creating transational order', errors: [e] })
     dispatch(error(actionTypes.ORDER_SAVE, { message, code }))
   }
 }
