@@ -87,6 +87,7 @@ module.exports = {
     welcome: '/welcome-to-gousto',
 
     orderConfirmation: '/order-confirmation/:orderId',
+    orderConfirmationWithSides: '/order-confirmation/:orderId?sides',
 
     termsAndConditions: '/terms-and-conditions',
     termsOfUse: '/terms-of-use',

@@ -11,36 +11,62 @@ import Content from 'containers/Content'
 
 import placeholderSrc from 'media/images/recipe-placeholder.png'
 import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
+import { SidesExperimentProvider, SidesExperimentConsumer } from '../../../../../../Menu/context/sidesExperimentContext'
 
 import css from './OrderProducts.css'
 
 class OrderProducts extends React.PureComponent {
   render() {
     const { products, orderId } = this.props
+    const hasProducts = Boolean(products.size)
 
     return (
       <div className={css.mainContainer}>
-        {products.size === 0 ? (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products" />) : null}
+        {!hasProducts && (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products" />)}
         <div>
           <div className={css.headerRow}>
             <Content contentKeys="mydeliveries_OrderOrderproductsTitle">
               <span className={css.header}>Gousto Market</span>
             </Content>
-            {products.size > 0 ? (
-              <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
-                Edit Items
+            <div>
+              {hasProducts && (
+              <SidesExperimentProvider>
+                <SidesExperimentConsumer>
+                  <Link className={css.editSidesLink} to={`${routes.client.orderConfirmationWithSides.replace(':orderId', orderId)}`}>
+                    Edit Sides
+                  </Link>
+                </SidesExperimentConsumer>
+              </SidesExperimentProvider>
+              )}
+              {hasProducts && (
+              <Link className={css.editMarketItemsLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
+                Edit Market Items
               </Link>
-            ) : null}
+              )}
+            </div>
           </div>
-          {products.size === 0 ? (
+          {!hasProducts ? (
             <div className={css.marketPromoContainer}>
               <p className={css.marketPromoText}>Add desserts, drinks, snacks and more to your next box at no extra charge.</p>
               <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products" />
-              <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
-                <Button color="secondary" width="full" noDecoration>
-                  Go to Gousto Market
-                </Button>
-              </Link>
+              <SidesExperimentProvider>
+                <SidesExperimentConsumer>
+                  <div>
+                    <Link to={`${routes.client.orderConfirmationWithSides.replace(':orderId', orderId)}`}>
+                      <Button className={css.addSidesButton} color="secondary" width="full" noDecoration>
+                        Add sides
+                      </Button>
+                    </Link>
+                  </div>
+                </SidesExperimentConsumer>
+              </SidesExperimentProvider>
+              <div>
+                <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
+                  <Button color="secondary" width="full" noDecoration>
+                    Add market items
+                  </Button>
+                </Link>
+              </div>
             </div>
           ) : (
             <div>
