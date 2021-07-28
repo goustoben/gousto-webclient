@@ -28,7 +28,7 @@ class OrderProducts extends React.PureComponent {
             </Content>
             {products.size > 0 ? (
               <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
-                Edit Items
+                Edit Market Items
               </Link>
             ) : null}
           </div>

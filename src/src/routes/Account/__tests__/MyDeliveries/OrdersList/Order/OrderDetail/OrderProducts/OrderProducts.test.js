@@ -62,10 +62,10 @@ describe('OrderProducts', () => {
       expect(wrapper.text()).toContain('£20.00')
     })
 
-    test('should render the "Edit Items" link', () => {
+    test('should render the "Edit Market Items" link', () => {
       const editItemsLink = wrapper.find(Link)
       expect(editItemsLink).toHaveLength(1)
-      expect(editItemsLink.children().text()).toBe('Edit Items')
+      expect(editItemsLink.children().text()).toBe('Edit Market Items')
     })
 
     describe('images', () => {
