@@ -164,37 +164,6 @@ describe('given dataLayerTracker middleware is invoked', () => {
       })
     })
 
-    describe('when FILTERS_COLLECTION_CHANGE is handled', () => {
-      test('then it should send view_collection', () => {
-        const action = {
-          type: actionTypes.FILTERS_COLLECTION_CHANGE,
-          collectionId: 'plant-based-id',
-        }
-        dataLayerTracker(action, state)
-
-        expect(window.dataLayer[1]).toEqual({
-          event: 'view_collection',
-          ecommerce: {
-            impressions: [
-              {
-                category: 'plant-based',
-                id: '672',
-                name: 'Roasted Veg Skewers',
-                quantity: 1,
-              },
-              {
-                category: 'plant-based',
-                id: '739',
-                name: 'Sweet Potato Curry',
-                quantity: 1,
-              },
-            ],
-          },
-          user: {},
-        })
-      })
-    })
-
     describe('when BASKET_RECIPE_ADD is handled', () => {
       test('then it should send add_to_cart', () => {
         const action = {

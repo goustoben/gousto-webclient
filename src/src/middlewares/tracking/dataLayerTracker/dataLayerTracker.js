@@ -2,7 +2,6 @@ import { actionTypes } from 'actions/actionTypes'
 import logger from 'utils/logger'
 import { getBasketRecipes } from 'selectors/basket'
 import { getRecipeTotalDiscounted, getTotalDiscount, getPricingPromoCode } from 'selectors/pricing'
-import { getRecipesInCollection } from 'routes/Menu/selectors/collections'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import {
   getUserDetails,
@@ -60,21 +59,6 @@ export const viewRecipe = ({ recipeId }, state) => {
       detail: {
         products: getProductsValueForSingleRecipeById(recipeId, state),
       },
-    },
-    state
-  )
-}
-
-export const viewCollection = ({ collectionId }, state) => {
-  const { menuCollections } = state
-  const recipeIdsByCollection = getRecipesInCollection(menuCollections, collectionId)
-  const collectionSlug = menuCollections.getIn([collectionId, 'slug'])
-
-  const recipeIds = recipeIdsByCollection.toArray()
-  sendEcommerceEvent(
-    'view_collection',
-    {
-      impressions: getProductsValueForRecipeIds(recipeIds, state, { collectionSlug }),
     },
     state
   )
@@ -182,7 +166,6 @@ export const referFriendLinkShared = (action) => {
 
 const callbacks = {
   [actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: viewRecipe,
-  [actionTypes.FILTERS_COLLECTION_CHANGE]: viewCollection,
   [actionTypes.BASKET_RECIPE_ADD]: addRecipeToBasket,
   [actionTypes.BASKET_CHECKOUT]: initiateCheckout,
   [actionTypes.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
