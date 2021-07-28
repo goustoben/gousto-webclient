@@ -7,7 +7,8 @@
 Cypress.Commands.overwrite('visit', (originalFn, url, options) => {
   return originalFn(url, {options, ...{
     headers: {
-      "x-pre-render": false
+      "x-pre-render": false,
+      "gousto-waf-access-token": Cypress.env('WAF_ACCESS_TOKEN')
     }
   }})
 })

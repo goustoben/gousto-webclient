@@ -4,9 +4,12 @@
   "testFiles": ["src/src/**/__regression__/*.spec.*"],
   "screenshotsFolder": "screenshots",
   "fixturesFolder": "fixtures",
-  "supportFile" : "support/index.js",
+  "supportFile": "support/index.js",
   "pluginsFile": false,
   "video": false,
   "chromeWebSecurity": false,
-  "experimentalFetchPolyfill": true
+  "experimentalFetchPolyfill": true,
+  "env": {
+    "WAF_ACCESS_TOKEN": "MOCK_TOKEN_VALUE"
+  }
 }
