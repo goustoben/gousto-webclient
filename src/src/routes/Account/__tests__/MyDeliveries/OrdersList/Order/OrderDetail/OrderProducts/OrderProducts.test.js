@@ -1,6 +1,8 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
+import { Button } from 'goustouicomponents'
+import Link from 'Link'
 import OrderProducts from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderProducts'
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 
@@ -60,19 +62,10 @@ describe('OrderProducts', () => {
       expect(wrapper.text()).toContain('£20.00')
     })
 
-    test('should render the "Edit Sides" link', () => {
-      const editItemsLink = wrapper
-        .find('SidesExperimentProvider')
-        .find('SidesExperimentConsumer')
-        .find('.editSidesLink')
+    test('should render the "Edit Items" link', () => {
+      const editItemsLink = wrapper.find(Link)
       expect(editItemsLink).toHaveLength(1)
-      expect(editItemsLink.children().text()).toBe('Edit Sides')
-    })
-
-    test('should render the "Edit Market Items" link', () => {
-      const editItemsLink = wrapper.find('.editMarketItemsLink')
-      expect(editItemsLink).toHaveLength(1)
-      expect(editItemsLink.children().text()).toBe('Edit Market Items')
+      expect(editItemsLink.children().text()).toBe('Edit Items')
     })
 
     describe('images', () => {
@@ -105,13 +98,7 @@ describe('OrderProducts', () => {
         expect(wrapper.find('.marketPromoText').text()).toBe('Add desserts, drinks, snacks and more to your next box at no extra charge.')
         expect(wrapper.find('img.marketImageRight').prop('src')).toBe(marketPhotoSrc)
         expect(wrapper.find('img.marketImageFull').prop('src')).toBe(marketPhotoSrc)
-        expect(wrapper
-          .find('SidesExperimentProvider')
-          .find('SidesExperimentConsumer')
-          .find('.addSidesButton')
-          .children()
-          .text()
-        ).toBe('Add sides')
+        expect(wrapper.find(Button).children().text()).toBe('Go to Gousto Market')
       })
     })
   })

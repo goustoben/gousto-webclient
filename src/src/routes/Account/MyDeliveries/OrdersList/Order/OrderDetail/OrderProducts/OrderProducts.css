@@ -4,10 +4,6 @@
 .headerRow {
   display: flex;
   justify-content: space-between;
-
-  @media ScreenXXSMax {
-	padding-bottom: 1rem;
-  }
 }
 
 .header {
@@ -15,21 +11,8 @@
 	margin-bottom: 1rem;
 }
 
-.editSidesLink {
-	display: block;
-	margin-bottom: 0.625rem;
-	text-align: right;
-	text-transform: uppercase;
-}
-
-.editMarketItemsLink {
-    display: block;
-	text-align: right;
-    text-transform: uppercase;
-}
-
-.addSidesButton {
-	margin-bottom: 10px;
+.editLink {
+  text-transform: uppercase;
 }
 
 .productContainer {
