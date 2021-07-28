@@ -28,6 +28,37 @@ jobs:
             - project
             - .circlerc
 
+  jest-coverage-report:
+    docker: *gousto_build_image
+    environment:
+      TZ: "Europe/London"
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Test coverage
+          command: cd src && npm run test:jest:ci:coverage
+          no_output_timeout: 30m
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/src/coverage/coverage-summary.json
+
+  eslint-generate-report:
+    docker: *gousto_build_image
+    environment:
+      TZ: "Europe/London"
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: eslint report
+          command: cd src && scripts/run-eslint-ci.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/src/eslint-results.json
+
   publish-code-health:
     docker: *gousto_build_image
     environment:
@@ -38,13 +69,6 @@ jobs:
       - run:
           name: Setup output folder
           command: mkdir /tmp/artifacts
-      - run:
-          name: Test coverage
-          command: cd src && npm run test:jest:ci:coverage
-          no_output_timeout: 30m
-      - run:
-          name: eslint coverage
-          command: cd src && scripts/run-eslint-ci.sh
       - run:
           name: Generate code health
           command: cd src && node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
@@ -254,6 +278,7 @@ jobs:
 
 workflows:
   version: 2
+
   e2e-manual:
     jobs:
       - setup-src:
@@ -412,14 +437,19 @@ workflows:
             branches:
               only:
                 - develop
-      - publish-code-health:
+      - jest-coverage-report:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
-          filters:
-            branches:
-              only:
-                - develop
+      - eslint-generate-report:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+      - publish-code-health:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - jest-coverage-report
+            - eslint-generate-report
       - build-nginx-image:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -519,7 +549,6 @@ workflows:
             branches:
               only:
                 - develop
-      
 
   production-environment:
     jobs:
