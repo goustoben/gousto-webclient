@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from 'actions/actionTypes'
+import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import { dataLayerTracker } from '../dataLayerTracker'
 
 describe('given dataLayerTracker middleware is invoked', () => {
@@ -399,6 +400,47 @@ describe('given dataLayerTracker middleware is invoked', () => {
                 ],
               },
             },
+          })
+        })
+      })
+    })
+
+    describe('when REFER_FRIEND_LINK_COPIED is handled', () => {
+      test('then it should send the "referral_click" event', () => {
+        const action = {
+          type: actionTypes.REFER_FRIEND_LINK_COPIED,
+        }
+
+        dataLayerTracker(action, state)
+
+        expect(window.dataLayer[0]).toEqual({
+          event: 'referral_click',
+          type: SOCIAL_TYPES.link,
+        })
+      })
+    })
+
+    describe('when REFER_FRIEND_LINK_SHARE is handled', () => {
+      const cases = [
+        [SOCIAL_TYPES.email, SOCIAL_TYPES.email],
+        [SOCIAL_TYPES.messenger],
+        [SOCIAL_TYPES.facebook],
+      ]
+
+      describe.each(cases)("and when channel is '%s'", (shareType) => {
+        test('then it should send the referral_click event with appropriate type', () => {
+          const action = {
+            type: actionTypes.REFER_FRIEND_LINK_SHARE,
+            trackingData: {
+              channel: shareType,
+            },
+          }
+
+          dataLayerTracker(action, state)
+
+          expect(window.dataLayer[0]).toEqual({
+            event: 'referral_click',
+            type: shareType,
           })
         })
       })

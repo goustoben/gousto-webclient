@@ -3,6 +3,7 @@ import logger from 'utils/logger'
 import { getBasketRecipes } from 'selectors/basket'
 import { getRecipeTotalDiscounted, getTotalDiscount, getPricingPromoCode } from 'selectors/pricing'
 import { getRecipesInCollection } from 'routes/Menu/selectors/collections'
+import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
 import {
   getUserDetails,
   getProductsValueForSingleRecipeById,
@@ -11,6 +12,14 @@ import {
   getBoxTypeValue,
   getOrderDetails,
 } from './dataLayerTrackerUtils'
+
+const sendDataLayerEvent = (event) => {
+  if (!__CLIENT__ && window.dataLayer) {
+    return
+  }
+
+  window.dataLayer.push(event)
+}
 
 const sendEcommerceEvent = (eventName, ecommerce, state) => {
   const event = {
@@ -31,16 +40,13 @@ const sendEcommerceEvent = (eventName, ecommerce, state) => {
     },
   }
   logger.debug({ message: 'dataLayerTracker - sendEcommerceEvent', extra: debugEvent })
-  if (!__CLIENT__ && window.dataLayer) {
-    return
-  }
 
   // ecommerce merges the values with the ecommerce hash of a previous call:
   // see https://developers.google.com/tag-manager/enhanced-ecommerce.  Clear
   // the old value to store only the fields we send in this particular call.
-  window.dataLayer.push({ ecommerce: null })
+  sendDataLayerEvent({ ecommerce: null })
 
-  window.dataLayer.push(event)
+  sendDataLayerEvent(event)
 }
 
 export const viewRecipe = ({ recipeId }, state) => {
@@ -155,6 +161,25 @@ export const customerPurchaseCompleted = ({ order }, state) => {
   )
 }
 
+export const referFriendLinkCopied = () => {
+  const event = {
+    event: 'referral_click',
+    type: SOCIAL_TYPES.link,
+  }
+  logger.debug({ message: 'dataLayerTracker - referFriendLinkCopied', extra: event })
+  sendDataLayerEvent(event)
+}
+
+export const referFriendLinkShared = (action) => {
+  const { trackingData } = action
+  const event = {
+    event: 'referral_click',
+    type: trackingData.channel,
+  }
+  logger.debug({ message: 'dataLayerTracker - referFriendLinkShared', extra: event })
+  sendDataLayerEvent(event)
+}
+
 const callbacks = {
   [actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: viewRecipe,
   [actionTypes.FILTERS_COLLECTION_CHANGE]: viewCollection,
@@ -162,6 +187,8 @@ const callbacks = {
   [actionTypes.BASKET_CHECKOUT]: initiateCheckout,
   [actionTypes.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
   [actionTypes.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
+  [actionTypes.REFER_FRIEND_LINK_COPIED]: referFriendLinkCopied,
+  [actionTypes.REFER_FRIEND_LINK_SHARE]: referFriendLinkShared,
 }
 
 export const dataLayerTracker = (action, state) => {
