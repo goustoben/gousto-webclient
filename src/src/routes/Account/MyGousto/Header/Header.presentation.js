@@ -1,14 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { userOrderPropType } from '../../../GetHelp/getHelpPropTypes'
+import Loading from 'Loading'
+import { myGoustoOrderPropType } from '../../../GetHelp/getHelpPropTypes'
 import { NextOrderContainer } from './NextOrder'
+import { NextProjectedDelivery } from './NextProjectedDelivery'
 import { NoNextOrder } from './NoNextOrder'
 import { PreviousOrderContainer } from './PreviousOrder'
 import { SubscriberPricingBanner } from './SubscriberPricingBanner'
 import css from './Header.css'
 
 const HeaderPresentation = ({
+  nextProjectedOrder,
   hasDeliveryToday,
+  isLoading,
   nextOrder,
   nextOrderTracking,
   hasTooltipForNextOrder,
@@ -16,41 +20,64 @@ const HeaderPresentation = ({
   previousOrder,
   showSubscriberPricingBanner,
   subscriptionStatus,
-}) => (
-  <div>
-    {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
-    <div className={css.cardsContainer}>
-      {previousOrder
-          && (
-            <PreviousOrderContainer
-              hasDeliveryToday={hasDeliveryToday}
-              hasTooltip={hasTooltipForPreviousOrder}
-              order={previousOrder}
-            />
-          )}
-      {nextOrder
+}) => {
+  const previousOrderCard = previousOrder
+    ? (
+      <PreviousOrderContainer
+        hasDeliveryToday={hasDeliveryToday}
+        hasTooltip={hasTooltipForPreviousOrder}
+        order={previousOrder}
+      />
+    ) : null
+
+  const renderUpcomingOrderCard = () => {
+    if (nextOrder) {
+      return (
+        <NextOrderContainer
+          boxTrackingUrl={nextOrderTracking}
+          hasDeliveryToday={hasDeliveryToday}
+          hasTooltip={hasTooltipForNextOrder}
+          order={nextOrder}
+        />
+      )
+    }
+
+    if (nextProjectedOrder) {
+      return <NextProjectedDelivery deliveryDate={nextProjectedOrder.deliveryDate} />
+    }
+
+    return <NoNextOrder />
+  }
+
+  return (
+    <div>
+      {showSubscriberPricingBanner && <SubscriberPricingBanner subscriptionStatus={subscriptionStatus} />}
+      {isLoading
         ? (
-          <NextOrderContainer
-            boxTrackingUrl={nextOrderTracking}
-            hasDeliveryToday={hasDeliveryToday}
-            hasTooltip={hasTooltipForNextOrder}
-            order={nextOrder}
-          />
-        )
-        : (
-          <NoNextOrder />
+          <div className={css.loading}>
+            <Loading />
+          </div>
+        ) : (
+          <div className={`${css.cardsContainer}`}>
+            {previousOrderCard}
+            {renderUpcomingOrderCard()}
+          </div>
         )}
     </div>
-  </div>
-)
+  )
+}
 
 HeaderPresentation.propTypes = {
   hasDeliveryToday: PropTypes.bool,
   hasTooltipForNextOrder: PropTypes.bool,
   hasTooltipForPreviousOrder: PropTypes.bool,
-  nextOrder: userOrderPropType,
+  isLoading: PropTypes.bool.isRequired,
+  nextOrder: myGoustoOrderPropType,
   nextOrderTracking: PropTypes.string,
-  previousOrder: userOrderPropType,
+  nextProjectedOrder: PropTypes.shape({
+    deliveryDate: PropTypes.string.isRequired,
+  }),
+  previousOrder: myGoustoOrderPropType,
   showSubscriberPricingBanner: PropTypes.bool.isRequired,
   subscriptionStatus: PropTypes.string,
 }
@@ -61,6 +88,7 @@ HeaderPresentation.defaultProps = {
   hasTooltipForPreviousOrder: false,
   nextOrder: null,
   nextOrderTracking: null,
+  nextProjectedOrder: null,
   previousOrder: null,
   subscriptionStatus: 'inactive',
 }

@@ -48,7 +48,7 @@ export function findNewestOrder(orders, areFutureOrdersIncluded) {
       : currentOrderIndex
   }, null)
 
-  return orders.get(orderIndex)
+  return orders.get(orderIndex, null)
 }
 
 export function isOrderEligibleForSelfRefundResolution(previousOrder) {

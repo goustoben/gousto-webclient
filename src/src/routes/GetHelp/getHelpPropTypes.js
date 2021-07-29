@@ -28,7 +28,7 @@ export const orderPropType = PropTypes.shape({
 })
 
 // This is not in getHelp in the store, but it's used in Get Help entry point in My Gousto
-export const userOrderPropType = ImmutablePropTypes.contains({
+export const myGoustoOrderPropType = ImmutablePropTypes.contains({
   id: PropTypes.string.isRequired,
   deliveryDate: PropTypes.string.isRequired,
   humanDeliveryDate: PropTypes.string.isRequired,

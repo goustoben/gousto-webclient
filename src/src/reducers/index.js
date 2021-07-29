@@ -42,6 +42,7 @@ import { experimentsReducer } from './experiments'
 import { loggingManager } from './loggingmanager'
 import { feedback } from './feedback'
 import { ribbonReducer } from './ribbonReducer'
+import { myGousto } from './myGousto'
 
 const reducers = {
   ...abandonBasket,
@@ -66,6 +67,7 @@ const reducers = {
   loggingManager,
   ...menu,
   menuService,
+  myGousto,
   ...newsletter,
   ...onScreenRecovery,
   ...persist,

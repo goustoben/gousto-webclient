@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
 import Link from 'components/Link'
-import { userOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
+import { myGoustoOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
 import css from './PreviousOrder.css'
 
 const PreviousOrder = ({
@@ -65,7 +65,7 @@ const PreviousOrder = ({
 PreviousOrder.propTypes = {
   hasDeliveryToday: PropTypes.bool.isRequired,
   hasTooltip: PropTypes.bool.isRequired,
-  order: userOrderPropType.isRequired,
+  order: myGoustoOrderPropType.isRequired,
   trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
 }
 

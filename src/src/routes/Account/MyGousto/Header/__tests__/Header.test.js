@@ -21,7 +21,10 @@ jest.mock('../NextOrder', () => ({
 
 const deliveryDateFormat = 'YYYY-MM-DD HH:mm:ss'
 const ACCESS_TOKEN = 'shhhh-secret'
-const ORDER_101 = Immutable.fromJS({
+const USER_ID = '111122'
+const NEXT_ORDER_TRACKING = 'www.courier.com/order/asdf'
+
+const FUTURE_ORDER = Immutable.fromJS({
   deliveryDate: moment().add(2, 'days').format(deliveryDateFormat),
   humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
   phase: 'delivered', // Just for proptypes, Not used in these tests
@@ -35,158 +38,56 @@ const ORDER_101 = Immutable.fromJS({
   },
   id: '101',
 })
-const upcomingOrders = Immutable.fromJS({
-  100: {
-    deliveryDate: moment().add(10, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    prices: {
-      total: '25.25 (not used in these tests)',
-    },
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '100',
+
+const PAST_ORDER = Immutable.fromJS({
+  deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
+  humanDeliveryDate: 'Saturday 17th July  (not used in these tests)',
+  phase: 'delivered', // Just for proptypes, Not used in these tests
+  state: 'committed', // Just for proptypes, Not used in these tests
+  deliverySlot: {
+    deliveryEnd: '18:59:59',
+    deliveryStart: '08:00:00'
   },
-  101: ORDER_101,
-  102: {
-    deliveryDate: moment().add(5, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    prices: {
-      total: '25.25 (not used in these tests)',
-    },
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '102',
+  id: '109',
+  prices: {
+    total: '12'
   },
-})
-const previousOrders = Immutable.fromJS({
-  100: {
-    deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '100',
-    prices: {
-      total: '12'
-    },
-    recipeItems: []
-  },
-  101: {
-    deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '101',
-    prices: {
-      total: '12'
-    },
-    recipeItems: []
-  },
-  102: {
-    deliveryDate: moment().subtract(5, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '102',
-    prices: {
-      total: '15'
-    },
-    recipeItems: []
-  },
+  recipeItems: []
 })
 
-const orderForToday = Immutable.fromJS({
-  100: {
-    deliveryDate: moment().format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    prices: {
-      total: '25.25 (not used in these tests)',
-    },
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '100',
-  }
-})
-
-const previousOrdersWithOrderForToday = Immutable.fromJS({
-  123: {
-    deliveryDate: moment().subtract(10, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '123',
-    prices: {
-      total: '12'
-    },
-    recipeItems: []
+const ORDER_FOR_TODAY = Immutable.fromJS({
+  deliveryDate: moment().format(deliveryDateFormat),
+  humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
+  phase: 'delivered', // Just for proptypes, Not used in these tests
+  state: 'committed', // Just for proptypes, Not used in these tests
+  prices: {
+    total: '25.25 (not used in these tests)',
   },
-  124: {
-    deliveryDate: moment().subtract(2, 'days').format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '124',
-    prices: {
-      total: '12'
-    },
-    recipeItems: []
+  deliverySlot: {
+    deliveryEnd: '18:59:59',
+    deliveryStart: '08:00:00'
   },
-  125: {
-    deliveryDate: moment().format(deliveryDateFormat),
-    humanDeliveryDate: 'Saturday 17th July (not used in these tests)',
-    phase: 'delivered', // Just for proptypes, Not used in these tests
-    state: 'committed', // Just for proptypes, Not used in these tests
-    prices: {
-      total: '25.25 (not used in these tests)',
-    },
-    deliverySlot: {
-      deliveryEnd: '18:59:59',
-      deliveryStart: '08:00:00'
-    },
-    id: '125',
-  }
+  id: '100',
 })
 
 let wrapper
 let store
 const mockLoadOrderTrackingInfo = jest.fn()
+const loadNextProjectedOrder = jest.fn()
+const loadOrders = jest.fn()
 const initialState = {}
 const mockStore = configureStore([thunk])
 
 const ProviderComponent = (props) => (
   <Provider store={store}>
-    <Header {...props} />
+    <Header
+      accessToken={ACCESS_TOKEN}
+      isOrdersPending={false}
+      isProjectedDeliveriesPending={false}
+      loadNextProjectedOrder={loadNextProjectedOrder}
+      loadOrders={loadOrders}
+      {...props}
+    />
   </Provider>
 )
 
@@ -197,47 +98,108 @@ describe('MyGousto - Header', () => {
 
   beforeEach(() => {
     store = mockStore(initialState)
+    wrapper = mount(
+      <ProviderComponent
+        loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+        nextOrderTracking={NEXT_ORDER_TRACKING}
+      />
+    )
   })
 
-  describe('when no orders are passed in', () => {
+  test('calls loadOrders on mount', () => {
+    expect(loadOrders).toHaveBeenCalled()
+  })
+
+  describe('when userId is not available', () => {
+    test('it does not call loadNextProjectedOrder on component did mount', () => {
+      expect(loadNextProjectedOrder).not.toHaveBeenCalled()
+    })
+
+    describe('and userId becomes available', () => {
+      beforeEach(() => {
+        wrapper.setProps({ userId: USER_ID })
+      })
+
+      test('it does call loadNextProjectedOrder with userId on component did mount', () => {
+        expect(loadNextProjectedOrder).toHaveBeenCalledWith(USER_ID)
+      })
+    })
+  })
+
+  describe('when userId is available', () => {
     beforeEach(() => {
       wrapper = mount(
         <ProviderComponent
-          accessToken={ACCESS_TOKEN}
+          userId={USER_ID}
         />
       )
     })
 
-    test('should not render any messages', () => {
-      expect(wrapper.find('.headerText').length).toEqual(0)
+    test('it does call loadNextProjectedOrder with userId on component did mount', () => {
+      expect(loadNextProjectedOrder).toHaveBeenCalledWith(USER_ID)
     })
   })
 
-  describe('when a user has upcoming orders', () => {
-    const NEXT_ORDER_TRACKING = 'www.courier.com/order/asdf'
-
+  describe('when isOrdersPending is true', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <ProviderComponent
-          accessToken={ACCESS_TOKEN}
-          nextOrderTracking={NEXT_ORDER_TRACKING}
-        />
-      )
+      wrapper.setProps({ isOrdersPending: true })
+    })
 
+    test('renders Loading', () => {
+      expect(wrapper.find('Loading').exists()).toBe(true)
+    })
+
+    test('does not render other components', () => {
+      expect(wrapper.find('NextProjectedDelivery').exists()).toBe(false)
+      expect(wrapper.find('NoNextOrder').exists()).toBe(false)
+      expect(wrapper.find('PreviousOrderContainer').exists()).toBe(false)
+      expect(wrapper.find('NextOrderContainer').exists()).toBe(false)
+    })
+  })
+
+  describe('when isProjectedDeliveriesPending is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isProjectedDeliveriesPending: true })
+    })
+
+    test('renders Loading', () => {
+      expect(wrapper.find('Loading').exists()).toBe(true)
+    })
+
+    test('does not render other components', () => {
+      expect(wrapper.find('NextProjectedDelivery').exists()).toBe(false)
+      expect(wrapper.find('NoNextOrder').exists()).toBe(false)
+      expect(wrapper.find('PreviousOrderContainer').exists()).toBe(false)
+      expect(wrapper.find('NextOrderContainer').exists()).toBe(false)
+    })
+  })
+
+  describe('when both isOrdersPending and isProjectedDeliveriesPending are false', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isOrdersPending: false, isProjectedDeliveriesPending: false })
+    })
+
+    test('does not render Loading', () => {
+      expect(wrapper.find('Loading').exists()).toBe(false)
+    })
+  })
+
+  describe('when a user has a next order', () => {
+    beforeEach(() => {
       // Props changed so componentDidUpdate runs
-      wrapper.setProps({ orders: upcomingOrders })
+      wrapper.setProps({ nextOrder: FUTURE_ORDER })
     })
 
     test('should render the NextOrder component with the right props', () => {
       const nextOrder = wrapper.find('NextOrderContainer')
       expect(nextOrder.prop('boxTrackingUrl')).toBe(NEXT_ORDER_TRACKING)
-      expect(nextOrder.prop('order')).toBe(ORDER_101)
+      expect(nextOrder.prop('order')).toBe(FUTURE_ORDER)
     })
 
     test('GetHelp API shouldShowEntryPointTooltip is called with the right parameters', () => {
       expect(shouldShowEntryPointTooltip).toHaveBeenCalledWith(
         ACCESS_TOKEN,
-        upcomingOrders.getIn(['101', 'deliveryDate'])
+        FUTURE_ORDER.get('deliveryDate')
       )
     })
 
@@ -249,19 +211,16 @@ describe('MyGousto - Header', () => {
           throw ERROR
         })
         logger.warning = jest.fn()
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
+        // Mount again so the mock implementation is picked up
+        wrapper = mount(<ProviderComponent />)
 
         // Props changed so componentDidUpdate runs
-        wrapper.setProps({ orders: upcomingOrders })
+        wrapper.setProps({ nextOrder: FUTURE_ORDER })
       })
 
       test('a warning is logged', () => {
         expect(logger.warning.mock.calls[0]).toEqual([
-          `API call to shouldShowEntryPointTooltip for order with date ${upcomingOrders.getIn(['101', 'deliveryDate'])} thrown an error`,
+          `API call to shouldShowEntryPointTooltip for order with date ${FUTURE_ORDER.get('deliveryDate')} thrown an error`,
           ERROR,
         ])
       })
@@ -273,14 +232,11 @@ describe('MyGousto - Header', () => {
           data: { day: 'same_day_evening' }
         })
 
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
+        // Mount again so the mock implementation is picked up
+        wrapper = mount(<ProviderComponent />)
 
         // Props changed so componentDidUpdate runs
-        wrapper.setProps({ orders: orderForToday })
+        wrapper.setProps({ nextOrder: ORDER_FOR_TODAY })
       })
 
       test('shows a tooltip pointing to the Get Help link', () => {
@@ -295,14 +251,11 @@ describe('MyGousto - Header', () => {
           data: { day: 'no' }
         })
 
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
+        // Mount again so the mock implementation is picked up
+        wrapper = mount(<ProviderComponent />)
 
         // Props changed so componentDidUpdate runs
-        wrapper.setProps({ orders: orderForToday })
+        wrapper.setProps({ nextOrder: ORDER_FOR_TODAY })
       })
 
       test('does not show any tooltip', () => {
@@ -313,12 +266,7 @@ describe('MyGousto - Header', () => {
 
     describe('and the next order is not for today', () => {
       beforeEach(() => {
-        wrapper = mount(
-          <Header
-            accessToken={ACCESS_TOKEN}
-            orders={upcomingOrders}
-          />
-        )
+        wrapper.setProps({ nextOrder: FUTURE_ORDER })
       })
 
       test('it passes hasDeliveryToday to NextOrder as false', () => {
@@ -328,12 +276,7 @@ describe('MyGousto - Header', () => {
 
     describe('and the next order is today', () => {
       beforeEach(() => {
-        wrapper = mount(
-          <Header
-            accessToken={ACCESS_TOKEN}
-            orders={orderForToday}
-          />
-        )
+        wrapper.setProps({ nextOrder: ORDER_FOR_TODAY })
       })
 
       test('it passes hasDeliveryToday to NextOrder as true', () => {
@@ -344,36 +287,47 @@ describe('MyGousto - Header', () => {
 
   describe('when a user has no upcoming orders', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <ProviderComponent
-          accessToken={ACCESS_TOKEN}
-          orders={previousOrders}
-        />
-      )
+      wrapper.setProps({ nextOrder: null })
     })
 
-    test('should render the NoNextOrder component without any props', () => {
-      expect(wrapper.find('NoNextOrder')).toHaveLength(1)
+    describe('and it has projected deliveries', () => {
+      const NEXT_PROJECTED_DELIVERY_DATE = '2021-08-03'
+
+      beforeEach(() => {
+        wrapper.setProps({
+          nextProjectedOrder: {
+            deliveryDate: NEXT_PROJECTED_DELIVERY_DATE,
+            skipped: false,
+            menuOpenDate: '2021-07-20T12:00:00.000Z'
+          }
+        })
+      })
+
+      test('renders NextProjectedDelivery with the right date', () => {
+        expect(wrapper.find('NextProjectedDelivery').prop('deliveryDate'))
+          .toBe(NEXT_PROJECTED_DELIVERY_DATE)
+      })
+    })
+
+    describe('and it has no projected deliveries', () => {
+      beforeEach(() => {
+        wrapper.setProps({ nextProjectedOrder: null })
+      })
+
+      test('should render the NoNextOrder component without any props', () => {
+        expect(wrapper.find('NoNextOrder')).toHaveLength(1)
+      })
     })
   })
 
   describe('when a user has previously delivered orders', () => {
     beforeEach(() => {
-      wrapper = mount(
-        <ProviderComponent
-          accessToken={ACCESS_TOKEN}
-          orders={previousOrders}
-        />
-      )
+      wrapper.setProps({ previousOrder: PAST_ORDER })
     })
 
     test('should render the PreviousOrder component with the order passed as a prop', () => {
       const previousOrder = wrapper.find('PreviousOrder')
-      expect(previousOrder.prop('order')).toBe(previousOrders.get('101'))
-    })
-
-    test('should pass hasDeliveryToday to PreviousOrder as false', () => {
-      expect(wrapper.find('PreviousOrder').prop('hasDeliveryToday')).toBe(false)
+      expect(previousOrder.prop('order')).toBe(PAST_ORDER)
     })
 
     describe('and the call to GetHelp API shouldShowEntryPointTooltip errors', () => {
@@ -384,19 +338,16 @@ describe('MyGousto - Header', () => {
           throw ERROR
         })
         logger.warning = jest.fn()
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
+        // Mount again so the mock implementation is picked up
+        wrapper = mount(<ProviderComponent />)
 
         // Props changed so componentDidUpdate runs
-        wrapper.setProps({ orders: previousOrders })
+        wrapper.setProps({ previousOrder: PAST_ORDER })
       })
 
       test('a warning is logged', () => {
         expect(logger.warning.mock.calls[0]).toEqual([
-          `API call to shouldShowEntryPointTooltip for order with date ${previousOrders.getIn(['101', 'deliveryDate'])} thrown an error`,
+          `API call to shouldShowEntryPointTooltip for order with date ${PAST_ORDER.get('deliveryDate')} thrown an error`,
           ERROR,
         ])
       })
@@ -408,14 +359,11 @@ describe('MyGousto - Header', () => {
           data: { day: 'yesterday' }
         })
 
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
+        // Mount again so the mock implementation is picked up
+        wrapper = mount(<ProviderComponent />)
 
         // Props changed so componentDidUpdate runs
-        wrapper.setProps({ orders: previousOrders })
+        wrapper.setProps({ previousOrder: PAST_ORDER })
       })
 
       test('sets hasTooltip to true in PreviousOrder', () => {
@@ -430,14 +378,11 @@ describe('MyGousto - Header', () => {
           data: { day: 'no' }
         })
 
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
+        // Mount again so the mock implementation is picked up
+        wrapper = mount(<ProviderComponent />)
 
         // Props changed so componentDidUpdate runs
-        wrapper.setProps({ orders: previousOrders })
+        wrapper.setProps({ previousOrder: PAST_ORDER })
       })
 
       test('sets hasTooltip to false in PreviousOrder', () => {
@@ -448,47 +393,40 @@ describe('MyGousto - Header', () => {
 
     describe('and the next order is for today', () => {
       beforeEach(() => {
-        wrapper = mount(
-          <ProviderComponent
-            accessToken={ACCESS_TOKEN}
-          />
-        )
-
-        wrapper.setProps({ orders: previousOrdersWithOrderForToday })
+        wrapper.setProps({ nextOrder: ORDER_FOR_TODAY })
       })
 
       test('should pass hasDeliveryToday to PreviousOrder as true', () => {
         expect(wrapper.find('PreviousOrder').prop('hasDeliveryToday')).toBe(true)
       })
     })
+
+    describe('and the next order is not for today', () => {
+      beforeEach(() => {
+        wrapper.setProps({ nextOrder: FUTURE_ORDER })
+      })
+
+      test('should pass hasDeliveryToday to PreviousOrder as false', () => {
+        expect(wrapper.find('PreviousOrder').prop('hasDeliveryToday')).toBe(false)
+      })
+    })
   })
 
   describe('when a user has no previously delivered orders', () => {
+    beforeEach(() => {
+      wrapper.setProps({ previousOrder: null })
+    })
+
     test('does not show details of previous deliveries', () => {
-      wrapper = mount(
-        <ProviderComponent
-          accessToken={ACCESS_TOKEN}
-          orders={upcomingOrders}
-        />
-      )
       expect(wrapper.find('PreviousOrder').exists()).toBe(false)
     })
   })
 
   describe('fetching the tracking URL for an order', () => {
-    beforeEach(() => {
-      wrapper = mount(
-        <ProviderComponent
-          accessToken={ACCESS_TOKEN}
-          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
-        />
-      )
-    })
-
     describe('when the user has an upcoming order', () => {
       describe('and the order is due to be delivered today', () => {
         test('fetches the tracking URL for the next order', () => {
-          wrapper.setProps({ orders: orderForToday })
+          wrapper.setProps({ nextOrder: ORDER_FOR_TODAY })
           expect(mockLoadOrderTrackingInfo).toHaveBeenCalledTimes(1)
           expect(mockLoadOrderTrackingInfo).toHaveBeenCalledWith('100')
         })
@@ -496,7 +434,7 @@ describe('MyGousto - Header', () => {
 
       describe('and the order is not due to be delivered today', () => {
         test('does not try to fetch the tracking URL for any orders', () => {
-          wrapper.setProps({ orders: upcomingOrders })
+          wrapper.setProps({ nextOrder: FUTURE_ORDER })
           expect(mockLoadOrderTrackingInfo).toHaveBeenCalledTimes(0)
         })
       })
@@ -504,7 +442,7 @@ describe('MyGousto - Header', () => {
 
     describe('when the user has no upcoming orders', () => {
       test('does not try to fetch the tracking URL for any orders', () => {
-        wrapper.setProps({ orders: previousOrders })
+        wrapper.setProps({ nextOrder: null })
         expect(mockLoadOrderTrackingInfo).toHaveBeenCalledTimes(0)
       })
     })

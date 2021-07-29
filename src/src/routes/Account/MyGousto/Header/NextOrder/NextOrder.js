@@ -4,7 +4,7 @@ import { Card, CTA, Heading, InfoTip, OrderDetails } from 'goustouicomponents'
 import Link from 'components/Link'
 import configRoutes from 'config/routes'
 import { windowOpen } from 'utils/window'
-import { userOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
+import { myGoustoOrderPropType } from '../../../../GetHelp/getHelpPropTypes'
 import { getClientOrderState } from '../../../../GetHelp/utils/orders'
 
 import css from './NextOrder.css'
@@ -113,7 +113,7 @@ NextOrder.propTypes = {
   boxTrackingUrl: PropTypes.string,
   hasDeliveryToday: PropTypes.bool.isRequired,
   hasTooltip: PropTypes.bool.isRequired,
-  order: userOrderPropType.isRequired,
+  order: myGoustoOrderPropType.isRequired,
   trackNextBoxTrackingClick: PropTypes.func.isRequired,
   trackClickGetHelpWithThisBox: PropTypes.func.isRequired,
 }

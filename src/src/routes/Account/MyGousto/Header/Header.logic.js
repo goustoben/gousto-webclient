@@ -1,53 +1,63 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import logger from 'utils/logger'
 import { shouldShowEntryPointTooltip } from 'apis/getHelp'
-import {
-  findNewestOrder,
-  isOrderBeingDeliveredToday,
-} from 'utils/order'
-import { userOrderPropType } from '../../../GetHelp/getHelpPropTypes'
+import { isOrderBeingDeliveredToday } from 'utils/order'
+import { myGoustoOrderPropType } from '../../../GetHelp/getHelpPropTypes'
 import { HeaderPresentation } from './Header.presentation'
-
 class Header extends PureComponent {
   constructor(props) {
     super(props)
     this.state = { hasTooltipForNextOrder: false, hasTooltipForPreviousOrder: false }
   }
 
+  componentDidMount() {
+    const { loadNextProjectedOrder, loadOrders, userId } = this.props
+
+    loadOrders()
+
+    if (userId) {
+      loadNextProjectedOrder(userId)
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    const { orders, loadOrderTrackingInfo } = this.props
-    if (prevProps.orders.size !== orders.size) {
-      const previousOrder = findNewestOrder(orders, false)
-      const nextOrder = findNewestOrder(orders, true)
+    const {
+      loadNextProjectedOrder,
+      loadOrderTrackingInfo,
+      nextOrder,
+      previousOrder,
+      userId
+    } = this.props
 
-      if (previousOrder) {
-        this.checkShouldShowTooltip({
-          orderDate: previousOrder.get('deliveryDate'),
-          targetTime: 'yesterday',
-        }).then(orderHasTooltip => {
-          if (orderHasTooltip && !prevState.hasTooltipForPreviousOrder) {
-            this.setState({ hasTooltipForPreviousOrder: true })
-          }
-        })
-      }
+    if (userId && !prevProps.userId) {
+      loadNextProjectedOrder(userId)
+    }
 
-      if (nextOrder) {
-        if (isOrderBeingDeliveredToday(nextOrder.get('deliveryDate'))) {
-          loadOrderTrackingInfo(nextOrder.get('id'))
+    if (prevProps.previousOrder !== previousOrder) {
+      this.checkShouldShowTooltip({
+        orderDate: previousOrder.get('deliveryDate'),
+        targetTime: 'yesterday',
+      }).then(orderHasTooltip => {
+        if (orderHasTooltip && !prevState.hasTooltipForPreviousOrder) {
+          this.setState({ hasTooltipForPreviousOrder: true })
         }
+      })
+    }
 
-        this.checkShouldShowTooltip({
-          orderDate: nextOrder.get('deliveryDate'),
-          targetTime: 'same_day_evening',
-        }).then(orderHasTooltip => {
-          if (orderHasTooltip && !prevState.hasTooltipForNextOrder) {
-            this.setState({ hasTooltipForNextOrder: true })
-          }
-        })
+    if (prevProps.nextOrder !== nextOrder) {
+      if (isOrderBeingDeliveredToday(nextOrder.get('deliveryDate'))) {
+        loadOrderTrackingInfo(nextOrder.get('id'))
       }
+
+      this.checkShouldShowTooltip({
+        orderDate: nextOrder.get('deliveryDate'),
+        targetTime: 'same_day_evening',
+      }).then(orderHasTooltip => {
+        if (orderHasTooltip && !prevState.hasTooltipForNextOrder) {
+          this.setState({ hasTooltipForNextOrder: true })
+        }
+      })
     }
   }
 
@@ -75,8 +85,12 @@ class Header extends PureComponent {
 
   render() {
     const {
-      orders,
+      isOrdersPending,
+      isProjectedDeliveriesPending,
+      nextOrder,
+      nextProjectedOrder,
       nextOrderTracking,
+      previousOrder,
       showSubscriberPricingBanner,
       subscriptionStatus,
     } = this.props
@@ -84,45 +98,53 @@ class Header extends PureComponent {
       hasTooltipForNextOrder,
       hasTooltipForPreviousOrder
     } = this.state
-    const nextOrder = findNewestOrder(orders, true)
-    const previousOrder = findNewestOrder(orders, false)
-    const loaded = nextOrder || previousOrder
-    const hasDeliveryToday = nextOrder && isOrderBeingDeliveredToday(nextOrder.get('deliveryDate'))
+    const isLoading = isOrdersPending || isProjectedDeliveriesPending
+    const hasDeliveryToday = !!(nextOrder && isOrderBeingDeliveredToday(nextOrder.get('deliveryDate')))
 
     return (
-      (loaded)
-        ? (
-          <HeaderPresentation
-            hasDeliveryToday={hasDeliveryToday}
-            nextOrder={nextOrder}
-            hasTooltipForNextOrder={hasTooltipForNextOrder}
-            nextOrderTracking={nextOrderTracking}
-            hasTooltipForPreviousOrder={hasTooltipForPreviousOrder}
-            previousOrder={previousOrder}
-            showSubscriberPricingBanner={showSubscriberPricingBanner}
-            subscriptionStatus={subscriptionStatus}
-          />
-        )
-        : null
+      <HeaderPresentation
+        nextProjectedOrder={nextProjectedOrder}
+        hasDeliveryToday={hasDeliveryToday}
+        isLoading={isLoading}
+        nextOrder={nextOrder}
+        hasTooltipForNextOrder={hasTooltipForNextOrder}
+        nextOrderTracking={nextOrderTracking}
+        hasTooltipForPreviousOrder={hasTooltipForPreviousOrder}
+        previousOrder={previousOrder}
+        showSubscriberPricingBanner={showSubscriberPricingBanner}
+        subscriptionStatus={subscriptionStatus}
+      />
     )
   }
 }
 
 Header.propTypes = {
   accessToken: PropTypes.string.isRequired,
+  isOrdersPending: PropTypes.bool.isRequired,
+  isProjectedDeliveriesPending: PropTypes.bool.isRequired,
+  loadNextProjectedOrder: PropTypes.func.isRequired,
+  loadOrders: PropTypes.func.isRequired,
   loadOrderTrackingInfo: PropTypes.func,
+  nextOrder: myGoustoOrderPropType,
   nextOrderTracking: PropTypes.string,
-  orders: ImmutablePropTypes.mapOf(userOrderPropType),
+  nextProjectedOrder: PropTypes.shape({
+    deliveryDate: PropTypes.string.isRequired,
+  }),
+  previousOrder: myGoustoOrderPropType,
   showSubscriberPricingBanner: PropTypes.bool,
   subscriptionStatus: PropTypes.string,
+  userId: PropTypes.string,
 }
 
 Header.defaultProps = {
+  nextOrder: null,
   loadOrderTrackingInfo: () => {},
   nextOrderTracking: null,
-  orders: Immutable.Map({}),
+  nextProjectedOrder: null,
+  previousOrder: null,
   showSubscriberPricingBanner: false,
   subscriptionStatus: 'inactive',
+  userId: null,
 }
 
 export { Header }

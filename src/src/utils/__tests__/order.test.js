@@ -250,8 +250,8 @@ describe('order utils', () => {
           order = findNewestOrder(pastOrder, true)
         })
 
-        test('returns undefined', () => {
-          expect(order).toEqual(undefined)
+        test('returns null', () => {
+          expect(order).toEqual(null)
         })
       })
 

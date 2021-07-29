@@ -150,7 +150,7 @@ class MyGousto extends React.PureComponent {
           </div>
         </div>
         <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>
-          <HeaderContainer orders={orders} />
+          <HeaderContainer />
         </Section>
         <Section title="Your recent recipes" alternateColour>
           {rateRecipeCount && rateRecipeCount > 0 ? (
