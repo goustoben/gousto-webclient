@@ -17,12 +17,13 @@ jobs:
   max-jest:
     docker: *gousto_build_image
     working_directory: ~/project/src
-    parallelism: 5
+    parallelism: 3
     steps:
       - attach_workspace:
           at: ~/
       - run:
           name: Run split tests
+          # This can be split across steps, just experimenting atm
           command: |
             circleci tests glob **/__tests__/**/*.test.js | circleci tests split > /tests-to-run &&
             yarn test:jest:ci:coverage $(cat /tests-to-run) &&
@@ -34,8 +35,8 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - coverage/coverage-summary-*.json
-            - coverage/tests-to-run-*
+            - project/src/coverage/coverage-summary-*.json
+            - project/src/coverage/tests-to-run-*
 
   test-isomorphic-jest:
     docker: *gousto_build_image
