@@ -39,7 +39,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,

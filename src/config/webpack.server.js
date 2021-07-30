@@ -53,7 +53,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /^(?!.*(test\.js|spec\.js)).*\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
