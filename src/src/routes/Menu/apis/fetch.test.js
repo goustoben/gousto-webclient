@@ -1,7 +1,14 @@
 import isomorphicFetch from 'isomorphic-fetch'
+import * as cookieHelper2 from 'utils/cookieHelper2'
 import { get, post } from './fetch'
 
 jest.mock('isomorphic-fetch', () => jest.fn())
+
+jest.spyOn(cookieHelper2, 'get').mockImplementation((_cookies, key, withVersionPrefix, shouldDecode) => {
+  if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
+    return 'session-id'
+  }
+})
 
 const setMockFetchResult = (data, status = 200) => (
   isomorphicFetch.mockResolvedValue({

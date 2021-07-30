@@ -1,4 +1,6 @@
+/* global fetchMock */
 import { renderHook } from '@testing-library/react-hooks'
+import { enableMocks } from 'jest-fetch-mock'
 import { useFetch } from '../useFetch'
 
 describe('useFetch', () => {
@@ -12,7 +14,13 @@ describe('useFetch', () => {
   }
 
   beforeEach(() => {
+    enableMocks()
+    fetchMock.doMock()
     global.fetch.resetMocks()
+  })
+
+  afterEach(() => {
+    fetchMock.dontMock()
   })
 
   describe('when performing a request', () => {

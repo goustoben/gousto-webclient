@@ -1,4 +1,7 @@
 {
+    "meta": {
+        "max_products_per_box": 10
+    },
     "data": [],
     "includes": []
 }

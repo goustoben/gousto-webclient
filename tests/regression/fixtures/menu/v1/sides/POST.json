@@ -1,4 +1,7 @@
 {
+    "meta": {
+        "max_products_per_box": 10
+    },
     "data": [
         {
             "id": "012d8f6a-609e-11eb-913f-06a5bb631817",

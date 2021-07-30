@@ -1,22 +1,20 @@
 import React from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import fixture from 'fixtures/menu/v1/sides/POST.json'
 import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-library/react'
-import * as sidesApis from 'routes/Menu/apis/sides'
+import { user } from 'routes/Menu/apis/sides.hook.mock'
+import Modal from 'react-modal'
 import { SidesModal } from './SidesModal'
+
+Modal.setAppElement(document.body)
 
 describe('<SideModal />', () => {
   const accessToken = 'access-token'
-  const userId = 'user-id'
   const order = { id: '1234', type: 'order ' }
 
-  const sides = fixture.data
+  let userId
   let onSubmit
   let isOpen
   let onClose
   let onError
-
-  const getSidesForOrder = jest.spyOn(sidesApis, 'getSidesForOrder')
 
   beforeEach(() => {
     onSubmit = jest.fn()
@@ -30,17 +28,43 @@ describe('<SideModal />', () => {
   describe('with an unsuccessful request', () => {
     beforeEach(() => {
       isOpen = true
-      getSidesForOrder.mockResolvedValue([null, { message: 'internal server error' }, 500])
+      userId = user.withError
     })
 
     it('should call onError', async () => {
-      render(<SidesModal accessToken={accessToken} userId={userId} order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} onError={onError} />)
+      render(
+        <SidesModal
+          accessToken={accessToken}
+          userId={userId}
+          order={order}
+          onSubmit={onSubmit}
+          isOpen={isOpen}
+          onClose={onClose}
+          onError={onError}
+        />
+      )
 
-      await waitFor(() => expect(onError).toHaveBeenCalledWith({ message: 'internal server error' }))
+      await waitFor(() => expect(onError).toHaveBeenCalled())
+
+      expect(onError).toHaveBeenCalledWith(
+        new Error('Fetch error: 500'),
+        expect.stringContaining('/menu/v1/side'),
+        expect.objectContaining({})
+      )
     })
 
     it('should not render', async () => {
-      render(<SidesModal accessToken={accessToken} userId={userId} order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} onError={onError} />)
+      render(
+        <SidesModal
+          accessToken={accessToken}
+          userId={userId}
+          order={order}
+          onSubmit={onSubmit}
+          isOpen={isOpen}
+          onClose={onClose}
+          onError={onError}
+        />
+      )
 
       // wait for the onError to be called when the request failed, before checking that nothing is rendered
       await waitFor(() => expect(onError).toHaveBeenCalled())
@@ -51,7 +75,7 @@ describe('<SideModal />', () => {
 
   describe('with a successful request', () => {
     beforeEach(() => {
-      getSidesForOrder.mockResolvedValue([sides, null, 200])
+      userId = user.withSides
     })
 
     describe('when closed', () => {
@@ -60,23 +84,30 @@ describe('<SideModal />', () => {
       })
 
       it('should not render', () => {
-        render(<SidesModal accessToken={accessToken} userId={userId} order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} onError={onError} />)
+        render(
+          <SidesModal
+            accessToken={accessToken}
+            userId={userId}
+            order={order}
+            onSubmit={onSubmit}
+            isOpen={isOpen}
+            onClose={onClose}
+            onError={onError}
+          />
+        )
 
         expect(screen.queryByRole('heading')).not.toBeInTheDocument()
-      })
-
-      it('should not call getSidesForOrder', async () => {
-        render(<SidesModal accessToken={accessToken} userId={userId} order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} onError={onError} />)
-
-        expect(getSidesForOrder).not.toHaveBeenCalled()
       })
     })
 
     describe('when open', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         isOpen = true
 
         render(<SidesModal accessToken={accessToken} userId={userId} order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} onError={onError} />)
+
+        // Wait for sides to load
+        await waitFor(() => screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }))
       })
 
       const getSideTileFromHeader = (headerTitle) => {
@@ -90,16 +121,7 @@ describe('<SideModal />', () => {
 
       const getWrappedSideTileFromHeader = (headerTitle) => within(getSideTileFromHeader(headerTitle))
 
-      it('should call getSidesForOrder with correct params', async () => {
-        render(<SidesModal accessToken={accessToken} userId={userId} order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} onError={onError} />)
-
-        await waitFor(() => screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }))
-
-        expect(getSidesForOrder).toHaveBeenCalledWith(accessToken, order, userId)
-      })
-
-      it('should render the sides tiles', () => {
-        expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument()
+      it('should render the sides tiles', async () => {
         expect(screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 })).not.toBeInTheDocument()
 
         // First Side
@@ -128,8 +150,6 @@ describe('<SideModal />', () => {
 
       describe('when user clicks show allergens', () => {
         it('should render the sides allergens and nutrition information', async () => {
-          expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument()
-
           // Show Allergens
           const button = screen.getByRole('button', { name: 'Show Allergens and Nutrition' })
           fireEvent.click(button)

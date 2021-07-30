@@ -1,10 +1,14 @@
 import qs from 'qs'
 import isomorphicFetch from 'isomorphic-fetch'
+import Cookies from 'utils/GoustoCookies'
+import { get as getFromCookie } from 'utils/cookieHelper2'
+
+const getSessionId = () => getFromCookie(Cookies, 'gousto_session_id', false, false)
 
 const getAuthorizationHeader = (accessToken) => (accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
 
-const getHeadersToSend = (accessToken, sessionId, userId, customHeaders = {}) => ({
-  'x-gousto-device-id': sessionId,
+const getHeadersToSend = (accessToken, userId, customHeaders = {}) => ({
+  'x-gousto-device-id': getSessionId(),
   'x-gousto-user-id': userId,
   ...getAuthorizationHeader(accessToken),
   'Content-Type': 'application/json',
@@ -15,7 +19,7 @@ const getHeadersToSend = (accessToken, sessionId, userId, customHeaders = {}) =>
  * Make an HTTP request
  *
  * @param {string} method - an HTTP request method. see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods}
- * @param {{ accessToken: string, sessionId: string, userId: string}} authOptions - authentication options
+ * @param {{ accessToken: string, userId: string}} authOptions - authentication options
  * @param {string} url - the request URL
  * @param {Object} [data] - request data; put into the querystring of a GET request, otherwise in the body
  * @param {Object} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link authOptions}
@@ -29,7 +33,6 @@ const fetch = async (
   method,
   {
     accessToken,
-    sessionId,
     userId
   },
   url,
@@ -40,7 +43,7 @@ const fetch = async (
 
   const request = {
     method: method.toUpperCase(),
-    headers: getHeadersToSend(accessToken, sessionId, userId, headers)
+    headers: getHeadersToSend(accessToken, userId, headers)
   }
 
   if (data) {
@@ -69,7 +72,7 @@ const fetch = async (
 /**
  * Make a GET request.
  *
- * @param {{ accessToken: string, sessionId: string, userId: string}} auth - authentication options
+ * @param {{ accessToken: string, userId: string}} auth - authentication options
  * @param {string} url - the request URL
  * @param {{}} [data] - request data; put into the querystring of a GET request, otherwise in the body
  * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
@@ -82,9 +85,34 @@ export const get = (auth, url, data, headers) => fetch('GET', auth, url, data, h
 /**
  * Make a POST request.
  *
- * @param {{ accessToken: string, sessionId: string, userId: string}} auth - authentication options
+ * @param {{ accessToken: string, userId: string}} auth - authentication options
  * @param {string} url - the request URL
  * @param {{}} [data] - request data; put into the querystring of a GET request, otherwise in the body
  * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
  */
-export const post = (auth, url, data, headers) => fetch('POST', auth, url, data, headers)
+export const post = async (auth, url, data, headers) => fetch('POST', auth, url, data, headers)
+
+/**
+ * Make a POST request. We required a flat version of `post` to support SWR.
+ *
+ * @param {string} url - the request URL
+ * @param {{}} [data] - request data; put into the querystring of a GET request, otherwise in the body]
+ * @param {string} accessToken - access token to be added to the headers to be sent with the request, combined with the authentication headers created from {@link auth}
+ * @param {string} userId - user ID to be added to the headers to be sent with the request
+ * @param {{}} [headers] - headers to be sent with the request, combined with the authentication headers created from {@link auth}
+ */
+class HTTPError extends Error {}
+
+export const postFetcher = async (url, data, accessToken, userId, headers) => {
+  const [response, requestError, statusCode] = await post({ accessToken, userId }, url, data, headers)
+
+  if (requestError) {
+    const error = new HTTPError(`Fetch error: ${statusCode}`)
+    // Attach extra info to the error object.
+    error.info = requestError
+    error.status = statusCode
+    throw error
+  }
+
+  return response
+}

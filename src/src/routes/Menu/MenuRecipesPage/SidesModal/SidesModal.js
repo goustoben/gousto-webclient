@@ -11,7 +11,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import { SubIngredients } from '../../Recipe/Detail/SubIngredients/SubIngredients'
 import css from './SidesModal.css'
 import { SidePropType } from './SidesPropTypes'
-import { useSides, useSidesBasket } from './SidesModal.hooks'
+import { useSidesBasket } from './SidesModal.hooks'
 
 const SidesContentFooter = ({
   toggleShowAllergenAndNutrition,
@@ -156,21 +156,22 @@ export const SidesModal = ({
   order,
   isOpen,
   onClose,
-  onSubmit: modalOnSubmit,
+  onSubmit: onSubmitCallback,
   onError
 }) => {
-  const sides = useSides(onError, accessToken, userId, order, isOpen)
   const {
+    sides,
     onSubmit,
     addSide,
     removeSide,
     getQuantityForSide,
     total,
-  } = useSidesBasket(sides, modalOnSubmit)
+  } = useSidesBasket(accessToken, userId, order, onSubmitCallback, onError)
+  const hasSides = Boolean(sides.length)
   const [showAllergenAndNutrition, setShowAllergenAndNutrition] = React.useState(false)
   const toggleShowAllergenAndNutrition = () => setShowAllergenAndNutrition(!showAllergenAndNutrition)
 
-  if (sides === null) {
+  if (!hasSides) {
     return null
   }
 

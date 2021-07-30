@@ -1,15 +1,15 @@
 // setup file
-import fs from "fs";
-import JSON5 from "json5"
 import '@testing-library/jest-dom/extend-expect'
 import MutationObserver from '@sheerun/mutationobserver-shim'
+// Endpoints need to be setup before MSW
+import './.setupEndpoints.js'
+import { cache } from "swr"
+import { server } from "./.msw"
 
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
 
 import Modal from 'react-modal'
-
-require('jest-fetch-mock').enableMocks()
 
 global.MutationObserver = global.MutationObserver || MutationObserver
 
@@ -43,5 +43,21 @@ jest
   .spyOn(Modal, "setAppElement")
   .mockImplementation(() => {});
 
-const config = JSON5.parse(fs.readFileSync('config/default.json5'))
-global.__ENDPOINTS__ = config.endpoints
+// This clears the cache of swr after each test
+afterAll(() => cache.clear())
+
+// Establish API mocking before all tests.
+beforeAll(() => {
+  server.listen()
+})
+
+// Reset any request handlers that we may add during the tests,
+// so they don't affect other tests.
+afterEach(() => {
+  // If you need logging of the requests, uncomment the following line.
+  // server.printHandlers()
+  server.resetHandlers()
+})
+
+// Clean up after the tests are finished.
+afterAll(() => server.close())
