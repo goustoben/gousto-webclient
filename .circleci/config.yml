@@ -308,6 +308,8 @@ workflows:
                 - mh-unit-tests-split
       - max-jest:
           context: gousto-beta-aws-app-circleci
+          requires:
+              - setup-src
           filters:
             branches:
               only:
