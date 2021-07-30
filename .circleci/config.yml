@@ -27,9 +27,9 @@ jobs:
             TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
             yarn test:jest:ci:coverage $TEST
       - persist_to_workspace:
-          root: ~/
+          root: ~/$CIRCLE_NODE_INDEX/
           paths:
-            - coverage/coverage-summary-$CIRCLE_NODE_INDEX.json
+            - coverage/coverage-summary.json
 
   test-isomorphic-jest:
     docker: *gousto_build_image
