@@ -25,11 +25,15 @@ jobs:
           name: Run split tests
           command: |
             TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
-            yarn test:jest:ci:coverage $TEST
+            yarn test:jest:ci:coverage $TEST && mv coverage/coverage-summary.json coverage/coverage-summary-$CIRCLE_NODE_INDEX.json && cp /tmp/tests-to-run coverage/tests-to-run-$CIRCLE_NODE_INDEX
+      - run:
+          name: Echo out files to persist to workspace
+          command: ls -l coverage
       - persist_to_workspace:
-          root: ~/$CIRCLE_NODE_INDEX/
+          root: ~/
           paths:
-            - coverage/coverage-summary.json
+            - coverage/coverage-summary-*.json
+            - coverage/tests-to-run-*
 
   test-isomorphic-jest:
     docker: *gousto_build_image
@@ -313,23 +317,23 @@ workflows:
             branches:
               only:
                 - mh-unit-tests-split
-      - eslint-generate-report:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - mh-unit-tests-split
-          requires:
-            - setup-src
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - mh-unit-tests-split
-          requires:
-            - max-jest
-            - eslint-generate-report
+      # - eslint-generate-report:
+      #     context: gousto-beta-aws-app-circleci
+      #     filters:
+      #       branches:
+      #         only:
+      #           - mh-unit-tests-split
+      #     requires:
+      #       - setup-src
+      # - publish-code-health:
+      #     context: gousto-beta-aws-app-circleci
+      #     filters:
+      #       branches:
+      #         only:
+      #           - mh-unit-tests-split
+      #     requires:
+      #       - max-jest
+      #       - eslint-generate-report
 
   e2e-manual:
     jobs:
