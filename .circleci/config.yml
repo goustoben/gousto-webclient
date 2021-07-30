@@ -25,12 +25,13 @@ jobs:
           name: Run split tests
           command: |
             TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
-            yarn test:jest:ci $TEST
+            yarn test:jest:ci:coverage $TEST
       - persist_to_workspace:
           root: ~/
           paths:
             - project
             - .circlerc
+            - project/src/coverage/coverage-summary.json
 
   test-isomorphic-jest:
     docker: *gousto_build_image
