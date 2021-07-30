@@ -46,7 +46,7 @@ jobs:
           at: ~/
       - run:
           name: Lease access to environment
-          command: gousto env sglease $ENVIRONMENT -t 30
+          command: gousto env sglease staging -t 30 # Hard coded to staging for now
           environment:
             AWS_ACCESS_KEY_ID: $BETA_AWS_ACCESS_KEY_ID
             AWS_SECRET_ACCESS_KEY: $BETA_AWS_SECRET_ACCESS_KEY
