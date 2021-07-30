@@ -26,9 +26,10 @@ jobs:
           command: |
             TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
             yarn test:jest:ci:coverage $TEST
-      - store_artifacts:
-          path: coverage/coverage-summary.json
-          destination: coverage-summary.json
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - coverage/coverage-summary-$CIRCLE_NODE_INDEX.json
 
   test-isomorphic-jest:
     docker: *gousto_build_image
@@ -84,12 +85,12 @@ jobs:
           at: ~/
       - run:
           name: Setup output folder
-          command: mkdir /tmp/artifacts
+          command: mkdir /test/artifacts # Modified to not affect real coverage
       - run:
           name: Generate code health
           command: cd src && node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
-          path: /tmp/artifacts
+          path: /test/artifacts
 
   # This looks like it's performed too many times
   setup-src:
@@ -312,6 +313,23 @@ workflows:
             branches:
               only:
                 - mh-unit-tests-split
+      - eslint-generate-report:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - mh-unit-tests-split
+          requires:
+            - setup-src
+      - publish-code-health:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - mh-unit-tests-split
+          requires:
+            - max-jest
+            - eslint-generate-report
 
   e2e-manual:
     jobs:
