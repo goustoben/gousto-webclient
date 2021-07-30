@@ -14,6 +14,24 @@ gousto_platform_image: &gousto_platform_image
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 jobs:
+  max-jest:
+    docker: *gousto_build_image
+    working_directory: ~/project/src
+    parallelism: 3
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run split tests
+          command: |
+            TEST=$(circleci tests glob **/__tests__/**/[^.]*.js?(x) | circleci tests split)
+            yarn test:jest:ci $TEST
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+
   test-isomorphic-jest:
     docker: *gousto_build_image
     steps:
@@ -75,6 +93,7 @@ jobs:
       - store_artifacts:
           path: /tmp/artifacts
 
+  # This looks like it's performed too many times
   setup-src:
     docker: *gousto_build_image
     steps:
@@ -278,6 +297,21 @@ jobs:
 
 workflows:
   version: 2
+
+  max-test:
+    jobs:
+      - setup-src:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - mh-unit-tests-split
+      - max-jest:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - mh-unit-tests-split
 
   e2e-manual:
     jobs:
