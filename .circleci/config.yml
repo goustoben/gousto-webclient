@@ -38,19 +38,57 @@ jobs:
             - project/src/coverage/coverage-summary-*.json
             - project/src/coverage/tests-to-run-*
 
-  test-isomorphic-jest:
+  max-test-regression:
     docker: *gousto_build_image
+    parallelism: 3
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run isomoprhic jest tests
-          command: cd src && npm run test:jest:ci
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
+          name: Lease access to environment
+          command: gousto env sglease $ENVIRONMENT -t 30
+          environment:
+            AWS_ACCESS_KEY_ID: $BETA_AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY: $BETA_AWS_SECRET_ACCESS_KEY
+      - run:
+          name: Run regression tests
+          command: |
+            TESTS="$(circleci tests glob "./cypress/integration/**/*.spec.js" | circleci tests split | paste -sd "," -)"
+            cd tests/regression &&
+            npm run test:staging:parallel -- $TESTS
+          environment:
+            CYPRESS_baseUrl: https://staging-frontend.gousto.info # Hard coded to staging for the mo, replace with ${ENVIRONMENT}
+            CYPRESS_WAF_ACCESS_TOKEN: $WAF_ACCESS_TOKEN
+            NODE_OPTIONS: max-http-header-size=1000000
+      # - store_artifacts:
+      #     path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
+      #     destination: report.html
+      # - store_artifacts:
+      #     path: ~/project/tests/regression/reports/html/screenshots
+      #     destination: screenshots
+      # - store_artifacts:
+      #     path: ~/project/tests/regression/reports/html/assets/app.js
+      #     destination: assets/app.js
+      # - store_artifacts:
+      #     path: ~/project/tests/regression/reports/html/assets/app.css
+      #     destination: assets/app.css
+      # - store_artifacts:
+      #     path: ~/project/tests/regression/reports/html/assets/MaterialIcons-Regular.woff
+      #     destination: assets/MaterialIcons-Regular.woff
+
+  # test-isomorphic-jest:
+  #   docker: *gousto_build_image
+  #   steps:
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run:
+  #         name: Run isomoprhic jest tests
+  #         command: cd src && npm run test:jest:ci
+  #     - persist_to_workspace:
+  #         root: ~/
+  #         paths:
+  #           - project
+  #           - .circlerc
 
   jest-coverage-report:
     docker: *gousto_build_image
@@ -312,14 +350,37 @@ workflows:
             branches:
               only:
                 - mh-unit-tests-split
-      - max-jest:
+      - setup-platform:
           context: gousto-beta-aws-app-circleci
-          requires:
-              - setup-src
           filters:
             branches:
               only:
                 - mh-unit-tests-split
+      - install-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - mh-unit-tests-split
+      - max-test-regression:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+          filters:
+            branches:
+              only:
+                - mh-unit-tests-split
+      # - max-jest:
+      #     context: gousto-beta-aws-app-circleci
+      #     requires:
+      #         - setup-src
+      #     filters:
+      #       branches:
+      #         only:
+      #           - mh-unit-tests-split
       # - eslint-generate-report:
       #     context: gousto-beta-aws-app-circleci
       #     filters:
