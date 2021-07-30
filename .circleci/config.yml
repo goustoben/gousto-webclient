@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Run split tests
           command: |
-            TEST=$(circleci tests glob **/__tests__/**/[^.]*.js?(x) | circleci tests split)
+            TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
             yarn test:jest:ci $TEST
       - persist_to_workspace:
           root: ~/
