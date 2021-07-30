@@ -79,6 +79,18 @@
   }
 }
 
+.socialBelongingContainer {
+  .stepsContainer,
+  .stepContainer,
+  .step {
+    min-height: 44rem;
+
+    @media BreakpointFromMedium {
+      min-height: 41rem;
+    }
+  }
+}
+
 .header,
 .body,
 .footer {
@@ -87,10 +99,6 @@
 
 .header {
   margin-bottom: 1rem;
-
-  @media BreakpointFromMedium {
-    margin-bottom: 1.5rem;
-  }
 }
 
 .body {

@@ -39,7 +39,7 @@ describe('Postcode Step', () => {
     })
 
     test('then changePostcode should be called', () => {
-      expect(changePostcode).toHaveBeenCalledWith('temp_postcode', 'next_step')
+      expect(changePostcode).toHaveBeenCalledWith('temp_postcode', 'next_step', null)
     })
   })
 })

@@ -2,7 +2,7 @@ import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
 import { redirect } from 'actions/redirect'
 import { trackUTMAndPromoCode } from 'actions/tracking'
-import { completeWizardPostcode, clickSeeThisWeeksMenu } from 'actions/trackingKeys'
+import { completeWizardPostcode, clickSeeThisWeeksMenu, signupSocialBelongingBanner } from 'actions/trackingKeys'
 import { stepByName } from 'utils/signup'
 import { signupConfig } from 'config/signup'
 import { getUTMAndPromoCode } from 'selectors/tracking'
@@ -103,8 +103,6 @@ export function signupNextStep(stepName) {
       } catch (e) {
         dispatch(push(`${client.signup}/${slug}`))
       }
-
-      dispatch(signupSetStep(step))
     }
 
     return null
@@ -132,9 +130,19 @@ export const trackSignupWizardAction = (type, additionalData = {}) => (dispatch,
   })
 }
 
-export function signupChangePostcode(postcode, nextStepName) {
+export const signupSetSocialBelongingOptions = (socialBelongingOptions) => ({
+  type: actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS,
+  ...socialBelongingOptions,
+})
+
+export function signupChangePostcode(postcode, nextStepName, socialBelongingOptions) {
   return async (dispatch, getState) => {
     await dispatch(basketPostcodeChange(postcode))
+
+    if (socialBelongingOptions) {
+      dispatch(signupSetSocialBelongingOptions(socialBelongingOptions))
+    }
+
     if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
       dispatch(trackSignupWizardAction(completeWizardPostcode, { postcode }))
       signupNextStep(nextStepName)(dispatch, getState)
@@ -145,3 +153,21 @@ export function signupChangePostcode(postcode, nextStepName) {
 export const signupDismissDiscountAppliedBar = () => ({
   type: actionTypes.SIGNUP_DISMISS_DISCOUNT_APPLIED_BAR,
 })
+
+export const trackSocialBelongingBannerAppearance = () => (dispatch, getState) => {
+  const state = getState()
+  const { promoCode, UTM } = getUTMAndPromoCode(state)
+  const district = state.signup.getIn(['wizard', 'district'])
+  const amountOfCustomers = state.signup.getIn(['wizard', 'amountOfCustomers'])
+
+  dispatch({
+    type: signupSocialBelongingBanner,
+    trackingData: {
+      actionType: signupSocialBelongingBanner,
+      ...UTM,
+      promo_code: promoCode,
+      district,
+      number_of_customers: amountOfCustomers,
+    },
+  })
+}

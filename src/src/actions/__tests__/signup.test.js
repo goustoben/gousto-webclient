@@ -15,6 +15,7 @@ import {
   signupSetStep,
   signupGoToMenu,
   trackSignupWizardAction,
+  trackSocialBelongingBannerAppearance,
 } from 'actions/signup'
 
 jest.mock('actions/basket', () => ({
@@ -171,7 +172,7 @@ describe('signup actions', () => {
 
         signupNextStep('delivery')(dispatch, getState)
 
-        expect(dispatch).toHaveBeenCalledTimes(2)
+        expect(dispatch).toHaveBeenCalledTimes(1)
         expect(redirect).not.toHaveBeenCalled()
       })
     })
@@ -364,6 +365,42 @@ describe('signup actions', () => {
           box_size: 2,
           promoCode: 'promo1',
           referral: '123',
+        },
+      })
+    })
+  })
+
+  describe('given trackSocialBelongingBannerAppearance action is called', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        signup: Immutable.fromJS({
+          wizard: {
+            district: 'District',
+            amountOfCustomers: 100,
+          }
+        }),
+        basket: Immutable.fromJS({
+          promoCode: 'promo1',
+        }),
+        tracking: Immutable.Map({
+          utmSource: {
+            referral: '123',
+          },
+        }),
+      })
+    })
+
+    test('then it should send correct tracking properties', async () => {
+      trackSocialBelongingBannerAppearance()(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'community_customers_banner_displayed',
+        trackingData: {
+          actionType: 'community_customers_banner_displayed',
+          promo_code: 'promo1',
+          referral: '123',
+          district: 'District',
+          number_of_customers: 100,
         },
       })
     })

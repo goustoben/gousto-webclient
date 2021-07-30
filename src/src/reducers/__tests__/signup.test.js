@@ -30,10 +30,35 @@ describe('signup reducer', () => {
       initialState = Immutable.fromJS({})
     })
 
-    test('should remember the fact of dismissal', () => {
+    test('should update showcaseMenuSeen properly', () => {
       const result = signup.signup(initialState, action)
 
       expect(result.get('showcaseMenuSeen')).toBe(true)
+    })
+  })
+
+  describe('given SIGNUP_SET_SOCIAL_BELONGING_OPTIONS is dispatched', () => {
+    const action = {
+      type: actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS,
+      amountOfCustomers: 100,
+      district: 'District',
+    }
+    let initialState
+
+    beforeEach(() => {
+      initialState = Immutable.fromJS({
+        wizard: {
+          district: null,
+          amountOfCustomers: null,
+        }
+      })
+    })
+
+    test('then should update parameters properly', () => {
+      const result = signup.signup(initialState, action)
+
+      expect(result.getIn(['wizard', 'amountOfCustomers'])).toBe(100)
+      expect(result.getIn(['wizard', 'district'])).toBe('District')
     })
   })
 })

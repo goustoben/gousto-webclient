@@ -7,6 +7,8 @@ const initialState = Immutable.fromJS({
     currentStepName: '',
     currentStepNumber: 0,
     isLastStep: false,
+    amountOfCustomers: null,
+    district: null,
   },
   isDiscountAppliedBarDismissed: false,
   showcaseMenuSeen: false,
@@ -34,6 +36,12 @@ const signup = {
 
     case actionTypes.SHOWCASE_MENU_SEEN: {
       return state.set('showcaseMenuSeen', true)
+    }
+
+    case actionTypes.SIGNUP_SET_SOCIAL_BELONGING_OPTIONS: {
+      return state
+        .setIn(['wizard', 'amountOfCustomers'], action.amountOfCustomers)
+        .setIn(['wizard', 'district'], action.district)
     }
 
     default: {

@@ -1,0 +1,18 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
+.socialBelongingContainer {
+  width: 100%;
+
+  @media BreakpointFromMedium {
+    max-width: max-content;
+    margin: 0 auto;
+  }
+}
+
+.bold {
+  composes: fontBold from 'design-language/typography.css';
+}
+
+.socialPadding {
+  padding: 0.5rem;
+}

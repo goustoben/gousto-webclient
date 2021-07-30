@@ -11,7 +11,7 @@ import {
   getIsPaymentBeforeChoosingEnabled,
 } from 'selectors/features'
 import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
-import { trackSignupWizardAction } from 'actions/signup'
+import { trackSignupWizardAction, trackSocialBelongingBannerAppearance } from 'actions/signup'
 import { DeliveryStep } from './DeliveryStep'
 
 function mapStateToProps(state) {
@@ -38,6 +38,8 @@ function mapStateToProps(state) {
     isTastePreferencesEnabled: getIsTastePreferencesEnabled(state),
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
     showcaseMenuSeen: state.signup.get('showcaseMenuSeen'),
+    district: state.signup.getIn(['wizard', 'district']),
+    amountOfCustomers: state.signup.getIn(['wizard', 'amountOfCustomers']),
   }
 }
 
@@ -51,6 +53,7 @@ const DeliveryStepContainer = connect(mapStateToProps, {
   trackDeliveryDayEdited: actions.trackDeliveryDayEdited,
   trackDeliverySlotEdited: actions.trackDeliverySlotEdited,
   trackSignupWizardAction,
+  trackSocialBelongingBannerAppearance,
 })(DeliveryStep)
 
 export { DeliveryStepContainer }

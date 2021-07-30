@@ -16,6 +16,7 @@ import { Heading, Alert } from 'goustouicomponents'
 import { unbounce as unbounceRoutes } from 'config/routes'
 import { signupConfig } from 'config/signup'
 import { completeWizardDeliveryDay } from 'actions/trackingKeys'
+import { SocialBelongingBanner } from 'routes/Signup/SocialBelongingBanner'
 import { SubscriptionTransparencyText } from '../../Components/SubscriptionTransparencyText'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
@@ -95,6 +96,10 @@ const DeliveryStep = ({
   isPaymentBeforeChoosingEnabled,
   trackSignupWizardAction,
   showcaseMenuSeen,
+  isSocialBelongingEnabled,
+  district,
+  amountOfCustomers,
+  trackSocialBelongingBannerAppearance,
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(
     boxSummaryDeliveryDays,
@@ -102,6 +107,7 @@ const DeliveryStep = ({
     disabledSlots,
     userHasAvailableSlots
   )
+  const showSocialBelongingBanner = isSocialBelongingEnabled && district && amountOfCustomers > 50
 
   if (nextDayDeliveryPaintedDoorFeature) {
     const nextDayDeliveryDays = createNextDayDeliveryDays()
@@ -199,6 +205,13 @@ const DeliveryStep = ({
           <Heading type="h1">{signupConfig.deliveryOptionsStep.title}</Heading>
           <Image name="delivery-day" />
         </div>
+        {showSocialBelongingBanner && (
+          <SocialBelongingBanner
+            amountOfCustomers={amountOfCustomers}
+            district={district}
+            trackBannerAppearance={trackSocialBelongingBannerAppearance}
+          />
+        )}
         <div className={signupCss.body}>
           <div className={css.container}>
             <div className={classNames(css.left, css.dropdown)} data-testing="signupDeliveryDay">
@@ -259,6 +272,10 @@ DeliveryStep.propTypes = {
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   trackSignupWizardAction: PropTypes.func.isRequired,
   showcaseMenuSeen: PropTypes.bool,
+  isSocialBelongingEnabled: PropTypes.bool,
+  district: PropTypes.string,
+  amountOfCustomers: PropTypes.number,
+  trackSocialBelongingBannerAppearance: PropTypes.func,
 }
 
 DeliveryStep.defaultProps = {
@@ -280,6 +297,10 @@ DeliveryStep.defaultProps = {
   isTastePreferencesEnabled: false,
   isPaymentBeforeChoosingEnabled: false,
   showcaseMenuSeen: false,
+  isSocialBelongingEnabled: false,
+  district: null,
+  amountOfCustomers: null,
+  trackSocialBelongingBannerAppearance: () => {},
 }
 
 export { DeliveryStep }

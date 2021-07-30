@@ -6,19 +6,22 @@ import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { Button } from '../../Button'
 import { Image } from '../../Image'
+import { getDataForSocialBelonging } from '../signupUtils'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
 class PostcodeStep extends PureComponent {
+  handleClick = () => {
+    const { tempPostcode, nextStepName, changePostcode, isSocialBelongingEnabled } = this.props
+    const socialBelongingData = isSocialBelongingEnabled
+      ? getDataForSocialBelonging(tempPostcode.replace(' ', ''))
+      : null
+
+    changePostcode(tempPostcode, nextStepName, socialBelongingData)
+  }
+
   render() {
-    const {
-      tempPostcode,
-      changeTempPostcode,
-      postcodePending,
-      changePostcode,
-      deliveryDaysError,
-      nextStepName,
-    } = this.props
+    const { tempPostcode, changeTempPostcode, postcodePending, deliveryDaysError } = this.props
 
     return (
       <div className={css.stepContainer} data-testing="signupPostcodeStep">
@@ -34,7 +37,7 @@ class PostcodeStep extends PureComponent {
                   if (e) {
                     e.preventDefault()
                   }
-                  changePostcode(tempPostcode, nextStepName)
+                  this.handleClick()
                 }}
                 action="#"
                 className={postcodeCss.row}
@@ -58,9 +61,7 @@ class PostcodeStep extends PureComponent {
                   <Button
                     disabled={tempPostcode.length < 5}
                     data-testing="signupPostcodeCTA"
-                    onClick={() => {
-                      changePostcode(tempPostcode, nextStepName)
-                    }}
+                    onClick={this.handleClick}
                     pending={postcodePending}
                     width="full"
                   >
@@ -103,6 +104,7 @@ PostcodeStep.propTypes = {
   changeTempPostcode: PropTypes.func,
   changePostcode: PropTypes.func,
   nextStepName: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isSocialBelongingEnabled: PropTypes.bool,
 }
 
 PostcodeStep.defaultProps = {
@@ -112,6 +114,7 @@ PostcodeStep.defaultProps = {
   changeTempPostcode: () => {},
   changePostcode: () => {},
   nextStepName: '',
+  isSocialBelongingEnabled: false,
 }
 
 export { PostcodeStep }

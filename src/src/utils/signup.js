@@ -31,6 +31,16 @@ export const findStepBySlug = stepSlug => {
 }
 
 /**
+ * @return Immutable.Map with keys `slug` and `name`; or null if not found.
+ */
+export const getStepFromPathname = (pathname) => {
+  const parts = pathname.split('/')
+  const stepSlug = parts[parts.length - 1]
+
+  return findStepBySlug(stepSlug)
+}
+
+/**
  * Get promocode query string parameter (if provided)
  * @param promocode
  * @param operator

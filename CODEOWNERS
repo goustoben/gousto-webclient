@@ -210,6 +210,7 @@
 /src/src/utils/__tests__/url.test.js                    @Gousto/squad-beetroots
 /src/src/utils/__tests__/utm.test.js                    @Gousto/squad-beetroots
 /src/src/utils/__tests__/home.test.js                   @Gousto/squad-beetroots
+/src/src/utils/__tests__/signup.test.js                 @Gousto/squad-beetroots
 /src/src/utils/home.js                                  @Gousto/squad-beetroots
 /src/src/selectors/checkout.js                          @Gousto/squad-beetroots
 /src/src/selectors/payment.js                           @Gousto/squad-beetroots

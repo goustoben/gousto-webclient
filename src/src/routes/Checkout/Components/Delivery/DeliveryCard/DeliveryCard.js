@@ -5,9 +5,12 @@ import Svg from 'Svg'
 
 import css from './DeliveryCard.css'
 
-const DeliveryCard = ({ iconName, children, dataTesting, cardStyle }) => (
+const DeliveryCard = ({ iconName, children, dataTesting, cardStyle, customClass }) => (
   <div
-    className={classNames(css.deliveryCardContainer, { [css[cardStyle]]: cardStyle !== 'default' })}
+    className={classNames(css.deliveryCardContainer, {
+      [css[cardStyle]]: cardStyle !== 'default',
+      [customClass]: customClass,
+    })}
     data-testing={dataTesting}
   >
     <Svg fileName={iconName} className={css.icon} />
@@ -20,11 +23,13 @@ DeliveryCard.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   dataTesting: PropTypes.string,
   cardStyle: PropTypes.oneOf(['default', 'blue']),
+  customClass: PropTypes.string,
 }
 
 DeliveryCard.defaultProps = {
   dataTesting: '',
   cardStyle: 'default',
+  customClass: '',
 }
 
 export { DeliveryCard }

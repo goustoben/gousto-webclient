@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import Helmet from 'react-helmet'
+import { browserHistory } from 'react-router'
 import Immutable from 'immutable'
 import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
-import { stepByName, getPromocodeQueryParam, findStepBySlug } from 'utils/signup'
+import {
+  stepByName,
+  getPromocodeQueryParam,
+  findStepBySlug,
+  getStepFromPathname,
+} from 'utils/signup'
 import { StepIndicator } from 'goustouicomponents'
 
 import css from './Signup.css'
@@ -62,6 +68,8 @@ const propTypes = {
   isPaymentBeforeChoosingV2Enabled: PropTypes.bool,
   isDiscountAppliedBarDismissed: PropTypes.bool,
   signupDismissDiscountAppliedBar: PropTypes.func,
+  isSocialBelongingEnabled: PropTypes.bool,
+  signupSetStep: PropTypes.func,
 }
 
 const defaultProps = {
@@ -88,6 +96,8 @@ const defaultProps = {
   isPaymentBeforeChoosingV2Enabled: false,
   isDiscountAppliedBarDismissed: false,
   signupDismissDiscountAppliedBar: () => {},
+  isSocialBelongingEnabled: false,
+  signupSetStep: () => {},
 }
 
 const contextTypes = {
@@ -202,6 +212,7 @@ class Signup extends PureComponent {
       lowestPricePerPortion,
       isPaymentBeforeChoosingEnabled,
       isPaymentBeforeChoosingV2Enabled,
+      signupSetStep,
     } = this.props
     const { store } = this.context
     const query = location ? location.query : {}
@@ -213,6 +224,14 @@ class Signup extends PureComponent {
       shouldSetStepFromParams: true,
     }
     Signup.fetchData({ store, query, params, options })
+    this.unlistenHistory = browserHistory.listen(({ pathname }) => {
+      const step = getStepFromPathname(pathname)
+      signupSetStep(step)
+    })
+  }
+
+  componentWillUnmount() {
+    this.unlistenHistory()
   }
 
   getCurrentStepNumber(steps) {
@@ -241,7 +260,7 @@ class Signup extends PureComponent {
   }
 
   renderStep = (name, nextStepName, currentStepNumber, isLastStep) => {
-    const { goToStep, stepName } = this.props
+    const { goToStep, stepName, isSocialBelongingEnabled } = this.props
     const Component = components[name]
 
     return (
@@ -252,6 +271,7 @@ class Signup extends PureComponent {
         stepNumber={currentStepNumber}
         isLastStep={isLastStep}
         active={stepName === name}
+        isSocialBelongingEnabled={isSocialBelongingEnabled}
       />
     )
   }
@@ -287,6 +307,7 @@ class Signup extends PureComponent {
       trackDiscountVisibility,
       isDiscountAppliedBarDismissed,
       signupDismissDiscountAppliedBar,
+      isSocialBelongingEnabled,
     } = this.props
 
     if (stepName === signupConfig.sellThePropositionPagePath) {
@@ -307,6 +328,7 @@ class Signup extends PureComponent {
       <div
         className={classNames(css.signupContainer, {
           [css.discountApplied]: isDiscountApplied,
+          [css.socialBelongingContainer]: isSocialBelongingEnabled,
         })}
       >
         <Helmet

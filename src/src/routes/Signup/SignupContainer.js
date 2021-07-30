@@ -5,9 +5,10 @@ import {
   getIsPaymentBeforeChoosingEnabled,
   getIsPaymentBeforeChoosingV2Enabled,
 } from 'selectors/features'
-import { signupDismissDiscountAppliedBar } from 'actions/signup'
+import { signupDismissDiscountAppliedBar, signupSetStep } from 'actions/signup'
 import { trackDiscountVisibilityBannerAppearance } from 'actions/tracking'
 import { getPromoBannerState } from 'utils/home'
+import { getIsSocialBelongingEnabled } from 'routes/Signup/signupSelectors'
 import { Signup } from './Signup'
 
 const mapStateToProps = (state, ownProps) => ({
@@ -25,6 +26,7 @@ const mapStateToProps = (state, ownProps) => ({
   isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
   isPaymentBeforeChoosingV2Enabled: getIsPaymentBeforeChoosingV2Enabled(state),
   isDiscountAppliedBarDismissed: state.signup.get('isDiscountAppliedBarDismissed'),
+  isSocialBelongingEnabled: getIsSocialBelongingEnabled(state),
 })
 
 const SignupContainer = connect(mapStateToProps, {
@@ -32,6 +34,7 @@ const SignupContainer = connect(mapStateToProps, {
   signupStepsReceive: actions.signupStepsReceive,
   trackDiscountVisibility: trackDiscountVisibilityBannerAppearance,
   signupDismissDiscountAppliedBar,
+  signupSetStep,
 })(Signup)
 
 export { SignupContainer }
