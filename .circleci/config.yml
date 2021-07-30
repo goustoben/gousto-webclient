@@ -27,7 +27,7 @@ jobs:
             TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
             yarn test:jest:ci:coverage $TEST
       - store_artifacts:
-          path: project/src/coverage/coverage-summary.json
+          path: coverage/coverage-summary.json
           destination: coverage-summary.json
 
   test-isomorphic-jest:
