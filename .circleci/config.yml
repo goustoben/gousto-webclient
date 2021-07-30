@@ -24,8 +24,10 @@ jobs:
       - run:
           name: Run split tests
           command: |
-            TEST=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
-            yarn test:jest:ci:coverage $TEST && mv coverage/coverage-summary.json coverage/coverage-summary-$CIRCLE_NODE_INDEX.json && cp /tmp/tests-to-run coverage/tests-to-run-$CIRCLE_NODE_INDEX
+            circleci tests glob **/__tests__/**/*.test.js | circleci tests split > /tests-to-run &&
+            yarn test:jest:ci:coverage $(cat /tests-to-run) &&
+            mv coverage/coverage-summary.json coverage/coverage-summary-$CIRCLE_NODE_INDEX.json &&
+            cp /tests-to-run coverage/tests-to-run-$CIRCLE_NODE_INDEX
       - run:
           name: Echo out files to persist to workspace
           command: ls -l coverage
