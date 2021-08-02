@@ -1,5 +1,5 @@
 {
-  "reporterEnabled": "mochawesome",
+  "reporterEnabled": "mochawesome, cypress-circleci-reporter",
   "mochawesomeReporterOptions": {
     "reportDir": "results/json",
     "overwrite": false,
