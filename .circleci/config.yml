@@ -40,7 +40,7 @@ jobs:
 
   max-test-regression:
     docker: *gousto_build_image
-    parallelism: 15
+    parallelism: 5
     steps:
       - attach_workspace:
           at: ~/
