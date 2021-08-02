@@ -22,14 +22,17 @@ jobs:
           at: ~/
       - run:
           name: Run split tests
-          # This can be split across steps, just experimenting atm
           command: |
             TESTS=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
-            yarn test:jest:ci:coverage $TESTS && mv coverage/coverage-summary.json coverage/coverage-summary-${CIRCLE_NODE_INDEX}.json
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/src/coverage/coverage-summary.json
+            yarn test:jest:ci:coverage $TESTS &&
+            mv coverage/coverage-summary.json coverage/coverage-summary-$CIRCLE_NODE_INDEX.json
+      - store_artifacts:
+          path: ~/project/src/coverage
+          destination: coverage
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - project/src/coverage/coverage-summary.json
 
   jest-coverage-report:
     docker: *gousto_build_image
@@ -281,6 +284,23 @@ jobs:
 
 workflows:
   version: 2
+
+  max-test:
+    jobs:
+      - setup-src:
+            context: gousto-beta-aws-app-circleci
+            filters:
+              branches:
+                only:
+                  - FEF-149-improve-unit-test-perf
+      - jest-coverage-report:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+          filters:
+              branches:
+                only:
+                  - FEF-149-improve-unit-test-perf
 
   e2e-manual:
     jobs:
