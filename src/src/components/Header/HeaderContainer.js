@@ -5,7 +5,6 @@ import { helpPreLoginVisibilityChange } from 'actions/login'
 import { getIsAuthenticated } from 'selectors/auth'
 import {
   getAbandonBasket,
-  getIsHelpCentreActive,
   getIsMobileTopBannerAppAwarenessEnabled,
   getIsMenuRedirectPageEnabled,
   getIsPaymentBeforeChoosingEnabled,
@@ -26,7 +25,6 @@ const mapStateToProps = (state) => ({
   features: state.features,
   fromJoin: getUserFromJoin(state),
   abandonBasketFeature: getAbandonBasket(state),
-  isHelpCentreActive: getIsHelpCentreActive(state),
   showAppAwareness: getIsAppAwarenessLoginEnabled(state),
   isAppAwarenessEnabled: getIsMobileTopBannerAppAwarenessEnabled(state),
   isMenuRedirectPageEnabled: getIsMenuRedirectPageEnabled(state),

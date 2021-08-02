@@ -22,12 +22,12 @@ const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick })
       : <button type="button" className={cssMobile.accountMenuItem} onClick={onLoginClick}>Log in</button>}
     <Svg fileName="icon_menubar_help_link" className={cssMobile.accountIcon} />
     <Link
-      to={defaultMenuItems.faq.url}
+      to={defaultMenuItems.help.url}
       className={cssMobile.helpMenuItem}
-      clientRouted={defaultMenuItems.faq.clientRouted}
-      tracking={() => trackNavigationClick({ actionType: `New ${defaultMenuItems.faq.tracking}` })}
+      clientRouted={defaultMenuItems.help.clientRouted}
+      tracking={() => trackNavigationClick({ actionType: `New ${defaultMenuItems.help.tracking}` })}
     >
-      {defaultMenuItems.faq.name}
+      {defaultMenuItems.help.name}
     </Link>
   </span>
 )

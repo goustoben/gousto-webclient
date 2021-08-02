@@ -1,11 +1,10 @@
 import Immutable from 'immutable'
 import globals from 'config/globals'
-import { zendesk, client } from 'config/routes'
+import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
-import userActions from 'actions/user'
 import pricingActions from '../pricing'
 import statusActions from '../status'
 import authActions from '../auth'
@@ -197,51 +196,6 @@ describe('login actions', () => {
       })
     })
 
-    describe('when the redirect URL is zendesk', () => {
-      beforeEach(() => {
-        documentLocation.mockReturnValueOnce({
-          pathname: '/',
-          protocol: 'http:',
-          search: '?target=https://gousto.zendesk.com/hc/en-gb',
-          slashes: true,
-        })
-
-        globals.domain = HOST_PRODUCTION
-      })
-
-      describe('and the userId is passed', () => {
-        beforeEach(async () => {
-          getState.mockReturnValue({
-            auth: authState,
-            user: Immutable.fromJS({
-              id: '123',
-            })
-          })
-          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
-        })
-
-        it('then should redirect user to zendesk with the userId appended to the url', async () => {
-          expect(redirect).toHaveBeenCalledWith(`${zendesk.faqs}?user_id=123`)
-        })
-      })
-
-      describe('and the userId is not passed', () => {
-        beforeEach(async () => {
-          getState.mockReturnValue({
-            auth: authState,
-            user: Immutable.fromJS({
-              id: null,
-            })
-          })
-          await loginActions.loginUser('email', 'password', true)(dispatch, getState)
-        })
-
-        it('then should redirect user to zendesk', async () => {
-          expect(redirect).toHaveBeenCalledWith(zendesk.faqs)
-        })
-      })
-    })
-
     describe('and redirect url does not match with global __DOMAIN__', () => {
       beforeEach(() => {
         globals.domain = HOST_PRODUCTION
@@ -345,39 +299,14 @@ describe('login actions', () => {
 
     describe('helpPreLoginVisibilityChange', () => {
       let dispatch
-      const getState = jest.fn()
 
       beforeEach(() => {
         dispatch = jest.fn()
       })
 
-      describe('Given the action is called with visibility true and isHelpCentreActive feature flag false', () => {
+      describe('Given the action is called with visibility true', () => {
         beforeEach(() => {
-          getState.mockReturnValue({
-            features: Immutable.fromJS({
-              isHelpCentreActive: { value: false },
-            }),
-          })
-          helpPreLoginVisibilityChange(true)(dispatch, getState)
-        })
-
-        test('the query parameter target is set to the eligibility check URL', () => {
-          const { index, eligibilityCheck } = client.getHelp
-          const eligibilityCheckURL = `${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`
-          const search = `?target=${encodeURIComponent(eligibilityCheckURL)}`
-          const serialisedQueryStringObject = JSON.stringify({ search })
-          expect(dispatch).toHaveBeenCalledWith(`${serialisedQueryStringObject} pushed`)
-        })
-      })
-
-      describe('Given the action is called with visibility true and isHelpCentreActive feature flag true', () => {
-        beforeEach(() => {
-          getState.mockReturnValue({
-            features: Immutable.fromJS({
-              isHelpCentreActive: { value: true },
-            }),
-          })
-          helpPreLoginVisibilityChange(true)(dispatch, getState)
+          helpPreLoginVisibilityChange(true)(dispatch)
         })
 
         test('the query parameter target is set to the Help Centre URL', () => {

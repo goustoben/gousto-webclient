@@ -1,4 +1,4 @@
-import { setFeatureFlag, clickHelp, clickMyGousto } from './pageUtils/home/home'
+import { setFeatureFlag, clickMyGousto } from './pageUtils/home/home'
 import { selectOrderIssue } from './pageUtils/help/getHelp'
 import { setMocksLoginHomePage } from './mocksSetters/mocksSetters'
 
@@ -12,16 +12,19 @@ describe('Given I am logged in and visit the home page', () => {
     setMocksLoginHomePage()
   })
 
-  describe('When I click Help', () => {
+  describe('When I visit My Gousto and click "Any issues with this box?" on last delivery', () => {
     beforeEach(() => {
       cy.fixture('getHelp/recipes/recipesWithIngredients').as('recipesWithIngredients')
       cy.route('GET', /recipes\/v2\/recipes/, '@recipesWithIngredients').as('recipesWithIngredientsRoute')
+      cy.fixture('getHelp/order/order26May20').as('currentOrder')
+      cy.route('GET', /order\/16269494/, '@currentOrder')
 
       cy.clock(dateAfterBoxDelivered.getTime(), ['Date'])
       cy.wait(['@userCurrentSubscriptionRequest', '@userCurrentOrdersRequest'])
 
-      clickHelp()
-      cy.wait(['@recipesWithIngredientsRoute'])
+      clickMyGousto()
+
+      cy.get('[data-testing="PreviousOrderGetHelpCTA"]').click()
     })
 
     describe('and my order delivery was due before today', () => {
@@ -43,8 +46,6 @@ describe('Given I am logged in and visit the home page', () => {
 
           describe('and I click Didnt arrive', () => {
             beforeEach(() => {
-              cy.fixture('getHelp/order/order26May20').as('currentOrder')
-              cy.route('GET', /order\/16269494/, '@currentOrder')
               cy.fixture('getHelp/deliveries/consignmentsWithoutTrackingUrl').as('consignmentsWithoutTrackingUrl')
               cy.route('GET', /deliveries\/v1.0\/consignments/, '@consignmentsWithoutTrackingUrl')
 
@@ -96,7 +97,7 @@ describe('Given I am logged in and visit the home page', () => {
       cy.clock(dateBoxDeliveryToday.getTime(), ['Date'])
     })
 
-    describe('and I click on My Gousto Get Help with the Next box ', () => {
+    describe('When I visit My Gousto and click "Any issues with this box?" on upcoming delivery', () => {
       beforeEach(() => {
         clickMyGousto()
 

@@ -38,7 +38,6 @@ module.exports = {
       deliveryDidntArrive: ({ orderId, userId }) => `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive`,
       deliveryDidntArriveValidation: ({ orderId, userId }) => `/get-help/user/${userId}/order/${orderId}/delivery/didnt-arrive/validation`,
       deliveryDontKnowWhen: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/delivery/dont-know-when`,
-      eligibilityCheck: 'eligibility-check',
       index: '/get-help',
       ingredientIssues: 'ingredient-issues',
       ingredientReasons: 'ingredient-reasons',
@@ -177,8 +176,6 @@ module.exports = {
   zendesk: {
     covid: 'https://gousto.zendesk.com/hc/en-gb/articles/360006713417--How-does-the-coronavirus-situation-affect-Gousto-',
     emailForm: 'https://gousto.zendesk.com/hc/en-gb/requests/new',
-    faqs: 'https://gousto.zendesk.com/hc/en-gb',
-    contactUs: 'https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us',
   },
   recaptcha: {
     verify: 'https://www.google.com/recaptcha/api/siteverify',

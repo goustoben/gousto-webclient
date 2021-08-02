@@ -54,9 +54,6 @@ const defaultFeatures = () => ({
   limitedCapacity: {
     value: false,
   },
-  isHelpCentreActive: {
-    value: false,
-  },
   enable3DSForSignUp: {
     value: false
   },

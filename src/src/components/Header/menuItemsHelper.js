@@ -6,10 +6,10 @@ export const defaultMenuItems = {
   home: { name: 'Home', url: clientRoutes.home, clientRouted: true },
   boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
   menu: { name: 'Choose Recipes', url: clientRoutes.menu, tracking: trackingKeys.clickRecipeNavigation },
-  faq: {
+  help: {
     name: 'Help',
-    url: `${clientRoutes.getHelp.index}/${clientRoutes.getHelp.eligibilityCheck}`,
-    clientRouted: true,
+    url: clientRoutes.helpCentre,
+    clientRouted: false,
     tracking: trackingKeys.clickHelpNavigation,
   },
   myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true, tracking: 'MyGoustoNavigation Clicked' },

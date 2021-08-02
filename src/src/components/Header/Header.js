@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { client, zendesk } from 'config/routes'
+import { client } from 'config/routes'
 import Svg from 'Svg'
 import Link from 'Link'
 import ModalPanel from 'Modal/ModalPanel'
@@ -128,14 +128,14 @@ class Header extends React.PureComponent {
       menu,
       isAuthenticated && menuItems.referFriend,
       menuItems.sustainability,
-      menuItems.faq,
+      menuItems.help,
     ].filter(item => item)
 
     const mobileItems = [
       !isAuthenticated && menuItems.boxPrices,
       menu,
       menuItems.sustainability,
-      menuItems.faq,
+      menuItems.help,
     ].filter(item => item)
 
     const myGousto = [menuItems.myGousto]
@@ -252,7 +252,6 @@ class Header extends React.PureComponent {
     const {
       isAuthenticated,
       trackNavigationClick,
-      isHelpCentreActive,
       postCode,
       isMenuRedirectPageEnabled,
     } = this.props
@@ -301,7 +300,7 @@ class Header extends React.PureComponent {
       }
 
       const isHelpLink = menuItem.name === 'Help'
-      const url = getLinkURL({ isHelpCentreActive, menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
+      const url = getLinkURL({ menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
       const trackingData = isHelpLink ? helpNavTrackingData : { actionType: menuItem.tracking }
 
       return (
@@ -310,7 +309,7 @@ class Header extends React.PureComponent {
           data-optimizely={isHelpLink ? 'desktop-header-help-link' : null}
           to={url}
           className={css.linkDesktop}
-          clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
+          clientRouted={menuItem.clientRouted}
           tracking={() => trackNavigationClick(trackingData)}
         >
           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
@@ -330,7 +329,6 @@ class Header extends React.PureComponent {
     const {
       isHelpPreLoginOpen,
       isLoginOpen,
-      isHelpCentreActive,
       showAppAwareness,
       trackContinueAsNewCustomer,
     } = this.props
@@ -356,7 +354,7 @@ class Header extends React.PureComponent {
           {isHelpPreLoginOpen
             ? (
               <Link
-                to={isHelpCentreActive ? client.helpCentre : zendesk.faqs}
+                to={client.helpCentre}
                 data-optimizely="new-customer-help-link"
                 clientRouted={false}
                 className={css.continueAsNewCustomerLink}
@@ -514,7 +512,6 @@ Header.propTypes = {
   trackContinueAsNewCustomer: PropTypes.func,
   trackHelpPreLoginModalDisplayed: PropTypes.func,
   trackNavigationClick: PropTypes.func,
-  isHelpCentreActive: PropTypes.bool,
   showAppAwareness: PropTypes.bool,
   isAppAwarenessEnabled: PropTypes.bool,
   isMenuRedirectPageEnabled: PropTypes.bool,
@@ -538,7 +535,6 @@ Header.defaultProps = {
   trackContinueAsNewCustomer: () => {},
   trackHelpPreLoginModalDisplayed: () => {},
   trackNavigationClick: () => { },
-  isHelpCentreActive: false,
   showAppAwareness: false,
   isAppAwarenessEnabled: false,
   isMenuRedirectPageEnabled: false,

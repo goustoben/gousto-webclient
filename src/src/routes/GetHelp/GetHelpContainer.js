@@ -30,9 +30,7 @@ const skipErrorByRoute = ({ pathname, userId, orderId }) => {
     deliveryDidntArrive,
     deliveryDidntArriveValidation,
     deliveryDontKnowWhen,
-    eligibilityCheck,
     index,
-    ingredientIssues,
   } = routes.getHelp
 
   const isPathnameInExceptionList = [
@@ -42,8 +40,6 @@ const skipErrorByRoute = ({ pathname, userId, orderId }) => {
     deliveryDidntArrive({ userId, orderId }),
     deliveryDidntArriveValidation({ userId, orderId }),
     deliveryDontKnowWhen({ userId, orderId }),
-    `${index}/${eligibilityCheck}`,
-    `${index}/${eligibilityCheck}/${ingredientIssues}`,
   ].includes(pathname)
 
   return isPathnameInExceptionList

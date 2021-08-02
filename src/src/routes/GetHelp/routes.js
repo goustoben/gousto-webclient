@@ -6,17 +6,14 @@ import WizardLayout from 'layouts/WizardLayout'
 import { checkValidSession } from 'utils/routes'
 import { GetHelpContainer } from './GetHelpContainer'
 import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
-
 import { Contact } from './Contact'
 import { Confirmation } from './Confirmation'
 import { DeliveryContainer } from './Delivery'
 import { DeliveryValidationContainer } from './Delivery/DeliveryValidation'
 import { DontKnowWhen } from './Delivery/DontKnowWhen'
-import { EligibilityCheck } from './EligibilityCheck'
 import { IngredientsContainer } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
-import { IngredientIssues as EligibilityCheckIngredientIssues } from './EligibilityCheck/IngredientIssues'
 import { RecipeCardsContainer } from './RecipeCards'
 import { Refund } from './Refund'
 import { DidntArriveContainer } from './Delivery/DidntArrive'
@@ -24,17 +21,6 @@ import { DidntArriveContainer } from './Delivery/DidntArrive'
 const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = '/'
-    const isEligibilityCheckUrl = () => {
-      const { pathname } = routes.location
-      const { index, eligibilityCheck } = configRoutes.client.getHelp
-      const eligibilityCheckUrl = `${index}/${eligibilityCheck}`
-
-      return pathname.replace('/', '') === eligibilityCheckUrl.replace('/', '')
-    }
-
-    if (routes && routes.location && isEligibilityCheckUrl()) {
-      return next()
-    }
 
     // redirect user to the `/` in case auth session is not found
     return checkValidSession(store, redirectTo)(routes, replace, next)
@@ -85,10 +71,8 @@ const getHelpRoutes = (store) => {
         />
         {Confirmation}
         {Contact}
-        {EligibilityCheck}
         {IngredientIssues}
         {IngredientReasons}
-        {EligibilityCheckIngredientIssues}
         {Refund}
         <Redirect to={login} />
       </Route>

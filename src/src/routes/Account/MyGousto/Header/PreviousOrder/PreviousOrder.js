@@ -51,6 +51,7 @@ const PreviousOrder = ({
               isFullWidth
               onClick={() => trackClickGetHelpWithThisBox(orderId)}
               size="small"
+              testingSelector="PreviousOrderGetHelpCTA"
               variant={hasDeliveryToday ? 'secondary' : 'primary'}
             >
               Any issues with this box?

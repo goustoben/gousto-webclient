@@ -171,21 +171,9 @@ describe('<Footer />', () => {
         expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
       })
 
-      describe('when the isHelpCentreActive prop is passed as false', () => {
-        test('redirects to eligibility check page', () => {
-          expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
-        })
-      })
-
-      describe('when the isHelpCentreActive prop is passed as true', () => {
-        beforeEach(() => {
-          wrapper.setProps({ isHelpCentreActive: true })
-        })
-
-        test('the help links to the help center page', () => {
-          const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
-          expect(helpLink.prop('to')).toContain('/help-centre')
-        })
+      test('the help links to the help center page', () => {
+        const helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+        expect(helpLink.prop('to')).toContain('/help-centre')
       })
     })
   })

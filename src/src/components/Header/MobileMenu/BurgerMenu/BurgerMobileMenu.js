@@ -29,7 +29,6 @@ class BurgerMobileMenu extends React.PureComponent {
       promoCodeUrl,
       trackNavigationClick,
       isAuthenticated,
-      isHelpCentreActive,
       isMenuRedirectPageEnabled,
       postCode,
       trackClickRateRecipes
@@ -97,7 +96,7 @@ class BurgerMobileMenu extends React.PureComponent {
       }
 
       const isHelpLink = menuItem.name === 'Help'
-      const url = getLinkURL({ isHelpCentreActive, menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
+      const url = getLinkURL({ menuItem, isMenuRedirectPageEnabled, isAuthenticated, postCode })
 
       if (rateRecipesItem) {
         return (
@@ -105,7 +104,7 @@ class BurgerMobileMenu extends React.PureComponent {
             to={url}
             className={css.menuItem}
             key={menuItem.name}
-            clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
+            clientRouted={menuItem.clientRouted}
             tracking={() => {
               trackClickRateRecipes('hamburger')
             }}
@@ -125,7 +124,7 @@ class BurgerMobileMenu extends React.PureComponent {
           data-optimizely={isHelpLink ? 'mobile-header-help-link' : null}
           className={css.menuItem}
           key={menuItem.name}
-          clientRouted={isHelpCentreActive ? false : menuItem.clientRouted}
+          clientRouted={menuItem.clientRouted}
           tracking={() => {
             trackNavigationClick(trackingData)
           }}
@@ -173,7 +172,6 @@ BurgerMobileMenu.propTypes = {
   promoCodeUrl: PropTypes.string,
   show: PropTypes.bool.isRequired,
   trackNavigationClick: PropTypes.func.isRequired,
-  isHelpCentreActive: PropTypes.bool,
   isMenuRedirectPageEnabled: PropTypes.bool,
   postCode: PropTypes.string,
   trackClickRateRecipes: PropTypes.func
@@ -181,7 +179,6 @@ BurgerMobileMenu.propTypes = {
 
 BurgerMobileMenu.defaultProps = {
   isAuthenticated: false,
-  isHelpCentreActive: false,
   postCode: '',
   isMenuRedirectPageEnabled: false,
   trackClickRateRecipes: () => {}

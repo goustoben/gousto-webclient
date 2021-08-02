@@ -8,11 +8,9 @@ import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
-import userActions from 'actions/user'
 import { getUserId } from 'selectors/user'
-import { getIsHelpCentreActive, getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
-import orderActions from './order'
 import pricingActions from './pricing'
 import statusActions from './status'
 import authActions from './auth'
@@ -48,14 +46,10 @@ const loginVisibilityChange = visibility => ({
 })
 
 export const helpPreLoginVisibilityChange = visibility => (
-  (dispatch, getState) => {
+  (dispatch) => {
     if (visibility === true) {
-      const isHelpCentreActive = getIsHelpCentreActive(getState())
-      const { index, eligibilityCheck } = client.getHelp
-      const eligibilityCheckUrl = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${index}/${eligibilityCheck}`)}`
       const helpCentreUrl = `?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}${client.helpCentre}`)}`
-      const search = isHelpCentreActive ? helpCentreUrl : eligibilityCheckUrl
-      dispatch(push({ search }))
+      dispatch(push({ search: helpCentreUrl }))
     }
     dispatch({
       type: actionTypes.HELP_PRELOGIN_VISIBILITY_CHANGE,
@@ -133,7 +127,7 @@ const cannotLogin = ({ email, password }) => (
   }
 )
 
-export const loginRedirect = (location, userIsAdmin, features, userId) => {
+export const loginRedirect = (location, userIsAdmin, features) => {
   let destination
   const { pathname, search } = location
 
@@ -157,14 +151,9 @@ export const loginRedirect = (location, userIsAdmin, features, userId) => {
         const isGoustoTarget = (
           hostInfo.join('.') === globalsHostInfo
         )
-        const isZendeskTarget = (
-          hostInfo.join('.') === 'gousto.zendesk.com'
-        )
 
         if (isGoustoTarget) {
           destination = `${url.pathname}${url.search ? url.search : ''}`
-        } else if (isZendeskTarget) {
-          destination = userId ? `${target}?user_id=${userId}` : target
         }
       } catch (err) {
         // do nothing

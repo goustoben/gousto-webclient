@@ -2,14 +2,13 @@ import { connect } from 'react-redux'
 import { getIsAuthenticated } from 'selectors/auth'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { trackNavigationClick } from 'actions/tracking'
-import { getIsHelpCentreActive, getIsMenuRedirectPageEnabled } from 'selectors/features'
+import { getIsMenuRedirectPageEnabled } from 'selectors/features'
 import Footer from './Footer'
 
 const mapStateToProps = (state, ownProps) => ({
   isAuthenticated: getIsAuthenticated(state),
   simple: ownProps.simple || state.persist.get('simpleHeader', false),
   type: ownProps.type,
-  isHelpCentreActive: getIsHelpCentreActive(state),
   isMenuRedirectPageEnabled: getIsMenuRedirectPageEnabled(state),
   postCode: state.basket.get('postcode'),
 })

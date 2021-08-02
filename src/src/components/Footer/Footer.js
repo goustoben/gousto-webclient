@@ -19,52 +19,45 @@ const showHelpPreLogin = (helpPreLoginVisibilityChange) => (
 const renderHelpLink = (
   isAuthenticated,
   helpPreLoginVisibilityChange,
-  isHelpCentreActive,
   trackNavigationClick
-) => {
-  const getHelpRoute = clientRoutes.getHelp
-
-  return (
-    isAuthenticated
-      ? (
-        <Link
-          to={isHelpCentreActive
-            ? `${clientRoutes.helpCentre}`
-            : `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`}
-          data-optimizely="footer-help-link"
-          data-selid="footer-learn-more"
-          title="Help"
-          clientRouted={false}
-          secondary
-          tracking={() => trackNavigationClick({
+) => (
+  isAuthenticated
+    ? (
+      <Link
+        to={clientRoutes.helpCentre}
+        data-optimizely="footer-help-link"
+        data-selid="footer-learn-more"
+        title="Help"
+        clientRouted={false}
+        secondary
+        tracking={() => trackNavigationClick({
+          actionType: trackingKeys.clickHelpFooter,
+          seCategory: 'help',
+          logged_in: true,
+        })}
+      >
+        Help
+      </Link>
+    )
+    : (
+      <span
+        data-test="help-link"
+        role="button"
+        tabIndex="0"
+        onClick={() => {
+          showHelpPreLogin(helpPreLoginVisibilityChange)
+          trackNavigationClick({
             actionType: trackingKeys.clickHelpFooter,
             seCategory: 'help',
-            logged_in: true,
-          })}
-        >
-          Help
-        </Link>
-      )
-      : (
-        <span
-          data-test="help-link"
-          role="button"
-          tabIndex="0"
-          onClick={() => {
-            showHelpPreLogin(helpPreLoginVisibilityChange)
-            trackNavigationClick({
-              actionType: trackingKeys.clickHelpFooter,
-              seCategory: 'help',
-              logged_in: false,
-            })
-          }}
-          onKeyDown={onEnter(() => showHelpPreLogin(helpPreLoginVisibilityChange))}
-        >
-          Help
-        </span>
-      )
-  )
-}
+            logged_in: false,
+          })
+        }}
+        onKeyDown={onEnter(() => showHelpPreLogin(helpPreLoginVisibilityChange))}
+      >
+        Help
+      </span>
+    )
+)
 
 const Footer = ({
   copyright,
@@ -72,7 +65,6 @@ const Footer = ({
   isAuthenticated,
   simple,
   type,
-  isHelpCentreActive,
   trackNavigationClick,
   isMenuRedirectPageEnabled,
   postCode,
@@ -134,7 +126,7 @@ const Footer = ({
         </span>
       </li>
       <li className={css.menuItem}>
-        {renderHelpLink(isAuthenticated, helpPreLoginVisibilityChange, isHelpCentreActive, trackNavigationClick)}
+        {renderHelpLink(isAuthenticated, helpPreLoginVisibilityChange, trackNavigationClick)}
       </li>
       {renderTermsLink()}
       <li className={css.menuItem}>
@@ -283,7 +275,6 @@ Footer.propTypes = {
   helpPreLoginVisibilityChange: PropTypes.func.isRequired,
   simple: PropTypes.bool,
   type: PropTypes.string,
-  isHelpCentreActive: PropTypes.bool,
   trackNavigationClick: PropTypes.func.isRequired,
   isMenuRedirectPageEnabled: PropTypes.bool,
   postCode: PropTypes.string,
@@ -294,7 +285,6 @@ Footer.defaultProps = {
   isAuthenticated: false,
   simple: false,
   type: 'medium',
-  isHelpCentreActive: false,
   isMenuRedirectPageEnabled: false,
   postCode: '',
 }

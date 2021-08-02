@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { client as routes, zendesk as zendeskRoutes } from 'config/routes'
-import { addUserIdToUrl } from 'utils/url'
+import { client as routes } from 'config/routes'
 import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
@@ -49,7 +48,7 @@ const OrderIssue = ({
       <ItemLink
         label={otherItem}
         trackClick={trackClick(selectOrderIssue, 'other')}
-        to={addUserIdToUrl(zendeskRoutes.faqs, userId)}
+        to={routes.helpCentre}
         clientRouted={false}
       />
     </List>

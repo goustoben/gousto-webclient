@@ -1,4 +1,4 @@
-import { clickHelp } from './pageUtils/home/home'
+import { clickMyGousto } from './pageUtils/home/home'
 import {
   clickAcceptCTA,
   clickContactUsCTA,
@@ -17,6 +17,8 @@ describe('Given the customer is logged in', () => {
     cy.route('GET', /user\/current/, '@userCurrent').as('userCurrentRequest')
     cy.fixture('user/userCurrentActiveSubscription').as('userCurrentSubscription')
     cy.route('GET', /user\/current\/subscription/, '@userCurrentSubscription').as('userCurrentSubscriptionRequest')
+    cy.fixture('getHelp/order/order26May20').as('currentOrder')
+    cy.route('GET', /order\/16269494/, '@currentOrder')
 
     cy.login()
   })
@@ -27,9 +29,8 @@ describe('Given the customer is logged in', () => {
     })
   })
 
-  describe('When their order is eligible for ingredients refund and Help is clicked', () => {
+  describe('When the order is eligible for ingredients refund and I click "Any issues with this box?" on last delivery in My Gousto', () => {
     beforeEach(() => {
-      // Make sure that we are authenticated when going to /get-help/eligibility-check
       cy.visit('/')
       cy.wait(['@identifyRequest', '@userCurrentRequest'])
 
@@ -43,9 +44,9 @@ describe('Given the customer is logged in', () => {
       cy.fixture('getHelp/ssr/validate').as('validate')
       cy.route('POST', /ssr\/v1\/ssr\/validate/, '@validate')
 
-      // Going to / and then clicking in Help is done only to make sure we are authenticated
-      // when we go to /get-help/eligibility-check.
-      clickHelp()
+      clickMyGousto()
+
+      cy.get('[data-testing="PreviousOrderGetHelpCTA"]').click()
     })
 
     describe('And the issue "Ingredients" is clicked', () => {

@@ -14,7 +14,7 @@ describe('given BurgerMobileMenu is called', () => {
   const menuItems = [
     { disabled: false, name: 'Home', url: '/home', clientRouted: true },
     { disabled: false, name: 'Choose Recipes', url: '/menu' },
-    { disabled: false, name: 'Help', url: '/help', clientRouted: true },
+    { disabled: false, name: 'Help', url: '/help-centre', clientRouted: false },
     { disabled: false, name: 'Rate My Recipes', url: '/rate-my-recipes', clientRouted: false, tracking: 'clickRateRecipes' },
   ]
 
@@ -47,7 +47,7 @@ describe('given BurgerMobileMenu is called', () => {
         expect(wrapper.find(Link)).toHaveLength(4)
         expect(wrapper.find(Link).at(0).prop('to')).toEqual('/home')
         expect(wrapper.find(Link).at(1).prop('to')).toEqual('/menu')
-        expect(wrapper.find(Link).at(2).prop('to')).toEqual('/help')
+        expect(wrapper.find(Link).at(2).prop('to')).toEqual('/help-centre')
         expect(wrapper.find(Link).at(3).prop('to')).toEqual('/rate-my-recipes')
       })
 
@@ -69,29 +69,16 @@ describe('given BurgerMobileMenu is called', () => {
         }
         const helpLink = wrapper
           .find(Link)
-          .filterWhere((link) => link.prop('to') === '/help')
+          .filterWhere((link) => link.prop('to') === '/help-centre')
         helpLink.simulate('click')
         expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
       })
 
-      describe('and the feature isHelpCentreActive is true', () => {
-        beforeEach(() => {
-          wrapper.setProps({ isHelpCentreActive: true })
-        })
-
-        test('the help link points to the help centre', () => {
-          const helpLink = wrapper
-            .find(Link)
-            .filterWhere((link) => link.prop('to') === '/help-centre')
-          expect(helpLink.exists()).toBe(true)
-        })
-
-        test('the help link is not clientRouted', () => {
-          const helpLink = wrapper
-            .find(Link)
-            .filterWhere((link) => link.prop('to') === '/help-centre')
-          expect(helpLink.prop('clientRouted')).toBe(false)
-        })
+      test('the help link is not clientRouted', () => {
+        const helpLink = wrapper
+          .find(Link)
+          .filterWhere((link) => link.prop('to') === '/help-centre')
+        expect(helpLink.prop('clientRouted')).toBe(false)
       })
 
       describe('when a menu option is set as disabled', () => {

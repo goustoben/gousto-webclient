@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import actions from 'actions'
 import { helpPreLoginVisibilityChange } from 'actions/login'
 import { Header } from 'Header/Header'
-import routesConfig, { zendesk } from 'config/routes'
+import routesConfig from 'config/routes'
 import * as trackingKeys from 'actions/trackingKeys'
 
 jest.mock('actions')
@@ -287,7 +287,6 @@ describe('Header', () => {
     })
 
     test('renders menu items in correct order', () => {
-      const getHelpRoute = routesConfig.client.getHelp
       const expected = [
         {
           clientRouted: true,
@@ -343,9 +342,9 @@ describe('Header', () => {
           tracking: 'SustainabilityNavigation Clicked',
         },
         {
-          clientRouted: true,
+          clientRouted: false,
           name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
+          url: routesConfig.client.helpCentre,
           tracking: 'click_help_navigation',
         }
       ]
@@ -353,20 +352,20 @@ describe('Header', () => {
       expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
     })
 
-    test('on desktop the help links to eligibility check page', () => {
+    test('on desktop the help links to the help centre', () => {
       const helpLink = wrapper.find('GoustoLink').at(4)
 
-      expect(helpLink.prop('to')).toContain('get-help/eligibility-check')
+      expect(helpLink.prop('to')).toContain('/help-centre')
     })
 
-    test('on mobile the help links to eligibility check page', () => {
+    test('on mobile the help links to the help centre', () => {
       const helpMenuItem = wrapper
         .find('MobileMenu')
         .prop('mobileMenuItems')
         .filter((menuItem) => menuItem.name === 'Help')
         .pop()
 
-      expect(helpMenuItem.url).toContain('get-help/eligibility-check')
+      expect(helpMenuItem.url).toContain('/help-centre')
     })
 
     test('help link dispatches a tracking action with correct data', () => {
@@ -379,18 +378,6 @@ describe('Header', () => {
       helpLink.prop('tracking')()
 
       expect(trackNavigationClick).toHaveBeenCalledWith(TRACKING_DATA)
-    })
-
-    describe('when the isHelpCentreActive prop is passed as true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isHelpCentreActive: true })
-      })
-
-      test('on desktop the help links to the help center page', () => {
-        const helpLink = wrapper.find('GoustoLink').at(4)
-
-        expect(helpLink.prop('to')).toContain('/help-centre')
-      })
     })
   })
 
@@ -412,7 +399,6 @@ describe('Header', () => {
     })
 
     test('should render menu items in correct order', () => {
-      const getHelpRoute = routesConfig.client.getHelp
       const expected = [
         {
           clientRouted: true,
@@ -438,9 +424,9 @@ describe('Header', () => {
           tracking: 'SustainabilityNavigation Clicked',
         },
         {
-          clientRouted: true,
+          clientRouted: false,
           name: 'Help',
-          url: `${getHelpRoute.index}/${getHelpRoute.eligibilityCheck}`,
+          url: routesConfig.client.helpCentre,
           tracking: 'click_help_navigation',
         }
       ]
@@ -498,9 +484,9 @@ describe('Header', () => {
         .toBe('We can help you faster if you\'re logged in')
     })
 
-    test('renders the Continue as new customer link to Zendesk', () => {
+    test('renders the Continue as new customer link to Help Centre', () => {
       expect(wrapper.find('.continueAsNewCustomerLink').prop('to'))
-        .toBe(zendesk.faqs)
+        .toBe(routesConfig.client.helpCentre)
     })
 
     test('renders the Continue as new customer link with client routed set to false', () => {
@@ -515,17 +501,6 @@ describe('Header', () => {
 
     test('tracks Help Pre Login modal visibility', () => {
       expect(trackHelpPreLoginModalDisplayed).toHaveBeenCalled()
-    })
-
-    describe('when the isHelpCentreActive is passed as true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ isHelpCentreActive: true })
-      })
-
-      test('renders the Continue as new customer link to Help Centre', () => {
-        expect(wrapper.find('.continueAsNewCustomerLink').prop('to'))
-          .toBe('/help-centre')
-      })
     })
 
     describe('and the close button of the modal panel is clicked', () => {

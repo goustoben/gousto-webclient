@@ -59,7 +59,7 @@ describe('<OrderIssue />', () => {
       expect(itemLinks.at(0).prop('to')).toBe('/get-help/user/456/order/123/ingredients')
       expect(itemLinks.at(1).prop('to')).toBe('/get-help/user/456/order/123/recipe-cards')
       expect(itemLinks.at(2).prop('to')).toBe(`/get-help/user/${PROPS.userId}/order/${PROPS.orderId}/delivery`)
-      expect(itemLinks.at(3).prop('to')).toBe(`https://gousto.zendesk.com/hc/en-gb/?user_id=${PROPS.userId}`)
+      expect(itemLinks.at(3).prop('to')).toBe('/help-centre')
     })
 
     test('the Others option is not client route', () => {

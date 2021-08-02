@@ -20,11 +20,7 @@ describe('login reducer', () => {
     test.each(cases)('when the visibility is %s the new state.helpPreLogin is %s', (visibility, expectedStateValue) => {
       const dispatch = jest.fn()
       const getState = jest.fn()
-      getState.mockReturnValue({
-        features: Immutable.fromJS({
-          isHelpCentreActive: { value: false }, // Value is irrelevant for this test
-        }),
-      })
+
       helpPreLoginVisibilityChange(visibility)(dispatch, getState)
       const dispatchCalls = dispatch.mock.calls
       const paramOfLastCallToDispatch = dispatchCalls[dispatchCalls.length - 1][0]
