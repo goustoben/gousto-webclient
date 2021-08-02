@@ -56,8 +56,11 @@ jobs:
             CYPRESS_baseUrl: https://staging-frontend.gousto.info # Hard coded to staging for the mo, replace with ${ENVIRONMENT}
             CYPRESS_WAF_ACCESS_TOKEN: $WAF_ACCESS_TOKEN
             NODE_OPTIONS: max-http-header-size=1000000
+      - run:
+          name: List test results
+          command: ls -l ~/project/test/regression/test_results/cypress
       - store_test_results:
-          path: /root/project/test/regression/test_results/cypress
+          path: ~/project/test/regression/test_results/cypress
       # - store_artifacts:
       #     path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
       #     destination: report.html
