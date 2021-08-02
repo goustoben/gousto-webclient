@@ -51,11 +51,13 @@ jobs:
           name: Run regression tests
           command: |
             cd tests/regression &&
-            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)"
+            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-circleci-reporter
           environment:
             CYPRESS_baseUrl: https://staging-frontend.gousto.info # Hard coded to staging for the mo, replace with ${ENVIRONMENT}
             CYPRESS_WAF_ACCESS_TOKEN: $WAF_ACCESS_TOKEN
             NODE_OPTIONS: max-http-header-size=1000000
+      - store_test_results:
+          path: test_results
       # - store_artifacts:
       #     path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
       #     destination: report.html
