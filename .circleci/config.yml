@@ -57,7 +57,7 @@ jobs:
             CYPRESS_WAF_ACCESS_TOKEN: $WAF_ACCESS_TOKEN
             NODE_OPTIONS: max-http-header-size=1000000
       - store_test_results:
-          path: /root/project/test/regression/test_results
+          path: /root/project/test/regression/test_results/cypress
       # - store_artifacts:
       #     path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
       #     destination: report.html
