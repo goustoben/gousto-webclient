@@ -135,7 +135,7 @@ jobs:
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
           no_output_timeout: 20m
 
-  test-e2e-selenium:
+  test-e2e:
     docker: *gousto_platform_image #stock image missing aws cli
     working_directory: ~/project/tests/e2e
     resource_class: large
@@ -169,7 +169,7 @@ jobs:
       - run:
           name: Run E2E tests
           working_directory: ~/project/tests/e2e
-          command: npm run test:staging
+          command: npm run test:fef
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always

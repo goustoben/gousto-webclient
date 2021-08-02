@@ -16,6 +16,7 @@ shape configs into groups:
 const settings = [
   'env.local',
   'env.staging',
+  'env.fef',
   'device.chrome'
 ].reduce((p, c) => {
   const [ group, key ] = c.split('.');
