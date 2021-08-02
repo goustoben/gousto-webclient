@@ -141,7 +141,7 @@ if (__PROD__ && __ENV__ === 'local') { // required for local PROD build
 
 app.use(processRequest)
 
-const port = 8080
+const port = __ENV__ === 'local' ? 8080 : 80
 
 app.listen(port, () => {
   logger.notice(`==> ✅  Koa Server is listening on port ${port}`)

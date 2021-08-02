@@ -37,5 +37,3 @@ node_version: 10.14.2
 nvm_root: "/opt/nvm"
 node_env: development
 node_server_port: 8080
-
-ngnix_port: 85

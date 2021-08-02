@@ -93,7 +93,6 @@ jobs:
             - project/regression
             - project/ansible
             - project/cloudformation
-            - project/kubernetes
             - project/service.yml
 
   setup-platform:
@@ -144,17 +143,6 @@ jobs:
           root: ~/
           paths:
             - project/src
-
-  build-nginx-image:
-    docker: *gousto_platform_image
-    steps:
-      - setup_remote_docker
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Create & deploy image
-          command: source ~/.circlerc && python ./ci_scripts/create_image.py --name nginx
-          no_output_timeout: 10m
 
   build-webclient-image:
     docker: *gousto_build_image
@@ -335,14 +323,6 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - build-nginx-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-platform
-          filters:
-            branches:
-              only:
-                - /^env-.*/
       - build-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -387,7 +367,6 @@ workflows:
       - deploy-containers:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-nginx-image
             - deploy-webclient-image
           filters:
             branches:
@@ -450,10 +429,6 @@ workflows:
           requires:
             - jest-coverage-report
             - eslint-generate-report
-      - build-nginx-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-platform
           filters:
             branches:
               only:
@@ -503,7 +478,6 @@ workflows:
       - deploy-containers:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-nginx-image
             - deploy-webclient-image
             - publish-code-health
           filters:
@@ -564,14 +538,6 @@ workflows:
             branches:
               only:
                 - master
-      - build-nginx-image:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - setup-platform
-          filters:
-            branches:
-              only:
-                - master
       - setup-build-application:
           context: gousto-prod-aws-app-circleci
           requires:
@@ -616,7 +582,6 @@ workflows:
       - deploy-containers:
           context: gousto-prod-aws-app-circleci
           requires:
-            - build-nginx-image
             - deploy-webclient-image
           filters:
             branches:
