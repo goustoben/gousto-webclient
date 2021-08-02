@@ -16,6 +16,7 @@ gousto_platform_image: &gousto_platform_image
 jobs:
   max-jest:
     docker: *gousto_build_image
+    working_directory: ~/project/src
     parallelism: 5
     steps:
       - attach_workspace:
@@ -293,7 +294,7 @@ workflows:
               branches:
                 only:
                   - FEF-149-improve-unit-test-perf
-      - jest-coverage-report:
+      - max-jest:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
