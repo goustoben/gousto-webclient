@@ -26,6 +26,7 @@
     "moment": "^2.25.3"
   },
   "devDependencies": {
+    "cypress-circleci-reporter": "^0.2.0",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-pipe": "^1.7.0",
     "mocha": "^8.3.2",
