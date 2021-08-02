@@ -193,11 +193,11 @@ jobs:
       - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
-          command: source ~/.circlerc && ./lease-access.sh
+          command: source ~/.circlerc && ENVIRONMENT=fef ./lease-access.sh
       - run:
           name: Run E2E tests
           working_directory: tests/e2e
-          command: npm run test:staging
+          command: npm run test:fef
       - store_test_results:
           path: tests/e2e/reports
           destination: test_results
