@@ -39,7 +39,7 @@ jobs:
       run: npm ci
       working-directory: src
     - name: Jest coverage report
-      uses: mattallty/jest-github-action@v1
+      uses: mattallty/jest-github-action@v1.0.3
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
