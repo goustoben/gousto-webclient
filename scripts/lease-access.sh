@@ -1,5 +1,8 @@
 #!/bin/bash
 
+now=$(date +"%T")
+echo "Leasing access to environments at: $now"
+
 AWS_ACCESS_KEY_ID=$BETA_AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY=$BETA_AWS_SECRET_ACCESS_KEY \
 gousto env sglease $ENVIRONMENT --sgs platform-tools -p 4444 -t 30
 
@@ -21,3 +24,9 @@ echo "export ipsetScope=$ipsetScope" >> $BASH_ENV
 echo "export ipsetId=$ipsetId" >> $BASH_ENV
 echo "export nextLockToken=$nextLockToken" >> $BASH_ENV
 echo "export ipsetAddresses='$ipsetAddresses'" >> $BASH_ENV
+
+echo "Adding 60s sleep due to WAF update time :-("
+sleep 60
+
+later=$(date +"%T")
+echo "Finished leasing access at: $later"
