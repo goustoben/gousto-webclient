@@ -179,11 +179,18 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Install curl
-          command: apt-get -y update && apt-get -y install curl
+          name: Install dependencies
+          command: apt-get -y update && apt-get -y install curl jq
       - run:
-          name: Run e2e selenium tests
-          command: source ~/.circlerc && scripts/validate.sh
+          name: Lease CI node access to public and internal ALBs
+          command: source ~/.circlerc && scripts/lease-access.sh
+      - run:
+          name: Run E2E selenium tests
+          command: source ~/.circlerc && cd tests/e2e && npm run test:staging
+      - run:
+          name: Cleanup CI IP access to ALB WAF
+          when: always
+          command: aws wafv2 update-ip-set --name $ipsetName --scope $ipsetScope --id $ipsetId --lock-token $nextLockToken --addresses $ipsetAddresses
 
   test-regression:
     docker: *gousto_build_image
