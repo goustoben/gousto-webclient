@@ -250,6 +250,23 @@ jobs:
 workflows:
   version: 2
 
+  max-test:
+    jobs:
+      - setup-src:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - FEF-149-unit-test-perf
+      - unit-tests:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - FEF-149-unit-test-perf
+          requires:
+            - setup-src
+
   e2e-manual:
     jobs:
       - setup-src:
