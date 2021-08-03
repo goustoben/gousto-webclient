@@ -14,21 +14,18 @@ gousto_platform_image: &gousto_platform_image
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
 jobs:
-  jest-coverage-report:
+  unit-tests:
     docker: *gousto_build_image
-    environment:
-      TZ: "Europe/London"
+    working_directory: ~/project/src
+    parallelism: 3
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Test coverage
-          command: cd src && npm run test:jest:ci:coverage
-          no_output_timeout: 30m
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/src/coverage/coverage-summary.json
+          name: Run split tests
+          command: |
+            TESTS=$(circleci tests glob **/__tests__/**/*.test.js | circleci tests split)
+            yarn test:jest:ci $TESTS
 
   eslint-generate-report:
     docker: *gousto_build_image
@@ -402,7 +399,7 @@ workflows:
             branches:
               only:
                 - develop
-      - jest-coverage-report:
+      - unit-tests:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
@@ -413,7 +410,7 @@ workflows:
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
-            - jest-coverage-report
+            - unit-tests
             - eslint-generate-report
           filters:
             branches:
