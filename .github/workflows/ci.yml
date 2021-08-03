@@ -38,6 +38,8 @@ jobs:
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: npm ci
       working-directory: src
+    - name: Print working dir
+      run: pwd
     - name: Jest coverage report
       uses: mattallty/jest-github-action@v1.0.3
       env:
@@ -45,7 +47,7 @@ jobs:
       with:
         changes-only: true
         working-directory: "src"
-        test-command: "npm run test:jest:ci"
+        test-command: "npm run test:jest:ci && ls -l"
     - name: Lint
       run: ./scripts/run-eslint-ci.sh
       working-directory: src
