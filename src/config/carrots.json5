@@ -158,19 +158,6 @@
             }
           }
         },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://carrots-api.gousto.info/graphql/v1",
-              "local": "https://carrots-api.gousto.info/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://carrots-graphql.gousto.info",
-              "local": "https://carrots-api.gousto.info/graphql/v1"
-            }
-          }
-        },
         "loggingmanager": {
           "1": {
             "versionString": "",

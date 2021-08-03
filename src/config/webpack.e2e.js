@@ -89,10 +89,6 @@ const config = {
           'image-webpack-loader',
         ],
       },
-      {
-        test: /\.(graphql|gql)$/,
-        loader: 'graphql-tag/loader',
-      },
     ],
   },
   plugins: [

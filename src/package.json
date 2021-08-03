@@ -53,9 +53,6 @@
     "cookies-js": "1.2.3",
     "dompurify": "^2.0.8",
     "gousto-lumberjack-js": "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4",
-    "graphql": "0.11.7",
-    "graphql-anywhere": "4.1.22",
-    "graphql-tag": "2.10.0",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
     "jsonfile": "4.0.0",
@@ -156,7 +153,6 @@
     "inject-loader": "4.0.1",
     "jest": "23.6.0",
     "jest-fetch-mock": "^3.0.3",
-    "jest-transform-graphql": "2.1.0",
     "jsdom": "11.3.0",
     "json5": "^2.2.0",
     "lodash-webpack-plugin": "0.11.5",
@@ -236,7 +232,6 @@
     ],
     "transform": {
       "^.+\\.js?$": "babel-jest",
-      "\\.(gql|graphql)$": "jest-transform-graphql",
       "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
     },
     "collectCoverageFrom": [

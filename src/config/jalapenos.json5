@@ -158,19 +158,6 @@
             }
           }
         },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://jalapenos-api.gousto.info/graphql/v1",
-              "local": "https://jalapenos-api.gousto.info/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://jalapenos-graphql.gousto.info",
-              "local": "https://jalapenos-api.gousto.info/graphql/v1"
-            }
-          }
-        },
         "loggingmanager": {
           "1": {
             "versionString": "",
