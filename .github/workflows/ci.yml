@@ -47,7 +47,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         changes-only: true
-        working-directory: "src"
         test-command: "echo 'skipping test run, performed in previous step'"
     - name: Lint
       run: ./scripts/run-eslint-ci.sh
