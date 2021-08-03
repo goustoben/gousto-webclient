@@ -376,7 +376,9 @@ describe('Menu', () => {
           disabled
         />,
       )
-      expect(menuLoadBoxPrices).not.toHaveBeenCalled()
+
+      // 📝 MH TODO 📝: Intentionally failed test
+      expect(menuLoadBoxPrices).toHaveBeenCalled()
     })
   })
 })
