@@ -14,7 +14,7 @@ export const items = [
   {
     key: 'itemRecipes',
     className: css.itemRecipes,
-    strongText: 'Over 50 recipes',
+    strongText: 'Over 60 recipes',
     normalText: 'changing weekly',
   },
   {

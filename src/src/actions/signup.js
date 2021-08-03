@@ -22,20 +22,22 @@ export function signupSetStep(step) {
     const signupState = getState().signup
     const steps = signupState.getIn(['wizard', 'steps'])
 
-    const newStepNumber = steps.findIndex(stepName => stepName === step.get('name'))
-    const isLastStep = newStepNumber === steps.size - 1
+    if (step) {
+      const newStepNumber = steps.findIndex(stepName => stepName === step.get('name'))
+      const isLastStep = newStepNumber === steps.size - 1
 
-    dispatch({
-      type: actionTypes.SIGNUP_STEP_SET,
-      currentStepName: step.get('name'),
-      currentStepNumber: newStepNumber,
-      isLastStep,
-      trackingData: {
+      dispatch({
         type: actionTypes.SIGNUP_STEP_SET,
-        step: step.get('slug'),
-        stepName: step.get('name'),
-      },
-    })
+        currentStepName: step.get('name'),
+        currentStepNumber: newStepNumber,
+        isLastStep,
+        trackingData: {
+          type: actionTypes.SIGNUP_STEP_SET,
+          step: step.get('slug'),
+          stepName: step.get('name'),
+        },
+      })
+    }
   }
 }
 
