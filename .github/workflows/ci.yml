@@ -38,9 +38,12 @@ jobs:
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       run: npm ci
       working-directory: src
-    - name: Run tests
-      run: npm run test:jest:ci:coverage
-      working-directory: src
+    - name: Jest coverage report
+      uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: src
+        skip-step: install
     - name: Lint
       run: ./scripts/run-eslint-ci.sh
       working-directory: src
