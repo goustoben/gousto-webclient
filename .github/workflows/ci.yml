@@ -39,11 +39,13 @@ jobs:
       run: npm ci
       working-directory: src
     - name: Jest coverage report
-      uses: ArtiomTr/jest-coverage-report-action@v2.0-rc.3
+      uses: mattallty/jest-github-action@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        working-directory: src
-        skip-step: install
+        changes-only: true
+        working-directory: "src"
+        test-command: "npm run test:jest:ci"
     - name: Lint
       run: ./scripts/run-eslint-ci.sh
       working-directory: src
