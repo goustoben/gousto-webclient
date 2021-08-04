@@ -17,7 +17,7 @@ jobs:
   unit-tests:
     docker: *gousto_build_image
     working_directory: ~/project/src
-    parallelism: 3
+    parallelism: 5
     steps:
       - attach_workspace:
           at: ~/
