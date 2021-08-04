@@ -13,6 +13,9 @@ import statusActions from 'actions/status'
 import { getAuthUserId, getIsAuthenticated } from 'selectors/auth'
 import { getPreviewOrderId } from 'selectors/basket'
 import { getUserStatus } from 'selectors/user'
+import { checkoutUrgencySetCurrentStatus } from 'routes/Checkout/checkoutActions'
+import { checkoutUrgencyStatuses } from 'routes/Checkout/checkoutUrgencyConfig'
+import { getIsCheckoutUrgencyEnabled } from 'routes/Checkout/checkoutSelectors'
 import {
   getSlotForBoxSummaryDeliveryDays,
   getCouldBasketBeExpired,
@@ -32,6 +35,13 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
   dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, true))
   dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
 
+  const state = getState()
+
+  const isCheckoutUrgencyEnabled = getIsCheckoutUrgencyEnabled(state)
+  if (isCheckoutUrgencyEnabled) {
+    dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.loading))
+  }
+
   if (!slot) {
     logger.error({ message: `Can't find any slot with id: ${slotId}`, actor: userId })
 
@@ -40,8 +50,6 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
 
     return
   }
-
-  const state = getState()
 
   const isOrderWithoutRecipes = getIsOrderWithoutRecipes(state)
 
@@ -73,6 +81,10 @@ export const checkoutCreatePreviewOrder = () => async (dispatch, getState) => {
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
     if (isOrderWithoutRecipes) {
       dispatch(pricingSuccess(previewOrder.prices))
+    }
+
+    if (isCheckoutUrgencyEnabled) {
+      dispatch(checkoutUrgencySetCurrentStatus(checkoutUrgencyStatuses.running))
     }
   } catch (e) {
     const { message, code } = e

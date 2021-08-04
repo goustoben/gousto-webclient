@@ -18,7 +18,7 @@ const errorsToCapture = [
   ...paypalErrors,
 ]
 
-const initialState = () => Immutable.fromJS({
+const checkoutInitialState = Immutable.fromJS({
   addressEdited: false,
   billingAddressEdited: false,
   confirmedAddress: false,
@@ -56,18 +56,18 @@ const initialState = () => Immutable.fromJS({
 const checkout = {
   checkout: (state, action) => {
     if (!state) {
-      return initialState()
+      return checkoutInitialState
     }
 
     switch (action.type) {
     case actionTypes.CHECKOUT_ERRORS_CLEAR: {
       return state
-        .set('errors', initialState().get('errors'))
+        .set('errors', checkoutInitialState.get('errors'))
     }
 
     case actionTypes.CHECKOUT_PAYPAL_ERRORS_CLEAR: {
       return state
-        .set('paypalErrors', initialState().get('paypalErrors'))
+        .set('paypalErrors', checkoutInitialState.get('paypalErrors'))
     }
 
     case actionTypes.CHECKOUT_ADDRESSES_RECEIVE: {
@@ -92,7 +92,7 @@ const checkout = {
 
     case actionTypes.PAYMENT_SET_PAYMENT_METHOD: {
       return state
-        .set('errors', initialState().get('errors'))
+        .set('errors', checkoutInitialState.get('errors'))
     }
 
     case actionTypes.PAYMENT_SET_PAYPAL_CLIENT_TOKEN: {

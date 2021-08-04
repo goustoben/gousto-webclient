@@ -25,7 +25,9 @@ import { Breadcrumbs } from './Components/Breadcrumbs'
 import { Summary } from './Components/Summary'
 import { BoxDetailsContainer, YourBoxDetailsContainer } from './Components/BoxDetails'
 import { ExpandableBoxSummary } from './Components/ExpandableBoxSummary'
-
+import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency'
+import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/CheckoutUrgencyModal'
+import { CheckoutUrgencyBanner } from './Components/CheckoutUrgency/CheckoutUrgencyBanner'
 import css from './Checkout.css'
 
 const checkoutSteps = ['account', 'delivery', 'payment']
@@ -68,6 +70,7 @@ const propTypes = {
   lastReachedStepIndex: PropTypes.number,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,
   isPaymentBeforeChoosingV3Enabled: PropTypes.bool,
+  isCheckoutUrgencyEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -97,6 +100,7 @@ const defaultProps = {
   lastReachedStepIndex: 0,
   isPaymentBeforeChoosingEnabled: false,
   isPaymentBeforeChoosingV3Enabled: false,
+  isCheckoutUrgencyEnabled: false,
 }
 
 const contextTypes = {
@@ -449,7 +453,41 @@ class Checkout extends PureComponent {
     )
   }
 
-  render() {
+  renderCheckoutUrgencyVariant() {
+    const {
+      params: { stepName },
+      prices,
+      trackUTMAndPromoCode,
+    } = this.props
+
+    return (
+      <CheckoutUrgencyControllerContainer>
+        <Div data-testing="checkoutContainer">
+          <Div className={css.checkoutContent}>
+            {stepName !== 'order-summary' && (
+              <div className={css.mobileOnly} data-testing="checkoutExpandableBoxSummary">
+                <ExpandableBoxSummary
+                  totalToPay={prices.get('total')}
+                  totalWithoutDiscount={prices.get('recipeTotal')}
+                  trackUTMAndPromoCode={trackUTMAndPromoCode}
+                  promoCodeValid={prices.get('promoCodeValid')}
+                >
+                  {this.renderSummaryAndYourBox()}
+                </ExpandableBoxSummary>
+              </div>
+            )}
+            <CheckoutUrgencyBanner />
+            {stepName !== 'order-summary' && this.renderProgressBar(stepName)}
+            {this.renderCheckoutSteps()}
+            {this.renderLoginModal()}
+          </Div>
+        </Div>
+        <CheckoutUrgencyModalContainer />
+      </CheckoutUrgencyControllerContainer>
+    )
+  }
+
+  renderControl() {
     const {
       params: { stepName },
       prices,
@@ -477,6 +515,15 @@ class Checkout extends PureComponent {
         </Div>
       </Div>
     )
+  }
+
+  render() {
+    const { isCheckoutUrgencyEnabled } = this.props
+    if (isCheckoutUrgencyEnabled) {
+      return this.renderCheckoutUrgencyVariant()
+    }
+
+    return this.renderControl()
   }
 }
 
