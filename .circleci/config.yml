@@ -289,7 +289,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: source ~/.circlerc && scripts/install-test-dependencies.sh
+      - run:
+          working_directory: tests/e2e
+          command: npm ci
+      - run:
+          working_directory: tests/regression
+          command: npm ci
       - persist_to_workspace:
           root: ~/
           paths:
