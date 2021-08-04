@@ -43,6 +43,7 @@ jobs:
       working-directory: src
     - name: Create coverage report
       uses: mattallty/jest-github-action@v1.0.3
+      if: success() || failure()
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
