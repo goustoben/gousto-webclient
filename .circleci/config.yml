@@ -209,7 +209,8 @@ jobs:
             cd tests/regression &&
             ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
           environment:
-            CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
+            CYPRESS_baseUrl: https://staging-frontend.gousto.info
+            # CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
             CYPRESS_WAF_ACCESS_TOKEN: $WAF_ACCESS_TOKEN
             CYPRESS_platform: web
             NODE_OPTIONS: max-http-header-size=1000000
@@ -300,6 +301,37 @@ jobs:
 workflows:
   version: 2
 
+  max-test:
+    jobs:
+      - setup-src:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - FEF-148-improve-regression-tests-perf
+      - setup-platform:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - FEF-148-improve-regression-tests-perf
+      - install-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-src
+            - setup-platform
+          filters:
+            branches:
+              only:
+                - FEF-148-improve-regression-tests-perf
+      - test-regression:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-test-dependencies
+          filters:
+            branches:
+              only:
+                - FEF-148-improve-regression-tests-perf
   e2e-manual:
     jobs:
       - setup-src:
