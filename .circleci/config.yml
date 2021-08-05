@@ -199,6 +199,7 @@ jobs:
 
   test-regression:
     docker: *gousto_build_image
+    working_directory: tests/regression
     parallelism: 5
     steps:
       - attach_workspace:
@@ -206,14 +207,16 @@ jobs:
       - run:
           name: Run regression tests
           command: |
-            cd tests/regression &&
-            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json" &&
-            npm run report
+            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
           environment:
             CYPRESS_baseUrl: https://staging-frontend.gousto.info
             # CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
             CYPRESS_platform: web
             NODE_OPTIONS: max-http-header-size=1000000
+      - run:
+          name: Create reports
+          when: always
+          command: npm run report
       - store_test_results:
           path: ~/project/tests/regression/test_results/cypress
       - store_artifacts:
