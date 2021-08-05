@@ -1,12 +1,6 @@
 ---
 version: 2.1
 
-gousto_build_image: &gousto_build_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node12:latest
-      aws_auth:
-        aws_access_key_id: $AWS_ERC_ACCESS_KEY
-        aws_secret_access_key: $AWS_ERC_SECRET_KEY
-
 gousto_platform_image: &gousto_platform_image
     - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
       aws_auth:
@@ -19,7 +13,8 @@ orbs:
 jobs:
 
   jest-coverage-report:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4
     environment:
       TZ: "Europe/London"
     steps:
@@ -35,7 +30,8 @@ jobs:
             - project/src/coverage/coverage-summary.json
 
   eslint-generate-report:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4
     environment:
       TZ: "Europe/London"
     steps:
@@ -50,7 +46,8 @@ jobs:
             - project/src/eslint-results.json
 
   publish-code-health:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4
     environment:
       TZ: "Europe/London"
     steps:
@@ -67,12 +64,17 @@ jobs:
 
 
   setup-ci-variables-and-download-platform-scripts:
-    docker: *gousto_platform_image
+    docker: *gousto_platform_image #stock image missing /gousto directory
     steps:
       - checkout
       - run:
           name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
           command: /gousto/platform-setup.sh
+      - run:
+          name: Set S3 Cloudfront URL
+          command: |
+            source ~/.circlerc && CLOUDFRONT_URL=$(python /root/project/ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-1)
+            echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
@@ -96,7 +98,8 @@ jobs:
             - .circlerc
 
   build-webclient:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
@@ -121,7 +124,7 @@ jobs:
             - .circlerc
 
   create-and-upload-webclient-docker-image-to-ecr:
-    docker: *gousto_platform_image
+    docker: *gousto_platform_image #stock image missing boto
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
@@ -132,8 +135,8 @@ jobs:
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
           no_output_timeout: 20m
 
-  test-e2e:
-    docker: *gousto_build_image
+  test-e2e-selenium:
+    docker: *gousto_platform_image #stock image missing aws cli
     working_directory: ~/project/tests/e2e
     resource_class: large
     steps:
@@ -173,7 +176,8 @@ jobs:
           command: aws wafv2 update-ip-set --name $ipsetName --scope $ipsetScope --id $ipsetId --lock-token $nextLockToken --addresses $ipsetAddresses
 
   test-regression:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4-browsers
     working_directory: ~/project/tests/regression
     parallelism: 5
     steps:
@@ -202,7 +206,8 @@ jobs:
           destination: ./
 
   test-regression-mobile:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4-browsers
     working_directory: ~/project/tests/regression
     parallelism: 5
     steps:
@@ -231,7 +236,7 @@ jobs:
           destination: ./
 
   deploy-infrastructure-and-webclient-image:
-    docker: *gousto_platform_image
+    docker: *gousto_platform_image #stock image missing boto
     steps:
       - attach_workspace:
           at: ~/
@@ -241,7 +246,8 @@ jobs:
 
 
   install-regression-test-dependencies:
-    docker: *gousto_build_image
+    docker:
+      - image: cimg/node:12.22.4
     steps:
       - attach_workspace:
           at: ~/
