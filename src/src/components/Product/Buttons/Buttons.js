@@ -19,7 +19,7 @@ class Buttons extends React.PureComponent {
 
   getTooltipMessage = () => {
     if (this.props.outOfStock) {
-      return 'Sorry, we don\'t have anymore in stock'
+      return 'Sorry, we don\'t have any more in stock'
     }
 
     if (this.props.limitReached) {
