@@ -199,7 +199,7 @@ jobs:
 
   test-regression:
     docker: *gousto_build_image
-    working_directory: tests/regression
+    working_directory: ~/project/tests/regression
     parallelism: 5
     steps:
       - attach_workspace:
