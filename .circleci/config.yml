@@ -206,6 +206,9 @@ jobs:
       - run:
           name: Run regression tests
           command: |
+            echo $CYPRESS_baseUrl &&
+            echo $CYPRESS_platform &&
+            echo $CYPRESS_WAF_ACCESS_TOKEN &&
             cd tests/regression &&
             ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
           environment:
