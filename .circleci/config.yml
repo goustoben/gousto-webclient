@@ -206,15 +206,12 @@ jobs:
       - run:
           name: Run regression tests
           command: |
-            echo $CYPRESS_baseUrl &&
-            echo $CYPRESS_platform &&
-            echo $CYPRESS_WAF_ACCESS_TOKEN &&
             cd tests/regression &&
-            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json" &&
+            npm run report
           environment:
             CYPRESS_baseUrl: https://staging-frontend.gousto.info
             # CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
-            CYPRESS_WAF_ACCESS_TOKEN: 0fd8d643-ad48-43ec-9ac2-c1c90a767115
             CYPRESS_platform: web
             NODE_OPTIONS: max-http-header-size=1000000
       - store_test_results:
