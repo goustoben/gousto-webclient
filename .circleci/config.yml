@@ -214,7 +214,7 @@ jobs:
           environment:
             CYPRESS_baseUrl: https://staging-frontend.gousto.info
             # CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
-            CYPRESS_WAF_ACCESS_TOKEN: ${WAF_ACCESS_TOKEN}
+            CYPRESS_WAF_ACCESS_TOKEN: 0fd8d643-ad48-43ec-9ac2-c1c90a767115
             CYPRESS_platform: web
             NODE_OPTIONS: max-http-header-size=1000000
       - store_test_results:
