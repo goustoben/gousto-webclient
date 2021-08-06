@@ -143,11 +143,19 @@ class AboutYou extends PureComponent {
               childLabel={item.childLabel || null}
               childLabelClassName={item.childLabelClassName || null}
               style={item.style || null}
+              autoСomplete="username"
             />
           </div>
         </div>
       )
     })
+  }
+
+  submitForm = (e) => {
+    if (e) {
+      e.preventDefault()
+    }
+    this.handleSubmit()
   }
 
   render() {
@@ -156,19 +164,21 @@ class AboutYou extends PureComponent {
       !passwordValue || !checkoutValid || (passwordErrors.length !== 0 && passwordValue)
 
     return (
-      <FormSection name={sectionName}>
-        <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
-          <SectionHeader title="Create account" />
-          {this.renderFields()}
-          <CheckoutButton
-            onClick={this.handleSubmit}
-            submitting={submitting}
-            isDisabled={disableCTA}
-            stepName="Continue to Delivery"
-          />
-        </div>
-        <ErrorMessage />
-      </FormSection>
+      <form id="create-account" onSubmit={this.submitForm}>
+        <FormSection name={sectionName}>
+          <div className={checkoutCss.sectionContainer} data-testing="checkoutAboutYouSection">
+            <SectionHeader title="Create account" />
+            {this.renderFields()}
+            <CheckoutButton
+              onClick={this.handleSubmit}
+              submitting={submitting}
+              isDisabled={disableCTA}
+              stepName="Continue to Delivery"
+            />
+          </div>
+          <ErrorMessage />
+        </FormSection>
+      </form>
     )
   }
 }

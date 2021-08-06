@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import Cookies from 'utils/GoustoCookies'
+import parsePhoneNumber from 'libphonenumber-js'
 // eslint-disable-next-line import/no-cycle
 import { get } from 'utils/cookieHelper2'
 
@@ -35,3 +36,10 @@ export const getCheckoutLogData = state => ({
   session_id: get(Cookies, 'gousto_session_id', false, false),
   gousto_ref: state.checkout.get('goustoRef'),
 })
+
+export const getFormattedPhoneNumber = ({ form }) => {
+  const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
+  const phone = parsePhoneNumber(delivery.get('phone', ''), 'GB')
+
+  return phone ? phone.formatNational().replaceAll(' ', '') : ''
+}
