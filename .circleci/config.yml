@@ -200,11 +200,15 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
+          name: Export base url environment variable
+          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info' >> $BASH_ENV
+          # This is a workaround for broken variable interpolation in version 2
+          # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
+      - run:
           name: Run regression tests
           command: |
             ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
           environment:
-            CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
             CYPRESS_platform: web
             NODE_OPTIONS: max-http-header-size=1000000
       - run:
@@ -234,11 +238,13 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
+          name: Export base url environment variable
+          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info' >> $BASH_ENV
+      - run:
           name: Run regression tests
           command: |
             ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
           environment:
-            CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
             CYPRESS_viewportWidth: 375
             CYPRESS_viewportHeight: 667
             CYPRESS_platform: mobile
@@ -296,7 +302,6 @@ jobs:
             - project/tests/regression/node_modules
             - project/tests/e2e/node_modules
             - .cache/Cypress
-
 
 workflows:
   version: 2
