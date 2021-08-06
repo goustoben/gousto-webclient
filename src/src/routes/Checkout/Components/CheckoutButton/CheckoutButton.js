@@ -24,7 +24,7 @@ const CheckoutButton = ({
       disabled={isDisabled || isLoading}
       onClick={onClick}
       onKeyDown={onClick}
-      type="submit"
+      type="button"
     >
       {isLoading ? (
         <span className={css.loaderContainer}>

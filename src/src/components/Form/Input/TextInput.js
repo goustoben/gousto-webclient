@@ -24,7 +24,7 @@ const propTypes = {
   validator: PropTypes.func,
   required: PropTypes.bool,
   isFixed: PropTypes.bool,
-  autoComplete: PropTypes.string,
+  autocompleteOff: PropTypes.bool,
   value: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['password', 'text', 'email', 'tel', 'number']),
   pattern: PropTypes.string,
@@ -46,7 +46,7 @@ const defaultProps = {
   required: false,
   textAlign: 'left',
   isFixed: false,
-  autoComplete: 'on',
+  autocompleteOff: false,
   onKeyDown: () => {},
   error: false,
   isInCheckout: false,
@@ -116,7 +116,7 @@ export class TextInput extends Component {
   }
 
   render = () => {
-    const { additionalProps, autoComplete, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isInCheckout, inputPrefix } = this.props
+    const { additionalProps, autocompleteOff, color, className, disabled, error, maxLength, name, pattern, placeholder, required, textAlign, type, value, 'data-testing': dataTesting, isInCheckout, inputPrefix } = this.props
 
     return (
       <div className={classNames({ [checkoutCss.relative]: isInCheckout && inputPrefix })}>
@@ -146,7 +146,7 @@ export class TextInput extends Component {
           required={required}
           type={type}
           pattern={pattern || null}
-          autoComplete={autoComplete || 'off'}
+          autoComplete={(autocompleteOff) ? 'off' : 'on'}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           ref={input => { this.input = input }}

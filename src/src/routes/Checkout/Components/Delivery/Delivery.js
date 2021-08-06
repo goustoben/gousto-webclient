@@ -140,7 +140,6 @@ export class Delivery extends React.PureComponent {
                   label="First name"
                   refId={`${sectionName}.firstName`}
                   dataTesting="checkoutFirstNameInput"
-                  autoСomplete="given-name"
                 />
               </div>
               <div className={classNames(checkoutCss.inputContainer, css.nameInput)}>
@@ -151,7 +150,6 @@ export class Delivery extends React.PureComponent {
                   label="Last name"
                   refId={`${sectionName}.lastName`}
                   dataTesting="checkoutLastNameInput"
-                  autoСomplete="family-name"
                 />
               </div>
             </div>

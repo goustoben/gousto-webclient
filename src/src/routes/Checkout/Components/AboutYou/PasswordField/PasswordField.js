@@ -98,7 +98,6 @@ export class PasswordField extends Component {
             data-testing={dataTesting}
             onChange={this.handleChange}
             ref={this.inputRef}
-            autoComplete="new-password"
           />
           {inputSuffix}
         </label>
