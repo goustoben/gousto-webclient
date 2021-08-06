@@ -194,12 +194,25 @@ jobs:
 
   test-regression:
     docker: *gousto_build_image
+    working_directory: ~/project/tests/regression
+    parallelism: 5
     steps:
       - attach_workspace:
           at: ~/
       - run:
           name: Run regression tests
-          command: source ~/.circlerc && scripts/validate-regression.sh
+          command: |
+            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+          environment:
+            CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
+            CYPRESS_platform: web
+            NODE_OPTIONS: max-http-header-size=1000000
+      - run:
+          name: Create reports
+          when: always
+          command: npm run report
+      - store_test_results:
+          path: ~/project/tests/regression/test_results/cypress
       - store_artifacts:
           path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
           destination: report.html
@@ -212,18 +225,30 @@ jobs:
       - store_artifacts:
           path: ~/project/tests/regression/reports/html/assets/app.css
           destination: assets/app.css
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/assets/MaterialIcons-Regular.woff
-          destination: assets/MaterialIcons-Regular.woff
 
   test-regression-mobile:
     docker: *gousto_build_image
+    working_directory: ~/project/tests/regression
+    parallelism: 5
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run regression tests mobile
-          command: source ~/.circlerc && scripts/validate-regression-mobile.sh
+          name: Run regression tests
+          command: |
+            ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
+          environment:
+            CYPRESS_baseUrl: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
+            CYPRESS_viewportWidth: 375
+            CYPRESS_viewportHeight: 667
+            CYPRESS_platform: mobile
+            NODE_OPTIONS: max-http-header-size=1000000
+      - store_test_results:
+          path: ~/project/tests/regression/test_results/cypress
+      - run:
+          name: Create reports
+          when: always
+          command: npm run report
       - store_artifacts:
           path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
           destination: report.html
@@ -236,9 +261,6 @@ jobs:
       - store_artifacts:
           path: ~/project/tests/regression/reports/html/assets/app.css
           destination: assets/app.css
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/assets/MaterialIcons-Regular.woff
-          destination: assets/MaterialIcons-Regular.woff
 
   deploy-application:
     docker: *gousto_platform_image
@@ -262,7 +284,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-      - run: source ~/.circlerc && scripts/install-test-dependencies.sh
+      - run:
+          working_directory: tests/e2e
+          command: npm ci
+      - run:
+          working_directory: tests/regression
+          command: npm ci
       - persist_to_workspace:
           root: ~/
           paths:

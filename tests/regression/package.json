@@ -4,15 +4,11 @@
   "description": "Gousto regression",
   "main": "index.js",
   "scripts": {
-    "test:debug:web": "NODE_OPTIONS=--max-http-header-size=1000000 cypress open --env platform=web",
-    "test:debug:mobile": "NODE_OPTIONS=--max-http-header-size=1000000 CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress open --env platform=mobile",
-    "test:web": "NODE_OPTIONS=--max-http-header-size=1000000 cypress run --env platform=web",
-    "test:web:single": "NODE_OPTIONS=--max-http-header-size=1000000 cypress run --spec",
-    "test:mobile": "NODE_OPTIONS=--max-http-header-size=1000000 CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run --env platform=mobile",
-    "test:staging:web": "NODE_OPTIONS=--max-http-header-size=1000000 cypress run --env platform=web --reporter cypress-multi-reporters --reporter-options \"configFile=reporterConfig.json\"",
-    "test:staging:mobile": "NODE_OPTIONS=--max-http-header-size=1000000 CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress run --env platform=mobile --reporter cypress-multi-reporters --reporter-options \"configFile=reporterConfig.json\"",
-    "ci:web": "npm run test:staging:web || npm run report",
-    "ci:mobile": "npm run test:staging:mobile || npm run report",
+    "test:debug:web": "cypress open --env platform=web",
+    "test:debug:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 cypress open --env platform=mobile",
+    "test:web": "cypress run --env platform=web",
+    "test:web:single": "cypress run --spec",
+    "test:mobile": "cypress run --env platform=mobile",
     "report": "run-s report:*",
     "report:merge": "mochawesome-merge results/json/*.json > results/mochawesome-bundle.json",
     "report:generate": "marge results/mochawesome-bundle.json -o reports/html",
@@ -25,12 +21,13 @@
     "moment": "^2.25.3"
   },
   "devDependencies": {
+    "cypress-circleci-reporter": "^0.2.0",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-pipe": "^1.7.0",
     "mocha": "^8.3.2",
+    "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0",
     "mochawesome-report-generator": "^5.2.0",
-    "mochawesome": "^6.2.2",
     "npm-run-all": "^4.1.5"
   }
 }
