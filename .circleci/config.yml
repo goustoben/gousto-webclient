@@ -308,13 +308,9 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          command: echo $A && echo $B && echo $C && echo $D
-          environment:
-            A: https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info
-            B: "https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info"
-            C: https://$GOUSTO_ENVIRONMENT-frontend.gousto.info
-            D: "https://$GOUSTO_ENVIRONMENT-frontend.gousto.info"
-
+          command: echo 'export A=https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info' >> $BASH_ENV
+      - run:
+          command: echo $A
 
 workflows:
   version: 2
