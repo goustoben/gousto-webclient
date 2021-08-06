@@ -17,25 +17,12 @@
         - FARGATE
       ContainerDefinitions:
         -
-          Name: nginx
-          Image:
-            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/nginx:{{ GITHUB_COMMIT }}
-          MemoryReservation: 256
-          PortMappings:
-            - ContainerPort: 80
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-create-group: true
-              awslogs-region:
-                Fn::Sub: ${AWS::Region}
-              awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-webserverlog
-              awslogs-stream-prefix: {{ serviceName }}-{{ ENVIRONMENT }}-nginx-service
-        -
           Name: webclient
           Image:
             Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient:{{ GITHUB_COMMIT }}
           MemoryReservation: 256
+          PortMappings:
+            - ContainerPort: 80
           Environment:
             - Name: ENVIRONMENT
               Value: {{ ENVIRONMENT }}
@@ -70,7 +57,7 @@
       TaskDefinition:
         Ref: EcsTaskDefinition
       LoadBalancers:
-              - ContainerName: nginx
+              - ContainerName: webclient
                 ContainerPort: 80
                 TargetGroupArn:
                   Ref:  ECSALBTargetGroup{{ exposure |title }}

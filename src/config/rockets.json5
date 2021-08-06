@@ -158,19 +158,6 @@
             }
           }
         },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://rockets-api.gousto.info/graphql/v1",
-              "local": "https://rockets-api.gousto.info/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://rockets-graphql.gousto.info",
-              "local": "https://rockets-api.gousto.info/graphql/v1"
-            }
-          }
-        },
         "loggingmanager": {
           "1": {
             "versionString": "",

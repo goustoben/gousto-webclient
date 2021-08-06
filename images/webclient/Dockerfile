@@ -1,11 +1,15 @@
 FROM node:12.21.0-buster-slim
 
-# AWS CLI to download secrets
+# AWS CLI to download secrets and libcap for port 80 permission
 RUN apt-get update && apt-get install -y \
     python2.7 \
     python-pip \
+    libcap2-bin \
     && rm -rf /var/lib/apt/lists/* \
     && pip install awscli --upgrade
+
+# ALLOW KOA TO RUN ON PORT 80
+RUN setcap cap_net_bind_service=+ep /usr/local/bin/node
 
 # APPLICATION RUNTIME DEPENDENCIES
 RUN npm i -g add pm2
@@ -28,7 +32,7 @@ COPY --chown=docker:docker src/manifest.json /home/docker/app/manifest.json
 COPY --chown=docker:docker src/ecs_start.sh /home/docker/app/ecs_start.sh
 
 USER docker
-EXPOSE 8080
+EXPOSE 80
 WORKDIR /home/docker/app
 
 # START APPLICATION

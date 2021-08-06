@@ -158,19 +158,6 @@
             }
           }
         },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://radishes-api.gousto.info/graphql/v1",
-              "local": "https://radishes-api.gousto.info/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://radishes-graphql.gousto.info",
-              "local": "https://radishes-api.gousto.info/graphql/v1"
-            }
-          }
-        },
         "loggingmanager": {
           "1": {
             "versionString": "",

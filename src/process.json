@@ -3,6 +3,7 @@
     {
       "name": "server",
       "script": "dist/server.js",
+      "exec_mode" : "cluster",
       "watch": true,
       "watch_options": {
         "usePolling": true

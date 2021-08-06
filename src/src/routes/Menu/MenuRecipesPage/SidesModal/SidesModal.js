@@ -75,53 +75,64 @@ SidesContentFooter.propTypes = {
 }
 
 const SidesContent = ({
-  getQuantityForSide,
+  getQuantityForSidesBasket,
   addSide,
   removeSide,
   sides,
+  isOutOfStock,
+  getLimit,
 }) => (
   <React.Fragment>
     {sides.map(
-      side => (
-        <div key={side.id} className={css.sidesModalSidesContainer}>
-          <div className={css.sidesModalSidesImageContainer}>
-            <Image media={Immutable.fromJS(side.images).toList()} className={css.sidesModalSidesImage} title={side.title} />
-          </div>
-          <div className={css.sidesModalSidesDetails}>
-            <h3 className={css.sidesModalSidesHeader}>
-              {side.title}
-            </h3>
-            <span className={css.sidesModalSidesText}>
-              {`£${side.list_price} ● 2 Servings`}
-            </span>
-            <div
-              role="button"
-              aria-label="Add or Remove Side"
-            >
-              <Buttons
-                fill
-                fullWidth
-                isAvailable
-                isAgeVerificationRequired={false}
-                limitReached={false}
-                onAdd={addSide}
-                onRemove={removeSide}
-                outOfStock={false}
-                productId={side.id}
-                qty={getQuantityForSide(side.id)}
-              />
+      side => {
+        const quantity = getQuantityForSidesBasket(side.id)
+        const limit = getLimit(side.id)
+        const isOutOfStockForSide = isOutOfStock(side.id)
+        const isAvailable = !(isOutOfStock(side.id) || getLimit(side.id))
+
+        return (
+          <div key={side.id} className={css.sidesModalSidesContainer}>
+            <div className={css.sidesModalSidesImageContainer}>
+              <Image media={Immutable.fromJS(side.images).toList()} className={css.sidesModalSidesImage} title={side.title} />
+            </div>
+            <div className={css.sidesModalSidesDetails}>
+              <h3 className={css.sidesModalSidesHeader}>
+                {side.title}
+              </h3>
+              <span className={css.sidesModalSidesText}>
+                {`£${side.list_price} ● 2 Servings`}
+              </span>
+              <div
+                role="button"
+                aria-label="Add or Remove Side"
+              >
+                <Buttons
+                  fill
+                  fullWidth
+                  isAgeVerificationRequired={false}
+                  onAdd={addSide}
+                  onRemove={removeSide}
+                  productId={side.id}
+                  outOfStock={isOutOfStockForSide}
+                  limitReached={limit}
+                  qty={quantity}
+                  isAvailable={isAvailable}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      )
+        )
+      }
     )}
   </React.Fragment>
 )
 
 SidesContent.propTypes = {
-  getQuantityForSide: PropTypes.func.isRequired,
+  getQuantityForSidesBasket: PropTypes.func.isRequired,
   addSide: PropTypes.func.isRequired,
   removeSide: PropTypes.func.isRequired,
+  isOutOfStock: PropTypes.func.isRequired,
+  getLimit: PropTypes.func.isRequired,
   sides: PropTypes.arrayOf(SidePropType).isRequired,
 }
 
@@ -164,7 +175,9 @@ export const SidesModal = ({
     onSubmit,
     addSide,
     removeSide,
-    getQuantityForSide,
+    getQuantityForSidesBasket,
+    isOutOfStock,
+    getLimit,
     total,
   } = useSidesBasket(accessToken, userId, order, onSubmitCallback, onError)
   const hasSides = Boolean(sides.length)
@@ -199,13 +212,15 @@ export const SidesModal = ({
               />
             ) : (
               <SidesContent
-                getQuantityForSide={getQuantityForSide}
+                getQuantityForSidesBasket={getQuantityForSidesBasket}
                 addSide={addSide}
                 removeSide={removeSide}
                 onSubmit={onSubmit}
                 sides={sides}
                 toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}
                 total={total}
+                isOutOfStock={isOutOfStock}
+                getLimit={getLimit}
               />
             )}
         </div>

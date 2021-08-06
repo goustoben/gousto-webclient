@@ -1,3 +1,4 @@
+import { checkoutUrgencyReducers } from 'routes/Checkout/checkoutUrgencyReducers'
 import { abandonBasket } from './abandonBasket'
 import { appBanner } from './appBanner'
 import account from './account'
@@ -54,6 +55,7 @@ const reducers = {
   ...boxSummary,
   brand,
   ...checkout,
+  ...checkoutUrgencyReducers,
   ...collections,
   ...cookbook,
   ...cookbookRecipes,

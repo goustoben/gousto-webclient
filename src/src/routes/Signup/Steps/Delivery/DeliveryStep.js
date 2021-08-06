@@ -266,7 +266,7 @@ DeliveryStep.propTypes = {
   trackDeliverySlotEdited: PropTypes.func,
   nextDayDeliveryPaintedDoorFeature: PropTypes.bool,
   next: PropTypes.func,
-  disabledSlots: PropTypes.arrayOf(PropTypes.string),
+  disabledSlots: PropTypes.instanceOf(Immutable.List),
   userHasAvailableSlots: PropTypes.bool,
   isTastePreferencesEnabled: PropTypes.bool,
   isPaymentBeforeChoosingEnabled: PropTypes.bool,

@@ -17,6 +17,7 @@ import {
   getIsPaymentBeforeChoosingEnabled,
   getIsPaymentBeforeChoosingV3Enabled,
 } from 'selectors/features'
+import { getIsCheckoutUrgencyEnabled } from 'routes/Checkout/checkoutSelectors'
 import { Checkout } from './Checkout'
 
 function mapStateToProps(state, ownProps) {
@@ -32,6 +33,7 @@ function mapStateToProps(state, ownProps) {
     lastReachedStepIndex: getCheckoutLastReachedStepIndex(state),
     isPaymentBeforeChoosingEnabled: getIsPaymentBeforeChoosingEnabled(state),
     isPaymentBeforeChoosingV3Enabled: getIsPaymentBeforeChoosingV3Enabled(state),
+    isCheckoutUrgencyEnabled: getIsCheckoutUrgencyEnabled(state),
   }
 }
 

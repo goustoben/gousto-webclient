@@ -29,8 +29,6 @@
   register: resolver
   when: "{{ environment_name != 'dev' }}"
 
-- include: nginx.yml
-
 - include: logrotate.yml
   when: "{{ environment_name != 'dev' }}"
 

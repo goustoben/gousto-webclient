@@ -29,12 +29,4 @@ build:
             strip: src/
       docker:
         dockerfile: images/webclient/Dockerfile
-    - image: local/webclient-webserver
-      context: .
-      docker:
-        dockerfile: images/nginx/Dockerfile
   local: {}
-deploy:
-  kubectl:
-    manifests:
-      - kubernetes/dev/*.yaml

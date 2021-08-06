@@ -51,7 +51,7 @@ Append the following entry to your local host file if you don't already have it,
 
 **Note:** VPN is required to connect to staging before running web-client.
 
-Webclient can either be run without G2FE as a standalone on port 8080, or as part of the whole FE stack with G2FE.
+Webclient can either be run without G2FE as a standalone on port 80, or as part of the whole FE stack with G2FE.
 
 To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
 

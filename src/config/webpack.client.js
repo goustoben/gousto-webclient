@@ -168,10 +168,6 @@ const config = {
           'svg-url-loader',
           'image-webpack'
         ],
-      },
-      {
-        test: /\.(graphql|gql)$/,
-        loader: 'graphql-tag/loader'
       }
     ]
   },

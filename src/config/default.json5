@@ -176,19 +176,6 @@
             }
           }
         },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://staging-api.gousto.info/graphql/v1",
-              "local": "https://staging-api.gousto.info/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://staging-graphql.gousto.info",
-              "local": "https://staging-api.gousto.info/graphql/v1"
-            }
-          }
-        },
         "loggingmanager": {
           "1": {
             "versionString": "",
@@ -621,19 +608,6 @@
             "serverSide": {
               "live": "http://production-felogging.gousto.co.uk",
               "local": "https://production-api.gousto.co.uk/felogging/v1"
-            }
-          }
-        },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://production-api.gousto.co.uk/graphql/v1",
-              "local": "https://production-api.gousto.co.uk/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://production-graphql.gousto.co.uk",
-              "local": "https://production-api.gousto.co.uk/graphql/v1"
             }
           }
         },

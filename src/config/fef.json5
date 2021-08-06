@@ -158,19 +158,6 @@
             }
           }
         },
-        "graphql": {
-          "1": {
-            "versionString": "v1",
-            "clientSide": {
-              "live": "https://fef-api.gousto.info/graphql/v1",
-              "local": "https://fef-api.gousto.info/graphql/v1"
-            },
-            "serverSide": {
-              "live": "http://fef-graphql.gousto.info",
-              "local": "https://fef-api.gousto.info/graphql/v1"
-            }
-          }
-        },
         "loggingmanager": {
           "1": {
             "versionString": "",
