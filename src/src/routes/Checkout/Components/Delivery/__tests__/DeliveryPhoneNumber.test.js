@@ -25,25 +25,4 @@ describe('DeliveryPhoneNumber', () => {
       expect(wrapper.find(Field).at(0).prop('mask')).toBe(true)
     })
   })
-
-  describe('handleKeyDown', () => {
-    describe('when user types forbidden letters', () => {
-      const preventDefault = jest.fn()
-      beforeEach(() => {
-        const event = {
-          target: {
-            value: 't',
-            selectionStart: true,
-          },
-          keyCode: 66,
-          preventDefault,
-        }
-        wrapper.instance().handleKeyDown(event)
-      })
-
-      test('then value should stay empty', () => {
-        expect(preventDefault).toHaveBeenCalled()
-      })
-    })
-  })
 })

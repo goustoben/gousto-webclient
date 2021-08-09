@@ -2,108 +2,33 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
+import { phoneValidator } from 'utils/forms'
 import css from './Delivery.css'
 import checkoutCss from '../../Checkout.css'
 
-class DeliveryPhoneNumber extends React.PureComponent {
-  /**
-   * object containing pressed keys
-   * @type {{}}
-   */
-  keys = {}
-
-  /**
-   * except for 'a', 'c', 'v', 'x', 'y', 'z'
-   * @param keyCode
-   */
-  isForbiddenLetter = (keyCode) =>
-    keyCode === 66 || (keyCode >= 68 && keyCode <= 85) || keyCode === 87
-
-  /**
-   * 'a', 'c', 'v', 'x', 'y', 'z'
-   * @param keyCode
-   */
-  isAllowedLetter = (keyCode) =>
-    keyCode === 65 || keyCode === 67 || keyCode === 86 || (keyCode >= 88 && keyCode <= 90)
-
-  /**
-   * space, semi-colon, equal sign, comma, dash, period, forward slash, grave accent, open bracket, back slash, close bracket, single quote
-   * @param keyCode
-   */
-  isForbiddenCharacter = (keyCode) =>
-    keyCode === 32 || (keyCode >= 186 && keyCode <= 192) || (keyCode >= 219 && keyCode <= 222)
-
-  isDigit = (keyCode) => (keyCode >= 48 && keyCode <= 57) || (keyCode >= 96 && keyCode <= 105)
-
-  isZero = (keyCode) => [48, 96].includes(keyCode)
-
-  isBackspace = (keyCode) => keyCode === 8
-
-  isCtrlMeta = (event) => event.ctrlKey || event.metaKey
-
-  isShiftAlt = (event) => event.shiftKey || event.altKey
-
-  handleKeyDown = (event) => {
-    if (!event || !event.target) return
-    const input = event.target
-    const { keyCode } = event
-
-    if (!this.keys[keyCode]) {
-      this.keys[keyCode] = event
-    }
-
-    const keysArray = Object.values(this.keys)
-
-    /**
-     * cursor at the beginning of the input
-     */
-    if (!event.target.selectionStart || !input.value) {
-      if (this.isZero(keyCode)) {
-        event.preventDefault()
-      }
-    }
-
-    if (
-      this.isForbiddenLetter(keyCode) ||
-      this.isForbiddenCharacter(keyCode) ||
-      (!keysArray.find(this.isCtrlMeta) && this.isAllowedLetter(keyCode)) ||
-      (keysArray.find(this.isShiftAlt) && this.isDigit(keyCode))
-    ) {
-      event.preventDefault()
-    }
-  }
-
-  render() {
-    const { receiveRef, sectionName } = this.props
-    const inputPrefix = <span className={css.phonePrefixRedesign}>+44(0)</span>
-
-    return (
-      <div className={css.deliveryFieldWrapper}>
-        <div className={css.row}>
-          <div className={checkoutCss.inputContainer}>
-            <Field
-              name="phone"
-              component={ReduxFormInput}
-              inputPrefix={inputPrefix}
-              inputType="Input"
-              type="tel"
-              required
-              onKeyDown={this.handleKeyDown}
-              color="gray"
-              subLabel="Used to update you on your delivery"
-              label="Phone number"
-              mask
-              withRef
-              ref={receiveRef}
-              refId={`${sectionName}.phone`}
-              data-testing="checkoutPhoneNumberInput"
-            />
-          </div>
-        </div>
+export const DeliveryPhoneNumber = ({ receiveRef, sectionName }) => (
+  <div className={css.deliveryFieldWrapper}>
+    <div className={css.row}>
+      <div className={checkoutCss.inputContainer}>
+        <Field
+          name="phone"
+          component={ReduxFormInput}
+          inputType="Input"
+          autocomplete="tel"
+          type="tel"
+          subLabel="Used to update you on your delivery"
+          label="UK phone number"
+          mask
+          withRef
+          ref={receiveRef}
+          refId={`${sectionName}.phone`}
+          dataTesting="checkoutPhoneNumberInput"
+          validate={phoneValidator}
+        />
       </div>
-    )
-  }
-}
+    </div>
+  </div>
+)
 
 DeliveryPhoneNumber.propTypes = {
   receiveRef: PropTypes.func,
@@ -114,5 +39,3 @@ DeliveryPhoneNumber.defaultProps = {
   receiveRef: () => {},
   sectionName: 'delivery',
 }
-
-export { DeliveryPhoneNumber }

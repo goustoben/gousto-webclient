@@ -10,7 +10,7 @@ import * as prospectApi from 'apis/prospect'
 
 import { signupConfig } from 'config/signup'
 
-import { accountFormName, deliveryFormName, getPasswordValue } from 'selectors/checkout'
+import { accountFormName, deliveryFormName, getPasswordValue, getFormattedPhoneNumber } from 'selectors/checkout'
 import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
@@ -659,7 +659,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     promocode: promoCode,
     customer: {
       tariff_id: basket.get('tariffId', ''),
-      phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
+      phone_number: getFormattedPhoneNumber(state),
       email: account.get('email'),
       name_first: delivery.get('firstName').trim(),
       name_last: delivery.get('lastName').trim(),
