@@ -210,25 +210,16 @@ jobs:
             ./node_modules/.bin/cypress run --spec "$(circleci tests glob "../../src/src/**/__regression__/*.spec.*" | circleci tests split | paste -sd "," -)" --reporter cypress-multi-reporters --reporter-options "configFile=reporterConfig.json"
           environment:
             CYPRESS_platform: web
-            NODE_OPTIONS: max-http-header-size=1000000
+            NODE_OPTIONS: --max-http-header-size=1000000
       - run:
           name: Create reports
-          when: always
+          when: on_fail
           command: npm run report
       - store_test_results:
           path: ~/project/tests/regression/test_results/cypress
       - store_artifacts:
-          path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
-          destination: report.html
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/screenshots
-          destination: screenshots
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/assets/app.js
-          destination: assets/app.js
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/assets/app.css
-          destination: assets/app.css
+          path: ~/project/tests/regression/reports/html
+          destination: ./
 
   test-regression-mobile:
     docker: *gousto_build_image
@@ -248,25 +239,16 @@ jobs:
             CYPRESS_viewportWidth: 375
             CYPRESS_viewportHeight: 667
             CYPRESS_platform: mobile
-            NODE_OPTIONS: max-http-header-size=1000000
+            NODE_OPTIONS: --max-http-header-size=1000000
       - store_test_results:
           path: ~/project/tests/regression/test_results/cypress
       - run:
           name: Create reports
-          when: always
+          when: on_fail
           command: npm run report
       - store_artifacts:
-          path: ~/project/tests/regression/reports/html/mochawesome-bundle.html
-          destination: report.html
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/screenshots
-          destination: screenshots
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/assets/app.js
-          destination: assets/app.js
-      - store_artifacts:
-          path: ~/project/tests/regression/reports/html/assets/app.css
-          destination: assets/app.css
+          path: ~/project/tests/regression/reports/html
+          destination: ./
 
   deploy-application:
     docker: *gousto_platform_image
