@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "nightwatch --env=local:chrome",
-    "test:staging": "nightwatch --env=staging:chrome --verbose --skiptags unstable"
+    "test:staging": "nightwatch --env=staging:chrome --verbose --skiptags unstable",
+    "test:fef": "nightwatch --env=fef:chrome --verbose --skiptags unstable"
   },
   "author": "",
   "license": "ISC",
