@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
-import { checkoutUrgencySetCurrentStatus } from 'routes/Checkout/checkoutActions'
+import {
+  checkoutUrgencySetCurrentStatus,
+  trackCheckoutUrgencyAction,
+} from 'routes/Checkout/checkoutActions'
 import {
   getCheckoutUrgencyCurrentStatus,
   getCheckoutUrgencyStartSeconds,
@@ -17,6 +20,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   checkoutUrgencySetCurrentStatus,
+  trackCheckoutUrgencyAction,
 }
 
 export const CheckoutUrgencyControllerContainer = connect(

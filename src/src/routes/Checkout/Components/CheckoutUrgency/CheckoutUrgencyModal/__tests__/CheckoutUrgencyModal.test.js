@@ -7,7 +7,9 @@ describe('CheckoutUrgencyModal', () => {
   let wrapper
 
   const checkoutCreatePreviewOrder = jest.fn()
+  const checkoutUrgencySetCurrentStatus = jest.fn()
   const redirectToMenu = jest.fn()
+  const trackCheckoutUrgencyAction = jest.fn()
 
   const render = (remainingSeconds) => {
     wrapper = mount(
@@ -15,7 +17,10 @@ describe('CheckoutUrgencyModal', () => {
         isOpen
         isLoading={false}
         checkoutCreatePreviewOrder={checkoutCreatePreviewOrder}
+        checkoutUrgencySetCurrentStatus={checkoutUrgencySetCurrentStatus}
         redirectToMenu={redirectToMenu}
+        modalSeconds={180}
+        trackCheckoutUrgencyAction={trackCheckoutUrgencyAction}
       />,
       {
         wrappingComponent: CheckoutUrgencyContext.Provider,
@@ -30,12 +35,20 @@ describe('CheckoutUrgencyModal', () => {
 
   describe('when remainingSeconds is more than 0', () => {
     beforeEach(() => {
-      render(600)
+      render(120)
     })
 
     test('then it renders correctly', () => {
-      // TODO check rendering
-      expect(wrapper.find('.modalHeaderHeading').text()).toBe('Your session is about to expire')
+      expect(wrapper.find('.header').text()).toBe('Your session is about to expire')
+      expect(wrapper.find('Clock').props()).toMatchObject({
+        seconds: 120,
+        total: 180,
+        isCritical: false,
+      })
+      expect(wrapper.find('.explanation').text()).toBe(
+        'Continue with checkout to avoid losing your recipes'
+      )
+      expect(wrapper.find('CTA .content').text()).toBe('Continue with checkout')
     })
 
     describe('and when the modal is closed', () => {
@@ -55,8 +68,16 @@ describe('CheckoutUrgencyModal', () => {
     })
 
     test('then it renders correctly', () => {
-      // TODO check rendering
-      expect(wrapper.find('.modalHeaderHeading').text()).toBe('Your session has expired')
+      expect(wrapper.find('.header').text()).toBe('Your session has expired')
+      expect(wrapper.find('Clock').props()).toMatchObject({
+        seconds: 0,
+        total: 180,
+        isCritical: true,
+      })
+      expect(wrapper.find('.explanation').text()).toBe(
+        'Go back to the menu to check your recipes are still in stock'
+      )
+      expect(wrapper.find('CTA .content').text()).toBe('Back to the menu')
     })
 
     describe('and when the modal is closed', () => {

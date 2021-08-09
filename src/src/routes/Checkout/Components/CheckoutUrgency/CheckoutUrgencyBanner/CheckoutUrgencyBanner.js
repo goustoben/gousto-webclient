@@ -1,13 +1,23 @@
 import React, { useContext } from 'react'
 import { CheckoutUrgencyContext } from 'routes/Checkout/Components/CheckoutUrgency/CheckoutUrgencyContext'
+import Svg from 'Svg'
+import { formatSeconds } from '../checkoutUrgencyUtils'
+import css from './CheckoutUrgencyBanner.css'
 
 export const CheckoutUrgencyBanner = () => {
   const remainingSeconds = useContext(CheckoutUrgencyContext)
+  const formattedTime = formatSeconds(remainingSeconds)
 
   return (
-    <div>
-      checkout urgency test banner:{' '}
-      <span id="CheckoutUrgencyBanner_remainingSeconds">{remainingSeconds}</span>
+    <div className={css.container}>
+      <div className={css.banner}>
+        <div className={css.iconContainer}>
+          <Svg className={css.icon} fileName="icon-timer-red" />
+        </div>
+        <div className={css.content}>
+          Checkout within {formattedTime} to avoid losing your recipes
+        </div>
+      </div>
     </div>
   )
 }

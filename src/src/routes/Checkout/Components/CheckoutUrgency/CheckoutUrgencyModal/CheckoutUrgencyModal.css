@@ -1,0 +1,70 @@
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+@value Large, FontFamilyAxiformaBook from 'design-language/typography.module.css';
+
+.modalOverrides {
+  composes: hideScroll from 'components/PromoModal/PromoModal.css';
+}
+
+.modalOverrides [data-testing="modal-close-button"] {
+  padding: 5px;
+
+  top: 1rem;
+  right: 1rem;
+
+  @media BreakpointFromMedium {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+}
+
+.header {
+  composes: fontStyleL from 'design-language/typography.module.css';
+  padding: 1rem 3rem 1rem 1rem;
+  margin: 0;
+
+  @media BreakpointFromMedium {
+    text-align: center;
+    padding: 1.5rem 4rem 1.5rem;
+  }
+}
+
+.body {
+  padding: 0 1rem;
+
+  @media BreakpointFromMedium {
+    width: 35rem;
+    text-align: center;
+  }
+}
+
+.ctaContainer {
+  width: 100%;
+  margin: 0 auto 1.5rem;
+
+  @media BreakpointFromMedium {
+    max-width: 22rem;
+  }
+}
+
+.ctaContainer button {
+  height: 3rem;
+  padding: 0.5rem 1.5rem;
+
+  > span {
+    padding: 0;
+  }
+}
+
+.clockContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.explanation {
+  margin-bottom: 1.5rem;
+
+  @media BreakpointFromMedium {
+    font: Large FontFamilyAxiformaBook !important;
+  }
+}

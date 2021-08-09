@@ -1,0 +1,52 @@
+@value FE-700 #D82B39;
+@value CG-800 #333D47;
+@value 4XLarge, 7XLarge, FontFamilyAxiformaBook from 'design-language/typography.module.css';
+
+.clock {
+  width: 8rem;
+  height: 8rem;
+  position: relative;
+
+  @media BreakpointFromMedium {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
+.highlight {
+  stroke-width: 2px;
+  stroke: CG-800;
+  transform: translateY(100%) rotate(-90deg);
+}
+
+.highlightIsCritical {
+  stroke: FE-700;
+}
+
+.clockSvg {
+  width: 100%;
+  height: 100%;
+}
+
+.text {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  /* When text is perfectly mathematically aligned within a circle, it looks
+     slightly off; this moves it slightly down so it looks better. */
+  top: 0.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: CG-800;
+  font: 4XLarge FontFamilyAxiformaBook;
+
+  @media BreakpointFromMedium {
+    font: 7XLarge FontFamilyAxiformaBook;
+  }
+}
+
+.textIsCritical {
+  color: FE-700;
+}

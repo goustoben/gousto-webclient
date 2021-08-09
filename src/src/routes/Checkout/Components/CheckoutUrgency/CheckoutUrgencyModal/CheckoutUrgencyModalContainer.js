@@ -1,5 +1,12 @@
 import { connect } from 'react-redux'
-import { getCheckoutUrgencyCurrentStatus } from 'routes/Checkout/checkoutSelectors'
+import {
+  getCheckoutUrgencyCurrentStatus,
+  getCheckoutUrgencyModalSeconds,
+} from 'routes/Checkout/checkoutSelectors'
+import {
+  checkoutUrgencySetCurrentStatus,
+  trackCheckoutUrgencyAction,
+} from 'routes/Checkout/checkoutActions'
 import { redirect } from 'actions/redirect'
 import { checkoutCreatePreviewOrder } from 'routes/Menu/actions/checkout'
 import routes from 'config/routes'
@@ -11,6 +18,7 @@ const mapStateToProps = (state) => {
   return {
     isOpen: currentStatus === 'runningAndModalOpen' || currentStatus === 'finishedAndModalOpen',
     isLoading: currentStatus === 'loading',
+    modalSeconds: getCheckoutUrgencyModalSeconds(state),
   }
 }
 
@@ -19,6 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(redirect(routes.client.menu))
   },
   checkoutCreatePreviewOrder: () => dispatch(checkoutCreatePreviewOrder()),
+  checkoutUrgencySetCurrentStatus: (status) => dispatch(checkoutUrgencySetCurrentStatus(status)),
+  trackCheckoutUrgencyAction: (...args) => dispatch(trackCheckoutUrgencyAction(...args)),
 })
 
 export const CheckoutUrgencyModalContainer = connect(

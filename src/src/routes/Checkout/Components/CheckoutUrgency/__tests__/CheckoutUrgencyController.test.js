@@ -11,12 +11,14 @@ describe('CheckoutUrgencyController', () => {
   let wrapper
 
   const checkoutUrgencySetCurrentStatus = jest.fn()
+  const trackCheckoutUrgencyAction = jest.fn()
 
   const render = (currentStatus, startSeconds = 60, modalSeconds = 30) => {
     wrapper = mount(
       <CheckoutUrgencyController
         currentStatus={currentStatus}
         checkoutUrgencySetCurrentStatus={checkoutUrgencySetCurrentStatus}
+        trackCheckoutUrgencyAction={trackCheckoutUrgencyAction}
         startSeconds={startSeconds}
         modalSeconds={modalSeconds}
       >
@@ -97,17 +99,20 @@ describe('CheckoutUrgencyController', () => {
 
   describe('when running and it is time to open the modal', () => {
     beforeEach(() => {
-      render(checkoutUrgencyStatuses.inactive, 31, 30)
+      render(checkoutUrgencyStatuses.inactive, 61, 60)
       wrapper.setProps({ currentStatus: checkoutUrgencyStatuses.running })
       act(() => {
         jest.runOnlyPendingTimers()
       })
     })
 
-    test('then it should open the modal', () => {
+    test('then it should open the modal and track it', () => {
       expect(checkoutUrgencySetCurrentStatus).toHaveBeenCalledWith(
         checkoutUrgencyStatuses.runningAndModalOpen
       )
+      expect(trackCheckoutUrgencyAction).toHaveBeenCalledWith('checkout_urgency_modal_displayed', {
+        time_remaining: 1,
+      })
     })
   })
 
@@ -120,9 +125,12 @@ describe('CheckoutUrgencyController', () => {
       })
     })
 
-    test('then it should change state to finishedAndModalOpen', () => {
+    test('then it should change state to finishedAndModalOpen and track it', () => {
       expect(checkoutUrgencySetCurrentStatus).toHaveBeenCalledWith(
         checkoutUrgencyStatuses.finishedAndModalOpen
+      )
+      expect(trackCheckoutUrgencyAction).toHaveBeenCalledWith(
+        'checkout_session_expired_modal_displayed'
       )
     })
   })

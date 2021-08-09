@@ -24,12 +24,12 @@ const getSecondsFromCheckoutUrgencyValue = (value, partIndex, defaultSeconds) =>
   }
   const parts = value.split(',')
   const part = parts[partIndex]
-  const minutes = Number.parseInt(part, 10)
+  const minutes = Number.parseFloat(part, 10)
   if (Number.isNaN(minutes)) {
     return defaultSeconds
   }
 
-  return minutes * 60
+  return Math.floor(minutes * 60)
 }
 
 export const getCheckoutUrgencyStartSeconds = createSelector(

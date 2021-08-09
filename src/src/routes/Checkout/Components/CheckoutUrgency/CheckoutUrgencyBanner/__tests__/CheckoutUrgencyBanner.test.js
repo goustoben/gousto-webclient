@@ -9,11 +9,13 @@ describe('CheckoutUrgencyBanner', () => {
   beforeEach(() => {
     wrapper = mount(<CheckoutUrgencyBanner />, {
       wrappingComponent: CheckoutUrgencyContext.Provider,
-      wrappingComponentProps: { value: 600 },
+      wrappingComponentProps: { value: 542 },
     })
   })
 
   test('renders correctly', () => {
-    expect(wrapper.find('#CheckoutUrgencyBanner_remainingSeconds').text()).toBe('600')
+    expect(wrapper.find('.content').text()).toBe(
+      'Checkout within 9:02 to avoid losing your recipes'
+    )
   })
 })
