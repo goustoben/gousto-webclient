@@ -14,7 +14,7 @@ const rules = {
     field: 'first name',
     rules: [
       { name: 'isLength', options: { min: 1 } },
-      { name: 'isLength', options: { max: 200 } },
+      { name: 'isLength', options: { max: 50 } },
       { name: 'matches', options: regExp.name },
     ],
   },
@@ -22,7 +22,7 @@ const rules = {
     field: 'last name',
     rules: [
       { name: 'isLength', options: { min: 1 } },
-      { name: 'isLength', options: { max: 200 } },
+      { name: 'isLength', options: { max: 50 } },
       { name: 'matches', options: regExp.name },
     ],
   },
