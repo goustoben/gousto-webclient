@@ -73,6 +73,10 @@
   margin: 0;
 }
 
+.stepsContainerVerticalLayout {
+  min-height: 39rem;
+}
+
 .stepsContainer {
   @media BreakpointFromMedium {
     margin: 0 auto;

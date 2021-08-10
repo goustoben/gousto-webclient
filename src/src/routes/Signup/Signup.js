@@ -70,6 +70,7 @@ const propTypes = {
   signupDismissDiscountAppliedBar: PropTypes.func,
   isSocialBelongingEnabled: PropTypes.bool,
   signupSetStep: PropTypes.func,
+  isBoxSizeVerticalLayoutEnabled: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -98,6 +99,7 @@ const defaultProps = {
   signupDismissDiscountAppliedBar: () => {},
   isSocialBelongingEnabled: false,
   signupSetStep: () => {},
+  isBoxSizeVerticalLayoutEnabled: false,
 }
 
 const contextTypes = {
@@ -308,6 +310,7 @@ class Signup extends PureComponent {
       isDiscountAppliedBarDismissed,
       signupDismissDiscountAppliedBar,
       isSocialBelongingEnabled,
+      isBoxSizeVerticalLayoutEnabled,
     } = this.props
 
     if (stepName === signupConfig.sellThePropositionPagePath) {
@@ -350,7 +353,11 @@ class Signup extends PureComponent {
           signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}
           isDiscountAppliedBarDismissed={isDiscountAppliedBarDismissed}
         />
-        <div className={css.stepsContainer}>
+        <div
+          className={classNames(css.stepsContainer, {
+            [css.stepsContainerVerticalLayout]: isBoxSizeVerticalLayoutEnabled,
+          })}
+        >
           <div className={css.animationContainer}>
             <div className={css.stepIndicatorContainer}>
               <StepIndicator current={stepNumber + 1} size={this.getStepSize(steps.size)} />

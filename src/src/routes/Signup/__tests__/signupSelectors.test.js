@@ -1,8 +1,8 @@
 import Immutable from 'immutable'
-import { getIsSocialBelongingEnabled } from '../signupSelectors'
+import { getIsSocialBelongingEnabled, getIsBoxSizeVerticalLayoutEnabled } from '../signupSelectors'
 
-describe('given getIsSocialBelongingEnabled', () => {
-  describe('when getIsSocialBelongingEnabled is called', () => {
+describe('signupSelectors', () => {
+  describe('given getIsSocialBelongingEnabled is called', () => {
     let state
 
     beforeEach(() => {
@@ -17,6 +17,24 @@ describe('given getIsSocialBelongingEnabled', () => {
 
     test('then it should return true', () => {
       expect(getIsSocialBelongingEnabled(state)).toBeTruthy()
+    })
+  })
+
+  describe('given getIsBoxSizeVerticalLayoutEnabled is called', () => {
+    let state
+
+    beforeEach(() => {
+      state = {
+        features: Immutable.fromJS({
+          isBoxSizeVerticalLayoutEnabled: {
+            value: true,
+          },
+        }),
+      }
+    })
+
+    test('then it should return true', () => {
+      expect(getIsBoxSizeVerticalLayoutEnabled(state)).toBeTruthy()
     })
   })
 })

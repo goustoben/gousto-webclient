@@ -1,5 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { signupConfig } from 'config/signup'
 import { Heading } from 'goustouicomponents'
 import { completeWizardBoxSize } from 'actions/trackingKeys'
@@ -12,6 +13,7 @@ const BoxSizeStep = ({
   numPortionChangeTracking,
   next,
   trackSignupWizardAction,
+  isBoxSizeVerticalLayoutEnabled,
 }) => {
   const { boxSizeTypes, title, subtitle } = signupConfig.boxSizeStep
   const handleClick = (value) => {
@@ -25,7 +27,12 @@ const BoxSizeStep = ({
 
   const renderCarouselItems = () =>
     boxSizeTypes.map(({ heading, suitableFor, ctaText, value }) => (
-      <div className={css.carouselItem} key={`box-size-for-${value}`}>
+      <div
+        className={classNames(css.carouselItem, {
+          [css.verticalLayoutItem]: isBoxSizeVerticalLayoutEnabled,
+        })}
+        key={`box-size-for-${value}`}
+      >
         <h2 className={css.itemHeading}>{heading}</h2>
         <p className={css.suitableTitle}>Suitable for:</p>
         <ul className={css.list}>
@@ -53,8 +60,18 @@ const BoxSizeStep = ({
           <Heading type="h1">{title}</Heading>
           <p className={css.subtitle}>{subtitle}</p>
         </div>
-        <div className={css.boxSizeCarousel}>
-          <div className={css.boxSizeCarouselInner}>{renderCarouselItems()}</div>
+        <div
+          className={classNames(css.boxSizeCarousel, {
+            [css.verticalLayout]: isBoxSizeVerticalLayoutEnabled,
+          })}
+        >
+          <div
+            className={classNames(css.boxSizeCarouselInner, {
+              [css.innerVerticalLayout]: isBoxSizeVerticalLayoutEnabled,
+            })}
+          >
+            {renderCarouselItems()}
+          </div>
         </div>
       </div>
     </div>
@@ -66,6 +83,11 @@ BoxSizeStep.propTypes = {
   numPortionChangeTracking: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired,
   trackSignupWizardAction: PropTypes.func.isRequired,
+  isBoxSizeVerticalLayoutEnabled: PropTypes.bool,
+}
+
+BoxSizeStep.defaultProps = {
+  isBoxSizeVerticalLayoutEnabled: false,
 }
 
 export { BoxSizeStep }

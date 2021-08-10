@@ -1,5 +1,5 @@
 @value White, Mackerel from 'styles/colors.css';
-@value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
+@value BreakpointToMedium, BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
 
 .boxSizeContainer {
   display: flex;
@@ -15,13 +15,8 @@
   composes: fontStyleBody from 'design-language/typography.css';
 
   @media BreakpointFromMedium {
-    margin-bottom: 01.5rem;
+    margin-bottom: 1.5rem;
   }
-}
-
-.boxSizeCarouselInner {
-  display: flex;
-  justify-content: space-between;
 }
 
 .boxSizeCarousel {
@@ -31,6 +26,22 @@
   @media BreakpointFromMedium {
     overflow: hidden;
     max-width: 100%;
+  }
+}
+
+.verticalLayout {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.boxSizeCarouselInner {
+  display: flex;
+  justify-content: space-between;
+}
+
+.innerVerticalLayout {
+  @media BreakpointToMedium {
+    display: block;
   }
 }
 
@@ -52,6 +63,15 @@
 
     &:first-child {
      margin-right: 0;
+    }
+  }
+}
+
+.verticalLayoutItem {
+  &:first-child {
+    @media BreakpointToMedium {
+      margin-right: 0;
+      margin-bottom: 1rem;
     }
   }
 }
