@@ -1,67 +1,124 @@
 ---
 serviceName: webclient
 region: eu-west-1
-exposure: public
+exposure: private
 dns: webclient
 owner: squad-radishes
+rootVolumeSize: 16
 
-ec2: false
-ecs:
-  alb:
-    - type: public
+alb:
+  ec2:
+    type: private
+    rules:
+      - priority: 94
+        conditions:
+          - field: host-header
+            value: "[environment]-webclient.[cloudformation_output_domain]"
+
+  ecs:
+    - type: private
       rules:
         - priority: 91
           conditions:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
+            - field: path-pattern
+              value: "/box-prices"
 
-  healthCheck:
-    target : 'HTTP:80/ping'
-    healthyThreshold: 2
-    unhealthyThreshold: 10
-    interval: 5
-    timeout: 4
+    - type: private
+      rules:
+        - priority: 92
+          conditions:
+            - field: host-header
+              value: "[environment]-webclient.[cloudformation_output_domain]"
+            - field: path-pattern
+              value: "/my-referrals"
 
-  containers:
-    webclient:
-      port: 80
-      logName: application
-      environment:
-        ENVIRONMENT: '{{ ENVIRONMENT }}'
+    - type: private
+      rules:
+        - priority: 93
+          conditions:
+            - field: host-header
+              value: "[environment]-webclient.[cloudformation_output_domain]"
 
-  taskRolePolicies:
-    - effect: Allow
-      actions:
-        - s3:GetObject
-        - s3:GetObjectVersion
-      resources:
-        - arn:aws:s3:::{{ stacks.defaults.output.configbucket }}/{{ ENVIRONMENT }}/config/service/{{ serviceName }}.yml
+messages:
+ publish:
+ consume:
 
-  logs:
-    - name: application
+alarms:
+  cpuAmber: 61
+  cpuRed: 80
+  elbLatencyAmber: 0.8
+  elbLatencyRed: 1.2
 
-  service:
-    healthCheckGracePeriod: 150
+logs:
+  - name: accessLogGroup
+  - name: errorLogGroup
+  - name: pm2Log
+  - name: apiTimeLog
 
-  scaling:
-    cpuTargetTrackingScalingPolicyPercentage: 50
-    memoryTargetTrackingScalingPolicyPercentage: 20
+ecs_log_filters:
+  - name: applicationlog
+    filters:
+      - name: AuthServiceTimeoutCount
+        pattern: '''{$.message = "auth/login catch {\"code\":500,\"errors\":[],\"message\":\"Timeout\",\"status\":500}"}'''
+        alarm:
+          description: Alarm to indicate that login requests to auth service are timing out.
+          owner: squad-haricots
+          level: critical
+
+scaling:
+  ecsCpuTargetTrackingScalingPolicyPercentage: 50
+  ecsMemoryTargetTrackingScalingPolicyPercentage: 20
+
+healthCheck:
+  target : 'HTTP:80/ping'
+  healthyThreshold: 2
+  unhealthyThreshold: 10
+  interval: 5
+  timeout: 4
+  gracePeriod: 1080
 
 environments:
   - name: staging
-    ecs:
-      memory: 1024
-      cpu: 512
-      maxCount: 2
+    instanceType: t2.small
+    minInstanceSize: 0
+    maxInstanceSize: 1
+    desiredInstanceSize: 0
+    ecsDesiredTaskCount: 1
+    ecsMaxTaskCount: 2
+    ecsMemory: 1024
+    ecsCpu: 512
+
+    deployment:
+      style: immutable
+      minInstancesInService: 0
+      maxBatchSize: 1
 
   - name: env-default
-    ecs:
-      memory: 512
-      cpu: 256
+    instanceType: t2.small
+    minInstanceSize: 0
+    maxInstanceSize: 0
+    desiredInstanceSize: 0
+    ecsDesiredTaskCount: 1
+    ecsMemory: 512
+    ecsCpu: 256
+
+    deployment:
+      style: inline
 
   - name: production
-    ecs:
-      memory: 2048
-      cpu: 1024
-      desiredCount: 8
-      maxCount: 16
+    instanceType: t2.medium
+    minInstanceSize: 0
+    maxInstanceSize: 8
+    desiredInstanceSize: 0
+    availability: alwaysOn
+    ecsDesiredTaskCount: 8
+    ecsMaxTaskCount: 16
+    ecsMemory: 2048
+    ecsCpu: 1024
+
+    deployment:
+      style: immutable
+      minInstancesInService: 0
+      maxBatchSize: 1

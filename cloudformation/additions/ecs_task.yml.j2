@@ -1,0 +1,108 @@
+
+{% for env in environments %}
+  {% if env.name == ENVIRONMENT %}
+
+  EcsTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: task-{{ ENVIRONMENT }}-{{ serviceName }}-definition
+      ExecutionRoleArn:
+        Ref:  EcsTaskExecutionRole
+      TaskRoleArn:
+        Ref: EcsTaskRole
+      Memory: {{ env.ecsMemory }} # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html#cfn-ecs-taskdefinition-memory
+      Cpu: {{ env.ecsCpu }} # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html#cfn-ecs-taskdefinition-cpu
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      ContainerDefinitions:
+        -
+          Name: webclient
+          Image:
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient:{{ GITHUB_COMMIT }}
+          MemoryReservation: 256
+          PortMappings:
+            - ContainerPort: 80
+          Environment:
+            - Name: ENVIRONMENT
+              Value: {{ ENVIRONMENT }}
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-applicationlog
+              awslogs-stream-prefix:  {{ serviceName }}-{{ ENVIRONMENT }}-node-service
+
+  EcsService:
+    Type: AWS::ECS::Service
+    DependsOn: EcsServiceRole
+    Properties:
+      Cluster: {{ stacks.compute.output.defaultcluster }}
+      DesiredCount: {{ env.ecsDesiredTaskCount }}
+      HealthCheckGracePeriodSeconds: 150
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200 #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-service-deploymentconfiguration.html
+        MinimumHealthyPercent: 100
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Ref: EcsServiceSecurityGroup
+          Subnets:
+            - {{ stacks.network.output.privateasubnet }}
+            - {{ stacks.network.output.privatebsubnet }}
+      TaskDefinition:
+        Ref: EcsTaskDefinition
+      LoadBalancers:
+              - ContainerName: webclient
+                ContainerPort: 80
+                TargetGroupArn:
+                  Ref:  ECSALBTargetGroup{{ exposure |title }}
+
+  {% endif %}
+{% endfor %}
+
+{% if ecs_log_filters is defined %}
+
+  {% for log in ecs_log_filters %}
+
+  {% for filter in log.filters %}
+
+  {{ filter.name }}:
+    Type: AWS::Logs::MetricFilter
+    Properties:
+      LogGroupName: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-{{ log.name}}
+      FilterPattern: {{ filter.pattern }}
+      MetricTransformations:
+        -
+          MetricValue: 1
+          MetricNamespace: Gousto/{{ ENVIRONMENT }}-{{ serviceName }}
+          MetricName: {{ filter.name }}
+
+  {% if filter.alarm is defined %}
+
+  {% set alarm_owner = filter.alarm.owner|default(owner) %}
+  {% set alarm_level = filter.alarm.level|default(None) %}
+
+  {{ filter.name }}Alarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: {{ filter.alarm.description }}
+      AlarmActions: [ "{{ get_alarm_topic_arn_for_owner(alarm_owner, type=alarm_level) }}" ]
+      ComparisonOperator: GreaterThanThreshold
+      EvaluationPeriods: 1
+      MetricName: {{ filter.name }}
+      Namespace: Gousto/{{ENVIRONMENT}}-{{serviceName}}
+      Period: 30
+      Statistic: Sum
+      Threshold: 0
+
+  {% endif %}
+
+  {% endfor %}
+  {% endfor %}
+
+{% endif %}
