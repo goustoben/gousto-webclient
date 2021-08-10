@@ -306,89 +306,89 @@ workflows:
               only:
                 - e2e-manual
 
-  lower-environment:
-    jobs:
-      - setup-ci-variables-and-download-platform-scripts:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - build-webclient:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-and-download-platform-scripts
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - jest-coverage-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - eslint-generate-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - jest-coverage-report
-            - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - deploy-infrastructure-and-webclient-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - install-regression-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-and-download-platform-scripts
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - test-regression:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - test-regression-mobile:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+#  lower-environment:
+#    jobs:
+#      - setup-ci-variables-and-download-platform-scripts:
+#          context: gousto-beta-aws-app-circleci
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - build-webclient:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - setup-ci-variables-and-download-platform-scripts
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - jest-coverage-report:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - build-webclient
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - eslint-generate-report:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - build-webclient
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - publish-code-health:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - jest-coverage-report
+#            - eslint-generate-report
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - create-and-upload-webclient-docker-image-to-ecr:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - build-webclient
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - deploy-infrastructure-and-webclient-image:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - create-and-upload-webclient-docker-image-to-ecr
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - install-regression-test-dependencies:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - setup-ci-variables-and-download-platform-scripts
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - test-regression:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - install-regression-test-dependencies
+#            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - test-regression-mobile:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - install-regression-test-dependencies
+#            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
 
   staging-environment:
     jobs:
@@ -485,13 +485,13 @@ workflows:
   production-environment:
     jobs:
       - setup-ci-variables-and-download-platform-scripts:
-          context: gousto-prod-aws-app-circleci
+          context: gousto-beta-aws-app-circleci
           filters:
             branches:
               only:
                 - master
       - build-webclient:
-          context: gousto-prod-aws-app-circleci
+          context: gousto-beta-aws-app-circleci
           requires:
             - setup-ci-variables-and-download-platform-scripts
           filters:
@@ -499,7 +499,7 @@ workflows:
               only:
                 - master
       - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-prod-aws-app-circleci
+          context: gousto-beta-aws-app-circleci
           requires:
             - build-webclient
           filters:
@@ -507,10 +507,102 @@ workflows:
               only:
                 - master
       - deploy-infrastructure-and-webclient-image:
-          context: gousto-prod-aws-app-circleci
+          context: gousto-beta-aws-app-circleci
           requires:
             - create-and-upload-webclient-docker-image-to-ecr
           filters:
             branches:
               only:
                 - master
+
+  pipeline-test:
+    jobs:
+      - setup-ci-variables-and-download-platform-scripts:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - build-webclient:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-and-download-platform-scripts
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - jest-coverage-report:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - eslint-generate-report:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - publish-code-health:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - jest-coverage-report
+            - eslint-generate-report
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - create-and-upload-webclient-docker-image-to-ecr:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-webclient
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - deploy-infrastructure-and-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - create-and-upload-webclient-docker-image-to-ecr
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - install-regression-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-and-download-platform-scripts
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-regression:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-regression-mobile:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - test-e2e:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+          filters:
+            branches:
+              only:
+                - /^env-.*/
