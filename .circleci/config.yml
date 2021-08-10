@@ -201,7 +201,7 @@ jobs:
           at: ~/
       - run:
           name: Export base url environment variable
-          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info' >> $BASH_ENV
+          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
           # This is a workaround for broken variable interpolation in version 2
           # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
       - run:
@@ -230,7 +230,7 @@ jobs:
           at: ~/
       - run:
           name: Export base url environment variable
-          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-frontend.gousto.info' >> $BASH_ENV
+          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
       - run:
           name: Run regression tests
           command: |
@@ -256,16 +256,6 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: source ~/.circlerc && scripts/deploy.sh
-
-  deploy-containers:
-    docker: *gousto_platform_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Deploy containers to ECS
-          command: source ~/.circlerc && python ./ci_scripts/deploy_containers.py --service webclient
-          no_output_timeout: 20m
 
   install-test-dependencies:
     docker: *gousto_build_image
@@ -380,14 +370,6 @@ workflows:
       - deploy-application:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-application
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - deploy-containers:
-          context: gousto-beta-aws-app-circleci
-          requires:
             - deploy-webclient-image
           filters:
             branches:
@@ -407,7 +389,6 @@ workflows:
           requires:
             - install-test-dependencies
             - deploy-application
-            - deploy-containers
           filters:
             branches:
               only:
@@ -417,7 +398,6 @@ workflows:
           requires:
             - install-test-dependencies
             - deploy-application
-            - deploy-containers
           filters:
             branches:
               only:
@@ -441,6 +421,10 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-src
+          filters:
+            branches:
+              only:
+                - develop
       - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -491,14 +475,6 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-application
-            - publish-code-health
-          filters:
-            branches:
-              only:
-                - develop
-      - deploy-containers:
-          context: gousto-beta-aws-app-circleci
-          requires:
             - deploy-webclient-image
             - publish-code-health
           filters:
@@ -519,7 +495,6 @@ workflows:
           requires:
             - install-test-dependencies
             - deploy-application
-            - deploy-containers
           filters:
             branches:
               only:
@@ -529,7 +504,6 @@ workflows:
           requires:
             - install-test-dependencies
             - deploy-application
-            - deploy-containers
           filters:
             branches:
               only:
@@ -539,7 +513,6 @@ workflows:
           requires:
             - install-test-dependencies
             - deploy-application
-            - deploy-containers
           filters:
             branches:
               only:
@@ -596,13 +569,6 @@ workflows:
           context: gousto-prod-aws-app-circleci
           requires:
             - build-application
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-containers:
-          context: gousto-prod-aws-app-circleci
-          requires:
             - deploy-webclient-image
           filters:
             branches:
