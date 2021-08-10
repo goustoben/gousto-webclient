@@ -48,6 +48,12 @@ const menuActions = {
   menuBrowseCTAVisibilityChange,
   menuReceiveMenuPending,
   menuReceiveBoxPrices,
+  trackViewSidesModal,
+  trackSidesContinueClicked,
+  trackAddSide,
+  trackCancelSide,
+  trackViewSidesAllergens,
+  trackCloseSidesAllergens,
 }
 
 function handleReloadMenuError({ dispatch }) {
@@ -392,6 +398,78 @@ export const unselectRecipeSide = (recipeId) => ({
   type: actionTypes.MENU_UNSELECT_RECIPE_SIDE,
   payload: {
     recipeId,
+  }
+})
+
+export const sideEventScreens = {
+  orderSidesScreen: 'order_sides_screen',
+  orderSidesAllergensScreen: 'order_sides_allergens_screen'
+}
+
+export const sideEventTypes = {
+  primaryAction: 'primary_action',
+  screenView: 'screen_view',
+  closeScreen: 'close_screen',
+  tertiaryAction: 'tertiary_action',
+}
+
+export const trackSidesContinueClicked = (sidesIds, sidesTotalSurcharge, totalNumberOfSides) => ({
+  type: actionTypes.TRACK_CONTINUE_WITH_SIDES_CLICKED,
+  trackingData: {
+    event_name: trackingKeys.sideModalSidesContinueClicked,
+    event_screen: sideEventScreens.orderSidesScreen,
+    event_type: sideEventTypes.primaryAction,
+    sides_ids: sidesIds,
+    sides_total_surcharge: sidesTotalSurcharge,
+    sides_counts: totalNumberOfSides
+  }
+})
+
+export const trackViewSidesModal = () =>
+  ({
+    type: actionTypes.TRACK_VIEW_ORDER_SIDES_SCREEN,
+    trackingData: {
+      event_name: trackingKeys.sideModalViewOrderSidesScreen,
+      event_screen: sideEventScreens.orderSidesScreen,
+      event_type: sideEventTypes.screenView,
+    }}
+  )
+
+export const trackCancelSide = () =>
+  ({
+    type: actionTypes.TRACK_ORDER_SIDES_CANCEL,
+    trackingData: {
+      event_name: trackingKeys.sideModalOrderSidesCancel,
+      event_type: sideEventTypes.closeScreen
+    }
+  })
+
+export const trackAddSide = (sideId, orderId) =>
+  ({
+    type: actionTypes.TRACK_ADD_SIDE,
+    trackingData: {
+      event_name: trackingKeys.sideModalAddSide,
+      side_id: sideId,
+      order_id: orderId,
+    }
+  })
+
+export const trackViewSidesAllergens = () =>
+  ({
+    type: actionTypes.TRACK_VIEW_ORDER_SIDES_ALLERGENS_SCREEN,
+    trackingData: {
+      event_name: trackingKeys.sideModalViewOrderSidesAllergensScreen,
+      event_screen: sideEventScreens.orderSidesScreen,
+      event_type: sideEventTypes.tertiaryAction
+    }
+  })
+
+export const trackCloseSidesAllergens = () => ({
+  type: actionTypes.TRACK_CLOSE_ORDER_SIDES_ALLERGENS_SCREEN,
+  trackingData: {
+    event_name: trackingKeys.sideModalClose,
+    event_screen: sideEventScreens.orderSidesAllergensScreen,
+    event_type: sideEventTypes.closeScreen
   }
 })
 

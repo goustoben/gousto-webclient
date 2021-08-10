@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { actionTypes } from '../actionTypes'
+import * as trackingKeys from '../trackingKeys'
 const mockFetchAvailableDates = jest.fn()
 const mockFetchRecipeStock = jest.fn()
 const mockLimitReached = jest.fn()
@@ -36,7 +37,7 @@ jest.mock('apis/boxPrices', () => ({
 
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
-  const { findSlot, ...menuActions } = require('../menu')//eslint-disable-line
+  const { findSlot, sideEventScreens, sideEventTypes, ...menuActions} = require('../menu')//eslint-disable-line
   const { getStockAvailability } = require('../menuActionHelper')//eslint-disable-line
   const dispatch = jest.fn()
   const state = {
@@ -387,6 +388,111 @@ describe('menu actions', () => {
           tariffId: 'id'
         })
       })
+    })
+  })
+
+  describe('trackSidesContinueClicked', () => {
+    it('should return action TRACK_CONTINUE_WITH_SIDES_CLICKED', () => {
+      const trackingAction = menuActions.trackSidesContinueClicked('side-ids', 'sides-total-surcharge', 'total_number-of-sides')
+
+      expect(trackingAction).toEqual(
+        {
+          type: actionTypes.TRACK_CONTINUE_WITH_SIDES_CLICKED,
+          trackingData:
+          {
+            event_name: trackingKeys.sideModalSidesContinueClicked,
+            event_screen: sideEventScreens.orderSidesScreen,
+            event_type: sideEventTypes.primaryAction,
+            sides_counts: 'total_number-of-sides',
+            sides_ids: 'side-ids',
+            sides_total_surcharge: 'sides-total-surcharge'
+          },
+        }
+      )
+    })
+  })
+
+  describe('trackViewSidesModal', () => {
+    it('should return action MENU_TRACK_VIEW_SIDES_MODAL', () => {
+      const trackingAction = menuActions.trackViewSidesModal()
+
+      expect(trackingAction).toEqual(
+        {
+          type: actionTypes.TRACK_VIEW_ORDER_SIDES_SCREEN,
+          trackingData: {
+            event_name: trackingKeys.sideModalViewOrderSidesScreen,
+            event_type: sideEventTypes.screenView,
+            event_screen: sideEventScreens.orderSidesScreen,
+          },
+        }
+      )
+    })
+  })
+
+  describe('trackCancelSide', () => {
+    it('should return action TRACK_ORDER_SIDES_CANCEL', () => {
+      const trackingAction = menuActions.trackCancelSide()
+
+      expect(trackingAction).toEqual(
+        {
+          type: actionTypes.TRACK_ORDER_SIDES_CANCEL,
+          trackingData: {
+            event_name: trackingKeys.sideModalOrderSidesCancel,
+            event_type: sideEventTypes.closeScreen
+          }
+        }
+      )
+    })
+  })
+
+  describe('trackAddSide', () => {
+    it('should return action TRACK_ADD_SIDE', () => {
+      const trackingAction = menuActions.trackAddSide('side-id', 'order-id')
+
+      expect(trackingAction).toEqual(
+        {
+          type: actionTypes.TRACK_ADD_SIDE,
+          trackingData: {
+            event_name: trackingKeys.sideModalAddSide,
+            side_id: 'side-id',
+            order_id: 'order-id',
+          }
+        }
+      )
+    })
+  })
+
+  describe('trackViewSidesAllergens', () => {
+    it('should return action TRACK_ORDER_SIDES_SEE_ALLERGENS', () => {
+      const trackingAction = menuActions.trackViewSidesAllergens()
+
+      expect(trackingAction).toEqual(
+        {
+          type: actionTypes.TRACK_VIEW_ORDER_SIDES_ALLERGENS_SCREEN,
+          trackingData: {
+            event_name: trackingKeys.sideModalViewOrderSidesAllergensScreen,
+            event_screen: sideEventScreens.orderSidesScreen,
+            event_type: sideEventTypes.tertiaryAction
+          }
+        }
+      )
+    })
+  })
+
+  describe('trackCloseSidesAllergens', () => {
+    it('should return action TRACK_CLOSE_ORDER_SIDES_ALLERGENS_SCREEN', () => {
+      const trackingAction = menuActions.trackCloseSidesAllergens()
+
+      expect(trackingAction).toEqual(
+        {
+          type: actionTypes.TRACK_CLOSE_ORDER_SIDES_ALLERGENS_SCREEN,
+          trackingData: {
+            event_name: trackingKeys.sideModalClose,
+            event_screen: sideEventScreens.orderSidesAllergensScreen,
+            event_type: sideEventTypes.closeScreen
+          }
+        }
+      )
     })
   })
 })
