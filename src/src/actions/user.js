@@ -10,7 +10,13 @@ import * as prospectApi from 'apis/prospect'
 
 import { signupConfig } from 'config/signup'
 
-import { accountFormName, deliveryFormName, getPasswordValue } from 'selectors/checkout'
+import {
+  accountFormName,
+  deliveryFormName,
+  getPasswordValue,
+  getFormattedPhoneNumber,
+  getSignupE2ETestName,
+} from 'selectors/checkout'
 import {
   isChoosePlanEnabled,
   getNDDFeatureValue,
@@ -33,6 +39,7 @@ import { deleteOrder } from 'routes/Account/MyDeliveries/apis/orderV2'
 import { actionTypes } from './actionTypes'
 // eslint-disable-next-line import/no-cycle
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
+import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from './log'
 import recipeActions from './recipes'
 import statusActions from './status'
 // eslint-disable-next-line import/no-cycle
@@ -659,7 +666,7 @@ function buildSignupRequestData(state, sca3ds, sourceId) {
     promocode: promoCode,
     customer: {
       tariff_id: basket.get('tariffId', ''),
-      phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
+      phone_number: getFormattedPhoneNumber(state),
       email: account.get('email'),
       name_first: delivery.get('firstName').trim(),
       name_last: delivery.get('lastName').trim(),
@@ -739,6 +746,7 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
 
     const prices = state.pricing.get('prices')
+    const signupTestName = getSignupE2ETestName(state)
     try {
       const reqData = buildSignupRequestData(state, sca3ds, sourceId)
 
@@ -772,6 +780,9 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
         dispatch(trackNewOrder(orderId, customerId))
         dispatch(basketPreviewOrderChange(orderId, state.basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
+        if (signupTestName) {
+          dispatch(trackSuccessfulCheckoutFlow('Signup succeeded', { testName: signupTestName, data }))
+        }
       } else {
         throw new GoustoException(actionTypes.USER_SUBSCRIBE)
       }
@@ -793,6 +804,9 @@ export function userSubscribe(sca3ds = false, sourceId = null) {
       })
       dispatch(trackNewOrder(previewOrderId))
       logger.error({ message: err.message, errors: [err] })
+      if (signupTestName) {
+        dispatch(trackFailedCheckoutFlow('Signup failed', err, { testName: signupTestName }))
+      }
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))

@@ -1,6 +1,7 @@
 const { performSignUpFlowUpToPaymentStep } = require('./signupCommon')
 
 module.exports = {
+  '@tags': ['unstable'],
   'Sign-up error for card name with checkout.com from /': function (browser) {
     const checkout = browser.page.checkoutV2()
     const welcome = browser.page.welcome()

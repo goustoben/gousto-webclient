@@ -8,6 +8,7 @@ module.exports = {
     performSignUpFlowUpToPaymentStep(browser)
 
     browser
+      .execute("window.__loadFeatures__({ features: { signupE2ETestName: { value: 'checkoutV2' }}})")
       .perform(function (done) {
         checkout.section.checkoutContainer.submitPaymentSection(browser)
         done()

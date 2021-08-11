@@ -22,7 +22,13 @@ import { authPayment, checkPayment, fetchPayPalToken, signupPayment } from 'apis
 
 import { getSignupRecaptchaToken } from 'selectors/auth'
 import { getPreviewOrderId, getPromoCode, getBasketRecipes } from 'selectors/basket'
-import { accountFormName, deliveryFormName, getPromoCodeValidationDetails, getPasswordValue } from 'selectors/checkout'
+import {
+  accountFormName,
+  deliveryFormName,
+  getPromoCodeValidationDetails,
+  getPasswordValue,
+  getSignupE2ETestName,
+} from 'selectors/checkout'
 import { getIsPaymentBeforeChoosingEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
 import {
   getDecoupledPaymentData,
@@ -48,6 +54,7 @@ import {
 } from './tracking'
 import loginActions from './login'
 import statusActions from './status'
+import { trackFailedCheckoutFlow, trackSuccessfulCheckoutFlow } from './log'
 import { pricingRequest } from './pricing'
 import tempActions from './temp'
 import { checkoutCreatePreviewOrder } from '../routes/Menu/actions/checkout'
@@ -392,8 +399,9 @@ export function checkoutPostSignup() {
     dispatch(trackSubscriptionCreated())
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
+    const state = getState()
+    const signupTestName = getSignupE2ETestName(state)
     try {
-      const state = getState()
       const { form, pricing } = state
       const recaptchaToken = getSignupRecaptchaToken(state)
       const accountValues = Immutable.fromJS(form[accountFormName].values)
@@ -410,10 +418,16 @@ export function checkoutPostSignup() {
       dispatch(tempActions.temp('originalNetTotal', netTotal))
       dispatch(trackPurchase())
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes }) // used for data layer tracking
+      if (signupTestName) {
+        dispatch(trackSuccessfulCheckoutFlow('PostSignup succeeded', { testName: signupTestName }))
+      }
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
       dispatch(trackCheckoutError(actionTypes.CHECKOUT_SIGNUP_LOGIN, err.code, 'checkoutPostSignup'))
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
+      if (signupTestName) {
+        dispatch(trackFailedCheckoutFlow('PostSignup failed', err, { testName: signupTestName }))
+      }
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
       basketResetPersistent(Cookies)

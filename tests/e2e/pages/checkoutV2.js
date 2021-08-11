@@ -217,7 +217,7 @@ module.exports = {
             changeCardSecurityCode: function (browser, cvv = '100') {
               this
                 .waitForElementVisible('@cardCvv')
-                .setValue('@cardCvv', ``)
+                .setValue('@cardCvv', '')
 
               browser.keys(browser.Keys.BACK_SPACE.repeat(4))
               browser.keys(cvv)

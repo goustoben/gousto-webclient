@@ -3,13 +3,6 @@ import addressRules from 'validations/address'
 import regExp from './regularExpressions'
 
 const rules = {
-  phone: {
-    field: 'phone number',
-    rules: [
-      { name: 'isLength', options: { min: 10 } },
-      { name: 'isLength', options: { max: 10 } },
-    ],
-  },
   firstName: {
     field: 'first name',
     rules: [
