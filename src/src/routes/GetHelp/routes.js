@@ -19,15 +19,9 @@ import { Refund } from './Refund'
 import { DidntArriveContainer } from './Delivery/DidntArrive'
 
 const getHelpRoutes = (store) => {
-  const onEnterHandler = (routes, replace, next) => {
-    const redirectTo = '/'
-
-    // redirect user to the `/` in case auth session is not found
-    return checkValidSession(store, redirectTo)(routes, replace, next)
-  }
-
   const {
     index,
+    contact,
     delivery,
     deliveryDidntArrive,
     deliveryDidntArriveValidation,
@@ -35,6 +29,21 @@ const getHelpRoutes = (store) => {
     ingredients,
     recipeCards,
   } = configRoutes.client.getHelp
+
+  const allowNotLoggedInToSomeRoutes = (routes, next) => {
+    if (routes.location.pathname === `${index}/${contact}`) {
+      next()
+    }
+  }
+
+  const onEnterHandler = (routes, replace, next) => {
+    const redirectTo = '/'
+    allowNotLoggedInToSomeRoutes(routes, next)
+    // redirect user to the `/` in case auth session is not found
+
+    return checkValidSession(store, redirectTo)(routes, replace, next)
+  }
+
   const { login } = configRoutes.client
 
   return (
