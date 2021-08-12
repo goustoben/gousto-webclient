@@ -241,17 +241,10 @@ npm run test:debug:web
 All data should be mocked. Cypress has been configured to return a 404 for any real api calls.
 
 ### Running end-to-end tests
-You will need the following installed:
-1. Java Runtime. Check if already installed with `java --version`, and if not, install using homebrew:
-```shell
-brew update
-brew cask install java
-```
-2. Nightwatch/Selenium:
+2. Nightwatch/Chromedriver:
 ```shell
 cd /tests/e2e
 npm ci
-node installLocal.js
 ```
 
 #### Local environment (for your local machine, even if you point to Staging)
@@ -280,8 +273,6 @@ npm run test:staging
 
 To run a specific tag (look at the end of the test files for the tags) use:
 `npm run test -- --tag gousto`
-
-Staging e2e tests run using a selenium server hosted on AWS. You may need to check the health of this server if the tests are not running properly - the `i-staging-selenium` EC2 instance.
 
 ## [Code editor setup](#code-editor-setup)
 Please install [EditorConfig](https://editorconfig.org/) for your text editor or IDE, it basically support most if not all commonly used editors (Sublime Text, VS Code, Vim, Brackets, Atom, all JetBrains products and etc). The purpose of this plugin is to ensure that everyone pushes code with the same code indentation, spacing and some other less common known configs such as ensure all file to have a final new line. It is super simple to use, just install the plugin then you won't need to do anything else. The plugin will automatically apply indentation rules from the .editorconfig file in the root of the repo.

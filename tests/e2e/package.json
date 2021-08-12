@@ -16,9 +16,10 @@
     "faker": "^3.1.0",
     "immutable": "^3.8.1",
     "nightwatch": "^0.9.21",
-    "nightwatch-cucumber": "^8.2.10",
     "randexp": "0.4.6",
     "selenium-download": "2.0.7"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chromedriver": "^92.0.1"
+  }
 }
