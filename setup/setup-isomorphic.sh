@@ -2,7 +2,7 @@
 
 export NODE_CONFIG_ENV=${ENVIRONMENT}
 export NODE_APP_INSTANCE="live"
-
+ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 cd src
 
 npm ci
