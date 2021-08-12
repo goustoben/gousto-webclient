@@ -17,7 +17,7 @@ const SidesContentFooter = ({
   toggleShowAllergenAndNutrition,
   total,
   onSubmit,
-  showAllergenAndNutrition
+  showAllergenAndNutrition,
 }) => (
   <div className={css.sidesModalFooter}>
     <div>
@@ -71,7 +71,7 @@ SidesContentFooter.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   toggleShowAllergenAndNutrition: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
-  showAllergenAndNutrition: PropTypes.bool.isRequired
+  showAllergenAndNutrition: PropTypes.bool.isRequired,
 }
 
 const SidesContent = ({
@@ -168,7 +168,6 @@ export const SidesModal = ({
   isOpen,
   onClose,
   onSubmit: onSubmitCallback,
-  onError
 }) => {
   const {
     sides,
@@ -179,7 +178,7 @@ export const SidesModal = ({
     isOutOfStock,
     getLimit,
     total,
-  } = useSidesBasket(accessToken, userId, order, onSubmitCallback, onError)
+  } = useSidesBasket(accessToken, userId, order, onSubmitCallback, isOpen)
   const hasSides = Boolean(sides.length)
   const [showAllergenAndNutrition, setShowAllergenAndNutrition] = React.useState(false)
   const toggleShowAllergenAndNutrition = () => setShowAllergenAndNutrition(!showAllergenAndNutrition)
@@ -242,5 +241,4 @@ SidesModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onError: PropTypes.func.isRequired
 }

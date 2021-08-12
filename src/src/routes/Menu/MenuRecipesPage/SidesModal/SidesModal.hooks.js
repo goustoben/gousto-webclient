@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSides } from 'routes/Menu/apis/sides.hook'
 import { ResourceType } from 'routes/Menu/constants/resources'
-import {SIDES, MAX_PRODUCTS_PER_BOX, LimitType} from '../../constants/products'
+import { SIDES, MAX_PRODUCTS_PER_BOX, LimitType } from '../../constants/products'
 
 // Note: this method should be replaced with `Object.fromEntries` when supported
 const fromEntriesReduce = (obj, [key, value]) => ({
@@ -18,7 +18,7 @@ const removeFalsyValuesFromObject = (object) => Object
   .reduce(fromEntriesReduce, {})
 
 const getProductsInOrder = (order) => {
-  const components = order.data.relationships.components.data
+  const components = order.relationships.components.data
 
   return components
     .filter(({ type }) => type === ResourceType.Product)
@@ -47,7 +47,8 @@ const makeUpdateSidesQuantity = (selectedProducts, setSelectedProducts) =>
 
 const getLimitsForProduct = (quantity, side, totalQuantityOfProducts, totalQuantityOfSides, maxProductsPerBox) => {
   const sideLimit = side.box_limit
-  const categoryLimit = side.categories[0].box_limit
+  const category = side.categories.find(c => c.title === SIDES) || {}
+  const categoryLimit = category.box_limit || 0
 
   if (totalQuantityOfSides >= categoryLimit) {
     return { type: LimitType.Category, value: SIDES}
@@ -64,10 +65,24 @@ const getLimitsForProduct = (quantity, side, totalQuantityOfProducts, totalQuant
   return false
 }
 
-export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, onError) => {
+export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, isOpen) => {
   const productsInOrder = getProductsInOrder(order)
   const [selectedProducts, setSelectedProducts] = React.useState(productsInOrder)
-  const { data } = useSides({ accessToken, userId, order }, { onError })
+  const { data } = useSides({
+    accessToken,
+    userId,
+    order: { data: order },
+    makeRequest: isOpen
+  }, {
+    onError: () => onSubmitCallback('sides-modal-without-sides', null),
+    onSuccess: (request) => {
+      const sides = request.data
+      // If no sides are returned selected sides
+      if (sides.length === 0) {
+        onSubmitCallback('sides-modal-without-sides', null)
+      }
+    }
+  })
 
   const sides = data ? data.data : []
   const total = getTotal(sides, selectedProducts)
@@ -75,7 +90,9 @@ export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, onE
   const updateSidesQuantity = makeUpdateSidesQuantity(selectedProducts, setSelectedProducts)
   const addSide = (id) => updateSidesQuantity(id, getQuantityForSidesBasket(id) + 1)
   const removeSide = (id) => updateSidesQuantity(id, getQuantityForSidesBasket(id) - 1)
-  const onSubmit = () => onSubmitCallback(selectedProducts)
+  const onSubmit = () => {
+    onSubmitCallback('sides-modal-with-sides', selectedProducts)
+  }
 
   // Limits and Stock
   const totalQuantityOfProducts = Object.values(selectedProducts).reduce(sum, 0)
@@ -86,10 +103,10 @@ export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, onE
   const getSide = (id) => sides.find((s) => s.id === id)
 
   const isOutOfStock = (id) => {
-    const quantityforOrder = productsInOrder[id] || 0
+    const quantityForOrder = productsInOrder[id] || 0
     const quantityForBasket = getQuantityForSidesBasket(id)
-    const quantityRequiringStock = quantityForBasket - quantityforOrder
-    const {stock} = getSide(id)
+    const quantityRequiringStock = quantityForBasket - quantityForOrder
+    const { stock } = getSide(id)
 
     return quantityRequiringStock >= stock
   }

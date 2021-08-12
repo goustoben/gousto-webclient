@@ -199,6 +199,30 @@ describe('basket reducer', () => {
     })
   })
 
+  describe('SET_BASKET_PRODUCTS action type', () => {
+    it('should set the products to be an Immutable Map of products', () => {
+      const action = {
+        type: actionTypes.SET_BASKET_PRODUCTS,
+        products: {
+          product_1: 2,
+          product_2: 1,
+        },
+      }
+      initialState = Immutable.fromJS({ products: { product_1: 1 } })
+
+      const result = basket(initialState, action)
+
+      const expectValue = Immutable.fromJS({
+        products: {
+          product_1: 2,
+          product_2: 1,
+        }
+      })
+
+      expect(Immutable.is(result, expectValue)).toEqual(true)
+    })
+  })
+
   describe('BASKET_PRODUCT_ADD action type', () => {
     test('should increment count for product id in products list by 1', () => {
       const action = {

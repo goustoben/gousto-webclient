@@ -150,6 +150,10 @@ const basket = {
       return state.set('postcodePending', action.pending)
     }
 
+    case actionTypes.SET_BASKET_PRODUCTS: {
+      return state.setIn(['products'], Immutable.fromJS(action.products))
+    }
+
     case actionTypes.BASKET_PRODUCT_ADD: {
       const currentQty = state.getIn(['products', action.productId], 0)
 

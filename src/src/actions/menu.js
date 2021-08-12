@@ -28,7 +28,8 @@ import {
   basketIdChange,
   basketOrderLoaded,
   basketPostcodeChange,
-  basketSlotChange
+  basketSlotChange,
+  basketChosenAddressChange,
 } from './basket'
 import { basketRecipeAdd } from '../routes/Menu/actions/basketRecipes'
 import tempActions from './temp'
@@ -291,6 +292,7 @@ export function menuLoadOrderDetails(orderId) {
 
     dispatch(basketIdChange(order.id))
     dispatch(basketOrderLoaded(order.id))
+    dispatch(basketChosenAddressChange(order.shippingAddress))
 
     const grossTotal = order && order.prices && order.prices.grossTotal
     const netTotal = order && order.prices && order.prices.total

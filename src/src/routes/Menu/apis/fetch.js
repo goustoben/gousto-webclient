@@ -7,13 +7,17 @@ const getSessionId = () => getFromCookie(Cookies, 'gousto_session_id', false, fa
 
 const getAuthorizationHeader = (accessToken) => (accessToken ? { Authorization: `Bearer ${accessToken}` } : {})
 
-const getHeadersToSend = (accessToken, userId, customHeaders = {}) => ({
-  'x-gousto-device-id': getSessionId(),
-  'x-gousto-user-id': userId,
-  ...getAuthorizationHeader(accessToken),
-  'Content-Type': 'application/json',
-  ...customHeaders
-})
+const getHeadersToSend = (accessToken, userId, customHeaders = {}) => {
+  const sessionId = getSessionId()
+
+  return ({
+    ...( sessionId ? { 'x-gousto-device-id': sessionId } : {} ),
+    ...( userId ? { 'x-gousto-user-id': userId } : {} ),
+    ...getAuthorizationHeader(accessToken),
+    'Content-Type': 'application/json',
+    ...customHeaders
+  })
+}
 
 /**
  * Make an HTTP request
@@ -49,6 +53,8 @@ const fetch = async (
   if (data) {
     if (request.method === 'GET') {
       requestUrl += `?${qs.stringify(data)}`
+    } else if (typeof data === 'string') {
+      request.body = data
     } else {
       request.body = JSON.stringify(data)
     }

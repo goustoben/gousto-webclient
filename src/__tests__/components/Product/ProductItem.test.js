@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import React from 'react'
 
 import Immutable from 'immutable'
@@ -56,5 +56,21 @@ describe('ProductItem', () => {
     expect(
       Immutable.is(wrapper.find(Item).prop('media'), testData.images.toList()),
     ).toEqual(true)
+  })
+
+  describe('when empty product', () => {
+    test('should not throw an error and safely render', () => {
+      expect(() => {
+        mount(<ProductItem
+          available={undefined}
+          images={undefined}
+          title={undefined}
+          quantity={undefined}
+          onRemove={() => {}}
+          onImageClick={() => {}}
+        />)
+      }).not.toThrow()
+    })
+
   })
 })

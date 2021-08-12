@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
+import { useIsSidesExperimentEnabled } from 'routes/Menu/context/sidesExperimentContext'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
 
@@ -18,8 +19,12 @@ const Checkout = (props) => {
     stock,
     view,
     section,
-    checkoutBasket
+    checkoutBasket,
+    openSidesModal,
+    isBasketTransactionalOrder
   } = props
+  const sidesExperimentEnabled = useIsSidesExperimentEnabled()
+  const showSideModal = sidesExperimentEnabled && !isBasketTransactionalOrder
 
   return (
     <BaseBannerButton
@@ -29,7 +34,7 @@ const Checkout = (props) => {
       pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
       spinnerClassName={css.coSpinner}
       spinnerContainerClassName={css.coSpinnerContainer}
-      onClick={() => checkoutBasket(section, view)}
+      onClick={() => (showSideModal ? openSidesModal() : checkoutBasket(section, view))}
     >
       Checkout
     </BaseBannerButton>
@@ -43,11 +48,13 @@ Checkout.propTypes = {
   view: PropTypes.string.isRequired,
   section: PropTypes.string.isRequired,
   checkoutBasket: PropTypes.func.isRequired,
+  openSidesModal: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
+  isBasketTransactionalOrder: PropTypes.bool.isRequired,
 }
 
 Checkout.defaultProps = {

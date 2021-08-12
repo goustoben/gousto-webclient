@@ -11,6 +11,7 @@ import {
   getBasketOrderPromoCode,
   getSignupChosenCollection,
   getBasketOrderId,
+  isBasketTransactionalOrder,
   getBasketLimitReached,
   getBasketProducts,
   getChosenAddressId,
@@ -126,6 +127,38 @@ describe('the basket selectors', () => {
 
     test('should return the basket order id', () => {
       expect(getBasketOrderId(state)).toEqual(orderId)
+    })
+  })
+
+  describe('isBasketTransactionalOrder', () => {
+    const orderId = '311737157'
+
+    describe('when basket has an order id', () => {
+      beforeEach(() => {
+        state = {
+          basket: Immutable.Map({
+            orderId,
+          })
+        }
+      })
+
+      test('should return the false', () => {
+        expect(isBasketTransactionalOrder(state)).toEqual(false)
+      })
+    })
+
+    describe('when basket doesn\'t an order id', () => {
+      beforeEach(() => {
+        state = {
+          basket: Immutable.Map({
+            orderId,
+          })
+        }
+      })
+
+      test('should return the false', () => {
+        expect(isBasketTransactionalOrder(state)).toEqual(false)
+      })
     })
   })
 

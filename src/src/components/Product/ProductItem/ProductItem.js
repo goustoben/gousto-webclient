@@ -3,11 +3,13 @@ import React from 'react'
 import Immutable from 'immutable'
 import Item from 'Item'
 
+const emptyArray = []
+
 const ProductItem = (props) => (
   <Item
     disclaimerKey={props.disclaimerKey}
     type="product"
-    media={props.images.toList()}
+    media={props.images ? props.images.toList() : emptyArray}
     title={props.title}
     quantity={props.quantity}
     onImageClick={props.onImageClick}

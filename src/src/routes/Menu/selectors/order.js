@@ -2,6 +2,7 @@ import { Map } from 'immutable'
 import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import {
   getBasketDate,
+  getBasketMenuId,
   getBasketOrderId,
   getBasketProducts,
   getBasketRecipes,
@@ -158,24 +159,47 @@ const getRecipesV2 = createSelector([
   (state) => state.menuService.recipe,
   getBasketRecipes,
   getNumPortions,
-], (recipes, basketRecipes, quantity) => basketRecipes.reduce((memo, recipeAmount, id) => [
+], (recipes, basketRecipes, quantity) => {
+  // We check if we have the recipe data, this might not
+  // be in the store yet as we are making the request
+  if (!recipes) return []
+
+  return basketRecipes.reduce((memo, recipeAmount, id) => [
+    ...memo,
+    ...Array.from(Array(recipeAmount).keys())
+      .map(() => ({
+        id: recipes[id].id,
+        type: ResourceType.Recipe,
+        meta: {
+          portion_for: quantity,
+        },
+      })
+      )
+  ], [])
+})
+
+const getProductsV2 = createSelector([
+  getBasketProducts,
+], (products = []) => products.reduce((memo, quantity, productId) => [
   ...memo,
-  ...Array.from(Array(recipeAmount).keys()).map(() => ({
-    id: recipes[id].id,
-    type: 'recipe',
+  {
+    id: productId,
+    type: ResourceType.Product,
     meta: {
-      portion_for: quantity,
+      quantity,
     },
-  })
-  )
+  }
 ], []))
 
 export const getOrderV2 = createSelector([
+  getBasketOrderId,
   getOrderDetailsForBasket,
   getRecipesV2,
+  getProductsV2,
   getUserDeliveryTariffId,
-  getPromoCode
-], (orderDetails, recipes, deliveryTariffId, promoCode) => {
+  getPromoCode,
+  getBasketMenuId,
+], (orderId, orderDetails, recipes, products, deliveryTariffId, promoCode, menuId) => {
   const {
     deliveryDayId,
     deliverySlotId,
@@ -187,7 +211,11 @@ export const getOrderV2 = createSelector([
   let shippingAddress = {}
   let deliverySlotLeadTime = {}
   let deliveryTariff = {}
-  let attributesBlock = {}
+  const attributesBlock = {
+    attributes: {
+      menu_id: menuId,
+    }
+  }
 
   if (shippingAddressId) {
     shippingAddress = {
@@ -223,16 +251,13 @@ export const getOrderV2 = createSelector([
   }
 
   if (promoCode) {
-    attributesBlock = {
-      attributes: {
-        prices: {
-          promo_code: promoCode
-        }
-      }
+    attributesBlock.attributes.prices = {
+      promo_code: promoCode
     }
   }
 
   return {
+    ...(orderId ? { id: orderId } : {}),
     type: ResourceType.Order,
     relationships: {
       ...shippingAddress,
@@ -256,6 +281,7 @@ export const getOrderV2 = createSelector([
       components: {
         data: [
           ...recipes,
+          ...products,
         ]
       }
     },

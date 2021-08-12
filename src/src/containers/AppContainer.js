@@ -13,7 +13,9 @@ import { documentLocation } from 'utils/window'
 export const AppContainer = ({ history, routes, store }) => (
   <Provider store={store}>
     <SWRConfig
-      value={{}}
+      value={{
+        revalidateOnFocus: false
+      }}
     >
       <Router
         history={history}

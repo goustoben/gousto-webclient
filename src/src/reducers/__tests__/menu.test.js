@@ -444,6 +444,28 @@ describe('menu reducer', () => {
     })
   })
 
+  describe('menuSidesModalOpen', () => {
+    describe('when MENU_OPEN_SIDES_MODAL action is sent', () => {
+      test('should return menuSidesModalOpen as true', () => {
+        const result = menu.menuSidesModalOpen(Immutable.Map({}), {
+          type: actionTypes.MENU_OPEN_SIDES_MODAL,
+        })
+
+        expect(result).toEqual(true)
+      })
+    })
+
+    describe('when MENU_CLOSE_SIDES_MODAL action is sent', () => {
+      test('should return menuSidesModalOpen as false', () => {
+        const result = menu.menuSidesModalOpen(Immutable.Map({}), {
+          type: actionTypes.MENU_CLOSE_SIDES_MODAL,
+        })
+
+        expect(result).toEqual(false)
+      })
+    })
+  })
+
   describe('menuRecipes', () => {
     test('should return menuRecipes', () => {
       const result = menu.menuRecipes(Immutable.List([]), {

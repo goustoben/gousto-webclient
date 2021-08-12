@@ -4,7 +4,7 @@ import { get, post } from './fetch'
 
 jest.mock('isomorphic-fetch', () => jest.fn())
 
-jest.spyOn(cookieHelper2, 'get').mockImplementation((_cookies, key, withVersionPrefix, shouldDecode) => {
+const cookieHelper2GetSpy = jest.spyOn(cookieHelper2, 'get').mockImplementation((_cookies, key, withVersionPrefix, shouldDecode) => {
   if (key === 'gousto_session_id' && !withVersionPrefix && !shouldDecode) {
     return 'session-id'
   }
@@ -64,12 +64,25 @@ describe('Menu > apis > fetch', () => {
       }))
     })
 
+    test('should attach only Content-Type header if no auth options provided', async () => {
+      cookieHelper2GetSpy.mockImplementationOnce(() => null)
+      const expectedHeaders = {
+        'Content-Type': 'application/json'
+      }
+
+      await post({}, url)
+
+      expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
+        headers: expectedHeaders
+      }))
+    })
+
     test('should attach Content-Type header', async () => {
       const expectedHeaders = {
         'Content-Type': 'application/json'
       }
 
-      await post(authOptions, url)
+      await post({}, url)
 
       expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
         headers: expect.objectContaining(expectedHeaders)
@@ -105,14 +118,28 @@ describe('Menu > apis > fetch', () => {
     })
 
     describe('when data attached', () => {
-      const data = { a: 3, b: 2 }
+      describe('when data is an object', () => {
+        const data = { a: 3, b: 2 }
 
-      test('should add data to body', async () => {
-        await post(authOptions, url, data)
+        test('should add data to body', async () => {
+          await post(authOptions, url, data)
 
-        expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
-          body: JSON.stringify(data)
-        }))
+          expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
+            body: JSON.stringify(data)
+          }))
+        })
+      })
+
+      describe('when data is a string', () => {
+        const data = JSON.stringify({ a: 3, b: 2 })
+
+        test('should add data to body', async () => {
+          await post(authOptions, url, data)
+
+          expect(isomorphicFetch).toHaveBeenCalledWith(url, expect.objectContaining({
+            body: data
+          }))
+        })
       })
     })
 

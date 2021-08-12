@@ -258,6 +258,17 @@ const menu = {
     }
   },
 
+  menuSidesModalOpen: (state = false, action) => {
+    switch (action.type) {
+    case actionTypes.MENU_OPEN_SIDES_MODAL:
+      return true
+    case actionTypes.MENU_CLOSE_SIDES_MODAL:
+      return false
+    default:
+      return state
+    }
+  },
+
   menuReceiveMenuPending: (state = false, action) => {
     switch (action.type) {
     case actionTypes.MENU_RECIPES_RECEIVE_PENDING:

@@ -1,4 +1,4 @@
-export const SIDES = 'sides'
+export const SIDES = 'Sides'
 
 // Limits
 export const MAX_PRODUCTS_PER_BOX = 10

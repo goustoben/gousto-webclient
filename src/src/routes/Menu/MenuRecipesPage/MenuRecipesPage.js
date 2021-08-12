@@ -19,6 +19,7 @@ import css from './MenuRecipesPage.css'
 import { ExperimentsContainer } from '../../../containers/Experiments'
 import { CollectionHeaderWrapperContainer } from './CollectionHeader'
 import { SignpostingExperimentWrapper, isMandatoryBucket, SignpostingExperimentContext } from '../context/uiSignpostingContext'
+import { MenuSidesModalContainer } from './MenuSidesModalContainer'
 
 const contextTypes = {
   store: PropTypes.shape({ dispatch: PropTypes.func }).isRequired,
@@ -124,6 +125,8 @@ export class MenuRecipesPage extends PureComponent {
         <AppModalContainer key="app-modal" />
         <BasketValidationErrorModalContainer />
         <RecipeSidesModalContainer />
+
+        <MenuSidesModalContainer />
 
         <VariantRecipeListModalContainer />
 

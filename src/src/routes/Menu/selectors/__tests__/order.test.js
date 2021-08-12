@@ -12,76 +12,7 @@ import {
   getUpdateOrderProductItemsOrderV1,
   getUserDeliveryTariffId,
 } from '../order'
-
-export const createState = (partialOverwrite = {}) => {
-  const {
-    basket = {},
-    menuService = {},
-    features = {},
-    slot = {},
-    user = {},
-    auth = {},
-    ...rest
-  } = partialOverwrite
-
-  return ({
-    basket: Immutable.fromJS({
-      date: '2019-10-10',
-      slotId: 'slot-uuid',
-      recipes: {
-        'recipe-id-1': 1,
-        'recipe-id-2': 2,
-      },
-      numPortions: 2,
-      ...basket
-    }),
-    menuService: {
-      recipe: {
-        'recipe-id-1': {
-          id: 'recipe-uuid-1'
-        },
-        'recipe-id-2': {
-          id: 'recipe-uuid-2'
-        },
-      },
-      ...menuService
-    },
-    boxSummaryDeliveryDays: Immutable.fromJS({
-      '2019-10-10': {
-        id: 'delivery-days-uuid',
-        date: '2019-10-10',
-        coreDayId: 'delivery-days-id',
-        deliverySlotLeadTimeId: deliveryTariffTypes.NON_NDD,
-        slots: [
-          {
-            id: 'slot-uuid',
-            coreSlotId: 'slot-core-id',
-            daySlotLeadTimeId: 'day-slot-lead-time-uuid',
-            ...slot
-          },
-        ],
-      },
-    }),
-    features: Immutable.fromJS({
-      ndd: {
-        value: 'features-ndd-day-slot-lead-time-uuid'
-      },
-      enable3DSForSignUp: {
-        value: false
-      },
-      ...features
-    }),
-    user: Immutable.fromJS({
-      orders: Immutable.List([]),
-      deliveryTariffId: 'user-day-slot-lead-time-uuid',
-      ...user
-    }),
-    auth: Immutable.fromJS({
-      ...auth
-    }),
-    ...rest,
-  })
-}
+import { createState } from '../__mocks__/order.mock'
 
 describe('order selectors', () => {
   describe('getSlotForBoxSummaryDeliveryDays', () => {
@@ -472,6 +403,9 @@ describe('order selectors', () => {
 
       expect(orderDetails).toEqual({
         type: 'order',
+        attributes: {
+          menu_id: '433',
+        },
         relationships: {
           components: {
             data: [{
@@ -522,6 +456,54 @@ describe('order selectors', () => {
       })
     })
 
+    describe('when menu-service recipes are not defined (have not been fetched)', () => {
+      test('returns an order without recipes', () => {
+        const state = createState({
+          menuService: {
+            recipe: undefined,
+          },
+          slot: {
+            daySlotLeadTimeId: null
+          }
+        })
+
+        const orderDetails = getOrderV2(state)
+
+        expect(orderDetails).toEqual({
+          type: 'order',
+          attributes: {
+            menu_id: '433',
+          },
+          relationships: {
+            components: {
+              data: []
+            },
+            delivery_day: {
+              data: {
+                id: 'delivery-days-id',
+                type: 'delivery-day'
+              }
+            },
+            delivery_slot: {
+              data: {
+                id: 'slot-core-id',
+                type: 'delivery-slot',
+                meta: {
+                  uuid: 'slot-uuid',
+                },
+              }
+            },
+            delivery_tariff: {
+              data: {
+                id: deliveryTariffTypes.NON_NDD,
+                type: 'delivery-tariff'
+              }
+            }
+          }
+        })
+      })
+    })
+
     describe('when customer does not have day slot lead time id', () => {
       test('returns an object containing the delivery_slot_lead_time for delivery slot lead time', () => {
         const state = createState()
@@ -530,6 +512,9 @@ describe('order selectors', () => {
 
         expect(orderDetails).toEqual({
           type: 'order',
+          attributes: {
+            menu_id: '433',
+          },
           relationships: {
             components: {
               data: [{
@@ -598,6 +583,9 @@ describe('order selectors', () => {
 
         expect(orderDetails).toEqual({
           type: 'order',
+          attributes: {
+            menu_id: '433',
+          },
           relationships: {
             components: {
               data: [{
@@ -655,6 +643,46 @@ describe('order selectors', () => {
             }
           }
         })
+      })
+    })
+
+    describe('when customer has products', () => {
+      test('returns an order with products', () => {
+        const state = createState({
+          basket: {
+            products: {
+              product_1: 2,
+              product_2: 1,
+            }
+          },
+          slot: {
+            daySlotLeadTimeId: null
+          }
+        })
+
+        const orderDetails = getOrderV2(state)
+
+        expect(orderDetails.relationships.components.data).toEqual(
+          expect.arrayContaining([
+            expect.objectContaining({ type: 'recipe' }),
+            expect.objectContaining({ type: 'recipe' }),
+            expect.objectContaining({ type: 'recipe' }),
+            {
+              id: 'product_1',
+              meta: {
+                quantity: 2,
+              },
+              type: 'product',
+            },
+            {
+              id: 'product_2',
+              meta: {
+                quantity: 1,
+              },
+              type: 'product',
+            },
+          ])
+        )
       })
     })
 

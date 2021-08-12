@@ -2,7 +2,7 @@ import { actionTypes } from 'actions/actionTypes'
 import * as actionsOrder from 'actions/order'
 import * as actionsOrderConfirmation from 'actions/orderConfirmation'
 import { getBasketSlotId } from 'selectors/basket'
-import { createState as createOrderState } from 'routes/Menu/selectors/__tests__/order.test'
+import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__/order.mock'
 import * as orderV2Api from '../apis/orderV2'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
 
@@ -94,6 +94,7 @@ describe('Menu > actions > checkoutTransactionalOrder', () => {
 
       expect(createOrder).toHaveBeenCalledWith('auth-access-token',
         {
+          attributes: {menu_id: '433'},
           relationships: {
             components: {
               data: [

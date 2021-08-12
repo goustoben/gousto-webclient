@@ -35,6 +35,11 @@ describe('BannerButton', () => {
     error: Immutable.fromJS({}),
     user: Immutable.fromJS({
       orders: {}
+    }),
+    experiments: Immutable.fromJS({
+      experiments: {}
+    }),
+    pending: Immutable.fromJS({
     })
   })
   const props = {

@@ -5,7 +5,7 @@ import * as orderV2 from 'routes/Menu/apis/orderV2'
 import actions from 'actions/pricing'
 import { deliveryTariffTypes } from 'utils/deliveries'
 import * as optimizelyUtils from 'containers/OptimizelyRollouts/optimizelyUtils'
-import { createState as createOrderState } from 'routes/Menu/selectors/__tests__/order.test'
+import { createState as createOrderState } from 'routes/Menu/selectors/__mocks__/order.mock'
 import { orderV2PricesFixture } from 'routes/Menu/transformers/orderPricesV2ToV1.test'
 
 jest.mock('apis/pricing')
@@ -337,6 +337,9 @@ describe('pricing actions', () => {
           })
           expect(getOrderPriceSpy).toHaveBeenCalledWith('auth-access-token',
             {
+              attributes: {
+                menu_id: '433',
+              },
               relationships: {
                 components: {
                   data: [
