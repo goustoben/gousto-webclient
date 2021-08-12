@@ -28,7 +28,12 @@ class BoxPrices extends React.PureComponent {
     return isBoxPricesRedesignEnabled ? (
       <div>
         <Helmet title={seo.title} meta={seo.meta} />
-        <BoxPricesRedesign />
+        <BoxPricesRedesign
+          error={error}
+          loading={loading}
+          boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+          numPersonsToBoxDescriptors={numPersonsToBoxDescriptors}
+        />
       </div>
     ) : (
       <div>

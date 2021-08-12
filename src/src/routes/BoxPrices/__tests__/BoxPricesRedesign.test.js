@@ -1,14 +1,20 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { shallow } from 'enzyme'
 
 import { BoxPricesRedesign } from 'routes/BoxPrices/BoxPricesRedesign'
+import numPersonsToBoxDescriptors from './__mocks__/numPersonsToBoxDescriptors.json'
 
 describe('BoxPricesRedesign', () => {
-  test('will match snapshot', () => {
-    const boxPrices = renderer
-      .create(<BoxPricesRedesign />)
-      .toJSON()
+  let wrapper
 
-    expect(boxPrices).toMatchSnapshot()
+  beforeEach(() => {
+    wrapper = shallow(<BoxPricesRedesign numPersonsToBoxDescriptors={numPersonsToBoxDescriptors} loading={false} />)
+  })
+
+  test('should be rendered correctly', () => {
+    expect(wrapper.find('h1').exists()).toBeTruthy()
+    expect(wrapper.find('SelectButton').exists()).toBeTruthy()
+    expect(wrapper.find('BoxPricesListRedesign').exists()).toBeFalsy()
+    expect(wrapper.find('BoxPricesContent').exists()).toBeTruthy()
   })
 })
