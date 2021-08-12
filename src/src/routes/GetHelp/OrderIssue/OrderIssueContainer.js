@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { selectOrderIssue } from 'actions/getHelp'
 import { getUserId } from 'selectors/user'
-import { getOrderId } from 'selectors/getHelp'
+import { getOrderId } from '../selectors/selectors'
 
 import { OrderIssue } from './OrderIssue'
 

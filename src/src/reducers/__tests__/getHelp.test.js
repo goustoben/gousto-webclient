@@ -48,6 +48,8 @@ const MOCK_ORDERS = [
     ],
   },
 ]
+const COMPENSATION_AMOUNT = 25
+const COMPENSATION_TYPE = 'credit'
 
 describe('getHelp reducer', () => {
   let newState
@@ -250,8 +252,6 @@ describe('getHelp reducer', () => {
   })
 
   describe('given an action with type GET_HELP_VALIDATE_DELIVERY is received', () => {
-    const COMPENSATION_AMOUNT = 25
-
     beforeEach(() => {
       newState = getHelp(getHelpInitialState, {
         type: actionTypes.GET_HELP_VALIDATE_DELIVERY,
@@ -299,6 +299,23 @@ describe('getHelp reducer', () => {
       test('ineligibleIngredientUuids state is set as that payload', () => {
         expect(newState.get('ineligibleIngredientUuids').toJS()).toEqual(INELIGIBLE_INGREDIENT_UUIDS)
       })
+    })
+  })
+
+  describe('given an action with type GET_HELP_CREATE_COMPLAINT is received', () => {
+    beforeEach(() => {
+      newState = getHelp(getHelpInitialState, {
+        type: actionTypes.GET_HELP_LOAD_REFUND_AMOUNT,
+        payload: {
+          amount: COMPENSATION_AMOUNT,
+          type: COMPENSATION_TYPE
+        },
+      })
+    })
+
+    test('the new state has compensation amount and type stored', () => {
+      expect(newState.getIn(['compensation', 'amount'])).toEqual(COMPENSATION_AMOUNT)
+      expect(newState.getIn(['compensation', 'type'])).toEqual(COMPENSATION_TYPE)
     })
   })
 })

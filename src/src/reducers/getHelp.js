@@ -3,6 +3,10 @@ import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
 import { fromJS, Map, OrderedMap } from 'immutable'
 
 const getHelpInitialState = fromJS({
+  compensation: {
+    amount: null,
+    type: '',
+  },
   ingredientIssues: [],
   ingredientSubIssues: [],
   order: {
@@ -196,6 +200,10 @@ const getHelp = (state, action) => {
     }
 
     return state
+  }
+  case actionTypes.GET_HELP_LOAD_REFUND_AMOUNT: {
+    return state.setIn(['compensation', 'amount'], action.payload.amount)
+      .setIn(['compensation', 'type'], action.payload.type)
   }
   default:
     return state

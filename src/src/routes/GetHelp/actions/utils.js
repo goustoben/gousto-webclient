@@ -13,10 +13,14 @@ export const asyncAndDispatch = async ({
   dispatch(error(actionType, null))
   try {
     const payload = await getPayload()
-    dispatch({
-      type: actionType,
-      payload,
-    })
+
+    // If you don't want it to dispatch return null in your getPayload function
+    if (payload !== null) {
+      dispatch({
+        type: actionType,
+        payload,
+      })
+    }
   } catch (err) {
     dispatch(error(actionType, err.message))
     logger.error({ message: errorMessage, errors: [err] })

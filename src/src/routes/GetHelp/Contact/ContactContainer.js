@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { selectContactChannel } from 'actions/getHelp'
 import { getUserId } from 'selectors/user'
-import { getOrderId } from 'selectors/getHelp'
+import { getOrderId } from '../selectors/selectors'
 
 import { Contact } from './Contact'
 

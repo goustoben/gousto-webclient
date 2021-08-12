@@ -91,6 +91,27 @@ describe('asyncAndDispatch', () => {
     })
   })
 
+  describe('when the getPayload returns null', () => {
+    beforeAll(async () => {
+      jest.clearAllMocks()
+      await asyncAndDispatch({
+        dispatch,
+        actionType: ACTION_TYPE,
+        getPayload: () => new Promise((resolve) => { resolve(null) }),
+        handleError,
+        errorMessage: ERROR_MESSAGE,
+      })
+    })
+
+    test('it does not dispatch an action of the action type passed', () => {
+      expect(dispatch).not.toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: ACTION_TYPE,
+        })
+      )
+    })
+  })
+
   describe('when the getPayload throws an error', () => {
     beforeAll(async () => {
       jest.clearAllMocks()

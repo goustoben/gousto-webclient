@@ -1,7 +1,6 @@
 import { Map } from 'immutable'
 import {
   getIsOrderValidationError,
-  getOrderId,
 } from '../getHelp'
 
 describe('getHelp selectors', () => {
@@ -50,26 +49,6 @@ describe('getHelp selectors', () => {
       test('returns false', () => {
         expect(getIsOrderValidationError(state)).toEqual(false)
       })
-    })
-  })
-
-  describe('getOrderId', () => {
-    let state
-
-    const ORDER_ID = '12345'
-
-    beforeEach(() => {
-      state = {
-        getHelp: Map({
-          order: Map({
-            id: ORDER_ID,
-          }),
-        }),
-      }
-    })
-
-    test('returns the order ID', () => {
-      expect(getOrderId(state)).toEqual(ORDER_ID)
     })
   })
 })

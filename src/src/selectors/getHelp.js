@@ -15,5 +15,3 @@ export const getIsOrderValidationError = createSelector(
   getOrderValidationError,
   (orderValidationError) => !!orderValidationError
 )
-
-export const getOrderId = state => state.getHelp.getIn(['order', 'id'])
