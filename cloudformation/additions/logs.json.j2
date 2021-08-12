@@ -1,0 +1,30 @@
+"AuthServiceTimeoutCount": {
+  "Type": "AWS::Logs::MetricFilter",
+  "Properties": {
+      "LogGroupName": {"Ref": "EcsApplicationLogGroup"},
+      "FilterPattern": '{$.message = "auth/login catch {\"code\":500,\"errors\":[],\"message\":\"Timeout\",\"status\":500}"}',
+      "MetricTransformations": [
+          {
+              "MetricValue": "1",
+              "MetricNamespace": "Gousto/{{ ENVIRONMENT }}-webclient",
+              "MetricName": "AuthServiceTimeoutCount"
+          }
+      ]
+  }
+},
+
+"AuthServiceTimeoutCountAlarm": {
+  "Type": "AWS::CloudWatch::Alarm",
+  "Properties": {
+    "AlarmName": "alm-{{ ENVIRONMENT }}-webclient-AuthServiceTimeoutCount",
+    "AlarmDescription": "Alarm to indicate webclient AuthServiceTimeoutCount has gone beyond an acceptable threshold of 0",
+    "AlarmActions": [ "{{ get_alarm_topic_arn_for_owner(alarm_owner, type=alarm_level) }}" ],
+    "ComparisonOperator": "GreaterThanThreshold",
+    "EvaluationPeriods": "1",
+    "MetricName": "AuthServiceTimeoutCount",
+    "Namespace": "Gousto/{{ ENVIRONMENT }}-webclient",
+    "Period": "30",
+    "Statistic": "Sum",
+    "Threshold": "0"
+  }
+}
