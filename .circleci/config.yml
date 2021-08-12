@@ -16,44 +16,52 @@ jobs:
   jest-coverage-report:
     docker:
       - image: cimg/node:12.22.4
+        user: root
+    resource_class: large
+    working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/
+          at: ~/project
       - run:
           name: Test coverage
           command: cd src && npm run test:jest:ci:coverage
           no_output_timeout: 30m
       - persist_to_workspace:
-          root: ~/
+          root: ~/project
           paths:
-            - project/src/coverage/coverage-summary.json
+            - mnt/ramdisk/src/coverage/coverage-summary.json
 
   eslint-generate-report:
     docker:
       - image: cimg/node:12.22.4
+        user: root
+    resource_class: large
+    working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: eslint report
           command: cd src && scripts/run-eslint-ci.sh
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/src/eslint-results.json
+            - mnt/ramdisk/src/eslint-results.json
 
   publish-code-health:
     docker:
       - image: cimg/node:12.22.4
+        user: root
+    working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Setup output folder
           command: mkdir /tmp/artifacts
@@ -66,6 +74,7 @@ jobs:
 
   setup-ci-variables-and-download-platform-scripts:
     docker: *gousto_platform_image #stock image missing /gousto directory
+    working_directory: /mnt/ramdisk
     steps:
       - checkout
       - run:
@@ -74,7 +83,7 @@ jobs:
       - run:
           name: Set S3 Cloudfront URL
           command: |
-            source ~/.circlerc && CLOUDFRONT_URL=$(python /root/project/ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-1)
+            source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-1)
             echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
       - setup_remote_docker:
           docker_layer_caching: true
@@ -83,29 +92,30 @@ jobs:
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --setup
           no_output_timeout: 10m
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - .ssh
-            - project/src
-            - project/tests
-            - project/regression
-            - project/ansible
-            - project/cloudformation
-            - project/service.yml
-            - project/setup
-            - project/scripts
-            - project/ci_scripts
-            - project/images
-            - .circlerc
+            - mnt/ramdisk/src
+            - mnt/ramdisk/tests
+            - mnt/ramdisk/regression
+            - mnt/ramdisk/ansible
+            - mnt/ramdisk/cloudformation
+            - mnt/ramdisk/service.yml
+            - mnt/ramdisk/setup
+            - mnt/ramdisk/scripts
+            - mnt/ramdisk/ci_scripts
+            - mnt/ramdisk/images
+            - root/.circlerc
 
   build-webclient:
     docker:
       - image: cimg/node:12.22.4
+        user: root
+    working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Setup environment and npm variables for build
           command: source ~/.circlerc && setup/setup-common.sh
@@ -116,21 +126,18 @@ jobs:
           name: Upload webclient resources to S3
           command: source ~/.circlerc && scripts/upload-to-s3.sh
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/src
-            - project/scripts
-            - project/ci_scripts
-            - project/images
-            - .circlerc
+            - mnt/ramdisk/src
 
   create-and-upload-webclient-docker-image-to-ecr:
     docker: *gousto_platform_image #stock image missing boto
+    working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Create and upload webclient docker image to ECR
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
@@ -140,11 +147,11 @@ jobs:
     docker:
       - image: cimg/node:12.22.4-browsers
         user: root
-    working_directory: ~/project/tests/e2e
+    working_directory: /mnt/ramdisk
     resource_class: large
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Source .circlerc
           command: source ~/.circlerc
@@ -159,25 +166,26 @@ jobs:
           aws-region: AWS_DEFAULT_REGION
       - run:
           name: Build webclient E2E helpers
-          working_directory: ../../src
+          working_directory: src
           command: NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build:e2e
       - run:
           name: Build E2E tests
+          working_directory: tests/e2e
           command: npm ci
       - run:
-          name: Lease CI node access to public and internal ALBs
-          working_directory: ../../
-          command: scripts/lease-access.sh
+          name: Lease CI node access to public ALB
+          working_directory: scripts
+          command: ./lease-access.sh
           environment:
             ENVIRONMENT: staging
       - run:
           name: Run E2E tests
+          working_directory: tests/e2e
           command: npm run test:staging
       - store_test_results:
-          path: ~/project/tests/e2e/reports
+          path: tests/e2e/reports
       - store_artifacts:
-          path: ~/project/tests/e2e/reports
-          destination: ./
+          path: tests/e2e/reports
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
@@ -186,11 +194,12 @@ jobs:
   test-regression:
     docker:
       - image: cimg/node:12.22.4-browsers
-    working_directory: ~/project/tests/regression
+        user: root
+    working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Export base url environment variable
           command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
@@ -208,19 +217,20 @@ jobs:
           when: on_fail
           command: npm run report
       - store_test_results:
-          path: ~/project/tests/regression/test_results/cypress
+          path: /mnt/ramdisk/tests/regression/test_results/cypress
       - store_artifacts:
-          path: ~/project/tests/regression/reports/html
+          path: /mnt/ramdisk/tests/regression/reports/html
           destination: ./
 
   test-regression-mobile:
     docker:
       - image: cimg/node:12.22.4-browsers
-    working_directory: ~/project/tests/regression
+        user: root
+    working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Export base url environment variable
           command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
@@ -234,20 +244,21 @@ jobs:
             CYPRESS_platform: mobile
             NODE_OPTIONS: --max-http-header-size=1000000
       - store_test_results:
-          path: ~/project/tests/regression/test_results/cypress
+          path: /mnt/ramdisk/tests/regression/test_results/cypress
       - run:
           name: Create reports
           when: on_fail
           command: npm run report
       - store_artifacts:
-          path: ~/project/tests/regression/reports/html
+          path: /mnt/ramdisk/tests/regression/reports/html
           destination: ./
 
   deploy-infrastructure-and-webclient-image:
     docker: *gousto_platform_image #stock image missing boto
+    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
           command: source ~/.circlerc && scripts/deploy.sh
@@ -256,19 +267,21 @@ jobs:
   install-regression-test-dependencies:
     docker:
       - image: cimg/node:12.22.4
+        user: root
+    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Install regression test dependencies
           command: |
             cd tests/regression
             source ~/.circlerc && npm ci
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/tests/regression/node_modules
-            - .cache/Cypress
+            - mnt/ramdisk/tests/regression/node_modules
+            - root/.cache/Cypress
 
 workflows:
   version: 2
