@@ -5,7 +5,11 @@ import { BoxPriceBlock } from '../BoxPriceBlock/BoxPriceBlockRedesign'
 import { BoxDescriptorsPropType } from '../boxPricesPropTypes'
 import css from './BoxPriceList.css'
 
-const BoxPricesListRedesign = ({ numPersonsToBoxDescriptors, boxPricesBoxSizeSelected, selectedBox }) => (
+const BoxPricesListRedesign = ({
+  numPersonsToBoxDescriptors,
+  boxPricesBoxSizeSelected,
+  selectedBox,
+}) => (
   <div className={css.boxPriceListRedesign}>
     {Object.entries(numPersonsToBoxDescriptors).map(([numPersonsStr, boxDescriptors]) => {
       const key = `box-type-${numPersonsStr}`

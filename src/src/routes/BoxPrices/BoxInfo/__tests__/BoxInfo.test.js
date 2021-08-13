@@ -8,7 +8,7 @@ describe('Given BoxInfo', () => {
     numPortions: 2,
     totalPrice: '20',
     pricePerPortion: '3',
-    numPersons: 4
+    numPersons: 4,
   }
 
   beforeEach(() => {

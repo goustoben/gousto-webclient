@@ -8,7 +8,9 @@ describe('BoxPricesRedesign', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<BoxPricesRedesign numPersonsToBoxDescriptors={numPersonsToBoxDescriptors} loading={false} />)
+    wrapper = shallow(
+      <BoxPricesRedesign numPersonsToBoxDescriptors={numPersonsToBoxDescriptors} loading={false} />
+    )
   })
 
   test('should be rendered correctly', () => {

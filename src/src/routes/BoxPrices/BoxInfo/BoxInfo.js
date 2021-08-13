@@ -10,11 +10,7 @@ class BoxInfo extends React.PureComponent {
 
     return (
       <div className={css.container}>
-        <p className={css.recipes}>
-          {numPortions}
-          {' '}
-          Recipes
-        </p>
+        <p className={css.recipes}>{numPortions} Recipes</p>
         <p>
           <span className={css.portionPrice}>
             &pound;
@@ -42,6 +38,4 @@ BoxInfo.propTypes = {
   numPersons: PropTypes.number.isRequired,
 }
 
-export {
-  BoxInfo
-}
+export { BoxInfo }

@@ -275,7 +275,8 @@ module.exports = {
         "src/routes/Payment/**/*.js",
         "src/routes/Signup/**/*.js",
         "src/routes/ShowcaseMenu/**/*.js",
-        "src/middlewares/tracking/dataLayerTracker/*.js"
+        "src/middlewares/tracking/dataLayerTracker/*.js",
+        "src/routes/BoxPrices/**/*.js",
       ],
       "rules": {
         "prettier/prettier": "error",
@@ -292,7 +293,8 @@ module.exports = {
         "no-confusing-arrow": 0,
         "react/jsx-indent": 0,
         "react/jsx-one-expression-per-line": 0,
-        "react/jsx-wrap-multilines": 0
+        "react/jsx-wrap-multilines": 0,
+        "react/jsx-curly-newline": 0
       }
     }
   ]

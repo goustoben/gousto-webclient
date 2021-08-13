@@ -37,9 +37,7 @@ class BoxPriceBlock extends PureComponent {
 
         <div className={css.link}>
           <p>
-            Delivery is
-            {' '}
-            <strong className={css.uppercase}>Free</strong>
+            Delivery is <strong className={css.uppercase}>Free</strong>
           </p>
           <BoxPriceButton
             numPersons={numPersons}

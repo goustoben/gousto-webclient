@@ -31,18 +31,12 @@ export const boxTypesRedesign = {
   2: {
     type: 'regular box',
     description: 'Our regular box is suitable for:',
-    suitable: [
-      '2 adults (or 1 + leftovers)',
-      '1 adult and 1-2 children',
-    ]
+    suitable: ['2 adults (or 1 + leftovers)', '1 adult and 1-2 children'],
   },
   4: {
     type: 'large box',
     description: 'Our large box is suitable for:',
-    suitable: [
-      '4 adults (or 2-3 + leftovers)',
-      '2 adults and 2-3 children',
-    ]
+    suitable: ['4 adults (or 2-3 + leftovers)', '2 adults and 2-3 children'],
   },
 }
 
@@ -63,11 +57,11 @@ export const icons = [
 
 export const content = [
   {
-    title: 'You\'re in control',
+    title: "You're in control",
     text: 'Choose from 60 recipes a week: meat, fish and vegetarian. That’s more than other recipe boxes. Choose the recipes you want, the day of the week you want them delivered, and how many servings',
   },
   {
-    title: 'Won\'t be home for delivery?',
+    title: "Won't be home for delivery?",
     text: 'No problem. Choose a safe place where we can leave your box. Ice and insulation help keep your ingredients cool.',
   },
 ]
@@ -88,11 +82,12 @@ export const seo = {
   meta: [
     {
       name: 'description',
-      content: 'Find prices on our 2 person or family size food boxes. Get free delivery on any day you like & subscribe for convenient fresh food. Order your first box now!'
+      content:
+        'Find prices on our 2 person or family size food boxes. Get free delivery on any day you like & subscribe for convenient fresh food. Order your first box now!',
     },
     {
       name: 'keywords',
-      content: 'Gousto, recipe delivery, price, fresh, healthy food, cooking, recipe box'
-    }
-  ]
+      content: 'Gousto, recipe delivery, price, fresh, healthy food, cooking, recipe box',
+    },
+  ],
 }

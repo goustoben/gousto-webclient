@@ -3,27 +3,27 @@
 @value Blueberry from 'styles/colors.css';
 
 .container {
-	margin-top: 20px;
+  margin-top: 20px;
 
-	@media ScreenMDMin {
-		margin-top: 0;
-	}
+  @media ScreenMDMin {
+    margin-top: 0;
+  }
 }
 
 .recipes {
-	font-size: sizeSM;
-	color: Blueberry;
-	text-transform: uppercase;
-	font-weight: 600;
+  font-size: sizeSM;
+  color: Blueberry;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 .portionPrice {
-	display: block;
-	font-size: sizeXL;
-	font-weight: 600;
+  display: block;
+  font-size: sizeXL;
+  font-weight: 600;
 }
 
 .boxPrice {
-	margin-left: 7px;
-	font-weight: 600;
+  margin-left: 7px;
+  font-weight: 600;
 }

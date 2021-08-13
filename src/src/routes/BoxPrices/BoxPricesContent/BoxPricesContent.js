@@ -9,7 +9,7 @@ export const BoxPricesContent = () => (
   <Fragment>
     <div className={css.container}>
       <div className={css.row}>
-        {content.map(contentItem => (
+        {content.map((contentItem) => (
           <div key={`box-prices-content-${contentItem.title}`} className={css.content}>
             <h3 className={css.title}>{contentItem.title}</h3>
             <p>{contentItem.text}</p>
@@ -21,7 +21,7 @@ export const BoxPricesContent = () => (
       </div>
     </div>
     <div className={classnames(css.quotes, css.column)}>
-      {quotes.map(quote => (
+      {quotes.map((quote) => (
         <blockquote key={`box-prices-quote-${quote.source}`} className={css.quote}>
           <p>{quote.text}</p>
           <span className={css.source}>{quote.source}</span>

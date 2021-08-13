@@ -14,3 +14,4 @@
 !src/routes/Signup/**/*
 !src/routes/ShowcaseMenu/**/*
 !src/middlewares/tracking/dataLayerTracker/**/*
+!src/routes/BoxPrices/**/*

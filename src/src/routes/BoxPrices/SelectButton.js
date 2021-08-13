@@ -20,5 +20,5 @@ SelectButton.propTypes = {
   text: PropTypes.string.isRequired,
   selectedBox: PropTypes.number.isRequired,
   setSelectedBox: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
 }

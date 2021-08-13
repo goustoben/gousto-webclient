@@ -3,20 +3,20 @@
 @value NewGrey from 'styles/colors.css';
 
 .loadingOverlay {
-	display: flex;
-	position: fixed;
-	top: 0;
-	z-index: 1;
-	width: 100%;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	filter: none;
-	pointer-events: none;
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  filter: none;
+  pointer-events: none;
 }
 
 .loading {
-	filter: blur(3px);
+  filter: blur(3px);
 }
 
 /* ///////////////////////////////////////////////////////
@@ -24,57 +24,56 @@
 /////////////////////////////////////////////////////// */
 
 .header {
-	composes: header4XL from 'styles/typography.css';
-	text-align: center;
-	margin: 2.5rem 0;
+  composes: header4XL from 'styles/typography.css';
+  text-align: center;
+  margin: 2.5rem 0;
 
-	@media BreakpointToMedium {
-		composes: mobile4XL from 'styles/typography.css';
-		margin: 1.5rem 0;
-	}
+  @media BreakpointToMedium {
+    composes: mobile4XL from 'styles/typography.css';
+    margin: 1.5rem 0;
+  }
 }
 
 .tabs {
-	display: none;
-	margin-top: 0.625rem;
-	composes: headerXL from 'styles/typography.css';
-	position: relative;
-	top: 1px;
+  display: none;
+  margin-top: 0.625rem;
+  composes: headerXL from 'styles/typography.css';
+  position: relative;
+  top: 1px;
 
-
-	.tab {
-		background: #F4F7FA;
-		border: 1px solid #AEB7C0;
-		padding: 0.875rem 0;
-		border-radius: 3px 3px 0px 0px;
-		cursor: pointer;
-		text-align: center;
-		font-weight: 800;
+  .tab {
+    background: #f4f7fa;
+    border: 1px solid #aeb7c0;
+    padding: 0.875rem 0;
+    border-radius: 3px 3px 0px 0px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 800;
     font-size: 18px;
-		width: 100%;
-	}
+    width: 100%;
+  }
 
-	.tab:first-child {
-		margin-left: 0.75rem;
-	}
+  .tab:first-child {
+    margin-left: 0.75rem;
+  }
 
-	.tab:last-child {
-		margin-left: 0.5rem;
-		margin-right: 0.75rem;
-	}
+  .tab:last-child {
+    margin-left: 0.5rem;
+    margin-right: 0.75rem;
+  }
 
-	@media BreakpointToMedium {
-		display: flex;
-		justify-content: center;
+  @media BreakpointToMedium {
+    display: flex;
+    justify-content: center;
 
-		.tab {
-			display: inline-block;
-		}
+    .tab {
+      display: inline-block;
+    }
 
-		.tabActive {
-			background: #fff;
-			border-bottom: none;
-			color: #615CFF;
-		}
-	}
+    .tabActive {
+      background: #fff;
+      border-bottom: none;
+      color: #615cff;
+    }
+  }
 }

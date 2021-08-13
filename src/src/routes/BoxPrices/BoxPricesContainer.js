@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   basketNumPortionChange: actions.basketNumPortionChange,
-  boxPricesBoxSizeSelected
+  boxPricesBoxSizeSelected,
 }
 
 export const BoxPricesContainer = connect(mapStateToProps, mapDispatchToProps)(BoxPrices)

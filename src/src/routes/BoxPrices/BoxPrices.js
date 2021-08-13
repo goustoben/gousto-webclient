@@ -23,7 +23,13 @@ class BoxPrices extends React.PureComponent {
   }
 
   render() {
-    const { isBoxPricesRedesignEnabled, boxPricesBoxSizeSelected, numPersonsToBoxDescriptors, loading, error } = this.props
+    const {
+      isBoxPricesRedesignEnabled,
+      boxPricesBoxSizeSelected,
+      numPersonsToBoxDescriptors,
+      loading,
+      error,
+    } = this.props
 
     return isBoxPricesRedesignEnabled ? (
       <div>

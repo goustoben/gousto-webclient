@@ -7,8 +7,8 @@ import css from './BoxIcon.css'
 class BoxIcon extends React.PureComponent {
   render() {
     const { numPersons, numPortions } = this.props
-    const icon = icons.find((configIcon) =>
-      configIcon.numPersons === numPersons && configIcon.numPortions === numPortions
+    const icon = icons.find(
+      (configIcon) => configIcon.numPersons === numPersons && configIcon.numPortions === numPortions
     )
 
     return icon && icon.image ? (
@@ -24,6 +24,4 @@ BoxIcon.propTypes = {
   numPortions: PropTypes.number.isRequired,
 }
 
-export {
-  BoxIcon
-}
+export { BoxIcon }

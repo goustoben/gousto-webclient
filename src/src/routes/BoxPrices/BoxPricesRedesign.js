@@ -26,11 +26,7 @@ const BoxPricesRedesign = ({
         </div>
       )}
       <div className={loading ? css.loading : ''}>
-        <h1
-          className={css.header}
-        >
-          {hero.header}
-        </h1>
+        <h1 className={css.header}>{hero.header}</h1>
         {!loading && (
           <Fragment>
             <div className={css.tabs}>

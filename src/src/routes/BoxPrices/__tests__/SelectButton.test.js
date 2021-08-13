@@ -18,7 +18,7 @@ describe('Given SelectButton', () => {
   test('should be clicked', () => {
     wrapper.find('.tab').simulate('click')
     expect(setSelectedBox.mock.calls.length).toEqual(1)
-    wrapper.find('.tab').simulate('keypress', {key: 'Enter'})
+    wrapper.find('.tab').simulate('keypress', { key: 'Enter' })
     expect(setSelectedBox.mock.calls.length).toEqual(2)
   })
 })

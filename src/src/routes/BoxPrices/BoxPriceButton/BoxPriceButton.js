@@ -20,5 +20,5 @@ export const BoxPriceButton = ({ numPersons, boxPricesBoxSizeSelected, children 
 BoxPriceButton.propTypes = {
   numPersons: PropTypes.number.isRequired,
   boxPricesBoxSizeSelected: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 }

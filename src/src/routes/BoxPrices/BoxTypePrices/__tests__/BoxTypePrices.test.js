@@ -19,7 +19,7 @@ describe('BoxTypePrices', () => {
       test('Then numPortions and totalPrice props should be null', () => {
         const expectedProps = {
           numPortions: null,
-          totalPrice: null
+          totalPrice: null,
         }
         expect(wrapper.props()).toEqual(expectedProps)
       })
@@ -29,14 +29,14 @@ describe('BoxTypePrices', () => {
       beforeEach(() => {
         wrapper.setProps({
           numPortions: 2,
-          totalPrice: '10'
+          totalPrice: '10',
         })
       })
 
       test('Then numPortions and totalPrice props should be defined', () => {
         const expectedProps = {
           numPortions: 2,
-          totalPrice: '10'
+          totalPrice: '10',
         }
         expect(wrapper.props()).toEqual(expectedProps)
       })

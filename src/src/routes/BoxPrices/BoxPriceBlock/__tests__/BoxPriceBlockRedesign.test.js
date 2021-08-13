@@ -19,7 +19,14 @@ describe('Given BoxPriceBlockRedesign', () => {
   ]
 
   beforeEach(() => {
-    wrapper = shallow(<BoxPriceBlock boxInfo={boxPriceMock} numPersons={2} selectedBox={2} boxPricesBoxSizeSelected={boxPricesBoxSizeSelected} />)
+    wrapper = shallow(
+      <BoxPriceBlock
+        boxInfo={boxPriceMock}
+        numPersons={2}
+        selectedBox={2}
+        boxPricesBoxSizeSelected={boxPricesBoxSizeSelected}
+      />
+    )
   })
 
   test('should be rendered correctly', () => {

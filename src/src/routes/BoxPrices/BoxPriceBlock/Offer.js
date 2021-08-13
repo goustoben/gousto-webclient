@@ -4,11 +4,7 @@ import classNames from 'classnames'
 
 import css from './BoxPriceBlock.css'
 
-export const Offer = ({
-  icon,
-  detailText,
-  text,
-}) => (
+export const Offer = ({ icon, detailText, text }) => (
   <div className={css.offer}>
     <icon className={classNames(css.icon, css[icon])} />
     <p className={css.offerOption}>
