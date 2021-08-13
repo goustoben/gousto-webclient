@@ -1175,10 +1175,11 @@ describe('checkout actions', () => {
   })
 
   describe('trackPurchase', () => {
+    const orderId = 'test-order-id'
+
     beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
-          previewOrderId: 'test-order-id',
           promoCode: 'TEST123'
         }),
         pricing: Immutable.fromJS({
@@ -1201,7 +1202,7 @@ describe('checkout actions', () => {
       })
 
       test('should not call ga with order details', async () => {
-        trackPurchase()(dispatch, getState)
+        trackPurchase({ orderId })(dispatch, getState)
 
         expect(ga).not.toHaveBeenCalled()
       })
@@ -1213,7 +1214,7 @@ describe('checkout actions', () => {
       })
 
       test('should call ga with order details', async () => {
-        trackPurchase()(dispatch, getState)
+        trackPurchase({ orderId })(dispatch, getState)
 
         expect(ga).toHaveBeenCalled()
         expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
@@ -1226,7 +1227,7 @@ describe('checkout actions', () => {
     })
 
     test('should call trackAffiliatePurchase with order details', () => {
-      trackPurchase()(dispatch, getState)
+      trackPurchase({ orderId })(dispatch, getState)
 
       expect(trackAffiliatePurchase).toHaveBeenCalled()
       expect(trackAffiliatePurchase).toHaveBeenCalledWith({

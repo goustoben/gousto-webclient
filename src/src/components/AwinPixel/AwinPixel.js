@@ -3,8 +3,12 @@ import PropTypes from 'prop-types'
 
 const MERCHANT_ID = 5070
 
-const AwinPixel = ({ show, orderId, total, commissionGroup, promoCode }) => (
-  (show) ? (
+const AwinPixel = ({ show, orderId, total, commissionGroup, promoCode }) => {
+  if (!show) {
+    return null
+  }
+
+  return (
     <img
       alt=""
       src={
@@ -19,8 +23,8 @@ const AwinPixel = ({ show, orderId, total, commissionGroup, promoCode }) => (
         }${commissionGroup && total ? `&parts=${commissionGroup}:${total}` : ''}`
       }
     />
-  ) : null
-)
+  )
+}
 
 AwinPixel.propTypes = {
   show: PropTypes.bool,

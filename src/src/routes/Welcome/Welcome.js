@@ -11,7 +11,7 @@ import ProductSelection from 'containers/welcome/ProductSelection'
 import { RibbonTriggerContainer } from 'RibbonTrigger'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
 import ProductDetailOverlay from './ProductDetailOverlay'
-import { AwinPixel } from './AwinPixel'
+import { AwinPixelContainer } from './AwinPixel'
 import css from './Welcome.css'
 import { AppPromo } from './AppPromo'
 
@@ -126,7 +126,7 @@ class Welcome extends React.PureComponent {
           open={isClient && this.isProductDetailAvailable()}
           productId={productDetailId}
         />
-        <AwinPixel />
+        <AwinPixelContainer orderId={orderId} />
         <RibbonTriggerContainer name="control_welcome" />
       </section>
     )

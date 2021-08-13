@@ -1,14 +1,9 @@
 import { connect } from 'react-redux'
-
 import { getUserOrderById } from 'utils/user'
-import {
-  getBasketOrderId,
-} from 'selectors/basket'
-
 import { AwinPixel } from 'AwinPixel'
 
-const mapStateToProps = (state) => {
-  const orderId = getBasketOrderId(state)
+const mapStateToProps = (state, ownProps) => {
+  const { orderId } = ownProps
   const order = getUserOrderById(orderId, state.user.get('orders'))
   const total = order.getIn(['prices', 'total'])
   const promoCode = order.getIn(['prices', 'promoCode'])

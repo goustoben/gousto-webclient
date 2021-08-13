@@ -330,26 +330,8 @@ describe('tracking actions', () => {
           global.AWIN = undefined
         })
 
-        test('should create AWIN and register order as Tracking.Sale', () => {
-          trackAffiliatePurchase({
-            orderId: 9010320,
-            total: '34.99',
-            commissionGroup: 'EXISTING',
-            promoCode: '',
-          })
-
-          expect(global.AWIN).toEqual({
-            Tracking: {
-              Sale: {
-                amount: '34.99',
-                channel: '',
-                currency: 'GBP',
-                orderRef: 9010320,
-                parts: 'EXISTING:34.99',
-                voucher: ''
-              }
-            }
-          })
+        test('then it should not do anything as the tracking method is unavailable', () => {
+          expect(global.AWIN).toBe(undefined)
         })
       })
 
@@ -358,14 +340,16 @@ describe('tracking actions', () => {
           enhancedTracking: true,
           sProtocol: 'https://',
           InputIdentifiers: ['email'],
-          Tracking: {},
+          Tracking: {
+            run: jest.fn()
+          },
         }
 
         beforeEach(() => {
           global.AWIN = AWIN
         })
 
-        test('should register order as Tracking.Sale, preserving object', () => {
+        test('should save order as Tracking.Sale and invoke run', () => {
           trackAffiliatePurchase({
             orderId: 9010321,
             total: '24.50',
@@ -373,30 +357,13 @@ describe('tracking actions', () => {
             promoCode: 'DTI-SB-P30M',
           })
 
-          expect(global.AWIN).toBe(AWIN)
-          expect(global.AWIN).toEqual({
-            ...AWIN,
-            Tracking: {
-              Sale: {
-                amount: '24.50',
-                channel: '',
-                currency: 'GBP',
-                orderRef: 9010321,
-                parts: 'FIRSTPURCHASE:24.50',
-                voucher: 'DTI-SB-P30M'
-              }
-            }
-          })
-        })
-
-        test('should call AWIN.Tracking.run', () => {
-          global.AWIN.Tracking.run = jest.fn()
-
-          trackAffiliatePurchase({
-            orderId: 9010321,
-            total: '24.50',
-            commissionGroup: 'FIRSTPURCHASE',
-            promoCode: 'DTI-SB-P30M',
+          expect(global.AWIN.Tracking.Sale).toEqual({
+            amount: '24.50',
+            channel: '',
+            currency: 'GBP',
+            orderRef: 9010321,
+            parts: 'FIRSTPURCHASE:24.50',
+            voucher: 'DTI-SB-P30M'
           })
 
           expect(global.AWIN.Tracking.run).toHaveBeenCalled()

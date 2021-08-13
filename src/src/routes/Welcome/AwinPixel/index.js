@@ -1,1 +1,1 @@
-export { AwinPixelContainer as AwinPixel } from './AwinPixelContainer'
+export { AwinPixelContainer } from './AwinPixelContainer'

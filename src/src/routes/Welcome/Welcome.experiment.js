@@ -5,7 +5,7 @@ import classnames from 'classnames'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
-import { AwinPixel } from './AwinPixel'
+import { AwinPixelContainer } from './AwinPixel'
 import css from './Welcome.experiment.css'
 import { AppPromoExperiment as AppPromo } from './AppPromo'
 import { OrderSchedule } from './OrderSchedule'
@@ -23,6 +23,7 @@ const propTypes = {
     orderId: PropTypes.string
   }).isRequired,
   fetchData: PropTypes.func.isRequired,
+  orderId: PropTypes.string.isRequired
 }
 
 class Welcome extends React.PureComponent {
@@ -43,6 +44,7 @@ class Welcome extends React.PureComponent {
     const {
       device,
       trackWelcomeAppPromoClick,
+      orderId,
     } = this.props
 
     return (
@@ -79,7 +81,7 @@ class Welcome extends React.PureComponent {
             </div>
           </div>
         </div>
-        <AwinPixel />
+        <AwinPixelContainer orderId={orderId} />
       </section>
     )
   }

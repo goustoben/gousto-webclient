@@ -70,26 +70,22 @@ export const setAffiliateSource = asource => (
 )
 
 export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) => {
-  if (globals.client) {
-    if (typeof window.AWIN === 'undefined' || typeof window.AWIN.Tracking === 'undefined') {
-      window.AWIN = {
-        Tracking: {},
-      }
-    }
-
-    window.AWIN.Tracking.Sale = {
-      amount: total,
-      channel: '',
-      orderRef: orderId,
-      parts: `${commissionGroup}:${total}`,
-      voucher: promoCode,
-      currency: 'GBP',
-    }
-
-    if (typeof window.AWIN.Tracking.run === 'function') {
-      window.AWIN.Tracking.run()
-    }
+  if (!(globals.client && window.AWIN)) {
+    return
   }
+
+  // Example #2 from
+  // https://wiki.awin.com/index.php/Advertiser_Tracking_Guide/Standard_Implementation#Conversion_Tag
+  window.AWIN.Tracking.Sale = {
+    amount: total,
+    channel: '',
+    orderRef: orderId,
+    parts: `${commissionGroup}:${total}`,
+    voucher: promoCode,
+    currency: 'GBP',
+  }
+
+  window.AWIN.Tracking.run()
 }
 
 export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (

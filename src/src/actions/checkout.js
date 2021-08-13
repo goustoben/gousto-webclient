@@ -362,11 +362,10 @@ export const checkPaymentAuth = (sessionId) => (
   }
 )
 
-export const trackPurchase = () => (
+export const trackPurchase = ({ orderId }) => (
   (dispatch, getState) => {
     const state = getState()
     const { pricing } = state
-    const orderId = getPreviewOrderId(state)
     const promoCode = getPromoCode(state)
     const prices = pricing.get('prices')
     const totalPrice = prices.get('grossTotal')
@@ -416,7 +415,7 @@ export function checkoutPostSignup() {
       await dispatch(loginActions.loginUser({ email, password, rememberMe: true, recaptchaToken }, orderId))
       dispatch(tempActions.temp('originalGrossTotal', grossTotal))
       dispatch(tempActions.temp('originalNetTotal', netTotal))
-      dispatch(trackPurchase())
+      dispatch(trackPurchase({ orderId }))
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId, basketRecipes }) // used for data layer tracking
       if (signupTestName) {
         dispatch(trackSuccessfulCheckoutFlow('PostSignup succeeded', { testName: signupTestName }))
