@@ -2,14 +2,16 @@ import Immutable from 'immutable'
 import globals from 'config/globals'
 import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
-import loginActions, { helpPreLoginVisibilityChange } from 'actions/login'
+import loginActions, { helpPreLoginVisibilityChange, loginRedirect } from 'actions/login'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/optimizelyUtils'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
-import pricingActions from '../pricing'
+import { pricingRequest } from '../pricing'
 import statusActions from '../status'
 import authActions from '../auth'
 
 jest.mock('config/globals')
+jest.mock('containers/OptimizelyRollouts/optimizelyUtils')
 
 jest.mock('actions/user')
 
@@ -62,6 +64,7 @@ describe('login actions', () => {
     const userState = Immutable.fromJS({
       id: '123',
     })
+    const requestState = Immutable.fromJS({ browser: 'mobile' })
 
     beforeEach(() => {
       jest.clearAllMocks()
@@ -71,7 +74,8 @@ describe('login actions', () => {
       authActions.authIdentify.mockReturnValue(null)
       getState.mockReturnValue({
         auth: authState,
-        user: userState
+        user: userState,
+        request: requestState
       })
       isActive.mockReturnValue(true)
     })
@@ -93,7 +97,7 @@ describe('login actions', () => {
       })
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingActions.pricingRequest).toHaveBeenCalled()
+      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -115,7 +119,7 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingActions.pricingRequest).toHaveBeenCalled()
+      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -130,7 +134,7 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingActions.pricingRequest).toHaveBeenCalled()
+      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -151,7 +155,7 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
       expect(authActions.authIdentify).toHaveBeenCalled()
-      expect(pricingActions.pricingRequest).toHaveBeenCalled()
+      expect(pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -234,12 +238,70 @@ describe('login actions', () => {
         })
       })
     })
+
+    describe('when user is on mobile web browser', () => {
+      test('then should redirect to /taste-profile if user is in the experiment variant', async () => {
+        const orderId = 'order-1'
+        documentLocation.mockReturnValue({
+          pathname: '/check-out',
+          protocol: 'http:',
+          search: '?target=http://www.gousto.co.uk/whatever',
+          slashes: true
+        })
+        const mockIsTasteProfileEnabled = jest.fn()
+        isOptimizelyFeatureEnabledFactory.mockImplementation((feature) => {
+          if (feature === 'turnips_taste_profile_web_phased_rollout') {
+            return mockIsTasteProfileEnabled
+          }
+        })
+        mockIsTasteProfileEnabled.mockResolvedValue(true)
+
+        await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true }, orderId)(dispatch, getState)
+
+        expect(statusActions.pending).toHaveBeenCalledTimes(2)
+        expect(statusActions.error).toHaveBeenCalledTimes(1)
+        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authActions.authIdentify).toHaveBeenCalled()
+        expect(pricingRequest).toHaveBeenCalled()
+        expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
+        expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
+        expect(redirect).toHaveBeenCalledWith(`/taste-profile/${orderId}`)
+      })
+
+      test('then should redirect to /welcome-to-gousto if user is NOT in the experiment variant', async () => {
+        const orderId = 'order-1'
+        documentLocation.mockReturnValue({
+          pathname: '/check-out',
+          protocol: 'http:',
+          search: '?target=http://www.gousto.co.uk/welcome-to-gousto',
+          slashes: true
+        })
+        const mockIsTasteProfileEnabled = jest.fn()
+        isOptimizelyFeatureEnabledFactory.mockImplementation((feature) => {
+          if (feature === 'turnips_taste_profile_web_phased_rollout') {
+            return mockIsTasteProfileEnabled
+          }
+        })
+        mockIsTasteProfileEnabled.mockResolvedValue(false)
+
+        await loginActions.loginUser({ email: 'email', password: 'password', rememberMe: true }, orderId)(dispatch, getState)
+
+        expect(statusActions.pending).toHaveBeenCalledTimes(2)
+        expect(statusActions.error).toHaveBeenCalledTimes(1)
+        expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true, null)
+        expect(authActions.authIdentify).toHaveBeenCalled()
+        expect(pricingRequest).toHaveBeenCalled()
+        expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
+        expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
+        expect(dispatch).toHaveBeenCalledWith('"/welcome-to-gousto/order-1" pushed')
+      })
+    })
   })
 
   describe('loginRedirect', () => {
     describe('when the current url contain no search query parameters', () => {
       test('should redirect the user to my-gousto by default', () => {
-        const url = loginActions.loginRedirect({
+        const url = loginRedirect({
           pathname: '/',
           search: '',
         }, false, Immutable.Map({}))
@@ -249,7 +311,7 @@ describe('login actions', () => {
 
     describe('when the current url contains a promo_code search query', () => {
       test('should preserve promo_code', () => {
-        const url = loginActions.loginRedirect({
+        const url = loginRedirect({
           pathname: '/',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -258,7 +320,7 @@ describe('login actions', () => {
       })
 
       test('should preserve path when it is menu', () => {
-        const url = loginActions.loginRedirect({
+        const url = loginRedirect({
           pathname: '/menu',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -267,7 +329,7 @@ describe('login actions', () => {
       })
 
       test('should preserve path when it is check-out', () => {
-        const url = loginActions.loginRedirect({
+        const url = loginRedirect({
           pathname: '/check-out',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -276,7 +338,7 @@ describe('login actions', () => {
       })
 
       test('should my-gousto when path is not menu or check-out', () => {
-        const url = loginActions.loginRedirect({
+        const url = loginRedirect({
           pathname: '/box-prices',
           hash: '#login',
           search: '?promo_code=GOUT3S',
@@ -287,7 +349,7 @@ describe('login actions', () => {
 
     describe('when the current url only contains a target search query', () => {
       test('should strip this from the destination', () => {
-        const url = loginActions.loginRedirect({
+        const url = loginRedirect({
           pathname: '/home',
           hash: '#login',
           search: '?target=fake.gousto.co.uk',

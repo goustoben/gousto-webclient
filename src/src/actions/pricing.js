@@ -176,8 +176,8 @@ export const pricingRequest = () => async (dispatch, getState) => {
 }
 
 const pricingActions = {
-  pricingRequest,
   pricingClear,
+  pricingRequest
 }
 
 export default pricingActions

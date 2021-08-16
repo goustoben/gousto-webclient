@@ -10,11 +10,14 @@ import globals from 'config/globals'
 import URL from 'url' // eslint-disable-line import/no-nodejs-modules
 import { getUserId } from 'selectors/user'
 import { getIsPaymentBeforeChoosingEnabled } from 'selectors/features'
+import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { orderAssignToUser } from '../routes/Menu/actions/order'
 import pricingActions from './pricing'
 import statusActions from './status'
 import authActions from './auth'
 import { actionTypes } from './actionTypes'
+import { isMobile } from '../utils/view'
+import { getBrowserType } from '../selectors/browser'
 
 const { pending, error } = statusActions
 const { redirect, documentLocation } = windowUtils
@@ -60,7 +63,7 @@ export const helpPreLoginVisibilityChange = visibility => (
   }
 )
 
-const logoutRedirect = () => (
+export const logoutRedirect = () => (
   () => {
     redirect('/')
   }
@@ -202,6 +205,14 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => (
     dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
+        const isTasteProfileEnabled = isOptimizelyFeatureEnabledFactory('turnips_taste_profile_web_phased_rollout')
+
+        if (isMobile(getBrowserType(getState())) && await isTasteProfileEnabled(dispatch, getState)) {
+          redirect(`/taste-profile/${orderId}`)
+
+          return
+        }
+
         const welcomePage = isPaymentBeforeChoosingEnabled ? client.checkoutWelcome : client.welcome
         dispatch(push(`${welcomePage}/${orderId}`))
       } else {
