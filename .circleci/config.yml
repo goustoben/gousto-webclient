@@ -16,6 +16,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
@@ -35,6 +36,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
@@ -53,6 +55,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
@@ -71,6 +74,7 @@ jobs:
 
   setup-ci-variables-and-download-platform-scripts:
     docker: *gousto_platform_image #stock image missing /gousto directory
+    resource_class: large
     working_directory: /mnt/ramdisk
     steps:
       - checkout
@@ -107,6 +111,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker:
@@ -132,6 +137,7 @@ jobs:
 
   create-and-upload-webclient-docker-image-to-ecr:
     docker: *gousto_platform_image #stock image missing boto
+    resource_class: large
     working_directory: /mnt/ramdisk
     steps:
       - setup_remote_docker:
@@ -145,6 +151,7 @@ jobs:
 
   test-e2e:
     docker: *gousto_platform_image #stock image missing aws cli
+    resource_class: large
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
@@ -186,6 +193,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4-browsers
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
@@ -217,6 +225,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4-browsers
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
@@ -246,6 +255,7 @@ jobs:
 
   deploy-infrastructure-and-webclient-image:
     docker: *gousto_platform_image #stock image missing boto
+    resource_class: large
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
@@ -259,6 +269,7 @@ jobs:
     docker:
       - image: cimg/node:12.22.4
         user: root
+    resource_class: large
     working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
