@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { RadioGroup, InputRadio } from 'goustouicomponents'
-import { frequencyMapping, userIdRange } from '../../../../enum/frequency'
-import { getFrequencyVariant } from '../../../../utils/frequency'
+import { frequencyMapping } from '../../../../enum/frequency'
 import {
   SubscriptionContext,
 } from '../../../../context'
@@ -12,15 +11,13 @@ import {
 } from '../../../../context/selectors/subscription'
 
 import { getDeliveryFrequency } from '../../../../context/selectors/deliveries'
-import { getCurrentUserId } from '../../../../context/selectors/currentUser'
 import { SettingSection } from '../../../../components/SettingSection'
 
 import { useUpdateSubscription } from '../../../../hooks/useUpdateSubscription'
 import { useSubscriptionToast } from '../../../../hooks/useSubscriptionToast'
-import { trackSubscriptionSettingsChange, trackWeeklyFrequencyVariant } from '../../../../tracking'
+import { trackSubscriptionSettingsChange } from '../../../../tracking'
 
 export const Frequency = ({ accessToken, isMobile }) => {
-  let mutableFrequencyMapping = { frequency: frequencyMapping }
   const subscriptionContext = useContext(SubscriptionContext)
   const { state: subscriptionState } = subscriptionContext
 
@@ -31,12 +28,6 @@ export const Frequency = ({ accessToken, isMobile }) => {
   const settingName = 'box_frequency'
 
   const currentDeliveryFrequency = getDeliveryFrequency(subscriptionState)
-  const currentUserId = getCurrentUserId(subscriptionState)
-
-  if (currentUserId > userIdRange.START && currentUserId < userIdRange.END) {
-    mutableFrequencyMapping = getFrequencyVariant({ currentUserId })
-    trackWeeklyFrequencyVariant({ variation: mutableFrequencyMapping.variation })
-  }
 
   const [, updateResponse, updateError] = useUpdateSubscription({
     accessToken,
@@ -72,7 +63,7 @@ export const Frequency = ({ accessToken, isMobile }) => {
         <p
           data-testing="current-frequency"
         >
-          {mutableFrequencyMapping.frequency[selectedInterval] || mutableFrequencyMapping.frequency[currentDeliveryFrequency]}
+          {frequencyMapping[selectedInterval] || frequencyMapping[currentDeliveryFrequency]}
         </p>
       )}
       onSubmit={onSubmit}
@@ -93,8 +84,8 @@ export const Frequency = ({ accessToken, isMobile }) => {
           name={settingName}
         >
           {
-            Object.keys(mutableFrequencyMapping.frequency).map(value => {
-              const frequencyValue = mutableFrequencyMapping.frequency[value]
+            Object.keys(frequencyMapping).map(value => {
+              const frequencyValue = frequencyMapping[value]
 
               return (
                 <InputRadio

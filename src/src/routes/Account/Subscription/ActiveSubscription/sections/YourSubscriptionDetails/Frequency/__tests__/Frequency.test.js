@@ -1,11 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { act } from 'react-dom/test-utils'
-import { frequencyMapping, frequencyMappingC } from '../../../../../enum/frequency'
-
+import { frequencyMapping } from '../../../../../enum/frequency'
 import { SubscriptionContext } from '../../../../../context/index'
 import { Frequency } from '../Frequency'
-
 import { getIsSubscriptionLoaded } from '../../../../../context/selectors/subscription'
 import {
   getDeliveryFrequency
@@ -23,8 +21,6 @@ jest.mock('../../../../../context/selectors/deliveries')
 jest.mock('../../../../../context/selectors/orders')
 jest.mock('../../../../../hooks/useUpdateSubscription')
 
-const mockDispatch = jest.fn()
-
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
 }))
@@ -35,12 +31,12 @@ const getOptionByProp = (propName, value) => wrapper.findWhere(
   el => el.prop(propName) === value
 )
 
-const mountWithProps = (props, state = {}) => {
+const mountWithProps = (props) => {
   wrapper = mount(
     <Frequency accessToken="foo" isMobile={false} {...props} />,
     {
       wrappingComponent: SubscriptionContext.Provider,
-      wrappingComponentProps: { value: { state, dispatch: mockDispatch } }
+      wrappingComponentProps: { value: { state: {}, dispatch: 'MOCK_DISPATCH' } }
     }
   )
 
@@ -59,7 +55,6 @@ const clickEdit = () => {
 
 describe('Frequency', () => {
   const trackSubscriptionSettingsChangeSpy = jest.spyOn(trackingSubscription, 'trackSubscriptionSettingsChange')
-  const trackWeeklyFrequencyVariantSpy = jest.spyOn(trackingSubscription, 'trackWeeklyFrequencyVariant')
   const useSubscriptionToastSpy = jest.spyOn(subscriptionToast, 'useSubscriptionToast')
 
   beforeEach(() => {
@@ -89,12 +84,12 @@ describe('Frequency', () => {
     })
   })
 
-  describe('Given data is loaded with a user not in the frequency variation range', () => {
+  describe('Given data is loaded', () => {
     beforeEach(() => {
       getIsSubscriptionLoaded.mockReturnValue(true)
       getDeliveryFrequency.mockReturnValue('1')
 
-      mountWithProps({}, { currentUser: { id: '12345' } })
+      mountWithProps()
     })
 
     test('Then I should see the frequency', () => {
@@ -103,10 +98,6 @@ describe('Frequency', () => {
           .find('[data-testing="current-frequency"]')
           .text()
       ).toEqual('Weekly')
-    })
-
-    test('And trackWeeklyFrequencyVariantSpy should not be called', () => {
-      expect(trackWeeklyFrequencyVariantSpy).not.toHaveBeenCalled()
     })
 
     describe('And I click "edit"', () => {
@@ -222,33 +213,6 @@ describe('Frequency', () => {
             })
           })
         })
-      })
-    })
-  })
-
-  describe('Given data is loaded with a user in the frequency variation range', () => {
-    beforeEach(() => {
-      getIsSubscriptionLoaded.mockReturnValue(true)
-      getDeliveryFrequency.mockReturnValue('1')
-
-      mountWithProps({}, { currentUser: { id: '42298808' } })
-    })
-
-    test('Then trackWeeklyFrequencyVariantSpy should be called', () => {
-      expect(trackWeeklyFrequencyVariantSpy).toHaveBeenCalledWith({
-        variation: 'C',
-      })
-    })
-
-    test('And the expected options are rendered', () => {
-      expect.assertions(Object.keys(frequencyMappingC).length)
-
-      const renderedOptions = wrapper.find('InputRadio[name="box_frequency"]')
-
-      renderedOptions.forEach((option) => {
-        const expectedText = frequencyMappingC[option.prop('value')]
-
-        expect(option.text()).toEqual(expectedText)
       })
     })
   })

@@ -1,4 +1,4 @@
-import { trackSubscriptionSettingsChange, trackWeeklyFrequencyVariant } from '../subscriptionSettings'
+import { trackSubscriptionSettingsChange } from '../subscriptionSettings'
 import snowplowTracker from '../../../../../middlewares/tracking/snowplow'
 jest.mock('../../../../../middlewares/tracking/snowplow')
 
@@ -10,10 +10,6 @@ describe('Given trackSubscriptionSettingsChange', () => {
     beforeEach(() => {
       windowSpy = jest.spyOn(global, 'window', 'get')
       windowSpy.mockImplementation(() => undefined)
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
     })
 
     describe('When only actionType is sent as param', () => {
@@ -49,24 +45,6 @@ describe('Given trackSubscriptionSettingsChange', () => {
         })
       })
     })
-
-    describe('When trackWeeklyFrequencyVariant is called with data', () => {
-      const variation = 'A'
-
-      beforeEach(() => {
-        trackWeeklyFrequencyVariant({ variation })
-      })
-
-      test('Then snowplowTracker is called the extra data', () => {
-        expect(snowplowTracker).toHaveBeenCalledWith({
-          actionType: 'allocate_user_frequency_experiment',
-          seCategory: 'SubscriptionSettingsPage',
-          variation: 'A'
-        }, {
-          pathname: 'server-side'
-        })
-      })
-    })
   })
 
   describe('And window is defined', () => {
@@ -88,24 +66,6 @@ describe('Given trackSubscriptionSettingsChange', () => {
         expect(snowplowTracker).toHaveBeenCalledWith({
           actionType: 'subscription_edit',
           seCategory: 'SubscriptionSettingsPage',
-        }, {
-          pathname: '/subscription'
-        })
-      })
-    })
-
-    describe('When trackWeeklyFrequencyVariant is called with data', () => {
-      const variation = 'A'
-
-      beforeEach(() => {
-        trackWeeklyFrequencyVariant({ variation })
-      })
-
-      test('Then snowplowTracker is called the extra data', () => {
-        expect(snowplowTracker).toHaveBeenCalledWith({
-          actionType: 'allocate_user_frequency_experiment',
-          seCategory: 'SubscriptionSettingsPage',
-          variation: 'A'
         }, {
           pathname: '/subscription'
         })

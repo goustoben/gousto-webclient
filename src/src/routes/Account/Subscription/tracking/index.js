@@ -1,4 +1,3 @@
 export {
-  trackSubscriptionSettingsChange,
-  trackWeeklyFrequencyVariant,
+  trackSubscriptionSettingsChange
 } from './subscriptionSettings'
