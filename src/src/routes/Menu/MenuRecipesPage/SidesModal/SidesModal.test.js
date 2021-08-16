@@ -8,7 +8,10 @@ Modal.setAppElement(document.body)
 
 describe('<SideModal />', () => {
   const accessToken = 'access-token'
+  const orderId = 'order-id'
+
   const getOrder = (products = []) => ({
+    id: orderId,
     type: 'order',
     attributes: {
       menu_id: '433',
@@ -83,54 +86,65 @@ describe('<SideModal />', () => {
     return sidePlusButton
   }
 
-  let order
   let onSubmit
-  let isOpen
   let onClose
+  let trackAddSide
+  let trackSidesContinueClicked
+  let trackViewSidesAllergens
+  let trackCloseSidesAllergens
+
+  const SideIds = {
+    PlainNaan: '50e99248-e00e-11eb-a669-02675e6927cd',
+    BlanchedPeas: 'ec295226-e008-11eb-a315-02675e6927cd',
+    GarlicBread: 'aacf211c-3ad5-11eb-bb92-06c0e76c292d',
+    DoughBall: '5a8503be-a814-11eb-8cf7-06643a4ae7fd',
+  }
 
   beforeEach(() => {
-    order = getOrder()
     onSubmit = jest.fn()
     onClose = jest.fn()
+    trackAddSide = jest.fn()
+    trackSidesContinueClicked = jest.fn()
+    trackViewSidesAllergens = jest.fn()
+    trackCloseSidesAllergens = jest.fn()
   })
 
   afterEach(jest.clearAllMocks)
   afterEach(cleanup)
 
-  describe('when closed', () => {
+  const renderModal = ({
+    userId,
+    order = getOrder(),
+    isOpen,
+  }) => {
+    render(
+      <SidesModal
+        accessToken={accessToken}
+        userId={userId}
+        order={order}
+        onSubmit={onSubmit}
+        isOpen={isOpen}
+        onClose={onClose}
+        trackAddSide={trackAddSide}
+        trackSidesContinueClicked={trackSidesContinueClicked}
+        trackViewSidesAllergens={trackViewSidesAllergens}
+        trackCloseSidesAllergens={trackCloseSidesAllergens}
+      />
+    )
+  }
+
+  describe('when modal is not open', () => {
     it('should not render', () => {
-      render(
-        <SidesModal
-          accessToken={accessToken}
-          userId={user.withSides}
-          order={getOrder()}
-          onSubmit={onSubmit}
-          isOpen={false}
-          onClose={onClose}
-        />
-      )
+      renderModal({ isOpen: false, userId: user.withSides })
 
       expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
   })
 
-  describe('when open', () => {
-    beforeEach(() => {
-      isOpen = true
-    })
-
+  describe('when modal is open', () => {
     describe('with an unsuccessful request', () => {
-      it('should call onSubmit and not render', async () => {
-        render(
-          <SidesModal
-            accessToken={accessToken}
-            userId={user.withError}
-            order={getOrder()}
-            onSubmit={onSubmit}
-            isOpen={isOpen}
-            onClose={onClose}
-          />
-        )
+      it('should call submitWithNoSides and not render', async () => {
+        renderModal({ isOpen: true, userId: user.withError })
 
         await waitFor(() => {
           expect(onSubmit).toHaveBeenNthCalledWith(1, 'sides-modal-without-sides', null)
@@ -141,17 +155,8 @@ describe('<SideModal />', () => {
     })
 
     describe('when sides endpoint returns with no sides', () => {
-      it('should call onSubmit and not render', async () => {
-        render(
-          <SidesModal
-            accessToken={accessToken}
-            userId={user.withOutSides}
-            order={getOrder()}
-            onSubmit={onSubmit}
-            isOpen={isOpen}
-            onClose={onClose}
-          />
-        )
+      it('should call submitWithNoSides and not render', async () => {
+        renderModal({ isOpen: true, userId: user.withOutSides })
 
         await waitFor(() => {
           expect(onSubmit).toHaveBeenNthCalledWith(1, 'sides-modal-without-sides', null)
@@ -162,20 +167,11 @@ describe('<SideModal />', () => {
     })
 
     describe('when sides endpoint returns sides', () => {
-      const renderOpenSidesModal = async () => {
-        render(
-          <SidesModal
-            accessToken={accessToken}
-            userId={user.withSides}
-            order={order}
-            onSubmit={onSubmit}
-            isOpen={isOpen}
-            onClose={onClose}
-          />
-        )
+      const renderOpenSidesModal = async (order) => {
+        renderModal({ isOpen: true, userId: user.withSides, order })
 
         // Wait for sides to load
-        await waitFor(() => screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }))
+        await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
       }
 
       it('should render the sides tiles', async () => {
@@ -198,15 +194,24 @@ describe('<SideModal />', () => {
         expect(secondImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Peas-3924-x400.jpg')
       })
 
-      it('should call onClose when modal close button is clicked', async () => {
+      it('should call onClose when modal close button is clicked and hide allergens', async () => {
         await renderOpenSidesModal()
 
         const header = within(screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }).closest('div'))
         const closeButton = header.getByTestId('modalClose')
 
+        // Show Allergens
+        const button = screen.getByRole('button', { name: 'Show Allergens and Nutrition' })
+
+        fireEvent.click(button)
+
+        await screen.findByRole('heading', { name: 'Allergens and Nutrition', level: 2 })
+
         fireEvent.click(closeButton)
 
         expect(onClose).toBeCalledTimes(1)
+
+        await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
       })
 
       describe('when user clicks show allergens', () => {
@@ -218,7 +223,10 @@ describe('<SideModal />', () => {
 
           fireEvent.click(button)
 
-          await waitFor(() => screen.getByRole('heading', { name: 'Allergens and Nutrition', level: 2 }))
+          // Track showing Allergens information
+          expect(trackViewSidesAllergens).toBeCalledTimes(1)
+
+          await screen.findByRole('heading', { name: 'Allergens and Nutrition', level: 2 })
 
           expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument()
 
@@ -240,7 +248,10 @@ describe('<SideModal />', () => {
 
           fireEvent.click(hideAllergensButton)
 
-          await waitFor(() => screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }))
+          // Track closing Allergens information
+          expect(trackCloseSidesAllergens).toBeCalledTimes(1)
+
+          await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
 
           expect(screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 })).not.toBeInTheDocument()
         })
@@ -263,7 +274,12 @@ describe('<SideModal />', () => {
 
           fireEvent.click(firstSideAddButton)
 
-          await waitFor(() => footer.getByText('Sides price'))
+          await footer.findByText('Sides price')
+
+          // We track adding a side
+          expect(trackAddSide).toBeCalled()
+
+          expect(trackAddSide).toHaveBeenNthCalledWith(1, SideIds.PlainNaan, orderId)
 
           // Check price
           expect(footer.getByText('+£1.00')).toBeInTheDocument()
@@ -280,6 +296,10 @@ describe('<SideModal />', () => {
           const secondSidePlusButton = secondSideTile.queryByRole('button', { name: '+' })
           fireEvent.click(secondSidePlusButton)
 
+          // We track adding a side
+          expect(trackAddSide).toHaveBeenNthCalledWith(2, SideIds.BlanchedPeas, orderId)
+          expect(trackAddSide).toHaveBeenNthCalledWith(3, SideIds.BlanchedPeas, orderId)
+
           // Check price
           expect(footer.getByText('+£3.00')).toBeInTheDocument()
 
@@ -288,13 +308,26 @@ describe('<SideModal />', () => {
 
           fireEvent.click(continueWithSidesButton)
 
+          // We track submitting with sides
+          expect(trackSidesContinueClicked).toHaveBeenNthCalledWith(
+            1,
+            [
+              SideIds.PlainNaan,
+              SideIds.BlanchedPeas,
+            ],
+            // Total price of sides
+            3,
+            // Total quantity of sides
+            3,
+          )
+
           expect(onSubmit).toHaveBeenNthCalledWith(
             1,
             'sides-modal-with-sides',
             {
-              '50e99248-e00e-11eb-a669-02675e6927cd': 1,
-              'ec295226-e008-11eb-a315-02675e6927cd': 2,
-            },
+              [SideIds.PlainNaan]: 1,
+              [SideIds.BlanchedPeas]: 2,
+            }
           )
 
           // Remove Sides
@@ -305,7 +338,7 @@ describe('<SideModal />', () => {
           fireEvent.click(secondSideMinusButton)
           fireEvent.click(secondSideMinusButton)
 
-          await waitFor(() => footer.getByRole('button', { name: 'Continue without sides' }))
+          await footer.findByRole('button', { name: 'Continue without sides' })
 
           // Prices should be hidden
           expect(footer.queryByText('Sides price')).not.toBeInTheDocument()
@@ -314,6 +347,16 @@ describe('<SideModal />', () => {
           const continueWithoutSidesButton = footer.getByRole('button', { name: 'Continue without sides' })
 
           fireEvent.click(continueWithoutSidesButton)
+
+          // We track submitting with sides
+          expect(trackSidesContinueClicked).toHaveBeenNthCalledWith(
+            2,
+            [],
+            // Total price of sides
+            0,
+            // Total quantity of sides
+            0,
+          )
 
           expect(onSubmit).toHaveBeenNthCalledWith(
             2,
@@ -348,8 +391,8 @@ describe('<SideModal />', () => {
               1,
               'sides-modal-with-sides',
               {
-                '50e99248-e00e-11eb-a669-02675e6927cd': 2
-              },
+                [SideIds.PlainNaan]: 2
+              }
             )
           })
         })
@@ -382,30 +425,27 @@ describe('<SideModal />', () => {
               1,
               'sides-modal-with-sides',
               {
-                '50e99248-e00e-11eb-a669-02675e6927cd': 2,
-                'aacf211c-3ad5-11eb-bb92-06c0e76c292d': 4,
-                'ec295226-e008-11eb-a315-02675e6927cd': 4,
-              },
+                [SideIds.PlainNaan]: 2,
+                [SideIds.GarlicBread]: 4,
+                [SideIds.BlanchedPeas]: 4,
+              }
             )
           })
         })
         describe('max product limit', () => {
-          const garlicBreadId = 'aacf211c-3ad5-11eb-bb92-06c0e76c292d'
-
-          beforeEach( () => {
-            const productWithQuantityOf8 = [ {
-              type: 'product',
-              id: 'product-id',
-              meta: {
-                quantity: 8,
-                amendments: [],
-              },
-            }]
-            order = getOrder(productWithQuantityOf8)
-          })
           describe('when user tries to add more products than the max product limit', () => {
             it('should not let them add more than the limit', async () => {
-              await renderOpenSidesModal()
+              const productId = 'product-id'
+              const productWithQuantityOf8 = [ {
+                type: 'product',
+                id: productId,
+                meta: {
+                  quantity: 8,
+                  amendments: [],
+                },
+              }]
+
+              await renderOpenSidesModal(getOrder(productWithQuantityOf8))
 
               // Because there is a sides already in the order, there will already be 8 sides selected
               const sideTile = getWrappedSideTileFromHeader('Cheese & basil garlic bread')
@@ -436,34 +476,27 @@ describe('<SideModal />', () => {
                 1,
                 'sides-modal-with-sides',
                 {
-                  'product-id': 8,
-                  [garlicBreadId]: 2,
-                },
-              )
+                  [productId]: 8,
+                  [SideIds.GarlicBread]: 2,
+                })
             })
           })
         })
       })
 
       describe('stock', () => {
-        const doughBallId = '5a8503be-a814-11eb-8cf7-06643a4ae7fd'
-
-        beforeEach(() => {
-          const doughBalls = [{
-            type: 'product',
-            id: doughBallId,
-            meta: {
-              quantity: 1,
-              amendments: [],
-            },
-          }]
-
-          order = getOrder(doughBalls)
-        })
-
         describe('when user tries to add a single side more times than the stock for that side', () => {
           it('should not let them add more than the stock', async () => {
-            await renderOpenSidesModal()
+            const doughBalls = [{
+              type: 'product',
+              id: SideIds.DoughBall,
+              meta: {
+                quantity: 1,
+                amendments: [],
+              },
+            }]
+
+            await renderOpenSidesModal(getOrder(doughBalls))
 
             // Because there is a side already in the order, there will already be one side selected
             const sideTile = getWrappedSideTileFromHeader('8 Dough Ball Bites')
@@ -491,8 +524,8 @@ describe('<SideModal />', () => {
               1,
               'sides-modal-with-sides',
               {
-                [doughBallId]: 3,
-              },
+                [SideIds.DoughBall]: 3,
+              }
             )
           })
         })

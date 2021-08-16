@@ -2,6 +2,13 @@ import { connect } from 'react-redux'
 import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import * as trackingKeys from 'actions/trackingKeys'
+import {
+  trackAddSide,
+  trackCancelSide,
+  trackViewSidesAllergens,
+  trackCloseSidesAllergens,
+  trackSidesContinueClicked
+} from 'actions/menu'
 import { checkoutWithSides } from '../actions/menuSidesCheckoutClick'
 import { closeSidesModal } from '../actions/sides'
 import { getOrderV2 } from '../selectors/order'
@@ -19,8 +26,17 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onClose: () => dispatch(closeSidesModal()),
-  onSubmit: (view, products) => dispatch(checkoutWithSides(trackingKeys.menu, view, products)),
+  trackAddSide: (sideId, orderId) => dispatch(trackAddSide(sideId, orderId)),
+  trackSidesContinueClicked: (sideIds, total, quantity) => dispatch(trackSidesContinueClicked(sideIds, total, quantity)),
+  trackViewSidesAllergens: () => dispatch(trackViewSidesAllergens()),
+  trackCloseSidesAllergens: () => dispatch(trackCloseSidesAllergens()),
+  onClose: () => {
+    dispatch(trackCancelSide())
+    dispatch(closeSidesModal())
+  },
+  onSubmit: (view, products) => {
+    dispatch(checkoutWithSides(trackingKeys.menu, view, products))
+  },
 })
 
 const MenuSidesModalContainer = connect(mapStateToProps, mapDispatchToProps)(SidesModal)

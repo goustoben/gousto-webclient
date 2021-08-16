@@ -168,6 +168,10 @@ export const SidesModal = ({
   isOpen,
   onClose,
   onSubmit: onSubmitCallback,
+  trackAddSide,
+  trackSidesContinueClicked,
+  trackViewSidesAllergens,
+  trackCloseSidesAllergens,
 }) => {
   const {
     sides,
@@ -178,10 +182,30 @@ export const SidesModal = ({
     isOutOfStock,
     getLimit,
     total,
-  } = useSidesBasket(accessToken, userId, order, onSubmitCallback, isOpen)
+  } = useSidesBasket({
+    accessToken,
+    userId,
+    order,
+    onSubmitCallback,
+    isOpen,
+    trackAddSide,
+    trackSidesContinueClicked,
+  })
   const hasSides = Boolean(sides.length)
   const [showAllergenAndNutrition, setShowAllergenAndNutrition] = React.useState(false)
-  const toggleShowAllergenAndNutrition = () => setShowAllergenAndNutrition(!showAllergenAndNutrition)
+  const toggleShowAllergenAndNutrition = () => {
+    if (showAllergenAndNutrition) {
+      trackCloseSidesAllergens()
+      setShowAllergenAndNutrition(false)
+    } else {
+      trackViewSidesAllergens()
+      setShowAllergenAndNutrition(true)
+    }
+  }
+  const onModalClose = () => {
+    setShowAllergenAndNutrition(false)
+    onClose()
+  }
 
   if (!hasSides) {
     return null
@@ -192,7 +216,7 @@ export const SidesModal = ({
       open={isOpen}
       from="top"
     >
-      <ModalPanel closePortal={onClose} className={css.sidesModalPanelContainer}>
+      <ModalPanel closePortal={onModalClose} className={css.sidesModalPanelContainer}>
         <ModalHeader align="left" withSeparator>
           {showAllergenAndNutrition
             ? 'Allergens and Nutrition'
@@ -241,4 +265,8 @@ SidesModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  trackAddSide: PropTypes.func.isRequired,
+  trackSidesContinueClicked: PropTypes.func.isRequired,
+  trackViewSidesAllergens: PropTypes.func.isRequired,
+  trackCloseSidesAllergens: PropTypes.func.isRequired,
 }

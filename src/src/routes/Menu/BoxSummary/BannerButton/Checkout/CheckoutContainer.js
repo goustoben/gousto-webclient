@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { isBasketTransactionalOrder } from 'selectors/basket'
+import { trackViewSidesModal } from 'actions/menu'
 import { checkoutBasket } from '../../../actions/menuCheckoutClick'
 import { openSidesModal } from '../../../actions/sides'
 import { Checkout } from './Checkout'
@@ -23,7 +24,10 @@ const mapStateToProps = (state) => ({
 
 const CheckoutContainer = connect(mapStateToProps, {
   checkoutBasket,
-  openSidesModal
+  openSidesModal: () => (dispatch) => {
+    dispatch(trackViewSidesModal())
+    dispatch(openSidesModal())
+  },
 })(Checkout)
 
 export { CheckoutContainer }

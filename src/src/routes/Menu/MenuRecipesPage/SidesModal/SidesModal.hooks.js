@@ -65,7 +65,15 @@ const getLimitsForProduct = (quantity, side, totalQuantityOfProducts, totalQuant
   return false
 }
 
-export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, isOpen) => {
+export const useSidesBasket = ({
+  accessToken,
+  userId,
+  order,
+  onSubmitCallback,
+  isOpen,
+  trackAddSide,
+  trackSidesContinueClicked,
+}) => {
   const productsInOrder = getProductsInOrder(order)
   const [selectedProducts, setSelectedProducts] = React.useState(productsInOrder)
   const { data } = useSides({
@@ -88,11 +96,11 @@ export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, isO
   const total = getTotal(sides, selectedProducts)
   const getQuantityForSidesBasket = (id) => selectedProducts[id] || 0
   const updateSidesQuantity = makeUpdateSidesQuantity(selectedProducts, setSelectedProducts)
-  const addSide = (id) => updateSidesQuantity(id, getQuantityForSidesBasket(id) + 1)
-  const removeSide = (id) => updateSidesQuantity(id, getQuantityForSidesBasket(id) - 1)
-  const onSubmit = () => {
-    onSubmitCallback('sides-modal-with-sides', selectedProducts)
+  const addSide = (id) => {
+    trackAddSide(id, order.id)
+    updateSidesQuantity(id, getQuantityForSidesBasket(id) + 1)
   }
+  const removeSide = (id) => updateSidesQuantity(id, getQuantityForSidesBasket(id) - 1)
 
   // Limits and Stock
   const totalQuantityOfProducts = Object.values(selectedProducts).reduce(sum, 0)
@@ -118,6 +126,14 @@ export const useSidesBasket = (accessToken, userId, order, onSubmitCallback, isO
     totalQuantityOfSides,
     maxProductsPerBox
   )
+
+  const onSubmit = () => {
+    const sidesIds = sides
+      .map(({ id }) => id)
+      .filter((id) => Boolean(selectedProducts[id]))
+    trackSidesContinueClicked(sidesIds, total, totalQuantityOfSides)
+    onSubmitCallback('sides-modal-with-sides', selectedProducts)
+  }
 
   return {
     sides,
