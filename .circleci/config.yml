@@ -37,17 +37,17 @@ jobs:
       - image: cimg/node:12.22.4
         user: root
     resource_class: large
-    working_directory: /mnt/ramdisk
+    working_directory: /project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: /
+          at: /project
       - run:
           name: eslint report
           command: cd src && scripts/run-eslint-ci.sh
       - persist_to_workspace:
-          root: /
+          root: /project
           paths:
             - mnt/ramdisk/src/eslint-results.json
 
