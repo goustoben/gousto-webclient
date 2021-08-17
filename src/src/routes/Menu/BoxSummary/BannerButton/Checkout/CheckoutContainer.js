@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { isBasketTransactionalOrder } from 'selectors/basket'
 import { trackViewSidesModal } from 'actions/menu'
+import { getAuthUserId } from 'selectors/auth'
+import { trackExperimentInSnowplow } from 'containers/OptimizelyRollouts/trackExperimentInSnowplow'
 import { checkoutBasket } from '../../../actions/menuCheckoutClick'
 import { openSidesModal } from '../../../actions/sides'
 import { Checkout } from './Checkout'
@@ -20,6 +22,7 @@ const mapStateToProps = (state) => ({
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE, null),
   basketPreviewOrderChangePending: state.pending.get('BASKET_PREVIEW_ORDER_CHANGE', false),
   isBasketTransactionalOrder: isBasketTransactionalOrder(state),
+  userId: getAuthUserId(state),
 })
 
 const CheckoutContainer = connect(mapStateToProps, {
@@ -28,6 +31,7 @@ const CheckoutContainer = connect(mapStateToProps, {
     dispatch(trackViewSidesModal())
     dispatch(openSidesModal())
   },
+  trackExperimentInSnowplow,
 })(Checkout)
 
 export { CheckoutContainer }

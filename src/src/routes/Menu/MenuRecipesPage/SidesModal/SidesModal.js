@@ -11,7 +11,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import { SubIngredients } from '../../Recipe/Detail/SubIngredients/SubIngredients'
 import css from './SidesModal.css'
 import { SidePropType } from './SidesPropTypes'
-import { useSidesBasket } from './SidesModal.hooks'
+import { useSidesBasket } from './SidesModal.hook'
 
 const SidesContentFooter = ({
   toggleShowAllergenAndNutrition,

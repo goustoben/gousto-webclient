@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { basketSum, okRecipes } from 'utils/basket'
 import config from 'config/basket'
-import { useIsSidesExperimentEnabled } from 'routes/Menu/context/sidesExperimentContext'
+import { useIsOptimizelyFeatureEnabled } from 'containers/OptimizelyRollouts'
 import css from './Checkout.css'
 import { BaseBannerButton } from '../BaseBannerButton'
 
@@ -21,9 +21,15 @@ const Checkout = (props) => {
     section,
     checkoutBasket,
     openSidesModal,
-    isBasketTransactionalOrder
+    isBasketTransactionalOrder,
+    userId,
+    trackExperimentInSnowplow,
   } = props
-  const sidesExperimentEnabled = useIsSidesExperimentEnabled()
+  const sidesExperimentEnabled = useIsOptimizelyFeatureEnabled({
+    name: 'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
+    userId,
+    trackExperimentInSnowplow
+  })
   const showSideModal = sidesExperimentEnabled && !isBasketTransactionalOrder
 
   return (
@@ -55,6 +61,8 @@ Checkout.propTypes = {
   orderSavePending: PropTypes.bool,
   basketPreviewOrderChangePending: PropTypes.bool,
   isBasketTransactionalOrder: PropTypes.bool.isRequired,
+  userId: PropTypes.string.isRequired,
+  trackExperimentInSnowplow: PropTypes.func.isRequired,
 }
 
 Checkout.defaultProps = {

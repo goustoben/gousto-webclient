@@ -5,15 +5,13 @@ import * as menuCheckoutActions from 'routes/Menu/actions/checkout'
 import * as orderActions from 'actions/order'
 import optimizelySdk from '@optimizely/optimizely-sdk'
 import * as menuActions from 'routes/Menu/actions/order'
-import * as menuCheckoutClick from '../menuCheckoutClick'
 import * as menuSelectors from '../../selectors/menu'
-
-const {
+import {
   isOrderApiCreateEnabled,
   isOrderApiUpdateEnabled,
   checkoutBasket,
   clearBasketNotValidError,
-} = menuCheckoutClick
+} from '../menuCheckoutClick'
 
 // The first spec to create optimizely instance will point to this function.
 // as we memories the optimizely instances onces created.

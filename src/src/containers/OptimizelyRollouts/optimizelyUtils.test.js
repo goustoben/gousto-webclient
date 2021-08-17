@@ -1,5 +1,4 @@
 import { Map } from 'immutable'
-// import optimizelySdk from '@optimizely/optimizely-sdk'
 import * as cookieHelper from 'utils/cookieHelper2'
 import Cookies from 'cookies-js'
 import {

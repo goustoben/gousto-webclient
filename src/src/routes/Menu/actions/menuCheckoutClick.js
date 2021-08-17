@@ -8,9 +8,7 @@ import { orderUpdate } from 'actions/order'
 import { getIsAuthenticated } from 'selectors/auth'
 import { isOptimizelyFeatureEnabledFactory } from 'containers/OptimizelyRollouts/index'
 import { sendUpdateOrder } from 'routes/Menu/actions/order'
-import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { checkoutTransactionalOrder } from './checkoutTransactionalOrder'
-import { closeSidesModal } from './sides'
 import { validateMenuLimitsForBasket } from '../selectors/menu'
 import { isBasketTransactionalOrder } from '../../../selectors/basket'
 
@@ -64,35 +62,6 @@ export const checkoutBasket = (section, view) => async (dispatch, getState) => {
   } else {
     dispatch(orderUpdate())
   }
-}
-
-// Products can be `null` if the products are never changes
-// Otherwise it will be an object of ids and quantities
-export const checkoutWithSides = (section, view, products) => async (dispatch, getState) => {
-  const hasProducts = Boolean(products)
-
-  dispatch(closeSidesModal())
-
-  if (hasProducts) {
-    await dispatch({
-      type: actionTypes.SET_BASKET_PRODUCTS,
-      products,
-      trackingData: {
-        actionType: actionTypes.SET_BASKET_PRODUCTS,
-        productIds: Object.keys(products),
-        section,
-        view,
-      },
-    })
-
-    const isUpdateV2Enabled = await isOrderApiUpdateEnabled(dispatch, getState)
-
-    if (!isUpdateV2Enabled) {
-      dispatch(basketUpdateProducts())
-    }
-  }
-
-  dispatch(checkoutBasket(section, view))
 }
 
 export const clearBasketNotValidError = () => (dispatch) => {

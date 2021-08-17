@@ -15,11 +15,12 @@ describe('CheckoutContainer', () => {
     const mockStore = configureStore([thunk])
 
     const store = mockStore({
+      auth: Immutable.Map({}),
       basket: Immutable.Map({}),
-      pricing: Immutable.Map({}),
-      pending: Immutable.Map({}),
       error: Immutable.Map({}),
       menuRecipes: Immutable.List(),
+      pending: Immutable.Map({}),
+      pricing: Immutable.Map({}),
       stock: Immutable.Map({}),
     })
 
