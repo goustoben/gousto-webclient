@@ -9,7 +9,7 @@ const PhoneContent = () => (
     Call us on&nbsp;
     <a className={css.visibleOnlyOnMobile} href={`tel:${telephone.link}`}>{telephone.number}</a>
     <span className={css.hiddenOnMobile}>{telephone.number}</span>
-    . We are available on weekdays from 9:00am - 7:45pm, and on weekends from 10:00am - 6:45pm
+    . We are available Monday - Sunday from 8:30am - 7:45pm.
   </div>
 )
 
