@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
   trackSidesContinueClicked: (sideIds, total, quantity) => dispatch(trackSidesContinueClicked(sideIds, total, quantity)),
   trackViewSidesAllergens: () => dispatch(trackViewSidesAllergens()),
   trackCloseSidesAllergens: () => dispatch(trackCloseSidesAllergens()),
-  onClose: () => dispatch(closeSidesModal),
+  onClose: () => dispatch(closeSidesModal()),
   onSubmit: (view, products) => {
     dispatch(checkoutWithSides(trackingKeys.menu, view, products))
   },

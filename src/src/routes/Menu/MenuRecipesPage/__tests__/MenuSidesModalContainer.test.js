@@ -76,8 +76,12 @@ describe('<MenuSidesModalContainer/>', () => {
   })
 
   test('should provide on close method that calls closeSidesModal and tracks with trackCancelSide', () => {
+    const closeSidesModalMock = jest.fn().mockImplementation(fakeActionResponse)
+    closeSidesModalSpy.mockReturnValue(closeSidesModalMock)
+
     wrapper.props().onClose()
 
+    expect(closeSidesModalMock).toHaveBeenCalled()
     expect(closeSidesModalSpy).toHaveBeenCalled()
   })
 
