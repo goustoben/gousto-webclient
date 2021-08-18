@@ -310,34 +310,10 @@ workflows:
             branches:
               only:
                 - e2e-manual
-      - build-webclient:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-and-download-platform-scripts
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - deploy-infrastructure-and-webclient-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-          filters:
-            branches:
-              only:
-                - e2e-manual
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+            - setup-ci-variables-and-download-platform-scripts
           filters:
             branches:
               only:
