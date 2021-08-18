@@ -7,6 +7,14 @@ gousto_platform_image: &gousto_platform_image
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
+circleci_node_image: &circleci_node_image
+  - image: cimg/node:12.22.4
+    user: root
+
+circleci_node_browsers_image: &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
+  - image: cimg/node:12.22.4-browsers
+    user: root
+
 orbs:
   browser-tools: circleci/browser-tools@1.1.3
   aws-cli: circleci/aws-cli@1.4.1
@@ -14,9 +22,7 @@ orbs:
 jobs:
 
   jest-coverage-report:
-    docker:
-      - image: cimg/node:12.22.4
-        user: root
+    docker: *circleci_node_image
     resource_class: large
     working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
@@ -34,9 +40,7 @@ jobs:
             - mnt/ramdisk/src/coverage/coverage-summary.json
 
   eslint-generate-report:
-    docker:
-      - image: cimg/node:12.22.4
-        user: root
+    docker: *circleci_node_image
     resource_class: large
     working_directory: /mnt/ramdisk
     environment:
@@ -53,9 +57,7 @@ jobs:
             - mnt/ramdisk/src/eslint-results.json
 
   publish-code-health:
-    docker:
-      - image: cimg/node:12.22.4
-        user: root
+    docker: *circleci_node_image
     resource_class: large
     working_directory: /mnt/ramdisk
     environment:
@@ -109,9 +111,7 @@ jobs:
             - root/.circlerc
 
   build-webclient:
-    docker:
-      - image: cimg/node:12.22.4
-        user: root
+    docker: *circleci_node_image
     resource_class: large
     working_directory: /mnt/ramdisk
     steps:
@@ -148,9 +148,7 @@ jobs:
           no_output_timeout: 20m
 
   test-e2e:
-    docker:
-      - image: cimg/node:12.22.4-browsers
-        user: root
+    docker: *circleci_node_browsers_image
     resource_class: large
     working_directory: /mnt/ramdisk
     steps:
@@ -196,9 +194,7 @@ jobs:
           command: aws wafv2 update-ip-set --name $ipsetName --scope $ipsetScope --id $ipsetId --lock-token $nextLockToken --addresses $ipsetAddresses
 
   test-regression:
-    docker:
-      - image: cimg/node:12.22.4-browsers
-        user: root
+    docker: *circleci_node_browsers_image
     resource_class: large
     working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
@@ -228,9 +224,7 @@ jobs:
           destination: ./
 
   test-regression-mobile:
-    docker:
-      - image: cimg/node:12.22.4-browsers
-        user: root
+    docker: *circleci_node_browsers_image
     resource_class: large
     working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
@@ -272,9 +266,7 @@ jobs:
 
 
   install-regression-test-dependencies:
-    docker:
-      - image: cimg/node:12.22.4
-        user: root
+    docker: *circleci_node_image
     resource_class: large
     working_directory: /mnt/ramdisk
     steps:
