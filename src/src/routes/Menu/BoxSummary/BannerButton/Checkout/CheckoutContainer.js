@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { actionTypes } from 'actions/actionTypes'
 import { isBasketTransactionalOrder } from 'selectors/basket'
-import { trackViewSidesModal } from 'actions/menu'
 import { getAuthUserId } from 'selectors/auth'
 import { trackExperimentInSnowplow } from 'containers/OptimizelyRollouts/trackExperimentInSnowplow'
 import { checkoutBasket } from '../../../actions/menuCheckoutClick'
@@ -27,10 +26,7 @@ const mapStateToProps = (state) => ({
 
 const CheckoutContainer = connect(mapStateToProps, {
   checkoutBasket,
-  openSidesModal: () => (dispatch) => {
-    dispatch(trackViewSidesModal())
-    dispatch(openSidesModal())
-  },
+  openSidesModal,
   trackExperimentInSnowplow,
 })(Checkout)
 

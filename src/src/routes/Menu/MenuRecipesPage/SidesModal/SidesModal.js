@@ -18,6 +18,7 @@ const SidesContentFooter = ({
   total,
   onSubmit,
   showAllergenAndNutrition,
+  isSubmitting,
 }) => (
   <div className={css.sidesModalFooter}>
     <div>
@@ -48,6 +49,8 @@ const SidesContentFooter = ({
               size="medium"
               variant="primary"
               onClick={onSubmit}
+              isLoading={isSubmitting}
+              isDisabled={isSubmitting}
             >
               Continue with sides
             </CTA>
@@ -58,6 +61,8 @@ const SidesContentFooter = ({
               size="medium"
               variant="secondary"
               onClick={onSubmit}
+              isLoading={isSubmitting}
+              isDisabled={isSubmitting}
             >
               Continue without sides
             </CTA>
@@ -72,6 +77,7 @@ SidesContentFooter.propTypes = {
   toggleShowAllergenAndNutrition: PropTypes.func.isRequired,
   total: PropTypes.number.isRequired,
   showAllergenAndNutrition: PropTypes.bool.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
 }
 
 const SidesContent = ({
@@ -182,6 +188,7 @@ export const SidesModal = ({
     isOutOfStock,
     getLimit,
     total,
+    isSubmitting,
   } = useSidesBasket({
     accessToken,
     userId,
@@ -252,6 +259,7 @@ export const SidesModal = ({
           showAllergenAndNutrition={showAllergenAndNutrition}
           total={total}
           onSubmit={onSubmit}
+          isSubmitting={isSubmitting}
         />
       </ModalPanel>
     </Overlay>

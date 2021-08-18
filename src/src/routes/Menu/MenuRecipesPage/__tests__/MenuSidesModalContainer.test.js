@@ -13,12 +13,11 @@ describe('<MenuSidesModalContainer/>', () => {
   let closeSidesModalSpy
   let checkoutWithSidesSpy
   let trackAddSideSpy
-  let trackCancelSideSpy
   let trackViewSidesAllergensSpy
   let trackCloseSidesAllergensSpy
   let trackSidesContinueClickedSpy
-
   let store
+
   const fakeActionResponse = jest.fn().mockReturnValue({ action: 'test', type: 'action' })
 
   beforeEach(() => {
@@ -26,7 +25,6 @@ describe('<MenuSidesModalContainer/>', () => {
     checkoutWithSidesSpy = jest.spyOn(MenuSidesCheckoutClick, 'checkoutWithSides').mockImplementation(fakeActionResponse)
 
     trackAddSideSpy = jest.spyOn(Menu, 'trackAddSide')
-    trackCancelSideSpy = jest.spyOn(Menu, 'trackCancelSide')
     trackViewSidesAllergensSpy = jest.spyOn(Menu, 'trackViewSidesAllergens')
     trackCloseSidesAllergensSpy = jest.spyOn(Menu, 'trackCloseSidesAllergens')
     trackSidesContinueClickedSpy = jest.spyOn(Menu, 'trackSidesContinueClicked')
@@ -81,7 +79,6 @@ describe('<MenuSidesModalContainer/>', () => {
     wrapper.props().onClose()
 
     expect(closeSidesModalSpy).toHaveBeenCalled()
-    expect(trackCancelSideSpy).toHaveBeenCalled()
   })
 
   test('should provide on submit method that calls checkoutWithSides with products', () => {

@@ -76,6 +76,7 @@ export const useSidesBasket = ({
 }) => {
   const productsInOrder = getProductsInOrder(order)
   const [selectedProducts, setSelectedProducts] = React.useState(productsInOrder)
+  const [isSubmitting, setSubmitting] = React.useState(false)
   const { data } = useSides({
     accessToken,
     userId,
@@ -127,13 +128,26 @@ export const useSidesBasket = ({
     maxProductsPerBox
   )
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    if (isSubmitting) return
+
+    setSubmitting(true)
+
     const sidesIds = sides
       .map(({ id }) => id)
       .filter((id) => Boolean(selectedProducts[id]))
+
     trackSidesContinueClicked(sidesIds, total, totalQuantityOfSides)
     onSubmitCallback('sides-modal-with-sides', selectedProducts)
   }
+
+  React.useEffect(() => {
+    if (!isOpen && isSubmitting) {
+      setSubmitting(false)
+    }
+  }, [isOpen, isSubmitting, setSubmitting])
 
   return {
     sides,
@@ -144,5 +158,6 @@ export const useSidesBasket = ({
     getQuantityForSidesBasket,
     isOutOfStock,
     getLimit,
+    isSubmitting,
   }
 }

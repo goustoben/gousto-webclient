@@ -4,7 +4,6 @@ import { getUserId } from 'selectors/user'
 import * as trackingKeys from 'actions/trackingKeys'
 import {
   trackAddSide,
-  trackCancelSide,
   trackViewSidesAllergens,
   trackCloseSidesAllergens,
   trackSidesContinueClicked
@@ -30,10 +29,7 @@ const mapDispatchToProps = (dispatch) => ({
   trackSidesContinueClicked: (sideIds, total, quantity) => dispatch(trackSidesContinueClicked(sideIds, total, quantity)),
   trackViewSidesAllergens: () => dispatch(trackViewSidesAllergens()),
   trackCloseSidesAllergens: () => dispatch(trackCloseSidesAllergens()),
-  onClose: () => {
-    dispatch(trackCancelSide())
-    dispatch(closeSidesModal())
-  },
+  onClose: () => dispatch(closeSidesModal),
   onSubmit: (view, products) => {
     dispatch(checkoutWithSides(trackingKeys.menu, view, products))
   },

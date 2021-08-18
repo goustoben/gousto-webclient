@@ -112,26 +112,32 @@ describe('<SideModal />', () => {
   afterEach(jest.clearAllMocks)
   afterEach(cleanup)
 
+  const SideModalWithMockedProps = ({
+    // eslint-disable-next-line react/prop-types
+    userId,
+    // eslint-disable-next-line react/prop-types
+    order = getOrder(),
+    // eslint-disable-next-line react/prop-types
+    isOpen,
+  }) => (
+    <SidesModal
+      accessToken={accessToken}
+      userId={userId}
+      order={order}
+      onSubmit={onSubmit}
+      isOpen={isOpen}
+      onClose={onClose}
+      trackAddSide={trackAddSide}
+      trackSidesContinueClicked={trackSidesContinueClicked}
+      trackViewSidesAllergens={trackViewSidesAllergens}
+      trackCloseSidesAllergens={trackCloseSidesAllergens}
+    />
+  )
   const renderModal = ({
     userId,
     order = getOrder(),
     isOpen,
-  }) => {
-    render(
-      <SidesModal
-        accessToken={accessToken}
-        userId={userId}
-        order={order}
-        onSubmit={onSubmit}
-        isOpen={isOpen}
-        onClose={onClose}
-        trackAddSide={trackAddSide}
-        trackSidesContinueClicked={trackSidesContinueClicked}
-        trackViewSidesAllergens={trackViewSidesAllergens}
-        trackCloseSidesAllergens={trackCloseSidesAllergens}
-      />
-    )
-  }
+  }) => render(<SideModalWithMockedProps userId={userId} order={order} isOpen={isOpen} />)
 
   describe('when modal is not open', () => {
     it('should not render', () => {
@@ -168,10 +174,12 @@ describe('<SideModal />', () => {
 
     describe('when sides endpoint returns sides', () => {
       const renderOpenSidesModal = async (order) => {
-        renderModal({ isOpen: true, userId: user.withSides, order })
+        const rtl = renderModal({ isOpen: true, userId: user.withSides, order })
 
         // Wait for sides to load
         await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
+
+        return rtl
       }
 
       it('should render the sides tiles', async () => {
@@ -259,17 +267,17 @@ describe('<SideModal />', () => {
 
       describe('when user selects sides and submits', () => {
         it('should display total and call onSubmit when continue button is clicked', async () => {
-          await renderOpenSidesModal()
+          const { rerender } = await renderOpenSidesModal()
 
           // Footer
-          const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+          let footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
 
           expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument()
           expect(footer.queryByRole('button', { name: 'Continue without sides' })).toBeInTheDocument()
           expect(footer.queryByRole('button', { name: 'Continue with sides' })).not.toBeInTheDocument()
 
           // Add a Side
-          const firstSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
+          let firstSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
           const firstSideAddButton = firstSideTile.queryByRole('button', { name: 'Add' })
 
           fireEvent.click(firstSideAddButton)
@@ -289,7 +297,7 @@ describe('<SideModal />', () => {
           expect(footer.queryByRole('button', { name: 'Continue with sides' })).toBeInTheDocument()
 
           // Add 2 Sides
-          const secondSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
+          let secondSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
           const secondSideAddButton = secondSideTile.queryByRole('button', { name: 'Add' })
           fireEvent.click(secondSideAddButton)
 
@@ -304,7 +312,7 @@ describe('<SideModal />', () => {
           expect(footer.getByText('+£3.00')).toBeInTheDocument()
 
           // Submit with Sides
-          const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+          let continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
 
           fireEvent.click(continueWithSidesButton)
 
@@ -330,7 +338,27 @@ describe('<SideModal />', () => {
             }
           )
 
-          // Remove Sides
+          expect(continueWithSidesButton).toBeDisabled()
+
+          // Close and Open Modal should reset disabled state
+          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen={false} />)
+
+          await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument())
+
+          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen />)
+
+          await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument())
+
+          // Reselect footer and continueWithSidesButton
+          footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+          continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+
+          expect(continueWithSidesButton).not.toBeDisabled()
+
+          // Reselect tiles and remove Sides
+          firstSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
+          secondSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
+
           const firstSideMinusButton = firstSideTile.queryByRole('button', { name: '-' })
           const secondSideMinusButton = secondSideTile.queryByRole('button', { name: '-' })
 
@@ -363,6 +391,8 @@ describe('<SideModal />', () => {
             'sides-modal-with-sides',
             {},
           )
+
+          expect(continueWithoutSidesButton).toBeDisabled()
         })
       })
 
