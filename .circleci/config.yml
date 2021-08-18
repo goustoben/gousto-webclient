@@ -201,6 +201,11 @@ jobs:
           name: Run E2E tests
           working_directory: ~/project/tests/e2e
           command: npm run test:staging
+      - store_test_results:
+          path: ~/project/tests/e2e/reports
+      - store_artifacts:
+          path: ~/project/tests/e2e/reports
+          destination: ./
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
