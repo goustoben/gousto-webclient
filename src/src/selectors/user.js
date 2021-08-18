@@ -26,8 +26,8 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   const userOrders = user.get('orders')
   const sortedOrders = userOrders && userOrders
     .sort((order1, order2) => {
-      const orderDate1 = order1.get('deliveryDay')
-      const orderDate2 = order2.get('deliveryDay')
+      const orderDate1 = order1.get('deliveryDate')
+      const orderDate2 = order2.get('deliveryDate')
 
       return moment(orderDate2) - moment(orderDate1)
     })

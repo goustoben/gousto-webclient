@@ -321,7 +321,7 @@ describe('getUserRecentRecipesIds', () => {
     user: Immutable.fromJS({
       orders: {
         1: {
-          deliveryDay: '2020-05-19 00:00:00',
+          deliveryDate: '2020-05-19 00:00:00',
           recipeItems: [
             { itemableType: 'Recipe', recipeId: '1' },
             { itemableType: 'Recipe', recipeId: '2' },
@@ -330,7 +330,7 @@ describe('getUserRecentRecipesIds', () => {
           ]
         },
         2: {
-          deliveryDay: '2020-07-13 00:00:00',
+          deliveryDate: '2020-07-13 00:00:00',
           recipeItems: [
             { itemableType: 'Recipe', recipeId: '5' },
             { itemableType: 'Recipe', recipeId: '5' },
@@ -339,7 +339,7 @@ describe('getUserRecentRecipesIds', () => {
           ]
         },
         3: {
-          deliveryDay: '2020-06-10 00:00:00',
+          deliveryDate: '2020-06-10 00:00:00',
           recipeItems: [
             { itemableType: 'Recipe', recipeId: '7' },
             { itemableType: 'Recipe', recipeId: '8' },
