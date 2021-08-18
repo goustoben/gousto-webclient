@@ -87,8 +87,15 @@ jobs:
       - run:
           name: Set S3 Cloudfront URL
           command: |
-            source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-1)
+            source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
             echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
+      - run:
+          name: Install npm dependencies
+          workdir: src
+          command: |
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            npm ci
+            npm run postinstall
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
@@ -122,12 +129,21 @@ jobs:
       - run:
           name: Setup environment and npm variables for build
           command: source ~/.circlerc && setup/setup-common.sh
+      - run: echo $ENVIRONMENT
       - run:
           name: Build webclient
-          command: source ~/.circlerc && setup/setup-isomorphic.sh
+          working_directory: src
+          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build
       - run:
           name: Upload webclient resources to S3
-          command: source ~/.circlerc && scripts/upload-to-s3.sh
+          working_directory: src
+          command: |
+            source ~/.circlerc
+            ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
+            echo "${ASSETS_BUCKET}"
+            npm config set goustowebclient_asset_bucket "${ASSETS_BUCKET}"
+            npm run deploy
+            npm run upload -- --upload_dir=${CI_BUILD_NUMBER}
       - persist_to_workspace:
           root: /
           paths:
@@ -262,7 +278,7 @@ jobs:
           at: /
       - run:
           name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
-          command: source ~/.circlerc && scripts/deploy.sh
+          command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
 
 
   install-regression-test-dependencies:
