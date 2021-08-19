@@ -205,38 +205,81 @@ describe('given dataLayerTracker middleware is invoked', () => {
       })
     })
 
-    describe('when BASKET_CHECKOUT is handled', () => {
-      test('then it should send initiate_checkout', () => {
-        const action = {
-          type: actionTypes.BASKET_CHECKOUT,
-        }
-        dataLayerTracker(action, state)
+    describe('when user navigates to a new location', () => {
+      const makeAction = (pathname) => ({
+        // eslint-disable-next-line no-underscore-dangle
+        type: actionTypes.__REACT_ROUTER_LOCATION_CHANGE,
+        payload: {
+          pathname,
+        },
+      })
 
-        expect(window.dataLayer[1]).toEqual({
-          event: 'initiate_checkout',
-          user: {},
+      let action
 
-          ecommerce: {
-            checkout: {
-              actionField: {
+      describe('and it does not match check-out', () => {
+        beforeEach(() => {
+          action = makeAction('/')
+        })
+
+        test('then it should not send any tracking', () => {
+          dataLayerTracker(action, state)
+
+          expect(window.dataLayer).toHaveLength(0)
+        })
+      })
+
+      describe('and it matches check-out special step', () => {
+        beforeEach(() => {
+          action = makeAction('/check-out/welcome-to-gousto')
+        })
+
+        test('then it should not send any tracking', () => {
+          dataLayerTracker(action, state)
+
+          expect(window.dataLayer).toHaveLength(0)
+        })
+      })
+
+      describe('and it matches check-out known step', () => {
+        const cases = [
+          ['/check-out/account', 1],
+          ['/check-out/delivery', 2],
+          ['/check-out/payment', 3],
+        ]
+
+        describe.each(cases)('%s', (pathname, expectedStep) => {
+          test('then it should send checkout with appropriate step parameter', () => {
+            action = makeAction(pathname)
+
+            dataLayerTracker(action, state)
+
+            expect(window.dataLayer[1]).toEqual({
+              event: 'checkout',
+              user: {},
+              ecommerce: {
                 box_type: 2,
+                checkout: {
+                  actionField: {
+                    step: expectedStep,
+                  },
+                  products: [
+                    {
+                      category: 'all-recipes',
+                      id: '123',
+                      name: 'Caponata',
+                      quantity: 2,
+                    },
+                    {
+                      category: 'all-recipes',
+                      id: '739',
+                      name: 'Sweet Potato Curry',
+                      quantity: 1,
+                    },
+                  ],
+                },
               },
-              products: [
-                {
-                  category: 'all-recipes',
-                  id: '123',
-                  name: 'Caponata',
-                  quantity: 2,
-                },
-                {
-                  category: 'all-recipes',
-                  id: '739',
-                  name: 'Sweet Potato Curry',
-                  quantity: 1,
-                },
-              ],
-            },
-          },
+            })
+          })
         })
       })
     })
@@ -257,9 +300,9 @@ describe('given dataLayerTracker middleware is invoked', () => {
           event: 'purchase_welcome',
           user: {},
           ecommerce: {
+            box_type: 2,
             purchase: {
               actionField: {
-                box_type: 2,
                 coupon: 'JOEWICKSGOUSTO',
                 coupon_value: '19.99',
                 currency_code: 'GBP',
@@ -303,9 +346,9 @@ describe('given dataLayerTracker middleware is invoked', () => {
             event: 'purchase',
             user: {},
             ecommerce: {
+              box_type: 2,
               purchase: {
                 actionField: {
-                  box_type: 2,
                   currency_code: 'GBP',
                   order_id: '333',
                   revenue: '39.99',
@@ -352,9 +395,9 @@ describe('given dataLayerTracker middleware is invoked', () => {
             event: 'purchase',
             user: {},
             ecommerce: {
+              box_type: 2,
               purchase: {
                 actionField: {
-                  box_type: 2,
                   currency_code: 'GBP',
                   order_id: '333',
                   revenue: '39.99',
@@ -390,11 +433,7 @@ describe('given dataLayerTracker middleware is invoked', () => {
     })
 
     describe('when REFER_FRIEND_LINK_SHARE is handled', () => {
-      const cases = [
-        [SOCIAL_TYPES.email, SOCIAL_TYPES.email],
-        [SOCIAL_TYPES.messenger],
-        [SOCIAL_TYPES.facebook],
-      ]
+      const cases = [[SOCIAL_TYPES.email], [SOCIAL_TYPES.messenger], [SOCIAL_TYPES.facebook]]
 
       describe.each(cases)("and when channel is '%s'", (shareType) => {
         test('then it should send the referral_click event with appropriate type', () => {

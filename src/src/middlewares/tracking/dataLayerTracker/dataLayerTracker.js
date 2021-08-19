@@ -3,6 +3,7 @@ import logger from 'utils/logger'
 import { getBasketRecipes } from 'selectors/basket'
 import { getRecipeTotalDiscounted, getTotalDiscount, getPricingPromoCode } from 'selectors/pricing'
 import { SOCIAL_TYPES } from 'components/SocialLinks/socialReferralHelper'
+import { checkoutSteps } from 'routes/Checkout/checkoutConfig'
 import {
   getUserDetails,
   getProductsValueForSingleRecipeById,
@@ -13,7 +14,7 @@ import {
 } from './dataLayerTrackerUtils'
 
 const sendDataLayerEvent = (event) => {
-  if (!__CLIENT__ && window.dataLayer) {
+  if (!(__CLIENT__ && window.dataLayer)) {
     return
   }
 
@@ -82,23 +83,6 @@ export const addRecipeToBasket = ({ recipeId, orderId }, state) => {
   )
 }
 
-export const initiateCheckout = (_action, state) => {
-  const basketRecipes = getBasketRecipes(state)
-
-  sendEcommerceEvent(
-    'initiate_checkout',
-    {
-      checkout: {
-        actionField: {
-          box_type: getBoxTypeValue(state),
-        },
-        products: getProductsValueForMultipleRecipes(basketRecipes, state),
-      },
-    },
-    state
-  )
-}
-
 export const signupPurchaseCompleted = (action, state) => {
   const { orderId, basketRecipes } = action
 
@@ -109,11 +93,11 @@ export const signupPurchaseCompleted = (action, state) => {
   sendEcommerceEvent(
     'purchase_welcome',
     {
+      box_type: getBoxTypeValue(state),
       purchase: {
         actionField: {
           order_id: orderId,
           currency_code: 'GBP',
-          box_type: getBoxTypeValue(state),
           revenue: totalPrice,
           coupon: promoCode,
           coupon_value: totalDiscount,
@@ -131,11 +115,11 @@ export const customerPurchaseCompleted = ({ order }, state) => {
   sendEcommerceEvent(
     'purchase',
     {
+      box_type: getBoxTypeValue(state),
       purchase: {
         actionField: {
           order_id: orderId,
           currency_code: 'GBP',
-          box_type: getBoxTypeValue(state),
           revenue: totalPrice,
         },
         products: getProductsValueForRecipeIds(recipeIds, state),
@@ -164,14 +148,44 @@ export const referFriendLinkShared = (action) => {
   sendDataLayerEvent(event)
 }
 
+export const locationChange = ({ payload }, state) => {
+  const { pathname } = payload
+  const checkoutRegexp = new RegExp('^/check-out/(.*)')
+  const match = checkoutRegexp.exec(pathname)
+  if (!match) {
+    return
+  }
+  const stepName = match[1]
+  const stepIndex = checkoutSteps.findIndex((checkoutStep) => checkoutStep === stepName)
+  if (stepIndex === -1) {
+    return
+  }
+  const basketRecipes = getBasketRecipes(state)
+  sendEcommerceEvent(
+    'checkout',
+    {
+      box_type: getBoxTypeValue(state),
+      checkout: {
+        actionField: {
+          // 1-based counting
+          step: stepIndex + 1,
+        },
+        products: getProductsValueForMultipleRecipes(basketRecipes, state),
+      },
+    },
+    state
+  )
+}
+
 const callbacks = {
   [actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: viewRecipe,
   [actionTypes.BASKET_RECIPE_ADD]: addRecipeToBasket,
-  [actionTypes.BASKET_CHECKOUT]: initiateCheckout,
   [actionTypes.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
   [actionTypes.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
   [actionTypes.REFER_FRIEND_LINK_COPIED]: referFriendLinkCopied,
   [actionTypes.REFER_FRIEND_LINK_SHARE]: referFriendLinkShared,
+  // eslint-disable-next-line no-underscore-dangle
+  [actionTypes.__REACT_ROUTER_LOCATION_CHANGE]: locationChange,
 }
 
 export const dataLayerTracker = (action, state) => {

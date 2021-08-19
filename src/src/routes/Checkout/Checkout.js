@@ -13,6 +13,7 @@ import { Div } from 'Page/Elements'
 import { getPreviewOrderErrorName } from 'utils/order'
 import { loadMenuServiceDataIfDeepLinked } from '../Menu/fetchData/menuService'
 
+import { checkoutSteps } from './checkoutConfig'
 import { loadCheckoutScript } from './loadCheckoutScript'
 import { loadPayPalScripts } from './loadPayPalScripts'
 
@@ -29,8 +30,6 @@ import { CheckoutUrgencyControllerContainer } from './Components/CheckoutUrgency
 import { CheckoutUrgencyModalContainer } from './Components/CheckoutUrgency/CheckoutUrgencyModal'
 import { CheckoutUrgencyBanner } from './Components/CheckoutUrgency/CheckoutUrgencyBanner'
 import css from './Checkout.css'
-
-const checkoutSteps = ['account', 'delivery', 'payment']
 
 const stepMapping = {
   'order-summary': { component: OrderSummary, humanName: 'Summary' },
