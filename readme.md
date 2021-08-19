@@ -238,6 +238,14 @@ For web
 npm run test:debug:web
 ```
 
+#### Running regression tests against a deployed environment
+Prepend any of the run commands above setting the environment variable `CYPRESS_baseUrl` to test a deployed version of the webclient
+_Please note - if the environment that you wish to test requires VPN access, you will also need to be on the VPN_
+
+```shell
+CYPRESS_baseUrl=https://rockets-www.gousto.info npm run test:debug:web
+```
+
 All data should be mocked. Cypress has been configured to return a 404 for any real api calls.
 
 ### Running end-to-end tests
