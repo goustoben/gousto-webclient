@@ -187,19 +187,19 @@ describe('<SideModal />', () => {
 
         expect(screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 })).not.toBeInTheDocument()
 
-        // First Side
-        const firstSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
-        expect(firstSideTile.queryByText(/£1.00 ● 2 Servings/)).toBeInTheDocument()
-        expect(firstSideTile.queryByLabelText('Add or Remove Side')).toBeInTheDocument()
-        const firstImage = firstSideTile.getByAltText('Plain Naan (x2)')
-        expect(firstImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Naan-3914-x400.jpg')
+        // plainNaan Side
+        const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
+        expect(plainNaanSideTile.queryByText(/£1.00 ● 2 Servings/)).toBeInTheDocument()
+        expect(plainNaanSideTile.queryByLabelText('Add or Remove Side')).toBeInTheDocument()
+        const plainNaanImage = plainNaanSideTile.getByAltText('Plain Naan (x2)')
+        expect(plainNaanImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Naan-3914-x400.jpg')
 
-        // Second Side
-        const secondSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
-        expect(secondSideTile.queryByText(/£1.00 ● 2 Servings/)).toBeInTheDocument()
-        expect(secondSideTile.queryByLabelText('Add or Remove Side')).toBeInTheDocument()
-        const secondImage = secondSideTile.getByAltText('Blanched Peas (160g)')
-        expect(secondImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Peas-3924-x400.jpg')
+        // blanchedPeas Side
+        const blanchedPeasSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
+        expect(blanchedPeasSideTile.queryByText(/£1.00 ● 2 Servings/)).toBeInTheDocument()
+        expect(blanchedPeasSideTile.queryByLabelText('Add or Remove Side')).toBeInTheDocument()
+        const blanchedPeasImage = blanchedPeasSideTile.getByAltText('Blanched Peas (160g)')
+        expect(blanchedPeasImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Peas-3924-x400.jpg')
       })
 
       it('should call onClose when modal close button is clicked and hide allergens', async () => {
@@ -238,17 +238,17 @@ describe('<SideModal />', () => {
 
           expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument()
 
-          // First Side
-          const firstSideTile = getSideTileFromHeader('Plain Naan (x2)')
+          // plainNaan Side
+          const plainNaanSideTile = getSideTileFromHeader('Plain Naan (x2)')
           // Expect description to be rendered
-          expect(firstSideTile).toContainHTML('The perfect accompaniment to any curry')
+          expect(plainNaanSideTile).toContainHTML('The perfect accompaniment to any curry')
           // Expect allergy bolding
-          expect(firstSideTile).toContainHTML('<span class="bold">wheat</span>')
+          expect(plainNaanSideTile).toContainHTML('<span class="bold">wheat</span>')
 
-          // Second Side
-          const secondSideTile = getSideTileFromHeader('Blanched Peas (160g)')
+          // blanchedPeas Side
+          const blanchedPeasSideTile = getSideTileFromHeader('Blanched Peas (160g)')
           // Expect description to be rendered
-          expect(secondSideTile).toContainHTML('Delicious green peas')
+          expect(blanchedPeasSideTile).toContainHTML('Delicious green peas')
           // No allergen test as peas don't have any
 
           // Hide Allergens
@@ -277,10 +277,10 @@ describe('<SideModal />', () => {
           expect(footer.queryByRole('button', { name: 'Continue with sides' })).not.toBeInTheDocument()
 
           // Add a Side
-          let firstSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
-          const firstSideAddButton = firstSideTile.queryByRole('button', { name: 'Add' })
+          const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
+          const plainNaanSideAddButton = plainNaanSideTile.queryByRole('button', { name: 'Add' })
 
-          fireEvent.click(firstSideAddButton)
+          fireEvent.click(plainNaanSideAddButton)
 
           await footer.findByText('Sides price')
 
@@ -297,12 +297,12 @@ describe('<SideModal />', () => {
           expect(footer.queryByRole('button', { name: 'Continue with sides' })).toBeInTheDocument()
 
           // Add 2 Sides
-          let secondSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
-          const secondSideAddButton = secondSideTile.queryByRole('button', { name: 'Add' })
-          fireEvent.click(secondSideAddButton)
+          const blanchedPeasSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
+          const blanchedPeasSideAddButton = blanchedPeasSideTile.queryByRole('button', { name: 'Add' })
+          fireEvent.click(blanchedPeasSideAddButton)
 
-          const secondSidePlusButton = secondSideTile.queryByRole('button', { name: '+' })
-          fireEvent.click(secondSidePlusButton)
+          const blanchedPeasSidePlusButton = blanchedPeasSideTile.queryByRole('button', { name: '+' })
+          fireEvent.click(blanchedPeasSidePlusButton)
 
           // We track adding a side
           expect(trackAddSide).toHaveBeenNthCalledWith(2, SideIds.BlanchedPeas, orderId)
@@ -340,12 +340,21 @@ describe('<SideModal />', () => {
 
           expect(continueWithSidesButton).toBeDisabled()
 
-          // Close and Open Modal should reset disabled state
+          // Close and Open Modal should reset disabled state and resets selected products base on Order
           rerender(<SideModalWithMockedProps userId={user.withSides} isOpen={false} />)
 
           await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument())
 
-          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen />)
+          const doughBalls = [{
+            type: 'product',
+            id: SideIds.DoughBall,
+            meta: {
+              quantity: 1,
+              amendments: [],
+            },
+          }]
+
+          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen order={getOrder(doughBalls)} />)
 
           await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument())
 
@@ -356,15 +365,11 @@ describe('<SideModal />', () => {
           expect(continueWithSidesButton).not.toBeDisabled()
 
           // Reselect tiles and remove Sides
-          firstSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
-          secondSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
+          const doughBallSideTile = getWrappedSideTileFromHeader(('8 Dough Ball Bites'))
 
-          const firstSideMinusButton = firstSideTile.queryByRole('button', { name: '-' })
-          const secondSideMinusButton = secondSideTile.queryByRole('button', { name: '-' })
+          const doughBallSideMinusButton = doughBallSideTile.queryByRole('button', { name: '-' })
 
-          fireEvent.click(firstSideMinusButton)
-          fireEvent.click(secondSideMinusButton)
-          fireEvent.click(secondSideMinusButton)
+          fireEvent.click(doughBallSideMinusButton)
 
           await footer.findByRole('button', { name: 'Continue without sides' })
 
@@ -431,12 +436,12 @@ describe('<SideModal />', () => {
           it('should not let them add more than the category limit', async () => {
             await renderOpenSidesModal()
 
-            const firstSidePlusButton = addSideToBasket('Cheese & basil garlic bread', 4)
-            const secondSidePlusButton = addSideToBasket('Blanched Peas (160g)', 4)
+            const plainNaanSidePlusButton = addSideToBasket('Cheese & basil garlic bread', 4)
+            const blanchedPeasSidePlusButton = addSideToBasket('Blanched Peas (160g)', 4)
             const thirdSidePlusButton = addSideToBasket('Plain Naan (x2)', 2)
 
-            expect(firstSidePlusButton).toHaveClass('disabled')
-            expect(secondSidePlusButton).toHaveClass('disabled')
+            expect(plainNaanSidePlusButton).toHaveClass('disabled')
+            expect(blanchedPeasSidePlusButton).toHaveClass('disabled')
             expect(thirdSidePlusButton).toHaveClass('disabled')
 
             // The tooltip uses React.portal and

@@ -74,7 +74,7 @@ export const useSidesBasket = ({
   trackAddSide,
   trackSidesContinueClicked,
 }) => {
-  const productsInOrder = getProductsInOrder(order)
+  const productsInOrder = React.useMemo(() => getProductsInOrder(order), [order])
   const [selectedProducts, setSelectedProducts] = React.useState(productsInOrder)
   const [isSubmitting, setSubmitting] = React.useState(false)
   const { data } = useSides({
@@ -148,6 +148,12 @@ export const useSidesBasket = ({
       setSubmitting(false)
     }
   }, [isOpen, isSubmitting, setSubmitting])
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setSelectedProducts(productsInOrder)
+    }
+  }, [isOpen, productsInOrder])
 
   return {
     sides,
