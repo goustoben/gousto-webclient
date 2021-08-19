@@ -20,15 +20,19 @@ const getIssuesTypes = (issuesIDs, issueTypesMapping) => {
   return issueTypes
 }
 
+const ARTICLE_NAME_1 = 'Where can I view my credit?'
+const ARTICLE_NAME_2 = 'What happens next with my feedback?'
+
 const GetHelpFAQ = ({ issuesIDs, onClick }) => {
   const issueTypes = getIssuesTypes(issuesIDs, ISSUE_TYPES_MAPPING)
   const hasIssueTypes = Object.values(issueTypes).find(issueType => issueType)
   const { MISSING_INGREDIENTS, WRONG_INGREDIENTS, DAMAGED_INGREDIENTS, INGREDIENT_QUALITY } = getIssuesTypes(issuesIDs, ISSUE_TYPES_MAPPING)
+  const trackClick = (articleName) => () => onClick(articleName)
 
   return (
     <section>
       <Card hasLateralBordersOnSmallScreens={false} hasPaddingVertical={false}>
-        <ItemExpandable trackClick={onClick} label="Where can I view my credit?">
+        <ItemExpandable trackClick={trackClick(ARTICLE_NAME_1)} label={ARTICLE_NAME_1}>
           <p>If you&apos;d like to check how much credit is on your account:</p>
 
           <p>
@@ -50,7 +54,7 @@ const GetHelpFAQ = ({ issuesIDs, onClick }) => {
       </Card>
       {hasIssueTypes && (
         <Card hasLateralBordersOnSmallScreens={false} hasPaddingVertical={false}>
-          <ItemExpandable trackClick={onClick} label="What happens next with my feedback?">
+          <ItemExpandable trackClick={trackClick(ARTICLE_NAME_2)} label={ARTICLE_NAME_2}>
             {
               (
                 MISSING_INGREDIENTS || WRONG_INGREDIENTS

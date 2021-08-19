@@ -7,14 +7,17 @@ import css from './GetHelpLayout2.css'
 
 const GetHelpLayout2 = ({
   children,
+  hasBackButton,
   headingText,
   backUrl,
 }) => (
   <div className={css.wrapperWide}>
     <LayoutPageWrapper>
-      <div className={css.wrapperBack}>
-        <CTABack url={backUrl} testingSelector="CTABack" />
-      </div>
+      {hasBackButton && (
+        <div className={css.wrapperBack}>
+          <CTABack url={backUrl} testingSelector="CTABack" />
+        </div>
+      )}
       <div className={classnames(css.heading, css.wrapper)}>
         <Heading size="fontStyleXL">
           {headingText}
@@ -32,11 +35,13 @@ const GetHelpLayout2 = ({
 GetHelpLayout2.propTypes = {
   backUrl: PropTypes.string,
   children: PropTypes.node.isRequired,
+  hasBackButton: PropTypes.bool,
   headingText: PropTypes.node.isRequired,
 }
 
 GetHelpLayout2.defaultProps = {
   backUrl: null,
+  hasBackButton: true,
 }
 
 export { GetHelpLayout2 }

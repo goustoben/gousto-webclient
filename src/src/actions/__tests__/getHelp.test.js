@@ -114,24 +114,5 @@ describe('getHelp actions', () => {
     test('the validateIngredients is being called correctly', () => {
       expect(validateIngredients).toHaveBeenCalledWith(...expectedParams)
     })
-
-    describe('when ssrShorterCompensationPeriod feature is turned on', () => {
-      beforeEach(async () => {
-        getState = jest.fn().mockReturnValueOnce({
-          ...GET_STATE_PARAMS,
-          features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: true } }),
-        })
-
-        await validateSelectedIngredients(body)(dispatch, getState)
-      })
-
-      test('the validateIngredients has ssrShorterCompensationPeriod attached to the body request', () => {
-        const [accessToken, body] = expectedParams
-        expect(validateIngredients).toHaveBeenCalledWith(accessToken, {
-          ...body,
-          features: ['ssrShorterCompensationPeriod'],
-        })
-      })
-    })
   })
 })

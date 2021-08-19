@@ -1,21 +1,20 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
 import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
-import { sanitize } from 'utils/sanitizer'
 import { replaceWithValues } from 'utils/text'
-import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
-import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
 import { GetHelpLayout } from '../layouts/GetHelpLayout'
 import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
 import { BottomButton } from '../components/BottomButton'
-import { orderPropType } from '../getHelpPropTypes'
 
 import css from './Refund.css'
 
 const propTypes = {
+  compensation: PropTypes.shape({
+    amount: PropTypes.number,
+    type: PropTypes.string
+  }).isRequired,
   content: PropTypes.shape({
     title: PropTypes.string.isRequired,
     infoBody: PropTypes.string.isRequired,
@@ -24,164 +23,56 @@ const propTypes = {
     button1: PropTypes.string.isRequired,
     button2: PropTypes.string.isRequired,
   }).isRequired,
-  featureShorterCompensationPeriod: PropTypes.bool.isRequired,
+  createComplaint: PropTypes.func.isRequired,
+  isAnyError: PropTypes.bool.isRequired,
+  isAnyPending: PropTypes.bool.isRequired,
+  loadRefundAmount: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
-  order: orderPropType.isRequired,
-  selectedIngredients: PropTypes.objectOf(PropTypes.shape({
-    ingredientUuid: PropTypes.string.isRequired,
-    issueDescription: PropTypes.string.isRequired,
-    issueId: PropTypes.string.isRequired,
-    recipeGoustoReference: PropTypes.string.isRequired,
-    recipeId: PropTypes.string.isRequired,
-  })).isRequired,
-  trackAcceptIngredientsRefund: PropTypes.func.isRequired,
   trackRejectRefund: PropTypes.func.isRequired,
 }
 
 class Refund extends PureComponent {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      refund: { value: 0, type: 'credit' },
-      isFetching: true,
-      didFetchError: false,
-    }
-  }
-
   componentDidMount() {
-    this.getRefund()
-  }
-
-  getRefund = async () => {
-    const { featureShorterCompensationPeriod, user, order, selectedIngredients } = this.props
-
-    const fetchRefundAmountParams = [
-      user.accessToken,
-      appendFeatureToRequest({
-        body: {
-          customer_id: Number(user.id),
-          order_id: Number(order.id),
-          ingredient_ids: Object.keys(selectedIngredients).map(
-            key => selectedIngredients[key].ingredientUuid
-          ),
-        },
-        featureShorterCompensationPeriod,
-      })
-    ]
-
-    try {
-      const response = await fetchRefundAmount(...fetchRefundAmountParams)
-
-      const { value, type } = response.data
-
-      this.setState(prevState => ({
-        ...prevState,
-        isFetching: false,
-        refund: {
-          ...prevState.refund,
-          type,
-          value,
-        }
-      }))
-    } catch (err) {
-      this.requestFailure()
-    }
-  }
-
-  onAcceptOffer = async () => {
-    const { refund } = this.state
-    const {
-      featureShorterCompensationPeriod,
-      user,
-      order,
-      selectedIngredients,
-      trackAcceptIngredientsRefund,
-    } = this.props
-
-    const issues = Object.keys(selectedIngredients).map(key => {
-      const {
-        issueId,
-        ingredientUuid,
-        issueDescription,
-        recipeGoustoReference,
-      } = selectedIngredients[key]
-
-      return {
-        category_id: Number(issueId),
-        ingredient_id: ingredientUuid,
-        description: sanitize(issueDescription),
-        recipe_gousto_reference: recipeGoustoReference,
-      }
-    })
-
-    const setComplaintParams = [
-      user.accessToken,
-      appendFeatureToRequest({
-        body: {
-          customer_id: Number(user.id),
-          order_id: Number(order.id),
-          type: refund.type,
-          value: refund.value,
-          issues
-        },
-        featureShorterCompensationPeriod,
-      })
-    ]
-
-    try {
-      const response = await setComplaint(...setComplaintParams)
-
-      trackAcceptIngredientsRefund(refund.value)
-      browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
-
-      return response
-    } catch (err) {
-      return this.requestFailure()
-    }
-  }
-
-  requestFailure = () => {
-    this.setState({
-      isFetching: false,
-      didFetchError: true
-    })
+    const { loadRefundAmount } = this.props
+    loadRefundAmount()
   }
 
   render() {
-    const { content, trackRejectRefund } = this.props
     const {
-      isFetching,
-      refund,
-      didFetchError,
-    } = this.state
+      compensation,
+      content,
+      createComplaint,
+      isAnyError,
+      isAnyPending,
+      trackRejectRefund,
+    } = this.props
 
     const infoBodyWithAmount = replaceWithValues(
       content.infoBody, {
-        refundAmount: refund.value.toFixed(2)
+        refundAmount: compensation.amount ? compensation.amount.toFixed(2) : ''
       }
     )
     const button2WithAmount = replaceWithValues(
       content.button2, {
-        refundAmount: refund.value.toFixed(2)
+        refundAmount: compensation.amount ? compensation.amount.toFixed(2) : ''
       }
     )
-    const getHelpLayoutbody = (isFetching || didFetchError)
+    const getHelpLayoutbody = (isAnyPending || isAnyError)
       ? ''
       : infoBodyWithAmount
-    const confirmationContent = (didFetchError)
+    const confirmationContent = (isAnyError)
       ? content.errorBody
       : content.confirmationBody
-    const acceptButton = (didFetchError)
+    const acceptButton = (isAnyError)
       ? null
       : (
         <Button
           className={css.button}
           color="primary"
-          onClick={() => this.onAcceptOffer()}
+          onClick={createComplaint}
         >
           {button2WithAmount}
         </Button>
@@ -191,7 +82,7 @@ class Refund extends PureComponent {
       <GetHelpLayout
         title={content.title}
       >
-        {(isFetching)
+        {(isAnyPending)
           ? (
             <div className={css.center}>
               <Loading className={css.loading} />
@@ -206,7 +97,7 @@ class Refund extends PureComponent {
                   color="secondary"
                   url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
                   clientRouted
-                  onClick={() => trackRejectRefund(refund.value)}
+                  onClick={() => trackRejectRefund(compensation.amount)}
                 >
                   {content.button1}
                 </BottomButton>
