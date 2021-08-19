@@ -65,10 +65,10 @@ class Image extends React.PureComponent {
   }
 
   render() {
-    const { maxMediaSize, media, lazy, once, offset, placeholder } = this.props
-    const className = classNames({
-      [this.props.className]: this.props.className,
-      [css.contain]: this.props.contain
+    const { maxMediaSize, media, lazy, once, offset, placeholder, title, onClick, className, contain } = this.props
+    const classes = classNames({
+      [className]: className,
+      [css.contain]: contain
     })
 
     let imageComponent = null
@@ -76,15 +76,24 @@ class Image extends React.PureComponent {
     if (typeof media === 'string') {
       imageComponent = (
         <img
-          alt={this.props.title}
-          className={className}
-          onClick={this.props.onClick}
+          alt={title}
+          className={classes}
+          onClick={onClick}
           src={media}
         />
       )
     }
 
-    if (media.size > 0) {
+    if (!media && typeof media !== 'string') {
+      imageComponent = (
+        <img
+          alt={title}
+          className={classes}
+        />
+      )
+    }
+
+    if (media && media.size > 0) {
       let srcs = media
 
       if (maxMediaSize) {
@@ -102,9 +111,9 @@ class Image extends React.PureComponent {
       const image = this.getDefaultImage(srcs, maxMediaSize)
       imageComponent = (
         <img
-          alt={this.props.title}
-          className={className}
-          onClick={this.props.onClick}
+          alt={title}
+          className={classes}
+          onClick={onClick}
           src={image.get('src', '')}
           srcSet={this.getSrcSet(srcs)}
         />
