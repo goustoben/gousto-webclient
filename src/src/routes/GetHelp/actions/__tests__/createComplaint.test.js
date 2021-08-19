@@ -1,11 +1,9 @@
 import Immutable from 'immutable'
 import { setComplaint } from 'apis/getHelp'
-import { trackAcceptIngredientsRefund } from 'actions/getHelp'
 import { createComplaint } from '../createComplaint'
 import * as getHelpActionsUtils from '../utils'
 
 jest.mock('apis/getHelp')
-jest.mock('actions/getHelp')
 
 const AMOUNT = 1.4
 const TYPE = 'credit'
@@ -109,9 +107,5 @@ describe('Given createComplaint action is called', () => {
         errorMessage: `Failed to createComplaint for orderId: ${ORDER_ID}, userId: ${USER_ID}`,
       })
     )
-  })
-
-  test('trackAcceptIngredientsRefund is called with amount', () => {
-    expect(trackAcceptIngredientsRefund).toHaveBeenCalledWith(AMOUNT)
   })
 })

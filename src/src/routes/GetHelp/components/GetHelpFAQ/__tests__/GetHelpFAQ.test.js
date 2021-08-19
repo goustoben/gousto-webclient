@@ -129,10 +129,8 @@ describe('GetHelpFAQ', () => {
       wrapper.find('[role="button"]').forEach((item) => item.simulate('click'))
     })
 
-    test('calls the onClick function with the name of the article', () => {
+    test('calls the onClick function', () => {
       expect(trackClickFn).toHaveBeenCalledTimes(2)
-      expect(trackClickFn).toHaveBeenCalledWith('Where can I view my credit?')
-      expect(trackClickFn).toHaveBeenCalledWith('What happens next with my feedback?')
     })
   })
 })

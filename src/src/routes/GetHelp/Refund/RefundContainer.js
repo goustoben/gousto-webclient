@@ -1,27 +1,27 @@
 import { connect } from 'react-redux'
 
 import {
-  getCompensation,
-  getIsError,
-  getPending,
-} from '../selectors/selectors'
+  selectOrderIssue,
+  trackAcceptIngredientsRefund,
+} from 'actions/getHelp'
+import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 import { trackRejectRefund } from '../actions/getHelp'
-import { loadRefundAmount } from '../actions/loadRefundAmount'
-import { createComplaint } from '../actions/createComplaint'
-import { actionTypes } from '../actions/actionTypes'
 
 import { Refund } from './Refund'
 
 const mapStateToProps = (state) => {
-  const { auth, user } = state
-  const compensation = getCompensation(state)
+  const { auth, user, getHelp } = state
+  const order = getHelp.get('order').toJS()
+  const selectedIngredients = getHelp.get('selectedIngredients').toJS()
 
   return {
-    compensation,
+    featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(state),
     user: {
       id: user.get('id'),
       accessToken: auth.get('accessToken'),
     },
+    order,
+    selectedIngredients,
     content: {
       title: state.content.get('get-help_refund_pageheader_header')
       || 'Get help with your box',
@@ -36,17 +36,13 @@ const mapStateToProps = (state) => {
       || 'Contact Us',
       button2: state.content.get('get-help_refund_pagecontent_button2')
       || 'Accept £{{refundAmount}} credit',
-    },
-    isAnyPending: getPending(state, actionTypes.GET_HELP_LOAD_REFUND_AMOUNT)
-    || getPending(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
-    isAnyError: getIsError(state, actionTypes.GET_HELP_LOAD_REFUND_AMOUNT)
-    || getIsError(state, actionTypes.GET_HELP_CREATE_COMPLAINT),
+    }
   }
 }
 
 const RefundContainer = connect(mapStateToProps, {
-  createComplaint,
-  loadRefundAmount,
+  selectOrderIssue,
+  trackAcceptIngredientsRefund,
   trackRejectRefund,
 })(Refund)
 

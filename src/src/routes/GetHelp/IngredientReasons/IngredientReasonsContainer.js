@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { storeIngredientIssueDescriptions } from 'actions/getHelp'
 import { trackIngredientReasonsConfirmed } from '../actions/getHelp'
 import { IngredientReasons } from './IngredientReasons.logic'
-import { getSelectedIngredients } from '../selectors/selectors'
 
 const mapStateToProps = (state) => ({
   content: {
@@ -15,7 +14,7 @@ const mapStateToProps = (state) => ({
     button1Copy: state.content.get('get-help_ingredientreasons_pagecontent_button1copy')
       || 'Submit details',
   },
-  ingredientsAndIssues: getSelectedIngredients(state),
+  ingredientsAndIssues: state.getHelp.get('selectedIngredients').toJS(),
 })
 
 const IngredientReasonsContainer = connect(

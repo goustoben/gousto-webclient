@@ -3,7 +3,7 @@ import {
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
 import { appendFeatureToRequest } from 'routes/GetHelp/utils/appendFeatureToRequest'
-import { getSelectedIngredients } from '../routes/GetHelp/selectors/selectors'
+import { getFeatureShorterCompensationPeriod } from 'selectors/features'
 import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
@@ -63,7 +63,7 @@ const validateSelectedIngredients = ({
   orderId,
   costumerId,
   ingredientUuids,
-}) => async (dispatch) => {
+}) => async (dispatch, getState) => {
   dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
   dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
 
@@ -75,6 +75,7 @@ const validateSelectedIngredients = ({
         order_id: Number(orderId),
         ingredient_ids: ingredientUuids
       },
+      featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
     })
   ]
 
@@ -96,10 +97,10 @@ const fetchIngredientIssues = () => async (dispatch, getState) => {
     const ingredientIssues = await fetchOrderIssuesApi(getState().auth.get('accessToken'))
     dispatch({ type: actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, ingredientIssues })
 
-    const selectedIngredients = getSelectedIngredients(getState())
+    const selectedIngredients = getState().getHelp.get('selectedIngredients')
     const { id, name } = ingredientIssues.data[0].category
-    Object.values(selectedIngredients).forEach(selectedIngredient => {
-      const ingredientAndRecipeId = `${selectedIngredient.recipeId}&${selectedIngredient.ingredientUuid}`
+    selectedIngredients.forEach(selectedIngredient => {
+      const ingredientAndRecipeId = `${selectedIngredient.get('recipeId')}&${selectedIngredient.get('ingredientUuid')}`
       dispatch({
         type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
         ingredientAndRecipeId,

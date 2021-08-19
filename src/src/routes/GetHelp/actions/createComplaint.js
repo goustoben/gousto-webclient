@@ -1,6 +1,3 @@
-import { push } from 'react-router-redux'
-import { client } from 'config/routes'
-import { trackAcceptIngredientsRefund } from 'actions/getHelp'
 import { getAccessToken } from 'selectors/auth'
 import { getUserId } from 'selectors/user'
 import { sanitize } from 'utils/sanitizer'
@@ -43,8 +40,6 @@ export const createComplaint = () => async (dispatch, getState) => {
 
   const getPayload = async () => {
     await setComplaint(accessToken, body)
-    trackAcceptIngredientsRefund(amount)
-    dispatch(push(`${client.getHelp.index}/${client.getHelp.confirmation}`))
 
     return null
   }

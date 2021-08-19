@@ -6,115 +6,45 @@ import { Confirmation } from '../Confirmation'
 
 describe('<Confirmation />', () => {
   const TRACK_CONFIRMATION_CTA_FUNCTION = jest.fn()
-  const TRACK_REFUND_FAQ_CLICK = jest.fn()
-  const USER_NAME = 'Batman'
-  const ISSUES_IDS = ['1', '2', '3']
-  const CREDIT = 2
 
-  const wrapper = mount(
-    <Confirmation
-      creditAmount={CREDIT}
-      issuesIDs={ISSUES_IDS}
-      nameFirst={USER_NAME}
-      trackConfirmationCTA={TRACK_CONFIRMATION_CTA_FUNCTION}
-      trackRefundFAQClick={TRACK_REFUND_FAQ_CLICK}
-    />
-  )
+  const wrapper = mount(<Confirmation trackConfirmationCTA={TRACK_CONFIRMATION_CTA_FUNCTION} />)
   const getHelpLayout = wrapper.find('GetHelpLayout2')
   const BottomBar = getHelpLayout.find('BottomFixedContent')
   const Button1 = BottomBar.find('CTA')
 
-  const locationAssignSpy = jest.fn()
-  const originalWindowLocation = window.location
+  describe('rendering', () => {
+    const locationAssignSpy = jest.fn()
+    const originalWindowLocation = window.location
 
-  test('header is rendering correctly', () => {
-    expect(getHelpLayout.prop('headingText')).toBe(`${USER_NAME}, thanks for your feedback`)
-  })
-
-  test('hasBackButton is false in the layout', () => {
-    expect(getHelpLayout.prop('hasBackButton')).toBe(false)
-  })
-
-  test('renders the copy inside the Card', () => {
-    expect(getHelpLayout.find('Card').at(0).text()).toContain(
-      'We really appreciate you letting us know about the issue. Credit will be automatically taken off your next order as an apology.'
-    )
-  })
-
-  describe('renders an alert inside the Card', () => {
-    let alert
-
-    beforeEach(() => {
-      alert = getHelpLayout.find('Card').at(0).find('Alert')
+    test('header is rendering correctly', () => {
+      expect(getHelpLayout.prop('headingText')).toBe('Thanks for your feedback')
     })
 
-    test('of type success', () => {
-      expect(alert.prop('type')).toBe('success')
+    test('bottom bar buttons are rendering correctly', () => {
+      expect(Button1.text()).toBe('Done')
     })
 
-    test('without the default icon', () => {
-      expect(alert.prop('hasIcon')).toBe(false)
-    })
+    describe('when the CTA is clicked', () => {
+      beforeEach(() => {
+        delete window.location
+        window.location = { assign: locationAssignSpy }
 
-    test('with a custom icon', () => {
-      expect(alert.find('.alertIcon').exists()).toBe(true)
-    })
-
-    test('with the credit amount', () => {
-      expect(alert.text()).toBe('£2 credit added')
-    })
-  })
-
-  test('renders a copy about credit inside the Card', () => {
-    expect(getHelpLayout.find('Card').at(0).text()).toContain(
-      'Credit can take up to 1 hour to appear in your account.'
-    )
-  })
-
-  test('renders GetHelpFAQ, passing the issues IDs', () => {
-    expect(getHelpLayout.find('GetHelpFAQ').prop('issuesIDs')).toBe(ISSUES_IDS)
-  })
-
-  describe('when GetHelpFAQ onClick prop is called', () => {
-    const ARTICLE_NAME = 'An article name'
-
-    beforeEach(() => {
-      getHelpLayout.find('GetHelpFAQ').prop('onClick')(ARTICLE_NAME)
-    })
-
-    test('trackRefundFAQClick is called with the right data', () => {
-      expect(TRACK_REFUND_FAQ_CLICK).toHaveBeenCalledWith({
-        articleName: ARTICLE_NAME,
-        compensationAmount: CREDIT,
-        isAutoAccept: false,
+        Button1.simulate('click')
       })
-    })
-  })
 
-  test('bottom bar buttons are rendering correctly', () => {
-    expect(Button1.text()).toBe('Done')
-  })
+      afterEach(() => {
+        window.location = originalWindowLocation
 
-  describe('when the CTA is clicked', () => {
-    beforeEach(() => {
-      delete window.location
-      window.location = { assign: locationAssignSpy }
+        locationAssignSpy.mockClear()
+      })
 
-      Button1.simulate('click')
-    })
+      test('calls the function passed through trackConfirmationCTA prop', () => {
+        expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalledTimes(1)
+      })
 
-    afterEach(() => {
-      window.location = originalWindowLocation
-
-      locationAssignSpy.mockClear()
-    })
-
-    test('calls the function passed through trackConfirmationCTA prop with isAutoAccept set to false', () => {
-      expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalledWith(false)
-    })
-
-    test('redirects to the URL passed as prop', () => {
-      expect(window.location.assign).toHaveBeenCalledWith(routes.myGousto)
+      test('redirects to the URL passed as prop', () => {
+        expect(window.location.assign).toHaveBeenCalledWith(routes.myGousto)
+      })
     })
   })
 })

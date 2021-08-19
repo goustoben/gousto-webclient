@@ -2,9 +2,7 @@ import { fromJS } from 'immutable'
 import {
   getAccessToken,
   getCompensation,
-  getError,
   getIneligibleIngredientUuids,
-  getIsError,
   getIsLoadOrderError,
   getIsOrderLoading,
   getIsTrackingUrlLoading,
@@ -12,10 +10,8 @@ import {
   getOrderDeliveryDate,
   getOrderDeliverySlot,
   getOrderId,
-  getPending,
   getRecipes,
   getSelectedIngredients,
-  getSelectedIngredientIssuesIDs,
   getTrackingUrl,
 } from '../selectors'
 
@@ -73,7 +69,6 @@ const SELECTED_INGREDIENTS = {
     issueDescription: 'ssss'
   },
 }
-const SELECTED_INGREDIENTS_ISSUES_IDS = ['4', '3']
 const STATE = {
   auth: fromJS({
     accessToken: ACCESS_TOKEN,
@@ -110,7 +105,6 @@ describe('Get Help selectors', () => {
     ['getRecipes', getRecipes, RECIPES],
     ['getSelectedIngredients', getSelectedIngredients, SELECTED_INGREDIENTS],
     ['getTrackingUrl', getTrackingUrl, TRACKING_URL],
-    ['getSelectedIngredientIssuesIDs', getSelectedIngredientIssuesIDs, SELECTED_INGREDIENTS_ISSUES_IDS],
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {
     beforeEach(() => {
       result = selector(STATE)
@@ -118,58 +112,6 @@ describe('Get Help selectors', () => {
 
     test('gets the corresponding value from the store', () => {
       expect(result).toEqual(expectedResult)
-    })
-  })
-
-  describe('Given getError is called with an action type', () => {
-    beforeEach(() => {
-      result = getError(STATE, 'GET_HELP_LOAD_ORDERS_BY_ID')
-    })
-
-    test('gets the error value for the corresponding action type', () => {
-      expect(result).toBe(ERROR_MESSAGE)
-    })
-  })
-
-  describe('Given getPending is called with an action type', () => {
-    beforeEach(() => {
-      result = getPending(STATE, 'GET_HELP_LOAD_ORDERS_BY_ID')
-    })
-
-    test('gets the pending value for the corresponding action type', () => {
-      expect(result).toBe(ORDER_PENDING_VALUE)
-    })
-  })
-
-  describe('Given getIsError is called', () => {
-    describe('and there is an error for the corresponding action type', () => {
-      beforeEach(() => {
-        result = getIsError({
-          ...STATE,
-          error: fromJS({
-            GET_HELP_LOAD_ORDERS_BY_ID: ERROR_MESSAGE,
-          }),
-        }, 'GET_HELP_LOAD_ORDERS_BY_ID')
-      })
-
-      test('the selector returns true', () => {
-        expect(result).toEqual(true)
-      })
-    })
-
-    describe('and there is not an error for the corresponding action type', () => {
-      beforeEach(() => {
-        result = getIsError({
-          ...STATE,
-          error: fromJS({
-            GET_HELP_LOAD_ORDERS_BY_ID: null,
-          }),
-        }, 'GET_HELP_LOAD_ORDERS_BY_ID')
-      })
-
-      test('the selector returns false', () => {
-        expect(result).toEqual(false)
-      })
     })
   })
 

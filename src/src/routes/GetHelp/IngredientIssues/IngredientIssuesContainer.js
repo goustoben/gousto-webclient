@@ -6,11 +6,10 @@ import {
   trackIngredientIssues
 } from 'actions/getHelp'
 import { IngredientIssues } from './IngredientIssues.logic'
-import { getSelectedIngredients } from '../selectors/selectors'
 
 const mapStateToProps = (state) => {
   const { getHelp } = state
-  const ingredients = getSelectedIngredients(state)
+  const ingredients = getHelp.get('selectedIngredients').toJS()
   const issues = getHelp.get('ingredientIssues').toJS()
   const subIssues = getHelp.get('ingredientSubIssues').toJS()
 

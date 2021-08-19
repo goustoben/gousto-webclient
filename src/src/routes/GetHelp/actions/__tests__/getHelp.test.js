@@ -27,13 +27,12 @@ import {
   trackDeliveryOther,
   trackDeliveryStatus,
   trackDeselectIngredient,
-  trackHelpPreLoginModalDisplayed,
   trackIngredientReasonsConfirmed,
+  trackHelpPreLoginModalDisplayed,
   trackMassIssueAlertDisplayed,
   trackNextBoxTrackingClick,
   trackRecipeCardClick,
   trackRecipeCardGetInTouchClick,
-  trackRefundFAQClick,
   trackRejectRefund,
   trackSelectDeliveryCategory,
   trackSelectIngredient,
@@ -385,14 +384,11 @@ describe('GetHelp action generators and thunks', () => {
   })
 
   describe('trackConfirmationCTA', () => {
-    const IS_AUTO_ACCEPT = 'true or false'
-
-    test('creates the tracking action with the right isAutoAccept value', () => {
-      expect(trackConfirmationCTA(IS_AUTO_ACCEPT)).toEqual({
+    test('creates the tracking action', () => {
+      expect(trackConfirmationCTA()).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'ssr_ingredients_done_click',
-          auto_accept: IS_AUTO_ACCEPT
+          actionType: 'ssr_click_done_refund_accepted',
         }
       })
     })
@@ -525,29 +521,6 @@ describe('GetHelp action generators and thunks', () => {
         trackingData: {
           actionType: 'ssr_recipes_click_get_in_touch',
           seCategory: 'help',
-        }
-      })
-    })
-  })
-
-  describe('trackRefundFAQClick', () => {
-    const COMPENSATION_AMOUNT = 7.89
-    const ARTICLE_NAME = 'An article title'
-    const IS_AUTO_ACCEPT = 'true or false'
-
-    test('creates the tracking action with the right isAutoAccept value', () => {
-      expect(trackRefundFAQClick({
-        compensationAmount: COMPENSATION_AMOUNT,
-        articleName: ARTICLE_NAME,
-        isAutoAccept: IS_AUTO_ACCEPT,
-      })).toEqual({
-        type: webClientActionTypes.TRACKING,
-        trackingData: {
-          actionType: 'ssr_ingredients_open_refund_article',
-          seCategory: 'help',
-          amount: COMPENSATION_AMOUNT,
-          article_name: ARTICLE_NAME,
-          auto_accept: IS_AUTO_ACCEPT,
         }
       })
     })
@@ -833,6 +806,25 @@ describe('GetHelp action generators and thunks', () => {
           expect(dispatch).toHaveBeenCalledWith({
             type: 'GET_HELP_VALIDATE_ORDER',
             ineligibleIngredientUuids: validationResponse.ineligibleIngredientUuids,
+          })
+        })
+      })
+
+      describe('when ssrShorterCompensationPeriod feature is turned on', () => {
+        beforeEach(async () => {
+          getState = jest.fn().mockReturnValueOnce({
+            ...GET_STATE_PARAMS,
+            features: Immutable.fromJS({ ssrShorterCompensationPeriod: { value: true } }),
+          })
+
+          await validateLatestOrder(params)(dispatch, getState)
+        })
+
+        test('the validateOrder has ssrShorterCompensationPeriod attached to the body request', () => {
+          const [accessToken, body] = expectedParams
+          expect(validateOrder).toHaveBeenCalledWith(accessToken, {
+            ...body,
+            features: ['ssrShorterCompensationPeriod'],
           })
         })
       })

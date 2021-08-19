@@ -66,6 +66,10 @@ export const getShowUserCredit = ({ features }) => (
   features && features.getIn(['showUserCredit', 'value'], false)
 )
 
+export const getFeatureShorterCompensationPeriod = ({ features }) => (
+  features && features.getIn(['ssrShorterCompensationPeriod', 'value'], false)
+)
+
 export const getUserMenuVariant = ({ features }) => (
   features && features.getIn(['userMenuVariant', 'value'], '')
 )
