@@ -2,7 +2,7 @@ import { withPlatformTags, WEB, MOBILE } from '../../../utils/regression/tags'
 
 describe('Promo Code', () => {
   describe('when the url contains a promoCode parameter', () => {
-    describe('and the user is logged out ', () => {
+    describe('and the user is logged out', () => {
       beforeEach(() => {
         cy.stubAll3rdParties()
         cy.server()
@@ -13,9 +13,7 @@ describe('Promo Code', () => {
       it('should display the promo modal', () => {
         cy.visit('/?promo_code=RET-REACTFEB19EMOB')
         cy.wait(['@promoCodeDetails'])
-        cy.get('[data-testing="promoModal"]')
-          .contains("You've got 20% off all boxes for a month.")
-          .should('exist')
+        cy.get('[data-testing="promoModal"]').should('exist')
       })
     })
 
@@ -41,10 +39,7 @@ describe('Promo Code', () => {
         it('should show the success promo modal', () => {
           cy.visit('/?promo_code=RET-REACTFEB19EMOB')
           cy.wait(['@promoCodeDetails', '@succeedInApply'])
-          cy.get('[data-testing="promoModal"]').contains('Hooray!').should('exist')
-          cy.get('[data-testing="promoModal"]')
-            .contains("You've got 20% off all boxes for a month.")
-            .should('exist')
+          cy.get('[data-testing="promoModalButton"]').contains('Claim discount').should('exist')
         })
       })
 
@@ -61,9 +56,9 @@ describe('Promo Code', () => {
           cy.visit('/?promo_code=RET-REACTFEB19EMOB')
           cy.wait(['@promoCodeDetails', '@failToApply'])
           cy.get('[data-testing="promoModal"]')
-            .contains("Something went wrong and we couldn't apply this promotion to your account.")
+            .contains('Something went wrong and your offer could not be applied.')
             .should('exist')
-          cy.get('[data-testing="promoModalButton"]').click()
+          cy.get('[data-testing="promoModalButton"]').contains('Close').click()
         }
 
         withPlatformTags(WEB).it('should show the failure promo modal on web', () => {

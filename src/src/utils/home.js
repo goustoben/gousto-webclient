@@ -28,6 +28,7 @@ export const getPromoBannerState = (state) => {
 
   return {
     promoCode,
-    canApplyPromo
+    canApplyPromo,
+    basketPromo,
   }
 }

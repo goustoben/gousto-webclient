@@ -1,18 +1,29 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ModalPanel from 'Modal/ModalPanel'
-import { Button } from 'goustouicomponents'
-import PromoModalBody from './PromoModalBody'
-import { PromoModalRedesign } from './PromoModalRedesign'
+import {
+  clickClaimDiscountPopup,
+  clickCloseDiscountPopup,
+  clickCloseDiscountFailurePopup,
+} from 'actions/trackingKeys'
+import { CTA, Modal } from 'goustouicomponents'
+import headerImage from 'media/images/discount-modal-header.jpg'
 import AgeVerify from './AgeVerify'
-import { promoCodes } from './promoCodeValues'
 import css from './PromoModal.css'
 
 class PromoModal extends React.Component {
-  handleClick = () => {
-    const { error, promoApply, justApplied, closeModal } = this.props
+  handleClick = (eventType) => () => {
+    const { error, promoApply, justApplied, closeModal, trackUTMAndPromoCode } = this.props
 
-    return (error || justApplied) ? closeModal() : promoApply()
+    if (error || justApplied) {
+      const event = error ? clickCloseDiscountFailurePopup : clickCloseDiscountPopup
+      trackUTMAndPromoCode(event)
+
+      return closeModal()
+    } else {
+      trackUTMAndPromoCode(eventType)
+
+      return promoApply()
+    }
   }
 
   render() {
@@ -24,41 +35,39 @@ class PromoModal extends React.Component {
       needsAgeVerification,
       isAgeVerified,
       pending,
-      trackUTMAndPromoCode,
-      isNewPromoCodeModalEnabled,
-      promoCode,
     } = this.props
 
-    if (isNewPromoCodeModalEnabled && promoCodes.includes(promoCode)) {
-      return (
-        <PromoModalRedesign
-          onClick={this.handleClick}
-          trackUTMAndPromoCode={trackUTMAndPromoCode}
-        />
-      )
-    }
-
     return (
-      <ModalPanel closePortal={() => this.handleClick()} closePortalFromButton={() => this.handleClick()} disableOverlay>
-        <div className={css.body} data-testing="promoModal">
-          <PromoModalBody title={title} text={text} error={error} />
-          <span className={css.buttonContainer}>
-            {needsAgeVerification && !error ? <AgeVerify /> : null}
-            <Button
-              className={css.buttonSegment}
-              data-testing="promoModalButton"
-              disabled={(needsAgeVerification && !isAgeVerified && !error) || pending}
-              onClick={() => {
-                this.handleClick()
-                trackUTMAndPromoCode('clickClaimDiscountPopup')
-              }}
-              pending={pending}
-            >
-              {buttonText}
-            </Button>
-          </span>
-        </div>
-      </ModalPanel>
+      <div className={css.hideScroll} data-testing="promoModal">
+        <Modal
+          isOpen
+          variant="floating"
+          name="promo-modal"
+          description="promo code modal"
+          handleClose={this.handleClick(clickCloseDiscountPopup)}
+        >
+          <div className={css.container} data-testing="promoModal">
+            {!error && <img className={css.header} src={headerImage} alt="Enjoy a tasty offer on us" />}
+            {error && <h4 className={css.errorSubHeader}>{title}</h4>}
+            <div className={css.contentContainer}>
+              {!error && <h4 className={css.subHeader}>{title}</h4>}
+              {/* eslint-disable-next-line react/no-danger */}
+              <p className={css.content} dangerouslySetInnerHTML={{ __html: text }} />
+              {needsAgeVerification && !error ? <AgeVerify /> : null}
+              <CTA
+                size="medium"
+                testingSelector="promoModalButton"
+                onClick={this.handleClick(clickClaimDiscountPopup)}
+                variant="primary"
+                isFullWidth
+                disabled={(needsAgeVerification && !isAgeVerified && !error) || pending}
+              >
+                {buttonText}
+              </CTA>
+            </div>
+          </div>
+        </Modal>
+      </div>
     )
   }
 }
@@ -75,8 +84,6 @@ PromoModal.propTypes = {
   justApplied: PropTypes.bool,
   trackUTMAndPromoCode: PropTypes.func,
   closeModal: PropTypes.func.isRequired,
-  isNewPromoCodeModalEnabled: PropTypes.bool,
-  promoCode: PropTypes.string,
 }
 
 PromoModal.defaultProps = {
@@ -86,8 +93,6 @@ PromoModal.defaultProps = {
   pending: false,
   justApplied: false,
   trackUTMAndPromoCode: () => {},
-  isNewPromoCodeModalEnabled: false,
-  promoCode: '',
   error: '',
 }
 

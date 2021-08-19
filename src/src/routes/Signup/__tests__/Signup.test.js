@@ -134,11 +134,7 @@ describe('Signup', () => {
     describe('when state is hidden', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <Signup
-            {...props}
-            promoModalVisible={false}
-            promoBannerState={{ canApplyPromo: false }}
-          />,
+          <Signup {...props} promoModalVisible={false} promoBannerState={{ basketPromo: '' }} />,
           {
             context,
           }
@@ -158,7 +154,7 @@ describe('Signup', () => {
     describe('when state is visible', () => {
       beforeEach(() => {
         wrapper = shallow(
-          <Signup {...props} promoModalVisible promoBannerState={{ canApplyPromo: true }} />,
+          <Signup {...props} promoModalVisible promoBannerState={{ basketPromo: 'DTI-promo' }} />,
           {
             context,
           }

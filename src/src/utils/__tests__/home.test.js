@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import home from 'config/home'
+import { promo } from 'config/home'
 import { getPromoBannerState } from '../home'
 
 describe('getPromoBannerState', () => {
@@ -22,14 +22,15 @@ describe('getPromoBannerState', () => {
     error: Immutable.fromJS({})
   }
 
-  const expectedPromoCode = home.promo.defaultPromoCode
+  const expectedPromoCode = promo.defaultPromoCode
 
   describe('When the state is clean', () => {
     test('Then the promo code should be applicable', () => {
       const result = getPromoBannerState(state)
       expect(result).toEqual({
         canApplyPromo: true,
-        promoCode: expectedPromoCode
+        promoCode: expectedPromoCode,
+        basketPromo: '',
       })
     })
   })

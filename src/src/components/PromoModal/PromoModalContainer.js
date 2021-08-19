@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
+import Immutable from 'immutable'
+import { client } from 'config/routes'
 import { actionTypes } from 'actions/actionTypes'
 import { trackUTMAndPromoCode } from 'actions/tracking'
 import { promoToggleModalVisibility } from 'actions/promos'
-import { getIsNewPromoCodeModalEnabled } from 'selectors/features'
-import Immutable from 'immutable'
 import { PromoModal } from './PromoModal'
+import css from './PromoModal.css'
 
 const mapStateToProps = (state) => {
   const promoCode = state.promoCurrent
@@ -25,7 +26,7 @@ const mapStateToProps = (state) => {
     .filter(product => product.get('ageRestricted'))
     .size > 0 && !state.user.get('ageVerified', false)
 
-  let buttonText = error ? 'Close' : 'Claim Discount'
+  let buttonText = error ? 'Close' : 'Claim discount'
 
   if (!title) {
     if (numProducts > 0) {
@@ -38,7 +39,7 @@ const mapStateToProps = (state) => {
         buttonText = 'Sounds Good'
       }
     } else {
-      title = 'Hooray!'
+      title = 'Join today with a tasty offer!'
     }
   }
 
@@ -50,13 +51,17 @@ const mapStateToProps = (state) => {
       <p>Happy cooking!</p>
       `
     } else {
-      text = `<p>A voucher (<strong>${promoCode}</strong>) has been applied on your Gousto box! Your discount will be automatically applied to your account. Happy cooking!</p>`
+      text = '<p>Here’s a discount for your first Gousto box. Your discount will be automatically applied at checkout.</p>'
     }
   }
 
   if (error) {
-    title = 'Sorry!'
+    title = 'Sorry, your offer could not be applied!'
     buttonText = 'Close'
+    text = error === 'Code is only applicable for new customers'
+      ? '<p>The promotion you tried to use is only for new customers.</p>'
+      : '<p>Something went wrong and your offer could not be applied.</p>'
+      + `<p>Try again or contact our Customer Care team via our <a href=${client.helpCentre} class=${css.link} target="_blank" rel="noopener noreferrer">Help Centre</a>.</p>`
   }
 
   const isAgeVerified = state.promoAgeVerified || state.user.get('ageVerified', false)
@@ -73,7 +78,6 @@ const mapStateToProps = (state) => {
     isAgeVerified,
     pending,
     justApplied: state.promoStore.getIn([promoCode, 'justApplied'], false),
-    isNewPromoCodeModalEnabled: getIsNewPromoCodeModalEnabled(state),
   }
 }
 

@@ -52,6 +52,7 @@ const propTypes = {
   promoModalVisible: PropTypes.bool.isRequired,
   promoBannerState: PropTypes.shape({
     canApplyPromo: PropTypes.bool,
+    basketPromo: PropTypes.string,
   }),
   trackDiscountVisibility: PropTypes.func,
   lowestPricePerPortion: PropTypes.shape({
@@ -323,7 +324,7 @@ class Signup extends PureComponent {
     const currentStep = steps.find((step) => step.get('slug') === stepName) || steps.get(0)
     const currentStepName = currentStep.get('name')
 
-    const { canApplyPromo } = promoBannerState
+    const { canApplyPromo, basketPromo } = promoBannerState
 
     const isDiscountApplied = !promoModalVisible && !canApplyPromo
 
@@ -347,7 +348,7 @@ class Signup extends PureComponent {
         />
         <DiscountAppliedBar
           promoModalVisible={promoModalVisible}
-          isPromoBarHidden={!canApplyPromo}
+          isPromoBarHidden={!basketPromo}
           trackDiscountVisibility={trackDiscountVisibility}
           wizardStep={currentStepName}
           signupDismissDiscountAppliedBar={signupDismissDiscountAppliedBar}

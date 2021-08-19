@@ -24,13 +24,13 @@ export const applyPromoCodeAndShowModal = () => async (dispatch, getState) => {
 }
 
 export const homeGetStarted = (ctaUri, sectionForTracking) => async (dispatch) => {
-  await dispatch(applyPromoCodeAndShowModal())
-
-  dispatch(redirect(ctaUri))
-
   if (sectionForTracking) {
     dispatch(trackGetStarted(sectionForTracking))
   }
+
+  await dispatch(applyPromoCodeAndShowModal())
+
+  dispatch(redirect(ctaUri))
 }
 
 export const homeActions = {

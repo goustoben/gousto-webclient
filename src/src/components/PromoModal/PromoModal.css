@@ -1,22 +1,6 @@
 @value BreakpointFromMedium, BreakpointFromLarge from 'design-language/breakpoints.css';
-
-.body {
-	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-}
-
-.buttonContainer {
-	display: inline-block;
-	text-align: right;
-	width: 100%;
-}
-
-.giftPreviews {
-	composes: marginXLTop from 'sass-loader!styles/spacing.scss';
-}
-
-.buttonSegment {
-	font-size: 14px;
-}
+@value Bluecheese, Oyster from 'styles/colors.css';
+@value NG-200 #C4C7C9;
 
 /* On Chrome */
 .hideScroll > div::-webkit-scrollbar {
@@ -43,6 +27,7 @@
 
 .header {
   width: 100%;
+  min-height: 10.25rem;
 }
 
 .contentContainer {
@@ -53,19 +38,39 @@
   }
 }
 
-.subHeader {
+.commonHeader {
   composes: fontStyleL from 'design-language/typography.css';
-  margin-bottom: 1rem;
-}
-
-.firstMonthDiscount {
-  margin-bottom: 1rem;
-}
-
-.appliedDiscount {
-  margin-bottom: 2rem;
-}
-
-.bold {
   composes: fontBold from 'design-language/typography.css';
+}
+
+.subHeader {
+  composes: commonHeader;
+  margin-bottom: 1rem;
+}
+
+.errorSubHeader {
+  composes: commonHeader;
+  border-bottom: 1px solid NG-200;
+  padding: 1rem 3rem 1rem 1rem;
+  margin: 0;
+
+  @media BreakpointFromMedium {
+    padding: 1rem 3rem 1rem 1.5rem;
+  }
+}
+
+.content {
+  composes: fontStyleBody from 'design-language/typography.css';
+}
+
+.link {
+  font-weight: bold;
+  color: Bluecheese;
+  border-bottom: 1px solid Oyster;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover {
+    text-decoration: none;
+  }
 }

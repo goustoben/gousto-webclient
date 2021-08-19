@@ -19,10 +19,10 @@ describe('Given DiscountAppliedBar component', () => {
     expect(wrapper.find(DiscountAppliedBar)).toBeDefined()
   })
 
-  describe('when discount pop-up is visible and promoModalVisible is true', () => {
+  describe('when discount pop-up is not visible and isPromoBarHidden is true', () => {
     beforeEach(() => {
       wrapper.setProps({
-        promoModalVisible: true,
+        promoModalVisible: false,
         isPromoBarHidden: false,
       })
     })
@@ -32,10 +32,14 @@ describe('Given DiscountAppliedBar component', () => {
     })
   })
 
-  describe('when isHidden state is true', () => {
+  describe('when isHidden state is true and modal is visible', () => {
     beforeEach(() => {
       wrapper.setState({
-        isHidden: false,
+        isHidden: true,
+      })
+      wrapper.setProps({
+        promoModalVisible: true,
+        isPromoBarHidden: false,
       })
     })
 
