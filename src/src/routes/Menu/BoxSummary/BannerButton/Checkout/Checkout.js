@@ -24,6 +24,8 @@ const Checkout = (props) => {
     isBasketTransactionalOrder,
     userId,
     trackExperimentInSnowplow,
+    loadingOrderPending,
+    menuFetchData,
   } = props
   const sidesExperimentEnabled = useIsOptimizelyFeatureEnabled({
     name: 'radishes_menu_api_recipe_agnostic_sides_mvp_web_enabled',
@@ -37,7 +39,14 @@ const Checkout = (props) => {
       view={view}
       dataTesting="boxSummaryButton"
       disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
-      pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
+      pending={
+        checkoutPending
+        || pricingPending
+        || basketPreviewOrderChangePending
+        || orderSavePending
+        || loadingOrderPending
+        || menuFetchData
+      }
       spinnerClassName={css.coSpinner}
       spinnerContainerClassName={css.coSpinnerContainer}
       onClick={() => (showSideModal ? openSidesModal() : checkoutBasket(section, view))}
@@ -56,6 +65,8 @@ Checkout.propTypes = {
   checkoutBasket: PropTypes.func.isRequired,
   openSidesModal: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
+  menuFetchData: PropTypes.bool,
+  loadingOrderPending: PropTypes.bool,
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
   orderSavePending: PropTypes.bool,
@@ -66,6 +77,8 @@ Checkout.propTypes = {
 }
 
 Checkout.defaultProps = {
+  menuFetchData: false,
+  loadingOrderPending: false,
   checkoutPending: false,
   pricingPending: false,
   orderSavePending: false,

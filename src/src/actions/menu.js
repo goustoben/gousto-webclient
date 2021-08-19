@@ -37,6 +37,11 @@ import { actionTypes } from './actionTypes'
 import * as trackingKeys from './trackingKeys'
 import { setLowestPricePerPortion } from './boxPricesPricePerPortion'
 
+/**
+ * menuActions should only be used for the tests
+ * to mock methods and internal to call other methods
+ * defined. Please don't use outside.
+ */
 /* eslint-disable no-use-before-define */
 const menuActions = {
   menuLoadMenu,
@@ -55,6 +60,7 @@ const menuActions = {
   trackCancelSide,
   trackViewSidesAllergens,
   trackCloseSidesAllergens,
+  menuChangeRecipeStock,
 }
 
 function handleReloadMenuError({ dispatch }) {
@@ -251,60 +257,68 @@ export function menuLoadBoxPrices() {
 
 export function menuLoadOrderDetails(orderId) {
   return async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
-    dispatch(basketReset())
-    dispatch(menuActions.menuCutoffUntilReceive(order.shouldCutoffAt))
+    try {
+      await dispatch(statusActions.pending(actionTypes.LOADING_ORDER, true))
 
-    dispatch(basketDateChange(order.deliveryDate))
-    dispatch(basketNumPortionChange(order.box.numPortions, orderId))
+      const accessToken = getState().auth.get('accessToken')
+      const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
+      dispatch(basketReset())
+      dispatch(menuActions.menuCutoffUntilReceive(order.shouldCutoffAt))
 
-    order.recipeItems.forEach(recipe => {
-      const qty = Math.round(parseInt(recipe.quantity, 10) / parseInt(order.box.numPortions, 10))
+      dispatch(basketDateChange(order.deliveryDate))
+      dispatch(basketNumPortionChange(order.box.numPortions, orderId))
 
-      const adjustedQty = menuConfig.stockThreshold + qty
-      dispatch(menuChangeRecipeStock({
-        [recipe.recipeId]: { [order.box.numPortions]: adjustedQty },
-      }))
+      order.recipeItems.forEach(recipe => {
+        const qty = Math.round(parseInt(recipe.quantity, 10) / parseInt(order.box.numPortions, 10))
 
-      for (let i = 1; i <= qty; i++) {
+        const adjustedQty = menuConfig.stockThreshold + qty
+        dispatch(menuActions.menuChangeRecipeStock({
+          [recipe.recipeId]: { [order.box.numPortions]: adjustedQty },
+        }))
+
+        for (let i = 1; i <= qty; i++) {
         // fall back to the defaults for these 3 params
-        const view = undefined
-        const recipeInfo = undefined
-        const maxRecipesNum = undefined
+          const view = undefined
+          const recipeInfo = undefined
+          const maxRecipesNum = undefined
 
-        dispatch(basketRecipeAdd(recipe.recipeId, view, recipeInfo, maxRecipesNum, orderId))
-      }
-    })
-
-    const productItems = order.productItems || []
-    if (productItems.length) {
-      const productItemIds = productItems.map(productItem => productItem.itemableId)
-      await dispatch(productsLoadProductsById(productItemIds))
-      await dispatch(productsLoadStock())
-      await dispatch(productsLoadCategories())
-      productItems.forEach((product) => {
-        for (let i = 0; i < parseInt(product.quantity, 10); i++) {
-          dispatch(basketProductAdd(product.itemableId))
+          dispatch(basketRecipeAdd(recipe.recipeId, view, recipeInfo, maxRecipesNum, orderId))
         }
       })
-    }
 
-    dispatch(basketIdChange(order.id))
-    dispatch(basketOrderLoaded(order.id))
-    dispatch(basketChosenAddressChange(order.shippingAddress))
+      const productItems = order.productItems || []
+      if (productItems.length) {
+        const productItemIds = productItems.map(productItem => productItem.itemableId)
+        await dispatch(productsLoadProductsById(productItemIds))
+        await dispatch(productsLoadStock())
+        await dispatch(productsLoadCategories())
+        productItems.forEach((product) => {
+          for (let i = 0; i < parseInt(product.quantity, 10); i++) {
+            dispatch(basketProductAdd(product.itemableId))
+          }
+        })
+      }
 
-    const grossTotal = order && order.prices && order.prices.grossTotal
-    const netTotal = order && order.prices && order.prices.total
+      dispatch(basketIdChange(order.id))
+      dispatch(basketOrderLoaded(order.id))
+      dispatch(basketChosenAddressChange(order.shippingAddress))
 
-    dispatch(tempActions.temp('originalGrossTotal', grossTotal))
-    dispatch(tempActions.temp('originalNetTotal', netTotal))
+      const grossTotal = order && order.prices && order.prices.grossTotal
+      const netTotal = order && order.prices && order.prices.total
 
-    await dispatch(basketPostcodeChange(order.shippingAddress.postcode)).then(() => {
+      dispatch(tempActions.temp('originalGrossTotal', grossTotal))
+      dispatch(tempActions.temp('originalNetTotal', netTotal))
+
+      // This sets `boxSummaryDeliveryDays`
+      await dispatch(basketPostcodeChange(order.shippingAddress.postcode))
+
+      const newState = getState()
       const coreSlotId = order.deliverySlot.id
-      const slotId = findSlot(getState().boxSummaryDeliveryDays, coreSlotId)
+      const slotId = findSlot(newState.boxSummaryDeliveryDays, coreSlotId)
       dispatch(basketSlotChange(slotId))
-    })
+    } finally {
+      dispatch(statusActions.pending(actionTypes.LOADING_ORDER, false))
+    }
   }
 }
 

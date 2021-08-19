@@ -14,6 +14,8 @@ const mapStateToProps = (state) => ({
   postcode: state.basket.get('postcode'),
   addressId: state.basket.getIn(['address', 'id'], ''),
   checkoutPending: state.pending.get(actionTypes.BASKET_CHECKOUT),
+  loadingOrderPending: state.pending.get(actionTypes.LOADING_ORDER, false),
+  menuFetchData: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
   menuRecipes: state.menuRecipes,
   stock: state.menuRecipeStock,
   pricingPending: state.pricing.get('pending', false),

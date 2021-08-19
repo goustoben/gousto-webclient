@@ -1,44 +1,43 @@
 import Immutable from 'immutable'
+import * as orders from 'apis/orders'
+import * as recipes from 'apis/recipes'
+import * as utilsBasket from 'utils/basket'
+import * as utilsDeliveries from 'utils/deliveries'
+import * as MenuServiceLoadDaysActions from 'actions/menuServiceLoadDays'
+import * as MenuActionHelperActions from 'actions/menuActionHelper'
+import * as boxPrices from 'apis/boxPrices'
 import { actionTypes } from '../actionTypes'
 import * as trackingKeys from '../trackingKeys'
-const mockFetchAvailableDates = jest.fn()
-const mockFetchRecipeStock = jest.fn()
-const mockLimitReached = jest.fn()
-const mockGetCutoffDateTime = jest.fn()
-
-const mockLoadMenuCollectionsWithMenuService = jest.fn()
-const mockMenuServiceLoadDays = jest.fn()
-const mockFetchBoxPrices = jest.fn().mockResolvedValue({ data: {} })
-
-jest.mock('apis/recipes', () => ({
-  fetchRecipeStock: mockFetchRecipeStock,
-}))
-
-jest.mock('utils/basket', () => ({
-  limitReached: mockLimitReached,
-}))
-
-jest.mock('utils/deliveries', () => ({
-  getCutoffDateTime: mockGetCutoffDateTime
-}))
-
-jest.mock('actions/menuServiceLoadDays', () => ({
-  menuServiceLoadDays: mockMenuServiceLoadDays,
-}))
-
-jest.mock('actions/menuActionHelper', () => ({
-  getStockAvailability: jest.fn(),
-  loadMenuCollectionsWithMenuService: mockLoadMenuCollectionsWithMenuService,
-}))
-
-jest.mock('apis/boxPrices', () => ({
-  fetchBoxPrices: mockFetchBoxPrices,
-}))
+import statusActions from '../status'
+import * as BasketActions from '../basket'
+import * as MenuBasketActions from '../../routes/Menu/actions/basketRecipes'
+import tempActions from '../temp'
+import * as ProductActions from '../products'
+import menuActions, {
+  findSlot,
+  sideEventScreens,
+  sideEventTypes,
+  menuCutoffUntilReceive,
+  forceMenuLoad,
+  menuLoadMenu,
+  menuLoadDays,
+  menuLoadStock,
+  menuBrowseCTAVisibilityChange,
+  menuLoadComplete,
+  menuReceiveBoxPrices,
+  recipeVariantDropdownExpanded,
+  menuLoadBoxPrices,
+  trackSidesContinueClicked,
+  trackViewSidesModal,
+  trackCancelSide,
+  trackAddSide,
+  trackViewSidesAllergens,
+  trackCloseSidesAllergens,
+  menuLoadOrderDetails,
+} from '../menu'
 
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
-  const { findSlot, sideEventScreens, sideEventTypes, ...menuActions} = require('../menu')//eslint-disable-line
-  const { getStockAvailability } = require('../menuActionHelper')//eslint-disable-line
   const dispatch = jest.fn()
   const state = {
     auth: Immutable.fromJS({
@@ -65,8 +64,18 @@ describe('menu actions', () => {
   }
   const getState = () => state
 
+  let mockFetchAvailableDates
+  let mockFetchRecipeStock
+  let mockLimitReached
+  let mockGetCutoffDateTime
+  let mockLoadMenuCollectionsWithMenuService
+  let mockMenuServiceLoadDays
+  let mockFetchBoxPrices
+  let mockGetStockAvailability
+
   beforeEach(() => {
-    mockFetchRecipeStock.mockResolvedValue({
+    mockFetchAvailableDates = jest.fn()
+    mockFetchRecipeStock = jest.fn().mockResolvedValue({
       data: {
         '001': {
           recipeId: '001',
@@ -76,6 +85,20 @@ describe('menu actions', () => {
         }
       }
     })
+    mockLimitReached = jest.fn()
+    mockGetCutoffDateTime = jest.fn()
+    mockLoadMenuCollectionsWithMenuService = jest.fn()
+    mockMenuServiceLoadDays = jest.fn()
+    mockFetchBoxPrices = jest.fn().mockResolvedValue({ data: {} })
+    mockGetStockAvailability = jest.fn()
+
+    jest.spyOn(recipes, 'fetchRecipeStock').mockImplementation(mockFetchRecipeStock)
+    jest.spyOn(boxPrices, 'fetchBoxPrices').mockImplementation(mockFetchBoxPrices)
+    jest.spyOn(utilsBasket, 'limitReached').mockImplementation(mockLimitReached)
+    jest.spyOn(utilsDeliveries, 'getCutoffDateTime').mockImplementation(mockGetCutoffDateTime)
+    jest.spyOn(MenuServiceLoadDaysActions, 'menuServiceLoadDays').mockImplementation(mockMenuServiceLoadDays)
+    jest.spyOn(MenuActionHelperActions, 'getStockAvailability').mockImplementation(mockGetStockAvailability)
+    jest.spyOn(MenuActionHelperActions, 'loadMenuCollectionsWithMenuService').mockImplementation(mockLoadMenuCollectionsWithMenuService)
   })
 
   afterEach(() => {
@@ -128,13 +151,13 @@ describe('menu actions', () => {
 
   describe('menuLoadMenu', () => {
     test('should call dispatch', async () => {
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getState)
+      await menuLoadMenu(cutoffDateTime)(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledTimes(3)
     })
 
     test('should use date from state when cutoffDateTime is null', async () => {
-      await menuActions.menuLoadMenu(null)(dispatch, getState)
+      await menuLoadMenu(null)(dispatch, getState)
       expect(mockGetCutoffDateTime).toHaveBeenCalled()
     })
 
@@ -150,7 +173,7 @@ describe('menu actions', () => {
 
       const getStateForTest = () => stateWithTrueCollectionValue
 
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+      await menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
 
       expect(mockLoadMenuCollectionsWithMenuService).toHaveBeenCalled()
     })
@@ -169,7 +192,7 @@ describe('menu actions', () => {
     describe('given menuService turned on', () => {
       describe('when call `menuLoadDays`', () => {
         beforeEach(async () => {
-          await menuActions.menuLoadDays()(dispatch, getState)
+          await menuLoadDays()(dispatch, getState)
         })
 
         test('then should have called `loadDays`', () => {
@@ -190,7 +213,7 @@ describe('menu actions', () => {
   describe('menuLoadStock', () => {
     describe('clearStock is true', () => {
       beforeEach(() => {
-        getStockAvailability.mockReturnValue({
+        mockGetStockAvailability.mockReturnValue({
           '001': {
             2: 53,
             4: 100,
@@ -201,7 +224,7 @@ describe('menu actions', () => {
       afterEach(() => {
         jest.clearAllMocks()
       })
-      const menuLoadStockAction = menuActions.menuLoadStock(true)
+      const menuLoadStockAction = menuLoadStock(true)
 
       test('should dispatch a replace action with adjusted stock', async () => {
         await menuLoadStockAction(dispatch, getState)
@@ -234,9 +257,9 @@ describe('menu actions', () => {
     })
 
     describe('clearStock is false', () => {
-      const menuLoadStockAction = menuActions.menuLoadStock(false)
+      const menuLoadStockAction = menuLoadStock(false)
       beforeEach(() => {
-        getStockAvailability.mockReturnValue({
+        mockGetStockAvailability.mockReturnValue({
           '001': {
             2: 53,
             4: 100,
@@ -267,7 +290,7 @@ describe('menu actions', () => {
 
   describe('menuCutoffUntilReceive', () => {
     test('should return a MENU_CUTOFF_UNTIL_RECEIVE action with the first argument mapped through to the cutoffUntil property', () => {
-      const result = menuActions.menuCutoffUntilReceive('2020-06-26')
+      const result = menuCutoffUntilReceive('2020-06-26')
 
       expect(result).toEqual({
         type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
@@ -278,7 +301,7 @@ describe('menu actions', () => {
 
   describe('forceMenuLoad', () => {
     test('should return a MENU_FORCE_LOAD action', () => {
-      const result = menuActions.forceMenuLoad(true)
+      const result = forceMenuLoad(true)
 
       expect(result).toEqual({
         type: actionTypes.MENU_FORCE_LOAD,
@@ -289,7 +312,7 @@ describe('menu actions', () => {
 
   describe('menuBrowseCTAVisibilityChange', () => {
     test('should return a MENU_BROWSE_CTA_VISIBILITY_CHANGE action', () => {
-      const result = menuActions.menuBrowseCTAVisibilityChange(true)
+      const result = menuBrowseCTAVisibilityChange(true)
 
       expect(result).toEqual({
         type: actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE,
@@ -300,7 +323,7 @@ describe('menu actions', () => {
 
   describe('menuLoadComplete', () => {
     test('should return a MENU_LOAD_COMPLETE action with correct time to load and menu service state', () => {
-      const result = menuActions.menuLoadComplete(12345, true)
+      const result = menuLoadComplete(12345, true)
 
       expect(result).toEqual({
         type: actionTypes.MENU_LOAD_COMPLETE,
@@ -316,7 +339,7 @@ describe('menu actions', () => {
     }
     const tariffId = '233'
     test('should return action MENU_BOX_PRICES_RECEIVE with price and tariffId', () => {
-      const result = menuActions.menuReceiveBoxPrices(prices, tariffId)
+      const result = menuReceiveBoxPrices(prices, tariffId)
       expect(result).toEqual({
         type: actionTypes.MENU_BOX_PRICES_RECEIVE,
         prices,
@@ -331,7 +354,7 @@ describe('menu actions', () => {
     }
 
     test('should return action MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED with no recipe data', () => {
-      const result = menuActions.recipeVariantDropdownExpanded(null)
+      const result = recipeVariantDropdownExpanded(null)
       expect(result).toEqual({
         type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
         payload: {
@@ -345,7 +368,7 @@ describe('menu actions', () => {
     })
 
     test('should return action MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED with recipe data', () => {
-      const result = menuActions.recipeVariantDropdownExpanded(recipeData)
+      const result = recipeVariantDropdownExpanded(recipeData)
       expect(result).toEqual({
         type: actionTypes.MENU_RECIPE_VARIANTS_DROPDOWN_EXPANDED,
         payload: {
@@ -380,7 +403,7 @@ describe('menu actions', () => {
           }
         })
 
-        await menuActions.menuLoadBoxPrices()(dispatch, getStateForPrice)
+        await menuLoadBoxPrices()(dispatch, getStateForPrice)
 
         expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: actionTypes.MENU_BOX_PRICES_RECEIVE,
@@ -393,7 +416,7 @@ describe('menu actions', () => {
 
   describe('trackSidesContinueClicked', () => {
     it('should return action TRACK_CONTINUE_WITH_SIDES_CLICKED', () => {
-      const trackingAction = menuActions.trackSidesContinueClicked('side-ids', 'sides-total-surcharge', 'total_number-of-sides')
+      const trackingAction = trackSidesContinueClicked('side-ids', 'sides-total-surcharge', 'total_number-of-sides')
 
       expect(trackingAction).toEqual(
         {
@@ -414,7 +437,7 @@ describe('menu actions', () => {
 
   describe('trackViewSidesModal', () => {
     it('should return action MENU_TRACK_VIEW_SIDES_MODAL', () => {
-      const trackingAction = menuActions.trackViewSidesModal()
+      const trackingAction = trackViewSidesModal()
 
       expect(trackingAction).toEqual(
         {
@@ -431,7 +454,7 @@ describe('menu actions', () => {
 
   describe('trackCancelSide', () => {
     it('should return action TRACK_ORDER_SIDES_CANCEL', () => {
-      const trackingAction = menuActions.trackCancelSide()
+      const trackingAction = trackCancelSide()
 
       expect(trackingAction).toEqual(
         {
@@ -447,7 +470,7 @@ describe('menu actions', () => {
 
   describe('trackAddSide', () => {
     it('should return action TRACK_ADD_SIDE', () => {
-      const trackingAction = menuActions.trackAddSide('side-id', 'order-id')
+      const trackingAction = trackAddSide('side-id', 'order-id')
 
       expect(trackingAction).toEqual(
         {
@@ -464,7 +487,7 @@ describe('menu actions', () => {
 
   describe('trackViewSidesAllergens', () => {
     it('should return action TRACK_ORDER_SIDES_SEE_ALLERGENS', () => {
-      const trackingAction = menuActions.trackViewSidesAllergens()
+      const trackingAction = trackViewSidesAllergens()
 
       expect(trackingAction).toEqual(
         {
@@ -481,7 +504,7 @@ describe('menu actions', () => {
 
   describe('trackCloseSidesAllergens', () => {
     it('should return action TRACK_CLOSE_ORDER_SIDES_ALLERGENS_SCREEN', () => {
-      const trackingAction = menuActions.trackCloseSidesAllergens()
+      const trackingAction = trackCloseSidesAllergens()
 
       expect(trackingAction).toEqual(
         {
@@ -493,6 +516,143 @@ describe('menu actions', () => {
           }
         }
       )
+    })
+  })
+
+  describe('menuLoadOrderDetails', () => {
+    let fetchOrderSpy
+    let statusActionsPendingSpy
+    let basketResetSpy
+    let basketDateChangeSpy
+    let basketNumPortionChangeSpy
+    let basketRecipeAddSpy
+    let basketProductAddSpy
+    let basketIdChangeSpy
+    let basketOrderLoadedSpy
+    let basketChosenAddressChangeSpy
+    let basketPostcodeChangeSpy
+    let basketSlotChangeSpy
+    let productsLoadProductsByIdSpy
+    let productsLoadStockSpy
+    let productsLoadCategoriesSpy
+    let menuCutoffUntilReceiveSpy
+    let menuChangeRecipeStockSpy
+    let tempSpy
+
+    beforeEach(() => {
+      fetchOrderSpy = jest.spyOn(orders, 'fetchOrder').mockImplementation()
+      statusActionsPendingSpy = jest.spyOn(statusActions, 'pending').mockImplementation()
+      basketResetSpy = jest.spyOn(BasketActions, 'basketReset').mockImplementation()
+      basketDateChangeSpy = jest.spyOn(BasketActions, 'basketDateChange').mockImplementation()
+      basketNumPortionChangeSpy = jest.spyOn(BasketActions, 'basketNumPortionChange').mockImplementation()
+      basketRecipeAddSpy = jest.spyOn(MenuBasketActions, 'basketRecipeAdd').mockImplementation()
+      basketProductAddSpy = jest.spyOn(BasketActions, 'basketProductAdd').mockImplementation()
+      basketIdChangeSpy = jest.spyOn(BasketActions, 'basketIdChange').mockImplementation()
+      basketOrderLoadedSpy = jest.spyOn(BasketActions, 'basketOrderLoaded').mockImplementation()
+      basketChosenAddressChangeSpy = jest.spyOn(BasketActions, 'basketChosenAddressChange').mockImplementation()
+      basketPostcodeChangeSpy = jest.spyOn(BasketActions, 'basketPostcodeChange').mockImplementation()
+      basketSlotChangeSpy = jest.spyOn(BasketActions, 'basketSlotChange').mockImplementation()
+      productsLoadProductsByIdSpy = jest.spyOn(ProductActions, 'productsLoadProductsById').mockImplementation()
+      productsLoadStockSpy = jest.spyOn(ProductActions, 'productsLoadStock').mockImplementation()
+      productsLoadCategoriesSpy = jest.spyOn(ProductActions, 'productsLoadCategories').mockImplementation()
+      menuCutoffUntilReceiveSpy = jest.spyOn(menuActions, 'menuCutoffUntilReceive').mockImplementation()
+      menuChangeRecipeStockSpy = jest.spyOn(menuActions, 'menuChangeRecipeStock').mockImplementation()
+      tempSpy = jest.spyOn(tempActions, 'temp').mockImplementation()
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    describe('when fetching the order successfully', () => {
+      it('should setup the basket and store state correctly', async () => {
+        const numPortions = 2
+        fetchOrderSpy.mockResolvedValue({
+          data: {
+            id: 'order_id',
+            box: {
+              numPortions,
+            },
+            shouldCutoffAt: 'should_cut_off_at',
+            deliveryDate: 'delivery_date',
+            recipeItems: [
+              { recipeId: 'recipes_1', quantity: 2 },
+              { recipeId: 'recipes_2', quantity: 2 },
+            ],
+            productItems: [
+              { itemableId: 'product_1', quantity: 2 },
+              { itemableId: 'product_2', quantity: 2 },
+            ],
+            prices: {
+              grossTotal: 20,
+              total: 24,
+            },
+            shippingAddress: {
+              postcode: 'N1 4DY'
+            },
+            deliverySlot: {
+              id: 'delivery_slot_id',
+            }
+          }
+        })
+        const boxSummaryDeliveryDaysId = 'dg015db8'
+        state.boxSummaryDeliveryDays = Immutable.fromJS({
+          '2019-10-22': {
+            slots: [
+              {
+                id: boxSummaryDeliveryDaysId,
+                coreSlotId: 'delivery_slot_id'
+              }
+            ]
+          }
+        })
+
+        await menuLoadOrderDetails('order_id')(dispatch, getState)
+
+        expect(fetchOrderSpy).toHaveBeenNthCalledWith(1, 'test', 'order_id', { 'includes[]': 'shipping_address' })
+        expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(1, 'LOADING_ORDER', true)
+        expect(basketResetSpy).toBeCalledTimes(1)
+        expect(basketDateChangeSpy).toHaveBeenNthCalledWith(1, 'delivery_date')
+        expect(basketNumPortionChangeSpy).toHaveBeenNthCalledWith(1, numPortions, 'order_id')
+        expect(basketRecipeAddSpy).toBeCalledTimes(2)
+        expect(basketRecipeAddSpy).toHaveBeenNthCalledWith(1, 'recipes_1', undefined, undefined, undefined, 'order_id')
+        expect(basketRecipeAddSpy).toHaveBeenNthCalledWith(2, 'recipes_2', undefined, undefined, undefined, 'order_id')
+        expect(menuChangeRecipeStockSpy).toBeCalledTimes(2)
+        expect(menuChangeRecipeStockSpy).toHaveBeenNthCalledWith(1, { recipes_1: { 2: 4 } })
+        expect(menuChangeRecipeStockSpy).toHaveBeenNthCalledWith(2, { recipes_2: { 2: 4 } })
+        expect(basketProductAddSpy).toBeCalledTimes(4)
+        expect(basketProductAddSpy).toHaveBeenNthCalledWith(1, 'product_1')
+        expect(basketProductAddSpy).toHaveBeenNthCalledWith(2, 'product_1')
+        expect(basketProductAddSpy).toHaveBeenNthCalledWith(3, 'product_2')
+        expect(basketProductAddSpy).toHaveBeenNthCalledWith(4, 'product_2')
+        expect(basketIdChangeSpy).toHaveBeenNthCalledWith(1, 'order_id')
+        expect(basketOrderLoadedSpy).toHaveBeenNthCalledWith(1, 'order_id')
+        expect(basketSlotChangeSpy).toHaveBeenNthCalledWith(1, boxSummaryDeliveryDaysId)
+        expect(productsLoadProductsByIdSpy).toHaveBeenNthCalledWith(1, ['product_1', 'product_2'])
+        expect(productsLoadStockSpy).toBeCalledTimes(1)
+        expect(productsLoadCategoriesSpy).toBeCalledTimes(1)
+        expect(menuCutoffUntilReceiveSpy).toHaveBeenNthCalledWith(1, 'should_cut_off_at')
+        expect(basketPostcodeChangeSpy).toHaveBeenNthCalledWith(1, 'N1 4DY')
+        expect(basketChosenAddressChangeSpy).toHaveBeenNthCalledWith(1, { postcode: 'N1 4DY' })
+        expect(tempSpy).toBeCalledTimes(2)
+        expect(tempSpy).toHaveBeenNthCalledWith(1, 'originalGrossTotal', 20)
+        expect(tempSpy).toHaveBeenNthCalledWith(2, 'originalNetTotal', 24)
+        expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(2, 'LOADING_ORDER', false)
+      })
+    })
+
+    describe('when fetching the order fails', () => {
+      it('should reset the status for LOADING_ORDER and throw the error', async () => {
+        fetchOrderSpy.mockRejectedValue(Error('error'))
+
+        try {
+          await menuLoadOrderDetails('order_id')(dispatch, getState)
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error)
+          expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(1, 'LOADING_ORDER', true)
+          expect(statusActionsPendingSpy).toHaveBeenNthCalledWith(2, 'LOADING_ORDER', false)
+        }
+      })
     })
   })
 })
