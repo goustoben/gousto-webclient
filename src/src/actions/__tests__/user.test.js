@@ -976,7 +976,7 @@ describe('user actions', () => {
       user: Immutable.fromJS({
         orders: {
           1234: {
-            deliveryDay: '2021-02-01 00:00:00',
+            deliveryDate: '2021-02-01 00:00:00',
             recipeItems: [
               { itemableType: 'Recipe', recipeId: '1' },
               { itemableType: 'Recipe', recipeId: '2' },
@@ -985,7 +985,7 @@ describe('user actions', () => {
             ]
           },
           5678: {
-            deliveryDay: '2021-01-01 00:00:00',
+            deliveryDate: '2021-01-01 00:00:00',
             recipeItems: [
               { itemableType: 'Recipe', recipeId: '5' },
               { itemableType: 'Recipe', recipeId: '5' },
