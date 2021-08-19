@@ -1,40 +1,78 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { BottomFixedContent, Card, CTA, Heading, Alert } from 'goustouicomponents'
+import { BottomFixedContent, Card, CTA, Alert } from 'goustouicomponents'
+import Svg from 'Svg'
 import { client as routes } from 'config/routes'
 import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
+import { GetHelpFAQ } from '../components/GetHelpFAQ/GetHelpFAQ'
 import css from './Confirmation.css'
 
 const propTypes = {
+  creditAmount: PropTypes.number.isRequired,
+  issuesIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  nameFirst: PropTypes.string.isRequired,
   trackConfirmationCTA: PropTypes.func.isRequired,
+  trackRefundFAQClick: PropTypes.func.isRequired,
 }
 
-const Confirmation = ({ trackConfirmationCTA }) => (
-  <GetHelpLayout2 headingText="Thanks for your feedback">
-    <Card>
-      <Heading size="fontStyleM" type="h2">
-        We really appreciate you letting us know about this issue.
-      </Heading>
-      <Alert type="info">We&apos;ve added the credit to your account. You can view it using the link below but please allow some time for it to appear on your account.</Alert>
-      <p className={css.content}>
-        The credit will be automatically taken off your next order. It won&apos;t show the deduction on your Gousto account but it should show on your bank statement.
-      </p>
+const IS_AUTO_ACCEPT = false
+
+const Confirmation = ({
+  creditAmount,
+  issuesIDs,
+  nameFirst,
+  trackConfirmationCTA,
+  trackRefundFAQClick
+}) => {
+  const onClickFAQ = (articleName) => {
+    trackRefundFAQClick({
+      compensationAmount: creditAmount,
+      articleName,
+      isAutoAccept: IS_AUTO_ACCEPT,
+    })
+  }
+
+  return (
+    <GetHelpLayout2 headingText={`${nameFirst}, thanks for your feedback`} hasBackButton={false}>
+      <Card>
+        <p>
+          We really appreciate you letting us know about the issue.
+          Credit will be automatically taken off your next order as an apology.
+        </p>
+        <Alert type="success" hasIcon={false}>
+          <div className={css.alertContent}>
+            <div className={css.alertIconWrapper}>
+              <Svg fileName="icon-pound" className={css.alertIcon} />
+            </div>
+            <p className={css.alertText}>
+              £
+              {creditAmount}
+              {' '}
+              credit added
+            </p>
+          </div>
+        </Alert>
+        <p className={css.creditCopy}>
+          Credit can take up to 1 hour to appear in your account.
+        </p>
+      </Card>
+      <GetHelpFAQ onClick={onClickFAQ} issuesIDs={issuesIDs} />
       <BottomFixedContent>
         <CTA
           testingSelector="doneCTA"
           isFullWidth
           size="small"
           onClick={() => {
-            trackConfirmationCTA()
+            trackConfirmationCTA(IS_AUTO_ACCEPT)
             window.location.assign(routes.myGousto)
           }}
         >
           Done
         </CTA>
       </BottomFixedContent>
-    </Card>
-  </GetHelpLayout2>
-)
+    </GetHelpLayout2>
+  )
+}
 
 Confirmation.propTypes = propTypes
 

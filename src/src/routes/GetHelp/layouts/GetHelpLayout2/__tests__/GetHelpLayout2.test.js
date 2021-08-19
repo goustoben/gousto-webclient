@@ -23,17 +23,33 @@ describe('GetHelpLayout2', () => {
 
   test('renders without crashing', () => {})
 
-  test('renders a CTABack', () => {
-    expect(wrapper.find('CTABack').exists()).toBe(true)
-  })
-
-  describe('When a back url is passed', () => {
+  describe('When hasBackButton is true', () => {
     beforeEach(() => {
-      wrapper.setProps({ backUrl: URL })
+      wrapper.setProps({ hasBackButton: true })
     })
 
-    test('passes the url to CTABack', () => {
-      expect(wrapper.find('CTABack').prop('url')).toBe(URL)
+    test('renders a CTABack', () => {
+      expect(wrapper.find('CTABack').exists()).toBe(true)
+    })
+
+    describe('And a back url is passed', () => {
+      beforeEach(() => {
+        wrapper.setProps({ backUrl: URL })
+      })
+
+      test('passes the url to CTABack', () => {
+        expect(wrapper.find('CTABack').prop('url')).toBe(URL)
+      })
+    })
+  })
+
+  describe('When hasBackButton is false', () => {
+    beforeEach(() => {
+      wrapper.setProps({ hasBackButton: false })
+    })
+
+    test('does not render a CTABack', () => {
+      expect(wrapper.find('CTABack').exists()).toBe(false)
     })
   })
 

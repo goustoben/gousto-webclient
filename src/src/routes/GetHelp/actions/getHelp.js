@@ -12,7 +12,6 @@ import * as trackingKeys from 'actions/trackingKeys'
 import { getAccessToken } from 'selectors/auth'
 import { getOrder, getRecipes } from '../selectors/selectors'
 import { appendFeatureToRequest } from '../utils/appendFeatureToRequest'
-import { getFeatureShorterCompensationPeriod } from '../../../selectors/features'
 import { actionTypes } from './actionTypes'
 import { asyncAndDispatch } from './utils'
 
@@ -150,10 +149,11 @@ export const trackRejectRefund = (amount) => ({
   }
 })
 
-export const trackConfirmationCTA = () => ({
+export const trackConfirmationCTA = (isAutoAccept) => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
     actionType: trackingKeys.ssrClickDoneRefundAccepted,
+    auto_accept: isAutoAccept,
   }
 })
 
@@ -231,6 +231,17 @@ export const trackRecipeCardGetInTouchClick = () => ({
   trackingData: {
     actionType: trackingKeys.ssrRecipesClickGetInTouch,
     seCategory: SE_CATEGORY_HELP,
+  }
+})
+
+export const trackRefundFAQClick = ({ compensationAmount, articleName, isAutoAccept }) => ({
+  type: webClientActionTypes.TRACKING,
+  trackingData: {
+    actionType: trackingKeys.ssrIngredientsOpenRefundArticle,
+    seCategory: SE_CATEGORY_HELP,
+    amount: compensationAmount,
+    article_name: articleName,
+    auto_accept: isAutoAccept,
   }
 })
 
@@ -324,7 +335,7 @@ export const validateLatestOrder = ({
   accessToken,
   orderId,
   costumerId
-}) => async (dispatch, getState) => {
+}) => async (dispatch) => {
   dispatch(webClientStatusActions.pending(webClientActionTypes.GET_HELP_VALIDATE_ORDER, true))
   dispatch(webClientStatusActions.error(webClientActionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
@@ -336,7 +347,6 @@ export const validateLatestOrder = ({
           customer_id: Number(costumerId),
           order_id: Number(orderId),
         },
-        featureShorterCompensationPeriod: getFeatureShorterCompensationPeriod(getState()),
       })
     )
     const { ineligibleIngredientUuids } = response.data

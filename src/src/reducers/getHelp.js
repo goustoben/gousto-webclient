@@ -191,9 +191,11 @@ const getHelp = (state, action) => {
     return state.setIn(['order', 'trackingUrl'], action.payload.trackingUrl)
   }
   case actionTypes.GET_HELP_VALIDATE_DELIVERY: {
-    return state.setIn(['order', 'deliveryCompensationAmount'], action.payload.compensation)
+    return state.setIn(['compensation', 'amount'], action.payload.compensation)
+      .setIn(['order', 'deliveryCompensationAmount'], action.payload.compensation)
       .setIn(['order', 'hasPassedDeliveryValidation'], action.payload.isValid)
   }
+
   case webClientActionTypes.GET_HELP_VALIDATE_ORDER: {
     if (action.ineligibleIngredientUuids) {
       return state.set('ineligibleIngredientUuids', fromJS(action.ineligibleIngredientUuids))

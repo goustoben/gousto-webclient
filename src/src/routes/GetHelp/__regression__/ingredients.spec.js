@@ -96,7 +96,7 @@ describe('Given the customer is logged in', () => {
 
             it('shows the refund confirmation step', () => {
               cy.url().should('include', 'confirmation')
-              cy.contains('Thanks')
+              cy.contains('thanks')
             })
           })
 

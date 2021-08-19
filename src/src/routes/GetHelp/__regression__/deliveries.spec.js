@@ -65,7 +65,7 @@ describe('Given I am logged in and visit the home page', () => {
 
               it('shows Thank you page with the information about applied credit', () => {
                 cy.url().should('include', 'confirmation')
-                cy.contains('We\'ve added the credit to your account.')
+                cy.contains('£26.95 credit added')
                 cy.get('[data-testing="doneCTA"]').should('exist')
               })
             })

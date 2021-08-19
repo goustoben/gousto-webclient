@@ -271,6 +271,11 @@ describe('getHelp reducer', () => {
       expect(newState.getIn(['order', 'deliveryCompensationAmount']))
         .toEqual(COMPENSATION_AMOUNT)
     })
+
+    test('the delivery compensation amount is stored in the new state.compensation.amount', () => {
+      expect(newState.getIn(['compensation', 'amount']))
+        .toEqual(COMPENSATION_AMOUNT)
+    })
   })
 
   describe('given an action with type GET_HELP_VALIDATE_ORDER is received', () => {
