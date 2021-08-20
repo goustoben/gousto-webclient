@@ -200,8 +200,10 @@ jobs:
           command: npm run test:staging
       - store_test_results:
           path: tests/e2e/reports
+          destination: test_results
       - store_artifacts:
           path: tests/e2e/reports
+          destination: artefacts
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
