@@ -188,7 +188,7 @@ jobs:
       - run:
           name: Build webclient E2E helpers
           working_directory: src
-          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build:e2e
+          command: source ~/.circlerc && NODE_CONFIG_ENV="staging" NODE_APP_INSTANCE="live" npm run build:e2e
       - run:
           name: Install E2E test dependencies
           working_directory: tests/e2e
@@ -196,11 +196,11 @@ jobs:
       - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
-          command: source ~/.circlerc && ENVIRONMENT=fef ./lease-access.sh
+          command: source ~/.circlerc && ENVIRONMENT=staging ./lease-access.sh
       - run:
           name: Run E2E tests
           working_directory: tests/e2e
-          command: npm run test:fef
+          command: npm run test:staging
       - store_test_results:
           path: tests/e2e/reports
           destination: test_results
@@ -222,7 +222,7 @@ jobs:
           at: /
       - run:
           name: Export base url environment variable
-          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
+          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://staging-webclient.gousto.info' >> $BASH_ENV
           # This is a workaround for broken variable interpolation in version 2
           # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
       - run: echo $BASH_ENV
@@ -253,7 +253,7 @@ jobs:
           at: /
       - run:
           name: Export base url environment variable
-          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
+          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://staging-webclient.gousto.info' >> $BASH_ENV
       - run:
           name: Run regression tests
           command: |
