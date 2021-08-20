@@ -182,6 +182,9 @@ jobs:
           aws-access-key-id: AWS_ERC_ACCESS_KEY
           aws-secret-access-key: AWS_ERC_SECRET_KEY
           aws-region: AWS_DEFAULT_REGION
+      - run: echo ${ENVIRONMENT}
+      - run: printenv
+      - run: cat ~/.circlerc
       - run:
           name: Build webclient E2E helpers
           working_directory: src
@@ -222,6 +225,7 @@ jobs:
           command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
           # This is a workaround for broken variable interpolation in version 2
           # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
+      - run: echo $BASH_ENV
       - run:
           name: Run regression tests
           command: |
@@ -537,57 +541,57 @@ workflows:
             branches:
               only:
                 - /^env-.*/
-      - build-webclient:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - jest-coverage-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - eslint-generate-report:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-ci-variables-scripts-and-npm-dependencies
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - publish-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - jest-coverage-report
-            - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - create-and-upload-webclient-docker-image-to-ecr:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-webclient
-            - jest-coverage-report
-            - eslint-generate-report
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - deploy-infrastructure-and-webclient-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - create-and-upload-webclient-docker-image-to-ecr
-          filters:
-            branches:
-              only:
-                - /^env-.*/
+#      - build-webclient:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - setup-ci-variables-scripts-and-npm-dependencies
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - jest-coverage-report:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - setup-ci-variables-scripts-and-npm-dependencies
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - eslint-generate-report:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - setup-ci-variables-scripts-and-npm-dependencies
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - publish-code-health:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - jest-coverage-report
+#            - eslint-generate-report
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - create-and-upload-webclient-docker-image-to-ecr:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - build-webclient
+#            - jest-coverage-report
+#            - eslint-generate-report
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
+#      - deploy-infrastructure-and-webclient-image:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - create-and-upload-webclient-docker-image-to-ecr
+#          filters:
+#            branches:
+#              only:
+#                - /^env-.*/
       - install-regression-test-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -600,7 +604,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+#            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -609,7 +613,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-regression-test-dependencies
-            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
+#            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -617,7 +621,8 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-infrastructure-and-webclient-image
+            - setup-ci-variables-scripts-and-npm-dependencies
+#            - deploy-infrastructure-and-webclient-image
           filters:
             branches:
               only:
