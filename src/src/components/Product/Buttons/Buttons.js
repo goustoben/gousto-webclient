@@ -154,6 +154,7 @@ class Buttons extends React.PureComponent {
           message={tooltipMessage}
           visible={tooltipVisible}
           onVisibleChange={this.tooltipToggle}
+          overlayClassName={css.tooltip}
         >
           <Segment
             onClick={this.handleAdd}

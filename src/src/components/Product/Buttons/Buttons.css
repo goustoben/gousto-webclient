@@ -27,3 +27,8 @@
 .qtySegment {
 	width: 25px;
 }
+
+.tooltip {
+	/* ReactModal has a z-index of 2001 */
+	z-index: 2001;
+}
