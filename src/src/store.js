@@ -18,6 +18,7 @@ import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import { dataLayerTracker } from 'middlewares/tracking/dataLayerTracker'
 import persistenceConfig from 'config/storePersistence'
 import globals from 'config/globals'
+import { createAuthorizationSubscriber } from 'routes/Menu/apis/_utils' 
 
 class GoustoStore {
   constructor() {
@@ -77,6 +78,8 @@ class GoustoStore {
       initialState,
       composeEnhancers(applyMiddleware(...middleware))
     )
+
+    createAuthorizationSubscriber(this.store)
 
     return this.store
   }

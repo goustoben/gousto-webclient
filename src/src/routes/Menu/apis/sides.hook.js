@@ -1,17 +1,9 @@
 import useSWR from 'swr'
 import endpoint from 'config/endpoint'
-import { postFetcher } from './fetch'
+import { getKy } from './_utils'
 
-export const useSides = ({ accessToken, userId, order, makeRequest = true }, options) => {
-  const argumentsForPostFetcher = makeRequest ? [
-    `${endpoint('menu', 1)}/sides`,
-    // We have to use JSON.stringify on `order` cause our selectors
-    // return new objects and create a mounting/request loop.
-    JSON.stringify(order),
-    accessToken,
-    userId,
-  ] : null
+const postSides = async (order) => getKy().post(`${endpoint('menu', 1)}/sides`, { json: { data: order } }).json()
 
-  // if null is provided to swr, it won't make a call to the API (postFetcher)
-  return useSWR(argumentsForPostFetcher, postFetcher, options)
-}
+export const usePostSides = ({ order, makeRequest = true }, options) => useSWR(makeRequest ? [order] : null, postSides, options)
+
+export const updateProducts = async (orderId, products) => getKy().post(`${endpoint('core')}/order/${orderId}/update-items`, { json: { data: products, _method: 'POST' } }).json()

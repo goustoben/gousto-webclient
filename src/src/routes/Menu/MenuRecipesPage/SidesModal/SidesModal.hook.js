@@ -1,22 +1,34 @@
+/* eslint-disable no-param-reassign */
 import React from 'react'
-import { useSides } from 'routes/Menu/apis/sides.hook'
+import create from 'zustand'
+import produce from 'immer'
+import { usePostSides, updateProducts } from 'routes/Menu/apis/sides.hook'
 import { ResourceType } from 'routes/Menu/constants/resources'
-import { updateOrderItems } from 'apis/orders'
 import { SIDES, MAX_PRODUCTS_PER_BOX, LimitType } from '../../constants/products'
+import {
+  trackSidesContinueClicked,
+  trackAddSide,
+  trackCloseSidesAllergens,
+  trackViewSidesAllergens,
+} from './tracking'
 
-// Note: this method should be replaced with `Object.fromEntries` when supported
-const fromEntriesReduce = (obj, [key, value]) => ({
-  ...obj,
-  [key]: value,
+// Setup basket store
+const useSidesBasketStore = create(set => ({
+  products: {},
+  resetProducts: (products) => set({ products }),
+  addProduct: (id) => set(produce(state => {
+    state.products[id] = (state.products[id] || 0) + 1
+  })),
+  removeProduct: (id) => set(produce(state => {
+    state.products[id] = (state.products[id] || 0) - 1
+    if (state.products[id] === 0) {
+      delete state.products[id]
+    }
+  })),
 })
+)
 
 const sum = (total, value) => total + value
-
-// This method remove keys from the object that are null/0/-0/false/undefined/''
-const removeFalsyValuesFromObject = (object) => Object
-  .entries(object)
-  .filter(([, value]) => Boolean(value))
-  .reduce(fromEntriesReduce, {})
 
 const getProductsInOrder = (order) => {
   const components = order.relationships.components.data
@@ -34,17 +46,6 @@ const getTotal = (sides, selectedProducts) =>
   sides
     .map(({ id, list_price: listPrice }) => listPrice * (selectedProducts[id] || 0))
     .reduce(sum, 0)
-
-const makeUpdateSidesQuantity = (selectedProducts, setSelectedProducts) =>
-  (id, quantity) => {
-    const objectWithUpdateSide = { [id]: quantity }
-    const updatedSides = removeFalsyValuesFromObject({
-      ...selectedProducts,
-      ...objectWithUpdateSide,
-    })
-
-    setSelectedProducts(updatedSides)
-  }
 
 const getLimitsForProduct = (quantity, side, totalQuantityOfProducts, totalQuantityOfSides, maxProductsPerBox) => {
   const sideLimit = side.box_limit
@@ -66,8 +67,8 @@ const getLimitsForProduct = (quantity, side, totalQuantityOfProducts, totalQuant
   return false
 }
 
-const getProductsForUpdateProductsV1 = (selectedProducts) => {
-  const productData = Object.entries(selectedProducts).map(([id, quantity]) => ({
+const getProductsForUpdateProductsV1 = (state) => {
+  const productData = Object.entries(state.products).map(([id, quantity]) => ({
     id,
     quantity,
     type: 'Product',
@@ -79,22 +80,18 @@ const getProductsForUpdateProductsV1 = (selectedProducts) => {
   }
 }
 
-export const useSidesBasket = ({
-  accessToken,
-  userId,
+export const useSidesBasketModal = ({
   order,
   onSubmitCallback,
   isOpen,
-  trackAddSide,
-  trackSidesContinueClicked,
 }) => {
+  const selectedProducts = useSidesBasketStore((state) => state.products)
+  const resetProducts = useSidesBasketStore((state) => state.resetProducts)
   const productsInOrder = React.useMemo(() => getProductsInOrder(order), [order])
-  const [selectedProducts, setSelectedProducts] = React.useState(productsInOrder)
+  const productsToUpdateV1 = useSidesBasketStore(getProductsForUpdateProductsV1)
   const [isSubmitting, setSubmitting] = React.useState(false)
-  const { data } = useSides({
-    accessToken,
-    userId,
-    order: { data: order },
+  const { data } = usePostSides({
+    order,
     makeRequest: isOpen
   }, {
     onError: () => onSubmitCallback('sides-modal-without-sides', null),
@@ -106,16 +103,68 @@ export const useSidesBasket = ({
       }
     }
   })
-
   const sides = data ? data.data : []
+  const totalQuantityOfSides = sides
+    .map(({ id }) => (selectedProducts[id] || 0))
+    .reduce(sum, 0)
   const total = getTotal(sides, selectedProducts)
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    if (isSubmitting) return
+
+    setSubmitting(true)
+
+    const sidesIds = sides
+      .map(({ id }) => id)
+      .filter((id) => Boolean(selectedProducts[id]))
+
+    try {
+      await updateProducts(
+        order.id,
+        productsToUpdateV1,
+      )
+      trackSidesContinueClicked(sidesIds, total, totalQuantityOfSides)
+      onSubmitCallback('sides-modal-with-sides', selectedProducts)
+    } catch (e) {
+      onSubmitCallback('sides-modal-failed-to-save-sides', null)
+    }
+  }
+
+  React.useEffect(() => {
+    if (!isOpen && isSubmitting) {
+      setSubmitting(false)
+    }
+  }, [isOpen, isSubmitting, setSubmitting])
+
+  React.useEffect(() => {
+    if (isOpen) {
+      resetProducts(productsInOrder)
+    }
+  }, [isOpen, productsInOrder, resetProducts])
+
+  return {
+    sides,
+    hasSides: Boolean(sides.length),
+    total,
+    onSubmit,
+    isSubmitting,
+  }
+}
+
+export const useSidesBasketForSidesContent = (order) => {
+  const { data } = usePostSides({ order })
+  const sides = data ? data.data : []
+  const selectedProducts = useSidesBasketStore((state) => state.products)
+  const addProduct = useSidesBasketStore((state) => state.addProduct)
+  const removeSide = useSidesBasketStore((state) => state.removeProduct)
+  const productsInOrder = React.useMemo(() => getProductsInOrder(order), [order])
   const getQuantityForSidesBasket = (id) => selectedProducts[id] || 0
-  const updateSidesQuantity = makeUpdateSidesQuantity(selectedProducts, setSelectedProducts)
   const addSide = (id) => {
     trackAddSide(id, order.id)
-    updateSidesQuantity(id, getQuantityForSidesBasket(id) + 1)
+    addProduct(id)
   }
-  const removeSide = (id) => updateSidesQuantity(id, getQuantityForSidesBasket(id) - 1)
 
   // Limits and Stock
   const totalQuantityOfProducts = Object.values(selectedProducts).reduce(sum, 0)
@@ -142,51 +191,33 @@ export const useSidesBasket = ({
     maxProductsPerBox
   )
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-
-    if (isSubmitting) return
-
-    setSubmitting(true)
-
-    const sidesIds = sides
-      .map(({ id }) => id)
-      .filter((id) => Boolean(selectedProducts[id]))
-
-    try {
-      await updateOrderItems(
-        accessToken,
-        order.id,
-        getProductsForUpdateProductsV1(selectedProducts)
-      )
-      trackSidesContinueClicked(sidesIds, total, totalQuantityOfSides)
-      onSubmitCallback('sides-modal-with-sides', selectedProducts)
-    } catch (e) {
-      onSubmitCallback('sides-modal-failed-to-save-sides', null)
-    }
-  }
-
-  React.useEffect(() => {
-    if (!isOpen && isSubmitting) {
-      setSubmitting(false)
-    }
-  }, [isOpen, isSubmitting, setSubmitting])
-
-  React.useEffect(() => {
-    if (isOpen) {
-      setSelectedProducts(productsInOrder)
-    }
-  }, [isOpen, productsInOrder])
-
   return {
-    sides,
-    onSubmit,
-    total,
     addSide,
-    removeSide,
+    getLimit,
     getQuantityForSidesBasket,
     isOutOfStock,
-    getLimit,
-    isSubmitting,
+    removeSide,
+    sides,
   }
+}
+
+export const useAllergenAndNutritionControl = (isOpen) => {
+  const [show, setShow] = React.useState(false)
+  const toggle = () => {
+    if (show) {
+      trackCloseSidesAllergens()
+      setShow(false)
+    } else {
+      trackViewSidesAllergens()
+      setShow(true)
+    }
+  }
+
+  React.useEffect(() => {
+    if (!isOpen && show) {
+      setShow(false)
+    }
+  }, [show, setShow, isOpen])
+
+  return [show, toggle]
 }

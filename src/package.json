@@ -53,6 +53,7 @@
     "cookies-js": "1.2.3",
     "dompurify": "^2.0.8",
     "gousto-lumberjack-js": "git@github.com:Gousto/lumberjack-js-package.git#v1.0.4",
+    "immer": "^9.0.5",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
     "jsonfile": "4.0.0",
@@ -61,6 +62,8 @@
     "koa-convert": "1.2.0",
     "koa-mount": "2.0.0",
     "koa-static": "3.0.0",
+    "ky": "v0.25.1",
+    "ky-universal": "^0.8.2",
     "libphonenumber-js": "^1.9.23",
     "moment": "2.22.2",
     "performance-now": "^2.1.0",
@@ -103,7 +106,8 @@
     "transit-js": "0.8.861",
     "url": "0.11.0",
     "uuid": "3.3.2",
-    "validator": "10.4.0"
+    "validator": "10.4.0",
+    "zustand": "^3.5.9"
   },
   "devDependencies": {
     "@sheerun/mutationobserver-shim": "^0.3.3",
@@ -267,7 +271,8 @@
       "__TEST__": true,
       "process.env.NODE_ENV": "production",
       "__GIT_HASH__": "production",
-      "__ENDPOINTS__": {}
+      "__ENDPOINTS__": {},
+      "$T": {}
     }
   },
   "husky": {

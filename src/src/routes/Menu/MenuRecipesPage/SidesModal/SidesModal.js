@@ -11,7 +11,11 @@ import ModalPanel from 'Modal/ModalPanel'
 import { SubIngredients } from '../../Recipe/Detail/SubIngredients/SubIngredients'
 import css from './SidesModal.css'
 import { SidePropType } from './SidesPropTypes'
-import { useSidesBasket } from './SidesModal.hook'
+import {
+  useSidesBasketModal,
+  useSidesBasketForSidesContent,
+  useAllergenAndNutritionControl,
+} from './SidesModal.hook'
 
 const SidesContentFooter = ({
   toggleShowAllergenAndNutrition,
@@ -80,66 +84,65 @@ SidesContentFooter.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
 }
 
-const SidesContent = ({
-  getQuantityForSidesBasket,
-  addSide,
-  removeSide,
-  sides,
-  isOutOfStock,
-  getLimit,
-}) => (
-  <React.Fragment>
-    {sides.map(
-      side => {
-        const quantity = getQuantityForSidesBasket(side.id)
-        const limit = getLimit(side.id)
-        const isOutOfStockForSide = isOutOfStock(side.id)
-        const isAvailable = !(isOutOfStockForSide || limit)
+const SidesContent = ({ order }) => {
+  const {
+    addSide,
+    getLimit,
+    getQuantityForSidesBasket,
+    isOutOfStock,
+    removeSide,
+    sides,
+  } = useSidesBasketForSidesContent(order)
 
-        return (
-          <div key={side.id} className={css.sidesModalSidesContainer}>
-            <div className={css.sidesModalSidesImageContainer}>
-              <Image media={Immutable.fromJS(side.images).toList()} className={css.sidesModalSidesImage} title={side.title} />
-            </div>
-            <div className={css.sidesModalSidesDetails}>
-              <h3 className={css.sidesModalSidesHeader}>
-                {side.title}
-              </h3>
-              <span className={css.sidesModalSidesText}>
-                {`£${side.list_price} ● 2 Servings`}
-              </span>
-              <div
-                role="button"
-                aria-label="Add or Remove Side"
-              >
-                <Buttons
-                  fill
-                  fullWidth
-                  isAgeVerificationRequired={false}
-                  onAdd={addSide}
-                  onRemove={removeSide}
-                  productId={side.id}
-                  outOfStock={isOutOfStockForSide}
-                  limitReached={limit}
-                  qty={quantity}
-                  isAvailable={isAvailable}
-                />
+  return (
+    <React.Fragment>
+      {sides.map(
+        side => {
+          const quantity = getQuantityForSidesBasket(side.id)
+          const limit = getLimit(side.id)
+          const isOutOfStockForSide = isOutOfStock(side.id)
+          const isAvailable = !(isOutOfStockForSide || limit)
+
+          return (
+            <div key={side.id} className={css.sidesModalSidesContainer}>
+              <div className={css.sidesModalSidesImageContainer}>
+                <Image media={Immutable.fromJS(side.images).toList()} className={css.sidesModalSidesImage} title={side.title} />
+              </div>
+              <div className={css.sidesModalSidesDetails}>
+                <h3 className={css.sidesModalSidesHeader}>
+                  {side.title}
+                </h3>
+                <span className={css.sidesModalSidesText}>
+                  {`£${side.list_price} ● 2 Servings`}
+                </span>
+                <div
+                  role="button"
+                  aria-label="Add or Remove Side"
+                >
+                  <Buttons
+                    fill
+                    fullWidth
+                    isAgeVerificationRequired={false}
+                    onAdd={addSide}
+                    onRemove={removeSide}
+                    productId={side.id}
+                    outOfStock={isOutOfStockForSide}
+                    limitReached={limit}
+                    qty={quantity}
+                    isAvailable={isAvailable}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        )
-      }
-    )}
-  </React.Fragment>
-)
+          )
+        }
+      )}
+    </React.Fragment>
+  )
+}
 
 SidesContent.propTypes = {
-  getQuantityForSidesBasket: PropTypes.func.isRequired,
-  addSide: PropTypes.func.isRequired,
-  removeSide: PropTypes.func.isRequired,
-  isOutOfStock: PropTypes.func.isRequired,
-  getLimit: PropTypes.func.isRequired,
-  sides: PropTypes.arrayOf(SidePropType).isRequired,
+  order: PropTypes.shape({}).isRequired,
 }
 
 const SidesAllergenAndNutritionContent = ({
@@ -168,51 +171,26 @@ SidesAllergenAndNutritionContent.propTypes = {
 }
 
 export const SidesModal = ({
-  accessToken,
-  userId,
   order,
   isOpen,
   onClose,
   onSubmit: onSubmitCallback,
-  trackAddSide,
-  trackSidesContinueClicked,
-  trackViewSidesAllergens,
-  trackCloseSidesAllergens,
 }) => {
   const {
     sides,
+    hasSides,
     onSubmit,
-    addSide,
-    removeSide,
-    getQuantityForSidesBasket,
-    isOutOfStock,
-    getLimit,
     total,
     isSubmitting,
-  } = useSidesBasket({
-    accessToken,
-    userId,
+  } = useSidesBasketModal({
     order,
     onSubmitCallback,
     isOpen,
-    trackAddSide,
-    trackSidesContinueClicked,
   })
-  const hasSides = Boolean(sides.length)
-  const [showAllergenAndNutrition, setShowAllergenAndNutrition] = React.useState(false)
-  const toggleShowAllergenAndNutrition = () => {
-    if (showAllergenAndNutrition) {
-      trackCloseSidesAllergens()
-      setShowAllergenAndNutrition(false)
-    } else {
-      trackViewSidesAllergens()
-      setShowAllergenAndNutrition(true)
-    }
-  }
-  const onModalClose = () => {
-    setShowAllergenAndNutrition(false)
-    onClose()
-  }
+  const [
+    showAllergenAndNutrition,
+    toggleShowAllergenAndNutrition
+  ] = useAllergenAndNutritionControl(isOpen)
 
   if (!hasSides) {
     return null
@@ -223,7 +201,7 @@ export const SidesModal = ({
       open={isOpen}
       from="top"
     >
-      <ModalPanel closePortal={onModalClose} className={css.sidesModalPanelContainer}>
+      <ModalPanel closePortal={onClose} className={css.sidesModalPanelContainer}>
         <ModalHeader align="left" withSeparator>
           {showAllergenAndNutrition
             ? 'Allergens and Nutrition'
@@ -242,15 +220,7 @@ export const SidesModal = ({
               />
             ) : (
               <SidesContent
-                getQuantityForSidesBasket={getQuantityForSidesBasket}
-                addSide={addSide}
-                removeSide={removeSide}
-                onSubmit={onSubmit}
-                sides={sides}
-                toggleShowAllergenAndNutrition={toggleShowAllergenAndNutrition}
-                total={total}
-                isOutOfStock={isOutOfStock}
-                getLimit={getLimit}
+                order={order}
               />
             )}
         </div>
@@ -267,14 +237,8 @@ export const SidesModal = ({
 }
 
 SidesModal.propTypes = {
-  accessToken: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
   order: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  trackAddSide: PropTypes.func.isRequired,
-  trackSidesContinueClicked: PropTypes.func.isRequired,
-  trackViewSidesAllergens: PropTypes.func.isRequired,
-  trackCloseSidesAllergens: PropTypes.func.isRequired,
 }

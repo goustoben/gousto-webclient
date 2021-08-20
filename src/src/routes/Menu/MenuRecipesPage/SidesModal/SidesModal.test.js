@@ -1,15 +1,14 @@
 import React from 'react'
 import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-library/react'
-import * as OrderAPI from 'apis/orders'
+import * as API from 'routes/Menu/apis/sides.hook'
 import { user } from 'routes/Menu/apis/sides.hook.mock'
-import Modal from 'react-modal'
 import { SidesModal } from './SidesModal'
-
-Modal.setAppElement(document.body)
+import * as Tracking from './tracking'
 
 describe('<SideModal />', () => {
-  const accessToken = 'access-token'
   const orderId = 'order-id'
+
+  $T.setupServer($T.handlers.sides)
 
   const getOrder = (products = []) => ({
     id: orderId,
@@ -93,7 +92,7 @@ describe('<SideModal />', () => {
   let trackSidesContinueClicked
   let trackViewSidesAllergens
   let trackCloseSidesAllergens
-  let updateOrderItems
+  let updateProducts
 
   const SideIds = {
     PlainNaan: '50e99248-e00e-11eb-a669-02675e6927cd',
@@ -103,13 +102,18 @@ describe('<SideModal />', () => {
   }
 
   beforeEach(() => {
-    updateOrderItems = jest.spyOn(OrderAPI, 'updateOrderItems').mockImplementation().mockResolvedValue()
+    updateProducts = jest.spyOn(API, 'updateProducts').mockImplementation().mockResolvedValue()
     onSubmit = jest.fn()
     onClose = jest.fn()
     trackAddSide = jest.fn()
     trackSidesContinueClicked = jest.fn()
     trackViewSidesAllergens = jest.fn()
     trackCloseSidesAllergens = jest.fn()
+
+    jest.spyOn(Tracking, 'trackAddSide').mockImplementation(trackAddSide)
+    jest.spyOn(Tracking, 'trackSidesContinueClicked').mockImplementation(trackSidesContinueClicked)
+    jest.spyOn(Tracking, 'trackViewSidesAllergens').mockImplementation(trackViewSidesAllergens)
+    jest.spyOn(Tracking, 'trackCloseSidesAllergens').mockImplementation(trackCloseSidesAllergens)
   })
 
   afterEach(jest.clearAllMocks)
@@ -117,25 +121,10 @@ describe('<SideModal />', () => {
 
   const SideModalWithMockedProps = ({
     // eslint-disable-next-line react/prop-types
-    userId,
-    // eslint-disable-next-line react/prop-types
     order = getOrder(),
     // eslint-disable-next-line react/prop-types
     isOpen,
-  }) => (
-    <SidesModal
-      accessToken={accessToken}
-      userId={userId}
-      order={order}
-      onSubmit={onSubmit}
-      isOpen={isOpen}
-      onClose={onClose}
-      trackAddSide={trackAddSide}
-      trackSidesContinueClicked={trackSidesContinueClicked}
-      trackViewSidesAllergens={trackViewSidesAllergens}
-      trackCloseSidesAllergens={trackCloseSidesAllergens}
-    />
-  )
+  }) => (<SidesModal order={order} onSubmit={onSubmit} isOpen={isOpen} onClose={onClose} />)
 
   const renderModal = ({
     userId,
@@ -152,16 +141,15 @@ describe('<SideModal />', () => {
    */
   const expectSubmitToHaveBeenNthCalledWith = async (nth, sides, totalQntOfSides, totalPrice, products = {}) => {
     // We track submitting with sides
-    await waitFor(() => expect(updateOrderItems).toBeCalledTimes(nth))
+    await waitFor(() => expect(updateProducts).toBeCalledTimes(nth))
     await waitFor(() => expect(trackSidesContinueClicked).toBeCalledTimes(nth))
     await waitFor(() => expect(onSubmit).toBeCalledTimes(nth))
 
     const sideIds = Object.keys(sides)
     const sideIdsAndProducts = [...sideIds, ...Object.keys(products)]
 
-    expect(updateOrderItems).toHaveBeenNthCalledWith(
+    expect(updateProducts).toHaveBeenNthCalledWith(
       nth,
-      'access-token',
       'order-id',
       {
         item_choices: expect.arrayContaining(sideIdsAndProducts.map((id) => ({
@@ -193,8 +181,12 @@ describe('<SideModal />', () => {
   }
 
   describe('when modal is not open', () => {
+    beforeEach(() => {
+      $T.setUserId(user.withSides)
+    })
+
     it('should not render', () => {
-      renderModal({ isOpen: false, userId: user.withSides })
+      renderModal({ isOpen: false })
 
       expect(screen.queryByRole('heading')).not.toBeInTheDocument()
     })
@@ -202,10 +194,12 @@ describe('<SideModal />', () => {
 
   describe('when modal is open', () => {
     describe('with an unsuccessful request', () => {
-      it('should call submitWithNoSides and not render', async () => {
-        expect.assertions(3)
+      beforeEach(() => {
+        $T.setUserId(user.withError)
+      })
 
-        renderModal({ isOpen: true, userId: user.withError })
+      it('should call submitWithNoSides and not render', async () => {
+        renderModal({ isOpen: true })
 
         await waitFor(() => {
           expect(onSubmit).toHaveBeenNthCalledWith(1, 'sides-modal-without-sides', null)
@@ -216,10 +210,12 @@ describe('<SideModal />', () => {
     })
 
     describe('when sides endpoint returns with no sides', () => {
-      it('should call submitWithNoSides and not render', async () => {
-        expect.assertions(3)
+      beforeEach(() => {
+        $T.setUserId(user.withOutSides)
+      })
 
-        renderModal({ isOpen: true, userId: user.withOutSides })
+      it('should call submitWithNoSides and not render', async () => {
+        renderModal({ isOpen: true })
 
         await waitFor(() => {
           expect(onSubmit).toHaveBeenNthCalledWith(1, 'sides-modal-without-sides', null)
@@ -230,8 +226,12 @@ describe('<SideModal />', () => {
     })
 
     describe('when sides endpoint returns sides', () => {
+      beforeEach(() => {
+        $T.setUserId(user.withSides)
+      })
+
       const renderOpenSidesModal = async (order) => {
-        const rtl = renderModal({ isOpen: true, userId: user.withSides, order })
+        const rtl = renderModal({ isOpen: true, order })
 
         // Wait for sides to load
         await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
@@ -259,7 +259,7 @@ describe('<SideModal />', () => {
         expect(blanchedPeasImage).toHaveAttribute('src', 'https://production-media.gousto.co.uk/cms/product-image-landscape/Peas-3924-x400.jpg')
       })
 
-      it('should call onClose when modal close button is clicked and hide allergens', async () => {
+      it('should call onClose when modal close button is clicked', async () => {
         await renderOpenSidesModal()
 
         const header = within(screen.getByRole('heading', { name: 'Fancy any sides?', level: 2 }).closest('div'))
@@ -275,8 +275,6 @@ describe('<SideModal />', () => {
         fireEvent.click(closeButton)
 
         expect(onClose).toBeCalledTimes(1)
-
-        await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
       })
 
       describe('when user clicks show allergens', () => {
@@ -319,6 +317,28 @@ describe('<SideModal />', () => {
           await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
 
           expect(screen.queryByRole('heading', { name: 'Allergens and Nutrition', level: 2 })).not.toBeInTheDocument()
+        })
+
+        it('should hide the sides allergens and nutrition information when modal is closed', async () => {
+          const { rerender } = await renderOpenSidesModal()
+
+          // Show Allergens
+          const button = screen.getByRole('button', { name: 'Show Allergens and Nutrition' })
+
+          fireEvent.click(button)
+
+          // Track showing Allergens information
+          expect(trackViewSidesAllergens).toBeCalledTimes(1)
+
+          await screen.findByRole('heading', { name: 'Allergens and Nutrition', level: 2 })
+
+          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen={false} order={getOrder()} />)
+
+          await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument())
+
+          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen order={getOrder()} />)
+
+          await screen.findByRole('heading', { name: 'Fancy any sides?', level: 2 })
         })
       })
 
@@ -438,7 +458,7 @@ describe('<SideModal />', () => {
 
         describe('when updating products is unsuccessful', () => {
           it('should continue with by calling onSubmit with null', async () => {
-            updateOrderItems.mockRejectedValue(new Error('Something went wrong'))
+            updateProducts.mockRejectedValue(new Error('Something went wrong'))
 
             await renderOpenSidesModal()
 
@@ -457,7 +477,7 @@ describe('<SideModal />', () => {
             fireEvent.click(continueWithSidesButton)
 
             // When the request fails
-            expect(updateOrderItems).toHaveBeenCalledTimes(1)
+            expect(updateProducts).toHaveBeenCalledTimes(1)
 
             // We call submit with no products/sides
             await waitFor(() => {

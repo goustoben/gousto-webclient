@@ -32,9 +32,10 @@
          "goustouicomponents": ["libs/goustouicomponents/src/main"],
          "design-language": ["libs/goustouicomponents/dist/design-language"],
          "zest": ["libs/goustouicomponents/dist"],
-         "fixtures": ["../tests/regression/fixtures"],
+         "fixtures": ["../tests/regression/fixtures"]
      }
   },
+  "include": ["index.d.ts"],
   "exclude":[
      "node_modules",
      "dist",

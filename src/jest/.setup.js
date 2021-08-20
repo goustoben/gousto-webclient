@@ -1,10 +1,12 @@
 // setup file
+import 'whatwg-fetch'
 import '@testing-library/jest-dom/extend-expect'
 import MutationObserver from '@sheerun/mutationobserver-shim'
 // Endpoints need to be setup before MSW
 import './.setupEndpoints.js'
 import { cache } from "swr"
-import { server } from "./.msw"
+import { helpers } from "./.msw"
+import { waitFor } from '@testing-library/react'
 
 const Enzyme = require('enzyme');
 const EnzymeAdapter = require('@wojtekmaj/enzyme-adapter-react-17');
@@ -43,21 +45,17 @@ jest
   .spyOn(Modal, "setAppElement")
   .mockImplementation(() => {});
 
-// This clears the cache of swr after each test
-afterAll(() => cache.clear())
+// This is a global test helper
+const $T = {
+  ...helpers,
+}
 
-// Establish API mocking before all tests.
-beforeAll(() => {
-  server.listen()
+global.$T = $T
+
+// We can only declare one afterEach in this file
+// issue with clearing cache https://github.com/vercel/swr/issues/781
+afterEach(async () => {
+  $T.setUserId()
+  cache.clear()
+  await new Promise(requestAnimationFrame)
 })
-
-// Reset any request handlers that we may add during the tests,
-// so they don't affect other tests.
-afterEach(() => {
-  // If you need logging of the requests, uncomment the following line.
-  // server.printHandlers()
-  server.resetHandlers()
-})
-
-// Clean up after the tests are finished.
-afterAll(() => server.close())

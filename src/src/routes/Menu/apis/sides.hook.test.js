@@ -1,82 +1,96 @@
-import { renderHook, cleanup } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react-hooks'
 import { user } from './sides.hook.mock'
-import { useSides } from './sides.hook'
+import { usePostSides } from './sides.hook'
 
-describe('useSides', () => {
-  const accessToken = 'access-token'
-  const order = { some: 'thing' }
+describe('usePostSides', () => {
+  const createOrder = () => ({ some: 'thing' })
 
-  afterEach(cleanup)
+  $T.setupServer($T.handlers.sides)
 
   describe('when request fails', () => {
-    test('the error key should be populated', async () => {
-      const userId = user.withError
+    beforeEach(() => {
+      $T.setUserId(user.withError)
+    })
 
-      const { result, waitFor } = renderHook(() => useSides({ userId, accessToken, order }))
+    it('the error key should be populated', async () => {
+      const order = createOrder()
+
+      const { result, waitFor } = renderHook(() => usePostSides({ order }))
 
       await waitFor(() => {
         expect(result.current.error).not.toBeUndefined()
       })
 
       expect(result.current.data).toBeUndefined()
-      expect(result.current.error.info).toEqual(
-        {
-          errors: [{
-            detail: 'Internal Server Error',
-            status: '500'
-          }],
-          meta: {trace_id: 'trace_id'}
-        }
-      )
-      expect(result.current.error.status).toEqual(500)
+      expect(result.current.error).toMatchInlineSnapshot('[HTTPError: Internal Server Error]')
+      expect(result.current.error.response.status).toEqual(500)
     })
   })
 
   describe('when request successful without sides', () => {
-    test('the data key is should be populated', async () => {
-      const userId = user.withOutSides
+    beforeEach(() => {
+      $T.setUserId(user.withOutSides)
+    })
 
-      const { result, waitFor } = renderHook(() => useSides({ userId, accessToken, order }))
+    it('the data key is should be populated', async () => {
+      const order = createOrder()
+
+      const { result, waitFor } = renderHook(() => usePostSides({ order }))
 
       await waitFor(() => {
         expect(result.current.data).not.toBeUndefined()
       })
 
       expect(result.current.error).toBeUndefined()
-      expect(result.current.data).toEqual(
-        {data: [], includes: [], meta: {max_products_per_box: 10}}
-      )
+      expect(result.current.data).toEqual({
+        data: [],
+        includes: [],
+        meta: { max_products_per_box: 10 },
+      })
     })
   })
 
   describe('when request successful sides', () => {
-    test('the data key is should be populated', async () => {
-      const userId = user.withSides
+    beforeEach(() => {
+      $T.setUserId(user.withSides)
+    })
 
-      const { result, waitFor } = renderHook(() => useSides({ userId, accessToken, order }))
+    it('the data key is should be populated', async () => {
+      const order = createOrder()
+
+      const { result, waitFor } = renderHook(() => usePostSides({ order }))
 
       await waitFor(() => {
         expect(result.current.data).not.toBeUndefined()
       })
 
       expect(result.current.error).toBeUndefined()
-      expect(result.current.data).toEqual(
-        {
-          data: expect.arrayContaining([
-            expect.objectContaining({
-              type: 'product',
-            }),
-            expect.objectContaining({
-              type: 'product',
-            }),
-            expect.objectContaining({
-              type: 'product',
-            }),
-          ]),
-          includes: [],
-          meta: {max_products_per_box: 10}
-        }
-      )
+      expect(result.current.data).toEqual({
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            type: 'product',
+          }),
+          expect.objectContaining({
+            type: 'product',
+          }),
+          expect.objectContaining({
+            type: 'product',
+          }),
+        ]),
+        includes: [],
+        meta: { max_products_per_box: 10 },
+      })
+    })
+
+    describe('when called with makeRequest set to false', () => {
+      it('it should not make a request', async () => {
+        const order = createOrder()
+
+        const { result } = renderHook(() => usePostSides({ order, makeRequest: false }))
+
+        expect(result.current.error).toBeUndefined()
+        expect(result.current.data).toBeUndefined()
+      })
     })
   })
 })
