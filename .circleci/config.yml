@@ -32,7 +32,8 @@ jobs:
           at: ~/project
       - run:
           name: Test coverage
-          command: cd src && npm run test:jest:ci:coverage
+          working_directory: src
+          command: npm run test:jest:ci:coverage
           no_output_timeout: 30m
       - persist_to_workspace:
           root: ~/project
@@ -50,7 +51,8 @@ jobs:
           at: /
       - run:
           name: eslint report
-          command: cd src && scripts/run-eslint-ci.sh
+          working_directory: src
+          command: scripts/run-eslint-ci.sh
       - persist_to_workspace:
           root: /
           paths:
@@ -70,7 +72,8 @@ jobs:
           command: mkdir /tmp/artifacts
       - run:
           name: Generate code health
-          command: cd src && node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
+          working_directory: src
+          command: node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
           path: /tmp/artifacts
 
@@ -171,9 +174,6 @@ jobs:
       - attach_workspace:
           at: /
       - run:
-          name: Source .circlerc
-          command: source ~/.circlerc
-      - run:
           name: Install CI dependencies
           command: apt-get -y update && apt-get -y install jq
       - browser-tools/install-chrome
@@ -185,17 +185,15 @@ jobs:
       - run:
           name: Build webclient E2E helpers
           working_directory: src
-          command: NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build:e2e
+          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build:e2e
       - run:
-          name: Build E2E tests
+          name: Install E2E test dependencies
           working_directory: tests/e2e
           command: npm ci
       - run:
           name: Lease CI node access to public ALB
           working_directory: scripts
-          command: ./lease-access.sh
-          environment:
-            ENVIRONMENT: staging
+          command: source ~/.circlerc && ./lease-access.sh
       - run:
           name: Run E2E tests
           working_directory: tests/e2e
@@ -219,7 +217,7 @@ jobs:
           at: /
       - run:
           name: Export base url environment variable
-          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
+          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
           # This is a workaround for broken variable interpolation in version 2
           # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
       - run:
@@ -249,7 +247,7 @@ jobs:
           at: /
       - run:
           name: Export base url environment variable
-          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
+          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
       - run:
           name: Run regression tests
           command: |
@@ -290,9 +288,8 @@ jobs:
           at: /
       - run:
           name: Install regression test dependencies
-          command: |
-            cd tests/regression
-            source ~/.circlerc && npm ci
+          working_directory: tests/regression
+          command: npm ci
       - persist_to_workspace:
           root: /
           paths:
