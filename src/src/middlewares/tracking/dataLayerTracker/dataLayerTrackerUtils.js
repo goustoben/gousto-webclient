@@ -102,7 +102,7 @@ const getV1OrderAPIKeys = (order) => {
 
 const getV2OrderAPIKeys = (order) => {
   const recipes = order.relationships.components.data.filter((i) => i.type === ResourceType.Recipe)
-  const recipeIds = recipes.map((recipe) => recipe.id)
+  const recipeIds = recipes.map((recipe) => recipe.meta.coreRecipeId)
   const recipeCount = recipes.length
   const totalPrice = order.attributes.prices.total
   const orderId = order.id.toString()

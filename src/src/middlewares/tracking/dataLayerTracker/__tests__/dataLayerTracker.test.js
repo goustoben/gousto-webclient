@@ -381,8 +381,8 @@ describe('given dataLayerTracker middleware is invoked', () => {
               relationships: {
                 components: {
                   data: [
-                    { id: '123', type: 'recipe' },
-                    { id: '123', type: 'recipe' },
+                    { id: 'uuid1', type: 'recipe', meta: { coreRecipeId: '123' } },
+                    { id: 'uuid1', type: 'recipe', meta: { coreRecipeId: '123' } },
                   ],
                 },
               },
