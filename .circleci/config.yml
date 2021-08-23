@@ -1,226 +1,223 @@
 ---
 version: 2.1
 
-gousto_build_image: &gousto_build_image
-    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/node12:latest
-      aws_auth:
-        aws_access_key_id: $AWS_ERC_ACCESS_KEY
-        aws_secret_access_key: $AWS_ERC_SECRET_KEY
-
 gousto_platform_image: &gousto_platform_image
     - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/platformdeploy:latest
       aws_auth:
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
+circleci_node_image: &circleci_node_image
+  - image: cimg/node:12.22.4
+    user: root
+
+circleci_node_browsers_image: &circleci_node_browsers_image #image has browser dependencies installed, but not browsers themselves
+  - image: cimg/node:12.22.4-browsers
+    user: root
+
 orbs:
   browser-tools: circleci/browser-tools@1.1.3
+  aws-cli: circleci/aws-cli@1.4.1
 
 jobs:
-  test-isomorphic-jest:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run isomoprhic jest tests
-          command: cd src && npm run test:jest:ci
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
 
   jest-coverage-report:
-    docker: *gousto_build_image
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: ~/project/mnt/ramdisk #removed it from the actual ramdisk directory as it uses too much system resources for jest to correctly run. When we can actually use a bigger node machine this can be moved back like the other steps
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/
+          at: ~/project
       - run:
           name: Test coverage
-          command: cd src && npm run test:jest:ci:coverage
+          working_directory: src
+          command: npm run test:jest:ci:coverage
           no_output_timeout: 30m
       - persist_to_workspace:
-          root: ~/
+          root: ~/project
           paths:
-            - project/src/coverage/coverage-summary.json
+            - mnt/ramdisk/src/coverage/coverage-summary.json
 
   eslint-generate-report:
-    docker: *gousto_build_image
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: eslint report
-          command: cd src && scripts/run-eslint-ci.sh
+          working_directory: src
+          command: scripts/run-eslint-ci.sh
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/src/eslint-results.json
+            - mnt/ramdisk/src/eslint-results.json
 
   publish-code-health:
-    docker: *gousto_build_image
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
     environment:
       TZ: "Europe/London"
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Setup output folder
           command: mkdir /tmp/artifacts
       - run:
           name: Generate code health
-          command: cd src && node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
+          working_directory: src
+          command: node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
       - store_artifacts:
           path: /tmp/artifacts
 
-  setup-src:
-    docker: *gousto_build_image
-    steps:
-      - checkout
-      - run:
-          name: Install global npm dependencies
-          command: npm i -g gulp && npm i -g concurrently@2.2.0
-      - run:
-          name: Install isomorphic npm dependencies
-          command: cd src && npm ci && npm run postinstall
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/src
-            - project/tests
-            - project/regression
-            - project/ansible
-            - project/cloudformation
-            - project/service.yml
 
-  setup-platform:
-    docker: *gousto_platform_image
+  setup-ci-variables-scripts-and-npm-dependencies:
+    docker: *gousto_platform_image #stock image missing /gousto directory
+    resource_class: large
+    working_directory: /mnt/ramdisk
     steps:
       - checkout
       - run:
-          name: Setup platform
+          name: Download platform deploy scripts and set the ENVIRONMENT variable from the branch name
           command: /gousto/platform-setup.sh
-      - setup_remote_docker
       - run:
-          name: Create & deploy image
+          name: Set S3 Cloudfront URL
+          command: |
+            source ~/.circlerc && CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=$AWS_DEFAULT_REGION)
+            echo "export CLOUDFRONT_URL=$CLOUDFRONT_URL" >> ~/.circlerc
+      - run:
+          name: Install npm dependencies
+          workdir: src
+          command: |
+            ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+            npm ci
+            npm run postinstall
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Setup ECR
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --setup
           no_output_timeout: 10m
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/setup
-            - project/scripts
-            - project/ci_scripts
-            - project/images
-            - .circlerc
+            - mnt/ramdisk/src
+            - mnt/ramdisk/tests
+            - mnt/ramdisk/regression
+            - mnt/ramdisk/ansible
+            - mnt/ramdisk/cloudformation
+            - mnt/ramdisk/service.yml
+            - mnt/ramdisk/setup
+            - mnt/ramdisk/scripts
+            - mnt/ramdisk/ci_scripts
+            - mnt/ramdisk/images
+            - root/.circlerc
 
-  setup-build-application:
-    docker: *gousto_platform_image
+  build-webclient:
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
-          name: Setup common
+          name: Setup environment and npm variables for build
           command: source ~/.circlerc && setup/setup-common.sh
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
-            - .npmrc
-
-  build-application:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
+      - run: echo $ENVIRONMENT
       - run:
-          name: Setup isomorphic
-          command: source ~/.circlerc && setup/setup-isomorphic.sh
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/src
-
-  build-webclient-image:
-    docker: *gousto_build_image
-    steps:
-      - setup_remote_docker
-      - attach_workspace:
-          at: ~/
+          name: Build webclient
+          working_directory: src
+          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build
       - run:
-          name: Upload client to S3
-          command: source ~/.circlerc && scripts/build-docker.sh
+          name: Upload webclient resources to S3
+          working_directory: src
+          command: |
+            source ~/.circlerc
+            ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
+            echo "${ASSETS_BUCKET}"
+            npm config set goustowebclient_asset_bucket "${ASSETS_BUCKET}"
+            npm run deploy
+            npm run upload -- --upload_dir=${CI_BUILD_NUMBER}
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/setup
-            - project/scripts
-            - project/ci_scripts
-            - project/images
-            - .circlerc
+            - mnt/ramdisk/src
 
-  deploy-webclient-image:
-    docker: *gousto_platform_image
+  create-and-upload-webclient-docker-image-to-ecr:
+    docker: *gousto_platform_image #stock image missing boto
+    resource_class: large
+    working_directory: /mnt/ramdisk
     steps:
-      - setup_remote_docker
+      - setup_remote_docker:
+          docker_layer_caching: true
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
-          name: Create & deploy image
+          name: Create and upload webclient docker image to ECR
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
           no_output_timeout: 20m
 
   test-e2e:
-    docker: *gousto_build_image
-    working_directory: ~/project/tests/e2e
+    docker: *circleci_node_browsers_image
     resource_class: large
+    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
-          name: Source .circlerc
-          command: source ~/.circlerc
-      - run:
-          name: Install dependencies
-          command: apt-get -y update && apt-get -y install curl jq
+          name: Install CI dependencies
+          command: apt-get -y update && apt-get -y install jq
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ERC_ACCESS_KEY
+          aws-secret-access-key: AWS_ERC_SECRET_KEY
+          aws-region: AWS_DEFAULT_REGION
       - run:
-          name: Lease CI node access to public and internal ALBs
-          working_directory: ../../
-          command: scripts/lease-access.sh
-          environment:
-            ENVIRONMENT: staging
+          name: Build webclient E2E helpers
+          working_directory: src
+          command: source ~/.circlerc && NODE_CONFIG_ENV=${ENVIRONMENT} NODE_APP_INSTANCE="live" npm run build:e2e
+      - run:
+          name: Install E2E test dependencies
+          working_directory: tests/e2e
+          command: npm ci
+      - run:
+          name: Lease CI node access to public ALB
+          working_directory: scripts
+          command: source ~/.circlerc && ./lease-access.sh
       - run:
           name: Run E2E tests
-          working_directory: ~/project/tests/e2e
+          working_directory: tests/e2e
           command: npm run test:staging
       - store_test_results:
-          path: ~/project/tests/e2e/reports
+          path: tests/e2e/reports
       - store_artifacts:
-          path: ~/project/tests/e2e/reports
-          destination: ./
+          path: tests/e2e/reports
       - run:
           name: Cleanup CI IP access to ALB WAF
           when: always
           command: aws wafv2 update-ip-set --name $ipsetName --scope $ipsetScope --id $ipsetId --lock-token $nextLockToken --addresses $ipsetAddresses
 
   test-regression:
-    docker: *gousto_build_image
-    working_directory: ~/project/tests/regression
+    docker: *circleci_node_browsers_image
+    resource_class: large
+    working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Export base url environment variable
-          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
+          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
           # This is a workaround for broken variable interpolation in version 2
           # https://discuss.circleci.com/t/using-environment-variables-in-config-yml-not-working/14237/2
       - run:
@@ -235,21 +232,22 @@ jobs:
           when: on_fail
           command: npm run report
       - store_test_results:
-          path: ~/project/tests/regression/test_results/cypress
+          path: /mnt/ramdisk/tests/regression/test_results/cypress
       - store_artifacts:
-          path: ~/project/tests/regression/reports/html
+          path: /mnt/ramdisk/tests/regression/reports/html
           destination: ./
 
   test-regression-mobile:
-    docker: *gousto_build_image
-    working_directory: ~/project/tests/regression
+    docker: *circleci_node_browsers_image
+    resource_class: large
+    working_directory: /mnt/ramdisk/tests/regression
     parallelism: 5
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
           name: Export base url environment variable
-          command: echo 'export CYPRESS_baseUrl=https://${GOUSTO_ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
+          command: echo 'source ~/.circlerc && export CYPRESS_baseUrl=https://${ENVIRONMENT}-webclient.gousto.info' >> $BASH_ENV
       - run:
           name: Run regression tests
           command: |
@@ -260,71 +258,51 @@ jobs:
             CYPRESS_platform: mobile
             NODE_OPTIONS: --max-http-header-size=1000000
       - store_test_results:
-          path: ~/project/tests/regression/test_results/cypress
+          path: /mnt/ramdisk/tests/regression/test_results/cypress
       - run:
           name: Create reports
           when: on_fail
           command: npm run report
       - store_artifacts:
-          path: ~/project/tests/regression/reports/html
+          path: /mnt/ramdisk/tests/regression/reports/html
           destination: ./
 
-  deploy-application:
-    docker: *gousto_platform_image
+  deploy-infrastructure-and-webclient-image:
+    docker: *gousto_platform_image #stock image missing boto
+    resource_class: large
+    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: ~/
-      - run: source ~/.circlerc && scripts/deploy.sh
+          at: /
+      - run:
+          name: Run Cloudformation to set up infrastructure and deploy the webclient image to ECS
+          command: source ~/.circlerc && python ./ci_scripts/deploy_service.py --service webclient
 
-  install-test-dependencies:
-    docker: *gousto_build_image
+
+  install-regression-test-dependencies:
+    docker: *circleci_node_image
+    resource_class: large
+    working_directory: /mnt/ramdisk
     steps:
       - attach_workspace:
-          at: ~/
+          at: /
       - run:
-          working_directory: tests/e2e
-          command: npm ci
-      - run:
+          name: Install regression test dependencies
           working_directory: tests/regression
           command: npm ci
       - persist_to_workspace:
-          root: ~/
+          root: /
           paths:
-            - project/tests/regression/node_modules
-            - project/tests/e2e/node_modules
-            - .cache/Cypress
+            - mnt/ramdisk/tests/regression/node_modules
+            - root/.cache/Cypress
 
 workflows:
   version: 2
 
   e2e-manual:
     jobs:
-      - setup-src:
+      - setup-ci-variables-scripts-and-npm-dependencies:
           context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - setup-platform:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - build-application:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-src
-            - setup-platform
-          filters:
-            branches:
-              only:
-                - e2e-manual
-      - install-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-src
-            - setup-platform
           filters:
             branches:
               only:
@@ -332,8 +310,7 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-test-dependencies
-            - build-application
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
@@ -341,64 +318,67 @@ workflows:
 
   lower-environment:
     jobs:
-      - setup-src:
+      - setup-ci-variables-scripts-and-npm-dependencies:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
               only:
                 - /^env-.*/
-      - setup-platform:
-          context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-      - build-webclient-image:
+      - build-webclient:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-application
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
                 - /^env-.*/
-      - deploy-webclient-image:
+      - jest-coverage-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-webclient-image
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
                 - /^env-.*/
-      - setup-build-application:
+      - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-src
-            - setup-platform
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
                 - /^env-.*/
-      - build-application:
+      - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-build-application
+            - jest-coverage-report
+            - eslint-generate-report
           filters:
             branches:
               only:
                 - /^env-.*/
-      - deploy-application:
+      - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy-webclient-image
+            - build-webclient
+            - jest-coverage-report
+            - eslint-generate-report
           filters:
             branches:
               only:
                 - /^env-.*/
-      - install-test-dependencies:
+      - deploy-infrastructure-and-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-src
-            - setup-platform
+            - create-and-upload-webclient-docker-image-to-ecr
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+      - install-regression-test-dependencies:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
@@ -406,8 +386,8 @@ workflows:
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-test-dependencies
-            - deploy-application
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -415,8 +395,8 @@ workflows:
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-test-dependencies
-            - deploy-application
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -424,14 +404,16 @@ workflows:
 
   staging-environment:
     jobs:
-      - setup-src:
+      - setup-ci-variables-scripts-and-npm-dependencies:
           context: gousto-beta-aws-app-circleci
           filters:
             branches:
               only:
                 - develop
-      - setup-platform:
+      - build-webclient:
           context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
@@ -439,7 +421,7 @@ workflows:
       - jest-coverage-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-src
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
@@ -447,7 +429,11 @@ workflows:
       - eslint-generate-report:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-src
+            - setup-ci-variables-scripts-and-npm-dependencies
+          filters:
+            branches:
+              only:
+                - develop
       - publish-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -457,54 +443,28 @@ workflows:
             branches:
               only:
                 - develop
-      - build-webclient-image:
+      - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-application
+            - build-webclient
+            - jest-coverage-report
+            - eslint-generate-report
           filters:
             branches:
               only:
                 - develop
-      - deploy-webclient-image:
+      - deploy-infrastructure-and-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-webclient-image
+            - create-and-upload-webclient-docker-image-to-ecr
           filters:
             branches:
               only:
                 - develop
-      - setup-build-application:
+      - install-regression-test-dependencies:
           context: gousto-beta-aws-app-circleci
           requires:
-            - setup-src
-            - setup-platform
-          filters:
-            branches:
-              only:
-                - develop
-      - build-application:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-build-application
-          filters:
-            branches:
-              only:
-                - develop
-      - deploy-application:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - build-application
-            - deploy-webclient-image
-            - publish-code-health
-          filters:
-            branches:
-              only:
-                - develop
-      - install-test-dependencies:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - setup-src
-            - setup-platform
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
@@ -512,8 +472,8 @@ workflows:
       - test-regression:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-test-dependencies
-            - deploy-application
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -521,8 +481,8 @@ workflows:
       - test-regression-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-test-dependencies
-            - deploy-application
+            - install-regression-test-dependencies
+            - deploy-infrastructure-and-webclient-image #hopefully will be able to remove the dependency on deployed service with move to run against docker image
           filters:
             branches:
               only:
@@ -530,8 +490,7 @@ workflows:
       - test-e2e:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-test-dependencies
-            - deploy-application
+            - deploy-infrastructure-and-webclient-image
           filters:
             branches:
               only:
@@ -539,56 +498,32 @@ workflows:
 
   production-environment:
     jobs:
-      - setup-src:
+      - setup-ci-variables-scripts-and-npm-dependencies:
           context: gousto-prod-aws-app-circleci
           filters:
             branches:
               only:
                 - master
-      - setup-platform:
-          context: gousto-prod-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - master
-      - setup-build-application:
+      - build-webclient:
           context: gousto-prod-aws-app-circleci
           requires:
-            - setup-src
-            - setup-platform
+            - setup-ci-variables-scripts-and-npm-dependencies
           filters:
             branches:
               only:
                 - master
-      - build-application:
+      - create-and-upload-webclient-docker-image-to-ecr:
           context: gousto-prod-aws-app-circleci
           requires:
-            - setup-build-application
+            - build-webclient
           filters:
             branches:
               only:
                 - master
-      - build-webclient-image:
+      - deploy-infrastructure-and-webclient-image:
           context: gousto-prod-aws-app-circleci
           requires:
-            - build-application
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-webclient-image:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-webclient-image
-          filters:
-            branches:
-              only:
-                - master
-      - deploy-application:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - build-application
-            - deploy-webclient-image
+            - create-and-upload-webclient-docker-image-to-ecr
           filters:
             branches:
               only:
