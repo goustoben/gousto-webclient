@@ -174,34 +174,6 @@ describe('CheckoutPayment', () => {
     })
   })
 
-  describe('when 3DS is enabled', () => {
-    beforeEach(() => {
-      wrapper = shallow(
-        <CheckoutPayment is3DSEnabled submit={submit} currentPaymentMethod={PaymentMethod.Card} />
-      )
-    })
-
-    test('should render 3DS modal', () => {
-      expect(wrapper.find(Checkout3DSModal).exists()).toBe(true)
-    })
-  })
-
-  describe('when 3DS is disabled', () => {
-    beforeEach(() => {
-      wrapper = shallow(
-        <CheckoutPayment
-          is3DSEnabled={false}
-          submit={submit}
-          currentPaymentMethod={PaymentMethod.Card}
-        />
-      )
-    })
-
-    test('should not render 3DS modal', () => {
-      expect(wrapper.find(Checkout3DSModal).exists()).toBe(false)
-    })
-  })
-
   describe('when Card method is selected', () => {
     beforeEach(() => {
       wrapper.setProps({ currentPaymentMethod: PaymentMethod.Card })
@@ -210,6 +182,10 @@ describe('CheckoutPayment', () => {
     test('then it should show the Card details and hide PayPal details', () => {
       expect(wrapper.find(CheckoutCardDetails).prop('hide')).toBeFalsy()
       expect(wrapper.find(CheckoutPayPalDetails).prop('hide')).toBeTruthy()
+    })
+
+    test('should render 3DS modal', () => {
+      expect(wrapper.find(Checkout3DSModal).exists()).toBe(true)
     })
   })
 

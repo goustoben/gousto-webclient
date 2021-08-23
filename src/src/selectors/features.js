@@ -100,10 +100,6 @@ export const getIsLimitedCapacityChristmas = ({ features }) => (
   features && features.getIn(['isLimitedCapacityChristmas', 'value'], false)
 )
 
-export const getIs3DSForSignUpEnabled = ({ features }) => (
-  features && features.getIn(['enable3DSForSignUp', 'value'], false)
-)
-
 export const getIsTastePreferencesEnabled = ({ features }) => (
   features && features.getIn(['tastePreferences', 'value'], false)
 )

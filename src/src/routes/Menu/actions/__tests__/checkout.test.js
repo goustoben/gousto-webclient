@@ -74,9 +74,6 @@ const createState = (stateOverrides) => ({
     ndd: {
       value: deliveryTariffTypes.NON_NDD
     },
-    enable3DSForSignUp: {
-      value: false
-    },
   }),
   ...stateOverrides,
 })

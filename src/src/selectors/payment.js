@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { PaymentMethod } from 'config/signup'
 import routes from 'config/routes'
-import { getIs3DSForSignUpEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
+import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import { getPreviewOrderId } from 'selectors/basket'
 
 export const getCurrentPaymentMethod = state => state.payment.get('paymentMethod')
@@ -23,9 +23,7 @@ export const isCardPayment = state => (
   getCurrentPaymentMethod(state) === PaymentMethod.Card
 )
 
-export const is3DSCardPayment = state => (
-  getIs3DSForSignUpEnabled(state) && isCardPayment(state)
-)
+export const is3DSCardPayment = state => isCardPayment(state)
 
 export const getCanSubmitPaymentDetails = state => (
   getCurrentPaymentMethod(state) === PaymentMethod.Card || isPayPalReady(state)
@@ -74,7 +72,7 @@ export const getDecoupledPaymentData = state => {
     return {
       ...result,
       card_token: cardPaymentDetails.card_token,
-      '3ds': getIs3DSForSignUpEnabled(state),
+      '3ds': true,
     }
   }
 

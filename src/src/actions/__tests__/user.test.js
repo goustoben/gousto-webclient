@@ -335,7 +335,7 @@ describe('user actions', () => {
       })
     })
 
-    describe('enable3DSForSignup feature is enabled', () => {
+    describe('when card method is selected', () => {
       const sca3ds = true
       const sessionId = 'src_5opchaqiwjbundi47kpmm6weka'
       const goustoRef = '105979923'

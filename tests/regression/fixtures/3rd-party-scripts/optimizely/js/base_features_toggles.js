@@ -1,6 +1,6 @@
 !(function (e) {
   console.log(`
-  #TESTING# Optimizely stubbed with local file. 
+  #TESTING# Optimizely stubbed with local file.
   `)
   function t(i) {
     if (n[i]) return n[i].exports;
@@ -2468,109 +2468,6 @@
               name: "[Beetroots][PSD2] Change card",
               groupId: null,
               commitId: "20023562379",
-              decisionMetadata: null,
-              policy: "single_experiment",
-              changes: null,
-            },
-            {
-              holdback: 0,
-              activation: {},
-              integrationSettings: {},
-              integrationStringVersion: 2,
-              viewIds: ["17593720385"],
-              experiments: [
-                {
-                  weightDistributions: [
-                    { entityId: "18429360303", endOfRange: 10000 },
-                  ],
-                  audienceName: "Everyone else",
-                  name: "[Beetroots][PSD2] Checkout",
-                  bucketingStrategy: null,
-                  variations: [
-                    {
-                      id: "18429360303",
-                      actions: [
-                        {
-                          viewId: "17593720385",
-                          changes: [
-                            {
-                              dependencies: [],
-                              type: "custom_code",
-                              id: "A6C564A1-D45B-4C95-8B75-89FBA42B536D",
-                              value: function ($) {
-                                var utils =
-                                  (window.optimizely &&
-                                    window.optimizely.get("utils")) ||
-                                  {};
-
-                                function initExperiment() {
-                                  if (window.__loadFeatures__) {
-                                    window.__loadFeatures__({
-                                      features: {
-                                        enable3DSForSignUp: false,
-                                      },
-                                    });
-                                  }
-                                }
-
-                                utils
-                                  .waitForElement('[name="aboutyou.password"]')
-                                  .then(initExperiment);
-                              },
-                            },
-                          ],
-                        },
-                      ],
-                      name: "Original",
-                    },
-                    {
-                      id: "18406560372",
-                      actions: [
-                        {
-                          viewId: "17593720385",
-                          changes: [
-                            {
-                              dependencies: [],
-                              type: "custom_code",
-                              id: "E8068037-49F9-4BA6-97FF-B0455A381F74",
-                              value: function ($) {
-                                var utils =
-                                  (window.optimizely &&
-                                    window.optimizely.get("utils")) ||
-                                  {};
-
-                                function initExperiment() {
-                                  if (window.__loadFeatures__) {
-                                    window.__loadFeatures__({
-                                      features: {
-                                        enable3DSForSignUp: true,
-                                      },
-                                    });
-                                  }
-                                }
-
-                                utils
-                                  .waitForElement('[name="aboutyou.password"]')
-                                  .then(initExperiment);
-                              },
-                            },
-                          ],
-                        },
-                      ],
-                      name: "Variation #1",
-                    },
-                  ],
-                  audienceIds: null,
-                  changes: null,
-                  id: "18406350268",
-                  integrationSettings: null,
-                },
-              ],
-              id: "18421420548",
-              weightDistributions: null,
-              name: "[Beetroots][PSD2] Checkout",
-              groupId: null,
-              commitId: "20031462499",
               decisionMetadata: null,
               policy: "single_experiment",
               changes: null,

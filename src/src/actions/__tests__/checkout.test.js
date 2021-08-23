@@ -312,9 +312,6 @@ const createState = (stateOverrides) => ({
     ndd: {
       value: deliveryTariffTypes.NON_NDD
     },
-    enable3DSForSignUp: {
-      value: false
-    },
     isPromoCodeValidationEnabled: {
       value: false,
     },
@@ -531,101 +528,37 @@ describe('checkout actions', () => {
       })
     })
 
-    describe('when 3DS enabled', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createState({
-          features: Immutable.fromJS({
-            enable3DSForSignUp: {
-              value: true
-            }
-          })
-        }))
-      })
+    test('should fetch gousto reference', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
 
-      test('should fetch gousto reference', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
-      })
-
-      test('should send "Submit" tracking event', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
-      })
-
-      test('should init 3DS signup flow', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.checkout3DSSignup).toHaveBeenCalled()
-      })
-
-      describe('when PayPal payment method selected', () => {
-        beforeEach(() => {
-          getState.mockReturnValue(createState({
-            features: Immutable.fromJS({
-              enable3DSForSignUp: {
-                value: true
-              },
-            }),
-            payment: Immutable.fromJS({
-              paymentMethod: PaymentMethod.PayPal,
-            })
-          }))
-        })
-
-        test('should fetch gousto reference', async () => {
-          await checkoutActions.checkoutSignup()(dispatch, getState)
-
-          expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
-        })
-
-        test('should init non 3DS signup flow', async () => {
-          await checkoutActions.checkoutSignup()(dispatch, getState)
-
-          expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
-        })
-      })
+      expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
     })
 
-    describe('when 3DS disabled', () => {
-      test('should fetch gousto reference', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
+    test('should send "Submit" tracking event', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
 
-        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
-      })
-
-      test('should send "Submit" tracking event', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
-      })
-
-      test('should init non-3DS signup flow', async () => {
-        await checkoutActions.checkoutSignup()(dispatch, getState)
-
-        expect(checkoutActions.checkoutNon3DSSignup).toHaveBeenCalled()
-      })
+      expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
     })
 
-    describe('when PayPal enabled and PayPal payment method selected', () => {
+    test('should init 3DS signup flow', async () => {
+      await checkoutActions.checkoutSignup()(dispatch, getState)
+
+      expect(checkoutActions.checkout3DSSignup).toHaveBeenCalled()
+    })
+
+    describe('when PayPal payment method selected', () => {
       beforeEach(() => {
         getState.mockReturnValue(createState({
-          features: Immutable.fromJS({
-            enable3DSForSignUp: {
-              value: true
-            },
-          }),
           payment: Immutable.fromJS({
             paymentMethod: PaymentMethod.PayPal,
           })
         }))
       })
 
-      test('should send "Submit" tracking event', async () => {
+      test('should fetch gousto reference', async () => {
         await checkoutActions.checkoutSignup()(dispatch, getState)
 
-        expect(checkoutActions.trackSignupPageChange).toHaveBeenCalledWith('Submit')
+        expect(checkoutActions.fetchGoustoRef).toHaveBeenCalled()
       })
 
       test('should init non 3DS signup flow', async () => {
@@ -1049,70 +982,57 @@ describe('checkout actions', () => {
       jest.clearAllMocks()
     })
 
-    describe('when 3ds is enabled', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createState({
-          checkout: checkoutState,
-          features: Immutable.fromJS({
-            enable3DSForSignUp: {
-              value: true
-            },
-          }),
-        }))
-      })
+    test('should send payment auth request', async () => {
+      const expected = {
+        order_id: '100004',
+        card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
+        amount: 3448,
+        gousto_ref: '105979923',
+        '3ds': true,
+        success_url: `http://localhost${routes.client.payment.success}`,
+        failure_url: `http://localhost${routes.client.payment.failure}`,
+        decoupled: false,
+      }
 
-      test('should send payment auth request', async () => {
-        const expected = {
-          order_id: '100004',
-          card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
-          amount: 3448,
-          gousto_ref: '105979923',
-          '3ds': true,
-          success_url: `http://localhost${routes.client.payment.success}`,
-          failure_url: `http://localhost${routes.client.payment.failure}`,
-          decoupled: false,
-        }
+      await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
+      expect(authPayment).toHaveBeenCalledWith(expected)
+    })
 
-        expect(authPayment).toHaveBeenCalledWith(expected)
-      })
+    test('should show 3ds challenge modal', async () => {
+      await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
-      test('should show 3ds challenge modal', async () => {
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
-
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.PAYMENT_SHOW_MODAL,
-          challengeUrl: 'https://bank.uk/3dschallenge',
-        })
-      })
-
-      test('should trigger 3dsmodal_display event', async () => {
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
-
-        expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
-      })
-
-      test('should not clear gousto reference', async () => {
-        await checkoutDecoupledPaymentSignup()(dispatch, getState)
-
-        expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
-      })
-
-      describe('when auth payment request failed', () => {
-        beforeEach(() => {
-          authPayment.mockRejectedValueOnce(new Error('Failed request'))
-        })
-
-        test('should clear gousto reference', async () => {
-          await checkoutDecoupledPaymentSignup()(dispatch, getState)
-
-          expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
-        })
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.PAYMENT_SHOW_MODAL,
+        challengeUrl: 'https://bank.uk/3dschallenge',
       })
     })
 
-    describe('when 3ds is disabled or PayPal selected', () => {
+    test('should trigger 3dsmodal_display event', async () => {
+      await checkoutDecoupledPaymentSignup()(dispatch, getState)
+
+      expect(trackUTMAndPromoCode).toHaveBeenCalledWith(trackingKeys.signupChallengeModalDisplay)
+    })
+
+    test('should not clear gousto reference', async () => {
+      await checkoutDecoupledPaymentSignup()(dispatch, getState)
+
+      expect(dispatch).not.toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+    })
+
+    describe('when auth payment request failed', () => {
+      beforeEach(() => {
+        authPayment.mockRejectedValueOnce(new Error('Failed request'))
+      })
+
+      test('should clear gousto reference', async () => {
+        await checkoutDecoupledPaymentSignup()(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.CHECKOUT_SET_GOUSTO_REF, goustoRef: null })
+      })
+    })
+
+    describe('when PayPal is selected', () => {
       test('should initiate signup request', async () => {
         await checkoutDecoupledPaymentSignup()(dispatch, getState)
 
@@ -1147,7 +1067,7 @@ describe('checkout actions', () => {
         order_id: '100004',
         card_token: 'tok_7zlbjzbma4fenkbwzcxhmz5hee',
         gousto_ref: '105979923',
-        '3ds': false,
+        '3ds': true,
       }
 
       await checkoutSignupPayment()(dispatch, getState)

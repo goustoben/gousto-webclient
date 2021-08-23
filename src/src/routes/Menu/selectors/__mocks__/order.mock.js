@@ -35,7 +35,7 @@ export const createState = (partialOverwrite = {}) => {
       },
       ...menuService
     },
-    boxSummaryDeliveryDays: Immutable.fromJS({
+    boxSummaryDeliveryDays: Immutable.fromJS( {
       '2019-10-10': {
         id: 'delivery-days-uuid',
         date: '2019-10-10',
@@ -54,9 +54,6 @@ export const createState = (partialOverwrite = {}) => {
     features: Immutable.fromJS({
       ndd: {
         value: 'features-ndd-day-slot-lead-time-uuid'
-      },
-      enable3DSForSignUp: {
-        value: false
       },
       ...features
     }),

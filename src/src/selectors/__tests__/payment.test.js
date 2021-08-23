@@ -16,11 +16,10 @@ import {
   getDecoupledPaymentData,
 } from 'selectors/payment'
 
-import { getIs3DSForSignUpEnabled, getIsDecoupledPaymentEnabled } from 'selectors/features'
+import { getIsDecoupledPaymentEnabled } from 'selectors/features'
 import routes from 'config/routes'
 
 jest.mock('selectors/features', () => ({
-  getIs3DSForSignUpEnabled: jest.fn(() => false),
   getIsDecoupledPaymentEnabled: jest.fn(() => false),
 }))
 
@@ -173,24 +172,14 @@ describe('payment selectors', () => {
 
   describe('given is3DSCardPayment method', () => {
     describe('when payment method is PayPal', () => {
-      describe('and 3DS is disabled', () => {
-        test('then should return false', () => {
-          const result = is3DSCardPayment(state)
-
-          expect(result).toBe(false)
-        })
+      beforeEach(() => {
+        state.payment = state.payment.set('paymentMethod', PaymentMethod.PayPal)
       })
 
-      describe('and 3DS is enabled', () => {
-        beforeEach(() => {
-          getIs3DSForSignUpEnabled.mockReturnValueOnce(true)
-        })
+      test('then should return false', () => {
+        const result = is3DSCardPayment(state)
 
-        test('then should return false', () => {
-          const result = is3DSCardPayment(state)
-
-          expect(result).toBe(false)
-        })
+        expect(result).toBe(false)
       })
     })
 
@@ -199,24 +188,10 @@ describe('payment selectors', () => {
         state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
       })
 
-      describe('and 3DS is disabled', () => {
-        test('then should return false', () => {
-          const result = is3DSCardPayment(state)
+      test('then should return true', () => {
+        const result = is3DSCardPayment(state)
 
-          expect(result).toBe(false)
-        })
-      })
-
-      describe('and 3DS is enabled', () => {
-        beforeEach(() => {
-          getIs3DSForSignUpEnabled.mockReturnValueOnce(true)
-        })
-
-        test('then should return true', () => {
-          const result = is3DSCardPayment(state)
-
-          expect(result).toBe(true)
-        })
+        expect(result).toBe(true)
       })
     })
   })
@@ -327,28 +302,8 @@ describe('payment selectors', () => {
   })
 
   describe('given getDecoupledPaymentData method', () => {
-    describe('when 3DSForSignUp is disabled', () => {
+    describe('when payment method is card', () => {
       beforeEach(() => {
-        state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
-      })
-
-      test('then should return payment details for non 3ds card', () => {
-        const expected = {
-          order_id: 'fake-order-id',
-          gousto_ref: 'fake-gousto-ref',
-          card_token: 'test-token',
-          '3ds': false,
-        }
-
-        const result = getDecoupledPaymentData(state)
-
-        expect(result).toEqual(expected)
-      })
-    })
-
-    describe('when 3DSForSignUp is enabled', () => {
-      beforeEach(() => {
-        getIs3DSForSignUpEnabled.mockReturnValueOnce(true)
         state.payment = state.payment.set('paymentMethod', PaymentMethod.Card)
       })
 

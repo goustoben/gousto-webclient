@@ -230,15 +230,12 @@ class CheckoutPayment extends React.Component {
     const {
       prerender,
       isPayPalReady,
-      is3DSEnabled,
       currentPaymentMethod,
       setCurrentPaymentMethod,
       isRecaptchaEnabled,
       ribbonTriggerName,
       hotjarTriggerName,
-      isPaymentBeforeChoosingEnabled,
     } = this.props
-    const hotjarShouldInvoke = is3DSEnabled || (isPaymentBeforeChoosingEnabled && !prerender)
 
     return (
       <div
@@ -268,9 +265,9 @@ class CheckoutPayment extends React.Component {
         {isPayPalReady && <PayPalConfirmation />}
         {this.renderOuterContent()}
         <PaymentFooter />
-        {is3DSEnabled && <Checkout3DSModal />}
+        <Checkout3DSModal />
         <RibbonTriggerContainer name={ribbonTriggerName} probabilityPercentage={50} />
-        <HotjarTrigger name={hotjarTriggerName} shouldInvoke={hotjarShouldInvoke} />
+        {!prerender && <HotjarTrigger name={hotjarTriggerName} shouldInvoke />}
       </div>
     )
   }
@@ -293,7 +290,6 @@ CheckoutPayment.propTypes = {
   checkoutScriptReady: PropTypes.bool,
   reloadCheckoutScript: PropTypes.func,
   paypalScriptsReady: PropTypes.bool,
-  is3DSEnabled: PropTypes.bool,
   isPayPalReady: PropTypes.bool,
   isRecaptchaEnabled: PropTypes.bool,
   recaptchaValue: PropTypes.string,
@@ -303,7 +299,6 @@ CheckoutPayment.propTypes = {
   setCurrentPaymentMethod: PropTypes.func,
   onLoginClick: PropTypes.func,
   ribbonTriggerName: PropTypes.string,
-  isPaymentBeforeChoosingEnabled: PropTypes.bool,
   hotjarTriggerName: PropTypes.string,
 }
 
@@ -321,7 +316,6 @@ CheckoutPayment.defaultProps = {
   checkoutScriptReady: false,
   reloadCheckoutScript: () => {},
   paypalScriptsReady: false,
-  is3DSEnabled: false,
   isPayPalReady: false,
   isRecaptchaEnabled: false,
   recaptchaValue: '',
@@ -330,7 +324,6 @@ CheckoutPayment.defaultProps = {
   setCurrentPaymentMethod: () => {},
   onLoginClick: () => {},
   ribbonTriggerName: '',
-  isPaymentBeforeChoosingEnabled: false,
   hotjarTriggerName: '',
 }
 
