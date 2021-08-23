@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import * as menuBasketActions from 'routes/Menu/actions/basket'
 import * as menuCheckoutClick from '../menuCheckoutClick'
 import { checkoutWithSides } from '../menuSidesCheckoutClick'
 import * as sidesAction from '../sides'
@@ -9,7 +8,6 @@ describe('checkoutWithSides', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
   let closeSidesModalSpy
-  let basketUpdateProductsSpy
   let checkoutBasketSpy
 
   const products = {
@@ -30,7 +28,6 @@ describe('checkoutWithSides', () => {
     getState.mockReturnValue(state)
 
     closeSidesModalSpy = jest.spyOn(sidesAction, 'closeSidesModal').mockImplementation()
-    basketUpdateProductsSpy = jest.spyOn(menuBasketActions, 'basketUpdateProducts').mockImplementation()
     checkoutBasketSpy = jest.spyOn(menuCheckoutClick, 'checkoutBasket').mockImplementation()
     jest.spyOn(menuCheckoutClick, 'isOrderApiUpdateEnabled').mockResolvedValue(true)
   })
@@ -91,36 +88,6 @@ describe('checkoutWithSides', () => {
       expect(dispatch).toBeCalledTimes(2)
       expect(checkoutBasketSpy).toHaveBeenCalledWith('menu', 'view')
       expect(dispatch).toHaveBeenCalledWith(checkoutBasketMock)
-    })
-  })
-
-  describe('when isOrderApiUpdateEnabled is false', () => {
-    beforeEach(() => {
-      jest.spyOn(menuCheckoutClick, 'isOrderApiUpdateEnabled').mockResolvedValue(false)
-    })
-
-    test('it calls feature enabled with the correct flag', async () => {
-      const basketUpdateProductsMock = jest.fn()
-      basketUpdateProductsSpy.mockReturnValue(basketUpdateProductsMock)
-
-      await checkoutWithSides('menu', 'view', products)(dispatch, getState)
-
-      expect(dispatch).toBeCalledTimes(4)
-      expect(basketUpdateProductsSpy).toBeCalled()
-      expect(dispatch).toHaveBeenCalledWith(basketUpdateProductsMock)
-    })
-  })
-
-  describe('when isOrderApiUpdateEnabled is true', () => {
-    beforeEach(() => {
-      jest.spyOn(menuCheckoutClick, 'isOrderApiUpdateEnabled').mockResolvedValue(true)
-    })
-
-    test('it calls feature enabled with the correct flag', async () => {
-      await checkoutWithSides('menu', 'view', products)(dispatch, getState)
-
-      expect(dispatch).toBeCalledTimes(3)
-      expect(basketUpdateProductsSpy).not.toBeCalled()
     })
   })
 })

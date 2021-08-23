@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, screen, within, fireEvent, waitFor, cleanup } from '@testing-library/react'
+import * as OrderAPI from 'apis/orders'
 import { user } from 'routes/Menu/apis/sides.hook.mock'
 import Modal from 'react-modal'
 import { SidesModal } from './SidesModal'
@@ -92,6 +93,7 @@ describe('<SideModal />', () => {
   let trackSidesContinueClicked
   let trackViewSidesAllergens
   let trackCloseSidesAllergens
+  let updateOrderItems
 
   const SideIds = {
     PlainNaan: '50e99248-e00e-11eb-a669-02675e6927cd',
@@ -101,6 +103,7 @@ describe('<SideModal />', () => {
   }
 
   beforeEach(() => {
+    updateOrderItems = jest.spyOn(OrderAPI, 'updateOrderItems').mockImplementation().mockResolvedValue()
     onSubmit = jest.fn()
     onClose = jest.fn()
     trackAddSide = jest.fn()
@@ -133,11 +136,61 @@ describe('<SideModal />', () => {
       trackCloseSidesAllergens={trackCloseSidesAllergens}
     />
   )
+
   const renderModal = ({
     userId,
     order = getOrder(),
     isOpen,
   }) => render(<SideModalWithMockedProps userId={userId} order={order} isOpen={isOpen} />)
+
+  /*
+   * Sides/Products looks like;
+   *  {
+   *    [SideIds.PlainNaan]: 1,
+   *    [SideIds.BlanchedPeas]: 2,
+   *  }
+   */
+  const expectSubmitToHaveBeenNthCalledWith = async (nth, sides, totalQntOfSides, totalPrice, products = {}) => {
+    // We track submitting with sides
+    await waitFor(() => expect(updateOrderItems).toBeCalledTimes(nth))
+    await waitFor(() => expect(trackSidesContinueClicked).toBeCalledTimes(nth))
+    await waitFor(() => expect(onSubmit).toBeCalledTimes(nth))
+
+    const sideIds = Object.keys(sides)
+    const sideIdsAndProducts = [...sideIds, ...Object.keys(products)]
+
+    expect(updateOrderItems).toHaveBeenNthCalledWith(
+      nth,
+      'access-token',
+      'order-id',
+      {
+        item_choices: expect.arrayContaining(sideIdsAndProducts.map((id) => ({
+          id,
+          quantity: sides[id] || products[id],
+          type: 'Product'
+        }))),
+        restrict: 'Product'
+      }
+    )
+
+    expect(trackSidesContinueClicked).toHaveBeenNthCalledWith(
+      nth,
+      expect.arrayContaining(sideIds),
+      // Total price of sides
+      totalPrice,
+      // Total quantity of sides
+      totalQntOfSides,
+    )
+
+    expect(onSubmit).toHaveBeenNthCalledWith(
+      nth,
+      'sides-modal-with-sides',
+      {
+        ...sides,
+        ...products,
+      }
+    )
+  }
 
   describe('when modal is not open', () => {
     it('should not render', () => {
@@ -150,6 +203,8 @@ describe('<SideModal />', () => {
   describe('when modal is open', () => {
     describe('with an unsuccessful request', () => {
       it('should call submitWithNoSides and not render', async () => {
+        expect.assertions(3)
+
         renderModal({ isOpen: true, userId: user.withError })
 
         await waitFor(() => {
@@ -162,6 +217,8 @@ describe('<SideModal />', () => {
 
     describe('when sides endpoint returns with no sides', () => {
       it('should call submitWithNoSides and not render', async () => {
+        expect.assertions(3)
+
         renderModal({ isOpen: true, userId: user.withOutSides })
 
         await waitFor(() => {
@@ -266,138 +323,147 @@ describe('<SideModal />', () => {
       })
 
       describe('when user selects sides and submits', () => {
-        it('should display total and call onSubmit when continue button is clicked', async () => {
-          const { rerender } = await renderOpenSidesModal()
+        describe('when updating products is successful', () => {
+          it('should display total and call onSubmit when continue button is clicked', async () => {
+            const { rerender } = await renderOpenSidesModal()
 
-          // Footer
-          let footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+            // Footer
+            let footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
 
-          expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument()
-          expect(footer.queryByRole('button', { name: 'Continue without sides' })).toBeInTheDocument()
-          expect(footer.queryByRole('button', { name: 'Continue with sides' })).not.toBeInTheDocument()
+            expect(footer.queryByRole('button', { name: 'Continue without sides' })).toBeInTheDocument()
+            expect(footer.queryByRole('button', { name: 'Continue with sides' })).not.toBeInTheDocument()
 
-          // Add a Side
-          const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
-          const plainNaanSideAddButton = plainNaanSideTile.queryByRole('button', { name: 'Add' })
+            // Add a Side
+            const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
+            const plainNaanSideAddButton = plainNaanSideTile.queryByRole('button', { name: 'Add' })
 
-          fireEvent.click(plainNaanSideAddButton)
+            fireEvent.click(plainNaanSideAddButton)
 
-          await footer.findByText('Sides price')
+            await footer.findByText('Sides price')
 
-          // We track adding a side
-          expect(trackAddSide).toBeCalled()
+            // We track adding a side
+            expect(trackAddSide).toHaveBeenNthCalledWith(1, SideIds.PlainNaan, orderId)
 
-          expect(trackAddSide).toHaveBeenNthCalledWith(1, SideIds.PlainNaan, orderId)
+            // Check price
+            expect(footer.getByText('+£1.00')).toBeInTheDocument()
 
-          // Check price
-          expect(footer.getByText('+£1.00')).toBeInTheDocument()
+            // Check continue button
+            expect(footer.queryByRole('button', { name: 'Continue without sides' })).not.toBeInTheDocument()
+            expect(footer.queryByRole('button', { name: 'Continue with sides' })).toBeInTheDocument()
 
-          // Check continue button
-          expect(footer.queryByRole('button', { name: 'Continue without sides' })).not.toBeInTheDocument()
-          expect(footer.queryByRole('button', { name: 'Continue with sides' })).toBeInTheDocument()
+            // Add 2 Sides
+            addSideToBasket('Blanched Peas (160g)', 2)
 
-          // Add 2 Sides
-          const blanchedPeasSideTile = getWrappedSideTileFromHeader('Blanched Peas (160g)')
-          const blanchedPeasSideAddButton = blanchedPeasSideTile.queryByRole('button', { name: 'Add' })
-          fireEvent.click(blanchedPeasSideAddButton)
+            // We track adding a side
+            expect(trackAddSide).toHaveBeenNthCalledWith(2, SideIds.BlanchedPeas, orderId)
+            expect(trackAddSide).toHaveBeenNthCalledWith(3, SideIds.BlanchedPeas, orderId)
 
-          const blanchedPeasSidePlusButton = blanchedPeasSideTile.queryByRole('button', { name: '+' })
-          fireEvent.click(blanchedPeasSidePlusButton)
+            // Check price
+            expect(footer.getByText('+£3.00')).toBeInTheDocument()
 
-          // We track adding a side
-          expect(trackAddSide).toHaveBeenNthCalledWith(2, SideIds.BlanchedPeas, orderId)
-          expect(trackAddSide).toHaveBeenNthCalledWith(3, SideIds.BlanchedPeas, orderId)
+            // Submit with Sides
+            let continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
 
-          // Check price
-          expect(footer.getByText('+£3.00')).toBeInTheDocument()
+            fireEvent.click(continueWithSidesButton)
 
-          // Submit with Sides
-          let continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            // We successfully submitted the sides
+            await expectSubmitToHaveBeenNthCalledWith(
+              1,
+              {
+                [SideIds.PlainNaan]: 1,
+                [SideIds.BlanchedPeas]: 2,
+              },
+              // Total quantity of sides
+              3,
+              // Total price of sides
+              3
+            )
 
-          fireEvent.click(continueWithSidesButton)
+            expect(continueWithSidesButton).toBeDisabled()
 
-          // We track submitting with sides
-          expect(trackSidesContinueClicked).toHaveBeenNthCalledWith(
-            1,
-            [
-              SideIds.PlainNaan,
-              SideIds.BlanchedPeas,
-            ],
-            // Total price of sides
-            3,
-            // Total quantity of sides
-            3,
-          )
+            // Close and Open Modal should reset disabled state and resets selected products base on Order
+            rerender(<SideModalWithMockedProps userId={user.withSides} isOpen={false} />)
 
-          expect(onSubmit).toHaveBeenNthCalledWith(
-            1,
-            'sides-modal-with-sides',
-            {
-              [SideIds.PlainNaan]: 1,
-              [SideIds.BlanchedPeas]: 2,
-            }
-          )
+            await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument())
 
-          expect(continueWithSidesButton).toBeDisabled()
+            const doughBalls = [{
+              type: 'product',
+              id: SideIds.DoughBall,
+              meta: {
+                quantity: 1,
+                amendments: [],
+              },
+            }]
 
-          // Close and Open Modal should reset disabled state and resets selected products base on Order
-          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen={false} />)
+            rerender(<SideModalWithMockedProps userId={user.withSides} isOpen order={getOrder(doughBalls)} />)
 
-          await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).not.toBeInTheDocument())
+            await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument())
 
-          const doughBalls = [{
-            type: 'product',
-            id: SideIds.DoughBall,
-            meta: {
-              quantity: 1,
-              amendments: [],
-            },
-          }]
+            // Reselect footer and continueWithSidesButton
+            footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
+            continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
 
-          rerender(<SideModalWithMockedProps userId={user.withSides} isOpen order={getOrder(doughBalls)} />)
+            expect(continueWithSidesButton).not.toBeDisabled()
 
-          await waitFor(() => expect(screen.queryByRole('heading', { name: 'Fancy any sides?', level: 2 })).toBeInTheDocument())
+            // Reselect tiles and remove Sides
+            const doughBallSideTile = getWrappedSideTileFromHeader(('8 Dough Ball Bites'))
 
-          // Reselect footer and continueWithSidesButton
-          footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
-          continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+            const doughBallSideMinusButton = doughBallSideTile.queryByRole('button', { name: '-' })
 
-          expect(continueWithSidesButton).not.toBeDisabled()
+            fireEvent.click(doughBallSideMinusButton)
 
-          // Reselect tiles and remove Sides
-          const doughBallSideTile = getWrappedSideTileFromHeader(('8 Dough Ball Bites'))
+            await footer.findByRole('button', { name: 'Continue without sides' })
 
-          const doughBallSideMinusButton = doughBallSideTile.queryByRole('button', { name: '-' })
+            // Prices should be hidden
+            expect(footer.queryByText('Sides price')).not.toBeInTheDocument()
 
-          fireEvent.click(doughBallSideMinusButton)
+            // Submit without Sides
+            const continueWithoutSidesButton = footer.getByRole('button', { name: 'Continue without sides' })
 
-          await footer.findByRole('button', { name: 'Continue without sides' })
+            fireEvent.click(continueWithoutSidesButton)
 
-          // Prices should be hidden
-          expect(footer.queryByText('Sides price')).not.toBeInTheDocument()
+            // We successfully submitted the sides
+            await expectSubmitToHaveBeenNthCalledWith(
+              2,
+              {},
+              // Total quantity of sides
+              0,
+              // Total price of sides
+              0
+            )
 
-          // Submit without Sides
-          const continueWithoutSidesButton = footer.getByRole('button', { name: 'Continue without sides' })
+            expect(continueWithoutSidesButton).toBeDisabled()
+          })
+        })
 
-          fireEvent.click(continueWithoutSidesButton)
+        describe('when updating products is unsuccessful', () => {
+          it('should continue with by calling onSubmit with null', async () => {
+            updateOrderItems.mockRejectedValue(new Error('Something went wrong'))
 
-          // We track submitting with sides
-          expect(trackSidesContinueClicked).toHaveBeenNthCalledWith(
-            2,
-            [],
-            // Total price of sides
-            0,
-            // Total quantity of sides
-            0,
-          )
+            await renderOpenSidesModal()
 
-          expect(onSubmit).toHaveBeenNthCalledWith(
-            2,
-            'sides-modal-with-sides',
-            {},
-          )
+            // Footer
+            const footer = within(screen.getByRole('button', { name: 'Show Allergens and Nutrition' }).closest('div'))
 
-          expect(continueWithoutSidesButton).toBeDisabled()
+            // Add a Side
+            const plainNaanSideTile = getWrappedSideTileFromHeader('Plain Naan (x2)')
+            const plainNaanSideAddButton = plainNaanSideTile.queryByRole('button', { name: 'Add' })
+
+            fireEvent.click(plainNaanSideAddButton)
+
+            // Submit with Sides
+            const continueWithSidesButton = footer.getByRole('button', { name: 'Continue with sides' })
+
+            fireEvent.click(continueWithSidesButton)
+
+            // When the request fails
+            expect(updateOrderItems).toHaveBeenCalledTimes(1)
+
+            // We call submit with no products/sides
+            await waitFor(() => {
+              expect(onSubmit).toHaveBeenNthCalledWith(1, 'sides-modal-failed-to-save-sides', null)
+            })
+          })
         })
       })
 
@@ -422,12 +488,16 @@ describe('<SideModal />', () => {
 
             fireEvent.click(continueWithSidesButton)
 
-            expect(onSubmit).toHaveBeenNthCalledWith(
+            // We successfully submitted the sides
+            await expectSubmitToHaveBeenNthCalledWith(
               1,
-              'sides-modal-with-sides',
               {
                 [SideIds.PlainNaan]: 2
-              }
+              },
+              // Total quantity of sides
+              2,
+              // Total price of sides
+              2
             )
           })
         })
@@ -436,17 +506,17 @@ describe('<SideModal />', () => {
           it('should not let them add more than the category limit', async () => {
             await renderOpenSidesModal()
 
-            const plainNaanSidePlusButton = addSideToBasket('Cheese & basil garlic bread', 4)
+            const garlicBreadSidePlusButton = addSideToBasket('Cheese & basil garlic bread', 4)
             const blanchedPeasSidePlusButton = addSideToBasket('Blanched Peas (160g)', 4)
-            const thirdSidePlusButton = addSideToBasket('Plain Naan (x2)', 2)
+            const plainNaanSidePlusButton = addSideToBasket('Plain Naan (x2)', 2)
 
-            expect(plainNaanSidePlusButton).toHaveClass('disabled')
+            expect(garlicBreadSidePlusButton).toHaveClass('disabled')
             expect(blanchedPeasSidePlusButton).toHaveClass('disabled')
-            expect(thirdSidePlusButton).toHaveClass('disabled')
+            expect(plainNaanSidePlusButton).toHaveClass('disabled')
 
             // The tooltip uses React.portal and
             // only renders on the page once hovered over
-            fireEvent.mouseOver(thirdSidePlusButton)
+            fireEvent.mouseOver(plainNaanSidePlusButton)
 
             expect(screen.queryByRole('tooltip', { name: 'Sorry, we can\'t fit anymore "Sides" items in your box' })).toBeInTheDocument()
 
@@ -456,17 +526,22 @@ describe('<SideModal />', () => {
 
             fireEvent.click(continueWithSidesButton)
 
-            expect(onSubmit).toHaveBeenNthCalledWith(
+            // We successfully submitted the sides
+            await expectSubmitToHaveBeenNthCalledWith(
               1,
-              'sides-modal-with-sides',
               {
-                [SideIds.PlainNaan]: 2,
-                [SideIds.GarlicBread]: 4,
                 [SideIds.BlanchedPeas]: 4,
-              }
+                [SideIds.GarlicBread]: 4,
+                [SideIds.PlainNaan]: 2,
+              },
+              // Total quantity of sides
+              10,
+              // Total price of sides
+              14
             )
           })
         })
+
         describe('max product limit', () => {
           describe('when user tries to add more products than the max product limit', () => {
             it('should not let them add more than the limit', async () => {
@@ -483,21 +558,13 @@ describe('<SideModal />', () => {
               await renderOpenSidesModal(getOrder(productWithQuantityOf8))
 
               // Because there is a sides already in the order, there will already be 8 sides selected
-              const sideTile = getWrappedSideTileFromHeader('Cheese & basil garlic bread')
-              const sideAddButton = sideTile.queryByRole('button', { name: 'Add' })
-
-              fireEvent.click(sideAddButton)
-              const sidePlusButton = sideTile.queryByRole('button', { name: '+' })
-
-              fireEvent.click(sidePlusButton)
+              const sidePlusButton = addSideToBasket('Cheese & basil garlic bread', 2)
 
               expect(sidePlusButton).toHaveClass('disabled')
 
               // The tooltip uses React.portal and
               // only renders on the page once hovered over
               fireEvent.mouseOver(sidePlusButton)
-
-              expect(screen.queryByRole('tooltip')).toBeInTheDocument()
 
               expect(screen.queryByRole('tooltip', { name: 'Sorry, we can\'t fit anymore items in your box' })).toBeInTheDocument()
 
@@ -507,13 +574,21 @@ describe('<SideModal />', () => {
 
               fireEvent.click(continueWithSidesButton)
 
-              expect(onSubmit).toHaveBeenNthCalledWith(
+              // We successfully submitted the sides
+              await expectSubmitToHaveBeenNthCalledWith(
                 1,
-                'sides-modal-with-sides',
+                {
+                  [SideIds.GarlicBread]: 2,
+                },
+                // Total quantity of sides
+                2,
+                // Total price of sides
+                4,
+                // Products
                 {
                   [productId]: 8,
-                  [SideIds.GarlicBread]: 2,
-                })
+                }
+              )
             })
           })
         })
@@ -555,12 +630,16 @@ describe('<SideModal />', () => {
             fireEvent.click(continueWithSidesButton)
 
             // We expect 3 sides because the order had 1
-            expect(onSubmit).toHaveBeenNthCalledWith(
+            // We successfully submitted the sides
+            await expectSubmitToHaveBeenNthCalledWith(
               1,
-              'sides-modal-with-sides',
               {
                 [SideIds.DoughBall]: 3,
-              }
+              },
+              // Total quantity of sides
+              3,
+              // Total price of sides
+              6.75
             )
           })
         })

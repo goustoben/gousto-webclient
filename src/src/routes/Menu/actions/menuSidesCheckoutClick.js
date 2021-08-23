@@ -1,12 +1,11 @@
 /* eslint-disable import/no-cycle */
 import { actionTypes } from 'actions/actionTypes'
-import { basketUpdateProducts } from 'routes/Menu/actions/basket'
 import { closeSidesModal } from './sides'
-import { isOrderApiUpdateEnabled, checkoutBasket } from './menuCheckoutClick'
+import { checkoutBasket } from './menuCheckoutClick'
 
 // Products can be `null` if the products are never changes
 // Otherwise it will be an object of ids and quantities
-export const checkoutWithSides = (section, view, products) => async (dispatch, getState) => {
+export const checkoutWithSides = (section, view, products) => async (dispatch) => {
   const hasProducts = Boolean(products)
 
   dispatch(closeSidesModal())
@@ -22,12 +21,6 @@ export const checkoutWithSides = (section, view, products) => async (dispatch, g
         view,
       },
     })
-
-    const isUpdateV2Enabled = await isOrderApiUpdateEnabled(dispatch, getState)
-
-    if (!isUpdateV2Enabled) {
-      dispatch(basketUpdateProducts())
-    }
   }
 
   dispatch(checkoutBasket(section, view))

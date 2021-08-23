@@ -94,7 +94,7 @@ const SidesContent = ({
         const quantity = getQuantityForSidesBasket(side.id)
         const limit = getLimit(side.id)
         const isOutOfStockForSide = isOutOfStock(side.id)
-        const isAvailable = !(isOutOfStock(side.id) || getLimit(side.id))
+        const isAvailable = !(isOutOfStockForSide || limit)
 
         return (
           <div key={side.id} className={css.sidesModalSidesContainer}>

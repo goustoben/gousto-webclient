@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSides } from 'routes/Menu/apis/sides.hook'
 import { ResourceType } from 'routes/Menu/constants/resources'
+import { updateOrderItems } from 'apis/orders'
 import { SIDES, MAX_PRODUCTS_PER_BOX, LimitType } from '../../constants/products'
 
 // Note: this method should be replaced with `Object.fromEntries` when supported
@@ -63,6 +64,19 @@ const getLimitsForProduct = (quantity, side, totalQuantityOfProducts, totalQuant
   }
 
   return false
+}
+
+const getProductsForUpdateProductsV1 = (selectedProducts) => {
+  const productData = Object.entries(selectedProducts).map(([id, quantity]) => ({
+    id,
+    quantity,
+    type: 'Product',
+  }))
+
+  return {
+    item_choices: productData,
+    restrict: 'Product',
+  }
 }
 
 export const useSidesBasket = ({
@@ -128,7 +142,7 @@ export const useSidesBasket = ({
     maxProductsPerBox
   )
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault()
 
     if (isSubmitting) return
@@ -139,8 +153,17 @@ export const useSidesBasket = ({
       .map(({ id }) => id)
       .filter((id) => Boolean(selectedProducts[id]))
 
-    trackSidesContinueClicked(sidesIds, total, totalQuantityOfSides)
-    onSubmitCallback('sides-modal-with-sides', selectedProducts)
+    try {
+      await updateOrderItems(
+        accessToken,
+        order.id,
+        getProductsForUpdateProductsV1(selectedProducts)
+      )
+      trackSidesContinueClicked(sidesIds, total, totalQuantityOfSides)
+      onSubmitCallback('sides-modal-with-sides', selectedProducts)
+    } catch (e) {
+      onSubmitCallback('sides-modal-failed-to-save-sides', null)
+    }
   }
 
   React.useEffect(() => {
