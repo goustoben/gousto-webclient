@@ -231,7 +231,7 @@ export const SidesModal = ({
         </ModalHeader>
         <div className={classnames([
           css.sideModalForSidesSelections,
-          total ? '' : css.sideModalForSidesSelectionsWithSides
+          total ? '' : css.sideModalForSidesSelectionsWithOutSides
         ])}
         >
           {showAllergenAndNutrition
