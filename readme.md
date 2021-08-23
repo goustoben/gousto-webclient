@@ -33,7 +33,9 @@ This file is used by node-config (see below for more info).
   "running_env": "local", //always local as you are not running on AWS
   "api_token": "inbound_frontend_access_key_goes_here",
   "auth_client_secret": "frontend_service_secret_goes_here",
-  "checkout_pk": "checkout_pk_test_token_goes_here" ,
+  "checkout_pk": "checkout_pk_test_token_goes_here",
+  "hmr_enabled": true, // enable this for local Hot module replacement
+  "client_dev_server_enabled": true, // enable this for webpack dev server configuration in the client build
 }
 ```
 
@@ -55,7 +57,12 @@ Webclient can either be run without G2FE as a standalone on port 80, or as part 
 
 To access the service simply navigate to `frontend.gousto.local:8080` or if running with G2FE as well, simply navigate to `frontend.gousto.local`.
 
-There are three ways to run webclient. The service can be run in docker, or run outside which will be faster.
+#### Running Webclient with HMR
+* `npm run dev` will build the server and then run it with HMR enabled. 
+  You'll see output from the server build initially and then the server will start, as it starts the HMR middleware will be invoked and this will build the client for the first time and should result in HMR being enabled for the client. (This process can take upwards of two minutes the first time you do it, so please be patient)
+  *PLEASE NOTE*: Using this option does not have a watch on the server files or use nodemon so changes to the server will involve restarting and rebuilding. It might be possible to start the server with nodemon and have changes update automatically but this is not currently included. 
+
+There are three other ways to run Webclient. The service can be run in docker, or run outside which will be faster.
 
 A script in the repo root called `./run.sh` has been created to help with all of these scenarios.
 
@@ -72,7 +79,6 @@ A script in the repo root called `./run.sh` has been created to help with all of
 When running with `./run.sh dev --docker` the app will rebuild by itself thanks to `npm run watch`.
 #### Option Three
 * `./run.sh dev --host` will build and run the service on the host. This will require node installed. This command has npm script command if you are in the `src/` folder and you can use `npm run dev`.
-
 
 **If you are switching from running it with `dev --docker` to `dev --host` or vice versa you'll have to run `npm rebuild node-sass` before running again as the node-sass binaries are compiled against a specific CPU architecture and OS which differ from within the Docker container and outside it.**
 **Alternatively just rm your node_modules folder, `dev --docker` will reinstall for you. With `dev --host` you'll have to run `npm install` yourself**

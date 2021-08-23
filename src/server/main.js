@@ -9,8 +9,11 @@ const bodyParser = require('koa-body')
 const { renderToString } = require('react-dom/server')
 const Footer = require('Footer').default
 const logger = require('utils/logger').default
-const app = new Koa()
 const { Provider } = require('react-redux')
+const path = require('path')
+/* eslint-disable-next-line import/no-extraneous-dependencies */
+const koaWebpack = require('koa-webpack')
+const app = new Koa()
 
 const globals = require('config/globals')
 const MainLayout = require('layouts/MainLayout').default
@@ -24,7 +27,7 @@ const { clearPersistentStore } = require('middlewares/persist/persistStore')
 const withStatic = process.env.withStatic === 'true'
 
 const uuidv1 = require('uuid/v1')
-const {loggerSetUuid} = require('actions/logger')
+const { loggerSetUuid } = require('actions/logger')
 const addressLookupRoute = require('./routes/addressLookup').default
 const routes = require('./routes').default
 const htmlTemplate = require('./template')
@@ -32,23 +35,49 @@ const { appsRedirect } = require('./middleware/apps')
 const { sessionMiddleware } = require('./middleware/tracking')
 const { processRequest, configureHistoryAndStore } = require('./processRequest')
 
+function enableHmr() {
+  koaWebpack({
+    configPath: path.join(process.cwd(), './config/webpack.client.js'),
+    devMiddleware: {
+      compress: true,
+      headers: {
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+        'Access-Control-Allow-Origin': '*',
+      },
+      historyApiFallback: true,
+      hot: true,
+      port: 8080,
+      public: 'frontend.gousto.local',
+      watchOptions: { aggregateTimeout: 300, poll: 1000 },
+      writeToDisk: true,
+    },
+    hotClient: {
+      host: 'frontend.gousto.local',
+      server: app.server
+    }
+  }).then((middleware) => {
+    app.use(middleware)
+  })
+}
+
 app.use(sessionMiddleware())
 
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
   const startTime = new Date()
-  const { header, request: { path }} = ctx
-  const writeLog = (path.indexOf('/ping') === -1) && (path.indexOf('/nsassets') === -1 )
+  const { header, request: { path: requestUrl }} = ctx
+  const writeLog = (requestUrl.indexOf('/ping') === -1) && (requestUrl.indexOf('/nsassets') === -1 )
 
   if (writeLog) {
     const uuid = uuidv1()
     ctx.uuid = uuid
-    logger.notice({message: '[START] REQUEST', requestUrl: path, uuid: ctx.uuid, headers: header})
+    logger.notice({message: '[START] REQUEST', requestUrl, uuid: ctx.uuid, headers: header})
   }
 
   await next()
   if (writeLog) {
-    logger.notice({message: '[END] REQUEST', requestUrl: path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header})
+    logger.notice({message: '[END] REQUEST', requestUrl, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: header})
   }
 })
 
@@ -143,44 +172,10 @@ app.use(processRequest)
 
 const port = __ENV__ === 'local' ? 8080 : 80
 
+if (__HMR__) {
+  enableHmr()
+}
+
 app.listen(port, () => {
   logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
 })
-
-if (__HMR__) {
-  const hotPort = port + 1
-
-  /* eslint-disable global-require, import/no-extraneous-dependencies */
-  const WebpackDevServer = require('webpack-dev-server')
-  const webpack = require('webpack')
-  // eslint-disable-next-line import/no-unresolved
-  const config = require('config/webpack.client')
-  /* eslint-enable */
-
-  new WebpackDevServer(webpack(config), {
-    port,
-    hot: true,
-    historyApiFallback: false,
-    withCredentials: false,
-    proxy: {
-      '*': `http://webclient.gousto.local:${port}`,
-    },
-    headers: { 'Access-Control-Allow-Origin': '*' },
-    stats: {
-      assets: false,
-      colors: true,
-      version: false,
-      hash: false,
-      timings: false,
-      chunks: false,
-      chunkModules: false,
-    },
-  })
-    .listen(hotPort, 'webclient.gousto.local', (err) => {
-      if (err) {
-        // eslint-disable-next-line no-console
-        console.error(err)
-      }
-      logger.info(`==> ✅  Hot-Reload listening on port ${hotPort}`)
-    })
-}

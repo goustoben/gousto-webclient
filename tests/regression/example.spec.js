@@ -66,7 +66,6 @@ describe("Examples", () => {
   it("shows box prices with mocked backend api", () => {
     cy.server()
     cy.fixture('boxPrices').as('boxPrices')
-    cy.route('POST', '**/graphql/v1/graphql', '@boxPrices')
     cy.visit("/box-prices")
     cy.get("span")
       .should((spans) => {
