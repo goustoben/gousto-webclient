@@ -1,6 +1,7 @@
+import { createSelector } from 'reselect'
 import { actionTypes } from 'routes/GetHelp/actions/actionTypes'
 import { actionTypes as webclientActionTypes } from 'actions/actionTypes'
-import { createSelector } from 'reselect'
+import { transformIngredientImgSrcSet } from '../utils/transformIngredientImgSrcSet'
 
 export const getAccessToken = (state) => state.auth.get('accessToken')
 
@@ -49,6 +50,20 @@ export const getRecipes = (state) => (
 
 export const getSelectedIngredients = (state) => (
   state.getHelp.get('selectedIngredients').toJS()
+)
+
+export const getSelectedIngredientsWithImage = createSelector(
+  getSelectedIngredients, getRecipes,
+  (selectedIngredients, recipes) => Object.values(selectedIngredients).map(({recipeId, ingredientUuid}) => {
+    const recipeForIngredient = recipes.find(recipe => recipe.id === recipeId)
+    const ingredientData = recipeForIngredient.ingredients.find(ingredient => ingredient.uuid === ingredientUuid)
+
+    return {
+      ingredientUuid,
+      label: ingredientData.label,
+      srcSet: transformIngredientImgSrcSet(ingredientData.urls)
+    }
+  })
 )
 
 export const getSelectedIngredientIssuesIDs = createSelector(getSelectedIngredients,

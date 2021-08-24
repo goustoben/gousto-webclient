@@ -1,7 +1,7 @@
 import { clickMyGousto } from './pageUtils/home/home'
 import {
-  clickAcceptCTA,
-  clickContactUsCTA,
+  clickClaimCTA,
+  clickGetInTouchCTA,
   clickContinueCTA,
   clickSubmitCTA,
   expandRecipes,
@@ -91,7 +91,7 @@ describe('Given the customer is logged in', () => {
               // This is an antipattern, we should be able to remove it when we fix data-testing in <Button> component
               cy.wait(2000)
 
-              clickAcceptCTA()
+              clickClaimCTA()
             })
 
             it('shows the refund confirmation step', () => {
@@ -106,7 +106,7 @@ describe('Given the customer is logged in', () => {
 
               cy.wait(2000)
 
-              clickContactUsCTA()
+              clickGetInTouchCTA()
             })
 
             it('shows the Contact Us step', () => {

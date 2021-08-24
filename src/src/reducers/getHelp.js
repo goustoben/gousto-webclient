@@ -30,9 +30,13 @@ const reduceRecipes = (recipes) => (
     const recipe = recipes[recipeId]
     const { id, goustoReference, title, url } = recipe
     const ingredients = recipe.ingredients.map(
-      ({ label: ingredientLabel, uuid: ingredientUuid }) => (
-        { label: ingredientLabel, url, uuid: ingredientUuid }
-      )
+      ({ label: ingredientLabel, media, uuid: ingredientUuid }) => {
+        const urls = media.images[0] ? media.images[0].urls : []
+
+        return (
+          { label: ingredientLabel, urls, uuid: ingredientUuid }
+        )
+      }
     )
 
     return { id, title, ingredients, url, goustoReference }

@@ -21,9 +21,32 @@ describe('<GetHelpContainer />', () => {
   describe('behaviour', () => {
     let store
     const RECIPES = [
-      { id: '3', ingredients: [{ uuid: '321', label: 'my-ingredient-label' }], title: 'a-title' },
-      { id: '4', ingredients: [{ uuid: '322', label: 'my-ingredient-label' }], title: 'b-title' }
-    ]
+      {
+        id: '3',
+        title: 'a-title',
+        ingredients: [{
+          uuid: '321',
+          label: 'my-ingredient-label',
+          media: {
+            images: [{
+              urls: [{ src: '', width: 50}]
+            }]
+          },
+        }]
+      },
+      {
+        id: '4',
+        title: 'b-title',
+        ingredients: [{
+          uuid: '322',
+          label: 'my-ingredient-label',
+          media: {
+            images: [{
+              urls: [{ src: '', width: 50}]
+            }]
+          },
+        }]
+      }]
     beforeAll(() => {
       const initialState = {
         auth: authDefaultState(),
@@ -81,9 +104,28 @@ describe('<GetHelpContainer />', () => {
     })
 
     test('fetched recipes ends up in the store', () => {
+      const EXPECTED_RECIPES = [
+        {
+          id: '3',
+          title: 'a-title',
+          ingredients: [{
+            uuid: '321',
+            label: 'my-ingredient-label',
+            urls: [{ src: '', width: 50}],
+          }]
+        },
+        {
+          id: '4',
+          title: 'b-title',
+          ingredients: [{
+            uuid: '322',
+            label: 'my-ingredient-label',
+            urls: [{ src: '', width: 50}],
+          }]
+        }]
       expect(
         store.getState().getHelp.get('recipes').toJS()
-      ).toEqual(RECIPES)
+      ).toEqual(EXPECTED_RECIPES)
     })
   })
 })

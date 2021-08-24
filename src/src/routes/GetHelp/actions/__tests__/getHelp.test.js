@@ -34,7 +34,7 @@ import {
   trackRecipeCardClick,
   trackRecipeCardGetInTouchClick,
   trackRefundFAQClick,
-  trackRejectRefund,
+  trackIngredientsGetInTouchClick,
   trackSelectDeliveryCategory,
   trackSelectIngredient,
   validateDeliveryAction,
@@ -369,15 +369,32 @@ describe('GetHelp action generators and thunks', () => {
     })
   })
 
-  describe('trackRejectRefund', () => {
+  describe('trackIngredientsGetInTouchClick with autoAccept true', () => {
     test('creates the tracking action', () => {
       const amount = '12345'
 
-      expect(trackRejectRefund(amount)).toEqual({
+      expect(trackIngredientsGetInTouchClick(amount, true)).toEqual({
         type: webClientActionTypes.TRACKING,
         trackingData: {
-          actionType: 'ssr_ingredients_decline_refund',
+          actionType: 'ssr_ingredients_click_get_in_touch',
           amount,
+          auto_accept: true,
+          seCategory: 'help',
+        }
+      })
+    })
+  })
+
+  describe('trackIngredientsGetInTouchClick with autoAccept false', () => {
+    test('creates the tracking action', () => {
+      const amount = '12345'
+
+      expect(trackIngredientsGetInTouchClick(amount, false)).toEqual({
+        type: webClientActionTypes.TRACKING,
+        trackingData: {
+          actionType: 'ssr_ingredients_click_get_in_touch',
+          amount,
+          auto_accept: false,
           seCategory: 'help',
         }
       })
@@ -392,7 +409,8 @@ describe('GetHelp action generators and thunks', () => {
         type: webClientActionTypes.TRACKING,
         trackingData: {
           actionType: 'ssr_ingredients_done_click',
-          auto_accept: IS_AUTO_ACCEPT
+          auto_accept: IS_AUTO_ACCEPT,
+          seCategory: 'help'
         }
       })
     })

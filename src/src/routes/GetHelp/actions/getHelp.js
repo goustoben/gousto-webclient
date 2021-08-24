@@ -140,11 +140,12 @@ export const storeGetHelpOrder = ({ id, recipeIds, recipeDetailedItems, delivery
   },
 })
 
-export const trackRejectRefund = (amount) => ({
+export const trackIngredientsGetInTouchClick = (amount, isAutoAccept) => ({
   type: webClientActionTypes.TRACKING,
   trackingData: {
-    actionType: trackingKeys.ssrIngredientDeclineRefund,
+    actionType: trackingKeys.ssrIngredientsClickGetInTouch,
     amount,
+    auto_accept: isAutoAccept,
     seCategory: SE_CATEGORY_HELP,
   }
 })
@@ -154,6 +155,7 @@ export const trackConfirmationCTA = (isAutoAccept) => ({
   trackingData: {
     actionType: trackingKeys.ssrClickDoneRefundAccepted,
     auto_accept: isAutoAccept,
+    seCategory: SE_CATEGORY_HELP,
   }
 })
 

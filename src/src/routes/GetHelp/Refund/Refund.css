@@ -1,4 +1,6 @@
 @value ScreenXXSMax from 'styles/screenSizes.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
+
 
 .center {
 	display: flex;
@@ -15,16 +17,34 @@
 	margin-bottom: 1rem;
 }
 
+.confirmationBodyAmount {
+  composes: fontStyleSubHead from 'design-language/typography.css';
+}
+
 .confirmationQuestion {
 	font-weight: bold;
 	margin-bottom: 1rem;
 }
 
-.button {
-	align-self: center;
-	flex-grow: 0.4;
+.getInTouch {
+	composes: defaultLinkStyle from 'design-language/anchor.module.css';
+	font-weight: bold;
+	line-height: 1.8;
+	max-height: 1.75rem;
+}
 
-	@media ScreenXXSMax {
-		align-self: center;
+.feedbackText {
+	margin: 0;
+}
+
+.extraInfo {
+	padding: 1rem 0.75rem 0rem;
+	@media BreakpointFromMedium {
+		padding: 1rem 0.75rem 1.25rem;
 	}
+}
+
+.extraInfoText {
+	margin: 0;
+	padding-bottom: 0.5rem;
 }

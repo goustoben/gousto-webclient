@@ -16,6 +16,7 @@ import {
   getRecipes,
   getSelectedIngredients,
   getSelectedIngredientIssuesIDs,
+  getSelectedIngredientsWithImage,
   getTrackingUrl,
 } from '../selectors'
 
@@ -47,10 +48,34 @@ const RECIPES = [
     title: 'Cheesy Pizza-Topped Chicken With Mixed Salad',
     url: 'gousto.co.uk/cookbook/recipes/cheesy-pizza-topped-chicken-with-mixed-salad',
     ingredients: [
-      { uuid: '3139eeba-c3a1-477c-87e6-50ba5c3d21e0', label: '1 shallot' },
-      { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4', label: 'mozzarella' },
+      { uuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
+        label: '40g Cornish clotted cream',
+        urls: [
+          {
+            src: 'ingredient-cornish-image-url',
+            width: 50,
+          },
+        ] },
     ],
     goustoReference: '2145',
+  },
+  {
+    id: '385',
+    title: 'Recipe 2',
+    url: 'gousto.co.uk/cookbook/recipes/recipe-2',
+    ingredients: [
+      {
+        uuid: '3c07d126-f655-437c-aa1d-c38dbbae0398',
+        label: '8ml soy sauce',
+        urls: [
+          {
+            src: 'ingredient-soy-image-url',
+            width: 50,
+          },
+        ]
+      },
+    ],
+    goustoReference: '354',
   },
 ]
 const SELECTED_INGREDIENTS = {
@@ -63,9 +88,9 @@ const SELECTED_INGREDIENTS = {
     issueName: 'Wrong Ingredients',
     issueDescription: 'assd'
   },
-  '2223&488d5751-dcff-4985-88c0-bf745ff54904': {
-    recipeId: '2223',
-    ingredientUuid: '488d5751-dcff-4985-88c0-bf745ff54904',
+  '2871&d93301c4-2563-4b9d-b829-991800ca87b4': {
+    recipeId: '2871',
+    ingredientUuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
     label: '40g Cornish clotted cream',
     recipeGoustoReference: '2093',
     issueId: '3',
@@ -74,6 +99,17 @@ const SELECTED_INGREDIENTS = {
   },
 }
 const SELECTED_INGREDIENTS_ISSUES_IDS = ['4', '3']
+
+const SELECTED_INGREDIENTS_WITH_IMG = [{
+  ingredientUuid: '3c07d126-f655-437c-aa1d-c38dbbae0398',
+  label: '8ml soy sauce',
+  srcSet: 'ingredient-soy-image-url 50w',
+},
+{ ingredientUuid: 'd93301c4-2563-4b9d-b829-991800ca87b4',
+  label: '40g Cornish clotted cream',
+  srcSet: 'ingredient-cornish-image-url 50w'
+}]
+
 const STATE = {
   auth: fromJS({
     accessToken: ACCESS_TOKEN,
@@ -111,6 +147,7 @@ describe('Get Help selectors', () => {
     ['getSelectedIngredients', getSelectedIngredients, SELECTED_INGREDIENTS],
     ['getTrackingUrl', getTrackingUrl, TRACKING_URL],
     ['getSelectedIngredientIssuesIDs', getSelectedIngredientIssuesIDs, SELECTED_INGREDIENTS_ISSUES_IDS],
+    ['getSelectedIngredientsWithImage', getSelectedIngredientsWithImage, SELECTED_INGREDIENTS_WITH_IMG],
   ])('Given %s is called', (_selectorName, selector, expectedResult) => {
     beforeEach(() => {
       result = selector(STATE)

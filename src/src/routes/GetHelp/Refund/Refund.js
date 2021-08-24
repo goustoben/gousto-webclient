@@ -1,12 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import Link from 'Link'
 import Loading from 'Loading'
-import { Button } from 'goustouicomponents'
+import { BottomFixedContent, Card, CTA, Heading } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
-import { replaceWithValues } from 'utils/text'
-import { GetHelpLayout } from '../layouts/GetHelpLayout'
-import { BottomFixedContentWrapper } from '../components/BottomFixedContentWrapper'
-import { BottomButton } from '../components/BottomButton'
+import { GetHelpLayout2 } from '../layouts/GetHelpLayout2'
+import { IngredientsListContainer } from './IngredientsList'
 
 import css from './Refund.css'
 
@@ -14,14 +13,6 @@ const propTypes = {
   compensation: PropTypes.shape({
     amount: PropTypes.number,
     type: PropTypes.string
-  }).isRequired,
-  content: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    infoBody: PropTypes.string.isRequired,
-    confirmationBody: PropTypes.string.isRequired,
-    errorBody: PropTypes.string.isRequired,
-    button1: PropTypes.string.isRequired,
-    button2: PropTypes.string.isRequired,
   }).isRequired,
   createComplaint: PropTypes.func.isRequired,
   isAnyError: PropTypes.bool.isRequired,
@@ -31,83 +22,114 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
   }).isRequired,
-  trackRejectRefund: PropTypes.func.isRequired,
+  numberOfIngredients: PropTypes.number.isRequired,
+  trackIngredientsGetInTouchClick: PropTypes.func.isRequired,
 }
 
-class Refund extends PureComponent {
-  componentDidMount() {
-    const { loadRefundAmount } = this.props
+const Refund = ({
+  compensation,
+  createComplaint,
+  isAnyError,
+  isAnyPending,
+  loadRefundAmount,
+  numberOfIngredients,
+  trackIngredientsGetInTouchClick
+}) => {
+  useEffect(() => {
     loadRefundAmount()
-  }
+  }, []) //eslint-disable-line
 
-  render() {
-    const {
-      compensation,
-      content,
-      createComplaint,
-      isAnyError,
-      isAnyPending,
-      trackRejectRefund,
-    } = this.props
+  const headingText = `We're so sorry to hear about the issue with your ingredient${numberOfIngredients > 1 ? 's' : ''}`
+  const getHelpLayoutbody = (isAnyPending || isAnyError)
+    ? (
+      <p className={css.confirmationBody}>
+        There was a problem in getting your refund. Please contact us below, or try again later.
+      </p>
+    )
+    : (
+      <Fragment>
+        <p className={css.confirmationBody}>
+          We would like to give you
+          {' '}
+          <span className={css.confirmationBodyAmount}>
+            £
+            {compensation.amount ? compensation.amount.toFixed(2) : ''}
+            {' '}
+            credit
+          </span>
+          {' '}
+          off your next order as an apology for the issues with:
+        </p>
+        <IngredientsListContainer />
+      </Fragment>
+    )
 
-    const infoBodyWithAmount = replaceWithValues(
-      content.infoBody, {
-        refundAmount: compensation.amount ? compensation.amount.toFixed(2) : ''
-      }
-    )
-    const button2WithAmount = replaceWithValues(
-      content.button2, {
-        refundAmount: compensation.amount ? compensation.amount.toFixed(2) : ''
-      }
-    )
-    const getHelpLayoutbody = (isAnyPending || isAnyError)
-      ? ''
-      : infoBodyWithAmount
-    const confirmationContent = (isAnyError)
-      ? content.errorBody
-      : content.confirmationBody
-    const acceptButton = (isAnyError)
-      ? null
-      : (
-        <Button
-          className={css.button}
-          color="primary"
+  const acceptButton = (isAnyError)
+    ? null
+    : (
+      <BottomFixedContent>
+        <CTA
+          testingSelector="claimCTA"
+          isFullWidth
+          size="small"
           onClick={createComplaint}
         >
-          {button2WithAmount}
-        </Button>
-      )
-
-    return (
-      <GetHelpLayout
-        title={content.title}
-      >
-        {(isAnyPending)
-          ? (
-            <div className={css.center}>
-              <Loading className={css.loading} />
-            </div>
-          )
-          : (
-            <div>
-              <p className={css.confirmationBody}>{getHelpLayoutbody}</p>
-              <p className={css.confirmationQuestion}>{confirmationContent}</p>
-              <BottomFixedContentWrapper>
-                <BottomButton
-                  color="secondary"
-                  url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-                  clientRouted
-                  onClick={() => trackRejectRefund(compensation.amount)}
-                >
-                  {content.button1}
-                </BottomButton>
-                {acceptButton}
-              </BottomFixedContentWrapper>
-            </div>
-          )}
-      </GetHelpLayout>
+          Claim £
+          {compensation.amount ? compensation.amount.toFixed(2) : ''}
+          {' '}
+          credit
+        </CTA>
+      </BottomFixedContent>
     )
-  }
+
+  return (
+    <GetHelpLayout2
+      headingText={headingText}
+      backUrl={`${routes.getHelp.index}/${routes.getHelp.ingredientReasons}`}
+    >
+      {(isAnyPending)
+        ? (
+          <div className={css.center}>
+            <Loading className={css.loading} />
+          </div>
+        )
+        : (
+          <Fragment>
+            <Card>
+              {getHelpLayoutbody}
+            </Card>
+            <Card>
+              <Heading size="fontStyleM" type="h2">
+                Your feedback will help us improve
+              </Heading>
+              <p className={css.feedbackText}>
+                We take this issue very seriously as we know how inconvenient this can be.
+                We’ll share your feedback with the relevant team to ensure this doesn’t happen again.
+              </p>
+            </Card>
+            <div className={css.extraInfo}>
+              <p className={css.extraInfoText}>
+                <strong>
+                  Need more help?
+                </strong>
+                {' '}
+                If you have any further questions please get in touch with our team.
+              </p>
+              <Link
+                className={css.getInTouch}
+                data-testing="getInTouch"
+                to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+                clientRouted
+                tracking={() => trackIngredientsGetInTouchClick(compensation.amount, false)}
+              >
+                Get in touch
+              </Link>
+            </div>
+            {acceptButton}
+          </Fragment>
+        )}
+    </GetHelpLayout2>
+  )
 }
 
 Refund.propTypes = propTypes
