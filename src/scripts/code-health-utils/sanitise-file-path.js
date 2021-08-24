@@ -1,1 +1,1 @@
-module.exports = (name) => name.replace(/^.*(\/gousto-webclient\/)|(\/root\/project\/)/i, '')
+module.exports = (name) => name.match(/src\/\S+/)[0]
