@@ -113,7 +113,7 @@ describe('<Confirmation />', () => {
       expect(TRACK_CONFIRMATION_CTA_FUNCTION).toHaveBeenCalledWith(false)
     })
 
-    test('redirects to the URL passed as prop', () => {
+    test('redirects to My Gousto', () => {
       expect(window.location.assign).toHaveBeenCalledWith(routes.myGousto)
     })
   })

@@ -32,6 +32,7 @@ module.exports = {
     rateRecipes2: '/rate-recipes',
 
     getHelp: {
+      autoAcceptConfirmation: 'auto-confirmation',
       confirmation: 'confirmation',
       contact: 'contact',
       delivery: ({ userId, orderId }) => `/get-help/user/${userId}/order/${orderId}/delivery`,

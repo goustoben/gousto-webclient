@@ -1,4 +1,4 @@
-@value BreakpointToMedium from 'design-language/breakpoints.css';
+@value BreakpointToMedium, BreakpointFromMedium from 'design-language/breakpoints.css';
 
 :global #react-root {
   height: 100%;
@@ -27,4 +27,10 @@
 
 .heading {
   margin-bottom: 1rem;
+}
+
+.noCTABack {
+  @media BreakpointFromMedium {
+    padding-top: calc(4rem + 1px);
+  }
 }

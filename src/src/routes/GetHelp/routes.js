@@ -4,6 +4,7 @@ import { Route, Redirect, IndexRoute } from 'react-router'
 import configRoutes from 'config/routes'
 import WizardLayout from 'layouts/WizardLayout'
 import { checkValidSession } from 'utils/routes'
+import { AutoAcceptConfirmationContainer } from './AutoAcceptConfirmation'
 import { GetHelpContainer } from './GetHelpContainer'
 import { OrderIssueContainer } from './OrderIssue/OrderIssueContainer'
 import { Contact } from './Contact'
@@ -21,6 +22,7 @@ import { DidntArriveContainer } from './Delivery/DidntArrive'
 const getHelpRoutes = (store) => {
   const {
     index,
+    autoAcceptConfirmation,
     contact,
     delivery,
     deliveryDidntArrive,
@@ -54,6 +56,10 @@ const getHelpRoutes = (store) => {
         onEnter={onEnterHandler}
       >
         <IndexRoute component={OrderIssueContainer} />
+        <Route
+          path={autoAcceptConfirmation}
+          component={AutoAcceptConfirmationContainer}
+        />
         <Route
           path={delivery({userId: ':userId', orderId: ':orderId'})}
           component={DeliveryContainer}

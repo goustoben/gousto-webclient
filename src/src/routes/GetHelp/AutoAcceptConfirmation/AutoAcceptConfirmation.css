@@ -1,4 +1,5 @@
 @value Haricot from 'styles/colors.css';
+@value BreakpointFromMedium from 'design-language/breakpoints.css';
 
 .alertContent {
   display: flex;
@@ -30,4 +31,23 @@
 .creditCopy {
   composes: fontStyleXS from 'design-language/typography.module.css';
   margin-bottom: 0;
+}
+
+.getInTouchLink {
+  composes: defaultLinkStyle from 'design-language/anchor.module.css';
+  font-weight: bold;
+  line-height: 1.8;
+  max-height: 1.75rem;
+}
+
+.extraInfo {
+  padding: 0 0.75rem;
+
+  @media BreakpointFromMedium {
+    padding: 0 0.75rem 1.25rem;
+  }
+}
+
+.extraInfoText {
+  margin-bottom: 0.5rem;
 }

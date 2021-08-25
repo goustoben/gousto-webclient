@@ -11,7 +11,7 @@ const GetHelpLayout2 = ({
   headingText,
   backUrl,
 }) => (
-  <div className={css.wrapperWide}>
+  <div className={classnames(css.wrapperWide, {[css.noCTABack]: !hasBackButton})}>
     <LayoutPageWrapper>
       {hasBackButton && (
         <div className={css.wrapperBack}>
