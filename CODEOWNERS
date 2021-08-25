@@ -5,6 +5,9 @@
 /src/dangerfile.js @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
 /.github/workflows/danger.yml @Gousto/frontend-foundations @Gousto/squad-radishes @Gousto/squad-haricots @Gousto/squad-turnips @Gousto/squad-rockets @Gousto/squad-beetroots
 
+# frontend guild ownership
+/src/bower.json @Gousto/guild-frontend
+
 # frontend-foundations ownership
 /.dockerignore        @Gousto/frontend-foundations
 /service.yml        @Gousto/frontend-foundations
@@ -20,7 +23,6 @@
 /.git-blame-ignore-revs        @Gousto/frontend-foundations
 /src/.babelrc        @Gousto/frontend-foundations
 /src/.bowerrc        @Gousto/frontend-foundations
-/src/bower.json        @Gousto/frontend-foundations
 /src/.eslintignore        @Gousto/frontend-foundations
 /src/.eslintrc        @Gousto/frontend-foundations
 /src/.gulprc.js        @Gousto/frontend-foundations
